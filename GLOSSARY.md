@@ -12,7 +12,11 @@
 
 - **Guia:** uma página pública que responde a uma Pergunta, em que cada afirmação aponta para Fichas.
 - **Pergunta:** uma dúvida do usuário que um Guia responde, por exemplo "onde conhecer alguém da minha idade?".
-- **Dica:** uma recomendação prática dentro de um Guia, ligada às Fichas que a sustentam e à Força da evidência delas.
+- **Tema:** um agrupamento de Perguntas com página própria, como "Onde conhecer pessoas" ou "Escolher parceiro".
+- **Confiança:** o rótulo da resposta curta de um Guia (forte, moderada ou fraca). O curador escolhe, mas nunca acima da Ficha mais forte que sustenta a resposta, e no máximo moderada se a resposta só se apoia em Fichas 🟡. Não confundir com Força da evidência, que é de uma Ficha.
+- **Dica:** uma recomendação prática ligada às Fichas que a sustentam e à Força da evidência delas. A mesma Dica pode aparecer em mais de um Guia.
+- **Inferência:** uma Dica deduzida de Fichas sem estudo que a teste diretamente. Aparece marcada como "inferência nossa", com Força no máximo moderada.
+- **Mito:** uma afirmação popular sem fonte primária, ou que a fonte citada não traz, como "10 anos de diferença de idade = 39% mais divórcio". Um Guia pode desmontá-la no bloco "O que circula por aí e não se sustenta".
 - **Perfil:** quem o usuário é e quem procura (gênero, orientação, idade). O Perfil decide quais Guias, Dicas e dados se aplicam.
 - **Requisito:** uma característica que o usuário exige de um parceiro, como faixa de idade, escolaridade ou cidade.
 - **Grupo possível:** a estimativa de quantas pessoas no Brasil atendem ao Perfil procurado e a todos os Requisitos.
