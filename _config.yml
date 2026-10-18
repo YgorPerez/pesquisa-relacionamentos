@@ -1,0 +1,12 @@
+title: Pesquisa sobre relacionamentos
+description: Estudos sobre como casais se conhecem, qualidade das relações e onde conhecer pessoas, com fontes primárias
+lang: pt-BR
+theme: jekyll-theme-primer
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: false
+exclude:
+  - AGENTS.md
+  - .claude
