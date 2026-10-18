@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTÓTIPO · Calculadora do Grupo possível</title>
+<!--
+  PROTÓTIPO DESCARTÁVEL (ticket #8, "Protótipo da calculadora do Grupo possível").
+  Três variantes da calculadora, trocadas pela barra de baixo (ou ← →), com a variante no #v= da URL.
+  Os números são FICTÍCIOS: uma amostra sintética com a forma dos microdados do Censo 2022
+  e probabilidades no formato da PNS 2019. Serve para julgar o comportamento, não os valores.
+  O bloco "módulo puro" (sem DOM) é a parte que pode ser aproveitada.
+-->
+<style>
+  :root { --acc:#0f766e; --acc2:#99d5cf; --tx:#1f2328; --mu:#667085; --bd:#e4e7ec; --bg:#fafaf9; --warn:#b54708; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--tx); background:var(--bg); }
+  header { padding:20px 28px 12px; border-bottom:1px solid var(--bd); background:#fff; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; background:#fef0c7; color:#93370d; padding:2px 8px; border-radius:99px; vertical-align:middle; margin-left:6px; }
+  .perfil { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:10px; font-size:14px; }
+  .perfil label { color:var(--mu); }
+  select, input[type=number] { font:inherit; padding:3px 6px; border:1px solid var(--bd); border-radius:6px; background:#fff; }
+  input[type=number] { width:64px; }
+  main { padding:20px 28px 110px; max-width:1120px; }
+  .muted { color:var(--mu); }
+  .small { font-size:13px; }
+  .chips { display:flex; flex-wrap:wrap; gap:4px; }
+  .chip { border:1px solid var(--bd); background:#fff; border-radius:99px; padding:2px 10px; font-size:13px; cursor:pointer; }
+  .chip.on { background:var(--acc); color:#fff; border-color:var(--acc); }
+  .rng { display:flex; align-items:center; gap:6px; font-size:13px; }
+  .rng input[type=range] { width:110px; accent-color:var(--acc); }
+  input[type=range] { accent-color:var(--acc); }
+  .ck { font-size:13px; display:flex; gap:6px; align-items:center; }
+  .src { font-size:11px; color:var(--mu); border:1px solid var(--bd); border-radius:4px; padding:0 5px; white-space:nowrap; }
+  .src.pns { color:#6941c6; border-color:#d9d6fe; }
+  .warn { color:var(--warn); }
+  ul.avisos { margin:6px 0 0; padding-left:18px; font-size:13px; color:var(--mu); }
+  ul.avisos li { margin:2px 0; }
+  .estado { margin-top:28px; font-size:12px; color:var(--mu); border-top:1px dashed var(--bd); padding-top:10px; word-break:break-all; }
+
+  /* A: funil */
+  .funil-row { display:grid; grid-template-columns: 300px 1fr 70px; gap:14px; align-items:center; padding:8px 0; border-bottom:1px solid var(--bd); }
+  .funil-row.off { opacity:.55; }
+  .funil-row.off .bar { background:#cfd4dc; }
+  .funil-row .nome { font-weight:600; font-size:14px; display:flex; gap:6px; align-items:center; }
+  .barwrap { height:22px; background:#f2f4f7; border-radius:4px; position:relative; }
+  .bar { height:100%; background:var(--acc); border-radius:4px; min-width:2px; }
+  .barwrap { display:flex; align-items:center; gap:8px; background:none; }
+  .barwrap .bar { background:var(--acc); flex:none; width:calc(var(--w) * .82); }
+  .barlabel { font-size:12px; white-space:nowrap; color:var(--tx); }
+  .corte { font-size:13px; text-align:right; color:var(--warn); font-variant-numeric:tabular-nums; }
+  .final { margin-top:18px; padding:16px; background:#fff; border:1px solid var(--bd); border-radius:10px; }
+  .final .big { font-size:30px; font-weight:700; }
+  .whisker { position:relative; height:14px; margin:8px 0 2px; background:#f2f4f7; border-radius:7px; }
+  .whisker .band { position:absolute; top:0; bottom:0; background:var(--acc2); border-radius:7px; }
+  .whisker .mid { position:absolute; top:-3px; bottom:-3px; width:3px; background:var(--acc); }
+
+  /* B: número + o que pesa */
+  .b-grid { display:grid; grid-template-columns: 330px 1fr; gap:28px; }
+  .b-form { background:#fff; border:1px solid var(--bd); border-radius:10px; padding:14px 16px; }
+  .b-form .campo { padding:8px 0; border-bottom:1px solid #f2f4f7; }
+  .b-form .campo:last-child { border:0; }
+  .b-form .rot { font-size:12px; color:var(--mu); margin-bottom:3px; display:flex; justify-content:space-between; }
+  .hero { font-size:44px; font-weight:750; letter-spacing:-.01em; line-height:1.1; }
+  .hero-sub { font-size:15px; color:var(--mu); margin-top:4px; }
+  .pesa { margin-top:22px; }
+  .pesa-row { display:grid; grid-template-columns: 1fr 120px 76px; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--bd); font-size:14px; }
+  .pesa-row .mult { font-weight:700; color:var(--acc); text-align:right; font-variant-numeric:tabular-nums; }
+  button { font:inherit; font-size:13px; border:1px solid var(--bd); background:#fff; border-radius:6px; padding:3px 10px; cursor:pointer; }
+  button:hover { border-color:var(--acc); }
+  details { margin-top:22px; background:#fff; border:1px solid var(--bd); border-radius:10px; padding:10px 14px; }
+  summary { cursor:pointer; font-weight:600; }
+
+  /* C: 1000 pontos */
+  .c-frase { font-size:22px; font-weight:600; max-width:820px; }
+  .c-grid { display:grid; grid-template-columns: repeat(50, 1fr); gap:3px; max-width:620px; margin:14px 0; }
+  .dot { aspect-ratio:1; border-radius:50%; background:#e4e7ec; }
+  .dot.pass { background:var(--acc); }
+  .dot.talvez { background:repeating-linear-gradient(45deg, var(--acc) 0 2px, var(--acc2) 2px 4px); }
+  .c-wrap { display:grid; grid-template-columns: 620px 1fr; gap:26px; align-items:start; }
+  .leg-row { display:grid; grid-template-columns: 14px 1fr 64px; gap:10px; align-items:start; padding:7px 0; border-bottom:1px solid var(--bd); }
+  .sw { width:14px; height:14px; border-radius:50%; margin-top:3px; }
+  .leg-row .nome { font-size:14px; font-weight:600; display:flex; gap:6px; align-items:center; margin-bottom:3px; }
+  .leg-row .n { font-size:13px; text-align:right; color:var(--mu); font-variant-numeric:tabular-nums; }
+
+  /* barra de troca */
+  #switcher { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#101828; color:#fff; border-radius:99px; padding:6px 8px; display:flex; gap:6px; align-items:center; box-shadow:0 6px 24px rgba(0,0,0,.25); z-index:10; font-size:14px; }
+  #switcher button { background:transparent; color:#fff; border:0; font-size:18px; padding:2px 12px; }
+  #switcher span { min-width:230px; text-align:center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Calculadora do Grupo possível <span class="tag">PROTÓTIPO · DADOS FICTÍCIOS</span></h1>
+  <div class="muted small">Quais Requisitos viram controles, como o número muda a cada ajuste, como mostrar o custo de cada Requisito e a incerteza. Três formas de fazer a mesma conta: troque na barra de baixo ou com ← →.</div>
+  <div class="perfil" id="perfil"></div>
+</header>
+<main id="app"></main>
+<div id="switcher"><button id="prev" aria-label="anterior">‹</button><span id="vlabel"></span><button id="next" aria-label="próxima">›</button></div>
+
+<script>
+// =====================================================================
+// MÓDULO PURO: dados sintéticos + estimativa. Sem DOM.
+// =====================================================================
+const GRUPOS = [18,20,25,30,35,40,45,50,55,60,65,70,75,80];
+const fimGrupo = g => { const i = GRUPOS.indexOf(g); return i < GRUPOS.length-1 ? GRUPOS[i+1]-1 : 90; };
+// O microdado público só tem idade em grupos de 5 anos: ratear o grupo pelos anos cobertos
+// (no site, a proporção viria do SIDRA 9514, idade simples).
+function fracIdade(g, min, max) {
+  const a = g, b = fimGrupo(g), top = max >= 80 ? 90 : max;
+  const lo = Math.max(a, min), hi = Math.min(b, top);
+  return hi < lo ? 0 : (hi - lo + 1) / (b - a + 1);
+}
+const banda = g => g < 20 ? 0 : g < 25 ? 1 : g < 30 ? 2 : g < 35 ? 3 : g < 40 ? 4 : g < 50 ? 5 : g < 60 ? 6 : g < 70 ? 7 : 8;
+
+const REGIOES = {
+  BR: { nome:'Brasil', adultos:156e6, amostra:120000, cor:[.43,.10,.45,.02], cidades:{} },
+  SP: { nome:'São Paulo (estado)', adultos:34.5e6, amostra:60000, cor:[.57,.10,.32,.01], cidades:{ 'sao-paulo':['São Paulo (capital)',.26], campinas:['Campinas',.026] } },
+  RJ: { nome:'Rio de Janeiro (estado)', adultos:12.6e6, amostra:30000, cor:[.42,.15,.42,.01], cidades:{ rio:['Rio de Janeiro (capital)',.38] } },
+  MG: { nome:'Minas Gerais', adultos:16.2e6, amostra:35000, cor:[.41,.12,.46,.01], cidades:{ bh:['Belo Horizonte',.11] } },
+  BA: { nome:'Bahia', adultos:10.9e6, amostra:25000, cor:[.20,.23,.56,.01], cidades:{ salvador:['Salvador',.17] } },
+  AC: { nome:'Acre', adultos:0.58e6, amostra:4000, cor:[.19,.09,.69,.03], cidades:{ 'rio-branco':['Rio Branco',.45] } },
+};
+const P_IDADE = (() => { const d = a => Math.max(.12, 1 - (a-18)/75);
+  const w = GRUPOS.map(g => { let s = 0; for (let a = g; a <= fimGrupo(g); a++) s += (g === 80 ? .08 : d(a)); return s; });
+  const t = w.reduce((x,y)=>x+y); return w.map(x => x/t); })();
+// P(não vive em união | sexo, banda de idade): forma do SIDRA 10185
+const NAO_UNIAO = { F:[.85,.62,.45,.33,.28,.30,.35,.45,.62], M:[.95,.75,.55,.37,.28,.25,.25,.27,.33] };
+const P_ESC = b => [[.17,.30,.45,.08],[.17,.30,.45,.08],[.12,.22,.42,.24],[.14,.22,.40,.24],[.20,.22,.36,.22],[.28,.24,.32,.16],[.35,.25,.25,.15],[.50,.22,.18,.10],[.55,.22,.15,.08]][b];
+const P_RENDA = e => [[.25,.45,.22,.07,.01],[.25,.30,.30,.13,.02],[.18,.17,.35,.25,.05],[.08,.07,.15,.40,.30]][e];
+const P_REL = b => b <= 2 ? [.36,.28,.20,.16] : b <= 5 ? [.42,.30,.12,.16] : [.55,.28,.06,.11];
+const P_FILHOS = b => [.15,.35,.55,.70,.78,.85,.88,.9,.9][b];
+
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const pick = (r, ps) => { const x = r(); let s = 0; for (let i = 0; i < ps.length; i++) { s += ps[i]; if (x < s) return i; } return ps.length-1; };
+const cache = {};
+function dados(uf) {
+  if (cache[uf]) return cache[uf];
+  const R = REGIOES[uf], r = rng([...uf].reduce((h,c)=>h*31+c.charCodeAt(0),7)), recs = [];
+  for (let i = 0; i < R.amostra; i++) {
+    const sexo = r() < .48 ? 'M' : 'F', g = GRUPOS[pick(r, P_IDADE)], b = banda(g);
+    const uniao = r() > NAO_UNIAO[sexo][b];
+    const esc = pick(r, P_ESC(b)); let renda = pick(r, P_RENDA(esc)); if (sexo === 'F' && renda > 0 && r() < .25) renda--;
+    recs.push({ sexo, g, uniao, esc, renda, cor: pick(r, R.cor), rel: pick(r, P_REL(b)),
+      filhos: sexo === 'F' ? r() < P_FILHOS(b) * (uniao ? 1 : .7) : null }); // Censo só pergunta filhos às mulheres
+  }
+  // Agrega em células, como o CSV longo e esparso do ticket #10: uma linha por combinação, com peso e n_registros.
+  const peso = R.adultos / R.amostra, celulas = new Map();
+  for (const r of recs) {
+    const key = [r.sexo, r.g, r.uniao, r.esc, r.renda, r.cor, r.rel, r.filhos].join('|');
+    const c = celulas.get(key); if (c) { c.peso += peso; c.n++; } else celulas.set(key, { ...r, peso, n: 1 });
+  }
+  return cache[uf] = { recs: [...celulas.values()] };
+}
+
+// PNS 2019 (formato): probabilidades por sexo × idade, com intervalo
+const LGB = { M:[4.6,4.6,4.6,2.4,2.4,1.2,1.2,.6,.6], F:[5.0,5.0,5.0,2.0,2.0,.8,.8,.3,.3] }; // homo+bi, %
+const NSR = .034; // não sabe ou recusou
+function pOrient(userGen, sexo, g) { // a pessoa (sexo) se interessa pelo gênero do usuário?
+  const lgb = LGB[sexo][banda(g)] / 100;
+  const mesmo = (userGen === 'homem' && sexo === 'M') || (userGen === 'mulher' && sexo === 'F');
+  if (mesmo) return [lgb*.75, lgb, lgb*1.25];
+  const bi = lgb * .45, p = 1 - lgb + bi - NSR - .003;
+  return [p, p + NSR/2, Math.min(1, p + NSR)];
+}
+const normCdf = x => { const t = 1/(1+.2316419*Math.abs(x)), d = .3989423*Math.exp(-x*x/2); const p = d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return x > 0 ? 1-p : p; };
+function pAltura(sexo, g, min, max) { // altura autodeclarada: média ±1 cm como incerteza
+  const m = (sexo === 'M' ? 172.5 : 160) - (g >= 60 ? 2 : 0), sd = sexo === 'M' ? 7 : 6.5;
+  const p = mu => normCdf((max + .5 - mu)/sd) - normCdf((min - .5 - mu)/sd);
+  const a = p(m-1), b = p(m), c = p(m+1); return [Math.min(a,b,c), b, Math.max(a,b,c)];
+}
+function pNaoFuma(sexo, g) { const b = banda(g); const f = [.10,.10,.14,.14,.14,.17,.17,.13,.13][b] * (sexo === 'M' ? 1 : .6); return [1-f*1.15, 1-f, 1-f*.85]; }
+
+const ORDEM = ['idade','cidade','companheiro','orientacao','escolaridade','renda','cor','religiao','filhos','altura','fumo'];
+const FONTE = { idade:'Censo + SIDRA', cidade:'SIDRA', companheiro:'Censo', orientacao:'PNS', escolaridade:'Censo', renda:'Censo', cor:'Censo', religiao:'Censo', filhos:'Censo', altura:'PNS', fumo:'PNS' };
+function ativos(s) {
+  const a = [];
+  if (s.idadeMin > 18 || s.idadeMax < 80) a.push('idade');
+  if (s.cidade) a.push('cidade');
+  if (s.companheiro) a.push('companheiro');
+  if (s.genero === 'homem' || s.genero === 'mulher') a.push('orientacao');
+  if (s.escMin > 0) a.push('escolaridade');
+  if (s.rendaMin > 0) a.push('renda');
+  if (s.cores.length) a.push('cor');
+  if (s.religioes.length) a.push('religiao');
+  if (s.semFilhos) a.push('filhos');
+  if (s.alturaMin > 140 || s.alturaMax < 200) a.push('altura');
+  if (s.naoFuma) a.push('fumo');
+  return a;
+}
+const sexosAlvo = s => s.procura === 'homens' ? ['M'] : s.procura === 'mulheres' ? ['F'] : ['M','F'];
+
+function contar(s, set) {
+  const { recs } = dados(s.uf), alvo = sexosAlvo(s);
+  let lo = 0, mid = 0, hi = 0, n = 0;
+  for (const r of recs) {
+    if (!alvo.includes(r.sexo)) continue;
+    let w = r.peso, a = 1, b = 1, c = 1;
+    for (const k of set) {
+      if (k === 'idade') w *= fracIdade(r.g, s.idadeMin, s.idadeMax);
+      else if (k === 'companheiro') { if (r.uniao) w = 0; }
+      else if (k === 'escolaridade') { if (r.esc < s.escMin) w = 0; }
+      else if (k === 'renda') { if (r.renda < s.rendaMin) w = 0; }
+      else if (k === 'cor') { if (!s.cores.includes(r.cor)) w = 0; }
+      else if (k === 'religiao') { if (!s.religioes.includes(r.rel)) w = 0; }
+      else if (k === 'filhos') { if (r.filhos === true) w = 0; } // homens: sem dado, passam
+      else if (k === 'orientacao') { const p = pOrient(s.genero, r.sexo, r.g); a *= p[0]; b *= p[1]; c *= p[2]; }
+      else if (k === 'altura') { const p = pAltura(r.sexo, r.g, s.alturaMin, s.alturaMax); a *= p[0]; b *= p[1]; c *= p[2]; }
+      else if (k === 'fumo') { const p = pNaoFuma(r.sexo, r.g); a *= p[0]; b *= p[1]; c *= p[2]; }
+      if (w === 0) break;
+    }
+    if (w === 0) continue;
+    n += r.n; lo += w*a; mid += w*b; hi += w*c;
+  }
+  if (set.has('cidade')) { const f = REGIOES[s.uf].cidades[s.cidade][1]; lo *= f; mid *= f; hi *= f; } // ajuste proporcional
+  const e = 1.96 / Math.sqrt(Math.max(n, 1)); // erro de amostra, aproximado
+  return { lo: lo * Math.max(0, 1-e), mid, hi: hi * (1+e), n, instavel: n < 50 };
+}
+
+function ingenuo(s, at) { // "multiplicar porcentagens nacionais": cada Requisito sozinho, sobre todos os adultos
+  const { recs } = dados('BR'), R = REGIOES[s.uf], alvo = sexosAlvo(s);
+  let v = R.adultos * (alvo.length === 2 ? 1 : alvo[0] === 'M' ? .48 : .52);
+  for (const k of at) {
+    if (k === 'cidade') { v *= R.cidades[s.cidade][1]; continue; }
+    let soma = 0, tot = 0;
+    for (const r of recs) {
+      if (k === 'filhos' && r.filhos === null) continue;
+      const w = r.peso; tot += w;
+      if (k === 'idade') soma += w * fracIdade(r.g, s.idadeMin, s.idadeMax);
+      else if (k === 'companheiro') soma += r.uniao ? 0 : w;
+      else if (k === 'escolaridade') soma += r.esc >= s.escMin ? w : 0;
+      else if (k === 'renda') soma += r.renda >= s.rendaMin ? w : 0;
+      else if (k === 'cor') soma += s.cores.includes(r.cor) ? w : 0;
+      else if (k === 'religiao') soma += s.religioes.includes(r.rel) ? w : 0;
+      else if (k === 'filhos') soma += r.filhos ? 0 : w;
+      else if (k === 'orientacao') soma += w * pOrient(s.genero, r.sexo, r.g)[1];
+      else if (k === 'altura') soma += w * pAltura(r.sexo, r.g, s.alturaMin, s.alturaMax)[1];
+      else if (k === 'fumo') soma += w * pNaoFuma(r.sexo, r.g)[1];
+    }
+    v *= soma / tot;
+  }
+  return v;
+}
+
+function avisos(s, at, res) {
+  const a = [];
+  if (res.atual.instavel) a.push({ forte:true, t:`Estimativa instável: só ${res.atual.n} registros da amostra atendem a tudo.` });
+  if (s.genero === 'outro') a.push({ forte:true, t:'O IBGE só registra sexo ao nascer e não pergunta identidade de gênero; não dá para estimar quem se interessa por você. O número conta todas as pessoas do gênero procurado.' });
+  if (!s.genero) a.push({ forte:true, t:'Sem o seu gênero no Perfil, não dá para descontar quem não se interessa por você. O número conta todas as pessoas do gênero procurado.' });
+  if (at.includes('filhos') && s.procura !== 'mulheres') a.push({ forte:true, t:'O Censo só pergunta filhos às mulheres. Para homens, "sem filhos" não foi aplicado.' });
+  if (at.includes('companheiro')) a.push({ t:'"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.' });
+  if (at.includes('orientacao')) a.push({ t:'Orientação vem da PNS 2019 (estatística experimental); 3,4% não souberam ou não quiseram responder.' });
+  if (at.includes('idade')) a.push({ t:'O microdado público traz a idade em grupos de 5 anos; o resto vem do SIDRA.' });
+  if (at.includes('cidade')) a.push({ t:'Cidade: a composição do estado aplicada à população da cidade.' });
+  if (at.includes('altura')) a.push({ t:'Altura autodeclarada na PNS 2019.' });
+  if (at.some(k => FONTE[k] === 'PNS')) a.push({ t:'Requisitos da PNS são combinados supondo que, dentro de sexo e idade, independem dos do Censo.' });
+  a.push({ t:'Censo de julho de 2022. Fonte: IBGE.' });
+  return a;
+}
+
+function estimar(s) {
+  const at = ativos(s), atual = contar(s, new Set(at)), base = contar(s, new Set());
+  const etapas = []; const acc = new Set();
+  for (const k of at) { acc.add(k); etapas.push({ k, ...contar(s, new Set(acc)) }); }
+  const custos = at.map(k => { const sem = contar(s, new Set(at.filter(x => x !== k))); return { k, sem, ganho: sem.mid - atual.mid, mult: sem.mid / Math.max(atual.mid, 1e-9) }; });
+  const res = { at, base, atual, etapas, custos, ingenuo: ingenuo(s, at) };
+  res.avisos = avisos(s, at, res);
+  return res;
+}
+
+// =====================================================================
+// PÁGINA (descartável)
+// =====================================================================
+const ESC = ['qualquer','fundamental completo','médio completo','superior completo'];
+const RENDA = ['qualquer','tem alguma renda','mais de 1 salário mínimo','mais de 2 salários mínimos','mais de 5 salários mínimos'];
+const CORES = ['branca','preta','parda','amarela ou indígena'];
+const RELS = ['católica','evangélica','sem religião','outra'];
+const VARIANTES = [['A','Funil'],['B','Número e o que mais pesa'],['C','1.000 pontos']];
+
+function fmt(x) {
+  if (x < 1) return 'menos de 1';
+  if (x < 100) return String(Math.round(x));
+  const sig = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+  const v = sig(x);
+  if (v < 1000) return String(v);
+  if (v < 1e6) return (v/1e3).toLocaleString('pt-BR') + ' mil';
+  const m = v/1e6; return m.toLocaleString('pt-BR', { maximumFractionDigits:1 }) + (m < 2 ? ' milhão' : ' milhões');
+}
+const faixa = r => `entre ${fmt(r.lo)} e ${fmt(r.hi)}`;
+const pct = x => (x*100).toLocaleString('pt-BR', { maximumFractionDigits: x < .1 ? 1 : 0 }) + '%';
+const adultos = s => s.procura === 'homens' ? 'adultos' : 'adultas';
+const nomeAlvo = s => s.procura === 'homens' ? 'homens' : s.procura === 'mulheres' ? 'mulheres' : 'pessoas';
+const regiaoNome = s => s.cidade ? REGIOES[s.uf].cidades[s.cidade][0] : REGIOES[s.uf].nome;
+function rotulo(k, s) {
+  return {
+    idade: `entre ${s.idadeMin} e ${s.idadeMax >= 80 ? '80+' : s.idadeMax} anos`,
+    cidade: s.cidade ? `em ${REGIOES[s.uf].cidades[s.cidade][0]}` : 'cidade',
+    companheiro: 'não mora com companheiro(a)',
+    orientacao: `se interessa por ${s.genero === 'homem' ? 'homens' : 'mulheres'}`,
+    escolaridade: `pelo menos ${ESC[s.escMin]}`,
+    renda: RENDA[s.rendaMin],
+    cor: s.cores.length ? 'cor ou raça: ' + s.cores.map(i => CORES[i]).join(', ') : 'cor ou raça',
+    religiao: s.religioes.length ? 'religião: ' + s.religioes.map(i => RELS[i]).join(', ') : 'religião',
+    filhos: 'sem filhos',
+    altura: `entre ${s.alturaMin} e ${s.alturaMax} cm`,
+    fumo: 'não fuma',
+  }[k];
+}
+const TITULO = { idade:'Idade', cidade:'Cidade', companheiro:'Disponível', orientacao:'Orientação', escolaridade:'Escolaridade', renda:'Renda', cor:'Cor ou raça', religiao:'Religião', filhos:'Filhos', altura:'Altura', fumo:'Cigarro' };
+
+// estado <-> URL (o MVP não tem login: o estado vive no link)
+const PADRAO = { v:'A', genero:'homem', procura:'mulheres', idade:30, uf:'SP', cidade:'', idadeMin:25, idadeMax:35, companheiro:true, escMin:0, rendaMin:0, cores:[], religioes:[], semFilhos:false, alturaMin:140, alturaMax:200, naoFuma:false };
+let S = lerUrl();
+function lerUrl() {
+  const p = new URLSearchParams(location.hash.slice(1)), s = structuredClone(PADRAO);
+  for (const [k, v] of p) {
+    if (!(k in s)) continue;
+    const d = PADRAO[k];
+    s[k] = Array.isArray(d) ? (v ? v.split(',').map(Number) : []) : typeof d === 'number' ? Number(v) : typeof d === 'boolean' ? v === '1' : v;
+  }
+  return s;
+}
+function gravarUrl() {
+  const p = new URLSearchParams();
+  for (const k in S) { const v = S[k]; if (JSON.stringify(v) === JSON.stringify(PADRAO[k]) && k !== 'v') continue; p.set(k, Array.isArray(v) ? v.join(',') : typeof v === 'boolean' ? (v ? '1' : '0') : v); }
+  history.replaceState(null, '', '#' + p.toString());
+}
+function set(patch, refazer) { Object.assign(S, patch); gravarUrl(); refazer ? render() : atualizar(); }
+
+// ---- controles (widget compartilhado entre variantes) ----
+const h = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const k in attrs) { if (k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]); else if (k === 'class') e.className = attrs[k]; else e.setAttribute(k, attrs[k]); } for (const c of kids.flat()) if (c != null) e.append(c); return e; };
+function controle(k) {
+  if (k === 'idade') return h('div', { class:'rng' }, 'de', rangeIn(18, 80, S.idadeMin, v => set({ idadeMin: Math.min(v, S.idadeMax) })), 'até', rangeIn(18, 80, S.idadeMax, v => set({ idadeMax: Math.max(v, S.idadeMin) })));
+  if (k === 'cidade') {
+    const sel = h('select', { onchange: e => { const [uf, c] = e.target.value.split(':'); set({ uf, cidade: c || '' }); } });
+    for (const uf in REGIOES) { sel.append(h('option', { value: uf }, REGIOES[uf].nome)); for (const c in REGIOES[uf].cidades) sel.append(h('option', { value: uf + ':' + c }, '  ' + REGIOES[uf].cidades[c][0])); }
+    sel.value = S.uf + (S.cidade ? ':' + S.cidade : ''); return sel;
+  }
+  if (k === 'companheiro') return check('só quem não mora com companheiro(a)', 'companheiro');
+  if (k === 'orientacao') return h('span', { class:'small muted' }, S.genero === 'homem' || S.genero === 'mulher' ? 'vem do seu Perfil' : 'não dá para estimar sem o seu gênero');
+  if (k === 'escolaridade') return stepIn(ESC, 'escMin');
+  if (k === 'renda') return stepIn(RENDA, 'rendaMin');
+  if (k === 'cor') return chips(CORES, 'cores');
+  if (k === 'religiao') return chips(RELS, 'religioes');
+  if (k === 'filhos') return check('sem filhos', 'semFilhos');
+  if (k === 'altura') return h('div', { class:'rng' }, 'de', rangeIn(140, 200, S.alturaMin, v => set({ alturaMin: Math.min(v, S.alturaMax) })), 'até', rangeIn(140, 200, S.alturaMax, v => set({ alturaMax: Math.max(v, S.alturaMin) })));
+  if (k === 'fumo') return check('não fuma', 'naoFuma');
+}
+function rangeIn(min, max, val, on) {
+  const out = h('span', { style:'min-width:28px;display:inline-block' }, String(val));
+  const i = h('input', { type:'range', min, max, value: val, oninput: e => { out.textContent = e.target.value; on(+e.target.value); } });
+  return h('span', { class:'rng' }, i, out);
+}
+function stepIn(labels, key) {
+  const out = h('span', { class:'small' }, labels[S[key]]);
+  const i = h('input', { type:'range', min:0, max: labels.length-1, value: S[key], style:'width:110px', oninput: e => { out.textContent = labels[+e.target.value]; set({ [key]: +e.target.value }); } });
+  return h('span', { class:'rng' }, i, out);
+}
+function chips(labels, key) {
+  const box = h('div', { class:'chips' });
+  labels.forEach((l, i) => { const c = h('button', { class: 'chip' + (S[key].includes(i) ? ' on' : ''), onclick: () => { const cur = S[key].includes(i) ? S[key].filter(x => x !== i) : [...S[key], i]; c.classList.toggle('on'); set({ [key]: cur.length === labels.length ? [] : cur }); if (cur.length === labels.length) box.querySelectorAll('.chip').forEach(x => x.classList.remove('on')); } }, l); box.append(c); });
+  return h('div', {}, box, h('div', { class:'small muted', style:'margin-top:2px' }, 'nenhum marcado = qualquer'));
+}
+function check(label, key) { return h('label', { class:'ck' }, h('input', { type:'checkbox', ...(S[key] ? { checked:'' } : {}), onchange: e => set({ [key]: e.target.checked }) }), label); }
+const fonte = k => h('span', { class: 'src' + (FONTE[k] === 'PNS' ? ' pns' : '') }, FONTE[k]);
+function soltar(k) {
+  const p = { idade:{ idadeMin:18, idadeMax:80 }, cidade:{ cidade:'' }, companheiro:{ companheiro:false }, escolaridade:{ escMin:0 }, renda:{ rendaMin:0 }, cor:{ cores:[] }, religiao:{ religioes:[] }, filhos:{ semFilhos:false }, altura:{ alturaMin:140, alturaMax:200 }, fumo:{ naoFuma:false } }[k];
+  if (p) set(p, true);
+}
+function listaAvisos(res) { return h('ul', { class:'avisos' }, res.avisos.map(a => h('li', { class: a.forte ? 'warn' : '' }, a.t))); }
+
+// ---- perfil ----
+function renderPerfil() {
+  const el = document.getElementById('perfil'); el.innerHTML = '';
+  const sel = (key, opts, refazer = true) => { const s = h('select', { onchange: e => { const patch = { [key]: e.target.value }; set(patch, refazer); } }); opts.forEach(([v, l]) => s.append(h('option', { value: v }, l))); s.value = S[key]; return s; };
+  const idade = h('input', { type:'number', min:18, max:99, value:S.idade, onchange: e => { const v = Math.max(18, +e.target.value); set({ idade: v, idadeMin: Math.max(18, v-5), idadeMax: Math.min(80, v+5) }, true); } });
+  el.append(h('strong', {}, 'Perfil'), h('label', {}, 'Seu gênero '), sel('genero', [['','não informar'],['homem','homem'],['mulher','mulher'],['outro','outro']]),
+    h('label', {}, 'Procura '), sel('procura', [['homens','homens'],['mulheres','mulheres'],['ambos','ambos']]),
+    h('label', {}, 'Idade '), idade, h('span', { class:'small muted' }, 'A idade do Perfil sugere a faixa de idade (±5 anos); dá para mudar abaixo.'));
+}
+
+// ---- variante A: funil ----
+const A = {
+  render(app) {
+    this.rows = {};
+    app.append(h('p', { class:'muted small', style:'margin-top:0' }, 'Cada Requisito corta o grupo na ordem da lista. A barra mostra quantos sobram e a coluna da direita quanto aquele passo cortou. Mude um controle e veja o funil inteiro reagir.'));
+    this.baseRow = h('div', { class:'funil-row' }, h('div', {}, h('div', { class:'nome' }, 'Ponto de partida'), h('div', { class:'small muted', id:'a-base-lbl' })), h('div', { class:'barwrap' }, h('div', { class:'bar', style:'--w:100%' }), h('span', { class:'barlabel', id:'a-base-n' })), h('div'));
+    app.append(this.baseRow);
+    for (const k of ORDEM) {
+      const bar = h('div', { class:'bar' }), lbl = h('span', { class:'barlabel' }), corte = h('div', { class:'corte' });
+      const row = h('div', { class:'funil-row' }, h('div', {}, h('div', { class:'nome' }, TITULO[k], fonte(k)), controle(k)), h('div', { class:'barwrap' }, bar, lbl), corte);
+      this.rows[k] = { row, bar, lbl, corte }; app.append(row);
+    }
+    this.final = h('div', { class:'final' }); app.append(this.final);
+  },
+  update(res, s) {
+    document.getElementById('a-base-lbl').textContent = `${nomeAlvo(s)} ${adultos(s)} em ${REGIOES[s.uf].nome}`;
+    document.getElementById('a-base-n').textContent = fmt(res.base.mid);
+    let prev = res.base.mid; const et = Object.fromEntries(res.etapas.map(e => [e.k, e]));
+    for (const k of ORDEM) {
+      const r = this.rows[k], e = et[k];
+      if (!e) { r.row.classList.add('off'); r.bar.style.setProperty('--w', (100 * prev / res.base.mid) + '%'); r.lbl.textContent = 'qualquer'; r.corte.textContent = '—'; continue; }
+      r.row.classList.remove('off');
+      r.bar.style.setProperty('--w', Math.max(.3, 100 * e.mid / res.base.mid) + '%');
+      r.lbl.textContent = fmt(e.mid) + (e.instavel ? ' (instável)' : '');
+      r.corte.textContent = prev > 0 ? '−' + pct(1 - e.mid / prev) : '—';
+      prev = e.mid;
+    }
+    const a = res.atual, max = a.hi * 1.15 || 1;
+    this.final.innerHTML = '';
+    this.final.append(h('div', { class:'muted small' }, `Grupo possível: ${nomeAlvo(s)} ${res.at.filter(k => k !== 'cidade').map(k => rotulo(k, s)).join(', ')}, em ${regiaoNome(s)}`),
+      h('div', { class:'big' }, faixa(a)), h('div', { class:'small muted' }, `estimativa central: ${fmt(a.mid)} · ${a.n} registros da amostra`),
+      h('div', { class:'whisker' }, h('div', { class:'band', style:`left:${100*a.lo/max}%;width:${100*(a.hi-a.lo)/max}%` }), h('div', { class:'mid', style:`left:${100*a.mid/max}%` })),
+      listaAvisos(res));
+  },
+};
+
+// ---- variante B: número grande + o que mais pesa ----
+const B = {
+  render(app) {
+    const form = h('div', { class:'b-form' });
+    for (const k of ORDEM) form.append(h('div', { class:'campo' }, h('div', { class:'rot' }, h('span', {}, TITULO[k]), fonte(k)), controle(k)));
+    this.out = h('div');
+    app.append(h('div', { class:'b-grid' }, form, this.out));
+  },
+  update(res, s) {
+    const a = res.atual; this.out.innerHTML = '';
+    const umEm = res.base.mid / Math.max(a.mid, 1e-9);
+    this.out.append(
+      h('div', { class:'muted' }, `${nomeAlvo(s)[0].toUpperCase() + nomeAlvo(s).slice(1)} em ${regiaoNome(s)} que atendem a tudo`),
+      h('div', { class:'hero' }, faixa(a)),
+      h('div', { class:'hero-sub' }, `1 em cada ${fmt(umEm)} ${nomeAlvo(s)} ${adultos(s)} do ${s.cidade ? 'estado' : 'lugar'} · central ${fmt(a.mid)}` + (a.instavel ? ' · ' : ''), a.instavel ? h('span', { class:'warn' }, 'instável') : null));
+    const pesa = h('div', { class:'pesa' }, h('div', { style:'font-weight:650;margin-bottom:4px' }, 'O que mais pesa'), h('div', { class:'small muted' }, 'Quanto o grupo cresceria se você soltasse só este Requisito, mantendo os outros.'));
+    [...res.custos].sort((x, y) => y.mult - x.mult).forEach(c => {
+      pesa.append(h('div', { class:'pesa-row' },
+        h('div', {}, rotulo(c.k, s), ' ', fonte(c.k)),
+        h('div', { class:'mult' }, c.mult < 1.005 ? 'quase nada' : `×${c.mult.toLocaleString('pt-BR', { maximumFractionDigits: c.mult < 1.1 ? 2 : c.mult < 10 ? 1 : 0 })}`, h('div', { class:'small muted', style:'font-weight:400' }, c.mult < 1.005 ? '' : '+' + fmt(c.ganho))),
+        c.k === 'orientacao' ? h('span', { class:'small muted' }, 'do Perfil') : h('button', { onclick: () => soltar(c.k) }, 'soltar')));
+    });
+    if (!res.custos.length) pesa.append(h('div', { class:'small muted' }, 'Nenhum Requisito ativo.'));
+    const err = res.ingenuo / Math.max(a.mid, 1e-9) - 1;
+    const det = h('details', {}, h('summary', {}, 'De onde vem a incerteza'), listaAvisos(res),
+      h('p', { class:'small' }, `E se só multiplicássemos as porcentagens nacionais de cada Requisito? Daria ${fmt(res.ingenuo)}, ${err >= 0 ? '+' : '−'}${pct(Math.abs(err))} em relação à conta cruzada. Por isso o site cruza os Requisitos na mesma base em vez de multiplicar.`));
+    this.out.append(pesa, det);
+  },
+};
+
+// ---- variante C: 1.000 pontos ----
+const CORES_REQ = { idade:'#f79009', cidade:'#7a5af8', companheiro:'#ee46bc', orientacao:'#2e90fa', escolaridade:'#66c61c', renda:'#dc6803', cor:'#15b79e', religiao:'#875bf7', filhos:'#f04438', altura:'#0ba5ec', fumo:'#98a2b3' };
+const C = {
+  render(app) {
+    this.frase = h('div', { class:'c-frase' }); this.sub = h('div', { class:'muted small', style:'margin-top:4px' });
+    this.grid = h('div', { class:'c-grid' }); this.dots = [];
+    for (let i = 0; i < 1000; i++) { const d = h('div', { class:'dot' }); this.dots.push(d); this.grid.append(d); }
+    const leg = h('div'); this.leg = {};
+    for (const k of ORDEM) { const n = h('div', { class:'n' }); leg.append(h('div', { class:'leg-row' }, h('div', { class:'sw', style:`background:${CORES_REQ[k]}` }), h('div', {}, h('div', { class:'nome' }, TITULO[k], fonte(k)), controle(k)), n)); this.leg[k] = n; }
+    this.av = h('div');
+    app.append(this.frase, this.sub, h('div', { class:'c-wrap' }, h('div', {}, this.grid, h('div', { class:'small muted' }, 'Cada ponto colorido saiu do grupo no Requisito daquela cor (na ordem da lista). Pontos listrados: talvez, dentro da faixa de incerteza.'), this.av), leg));
+  },
+  update(res, s) {
+    const base = res.base.mid, a = res.atual;
+    const passLo = Math.round(1000 * a.lo / base), passHi = Math.round(1000 * a.hi / base);
+    const porMil = 1000 * a.mid / base;
+    this.frase.textContent = porMil >= 1
+      ? `De cada 1.000 ${nomeAlvo(s)} ${adultos(s)} em ${REGIOES[s.uf].nome}, cerca de ${Math.round(porMil)} atendem a tudo.`
+      : `Menos de 1 em cada 1.000 ${nomeAlvo(s)} ${adultos(s)} em ${REGIOES[s.uf].nome} atende a tudo: cerca de ${fmt(porMil * 1000)} em cada milhão.`;
+    this.sub.textContent = `No total: ${faixa(a)} ${nomeAlvo(s)}${s.cidade ? ' em ' + regiaoNome(s) : ''}.`;
+    const cores = []; for (let i = 0; i < passLo; i++) cores.push('pass'); for (let i = passLo; i < passHi; i++) cores.push('talvez');
+    let prev = base; const cortes = {};
+    for (const e of res.etapas) { const n = Math.round(1000 * (prev - e.mid) / base); cortes[e.k] = n; for (let i = 0; i < n; i++) cores.push(e.k); prev = e.mid; }
+    this.dots.forEach((d, i) => { const c = cores[i]; d.className = 'dot' + (c === 'pass' || c === 'talvez' ? ' ' + c : ''); d.style.background = c && c !== 'pass' && c !== 'talvez' ? CORES_REQ[c] : ''; });
+    for (const k of ORDEM) this.leg[k].textContent = k in cortes ? `−${cortes[k]}` : '—';
+    this.av.innerHTML = ''; this.av.append(listaAvisos(res));
+  },
+};
+
+// ---- montagem ----
+const VAR = { A, B, C };
+let atual;
+function render() {
+  renderPerfil();
+  const app = document.getElementById('app'); app.innerHTML = '';
+  atual = VAR[S.v] || A; atual.render(app);
+  app.append(h('div', { class:'estado', id:'estado' }));
+  const i = VARIANTES.findIndex(v => v[0] === S.v);
+  document.getElementById('vlabel').textContent = `${VARIANTES[i][0]} (${VARIANTES[i][1]})`;
+  atualizar();
+}
+function atualizar() {
+  const t = performance.now(), res = estimar(S);
+  atual.update(res, S);
+  document.getElementById('estado').textContent = `Link compartilhável (repare no que ele revela: gênero, quem procura, idade, Requisitos): ${location.href} · conta em ${Math.round(performance.now() - t)} ms`;
+}
+function trocar(d) { const i = VARIANTES.findIndex(v => v[0] === S.v); set({ v: VARIANTES[(i + d + VARIANTES.length) % VARIANTES.length][0] }, true); }
+document.getElementById('prev').onclick = () => trocar(-1);
+document.getElementById('next').onclick = () => trocar(1);
+addEventListener('keydown', e => { if (e.target.closest('input,textarea,select,[contenteditable]')) return; if (e.key === 'ArrowLeft') trocar(-1); if (e.key === 'ArrowRight') trocar(1); });
+render();
+</script>
+</body>
+</html>
