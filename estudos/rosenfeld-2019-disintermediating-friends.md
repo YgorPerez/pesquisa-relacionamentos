@@ -38,7 +38,7 @@ Como casais heterossexuais americanos se conheceram, por ano em que se conhecera
 - Só EUA.
 - Poucos casais por ano individual; 2017 é um ponto de uma amostra modesta.
 - "Online" inclui sites, redes sociais, jogos etc., não só apps.
-- Os números virais de 53%–66% para 2020–2022 **não** vêm deste artigo; vêm de follow-ups pequenos e de um gráfico do Reddit.
+- Os números virais de 53%–66% para 2020–2022 **não** vêm deste artigo. O autor publicou no [site dele](https://web.stanford.edu/~mrosenfe/) uma versão atualizada do gráfico ("through 2021"), com só **117 casais em 2020 e 74 em 2022**; a curva chega a cerca de 53% em 2021. Esse ponto **não aparece em artigo revisado por pares**: os dois artigos com as ondas de 2020 e 2022 (Rosenfeld & Hausen 2023, *Sociological Science*; Rosenfeld 2025, *Journal of Family Issues*) não trazem a fatia de casais que se conheceram online. Não encontrei fonte primária para 66%. Ver [pesquisa 2026-10-18](../pesquisas/2026-10-18-onde-casais-se-conhecem.md).
 
 ## Como usamos
 
