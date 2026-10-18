@@ -17,7 +17,7 @@
 - **Dica:** uma recomendação prática ligada às Fichas que a sustentam e à Força da evidência delas. A mesma Dica pode aparecer em mais de um Guia.
 - **Inferência:** uma Dica deduzida de Fichas sem estudo que a teste diretamente. Aparece marcada como "inferência nossa", com Força no máximo moderada.
 - **Mito:** uma afirmação popular sem fonte primária, ou que a fonte citada não traz, como "10 anos de diferença de idade = 39% mais divórcio". Um Guia pode desmontá-la no bloco "O que circula por aí e não se sustenta".
-- **Perfil:** quem o usuário é e quem procura (gênero, orientação, idade). O Perfil decide quais Guias, Dicas e dados se aplicam.
+- **Perfil:** quem o usuário é e quem procura: o gênero dele, o gênero de quem ele procura e a idade. A orientação decorre das duas primeiras e não é perguntada. O Perfil é opcional: destaca o que vale para o usuário e marca com aviso o que vem de outras amostras, sem esconder nada.
 - **Requisito:** uma característica que o usuário exige de um parceiro, como faixa de idade, escolaridade ou cidade.
 - **Grupo possível:** a estimativa de quantas pessoas no Brasil atendem ao Perfil procurado e a todos os Requisitos.
 - **Prioridade:** quanto o usuário valoriza uma característica de um parceiro. É comparada com o que a evidência diz que prevê um bom relacionamento.
