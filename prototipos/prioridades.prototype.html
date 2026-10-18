@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTÓTIPO · Prioridades vs. evidência</title>
+<!--
+  PROTÓTIPO DESCARTÁVEL (ticket #9, "Protótipo de Prioridades vs. evidência").
+  Três variantes de como comparar as Prioridades do usuário com a evidência, trocadas pela barra
+  de baixo (ou ← →), com a variante e o estado no #hash da URL.
+  Os números vêm da pesquisa do ticket #3 (pesquisas/2026-10-18-caracteristicas-parceiro.md),
+  mas as Fichas ainda contam como ⬜ até serem refeitas (#6): servem para julgar a forma, não para publicar.
+  O bloco "módulo puro" (sem DOM) tem o formato que dados/prioridades.yaml teria (#10).
+-->
+<style>
+  :root { --acc:#0f766e; --acc2:#99d5cf; --tx:#1f2328; --mu:#667085; --bd:#e4e7ec; --bg:#fafaf9; --warn:#b54708;
+          --n3:#0f766e; --n2:#5fb3a9; --n1:#c9e7e3; --n0:#eaecf0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--tx); background:var(--bg); }
+  header { padding:20px 28px 12px; border-bottom:1px solid var(--bd); background:#fff; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  h2 { font-size:17px; margin:22px 0 8px; }
+  .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; background:#fef0c7; color:#93370d; padding:2px 8px; border-radius:99px; vertical-align:middle; margin-left:6px; }
+  .perfil { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:10px; font-size:14px; }
+  .perfil label { color:var(--mu); }
+  select { font:inherit; padding:3px 6px; border:1px solid var(--bd); border-radius:6px; background:#fff; }
+  main { padding:20px 28px 110px; max-width:1180px; }
+  .muted { color:var(--mu); }
+  .small { font-size:13px; }
+  .warn { color:var(--warn); }
+  button { font:inherit; font-size:13px; border:1px solid var(--bd); background:#fff; border-radius:6px; padding:3px 10px; cursor:pointer; }
+  button:hover { border-color:var(--acc); }
+  button.on { background:var(--acc); color:#fff; border-color:var(--acc); }
+  details { margin-top:18px; background:#fff; border:1px solid var(--bd); border-radius:10px; padding:10px 14px; }
+  summary { cursor:pointer; font-weight:600; }
+  .estado { margin-top:28px; font-size:12px; color:var(--mu); border-top:1px dashed var(--bd); padding-top:10px; word-break:break-all; }
+
+  /* rótulos comuns */
+  .nivel { display:inline-block; font-size:12px; font-weight:700; padding:1px 8px; border-radius:99px; white-space:nowrap; }
+  .nivel.n3 { background:var(--n3); color:#fff; }
+  .nivel.n2 { background:var(--n2); color:#fff; }
+  .nivel.n1 { background:var(--n1); color:#134e48; }
+  .nivel.n0 { background:var(--n0); color:var(--mu); }
+  .selo { font-size:11px; color:var(--mu); border:1px solid var(--bd); border-radius:4px; padding:0 5px; white-space:nowrap; }
+  .medida { font-size:12px; color:var(--mu); font-variant-numeric:tabular-nums; }
+  .ficha { font-size:12px; color:var(--acc); text-decoration:none; border-bottom:1px dotted var(--acc); }
+  .amostra { font-size:11px; color:#6941c6; }
+  .nota { font-size:13px; border-left:3px solid var(--warn); padding:4px 10px; margin:6px 0; background:#fffaeb; }
+  .nota.vies { border-color:#6941c6; background:#f4f3ff; }
+  .prio { display:flex; gap:3px; flex-wrap:wrap; }
+  .prio button { font-size:12px; padding:2px 8px; }
+
+  /* faixa da Joel 2020 */
+  .joel { background:#fff; border:1px solid var(--bd); border-radius:10px; padding:14px 16px; }
+  .joel .barra { display:flex; height:34px; border-radius:6px; overflow:hidden; margin:10px 0 6px; font-size:12px; font-weight:600; }
+  .joel .barra div { display:flex; align-items:center; padding:0 8px; white-space:nowrap; }
+  .joel .rel { background:var(--acc); color:#fff; }
+  .joel .par { background:#f79009; color:#fff; justify-content:center; padding:0 !important; }
+  .joel .nao { background:repeating-linear-gradient(45deg,#f2f4f7 0 6px,#e4e7ec 6px 12px); color:var(--mu); }
+  .joel .leg { display:flex; gap:18px; flex-wrap:wrap; font-size:13px; }
+  .joel .leg i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+
+  /* A: tabela */
+  .tab-a { width:100%; border-collapse:separate; border-spacing:0; margin-top:16px; background:#fff; border:1px solid var(--bd); border-radius:10px; overflow:hidden; }
+  .tab-a th { text-align:left; font-size:12px; color:var(--mu); font-weight:600; padding:10px 12px; border-bottom:1px solid var(--bd); background:#f9fafb; }
+  .tab-a td { vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--bd); font-size:13px; }
+  .tab-a tr:last-child td { border-bottom:0; }
+  .tab-a td.car { font-weight:600; font-size:14px; width:210px; }
+  .tab-a td.cel { width:23%; }
+  .tab-a td.cel.choque { box-shadow: inset 0 0 0 2px #fdb022; background:#fffcf5; }
+  .tab-a .txt { margin:5px 0 3px; }
+
+  /* B: uma por vez */
+  .b-wrap { max-width:680px; margin:0 auto; }
+  .b-prog { display:flex; gap:4px; margin-bottom:14px; }
+  .b-prog span { flex:1; height:5px; border-radius:3px; background:var(--bd); cursor:pointer; }
+  .b-prog span.feito { background:var(--acc2); }
+  .b-prog span.atual { background:var(--acc); }
+  .carta { background:#fff; border:1px solid var(--bd); border-radius:14px; padding:22px 24px; }
+  .carta h3 { font-size:22px; margin:0 0 4px; }
+  .carta .q { font-size:15px; margin:14px 0 8px; }
+  .carta .prio button { font-size:14px; padding:6px 14px; }
+  .revela { margin-top:18px; border-top:1px solid var(--bd); padding-top:14px; }
+  .revela .linha { display:grid; grid-template-columns: 120px 1fr; gap:12px; padding:8px 0; border-bottom:1px solid #f2f4f7; }
+  .revela .linha:last-child { border:0; }
+  .veredito { font-size:16px; font-weight:600; margin:4px 0 6px; }
+  .b-nav { display:flex; justify-content:space-between; margin-top:14px; }
+  .b-nav button { font-size:14px; padding:6px 16px; }
+  .resumo-b li { margin:6px 0; }
+
+  /* C: ordem vs. evidência */
+  .c-tabs { display:flex; gap:6px; margin:10px 0 14px; }
+  .c-tabs button { font-size:14px; padding:5px 14px; }
+  .c-wrap { position:relative; display:grid; grid-template-columns: 300px 180px 1fr; align-items:start; }
+  .c-col h4 { margin:0 0 8px; font-size:13px; color:var(--mu); font-weight:600; }
+  .c-item { display:flex; align-items:center; gap:6px; height:40px; padding:0 8px; margin-bottom:6px; background:#fff; border:1px solid var(--bd); border-radius:8px; font-size:14px; }
+  .c-item .pos { width:20px; color:var(--mu); font-size:12px; font-variant-numeric:tabular-nums; }
+  .c-item .nm { flex:1; }
+  .c-item button { padding:0 6px; font-size:12px; }
+  .c-tier { border-radius:10px; padding:8px 10px; margin-bottom:10px; }
+  .c-tier.n3 { background:#e6f4f2; } .c-tier.n2 { background:#eef8f6; } .c-tier.n1 { background:#f6fbfa; } .c-tier.n0 { background:#f2f4f7; }
+  .c-tier .cab { font-weight:700; font-size:13px; margin-bottom:6px; }
+  .c-chip { height:40px; margin-bottom:6px; display:flex; flex-direction:column; justify-content:center; padding:0 10px; background:#fff; border:1px solid var(--bd); border-radius:8px; font-size:13px; cursor:pointer; }
+  .c-chip.sel { border-color:var(--acc); box-shadow:0 0 0 2px var(--acc2); }
+  .c-chip .medida { font-size:11px; }
+  .c-chip .l1 { display:flex; justify-content:space-between; gap:6px; }
+  svg.c-lin { position:absolute; left:300px; top:0; width:180px; pointer-events:none; overflow:visible; }
+  .c-topo { background:var(--acc); color:#fff; border-radius:10px; padding:10px 14px; margin-bottom:12px; }
+  .c-det { margin-top:16px; background:#fff; border:1px solid var(--bd); border-radius:10px; padding:12px 14px; font-size:14px; }
+
+  /* C no celular: uma lista só, na sua ordem; o degrau da evidência vem na própria linha */
+  .m-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:#eef0f3; border-radius:10px; padding:3px; }
+  .m-seg.dois { grid-template-columns:1fr 1fr; margin-top:10px; }
+  .m-seg button { border:0; background:transparent; min-height:40px; font-size:15px; font-weight:600; color:var(--mu); border-radius:8px; padding:0 4px; }
+  .m-seg button.on { background:#fff; color:var(--tx); box-shadow:0 1px 3px rgba(16,24,40,.12); }
+  .m-sub { font-size:14px; color:var(--mu); margin:8px 2px 12px; }
+  .m-topo { background:var(--acc); color:#fff; border-radius:12px; padding:12px 14px; font-size:15px; margin-bottom:14px; }
+  .m-topo .barra { display:flex; height:10px; border-radius:99px; overflow:hidden; margin-top:10px; background:rgba(255,255,255,.25); }
+  .m-topo .barra i { display:block; }
+  .m-escala { display:flex; gap:6px; flex-wrap:wrap; margin:0 2px 12px; font-size:13px; color:var(--mu); align-items:center; }
+  .m-lista { list-style:none; margin:0; padding:0; }
+  .m-item { background:#fff; border:1px solid var(--bd); border-radius:12px; margin-bottom:8px; }
+  .m-item.alerta { border-color:#f79009; box-shadow:0 0 0 1px #f79009; }
+  .m-lin { display:flex; align-items:center; gap:4px; min-height:56px; padding-left:12px; }
+  .m-abrir { flex:1; display:flex; align-items:center; gap:10px; text-align:left; border:0; background:none; padding:8px 0; min-height:56px; font-size:16px; color:var(--tx); border-radius:0; }
+  .m-abrir:hover { border:0; }
+  .m-pos { width:22px; flex:none; font-size:15px; font-weight:700; color:var(--mu); font-variant-numeric:tabular-nums; }
+  .m-nm { flex:1; line-height:1.25; }
+  .m-nm small { display:block; font-size:13px; color:var(--mu); margin-top:2px; }
+  .m-item .nivel { font-size:13px; padding:3px 9px; }
+  .m-mov { display:flex; flex:none; }
+  .m-mov button { width:44px; height:56px; border:0; background:none; border-radius:0; display:grid; place-items:center; color:var(--mu); padding:0; }
+  .m-mov button:disabled { opacity:.25; }
+  .m-mov svg { width:20px; height:20px; }
+  .m-aviso { font-size:14px; color:#93370d; background:#fffaeb; padding:8px 12px; border-top:1px solid #fedf89; border-radius:0 0 12px 12px; }
+  .m-det { padding:4px 14px 14px 44px; font-size:15px; border-top:1px solid var(--bd); }
+  .m-det p { margin:10px 0 6px; }
+  .m-det .ficha, .m-det .selo, .m-det .amostra { font-size:13px; }
+  .m-degrau { font-size:13px; font-weight:700; color:var(--mu); margin:16px 2px 6px; }
+
+  @media (max-width: 759px) {
+    header { padding:14px 16px 10px; }
+    h1 { font-size:18px; }
+    .tag { display:block; width:max-content; margin:6px 0 0; }
+    main { padding:14px 12px 96px; }
+    .perfil { gap:8px; font-size:15px; }
+    .perfil select { min-height:40px; font-size:16px; }
+    .nota { font-size:14px; }
+    .estado { display:none; }
+    header > .muted.small { display:none; }
+    .perfil .muted { flex-basis:100%; font-size:13px; }
+    #switcher { bottom:max(12px, env(safe-area-inset-bottom)); width:calc(100% - 24px); justify-content:space-between; }
+    #switcher button { min-width:44px; min-height:40px; }
+    #switcher span { min-width:0; font-size:14px; }
+  }
+
+  /* barra de troca */
+  #switcher { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#101828; color:#fff; border-radius:99px; padding:6px 8px; display:flex; gap:6px; align-items:center; box-shadow:0 6px 24px rgba(0,0,0,.25); z-index:10; font-size:14px; }
+  #switcher button { background:transparent; color:#fff; border:0; font-size:18px; padding:2px 12px; }
+  #switcher span { min-width:260px; text-align:center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Prioridades vs. evidência <span class="tag">PROTÓTIPO · FICHAS AINDA ⬜</span></h1>
+  <div class="muted small">Você marca quanto valoriza cada característica; o site mostra o que a evidência diz sobre ela, separando atração, satisfação e duração, sem nota de compatibilidade. Três formas: troque na barra de baixo ou com ← →.</div>
+  <div class="perfil" id="perfil"></div>
+</header>
+<main id="app"></main>
+<div id="switcher"><button id="prev" aria-label="anterior">‹</button><span id="vlabel"></span><button id="next" aria-label="próxima">›</button></div>
+
+<script>
+// =====================================================================
+// MÓDULO PURO: o que seria dados/prioridades.yaml + regras de comparação. Sem DOM.
+// =====================================================================
+const FICHAS = {
+  'joel-2020':       { nome:'Joel et al. 2020', status:'✅', forca:'forte', amostra:'43 bases, EUA/Europa/Canadá/Israel' },
+  'eastwick-2014':   { nome:'Eastwick et al. 2014', status:'🟡', forca:'forte', amostra:'meta-análise, maioria EUA' },
+  'eastwick-2024':   { nome:'Eastwick et al. 2024', status:'✅', forca:'forte', amostra:'43 países' },
+  'meltzer-2014':    { nome:'Meltzer et al. 2014', status:'✅', forca:'moderada', amostra:'recém-casados, EUA' },
+  'francis-tan-2015':{ nome:'Francis-Tan & Mialon 2015', status:'✅', forca:'fraca', amostra:'online (mTurk), EUA' },
+  'killewald-2023':  { nome:'Killewald et al. 2023', status:'🟡', forca:'moderada', amostra:'EUA' },
+  'dyrenforth-2010': { nome:'Dyrenforth et al. 2010', status:'🟡', forca:'forte', amostra:'Austrália, Reino Unido, Alemanha' },
+  'malouff-2010':    { nome:'Malouff et al. 2010', status:'🟡', forca:'forte', amostra:'meta-análise, 19 amostras' },
+  'le-2010':         { nome:'Le et al. 2010', status:'🟡', forca:'forte', amostra:'meta-análise, maioria EUA' },
+  'montoya-2008':    { nome:'Montoya et al. 2008', status:'🟡', forca:'forte', amostra:'meta-análise' },
+  'schwartz-2014':   { nome:'Schwartz & Han 2014', status:'✅', forca:'forte', amostra:'EUA, coortes 1950–2004' },
+  'lehrer-1993':     { nome:'Lehrer & Chiswick 1993', status:'🟡', forca:'moderada', amostra:'EUA, 1987–88' },
+};
+
+// Nível: o que a evidência permite dizer, em 4 degraus. Nada de número único nem ranking fino.
+const NIVEIS = {
+  3: 'pesa',
+  2: 'pesa pouco',
+  1: 'quase nada',
+  0: 'não sabemos',
+};
+const DESFECHOS = { atracao:'Atração', satisfacao:'Satisfação', duracao:'Duração' };
+const DESF_LONGO = { atracao:'o quanto atrai no começo', satisfacao:'o quanto o casal fica satisfeito', duracao:'o quanto a relação dura' };
+
+const PRIO = ['tanto faz', 'um pouco', 'importa', 'indispensável'];
+
+// uma linha por característica × desfecho, como no prioridades.yaml do #10 (valor, medida, texto_simples, ficha)
+const CARS = [
+  { id:'aparencia', nome:'Aparência', ev:{
+      atracao:   { n:3, medida:'r ≈ 0,40', texto:'Quem é mais bonito atrai mais, para homens e mulheres igualmente.', ficha:'eastwick-2014' },
+      satisfacao:{ n:2, medida:'r = 0,10, só maridos, só no início', texto:'No casamento, só os maridos ficam um pouco mais satisfeitos, e só no começo. Para as esposas, nada.', ficha:'meltzer-2014' },
+      duracao:   { n:0, medida:'HR 1,29 (estudo fraco)', texto:'Só um estudo fraco: quem disse ter casado "pela aparência" se divorciou mais.', ficha:'francis-tan-2015' },
+    }, vies:{ todos:'As pessoas dão menos peso à aparência quando dizem o que querem do que quando de fato se atraem.' } },
+  { id:'sexo', nome:'Química sexual', ev:{
+      atracao:   { n:3, medida:'1º de 35 no revelado, 12º no declarado', texto:'"Bom de cama" é o que mais pesa no que as pessoas revelam, e só o 12º no que dizem.', ficha:'eastwick-2024' },
+      satisfacao:{ n:3, medida:'entre os 5 melhores preditores', texto:'A satisfação sexual está entre o que mais prevê satisfação, mas ela se constrói a dois, não vem pronta no parceiro.', ficha:'joel-2020' },
+      duracao:   { n:0, texto:'Nenhum estudo lido mede isso.' },
+    }, vies:{ todos:'É o item que as pessoas mais subestimam ao dizer o que querem.' } },
+  { id:'renda', nome:'Renda', ev:{
+      atracao:   { n:2, medida:'r ≈ 0,10', texto:'Pesa pouco na atração, igual para homens e mulheres.', ficha:'eastwick-2014' },
+      satisfacao:{ n:0, texto:'Nenhum estudo lido mede a renda do parceiro e a satisfação.' },
+      duracao:   { n:0, medida:'patrimônio do casal', texto:'O que se associa a menos divórcio é o patrimônio do casal, não a renda de um. Não diz nada sobre escolher.', ficha:'killewald-2023' },
+    }, vies:{ mulher:'Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.',
+              homem:'Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.' } },
+  { id:'calma', nome:'Calma, estabilidade emocional', ev:{
+      atracao:   { n:2, medida:'mais baixo no revelado que no declarado', texto:'No primeiro contato, pesa menos do que as pessoas dizem.', ficha:'eastwick-2024' },
+      satisfacao:{ n:2, medida:'personalidade toda do parceiro: 1% a 3%', texto:'É o traço do parceiro com o resultado mais consistente. Mesmo assim, a personalidade inteira do parceiro explica de 1% a 3% da satisfação.', ficha:'dyrenforth-2010' },
+      duracao:   { n:1, texto:'Para o fim de namoros, a personalidade quase não prevê.', ficha:'le-2010' },
+    } },
+  { id:'gentileza', nome:'Gentileza', ev:{
+      atracao:   { n:0, texto:'Os estudos lidos não separam isso.' },
+      satisfacao:{ n:2, medida:'personalidade toda do parceiro: 1% a 3%', texto:'Parceiros mais gentis se associam a mais satisfação, num efeito pequeno.', ficha:'malouff-2010' },
+      duracao:   { n:1, texto:'Para o fim de namoros, a personalidade quase não prevê.', ficha:'le-2010' },
+    } },
+  { id:'responsavel', nome:'Ser responsável', ev:{
+      atracao:   { n:0, texto:'Os estudos lidos não separam isso.' },
+      satisfacao:{ n:2, medida:'personalidade toda do parceiro: 1% a 3%', texto:'Parceiros mais responsáveis se associam a mais satisfação, num efeito pequeno.', ficha:'malouff-2010' },
+      duracao:   { n:1, texto:'Para o fim de namoros, a personalidade quase não prevê.', ficha:'le-2010' },
+    } },
+  { id:'parecido', nome:'Ser parecido comigo', ev:{
+      atracao:   { n:1, medida:'real: nulo; percebida: prevê', texto:'Ser parecido de fato não prevê atração em quem já está junto. Sentir-se parecido, sim.', ficha:'montoya-2008' },
+      satisfacao:{ n:1, medida:'< 0,5%', texto:'Ter personalidades parecidas explica menos de 0,5% da satisfação.', ficha:'dyrenforth-2010' },
+      duracao:   { n:0, texto:'Nenhum estudo lido mede isso.' },
+    } },
+  { id:'escolaridade', nome:'Mesma escolaridade', ev:{
+      atracao:   { n:0, texto:'Nenhum estudo lido mede isso.' },
+      satisfacao:{ n:0, texto:'Nenhum estudo lido mede isso.' },
+      duracao:   { n:2, medida:'HR 0,78', texto:'Nos EUA recentes, casais com a mesma escolaridade se divorciam um pouco menos.', ficha:'schwartz-2014' },
+    } },
+  { id:'religiao', nome:'Mesma religião', ev:{
+      atracao:   { n:0, texto:'Nenhum estudo lido mede isso.' },
+      satisfacao:{ n:0, texto:'Nenhum estudo lido mede isso.' },
+      duracao:   { n:2, texto:'Uniões entre religiões diferentes se desfazem mais, sobretudo quando as religiões são distantes.', ficha:'lehrer-1993' },
+    } },
+  { id:'idade', nome:'Idade parecida', ev:{
+      atracao:   { n:0, texto:'Nenhum estudo lido mede isso.' },
+      satisfacao:{ n:0, texto:'Nenhum estudo lido mede isso.' },
+      duracao:   { n:0, medida:'HR 1,022 por ano (estudo fraco)', texto:'Só um estudo fraco e ambíguo. "10 anos de diferença = 39% mais divórcio" não está no artigo que costuma ser citado.', ficha:'francis-tan-2015' },
+    } },
+];
+
+// Comparação: só frases, nunca nota. Retorna null quando não há nada a dizer.
+function comparar(prio, cel) {
+  if (prio == null) return null;
+  if (prio >= 2 && cel.n <= 1) return { tipo:'choque', txt: cel.n === 0
+      ? `Você dá ${PRIO[prio]}; para isto, não há boa evidência.`
+      : `Você dá ${PRIO[prio]}; a evidência diz que pesa quase nada.` };
+  if (prio <= 1 && cel.n === 3) return { tipo:'choque', txt:`Você dá "${PRIO[prio]}"; a evidência diz que pesa mais do que se costuma achar.` };
+  return { tipo:'ok', txt:'Sua prioridade e a evidência não se contradizem.' };
+}
+function vies(car, genero) { return car.vies && (car.vies[genero] || car.vies.todos) || null; }
+
+// =====================================================================
+// ESTADO + URL
+// =====================================================================
+const VARIANTES = [ ['A','Tabela lado a lado'], ['B','Uma por vez, com revelação'], ['C','Sua ordem vs. a evidência'] ];
+const st = { v:'A', g:'', prio:{}, ordem:CARS.map(c=>c.id), passo:0, desf:'satisfacao', sel:null, cvista:'sua' };
+function lerHash() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get('v')) st.v = h.get('v');
+  if (h.has('g')) st.g = h.get('g');
+  if (h.get('p')) h.get('p').split(',').forEach(kv => { const [k,v] = kv.split(':'); if (k) st.prio[k] = +v; });
+  if (h.get('o')) { const o = h.get('o').split(',').filter(id => CARS.some(c=>c.id===id)); if (o.length === CARS.length) st.ordem = o; }
+  if (h.get('d')) st.desf = h.get('d');
+  if (h.get('cv')) st.cvista = h.get('cv');
+  if (h.get('sel')) st.sel = h.get('sel');
+}
+function gravarHash() {
+  const h = new URLSearchParams();
+  h.set('v', st.v); if (st.g) h.set('g', st.g);
+  const p = Object.entries(st.prio).map(([k,v]) => `${k}:${v}`).join(','); if (p) h.set('p', p);
+  if (st.v === 'C') { h.set('o', st.ordem.join(',')); h.set('d', st.desf); h.set('cv', st.cvista); if (st.sel) h.set('sel', st.sel); }
+  history.replaceState(null, '', '#' + h.toString());
+}
+
+// =====================================================================
+// PEÇAS
+// =====================================================================
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function nivel(n) { return `<span class="nivel n${n}">${NIVEIS[n]}</span>`; }
+function fonte(cel) {
+  if (!cel.ficha) return '';
+  const f = FICHAS[cel.ficha];
+  return `<a class="ficha" href="#" title="${esc(f.amostra)}">${esc(f.nome)}</a> <span class="selo">${f.status} · ${f.forca}</span> <span class="amostra">${esc(f.amostra)}</span>`;
+}
+function prioBotoes(id, extra='') {
+  return `<div class="prio ${extra}">` + PRIO.map((t,i) => `<button data-prio="${id}:${i}" class="${st.prio[id]===i?'on':''}">${t}</button>`).join('') + '</div>';
+}
+function joel(compacto) {
+  return `<div class="joel">
+    <div><b>Antes da lista:</b> em 11.196 casais de 43 estudos, o que mais explicou a satisfação foi como a pessoa vive a relação (compromisso, apreciação, vida sexual, conflito), não quem o parceiro é.</div>
+    <div class="barra" title="Joel et al. 2020">
+      <div class="rel" style="width:45%">como vocês se tratam · 45%</div>
+      <div class="par" style="width:5%" title="traços do parceiro">5%</div>
+      <div class="nao" style="width:50%">o resto nenhum estudo explica</div>
+    </div>
+    <div class="leg"><span><i style="background:var(--acc)"></i>percepção da própria relação</span><span><i style="background:#f79009"></i>tudo o que se sabe do parceiro: personalidade, valores, aparência</span></div>
+    ${compacto ? '' : `<div class="small muted" style="margin-top:6px">Somados à relação, os traços do parceiro acrescentaram de 0% a 3,5%. A lista abaixo inteira cabe na fatia laranja.</div>`}
+    <div class="small" style="margin-top:6px">${fonte({ficha:'joel-2020'})} · <span class="medida">% da variância da satisfação</span></div>
+  </div>`;
+}
+function avisoAmostra() {
+  return `<div class="nota">Nenhum destes estudos é brasileiro: vêm de EUA, Europa e Austrália (um cobre 43 países). ${st.g ? 'Nenhum separa resultados por orientação.' : ''}</div>`;
+}
+
+// =====================================================================
+// VARIANTE A: tabela, tudo à vista
+// =====================================================================
+function varA() {
+  let h = joel(false) + avisoAmostra();
+  h += `<table class="tab-a"><tr><th>Característica</th><th>Quanto importa para você</th>` +
+       Object.entries(DESFECHOS).map(([k,t]) => `<th>${t}<div style="font-weight:400">${DESF_LONGO[k]}</div></th>`).join('') + '</tr>';
+  for (const c of CARS) {
+    h += `<tr><td class="car">${esc(c.nome)}</td><td>${prioBotoes(c.id)}`;
+    const vi = st.prio[c.id] != null && vies(c, st.g);
+    if (vi) h += `<div class="nota vies small">${esc(vi)}</div>`;
+    h += '</td>';
+    for (const d of Object.keys(DESFECHOS)) {
+      const cel = c.ev[d], cmp = comparar(st.prio[c.id], cel);
+      h += `<td class="cel ${cmp && cmp.tipo==='choque' ? 'choque' : ''}">${nivel(cel.n)} ${cel.medida ? `<span class="medida">${esc(cel.medida)}</span>` : ''}
+            <div class="txt">${esc(cel.texto)}</div><div>${fonte(cel)}</div>
+            ${cmp && cmp.tipo==='choque' ? `<div class="warn small" style="margin-top:4px">${esc(cmp.txt)}</div>` : ''}</td>`;
+    }
+    h += '</tr>';
+  }
+  h += '</table>';
+  h += `<details><summary>Como ler os níveis</summary><ul class="small">
+    <li>${nivel(3)} efeito médio, de estudo forte (ex.: r ≈ 0,40).</li>
+    <li>${nivel(2)} efeito pequeno ou de um estudo só.</li>
+    <li>${nivel(1)} medido, e o efeito é perto de zero.</li>
+    <li>${nivel(0)} nenhum estudo bom mediu, ou só um estudo fraco. Não quer dizer que não importa.</li>
+    <li>Quase tudo é observacional: "se associa", nunca "causa".</li></ul></details>`;
+  return h;
+}
+
+// =====================================================================
+// VARIANTE B: uma característica por vez; a evidência só aparece depois de responder
+// =====================================================================
+function varB() {
+  const total = CARS.length;
+  let h = '<div class="b-wrap">';
+  h += '<div class="b-prog">' + CARS.map((c,i) => `<span data-passo="${i}" class="${i===st.passo?'atual':(st.prio[c.id]!=null?'feito':'')}" title="${esc(c.nome)}"></span>`).join('') +
+       `<span data-passo="${total}" class="${st.passo===total?'atual':''}" title="resumo"></span></div>`;
+  if (st.passo < total) {
+    const c = CARS[st.passo], p = st.prio[c.id];
+    h += `<div class="carta"><div class="muted small">${st.passo+1} de ${total}</div><h3>${esc(c.nome)}</h3>
+      <div class="q">Quanto isso importa para você num parceiro?</div>${prioBotoes(c.id)}`;
+    if (p != null) {
+      const choques = Object.keys(DESFECHOS).map(d => comparar(p, c.ev[d])).filter(x => x.tipo==='choque');
+      const vi = vies(c, st.g);
+      h += `<div class="revela"><div class="veredito">${choques.length ? 'A evidência conta outra história em parte:' : 'O que a evidência diz:'}</div>`;
+      for (const [d,t] of Object.entries(DESFECHOS)) {
+        const cel = c.ev[d];
+        h += `<div class="linha"><div><b>${t}</b><br>${nivel(cel.n)}</div><div>${esc(cel.texto)} ${cel.medida ? `<span class="medida">(${esc(cel.medida)})</span>` : ''}<div>${fonte(cel)}</div></div></div>`;
+      }
+      if (vi) h += `<div class="nota vies">${esc(vi)}</div>`;
+      h += '</div>';
+    }
+    h += `</div><div class="b-nav"><button data-passo="${Math.max(0,st.passo-1)}" ${st.passo===0?'disabled':''}>‹ anterior</button>
+      <button data-passo="${st.passo+1}" class="${p!=null?'on':''}">${p!=null?'próxima ›':'pular ›'}</button></div>`;
+  } else {
+    const resp = CARS.filter(c => st.prio[c.id] != null);
+    const choque = resp.filter(c => Object.keys(DESFECHOS).some(d => comparar(st.prio[c.id], c.ev[d]).tipo==='choque'));
+    h += `<div class="carta"><h3>O que fica</h3>
+      <p>Você respondeu ${resp.length} de ${total}. Em ${choque.length} delas a evidência diverge do peso que você deu.</p>
+      <ul class="resumo-b">${choque.map(c => `<li><b>${esc(c.nome)}</b> (você: ${PRIO[st.prio[c.id]]}): ${Object.keys(DESFECHOS).map(d => { const x = comparar(st.prio[c.id], c.ev[d]); return x.tipo==='choque' ? `${DESFECHOS[d].toLowerCase()} ${nivel(c.ev[d].n)}` : ''; }).filter(Boolean).join(', ')}</li>`).join('')}</ul>
+      <p style="margin-top:18px"><b>E o mais importante não estava na lista.</b></p>${joel(true)}${avisoAmostra()}</div>
+      <div class="b-nav"><button data-passo="${total-1}">‹ voltar</button><button data-passo="0">recomeçar</button></div>`;
+  }
+  return h + '</div>';
+}
+
+// =====================================================================
+// VARIANTE C: você ordena; a evidência agrupa em degraus; linhas ligam um ao outro
+// =====================================================================
+function varC() {
+  if (celular.matches) return varCCelular();
+  let h = `<div class="c-tabs">` + Object.entries(DESFECHOS).map(([k,t]) => `<button data-desf="${k}" class="${st.desf===k?'on':''}">${t}: ${DESF_LONGO[k]}</button>`).join('') + '</div>';
+  h += `<div class="c-wrap"><div class="c-col"><h4>Sua ordem (do que mais importa ao que menos)</h4>`;
+  st.ordem.forEach((id,i) => {
+    const c = CARS.find(x => x.id===id);
+    h += `<div class="c-item" id="ci-${id}"><span class="pos">${i+1}</span><span class="nm">${esc(c.nome)}</span>
+      <button data-mover="${id}:-1" ${i===0?'disabled':''}>▲</button><button data-mover="${id}:1" ${i===st.ordem.length-1?'disabled':''}>▼</button></div>`;
+  });
+  h += `</div><div></div><div class="c-col"><h4>O que a evidência diz sobre ${DESF_LONGO[st.desf]}</h4>`;
+  if (st.desf === 'satisfacao') h += `<div class="c-topo"><b>Acima de tudo da lista:</b> como vocês se tratam (compromisso, apreciação, vida sexual, conflito) explica ~45%; todos os traços do parceiro juntos, ~5%.</div>`;
+  for (const n of [3,2,1,0]) {
+    const ids = st.ordem.filter(id => CARS.find(c=>c.id===id).ev[st.desf].n === n);
+    if (!ids.length) continue;
+    h += `<div class="c-tier n${n}"><div class="cab">${nivel(n)}</div>`;
+    for (const id of ids) {
+      const c = CARS.find(x=>x.id===id), cel = c.ev[st.desf];
+      h += `<div class="c-chip ${st.sel===id?'sel':''}" id="ct-${id}" data-sel="${id}"><div class="l1"><span>${esc(c.nome)}</span>${cel.ficha ? `<span class="selo">${FICHAS[cel.ficha].status} · ${FICHAS[cel.ficha].forca}</span>` : ''}</div>${cel.medida ? `<span class="medida">${esc(cel.medida)}</span>` : ''}</div>`;
+    }
+    h += '</div>';
+  }
+  h += `</div><svg class="c-lin" id="clin"></svg></div>`;
+  const sel = st.sel && CARS.find(c => c.id===st.sel);
+  if (sel) {
+    const cel = sel.ev[st.desf], i = st.ordem.indexOf(sel.id), vi = vies(sel, st.g);
+    h += `<div class="c-det"><b>${esc(sel.nome)}</b>: você pôs em ${i+1}º. ${nivel(cel.n)} ${esc(cel.texto)} <div>${fonte(cel)}</div>${vi ? `<div class="nota vies">${esc(vi)}</div>` : ''}</div>`;
+  } else h += `<div class="c-det muted">Clique numa característica da direita para ver o que a evidência diz. As linhas laranja ligam o que está no seu topo 3 a um degrau "quase nada" ou "não sabemos".</div>`;
+  h += avisoAmostra();
+  return h;
+}
+const celular = matchMedia('(max-width: 759px)');
+const SETA = d => `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d < 0 ? 'M5 12.5 10 7.5l5 5' : 'M5 7.5l5 5 5-5'}"/></svg>`;
+
+function varCCelular() {
+  const alerta = (id, i) => i < 3 && CARS.find(c=>c.id===id).ev[st.desf].n <= 1;
+  let h = `<div class="m-seg" role="tablist">` + Object.entries(DESFECHOS).map(([k,t]) =>
+    `<button role="tab" aria-selected="${st.desf===k}" data-desf="${k}" class="${st.desf===k?'on':''}">${t}</button>`).join('') + '</div>';
+  h += `<div class="m-sub">O que a evidência diz sobre ${DESF_LONGO[st.desf]}.</div>`;
+  if (st.desf === 'satisfacao') h += `<div class="m-topo"><b>Antes da lista:</b> como vocês se tratam (compromisso, apreciação, vida sexual, conflito) explica cerca de 45% da satisfação. Tudo o que se sabe do parceiro, cerca de 5%.
+    <div class="barra" aria-hidden="true"><i style="width:45%;background:#fff"></i><i style="width:5%;background:#f79009"></i></div></div>`;
+  h += `<div class="m-seg dois"><button data-cvista="sua" class="${st.cvista==='sua'?'on':''}">Sua ordem</button><button data-cvista="evid" class="${st.cvista==='evid'?'on':''}">Ordem da evidência</button></div>`;
+  h += `<div class="m-sub">${st.cvista==='sua' ? 'Use as setas para pôr no topo o que mais importa para você. Toque num item para ver a evidência.' : 'A mesma lista, agrupada pelo quanto a evidência diz que cada item pesa. O número é a posição que você deu.'}</div>`;
+
+  const linha = (id, i) => {
+    const c = CARS.find(x=>x.id===id), cel = c.ev[st.desf], aberto = st.sel === id, al = alerta(id, i);
+    let r = `<li class="m-item ${al?'alerta':''}" id="mi-${id}"><div class="m-lin">
+      <button class="m-abrir" data-sel="${id}" aria-expanded="${aberto}"><span class="m-pos">${i+1}</span>
+        <span class="m-nm">${esc(c.nome)}${cel.medida ? `<small>${esc(cel.medida)}</small>` : ''}</span>${nivel(cel.n)}</button>`;
+    if (st.cvista === 'sua') r += `<span class="m-mov"><button data-mover="${id}:-1" aria-label="Subir ${esc(c.nome)}" ${i===0?'disabled':''}>${SETA(-1)}</button><button data-mover="${id}:1" aria-label="Descer ${esc(c.nome)}" ${i===st.ordem.length-1?'disabled':''}>${SETA(1)}</button></span>`;
+    r += '</div>';
+    if (aberto) {
+      const vi = vies(c, st.g);
+      r += `<div class="m-det"><p>${esc(cel.texto)}</p><div>${fonte(cel)}</div>${vi ? `<div class="nota vies">${esc(vi)}</div>` : ''}</div>`;
+    }
+    if (al) r += `<div class="m-aviso">${cel.n === 0 ? 'Está no seu topo 3, mas não há boa evidência sobre isso.' : 'Está no seu topo 3, mas a evidência diz que pesa quase nada.'}</div>`;
+    return r + '</li>';
+  };
+
+  if (st.cvista === 'sua') {
+    h += '<ol class="m-lista">' + st.ordem.map(linha).join('') + '</ol>';
+  } else {
+    for (const n of [3,2,1,0]) {
+      const ids = st.ordem.filter(id => CARS.find(c=>c.id===id).ev[st.desf].n === n);
+      if (!ids.length) continue;
+      h += `<div class="m-degrau">${NIVEIS[n]}</div><ol class="m-lista">` + ids.map(id => linha(id, st.ordem.indexOf(id))).join('') + '</ol>';
+    }
+  }
+  h += avisoAmostra();
+  return h;
+}
+
+function linhasC() {
+  const svg = $('#clin'); if (!svg) return;
+  const wrap = svg.parentElement.getBoundingClientRect();
+  svg.setAttribute('height', wrap.height);
+  let s = '';
+  st.ordem.forEach((id,i) => {
+    const a = $('#ci-'+id).getBoundingClientRect(), b = $('#ct-'+id).getBoundingClientRect();
+    const y1 = a.top + a.height/2 - wrap.top, y2 = b.top + b.height/2 - wrap.top;
+    const n = CARS.find(c=>c.id===id).ev[st.desf].n;
+    const alerta = i < 3 && n <= 1;
+    s += `<path d="M0 ${y1} C 90 ${y1}, 90 ${y2}, 180 ${y2}" fill="none" stroke="${alerta ? '#f79009' : '#c7ccd4'}" stroke-width="${alerta ? 2.5 : 1.2}"/>`;
+  });
+  svg.innerHTML = s;
+}
+
+// =====================================================================
+// MONTAGEM
+// =====================================================================
+function render() {
+  $('#perfil').innerHTML = `<label>Perfil (opcional): seu gênero</label>
+    <select id="g"><option value="">não informado</option><option value="homem">homem</option><option value="mulher">mulher</option><option value="outro">outro</option></select>
+    <span class="muted small">Só muda os avisos sobre o que as pessoas dizem vs. o que escolhem.</span>`;
+  $('#g').value = st.g;
+  const vi = VARIANTES.findIndex(v => v[0]===st.v);
+  $('#vlabel').textContent = `${st.v} (${VARIANTES[vi][1]})`;
+  $('#app').innerHTML = ({A:varA, B:varB, C:varC})[st.v]() + `<div class="estado">Estado no link: ${esc(location.href.split('#')[0])}#<span id="hash"></span></div>`;
+  gravarHash();
+  $('#hash').textContent = location.hash.slice(1);
+  if (st.v === 'C') linhasC();
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-prio],[data-passo],[data-desf],[data-mover],[data-sel],[data-cvista],a.ficha');
+  if (!t) return;
+  if (t.matches('a.ficha')) { e.preventDefault(); return; }
+  if (t.dataset.prio) { const [id,v] = t.dataset.prio.split(':'); st.prio[id] = st.prio[id] === +v ? undefined : +v; if (st.prio[id]===undefined) delete st.prio[id]; }
+  if (t.dataset.passo != null) st.passo = +t.dataset.passo;
+  if (t.dataset.desf) st.desf = t.dataset.desf;
+  if (t.dataset.cvista) st.cvista = t.dataset.cvista;
+  if (t.dataset.sel) st.sel = st.sel === t.dataset.sel ? null : t.dataset.sel;
+  if (t.dataset.mover) { const [id,d] = t.dataset.mover.split(':'); const i = st.ordem.indexOf(id), j = i + +d; [st.ordem[i], st.ordem[j]] = [st.ordem[j], st.ordem[i]]; }
+  render();
+});
+document.addEventListener('change', e => { if (e.target.id === 'g') { st.g = e.target.value; render(); } });
+function trocar(d) { const i = VARIANTES.findIndex(v => v[0]===st.v); st.v = VARIANTES[(i + d + VARIANTES.length) % VARIANTES.length][0]; render(); }
+$('#prev').onclick = () => trocar(-1); $('#next').onclick = () => trocar(1);
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input,textarea,select,[contenteditable]')) return;
+  if (e.key === 'ArrowLeft') trocar(-1); if (e.key === 'ArrowRight') trocar(1);
+});
+window.addEventListener('resize', () => st.v === 'C' && linhasC());
+celular.addEventListener('change', render);
+lerHash(); render();
+</script>
+</body>
+</html>
