@@ -15,6 +15,24 @@
 - Separação ou divórcio.
 - Satisfação conjugal (escala de 1 a 7, média de duas medidas, incluindo o Couples Satisfaction Index), só entre quem continuava casado.
 
+## Como a satisfação foi medida
+
+Fonte: seção *Methods*, p. 10139–10140.
+
+- Questionário online (Harris Interactive, junho de 2012). As perguntas de satisfação foram feitas **só a quem ainda estava casado**.
+- Respondia **um indivíduo**, não o casal; o cônjuge não foi ouvido.
+- Duas escalas, ambas de 1 a 7, aplicadas nesta ordem:
+  1. **Couples Satisfaction Index de 4 itens (CSI-4)** (Funk & Rogge 2007). Exemplos: "Indique o grau de felicidade, considerando tudo, do seu casamento", de 1 ("extremamente infeliz") a 7 ("perfeito"); "Em geral, quão satisfeito você está com seu casamento?". α = 0,89.
+  2. **11 frases sobre o cônjuge**, de 1 ("discordo totalmente") a 7 ("concordo totalmente"): "temos química", "somos felizes", "entendemos os sentimentos um do outro", "demonstramos afeto", "rimos muito", "conseguimos discordar sem perder a calma", "a gente se entende", "estamos apaixonados", "temos ótima comunicação", "somos compatíveis", "confiamos um no outro". α = 0,97.
+- Correlação entre as duas escalas: 0,78. Uma análise fatorial indicou um único fator, então a nota final é a **média das duas**.
+
+## Quanto tempo de casamento
+
+- Entraram só pessoas que casaram entre 2005 e 2012; a pesquisa é de junho de 2012. Os casamentos tinham **de poucos meses a cerca de 7 anos** ("the first 6 or 7 y of marriage", p. 10139).
+- O texto principal **não informa o tempo médio de casamento** nem quanto tempo o casal namorou antes.
+- Idade média dos respondentes: ~38 anos (Tabela 1).
+- Para comparação: no Brasil, o divórcio ocorre em média 13,8 anos após o casamento ([IBGE 2024](ibge-2024-registro-civil.md)). Muitas separações ainda não tinham acontecido na data da pesquisa.
+
 ## Achados principais
 
 | Medida | Valor | Onde no texto |
@@ -53,6 +71,24 @@
 - Observacional: os próprios autores apontam que personalidade e motivação para casar podem explicar as diferenças.
 - Era dos sites (2005–2012), antes da popularização dos apps de swipe.
 - Nas palavras dos autores, os efeitos são "quite small and do not hold for everyone".
+- Respostas de um só cônjuge, num único momento; casamentos de 6 meses e de 7 anos entram juntos (o ano do casamento foi controlado nas análises, o que reduz, mas não elimina, esse problema).
+
+### Possíveis vieses na medida de satisfação
+
+Análise nossa; o artigo não discute esses vieses. O formato do questionário foi conferido no PDF; as referências de literatura estão ⬜ não verificadas (ver [perguntas abertas](../perguntas-abertas.md)).
+
+| Viés | Por que se aplica aqui |
+|---|---|
+| **Ordem e consistência** | A pergunta geral ("quão feliz você é no casamento?") vem antes das 11 frases específicas. Quem responde "muito feliz" tende a concordar com o resto para manter a coerência. Efeitos de ordem de perguntas: Schwarz, Strack & Mai (1991), *Public Opinion Quarterly*. |
+| **Aquiescência** | As 11 frases são todas positivas; "concordo" sempre significa "casamento bom". Não há itens invertidos para detectar quem concorda com tudo. |
+| ***Sentiment override*** | A impressão geral sobre o parceiro colore as respostas sobre cada detalhe (Weiss 1980). Parte da correlação de 0,78 e do α de 0,97 pode ser a mesma impressão medida duas vezes. |
+| **Desejabilidade social** | Tendência a pintar o casamento melhor do que é (*marital conventionalization*, Edmonds 1967). |
+
+- O artigo só menciona aleatorização da ordem das opções nas perguntas sobre **onde** o casal se conheceu, não nas de satisfação.
+- **Efeito provável:** infla o **nível** das notas (5,5 de 7 deve exagerar a qualidade real). Afeta menos a **comparação** entre locais, a menos que um grupo infle mais que outro.
+- **Hipótese não testada:** quem pagou um site (ex.: eHarmony, nota mais alta, 5,86) pode ter mais motivação para justificar a escolha.
+- **Consequência:** o dado mais confiável do estudo é o de separação (fato, não opinião), e ele **não** variou por local.
+
 - A comunicação de imprensa citava "mundos virtuais" entre os piores; no artigo, mundo virtual está na média e o pior online é "comunidade online".
 
 ## Como usamos
