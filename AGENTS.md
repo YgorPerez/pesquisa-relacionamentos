@@ -41,6 +41,14 @@ GitHub Issues em `YgorPerez/pesquisa-relacionamentos`, via `gh` com a conta Ygor
 
 Os cinco labels canônicos (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). Ver `docs/agents/triage-labels.md`.
 
+### Design e texto
+
+`impeccable` para qualquer interface (instale com `npx impeccable install --project --providers=claude,codex -y`, porque não é versionada) e `unslop` para toda prosa. Ver `docs/agents/design.md`.
+
+### Preview remoto
+
+Para o usuário abrir um protótipo no celular, `scripts/preview-remoto.sh` publica `prototipos/` num link https temporário. Ver `docs/agents/preview-remoto.md`.
+
 ### Domain docs
 
 Single-context: `GLOSSARY.md` e `docs/adr/` na raiz. Ver `docs/agents/domain.md`.

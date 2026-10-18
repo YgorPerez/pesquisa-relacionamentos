@@ -1,1 +1,14 @@
 .claude/worktrees/
+
+# O que `npx impeccable install --project --providers=claude,codex -y` gera: a
+# skill com um binário de 23 MB de uma plataforma só, os agentes e o gancho do
+# Codex. Quem precisar roda o comando de novo (docs/agents/design.md). O gancho
+# do Claude vai para .claude/settings.local.json, que já é ignorado.
+.claude/skills/impeccable/
+.claude/agents/impeccable-*
+.agents/skills/impeccable/
+.codex/hooks.json
+.impeccable/review/
+.impeccable/critique/
+.impeccable/questions/
+.impeccable/rounds/
