@@ -50,12 +50,28 @@ Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md).
 - [Tyson et al. 2016](estudos/tyson-2016-tinder.md): 0,6% de match para perfis masculinos de teste · ✅ · fraca
 - [Start.io (estimativa)](estudos/startio-tinder-brasil-genero.md): ~71% de homens no Tinder Brasil · 🟡 · fraca
 
+### Características do parceiro
+- [Joel et al. 2020](estudos/joel-2020-machine-learning-43-datasets.md): em 11.196 casais, percepções da relação explicam 45% da satisfação; traços do parceiro, 5% · ✅ · forte
+- [Malouff et al. 2010](estudos/malouff-2010-personalidade-parceiro.md): neuroticismo baixo, amabilidade, conscienciosidade e extroversão do parceiro se associam à satisfação · 🟡 · forte
+- [Dyrenforth et al. 2010](estudos/dyrenforth-2010-personalidade-similaridade.md): personalidade do parceiro explica 1–3%; similaridade, < 0,5% · 🟡 · forte
+- [Montoya et al. 2008](estudos/montoya-2008-similaridade-real-percebida.md): similaridade real não prevê atração em relações existentes; a percebida prevê · 🟡 · forte
+- [Eastwick & Finkel 2008](estudos/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem desejo real no speed dating · ✅ · moderada
+- [Eastwick et al. 2014](estudos/eastwick-2014-meta-analise-preferencias.md): atratividade r ≈ 0,40 e renda r ≈ 0,10, iguais nos dois sexos · 🟡 · forte
+- [Eastwick et al. 2024](estudos/eastwick-2024-preferencias-43-paises.md): 43 países; encaixe com a lista pessoal tem efeito pequeno (β por traço = 0,04) · ✅ · forte
+- [Meltzer et al. 2014](estudos/meltzer-2014-atratividade-casamento.md): atratividade da esposa, r = 0,10 na satisfação inicial do marido; nada para esposas · ✅ · moderada
+- [Francis-Tan & Mialon 2015](estudos/francis-tan-2015-gastos-casamento-divorcio.md): diferença de idade e de escolaridade, religião e gastos vs. divórcio · ✅ · fraca
+- [Schwartz & Han 2014](estudos/schwartz-2014-homogamia-educacional.md): mesma escolaridade ficou mais estável; esposa mais escolarizada deixou de ser risco · ✅ · forte
+- [Lehrer & Chiswick 1993](estudos/lehrer-1993-religiao-estabilidade.md): uniões inter-religiosas se dissolvem mais · 🟡 · moderada
+- [Le et al. 2010](estudos/le-2010-preditores-termino.md): compromisso e amor preveem término; personalidade pouco · 🟡 · forte
+- [Killewald et al. 2023](estudos/killewald-2023-riqueza-divorcio.md): patrimônio do casal reduz divórcio, sobretudo saindo do zero · 🟡 · moderada
+
 ### Brasil: dados oficiais
 - [IBGE Registro Civil 2024](estudos/ibge-2024-registro-civil.md): idade ao casar, divórcios, duração · ✅ · forte
 
 ## Relatórios
 
 - [2026-10-18: Casamentos, apps de namoro e onde procurar](relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md)
+- [2026-10-18: Características do parceiro, o que se diz vs. o que prevê](pesquisas/2026-10-18-caracteristicas-parceiro.md) (pesquisa do ticket #3, em `pesquisas/`)
 
 ## Dicas práticas
 
