@@ -4,7 +4,8 @@
 
 - **Estudo:** uma fonte primária (artigo revisado por pares, relatório de pesquisa ou dado oficial) que sustenta afirmações do site.
 - **Ficha:** o resumo de um Estudo no acervo: o que mediu, números principais, limitações, Status de verificação e Força da evidência. Cada Estudo tem exatamente uma Ficha.
-- **Status de verificação:** até que ponto a Ficha foi conferida na fonte original. Pode ser ✅ (lido no original), 🟡 (parcial) ou ⬜ (não verificado). Só Fichas ✅ e 🟡 sustentam um Guia.
+- **Status de verificação:** até que ponto a Ficha foi conferida na fonte original. Pode ser ✅ (lido no original), 🟡 (parcial) ou ⬜ (não verificado). Só Fichas ✅ e 🟡 sustentam um Guia, e só quando cada número delas foi conferido num trecho da fonte salva no acervo. Isso vale para quem escreveu a Ficha, pessoa ou agente.
+- **Fonte local:** a cópia de um Estudo guardada no acervo (PDF ou página salva) para que os números da Ficha possam ser conferidos mesmo se o original sair do ar.
 - **Força da evidência:** quanto se pode confiar no achado de um Estudo, independentemente de ele ter sido conferido. Pode ser forte, moderada ou fraca.
 - **Relatório:** uma síntese interna que cruza vários Estudos para responder a uma pergunta de pesquisa. Não é publicado como está.
 
