@@ -78,10 +78,11 @@ Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md).
 ## Relatórios
 
 - [2026-10-18: Casamentos, apps de namoro e onde procurar](relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md)
-- [2026-10-18: Características do parceiro, o que se diz vs. o que prevê](pesquisas/2026-10-18-caracteristicas-parceiro.md) (pesquisa do ticket #3, em `pesquisas/`)
 
 ## Pesquisas
 
+- [2026-10-18: Dados oficiais para estimar o Grupo possível](pesquisas/2026-10-18-dados-grupo-possivel.md) (ticket #2)
+- [2026-10-18: Características do parceiro, o que se diz vs. o que prevê](pesquisas/2026-10-18-caracteristicas-parceiro.md) (ticket #3)
 - [2026-10-18: Onde casais se conhecem, especialmente no Brasil](pesquisas/2026-10-18-onde-casais-se-conhecem.md) (ticket #4)
 
 ## Dicas práticas
