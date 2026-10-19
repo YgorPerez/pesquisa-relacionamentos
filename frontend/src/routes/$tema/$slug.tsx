@@ -3,6 +3,8 @@ import { buscarGuia } from '#/conteudo/guias'
 import { ConfiancaDaResposta, FichasCitadas, Html, LinhaDePergunta } from '#/ui/guia'
 import { usePontoNoHistorico, useReferencias, VoltarParaGuia } from '#/ui/navegacao'
 import { ForcaDaEvidencia } from '#/ui/selos'
+import { AvisoSemDado, CaixaDoPerfil, LinkDoPerfil, NotaValePara, ParaOSeuPerfil } from '#/ui/perfil'
+import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
 
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
@@ -28,11 +30,13 @@ function PaginaDoGuia() {
   const guia = Route.useLoaderData()
   const { circulada, voltarAoTexto } = useReferencias(guia.slug)
   usePontoNoHistorico()
+  const { perfil, noGuia } = usePerfilNoGuia(guia)
 
   return (
     <main className="folha">
       <div className="coluna">
         <VoltarParaGuia />
+        {perfil && noGuia?.comDado === 0 && <AvisoSemDado perfil={perfil} />}
         <h1 className="display" dangerouslySetInnerHTML={{ __html: guia.perguntaHtml }} />
 
         <section className="painel com-reticula resposta-curta" aria-labelledby="t-resposta">
@@ -41,6 +45,7 @@ function PaginaDoGuia() {
           </h2>
           <ConfiancaDaResposta confianca={guia.confianca} />
           <Html className="resposta prosa" html={guia.respostaHtml} />
+          {noGuia && <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />}
         </section>
 
         <div className="seta-fontes">
@@ -50,13 +55,15 @@ function PaginaDoGuia() {
           <a href="#fichas">quer conferir? as Fichas estão lá no fim</a>
         </div>
 
+        <LinkDoPerfil perfil={perfil} />
+
         {guia.dicas.length > 0 && (
           <section className="secao" aria-labelledby="t-dicas">
             <h2 id="t-dicas" className="headline">
               Dicas
             </h2>
             <ul className="dicas-do-guia">
-              {guia.dicas.map((dica) => (
+              {guia.dicas.map((dica, i) => (
                 <li key={dica.slug} className="painel com-reticula dica">
                   <Html como="p" html={dica.html} />
                   <div className="dica-meta">
@@ -70,9 +77,7 @@ function PaginaDoGuia() {
                       Inferência nossa: nenhum estudo testou isso direto. Saiu das Fichas citadas.
                     </p>
                   )}
-                  <p className="vale">
-                    <b>Vale para:</b> {dica.valePara}
-                  </p>
+                  <NotaValePara texto={dica.valePara} veredito={noGuia?.dicas[i] ?? null} />
                 </li>
               ))}
             </ul>
@@ -92,9 +97,7 @@ function PaginaDoGuia() {
                 </span>
                 <div>
                   <Html como="p" html={achado.html} />
-                  <p className="vale">
-                    <b>Vale para:</b> {achado.valePara}
-                  </p>
+                  <NotaValePara texto={achado.valePara} veredito={noGuia?.achados[i] ?? null} />
                 </div>
               </li>
             ))}
@@ -133,6 +136,11 @@ function PaginaDoGuia() {
             Varia conforme o Perfil?
           </h2>
           <Html className="prosa" html={guia.perfilHtml} />
+          <CaixaDoPerfil
+            perfil={perfil}
+            comDado={noGuia?.comDado ?? null}
+            totalDeAchados={guia.achados.length}
+          />
         </section>
 
         {guia.mitos.length > 0 && (

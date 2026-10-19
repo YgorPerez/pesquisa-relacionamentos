@@ -64,6 +64,15 @@ export function semMarcas(markdown: string): string {
     .trim()
 }
 
+/** As Fichas citadas na frase do número-chave (`==…==`) da resposta curta:
+ * é o `cobre` delas que diz se o número vale para o Perfil. `null` se não há
+ * número marcado ou se a frase dele não cita Ficha. */
+export function fichasDoNumeroChave(markdown: string): ReadonlyArray<string> | null {
+  const frase = markdown.split(/(?<=[.!?])\s+/).find((f) => /==[^=\n]+==/.test(f))
+  const slugs = [...(frase ?? '').matchAll(/\[@([a-z0-9-]+)\]/g)].map((m) => m[1] ?? '')
+  return slugs.length > 0 ? slugs : null
+}
+
 export const primeiraFrase = (markdown: string): string => {
   const texto = semMarcas(markdown)
   return /^.+?[.!?](?=\s|$)/.exec(texto)?.[0] ?? texto
@@ -118,6 +127,8 @@ export interface DicaNoGuia {
   readonly forca: Forca
   readonly inferencia: boolean
   readonly valePara: string
+  /** O `cobre` cru, para o navegador decidir o "vale para você" com o Perfil. */
+  readonly cobre: ReadonlyArray<Cobre>
 }
 
 export interface AchadoVista {
@@ -125,6 +136,7 @@ export interface AchadoVista {
   readonly pais: string
   readonly periodo: string
   readonly valePara: string
+  readonly cobre: ReadonlyArray<Cobre>
 }
 
 export interface FichaCitada extends FichaResumo {
@@ -145,6 +157,8 @@ export interface GuiaVista extends GuiaResumo {
   readonly tema: string
   readonly temaTitulo: string
   readonly respostaHtml: string
+  /** O `cobre` das Fichas da frase do número-chave; `null` sem número marcado. */
+  readonly chave: ReadonlyArray<Cobre> | null
   readonly dicas: ReadonlyArray<DicaNoGuia>
   readonly achados: ReadonlyArray<AchadoVista>
   readonly divergencia: {
@@ -180,6 +194,11 @@ function fichasCitadas(slugs: ReadonlyArray<string>, acervo: Acervo): FichaCitad
   })
 }
 
+function cobreDaChave(respostaCurta: string, acervo: Acervo): ReadonlyArray<Cobre> | null {
+  const slugs = fichasDoNumeroChave(respostaCurta)
+  return slugs && slugs.flatMap((slug) => fichaDoAcervo(acervo, slug)?.cobre ?? [])
+}
+
 export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
   const numeros = numerar(guia.fichasCitadas, acervo)
   const tema = acervo.temas.find((t) => t.slug === guia.tema)
@@ -187,6 +206,7 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
     ...resumoDoGuia(guia),
     temaTitulo: tema?.titulo ?? guia.tema,
     respostaHtml: html(comReferencias(guia.respostaCurta, numeros)),
+    chave: cobreDaChave(guia.respostaCurta, acervo),
     dicas: guia.dicas.flatMap((slug) => {
       const dica = acervo.dicas.find((d) => d.slug === slug)
       return dica
@@ -197,6 +217,7 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
               forca: dica.forca,
               inferencia: dica.inferencia,
               valePara: valePara(dica.cobre),
+              cobre: dica.cobre,
             },
           ]
         : []
@@ -205,6 +226,7 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
       html: textoComFichas(a.texto, a.fichas, numeros),
       ...ondeEQuando(a.paises, a.periodo),
       valePara: valePara(a.cobre),
+      cobre: a.cobre,
     })),
     divergencia: guia.divergencia
       ? {
