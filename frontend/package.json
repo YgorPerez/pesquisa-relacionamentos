@@ -26,7 +26,8 @@
     "@tem-estudo/regras": "workspace:*",
     "marked": "^18.1.1",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
