@@ -37,7 +37,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 - Guia em 7 seções mais Perguntas relacionadas (#7). Só cita Fichas ✅ ou 🟡; com só 🟡, a Confiança vai no máximo a moderada. Inferência aparece marcada como "inferência nossa".
 - Perfil opcional (#5): nada some. O que cobre o Perfil ganha "vale para você", o resto leva aviso da amostra.
 - Grupo possível (#8): número em faixa, "o que mais pesa", Requisito sem dado desabilitado com o motivo.
-- Prioridades (#9): o usuário ordena; a evidência agrupa em degraus por desfecho, sem nota de compatibilidade.
+- Prioridades (#9, #19): o usuário toca nas três características que mais importam, na ordem; a evidência agrupa em degraus por desfecho, sem nota de compatibilidade.
 - Fora do MVP: guias de comportamento/atração e de apps na prática, chat com IA, contas, outras línguas e países.
 - Em aberto: nome do site e domínio, deploy, SEO e URLs, privacidade do estado no link, analytics.
 
