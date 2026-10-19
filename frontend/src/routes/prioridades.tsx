@@ -8,10 +8,14 @@ import {
   alternarNoTopo3,
   type Desfecho,
 } from '@tem-estudo/regras/prioridades'
-import { useState } from 'react'
+import { fraseDoLink, lerLink, previaDePrioridades, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
+import { useCallback, useMemo, useState } from 'react'
 import { buscarPrioridades } from '#/conteudo/guias'
+import { metaDaPrevia } from '#/conteudo/previa'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
-import { usePerfil } from '#/estado/perfil'
+import { useLinkRecebido } from '#/estado/link'
+import { gravarPerfil, usePerfil } from '#/estado/perfil'
+import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
 import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
 import { contarUmaVezPorVisita } from '#/analytics/contagem'
 import { ConfiancaDaResposta } from '#/ui/guia'
@@ -24,8 +28,15 @@ import {
 } from '#/ui/prioridades'
 
 export const Route = createFileRoute('/prioridades')({
-  loader: () => buscarPrioridades(),
-  head: () => ({
+  loader: async ({ location }) => {
+    const vista = await buscarPrioridades()
+    // A prévia do link, para o robô da rede social: o topo 3 e o alerta,
+    // sem o Perfil. Só no servidor; no navegador ela não serve a ninguém.
+    const estado = vista && typeof window === 'undefined' ? lerLink('prioridades', location.searchStr, idsDe(vista)) : null
+    const previa = estado?.calculadora === 'prioridades' ? previaDePrioridades(vista!.caracteristicas, estado.prioridades) : null
+    return { vista, previa }
+  },
+  head: ({ loaderData }) => ({
     meta: [
       { title: 'Prioridades vs. evidência · Tem estudo?' },
       {
@@ -33,13 +44,16 @@ export const Route = createFileRoute('/prioridades')({
         content:
           'Toque nas três características que mais importam para você num parceiro e veja quanto a evidência põe em cada uma.',
       },
+      ...metaDaPrevia(loaderData?.previa ?? null),
     ],
   }),
   component: PaginaDePrioridades,
 })
 
+const idsDe = (vista: PrioridadesVista) => vista.caracteristicas.map((c) => c.id)
+
 function PaginaDePrioridades() {
-  const vista = Route.useLoaderData()
+  const { vista } = Route.useLoaderData()
   return (
     <main className="folha">
       <div className="coluna">
@@ -61,10 +75,25 @@ function PaginaDePrioridades() {
 
 function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const { caracteristicas } = vista
-  const estado = usePrioridades(caracteristicas.map((c) => c.id))
-  const genero = usePerfil()?.genero
+  const ids = useMemo(() => idsDe(vista), [vista])
+  const aplicarLink = useCallback(
+    (query: string) => {
+      const link = lerLink('prioridades', query, ids)
+      if (link?.calculadora !== 'prioridades') return false
+      gravarPerfil(link.perfil)
+      gravarPrioridades(link.prioridades)
+      return true
+    },
+    [ids],
+  )
+  const trocou = useLinkRecebido(aplicarLink)
+  const estado = usePrioridades(ids)
+  const perfil = usePerfil()
+  const genero = perfil?.genero
   const [aberta, setAberta] = useState<string | null>(null)
   const { topo3, desfecho } = estado
+  const link: EstadoDoLink = { calculadora: 'prioridades', perfil, prioridades: estado }
+  const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
 
   const mexer = (novo: typeof estado) => {
     gravarPrioridades(novo)
@@ -78,6 +107,11 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       <p className="lead">
         Das dez, quais são as três que mais importam para você num parceiro? Toque nelas na ordem.
       </p>
+      {trocou && (
+        <p className="aviso" role="status">
+          Este link trocou o seu Perfil e o seu topo 3 salvos pelos de quem mandou.
+        </p>
+      )}
 
       <EscolhaDoTopo3 caracteristicas={caracteristicas} topo3={topo3} aoTocar={tocar} />
 
@@ -118,6 +152,8 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da Austrália, e um cobre 43 países. Quase
         todos são de casais homem-mulher.
       </p>
+
+      <Compartilhar query={queryDoLink(link)} frase={fraseDoLink(link, { nomes })} aviso={AVISO_DA_CONTAGEM} />
 
       {vista.doGuia && (
         <section className="secao do-guia" aria-labelledby="t-do-guia">

@@ -9,6 +9,7 @@ import {
   valorDoRequisito,
   type Requisitos,
 } from '@tem-estudo/regras/requisitos'
+import { Link } from '@tanstack/react-router'
 import { useEffect, useId, useState, type ReactNode } from 'react'
 
 /** Quem atende, para a frase: "mulheres", "homens" ou "pessoas". */
@@ -320,5 +321,83 @@ export function Dobras({
         </ul>
       </details>
     </>
+  )
+}
+
+const Seta = () => (
+  <svg width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M2 8.5C9 7.4 16 8.2 23 8M23 8l-6-5.5M23 8l-6 5.5" />
+  </svg>
+)
+
+/** "370 mil adultos", "1,2 milhão de adultos": só o número vai no rosa. */
+function AdultosNoBrasil({ quantidade }: { quantidade: number }) {
+  const numero = formatarQuantidade(quantidade)
+  return (
+    <>
+      <mark className="numero-chave">{numero}</mark>
+      {numero.includes('milh') ? ' de adultos' : ' adultos'}
+    </>
+  )
+}
+
+/** O cartão do Guia B5 (#19, variante A). Sem uso, o número do Brasil inteiro
+ * e o convite; com Perfil ou Requisitos, a conta de agora em resumo. */
+export function CartaoDoGrupoPossivel({
+  estimativa,
+  usado,
+  ligados,
+  carregando,
+}: {
+  estimativa: Estimativa
+  /** O visitante já disse o Perfil ou mexeu nos Requisitos. */
+  usado: boolean
+  /** Os Requisitos ligados, escritos como na frase ("25 a 35 anos"). */
+  ligados: ReadonlyArray<string>
+  carregando: boolean
+}) {
+  return (
+    <section className="secao cartao-calculadora" aria-labelledby="t-cartao-gp">
+      <h2 id="t-cartao-gp" className="headline">
+        {usado ? 'Seu Grupo possível' : 'Faça a conta'}
+      </h2>
+      <div className="painel com-reticula">
+        {usado ? (
+          <div aria-busy={carregando} className={carregando ? 'gp-carregando' : undefined}>
+            <Faixa estimativa={estimativa} />
+            <p className="cartao-gp-sub">{NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você pediu</p>
+            <p className="cartao-gp-ligados">
+              Seus Requisitos:{' '}
+              {ligados.length > 0
+                ? ligados.map((valor, i) => (
+                    <span key={valor}>
+                      {i > 0 && ', '}
+                      <b>{valor}</b>
+                    </span>
+                  ))
+                : 'nenhum'}
+              .
+            </p>
+            <p className="cartao-gp-pesa">
+              <MaisPesa estimativa={estimativa} />
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className="rotulo-calculadora">Grupo possível</p>
+            <p className="cartao-gp-frase">
+              No Brasil, <AdultosNoBrasil quantidade={estimativa.resultado.central} /> não moram com companheiro(a).
+              Quantos deles atendem ao que você procura?
+            </p>
+          </>
+        )}
+        <p className="acoes-calculadora">
+          <Link to="/grupo-possivel" className="botao com-reticula botao-link">
+            {usado ? 'Ajustar os Requisitos' : 'Fazer a conta'}
+            <Seta />
+          </Link>
+        </p>
+      </div>
+    </section>
   )
 }

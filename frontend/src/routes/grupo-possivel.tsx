@@ -23,15 +23,19 @@ import {
   type RequisitoDoVisitante,
   type Requisitos,
 } from '@tem-estudo/regras/requisitos'
+import { ehLink, fraseDoLink, lerLink, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
 import { useId, useRef, type ReactNode } from 'react'
 import { buscarGuiaDaCalculadora } from '#/conteudo/guias'
+import { buscarPreviaDoGrupo, metaDaPrevia } from '#/conteudo/previa'
+import { useLinkRecebido } from '#/estado/link'
+import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
 import {
   gravarRequisitos,
   LUGARES_COM_DADOS,
   useGrupoPossivel,
   useRequisitosSalvos,
 } from '#/estado/grupo-possivel'
-import { usePerfil } from '#/estado/perfil'
+import { gravarPerfil, usePerfil } from '#/estado/perfil'
 import { contarUmaVezPorVisita } from '#/analytics/contagem'
 import { Botao } from '#/ui/botao'
 import {
@@ -49,8 +53,17 @@ import { ConfiancaDaResposta } from '#/ui/guia'
 import { CaixaDoPerfil } from '#/ui/perfil'
 
 export const Route = createFileRoute('/grupo-possivel')({
-  loader: () => buscarGuiaDaCalculadora({ data: 'grupo-possivel' }),
-  head: () => ({
+  loader: async ({ location }) => {
+    // A prévia do link só no servidor, para o robô da rede social; no
+    // navegador, nada do estado sai do aparelho.
+    const comLink = typeof window === 'undefined' && ehLink(location.searchStr)
+    const [guia, previa] = await Promise.all([
+      buscarGuiaDaCalculadora({ data: 'grupo-possivel' }),
+      comLink ? buscarPreviaDoGrupo({ data: location.searchStr }) : null,
+    ])
+    return { guia, previa }
+  },
+  head: ({ loaderData }) => ({
     meta: [
       { title: 'Grupo possível · Tem estudo?' },
       {
@@ -58,15 +71,25 @@ export const Route = createFileRoute('/grupo-possivel')({
         content:
           'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022 e a PNS 2019.',
       },
+      ...metaDaPrevia(loaderData?.previa ?? null),
     ],
   }),
   component: PaginaDoGrupoPossivel,
 })
 
+const aplicarLink = (query: string) => {
+  const estado = lerLink('grupo-possivel', query)
+  if (estado?.calculadora !== 'grupo-possivel') return false
+  gravarPerfil(estado.perfil)
+  gravarRequisitos(estado.requisitos)
+  return true
+}
+
 const qualquer = 'qualquer'
 
 function PaginaDoGrupoPossivel() {
-  const guia = Route.useLoaderData()
+  const { guia } = Route.useLoaderData()
+  const trocou = useLinkRecebido(aplicarLink)
   const perfil = usePerfil()
   const salvos = useRequisitosSalvos()
   const { estimativa, carregando, falhou, tentar, uf } = useGrupoPossivel(perfil, salvos)
@@ -85,6 +108,7 @@ function PaginaDoGrupoPossivel() {
   const maisPesa = useRef<HTMLHeadingElement>(null)
   const fortes = estimativa.ressalvas.filter((x) => x.forte)
   const lugarNome = valor('lugar')
+  const link: EstadoDoLink = { calculadora: 'grupo-possivel', perfil, requisitos: salvos }
 
   const linha = (k: RequisitoDoVisitante, controle: ReactNode, nota?: ReactNode) => (
     <LinhaDoRequisito key={k} requisito={k} valor={valor(k)} custo={custo(k)} ligado={ligado(k)} nota={nota}>
@@ -230,6 +254,11 @@ function PaginaDoGrupoPossivel() {
           Diga quem você procura e ligue os seus Requisitos. O número de cima muda junto, com dados do Censo 2022 e da
           PNS 2019.
         </p>
+        {trocou && (
+          <p className="aviso" role="status">
+            Este link trocou o seu Perfil e os seus Requisitos salvos pelos de quem mandou.
+          </p>
+        )}
         {falhou && (
           <p className="aviso" role="alert">
             Não deu para baixar os dados da conta.{' '}
@@ -304,6 +333,12 @@ function PaginaDoGrupoPossivel() {
             <Dobras estimativa={estimativa} perfil={perfil} requisitos={r} municipio={municipio} />
           </div>
         </section>
+
+        <Compartilhar
+          query={queryDoLink(link)}
+          frase={fraseDoLink(link, { municipio })}
+          aviso={AVISO_DA_CONTAGEM}
+        />
 
         {guia && (
           <section className="secao" aria-labelledby="t-do-guia">

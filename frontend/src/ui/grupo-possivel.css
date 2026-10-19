@@ -76,6 +76,34 @@ h3.gp-rotulo {
   }
 }
 
+/* ---------- cartão do Guia B5 ---------- */
+.cartao-gp-frase {
+  margin: 6px 0 0;
+  font-family: var(--tipo-title-familia);
+  font-size: clamp(20px, 5.4vw, 24px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.cartao-gp-sub,
+.cartao-gp-ligados,
+.cartao-gp-pesa {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cor-tinta-2);
+}
+
+.cartao-gp-sub {
+  margin-top: 4px;
+}
+
+.cartao-gp-ligados b,
+.cartao-gp-pesa b {
+  color: var(--cor-tinta);
+}
+
 .gp-intro {
   margin: 22px 0 var(--espaco-md);
 }

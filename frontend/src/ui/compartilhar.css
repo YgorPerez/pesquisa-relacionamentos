@@ -1,0 +1,32 @@
+/* ---------- compartilhar (#34): o botão e a linha do que o link revela ---------- */
+.compartilhar-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-sm);
+}
+
+.compartilhar-frase {
+  flex: 1 1 14rem;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.compartilhar-aviso,
+.compartilhar-status {
+  margin: var(--espaco-xs) 0 0;
+  font-size: var(--tipo-label-tamanho);
+  line-height: 1.45;
+  color: var(--cor-tinta-2);
+}
+
+.compartilhar-status:empty {
+  margin: 0;
+}
+
+.compartilhar-campo {
+  width: 100%;
+  margin-top: var(--espaco-xs);
+  font-size: 15px;
+  font-weight: 400;
+}

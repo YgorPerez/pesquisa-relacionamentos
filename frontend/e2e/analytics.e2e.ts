@@ -45,7 +45,7 @@ const ajudou = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
 
 /** Uma visita inteira: o Guia com "Ajudou?" e uma Ficha aberta dele, e as
  * duas calculadoras mexidas duas vezes cada. */
-async function percorrer(page: Page, comPerfil: boolean) {
+async function percorrer(page: Page, comPerfil: boolean, envios: Record<string, string>[]) {
   await abrir(page, GUIA)
   if (comPerfil) await dizerPerfil(page, 'Ver o que vale para mim')
   await ajudou(page).getByRole('button', { name: 'Não' }).click()
@@ -53,6 +53,8 @@ async function percorrer(page: Page, comPerfil: boolean) {
   await expect(ajudou(page)).toContainText('Obrigado')
   await page.locator('.fichas-citadas a.ficha-titulo').first().click()
   await expect(page).toHaveURL(/\/estudos\//)
+  // A visita da Ficha sai depois da navegação: espere antes de sair dela.
+  await expect.poll(() => envios.some((e) => e.p.startsWith('/estudos/'))).toBe(true)
 
   await abrir(page, '/grupo-possivel')
   const fuma = page.locator('#req-fumo').getByRole('checkbox', { name: 'Só quem não fuma' })
@@ -111,7 +113,7 @@ test.describe('contagem de uso', () => {
       const contexto = await browser.newContext({ ...test.info().project.use })
       const page = await contexto.newPage()
       const { envios } = gravarEnvios(page)
-      await percorrer(page, comPerfil)
+      await percorrer(page, comPerfil, envios)
       visitas.push(envios.map(({ r: _r, ...resto }) => resto))
       for (const envio of envios) {
         expect(CAMPOS).toEqual(expect.arrayContaining(Object.keys(envio)))
