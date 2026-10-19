@@ -1,18 +1,33 @@
+---
+# Antes da migração: 🟡 parcial (página comercial; metodologia não publicada)
+referencia: "Start.io. *Dating Users – Tinder in Brazil* (página de audiência)."
+link: https://www.start.io/audience/dating-users-tinder-in-brazil
+status: nao-verificado
+forca: fraca
+forca_porque: "Estimativa comercial, com gênero inferido de sinais do aparelho e metodologia não publicada."
+paises: [Brasil]
+periodo: "data não informada"
+amostra:
+  descricao: "Usuários da rede de anúncios da Start.io. O gênero é inferido a partir de sinais do aparelho, sem pesquisa com usuários."
+  representativa: false
+desenho: plataforma
+conflito: "Empresa que vende segmentação de anúncios."
+cobre:
+  generos: [homem, mulher]
+---
+
 # Start.io: estimativa de gênero dos usuários do Tinder no Brasil
 
-- **Referência:** Start.io. *Dating Users – Tinder in Brazil* (página de audiência).
-- **Link:** https://www.start.io/audience/dating-users-tinder-in-brazil
-- **Status:** 🟡 parcial (página comercial; metodologia não publicada)
-- **Força da evidência:** **fraca**
-- **País e período dos dados:** Brasil; data não informada
-- **Amostra:** usuários da rede de anúncios da Start.io
-- **Desenho:** gênero **inferido** a partir de sinais do aparelho, sem pesquisa com usuários
-- **Financiamento e conflitos de interesse:** empresa que vende segmentação de anúncios
+## O que mediu
 
-## Achados principais
+A proporção estimada de homens e mulheres entre usuários do Tinder no Brasil, com o gênero inferido a partir de sinais do aparelho na rede de anúncios da Start.io.
 
-- ~71% homens / ~29% mulheres entre usuários do Tinder no Brasil.
-- ~76% homens em São Paulo e no Rio de Janeiro.
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Usuários do Tinder no Brasil, por gênero | ~71% homens / ~29% mulheres | página de audiência | |
+| Homens entre usuários em São Paulo e no Rio de Janeiro | ~76% | página de audiência | |
 
 ## Limitações
 

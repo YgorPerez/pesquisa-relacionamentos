@@ -1,24 +1,37 @@
-# Sharabi & Dorrance-Hall (2024): "efeito do namoro online" na qualidade do casamento
+---
+# Antes da migração: ⬜ não verificado: artigo fechado; dados vêm só da cobertura da [PsyPost](https://www.psypost.org/online-datings-long-term-effects-on-marital-outcomes-explored-in-recent-study). Metadados (título, revista, volume) conferidos no Crossref (data: 2026-10-18)
+referencia: "Sharabi LL, Dorrance-Hall E. *The online dating effect: Where a couple meets predicts the quality of their marriage*. Computers in Human Behavior 150:107973, 2024 (online em 2023)."
+link: https://doi.org/10.1016/j.chb.2023.107973
+status: nao-verificado
+forca: moderada
+forca_porque: "A confirmar: forma de recrutamento não informada na cobertura."
+paises: [EUA]
+periodo: "não informado no texto lido"
+amostra:
+  n: 923
+  descricao: "923 adultos casados, cerca de metade conheceu o cônjuge online; segundo a cobertura, com cotas de idade, raça e gênero."
+  representativa: false
+desenho: transversal
+conflito: "Acadêmico (Arizona State University); não verificado."
+cobre: {}
+---
 
-- **Referência:** Sharabi LL, Dorrance-Hall E. *The online dating effect: Where a couple meets predicts the quality of their marriage*. Computers in Human Behavior 150:107973, 2024 (online em 2023).
-- **Link/DOI:** https://doi.org/10.1016/j.chb.2023.107973
-- **Status:** ⬜ não verificado: artigo fechado; dados vêm só da cobertura da [PsyPost](https://www.psypost.org/online-datings-long-term-effects-on-marital-outcomes-explored-in-recent-study). Metadados (título, revista, volume) conferidos no Crossref (data: 2026-10-18)
-- **Força da evidência:** moderada (a confirmar: forma de recrutamento não informada na cobertura)
-- **País e período dos dados:** EUA
-- **Amostra:** 923 adultos casados, cerca de metade conheceu o cônjuge online; segundo a cobertura, com cotas de idade, raça e gênero
-- **Desenho:** transversal
-- **Financiamento e conflitos de interesse:** acadêmico (Arizona State University); não verificado
+# Sharabi & Dorrance-Hall (2024): "efeito do namoro online" na qualidade do casamento
 
 ## O que mediu
 
 Se casamentos iniciados online diferem em satisfação e estabilidade (ter pensado em divórcio), e se estigma, aprovação da rede social, distância inicial e autorrevelação explicam a diferença.
 
-## Achados principais (segundo a cobertura, sem tamanhos de efeito)
+## Achados
 
-- Casamentos iniciados online relataram satisfação e estabilidade **um pouco menores**.
-- Menor aprovação de amigos e família e maior sensação de marginalização social explicavam parte da diferença.
-- Os dois grupos ficaram acima do ponto médio das escalas.
-- Quem se conheceu online era mais jovem e tinha mais experiência de namoro antes de casar.
+Segundo a cobertura, sem tamanhos de efeito.
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Satisfação e estabilidade, casamentos iniciados online vs. offline | **um pouco menores** online | cobertura da PsyPost | |
+| O que explicava parte da diferença | menor aprovação de amigos e família e maior sensação de marginalização social | cobertura da PsyPost | |
+| Posição dos dois grupos nas escalas | acima do ponto médio | cobertura da PsyPost | |
+| Perfil de quem se conheceu online | mais jovem, com mais experiência de namoro antes de casar | cobertura da PsyPost | |
 
 ## Limitações
 

@@ -1,22 +1,38 @@
+---
+# Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
+referencia: "Mobile Time e Opinion Box. *Apps de relacionamento*, abril de 2025."
+link: https://www.mobiletime.com.br/noticias/22/04/2025/apps-de-relacionamento/
+status: nao-verificado
+forca: moderada
+forca_porque: "Survey online com 2.019 pessoas e margem de erro publicada, mas só donos de smartphone que respondem pesquisa online."
+paises: [Brasil]
+periodo: "entrevistas de 12 a 27 de março de 2025"
+amostra:
+  n: 2019
+  descricao: "2.019 internautas brasileiros com smartphone; margem de erro de 2,2 p.p."
+  representativa: false
+desenho: transversal
+conflito: "Empresas de pesquisa de mercado; sem vínculo com apps identificado."
+cobre:
+  generos: [homem, mulher]
+---
+
 # Mobile Time/Opinion Box (2025): apps de relacionamento no Brasil
 
-- **Referência:** Mobile Time e Opinion Box. *Apps de relacionamento*, abril de 2025.
-- **Link:** https://www.mobiletime.com.br/noticias/22/04/2025/apps-de-relacionamento/
-- **Status:** ✅ lido no original (pesquisa de 2026-10-18)
-- **Força da evidência:** moderada
-- **País e período dos dados:** Brasil, entrevistas de 12 a 27 de março de 2025
-- **Amostra:** 2.019 internautas brasileiros com smartphone; margem de erro de 2,2 p.p.
-- **Desenho:** survey online transversal
-- **Financiamento e conflitos de interesse:** empresas de pesquisa de mercado; sem vínculo com apps identificado
+## O que mediu
 
-## Achados principais
+Quantos internautas brasileiros com smartphone já tiveram encontro com alguém que conheceram em app de relacionamento, por faixa etária, e qual app mais usaram.
 
-| Já teve encontro com alguém conhecido em app | % |
-|---|---|
-| Total | 23% |
-| 16–29 anos | 29% |
-| 30–49 anos | 25% |
-| 50+ | 14% |
+Desenho, como descrito antes da migração: survey online transversal.
+
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Já teve encontro com alguém conhecido em app, total | 23% | — | |
+| Idem, 16–29 anos | 29% | — | |
+| Idem, 30–49 anos | 25% | — | |
+| Idem, 50+ | 14% | — | |
 
 - Entre quem já teve encontro por app, 43% citam o Tinder como o mais usado. Sem diferença significativa por gênero.
 

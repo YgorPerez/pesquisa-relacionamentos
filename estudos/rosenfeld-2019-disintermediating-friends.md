@@ -1,31 +1,44 @@
-# Rosenfeld, Thomas & Hausen (2019): online substitui os amigos como intermediário
+---
+# Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
+referencia: "Rosenfeld MJ, Thomas RJ, Hausen S. *Disintermediating your friends: How online dating in the United States displaces other ways of meeting*. PNAS 116(36):17753–17758, 2019. Texto completo aberto (PDF do autor): https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf"
+link: https://doi.org/10.1073/pnas.1908630116
+status: nao-verificado
+forca: forte
+forca_porque: "Amostra representativa de adultos americanos (HCMST), N = 5.421 casais."
+paises: [EUA]
+periodo: "2009 e 2017 (HCMST)"
+amostra:
+  n: 5421
+  descricao: "N = 5.421 casais heterossexuais da pesquisa How Couples Meet and Stay Together (HCMST), amostra representativa de adultos americanos."
+  representativa: true
+desenho: transversal
+conflito: "Acadêmico; sem vínculo com empresas de namoro identificado."
+cobre:
+  generos: [homem, mulher]
+  casal: hetero
+---
 
-- **Referência:** Rosenfeld MJ, Thomas RJ, Hausen S. *Disintermediating your friends: How online dating in the United States displaces other ways of meeting*. PNAS 116(36):17753–17758, 2019.
-- **Link/DOI:** https://doi.org/10.1073/pnas.1908630116 · [PDF do autor](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf)
-- **Status:** ✅ lido no original (pesquisa de 2026-10-18)
-- **Força da evidência:** forte
-- **País e período dos dados:** EUA; pesquisa How Couples Meet and Stay Together (HCMST) 2009 e 2017
-- **Amostra:** N = 5.421 casais heterossexuais, amostra representativa de adultos americanos
-- **Desenho:** retrospectivo (ano em que o casal se conheceu)
-- **Financiamento e conflitos de interesse:** acadêmico; sem vínculo com empresas de namoro identificado
+# Rosenfeld, Thomas & Hausen (2019): online substitui os amigos como intermediário
 
 ## O que mediu
 
 Como casais heterossexuais americanos se conheceram, por ano em que se conheceram. As categorias não são exclusivas.
 
-## Achados principais
+Desenho, como descrito antes da migração: retrospectivo (ano em que o casal se conheceu).
 
-| Como se conheceram | 1995 | 2017 |
-|---|---|---|
-| Online | 2% | **39%** |
-| Por amigos | 33% | 20% |
-| Bar/restaurante* | 19% | 27% |
-| Colegas de trabalho | 19% | 11% |
-| Família | 15% | 7% |
-| Escola | 10% | 5% |
-| Faculdade | 9% | 4% (queda não significativa) |
-| Vizinhos | 8% | 3% |
-| Igreja | 7% | 4% |
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Conheceram-se online | 1995: 2%; 2017: **39%** | — | |
+| Por amigos | 1995: 33%; 2017: 20% | — | |
+| Em bar/restaurante* | 1995: 19%; 2017: 27% | — | |
+| Por colegas de trabalho | 1995: 19%; 2017: 11% | — | |
+| Pela família | 1995: 15%; 2017: 7% | — | |
+| Na escola | 1995: 10%; 2017: 5% | — | |
+| Na faculdade | 1995: 9%; 2017: 4% (queda não significativa) | — | |
+| Por vizinhos | 1995: 8%; 2017: 3% | — | |
+| Na igreja | 1995: 7%; 2017: 4% | — | |
 
 \* A alta de bar/restaurante vem inteiramente de casais que se conheceram online e marcaram o primeiro encontro num bar.
 

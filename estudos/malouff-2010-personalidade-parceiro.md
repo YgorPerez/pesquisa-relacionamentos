@@ -1,26 +1,39 @@
-# Malouff et al. (2010): personalidade do parceiro e satisfação (meta-análise)
+---
+# Antes da migração: 🟡 parcial: só o resumo no repositório da University of New England. O texto completo é pago e os r por traço não foram conferidos (data: 2026-10-18)
+referencia: "Malouff JM, Thorsteinsson EB, Schutte NS, Bhullar N, Rooke SE. *The Five-Factor Model of personality and relationship satisfaction of intimate partners: A meta-analysis*. Journal of Research in Personality 44(1):124–127, 2010. Registro com resumo: https://hdl.handle.net/1959.11/7370"
+link: https://doi.org/10.1016/j.jrp.2009.09.004
+status: nao-verificado
+forca: forte
+forca_porque: "Meta-análise, mas os efeitos são pequenos e a maioria dos estudos é transversal."
+paises: []
+periodo: "não informado no texto lido"
+amostra:
+  n: 3848
+  descricao: "19 amostras, 3.848 participantes, todos parceiros íntimos heterossexuais."
+  representativa: false
+desenho: meta-analise
+conflito: "Não conferido."
+cobre:
+  generos: [homem, mulher]
+  casal: hetero
+---
 
-- **Referência:** Malouff JM, Thorsteinsson EB, Schutte NS, Bhullar N, Rooke SE. *The Five-Factor Model of personality and relationship satisfaction of intimate partners: A meta-analysis*. Journal of Research in Personality 44(1):124–127, 2010.
-- **Link/DOI:** https://doi.org/10.1016/j.jrp.2009.09.004 (registro com resumo: https://hdl.handle.net/1959.11/7370)
-- **Status:** 🟡 parcial: só o resumo no repositório da University of New England. O texto completo é pago e **os r por traço não foram conferidos** (data: 2026-10-18)
-- **Força da evidência:** forte (meta-análise), mas os efeitos são pequenos e a maioria dos estudos é transversal
-- **País e período dos dados:** vários; não conferido
-- **Amostra:** 19 amostras, 3.848 participantes, todos parceiros íntimos heterossexuais
-- **Desenho:** meta-análise de estudos correlacionais
-- **Financiamento e conflitos de interesse:** não conferido
+# Malouff et al. (2010): personalidade do parceiro e satisfação (meta-análise)
 
 ## O que mediu
 
 Segundo o resumo, mediu a associação entre a personalidade (Big Five) de uma pessoa e a satisfação do **parceiro** com a relação.
 
-## Achados principais
+Desenho, como descrito antes da migração: meta-análise de estudos correlacionais.
 
-| Medida | Valor | Onde no texto |
-|---|---|---|
-| Traços do parceiro associados à satisfação | 4 dos 5: **baixo neuroticismo**, **alta amabilidade**, **alta conscienciosidade**, **alta extroversão** | Resumo |
-| Abertura | não aparece entre os traços significativos | Resumo |
-| Diferença entre homens e mulheres, casados e não casados | não significativa | Resumo |
-| Tamanho de cada r | **não conferido** | — |
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Traços do parceiro associados à satisfação | 4 dos 5: **baixo neuroticismo**, **alta amabilidade**, **alta conscienciosidade**, **alta extroversão** | Resumo | |
+| Abertura | não aparece entre os traços significativos | Resumo | |
+| Diferença entre homens e mulheres, casados e não casados | não significativa | Resumo | |
+| Tamanho de cada r | **não conferido** | — | |
 
 - Uma fonte secundária ordena os traços de "emotional stability" (maior efeito) a amabilidade, conscienciosidade e extroversão. Isso não foi conferido no original.
 

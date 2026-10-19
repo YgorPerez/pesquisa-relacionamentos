@@ -1,25 +1,33 @@
-# Rosenfeld (2017): casamento e casal na era da internet
+---
+# Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
+referencia: "Rosenfeld MJ. *Marriage, Choice, and Couplehood in the Age of the Internet*. Sociological Science 4:490–510, 2017."
+link: https://doi.org/10.15195/v4.a20
+status: nao-verificado
+forca: forte
+forca_porque: "Amostra representativa (HCMST) acompanhada por cerca de 6 anos."
+paises: [EUA]
+periodo: "2009–2015 (HCMST)"
+amostra:
+  descricao: "Amostra representativa da How Couples Meet and Stay Together (HCMST), acompanhada por cerca de 6 anos."
+  representativa: true
+desenho: longitudinal
+conflito: "Financiamento público (NSF)."
+cobre: {}
+---
 
-- **Referência:** Rosenfeld MJ. *Marriage, Choice, and Couplehood in the Age of the Internet*. Sociological Science 4:490–510, 2017.
-- **Link/DOI:** https://doi.org/10.15195/v4.a20
-- **Status:** ✅ lido no original (pesquisa de 2026-10-18)
-- **Força da evidência:** forte
-- **País e período dos dados:** EUA; HCMST 2009–2015
-- **Amostra:** amostra representativa da HCMST, acompanhada por cerca de 6 anos
-- **Desenho:** longitudinal
-- **Financiamento e conflitos de interesse:** financiamento público (NSF)
+# Rosenfeld (2017): casamento e casal na era da internet
 
 ## O que mediu
 
 Se a forma como o casal se conheceu prevê término e a velocidade de transição para o casamento.
 
-## Achados principais
+## Achados
 
-| Medida | Resultado |
-|---|---|
-| Conhecer-se online prevê término? | **Não** |
-| Online (sobretudo site de namoro) prevê casar mais rápido? | **Sim** |
-| É efeito causal? | O autor diz explicitamente que **não** mede causalidade |
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Conhecer-se online prevê término? | **Não** | — | |
+| Online (sobretudo site de namoro) prevê casar mais rápido? | **Sim** | — | |
+| É efeito causal? | O autor diz explicitamente que **não** mede causalidade | — | |
 
 - Hipótese do autor: pessoas mais "prontas para casar" escolhem a internet, o que explicaria o casamento mais rápido.
 
