@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PROTÓTIPO · Navegação, Perfil e calculadoras</title>
+<!--
+  PROTÓTIPO DESCARTÁVEL (ticket #16, "Navegação entre Guias, seletor de Perfil e calculadoras").
+  Um site de mentira (Início, dois Temas, nove Guias, as duas calculadoras) para julgar três formas de:
+    - onde o usuário escolhe o Perfil e como ele vale em todo o site;
+    - como Grupo possível (B5) e Prioridades (B1) aparecem dentro e fora do Guia;
+    - como se vai de um Guia a uma Pergunta relacionada no celular e se volta ao ponto exato.
+  A: Perfil num chip fixo no topo; calculadora inteira dentro do Guia.
+  B: Perfil pedido onde ele muda algo; o Guia mostra uma prévia da calculadora.
+  C: abas embaixo no celular (Guias, Grupo possível, Prioridades, Você); Pergunta relacionada abre numa folha.
+  Variante em ?v=, página no #/caminho. Troque pela barra escura ou com ← →.
+  O "voltar ao ponto exato" é real: rolagem e seções abertas ficam no history.state da entrada.
+  Estado só em memória (o site guardaria no localStorage, ADR 0001). Textos e números são de exemplo:
+  as Fichas contam como ⬜ (#6), e a conta do Grupo possível é inventada. Servem para julgar a navegação.
+  A identidade visual é de outro ticket ("Identidade visual e página do Guia"); aqui o visual é neutro.
+-->
+<style>
+  :root {
+    --tx:#1c2321; --mu:#5b6663; --bd:#dfe4e2; --bg:#f7f8f7; --card:#fff;
+    --acc:#0e6b62; --acc-soft:#e3f1ef; --acc-ink:#0a4f48;
+    --warn:#9a4a07; --warn-soft:#fff4e5; --ok:#0e6b62;
+    --n3:#0e6b62; --n2:#4f9e94; --n1:#cfe6e2; --n0:#eceeed;
+    --r:12px; --tab:64px;
+  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; font:16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color:var(--tx); background:var(--bg); }
+  ::selection { background:#bfe3dd; }
+  a { color:var(--acc); text-underline-offset:3px; }
+  :focus-visible { outline:3px solid #f0a020; outline-offset:2px; border-radius:6px; }
+  button, input, select { font:inherit; color:inherit; }
+  button { cursor:pointer; }
+  h1 { font-size:1.6rem; line-height:1.2; margin:.2rem 0 .8rem; text-wrap:balance; letter-spacing:-.01em; }
+  h2 { font-size:1.15rem; margin:2rem 0 .6rem; }
+  h3 { font-size:1rem; margin:1.2rem 0 .4rem; }
+  p { margin:.5rem 0; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 18px; }
+  .muted { color:var(--mu); }
+  .small { font-size:.875rem; }
+  .tiny { font-size:.8rem; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .sp { flex:1; }
+  main { padding:12px 0 140px; }
+  body.v-C main { padding-bottom:calc(var(--tab) + 120px); }
+
+  .prot { background:#fff7d6; color:#6b4b00; font-size:.8rem; padding:6px 18px; text-align:center; }
+
+  /* cabeçalho */
+  .top { background:var(--card); border-bottom:1px solid var(--bd); }
+  .top .wrap { display:flex; align-items:center; gap:12px; min-height:56px; }
+  .marca { font-weight:700; text-decoration:none; color:var(--tx); white-space:nowrap; }
+  .marca small { font-weight:400; color:var(--mu); }
+  .nav { display:flex; gap:4px; }
+  .nav a { text-decoration:none; color:var(--tx); padding:8px 10px; border-radius:8px; font-size:.95rem; }
+  .nav a.on { background:var(--acc-soft); color:var(--acc-ink); font-weight:600; }
+  body.v-A .top { position:sticky; top:0; z-index:5; }
+
+  .chip-perfil { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--bd); background:var(--card); border-radius:99px; padding:6px 12px 6px 8px; min-height:40px; font-size:.9rem; max-width:100%; }
+  .chip-perfil .bola { width:26px; height:26px; border-radius:50%; background:var(--acc-soft); display:grid; place-items:center; flex:none; }
+  .chip-perfil.vazio { border-style:dashed; color:var(--mu); }
+  .chip-perfil[aria-expanded="true"] { border-color:var(--acc); box-shadow:0 0 0 2px var(--acc-soft); }
+  .chip-perfil span.t { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  svg.ic { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+
+  .painel-perfil { background:var(--card); border-bottom:1px solid var(--bd); box-shadow:0 8px 20px -12px rgba(0,0,0,.25); }
+  .painel-perfil .wrap { padding-top:14px; padding-bottom:16px; }
+
+  /* formulário do Perfil */
+  .pf { display:grid; gap:14px; }
+  .pf fieldset { border:0; margin:0; padding:0; }
+  .pf legend { font-weight:600; font-size:.95rem; margin-bottom:6px; }
+  .seg { display:flex; flex-wrap:wrap; gap:6px; }
+  .seg label { position:relative; }
+  .seg input { position:absolute; opacity:0; inset:0; margin:0; }
+  .seg span { display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border:1px solid var(--bd); border-radius:10px; background:var(--card); }
+  .seg input:checked + span { background:var(--acc); border-color:var(--acc); color:#fff; font-weight:600; }
+  .seg input:focus-visible + span { outline:3px solid #f0a020; outline-offset:2px; }
+  .idade { display:flex; align-items:center; gap:8px; }
+  .idade input { width:88px; min-height:44px; padding:0 10px; border:1px solid var(--bd); border-radius:10px; font-size:1rem; }
+  .pf .acoes { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:44px; padding:0 16px; border-radius:10px; border:1px solid var(--bd); background:var(--card); text-decoration:none; color:var(--tx); font-weight:500; }
+  .btn.pri { background:var(--acc); border-color:var(--acc); color:#fff; }
+  .btn.link { border:0; background:none; color:var(--acc); padding:0 4px; min-height:36px; text-decoration:underline; text-underline-offset:3px; }
+  .btn:disabled { opacity:.5; cursor:not-allowed; }
+
+  /* Guia */
+  .migalha { font-size:.875rem; margin-top:14px; }
+  .migalha a { color:var(--mu); }
+  .voltar { display:flex; align-items:center; gap:6px; margin:12px 0 0; padding:10px 12px; background:var(--card); border:1px solid var(--bd); border-radius:10px; width:100%; text-align:left; font-size:.92rem; min-height:44px; }
+  .voltar b { font-weight:600; }
+  .curta { background:var(--card); border:1px solid var(--bd); border-radius:var(--r); padding:16px 18px; }
+  .curta p { font-size:1.08rem; margin:0 0 10px; }
+  .conf { display:inline-flex; gap:6px; align-items:center; font-size:.85rem; background:var(--acc-soft); color:var(--acc-ink); border-radius:99px; padding:3px 10px; font-weight:600; }
+  .aviso { background:var(--warn-soft); color:#5d3204; border:1px solid #f4d2a6; border-radius:10px; padding:10px 14px; font-size:.92rem; margin:12px 0; }
+  .aviso.leve { background:var(--card); border-color:var(--bd); color:var(--mu); }
+  .vale { display:inline-block; font-size:.8rem; font-weight:700; color:#fff; background:var(--ok); border-radius:6px; padding:1px 8px; margin-right:6px; }
+  .naovale { display:block; font-size:.85rem; color:var(--warn); margin-top:4px; }
+  .amostra { display:block; font-size:.85rem; color:var(--mu); margin-top:4px; }
+  .lista { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+  .achado { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:12px 14px; }
+  .achado.seu { border-color:var(--acc); background:#f3faf8; }
+  .ficha { font-size:.85rem; color:var(--acc); }
+  details.sec { border-top:1px solid var(--bd); }
+  details.sec > summary { cursor:pointer; padding:14px 0; font-weight:600; list-style:none; display:flex; justify-content:space-between; align-items:center; min-height:48px; }
+  details.sec > summary::after { content:"+"; font-size:1.3rem; color:var(--mu); }
+  details.sec[open] > summary::after { content:"–"; }
+  details.sec > div { padding-bottom:14px; }
+  .rel { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  .rel a, .rel button.relb { display:flex; gap:10px; align-items:center; justify-content:space-between; text-align:left; width:100%; padding:14px 16px; background:var(--card); border:1px solid var(--bd); border-radius:10px; text-decoration:none; color:var(--tx); min-height:56px; font-size:1rem; }
+  .rel small { display:block; color:var(--mu); font-size:.85rem; margin-top:2px; }
+  .rel.grande a { padding:18px; }
+
+  /* cartão de calculadora (prévia e atalho) */
+  .calc-card { display:block; text-decoration:none; color:var(--tx); background:var(--card); border:1px solid var(--acc); border-radius:var(--r); padding:16px 18px; margin:16px 0; }
+  .calc-card .t { font-weight:700; color:var(--acc-ink); }
+  .calc-card .num { font-size:1.5rem; font-weight:700; font-variant-numeric:tabular-nums; margin:4px 0; }
+  .calc-card .ir { color:var(--acc); font-weight:600; margin-top:8px; display:flex; align-items:center; gap:6px; }
+
+  /* calculadora: moldura */
+  .calc { background:var(--card); border:1px solid var(--bd); border-radius:var(--r); padding:16px 16px 18px; margin:16px 0; }
+  .calc h2 { margin-top:0; }
+  .calc .cab { display:flex; gap:8px; align-items:baseline; justify-content:space-between; flex-wrap:wrap; }
+  .origem { font-size:.85rem; color:var(--mu); background:var(--bg); border-radius:8px; padding:8px 10px; margin:8px 0 12px; }
+
+  /* Grupo possível */
+  .gp-res { background:var(--acc-soft); border-radius:10px; padding:14px; margin:12px 0; }
+  .gp-res .faixa { font-size:1.6rem; font-weight:700; font-variant-numeric:tabular-nums; line-height:1.2; color:var(--acc-ink); }
+  .gp-ctl { display:grid; gap:14px; }
+  .gp-ctl label.l { display:block; font-weight:600; font-size:.92rem; margin-bottom:4px; }
+  .gp-ctl input[type=range] { width:100%; accent-color:var(--acc); min-height:32px; }
+  .gp-ctl select { min-height:44px; padding:0 10px; border:1px solid var(--bd); border-radius:10px; background:var(--card); }
+  .chk { display:flex; gap:10px; align-items:center; min-height:44px; }
+  .chk input { width:22px; height:22px; accent-color:var(--acc); }
+  .des { opacity:.55; }
+  .pesa { list-style:none; padding:0; margin:6px 0 0; display:grid; gap:6px; }
+  .pesa li { display:flex; justify-content:space-between; gap:8px; font-size:.92rem; border-bottom:1px solid var(--bd); padding:6px 0; }
+  .pesa b { font-variant-numeric:tabular-nums; }
+
+  /* Prioridades */
+  .seg3 { display:grid; grid-template-columns:repeat(3,1fr); background:#e8ecea; border-radius:10px; padding:3px; margin:6px 0 12px; }
+  .seg3 button { border:0; background:transparent; min-height:42px; border-radius:8px; font-weight:600; color:var(--mu); }
+  .seg3 button.on { background:var(--card); color:var(--tx); box-shadow:0 1px 3px rgba(0,0,0,.12); }
+  .pr-lista { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+  .pr-it { display:flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:4px 4px 4px 12px; min-height:56px; }
+  .pr-it.alerta { border-color:#e08a1e; box-shadow:0 0 0 1px #e08a1e; }
+  .pr-it .pos { width:20px; color:var(--mu); font-weight:700; font-variant-numeric:tabular-nums; }
+  .pr-it .nm { flex:1; line-height:1.25; }
+  .pr-it .mv { width:44px; height:44px; border:1px solid var(--bd); border-radius:8px; background:var(--card); display:grid; place-items:center; }
+  .nivel { font-size:.8rem; font-weight:600; border-radius:99px; padding:2px 9px; white-space:nowrap; }
+  .nivel.n3 { background:var(--n3); color:#fff; } .nivel.n2 { background:var(--n2); color:#fff; }
+  .nivel.n1 { background:var(--n1); color:#134e48; } .nivel.n0 { background:var(--n0); color:var(--mu); }
+  .joel { background:var(--acc-soft); border-radius:10px; padding:10px 12px; font-size:.92rem; margin-bottom:10px; }
+  .joel .barra { display:flex; height:10px; border-radius:99px; overflow:hidden; margin-top:8px; background:#fff; }
+
+  /* Início e Tema */
+  .temas { display:grid; gap:24px; }
+  .perg { list-style:none; margin:0; padding:0; border-top:1px solid var(--bd); }
+  .perg li { border-bottom:1px solid var(--bd); }
+  .perg a { display:block; padding:14px 2px; text-decoration:none; color:var(--tx); }
+  .perg a b { display:block; font-size:1.02rem; }
+  .perg a span { display:block; font-size:.9rem; color:var(--mu); margin-top:2px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .atalhos { display:grid; gap:10px; grid-template-columns:1fr 1fr; margin:16px 0 8px; }
+  .atalhos a { background:var(--card); border:1px solid var(--bd); border-radius:var(--r); padding:14px; text-decoration:none; color:var(--tx); }
+  .atalhos a b { display:block; }
+  .atalhos a span { font-size:.85rem; color:var(--mu); }
+
+  /* C: abas e folha */
+  .tabs { display:none; }
+  body.v-C .tabs { display:grid; grid-template-columns:repeat(4,1fr); position:fixed; left:0; right:0; bottom:0; height:calc(var(--tab) + env(safe-area-inset-bottom)); padding-bottom:env(safe-area-inset-bottom); background:var(--card); border-top:1px solid var(--bd); z-index:20; }
+  .tabs a { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; text-decoration:none; color:var(--mu); font-size:.72rem; font-weight:600; position:relative; }
+  .tabs a.on { color:var(--acc); }
+  .tabs a.on::before { content:""; position:absolute; top:0; left:25%; right:25%; height:3px; border-radius:0 0 3px 3px; background:var(--acc); }
+  .tabs svg.ic { width:22px; height:22px; }
+  .tabs .ponto { position:absolute; top:10px; right:calc(50% - 18px); width:8px; height:8px; border-radius:50%; background:#e08a1e; }
+
+  .veu { position:fixed; inset:0; background:rgba(20,28,26,.38); z-index:30; opacity:0; transition:opacity .2s; }
+  .veu.on { opacity:1; }
+  .folha { position:fixed; left:0; right:0; bottom:0; max-height:90vh; height:90vh; background:var(--bg); border-radius:16px 16px 0 0; z-index:31; display:flex; flex-direction:column; transform:translateY(100%); transition:transform .28s cubic-bezier(.2,.8,.2,1); box-shadow:0 -10px 30px rgba(0,0,0,.18); }
+  .folha.on { transform:none; }
+  .folha .alca { width:40px; height:5px; border-radius:99px; background:#c9d0cd; margin:8px auto 4px; }
+  .folha .fc { display:flex; gap:8px; align-items:center; padding:4px 12px 8px; border-bottom:1px solid var(--bd); }
+  .folha .corpo { overflow:auto; padding:0 18px 40px; flex:1; overscroll-behavior:contain; }
+  .folha .corpo h1 { font-size:1.35rem; margin-top:14px; }
+  @media (prefers-reduced-motion:reduce) { .folha, .veu { transition:none; } }
+
+  /* estado do protótipo */
+  .estado { margin-top:40px; font-size:.8rem; color:var(--mu); background:#eef1f0; border-radius:10px; padding:10px 12px; }
+  .estado summary { cursor:pointer; font-weight:600; }
+  .estado pre { white-space:pre-wrap; word-break:break-word; margin:8px 0 0; font-size:.78rem; }
+  .toast { position:fixed; left:50%; top:16px; transform:translate(-50%,-150%); background:#1c2321; color:#fff; padding:10px 16px; border-radius:99px; font-size:.9rem; z-index:60; transition:transform .25s; box-shadow:0 6px 20px rgba(0,0,0,.25); }
+  .toast.on { transform:translate(-50%,0); }
+
+  /* barra de troca de variante: não faz parte do design */
+  #switcher { position:fixed; left:50%; bottom:max(14px, env(safe-area-inset-bottom)); transform:translateX(-50%); background:#101828; color:#fff; border-radius:99px; padding:5px 6px; display:flex; gap:4px; align-items:center; box-shadow:0 6px 24px rgba(0,0,0,.3); z-index:50; font-size:.85rem; max-width:calc(100% - 20px); }
+  #switcher button { background:transparent; color:#fff; border:0; font-size:1.2rem; min-width:40px; min-height:38px; border-radius:99px; }
+  #switcher span { text-align:center; padding:0 4px; }
+  body.v-C #switcher { bottom:calc(var(--tab) + 10px + env(safe-area-inset-bottom)); }
+
+  @media (min-width:760px) {
+    h1 { font-size:2rem; }
+    .wrap { padding:0 28px; }
+    body.v-C .tabs { position:static; height:auto; display:flex; gap:4px; border:0; background:none; padding:0; }
+    body.v-C .tabs a { flex-direction:row; font-size:.92rem; padding:8px 12px; border-radius:8px; gap:6px; }
+    body.v-C .tabs a.on { background:var(--acc-soft); color:var(--acc-ink); }
+    body.v-C .tabs a.on::before { display:none; }
+    body.v-C .tabs .ponto { position:static; }
+    body.v-C main { padding-bottom:140px; }
+    body.v-C #switcher { bottom:18px; }
+    .folha { left:auto; right:0; top:0; bottom:0; width:min(560px, 92vw); height:auto; max-height:none; border-radius:16px 0 0 16px; transform:translateX(100%); }
+    .folha .alca { display:none; }
+    .temas { grid-template-columns:1fr 1fr; gap:32px; }
+    .wrap.largo { max-width:1040px; }
+  }
+  @media (min-width:760px) { #tabs { display:none !important; } }
+  @media (max-width:759px) {
+    .top .nav.desk { display:none; }
+    body.v-C .top .tabs-desk { display:none; }
+    body.v-A .top .wrap { flex-wrap:nowrap; }
+    body.v-A .marca small { display:none; }
+    .chip-perfil { max-width:62vw; }
+  }
+</style>
+</head>
+<body>
+<div class="prot">Protótipo descartável · textos e números de exemplo · as Fichas ainda contam como ⬜</div>
+<div id="topo"></div>
+<main id="app"></main>
+<nav class="tabs" id="tabs" aria-label="Seções"></nav>
+<div id="folha-raiz"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="switcher"><button id="prev" aria-label="Variante anterior">‹</button><span id="vlabel"></span><button id="next" aria-label="Próxima variante">›</button></div>
+
+<script>
+// =====================================================================
+// CONTEÚDO DE EXEMPLO (no site, viria de guias/<tema>/<slug>.md, #10)
+// =====================================================================
+const TEMAS = [
+  { slug:'onde-conhecer-pessoas', titulo:'Onde conhecer pessoas',
+    contexto:'Onde os casais se conhecem, se o lugar muda alguma coisa e onde vale a pena tentar. Quase todos os dados são de fora do Brasil, e cada Guia diz isso.',
+    guias:['onde-os-casais-se-conhecem','o-lugar-muda-a-relacao','app-ou-presencial','com-que-idade-se-casa'] },
+  { slug:'escolher-parceiro', titulo:'Escolher parceiro',
+    contexto:'O que se sabe sobre o que prevê atração, satisfação e duração, e quanto os seus Requisitos estreitam o grupo de pessoas possíveis.',
+    guias:['que-caracteristicas-preveem','precisamos-ser-parecidos','o-que-digo-querer','aparencia-e-dinheiro','meus-requisitos-sao-exigentes'] },
+];
+// cobre: o que a amostra cobriu (#5). Dimensão ausente = o estudo não separou por ela.
+// casal: proposta deste protótipo; as listas do #5 sozinhas deixam "homem que procura homens" casar com estudo de casais héteros.
+const HETERO = { generos:['homem','mulher'], procura:['homens','mulheres'], casal:'hetero' };
+const G = {
+  'onde-os-casais-se-conhecem': { tema:'onde-conhecer-pessoas', pergunta:'Onde os casais se conhecem hoje?', conf:'moderada',
+    curta:'Nos EUA, a internet virou o lugar mais comum: perto de 4 em cada 10 casais de 2017 se conheceram online. Fora dos EUA a fatia é bem menor, abaixo de 9% na França e perto de 11% no Reino Unido. No Brasil não há pesquisa representativa.',
+    achados:[
+      { t:'Nos EUA, cerca de 39% dos casais héteros formados em 2017 se conheceram pela internet.', f:'rosenfeld-2019', am:'EUA, 2017, casais héteros', cobre:{...HETERO, idades:{min:18,max:80}} },
+      { t:'Entre casais do mesmo sexo nos EUA, conhecer-se online é ainda mais comum: a maioria.', f:'rosenfeld-2019', am:'EUA, 2017, casais do mesmo sexo', cobre:{ generos:['homem','mulher'], procura:['homens','mulheres'], casal:'mesmo-sexo' } },
+      { t:'Na França, menos de 9% dos casais formados até 2013 se conheceram em sites ou apps.', f:'bergstrom-2016', am:'França, 2013', cobre:{...HETERO, idades:{min:26,max:65}} },
+      { t:'No Reino Unido, perto de 11% dos casais recentes se conheceram online.', f:'lampard-2020', am:'Reino Unido, 2010–2012', cobre:{...HETERO, idades:{min:16,max:74}} },
+    ],
+    varia:'Os dados americanos separam casais héteros e do mesmo sexo. Os europeus não separam idade dentro do casal. Nenhum separa quem tem outra identidade de gênero.',
+    mitos:['"Mais da metade dos casais já se conhece por app": o número vem de 117 e 74 casais da pesquisa americana depois de 2020 e não foi publicado.'],
+    limites:'Não existe pesquisa representativa no Brasil. O estudo brasileiro mais próximo (Kowal 2025) tem 119 pessoas e não mede onde o país todo se conhece.',
+    fichas:['rosenfeld-2019','bergstrom-2016','lampard-2020','kowal-2025'],
+    rel:['o-lugar-muda-a-relacao','app-ou-presencial','com-que-idade-se-casa'] },
+  'o-lugar-muda-a-relacao': { tema:'onde-conhecer-pessoas', pergunta:'O lugar onde nos conhecemos muda a relação?', conf:'moderada',
+    curta:'Pelo que se sabe, não. Estudos que acompanham casais por anos não acham mais término entre quem se conheceu online. O único estudo com brasileiros também não achou diferença, mas é pequeno.',
+    achados:[
+      { t:'Nos EUA, casais que se conheceram online não terminaram mais que os outros nos anos seguintes.', f:'rosenfeld-2017', am:'EUA, 2009–2015', cobre:{...HETERO} },
+      { t:'Na Suíça, casais formados online tinham planos de morar junto e de ter filhos parecidos com os dos outros.', f:'potarca-2020', am:'Suíça, 2018', cobre:{...HETERO, idades:{min:18,max:65}} },
+      { t:'Com 119 brasileiros, não houve diferença de satisfação entre quem se conheceu online e presencialmente.', f:'kowal-2025', am:'Brasil e outros países, 2023', cobre:{ idades:{min:18,max:60} } },
+    ],
+    varia:'Só o estudo com brasileiros não separa por gênero. Os outros são de casais héteros.',
+    mitos:[], limites:'Quem se conhece online pode ser diferente de quem se conhece no bar. Os estudos tentam descontar isso, mas não dá para descartar de todo.',
+    fichas:['rosenfeld-2017','potarca-2020','kowal-2025'],
+    rel:['onde-os-casais-se-conhecem','precisamos-ser-parecidos'] },
+  'app-ou-presencial': { tema:'onde-conhecer-pessoas', pergunta:'App ou presencial: onde tenho mais chance?', conf:'fraca',
+    curta:'Ninguém sabe ao certo. Não há estudo que compare, para a mesma pessoa, a chance de começar um relacionamento em cada lugar. O que existe são pesquisas de uso: muita gente usa app, e uma parte menor diz ter achado uma relação séria ali.',
+    achados:[
+      { t:'Nos EUA, 3 em cada 10 adultos já usaram app ou site de namoro, e 1 em cada 10 diz ter tido uma relação séria a partir dele.', f:'pew-2023', am:'EUA, 2022', cobre:{...HETERO, idades:{min:18,max:80}} },
+      { t:'Em apps, poucos perfis concentram a maior parte dos likes.', f:'tyson-2016', am:'Reino Unido, 2016', cobre:{ generos:['homem','mulher'], procura:['homens','mulheres'], idades:{min:18,max:40} } },
+    ],
+    varia:'Os padrões de like mudam muito entre homens e mulheres. Os dados de casais do mesmo sexo são escassos.',
+    mitos:[], limites:'Pesquisa de uso não diz qual lugar funciona melhor para você.',
+    fichas:['pew-2023','tyson-2016'],
+    rel:['onde-os-casais-se-conhecem','meus-requisitos-sao-exigentes'] },
+  'com-que-idade-se-casa': { tema:'onde-conhecer-pessoas', pergunta:'Estou atrasado? Com que idade se casa no Brasil?', conf:'forte',
+    curta:'No Brasil, a idade média no primeiro casamento civil fica perto dos 30 anos, e vem subindo. Casar depois disso é comum.',
+    achados:[
+      { t:'A idade média no casamento civil subiu ao longo da última década, para homens e para mulheres.', f:'ibge-2024', am:'Brasil, Registro Civil', cobre:{ generos:['homem','mulher'], procura:['homens','mulheres'], idades:{min:18,max:80}, brasil:true } },
+    ],
+    varia:'O Registro Civil conta casamentos, não uniões sem papel, e separa por sexo de quem casa.',
+    mitos:[], limites:'Muita gente vive junto sem casar no civil, e essas uniões não entram nesta conta.',
+    fichas:['ibge-2024'],
+    rel:['onde-os-casais-se-conhecem','meus-requisitos-sao-exigentes'] },
+  'que-caracteristicas-preveem': { tema:'escolher-parceiro', pergunta:'Que características do parceiro preveem um bom relacionamento?', conf:'moderada', calc:'prioridades',
+    curta:'Pouco do que dá para saber do parceiro antes prevê a satisfação. Num estudo com 43 bases de dados, como o casal vê a própria relação explicou cerca de 45% da satisfação, e as características do parceiro, cerca de 5%.',
+    dicas:['Dê menos peso às listas de exigências e mais a como a relação está sendo, depois de alguns meses.'],
+    achados:[
+      { t:'O que mais prevê a satisfação é como a pessoa vê a relação: compromisso, gratidão, sentir que o outro responde.', f:'joel-2020', am:'43 bases, sobretudo EUA e Europa', cobre:{...HETERO, idades:{min:18,max:80}} },
+      { t:'A personalidade inteira do parceiro explica de 1% a 3% da satisfação.', f:'dyrenforth-2010', am:'Austrália, Reino Unido, Alemanha', cobre:{...HETERO, idades:{min:18,max:80}} },
+      { t:'Para o fim de namoros, a personalidade quase não prevê.', f:'le-2010', am:'Meta-análise, maioria EUA, universitários', cobre:{ idades:{min:18,max:30} } },
+    ],
+    varia:'Quase todos os estudos são de casais héteros. Nenhum é brasileiro.',
+    mitos:[], limites:'Os estudos medem casais que já estão juntos. Não dizem como escolher entre duas pessoas que você ainda não conhece.',
+    fichas:['joel-2020','dyrenforth-2010','le-2010','malouff-2010'],
+    rel:['precisamos-ser-parecidos','o-que-digo-querer','meus-requisitos-sao-exigentes'] },
+  'precisamos-ser-parecidos': { tema:'escolher-parceiro', pergunta:'Precisamos ser parecidos?', conf:'moderada',
+    curta:'Ser parecido de fato quase não prevê satisfação: personalidades parecidas explicam menos de 0,5%. Sentir-se parecido prevê mais. Mesma religião e mesma escolaridade aparecem ligadas a um pouco menos de divórcio.',
+    achados:[
+      { t:'Ter personalidades parecidas explica menos de 0,5% da satisfação.', f:'dyrenforth-2010', am:'Austrália, Reino Unido, Alemanha', cobre:{...HETERO} },
+      { t:'Sentir-se parecido prevê atração; ser parecido de fato, em quem já está junto, não.', f:'montoya-2008', am:'Meta-análise, maioria EUA', cobre:{ idades:{min:18,max:30} } },
+      { t:'Nos EUA recentes, casais com a mesma escolaridade se divorciam um pouco menos.', f:'schwartz-2014', am:'EUA, 1980–2010', cobre:{...HETERO} },
+    ],
+    varia:'Os estudos de divórcio são de casais héteros casados no civil.',
+    mitos:[], limites:'Associação, não causa: casais parecidos podem diferir de outras formas.',
+    fichas:['dyrenforth-2010','montoya-2008','schwartz-2014','lehrer-1993'],
+    rel:['que-caracteristicas-preveem','o-que-digo-querer'] },
+  'o-que-digo-querer': { tema:'escolher-parceiro', pergunta:'O que eu digo querer é o que me atrai?', conf:'moderada',
+    curta:'Pouco. O que as pessoas dizem querer num parceiro prevê mal por quem elas se atraem ao vivo. Química sexual é o item mais subestimado.',
+    achados:[
+      { t:'As preferências declaradas antes de um speed dating não previram por quem a pessoa se interessou.', f:'eastwick-2008', am:'EUA, universitários', cobre:{...HETERO, idades:{min:18,max:30}} },
+      { t:'"Bom de cama" foi o 1º de 35 itens no que as pessoas revelam e só o 12º no que dizem.', f:'eastwick-2024', am:'EUA, adultos', cobre:{...HETERO, idades:{min:18,max:65}} },
+    ],
+    varia:'Os estudos são de héteros, em geral jovens. Para quem procura ambos, valem para um dos lados.',
+    mitos:[], limites:'Speed dating mede atração inicial, não relação longa.',
+    fichas:['eastwick-2008','eastwick-2024'],
+    rel:['aparencia-e-dinheiro','que-caracteristicas-preveem'] },
+  'aparencia-e-dinheiro': { tema:'escolher-parceiro', pergunta:'Aparência e dinheiro importam?', conf:'moderada',
+    curta:'Aparência pesa na atração, para homens e mulheres igualmente. No casamento, o efeito é pequeno e só aparece nos maridos, no começo. Renda pesa pouco na atração.',
+    achados:[
+      { t:'Quem é mais bonito atrai mais, e o efeito é igual para homens e mulheres.', f:'eastwick-2014', am:'Meta-análise, maioria EUA', cobre:{...HETERO, idades:{min:18,max:40}} },
+      { t:'Nos recém-casados, só os maridos ficam um pouco mais satisfeitos com uma esposa mais bonita, e só no começo.', f:'meltzer-2014', am:'EUA, recém-casados', cobre:{ generos:['homem'], procura:['mulheres'], idades:{min:18,max:40} } },
+      { t:'O que se associa a menos divórcio é o patrimônio do casal, não a renda de um dos dois.', f:'killewald-2023', am:'EUA, 1968–2019', cobre:{...HETERO} },
+    ],
+    varia:'O achado do casamento só vale para maridos de casais héteros recém-casados.',
+    mitos:[], limites:'Os estudos de atração usam fotos e encontros curtos.',
+    fichas:['eastwick-2014','meltzer-2014','killewald-2023'],
+    rel:['o-que-digo-querer','que-caracteristicas-preveem'] },
+  'meus-requisitos-sao-exigentes': { tema:'escolher-parceiro', pergunta:'Meus Requisitos são exigentes demais?', conf:'forte', calc:'grupo',
+    curta:'Depende de quais. Cada Requisito corta uma parte das pessoas, e alguns cortam muito mais que outros. A calculadora estima, com dados do IBGE, quantas pessoas no Brasil atendem a todos os seus.',
+    dicas:['Antes de cortar alguém por um Requisito, veja quanto ele encolhe o seu grupo.'],
+    achados:[
+      { t:'O Censo 2022 permite cruzar idade, cidade, união, escolaridade, renda, cor, religião e filhos de uma vez.', f:'ibge-censo-2022', am:'Brasil, 2022', cobre:{ generos:['homem','mulher'], procura:['homens','mulheres'], idades:{min:18,max:80}, brasil:true } },
+      { t:'Multiplicar porcentagens nacionais de cada Requisito erra até cerca de 60%, porque eles andam juntos.', f:'ibge-censo-2022', am:'Brasil, 2022', cobre:{ generos:['homem','mulher'], procura:['homens','mulheres'], brasil:true } },
+    ],
+    varia:'O Censo não mede orientação nem identidade de gênero. A orientação vem da PNS 2019, com faixa.',
+    mitos:[], limites:'"Solteiro" no Censo é "não mora com companheiro(a)", e isso inclui quem namora.',
+    fichas:['ibge-censo-2022','ibge-pns-2019'],
+    rel:['que-caracteristicas-preveem','com-que-idade-se-casa','app-ou-presencial'] },
+};
+const temaDe = slug => TEMAS.find(t => t.slug === G[slug].tema);
+const caminhoGuia = slug => `/${G[slug].tema}/${slug}`;
+
+// =====================================================================
+// MÓDULO PURO: Perfil e "vale para você" (#5)
+// =====================================================================
+function perfilVazio(p) { return !p.g && !p.p && p.idade == null; }
+function valePara(p, cobre) {
+  if (perfilVazio(p)) return null;               // sem Perfil: só a nota da amostra
+  if (p.g === 'outro') return cobre.generos ? false : true;
+  if (p.g && cobre.generos && !cobre.generos.includes(p.g)) return false;
+  if (p.p && cobre.procura) {
+    const quer = p.p === 'ambos' ? ['homens','mulheres'] : [p.p];
+    if (!quer.some(q => cobre.procura.includes(q))) return false;
+  }
+  if (cobre.casal && (p.g === 'homem' || p.g === 'mulher') && p.p && p.p !== 'ambos') {
+    const mesmo = (p.g === 'homem') === (p.p === 'homens');
+    if ((cobre.casal === 'hetero') === mesmo) return false;
+  }
+  if (p.idade != null && cobre.idades && (p.idade < cobre.idades.min || p.idade > cobre.idades.max)) return false;
+  return true;
+}
+function perfilTexto(p) {
+  if (perfilVazio(p)) return 'Perfil: não informado';
+  const g = { homem:'homem', mulher:'mulher', outro:'outro gênero' }[p.g] || '';
+  const q = p.p ? `procura ${p.p}` : '';
+  return [g, q, p.idade != null ? `${p.idade} anos` : ''].filter(Boolean).join(' · ');
+}
+
+// =====================================================================
+// MÓDULO PURO: Grupo possível (conta inventada; a real é a do #8)
+// =====================================================================
+const UF = { BR:['Brasil', 81e6], SP:['São Paulo', 17.6e6], RJ:['Rio de Janeiro', 6.6e6], MG:['Minas Gerais', 8.2e6], BA:['Bahia', 5.4e6], PE:['Pernambuco', 3.5e6] };
+const ESC = ['qualquer','ensino médio completo','superior completo'];
+function procuraEfetiva(p, gp) { return gp.procura || p.p || 'mulheres'; }
+function fatores(p, gp) {
+  const procura = procuraEfetiva(p, gp);
+  const f = [];
+  const anos = gp.imax - gp.imin + 1;
+  f.push({ id:'idade', nome:`Idade ${gp.imin}–${gp.imax}`, v: Math.min(1, anos / 63 * 1.25) });
+  if (gp.disp) f.push({ id:'disp', nome:'Não mora com companheiro(a)', v:0.46 });
+  if (gp.esc) f.push({ id:'esc', nome:`Escolaridade: ${ESC[gp.esc]}`, v:[1, 0.55, 0.21][gp.esc] });
+  if (gp.fuma) f.push({ id:'fuma', nome:'Não fuma', v:0.87, pns:true });
+  if (gp.alt > 0) {
+    const [m, s] = procura === 'homens' ? [171, 7] : procura === 'mulheres' ? [159, 6.5] : [165, 9];
+    const z = (gp.alt - m) / s, cdf = 1 / (1 + Math.exp(-1.702 * z));
+    f.push({ id:'alt', nome:`Altura de ${gp.alt} cm ou mais`, v:Math.max(0.005, 1 - cdf), pns:true });
+  }
+  if (gp.filhos && procura === 'mulheres') f.push({ id:'filhos', nome:'Sem filhos', v:0.52 });
+  if (gp.filhos && procura === 'ambos') f.push({ id:'filhos', nome:'Sem filhos (só mulheres)', v:0.76 });
+  if (p.g && p.g !== 'outro' && p.p) {
+    const igual = (p.g === 'homem' && procura === 'homens') || (p.g === 'mulher' && procura === 'mulheres');
+    const v = procura === 'ambos' ? 0.5 : igual ? 0.03 : 0.95;
+    f.push({ id:'orient', nome:'Orientação compatível (do Perfil)', v, pns:true, fixo:true });
+  }
+  return f;
+}
+function estimar(p, gp) {
+  const procura = procuraEfetiva(p, gp);
+  const base = UF[gp.uf][1] * (procura === 'ambos' ? 2 : 1);
+  const fs = fatores(p, gp);
+  const c = fs.reduce((a, x) => a * x.v, base);
+  const largura = 0.06 + 0.05 * fs.filter(x => x.pns).length;
+  const pesa = fs.filter(x => !x.fixo).map(x => ({ nome:x.nome, vezes:1 / x.v })).sort((a, b) => b.vezes - a.vezes);
+  return { c, lo:c * (1 - largura), hi:c * (1 + largura), pesa, procura, instavel: c < 2000, teto: p.g === 'outro' || !p.g };
+}
+function arred(n) {
+  if (n < 1) return '0';
+  const d = Math.pow(10, Math.max(0, Math.floor(Math.log10(n)) - 1));
+  const r = Math.round(n / d) * d;
+  if (r >= 1e6) return (r / 1e6).toLocaleString('pt-BR', { maximumFractionDigits:1 }) + ' milhões';
+  if (r >= 1e3) return (r / 1e3).toLocaleString('pt-BR', { maximumFractionDigits:0 }) + ' mil';
+  return r.toLocaleString('pt-BR');
+}
+
+// =====================================================================
+// MÓDULO PURO: Prioridades (degraus do #9, recorte)
+// =====================================================================
+const DEG = ['não sabemos','quase nada','pesa pouco','pesa'];
+const CARS = {
+  aparencia:{ nome:'Aparência', n:{ atracao:3, satisfacao:2, duracao:0 } },
+  sexo:{ nome:'Química sexual', n:{ atracao:3, satisfacao:3, duracao:0 } },
+  renda:{ nome:'Renda', n:{ atracao:2, satisfacao:0, duracao:0 } },
+  calma:{ nome:'Calma, estabilidade emocional', n:{ atracao:2, satisfacao:2, duracao:1 } },
+  gentileza:{ nome:'Gentileza', n:{ atracao:0, satisfacao:2, duracao:1 } },
+  parecido:{ nome:'Ser parecido comigo', n:{ atracao:1, satisfacao:1, duracao:0 } },
+  religiao:{ nome:'Mesma religião', n:{ atracao:0, satisfacao:0, duracao:2 } },
+  idade:{ nome:'Idade parecida', n:{ atracao:0, satisfacao:0, duracao:0 } },
+};
+const DESF = { atracao:'Atração', satisfacao:'Satisfação', duracao:'Duração' };
+function alertas(pr) { return pr.ordem.slice(0, 3).filter(id => CARS[id].n[pr.desf] <= 1); }
+
+// =====================================================================
+// ESTADO (em memória; no site, localStorage pelo ADR 0001)
+// =====================================================================
+const VARIANTES = [['A','Chip no topo'], ['B','Perfil onde importa'], ['C','Abas e folha']];
+const st = {
+  v: new URLSearchParams(location.search).get('v') || 'A',
+  perfil: { g:'', p:'', idade:null },
+  gp: { procura:null, imin:null, imax:null, uf:'SP', disp:true, esc:0, fuma:false, alt:0, filhos:false },
+  pr: { ordem:['aparencia','renda','parecido','gentileza','calma','sexo','religiao','idade'], desf:'satisfacao', mexeu:false },
+  painelPerfil: false,       // A: painel aberto sob o chip
+  formB: false,              // B: formulário aberto no lugar
+  ultimoGuia: null,          // C: a aba Guias volta ao último Guia lido
+  restaurado: null,
+};
+function idadePadrao() {
+  if (st.gp.imin == null) {
+    const i = st.perfil.idade ?? 27;
+    st.gp.imin = Math.max(18, i - 5); st.gp.imax = Math.min(80, i + 5);
+  }
+}
+
+// =====================================================================
+// ROTAS E HISTÓRICO
+// =====================================================================
+function rota() {
+  const h = location.hash.slice(1) || '/';
+  const [path, q] = h.split('?');
+  return { path, folha: new URLSearchParams(q || '').get('folha') };
+}
+function pagina(path) {
+  const seg = path.split('/').filter(Boolean);
+  if (!seg.length) return { tipo:'inicio' };
+  if (seg[0] === 'grupo-possivel') return { tipo:'grupo' };
+  if (seg[0] === 'prioridades') return { tipo:'prioridades' };
+  if (seg[0] === 'voce') return { tipo:'voce' };
+  if (seg.length === 1) return TEMAS.find(t => t.slug === seg[0]) ? { tipo:'tema', tema:seg[0] } : { tipo:'404' };
+  return G[seg[1]] ? { tipo:'guia', slug:seg[1] } : { tipo:'404' };
+}
+// Antes de sair de uma página, a entrada atual do histórico guarda rolagem e seções abertas.
+function salvarPonto() {
+  const abertas = [...document.querySelectorAll('#app details[open][id]')].map(d => d.id);
+  const folhaEl = document.querySelector('.folha .corpo');
+  history.replaceState({ ...(history.state || {}), scroll: scrollY, abertas, folhaScroll: folhaEl ? folhaEl.scrollTop : null }, '');
+}
+let vindoDe = null, ultimaBase = null;
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#/"]');
+  if (!a || e.metaKey || e.ctrlKey) return;
+  salvarPonto();
+  vindoDe = rota();
+}, true);
+window.addEventListener('hashchange', () => {
+  if (vindoDe) { history.replaceState({ de: vindoDe.folha ? null : vindoDe.path }, ''); vindoDe = null; }
+  navegar();
+});
+history.scrollRestoration = 'manual';
+
+function navegar() {
+  const r = rota();
+  // C: abrir/fechar a folha não refaz a página de baixo, que fica onde estava.
+  if (st.v === 'C' && ultimaBase === r.path + '|C') { folha(r.folha, history.state && history.state.folhaScroll); mostrarEstado(); return; }
+  desenhar();
+  const hs = history.state;
+  if (hs && hs.scroll != null) {
+    (hs.abertas || []).forEach(id => { const d = document.getElementById(id); if (d) d.open = true; });
+    requestAnimationFrame(() => {
+      scrollTo(0, hs.scroll);
+      if (hs.scroll > 120) aviso('Voltou para onde você estava');
+    });
+    st.restaurado = { scroll: hs.scroll, abertas: hs.abertas };
+  } else { scrollTo(0, 0); st.restaurado = null; }
+  folha(r.folha, hs && hs.folhaScroll);
+  mostrarEstado();
+}
+// Mudança de estado (Perfil, calculadora) refaz a página sem mexer na rolagem.
+function redesenhar() {
+  const y = scrollY, abertas = [...document.querySelectorAll('#app details[open][id]')].map(d => d.id);
+  const foco = document.activeElement && document.activeElement.dataset.foco;
+  desenhar();
+  abertas.forEach(id => { const d = document.getElementById(id); if (d) d.open = true; });
+  scrollTo(0, y);
+  if (foco) { const el = document.querySelector(`[data-foco="${foco}"]`); if (el) el.focus(); }
+  mostrarEstado();
+}
+
+// =====================================================================
+// PEÇAS
+// =====================================================================
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+const IC = {
+  pessoa:'<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>',
+  livro:'<svg class="ic" viewBox="0 0 24 24"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z"/></svg>',
+  grupo:'<svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="9" r="2.6"/><circle cx="16" cy="9" r="2.6"/><path d="M3 19c.8-2.8 2.8-4.3 5-4.3s4.2 1.5 5 4.3M11 19c.8-2.8 2.8-4.3 5-4.3s4.2 1.5 5 4.3"/></svg>',
+  ordem:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 5l1 1 2-2M4 11l1 1 2-2M4 17l1 1 2-2"/></svg>',
+  seta:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>',
+  volta:'<svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>',
+  cima:'<svg class="ic" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg>',
+  baixo:'<svg class="ic" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
+  x:'<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  abrir:'<svg class="ic" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+};
+function formPerfil(ctx, extra = '') {
+  const p = st.perfil, r = (n, v, t) => `<label><input type="radio" name="${ctx}-${n}" value="${v}" data-pf="${n}" ${p[n] === v ? 'checked' : ''}><span>${t}</span></label>`;
+  return `<div class="pf">
+    <fieldset><legend>Seu gênero</legend><div class="seg">${r('g','homem','Homem')}${r('g','mulher','Mulher')}${r('g','outro','Outro')}</div></fieldset>
+    <fieldset><legend>Quem você procura</legend><div class="seg">${r('p','homens','Homens')}${r('p','mulheres','Mulheres')}${r('p','ambos','Ambos')}</div></fieldset>
+    <div><label class="pf-l" for="${ctx}-idade" style="font-weight:600;font-size:.95rem">Sua idade</label>
+      <div class="idade"><input id="${ctx}-idade" type="number" inputmode="numeric" min="18" max="99" value="${p.idade ?? ''}" data-pf="idade" data-foco="${ctx}-idade" placeholder="18+"><span class="muted small">anos</span></div></div>
+    <div class="acoes">${extra}${perfilVazio(p) ? '' : `<button class="btn link" data-acao="apagar-perfil">Apagar Perfil</button>`}</div>
+    <p class="tiny muted" style="margin:0">Opcional. Fica só neste navegador. Não esconde nada: só marca o que vale para você.</p>
+  </div>`;
+}
+function selo(f) { return `<a class="ficha" href="#" data-acao="ficha">${esc(f)}</a> <span class="tiny muted">⬜ exemplo</span>`; }
+function htmlAchado(a) {
+  const v = valePara(st.perfil, a.cobre);
+  return `<li class="achado ${v ? 'seu' : ''}">${v ? '<span class="vale">vale para você</span>' : ''}${esc(a.t)}
+    <span class="amostra">vale para: ${esc(a.am)} · ${selo(a.f)}</span>
+    ${v === false ? `<span class="naovale">Não há dado deste estudo para o seu Perfil.</span>` : ''}</li>`;
+}
+function avisoGuia(g) {
+  if (perfilVazio(st.perfil)) return '';
+  const algum = g.achados.some(a => valePara(st.perfil, a.cobre));
+  return algum ? '' : `<div class="aviso">Nenhum estudo deste Guia separou o seu Perfil (${esc(perfilTexto(st.perfil))}). O que segue vem de outras amostras.</div>`;
+}
+function relHtml(g, modo) {
+  return `<ul class="rel ${modo === 'B' ? 'grande' : ''}">${g.rel.map(s => {
+    const alvo = modo === 'C' ? `#${rota().path}?folha=${s}` : `#${caminhoGuia(s)}`;
+    return `<li><a href="${alvo}"><span>${esc(G[s].pergunta)}<small>${esc(G[s].curta.split('. ')[0])}.</small></span>${IC.seta}</a></li>`;
+  }).join('')}</ul>`;
+}
+function secao(id, titulo, corpo, aberto = false) {
+  return `<details class="sec" id="${id}" ${aberto ? 'open' : ''}><summary>${titulo}</summary><div>${corpo}</div></details>`;
+}
+
+// ---------- calculadoras ----------
+function calcGrupo(onde) {
+  idadePadrao();
+  const p = st.perfil, gp = st.gp, e = estimar(p, gp);
+  const doPerfil = !gp.procura && p.p;
+  const op = (v, t) => `<option value="${v}" ${procuraEfetiva(p, gp) === v ? 'selected' : ''}>${t}</option>`;
+  const filhosDes = e.procura === 'homens';
+  const perfilB = st.v === 'B' && onde === 'pagina' ? `<div class="origem"><b>Primeiro, quem é você?</b> A orientação sai daqui e não é perguntada.${formPerfil('gpb')}</div>` : '';
+  return `<section class="calc" id="calc-grupo" aria-label="Grupo possível">
+    <div class="cab"><h2>Grupo possível</h2>${onde === 'guia' ? '<a class="small" href="#/grupo-possivel">abrir sozinha</a>' : ''}</div>
+    ${perfilB}
+    ${st.v !== 'B' || onde !== 'pagina' ? `<div class="origem">${perfilVazio(p) ? 'Sem Perfil: contando todos do gênero escolhido, sem descontar orientação.' : `Ponto de partida do seu Perfil: ${esc(perfilTexto(p))}. Dá para mudar aqui sem mudar o Perfil.`}</div>` : ''}
+    <div class="gp-res" aria-live="polite" id="gp-res">${resGrupo(e)}</div>
+    <div class="gp-ctl">
+      <div><label class="l" for="gp-procura">Procurando</label>
+        <select id="gp-procura" data-gp="procura" data-foco="gp-procura">${op('homens','homens')}${op('mulheres','mulheres')}${op('ambos','homens e mulheres')}</select>
+        ${doPerfil ? '<span class="tiny muted"> do seu Perfil</span>' : ''}</div>
+      <div><label class="l" for="gp-uf">Onde</label><select id="gp-uf" data-gp="uf" data-foco="gp-uf">${Object.entries(UF).map(([k, [n]]) => `<option value="${k}" ${gp.uf === k ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+      <div><label class="l" for="gp-imin">Idade: <span id="gp-il">${gp.imin} a ${gp.imax}</span></label>
+        <input id="gp-imin" type="range" min="18" max="80" value="${gp.imin}" data-gp="imin" data-foco="gp-imin" aria-label="Idade mínima">
+        <input id="gp-imax" type="range" min="18" max="80" value="${gp.imax}" data-gp="imax" data-foco="gp-imax" aria-label="Idade máxima"></div>
+      <label class="chk"><input type="checkbox" data-gp="disp" data-foco="gp-disp" ${gp.disp ? 'checked' : ''}> Não mora com companheiro(a)</label>
+      <div><label class="l" for="gp-esc">Escolaridade mínima</label><select id="gp-esc" data-gp="esc" data-foco="gp-esc">${ESC.map((t, i) => `<option value="${i}" ${gp.esc === i ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+      <div><label class="l" for="gp-alt">Altura mínima: <span id="gp-al">${gp.alt ? gp.alt + ' cm' : 'qualquer'}</span></label>
+        <input id="gp-alt" type="range" min="0" max="195" step="5" value="${gp.alt}" data-gp="alt" data-foco="gp-alt"></div>
+      <label class="chk"><input type="checkbox" data-gp="fuma" data-foco="gp-fuma" ${gp.fuma ? 'checked' : ''}> Não fuma</label>
+      <label class="chk ${filhosDes ? 'des' : ''}"><input type="checkbox" data-gp="filhos" data-foco="gp-filhos" ${gp.filhos && !filhosDes ? 'checked' : ''} ${filhosDes ? 'disabled' : ''}> Sem filhos
+        ${filhosDes ? '<span class="tiny">· o Censo não pergunta filhos aos homens</span>' : e.procura === 'ambos' ? '<span class="tiny muted">· vale só para as mulheres</span>' : ''}</label>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" data-acao="compartilhar">Compartilhar</button><span class="tiny muted">O link leva o Perfil e os Requisitos (ADR 0001).</span></div>
+  </section>`;
+}
+function resGrupo(e) {
+  return `<div class="small muted">Pessoas no Brasil que atendem a tudo</div>
+    <div class="faixa">entre ${arred(e.lo)} e ${arred(e.hi)}</div>
+    <div class="tiny muted">estimativa central ${arred(e.c)}${e.instavel ? ' · <b>instável</b>: poucos registros' : ''}</div>
+    ${e.teto ? '<div class="tiny" style="margin-top:6px;color:var(--warn)">Sem gênero no Perfil (ou "outro"), a conta não desconta orientação: o número é um teto.</div>' : ''}
+    ${e.pesa.length ? `<div class="small" style="margin-top:10px;font-weight:600">O que mais pesa (se soltar só este)</div>
+      <ul class="pesa">${e.pesa.slice(0, 3).map(x => `<li><span>${esc(x.nome)}</span><b>×${x.vezes.toLocaleString('pt-BR', { maximumFractionDigits:1 })}</b></li>`).join('')}</ul>` : ''}`;
+}
+function calcPrio(onde) {
+  const pr = st.pr, al = alertas(pr);
+  const vies = st.perfil.g === 'mulher' ? 'Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.'
+             : st.perfil.g === 'homem' ? 'Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.' : '';
+  return `<section class="calc" id="calc-prio" aria-label="Prioridades vs. evidência">
+    <div class="cab"><h2>Suas prioridades vs. a evidência</h2>${onde === 'guia' ? '<a class="small" href="#/prioridades">abrir sozinha</a>' : ''}</div>
+    <p class="small muted" style="margin-top:0">Ordene do que mais importa para você ao que menos. A evidência não dá posição: diz se pesa.</p>
+    <div class="seg3" role="group" aria-label="Desfecho">${Object.entries(DESF).map(([k, t]) => `<button data-desf="${k}" data-foco="desf-${k}" class="${pr.desf === k ? 'on' : ''}" aria-pressed="${pr.desf === k}">${t}</button>`).join('')}</div>
+    ${pr.desf === 'satisfacao' ? `<div class="joel">Como o casal se trata explica cerca de 45% da satisfação. Tudo o que se sabe do parceiro, cerca de 5%.<div class="barra" aria-hidden="true"><i style="width:45%;background:var(--acc)"></i><i style="width:5%;background:#e08a1e"></i></div></div>` : ''}
+    ${al.length ? `<div class="aviso">No seu topo 3, ${al.map(id => CARS[id].nome.toLowerCase()).join(' e ')} ${al.length > 1 ? 'pesam' : 'pesa'} quase nada ou não ${al.length > 1 ? 'têm' : 'tem'} boa evidência para ${DESF[pr.desf].toLowerCase()}.</div>` : ''}
+    <ol class="pr-lista">${pr.ordem.map((id, i) => {
+      const n = CARS[id].n[pr.desf];
+      return `<li class="pr-it ${i < 3 && n <= 1 ? 'alerta' : ''}"><span class="pos">${i + 1}</span><span class="nm">${esc(CARS[id].nome)}</span>
+        <span class="nivel n${n}">${DEG[n]}</span>
+        <button class="mv" data-mover="${id}:-1" data-foco="up-${id}" aria-label="Subir ${esc(CARS[id].nome)}" ${i === 0 ? 'disabled' : ''}>${IC.cima}</button>
+        <button class="mv" data-mover="${id}:1" data-foco="dn-${id}" aria-label="Descer ${esc(CARS[id].nome)}" ${i === pr.ordem.length - 1 ? 'disabled' : ''}>${IC.baixo}</button></li>`;
+    }).join('')}</ol>
+    ${vies ? `<p class="small muted">${vies}</p>` : ''}
+    <div class="row" style="margin-top:12px"><button class="btn" data-acao="compartilhar">Compartilhar</button></div>
+  </section>`;
+}
+function previaCalc(g) {          // B: prévia no Guia, que leva à página da calculadora
+  if (g.calc === 'grupo') {
+    idadePadrao(); const e = estimar(st.perfil, st.gp);
+    return `<a class="calc-card" href="#/grupo-possivel"><div class="t">Faça a conta: Grupo possível</div>
+      <div class="num">entre ${arred(e.lo)} e ${arred(e.hi)}</div>
+      <div class="small muted">${perfilVazio(st.perfil) ? 'Hoje: mulheres de 22 a 32 em São Paulo, só de exemplo. Diga quem procura e seus Requisitos.' : `Com o seu Perfil e os Requisitos de agora (${esc(UF[st.gp.uf][0])}, ${st.gp.imin} a ${st.gp.imax}).`}</div>
+      <div class="ir">Ajustar os Requisitos ${IC.seta}</div></a>`;
+  }
+  const al = alertas(st.pr);
+  return `<a class="calc-card" href="#/prioridades"><div class="t">Compare: suas prioridades vs. a evidência</div>
+    <div class="small" style="margin-top:6px">${st.pr.mexeu ? `Seu topo 3: ${st.pr.ordem.slice(0, 3).map(id => CARS[id].nome).join(', ')}.${al.length ? ` ${al.length} dele${al.length > 1 ? 's' : ''} pesa${al.length > 1 ? 'm' : ''} quase nada para ${DESF[st.pr.desf].toLowerCase()}.` : ''}` : 'Ordene 8 características e veja quais pesam para atração, satisfação e duração.'}</div>
+    <div class="ir">${st.pr.mexeu ? 'Continuar' : 'Começar'} ${IC.seta}</div></a>`;
+}
+function atalhoAba(g) {           // C: o Guia aponta para a aba da calculadora
+  const t = g.calc === 'grupo' ? ['Grupo possível', '#/grupo-possivel', 'A calculadora fica na aba Grupo possível, com o seu Perfil.']
+                               : ['Prioridades', '#/prioridades', 'A comparação fica na aba Prioridades.'];
+  return `<a class="calc-card" href="${t[1]}"><div class="t">${t[0]}</div><div class="small muted">${t[2]}</div><div class="ir">Ir para a aba ${IC.seta}</div></a>`;
+}
+
+// =====================================================================
+// PÁGINAS
+// =====================================================================
+function pgInicio() {
+  return `<div class="wrap largo">
+    <h1 style="margin-top:20px">O que os estudos dizem sobre onde conhecer pessoas e como escolher parceiro.</h1>
+    <p class="muted">Cada resposta aponta para o estudo de onde saiu, e diz quando a evidência não sabe.</p>
+    ${st.v === 'C' ? '' : `<div class="atalhos"><a href="#/grupo-possivel"><b>Grupo possível</b><span>Quantas pessoas atendem aos seus Requisitos</span></a><a href="#/prioridades"><b>Prioridades</b><span>O que você valoriza vs. o que prevê</span></a></div>`}
+    <div class="temas">${TEMAS.map(t => `<section><h2><a href="#/${t.slug}" style="color:inherit;text-decoration:none">${t.titulo}</a></h2>
+      <ul class="perg">${t.guias.map(s => `<li><a href="#${caminhoGuia(s)}"><b>${esc(G[s].pergunta)}</b><span>${esc(G[s].curta)}</span></a></li>`).join('')}</ul></section>`).join('')}</div>
+  </div>`;
+}
+function pgTema(slug) {
+  const t = TEMAS.find(x => x.slug === slug);
+  return `<div class="wrap"><div class="migalha"><a href="#/">Início</a></div><h1>${t.titulo}</h1><p class="muted">${t.contexto}</p>
+    <ul class="perg">${t.guias.map(s => `<li><a href="#${caminhoGuia(s)}"><b>${esc(G[s].pergunta)}</b><span>${esc(G[s].curta)}</span></a></li>`).join('')}</ul></div>`;
+}
+function corpoGuia(slug, emFolha = false) {
+  const g = G[slug], t = temaDe(slug), v = st.v;
+  const de = !emFolha && history.state && history.state.de && pagina(history.state.de).tipo === 'guia' ? pagina(history.state.de).slug : null;
+  let calc = '';
+  if (g.calc && !emFolha) calc = v === 'A' ? (g.calc === 'grupo' ? calcGrupo('guia') : calcPrio('guia')) : v === 'B' ? previaCalc(g) : atalhoAba(g);
+  if (g.calc && emFolha) calc = atalhoAba(g);
+  const pedirPerfilB = v === 'B' && perfilVazio(st.perfil)
+    ? `<p class="small" style="margin:10px 2px 0"><a href="#" data-acao="ir-perfil">Diga seu Perfil e veja o que vale para você</a> <span class="muted">· opcional</span></p>` : '';
+  let perfilSec = `<p>${esc(g.varia)}</p>`;
+  if (v === 'B') {
+    perfilSec += perfilVazio(st.perfil) || st.formB
+      ? `<div class="curta" style="margin-top:10px">${formPerfil('b-' + slug, `<button class="btn pri" data-acao="fechar-formB">Pronto</button>`)}</div>`
+      : `<div class="row small" style="margin-top:8px"><span>Seu Perfil: <b>${esc(perfilTexto(st.perfil))}</b></span><button class="btn link" data-acao="abrir-formB">mudar</button></div>`;
+  }
+  if (v === 'C' && !emFolha) perfilSec += `<p class="small">${perfilVazio(st.perfil) ? 'Para marcar o que vale para você, preencha a aba <a href="#/voce">Você</a>.' : `Seu Perfil: <b>${esc(perfilTexto(st.perfil))}</b> · <a href="#/voce">mudar na aba Você</a>`}</p>`;
+  const k = emFolha ? 'f-' : '';
+  return `${de && v === 'B' ? `<button class="voltar" data-acao="voltar">${IC.volta}<span>Voltar para <b>${esc(G[de].pergunta)}</b></span></button>` : ''}
+    ${emFolha ? '' : `<div class="migalha"><a href="#/">Início</a> › <a href="#/${t.slug}">${t.titulo}</a></div>`}
+    <h1>${esc(g.pergunta)}</h1>
+    ${avisoGuia(g)}
+    <div class="curta"><p>${esc(g.curta)}</p><span class="conf">Confiança ${g.conf}</span></div>
+    ${pedirPerfilB}
+    ${g.dicas ? `<h2>Dicas</h2><ul class="lista">${g.dicas.map(d => `<li class="achado">${esc(d)} <span class="amostra">Dica · Força moderada</span></li>`).join('')}</ul>` : ''}
+    ${calc}
+    <h2>O que a evidência diz</h2><ul class="lista">${g.achados.map(htmlAchado).join('')}</ul>
+    <h2 id="${k}varia">Varia conforme o Perfil?</h2>${perfilSec}
+    <div style="margin-top:20px">
+    ${g.mitos.length ? secao(k + 'sec-mitos', 'O que circula por aí e não se sustenta', g.mitos.map(m => `<p>${esc(m)}</p>`).join('')) : ''}
+    ${secao(k + 'sec-lim', 'Limitações e o que não se sabe', `<p>${esc(g.limites)}</p>`)}
+    ${secao(k + 'sec-fichas', `Fichas citadas (${g.fichas.length})`, `<ul class="lista">${g.fichas.map(f => `<li>${selo(f)} <span class="tiny muted">· Força moderada</span></li>`).join('')}</ul>`)}
+    </div>
+    <h2>Perguntas relacionadas</h2>${relHtml(g, emFolha ? 'C' : v)}`;
+}
+function pgGuia(slug) { if (st.v === 'C') st.ultimoGuia = slug; return `<div class="wrap">${corpoGuia(slug)}</div>`; }
+function pgCalc(tipo) {
+  const host = tipo === 'grupo' ? 'meus-requisitos-sao-exigentes' : 'que-caracteristicas-preveem';
+  const g = G[host];
+  return `<div class="wrap">
+    ${st.v === 'C' ? '' : `<div class="migalha"><a href="#/">Início</a></div>`}
+    <h1>${tipo === 'grupo' ? 'Grupo possível' : 'Prioridades vs. evidência'}</h1>
+    ${tipo === 'grupo' ? calcGrupo('pagina') : calcPrio('pagina')}
+    <div class="curta"><p class="small muted" style="margin:0 0 4px">Do Guia "${esc(g.pergunta)}"</p><p>${esc(g.curta)}</p>
+      <a href="#${caminhoGuia(host)}">Ler o Guia inteiro</a></div></div>`;
+}
+function pgVoce() {
+  return `<div class="wrap"><h1>Você</h1>
+    <p class="muted">Seu Perfil marca, em todos os Guias, o que vale para você, e é o ponto de partida do Grupo possível. Nada some.</p>
+    <div class="curta">${formPerfil('voce')}</div>
+    <h2>Onde ele está valendo</h2>
+    <ul class="lista">${['meus-requisitos-sao-exigentes','aparencia-e-dinheiro','onde-os-casais-se-conhecem'].map(s => {
+      const n = G[s].achados.filter(a => valePara(st.perfil, a.cobre)).length;
+      return `<li class="achado"><a href="#${caminhoGuia(s)}">${esc(G[s].pergunta)}</a><span class="amostra">${perfilVazio(st.perfil) ? 'sem Perfil' : `${n} de ${G[s].achados.length} achados valem para você`}</span></li>`;
+    }).join('')}</ul></div>`;
+}
+
+// ---------- cabeçalho por variante ----------
+function topo(pg) {
+  const v = st.v, p = st.perfil;
+  const ativo = x => (pg.tipo === 'tema' && pg.tema === x) || (pg.tipo === 'guia' && G[pg.slug].tema === x) ? 'on' : '';
+  const nav = `<nav class="nav desk">${TEMAS.map(t => `<a href="#/${t.slug}" class="${ativo(t.slug)}">${t.titulo}</a>`).join('')}</nav>`;
+  if (v === 'A') return `<header class="top"><div class="wrap"><a class="marca" href="#/">[nome do site] <small>evidência sobre relacionamentos</small></a>${nav}<span class="sp"></span>
+      <button class="chip-perfil ${perfilVazio(p) ? 'vazio' : ''}" data-acao="painel" aria-expanded="${st.painelPerfil}" aria-controls="painel-perfil" data-foco="chip">
+        <span class="bola">${IC.pessoa}</span><span class="t">${perfilVazio(p) ? 'Seu Perfil' : esc(perfilTexto(p))}</span></button></div>
+      ${st.painelPerfil ? `<div class="painel-perfil" id="painel-perfil"><div class="wrap">${formPerfil('a', `<button class="btn pri" data-acao="painel">Pronto</button>`)}</div></div>` : ''}</header>`;
+  if (v === 'B') return `<header class="top"><div class="wrap"><a class="marca" href="#/">[nome do site] <small>evidência sobre relacionamentos</small></a>${nav}</div></header>`;
+  return `<header class="top"><div class="wrap"><a class="marca" href="#/">[nome do site]</a><span class="sp"></span><div class="tabs-desk">${abas(pg, true)}</div></div></header>`;
+}
+function abas(pg, desk) {
+  const ultimo = st.ultimoGuia ? `#${caminhoGuia(st.ultimoGuia)}` : '#/';
+  const on = t => ({ guias:['inicio','tema','guia'], grupo:['grupo'], prio:['prioridades'], voce:['voce'] }[t].includes(pg.tipo) ? 'on' : '');
+  const h = `<a href="${on('guias') && pg.tipo === 'guia' ? '#/' : ultimo}" class="${on('guias')}">${IC.livro}<span>Guias</span></a>
+    <a href="#/grupo-possivel" class="${on('grupo')}">${IC.grupo}<span>Grupo possível</span></a>
+    <a href="#/prioridades" class="${on('prio')}">${IC.ordem}<span>Prioridades</span></a>
+    <a href="#/voce" class="${on('voce')}">${IC.pessoa}<span>Você</span>${perfilVazio(st.perfil) ? '<span class="ponto" aria-label="Perfil não informado"></span>' : ''}</a>`;
+  return desk ? `<nav class="tabs" style="display:flex">${h}</nav>` : h;
+}
+
+// ---------- folha (C) ----------
+function folha(slug, rolagem) {
+  const raiz = document.getElementById('folha-raiz');
+  if (st.v !== 'C' || !slug || !G[slug]) {
+    const f = raiz.querySelector('.folha');
+    if (f) { f.classList.remove('on'); raiz.querySelector('.veu').classList.remove('on'); setTimeout(() => { if (!rota().folha) raiz.innerHTML = ''; }, 280); }
+    document.body.style.overflow = '';
+    return;
+  }
+  const ja = raiz.querySelector('.folha');
+  const html = `<div class="corpo" tabindex="-1">${corpoGuia(slug, true)}</div>`;
+  if (ja) { ja.querySelector('.corpo').outerHTML = html; }
+  else raiz.innerHTML = `<div class="veu" data-acao="fechar-folha"></div>
+    <div class="folha" role="dialog" aria-modal="true" aria-label="Pergunta relacionada"><div class="alca"></div>
+      <div class="fc"><button class="btn" data-acao="fechar-folha" aria-label="Fechar">${IC.x}</button><span class="sp small muted">Pergunta relacionada</span>
+        <a class="btn" id="folha-pagina" href="#">${IC.abrir} Página inteira</a></div>${html}</div>`;
+  raiz.querySelector('#folha-pagina').href = `#${caminhoGuia(slug)}`;
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    raiz.querySelector('.folha').classList.add('on'); raiz.querySelector('.veu').classList.add('on');
+    const c = raiz.querySelector('.corpo'); c.scrollTop = rolagem || 0; c.focus({ preventScroll:true });
+  });
+}
+
+// =====================================================================
+// MONTAGEM
+// =====================================================================
+function desenhar() {
+  document.body.className = 'v-' + st.v;
+  const r = rota(), pg = pagina(r.path);
+  document.getElementById('topo').innerHTML = topo(pg);
+  document.getElementById('tabs').innerHTML = st.v === 'C' ? abas(pg, false) : '';
+  const corpo = { inicio:pgInicio, tema:() => pgTema(pg.tema), guia:() => pgGuia(pg.slug), grupo:() => pgCalc('grupo'), prioridades:() => pgCalc('prio'),
+    voce:() => st.v === 'C' ? pgVoce() : '<div class="wrap"><h1>Só na variante C</h1></div>', '404':() => '<div class="wrap"><h1>Página não encontrada</h1></div>' }[pg.tipo]();
+  document.getElementById('app').innerHTML = corpo + `<div class="wrap"><details class="estado"><summary>Estado do protótipo</summary><pre id="estado"></pre></details></div>`;
+  document.getElementById('vlabel').textContent = `${st.v} · ${VARIANTES.find(v => v[0] === st.v)[1]}`;
+  ultimaBase = r.path + '|' + st.v;
+}
+function mostrarEstado() {
+  const el = document.getElementById('estado'); if (!el) return;
+  el.textContent = JSON.stringify({
+    variante: st.v, rota: location.hash || '#/', perfil: st.perfil,
+    grupo: st.gp, prioridades: { topo3: st.pr.ordem.slice(0, 3), desfecho: st.pr.desf },
+    'entrada do histórico': history.state, 'restaurado ao chegar': st.restaurado, 'entradas na aba': history.length,
+  }, null, 1);
+}
+let tt;
+function aviso(txt) { const t = document.getElementById('toast'); t.textContent = txt; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 1800); }
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-acao],[data-desf],[data-mover]');
+  if (!t) return;
+  const a = t.dataset.acao;
+  if (a) e.preventDefault();
+  if (a === 'painel') { st.painelPerfil = !st.painelPerfil; redesenhar(); if (st.painelPerfil) document.querySelector('#painel-perfil input')?.focus(); return; }
+  if (a === 'apagar-perfil') { st.perfil = { g:'', p:'', idade:null }; st.gp.procura = null; st.gp.imin = null; redesenhar(); return; }
+  if (a === 'abrir-formB') { st.formB = true; redesenhar(); return; }
+  if (a === 'fechar-formB') { st.formB = false; redesenhar(); return; }
+  if (a === 'ir-perfil') { document.getElementById('varia').scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+  if (a === 'voltar' || a === 'fechar-folha') { history.back(); return; }
+  if (a === 'ficha') { aviso('Página da Ficha: fora deste protótipo'); return; }
+  if (a === 'compartilhar') { aviso('Link copiado (de mentira): leva o estado na query'); return; }
+  if (t.dataset.desf) { st.pr.desf = t.dataset.desf; atualizarCalc(); return; }
+  if (t.dataset.mover) {
+    const [id, d] = t.dataset.mover.split(':'), o = st.pr.ordem, i = o.indexOf(id), j = i + +d;
+    [o[i], o[j]] = [o[j], o[i]]; st.pr.mexeu = true; atualizarCalc();
+  }
+});
+// Calculadora: refaz só ela, com o foco no mesmo controle.
+function atualizarCalc() {
+  const foco = document.activeElement && document.activeElement.dataset.foco;
+  const dentroFolha = !!document.activeElement?.closest('.folha');
+  if (dentroFolha) { redesenhar(); return; }
+  const gp = document.getElementById('calc-grupo'), pr = document.getElementById('calc-prio');
+  const onde = rota().path.startsWith('/grupo-possivel') || rota().path.startsWith('/prioridades') ? 'pagina' : 'guia';
+  if (gp) gp.outerHTML = calcGrupo(onde);
+  if (pr) pr.outerHTML = calcPrio(onde);
+  if (foco) { const el = document.querySelector(`[data-foco="${foco}"]`); if (el) el.focus(); }
+  mostrarEstado();
+}
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.gp && t.type === 'range') {
+    const k = t.dataset.gp; st.gp[k] = +t.value;
+    if (k === 'imin' && st.gp.imin > st.gp.imax) st.gp.imax = st.gp.imin;
+    if (k === 'imax' && st.gp.imax < st.gp.imin) st.gp.imin = st.gp.imax;
+    if (k === 'alt' && st.gp.alt > 0 && st.gp.alt < 140) st.gp.alt = 140;
+    // enquanto arrasta, só o resultado muda (#8: recalcula durante o movimento)
+    document.getElementById('gp-res').innerHTML = resGrupo(estimar(st.perfil, st.gp));
+    document.getElementById('gp-il').textContent = `${st.gp.imin} a ${st.gp.imax}`;
+    document.getElementById('gp-al').textContent = st.gp.alt ? st.gp.alt + ' cm' : 'qualquer';
+    mostrarEstado();
+  }
+  if (t.dataset.pf === 'idade') {
+    const n = parseInt(t.value, 10);
+    st.perfil.idade = n >= 18 && n <= 99 ? n : null;
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.pf === 'g' || t.dataset.pf === 'p') {
+    st.perfil[t.dataset.pf] = t.value;
+    if (t.dataset.pf === 'p') st.gp.procura = null;   // o Perfil volta a ser o ponto de partida
+    redesenhar(); return;
+  }
+  if (t.dataset.pf === 'idade') { st.gp.imin = null; redesenhar(); return; }
+  if (t.dataset.gp && t.type !== 'range') {
+    const k = t.dataset.gp;
+    st.gp[k] = t.type === 'checkbox' ? t.checked : k === 'esc' ? +t.value : t.value;
+    atualizarCalc(); return;
+  }
+  if (t.dataset.gp) atualizarCalc();
+});
+
+// variante
+function trocar(d) {
+  const i = VARIANTES.findIndex(v => v[0] === st.v);
+  st.v = VARIANTES[(i + d + VARIANTES.length) % VARIANTES.length][0];
+  st.painelPerfil = false; st.formB = false;
+  const r = rota();
+  history.replaceState(history.state, '', `?v=${st.v}#${r.path}`);   // a folha só existe em C
+  redesenhar(); folha(null);
+}
+document.getElementById('prev').onclick = () => trocar(-1);
+document.getElementById('next').onclick = () => trocar(1);
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input,textarea,select,[contenteditable]')) return;
+  if (e.key === 'ArrowLeft') trocar(-1);
+  if (e.key === 'ArrowRight') trocar(1);
+  if (e.key === 'Escape' && rota().folha) history.back();
+});
+if (!location.hash) history.replaceState(null, '', `?v=${st.v}#/`);
+navegar();
+</script>
+</body>
+</html>
