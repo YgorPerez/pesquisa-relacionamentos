@@ -26,6 +26,7 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "1.64.0",
     "@storybook/react-vite": "^10.6.1",
     "@types/node": "catalog:",
