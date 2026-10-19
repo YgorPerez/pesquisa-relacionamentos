@@ -42,11 +42,24 @@ export const APP = {
   vhost: '/etc/nginx/sites-available/temestudo.conf',
 } as const
 
+/** O GoatCounter (#35) em stats.temestudo.com: um contêiner só, fora do par
+ * do app, com o SQLite num volume do Docker. A imagem é fixa: trocar a versão
+ * aqui troca o contêiner no próximo deploy, e os dados ficam no volume. */
+export const STATS = {
+  container: 'temestudo-stats',
+  imagem: 'arp242/goatcounter:2.7.0',
+  volume: 'temestudo-stats',
+  porta: 3051,
+  host: 'stats.temestudo.com',
+  vhost: '/etc/nginx/sites-available/temestudo-stats.conf',
+} as const
+
 /** A configuração do host que sai de `../nginx/` em cada deploy: o nome no
  * repositório e o caminho na VPS. */
 export const CONFIGURACAO_DO_HOST = [
   ['log-sem-query.conf', '/etc/nginx/conf.d/temestudo-log-sem-query.conf'],
   ['temestudo.conf', APP.vhost],
+  ['temestudo-stats.conf', STATS.vhost],
   ['tls.conf', '/etc/nginx/temestudo/tls.conf'],
   ['logrotate-temestudo', '/etc/logrotate.d/temestudo'],
 ] as const
@@ -137,6 +150,7 @@ for ARQ in ${destinos}; do
 done
 ${CONFIGURACAO_DO_HOST.map(([nome, destino]) => `install -o root -g root -m 644 envio/${nome} "${destino}"`).join('\n')}
 ln -sfn "${vhost}" /etc/nginx/sites-enabled/temestudo.conf
+ln -sfn "${STATS.vhost}" /etc/nginx/sites-enabled/temestudo-stats.conf
 # O site padrão do pacote também quer o default_server da porta 80, e o
 # vhost provisório do preparar-vps.sh já cumpriu o papel dele.
 rm -f /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/temestudo-acme.conf`
@@ -145,7 +159,8 @@ rm -f /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/temestudo-acme.c
     ? String.raw`  for ARQ in ${destinos}; do
     if [ -f "$ARQ.anterior" ]; then mv -f "$ARQ.anterior" "$ARQ"; else rm -f "$ARQ"; fi
   done
-  if [ ! -f "${vhost}" ]; then rm -f /etc/nginx/sites-enabled/temestudo.conf; fi`
+  if [ ! -f "${vhost}" ]; then rm -f /etc/nginx/sites-enabled/temestudo.conf; fi
+  if [ ! -f "${STATS.vhost}" ]; then rm -f /etc/nginx/sites-enabled/temestudo-stats.conf; fi`
     : ''
   return String.raw`exec 9>publicar.lock
 flock -w 600 9 || { echo "Outro deploy está rodando na VPS há 10 min." >&2; exit 1; }
@@ -198,6 +213,36 @@ echo "App sha-${sha} no ar na porta $NOVA, para ${host}."
 `
 }
 
+/** O contêiner do GoatCounter, criado ou trocado só quando falta, parou ou a
+ * imagem de `STATS` mudou. O banco fica no volume, que sobrevive à troca. A
+ * conta e o login não saem daqui: são a etapa do GoatCounter no
+ * `wizard-deploy.sh`. */
+export function garantirOStats() {
+  const { container, imagem, volume, porta } = STATS
+  return String.raw`docker volume create ${volume} >/dev/null
+ATUAL=$(docker inspect -f '{{.Config.Image}}' ${container} 2>/dev/null || true)
+RODANDO=$(docker inspect -f '{{.State.Running}}' ${container} 2>/dev/null || true)
+if [ "$ATUAL" = "${imagem}" ] && [ "$RODANDO" = true ]; then
+  echo "GoatCounter ${imagem} já no ar na porta ${porta}."
+else
+  docker pull -q ${imagem} >/dev/null
+  docker rm -f ${container} >/dev/null 2>&1 || true
+  docker run -d --name ${container} --restart unless-stopped --init \
+    --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
+    --log-opt max-size=10m --log-opt max-file=3 \
+    -v ${volume}:/home/goatcounter/goatcounter-data \
+    -p "127.0.0.1:${porta}:8080" ${imagem} serve -listen :8080 -tls http -automigrate >/dev/null
+  echo "GoatCounter ${imagem} no ar na porta ${porta}."
+  sleep 3
+fi
+# Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a
+# conta. O login sai da etapa 8 do wizard, logo depois do primeiro deploy.
+if ! docker exec ${container} goatcounter db show site -find ${STATS.host} >/dev/null 2>&1; then
+  echo "AVISO: o GoatCounter ainda não tem login. Rode já a etapa 8 do frontend/scripts/wizard-deploy.sh."
+fi
+`
+}
+
 /** Publica o `.output` do build com o SHA do commit. */
 export function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps: Vps; dizer: (l: string) => void }) {
   if (!SHA.test(sha)) throw new Error(`"${sha}" não é um SHA.`)
@@ -224,6 +269,12 @@ export function publicar({ saida, sha, vps, dizer }: { saida: string; sha: strin
       obra,
     )
     dizer(naVps(vps, montarAImagem(sha)).trim())
+    // O GoatCounter fora do ar não segura o site: o deploy segue com um aviso.
+    try {
+      dizer(naVps(vps, garantirOStats()).trim())
+    } catch (erro) {
+      dizer(`Aviso: o GoatCounter não subiu (${(erro as Error).message}). O site segue.`)
+    }
     dizer(naVps(vps, trocarOApp(sha, true)).trim())
   } finally {
     rmSync(obra, { recursive: true, force: true })

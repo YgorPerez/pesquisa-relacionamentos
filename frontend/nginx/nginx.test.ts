@@ -4,6 +4,7 @@
 
 import { readFileSync } from 'node:fs'
 import { describe, expect, test } from 'vitest'
+import { CONFIGURACAO_DO_HOST, STATS } from '../scripts/vps.ts'
 
 const pasta = new URL('./', import.meta.url)
 const vhost = readFileSync(new URL('temestudo.conf', pasta), 'utf8')
@@ -132,6 +133,61 @@ describe('o vhost de temestudo.com', () => {
 
   test('o proxy para o contêiner sai do include que o deploy escreve', () => {
     expect(vhost).toContain('include /etc/nginx/temestudo/temestudo-app.conf;')
+  })
+})
+
+describe('o vhost de stats.temestudo.com (GoatCounter, #35)', () => {
+  const stats = ler(readFileSync(new URL('temestudo-stats.conf', pasta), 'utf8'))
+  const blocos = stats.filter((d) => d.nome === 'server')
+  const todos = (bloco: Diretiva[]): Diretiva[] =>
+    bloco.flatMap((d) => [d, ...(d.filhos ? todos(d.filhos) : [])])
+
+  test('só atende stats.temestudo.com, no 80 e no 443', () => {
+    expect(blocos.map((s) => de(s.filhos, 'server_name').flatMap((n) => n.args))).toEqual([
+      ['stats.temestudo.com'],
+      ['stats.temestudo.com'],
+    ])
+    expect(de(stats, 'log_format')).toEqual([])
+  })
+
+  test('cada server grava no formato sem query e no error_log do site', () => {
+    for (const servidor of blocos) {
+      expect(de(servidor.filhos, 'access_log').map((d) => d.args)).toEqual([
+        ['/var/log/nginx/temestudo/access.log', 'temestudo_sem_query'],
+      ])
+      expect(de(servidor.filhos, 'error_log').map((d) => d.args[0])).toEqual([
+        '/var/log/nginx/temestudo/error.log',
+      ])
+    }
+    for (const d of todos(stats).filter((d) => d.nome === 'access_log')) {
+      expect(d.args[1]).toBe('temestudo_sem_query')
+    }
+  })
+
+  test('o 80 serve o desafio do certbot e manda o resto para o https', () => {
+    const http = blocos.find((s) => de(s.filhos, 'listen').some((l) => l.args[0] === '80'))
+    const locais = de(http?.filhos, 'location')
+    expect(locais.map((l) => l.args)).toContainEqual(['^~', '/.well-known/acme-challenge/'])
+    const acme = locais.find((l) => l.args.includes('/.well-known/acme-challenge/'))
+    expect(de(acme?.filhos, 'root').map((d) => d.args)).toEqual([['/opt/temestudo/acme']])
+  })
+
+  test('o 443 passa ao contêiner do GoatCounter em 127.0.0.1, com o IP de quem visita', () => {
+    const https = blocos.find((s) => de(s.filhos, 'listen').some((l) => l.args.includes('ssl')))
+    expect(de(https?.filhos, 'include').map((d) => d.args[0])).toContain('/etc/nginx/temestudo/tls.conf')
+    const proxy = todos(https?.filhos ?? []).filter((d) => d.nome === 'proxy_pass')
+    expect(proxy.map((d) => d.args[0])).toEqual([`http://127.0.0.1:${STATS.porta}`])
+    const cabecalhos = todos(https?.filhos ?? []).filter((d) => d.nome === 'proxy_set_header')
+    expect(cabecalhos.map((d) => d.args)).toContainEqual(['X-Forwarded-For', '$remote_addr'])
+    expect(de(https?.filhos, 'add_header').map((d) => d.args)).toContainEqual([
+      'Referrer-Policy',
+      'strict-origin',
+      'always',
+    ])
+  })
+
+  test('o deploy instala o arquivo e o liga', () => {
+    expect(CONFIGURACAO_DO_HOST).toContainEqual(['temestudo-stats.conf', STATS.vhost])
   })
 })
 

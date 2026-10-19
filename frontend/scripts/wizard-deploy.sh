@@ -193,7 +193,7 @@ finish() {
 # `.env.deploy` (no gitignore), e pode rodar de novo: o Enter mantém o valor
 # da rodada anterior. A chave privada só sai do disco para o secret.
 
-TOTAL_STAGES=7
+TOTAL_STAGES=8
 
 cd "$(dirname "$0")/../.."
 ENV_FILE=.env.deploy
@@ -213,10 +213,10 @@ stage "A VPS na Hostinger"
 say "O site roda numa VPS só dele, nunca na do Festival dos Macacos."
 open_url "https://hpanel.hostinger.com/vps"
 step "Contrate ou escolha a VPS do Tem estudo? (o plano mais barato basta)."
-step "Sistema operacional: Ubuntu 24.04 puro, sem painel e sem aplicativo."
+step "Sistema operacional: Ubuntu 26.04 puro, sem painel e sem aplicativo."
 step "Defina a senha de root. A chave SSH entra na etapa 3."
 step "Na visão geral da VPS, copie o endereço IPv4."
-note "Se o painel estiver diferente, o que importa é: Ubuntu 24.04, acesso root, e o IPv4."
+note "Se o painel estiver diferente, o que importa é: Ubuntu 26.04, acesso root, e o IPv4."
 ask VPS_HOST "IPv4 da VPS:"
 [[ "$VPS_HOST" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || warn "Isso não parece um IPv4: confira antes de seguir."
 ask VPS_USER "Usuário do SSH (Enter vazio = root):"
@@ -228,18 +228,20 @@ write_env VPS_USER "$VPS_USER"
 write_env VPS_PORT "$VPS_PORT"
 
 # ── 2 ─────────────────────────────────────────────────────────────────────
-stage "O DNS na Cloudflare"
-say "Três registros A apontando para $VPS_HOST, todos sem proxy (nuvem cinza, 'DNS only')."
-say "Sem proxy, o certbot valida o domínio direto na VPS e a Cloudflare não vê o tráfego."
-open_url "https://dash.cloudflare.com/"
-step "Abra o domínio temestudo.com → DNS → Records."
-step "Add record: tipo A, nome @, IPv4 $VPS_HOST, Proxy status desligado (DNS only)."
-step "Add record: tipo A, nome www, IPv4 $VPS_HOST, DNS only."
-step "Add record: tipo A, nome stats, IPv4 $VPS_HOST, DNS only (o GoatCounter do #35 usa)."
-step "Se já houver um registro A ou AAAA antigo em @ ou www, apague-o."
+stage "O DNS na Hostinger"
+say "O domínio foi comprado na Hostinger e o DNS fica lá. Três registros A apontam para $VPS_HOST."
+say "O certbot valida o domínio direto na VPS, então nenhum nome pode apontar para outro lugar."
+open_url "https://hpanel.hostinger.com/domains"
+step "Abra temestudo.com → DNS / Nameservers → Registros DNS."
+note "Os nameservers precisam ser os da Hostinger (ns1/ns2.dns-parking.com), senão os registros daqui não valem."
+step "Registro A de nome @: edite para apontar a $VPS_HOST (ele vem apontando para o estacionamento)."
+step "Nome www: apague o CNAME que vem pronto e crie um A, nome www, apontando a $VPS_HOST."
+step "Crie um A, nome stats, apontando a $VPS_HOST (o GoatCounter usa)."
+step "Apague qualquer AAAA em @, www ou stats: o Let's Encrypt tentaria o IPv6 primeiro."
+note "Deixe o TTL que o painel sugere."
 pause "Enter depois de salvar os três registros."
 if command -v dig >/dev/null 2>&1; then
-  for nome in temestudo.com www.temestudo.com; do
+  for nome in temestudo.com www.temestudo.com stats.temestudo.com; do
     visto=$(dig +short A "$nome" @1.1.1.1 | tail -n1)
     if [[ "$visto" == "$VPS_HOST" ]]; then say "✓ $nome → $visto"
     else warn "$nome ainda responde '${visto:-nada}'. Pode levar uns minutos; a etapa 5 precisa dele certo."; fi
@@ -292,7 +294,7 @@ pause
 # ── 5 ─────────────────────────────────────────────────────────────────────
 stage "Preparar a VPS"
 say "O frontend/scripts/preparar-vps.sh instala Docker, Nginx e certbot, abre 80 e 443"
-say "e tira o certificado de temestudo.com e www.temestudo.com por webroot."
+say "e tira o certificado de temestudo.com, www e stats por webroot."
 note "Precisa do DNS da etapa 2 já apontando para $VPS_HOST. Pode rodar de novo sem estrago."
 if confirm "Rodar o preparar-vps.sh em $VPS_USER@$VPS_HOST agora?"; then
   ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -p "$VPS_PORT" \
@@ -334,5 +336,36 @@ else
   warn "https://temestudo.com ainda não responde como deveria. Veja o log do run e docs/deploy.md."
 fi
 pause
+
+# ── 8 ─────────────────────────────────────────────────────────────────────
+stage "O login do GoatCounter"
+say "O deploy já subiu o contêiner temestudo-stats. Falta criar o site e o seu login nele,"
+say "e ligar só o que o #21 decidiu: referência, tela, país e sessões; 31 dias de retenção."
+note "Rode esta etapa depois do primeiro deploy verde. Rodar de novo só reaplica as configurações."
+ask STATS_EMAIL "E-mail do login do GoatCounter (Enter vazio = $CERTBOT_EMAIL):"
+STATS_EMAIL=${STATS_EMAIL:-$CERTBOT_EMAIL}
+write_env STATS_EMAIL "$STATS_EMAIL"
+SSH_VPS=(ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -p "$VPS_PORT" "$VPS_USER@$VPS_HOST")
+if "${SSH_VPS[@]}" -o BatchMode=yes "docker exec temestudo-stats goatcounter db show site -find stats.temestudo.com" >/dev/null 2>&1; then
+  say "O site stats.temestudo.com já existe no GoatCounter."
+elif confirm "Criar o site e o login $STATS_EMAIL agora? O GoatCounter pede a senha duas vezes."; then
+  "${SSH_VPS[@]}" -t "docker exec -it temestudo-stats goatcounter db create site -vhost stats.temestudo.com -user.email '$STATS_EMAIL'"
+else
+  SKIPPED+=("login do GoatCounter: ssh root@$VPS_HOST -t docker exec -it temestudo-stats goatcounter db create site -vhost stats.temestudo.com -user.email <email>")
+fi
+# Collect 154 = referência (2) + tamanho de tela (8) + país (16) + sessões (128).
+# Ficam desligados navegador e sistema (4), região (32), idioma (64) e as
+# visitas uma a uma (256). O GoatCounter lê as configurações ao subir: daí o restart.
+CONFIGURAR="docker exec temestudo-stats goatcounter db query \"update sites set settings = json_set(settings, '\$.collect', 154, '\$.data_retention', 31) where cname = 'stats.temestudo.com'\" && docker restart temestudo-stats >/dev/null"
+if "${SSH_VPS[@]}" -o BatchMode=yes "$CONFIGURAR"; then
+  say "✓ retenção de 31 dias; região, navegador e sistema desligados."
+else
+  SKIPPED+=("configurar o GoatCounter: ver docs/deploy.md, seção GoatCounter")
+fi
+open_url "https://stats.temestudo.com/settings/main"
+step "Entre com $STATS_EMAIL e a senha que você escolheu."
+step "Em Settings → Data collection, confira: Referrer, Size, Country e Sessions marcados; o resto desmarcado."
+step "Em Data retention, confira 31 dias."
+pause "Enter depois de conferir."
 
 finish
