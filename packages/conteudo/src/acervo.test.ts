@@ -220,12 +220,85 @@ X.
   })
 })
 
+describe('origem dos dados (.meta.yaml)', () => {
+  const ficha = (pasta: string, slug: string) => ({
+    caminho: `estudos/${slug}.md`,
+    texto: textoDaFixture(pasta, slug),
+  })
+  const meta = (corpo: string) => ({ caminho: 'dados/grupo-possivel/censo.meta.yaml', texto: corpo })
+  const META_OK = `ficha: silva-2020-apps-brasil
+tabela: ["Microdados, arquivo de pessoas"]
+variaveis: [P0110, P0150]
+baixado_em: 2026-10-19
+script: scripts/grupo-possivel/pipeline.ts
+versao: "arquivo de 2026-09-14"
+`
+
+  it('lê o .meta.yaml de cada arquivo de dados em dados/', () => {
+    const acervo = acervoDe(carregarAcervo(fixture('valido')))
+    expect(acervo.dados).toEqual([
+      {
+        arquivo: 'dados/grupo-possivel/exemplo.meta.yaml',
+        ficha: 'silva-2020-apps-brasil',
+        tabela: ['SIDRA 9514'],
+        baixado_em: '2026-10-19',
+        script: 'scripts/grupo-possivel/pipeline.ts',
+        versao: 'Censo 2022, universo',
+      },
+    ])
+  })
+
+  it('aceita o .meta.yaml que cita uma Ficha ✅', () => {
+    const resultado = montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(META_OK)])
+    expect(acervoDe(resultado).dados[0]?.variaveis).toEqual(['P0110', 'P0150'])
+  })
+
+  it('falha quando o .meta.yaml cita uma Ficha ⬜', () => {
+    const texto = META_OK.replace('silva-2020-apps-brasil', 'lima-2015-encontros')
+    expect(errosDe(montarAcervo([ficha('valido', 'lima-2015-encontros'), meta(texto)]))).toEqual([
+      'dados/grupo-possivel/censo.meta.yaml: ficha: lima-2015-encontros é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡',
+    ])
+  })
+
+  it('falha quando a Ficha citada não existe', () => {
+    expect(errosDe(montarAcervo([meta(META_OK)]))).toEqual([
+      'dados/grupo-possivel/censo.meta.yaml: ficha: não existe a Ficha estudos/silva-2020-apps-brasil.md',
+    ])
+  })
+
+  it('falha com campo ausente, data errada ou sem tabela nem variáveis', () => {
+    const texto = 'ficha: silva-2020-apps-brasil\nbaixado_em: ontem\nscript: x.ts\n'
+    expect(errosDe(montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(texto)]))).toEqual(
+      expect.arrayContaining([
+        'dados/grupo-possivel/censo.meta.yaml: baixado_em: use a data como AAAA-MM-DD (veio "ontem")',
+        'dados/grupo-possivel/censo.meta.yaml: versao: campo obrigatório ausente',
+      ]),
+    )
+    const semTabela = META_OK.replace(/^tabela:.*\n/m, '').replace(/^variaveis:.*\n/m, '')
+    expect(errosDe(montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(semTabela)]))).toEqual([
+      'dados/grupo-possivel/censo.meta.yaml: diga a tabela ou as variáveis de onde os dados saíram',
+    ])
+  })
+})
+
 describe('o acervo do repositório', () => {
-  it('carrega as 30 Fichas, todas não verificadas até serem refeitas (#6)', () => {
+  it('carrega as Fichas: as 30 antigas não verificadas até serem refeitas (#6), as do IBGE conferidas (#36)', () => {
     const raiz = fileURLToPath(new URL('../../..', import.meta.url))
     const acervo = acervoDe(carregarAcervo(raiz))
-    expect(acervo.fichas).toHaveLength(30)
-    expect(new Set(acervo.fichas.map((f) => f.status))).toEqual(new Set(['nao-verificado']))
+    const conferidas = acervo.fichas.filter((f) => f.status !== 'nao-verificado').map((f) => f.slug)
+    expect(conferidas).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
+    expect(acervo.fichas).toHaveLength(32)
+  })
+
+  it('os dados do Grupo possível citam as Fichas do Censo e da PNS', () => {
+    const raiz = fileURLToPath(new URL('../../..', import.meta.url))
+    const acervo = acervoDe(carregarAcervo(raiz))
+    expect(acervo.dados.map((d) => [d.arquivo, d.ficha])).toEqual([
+      ['dados/grupo-possivel/censo-2022.meta.yaml', 'ibge-2022-censo-amostra'],
+      ['dados/grupo-possivel/pns-2019.meta.yaml', 'ibge-2019-pns'],
+      ['dados/grupo-possivel/sidra-9514-idade.meta.yaml', 'ibge-2022-censo-amostra'],
+      ['dados/grupo-possivel/sidra-9514-municipios.meta.yaml', 'ibge-2022-censo-amostra'],
+    ])
   })
 })
 

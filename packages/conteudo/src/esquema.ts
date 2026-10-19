@@ -40,6 +40,19 @@ export const Seo = Schema.Struct({
 })
 export type Seo = typeof Seo.Type
 
+/** A origem de um arquivo de dados das calculadoras (`dados/**\/x.meta.yaml`, #10). */
+export const MetaDados = Schema.Struct({
+  ficha: Slug,
+  tabela: Schema.optional(Schema.Array(Texto)),
+  variaveis: Schema.optional(Schema.Array(Texto)),
+  baixado_em: Data,
+  script: Texto,
+  versao: Texto,
+  /** O que o pipeline conferiu contra números publicados. */
+  conferencia: Schema.optional(Texto),
+})
+export type MetaDados = typeof MetaDados.Type
+
 export const FrontmatterFicha = Schema.Struct({
   referencia: Texto,
   link: Url,

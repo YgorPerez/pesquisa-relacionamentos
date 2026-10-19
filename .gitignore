@@ -15,3 +15,6 @@
 
 # O monorepo pnpm (frontend/, packages/).
 node_modules/
+
+# Fonte local sem licença aberta (#6): fica na máquina de quem conferiu a Ficha.
+fontes/privado/
