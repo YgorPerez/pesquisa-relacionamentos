@@ -1,0 +1,530 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T12:41:43.489Z",
+        "reason": "agent: the canon card deliberately renders the category standard, side-tab summary box included"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "marcador",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.829Z",
+        "reason": "agent: local @font-face aliases for Permanent Marker and Atkinson Hyperlegible, both declared in DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "atkinson",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.840Z",
+        "reason": "agent: local @font-face aliases for Permanent Marker and Atkinson Hyperlegible, both declared in DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "225px",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.851Z",
+        "reason": "agent: component of the documented torto/torto-2 elliptical radius tokens"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "16px",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.862Z",
+        "reason": "agent: component of the documented torto/torto-2 elliptical radius tokens"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "6px",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.873Z",
+        "reason": "agent: browser focus ring rounding"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "999px",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.884Z",
+        "reason": "agent: prototype scenario switcher, not part of the design"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,.35)",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.895Z",
+        "reason": "agent: prototype scenario switcher shadow, not part of the design"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "11px",
+        "files": [
+          "prototipos/guia.prototype.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.906Z",
+        "reason": "agent: prototype scenario switcher label, not part of the design"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.917Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.928Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.938Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.950Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.960Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.971Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.981Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-19T13:38:12.992Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-patent.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.003Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-patent.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.014Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-patent.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.025Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-patent.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.036Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-swiss.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.047Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-swiss.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.058Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-swiss.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.069Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-swiss.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.080Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.092Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.103Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.115Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.126Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.138Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.149Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.159Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.171Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/1-caderno.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.182Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/1-caderno.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.194Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/1-caderno.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.206Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/1-caderno.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.218Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/2-rotulo.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.229Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/2-rotulo.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.241Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/2-rotulo.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.254Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/2-rotulo.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.265Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/3-suico.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.277Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/3-suico.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.289Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/3-suico.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.303Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/3-suico.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.315Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/4-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.326Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/4-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.339Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/4-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.350Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/4-zine.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.361Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/5-patente.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.373Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/5-patente.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.385Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/5-patente.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.400Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/5-patente.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.413Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/6-padrao.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.427Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/6-padrao.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.440Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/6-padrao.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.455Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/esbocos/6-padrao.html"
+        ],
+        "createdAt": "2026-10-19T13:38:13.467Z",
+        "reason": "agent: spent direction-round sketch of another world, predates DESIGN.md"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "prototipos/guia-zine-serio.prototype.html"
+        ],
+        "createdAt": "2026-10-19T14:40:49.441Z",
+        "reason": "agent: section.sec background is only a 6px hand-drawn rule at the top, not a filled container"
+      }
+    ]
+  }
+}

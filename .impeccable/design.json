@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T15:00:00Z",
+  "title": "Design System: evidência! (nome provisório)",
+  "extensions": {
+    "colorMeta": {
+      "papel": { "role": "neutral", "displayName": "Papel frio", "canonical": "#f5f8f8", "tonalRamp": ["#202d2d", "#395151", "#527575", "#6c9898", "#90b1b1", "#b4caca", "#d5e2e2", "#f0f4f4"] },
+      "folha": { "role": "neutral", "displayName": "Folha", "canonical": "#fcfdfd", "tonalRamp": ["#1f2e2e", "#375353", "#507777", "#699b9b", "#8eb4b4", "#b3cccc", "#d4e2e2", "#f0f5f5"] },
+      "tinta": { "role": "neutral", "displayName": "Tinta", "canonical": "#1a1c1c", "tonalRamp": ["#252828", "#424747", "#606767", "#7d8787", "#9da4a4", "#bdc2c2", "#dadddd", "#f2f3f3"] },
+      "tinta-2": { "role": "neutral", "displayName": "Tinta clara", "canonical": "#414948", "tonalRamp": ["#242828", "#414948", "#5e6968", "#7b8987", "#9ba6a5", "#bcc3c2", "#d9dddd", "#f2f3f3"] },
+      "amarelo-voce": { "role": "primary", "displayName": "Amarelo risografia \"vale para você\"", "canonical": "#ecd36f", "tonalRamp": ["#3d340f", "#6e5e1c", "#9f8728", "#cdaf37", "#d9c368", "#e6d699", "#f1e8c6", "#faf7eb"] },
+      "rosa-mito": { "role": "secondary", "displayName": "Rosa risografia \"atenção\"", "canonical": "#e7a3b6", "tonalRamp": ["#3d101c", "#6d1c33", "#9e294a", "#cb3962", "#d86988", "#e59aaf", "#f0c6d2", "#faebef"] },
+      "agua-fonte": { "role": "tertiary", "displayName": "Verde-água risografia \"caminho até a fonte\"", "canonical": "#95cfc5", "tonalRamp": ["#183530", "#2b5f56", "#3e897c", "#53b1a1", "#7dc4b8", "#a7d7cf", "#cee9e4", "#edf7f5"] },
+      "agua-tinta": { "role": "tertiary", "displayName": "Verde-água de tinta", "canonical": "#0d6359", "tonalRamp": ["#0f3d38", "#1c6e65", "#289f91", "#37cdbc", "#68d9cc", "#99e6dd", "#c6f1ec", "#ebfaf8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "A Pergunta do Guia, com uma palavra em amarelo cobrindo a letra inteira." },
+      "headline": { "displayName": "Headline", "purpose": "Títulos de seção, abaixo da régua à mão." },
+      "title": { "displayName": "Title", "purpose": "Frase do Mito, perguntas relacionadas, nível de Confiança, nome do site." },
+      "nota-de-margem": { "displayName": "Nota de margem", "purpose": "No máximo duas anotações em Kalam por página, em verde-água de tinta." },
+      "lead": { "displayName": "Lead", "purpose": "A resposta curta." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido em Atkinson, com algarismos 0 a 9 da Source Sans 3 por unicode-range (U+0030-0039); coluna de até min(38rem, 66ch)." },
+      "label": { "displayName": "Label", "purpose": "Selos, metadados da Ficha, opções, botões, linha \"Para o seu Perfil\"." }
+    },
+    "shadows": [
+      { "name": "reticula-fina", "value": "::after { background: radial-gradient(circle, rgba(26,28,28,.62) .8px, transparent 1.2px) 0 0/4px 4px; transform: translate(5px, 6px); inset: -2px; z-index: -1; border-radius: inherit }", "purpose": "Única elevação: atrás de painéis, Mitos, caixa do Perfil, cartões relacionados e botão principal." }
+    ],
+    "motion": [
+      { "name": "sai", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Curva de saída de todo traço desenhado e do marca-texto." },
+      { "name": "marca-texto-titulo", "value": "scaleX 0→1, .8s, atraso .25s", "purpose": "O amarelo do título se pinta da esquerda para a direita." },
+      { "name": "laco-ficha", "value": "stroke-dashoffset 1→0, .9s; fill-opacity .4s", "purpose": "Laço à mão em volta da Ficha alvo, com preenchimento verde-água claro." },
+      { "name": "seta-ficha", "value": "stroke-dashoffset 1→0, .5s, atraso .7s", "purpose": "Seta curta entrando na Ficha depois do laço." }
+    ],
+    "breakpoints": [
+      { "name": "folha", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão principal",
+      "kind": "button",
+      "refersTo": "botao",
+      "description": "Ação principal em amarelo, com retícula fina atrás.",
+      "html": "<span style=\"position:relative;isolation:isolate;display:inline-block\"><button class=\"ds-botao\">Ver o que vale para mim</button></span>",
+      "css": ".ds-botao{position:relative;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:15px;font-weight:700;color:#1a1c1c;background:#ecd36f;min-height:44px;padding:10px 16px;border:1.8px solid #1a1c1c;border-radius:7px 3px 6px 4px/4px 6px 3px 7px;cursor:pointer} .ds-botao::after{content:'';position:absolute;inset:-2px;transform:translate(5px,6px);z-index:-1;border-radius:inherit;background:radial-gradient(circle,rgba(26,28,28,.62) .8px,transparent 1.2px) 0 0/4px 4px;pointer-events:none} .ds-botao:hover{transform:translateY(-1px)} .ds-botao:active{transform:translateY(1px)} .ds-botao:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px;box-shadow:0 0 0 7px #ecd36f} @media (prefers-reduced-motion:reduce){.ds-botao:hover,.ds-botao:active{transform:none}}"
+    },
+    {
+      "name": "Botão leve",
+      "kind": "button",
+      "refersTo": "botao-leve",
+      "description": "Ação secundária, fundo folha e sem retícula.",
+      "html": "<button class=\"ds-botao-leve\">mudar</button>",
+      "css": ".ds-botao-leve{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:15px;font-weight:700;color:#1a1c1c;background:#fcfdfd;min-height:44px;padding:10px 16px;border:1.8px solid #1a1c1c;border-radius:7px 3px 6px 4px/4px 6px 3px 7px;cursor:pointer} .ds-botao-leve:hover{transform:translateY(-1px)} .ds-botao-leve:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px;box-shadow:0 0 0 7px #ecd36f}"
+    },
+    {
+      "name": "Opção do Perfil",
+      "kind": "chip",
+      "refersTo": "opcao",
+      "description": "Rádio em forma de etiqueta; marcada vira amarelo.",
+      "html": "<div class=\"ds-opcoes\"><label><input type=\"radio\" name=\"g\" checked><span>mulher</span></label><label><input type=\"radio\" name=\"g\"><span>homem</span></label><label><input type=\"radio\" name=\"g\"><span>outro</span></label></div>",
+      "css": ".ds-opcoes{display:flex;gap:8px;flex-wrap:wrap;font-family:'Atkinson Hyperlegible',system-ui,sans-serif} .ds-opcoes label{position:relative;cursor:pointer} .ds-opcoes input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer} .ds-opcoes span{display:inline-block;min-height:44px;padding:10px 14px;border:1.8px solid #1a1c1c;border-radius:7px 3px 6px 4px/4px 6px 3px 7px;background:#f5f8f8;color:#1a1c1c;font-weight:700;font-size:15px;line-height:1.3} .ds-opcoes input:checked+span{background:#ecd36f} .ds-opcoes input:focus-visible+span{outline:3px solid #1a1c1c;outline-offset:3px}"
+    },
+    {
+      "name": "Campo de idade",
+      "kind": "input",
+      "refersTo": "campo",
+      "description": "Campo numérico com contorno quase reto.",
+      "html": "<input class=\"ds-campo\" type=\"number\" placeholder=\"25\">",
+      "css": ".ds-campo{width:88px;min-height:44px;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:18px;font-weight:700;padding:6px 10px;border:1.8px solid #1a1c1c;border-radius:3px 7px 4px 6px/6px 4px 7px 3px;background:#f5f8f8;color:#1a1c1c} .ds-campo:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px;box-shadow:0 0 0 7px #ecd36f}"
+    },
+    {
+      "name": "Barra do topo",
+      "kind": "nav",
+      "description": "Nome em Bricolage e etiqueta do Tema em folha com contorno em tinta, reta.",
+      "html": "<header class=\"ds-topo\"><a class=\"ds-logo\" href=\"#\">evidência!</a><a class=\"ds-tema\" href=\"#\"><span>Onde conhecer pessoas</span></a></header>",
+      "css": ".ds-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 18px;background:#f5f8f8;border-bottom:2px solid #1a1c1c} .ds-logo{font-family:'Bricolage Grotesque','Atkinson Hyperlegible',system-ui,sans-serif;font-weight:700;font-size:21px;line-height:1;letter-spacing:-.015em;color:#1a1c1c;text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .ds-tema{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-weight:700;font-size:14px;line-height:1.2;color:#1a1c1c;text-decoration:none;min-height:44px;display:inline-flex;align-items:center} .ds-tema span{background:#fcfdfd;border:1.5px solid #1a1c1c;border-radius:3px 7px 4px 6px/6px 4px 7px 3px;padding:5px 10px} .ds-logo:focus-visible,.ds-tema:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px}"
+    },
+    {
+      "name": "Painel da resposta curta",
+      "kind": "card",
+      "refersTo": "painel",
+      "description": "Três degraus de Confiança com a palavra, número-chave em rosa cobrindo a letra inteira, referência em anel à mão e a linha \"Para o seu Perfil\".",
+      "html": "<div style=\"isolation:isolate;padding:4px 12px 12px 4px\"><section class=\"ds-painel\"><div class=\"ds-conf\"><svg width=\"72\" height=\"24\" viewBox=\"0 0 66 22\" aria-hidden=\"true\"><path class=\"ds-degrau ds-cheio\" d=\"M2.6 6.4 19.8 5.5l.7 11.4-17.5.6z\"/><path class=\"ds-degrau ds-cheio\" d=\"M23.6 5.3l17.4.7-.5 11-17.4-.4z\"/><path class=\"ds-degrau\" d=\"M44.6 5.8l18.2-.7.5 11.3-18.3.8z\"/></svg><p class=\"ds-rotulo\">Confiança da resposta<span>moderada</span></p></div><p class=\"ds-resposta\">Nos EUA, a internet virou o jeito mais comum: <span class=\"ds-num\">39% dos casais de 2017</span><a class=\"ds-ref\" href=\"#\">1</a>.</p><p class=\"ds-para-perfil\"><span class=\"ds-selo\">vale para você</span> o 39% é de casais homem-mulher, como o seu Perfil.</p></section></div>",
+      "css": ".ds-painel{position:relative;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:#1a1c1c;background:#fcfdfd;border:2px solid #1a1c1c;border-radius:7px 3px 6px 4px/4px 6px 3px 7px;padding:18px 18px 16px} .ds-painel::after{content:'';position:absolute;inset:-2px;transform:translate(5px,6px);z-index:-1;border-radius:inherit;background:radial-gradient(circle,rgba(26,28,28,.62) .8px,transparent 1.2px) 0 0/4px 4px;pointer-events:none} .ds-conf{display:flex;align-items:center;gap:14px;margin:0 0 12px;padding-bottom:12px;border-bottom:1.5px dotted #1a1c1c} .ds-degrau{fill:none;stroke:#1a1c1c;stroke-width:1.8;stroke-linejoin:round} .ds-cheio{fill:#1a1c1c} .ds-rotulo{margin:0;font-weight:700;font-size:14.5px;line-height:1.25;color:#414948} .ds-rotulo span{display:block;font-family:'Bricolage Grotesque','Atkinson Hyperlegible',sans-serif;font-weight:700;font-size:21px;line-height:1.15;letter-spacing:-.01em;color:#1a1c1c} .ds-resposta{font-size:18.5px;line-height:1.58;margin:0} .ds-num{background:#e7a3b6;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-weight:700;padding:0 3px} .ds-ref{display:inline-grid;place-items:center;min-width:26px;height:25px;padding:0 6px;margin:0 1px 0 .3em;vertical-align:2px;font-weight:700;font-size:13px;line-height:1;color:#0d6359;text-decoration:none;border-radius:50%;background:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26' preserveAspectRatio='none'%3E%3Cpath d='M17 2.6C24 3 28 7.5 27.6 13.2 27.2 19.4 21.8 23.6 14.6 23.4 7.4 23.2 2.3 18.8 2.5 12.6 2.7 6.8 8.2 2.2 15.6 2.9 18.5 3.2 20.4 3.9 21.4 4.8' fill='none' stroke='%230d6359' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E\") center/100% 100% no-repeat,#fcfdfd} .ds-ref:hover{background-color:#95cfc5;color:#1a1c1c} .ds-ref:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px;box-shadow:0 0 0 7px #ecd36f} .ds-para-perfil{margin:12px 0 0;padding-top:10px;border-top:1.5px dotted #1a1c1c;font-size:15.5px;line-height:1.5} .ds-selo{background:#ecd36f;border-radius:3px;font-weight:700;padding:1px 8px}"
+    },
+    {
+      "name": "Achado com Perfil",
+      "kind": "custom",
+      "description": "Achado que cobre: selo amarelo junto da nota \"Vale para:\", que fica. Achado que não cobre: anel vazio em tinta e \"Não há dado\".",
+      "html": "<ol class=\"ds-achados\"><li class=\"ds-achado\"><span class=\"ds-onde\">EUA<small>2017</small></span><div><p>A internet passou “por amigos” por volta de 2013. É o caminho mais comum, mas não a maioria: 39% em 2017.</p><span class=\"ds-selo\">vale para você</span><p class=\"ds-vale\"><b>Vale para:</b> casais homem-mulher, amostra representativa dos EUA.</p></div></li><li class=\"ds-achado\"><span class=\"ds-onde\">FR<small>2013</small></span><div><p>Na França, menos de 9% dos casais formados entre 2005 e 2013 se conheceram em sites.</p><p class=\"ds-vale ds-nao\"><b>Vale para:</b> pessoas de 26 a 65 anos, amostra sorteada.</p></div></li></ol>",
+      "css": ".ds-achados{list-style:none;margin:0;padding:0;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:17px;line-height:1.6;color:#1a1c1c} .ds-achado{display:grid;grid-template-columns:58px 1fr;gap:14px;padding:16px 0;border-top:1.5px dotted #1a1c1c} .ds-achado:first-child{border-top:0;padding-top:2px} .ds-achado p{margin:0} .ds-onde{font-family:'Bricolage Grotesque','Atkinson Hyperlegible',sans-serif;font-weight:700;font-size:16px;line-height:1.1;text-align:center;border:1.8px solid #1a1c1c;border-radius:3px 7px 4px 6px/6px 4px 7px 3px;padding:7px 2px 6px;height:max-content;background:#fcfdfd} .ds-onde small{display:block;font-family:'Atkinson Hyperlegible',sans-serif;font-size:12px;margin-top:3px;color:#414948} .ds-selo{display:inline-block;margin:6px 8px 0 0;background:#ecd36f;border-radius:3px;font-weight:700;font-size:14.5px;padding:1px 8px} .ds-vale{margin-top:6px!important;font-size:14.5px;line-height:1.45;color:#414948} .ds-vale b{color:#1a1c1c} .ds-nao::before{content:'';display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;border:1.8px solid #1a1c1c;border-radius:50% 46% 52% 48%} .ds-nao::after{content:' Não há dado deste estudo para o seu Perfil.';color:#1a1c1c;font-weight:700}"
+    },
+    {
+      "name": "Mito",
+      "kind": "card",
+      "refersTo": "mito",
+      "description": "Frase que circula, atravessada pelo risco rosa (de propósito, não é marca-texto), com o porquê embaixo.",
+      "html": "<div style=\"isolation:isolate;padding:4px 12px 12px 4px\"><article class=\"ds-mito\"><p class=\"ds-frase\"><s>“Casal que se conheceu na internet dura menos.”</s></p><p class=\"ds-porque\">No acompanhamento americano de seis anos, o lugar onde o casal se conheceu não previu término.</p></article></div>",
+      "css": ".ds-mito{position:relative;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:17px;line-height:1.6;color:#1a1c1c;background:#fcfdfd;border:2px solid #1a1c1c;border-radius:7px 3px 6px 4px/4px 6px 3px 7px;padding:16px 18px} .ds-mito::after{content:'';position:absolute;inset:-2px;transform:translate(5px,6px);z-index:-1;border-radius:inherit;background:radial-gradient(circle,rgba(26,28,28,.62) .8px,transparent 1.2px) 0 0/4px 4px;pointer-events:none} .ds-frase{font-family:'Bricolage Grotesque','Atkinson Hyperlegible',sans-serif;font-weight:600;font-size:19.5px;line-height:1.35;letter-spacing:-.01em;margin:0;display:inline} .ds-frase s{text-decoration:none;background:linear-gradient(#e7a3b6,#e7a3b6) center 60%/100% 30% repeat-x;-webkit-box-decoration-break:clone;box-decoration-break:clone} .ds-porque{margin:12px 0 0}"
+    },
+    {
+      "name": "Ficha circulada com Status e Força",
+      "kind": "custom",
+      "description": "Item da lista de Fichas no estado alvo: laço à mão com fundo verde-água claro, Status e Força desenhados com a palavra, 'voltar ao texto'.",
+      "html": "<div style=\"padding:14px\"><div class=\"ds-ficha\"><svg class=\"ds-laco\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path vector-effect=\"non-scaling-stroke\" d=\"M7 7C35 2 75 3 96 7c3 25 3 60-1 86-30 4-65 4-91 1C1 70 1 35 4 5\"/></svg><span class=\"ds-n\">4</span><div><a class=\"ds-titulo\" href=\"#\">Kowal e colegas 2025</a><div class=\"ds-meta\"><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"#1a1c1c\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 3.5h14v13H3z\" transform=\"rotate(-1 10 10)\"/><path d=\"M4.5 16L16 4.5M4 10.5L10.5 4M9.5 16L16 9.5\" stroke-width=\"1.4\"/></svg>parcial</span><span><svg width=\"36\" height=\"12\" viewBox=\"0 0 66 22\" fill=\"none\" stroke=\"#1a1c1c\" stroke-width=\"2.4\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.6 6.4 19.8 5.5l.7 11.4-17.5.6z\" fill=\"#1a1c1c\"/><path d=\"M23.6 5.3l17.4.7-.5 11-17.4-.4z\" fill=\"#1a1c1c\"/><path d=\"M44.6 5.8l18.2-.7.5 11.3-18.3.8z\"/></svg>moderada</span><span>50 países · 2024 · 6.646 pessoas</span></div><button class=\"ds-volta\">voltar ao texto</button></div></div></div>",
+      "css": ".ds-ficha{position:relative;isolation:isolate;display:grid;grid-template-columns:34px 1fr;gap:10px;padding:14px 10px 14px 16px;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:17px;line-height:1.6;color:#1a1c1c} .ds-laco{position:absolute;inset:-10px;width:calc(100% + 20px);height:calc(100% + 20px);overflow:visible;pointer-events:none;z-index:-1} .ds-laco path{stroke:#0d6359;stroke-width:2.4;fill:rgba(149,207,197,.3)} .ds-n{display:grid;place-items:center;width:30px;height:30px;font-weight:700;font-size:15px;border:1.8px solid #0d6359;color:#0d6359;border-radius:50% 47% 52% 48%} .ds-titulo{color:#1a1c1c;font-weight:700;text-decoration:underline;text-decoration-color:#0d6359;text-decoration-thickness:1.5px;text-underline-offset:4px} .ds-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;font-size:14.5px;line-height:1.35} .ds-meta span{display:inline-flex;align-items:center;gap:6px} .ds-volta{margin-top:6px;min-height:44px;font:inherit;font-weight:700;font-size:14.5px;color:#1a1c1c;background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:underline;text-underline-offset:4px} .ds-volta:focus-visible{outline:3px solid #1a1c1c;outline-offset:3px;box-shadow:0 0 0 7px #ecd36f}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O zine sério",
+    "overview": "Um amigo leu os estudos e explica o que eles dizem num zine impresso com cuidado: tinta preta, marca-texto onde importa, setas que levam à fonte. A mão aparece nos detalhes (setas, anéis, círculo, régua, duas notas de margem) e não na estrutura. Títulos são tipográficos e firmes; o desenho fica para o que aponta, marca ou mede.\n\nEste mundo substitui o fanzine desenhado, que o usuário escolheu primeiro e depois julgou infantil. Saíram os títulos em Permanent Marker, a carinha da Confiança, os contornos muito tortos e a etiqueta do Tema girada. Ficaram a tinta sobre papel frio, os três marca-textos com papel fixo, a retícula de sombra e a interação da Ficha circulada. Valem para tudo as restrições do usuário: o site não pode parecer blog de autoajuda nem artigo científico, e quem lê deve sair com \"alívio com os pés no chão\".\n\nAntes da escolha, duas alternativas foram construídas em página inteira e comparadas com esta:\n- Prancha de patente: descartada pelo risco de parecer acadêmica demais.\n- Padrão da categoria: descartada por não ter identidade.\n\nCelular primeiro, uma coluna. No desktop a coluna vira uma folha com contorno sobre fundo de retícula fina.",
+    "keyCharacteristics": [
+      "Papel frio quase branco, tinta preta, três tintas de risografia com papel fixo.",
+      "Títulos em Bricolage Grotesque, corpo em Atkinson Hyperlegible com algarismos da Source Sans 3, no máximo duas notas de margem em Kalam.",
+      "Contornos de 1,8 a 2px quase retos, com só uma leve irregularidade de mão.",
+      "Sombra de retícula fina deslocada, sem desfoque.",
+      "Confiança e Força em três degraus desenhados à mão, sempre com a palavra.",
+      "Textos em PT-BR. O nome do site ainda não existe; \"evidência!\" é provisório."
+    ],
+    "rules": [
+      { "name": "The Three Inks Rule", "body": "Amarelo = vale para você e uma palavra do título; rosa = Mito e o número-chave; verde-água = caminho até a fonte. Nenhuma tinta troca de papel e não entra uma quarta. O que não tem um desses papéis fica em tinta e papel: \"não há dado\" é um anel vazio em tinta, e a etiqueta do Tema é folha com contorno em tinta.", "section": "colors" },
+      { "name": "The Full Letter Rule", "body": "Marca-texto amarelo e rosa cobre a altura inteira da letra, das ascendentes às descendentes. Nunca uma faixa só na metade de baixo. (Pedido do usuário.) O risco do Mito é outra coisa, mantido de propósito: uma faixa rosa no meio da linha que atravessa a frase e diz \"isto não se sustenta\".", "section": "colors" },
+      { "name": "The One Yellow Word Rule", "body": "Cada título leva no máximo uma palavra em amarelo.", "section": "colors" },
+      { "name": "The Cool Paper Rule", "body": "O fundo é o papel frio. Creme, bege e papel quente ficam fora.", "section": "colors" },
+      { "name": "The Two Margin Notes Rule", "body": "No máximo duas notas em Kalam por página. Uma terceira anotação usa a mesma seta com Atkinson itálico de 15px.", "section": "typography" },
+      { "name": "The Plain Digits Rule", "body": "Algarismos vêm da Source Sans 3, dentro da família da Atkinson. Nunca o zero cortado.", "section": "typography" },
+      { "name": "The Glued Ref Rule", "body": "Um número de referência nunca fica sozinho no começo de uma linha: gruda na palavra anterior e na pontuação seguinte, com cerca de 0,3em de espaço antes dele.", "section": "typography" },
+      { "name": "The Halftone Rule", "body": "Sombra é retícula deslocada atrás do contorno. Nunca box-shadow com desfoque, nunca bloco sólido.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** usar o papel frio como fundo e folha nas caixas.",
+      "**Do** manter cada tinta no seu papel: amarelo para \"vale para você\", rosa para Mito e número-chave, verde-água para o caminho até a fonte.",
+      "**Do** cobrir a altura inteira da letra com o marca-texto amarelo e rosa.",
+      "**Do** pôr a palavra ao lado dos três degraus e dos ícones de Status.",
+      "**Do** dar elevação só com a retícula fina deslocada 5px e 6px.",
+      "**Do** manter alvos de toque com pelo menos 44px.",
+      "**Do** desligar animações de traço e de marca-texto em prefers-reduced-motion, mostrando o desenho pronto.",
+      "**Do** grudar o número de referência na palavra anterior, com cerca de 0,3em de espaço."
+    ],
+    "donts": [
+      "**Don't** voltar ao desenho infantil: letra de marcador em títulos, carinhas, contornos muito tortos, etiquetas giradas.",
+      "**Don't** mostrar Confiança, Status ou Força só por cor.",
+      "**Don't** usar marca-texto que cubra só a metade de baixo da letra.",
+      "**Don't** pôr mais de uma palavra em amarelo num título.",
+      "**Don't** usar uma tinta fora do seu papel: nada de rosa em \"não há dado\", nada de verde-água na etiqueta do Tema.",
+      "**Don't** usar mais de duas notas de margem em Kalam por página.",
+      "**Don't** esconder conteúdo por causa do Perfil, nem tirar a nota \"Vale para:\" de um achado que cobre.",
+      "**Don't** usar o zero cortado da Atkinson em números.",
+      "**Don't** usar fundo creme ou bege; lê como blog de autoajuda.",
+      "**Don't** usar sombra com desfoque nem bloco sólido deslocado.",
+      "**Don't** compor como artigo científico: caixa azul de resumo, selo de nota, lista de referências em letra miúda.",
+      "**Don't** traçar setas do comprimento da página; no celular elas não se leem."
+    ]
+  }
+}
