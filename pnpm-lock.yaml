@@ -237,6 +237,9 @@ importers:
       react-dom:
         specifier: ^19.3.0
         version: 19.3.1(react@19.3.1)
+      xss:
+        specifier: ^1.0.15
+        version: 1.0.15
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.14.0
@@ -2692,6 +2695,9 @@ packages:
     resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==}
     engines: {node: '>=20'}
 
+  commander@2.20.3:
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+
   conf@15.1.0:
     resolution: {integrity: sha512-Uy5YN9KEu0WWDaZAVJ5FAmZoaJt9rdK6kH+utItPyGsCqCgaTKkrmZx3zoE0/3q6S3bcp3Ihkk+ZqPxWxFK5og==}
     engines: {node: '>=20'}
@@ -2723,6 +2729,9 @@ packages:
 
   css.escape@1.5.1:
     resolution: {integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==}
+
+  cssfilter@0.0.10:
+    resolution: {integrity: sha512-FAaLDaplstoRsDR8XGYH51znUN0UY7nMc6Z9/fvE8EXGwvJE9hu7W2vHwx1+bd6gCYnln9nLbzxFTrcO9YQDZw==}
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
@@ -3816,6 +3825,11 @@ packages:
   xmlbuilder2@4.0.3:
     resolution: {integrity: sha512-bx8Q1STctnNaaDymWnkfQLKofs0mGNN7rLLapJlGuV3VlvegD7Ls4ggMjE3aUSWItCCzU0PEv45lI87iSigiCA==}
     engines: {node: '>=20.0'}
+
+  xss@1.0.15:
+    resolution: {integrity: sha512-FVdlVVC67WOIPvfOwhoMETV72f6GbW7aOabBC3WxN/oUdoEMDyLz4OgRv5/gck2ZeNqEQu+Tb0kloovXOfpYVg==}
+    engines: {node: '>= 0.10.0'}
+    hasBin: true
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -5723,6 +5737,8 @@ snapshots:
 
   commander@14.0.3: {}
 
+  commander@2.20.3: {}
+
   conf@15.1.0:
     dependencies:
       ajv: 8.20.0
@@ -5754,6 +5770,8 @@ snapshots:
       srvx: 1.0.6
 
   css.escape@1.5.1: {}
+
+  cssfilter@0.0.10: {}
 
   csstype@3.2.3: {}
 
@@ -6932,6 +6950,11 @@ snapshots:
       '@oozcitak/infra': 2.0.2
       '@oozcitak/util': 10.0.0
       js-yaml: 4.3.2
+
+  xss@1.0.15:
+    dependencies:
+      commander: 2.20.3
+      cssfilter: 0.0.10
 
   yallist@3.1.1: {}
 
