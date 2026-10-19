@@ -39,7 +39,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 - Grupo possível (#8): número em faixa, "o que mais pesa", Requisito sem dado desabilitado com o motivo.
 - Prioridades (#9, #19): o usuário toca nas três características que mais importam, na ordem; a evidência agrupa em degraus por desfecho, sem nota de compatibilidade.
 - Fora do MVP: guias de comportamento/atração e de apps na prática, chat com IA, contas, outras línguas e países.
-- Em aberto: analytics (#21).
+- Analytics (#21): GoatCounter na própria VPS, sem Perfil nos eventos, 31 dias e opt-out por GPC/DNT ou chave no rodapé; "Ajudou?" no fim do Guia mede se ele ajudou.
 
 ## Brand Commitments
 
