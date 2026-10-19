@@ -4,7 +4,7 @@
 
 - [x] O Brasil está entre os 50 países de [Kowal 2025](estudos/kowal-2025-50-paises.md)? A lista só aparece num mapa; checar material suplementar.
   - **Sim** (2026-10-18). Os dados do OSF (osf.io/uzf37) listam os 50 países: 119 brasileiros com parceiro, 23 (19%) online. Ver a Ficha e a [pesquisa](pesquisas/2026-10-18-onde-casais-se-conhecem.md).
-- [ ] Conferir no original e criar fichas para as dicas marcadas ⬜ em [`dicas/dicas-com-evidencia.md`](dicas/dicas-com-evidencia.md): Huang 2017, Boothby 2018, Epley & Schroeder 2014, Eastwick 2007, Aron 1997, Buss 1989, Walster 1966, Bressler 2006, Eastwick & Finkel 2008, Joel 2020, Gottman.
+- [ ] Conferir no original e criar fichas para as dicas de [`dicas/_sem-ficha.md`](dicas/_sem-ficha.md): Huang 2017, Boothby 2018, Epley & Schroeder 2014, Eastwick 2007, Aron 1997, Buss 1989, Walster 1966, Bressler 2006, Eastwick & Finkel 2008, Joel 2020, Gottman.
 - [ ] Conferir no site do Ined (fora do ar em 2026-10-18) a fiche ERFI-2 nº 22 (2026): 24% dos casais que passaram a morar juntos em 2020–2024 na França se conheceram online. Criar Ficha.
 - [ ] Ler o texto completo de [Sharabi & Dorrance-Hall 2024](estudos/sharabi-2024-online-dating-effect.md) (⬜) e de [Potarca 2021](estudos/potarca-2021-alemanha-pairfam.md) (🟡), e de Hu, Zhu & Zhang 2024 (*Cyberpsychology, Behavior, and Social Networking* 27(9)).
 - [ ] Encontrar o relatório original da Casamentos.com.br (2021) com "quase 20%" de casais que se conheceram pela internet.

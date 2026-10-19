@@ -108,4 +108,3 @@ Análise nossa; o artigo não discute esses vieses. O formato do questionário f
 ## Como usamos
 
 - [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 2.1 e 2.2: online vs. offline e ranking de locais.
-- [Dicas](../dicas/dicas-com-evidencia.md): escola e eventos sociais um pouco acima de bar e trabalho em satisfação.

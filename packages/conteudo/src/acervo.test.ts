@@ -227,6 +227,20 @@ describe('o acervo do repositório', () => {
     expect(acervo.fichas).toHaveLength(30)
     expect(new Set(acervo.fichas.map((f) => f.status))).toEqual(new Set(['nao-verificado']))
   })
+
+  it('traz as Dicas da tabela antiga, uma por arquivo, sem as ⬜, e nenhuma publicada ainda', () => {
+    const raiz = fileURLToPath(new URL('../../..', import.meta.url))
+    const acervo = acervoDe(carregarAcervo(raiz))
+    expect(acervo.dicas.map((d) => [d.slug, d.forca, d.inferencia])).toEqual([
+      ['apps-como-complemento', 'forte', false],
+      ['convivencia-repetida', 'moderada', true],
+      ['escola-e-eventos-sociais', 'moderada', false],
+      ['mensagem-um-pouco-acima', 'moderada', false],
+      ['sem-pressa-para-casar', 'forte', false],
+    ])
+    // As Fichas que as sustentam ainda são ⬜: as Dicas esperam a conferência.
+    expect(acervo.dicas.filter((d) => d.publicada)).toEqual([])
+  })
 })
 
 describe('caminhos e índice', () => {

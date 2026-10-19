@@ -23,3 +23,18 @@ export type Desenho = (typeof DESENHOS)[number]
 export const GENEROS = ['homem', 'mulher'] as const
 export const PROCURA = ['homens', 'mulheres'] as const
 export const CASAIS = ['hetero', 'mesmo-sexo'] as const
+
+/** As calculadoras que um Guia pode hospedar. */
+export const CALCULADORAS = ['grupo-possivel', 'prioridades'] as const
+export type Calculadora = (typeof CALCULADORAS)[number]
+
+/** Os caminhos fixos do app, que nenhum Tema pode usar como slug (#15). */
+export const ROTAS_RESERVADAS = [
+  'estudos',
+  'dicas',
+  'grupo-possivel',
+  'prioridades',
+  'privacidade',
+  'sitemap.xml',
+  'robots.txt',
+] as const

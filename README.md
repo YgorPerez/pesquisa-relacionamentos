@@ -89,4 +89,5 @@ Desde a migração para frontmatter (#26), todas as fichas estão `nao-verificad
 
 ## Dicas práticas
 
-- [Dicas com evidência](dicas/dicas-com-evidencia.md)
+- Uma Dica por arquivo em [`dicas/`](dicas/), com `fichas`, `forca` e `inferencia` no frontmatter. O site lista as que se apoiam em Fichas ✅ ou 🟡 em `/dicas`.
+- [Dicas que esperam Ficha](dicas/_sem-ficha.md)
