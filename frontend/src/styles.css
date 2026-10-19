@@ -10,6 +10,7 @@
 @import './ui/perfil.css';
 @import './ui/grupo-possivel.css';
 @import './ui/prioridades.css';
+@import './ui/contagem.css';
 
 *,
 *::before,

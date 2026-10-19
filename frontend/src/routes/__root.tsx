@@ -2,6 +2,8 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-r
 import { ORIGEM } from '@tem-estudo/conteudo/busca'
 import type { ReactNode } from 'react'
 import { Topo } from '#/ui/topo'
+import { Rodape } from '#/ui/contagem'
+import { useContarVisitas } from '#/analytics/contagem'
 import bricolage from '../fontes/bricolage-grotesque-latin-wght-normal.woff2?url'
 import atkinson from '../fontes/atkinson-hyperlegible-latin-400-normal.woff2?url'
 import css from '../styles.css?url'
@@ -58,10 +60,12 @@ export const Route = createRootRoute({
 })
 
 function Raiz() {
+  useContarVisitas()
   return (
     <Documento>
       <Topo />
       <Outlet />
+      <Rodape />
     </Documento>
   )
 }

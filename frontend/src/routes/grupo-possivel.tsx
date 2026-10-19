@@ -32,6 +32,7 @@ import {
   useRequisitosSalvos,
 } from '#/estado/grupo-possivel'
 import { usePerfil } from '#/estado/perfil'
+import { contarUmaVezPorVisita } from '#/analytics/contagem'
 import { Botao } from '#/ui/botao'
 import {
   Dobras,
@@ -70,7 +71,10 @@ function PaginaDoGrupoPossivel() {
   const salvos = useRequisitosSalvos()
   const { estimativa, carregando, falhou, tentar, uf } = useGrupoPossivel(perfil, salvos)
   const r = salvos ?? REQUISITOS_PADRAO
-  const mudar = (mudanca: Partial<Requisitos>) => gravarRequisitos({ ...r, ...mudanca })
+  const mudar = (mudanca: Partial<Requisitos>) => {
+    gravarRequisitos({ ...r, ...mudanca })
+    contarUmaVezPorVisita('calculadora/grupo-possivel')
+  }
   const idade = idadeProcurada(perfil, r)
   const municipio = r.lugar?.municipio ? uf?.municipios.get(r.lugar.municipio)?.nome : undefined
   const valor = (k: RequisitoDoVisitante | 'orientacao') => valorDoRequisito(k, perfil, r, municipio)
@@ -209,6 +213,7 @@ function PaginaDoGrupoPossivel() {
 
   const soltarERever = (k: RequisitoDoVisitante) => {
     gravarRequisitos(soltar(r, k))
+    contarUmaVezPorVisita('calculadora/grupo-possivel')
     maisPesa.current?.focus()
   }
 

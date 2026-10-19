@@ -8,6 +8,8 @@ import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
 import { usePrioridades } from '#/estado/prioridades'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { CartaoDePrioridades } from '#/ui/prioridades'
+import { Ajudou } from '#/ui/contagem'
+import { useContarFichasAbertas } from '#/analytics/contagem'
 
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
@@ -38,6 +40,7 @@ function PaginaDoGuia() {
   const guia = Route.useLoaderData()
   const { circulada, voltarAoTexto } = useReferencias(guia.slug)
   usePontoNoHistorico()
+  useContarFichasAbertas(guia.slug)
   const { perfil, noGuia } = usePerfilNoGuia(guia)
 
   return (
@@ -186,6 +189,8 @@ function PaginaDoGuia() {
           </p>
           <FichasCitadas fichas={guia.fichas} circulada={circulada} voltarAoTexto={voltarAoTexto} />
         </section>
+
+        <Ajudou key={guia.slug} guia={guia.slug} />
 
         {guia.relacionadas.length > 0 && (
           <section className="secao" aria-labelledby="t-relacionadas">

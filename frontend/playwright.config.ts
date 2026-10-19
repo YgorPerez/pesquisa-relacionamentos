@@ -37,9 +37,11 @@ export default defineConfig({
   ],
   // O build do e2e lê o conteúdo de fixture (`e2e/acervo`), com uma Ficha de
   // cada Status, e não o acervo do repositório. Rode `pnpm build` de novo
-  // antes de `pnpm start` com o conteúdo de verdade.
+  // antes de `pnpm start` com o conteúdo de verdade. O `VITE_CONTAR_EM_LOCALHOST`
+  // liga a contagem em localhost, onde o `analytics.e2e.ts` intercepta os
+  // envios ao GoatCounter.
   webServer: {
-    command: `CONTEUDO_RAIZ=e2e/acervo pnpm build && PORT=${porta} node .output/server/index.mjs`,
+    command: `CONTEUDO_RAIZ=e2e/acervo VITE_CONTAR_EM_LOCALHOST=1 pnpm build && PORT=${porta} node .output/server/index.mjs`,
     url: `http://localhost:${porta}/`,
     reuseExistingServer: false,
     stdout: 'ignore',

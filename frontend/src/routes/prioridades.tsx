@@ -13,6 +13,7 @@ import { buscarPrioridades } from '#/conteudo/guias'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { usePerfil } from '#/estado/perfil'
 import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
+import { contarUmaVezPorVisita } from '#/analytics/contagem'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import {
   AlertaDoTopo3,
@@ -65,8 +66,12 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const [aberta, setAberta] = useState<string | null>(null)
   const { topo3, desfecho } = estado
 
-  const tocar = (id: string) => gravarPrioridades({ ...estado, topo3: alternarNoTopo3(topo3, id) })
-  const escolherDesfecho = (d: Desfecho) => gravarPrioridades({ ...estado, desfecho: d })
+  const mexer = (novo: typeof estado) => {
+    gravarPrioridades(novo)
+    contarUmaVezPorVisita('calculadora/prioridades')
+  }
+  const tocar = (id: string) => mexer({ ...estado, topo3: alternarNoTopo3(topo3, id) })
+  const escolherDesfecho = (d: Desfecho) => mexer({ ...estado, desfecho: d })
 
   return (
     <>

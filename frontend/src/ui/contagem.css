@@ -1,0 +1,162 @@
+/* "Ajudou?", a chave da contagem e o rodapé do site (#35). */
+
+/* ---------- Ajudou? ---------- */
+.ajudou-botoes {
+  display: flex;
+  gap: 10px;
+}
+
+.ajudou-botoes .botao {
+  min-width: 88px;
+}
+
+.ajudou-motivos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ajudou-pergunta {
+  margin: 0 0 2px;
+  font-weight: 700;
+}
+
+.ajudou-obrigado {
+  margin: 0;
+  color: var(--cor-tinta-2);
+}
+
+.ajudou-obrigado:empty {
+  display: none;
+}
+
+/* ---------- a chave ---------- */
+.chave-contagem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chave {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--alvo-de-toque);
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--cor-tinta);
+}
+
+/* O checkbox fica invisível por cima da chave inteira, como nas opções. */
+.chave input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chave input:disabled {
+  cursor: not-allowed;
+}
+
+.chave-trilho {
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 26px;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: 13px 12px 13px 12px;
+  background: var(--cor-papel);
+}
+
+.chave-trilho::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 17px;
+  height: 17px;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: var(--raio-bolota);
+  background: var(--cor-folha);
+  transition: transform 0.15s ease-out;
+}
+
+.chave input:checked + .chave-trilho {
+  background: var(--cor-amarelo-voce);
+}
+
+.chave input:checked + .chave-trilho::after {
+  transform: translateX(19px);
+}
+
+.chave input:disabled + .chave-trilho {
+  border-style: dashed;
+}
+
+.chave input:disabled ~ span:last-child {
+  color: var(--cor-tinta-2);
+}
+
+.chave input:focus-visible + .chave-trilho {
+  outline: 3px solid var(--cor-tinta);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--cor-amarelo-voce);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chave-trilho::after {
+    transition: none;
+  }
+}
+
+.chave-nota {
+  font-size: 14.5px;
+  color: var(--cor-tinta-2);
+}
+
+/* ---------- rodapé do site ---------- */
+.rodape-site {
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  padding: var(--espaco-md);
+  border-top: var(--traco-painel) solid var(--cor-tinta);
+  font-size: 15px;
+  color: var(--cor-tinta-2);
+}
+
+.rodape-site-dentro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 24px;
+}
+
+.rodape-site a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  font-weight: 700;
+  color: var(--cor-tinta);
+}
+
+/* No desktop, o rodapé continua a folha da página sobre a retícula. */
+@media (min-width: 900px) {
+  .rodape-site {
+    background: var(--cor-papel);
+    border: var(--traco-painel) solid var(--cor-tinta);
+    border-top: 0;
+    padding: var(--espaco-md) 64px;
+  }
+}
+
+/* ---------- página de privacidade ---------- */
+.privacidade .chave-contagem {
+  margin-top: var(--espaco-sm);
+}

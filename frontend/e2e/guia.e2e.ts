@@ -27,6 +27,7 @@ test.describe('página do Guia', () => {
       'O que circula por aí e não se sustenta',
       'Limitações e o que não se sabe',
       'Fichas citadas',
+      'Ajudou?',
       'Perguntas relacionadas',
     ])
     await semRolagemLateral(page)
