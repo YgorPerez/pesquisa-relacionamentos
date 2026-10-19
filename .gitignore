@@ -20,3 +20,6 @@ node_modules/
 # aberta fica só na máquina de quem escreve e de quem revisa a Ficha. A âncora
 # `/` deixa de fora as fixtures de `scripts/fixtures/conferencia/`.
 /fontes/privado/
+
+# O que o `frontend/scripts/wizard-deploy.sh` lembra entre uma rodada e outra.
+.env.deploy

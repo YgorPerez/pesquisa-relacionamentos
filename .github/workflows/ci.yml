@@ -1,6 +1,5 @@
 # Os testes e o build em cada PR e em cada push na main, no molde do `pr.yml`
-# do Festival dos Macacos. O deploy entra em outro workflow, com o ticket
-# dele.
+# do Festival dos Macacos. O deploy é o `deploy.yml`.
 name: CI
 
 "on":

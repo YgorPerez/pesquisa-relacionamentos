@@ -12,6 +12,7 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 | [`relatorios/`](relatorios/) | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo |
 | [`dicas/`](dicas/) | Conclusões práticas, cada uma ligada aos estudos que a sustentam |
 | [`fontes/`](fontes/) | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `fontes/privado/`, que fica fora do git |
+| [`docs/deploy.md`](docs/deploy.md) | Como o site vai ao ar em temestudo.com e como voltar à versão anterior |
 
 O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https://github.com/YgorPerez/pesquisa-relacionamentos/issues?q=is%3Aissue+is%3Aopen+label%3Aacervo). O passo a passo para trabalhar uma delas está na skill [`acervo`](.claude/skills/acervo/SKILL.md).
 
