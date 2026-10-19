@@ -28,7 +28,7 @@ Inquérito domiciliar com um morador selecionado por domicílio. Para o Grupo po
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Pergunta de orientação sexual | Y008 | Dicionário de variáveis, Y008 | "Qual é a sua orientação sexual?" |
+| Pergunta de orientação sexual | Autodeclarada, perguntada à própria pessoa | Dicionário de variáveis, Y008 | "Qual é a sua orientação sexual?" |
 | Heterossexuais, 18 anos ou mais | 94,8% (IC 94,5–95,0) | Tabela 1.1.1, linha Heterossexual, coluna Total | "Heterossexual 94,8 94,5 95,0 94,7 94,3 95,1 94,8 94,4 95,2" |
 | Homossexuais | 1,2% no total; 1,4% dos homens (1,2–1,6); 0,9% das mulheres (0,8–1,1) | Tabela 1.1.1, linha Homossexual | "Homossexual 1,2 1,0 1,3 1,4 1,2 1,6 0,9 0,8 1,1" |
 | Bissexuais | 0,7% no total; 0,5% dos homens (0,4–0,7); 0,8% das mulheres (0,7–1,0) | Tabela 1.1.1, linha Bissexual | "Bissexual 0,7 0,6 0,8 0,5 0,4 0,7 0,8 0,7 1,0" |
@@ -38,11 +38,11 @@ Inquérito domiciliar com um morador selecionado por domicílio. Para o Grupo po
 | Homossexuais ou bissexuais, 60 anos ou mais | 0,2% (IC 0,2–0,3) | Tabela 1.2.1, linha 60 ou mais | "60 ou mais 100,0 - - 97,2 96,8 97,6 0,2 0,2 0,3 2,5 2,2 2,9" |
 | Altura usada | Altura final, em cm | Dicionário de variáveis, P00404 | "Altura - Final (em cm)" |
 | Altura medida | Só numa subamostra em 2019 | Nota técnica 01/2021, p. 1 | "Em 2019, entretanto, a aferição dessas medidas ocorreu em uma subamostra dos moradores selecionados de 15 anos ou mais de idade." |
-| Pergunta de tabaco | P050: diariamente, menos que diariamente, não fuma | Dicionário de variáveis, P050 | "Atualmente, o(a) Sr(a) fuma algum produto do tabaco?" |
+| Pergunta de tabaco | Uso atual de qualquer produto do tabaco | Dicionário de variáveis, P050 | "Atualmente, o(a) Sr(a) fuma algum produto do tabaco?" |
 
 As tabelas trazem, por linha, Total, Homem e Mulher (Tabela 1.1.1) ou Total, Heterossexual, Homossexual ou Bissexual e Recusou ou não sabia (Tabela 1.2.1), cada um com o percentual e os limites inferior e superior. O pipeline do Grupo possível reproduz a Tabela 1.1.1 por sexo a partir do microdado, na casa decimal publicada.
 
-Fonte local: `fontes/privado/ibge-2019-pns/` (Tabelas 1.1.1 e 1.2.1, dicionário e nota técnica, fora do git). O microdado fica no cache do pipeline, fora do repositório.
+Fonte local: `fontes/privado/ibge-2019-pns.txt` (o texto das Tabelas 1.1.1 e 1.2.1, do dicionário e da nota técnica) e os originais em `fontes/privado/ibge-2019-pns/`, fora do git. O microdado fica no cache do pipeline, fora do repositório.
 
 ## Limitações
 
@@ -55,4 +55,4 @@ Fonte local: `fontes/privado/ibge-2019-pns/` (Tabelas 1.1.1 e 1.2.1, dicionário
 ## Como usamos
 
 - Dados do Grupo possível: `dados/grupo-possivel/pns-2019.csv`, gerado por `scripts/grupo-possivel/pipeline.ts`.
-- [Pesquisa 2026-10-18 sobre os dados do Grupo possível](../pesquisas/2026-10-18-dados-grupo-possivel.md).
+- [Relatório 2026-10-18 sobre os dados do Grupo possível](../relatorios/2026-10-18-dados-grupo-possivel.md).
