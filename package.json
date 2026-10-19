@@ -1,11 +1,13 @@
 {
   "name": "tem-estudo",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm --filter frontend build",
     "start": "pnpm --filter frontend start",
-    "test": "pnpm -r test && node --test \"scripts/*.test.ts\"",
+    "test": "pnpm -r test && node --test \"scripts/**/*.test.ts\"",
+    "dados:grupo-possivel": "node scripts/grupo-possivel/pipeline.ts",
     "typecheck": "pnpm -r typecheck",
     "e2e": "pnpm --filter frontend e2e",
     "storybook": "pnpm --filter frontend storybook",
