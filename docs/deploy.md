@@ -19,7 +19,7 @@ Rode o wizard da raiz do repositório:
 bash frontend/scripts/wizard-deploy.sh
 ```
 
-Ele passa por oito etapas: a VPS (Ubuntu 26.04, acesso root), os registros A de `@`, `www` e `stats` no DNS da Hostinger, a chave SSH do deploy, o e-mail do certificado, o `preparar-vps.sh` pelo ssh, os secrets do Actions, o primeiro deploy e o login do GoatCounter. Os valores que não são segredo ficam em `.env.deploy`, que o git ignora.
+Ele passa por oito etapas: a VPS (Ubuntu 26.04, acesso root), os registros A de `@`, `www` e `stats` no DNS da Hostinger, a chave SSH do deploy, o e-mail do certificado, o `preparar-vps.sh` pelo ssh, os secrets do Actions, o primeiro deploy e a senha do GoatCounter. Os valores que não são segredo ficam em `.env.deploy`, que o git ignora.
 
 No DNS da Hostinger, o registro A de `@` vem apontando para a página de estacionamento e o `www` vem como CNAME: o wizard pede para trocar os dois por registros A para a VPS e apagar qualquer AAAA, porque o Let's Encrypt tenta o IPv6 primeiro.
 
@@ -81,7 +81,7 @@ Para ver as imagens que a VPS tem: `ssh root@<ip> docker images temestudo-app`.
 
 | O quê | Onde |
 |---|---|
-| Pasta do app | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`) |
+| Pasta do app | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`, `goatcounter-senha`) |
 | Desafio do certbot | `/opt/temestudo/acme` |
 | Vhosts | `/etc/nginx/sites-available/temestudo.conf` e `temestudo-stats.conf`, com link em `sites-enabled/` |
 | GoatCounter | contêiner `temestudo-stats` em `127.0.0.1:3051`, banco no volume `temestudo-stats` |
@@ -115,21 +115,27 @@ A contagem de visitas roda em https://stats.temestudo.com, num contêiner própr
 - **Vhost:** `frontend/nginx/temestudo-stats.conf` sai junto com o `temestudo.conf`, com o mesmo `log_format` sem query e os mesmos arquivos de log. O bloco `:80` serve o desafio do certbot, porque o `default_server` recusa host que não conhece. O Nginx passa ao GoatCounter só o IP de quem visita, de onde ele tira o país.
 - **Certificado:** um só para `temestudo.com`, `www` e `stats`, tirado pelo `preparar-vps.sh`. Num certificado antigo sem o `stats`, rodar o script de novo acrescenta o nome (`--expand`).
 - **O que o site manda:** o envio é nosso (`frontend/src/analytics/goatcounter.ts`), e não o `count.js`, que manda sempre o `location.search` com o Perfil. Vão o caminho sem query, a referência sem query, a largura da tela e, nos eventos, o nome. Com GPC, DNT ou a chave do rodapé desligada, o arquivo nem carrega.
-- **Configuração do site no GoatCounter:** retenção de 31 dias, e só referência, tamanho de tela, país e sessões ligados (`collect` = 154). Região, navegador e sistema, idioma e as visitas uma a uma ficam desligados.
+- **Configuração do site no GoatCounter:** retenção de 31 dias, e só referência, tamanho de tela e país ligados (`collect` = 26, `COLETA_DO_STATS` no `vps.ts`). Sessões, região, navegador e sistema e idioma ficam desligados. Todo deploy confere as duas e, se alguém mexeu, volta ao combinado e reinicia o contêiner, porque o GoatCounter lê a configuração ao subir.
 
-### Login (uma vez, depois do primeiro deploy)
+### Site e login
 
-Enquanto o GoatCounter não tem site criado, a tela inicial dele deixa qualquer um criar a conta, e o deploy avisa isso no log. Logo depois do primeiro deploy verde, rode a etapa 8 do wizard, ou à mão:
+Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a conta. Por isso o próprio deploy cria o site `stats.temestudo.com` e o usuário, antes de o vhost de `stats` entrar no Nginx:
+
+- o e-mail vem da variável `GOATCOUNTER_EMAIL` do repositório (Settings, Variables), que o wizard grava na etapa 6; sem ela, `admin@temestudo.com`;
+- a senha é sorteada (40 letras e números) e fica em `/opt/temestudo/goatcounter-senha`, do root, com modo 600;
+- se a criação falha, o contêiner para, e o Nginx responde 502 em vez da tela de criar conta. Se o GoatCounter nem sobe e um contêiner antigo sem site está no ar, o deploy também o para.
+
+Depois do primeiro deploy verde, a etapa 8 do wizard mostra a senha e abre o painel. À mão:
 
 ```bash
-ssh -t root@<ip> docker exec -it temestudo-stats goatcounter db create site \
-  -vhost stats.temestudo.com -user.email <email>   # pede a senha (8 a 50 caracteres)
-ssh root@<ip> "docker exec temestudo-stats goatcounter db query \"update sites set settings = json_set(settings, '\$.collect', 154, '\$.data_retention', 31) where cname = 'stats.temestudo.com'\" && docker restart temestudo-stats"
+ssh root@<ip> cat /opt/temestudo/goatcounter-senha
 ```
 
-O GoatCounter lê as configurações ao subir, por isso o restart. Depois, entre em https://stats.temestudo.com e confira em Settings: em Data collection, só Referrer, Size, Country e Sessions marcados; em Data retention, 31.
+Entre em https://stats.temestudo.com com o e-mail e essa senha, e confira em Settings: em Data collection, só Referrer, Size e Country marcados; em Data retention, 31. Se trocar a senha no painel, o arquivo fica com a antiga: apague-o para não confundir.
 
 Para conferir sem o navegador: `ssh root@<ip> docker exec temestudo-stats goatcounter db query "select settings from sites"`.
+
+O teste `frontend/scripts/stats.docker.test.ts` roda esse caminho num GoatCounter local, em Docker: `TESTAR_GOATCOUNTER=1 pnpm --filter frontend exec vitest run scripts/stats.docker.test.ts`.
 
 ### Revisão do painel
 

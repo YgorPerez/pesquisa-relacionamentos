@@ -213,12 +213,40 @@ echo "App sha-${sha} no ar na porta $NOVA, para ${host}."
 `
 }
 
+/** O contêiner do GoatCounter: o `STATS`, ou outro no teste local. */
+export type ConteinerDoStats = { readonly [K in keyof typeof STATS]: (typeof STATS)[K] extends number ? number : string }
+
+/** O que o GoatCounter coleta: só referência (2), tamanho de tela (8) e país
+ * (16). Sem sessões (128), região (32), navegador e sistema (4), idioma (64). */
+export const COLETA_DO_STATS = 2 + 8 + 16
+/** Os dias que o GoatCounter guarda as visitas. */
+export const RETENCAO_DO_STATS = 31
+/** O e-mail do login do GoatCounter quando o `GOATCOUNTER_EMAIL` não diz outro. */
+export const EMAIL_DO_STATS = 'admin@temestudo.com'
+/** Onde a VPS guarda a senha que o primeiro deploy sorteia (root, 600). */
+export const SENHA_DO_STATS = `${APP.pasta}/goatcounter-senha`
+
+/** O e-mail vai dentro de um script bash: só o formato simples passa. */
+const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+
 /** O contêiner do GoatCounter, criado ou trocado só quando falta, parou ou a
- * imagem de `STATS` mudou. O banco fica no volume, que sobrevive à troca. A
- * conta e o login não saem daqui: são a etapa do GoatCounter no
- * `wizard-deploy.sh`. */
-export function garantirOStats() {
-  const { container, imagem, volume, porta } = STATS
+ * imagem de `STATS` mudou. O banco fica no volume, que sobrevive à troca.
+ *
+ * Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a
+ * conta. Por isso o site e o usuário saem daqui, antes de o vhost de
+ * `stats` entrar no Nginx, com uma senha sorteada e gravada em
+ * `arquivoDaSenha`. Se a criação falha, o contêiner para, e a tela de criar
+ * conta não fica no ar. A coleta e a retenção voltam ao combinado a cada
+ * deploy. Os parâmetros além do e-mail servem ao teste local
+ * (`stats.docker.test.ts`). */
+export function garantirOStats({
+  email = EMAIL_DO_STATS,
+  stats = STATS,
+  arquivoDaSenha = SENHA_DO_STATS,
+}: { email?: string; stats?: ConteinerDoStats; arquivoDaSenha?: string } = {}) {
+  if (!EMAIL.test(email)) throw new Error(`"${email}" não é um e-mail que o deploy aceite.`)
+  const { container, imagem, volume, porta, host } = stats
+  const gc = `docker exec ${container} goatcounter`
   return String.raw`docker volume create ${volume} >/dev/null
 ATUAL=$(docker inspect -f '{{.Config.Image}}' ${container} 2>/dev/null || true)
 RODANDO=$(docker inspect -f '{{.State.Running}}' ${container} 2>/dev/null || true)
@@ -233,12 +261,48 @@ else
     -v ${volume}:/home/goatcounter/goatcounter-data \
     -p "127.0.0.1:${porta}:8080" ${imagem} serve -listen :8080 -tls http -automigrate >/dev/null
   echo "GoatCounter ${imagem} no ar na porta ${porta}."
-  sleep 3
 fi
-# Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a
-# conta. O login sai da etapa 8 do wizard, logo depois do primeiro deploy.
-if ! docker exec ${container} goatcounter db show site -find ${STATS.host} >/dev/null 2>&1; then
-  echo "AVISO: o GoatCounter ainda não tem login. Rode já a etapa 8 do frontend/scripts/wizard-deploy.sh."
+# Até 30 s para o GoatCounter responder, qualquer status.
+esperar_o_stats() {
+  for i in $(seq 1 30); do
+    if [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:${porta}/" || true)" != 000 ]; then return 0; fi
+    sleep 1
+  done
+}
+esperar_o_stats
+if ! ${gc} db show site -find ${host} >/dev/null 2>&1; then
+  # A senha vai para o arquivo antes do site, para nunca existir um login
+  # que ninguém sabe. Ela passa na linha de comando do docker exec: a VPS só
+  # tem o root.
+  SENHA=$(head -c 64 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 40)
+  ( umask 077; printf '%s\n' "$SENHA" > "${arquivoDaSenha}.novo" )
+  chmod 600 "${arquivoDaSenha}.novo"
+  mv -f "${arquivoDaSenha}.novo" "${arquivoDaSenha}"
+  if ! ${gc} db create site -vhost ${host} -user.email '${email}' -user.password "$SENHA" >/dev/null; then
+    docker stop ${container} >/dev/null || true
+    rm -f "${arquivoDaSenha}"
+    echo "Não deu para criar o site ${host}; o GoatCounter ficou parado, sem a tela de criar conta no ar." >&2
+    exit 1
+  fi
+  echo "GoatCounter: site ${host} criado, login ${email}, senha em ${arquivoDaSenha}."
+fi
+CONFIG=$(${gc} db query "select json_extract(settings, '$.collect') || ',' || json_extract(settings, '$.data_retention') from sites where cname = '${host}'" | tail -n 1)
+if [ "$CONFIG" != "${COLETA_DO_STATS},${RETENCAO_DO_STATS}" ]; then
+  ${gc} db query "update sites set settings = json_set(settings, '$.collect', ${COLETA_DO_STATS}, '$.data_retention', ${RETENCAO_DO_STATS}) where cname = '${host}'" >/dev/null
+  # O GoatCounter lê a configuração do site ao subir.
+  docker restart ${container} >/dev/null
+  esperar_o_stats
+  echo "GoatCounter: coleta ${COLETA_DO_STATS} (referência, tela, país) e retenção de ${RETENCAO_DO_STATS} dias aplicadas."
+fi
+`
+}
+
+/** Para o GoatCounter que está no ar sem o site criado. */
+export function pararOStatsSemSite(stats: ConteinerDoStats = STATS) {
+  return `if docker inspect ${stats.container} >/dev/null 2>&1 \\
+  && ! docker exec ${stats.container} goatcounter db show site -find ${stats.host} >/dev/null 2>&1; then
+  docker stop ${stats.container} >/dev/null || true
+  echo "GoatCounter parado: sem site criado, a tela de criar conta ficaria aberta."
 fi
 `
 }
@@ -271,9 +335,15 @@ export function publicar({ saida, sha, vps, dizer }: { saida: string; sha: strin
     dizer(naVps(vps, montarAImagem(sha)).trim())
     // O GoatCounter fora do ar não segura o site: o deploy segue com um aviso.
     try {
-      dizer(naVps(vps, garantirOStats()).trim())
+      dizer(naVps(vps, garantirOStats({ email: process.env.GOATCOUNTER_EMAIL || undefined })).trim())
     } catch (erro) {
       dizer(`Aviso: o GoatCounter não subiu (${(erro as Error).message}). O site segue.`)
+      // Um GoatCounter sem site no ar mostra a tela de criar conta a quem chegar.
+      try {
+        dizer(naVps(vps, pararOStatsSemSite()).trim())
+      } catch {
+        dizer('Aviso: não deu para conferir se o GoatCounter ficou sem site.')
+      }
     }
     dizer(naVps(vps, trocarOApp(sha, true)).trim())
   } finally {

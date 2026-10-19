@@ -206,6 +206,9 @@ test('a página de privacidade diz o que fica no aparelho, no link, no log e no 
     'Não ser contado',
   ])
   await expect(page.getByRole('main')).toContainText('31 dias')
+  // A coleta do GoatCounter não tem sessões (`COLETA_DO_STATS`, `scripts/vps.ts`).
+  await expect(page.getByRole('main')).toContainText('não liga as páginas de uma mesma visita')
+  await expect(page.getByRole('main')).not.toContainText('8 horas')
   await expect(page.getByRole('main')).toContainText('3 dias')
   await expect(page.getByRole('main')).toContainText('14 dias')
   await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Privacidade' })).toHaveAttribute(

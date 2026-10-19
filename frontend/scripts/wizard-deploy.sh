@@ -313,8 +313,13 @@ set_secret VPS_HOST "$VPS_HOST"
 set_secret VPS_USER "$VPS_USER"
 set_secret VPS_PORT "$VPS_PORT"
 set_secret VPS_SSH_KEY "$(cat "$VPS_SSH_KEY_PATH")"
+say "O primeiro deploy cria o login do GoatCounter com este e-mail e uma senha sorteada."
+ask STATS_EMAIL "E-mail do login do GoatCounter (Enter vazio = admin@temestudo.com):"
+STATS_EMAIL=${STATS_EMAIL:-admin@temestudo.com}
+write_env STATS_EMAIL "$STATS_EMAIL"
+set_var GOATCOUNTER_EMAIL "$STATS_EMAIL"
 open_url "https://github.com/$GH_REPO/settings/secrets/actions"
-note "Confira na página que VPS_HOST, VPS_USER, VPS_PORT e VPS_SSH_KEY estão lá."
+note "Confira na página que VPS_HOST, VPS_USER, VPS_PORT e VPS_SSH_KEY estão lá, e GOATCOUNTER_EMAIL na aba Variables."
 pause
 
 # ── 7 ─────────────────────────────────────────────────────────────────────
@@ -339,32 +344,20 @@ pause
 
 # ── 8 ─────────────────────────────────────────────────────────────────────
 stage "O login do GoatCounter"
-say "O deploy já subiu o contêiner temestudo-stats. Falta criar o site e o seu login nele,"
-say "e ligar só o que o #21 decidiu: referência, tela, país e sessões; 31 dias de retenção."
-note "Rode esta etapa depois do primeiro deploy verde. Rodar de novo só reaplica as configurações."
-ask STATS_EMAIL "E-mail do login do GoatCounter (Enter vazio = $CERTBOT_EMAIL):"
-STATS_EMAIL=${STATS_EMAIL:-$CERTBOT_EMAIL}
-write_env STATS_EMAIL "$STATS_EMAIL"
-SSH_VPS=(ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -p "$VPS_PORT" "$VPS_USER@$VPS_HOST")
-if "${SSH_VPS[@]}" -o BatchMode=yes "docker exec temestudo-stats goatcounter db show site -find stats.temestudo.com" >/dev/null 2>&1; then
-  say "O site stats.temestudo.com já existe no GoatCounter."
-elif confirm "Criar o site e o login $STATS_EMAIL agora? O GoatCounter pede a senha duas vezes."; then
-  "${SSH_VPS[@]}" -t "docker exec -it temestudo-stats goatcounter db create site -vhost stats.temestudo.com -user.email '$STATS_EMAIL'"
+say "O deploy criou o site stats.temestudo.com e o login $STATS_EMAIL, com uma senha sorteada"
+say "em /opt/temestudo/goatcounter-senha, e ligou só referência, tela e país, com 31 dias."
+note "Rode esta etapa depois do primeiro deploy verde."
+SSH_VPS=(ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -p "$VPS_PORT" "$VPS_USER@$VPS_HOST")
+if SENHA_DO_STATS=$("${SSH_VPS[@]}" "cat /opt/temestudo/goatcounter-senha" 2>/dev/null); then
+  say "A senha (guarde no seu gerenciador de senhas):"
+  printf '\n    %s%s%s\n\n' "$BOLD" "$SENHA_DO_STATS" "$RESET"
 else
-  SKIPPED+=("login do GoatCounter: ssh root@$VPS_HOST -t docker exec -it temestudo-stats goatcounter db create site -vhost stats.temestudo.com -user.email <email>")
-fi
-# Collect 154 = referência (2) + tamanho de tela (8) + país (16) + sessões (128).
-# Ficam desligados navegador e sistema (4), região (32), idioma (64) e as
-# visitas uma a uma (256). O GoatCounter lê as configurações ao subir: daí o restart.
-CONFIGURAR="docker exec temestudo-stats goatcounter db query \"update sites set settings = json_set(settings, '\$.collect', 154, '\$.data_retention', 31) where cname = 'stats.temestudo.com'\" && docker restart temestudo-stats >/dev/null"
-if "${SSH_VPS[@]}" -o BatchMode=yes "$CONFIGURAR"; then
-  say "✓ retenção de 31 dias; região, navegador e sistema desligados."
-else
-  SKIPPED+=("configurar o GoatCounter: ver docs/deploy.md, seção GoatCounter")
+  warn "A VPS não tem /opt/temestudo/goatcounter-senha. Veja o log do deploy na linha do GoatCounter."
+  SKIPPED+=("login do GoatCounter: o deploy não gravou a senha; ver docs/deploy.md, seção GoatCounter")
 fi
 open_url "https://stats.temestudo.com/settings/main"
-step "Entre com $STATS_EMAIL e a senha que você escolheu."
-step "Em Settings → Data collection, confira: Referrer, Size, Country e Sessions marcados; o resto desmarcado."
+step "Entre com $STATS_EMAIL e a senha acima. Em User → Password dá para trocá-la."
+step "Em Settings → Data collection, confira: Referrer, Size e Country marcados; Sessions e o resto desmarcados."
 step "Em Data retention, confira 31 dias."
 pause "Enter depois de conferir."
 

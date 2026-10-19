@@ -98,9 +98,9 @@ function Privacidade() {
             e sistema ficam desligados.
           </p>
           <p>
-            Para não contar duas vezes quem recarrega a página, o GoatCounter liga as páginas de uma
-            visita por até 8 horas com um código que não identifica ninguém. Tudo o que tem mais de
-            31 dias é apagado. A base é o legítimo interesse (LGPD, art. 7º, IX): saber se os Guias
+            O GoatCounter não liga as páginas de uma mesma visita: cada página aberta conta uma vez,
+            sem código nenhum que acompanhe você de uma página a outra. Tudo o que tem mais de 31
+            dias é apagado. A base é o legítimo interesse (LGPD, art. 7º, IX): saber se os Guias
             ajudam.
           </p>
         </section>
