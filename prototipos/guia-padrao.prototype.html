@@ -1,0 +1,670 @@
+<!doctype html>
+<!--
+  PROTÓTIPO DESCARTÁVEL. Ticket "Identidade visual e página do Guia".
+  Variante "padrão da categoria": a mesma página de guia.prototype.html (conteúdo e comportamento),
+  vestida como um site de informação em saúde/evidência (Examine, Our World in Data, NHS.uk).
+  Números vêm das Fichas do repo; Perfil e cenários são de exemplo.
+  A barra preta no rodapé é do protótipo, não do site.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onde os casais se conhecem hoje? · protótipo</title>
+<style>
+@font-face{font-family:"Source Sans 3";src:url(fontes/source-sans-3-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(fontes/source-sans-3-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(fontes/source-sans-3-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(fontes/source-sans-3-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+
+:root{
+  --texto:#1f2937;
+  --titulo:#111827;
+  --apagado:#4b5563;
+  --linha:#e5e7eb;
+  --linha-forte:#d1d5db;
+  --fundo-suave:#f9fafb;
+  --azul:#1d4ed8;
+  --azul-escuro:#1e3a8a;
+  --azul-claro:#eff6ff;
+  --azul-borda:#bfdbfe;
+  --verde:#166534;
+  --verde-claro:#dcfce7;
+  --ambar:#92400e;
+  --ambar-claro:#fef3c7;
+  --vermelho:#991b1b;
+  --vermelho-claro:#fee2e2;
+  --sai:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:#fff;color:var(--texto);
+  font:400 18px/1.6 "Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-text-size-adjust:100%;
+  padding-bottom:84px;
+}
+a{color:var(--azul);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--azul-escuro);text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--azul);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit}
+.nw{white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+svg{flex:none}
+
+/* ---------- cabeçalho ---------- */
+.topo{border-bottom:1px solid var(--linha)}
+.topo-in{max-width:72rem;margin:0 auto;padding:0 20px;min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:700;font-size:20px;color:var(--titulo);text-decoration:none;letter-spacing:-.01em}
+.logo:hover{color:var(--titulo)}
+.logo svg{color:var(--azul)}
+.topo nav a{display:inline-flex;align-items:center;min-height:44px;font-size:16px;font-weight:600;color:var(--texto);text-decoration:none}
+.topo nav a:hover{color:var(--azul);text-decoration:underline}
+
+/* ---------- grade ---------- */
+.pagina{max-width:72rem;margin:0 auto;padding:0 20px}
+.conteudo > *{max-width:42rem}
+@media (min-width:1024px){
+  .pagina{display:grid;grid-template-columns:15rem minmax(0,42rem);column-gap:4.5rem;justify-content:center;padding:0 32px}
+  .conteudo{display:contents}
+  .conteudo > *{grid-column:2}
+  .topo-in{max-width:calc(61.5rem + 64px);padding:0 32px}
+  .conteudo > .indice{grid-column:1;grid-row:1 / span 40;align-self:start;position:sticky;top:24px;margin-top:40px}
+}
+
+/* ---------- voltar / trilha ---------- */
+.voltar{
+  display:none;align-items:center;gap:8px;margin-top:16px;min-height:44px;
+  background:none;border:0;padding:0;cursor:pointer;font-weight:600;font-size:16px;color:var(--azul);text-align:left
+}
+.voltar:hover span{text-decoration:underline;text-underline-offset:3px}
+body.de-outro .voltar{display:inline-flex}
+.trilha{margin:20px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:15px;color:var(--apagado)}
+.trilha a{display:inline-flex;align-items:center;min-height:44px;color:var(--azul)}
+.trilha li{display:inline-flex;align-items:center;gap:8px}
+.trilha li + li::before{content:"›";color:#6b7280}
+body.de-outro .trilha{margin-top:4px}
+
+/* ---------- título ---------- */
+h1{
+  font-size:clamp(32px,7.4vw,44px);line-height:1.15;font-weight:700;color:var(--titulo);
+  letter-spacing:-.015em;margin:4px 0 24px;text-wrap:balance
+}
+
+/* ---------- aviso de Perfil ---------- */
+.aviso-topo{
+  display:none;gap:12px;align-items:flex-start;margin:0 0 20px;padding:14px 16px;
+  background:var(--fundo-suave);border:1px solid var(--linha-forte);border-radius:8px;font-size:16px;line-height:1.5
+}
+.aviso-topo svg{margin-top:2px;color:var(--apagado)}
+body.nada-cobre .aviso-topo{display:flex}
+
+/* ---------- resposta curta ---------- */
+.resumo{background:#f5f8ff;border:1px solid #d7e2f7;border-radius:10px;padding:20px 20px 22px}
+.resumo h2{font-size:15px;font-weight:600;color:var(--apagado);margin:0;line-height:1.3}
+.resumo-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.resposta{font-size:19px;line-height:1.6;margin:0;color:var(--titulo)}
+.resposta strong{font-weight:700}
+
+/* selo de Confiança */
+.selo-conf{
+  display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 10px;border-radius:999px;
+  font-size:15px;font-weight:600;line-height:1.2;border:1px solid transparent
+}
+.selo-conf[data-nivel="forte"]{background:var(--verde-claro);color:var(--verde);border-color:#bbf7d0}
+.selo-conf[data-nivel="moderada"]{background:var(--ambar-claro);color:var(--ambar);border-color:#fde68a}
+.selo-conf[data-nivel="fraca"]{background:var(--vermelho-claro);color:var(--vermelho);border-color:#fecaca}
+.medidor rect{fill:currentColor}
+.medidor rect.off{opacity:.25}
+
+.depois-resumo{display:flex;flex-direction:column;gap:2px;margin:16px 0 0}
+.depois-resumo a{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:17px;width:fit-content}
+.perfil-link{font-weight:600}
+.perfil-link{align-items:flex-start!important;padding:10px 0}
+.perfil-link svg{margin-top:4px}
+.perfil-link small{display:inline-block;white-space:nowrap;font-weight:400;font-size:14px;color:var(--apagado);border:1px solid var(--linha-forte);border-radius:999px;padding:1px 8px;margin-left:2px}
+
+/* ---------- índice "Nesta página" ---------- */
+.indice{margin-top:32px;padding:16px 20px 12px;border:1px solid var(--linha);border-radius:10px}
+.indice h2{font-size:15px;font-weight:700;color:var(--titulo);margin:0 0 4px;letter-spacing:.01em}
+.indice ol{list-style:none;margin:0;padding:0}
+.indice a{
+  display:flex;align-items:center;min-height:44px;padding:6px 10px;margin:0 -10px;border-radius:6px;
+  font-size:16px;line-height:1.35;text-decoration:none
+}
+.indice a:hover{text-decoration:underline}
+.indice a[aria-current="true"]{background:var(--azul-claro);color:var(--azul-escuro);font-weight:600}
+@media (min-width:1024px){
+  .indice{border:0;padding:0}
+  .indice h2{padding-bottom:8px;border-bottom:1px solid var(--linha);margin-bottom:8px}
+}
+
+/* ---------- seções ---------- */
+section.sec{margin-top:56px}
+section.sec > h2{font-size:26px;line-height:1.25;font-weight:700;color:var(--titulo);margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
+.intro{color:var(--apagado);margin:-4px 0 18px}
+p{margin:0 0 1em}
+
+/* referência numerada (estilo sobrescrito) */
+.ref{
+  position:relative;display:inline-block;margin-left:1px;padding:0 2px;min-width:1.15em;
+  font-size:.7em;line-height:1.35;font-weight:700;vertical-align:.62em;text-align:center;
+  color:var(--azul);background:#dbeafe;border-radius:3px;text-decoration:none;
+  font-variant-numeric:tabular-nums
+}
+.ref + .ref{margin-left:2px}
+.ref::before{content:"";position:absolute;inset:-14px -4px}
+.ref:hover{background:var(--azul);color:#fff}
+.ref:focus-visible{outline-offset:1px}
+
+/* Dica */
+.dica{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border:1px solid var(--linha-forte);border-radius:10px;background:var(--fundo-suave)}
+.dica svg{color:var(--azul);margin-top:3px}
+.dica p{margin:0}
+.inferencia{display:block;margin-top:10px;font-style:italic;font-size:16px;color:var(--apagado)}
+
+/* achados */
+.achados{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.achado{padding:20px 0;border-bottom:1px solid var(--linha)}
+.chips{display:flex;gap:6px;margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;line-height:1;padding:5px 9px;border-radius:6px;background:#f3f4f6;color:#374151;border:1px solid var(--linha)}
+.chip.ano{font-weight:400;font-variant-numeric:tabular-nums}
+.achado p{margin:0}
+.vale{margin-top:8px;font-size:16px;line-height:1.5;color:var(--apagado)}
+.vale b{color:var(--texto);font-weight:600}
+.vale .sem-dado{display:none}
+.vale svg{display:none}
+.selo-voce{
+  display:none;align-items:center;gap:6px;margin-top:10px;padding:4px 10px 4px 8px;border-radius:999px;
+  background:var(--verde-claro);color:var(--verde);border:1px solid #bbf7d0;font-size:15px;font-weight:600;line-height:1.3
+}
+.achado.cobre .selo-voce{display:inline-flex}
+.achado.cobre .vale{display:none}
+.achado.nao-cobre .vale{
+  display:flex;gap:10px;align-items:flex-start;padding:10px 12px;margin-top:12px;
+  background:var(--fundo-suave);border:1px solid var(--linha);border-radius:8px;color:#374151
+}
+.achado.nao-cobre .vale svg{display:block;margin-top:3px;color:var(--apagado)}
+.achado.nao-cobre .sem-dado{display:inline;font-weight:600;color:var(--titulo)}
+
+/* Perfil */
+.perfil-caixa{border:1px solid var(--linha-forte);border-radius:10px;padding:20px}
+.perfil-caixa fieldset{border:0;padding:0;margin:0 0 18px}
+.perfil-caixa legend{font-weight:600;color:var(--titulo);margin-bottom:8px;padding:0}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px}
+.opcoes label{position:relative;cursor:pointer}
+.opcoes input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opcoes span{
+  display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border:1px solid #9ca3af;
+  border-radius:8px;background:#fff;font-size:17px;line-height:1.2
+}
+.opcoes label:hover span{border-color:var(--azul)}
+.opcoes input:checked + span{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:600}
+.opcoes input:focus-visible + span{outline:3px solid var(--azul);outline-offset:2px}
+.idade{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.idade input{width:96px;min-height:48px;font:400 18px "Source Sans 3",system-ui,sans-serif;padding:8px 12px;border:1px solid #6b7280;border-radius:8px;background:#fff;color:var(--titulo)}
+.perfil-resumo{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.perfil-resumo p{margin:0}
+.perfil-resumo b{font-weight:600;color:var(--titulo)}
+body.com-perfil .perfil-form{display:none}
+body.com-perfil .perfil-resumo{display:flex}
+.botao{
+  min-height:48px;padding:10px 20px;border:1px solid var(--azul);border-radius:8px;
+  background:var(--azul);color:#fff;font-weight:600;font-size:17px;cursor:pointer
+}
+.botao:hover{background:var(--azul-escuro);border-color:var(--azul-escuro)}
+.botao.leve{background:#fff;color:var(--azul);border-color:#9ca3af;min-height:44px}
+.botao.leve:hover{border-color:var(--azul);background:var(--azul-claro)}
+.contagem{margin:14px 0 0;font-size:16px;color:var(--apagado)}
+.contagem:empty{display:none}
+
+/* Mitos */
+.mito{border:1px solid var(--linha-forte);border-radius:10px;overflow:hidden}
+.mito + .mito{margin-top:16px}
+.mito > div{padding:16px 20px}
+.mito > div + div{border-top:1px solid var(--linha)}
+.mito .rotulo{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.02em;margin:0 0 6px}
+.mito .rotulo.m{color:var(--vermelho)}
+.mito .rotulo.d{color:var(--verde)}
+.mito .frase{margin:0;font-size:19px;font-weight:600;color:var(--titulo);line-height:1.45}
+.mito .lado-mito{background:var(--fundo-suave)}
+.mito .porque{margin:0}
+
+/* limitações */
+.limites{margin:0;padding-left:1.2em}
+.limites li{margin-bottom:10px;padding-left:4px}
+.limites li::marker{color:#6b7280}
+
+/* Fichas citadas */
+.fichas{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.ficha{
+  display:grid;grid-template-columns:36px 1fr;gap:14px;padding:18px 12px;margin:0 -12px;
+  position:relative;scroll-margin:96px
+}
+.ficha::after,.relacionadas a::after{content:"";position:absolute;left:12px;right:12px;bottom:0;border-bottom:1px solid var(--linha)}
+.ficha:focus{outline:none}
+.ficha .n{display:grid;place-items:center;width:32px;height:32px;margin-top:-2px;font-weight:700;font-size:16px;color:var(--azul);background:var(--azul-claro);border-radius:6px;font-variant-numeric:tabular-nums}
+.ficha a.titulo{font-weight:600;font-size:18px}
+.ficha .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ficha .ctx{margin:8px 0 0;font-size:16px;color:var(--apagado);line-height:1.45}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;
+  font-size:14px;font-weight:600;line-height:1.3;border:1px solid var(--linha-forte);background:#fff;color:#374151
+}
+.badge[data-status="lido"] svg{color:#15803d}
+.badge[data-status="parcial"] svg{color:#b45309}
+.badge[data-forca] svg{color:#334155}
+.volta-texto{
+  display:none;align-items:center;gap:6px;margin-top:10px;min-height:44px;padding:0;background:none;border:0;
+  font-size:16px;font-weight:600;color:var(--azul);cursor:pointer
+}
+.volta-texto:hover span{text-decoration:underline;text-underline-offset:3px}
+.ficha.alvo .volta-texto{display:inline-flex}
+.ficha.alvo{border-radius:8px;background:#f5f8ff;box-shadow:0 0 0 1px var(--azul-borda)}
+.ficha.alvo.pisca{animation:pisca 2.6s var(--sai) both}
+@keyframes pisca{
+  0%,40%{background:#fde68a;box-shadow:0 0 0 2px #f59e0b}
+  100%{background:#f5f8ff;box-shadow:0 0 0 1px var(--azul-borda)}
+}
+@media (prefers-reduced-motion:reduce){.ficha.alvo.pisca{animation:none}}
+.legenda{font-size:16px;color:var(--apagado);margin:16px 0 0}
+
+/* relacionadas */
+.relacionadas{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+.relacionadas a{
+  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;text-decoration:none;
+  position:relative;padding:18px 12px;margin:0 -12px;border-radius:6px;color:var(--texto)
+}
+.relacionadas a:hover{background:var(--fundo-suave)}
+.relacionadas a:hover b{text-decoration:underline;text-underline-offset:3px}
+.relacionadas b{display:block;font-size:19px;font-weight:600;line-height:1.35;color:var(--azul);margin-bottom:4px}
+.relacionadas span{font-size:16px;color:var(--apagado);line-height:1.5}
+.relacionadas svg{color:var(--azul)}
+
+footer{margin-top:72px;border-top:1px solid var(--linha);background:var(--fundo-suave)}
+footer p{max-width:72rem;margin:0 auto;padding:24px 20px 32px;font-size:15px;color:var(--apagado)}
+@media (min-width:1024px){footer p{padding-left:32px;padding-right:32px}}
+
+/* ---------- barra do protótipo (não é do site) ---------- */
+.proto{
+  position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:20;
+  display:flex;align-items:center;gap:6px;background:#111;color:#fff;border-radius:999px;padding:6px;
+  font:700 13px/1.2 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.35);max-width:calc(100vw - 16px)
+}
+.proto button{background:#2a2a2a;color:#fff;border:0;border-radius:999px;min-width:40px;min-height:40px;cursor:pointer;font:inherit}
+.proto .cena{padding:0 8px;text-align:center;width:min(250px,calc(100vw - 120px))}
+.proto .cena small{display:block;font-weight:400;opacity:.7;font-size:11px}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-in">
+    <a class="logo" href="#">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="12" width="5" height="9" rx="1" fill="currentColor" opacity=".45"/><rect x="8.5" y="7" width="5" height="14" rx="1" fill="currentColor" opacity=".7"/><rect x="16" y="1" width="5" height="20" rx="1" fill="currentColor"/></svg>
+      Evidência
+    </a>
+    <nav aria-label="Principal"><a href="#">Temas</a></nav>
+  </div>
+</header>
+
+<main class="pagina">
+<div class="conteudo">
+
+  <button class="voltar" type="button" onclick="history.back()">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 9H3M8 4L3 9l5 5"/></svg>
+    <span>Voltar para “App ou presencial: onde tenho mais chance?”</span>
+  </button>
+
+  <nav aria-label="Você está em">
+    <ol class="trilha">
+      <li><a href="#">Onde conhecer pessoas</a></li>
+      <li><span aria-current="page">A1</span></li>
+    </ol>
+  </nav>
+
+  <h1>Onde os casais se conhecem hoje?</h1>
+
+  <p class="aviso-topo" role="note" id="aviso-topo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="8.2"/><path d="M10 9v5"/><circle cx="10" cy="6" r=".6" fill="currentColor"/></svg>
+    <span>Nenhum estudo deste Guia separou <b id="aviso-perfil">o seu Perfil</b>. O que segue vem de outras amostras: vale como pista, não como resposta para você.</span>
+  </p>
+
+  <section class="resumo" aria-labelledby="t-resposta">
+    <div class="resumo-topo">
+      <h2 id="t-resposta">Resposta curta</h2>
+      <span class="selo-conf" id="selo-conf" data-nivel="moderada">
+        <svg class="medidor" width="18" height="16" viewBox="0 0 18 16" aria-hidden="true"><rect x="0" y="10" width="4.5" height="6" rx="1"/><rect x="6.75" y="5" width="4.5" height="11" rx="1"/><rect x="13.5" y="0" width="4.5" height="16" rx="1"/></svg>
+        <span>Confiança <span id="conf-nivel">moderada</span></span>
+      </span>
+    </div>
+    <p class="resposta">
+      Ninguém mediu isso direito no Brasil. Nos EUA, a internet virou o jeito mais comum de casais se conhecerem: <strong>39% dos casais de 2017</strong><a class="ref" href="#f1" data-f="1" aria-label="Ficha 1">1</a>. Na França e no Reino Unido, com amostras sorteadas, fica perto de 1 em cada 10<a class="ref" href="#f2" data-f="2" aria-label="Ficha 2">2</a><a class="ref" href="#f3" data-f="3" aria-label="Ficha 3">3</a>.
+    </p>
+  </section>
+
+  <div class="depois-resumo">
+    <a href="#fichas">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v12M4 10l5 5 5-5"/></svg>
+      Quer conferir? As Fichas estão lá no fim
+    </a>
+    <a class="perfil-link" href="#perfil">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="6" r="3.2"/><path d="M2.8 16c.8-3.2 3.3-5 6.2-5s5.4 1.8 6.2 5"/></svg>
+      <span>Diga seu Perfil e veja o que vale para você <small>opcional</small></span>
+    </a>
+  </div>
+
+  <nav class="indice" aria-labelledby="t-indice">
+    <h2 id="t-indice">Nesta página</h2>
+    <ol>
+      <li><a href="#t-resposta">Resposta curta</a></li>
+      <li><a href="#dica">Dica</a></li>
+      <li><a href="#evidencia">O que a evidência diz</a></li>
+      <li><a href="#perfil">Varia conforme o Perfil?</a></li>
+      <li><a href="#mitos">O que circula por aí e não se sustenta</a></li>
+      <li><a href="#limites">Limitações e o que não se sabe</a></li>
+      <li><a href="#fichas">Fichas citadas</a></li>
+      <li><a href="#relacionadas">Perguntas relacionadas</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="dica" aria-labelledby="t-dica">
+    <h2 id="t-dica">Dica</h2>
+    <div class="dica">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 2a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.2.9 1.9V16h6v-.4c0-.7.3-1.4.9-1.9A6.5 6.5 0 0 0 11 2z"/><path d="M8.5 19.5h5"/></svg>
+      <p>
+        Se você só procura por app, não largue os outros caminhos. Fora dos EUA, amigos, trabalho e estudo ainda juntam a maior parte dos casais<a class="ref" href="#f2" data-f="2" aria-label="Ficha 2">2</a><a class="ref" href="#f3" data-f="3" aria-label="Ficha 3">3</a>.
+        <span class="inferencia">Inferência nossa: nenhum estudo testou isso direto. Força moderada.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="sec" id="evidencia" aria-labelledby="t-evid">
+    <h2 id="t-evid">O que a evidência diz</h2>
+    <p class="intro">Repara: só o último é do Brasil.</p>
+    <ol class="achados">
+      <li class="achado" data-cobre='{"casal":["hetero"],"idade":[18,99]}'>
+        <div class="chips"><span class="chip">EUA</span><span class="chip ano">2017</span></div>
+        <p>A internet passou “por amigos” por volta de 2013. É o caminho mais comum, mas não a maioria: 39% em 2017<a class="ref" href="#f1" data-f="1" aria-label="Ficha 1">1</a>.</p>
+        <span class="selo-voce">vale para você</span>
+        <p class="vale"><b>Vale para:</b> casais homem-mulher, amostra representativa dos EUA.</p>
+      </li>
+      <li class="achado" data-cobre='{"casal":["mesmo"],"idade":[18,99]}'>
+        <div class="chips"><span class="chip">EUA</span><span class="chip ano">2017</span></div>
+        <p>Entre casais do mesmo sexo, a fatia online é bem maior: cerca de 65%<a class="ref" href="#f1" data-f="1" aria-label="Ficha 1">1</a>.</p>
+        <span class="selo-voce">vale para você</span>
+        <p class="vale"><b>Vale para:</b> casais do mesmo sexo nos EUA. Poucos casais na amostra.</p>
+      </li>
+      <li class="achado" data-cobre='{"casal":["hetero","mesmo"],"idade":[26,65]}'>
+        <div class="chips"><span class="chip">França</span><span class="chip ano">2013</span></div>
+        <p>Na França, menos de 9% dos casais formados entre 2005 e 2013 se conheceram em sites<a class="ref" href="#f2" data-f="2" aria-label="Ficha 2">2</a>.</p>
+        <span class="selo-voce">vale para você</span>
+        <p class="vale"><b>Vale para:</b> pessoas de 26 a 65 anos, amostra sorteada.</p>
+      </li>
+      <li class="achado" data-cobre='{"casal":["hetero","mesmo"],"idade":[16,74]}'>
+        <div class="chips"><span class="chip">Reino Unido</span><span class="chip ano">2012</span></div>
+        <p>Na Grã-Bretanha, 10,9% dos casais de 2008 a 2012 se conheceram online. Amigos e família seguem na frente<a class="ref" href="#f3" data-f="3" aria-label="Ficha 3">3</a>.</p>
+        <span class="selo-voce">vale para você</span>
+        <p class="vale"><b>Vale para:</b> casais que moram juntos, 16 a 74 anos.</p>
+      </li>
+      <li class="achado" data-cobre='{"casal":["hetero","mesmo"],"idade":[18,99]}'>
+        <div class="chips"><span class="chip">Brasil</span><span class="chip ano">2024</span></div>
+        <p>Num painel online com 119 brasileiros com parceiro, 19% conheceram a pessoa online. É pouca gente para tirar conclusão<a class="ref" href="#f4" data-f="4" aria-label="Ficha 4">4</a>.</p>
+        <span class="selo-voce">vale para você</span>
+        <p class="vale"><b>Vale para:</b> brasileiros num painel online com cotas.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" id="perfil" aria-labelledby="t-perfil">
+    <h2 id="t-perfil">Varia conforme o Perfil?</h2>
+    <p class="intro">Diga quem você é e quem procura. Nada some da página: o que tem dado para você ganha a marca “vale para você”. Fica só neste navegador.</p>
+    <div class="perfil-caixa">
+      <form class="perfil-form" onsubmit="salvaPerfil(event)">
+        <fieldset>
+          <legend>Você é</legend>
+          <div class="opcoes">
+            <label><input type="radio" name="genero" value="homem"><span>homem</span></label>
+            <label><input type="radio" name="genero" value="mulher"><span>mulher</span></label>
+            <label><input type="radio" name="genero" value="outro"><span>outro</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Você procura</legend>
+          <div class="opcoes">
+            <label><input type="radio" name="procura" value="homens"><span>homens</span></label>
+            <label><input type="radio" name="procura" value="mulheres"><span>mulheres</span></label>
+            <label><input type="radio" name="procura" value="ambos"><span>ambos</span></label>
+          </div>
+        </fieldset>
+        <fieldset style="margin-bottom:0">
+          <legend><label for="idade">Sua idade</label></legend>
+          <div class="idade"><input id="idade" name="idade" type="number" inputmode="numeric" min="18" max="99" placeholder="25"><button class="botao" type="submit">Ver o que vale para mim</button></div>
+        </fieldset>
+      </form>
+      <div class="perfil-resumo">
+        <p>Seu Perfil: <b id="perfil-texto">mulher, procura homens, 24 anos</b></p>
+        <button class="botao leve" type="button" onclick="limpaPerfil()">mudar</button>
+      </div>
+      <p class="contagem" id="contagem" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="sec" id="mitos" aria-labelledby="t-mito">
+    <h2 id="t-mito">O que circula por aí e não se sustenta</h2>
+    <article class="mito">
+      <div class="lado-mito">
+        <p class="rotulo m"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.8"/><path d="M5.6 5.6l4.8 4.8M10.4 5.6l-4.8 4.8"/></svg>Mito</p>
+        <p class="frase">“Mais da metade dos casais já se conhece por app.”</p>
+      </div>
+      <div>
+        <p class="rotulo d"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.8"/><path d="M5 8.2l2 2 4-4.4"/></svg>O que os dados dizem</p>
+        <p class="porque">Vem de um gráfico no site de um pesquisador americano, com 117 casais em 2020 e 74 em 2022. Nenhum artigo revisado traz esse número<a class="ref" href="#f1" data-f="1" aria-label="Ficha 1">1</a>. E a versão que circula com 66% não tem fonte nenhuma.</p>
+      </div>
+    </article>
+    <article class="mito">
+      <div class="lado-mito">
+        <p class="rotulo m"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.8"/><path d="M5.6 5.6l4.8 4.8M10.4 5.6l-4.8 4.8"/></svg>Mito</p>
+        <p class="frase">“Casal que se conheceu na internet dura menos.”</p>
+      </div>
+      <div>
+        <p class="rotulo d"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.8"/><path d="M5 8.2l2 2 4-4.4"/></svg>O que os dados dizem</p>
+        <p class="porque">No acompanhamento americano de seis anos, o lugar onde o casal se conheceu não previu término<a class="ref" href="#f5" data-f="5" aria-label="Ficha 5">5</a>. Estudos mais novos discordam entre si, então ninguém pode afirmar isso.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="sec" id="limites" aria-labelledby="t-lim">
+    <h2 id="t-lim">Limitações e o que não se sabe</h2>
+    <ul class="limites">
+      <li>Não existe pesquisa representativa do Brasil sobre onde os casais se conhecem. O IBGE não pergunta isso.</li>
+      <li>“Online” junta app, site, rede social e jogo. Quase nenhum estudo separa o app.</li>
+      <li>Os dados mais sólidos param em 2017 nos EUA e em 2013 na Europa. Depois disso, só amostras pequenas.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="fichas" aria-labelledby="t-fichas">
+    <h2 id="t-fichas">Fichas citadas</h2>
+    <p class="intro">Toque num número do texto e a Ficha aparece marcada aqui.</p>
+    <ol class="fichas">
+      <li class="ficha" id="f1" tabindex="-1">
+        <span class="n" aria-hidden="true">1</span>
+        <div>
+          <a class="titulo" href="#">Rosenfeld, Thomas e Hausen 2019</a>
+          <div class="meta"><span class="badge" data-status="lido">lido no original</span><span class="badge" data-forca="3">forte</span></div>
+          <p class="ctx">EUA · 2009 e 2017 · 5.421 casais</p>
+          <button class="volta-texto" type="button" onclick="voltaTexto()"></button>
+        </div>
+      </li>
+      <li class="ficha" id="f2" tabindex="-1">
+        <span class="n" aria-hidden="true">2</span>
+        <div>
+          <a class="titulo" href="#">Bergström 2016</a>
+          <div class="meta"><span class="badge" data-status="lido">lido no original</span><span class="badge" data-forca="3">forte</span></div>
+          <p class="ctx">França · 2013–2014 · 7.825 pessoas</p>
+          <button class="volta-texto" type="button" onclick="voltaTexto()"></button>
+        </div>
+      </li>
+      <li class="ficha" id="f3" tabindex="-1">
+        <span class="n" aria-hidden="true">3</span>
+        <div>
+          <a class="titulo" href="#">Lampard 2020</a>
+          <div class="meta"><span class="badge" data-status="lido">lido no original</span><span class="badge" data-forca="3">forte</span></div>
+          <p class="ctx">Reino Unido · 2010–2012 · 6.716 casais</p>
+          <button class="volta-texto" type="button" onclick="voltaTexto()"></button>
+        </div>
+      </li>
+      <li class="ficha" id="f4" tabindex="-1">
+        <span class="n" aria-hidden="true">4</span>
+        <div>
+          <a class="titulo" href="#">Kowal e colegas 2025</a>
+          <div class="meta"><span class="badge" data-status="parcial">parcial</span><span class="badge" data-forca="2">moderada</span></div>
+          <p class="ctx">50 países, Brasil incluído · 2024 · 6.646 pessoas</p>
+          <button class="volta-texto" type="button" onclick="voltaTexto()"></button>
+        </div>
+      </li>
+      <li class="ficha" id="f5" tabindex="-1">
+        <span class="n" aria-hidden="true">5</span>
+        <div>
+          <a class="titulo" href="#">Rosenfeld 2017</a>
+          <div class="meta"><span class="badge" data-status="lido">lido no original</span><span class="badge" data-forca="3">forte</span></div>
+          <p class="ctx">EUA · 2009–2015 · acompanhamento de 6 anos</p>
+          <button class="volta-texto" type="button" onclick="voltaTexto()"></button>
+        </div>
+      </li>
+    </ol>
+    <p class="legenda">Status: lido no original (conferido no texto completo) ou parcial (só no resumo). Força: forte, moderada ou fraca, conforme o desenho e o tamanho do estudo.</p>
+  </section>
+
+  <section class="sec" id="relacionadas" aria-labelledby="t-rel">
+    <h2 id="t-rel">Perguntas relacionadas</h2>
+    <ul class="relacionadas">
+      <li><a href="#"><div><b>O lugar onde nos conhecemos muda a relação?</b><span>Os estudos discordam, e nenhum achou diferença grande.</span></div><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4l6 6-6 6"/></svg></a></li>
+      <li><a href="#"><div><b>App ou presencial: onde tenho mais chance?</b><span>Depende de quem você procura e de quantas pessoas estão no app.</span></div><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4l6 6-6 6"/></svg></a></li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer><p>Protótipo. Os números vêm das Fichas do repositório; Perfil, Status parcial da Ficha 4 e textos da Dica e das relacionadas são de exemplo.</p></footer>
+
+<nav class="proto" aria-label="Controles do protótipo">
+  <button type="button" onclick="cena(-1)" aria-label="Cenário anterior">←</button>
+  <div class="cena"><span id="cena-nome">sem Perfil</span><small>protótipo · ← → muda o cenário</small></div>
+  <button type="button" onclick="cena(1)" aria-label="Próximo cenário">→</button>
+</nav>
+
+<script>
+/* Ícones de Status, Força, "vale para você" e notas, montados a partir das classes e data-* */
+const ICONE = {
+  lido:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M5.6 9.2l1.7 1.7 3.2-3.6"/></svg>',
+  parcial:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M3.5 9.5h9v5h-9z" fill="currentColor" stroke="none"/></svg>',
+  check:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>',
+  info:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="8.2"/><path d="M10 9v5"/><circle cx="10" cy="6" r=".6" fill="currentColor"/></svg>',
+  volta:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3M3.5 7.5L8 3l4.5 4.5"/></svg>'
+};
+const MEDIDOR = n => `<svg class="medidor" width="18" height="16" viewBox="0 0 18 16" aria-hidden="true">${
+  [[0,10,6],[6.75,5,11],[13.5,0,16]].map(([x,y,h],k)=>`<rect x="${x}" y="${y}" width="4.5" height="${h}" rx="1"${k<n?'':' class="off"'}/>`).join('')}</svg>`;
+const NIVEL = {forte:3, moderada:2, fraca:1};
+document.querySelectorAll('[data-status]').forEach(e=>{ e.insertAdjacentHTML('afterbegin',ICONE[e.dataset.status]+'<span class="sr">Status de verificação: </span>'); });
+document.querySelectorAll('[data-forca]').forEach(e=>{ e.insertAdjacentHTML('afterbegin',MEDIDOR(+e.dataset.forca)+'<span class="sr">Força da evidência: </span>'); });
+document.querySelectorAll('.selo-voce').forEach(e=>e.insertAdjacentHTML('afterbegin',ICONE.check));
+document.querySelectorAll('.vale').forEach(e=>{ e.insertAdjacentHTML('afterbegin',ICONE.info);
+  const corpo=document.createElement('span'); while(e.childNodes.length>1) corpo.append(e.childNodes[1]);
+  corpo.insertAdjacentHTML('beforeend',' <span class="sem-dado">Não há dado deste estudo para o seu Perfil.</span>'); e.append(corpo); });
+document.querySelectorAll('.volta-texto').forEach(b=>b.innerHTML=ICONE.volta+'<span>voltar ao texto</span>');
+
+/* Confiança: o medidor de três barras e a palavra mudam com o nível */
+function confianca(n){
+  const s=document.getElementById('selo-conf'); s.dataset.nivel=n;
+  s.querySelectorAll('.medidor rect').forEach((r,k)=>r.classList.toggle('off',k>=NIVEL[n]));
+  document.getElementById('conf-nivel').textContent=n;
+}
+
+/* Perfil: destaca e avisa, nunca esconde */
+let perfil = null, simulaNada = false;
+function casal(p){ if(!p) return null;
+  if(p.procura==='ambos') return ['hetero','mesmo'];
+  if(p.genero==='outro') return ['outro'];
+  const mesmo = (p.genero==='homem'&&p.procura==='homens')||(p.genero==='mulher'&&p.procura==='mulheres');
+  return [mesmo?'mesmo':'hetero'];
+}
+function aplica(){
+  const c = casal(perfil); let n=0, tot=0;
+  document.querySelectorAll('.achado').forEach(li=>{
+    tot++; li.classList.remove('cobre','nao-cobre');
+    if(!perfil) return;
+    const cob = JSON.parse(li.dataset.cobre);
+    const okIdade = perfil.idade>=cob.idade[0] && perfil.idade<=cob.idade[1];
+    const okCasal = c.includes('outro') ? cob.casal.length===2 : c.some(x=>cob.casal.includes(x));
+    if(okIdade&&okCasal&&!simulaNada){ li.classList.add('cobre'); n++; } else li.classList.add('nao-cobre');
+  });
+  document.body.classList.toggle('com-perfil',!!perfil);
+  document.body.classList.toggle('nada-cobre',!!perfil && n===0);
+  const txt = perfil ? `${perfil.genero}, procura ${perfil.procura}, ${perfil.idade} anos` : '';
+  document.getElementById('perfil-texto').textContent = txt;
+  document.getElementById('aviso-perfil').textContent = txt;
+  document.getElementById('contagem').textContent = perfil ? `${n} de ${tot} achados têm dado para o seu Perfil.` : '';
+}
+function salvaPerfil(e){ e.preventDefault(); const f=new FormData(e.target);
+  if(!f.get('genero')||!f.get('procura')||!f.get('idade')) { document.getElementById('contagem').textContent='Falta responder: '+['genero','procura','idade'].filter(k=>!f.get(k)).map(k=>({genero:'você é',procura:'você procura',idade:'sua idade'})[k]).join(', ')+'.'; return; }
+  perfil={genero:f.get('genero'),procura:f.get('procura'),idade:+f.get('idade')}; aplica(); }
+function limpaPerfil(){ perfil=null; aplica(); document.querySelector('.perfil-form input').focus(); }
+
+/* Número de referência nunca fica sozinho na linha: gruda na palavra anterior e na pontuação */
+document.querySelectorAll('a.ref').forEach(a=>{
+  const prev=a.previousSibling; if(!prev||prev.nodeType!==3) return;
+  const m=prev.data.match(/(\S+)$/); if(!m) return;
+  prev.data=prev.data.slice(0,-m[1].length);
+  const w=document.createElement('span'); w.className='nw'; w.append(m[1]); prev.after(w);
+  let n=w.nextSibling;
+  while(n&&n.nodeType===1&&n.matches('a.ref')){ const nx=n.nextSibling; w.append(n); n=nx; }
+  if(n&&n.nodeType===3){ const p=n.data.match(/^[.,;:]+/); if(p){ n.data=n.data.slice(p[0].length); w.append(p[0]); } }
+});
+
+/* Assinatura: tocar um número leva à Ficha, acende o fundo que se apaga e oferece a volta */
+let origem=null;
+document.querySelectorAll('a.ref').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); origem=a;
+  document.querySelectorAll('.ficha.alvo').forEach(f=>f.classList.remove('alvo','pisca'));
+  const f=document.getElementById('f'+a.dataset.f);
+  f.classList.add('alvo'); void f.offsetWidth; f.classList.add('pisca');
+  f.scrollIntoView({block:'center'}); f.focus({preventScroll:true});
+}));
+function voltaTexto(){ document.querySelectorAll('.ficha.alvo').forEach(f=>f.classList.remove('alvo','pisca'));
+  if(origem){ origem.scrollIntoView({block:'center'}); origem.focus({preventScroll:true}); } }
+
+/* "Nesta página": marca a seção em leitura */
+const links=[...document.querySelectorAll('.indice a')];
+const alvos=links.map(l=>document.querySelector(l.getAttribute('href')).closest('section'));
+const marca=()=>{ let atual=0; alvos.forEach((s,k)=>{ if(s.getBoundingClientRect().top<innerHeight*.35) atual=k; });
+  links.forEach((l,k)=>k===atual ? l.setAttribute('aria-current','true') : l.removeAttribute('aria-current')); };
+addEventListener('scroll',()=>requestAnimationFrame(marca),{passive:true}); marca();
+
+/* Cenários do protótipo */
+const CENAS = [
+  {nome:'sem Perfil', perfil:null, conf:'moderada', de:false},
+  {nome:'mulher, procura homens, 24', perfil:{genero:'mulher',procura:'homens',idade:24}, conf:'moderada', de:false},
+  {nome:'homem, procura homens, 30', perfil:{genero:'homem',procura:'homens',idade:30}, conf:'moderada', de:false},
+  {nome:'nenhum achado cobre (simulado)', perfil:{genero:'outro',procura:'homens',idade:19}, conf:'moderada', de:false, nada:true},
+  {nome:'veio de outro Guia', perfil:null, conf:'moderada', de:true},
+  {nome:'Confiança forte', perfil:null, conf:'forte', de:false},
+  {nome:'Confiança fraca', perfil:null, conf:'fraca', de:false},
+];
+let i = Math.max(0, Math.min(CENAS.length-1, +(new URLSearchParams(location.search).get('cena')||0)));
+function mostra(){ const c=CENAS[i]; perfil=c.perfil; simulaNada=!!c.nada; confianca(c.conf);
+  document.body.classList.toggle('de-outro',c.de); aplica();
+  document.getElementById('cena-nome').textContent=`${i+1}/${CENAS.length} · ${c.nome}`;
+  const u=new URL(location); u.searchParams.set('cena',i); history.replaceState(null,'',u); }
+function cena(d){ i=(i+d+CENAS.length)%CENAS.length; mostra(); }
+addEventListener('keydown',e=>{ if(e.target.closest('input,textarea,[contenteditable]')) return;
+  if(e.key==='ArrowRight') cena(1); if(e.key==='ArrowLeft') cena(-1); });
+mostra();
+if(new URLSearchParams(location.search).has('alvo')) setTimeout(()=>document.querySelector('a.ref').click(),300);
+if(new URLSearchParams(location.search).has('captura')){ document.querySelector('.proto').style.display='none'; document.body.style.paddingBottom='0';
+  document.fonts.ready.then(()=>requestAnimationFrame(()=>{ document.title=document.documentElement.scrollHeight; })); }
+</script>
+</body>
+</html>

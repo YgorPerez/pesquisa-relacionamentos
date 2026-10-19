@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:390px;height:844px;overflow:hidden}
+body{background:#fff;color:#111;font:16px/1.5 "Hanken Grotesk",sans-serif}
+.g{display:grid;grid-template-columns:repeat(6,1fr);column-gap:10px;padding:0 16px}
+.nav{padding-top:14px;padding-bottom:14px;font:700 13px/1 "Hanken Grotesk";border-bottom:2px solid #111}
+.nav .a{grid-column:1/4}.nav .b{grid-column:4/7;text-align:right;color:#e2231a}
+.geo{grid-column:1/7;height:120px;position:relative;margin-top:16px}
+.geo .arc{position:absolute;left:0;top:0;width:240px;height:240px;border-radius:50%;border:28px solid #e2231a;clip-path:inset(0 0 50% 0)}
+.geo .bar{position:absolute;right:0;top:40px;width:96px;height:28px;background:#111}
+.geo .bar2{position:absolute;right:0;top:80px;width:46px;height:28px;background:#111}
+.k{grid-column:1/3;font:700 13px/1.3 "Hanken Grotesk";margin-top:18px;color:#e2231a}
+h1{grid-column:1/7;font:800 34px/1.02 "Hanken Grotesk";letter-spacing:-.02em;margin-top:4px}
+.conf{grid-column:1/7;margin-top:16px;display:flex;align-items:center;gap:8px;font:700 13px/1 "Hanken Grotesk"}
+.conf i{display:inline-block;width:14px;height:14px;background:#111}.conf i.o{background:none;border:2px solid #111}
+.resp{grid-column:1/7;margin-top:12px;font-size:17px;line-height:1.5}
+.resp b{font-weight:700}
+.perfil{grid-column:1/7;margin-top:14px;padding-top:10px;border-top:2px solid #111;font:700 14px/1.3 "Hanken Grotesk"}
+.perfil span{color:#e2231a}
+h2{grid-column:1/7;margin-top:22px;font:800 13px/1 "Hanken Grotesk";text-transform:uppercase;letter-spacing:.06em}
+.ac{grid-column:1/7;display:grid;grid-template-columns:repeat(6,1fr);column-gap:10px;border-top:1px solid #111;padding:8px 0;margin-top:8px}
+.ac .p{grid-column:1/2;font:700 12px/1.3 "Hanken Grotesk"}
+.ac .t{grid-column:2/7;font-size:15px;line-height:1.4}
+.ac.v .p{color:#e2231a}
+</style></head><body>
+<div class="g nav"><span class="a">Evidência</span><span class="b">Onde conhecer</span></div>
+<div class="g">
+<div class="geo"><div class="arc"></div><div class="bar"></div><div class="bar2"></div></div>
+<div class="k">A1</div>
+<h1>Onde os casais se conhecem hoje?</h1>
+<p class="conf"><i></i><i></i><i class="o"></i> Confiança moderada</p>
+<p class="resp">Ninguém mediu isso direito no Brasil. Nos EUA, a internet virou o jeito mais comum: <b>39% dos casais de 2017</b>. Na França e no Reino Unido, fica perto de <b>1 em cada 10</b>.</p>
+<p class="perfil">Diga seu Perfil <span>→</span> e veja o que vale para você</p>
+<h2>O que a evidência diz</h2>
+<div class="ac v"><span class="p">EUA 2017</span><span class="t">Online é o mais comum, não a maioria. ✅ forte</span></div>
+<div class="ac"><span class="p">FR 2013</span><span class="t">Menos de 9% dos casais se conheceram online. ✅ forte</span></div>
+</div>
+</body></html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pauta:28px;--azul:#1b3fc4;--margem:#d63a2f;--linha:#bcd3ec;--tinta:#1d2230;--marca:#fff04d;--papel:#fbfcfd}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:390px;height:844px;overflow:hidden}
+body{background:var(--papel);color:var(--tinta);font:16px/var(--pauta) "Source Serif 4",serif;
+ background-image:linear-gradient(transparent calc(var(--pauta) - 1px),var(--linha) calc(var(--pauta) - 1px));
+ background-size:100% var(--pauta);background-position:0 6px}
+.capa{background:var(--azul);color:#fff;height:84px;padding:14px 18px 0 18px;position:relative}
+.capa .marca{font:700 15px/1 "Barlow Condensed";letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.capa .tema{font:600 13px/1 "Barlow Condensed";letter-spacing:.06em;text-transform:uppercase;margin-top:10px;opacity:.85}
+.capa .espiral{position:absolute;left:0;right:0;bottom:-7px;height:14px;
+ background:radial-gradient(circle at 7px 7px,var(--papel) 4px,transparent 4.5px) 0 0/22px 14px repeat-x}
+.folha{position:relative;padding:28px 18px 0 58px}
+.folha:before{content:"";position:absolute;left:46px;top:0;bottom:-900px;width:2px;background:var(--margem);opacity:.75}
+.num{position:absolute;left:10px;font:700 15px/var(--pauta) "Barlow Condensed";color:var(--azul)}
+h1{font:700 26px/var(--pauta) "Source Serif 4";letter-spacing:-.01em;margin-bottom:var(--pauta)}
+h1 span{display:block}
+.conf{display:flex;align-items:center;gap:8px;font:600 15px/var(--pauta) "Barlow Condensed";letter-spacing:.06em;text-transform:uppercase;color:var(--azul)}
+.conf svg{flex:none}
+.resp{margin:0 0 var(--pauta)}
+.resp b{font-weight:600}
+.ref{font:600 13px/1 "Barlow Condensed";color:var(--azul);vertical-align:super;margin-left:1px}
+.perfil{font:600 15px/var(--pauta) "Barlow Condensed";letter-spacing:.03em;color:var(--azul);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+h2{font:700 15px/var(--pauta) "Barlow Condensed";letter-spacing:.08em;text-transform:uppercase;color:var(--margem);margin-top:var(--pauta)}
+.achado{position:relative;margin:0}
+.achado .m{position:absolute;left:-58px;width:44px;text-align:right;font:600 12px/14px "Barlow Condensed";color:var(--azul);top:7px}
+.vale{background:linear-gradient(transparent 30%,var(--marca) 30%,var(--marca) 88%,transparent 88%);padding:0 2px}
+.mito{text-decoration:line-through;text-decoration-color:var(--margem);text-decoration-thickness:2px}
+</style></head><body>
+<header class="capa"><div class="marca">Evidência · relacionamentos</div><div class="tema">Onde conhecer pessoas · A1</div><div class="espiral"></div></header>
+<main class="folha">
+<span class="num">A1</span>
+<h1><span>Onde os casais</span><span>se conhecem hoje?</span></h1>
+<p class="conf"><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#1b3fc4" stroke-width="2"/><path d="M11 2a9 9 0 0 1 0 18z" fill="#1b3fc4"/></svg>Confiança moderada</p>
+<p class="resp">Ninguém mediu isso direito no Brasil. Nos EUA, a internet virou o jeito mais comum: <b>39% dos casais de 2017</b>.<span class="ref">1</span> Na França e no Reino Unido, fica perto de <b>1 em cada 10</b>.<span class="ref">2 3</span></p>
+<p><a class="perfil">Diga seu Perfil e veja o que vale para você</a></p>
+<h2>O que a evidência diz</h2>
+<p class="achado"><span class="m">EUA<br>2017</span>Online passou “por amigos” por volta de 2013, mas é <span class="vale">o mais comum, não a maioria.</span><span class="ref">1</span></p>
+<p class="achado"><span class="m">BR<br>2025</span>Num painel com 119 brasileiros, 19% conheceram o parceiro online.<span class="ref">4</span></p>
+<h2>O que circula e não se sustenta</h2>
+<p><span class="mito">“Mais da metade dos casais se conhece por app.”</span> Vem de 74 casais, num gráfico fora de artigo.</p>
+</main>
+</body></html>
