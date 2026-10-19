@@ -36,7 +36,7 @@ Sem `VPS_HOST`, `VPS_USER` ou `VPS_SSH_KEY`, o workflow roda os testes e o build
 
 Cada push na `main` que mexe no site (`frontend/`, `packages/`, o conteúdo, o lockfile) dispara o Deploy:
 
-1. O job `testes-e-build` roda tipos, testes, o build e o e2e sobre o build. O `.output` que passou é o que sobe.
+1. O job `testes-e-build` roda tipos, testes e o e2e (sobre um build do conteúdo de fixture). Depois monta o build com o acervo do repositório, e é esse `.output` que sobe. Conteúdo com erro derruba o build e nada é publicado.
 2. O job `publicar` manda o `.output`, o `Dockerfile` e a configuração do Nginx por scp para `/opt/temestudo/envio/`. Na VPS, o script monta a imagem `temestudo-app:sha-<commit>`.
 3. A troca:
    - o contêiner novo sobe na porta livre do par 3011/3031, ao lado do antigo;

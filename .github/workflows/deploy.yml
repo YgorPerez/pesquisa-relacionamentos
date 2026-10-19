@@ -90,9 +90,9 @@ jobs:
       - name: Testes
         run: pnpm test
 
-      # O `pnpm e2e` monta o build e roda o Playwright sobre ele. O
-      # `.output` que fica é o que vai para a VPS.
-      - name: Build e E2E
+      # O `pnpm e2e` monta um build sobre o conteúdo de fixture
+      # (`frontend/e2e/acervo`) e roda o Playwright sobre ele.
+      - name: E2E
         run: pnpm e2e
 
       - name: Guardar traces do e2e
@@ -103,6 +103,12 @@ jobs:
           path: frontend/test-results/
           if-no-files-found: ignore
           retention-days: 14
+
+      # O build que vai para a VPS, com o acervo do repositório. Ele vem
+      # depois do e2e, que deixou no `.output` o build da fixture. Conteúdo
+      # com erro derruba este passo, e nada é publicado.
+      - name: Build do conteúdo
+        run: pnpm build
 
       # O upload-artifact pula pastas com ponto, como o `.output`: vai num tar.
       - name: Empacotar o build
