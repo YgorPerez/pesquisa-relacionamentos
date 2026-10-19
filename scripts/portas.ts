@@ -87,6 +87,7 @@ export function portaDoCheckout(uso: Uso, raiz = RAIZ) {
 
 if (import.meta.main) {
   const onde = ehWorktree() ? `worktree ${RAIZ}` : 'checkout principal'
+  // oxlint-disable-next-line no-console -- teste do teto de supressões (#57)
   console.log(`[portas] ${onde}`)
   for (const uso of USOS) console.log(`${uso}\t${portaDoCheckout(uso)}`)
 }
