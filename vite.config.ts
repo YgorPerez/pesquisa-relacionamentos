@@ -48,15 +48,16 @@ const FORA = [
 
 export default defineConfig({
   // Os testes dos scripts da raiz (`pnpm conferir`, o pipeline dos dados, o
-  // gancho do Claude Code). Cada pacote tem o `test` dele.
+  // gancho do Claude Code, a suíte do PR) e os do CI (`.github/scripts/`).
+  // Cada pacote tem o `test` dele.
   test: {
     ...(workers ? { maxWorkers: workers } : {}),
-    include: ['scripts/**/*.test.ts'],
+    include: ['scripts/**/*.test.ts', '.github/scripts/**/*.test.ts'],
     environment: 'node',
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'json'],
-      include: ['scripts/**/*.ts'],
+      include: ['scripts/**/*.ts', '.github/scripts/**/*.ts'],
       exclude: ['scripts/fixtures/**'],
       // O piso é a cobertura de quando ele entrou (ADR 0005): sobe com ela,
       // nunca desce.
