@@ -6,7 +6,7 @@
 // O formato já circula em links velhos: mudar uma chave quebra quem recebeu.
 // Por isso cada versão tem o seu leitor, e uma versão nova acrescenta outro
 // sem apagar os de antes. A opção de não ser contado (#35) nunca entra aqui.
-import { lerPerfil, type Perfil } from './perfil.ts'
+import { lerPerfil, type GeneroDoPerfil, type Perfil } from './perfil.ts'
 import { formatarFaixa } from './numeros.ts'
 import {
   alertaDoTopo3,
@@ -39,7 +39,8 @@ export type EstadoDoLink =
     }
   | {
       readonly calculadora: 'prioridades'
-      readonly perfil: Perfil | null
+      /** Só o gênero do Perfil: a conta usa para a nota de viés, e o resto não vai. */
+      readonly genero: GeneroDoPerfil | null
       readonly prioridades: EstadoDasPrioridades
     }
 
@@ -87,7 +88,7 @@ const lista = (texto: string | undefined): string[] => (texto ? texto.split(',')
 //   Grupo possível: &idades=25-35&uf=SP&municipio=3550308&companheiro=nao
 //     &escolaridade=superior&renda=2-5&cor=preta,parda&religiao=catolica
 //     &sem-filhos=sim&altura=160-200&nao-fuma=sim (só o que sai do padrão)
-//   Prioridades: &topo=renda,sexo,calma&desfecho=satisfacao
+//   Prioridades: só o gênero do Perfil, &topo=renda,sexo,calma&desfecho=satisfacao
 
 const CHAVES_DOS_REQUISITOS_V1 = [
   'idades', 'uf', 'municipio', 'companheiro', 'escolaridade', 'renda', 'cor', 'religiao', 'sem-filhos', 'altura',
@@ -96,18 +97,18 @@ const CHAVES_DOS_REQUISITOS_V1 = [
 
 function escreverV1(estado: EstadoDoLink): Array<readonly [string, string]> {
   const pares: Array<readonly [string, string]> = [['v', String(VERSAO_DO_LINK)]]
-  const p = estado.perfil
-  if (p?.genero) pares.push(['genero', p.genero])
-  if (p?.procura) pares.push(['procura', p.procura])
-  if (p?.idade !== undefined) pares.push(['idade', String(p.idade)])
-
   if (estado.calculadora === 'prioridades') {
+    if (estado.genero) pares.push(['genero', estado.genero])
     const { topo3, desfecho } = estado.prioridades
     if (topo3.length > 0) pares.push(['topo', topo3.join(',')])
     pares.push(['desfecho', desfecho])
     return pares
   }
 
+  const p = estado.perfil
+  if (p?.genero) pares.push(['genero', p.genero])
+  if (p?.procura) pares.push(['procura', p.procura])
+  if (p?.idade !== undefined) pares.push(['idade', String(p.idade)])
   const r = estado.requisitos
   if (!r) return pares
   const padrao = REQUISITOS_PADRAO
@@ -128,12 +129,14 @@ function escreverV1(estado: EstadoDoLink): Array<readonly [string, string]> {
 }
 
 function lerV1(calculadora: CalculadoraComLink, q: Parametros, ids?: ReadonlyArray<string>): EstadoDoLink {
-  const perfil = lerPerfil({ genero: q.get('genero'), procura: q.get('procura'), idade: q.get('idade') })
-
   if (calculadora === 'prioridades') {
+    // Os links de antes levavam `procura` e `idade` também: ficam de fora.
+    const genero = lerPerfil({ genero: q.get('genero') })?.genero ?? null
     const prioridades = lerPrioridades({ topo3: lista(q.get('topo')), desfecho: q.get('desfecho') }, ids)!
-    return { calculadora, perfil, prioridades }
+    return { calculadora, genero, prioridades }
   }
+
+  const perfil = lerPerfil({ genero: q.get('genero'), procura: q.get('procura'), idade: q.get('idade') })
 
   if (!CHAVES_DOS_REQUISITOS_V1.some((chave) => q.has(chave))) return { calculadora, perfil, requisitos: null }
   const uf = q.get('uf')
@@ -204,9 +207,8 @@ export interface OpcoesDaFrase {
  * em SP.": tudo o que a query leva, em português, para o visitante decidir se
  * compartilha. */
 export function fraseDoLink(estado: EstadoDoLink, opcoes: OpcoesDaFrase = {}): string {
-  const partes = perfilNaFrase(estado.perfil)
-
   if (estado.calculadora === 'prioridades') {
+    const partes = estado.genero ? [GENERO_NA_FRASE[estado.genero]] : []
     const { topo3, desfecho } = estado.prioridades
     const nomes = topo3.map((id) => (opcoes.nomes?.[id] ?? id).toLowerCase())
     partes.push(nomes.length ? `topo 3 ${emLista(nomes)}` : 'nenhuma característica escolhida')
@@ -214,6 +216,7 @@ export function fraseDoLink(estado: EstadoDoLink, opcoes: OpcoesDaFrase = {}): s
   }
 
   const { perfil } = estado
+  const partes = perfilNaFrase(perfil)
   const r = estado.requisitos
   const idades = idadesNaFrase(r?.idade ?? null)
   if (perfil?.procura || idades)

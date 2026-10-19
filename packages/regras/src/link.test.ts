@@ -45,15 +45,21 @@ describe('ida e volta', () => {
     expect(lerLink('grupo-possivel', query)).toEqual({ calculadora: 'grupo-possivel', perfil: { idade: 40 }, requisitos: null })
   })
 
-  it('Prioridades volta com o topo 3 na ordem, o desfecho e o Perfil', () => {
+  it('Prioridades volta com o topo 3 na ordem, o desfecho e o gênero', () => {
     const estado: EstadoDoLink = {
       calculadora: 'prioridades',
-      perfil: { genero: 'mulher' },
+      genero: 'mulher',
       prioridades: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' },
     }
     const query = queryDoLink(estado)
     expect(query).toBe('v=1&genero=mulher&topo=renda,sexo,calma&desfecho=duracao')
     expect(lerLink('prioridades', query)).toEqual(estado)
+  })
+
+  it('Prioridades sem gênero leva só o topo 3 e o desfecho', () => {
+    const estado: EstadoDoLink = { calculadora: 'prioridades', genero: null, prioridades: { topo3: ['humor'], desfecho: 'satisfacao' } }
+    expect(queryDoLink(estado)).toBe('v=1&topo=humor&desfecho=satisfacao')
+    expect(lerLink('prioridades', queryDoLink(estado))).toEqual(estado)
   })
 
   it('a renda "5+" sobrevive ao escape e também chega sem ele', () => {
@@ -78,10 +84,11 @@ describe('versões antigas', () => {
     ).toEqual({ calculadora: 'grupo-possivel', perfil: { genero: 'homem', procura: 'mulheres', idade: 30 }, requisitos: TUDO })
   })
 
-  it('um link da versão 1 de Prioridades abre o mesmo estado', () => {
-    expect(lerLink('prioridades', 'v=1&procura=ambos&topo=gentileza,humor&desfecho=atracao')).toEqual({
+  it('um link da versão 1 de Prioridades abre o topo 3 e o gênero, sem o resto do Perfil', () => {
+    // Antes do #23 o link de Prioridades levava o Perfil inteiro; a conta só usa o gênero.
+    expect(lerLink('prioridades', 'v=1&genero=homem&procura=ambos&idade=33&topo=gentileza,humor&desfecho=atracao')).toEqual({
       calculadora: 'prioridades',
-      perfil: { procura: 'ambos' },
+      genero: 'homem',
       prioridades: { topo3: ['gentileza', 'humor'], desfecho: 'atracao' },
     })
   })
@@ -111,7 +118,7 @@ describe('query inválida', () => {
   it('o topo 3 fica com até três ids que existem, sem repetir; desfecho desconhecido vira satisfação', () => {
     expect(lerLink('prioridades', 'v=1&topo=renda,renda,<b>,sexo,calma,humor&desfecho=amor', ['renda', 'sexo', 'humor'])).toEqual({
       calculadora: 'prioridades',
-      perfil: null,
+      genero: null,
       prioridades: { topo3: ['renda', 'sexo', 'humor'], desfecho: 'satisfacao' },
     })
   })
@@ -153,15 +160,15 @@ describe('fraseDoLink', () => {
     )
   })
 
-  it('em Prioridades, o Perfil, o topo 3 pelos nomes e o desfecho', () => {
+  it('em Prioridades, o gênero, o topo 3 pelos nomes e o desfecho', () => {
     expect(
       fraseDoLink(
-        { calculadora: 'prioridades', perfil: { genero: 'mulher', idade: 41 }, prioridades: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' } },
+        { calculadora: 'prioridades', genero: 'mulher', prioridades: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' } },
         { nomes: NOMES },
       ),
-    ).toBe('Este link mostra: mulher, 41, topo 3 renda, química sexual e estabilidade emocional, em duração.')
+    ).toBe('Este link mostra: mulher, topo 3 renda, química sexual e estabilidade emocional, em duração.')
     expect(
-      fraseDoLink({ calculadora: 'prioridades', perfil: null, prioridades: { topo3: [], desfecho: 'satisfacao' } }),
+      fraseDoLink({ calculadora: 'prioridades', genero: null, prioridades: { topo3: [], desfecho: 'satisfacao' } }),
     ).toBe('Este link mostra: nenhuma característica escolhida, em satisfação.')
   })
 })

@@ -14,7 +14,7 @@ import { buscarPrioridades } from '#/conteudo/guias'
 import { metaDaPrevia } from '#/conteudo/previa'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { useLinkRecebido } from '#/estado/link'
-import { gravarPerfil, usePerfil } from '#/estado/perfil'
+import { gravarPerfil, perfilSalvo, usePerfil } from '#/estado/perfil'
 import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
 import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
 import { contarUmaVezPorVisita } from '#/analytics/contagem'
@@ -76,11 +76,16 @@ function PaginaDePrioridades() {
 function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const { caracteristicas } = vista
   const ids = useMemo(() => idsDe(vista), [vista])
+  const [trocouGenero, setTrocouGenero] = useState(false)
   const aplicarLink = useCallback(
     (query: string) => {
       const link = lerLink('prioridades', query, ids)
       if (link?.calculadora !== 'prioridades') return false
-      gravarPerfil(link.perfil)
+      // O link leva só o gênero: quem se procura e a idade salvos ficam.
+      if (link.genero) {
+        gravarPerfil({ ...perfilSalvo.ler(), genero: link.genero })
+        setTrocouGenero(true)
+      }
       gravarPrioridades(link.prioridades)
       return true
     },
@@ -92,7 +97,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const genero = perfil?.genero
   const [aberta, setAberta] = useState<string | null>(null)
   const { topo3, desfecho } = estado
-  const link: EstadoDoLink = { calculadora: 'prioridades', perfil, prioridades: estado }
+  const link: EstadoDoLink = { calculadora: 'prioridades', genero: genero ?? null, prioridades: estado }
   const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
 
   const mexer = (novo: typeof estado) => {
@@ -109,7 +114,9 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       </p>
       {trocou && (
         <p className="aviso" role="status">
-          Este link trocou o seu Perfil e o seu topo 3 salvos pelos de quem mandou.
+          {trocouGenero
+            ? 'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.'
+            : 'Este link trocou o seu topo 3 salvo pelo de quem mandou.'}
         </p>
       )}
 

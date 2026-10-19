@@ -143,6 +143,26 @@ test.describe('link de Prioridades', () => {
     await outro.context.close()
   })
 
+  test('do Perfil, o link leva só o gênero, e quem abre guarda o resto do seu', async ({ page, context, browser }) => {
+    await comAreaDeTransferencia(context)
+    await context.addInitScript(() =>
+      localStorage.setItem('tem-estudo:perfil', JSON.stringify({ genero: 'mulher', procura: 'homens', idade: 41 })),
+    )
+    await page.goto('/prioridades', { waitUntil: 'networkidle' })
+    await chip(page, 'Renda').tap()
+    await expect(compartilhar(page)).toContainText('Este link mostra: mulher, topo 3 renda, em satisfação.')
+    const link = new URL(await copiarLink(page))
+    expect(link.search).toBe('?v=1&genero=mulher&topo=renda&desfecho=satisfacao')
+
+    const outro = await outroAparelho(browser, { perfil: { genero: 'homem', procura: 'mulheres', idade: 30 } })
+    await outro.page.goto(`${link.pathname}${link.search}`)
+    await expect(outro.page.getByRole('status').filter({ hasText: 'trocou' })).toHaveText(
+      'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.',
+    )
+    expect(await salvo(outro.page, 'perfil')).toEqual({ genero: 'mulher', procura: 'mulheres', idade: 30 })
+    await outro.context.close()
+  })
+
   test('a prévia mostra o topo 3 e o alerta', async ({ request }) => {
     const html = await (await request.get('/prioridades?v=1&genero=homem&idade=33&topo=sexo,renda&desfecho=satisfacao')).text()
     expect(html).toContain('<meta name="robots" content="noindex"')
