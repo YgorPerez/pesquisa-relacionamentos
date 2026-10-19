@@ -197,9 +197,12 @@ describe('a rotação dos logs do site', () => {
     regras: m[2].split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#')),
   }))
 
-  test('o error_log gira todo dia e guarda 3 dias', () => {
+  test('o error_log gira todo dia e não passa de 3 dias, contando o arquivo atual', () => {
     const erro = estrofes.find((e) => e.arquivos.includes('/var/log/nginx/temestudo/error.log'))
-    expect(erro?.regras).toEqual(expect.arrayContaining(['daily', 'rotate 3']))
+    expect(erro?.regras).toContain('daily')
+    const rotate = Number(erro?.regras.find((r) => r.startsWith('rotate '))?.split(' ')[1])
+    // O `error.log` de hoje mais `rotate` arquivos girados, um por dia.
+    expect(1 + rotate).toBe(3)
     expect(erro?.regras.some((r) => r.startsWith('postrotate'))).toBe(true)
   })
 })

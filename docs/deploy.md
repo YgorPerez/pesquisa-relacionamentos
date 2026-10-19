@@ -102,7 +102,7 @@ O link de compartilhamento leva o Perfil na query ([ADR 0001](adr/0001-estado-co
 - O access_log do Nginx usa o `log_format temestudo_sem_query` (`/etc/nginx/conf.d/temestudo-log-sem-query.conf`), com o caminho cortado antes do `?` e sem o Referer. Uma linha fica assim: `1.2.3.4 [19/Oct/2026:16:33:25 -0300] "GET /grupo-possivel HTTP/2.0" 200 1796 0.004 "temestudo.com"`.
 - Todo `server` do arquivo usa esse formato, inclusive o `default_server` que recebe os pedidos pelo IP. O site padrão do pacote sai no deploy.
 - O app escreve uma linha por pedido no stdout, com método, caminho, status e tempo: `GET /grupo-possivel 200 12ms` (`frontend/src/platform/registro-do-pedido.ts`).
-- O error_log copia a linha do pedido quando algo falha, com a query. Ele gira todo dia e guarda 3 dias. O access_log guarda 14. Os dois ficam numa subpasta para escapar do `*.log` do `/etc/logrotate.d/nginx` do Ubuntu, que guardaria 14 dias do error_log também.
+- O error_log copia a linha do pedido quando algo falha, com a query. Ele gira todo dia e não passa de 3 dias: o arquivo de hoje e 2 girados (`rotate 2`). O access_log guarda 14. Os dois ficam numa subpasta para escapar do `*.log` do `/etc/logrotate.d/nginx` do Ubuntu, que guardaria 14 dias do error_log também.
 - `Referrer-Policy: strict-origin` sai do app nas páginas e do Nginx em todo o resto. O Nginx esconde a do app para o cabeçalho não sair duplicado.
 
 Os testes conferem isso: `frontend/src/platform/registro-do-pedido.test.ts` manda um pedido com query e lê a linha de log, e `frontend/nginx/nginx.test.ts` lê o formato declarado no vhost e na rotação.

@@ -2,11 +2,12 @@
 # arquivo em `/etc/logrotate.d/temestudo`.
 #
 # O error_log copia a linha do pedido, com a query, quando algo falha
-# (ADR 0001): gira todo dia e guarda 3 dias. O `delaycompress` fica de fora
-# para o dia de ontem também sair do disco no prazo, já comprimido.
+# (ADR 0001): gira todo dia e não passa de 3 dias, o arquivo de hoje mais
+# 2 girados. O `delaycompress` fica de fora para o dia de ontem já sair
+# comprimido.
 /var/log/nginx/temestudo/error.log {
 	daily
-	rotate 3
+	rotate 2
 	missingok
 	notifempty
 	compress
