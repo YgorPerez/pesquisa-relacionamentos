@@ -46,4 +46,4 @@ Desenho, como descrito antes da migração: transversal, comparativo (análise d
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): exemplo do que existe na literatura acadêmica brasileira e de por que ela ainda não responde à pergunta.
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): exemplo do que existe na literatura acadêmica brasileira e de por que ela ainda não responde à pergunta.

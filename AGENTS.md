@@ -23,6 +23,10 @@ O `git push`/`fetch` deste repo já está fixado na conta YgorPerez (credential 
 
 Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, Força da evidência, nomes de arquivo) no `README.md`.
 
+## Acervo
+
+Issue `acervo`, Ficha nova ou refeita em `estudos/`, revisão de PR de acervo: siga a skill `acervo` (`.claude/skills/acervo/SKILL.md`; checklist do revisor em `REVISOR.md`). A conferência roda com `pnpm conferir estudos/<slug>.md`. A fila do que falta verificar ou pesquisar são as issues `acervo`; sínteses vão para `relatorios/`.
+
 ## Perguntar
 
 Uma decisão que é do usuário (qual ticket, qual opção, se segue em frente) vai pela ferramenta de pergunta interativa do harness (`AskUserQuestion` no Claude Code, `request_user_input` no Codex), com a opção recomendada primeiro. Continue trabalhando no que não depende da resposta. Depois que o usuário mandar seguir num ticket especificado, não pergunte de novo o que o ticket já decide: diga sua escolha numa linha e siga.

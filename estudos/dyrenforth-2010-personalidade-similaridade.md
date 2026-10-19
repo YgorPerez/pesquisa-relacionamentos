@@ -45,4 +45,4 @@ Desenho, como descrito antes da migração: correlacional diádico (modelo ator-
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito da personalidade do parceiro (1% a 3%) e evidência de que a similaridade de personalidade quase não importa.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito da personalidade do parceiro (1% a 3%) e evidência de que a similaridade de personalidade quase não importa.

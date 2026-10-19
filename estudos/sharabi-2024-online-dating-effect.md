@@ -40,4 +40,4 @@ Segundo a cobertura, sem tamanhos de efeito.
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): só como indício pendente de verificação. **Não usar em Guia antes de ler o texto completo.**
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): só como indício pendente de verificação. **Não usar em Guia antes de ler o texto completo.**

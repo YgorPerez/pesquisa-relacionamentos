@@ -1,3 +1,7 @@
+---
+ticket: 2
+---
+
 # Que dados oficiais brasileiros permitem estimar o Grupo possível por Requisito?
 
 **Data:** 2026-10-18 · **Ticket:** [#2](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/2)

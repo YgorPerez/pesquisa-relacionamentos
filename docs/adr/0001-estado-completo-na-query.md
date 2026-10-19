@@ -1,6 +1,6 @@
 # Estado completo na query do link, fora do log e sem gênero no analytics
 
-O link de compartilhamento leva o estado inteiro (Perfil, Requisitos e Prioridades) na query `?`, não no fragmento `#`. O fragmento nunca chegaria ao servidor. Com a query, o servidor e as prévias de redes sociais conseguem montar o resultado. O custo é que gênero, idade e a orientação que deles decorre passam pelo servidor. Orientação conta como dado sensível pela LGPD, e a [pesquisa de base legal](https://github.com/YgorPerez/pesquisa-relacionamentos/blob/research/lgpd-estado-link/pesquisas/2026-10-18-lgpd-estado-link.md) mostrou que o plano inicial (log e analytics com a query completa, só com aviso e opt-out) não tinha base no art. 11. Por isso o servidor recebe a query, mas não a guarda com o Perfil.
+O link de compartilhamento leva o estado inteiro (Perfil, Requisitos e Prioridades) na query `?`, não no fragmento `#`. O fragmento nunca chegaria ao servidor. Com a query, o servidor e as prévias de redes sociais conseguem montar o resultado. O custo é que gênero, idade e a orientação que deles decorre passam pelo servidor. Orientação conta como dado sensível pela LGPD, e a [pesquisa de base legal](../../relatorios/2026-10-18-lgpd-estado-link.md) mostrou que o plano inicial (log e analytics com a query completa, só com aviso e opt-out) não tinha base no art. 11. Por isso o servidor recebe a query, mas não a guarda com o Perfil.
 
 ## Consequências
 
