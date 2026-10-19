@@ -13,8 +13,11 @@ export default defineConfig({
       {
         // O `Html` é o único lugar do app que injeta HTML: o que o servidor
         // montou com o `marked` a partir do Markdown do acervo (`estudos/`,
-        // `dicas/`, os Guias), que está no repositório e passa por revisão.
-        // Nada que o visitante digita ou que vem na URL chega aqui.
+        // `dicas/`, os Guias). A entrada é sanitizada em
+        // `src/conteudo/html-seguro.ts`, por onde passam o `html` e o
+        // `htmlEmLinha` de `src/conteudo/vista.ts`: lista fechada de tags e
+        // atributos, `href` só http(s), âncora ou caminho relativo. Nada que
+        // o visitante digita ou que vem na URL chega aqui.
         rules: ['react-doctor/dangerous-html-sink'],
         files: ['src/ui/guia.tsx'],
       },

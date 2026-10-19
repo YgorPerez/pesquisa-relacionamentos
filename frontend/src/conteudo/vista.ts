@@ -3,6 +3,7 @@
 import type { Achado, Ficha } from '@tem-estudo/conteudo'
 import { buscaDaFicha, type Busca } from '@tem-estudo/conteudo/busca'
 import { Marked } from 'marked'
+import { htmlSeguro } from './html-seguro'
 
 const REPO = 'https://github.com/YgorPerez/pesquisa-relacionamentos/blob/main'
 
@@ -25,10 +26,11 @@ const marked = new Marked({
   },
 })
 
+// O HTML sai filtrado daqui: é ele que o `Html` de `ui/guia.tsx` injeta.
 export const html = (markdown: string) =>
-  marked.parse(markdown, { async: false })
+  htmlSeguro(marked.parse(markdown, { async: false }))
 export const htmlEmLinha = (markdown: string) =>
-  marked.parseInline(markdown, { async: false })
+  htmlSeguro(marked.parseInline(markdown, { async: false }))
 
 export interface AchadoVista {
   readonly medida: string
