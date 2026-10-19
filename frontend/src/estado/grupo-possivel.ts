@@ -24,12 +24,7 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import grupoPossivel from 'virtual:grupo-possivel'
 import { armazenado, useArmazenado } from './armazenado'
-import {
-  pacoteAberto,
-  pacoteFalhou,
-  pedirPacote,
-  useMudancaDosPacotes,
-} from './pacotes-do-grupo'
+import { pedirPacote, usePacote } from './pacotes-do-grupo'
 
 const requisitosSalvos = armazenado<Requisitos>('grupo-possivel', lerRequisitos)
 
@@ -67,7 +62,8 @@ export function useGrupoPossivel(
   const requisitos = salvos ?? REQUISITOS_PADRAO
   const uf = requisitos.lugar?.uf
   const precisa: LugarDoPacote[] = uf ? ['BR', uf] : ['BR']
-  useMudancaDosPacotes()
+  const doBrasil = usePacote('BR')
+  const daUfPedida = usePacote(uf)
 
   // Quem nunca disse nada vê a conta feita no build, sem baixar nada.
   const deExemplo = perfil === null && salvos === null
@@ -76,8 +72,8 @@ export function useGrupoPossivel(
     if (!deExemplo) for (const lugar of precisa) pedirPacote(lugar)
   })
 
-  const brasil = pacoteAberto('BR')
-  const daUf = uf ? pacoteAberto(uf) : undefined
+  const brasil = doBrasil.dados
+  const daUf = daUfPedida.dados
   const prontos = brasil && (!uf || daUf)
   const calculada = useMemo(() => {
     if (!prontos || deExemplo) return null
@@ -103,7 +99,7 @@ export function useGrupoPossivel(
   return {
     estimativa,
     carregando: !deExemplo && !calculada,
-    falhou: precisa.some(pacoteFalhou),
+    falhou: doBrasil.falhou || daUfPedida.falhou,
     tentar: () => precisa.forEach(pedirPacote),
     uf: daUf,
   }

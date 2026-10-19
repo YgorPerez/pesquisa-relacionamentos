@@ -7,4 +7,5 @@ O Oxlint também tem uma versão do compilador em Rust, ligada por `react({ comp
 ## Consequências
 
 - O `lint` liga as 22 regras do React Compiler: as 12 que a categoria `correctness` já liga e as outras dez uma a uma, mais `react/rules-of-hooks` e `react/exhaustive-deps`. Elas acharam dez pontos no código que existia, e todos foram corrigidos sem supressão: `setState` em efeito virou ajuste durante o render ou `useSyncExternalStore`, ref lida no render virou estado, e uma dependência que faltava virou `useEffectEvent`.
+- O lint não pega tudo. A conta do Grupo possível lia o `Map` dos pacotes direto no render, e o compilador guardou o primeiro valor, vazio: a página ficou carregando para sempre, e só o e2e viu. Estado de fora do React chega ao render por `useSyncExternalStore`, com o valor como snapshot.
 - Uma tela que o compilador quebrar sai dele com `'use no memo'` no topo, e a linha leva o motivo.

@@ -15,9 +15,7 @@ const abertos = new Map<LugarDoPacote, DadosDoLugar>()
 const pedidos = new Map<LugarDoPacote, Promise<void>>()
 const falhas = new Set<LugarDoPacote>()
 const avisos = new Set<() => void>()
-let versao = 0
 const avisar = () => {
-  versao++
   avisos.forEach((aviso) => aviso())
 }
 
@@ -45,21 +43,28 @@ export function pedirPacote(lugar: LugarDoPacote) {
 }
 
 /** Os dados do lugar, se o pacote já chegou. */
-export const pacoteAberto = (lugar: LugarDoPacote) => abertos.get(lugar)
-
-/** O pacote do lugar não chegou (sem rede?). */
-export const pacoteFalhou = (lugar: LugarDoPacote) => falhas.has(lugar)
-
 const assinar = (aviso: () => void) => {
   avisos.add(aviso)
   return () => avisos.delete(aviso)
 }
 
-/** Desenha de novo quando um pacote chega ou falha. */
-export function useMudancaDosPacotes() {
-  useSyncExternalStore(
+/** Os dados do lugar, quando o pacote chega, e se o pedido falhou (sem
+ * rede?). Lidos como snapshot do store, e não direto do `Map` no render: o
+ * React Compiler guarda o que o render calcula, e só um valor que vem de
+ * hook avisa que mudou. `undefined` não pede nada. */
+export function usePacote(lugar: LugarDoPacote | undefined): {
+  dados: DadosDoLugar | undefined
+  falhou: boolean
+} {
+  const dados = useSyncExternalStore(
     assinar,
-    () => versao,
-    () => 0,
+    () => (lugar ? abertos.get(lugar) : undefined),
+    () => undefined,
   )
+  const falhou = useSyncExternalStore(
+    assinar,
+    () => (lugar ? falhas.has(lugar) : false),
+    () => false,
+  )
+  return { dados, falhou }
 }
