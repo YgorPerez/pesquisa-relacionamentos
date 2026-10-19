@@ -1,0 +1,60 @@
+# Fixture do e2e: os degraus do rascunho de verdade
+# (dados/prioridades/_prioridades.yaml), com as Fichas trocadas pelas da
+# fixture, uma ✅ (silva-2020) e uma 🟡 (costa-2018).
+satisfacao_explicada: { ficha: silva-2020-apps-brasil, relacao: 45, parceiro: 5, sem_explicacao: 50 }
+
+caracteristicas:
+  - id: aparencia
+    nome: Aparência
+    atracao: { degrau: 3, medida: "r ≈ 0,40", texto_simples: "Quem é mais bonito atrai mais.", ficha: silva-2020-apps-brasil }
+    satisfacao: { degrau: 2, medida: "r = 0,10, só maridos", texto_simples: "Só os maridos ficam um pouco mais satisfeitos, e só no começo.", ficha: costa-2018-satisfacao }
+    duracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    vies: { todos: "As pessoas dão menos peso à aparência quando dizem o que querem do que quando se atraem." }
+  - id: sexo
+    nome: Química sexual
+    atracao: { degrau: 3, texto_simples: "É o que mais pesa no que as pessoas revelam.", ficha: silva-2020-apps-brasil }
+    satisfacao: { degrau: 3, texto_simples: "Está entre o que mais prevê satisfação.", ficha: silva-2020-apps-brasil }
+    duracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+  - id: renda
+    nome: Renda
+    atracao: { degrau: 2, texto_simples: "Pesa pouco na atração.", ficha: silva-2020-apps-brasil }
+    satisfacao: { degrau: 0, texto_simples: "Nenhum estudo lido mede a renda do parceiro e a satisfação." }
+    duracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    vies:
+      mulher: Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.
+      homem: Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.
+  - id: calma
+    nome: Estabilidade emocional
+    atracao: { degrau: 2, texto_simples: "No primeiro contato, pesa menos do que se diz.", ficha: costa-2018-satisfacao }
+    satisfacao: { degrau: 2, texto_simples: "É o traço do parceiro com o resultado mais consistente.", ficha: costa-2018-satisfacao }
+    duracao: { degrau: 1, texto_simples: "Para o fim de namoros, a personalidade quase não prevê.", ficha: costa-2018-satisfacao }
+  - id: gentileza
+    nome: Gentileza
+    atracao: { degrau: 0, texto_simples: "Os estudos lidos não separam isso." }
+    satisfacao: { degrau: 2, texto_simples: "Parceiros mais gentis se associam a mais satisfação.", ficha: costa-2018-satisfacao }
+    duracao: { degrau: 1, texto_simples: "Para o fim de namoros, a personalidade quase não prevê.", ficha: costa-2018-satisfacao }
+  - id: responsavel
+    nome: Ser responsável
+    atracao: { degrau: 0, texto_simples: "Os estudos lidos não separam isso." }
+    satisfacao: { degrau: 2, texto_simples: "Parceiros mais responsáveis se associam a mais satisfação.", ficha: costa-2018-satisfacao }
+    duracao: { degrau: 1, texto_simples: "Para o fim de namoros, a personalidade quase não prevê.", ficha: costa-2018-satisfacao }
+  - id: parecido
+    nome: Ser parecido comigo
+    atracao: { degrau: 1, texto_simples: "Ser parecido de fato não prevê atração.", ficha: costa-2018-satisfacao }
+    satisfacao: { degrau: 1, medida: "< 0,5%", texto_simples: "Ter personalidades parecidas explica menos de 0,5% da satisfação.", ficha: costa-2018-satisfacao }
+    duracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+  - id: escolaridade
+    nome: Mesma escolaridade
+    atracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    satisfacao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    duracao: { degrau: 2, medida: "HR 0,78", texto_simples: "Casais com a mesma escolaridade se divorciam um pouco menos.", ficha: silva-2020-apps-brasil }
+  - id: religiao
+    nome: Mesma religião
+    atracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    satisfacao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    duracao: { degrau: 2, texto_simples: "Uniões entre religiões diferentes se desfazem mais.", ficha: silva-2020-apps-brasil }
+  - id: idade
+    nome: Idade parecida
+    atracao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    satisfacao: { degrau: 0, texto_simples: "Nenhum estudo lido mede isso." }
+    duracao: { degrau: 0, texto_simples: "Só um estudo fraco e ambíguo.", ficha: costa-2018-satisfacao }

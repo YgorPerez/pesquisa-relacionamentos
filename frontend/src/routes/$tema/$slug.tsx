@@ -5,14 +5,22 @@ import { usePontoNoHistorico, useReferencias, VoltarParaGuia } from '#/ui/navega
 import { ForcaDaEvidencia } from '#/ui/selos'
 import { AvisoSemDado, CaixaDoPerfil, LinkDoPerfil, NotaValePara, ParaOSeuPerfil } from '#/ui/perfil'
 import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
+import { usePrioridades } from '#/estado/prioridades'
+import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
+import { CartaoDePrioridades } from '#/ui/prioridades'
 
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
   head: ({ loaderData: guia }) => ({
+    // A prévia do link repete o título e a descrição de busca; a imagem é a
+    // fixa do site, da raiz.
     meta: guia
       ? [
-          { title: `${guia.pergunta} · Tem estudo?` },
-          { name: 'description', content: guia.descricao },
+          { title: `${guia.busca.titulo} · Tem estudo?` },
+          { name: 'description', content: guia.busca.descricao },
+          { property: 'og:type', content: 'article' },
+          { property: 'og:title', content: guia.busca.titulo },
+          { property: 'og:description', content: guia.busca.descricao },
         ]
       : [],
   }),
@@ -83,6 +91,8 @@ function PaginaDoGuia() {
             </ul>
           </section>
         )}
+
+        {guia.prioridades && <CartaoDoB1 prioridades={guia.prioridades} />}
 
         <section className="secao" aria-labelledby="t-evidencia">
           <h2 id="t-evidencia" className="headline">
@@ -194,6 +204,12 @@ function PaginaDoGuia() {
       </div>
     </main>
   )
+}
+
+/** O cartão de Prioridades, com o topo 3 que o visitante deixou na página. */
+function CartaoDoB1({ prioridades }: { prioridades: PrioridadesVista }) {
+  const { topo3 } = usePrioridades(prioridades.caracteristicas.map((c) => c.id))
+  return <CartaoDePrioridades barra={prioridades.barra} caracteristicas={prioridades.caracteristicas} topo3={topo3} />
 }
 
 function GuiaNaoExiste() {

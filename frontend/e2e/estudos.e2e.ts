@@ -62,7 +62,7 @@ test.describe('/estudos/<slug>', () => {
     page,
   }) => {
     await page.goto('/estudos/silva-2020-apps-brasil')
-    await expect(page).toHaveTitle('Silva e Souza (2020): apps de namoro no Brasil · Tem estudo?')
+    await expect(page).toHaveTitle('Silva e Souza 2020: apps de namoro no Brasil · Tem estudo?')
 
     const dados = page.locator('.ficha-dados')
     await expect(dados).toContainText('Silva A, Souza B. Apps de namoro no Brasil.')

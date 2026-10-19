@@ -1,6 +1,7 @@
 // A Ficha do pacote de conteúdo no formato que as páginas desenham: o
 // markdown já virou HTML no servidor, e o navegador recebe só o que mostra.
 import type { Achado, Ficha } from '@tem-estudo/conteudo'
+import { buscaDaFicha, type Busca } from '@tem-estudo/conteudo/busca'
 import { Marked } from 'marked'
 
 const REPO = 'https://github.com/YgorPerez/pesquisa-relacionamentos/blob/main'
@@ -62,7 +63,8 @@ export interface FichaVista extends FichaResumo {
   readonly outrasSecoes: ReadonlyArray<{ readonly titulo: string; readonly html: string }>
   readonly limitacoesHtml: string
   readonly indexar: boolean
-  readonly descricao: string
+  /** Título e descrição de busca (#15). */
+  readonly busca: Busca
 }
 
 const numero = new Intl.NumberFormat('pt-BR')
@@ -99,10 +101,7 @@ export function resumo(ficha: Ficha): FichaResumo {
   }
 }
 
-const semMarkdown = (texto: string) => texto.replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim()
-
 export function vista(ficha: Ficha, indexar: boolean): FichaVista {
-  const primeiro = ficha.achados[0]
   return {
     ...resumo(ficha),
     referenciaHtml: htmlEmLinha(ficha.referencia),
@@ -123,8 +122,6 @@ export function vista(ficha: Ficha, indexar: boolean): FichaVista {
     outrasSecoes: ficha.outrasSecoes.map((s) => ({ titulo: s.titulo, html: html(s.markdown) })),
     limitacoesHtml: html(ficha.limitacoes),
     indexar,
-    descricao:
-      ficha.seo?.descricao ??
-      (primeiro ? semMarkdown(`${primeiro.medida}: ${primeiro.valor}.`) : semMarkdown(ficha.referencia)),
+    busca: buscaDaFicha(ficha),
   }
 }

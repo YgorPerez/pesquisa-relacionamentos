@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GrupoPossivelRouteImport } from './routes/grupo-possivel'
+import { Route as PrioridadesRouteImport } from './routes/prioridades'
 import { Route as TemaIndexRouteImport } from './routes/$tema/index'
 import { Route as TemaSlugRouteImport } from './routes/$tema/$slug'
 import { Route as DicasIndexRouteImport } from './routes/dicas/index'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const GrupoPossivelRoute = GrupoPossivelRouteImport.update({
   id: '/grupo-possivel',
   path: '/grupo-possivel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrioridadesRoute = PrioridadesRouteImport.update({
+  id: '/prioridades',
+  path: '/prioridades',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TemaIndexRoute = TemaIndexRouteImport.update({
@@ -62,6 +68,7 @@ const EstudosSlugRoute = EstudosSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
+  '/prioridades': typeof PrioridadesRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
+  '/prioridades': typeof PrioridadesRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
+  '/prioridades': typeof PrioridadesRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/grupo-possivel'
+    | '/prioridades'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/grupo-possivel'
+    | '/prioridades'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/grupo-possivel'
+    | '/prioridades'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GrupoPossivelRoute: typeof GrupoPossivelRoute
+  PrioridadesRoute: typeof PrioridadesRoute
   TemaSlugRoute: typeof TemaSlugRoute
   DicasSlugRoute: typeof DicasSlugRoute
   EstudosSlugRoute: typeof EstudosSlugRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/grupo-possivel'
       fullPath: '/grupo-possivel'
       preLoaderRoute: typeof GrupoPossivelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prioridades': {
+      id: '/prioridades'
+      path: '/prioridades'
+      fullPath: '/prioridades'
+      preLoaderRoute: typeof PrioridadesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$tema/': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GrupoPossivelRoute: GrupoPossivelRoute,
+  PrioridadesRoute: PrioridadesRoute,
   TemaSlugRoute: TemaSlugRoute,
   DicasSlugRoute: DicasSlugRoute,
   EstudosSlugRoute: EstudosSlugRoute,

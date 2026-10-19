@@ -2,6 +2,7 @@
 // HTML no servidor, com as referências `[@slug]` numeradas pela ordem das
 // Fichas citadas e o número-chave `==…==` em rosa.
 import type { Acervo, Cobre, Dica, Ficha, Forca, Guia, Tema } from '@tem-estudo/conteudo'
+import { buscaDaDica, buscaDoGuia, buscaDoTema, type Busca } from '@tem-estudo/conteudo/busca'
 import { dicaPublicada } from '@tem-estudo/conteudo/consultas'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 
@@ -77,9 +78,6 @@ export const primeiraFrase = (markdown: string): string => {
   const texto = semMarcas(markdown)
   return /^.+?[.!?](?=\s|$)/.exec(texto)?.[0] ?? texto
 }
-
-const cortar = (texto: string, limite = 155) =>
-  texto.length <= limite ? texto : `${texto.slice(0, limite - 1).replace(/\s+\S*$/, '')}…`
 
 /** A Pergunta com a única palavra em amarelo (`==palavra==`). */
 export const perguntaHtml = (pergunta: string) =>
@@ -170,7 +168,8 @@ export interface GuiaVista extends GuiaResumo {
   readonly limitacoesHtml: string
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly relacionadas: ReadonlyArray<GuiaResumo>
-  readonly descricao: string
+  /** Título e descrição de busca e do Open Graph (#15). */
+  readonly busca: Busca
 }
 
 export function resumoDoGuia(guia: Guia): GuiaResumo {
@@ -248,7 +247,7 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
       const outro = acervo.guias.find((g) => g.slug === slug)
       return outro ? [resumoDoGuia(outro)] : []
     }),
-    descricao: guia.seo?.descricao ?? cortar(semMarcas(guia.respostaCurta)),
+    busca: buscaDoGuia(guia),
   }
 }
 
@@ -256,7 +255,8 @@ export interface TemaVista {
   readonly slug: string
   readonly titulo: string
   readonly contextoHtml: string
-  readonly descricao: string
+  /** Título e descrição de busca e do Open Graph (#15). */
+  readonly busca: Busca
   readonly guias: ReadonlyArray<GuiaResumo & { readonly respostaHtml: string }>
 }
 
@@ -265,7 +265,7 @@ export function vistaDoTema(tema: Tema, acervo: Acervo): TemaVista {
     slug: tema.slug,
     titulo: tema.titulo,
     contextoHtml: html(tema.contexto),
-    descricao: tema.seo?.descricao ?? cortar(semMarcas(tema.contexto)),
+    busca: buscaDoTema(tema),
     // Na página do Tema a resposta curta vai sem os números: as Fichas estão
     // no Guia, e o Tema não faz afirmação nova (#7).
     guias: acervo.guias
@@ -288,6 +288,7 @@ export interface DicaVista extends DicaResumo {
   readonly valePara: string
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly guias: ReadonlyArray<GuiaResumo>
+  readonly busca: Busca
 }
 
 export const resumoDaDica = (dica: Dica): DicaResumo => ({
@@ -303,6 +304,7 @@ export function vistaDaDica(dica: Dica, acervo: Acervo): DicaVista {
     valePara: valePara(dica.cobre),
     fichas: fichasCitadas(dica.fichas, acervo),
     guias: acervo.guias.filter((g) => g.dicas.includes(dica.slug)).map(resumoDoGuia),
+    busca: buscaDaDica(dica),
   }
 }
 

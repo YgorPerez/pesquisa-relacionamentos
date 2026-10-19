@@ -120,6 +120,14 @@ export type Mito = typeof Mito.Type
 
 /** `guias/<tema>/<slug>.md`: o corpo traz a resposta curta (antes do primeiro
  * `##`), "Varia conforme o Perfil?" e Limitações. */
+/** O `antes` do Guia: o slug antigo no mesmo Tema, ou `tema/slug` quando o
+ * Guia veio de outro Tema. */
+const CaminhoDeGuia = Schema.String.check(
+  Schema.isPattern(/^(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?[a-z0-9]+(?:-[a-z0-9]+)*$/, {
+    message: 'use o slug antigo ou tema/slug, em minúsculas sem acento, com hífen',
+  }),
+)
+
 export const FrontmatterGuia = Schema.Struct({
   pergunta: Texto,
   confianca: Schema.Literals(FORCAS),
@@ -129,7 +137,7 @@ export const FrontmatterGuia = Schema.Struct({
   mitos: Schema.optional(Schema.Array(Mito)),
   relacionadas: Schema.optional(Slugs),
   calculadora: Schema.optional(Schema.Literals(CALCULADORAS)),
-  antes: Schema.optional(Slugs),
+  antes: Schema.optional(Schema.Array(CaminhoDeGuia)),
   seo: Schema.optional(Seo),
 })
 export type FrontmatterGuia = typeof FrontmatterGuia.Type

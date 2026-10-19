@@ -62,7 +62,11 @@ const DEGRAUS = [
 
 /** Os três degraus desenhados à mão, cheios conforme o nível. */
 export function Degraus({ nivel, largura = 36 }: { nivel: Forca; largura?: number }) {
-  const cheios = DEGRAUS_DA_FORCA[nivel]
+  return <DegrausCheios cheios={DEGRAUS_DA_FORCA[nivel]} largura={largura} />
+}
+
+/** Os mesmos degraus com 1 a 3 cheios: o peso que a evidência dá em Prioridades. */
+export function DegrausCheios({ cheios, largura = 36 }: { cheios: number; largura?: number }) {
   return (
     <svg
       className="degraus"

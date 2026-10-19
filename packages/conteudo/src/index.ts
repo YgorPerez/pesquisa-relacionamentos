@@ -8,9 +8,24 @@ export {
   montarAcervo,
   type Acervo,
   type Arquivo,
+  type Opcoes,
   type OrigemDosDados,
   type Resultado,
 } from './acervo.ts'
+export {
+  buscaDaDica,
+  buscaDaFicha,
+  buscaDoGuia,
+  buscaDoTema,
+  caminhosDoSitemap,
+  LIMITES,
+  ORIGEM,
+  redirecionamentos,
+  robotsTxt,
+  sitemapXml,
+  textoPuro,
+  type Busca,
+} from './busca.ts'
 export {
   caminhoDaDica,
   caminhoDaFicha,
@@ -43,6 +58,12 @@ export {
   type Status,
 } from './listas.ts'
 export type { Achado, Ficha } from './ficha.ts'
+export type {
+  Caracteristica,
+  CelulaDePrioridade,
+  Prioridades,
+  SatisfacaoExplicada,
+} from './prioridades.ts'
 export type { Secao } from './markdown.ts'
 export { referenciasNoTexto } from './publicacao.ts'
 export { formatarProblemas, type Problema } from './problemas.ts'
