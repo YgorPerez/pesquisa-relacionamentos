@@ -1,10 +1,10 @@
-# Estado completo na query do link, registrado em log e analytics
+# Estado completo na query do link, fora do log e sem gênero no analytics
 
-O link de compartilhamento leva o estado inteiro (Perfil, Requisitos e Prioridades) na query `?`, não no fragmento `#`. O fragmento nunca chegaria ao servidor. Com a query, o servidor e as prévias de redes sociais conseguem montar o resultado, e o uso fica medido em log e analytics. O custo: gênero, idade e a orientação que deles decorre passam pelo servidor, ficam 30 dias no log do proxy e no analytics e aparecem no cache das plataformas que geram a prévia. Para orientação sexual isso é dado sensível pela LGPD.
+O link de compartilhamento leva o estado inteiro (Perfil, Requisitos e Prioridades) na query `?`, não no fragmento `#`. O fragmento nunca chegaria ao servidor. Com a query, o servidor e as prévias de redes sociais conseguem montar o resultado. O custo é que gênero, idade e a orientação que deles decorre passam pelo servidor. Orientação conta como dado sensível pela LGPD, e a [pesquisa de base legal](https://github.com/YgorPerez/pesquisa-relacionamentos/blob/research/lgpd-estado-link/pesquisas/2026-10-18-lgpd-estado-link.md) mostrou que o plano inicial (log e analytics com a query completa, só com aviso e opt-out) não tinha base no art. 11. Por isso o servidor recebe a query, mas não a guarda com o Perfil.
 
 ## Consequências
 
-- O log do servidor guarda a URL completa por 30 dias. O analytics recebe a query completa, também com 30 dias de retenção, salvo opt-out do usuário. O opt-out vale só para o analytics.
-- A prévia mostra o resultado e quem se procura, mas nunca o Perfil de quem compartilhou. `Referrer-Policy: strict-origin` impede que a query vaze para sites externos.
+- O log do proxy e do app registra só o caminho, nunca a query.
+- O analytics recebe o evento e os campos que não revelam orientação, com retenção de 30 dias e opt-out. O par gênero próprio + gênero procurado nunca vai ao analytics. A base é o legítimo interesse do art. 7º, IX.
+- A prévia mostra o resultado e quem se procura, mas nunca o Perfil de quem compartilhou. Ela ainda passa pelos robôs das plataformas, que não guardam o gênero de quem compartilhou. `Referrer-Policy: strict-origin` impede que a query vaze para sites externos.
 - Mudar o formato da query quebra links que já circulam, então trocá-lo depois exige ler o formato antigo também.
-- Ninguém validou ainda se aviso com opt-out basta como base legal para dado sensível (art. 11). Ver o ticket de base legal LGPD.
