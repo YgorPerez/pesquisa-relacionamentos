@@ -1,27 +1,40 @@
-# Meltzer et al. (2014): atratividade do cônjuge e satisfação conjugal
+---
+# Antes da migração: ✅ lido no original, via PMC (data: 2026-10-18)
+referencia: "Meltzer AL, McNulty JK, Jackson GL, Karney BR. *Sex differences in the implications of partner physical attractiveness for the trajectory of marital satisfaction*. Journal of Personality and Social Psychology 106(3):418–428, 2014. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC4011637/"
+link: https://doi.org/10.1037/a0034424
+status: nao-verificado
+forca: moderada
+forca_porque: "Longitudinal, com atratividade avaliada por terceiros, mas amostra modesta e só recém-casados americanos; o resultado é contestado."
+paises: [EUA]
+periodo: "não informado no texto lido"
+amostra:
+  n: 458
+  descricao: "458 casais recém-casados em 4 estudos (82 + 169 + 72 + 135), do norte da Flórida, do norte de Ohio e do leste do Tennessee."
+  representativa: false
+desenho: longitudinal
+conflito: "NICHD, NSF, NIMH e Fetzer Institute."
+cobre:
+  generos: [homem, mulher]
+  casal: hetero
+---
 
-- **Referência:** Meltzer AL, McNulty JK, Jackson GL, Karney BR. *Sex differences in the implications of partner physical attractiveness for the trajectory of marital satisfaction*. Journal of Personality and Social Psychology 106(3):418–428, 2014.
-- **Link/DOI:** https://doi.org/10.1037/a0034424 (texto completo: https://pmc.ncbi.nlm.nih.gov/articles/PMC4011637/)
-- **Status:** ✅ lido no original, via PMC (data: 2026-10-18)
-- **Força da evidência:** moderada (longitudinal, com atratividade avaliada por terceiros, mas amostra modesta e só recém-casados americanos; o resultado é contestado)
-- **País e período dos dados:** EUA (norte da Flórida, norte de Ohio, leste do Tennessee)
-- **Amostra:** 458 casais recém-casados em 4 estudos (82 + 169 + 72 + 135)
-- **Desenho:** longitudinal. Até 8 medições de satisfação ao longo dos primeiros 4 anos de casamento
-- **Financiamento e conflitos de interesse:** NICHD, NSF, NIMH e Fetzer Institute
+# Meltzer et al. (2014): atratividade do cônjuge e satisfação conjugal
 
 ## O que mediu
 
 Se a atratividade facial do cônjuge prevê a satisfação inicial e a trajetória de satisfação. A atratividade foi avaliada por assistentes treinados, numa escala de 1 a 10, com ICC entre 0,78 e 0,93. O modelo controla a atratividade da própria pessoa.
 
-## Achados principais
+Desenho, como descrito antes da migração: longitudinal. Até 8 medições de satisfação ao longo dos primeiros 4 anos de casamento.
 
-| Medida | Valor | Onde no texto |
-|---|---|---|
-| Atratividade da esposa → satisfação inicial do marido | β = 0,36, r = 0,10, p < 0,05 | Tabela 3 |
-| Atratividade da esposa → mudança na satisfação do marido | β = 0,03, r = 0,03, não significativo | Tabela 3 |
-| Atratividade do marido → satisfação inicial da esposa | β = −0,21, r = 0,05, não significativo | Tabela 3 |
-| Atratividade do marido → mudança na satisfação da esposa | β = −0,01, r = 0,01, não significativo | Tabela 3 |
-| Diferença entre sexos (teste direto) | χ²(1) = 3,86, p = 0,046 | Resultados |
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Atratividade da esposa → satisfação inicial do marido | β = 0,36, r = 0,10, p < 0,05 | Tabela 3 | |
+| Atratividade da esposa → mudança na satisfação do marido | β = 0,03, r = 0,03, não significativo | Tabela 3 | |
+| Atratividade do marido → satisfação inicial da esposa | β = −0,21, r = 0,05, não significativo | Tabela 3 | |
+| Atratividade do marido → mudança na satisfação da esposa | β = −0,01, r = 0,01, não significativo | Tabela 3 | |
+| Diferença entre sexos (teste direto) | χ²(1) = 3,86, p = 0,046 | Resultados | |
 
 ## Limitações
 

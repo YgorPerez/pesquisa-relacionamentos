@@ -1,26 +1,35 @@
-# Eastwick et al. (2014): validade preditiva das preferências ideais (meta-análise)
+---
+# Antes da migração: 🟡 parcial: resumo no PubMed. Texto completo pago, sem PDF aberto encontrado (data: 2026-10-18)
+referencia: "Eastwick PW, Luchies LB, Finkel EJ, Hunt LL. *The predictive validity of ideal partner preferences: A review and meta-analysis*. Psychological Bulletin 140(3):623–665, 2014. Resumo: PubMed 23586697."
+link: https://doi.org/10.1037/a0032432
+status: nao-verificado
+forca: forte
+forca_porque: "Meta-análise, k = 97."
+paises: []
+periodo: "não informado no texto lido"
+amostra:
+  descricao: "97 estudos (k = 97) da literatura de atração e de relacionamentos."
+  representativa: false
+desenho: meta-analise
+conflito: "Não conferido. Há debate publicado: comentário de Schmitt (2014) e réplica dos autores (PubMed 24773504)."
+cobre:
+  generos: [homem, mulher]
+---
 
-- **Referência:** Eastwick PW, Luchies LB, Finkel EJ, Hunt LL. *The predictive validity of ideal partner preferences: A review and meta-analysis*. Psychological Bulletin 140(3):623–665, 2014.
-- **Link/DOI:** https://doi.org/10.1037/a0032432 (resumo: PubMed 23586697)
-- **Status:** 🟡 parcial: resumo no PubMed. Texto completo pago, sem PDF aberto encontrado (data: 2026-10-18)
-- **Força da evidência:** forte (meta-análise, k = 97)
-- **País e período dos dados:** vários; não conferido
-- **Amostra:** 97 estudos (k = 97) da literatura de atração e de relacionamentos
-- **Desenho:** revisão e meta-análise
-- **Financiamento e conflitos de interesse:** não conferido. Há debate publicado: comentário de Schmitt (2014) e réplica dos autores (PubMed 24773504)
+# Eastwick et al. (2014): validade preditiva das preferências ideais (meta-análise)
 
 ## O que mediu
 
 Quanto a atratividade física e a perspectiva de renda de **pessoas reais** (parceiros ou alvos conhecidos) preveem a avaliação romântica que se faz delas, e se esse peso difere entre homens e mulheres como as preferências declaradas sugerem.
 
-## Achados principais
+## Achados
 
-| Medida | Valor | Onde no texto |
-|---|---|---|
-| Atratividade física → avaliação romântica | r ≈ 0,40 (moderado a forte), igual para os dois sexos | Resumo |
-| Perspectiva de renda → avaliação romântica | r ≈ 0,10 (pequeno), igual para os dois sexos | Resumo |
-| Diferença entre sexos nas correlações | r de diferença = 0,03, uniformemente não significativa | Resumo |
-| Em vinhetas e alvos hipotéticos | homens e mulheres diferem de forma confiável | Resumo |
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Atratividade física → avaliação romântica | r ≈ 0,40 (moderado a forte), igual para os dois sexos | Resumo | |
+| Perspectiva de renda → avaliação romântica | r ≈ 0,10 (pequeno), igual para os dois sexos | Resumo | |
+| Diferença entre sexos nas correlações | r de diferença = 0,03, uniformemente não significativa | Resumo | |
+| Em vinhetas e alvos hipotéticos | homens e mulheres diferem de forma confiável | Resumo | |
 
 ## Limitações
 

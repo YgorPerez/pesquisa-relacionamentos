@@ -4,6 +4,7 @@
 @import './ui/fontes.css';
 @import './ui/tokens.css';
 @import './ui/componentes.css';
+@import './ui/fichas.css';
 
 *,
 *::before,

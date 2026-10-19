@@ -18,7 +18,7 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 
 ## Convenções
 
-**Status de verificação** (no topo de cada ficha):
+**Status de verificação** (campo `status` no frontmatter de cada ficha: `ok`, `parcial` ou `nao-verificado`):
 
 - ✅ **Lido no original:** números conferidos no texto completo do artigo/relatório.
 - 🟡 **Parcial:** conferido no resumo, página oficial ou comunicado, mas não no texto completo.
@@ -32,9 +32,11 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 
 **Nomes de arquivo:** `estudos/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `relatorios/<AAAA-MM-DD>-<tema>.md`. Pesquisas: `pesquisas/<AAAA-MM-DD>-<tema>.md`.
 
-Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md).
+Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/conteudo`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
 
 ## Índice de estudos
+
+Desde a migração para frontmatter (#26), todas as fichas estão `nao-verificado` até serem refeitas com Fonte local e trecho conferido (#6). O Status abaixo é o de antes da migração e fica guardado no comentário `# Antes da migração` de cada ficha.
 
 ### Como os casais se conhecem
 - [Rosenfeld, Thomas & Hausen 2019](estudos/rosenfeld-2019-disintermediating-friends.md): online virou o canal mais comum nos EUA (39% em 2017) · ✅ · forte

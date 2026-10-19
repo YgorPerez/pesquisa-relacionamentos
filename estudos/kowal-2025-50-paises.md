@@ -1,38 +1,40 @@
-# Kowal et al. (2025): conhecer-se online e satisfação em 50 países
+---
+# Antes da migração: ✅ lido no original (pesquisa de 2026-10-18). Lista de países e recorte do Brasil conferidos nos dados abertos do OSF (https://osf.io/uzf37, arquivo `Dataset_Relationship_Formation.csv`)
+referencia: "Kowal M. et al. *Meeting partners online is related to lower relationship satisfaction and love: Data from 50 countries*. Telematics and Informatics 101:102309, 2025."
+link: https://doi.org/10.1016/j.tele.2025.102309
+status: nao-verificado
+forca: moderada
+forca_porque: "Amostra grande em 50 países, mas de painel online com cotas e transversal."
+paises: [Argélia, Argentina, Austrália, Bangladesh, Bolívia, Brasil, Bulgária, Chile, China, Colômbia, Equador, Egito, Etiópia, França, Alemanha, Gana, Grécia, Guatemala, Honduras, Índia, Indonésia, Itália, Japão, Cazaquistão, Quênia, Malásia, México, Marrocos, Nova Zelândia, Nicarágua, Nigéria, Paquistão, Panamá, Paraguai, Peru, Filipinas, Polônia, Romênia, Singapura, África do Sul, Coreia do Sul, Espanha, Sri Lanka, Tailândia, Turquia, Reino Unido, EUA, Uganda, Venezuela, Vietnã]
+periodo: "2024"
+amostra:
+  n: 6646
+  descricao: "6.646 pessoas com parceiro, recrutadas por painel online com cotas (Syno International)."
+  representativa: false
+desenho: transversal
+conflito: "Acadêmico; nenhum conflito identificado."
+cobre: {}
+---
 
-- **Referência:** Kowal M. et al. *Meeting partners online is related to lower relationship satisfaction and love: Data from 50 countries*. Telematics and Informatics 101:102309, 2025.
-- **Link/DOI:** https://doi.org/10.1016/j.tele.2025.102309
-- **Status:** ✅ lido no original (pesquisa de 2026-10-18). Lista de países e recorte do Brasil conferidos nos dados abertos do OSF (https://osf.io/uzf37, arquivo `Dataset_Relationship_Formation.csv`)
-- **Força da evidência:** moderada
-- **País e período dos dados:** 50 países, **incluindo o Brasil**; coleta em 2024
-- **Amostra:** 6.646 pessoas com parceiro, recrutadas por painel online com cotas (Syno International)
-- **Desenho:** transversal
-- **Financiamento e conflitos de interesse:** acadêmico; nenhum conflito identificado
+# Kowal et al. (2025): conhecer-se online e satisfação em 50 países
 
 ## O que mediu
 
 Se quem conheceu o parceiro online difere em satisfação, intimidade, paixão e compromisso.
 
-## Achados principais
+## Achados
 
-| Medida | Valor |
-|---|---|
-| Conheceram o parceiro online | 16% (de 8% em Gana a 33% na Polônia) |
-| Em relações iniciadas após 2010 | 21% |
-| Satisfação menor entre os que se conheceram online | d = 0,43 |
-| Intimidade | d = 0,35 |
-| Paixão | d = 0,37 |
-| Compromisso | d = 0,51 |
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Conheceram o parceiro online | 16% (de 8% em Gana a 33% na Polônia) | — | |
+| Em relações iniciadas após 2010 | 21% | — | |
+| Satisfação menor entre os que se conheceram online | d = 0,43 | — | |
+| Intimidade | d = 0,35 | — | |
+| Paixão | d = 0,37 | — | |
+| Compromisso | d = 0,51 | — | |
 
 - O padrão se repete em quase todos os países.
 - Quem se conheceu online tinha nível socioeconômico menor e relações mais curtas.
-
-## Limitações
-
-- Painel online com cotas, apesar de os autores chamarem a amostra de "nacionalmente representativa".
-- Transversal: não prova causa.
-- Online/offline é binário; não separa app de rede social.
-- Recorte do Brasil pequeno (119 pessoas com parceiro, 23 online): não permite conclusão sobre o Brasil isoladamente.
 
 ## Brasil na amostra (cálculo próprio com os dados do OSF)
 
@@ -51,6 +53,13 @@ Médias simples, **sem ponderação e sem teste estatístico**, calculadas em 20
 - Relações iniciadas depois de 2010 (2024 menos o tempo de relação): 21 de 69 (30%) online.
 - O Brasil fica em 15º entre os 50 países na fatia online (19,3%); a média geral é 16,1%, a Polônia tem 32,4% e os EUA 11,3% nesta amostra.
 - No Brasil, as diferenças brutas entre online e offline são mínimas, mas o grupo online é pequeno demais para afirmar que o padrão geral não vale aqui.
+
+## Limitações
+
+- Painel online com cotas, apesar de os autores chamarem a amostra de "nacionalmente representativa".
+- Transversal: não prova causa.
+- Online/offline é binário; não separa app de rede social.
+- Recorte do Brasil pequeno (119 pessoas com parceiro, 23 online): não permite conclusão sobre o Brasil isoladamente.
 
 ## Como usamos
 

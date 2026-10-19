@@ -1,18 +1,35 @@
+---
+# Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
+referencia: "Bruch EE, Newman MEJ. *Aspirational pursuit of mates in online dating markets*. Science Advances 4(8):eaap9815, 2018."
+link: https://doi.org/10.1126/sciadv.aap9815
+status: nao-verificado
+forca: moderada
+forca_porque: "Comportamento real numa plataforma, mas um só site, em 4 cidades dos EUA, em 2014."
+paises: [EUA]
+periodo: "2014"
+amostra:
+  descricao: "Mensagens de usuários de um site de namoro gratuito em 4 cidades dos EUA."
+  representativa: false
+desenho: plataforma
+conflito: "Acadêmico; nenhum conflito identificado."
+cobre:
+  generos: [homem, mulher]
+---
+
 # Bruch & Newman (2018): busca "aspiracional" em sites de namoro
 
-- **Referência:** Bruch EE, Newman MEJ. *Aspirational pursuit of mates in online dating markets*. Science Advances 4(8):eaap9815, 2018.
-- **Link/DOI:** https://doi.org/10.1126/sciadv.aap9815
-- **Status:** ✅ lido no original (pesquisa de 2026-10-18)
-- **Força da evidência:** moderada
-- **País e período dos dados:** EUA (4 cidades), 2014
-- **Amostra:** mensagens de usuários de um site de namoro gratuito
-- **Desenho:** dados de comportamento na plataforma
-- **Financiamento e conflitos de interesse:** acadêmico; nenhum conflito identificado
+## O que mediu
 
-## Achados principais
+Para quem os usuários de um site de namoro mandam mensagem, comparando a "desejabilidade" de quem envia com a de quem recebe (desejabilidade medida pelas mensagens recebidas), e como a chance de resposta varia com essa diferença.
 
-- Homens e mulheres mandam mensagem, em média, para pessoas ~25% "mais desejáveis" que eles mesmos (desejabilidade medida pelas mensagens recebidas).
-- A chance de resposta cai fortemente quanto maior essa diferença.
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Desejabilidade de quem recebe a mensagem, comparada à de quem envia (homens e mulheres) | ~25% maior, em média | — | |
+| Chance de resposta conforme cresce essa diferença | cai fortemente | — | |
+
+- Desejabilidade medida pelas mensagens recebidas.
 
 ## Limitações
 
