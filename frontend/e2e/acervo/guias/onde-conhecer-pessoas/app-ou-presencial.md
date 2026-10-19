@@ -6,6 +6,7 @@ achados:
     fichas: [costa-2018-satisfacao]
 dicas: [apps-como-complemento]
 relacionadas: [onde-os-casais-se-conhecem]
+calculadora: grupo-possivel
 antes: [app-ou-bar, escolher-parceiro/onde-procurar]
 ---
 

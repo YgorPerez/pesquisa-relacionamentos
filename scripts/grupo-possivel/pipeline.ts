@@ -7,14 +7,18 @@
 // 4. Confere os dois contra os números publicados. Se algo não bate, sai com
 //    erro antes de gravar qualquer arquivo.
 // 5. Grava em `dados/grupo-possivel/` o CSV do Censo, as probabilidades da
-//    PNS e as duas tabelas do SIDRA para o ajuste por município e por idade
-//    exata, cada um com o seu `.meta.yaml`.
+//    PNS e as tabelas do SIDRA para a idade exata e o município (população
+//    na 9514, estado conjugal na 10185), cada um com o seu `.meta.yaml`.
+//
+// `--so-municipios` refaz só o estado conjugal por município, sem baixar os
+// microdados.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { arquivosDoZip, baixar, FTP, linhasDoZip, PASTA_BRUTOS } from './brutos.ts'
 import { agregarPessoas, celulasEmCsv, GRUPOS_DE_IDADE, UFS } from './censo.ts'
 import { conferir, conferirPns, TOLERANCIA_BRASIL, TOLERANCIA_UF, type CelulaConjugal } from './conferencia.ts'
 import { estimarPns, lerRegistroPns, pnsEmCsv, type RegistroPns } from './pns.ts'
+import { conferirMunicipios, municipiosEmCsv, type ConjugalDoMunicipio } from './municipios.ts'
 import { buscarSidra, type ValorSidra } from './sidra.ts'
 
 const RAIZ = join(import.meta.dirname, '..', '..')
@@ -73,29 +77,66 @@ async function populacaoPorUf(): Promise<Record<string, number>> {
   return Object.fromEntries(valores.map((v) => [SIGLA_POR_CODIGO[v.local] ?? v.local, v.valor]))
 }
 
+/** Os grupos de idade da classificação 58 da tabela 10185. */
+const GRUPOS_10185: Readonly<Record<string, string>> = {
+  '1143': '15-19', '1144': '20-24', '1145': '25-29', '1146': '30-34', '1147': '35-39', '1148': '40-44',
+  '1149': '45-49', '1150': '50-54', '1151': '55-59', '1152': '60-64', '1153': '65-69', '1154': '70-74',
+  '1155': '75-79', '2503': '80+',
+}
+const CLASSIFICACOES_10185 = ['464[12108,12109]', '2[4,5]', `58[${Object.keys(GRUPOS_10185).join(',')}]`, '86[95251]']
+
+function celulaConjugal(v: ValorSidra): Omit<CelulaConjugal, 'local'> {
+  const [conjugal = '', sexo = '', grupo = ''] = v.categorias
+  return {
+    sexo: SEXO_SIDRA[sexo] ?? sexo,
+    idade: GRUPOS_10185[grupo] ?? grupo,
+    uniao: conjugal === '12108' ? 'sim' : 'nao',
+    pessoas: v.valor,
+  }
+}
+
 /** SIDRA 10185, cor ou raça total, a partir de 15 anos, Brasil e UFs. */
 async function estadoConjugal(): Promise<CelulaConjugal[]> {
-  const grupos: Record<string, string> = {
-    '1143': '15-19', '1144': '20-24', '1145': '25-29', '1146': '30-34', '1147': '35-39', '1148': '40-44',
-    '1149': '45-49', '1150': '50-54', '1151': '55-59', '1152': '60-64', '1153': '65-69', '1154': '70-74',
-    '1155': '75-79', '2503': '80+',
-  }
-  const valores = await buscarSidra(10185, 140, 'N1[all]|N3[all]', [
-    '464[12108,12109]',
-    '2[4,5]',
-    `58[${Object.keys(grupos).join(',')}]`,
-    '86[95251]',
-  ])
-  return valores.map((v) => {
-    const [conjugal = '', sexo = '', grupo = ''] = v.categorias
-    return {
-      local: SIGLA_POR_CODIGO[v.local] ?? v.local,
-      sexo: SEXO_SIDRA[sexo] ?? sexo,
-      idade: grupos[grupo] ?? grupo,
-      uniao: conjugal === '12108' ? 'sim' : 'nao',
-      pessoas: v.valor,
+  const valores = await buscarSidra(10185, 140, 'N1[all]|N3[all]', CLASSIFICACOES_10185)
+  return valores.map((v) => ({ local: SIGLA_POR_CODIGO[v.local] ?? v.local, ...celulaConjugal(v) }))
+}
+
+/** SIDRA 10185 por município, uma consulta por UF. */
+async function estadoConjugalPorMunicipio(): Promise<ConjugalDoMunicipio[]> {
+  const municipios: ConjugalDoMunicipio[] = []
+  for (const codigoUf of Object.keys(UFS)) {
+    const valores = await buscarSidra(10185, 140, `N6[N3[${codigoUf}]]`, CLASSIFICACOES_10185)
+    const porMunicipio = new Map<string, { nome: string; pessoas: Map<string, number> }>()
+    for (const v of valores) {
+      const m = porMunicipio.get(v.local) ?? { nome: v.nome.replace(/ \([A-Z]{2}\)$| - [A-Z]{2}$/, ''), pessoas: new Map() }
+      porMunicipio.set(v.local, m)
+      const c = celulaConjugal(v)
+      m.pessoas.set(`${c.sexo}_${c.idade}_${c.uniao}`, c.pessoas)
     }
-  })
+    for (const [codigo, m] of porMunicipio) municipios.push({ codigo, nome: m.nome, uf: UFS[codigoUf]!, pessoas: m.pessoas })
+  }
+  return municipios
+}
+
+const META_10185_MUNICIPIOS = (total: number) => ({
+  ficha: FICHA_CENSO,
+  tabela: ['SIDRA 10185'],
+  variaveis: ['140 Pessoas de 10 anos ou mais de idade', '464 Estado conjugal (viviam ou não em união)', '2 Sexo', '58 Grupo de idade (15 anos ou mais)', '86 Cor ou raça (total)'],
+  baixado_em: hoje(),
+  versao: `Censo 2022, amostra, ${total} municípios`,
+  conferencia: 'A soma dos municípios dá a UF publicada na mesma tabela, em cada sexo × grupo de idade × união.',
+})
+
+/** `--so-municipios`: refaz só o estado conjugal por município, sem os microdados. */
+async function soMunicipios() {
+  const [conjugal, municipios] = await Promise.all([estadoConjugal(), estadoConjugalPorMunicipio()])
+  const falhas = conferirMunicipios(municipios, conjugal)
+  if (falhas.length > 0) {
+    console.error(`Os municípios não fecham com as UFs; nada foi gravado.\n${falhas.join('\n')}`)
+    process.exit(1)
+  }
+  mkdirSync(SAIDA, { recursive: true })
+  gravar('sidra-10185-municipios', municipiosEmCsv(municipios), META_10185_MUNICIPIOS(municipios.length))
 }
 
 /** População por sexo e idade simples (15 a 100+), Brasil e UFs. */
@@ -190,11 +231,12 @@ async function principal() {
 
   console.log('consultando o SIDRA')
   const { simples, grupos } = await idadesDa9514()
-  const [populacao, conjugal, csvIdade, csvMunicipios] = await Promise.all([
+  const [populacao, conjugal, csvIdade, csvMunicipios, conjugalMunicipios] = await Promise.all([
     populacaoPorUf(),
     estadoConjugal(),
     idadeSimples(simples),
     municipios(grupos),
+    estadoConjugalPorMunicipio(),
   ])
 
   console.log('agregando o Censo')
@@ -213,7 +255,7 @@ async function principal() {
   }
 
   const conferencia = conferir(agregado, { populacao, conjugal })
-  const falhas = [...conferencia.falhas, ...conferirPns(registros)]
+  const falhas = [...conferencia.falhas, ...conferirPns(registros), ...conferirMunicipios(conjugalMunicipios, conjugal)]
   if (falhas.length > 0) {
     console.error(`A conferência contra o que o IBGE publicou falhou; nada foi gravado.\n${falhas.join('\n')}`)
     process.exit(1)
@@ -260,6 +302,7 @@ async function principal() {
     baixado_em: hoje(),
     versao: `Censo 2022, universo, ${csvMunicipios.total} municípios`,
   })
+  gravar('sidra-10185-municipios', municipiosEmCsv(conjugalMunicipios), META_10185_MUNICIPIOS(conjugalMunicipios.length))
 }
 
-await principal()
+await (process.argv.includes('--so-municipios') ? soMunicipios() : principal())

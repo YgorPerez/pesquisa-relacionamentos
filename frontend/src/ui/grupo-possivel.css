@@ -1,0 +1,351 @@
+/* A página do Grupo possível (#19, variante A), no sistema do DESIGN.md.
+ * Rosa só no número do grupo (o número-chave da página); amarelo nas opções
+ * marcadas e no botão. Todo controle tem 44px de toque e nenhum pede arrastar. */
+
+/* ---------- o número preso no topo ---------- */
+.gp-preso {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 calc(-1 * var(--espaco-xs));
+  padding: 10px 14px 8px;
+}
+
+.gp-rotulo {
+  margin: 0;
+  font-family: var(--tipo-label-familia);
+  font-size: var(--tipo-label-tamanho);
+  font-weight: 700;
+  line-height: var(--tipo-label-altura);
+  color: var(--cor-tinta-2);
+}
+
+h3.gp-rotulo {
+  margin-top: var(--espaco-md);
+  margin-bottom: 8px;
+}
+
+.gp-faixa {
+  margin: 2px 0 0;
+  font-family: var(--tipo-headline-familia);
+  font-size: var(--tipo-headline-tamanho);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: var(--tipo-headline-espacamento);
+}
+
+.gp-instavel {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 0 8px;
+  vertical-align: 3px;
+  border: var(--traco-controle) dashed var(--cor-tinta);
+  border-radius: var(--raio-mao-2);
+  font-family: var(--tipo-label-familia);
+  font-size: var(--tipo-label-tamanho);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.gp-linha2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 12px;
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.gp-linha2 a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  font-weight: 700;
+}
+
+/* Enquanto os dados chegam, o número antigo fica, apagado. */
+.gp-carregando {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gp-carregando {
+    transition: opacity 0.2s var(--sai) 0.15s;
+  }
+}
+
+.gp-intro {
+  margin: 22px 0 var(--espaco-md);
+}
+
+.gp-aviso {
+  font-weight: 700;
+}
+
+.gp-dica,
+.gp-motivo {
+  margin: 8px 0 0;
+  font-size: var(--tipo-label-tamanho);
+  line-height: 1.45;
+  color: var(--cor-tinta-2);
+}
+
+.gp-motivo {
+  color: var(--cor-tinta);
+  font-weight: 700;
+}
+
+/* ---------- Requisitos em linhas ---------- */
+.gp-req {
+  padding: var(--espaco-md) 0 var(--espaco-sm);
+  border-top: 1.5px dotted var(--cor-tinta);
+}
+
+.gp-req:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+
+.gp-req-cab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+  margin-bottom: 10px;
+}
+
+.gp-req-titulo {
+  margin: 0;
+  font-family: var(--tipo-title-familia);
+  font-size: var(--tipo-title-tamanho);
+  font-weight: 700;
+  letter-spacing: var(--tipo-title-espacamento);
+}
+
+.gp-req-valor {
+  font-weight: 700;
+  font-size: 15.5px;
+}
+
+/* O valor de um Requisito ligado leva o amarelo de "vale para você". */
+.gp-req-ligado .gp-req-valor {
+  padding: 0 4px;
+  background: var(--cor-amarelo-voce);
+  border-radius: var(--raio-mao-2);
+}
+
+.gp-req-custo {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  font-size: 15px;
+  color: var(--cor-tinta-2);
+}
+
+.gp-opcoes {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* ---------- botões de passo ---------- */
+.gp-par {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+}
+
+.gp-passos-rotulo {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.gp-passos-controle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gp-passo {
+  display: inline-grid;
+  place-items: center;
+  width: var(--alvo-de-toque);
+  height: var(--alvo-de-toque);
+  padding: 0;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: var(--raio-mao);
+  background: var(--cor-folha);
+  cursor: pointer;
+}
+
+.gp-passo:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.gp-passo:not(:disabled):active {
+  background: var(--cor-amarelo-voce);
+}
+
+.gp-numero {
+  width: 4.2rem;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.gp-numero::-webkit-inner-spin-button,
+.gp-numero::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gp-unidade {
+  font-size: 15px;
+  color: var(--cor-tinta-2);
+}
+
+/* ---------- caixa de marcar em chip ---------- */
+.gp-marcar {
+  display: inline-flex;
+}
+
+.gp-marcar span {
+  gap: 8px;
+}
+
+.gp-visto {
+  flex: none;
+}
+
+.gp-desabilitado {
+  cursor: not-allowed;
+}
+
+.gp-desabilitado span {
+  opacity: 0.55;
+  border-style: dashed;
+}
+
+/* ---------- lugar ---------- */
+.gp-lugar {
+  display: grid;
+  gap: 4px 0;
+}
+
+.gp-lugar .gp-passos-rotulo:not(:first-child) {
+  margin-top: 10px;
+}
+
+.gp-lista {
+  width: 100%;
+  max-width: 22rem;
+  font-size: 16px;
+}
+
+/* ---------- a conta ---------- */
+.gp-sub {
+  margin: 6px 0 0;
+}
+
+.gp-pesa {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gp-pesa li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 12px;
+  padding: 10px 0;
+  border-top: 1.5px dotted var(--cor-tinta);
+}
+
+.gp-pesa-nome {
+  font-weight: 700;
+}
+
+.gp-pesa-nome small {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--cor-tinta-2);
+}
+
+.gp-pesa-custo {
+  grid-column: 1;
+  font-size: 15px;
+}
+
+.gp-pesa .botao {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.gp-dobra {
+  margin-top: var(--espaco-sm);
+  border-top: var(--traco-painel) solid var(--cor-tinta);
+}
+
+.gp-dobra summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  font-family: var(--tipo-title-familia);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gp-funil {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gp-funil li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1.5px dotted var(--cor-tinta);
+  font-size: 15.5px;
+}
+
+.gp-ingenua {
+  margin: 0 0 10px;
+  font-size: 15.5px;
+}
+
+.gp-ressalvas {
+  margin: 10px 0 var(--espaco-sm);
+  padding-left: 1.1em;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.gp-ressalvas li + li {
+  margin-top: 6px;
+}
+
+/* ---------- Do Guia ---------- */
+.gp-do-guia .gp-rotulo {
+  margin-bottom: 10px;
+  color: var(--cor-tinta);
+  font-family: var(--tipo-title-familia);
+  font-size: 19px;
+}
+
+.gp-ler-guia {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  margin-top: 6px;
+  font-weight: 700;
+}

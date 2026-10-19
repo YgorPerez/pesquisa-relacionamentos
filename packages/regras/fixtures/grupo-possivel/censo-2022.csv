@@ -1,0 +1,11 @@
+sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,peso,n_registros
+mulher,25-29,AC,nao,superior,2-5,branca,catolica,nao,1000,100
+mulher,25-29,AC,nao,medio,1-2,parda,evangelica,sim,3000,300
+mulher,25-29,AC,sim,superior,2-5,branca,catolica,sim,2000,200
+mulher,30-34,AC,nao,superior,5+,preta,sem-religiao,nao,400,40
+mulher,15-19,AC,nao,medio,sem-renda,parda,,nao,500,50
+homem,25-29,AC,nao,superior,5+,branca,sem-religiao,,1500,150
+homem,30-34,AC,nao,medio,ate-1,preta,catolica,,600,60
+homem,25-29,AC,sim,fundamental,1-2,parda,evangelica,,900,90
+mulher,25-29,AP,nao,superior,2-5,parda,catolica,nao,700,70
+homem,25-29,AP,nao,medio,1-2,parda,evangelica,,300,3
