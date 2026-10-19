@@ -15,7 +15,7 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins,
   test: {
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'nginx/**/*.test.ts', 'scripts/**/*.test.ts'],
     environment: 'node',
   },
 })

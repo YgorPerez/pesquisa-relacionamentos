@@ -15,3 +15,6 @@
 
 # O monorepo pnpm (frontend/, packages/).
 node_modules/
+
+# O que o `frontend/scripts/wizard-deploy.sh` lembra entre uma rodada e outra.
+.env.deploy

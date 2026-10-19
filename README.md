@@ -14,6 +14,7 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 | [`dicas/`](dicas/) | Conclusões práticas, cada uma ligada aos estudos que a sustentam |
 | [`fontes/pdfs/`](fontes/pdfs/) | Cópias locais de artigos de acesso aberto |
 | [`perguntas-abertas.md`](perguntas-abertas.md) | O que ainda falta verificar ou pesquisar |
+| [`docs/deploy.md`](docs/deploy.md) | Como o site vai ao ar em temestudo.com e como voltar à versão anterior |
 
 ## Convenções
 
