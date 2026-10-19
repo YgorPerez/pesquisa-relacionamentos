@@ -1,6 +1,17 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 import { buscarFicha } from '#/conteudo/fichas'
-import { Html, LinhaDePergunta } from '#/ui/guia'
+import { Html, LinhaDePergunta, MetaDaFicha } from '#/ui/guia'
+import { LinkDeVoltar } from '#/ui/navegacao'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Secao,
+} from '#/ui/pagina'
 import {
   ForcaDaEvidencia,
   LegendaDasFichas,
@@ -31,149 +42,115 @@ const data = (iso: string) => {
   return `${dia}/${mes}/${ano}`
 }
 
+/** Uma linha dos dados da Ficha, com o fio pontilhado em cima. */
+function Dado({ titulo, children }: { titulo: ReactNode; children: ReactNode }) {
+  return (
+    <div className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-3 first:border-t-0 first:pt-0">
+      <dt className="font-label text-label leading-body text-tinta-2">
+        {titulo}
+      </dt>
+      <dd className="m-0 mt-0.5 wrap-anywhere">{children}</dd>
+    </div>
+  )
+}
+
 function PaginaDaFicha() {
   const ficha = Route.useLoaderData()
   const naoVerificada = ficha.status === 'nao-verificado'
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <Link to="/estudos" className="voltar">
-          <svg
-            width="22"
-            height="14"
-            viewBox="0 0 22 14"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
-          </svg>
-          Todos os estudos
-        </Link>
+    <Folha>
+      <Coluna>
+        <LinkDeVoltar to="/estudos">Todos os estudos</LinkDeVoltar>
 
         {naoVerificada && (
-          <p className="aviso" role="note">
+          <Aviso role="note">
             <strong>Ficha não verificada.</strong> Os números abaixo ainda não
             foram conferidos no texto original. Ela não sustenta nenhum Guia até
             ser refeita com a fonte aberta.
-          </p>
+          </Aviso>
         )}
 
-        <h1 className="display display-ficha">{ficha.titulo}</h1>
+        <Display ficha>{ficha.titulo}</Display>
 
-        <div className="ficha-meta ficha-meta-grande">
+        <MetaDaFicha grande>
           <StatusDeVerificacao status={ficha.status} />
           <ForcaDaEvidencia forca={ficha.forca} rotulo />
-        </div>
+        </MetaDaFicha>
 
-        <dl className="ficha-dados">
-          <div>
-            <dt>Referência</dt>
-            <dd>
-              <Html como="span" html={ficha.referenciaHtml} />{' '}
-              <a
-                href={ficha.link}
-                className="link-fonte"
-                rel="noopener"
-                target="_blank"
-              >
-                Abrir o estudo
-                <span className="visualmente-oculto"> (abre em outra aba)</span>
-              </a>
-            </dd>
-          </div>
-          <div>
-            <dt>Verificação</dt>
-            <dd>
-              {ficha.verificadoEm
-                ? `${ficha.status === 'ok' ? 'Lido no original' : 'Conferido em parte'} em ${data(ficha.verificadoEm)}.`
-                : 'Ainda não conferida na fonte.'}
-            </dd>
-          </div>
-          <div>
-            <dt>Por que {ficha.forca}</dt>
-            <dd>{ficha.forcaPorque}</dd>
-          </div>
-          <div>
-            <dt>Amostra</dt>
-            <dd>
-              {ficha.n !== null && <strong>{numero.format(ficha.n)}. </strong>}
-              <Html como="span" html={ficha.amostraHtml} />{' '}
-              {ficha.representativa
-                ? 'Representativa da população.'
-                : 'Não é representativa da população.'}
-            </dd>
-          </div>
-          <div>
-            <dt>Desenho</dt>
-            <dd>{PALAVRA_DO_DESENHO[ficha.desenho]}</dd>
-          </div>
-          <div>
-            <dt>País e período</dt>
-            <dd>
-              {ficha.paises.length > 0
-                ? ficha.paises.join(', ')
-                : 'País não informado'}{' '}
-              · {ficha.periodo}
-            </dd>
-          </div>
-          <div>
-            <dt>Financiamento e conflito de interesse</dt>
-            <dd>
-              {ficha.conflitoHtml ? (
-                <Html como="span" html={ficha.conflitoHtml} />
-              ) : (
-                'Não declarado.'
-              )}
-            </dd>
-          </div>
-          {ficha.licenca && (
-            <div>
-              <dt>Licença</dt>
-              <dd>{ficha.licenca}</dd>
-            </div>
-          )}
+        <dl className="m-0" data-slot="ficha-dados">
+          <Dado titulo="Referência">
+            <Html como="span" html={ficha.referenciaHtml} />{' '}
+            <a
+              href={ficha.link}
+              className="flex min-h-toque w-fit items-center font-bold text-agua-tinta decoration-agua-tinta hover:bg-agua-fonte hover:text-tinta"
+              rel="noopener"
+              target="_blank"
+            >
+              Abrir o estudo
+              <span className="sr-only"> (abre em outra aba)</span>
+            </a>
+          </Dado>
+          <Dado titulo="Verificação">
+            {ficha.verificadoEm
+              ? `${ficha.status === 'ok' ? 'Lido no original' : 'Conferido em parte'} em ${data(ficha.verificadoEm)}.`
+              : 'Ainda não conferida na fonte.'}
+          </Dado>
+          <Dado titulo={`Por que ${ficha.forca}`}>{ficha.forcaPorque}</Dado>
+          <Dado titulo="Amostra">
+            {ficha.n !== null && <strong>{numero.format(ficha.n)}. </strong>}
+            <Html como="span" html={ficha.amostraHtml} />{' '}
+            {ficha.representativa
+              ? 'Representativa da população.'
+              : 'Não é representativa da população.'}
+          </Dado>
+          <Dado titulo="Desenho">{PALAVRA_DO_DESENHO[ficha.desenho]}</Dado>
+          <Dado titulo="País e período">
+            {ficha.paises.length > 0
+              ? ficha.paises.join(', ')
+              : 'País não informado'}{' '}
+            · {ficha.periodo}
+          </Dado>
+          <Dado titulo="Financiamento e conflito de interesse">
+            {ficha.conflitoHtml ? (
+              <Html como="span" html={ficha.conflitoHtml} />
+            ) : (
+              'Não declarado.'
+            )}
+          </Dado>
+          {ficha.licenca && <Dado titulo="Licença">{ficha.licenca}</Dado>}
         </dl>
 
-        <section className="secao" aria-labelledby="o-que-mediu">
-          <h2 id="o-que-mediu" className="headline">
-            O que mediu
-          </h2>
+        <Secao aria-labelledby="o-que-mediu">
+          <Headline id="o-que-mediu">O que mediu</Headline>
           <Html className="prosa" html={ficha.oQueMediuHtml} />
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="achados">
-          <h2 id="achados" className="headline">
-            Achados
-          </h2>
-          <ol className="achados">
+        <Secao aria-labelledby="achados">
+          <Headline id="achados">Achados</Headline>
+          <ol className="m-0 mb-md list-none p-0" data-slot="achados">
             {ficha.achados.map((achado) => (
               <li
                 key={`${achado.medida}|${achado.valor}|${achado.onde}`}
-                className="achado"
+                className="grid grid-cols-[minmax(64px,max-content)_1fr] gap-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5 estreito:grid-cols-1 estreito:gap-0.5"
               >
-                <Html className="achado-valor" html={achado.valor} />
+                <Html
+                  className="max-w-38 font-title text-title leading-title font-bold tracking-normal wrap-anywhere estreito:max-w-none"
+                  html={achado.valor}
+                />
                 <div>
-                  <Html
-                    como="span"
-                    className="achado-medida"
-                    html={achado.medida}
-                  />
+                  <Html como="span" className="block" html={achado.medida} />
                   {achado.trecho ? (
-                    <blockquote className="trecho">
+                    <blockquote className="m-0 mt-xs border-l-2 border-agua-tinta pl-3 italic">
                       <Html como="span" html={achado.trecho} />
                     </blockquote>
                   ) : (
-                    <p className="trecho-ausente">
+                    <p className="m-0 mt-xs text-nota text-tinta-2">
                       Trecho do original ainda não conferido.
                     </p>
                   )}
                   {achado.onde && achado.onde !== '—' && (
-                    <p className="achado-onde">
+                    <p className="m-0 mt-xs text-nota text-tinta-2">
                       Onde: <Html como="span" html={achado.onde} />
                     </p>
                   )}
@@ -184,45 +161,37 @@ function PaginaDaFicha() {
           {ficha.notasDosAchadosHtml && (
             <Html className="prosa" html={ficha.notasDosAchadosHtml} />
           )}
-        </section>
+        </Secao>
 
         {ficha.outrasSecoes.map((secao, i) => (
-          <section
-            key={secao.titulo}
-            className="secao"
-            aria-labelledby={`secao-${i}`}
-          >
-            <h2 id={`secao-${i}`} className="headline">
-              {secao.titulo}
-            </h2>
+          <Secao key={secao.titulo} aria-labelledby={`secao-${i}`}>
+            <Headline id={`secao-${i}`}>{secao.titulo}</Headline>
             <Html className="prosa" html={secao.html} />
-          </section>
+          </Secao>
         ))}
 
-        <section className="secao" aria-labelledby="limitacoes">
-          <h2 id="limitacoes" className="headline">
-            Limitações
-          </h2>
+        <Secao aria-labelledby="limitacoes">
+          <Headline id="limitacoes">Limitações</Headline>
           <Html className="prosa limites" html={ficha.limitacoesHtml} />
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="citada-em">
-          <h2 id="citada-em" className="headline">
-            Citada em
-          </h2>
+        <Secao aria-labelledby="citada-em">
+          <Headline id="citada-em">Citada em</Headline>
           {ficha.citadaEm.guias.length === 0 &&
           ficha.citadaEm.dicas.length === 0 ? (
-            <p className="secundario">
+            <p className="text-tinta-2">
               Nenhum Guia nem Dica publicada cita esta Ficha ainda.
             </p>
           ) : (
             <>
               {ficha.citadaEm.guias.length > 0 && (
                 <>
-                  <h3 className="title citada-subtitulo">Guias</h3>
-                  <ul className="linhas-pergunta">
+                  <h3 className="mx-0 mt-md mb-sm font-title text-title">
+                    Guias
+                  </h3>
+                  <ul className="isolate m-0 list-none p-0">
                     {ficha.citadaEm.guias.map((guia) => (
-                      <li key={guia.slug}>
+                      <li key={guia.slug} className="not-first:mt-md">
                         <LinhaDePergunta guia={guia} />
                       </li>
                     ))}
@@ -231,11 +200,20 @@ function PaginaDaFicha() {
               )}
               {ficha.citadaEm.dicas.length > 0 && (
                 <>
-                  <h3 className="title citada-subtitulo">Dicas</h3>
-                  <ul className="dicas-que-citam">
+                  <h3 className="mx-0 mt-md mb-sm font-title text-title">
+                    Dicas
+                  </h3>
+                  <ul className="m-0 list-none p-0">
                     {ficha.citadaEm.dicas.map((dica) => (
-                      <li key={dica.slug}>
-                        <Link to="/dicas/$slug" params={{ slug: dica.slug }}>
+                      <li
+                        key={dica.slug}
+                        className="not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
+                      >
+                        <Link
+                          to="/dicas/$slug"
+                          params={{ slug: dica.slug }}
+                          className="flex min-h-toque items-center py-2 font-bold decoration-agua-tinta underline-offset-4"
+                        >
                           {dica.texto}
                         </Link>
                       </li>
@@ -245,29 +223,27 @@ function PaginaDaFicha() {
               )}
             </>
           )}
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="como-ler">
-          <h2 id="como-ler" className="headline">
-            Como ler
-          </h2>
+        <Secao aria-labelledby="como-ler">
+          <Headline id="como-ler">Como ler</Headline>
           <LegendaDasFichas />
-        </section>
-      </div>
-    </main>
+        </Secao>
+      </Coluna>
+    </Folha>
   )
 }
 
 function FichaNaoExiste() {
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">Essa Ficha não existe</h1>
-        <p className="lead">
+    <Folha>
+      <Coluna>
+        <Display>Essa Ficha não existe</Display>
+        <Lead>
           O endereço pode ter mudado.{' '}
           <Link to="/estudos">Veja todos os estudos</Link>.
-        </p>
-      </div>
-    </main>
+        </Lead>
+      </Coluna>
+    </Folha>
   )
 }

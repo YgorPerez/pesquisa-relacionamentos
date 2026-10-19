@@ -18,7 +18,7 @@ const DEGRAUS_DA_FORCA: Record<Forca, number> = {
 function IconeDoStatus({ status }: { status: Status }) {
   return (
     <svg
-      className="icone-status"
+      className="flex-none text-tinta"
       width="18"
       height="18"
       viewBox="0 0 20 20"
@@ -33,7 +33,7 @@ function IconeDoStatus({ status }: { status: Status }) {
       {status === 'ok' && (
         <path
           d="M6 10.5l3 3 6-8"
-          stroke="var(--color-agua-tinta)"
+          className="stroke-agua-tinta"
           strokeWidth="2.4"
         />
       )}
@@ -49,7 +49,7 @@ function IconeDoStatus({ status }: { status: Status }) {
 
 export function StatusDeVerificacao({ status }: { status: Status }) {
   return (
-    <span className="selo-meta" data-status={status}>
+    <span className="inline-flex items-center gap-1.5 font-label text-label" data-status={status}>
       <IconeDoStatus status={status} />
       {PALAVRA_DO_STATUS[status]}
     </span>
@@ -83,7 +83,7 @@ export function DegrausCheios({
 }) {
   return (
     <svg
-      className="degraus"
+      className="flex-none text-tinta"
       width={largura}
       height={(largura * 22) / 66}
       viewBox="0 0 66 22"
@@ -108,7 +108,7 @@ export function ForcaDaEvidencia({
   rotulo?: boolean
 }) {
   return (
-    <span className="selo-meta" data-forca={forca}>
+    <span className="inline-flex items-center gap-1.5 font-label text-label" data-forca={forca}>
       <Degraus nivel={forca} />
       {rotulo ? `evidência ${forca}` : forca}
     </span>
@@ -118,47 +118,47 @@ export function ForcaDaEvidencia({
 /** A legenda do fim das listas de Fichas. */
 export function LegendaDasFichas() {
   return (
-    <dl className="legenda">
-      <div>
-        <dt>
+    <dl className="m-0 text-nota text-tinta-2">
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <StatusDeVerificacao status="ok" />
         </dt>
-        <dd>os números foram conferidos no texto completo do estudo.</dd>
+        <dd className="m-0">os números foram conferidos no texto completo do estudo.</dd>
       </div>
-      <div>
-        <dt>
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <StatusDeVerificacao status="parcial" />
         </dt>
-        <dd>
+        <dd className="m-0">
           conferido no resumo ou na página oficial, não no texto completo.
         </dd>
       </div>
-      <div>
-        <dt>
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <StatusDeVerificacao status="nao-verificado" />
         </dt>
-        <dd>ainda não conferido na fonte. Não sustenta nenhum Guia.</dd>
+        <dd className="m-0">ainda não conferido na fonte. Não sustenta nenhum Guia.</dd>
       </div>
-      <div>
-        <dt>
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <ForcaDaEvidencia forca="forte" />
         </dt>
-        <dd>amostra grande e representativa, replicado ou meta-análise.</dd>
+        <dd className="m-0">amostra grande e representativa, replicado ou meta-análise.</dd>
       </div>
-      <div>
-        <dt>
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <ForcaDaEvidencia forca="moderada" />
         </dt>
-        <dd>
+        <dd className="m-0">
           bom desenho, mas uma amostra só, um retrato num momento ou um viés
           conhecido.
         </dd>
       </div>
-      <div>
-        <dt>
+      <div className="grid gap-0.5 py-2">
+        <dt className="text-tinta">
           <ForcaDaEvidencia forca="fraca" />
         </dt>
-        <dd>
+        <dd className="m-0">
           amostra pequena, não representativa, comercial ou com conflito de
           interesse.
         </dd>

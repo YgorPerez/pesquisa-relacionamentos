@@ -5,6 +5,8 @@ import {
   LegendaDasFichas,
   StatusDeVerificacao,
 } from '#/ui/selos'
+import { MetaDaFicha } from '#/ui/guia'
+import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
 
 export const Route = createFileRoute('/estudos/')({
   loader: () => listarFichas(),
@@ -29,55 +31,58 @@ function Estudos() {
   const conferidas = fichas.filter((f) => f.status !== 'nao-verificado').length
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">
+    <Folha>
+      <Coluna>
+        <Display>
           Os <span className="marca-texto">estudos</span> por trás das respostas
-        </h1>
-        <p className="lead">
+        </Display>
+        <Lead>
           Cada Ficha resume um estudo: o que mediu, os números com o trecho do
           original e o que ele não consegue dizer. Ao lado de cada uma, até onde
           a gente conferiu e quanto a evidência pesa.
-        </p>
+        </Lead>
 
-        <section className="secao" aria-labelledby="lista">
-          <h2 id="lista" className="headline">
+        <Secao aria-labelledby="lista">
+          <Headline id="lista">
             {contar(fichas.length, 'Ficha', 'Fichas')}
-          </h2>
+          </Headline>
           {conferidas === 0 && (
-            <p className="aviso">
+            <Aviso>
               Nenhuma Ficha foi conferida no original ainda. Todas estão sendo
               refeitas com a fonte aberta ao lado, e até lá nenhuma sustenta um
               Guia.
-            </p>
+            </Aviso>
           )}
-          <ol className="fichas">
+          <ol className="m-0 list-none p-0" data-slot="fichas">
             {fichas.map((ficha) => (
-              <li key={ficha.slug} className="ficha">
+              <li
+                key={ficha.slug}
+                className="py-sm not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
+              >
                 <Link
                   to="/estudos/$slug"
                   params={{ slug: ficha.slug }}
-                  className="ficha-titulo"
+                  className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
                 >
                   {ficha.titulo}
                 </Link>
-                <div className="ficha-meta">
+                <MetaDaFicha>
                   <StatusDeVerificacao status={ficha.status} />
                   <ForcaDaEvidencia forca={ficha.forca} />
-                  <span>{ficha.contexto}</span>
-                </div>
+                  <span className="text-tinta-2">{ficha.contexto}</span>
+                </MetaDaFicha>
               </li>
             ))}
           </ol>
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="como-ler">
-          <h2 id="como-ler" className="headline">
+        <Secao aria-labelledby="como-ler">
+          <Headline id="como-ler">
             Como ler
-          </h2>
+          </Headline>
           <LegendaDasFichas />
-        </section>
-      </div>
-    </main>
+        </Secao>
+      </Coluna>
+    </Folha>
   )
 }

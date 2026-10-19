@@ -1,0 +1,290 @@
+/* O que o Tailwind não cobre, e por isso é CSS escrito à mão. Tudo o mais
+ * no site é classe do Tailwind no próprio componente.
+ *
+ * 1. Os desenhos à mão do DESIGN.md: a retícula atrás do contorno, a régua
+ *    de cada seção, o marca-texto amarelo, o anel da referência e a faixa
+ *    rosa do número-chave. São SVG em `url(data:…)` e pseudo-elementos com
+ *    deslocamento, que como classe do Tailwind seriam valores arbitrários
+ *    longos (`bg-[url(…)]`) que o `no-arbitrary-values` recusa. Os que
+ *    entram no JSX são `@utility`, e o `@shadcn/lint` os conhece.
+ * 2. O HTML que sai do Markdown do acervo (`conteudo/vista-guia.ts`), que
+ *    não tem `className`: `.prosa`, `.ref`, `.nw`, `.numero-chave` e
+ *    `.marca-texto`. Os nomes são a lista fechada de
+ *    `conteudo/html-seguro.ts`.
+ * 3. A animação do laço que circula a Ficha: o traço desenhado com
+ *    `stroke-dashoffset`, em `@keyframes`. */
+
+/* ---------- 1. desenhos que o JSX usa ---------- */
+
+/* A única elevação: retícula fina deslocada atrás do contorno. */
+@utility reticula {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    transform: var(--reticula-deslocamento);
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--reticula);
+    pointer-events: none;
+  }
+}
+
+/* A retícula como o próprio fundo (a fatia sem explicação da barra). */
+@utility fundo-reticula {
+  background: var(--reticula), var(--color-folha);
+}
+
+/* O fio pontilhado e o tracejado de um lado só (`border-t-2
+ * fio-pontilhado`). Sem o preflight, o `border-dotted` do Tailwind põe o
+ * estilo nos quatro lados, e o lado sem largura ganha a largura `medium` do
+ * navegador. Estes só trocam o estilo que o `border-t-*` já lê. */
+@utility fio-pontilhado {
+  --tw-border-style: dotted;
+}
+
+@utility fio-tracejado {
+  --tw-border-style: dashed;
+}
+
+/* Cada seção abre com a régua desenhada à mão, no alto. */
+@utility regua {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 6' preserveAspectRatio='none'%3E%3Cpath d='M1 3.4C120 2.6 260 3.6 380 2.9S540 3.3 599 2.8' stroke='%231a1c1c' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")
+    left top / 100% 6px no-repeat;
+}
+
+/* O risco do Mito: faixa rosa de 30% da altura no meio da linha, e não
+ * marca-texto. Um degradê com posição e tamanho, que como classe seria um
+ * `bg-[linear-gradient(…)]` arbitrário. */
+@utility risco-do-mito {
+  text-decoration: none;
+  background: linear-gradient(var(--color-rosa-mito), var(--color-rosa-mito))
+    center 60% / 100% 30% repeat-x;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@layer components {
+  /* ---------- marca-texto: a única palavra em amarelo do título ---------- */
+  .marca-texto {
+    position: relative;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  /* Cobre a letra inteira, das ascendentes às descendentes (The Full Letter
+   * Rule), e se pinta da esquerda para a direita ao carregar. */
+  .marca-texto::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: -6px;
+    right: -7px;
+    top: 10%;
+    bottom: -6%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 8C50 6 130 7 196 5l1 8-1 9 1 9-3 3C130 33 60 33 5 35l-2-8 1-9-1-8z' fill='%23ecd36f'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    transform: rotate(-0.5deg);
+    transform-origin: left center;
+    animation: marca-passa 0.8s var(--ease-sai) 0.25s both;
+  }
+
+  @keyframes marca-passa {
+    from {
+      transform: rotate(-0.5deg) scaleX(0);
+    }
+    to {
+      transform: rotate(-0.5deg) scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marca-texto::before {
+      animation: none;
+    }
+  }
+}
+
+/* ---------- 2. o HTML do Markdown do acervo ---------- */
+
+@layer components {
+  .prosa > :first-child {
+    margin-top: 0;
+  }
+
+  .prosa > :last-child {
+    margin-bottom: 0;
+  }
+
+  .prosa p,
+  .prosa ul,
+  .prosa ol {
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .prosa ul,
+  .prosa ol {
+    padding-left: 1.3em;
+  }
+
+  .prosa li + li {
+    margin-top: var(--spacing-xs);
+  }
+
+  .prosa a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Tabelas que sobraram nas seções extras rolam dentro delas, não a página. */
+  .prosa table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .prosa th,
+  .prosa td {
+    text-align: left;
+    vertical-align: top;
+    padding: 6px 10px 6px 0;
+    border-bottom: 1.5px dotted var(--color-tinta);
+  }
+
+  /* ---------- limitações: traço curto desenhado como marcador ---------- */
+  .limites ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .limites li {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .limites li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 18px;
+    height: 12px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='none' stroke='%231a1c1c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M2 6.6C6 5.6 11 6.2 16 5.4'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transform: translateY(-50%);
+  }
+
+  /* ---------- número de referência no anel, grudado na palavra ---------- */
+  .nw {
+    white-space: nowrap;
+  }
+
+  .ref {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    min-width: 26px;
+    height: 25px;
+    padding: 0 6px;
+    margin: 0 1px 0 0.3em;
+    vertical-align: 2px;
+    font-family: var(--font-label);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-agua-tinta);
+    text-decoration: none;
+    border-radius: var(--radius-redondo);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26' preserveAspectRatio='none'%3E%3Cpath d='M17 2.6C24 3 28 7.5 27.6 13.2 27.2 19.4 21.8 23.6 14.6 23.4 7.4 23.2 2.3 18.8 2.5 12.6 2.7 6.8 8.2 2.2 15.6 2.9 18.5 3.2 20.4 3.9 21.4 4.8' fill='none' stroke='%230d6359' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
+        center / 100% 100% no-repeat,
+      var(--color-folha);
+  }
+
+  .ref + .ref {
+    margin-left: 2px;
+  }
+
+  /* A área de toque chega a 44 × 45px sem mexer na linha. */
+  .ref::before {
+    content: '';
+    position: absolute;
+    inset: -10px -9px;
+  }
+
+  .ref:hover {
+    background-color: var(--color-agua-fonte);
+    color: var(--color-tinta);
+  }
+
+  /* ---------- número-chave em rosa, na altura inteira da letra ---------- */
+  .numero-chave {
+    color: inherit;
+    font-weight: 700;
+    padding: 0 3px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 8C50 6 130 7 196 5l1 8-1 9 1 9-3 3C130 33 60 33 5 35l-2-8 1-9-1-8z' fill='%23e7a3b6'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+/* ---------- 3. o laço que circula a Ficha ---------- */
+
+@layer components {
+  .ficha-citada .laco {
+    position: absolute;
+    inset: -10px;
+    z-index: -1;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .ficha-citada .laco path,
+  .ficha-citada .seta-laco path {
+    fill: none;
+    stroke: var(--color-agua-tinta);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .ficha-citada .laco path {
+    fill: color-mix(in srgb, var(--color-agua-fonte) 30%, transparent);
+    animation: desenha-traco 0.9s var(--ease-sai) forwards;
+  }
+
+  .ficha-citada .seta-laco {
+    position: absolute;
+    left: -14px;
+    top: -26px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .ficha-citada .seta-laco path {
+    animation: desenha-traco 0.5s var(--ease-sai) 0.7s forwards;
+  }
+
+  @keyframes desenha-traco {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ficha-citada .laco path,
+    .ficha-citada .seta-laco path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+}

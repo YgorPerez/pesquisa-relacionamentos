@@ -1,26 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { listarTemas } from '#/conteudo/guias'
+import { LinhaDaCalculadora } from '#/ui/guia'
+import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
 
 export const Route = createFileRoute('/')({
   loader: () => listarTemas(),
   component: Inicio,
 })
-
-const Seta = () => (
-  <svg
-    width="30"
-    height="20"
-    viewBox="0 0 30 20"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M2 11c8-2 16-1 25-1M27 10l-7-7M27 10l-7 7" />
-  </svg>
-)
 
 /** As duas calculadoras. As páginas delas chegam nos tickets #32 e #33. */
 const CALCULADORAS = [
@@ -43,49 +29,48 @@ function Inicio() {
   const temas = Route.useLoaderData()
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">
+    <Folha>
+      <Coluna>
+        <Display>
           Dúvida de relacionamento, com a{' '}
           <span className="marca-texto">fonte</span> junto
-        </h1>
-        <p className="lead">
+        </Display>
+        <Lead>
           Respostas curtas sobre onde conhecer pessoas e como escolher parceiro.
           Cada afirmação leva ao estudo de onde saiu, e a gente avisa quando a
           pesquisa ainda não sabe.
-        </p>
+        </Lead>
 
-        <section className="secao" aria-labelledby="temas">
-          <h2 id="temas" className="headline">
-            Os Temas
-          </h2>
+        <Secao aria-labelledby="temas">
+          <Headline id="temas">Os Temas</Headline>
           {temas.length === 0 ? (
-            <p className="aviso">
+            <Aviso>
               Os Guias entram no ar quando os estudos que os sustentam forem
               conferidos na fonte. Enquanto isso,{' '}
               <Link to="/estudos">veja os estudos do acervo</Link>.
-            </p>
+            </Aviso>
           ) : (
             temas.map((tema) => (
               <article
                 key={tema.slug}
-                className="painel com-reticula tema-no-inicio"
+                className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 not-first-of-type:mt-lg"
               >
-                <h3 className="title">
+                <h3 className="m-0 font-title text-title">
                   <Link
                     to="/$tema"
                     params={{ tema: tema.slug }}
-                    className="link-tema"
+                    className="inline-flex min-h-toque items-center decoration-2"
                   >
                     {tema.titulo}
                   </Link>
                 </h3>
-                <ol className="perguntas-do-tema">
+                <ol className="mt-1 mb-0 pl-marcador">
                   {tema.guias.map((guia) => (
-                    <li key={guia.slug}>
+                    <li key={guia.slug} className="not-first:mt-0.5">
                       <Link
                         to="/$tema/$slug"
                         params={{ tema: guia.tema, slug: guia.slug }}
+                        className="inline-flex min-h-toque items-center"
                       >
                         {guia.pergunta}
                       </Link>
@@ -95,34 +80,30 @@ function Inicio() {
               </article>
             ))
           )}
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="calculadoras">
-          <h2 id="calculadoras" className="headline">
-            Faça a conta
-          </h2>
-          <ul className="linhas-pergunta">
+        <Secao aria-labelledby="calculadoras">
+          <Headline id="calculadoras">Faça a conta</Headline>
+          <ul className="isolate m-0 list-none p-0">
             {CALCULADORAS.map((c) => (
-              <li key={c.para}>
-                <a href={c.para} className="linha-pergunta com-reticula">
-                  <span>
-                    <b>{c.nome}</b>
-                    <span className="secundario">{c.resumo}</span>
-                  </span>
-                  <Seta />
-                </a>
+              <li key={c.para} className="not-first:mt-md">
+                <LinhaDaCalculadora
+                  href={c.para}
+                  titulo={c.nome}
+                  resumo={c.resumo}
+                />
               </li>
             ))}
           </ul>
-        </section>
+        </Secao>
 
-        <footer className="rodape">
+        <footer className="mt-rodape text-nota text-tinta-2">
           <p>
             <Link to="/estudos">Todos os estudos</Link> ·{' '}
             <Link to="/dicas">Todas as Dicas</Link>
           </p>
         </footer>
-      </div>
-    </main>
+      </Coluna>
+    </Folha>
   )
 }

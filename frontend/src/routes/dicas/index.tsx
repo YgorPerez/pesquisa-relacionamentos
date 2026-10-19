@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { listarDicas } from '#/conteudo/guias'
 import { ForcaDaEvidencia } from '#/ui/selos'
+import { MetaDaFicha } from '#/ui/guia'
+import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/')({
   loader: () => listarDicas(),
@@ -21,49 +23,52 @@ function Dicas() {
   const dicas = Route.useLoaderData()
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">
+    <Folha>
+      <Coluna>
+        <Display>
           O que <span className="marca-texto">fazer</span> com a evidência
-        </h1>
-        <p className="lead">
+        </Display>
+        <Lead>
           Cada Dica diz quanto a evidência pesa e leva aos estudos de onde saiu.
           Quando nenhum estudo testou a Dica direto, ela vem marcada como
           inferência nossa.
-        </p>
+        </Lead>
 
-        <section className="secao" aria-labelledby="lista-dicas">
-          <h2 id="lista-dicas" className="headline">
+        <Secao aria-labelledby="lista-dicas">
+          <Headline id="lista-dicas">
             {dicas.length === 1 ? '1 Dica' : `${dicas.length} Dicas`}
-          </h2>
+          </Headline>
           {dicas.length === 0 ? (
-            <p className="aviso">
+            <Aviso>
               Nenhuma Dica no ar ainda. Elas entram quando os estudos que as
               sustentam forem conferidos na fonte.
-            </p>
+            </Aviso>
           ) : (
-            <ol className="dicas">
+            <ol className="m-0 list-none p-0" data-slot="dicas">
               {dicas.map((dica) => (
-                <li key={dica.slug} className="dica-da-lista">
+                <li
+                  key={dica.slug}
+                  className="py-sm not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
+                >
                   <Link
                     to="/dicas/$slug"
                     params={{ slug: dica.slug }}
-                    className="ficha-titulo"
+                    className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
                   >
                     {dica.texto}
                   </Link>
-                  <div className="ficha-meta">
+                  <MetaDaFicha>
                     <ForcaDaEvidencia forca={dica.forca} />
                     {dica.inferencia && (
-                      <span className="inferencia-curta">Inferência nossa</span>
+                      <span className="text-tinta-2 italic">Inferência nossa</span>
                     )}
-                  </div>
+                  </MetaDaFicha>
                 </li>
               ))}
             </ol>
           )}
-        </section>
-      </div>
-    </main>
+        </Secao>
+      </Coluna>
+    </Folha>
   )
 }

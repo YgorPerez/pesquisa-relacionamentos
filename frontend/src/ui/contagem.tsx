@@ -13,7 +13,10 @@ import {
   type Evento,
   type MotivoDoNao,
 } from '#/analytics/eventos'
+import { cn } from '@/platform/cn'
 import { Botao } from './botao'
+import { Headline, Secao } from './pagina'
+import { Switch } from './shadcn/switch'
 
 /** O texto de cada um dos quatro motivos do "não" (#21). Sem campo livre. */
 const TEXTO_DO_MOTIVO: Readonly<Record<MotivoDoNao, string>> = {
@@ -35,26 +38,33 @@ export function Ajudou({ guia }: { guia: string }) {
   }
 
   return (
-    <section className="secao ajudou" aria-labelledby="t-ajudou">
-      <h2 id="t-ajudou" className="headline">
-        Ajudou?
-      </h2>
+    <Secao aria-labelledby="t-ajudou">
+      <Headline id="t-ajudou">Ajudou?</Headline>
       {passo === 'pergunta' && (
-        <div className="ajudou-botoes">
+        <div className="flex gap-2.5">
           <Botao
             variante="leve"
+            className="min-w-22"
             onClick={() => responder(EVENTOS.ajudouSim(guia))}
           >
             Sim
           </Botao>
-          <Botao variante="leve" onClick={() => setPasso('motivo')}>
+          <Botao
+            variante="leve"
+            className="min-w-22"
+            onClick={() => setPasso('motivo')}
+          >
             Não
           </Botao>
         </div>
       )}
       {passo === 'motivo' && (
-        <div role="group" aria-labelledby="t-motivo" className="ajudou-motivos">
-          <p id="t-motivo" className="ajudou-pergunta">
+        <div
+          role="group"
+          aria-labelledby="t-motivo"
+          className="flex flex-col items-start gap-2"
+        >
+          <p id="t-motivo" className="m-0 mb-0.5 font-bold">
             O que faltou?
           </p>
           {MOTIVOS_DO_NAO.map((motivo) => (
@@ -68,37 +78,45 @@ export function Ajudou({ guia }: { guia: string }) {
           ))}
         </div>
       )}
-      <p role="status" className="ajudou-obrigado">
+      <p role="status" className="m-0 text-tinta-2 empty:hidden">
         {passo === 'respondido' &&
           (estado === 'conta'
             ? 'Obrigado. A resposta entra na contagem sem nada sobre você.'
             : 'Obrigado. Você pediu para não ser contado, então a resposta não sai do aparelho.')}
       </p>
-    </section>
+    </Secao>
   )
 }
 
 /** A chave "Contar minhas visitas". Com GPC ou DNT ela fica desligada e
  * presa, e diz por quê. */
-export function ChaveDaContagem() {
+export function ChaveDaContagem({ className }: { className?: string }) {
   const estado = useEstadoDaContagem()
   const id = useId()
+  const presa = estado === null || estado === 'navegador'
   return (
-    <div className="chave-contagem">
-      <label className="chave">
-        <input
-          type="checkbox"
-          role="switch"
+    <div className={cn('flex flex-col gap-0.5', className)}>
+      <label
+        className={cn(
+          'relative inline-flex min-h-toque items-center gap-2.5 font-bold text-tinta',
+          presa ? 'cursor-not-allowed' : 'cursor-pointer',
+        )}
+      >
+        <Switch
           checked={estado === 'conta'}
-          disabled={estado === null || estado === 'navegador'}
+          disabled={presa}
           aria-describedby={estado === 'navegador' ? id : undefined}
-          onChange={(e) => gravarContagem(e.target.checked)}
+          onCheckedChange={(ligada) => gravarContagem(ligada)}
         />
-        <span className="chave-trilho" aria-hidden="true" />
-        <span>Contar minhas visitas</span>
+        <span className={presa ? 'text-tinta-2' : undefined}>
+          Contar minhas visitas
+        </span>
       </label>
       {estado === 'navegador' && (
-        <span id={id} className="chave-nota">
+        <span
+          id={id}
+          className="text-label leading-body font-normal text-tinta-2"
+        >
           Desligada: seu navegador pede para não contar (GPC ou Do Not Track).
         </span>
       )}
@@ -106,12 +124,18 @@ export function ChaveDaContagem() {
   )
 }
 
-/** O rodapé de todas as páginas: a página de privacidade e a chave. */
+/** O rodapé de todas as páginas: a página de privacidade e a chave. No
+ * desktop, ele continua a folha da página sobre a retícula. */
 export function Rodape() {
   return (
-    <footer className="rodape-site">
-      <div className="rodape-site-dentro">
-        <Link to="/privacidade">Privacidade</Link>
+    <footer className="mx-auto max-w-pagina border-t-2 border-tinta p-md text-nota text-tinta-2 folha:border-2 folha:border-t-0 folha:bg-papel folha:px-16">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1.5">
+        <Link
+          to="/privacidade"
+          className="inline-flex min-h-toque items-center font-bold text-tinta"
+        >
+          Privacidade
+        </Link>
         <ChaveDaContagem />
       </div>
     </footer>

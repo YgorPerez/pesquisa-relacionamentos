@@ -1,8 +1,9 @@
 // A navegação do Guia (#16, #28): a referência que circula a Ficha e o
 // "voltar ao texto", o "Voltar para <Pergunta>" de quem veio de outro Guia e
 // o ponto da leitura (rolagem e seções abertas) guardado no histórico.
-import { useRouter, useRouterState } from '@tanstack/react-router'
+import { Link, useRouter, useRouterState } from '@tanstack/react-router'
 import {
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -10,6 +11,7 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react'
+import { cn } from '@/platform/cn'
 import { laco } from './laco'
 
 declare module '@tanstack/react-router' {
@@ -192,6 +194,26 @@ const SetaVoltar = () => (
   </svg>
 )
 
+/** O voltar do DESIGN.md: negrito com a seta, sem caixa. */
+const VOLTAR =
+  'mt-sm inline-flex min-h-toque items-center gap-2 font-label text-aviso font-bold no-underline hover:underline'
+
+/** "Todos os estudos", "Todas as Dicas": o voltar para a lista. */
+export function LinkDeVoltar({
+  to,
+  children,
+}: {
+  to: '/estudos' | '/dicas'
+  children: ReactNode
+}) {
+  return (
+    <Link to={to} className={VOLTAR} data-slot="voltar">
+      <SetaVoltar />
+      {children}
+    </Link>
+  )
+}
+
 /** Estar no navegador não muda depois de hidratar: ninguém a avisar. */
 const semAvisos = () => () => {}
 
@@ -212,7 +234,11 @@ export function VoltarParaGuia() {
   return (
     <button
       type="button"
-      className="voltar voltar-guia"
+      className={cn(
+        VOLTAR,
+        'cursor-pointer border-0 bg-transparent p-0 text-left text-inherit',
+      )}
+      data-slot="voltar"
       onClick={() => {
         salvarPonto()
         router.history.back()

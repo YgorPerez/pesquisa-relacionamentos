@@ -4,6 +4,8 @@
 // sem query.
 import { useState } from 'react'
 import { Botao } from './botao'
+import { Headline, Secao } from './pagina'
+import { Input } from './shadcn/input'
 
 type Copia =
   | { readonly tipo: 'nada' }
@@ -40,23 +42,20 @@ export function Compartilhar({
   }
 
   return (
-    <section
-      className="secao compartilhar"
+    <Secao
       {...(semTitulo
         ? { 'aria-label': 'Compartilhar' }
         : { 'aria-labelledby': 't-compartilhar' })}
     >
       {!semTitulo && (
-        <h2 id="t-compartilhar" className="headline">
-          Compartilhar
-        </h2>
+        <Headline id="t-compartilhar">Compartilhar</Headline>
       )}
-      <div className="compartilhar-linha">
+      <div className="flex flex-wrap items-center gap-sm">
         <Botao onClick={copiar}>Copiar link</Botao>
-        <p className="compartilhar-frase">{frase}</p>
+        <p className="m-0 flex-[1_1_14rem] leading-nota">{frase}</p>
       </div>
-      {aviso && <p className="compartilhar-aviso">{aviso}</p>}
-      <p role="status" className="compartilhar-status">
+      {aviso && <p className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2">{aviso}</p>}
+      <p role="status" className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2 empty:m-0">
         {copia.tipo === 'copiado'
           ? 'Link copiado.'
           : copia.tipo === 'falhou'
@@ -64,8 +63,8 @@ export function Compartilhar({
             : ''}
       </p>
       {copia.tipo === 'falhou' && (
-        <input
-          className="campo compartilhar-campo"
+        <Input
+          className="mt-xs w-full text-nota font-normal"
           readOnly
           value={copia.link}
           aria-label="Link para copiar"
@@ -73,7 +72,7 @@ export function Compartilhar({
           autoFocus
         />
       )}
-    </section>
+    </Secao>
   )
 }
 

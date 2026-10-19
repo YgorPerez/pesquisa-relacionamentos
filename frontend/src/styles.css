@@ -1,75 +1,97 @@
 /* A base do site no sistema do DESIGN.md: papel frio, tinta, uma coluna,
- * celular primeiro. Cada componente traz o próprio CSS ao lado dele. */
+ * celular primeiro. Os componentes se vestem com as classes do Tailwind, e o
+ * tema são os tokens do DESIGN.md (`ui/tokens.css`). O que o Tailwind não
+ * cobre mora em `ui/desenhos.css`, com o porquê de cada um.
+ *
+ * Sem o preflight do Tailwind: ele zera as margens, as listas e os títulos
+ * do navegador, e a base do site sempre foi a do navegador com os retoques
+ * de baixo. Com ele, o visual mudava. */
 
+/* A ordem das camadas, como no `tailwindcss/index.css`: a utilidade ganha
+ * da base e dos desenhos. */
+@layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'shadcn/tailwind.css';
 @import './ui/fontes.css';
 @import './ui/tokens.css';
+@import './ui/desenhos.css';
 @import './ui/componentes.css';
 @import './ui/fichas.css';
 @import './ui/guias.css';
-@import './ui/navegacao.css';
-@import './ui/perfil.css';
 @import './ui/grupo-possivel.css';
 @import './ui/prioridades.css';
-@import './ui/compartilhar.css';
-@import './ui/contagem.css';
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* O `hover:` do Tailwind só vale onde há mouse (`@media (hover: hover)`). O
+ * do site vale também no toque, como sempre valeu. */
+@custom-variant hover (&:hover);
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 16px;
-  -webkit-text-size-adjust: 100%;
-}
+/* O celular estreito, onde o achado põe o número em cima do texto. */
+@custom-variant estreito (@media (max-width: 420px));
 
-@media (prefers-reduced-motion: reduce) {
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
+    scroll-padding-top: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-papel);
+    color: var(--color-tinta);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: var(--text-body--font-weight);
+    line-height: var(--text-body--line-height);
+  }
+
+  ::selection {
+    background: var(--color-amarelo-voce);
+    color: var(--color-tinta);
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: var(--traco-etiqueta);
+    text-underline-offset: 4px;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* No desktop a coluna vira uma folha com contorno sobre a retícula fina. */
+  @media (min-width: 900px) {
+    body {
+      background: var(--reticula-fundo), var(--color-papel);
+    }
   }
 }
 
-body {
-  margin: 0;
-  background: var(--color-papel);
-  color: var(--color-tinta);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  font-weight: var(--text-body--font-weight);
-  line-height: var(--text-body--line-height);
-}
-
-::selection {
-  background: var(--color-amarelo-voce);
-  color: var(--color-tinta);
-}
-
-a {
-  color: inherit;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-}
-
-:focus-visible {
-  outline: 3px solid var(--color-tinta);
-  outline-offset: 3px;
-  border-radius: 4px;
-  box-shadow: 0 0 0 7px var(--color-amarelo-voce);
-}
-
-button {
-  font: inherit;
-  color: inherit;
-}
-
-/* No desktop a coluna vira uma folha com contorno sobre a retícula fina. */
-@media (min-width: 900px) {
-  body {
-    background: var(--reticula-fundo), var(--color-papel);
+/* O foco de todo controle: contorno de 3px em tinta e o anel amarelo por
+ * fora. Depois das utilidades, na mesma camada: ganha de uma classe do
+ * mesmo peso (o `rounded-mao` do botão vira o canto de 4px no foco, como
+ * sempre foi), e perde para quem pede o foco com mais força
+ * (`focus:outline-none`). */
+@layer utilities {
+  :focus-visible {
+    outline: 3px solid var(--color-tinta);
+    outline-offset: 3px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-foco);
   }
 }

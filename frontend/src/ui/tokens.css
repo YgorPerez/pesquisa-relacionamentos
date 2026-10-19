@@ -73,7 +73,11 @@
   --text-grande: 18px;
   --text-linha: 19px;
   --text-nivel: 21px;
+  /* O `display` menor, da Ficha e da Dica: só o tamanho muda. */
   --text-display-ficha: clamp(29px, 7.4vw, 42px);
+  --text-display-ficha--font-weight: 700;
+  --text-display-ficha--line-height: 1.06;
+  --text-display-ficha--letter-spacing: -0.022em;
   --text-frase-do-cartao: clamp(20px, 5.4vw, 24px);
 
   /* As entrelinhas sem unidade. O `leading-<número>` do Tailwind é da escala
@@ -114,6 +118,8 @@
   --spacing-rodape: 56px;
   /* O alvo de toque mínimo (DESIGN.md, Do's and Don'ts). */
   --spacing-toque: 44px;
+  /* O recuo de uma lista numerada ou com bolinha. */
+  --spacing-marcador: 1.3em;
 
   /* A coluna da página e a medida do texto. */
   --container-pagina: 46rem;
@@ -128,6 +134,9 @@
   --shadow-foco: 0 0 0 7px var(--color-amarelo-voce);
 
   --ease-sai: cubic-bezier(0.16, 1, 0.3, 1);
+  /* O `ease-out` do CSS, e não a curva mais seca do Tailwind: o polegar da
+   * chave anda nele. */
+  --ease-out: ease-out;
 
   /* A única elevação: retícula fina de pontos em tinta a 62%, deslocada
    * atrás do contorno (The Halftone Rule). Quem a desenha é a `@utility

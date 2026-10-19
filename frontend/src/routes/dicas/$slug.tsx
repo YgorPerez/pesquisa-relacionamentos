@@ -2,6 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarDica } from '#/conteudo/guias'
 import { FichasCitadas, LinhaDePergunta } from '#/ui/guia'
 import { ForcaDaEvidencia } from '#/ui/selos'
+import { LinkDeVoltar } from '#/ui/navegacao'
+import { Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/$slug')({
   loader: ({ params }) => buscarDica({ data: params.slug }),
@@ -21,83 +23,68 @@ function PaginaDaDica() {
   const dica = Route.useLoaderData()
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <Link to="/dicas" className="voltar">
-          <svg
-            width="22"
-            height="14"
-            viewBox="0 0 22 14"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
-          </svg>
-          Todas as Dicas
-        </Link>
+    <Folha>
+      <Coluna>
+        <LinkDeVoltar to="/dicas">Todas as Dicas</LinkDeVoltar>
 
-        <h1 className="display display-ficha">{dica.texto}</h1>
+        <Display ficha>{dica.texto}</Display>
 
         <section
-          className="painel com-reticula dica"
+          className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0"
           aria-label="Quanto a evidência pesa"
         >
-          <div className="dica-meta dica-meta-topo">
+          <div className="mt-0 flex flex-wrap items-center gap-x-4 gap-y-1">
             <ForcaDaEvidencia forca={dica.forca} rotulo />
           </div>
           {dica.inferencia && (
-            <p className="inferencia">
+            <p className="mt-1 mb-0 text-nota text-tinta-2 italic">
               Inferência nossa: nenhum estudo testou isso direto. Saiu das
               Fichas citadas.
             </p>
           )}
-          <p className="vale">
-            <b>Vale para:</b> {dica.valePara}
+          <p className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2">
+            <b className="text-tinta">Vale para:</b> {dica.valePara}
           </p>
         </section>
 
-        <section className="secao" aria-labelledby="t-guias">
-          <h2 id="t-guias" className="headline">
+        <Secao aria-labelledby="t-guias">
+          <Headline id="t-guias">
             Aparece nos Guias
-          </h2>
+          </Headline>
           {dica.guias.length === 0 ? (
-            <p className="secundario">Nenhum Guia traz esta Dica ainda.</p>
+            <p className="text-tinta-2">Nenhum Guia traz esta Dica ainda.</p>
           ) : (
-            <ul className="linhas-pergunta">
+            <ul className="isolate m-0 list-none p-0">
               {dica.guias.map((guia) => (
-                <li key={guia.slug}>
+                <li key={guia.slug} className="not-first:mt-md">
                   <LinhaDePergunta guia={guia} />
                 </li>
               ))}
             </ul>
           )}
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="t-fichas">
-          <h2 id="t-fichas" className="headline">
+        <Secao aria-labelledby="t-fichas">
+          <Headline id="t-fichas">
             Fichas citadas
-          </h2>
+          </Headline>
           <FichasCitadas fichas={dica.fichas} />
-        </section>
-      </div>
-    </main>
+        </Secao>
+      </Coluna>
+    </Folha>
   )
 }
 
 function DicaNaoExiste() {
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">Essa Dica não está no ar</h1>
-        <p className="lead">
+    <Folha>
+      <Coluna>
+        <Display>Essa Dica não está no ar</Display>
+        <Lead>
           O endereço pode ter mudado, ou a Dica ainda espera os estudos serem
           conferidos. <Link to="/dicas">Veja as Dicas publicadas</Link>.
-        </p>
-      </div>
-    </main>
+        </Lead>
+      </Coluna>
+    </Folha>
   )
 }

@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ChaveDaContagem } from '#/ui/contagem'
+import { Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
 
 export const Route = createFileRoute('/privacidade')({
   head: () => ({
@@ -19,18 +20,18 @@ export const Route = createFileRoute('/privacidade')({
  * os do deploy (`docs/deploy.md`) e da ADR 0001. */
 function Privacidade() {
   return (
-    <main className="folha privacidade">
-      <div className="coluna">
-        <h1 className="display">Privacidade</h1>
-        <p className="lead">
+    <Folha>
+      <Coluna>
+        <Display>Privacidade</Display>
+        <Lead>
           O site não tem conta nem login. O que você diz sobre você fica no seu
           aparelho, e a gente conta as visitas sem saber quem você é.
-        </p>
+        </Lead>
 
-        <section className="secao prosa" aria-labelledby="p-aparelho">
-          <h2 id="p-aparelho" className="headline">
+        <Secao className="prosa" aria-labelledby="p-aparelho">
+          <Headline id="p-aparelho">
             O que fica no seu aparelho
-          </h2>
+          </Headline>
           <p>
             O Perfil (seu gênero, quem você procura e sua idade), os Requisitos
             do Grupo possível, o seu topo 3 em Prioridades e a escolha de ser
@@ -43,12 +44,12 @@ function Privacidade() {
             navegador. Outra pessoa que use o mesmo navegador vê o que ficou
             salvo.
           </p>
-        </section>
+        </Secao>
 
-        <section className="secao prosa" aria-labelledby="p-link">
-          <h2 id="p-link" className="headline">
+        <Secao className="prosa" aria-labelledby="p-link">
+          <Headline id="p-link">
             O que vai no link
-          </h2>
+          </Headline>
           <p>
             Só quando você toca em “Copiar link” numa calculadora. O link leva o
             que a conta usa: o Perfil e os Requisitos, ou o topo 3 e o desfecho.
@@ -63,12 +64,12 @@ function Privacidade() {
             Guia não leva nada seu, e a escolha de não ser contado nunca vai num
             link.
           </p>
-        </section>
+        </Secao>
 
-        <section className="secao prosa" aria-labelledby="p-servidor">
-          <h2 id="p-servidor" className="headline">
+        <Secao className="prosa" aria-labelledby="p-servidor">
+          <Headline id="p-servidor">
             O que o servidor anota
-          </h2>
+          </Headline>
           <p>
             Como todo site, o servidor anota cada pedido: o endereço IP, a hora,
             a página sem nada depois do “?”, a resposta e quanto tempo levou.
@@ -81,12 +82,12 @@ function Privacidade() {
             depois de 3 dias. O programa do site anota só a página, a resposta e
             o tempo, sem IP, e escreve por cima das linhas mais antigas.
           </p>
-        </section>
+        </Secao>
 
-        <section className="secao prosa" aria-labelledby="p-contagem">
-          <h2 id="p-contagem" className="headline">
+        <Secao className="prosa" aria-labelledby="p-contagem">
+          <Headline id="p-contagem">
             O que a contagem de visitas guarda
-          </h2>
+          </Headline>
           <p>
             A contagem usa o GoatCounter, que roda no nosso próprio servidor, em
             stats.temestudo.com. Nenhuma empresa de fora recebe esses dados. Ela
@@ -111,21 +112,21 @@ function Privacidade() {
             página a outra. Tudo o que tem mais de 31 dias é apagado. A base é o
             legítimo interesse (LGPD, art. 7º, IX): saber se os Guias ajudam.
           </p>
-        </section>
+        </Secao>
 
-        <section className="secao prosa" aria-labelledby="p-nao-contar">
-          <h2 id="p-nao-contar" className="headline">
+        <Secao className="prosa" aria-labelledby="p-nao-contar">
+          <Headline id="p-nao-contar">
             Não ser contado
-          </h2>
+          </Headline>
           <p>
             Se o seu navegador pede para não ser rastreado (Global Privacy
             Control ou Do Not Track), a contagem nem carrega. Você também pode
             desligar aqui ou no rodapé de qualquer página. A escolha fica no seu
             aparelho, e abrir um link não a desfaz.
           </p>
-          <ChaveDaContagem />
-        </section>
-      </div>
-    </main>
+          <ChaveDaContagem className="mt-sm" />
+        </Secao>
+      </Coluna>
+    </Folha>
   )
 }

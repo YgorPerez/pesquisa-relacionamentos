@@ -10,6 +10,8 @@ import { defineConfig } from 'vite-plus'
 const FORA = [
   // Gerado pelo TanStack Router a cada build.
   'frontend/src/routeTree.gen.ts',
+  // Gerado pelo `cn build` (`pnpm cn:tabelas`) a partir do `@theme`.
+  'frontend/src/platform/cn-tabelas.js',
   'frontend/.output/**',
   'frontend/.nitro/**',
   'frontend/.tanstack/**',
@@ -89,7 +91,16 @@ export default defineConfig({
       // `vite-plus/prefer-vite-plus-imports`: o Vitest e o Vite vêm do Vite+.
       { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },
       './frontend/lint/estado.ts',
+      // O design system: as classes do Tailwind contra o tema de
+      // `frontend/src/ui/tokens.css` e os componentes de `src/ui/shadcn/`,
+      // achados pelo `frontend/components.json` (ADR do #54).
+      '@shadcn/lint',
     ],
+    settings: {
+      shadcn: {
+        note: 'Os tokens e as peças estão no DESIGN.md; o tema é frontend/src/ui/tokens.css.',
+      },
+    },
     rules: {
       'vite-plus/prefer-vite-plus-imports': 'error',
       // As regras de hooks e as 22 do React Compiler (ADR 0003). A categoria
@@ -113,6 +124,32 @@ export default defineConfig({
         files: ['frontend/src/**'],
         excludeFiles: ['frontend/src/estado/armazenado.ts'],
         rules: { 'estado/localstorage-pelo-armazenado': 'error' },
+      },
+      {
+        // As classes do app contra o design system, como no `eslint.config.js`
+        // do Festival. `ui/shadcn/` é onde o design system se desenha: lá a
+        // classe é a definição da variante, e não um retoque dela.
+        files: ['frontend/src/**'],
+        excludeFiles: ['frontend/src/ui/shadcn/**'],
+        rules: {
+          'shadcn/no-unknown-classes': 'error',
+          'shadcn/no-raw-colors': 'error',
+          'shadcn/require-static-classes': 'error',
+          'shadcn/no-arbitrary-values': [
+            'error',
+            {
+              // `layout`: largura, altura, posição e margem medidas para uma
+              // tela não são token. `transition`: quais propriedades se movem
+              // é escolha do componente.
+              allow: ['layout', 'transition'],
+            },
+          ],
+          'shadcn/no-restyle': [
+            'error',
+            // O lugar é de quem usa: margem, largura, altura, posição.
+            { allow: ['layout'] },
+          ],
+        },
       },
       {
         // Os diagnósticos do Effect, pelo patch do `@effect/tsgo` (ADR 0004).

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarTema } from '#/conteudo/guias'
 import { ConfiancaCurta, Html } from '#/ui/guia'
+import { Coluna, Display, Folha, Headline, Lead } from '#/ui/pagina'
 
 export const Route = createFileRoute('/$tema/')({
   loader: ({ params }) => buscarTema({ data: params.tema }),
@@ -20,28 +21,29 @@ function PaginaDoTema() {
   const tema = Route.useLoaderData()
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">{tema.titulo}</h1>
-        <Html className="lead contexto prosa" html={tema.contextoHtml} />
+    <Folha>
+      <Coluna>
+        <Display>{tema.titulo}</Display>
+        <Html className="prosa m-0 text-lead" html={tema.contextoHtml} />
 
-        <ol className="perguntas">
+        <ol className="m-0 list-none p-0" data-slot="perguntas">
           {tema.guias.map((guia) => (
-            <li key={guia.slug} className="secao pergunta-do-tema">
-              <h2 className="headline">
+            <li key={guia.slug} className="regua mt-secao pt-5">
+              <Headline>
                 <Link
                   to="/$tema/$slug"
                   params={{ tema: guia.tema, slug: guia.slug }}
+                  className="decoration-2 underline-offset-5 hover:bg-amarelo-voce"
                 >
                   {guia.pergunta}
                 </Link>
-              </h2>
-              <ConfiancaCurta confianca={guia.confianca} />
-              <Html className="prosa" html={guia.respostaHtml} />
+              </Headline>
+              <ConfiancaCurta confianca={guia.confianca} className="mb-2.5" />
+              <Html className="prosa mt-2.5" html={guia.respostaHtml} />
               <Link
                 to="/$tema/$slug"
                 params={{ tema: guia.tema, slug: guia.slug }}
-                className="voltar ler-guia"
+                className="mt-1 inline-flex min-h-toque items-center gap-2 font-label text-aviso font-bold no-underline hover:underline"
                 aria-label={`Ler o Guia: ${guia.pergunta}`}
               >
                 Ler o Guia
@@ -62,21 +64,21 @@ function PaginaDoTema() {
             </li>
           ))}
         </ol>
-      </div>
-    </main>
+      </Coluna>
+    </Folha>
   )
 }
 
 function TemaNaoExiste() {
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">Essa página não existe</h1>
-        <p className="lead">
+    <Folha>
+      <Coluna>
+        <Display>Essa página não existe</Display>
+        <Lead>
           O endereço pode ter mudado.{' '}
           <Link to="/">Veja os Temas na página inicial</Link>.
-        </p>
-      </div>
-    </main>
+        </Lead>
+      </Coluna>
+    </Folha>
   )
 }

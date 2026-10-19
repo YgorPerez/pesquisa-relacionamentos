@@ -179,51 +179,6 @@
   white-space: nowrap;
 }
 
-.prosa > :first-child {
-  margin-top: 0;
-}
-
-.prosa > :last-child {
-  margin-bottom: 0;
-}
-
-.prosa p,
-.prosa ul,
-.prosa ol {
-  margin: 0 0 var(--spacing-sm);
-}
-
-.prosa ul,
-.prosa ol {
-  padding-left: 1.3em;
-}
-
-.prosa li + li {
-  margin-top: var(--spacing-xs);
-}
-
-.prosa a {
-  overflow-wrap: anywhere;
-}
-
-/* Tabelas que sobraram nas seções extras rolam dentro delas, não a página. */
-.prosa table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-  border-collapse: collapse;
-  font-size: 15px;
-  margin: 0 0 var(--spacing-sm);
-}
-
-.prosa th,
-.prosa td {
-  text-align: left;
-  vertical-align: top;
-  padding: 6px 10px 6px 0;
-  border-bottom: 1.5px dotted var(--color-tinta);
-}
-
 /* ---------- achados ---------- */
 .achados {
   list-style: none;
@@ -280,29 +235,6 @@
   .achado-valor {
     max-width: none;
   }
-}
-
-/* ---------- limitações: traço curto desenhado como marcador ---------- */
-.limites ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.limites li {
-  position: relative;
-  padding-left: 28px;
-}
-
-.limites li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 18px;
-  height: 12px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='none' stroke='%231a1c1c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M2 6.6C6 5.6 11 6.2 16 5.4'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  transform: translateY(-50%);
 }
 
 /* ---------- legenda ---------- */
