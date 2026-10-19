@@ -5,6 +5,11 @@
 // não vale para uma pasta sai por `overrides`, com o motivo.
 import { recommended as effectRecomendado } from '@effect/tsgo/oxlint-presets'
 import { defineConfig } from 'vite-plus'
+import { workersDoVitest } from './scripts/fila-da-maquina.ts'
+
+// A rodada entra na fila da máquina antes de começar e leva os workers que
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0010).
+const workers = await workersDoVitest()
 
 /** O que não é código nosso, ou é texto que o build lê byte a byte. */
 const FORA = [
@@ -33,14 +38,19 @@ const FORA = [
   // Vendorizado: as skills de terceiros e o que o `impeccable` gera.
   '.claude/skills/unslop/**',
   '.claude/skills/grilling/**',
+  '.agents/**',
+  'skills-lock.json',
   '.impeccable/**',
   '.claude/worktrees/**',
+  // O código do Effect que os agentes leem (ADR 0009).
+  '.repos/**',
 ]
 
 export default defineConfig({
   // Os testes dos scripts da raiz (`pnpm conferir`, o pipeline dos dados, o
   // gancho do Claude Code). Cada pacote tem o `test` dele.
   test: {
+    ...(workers ? { maxWorkers: workers } : {}),
     include: ['scripts/**/*.test.ts'],
     environment: 'node',
     coverage: {

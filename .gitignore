@@ -16,6 +16,10 @@
 # O monorepo pnpm (frontend/, packages/).
 node_modules/
 
+# O código do Effect para os agentes lerem (`scripts/sincronizar-referencias.ts`,
+# ADR 0009): um clone raso que o script refaz quando a versão muda.
+.repos/
+
 # O que o `pnpm check` deixa: a cobertura de cada pacote, que a `fallow
 # health` lê, e o cache da fallow.
 coverage/
