@@ -29,8 +29,11 @@ export default defineConfig({
     // Celular primeiro: o Pixel 7 tem 412px de largura e toque.
     { name: 'celular', use: { ...devices['Pixel 7'], channel: 'chrome' } },
   ],
+  // O build do e2e lê o conteúdo de fixture (`e2e/acervo`), com uma Ficha de
+  // cada Status, e não o acervo do repositório. Rode `pnpm build` de novo
+  // antes de `pnpm start` com o conteúdo de verdade.
   webServer: {
-    command: `pnpm build && PORT=${porta} node .output/server/index.mjs`,
+    command: `CONTEUDO_RAIZ=e2e/acervo pnpm build && PORT=${porta} node .output/server/index.mjs`,
     url: `http://localhost:${porta}/`,
     reuseExistingServer: false,
     stdout: 'ignore',

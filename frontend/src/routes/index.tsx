@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: Inicio,
@@ -45,6 +45,7 @@ function Inicio() {
         <footer className="rodape">
           <p>
             Os Guias entram no ar quando os estudos que os sustentam forem conferidos na fonte.
+            Enquanto isso, <Link to="/estudos">veja os estudos do acervo</Link>.
           </p>
         </footer>
       </div>
