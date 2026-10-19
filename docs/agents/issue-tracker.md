@@ -9,7 +9,18 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 - **List issues**: `gh issue list --state open --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'` with appropriate `--label` and `--state` filters.
 - **Comment on an issue**: `gh issue comment <number> --body "..."`
 - **Apply / remove labels**: `gh issue edit <number> --add-label "..."` / `--remove-label "..."`
-- **Close**: `gh issue close <number> --comment "..."`
+- **Close**: `gh issue close <number> --comment "..."`. A ticket with code closes through its pull request (below), not by hand on its own.
+
+## Closing a ticket through its pull request
+
+A ticket that changes code enters through a pull request (ADR 0025, `docs/agents/integracao.md`, "O pull request" and "O merge"):
+
+1. The branch `ticket/<n>-<name>` opens a PR against its spec branch (`spec/<n>-<name>`), or against `main` for a ticket outside a spec, following `.github/pull_request_template.md`, with `Closes #<n>` in the body.
+2. The PR merges only when every check on its last commit is green and no comment is left unanswered: `gh pr merge <pr> --merge`, no squash.
+3. GitHub closes the issue by itself only when the PR targets `main`. For a PR into `spec/*`, whoever merged it closes the issue: `gh issue close <n> --comment "Entrou em spec/<n> por #<pr>."`.
+4. The spec's own PR into `main` carries `Closes #<spec>`.
+
+A ticket with no code to merge (`research`, `grilling`, a throwaway `prototype`) still closes with a comment, as in **Resolve** below.
 
 The repo is `YgorPerez/pesquisa-relacionamentos` (`gh` infers it from `git remote -v`). **Always authenticate as the YgorPerez account, never ygor-infotera:** run `export GH_TOKEN=$(gh auth token --user YgorPerez)` before any `gh` call.
 
@@ -42,4 +53,4 @@ Used by `/wayfinder`. The **map** is a single issue with **child** issues as tic
 - **Blocking**: GitHub's **native issue dependencies**, the canonical, UI-visible representation. Add an edge with `gh api --method POST repos/YgorPerez/pesquisa-relacionamentos/issues/<child>/dependencies/blocked_by -F issue_id=<blocker-db-id>`, where `<blocker-db-id>` is the blocker's numeric **database id** (`gh api repos/YgorPerez/pesquisa-relacionamentos/issues/<n> --jq .id`, _not_ the `#number` or `node_id`). GitHub reports `issue_dependencies_summary.blocked_by` (open blockers only, the live gate). Where dependencies aren't available, fall back to a `Blocked by: #<n>, #<n>` line at the top of the child body. A ticket is unblocked when every blocker is closed.
 - **Frontier query**: list the map's open children (`gh issue list --state open`, scoped to the map's sub-issues / task list), drop any with an open blocker (`issue_dependencies_summary.blocked_by > 0`, or an open issue in the `Blocked by` line) or an assignee; first in map order wins.
 - **Claim**: `gh issue edit <n> --add-assignee @me`, the session's first write.
-- **Resolve**: `gh issue comment <n> --body "<answer>"`, then `gh issue close <n>`, then append a context pointer (gist + link) to the map's Decisions-so-far.
+- **Resolve**: a ticket with code resolves when its PR merges (**Closing a ticket through its pull request** above); the pointer links the PR. Any other ticket: `gh issue comment <n> --body "<answer>"`, then `gh issue close <n>`. Either way, append a context pointer (gist + link) to the map's Decisions-so-far.

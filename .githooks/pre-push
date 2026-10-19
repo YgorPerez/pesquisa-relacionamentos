@@ -1,0 +1,27 @@
+#!/bin/sh
+# O portão de push (docs/agents/integracao.md, ADR 0020), do Festival dos
+# Macacos. O git roda isto na raiz da worktree. Só `node`, sem pnpm: quem roda
+# o pnpm é o `scripts/verificar-push.ts`. `git push --no-verify` pula este
+# hook.
+#
+# O `core.hooksPath` pode nomear o `.githooks/` de outra worktree: o Claude
+# Code grava o caminho absoluto do checkout principal ao criar a worktree de
+# um agente. Então este passa a vez ao `.githooks/pre-push` da worktree que
+# faz o push, se ele existe e é outro arquivo. A variável impede a volta.
+if [ -z "$TEM_ESTUDO_PRE_PUSH_REPASSADO" ]; then
+  raiz=$(git rev-parse --show-toplevel) || exit 1
+  daqui=$(cd -P "$(dirname "$0")" && pwd)
+  dela=$(cd -P "$raiz/.githooks" 2>/dev/null && pwd)
+  if [ -f "$raiz/.githooks/pre-push" ] && [ "$daqui" != "$dela" ]; then
+    TEM_ESTUDO_PRE_PUSH_REPASSADO=1
+    export TEM_ESTUDO_PRE_PUSH_REPASSADO
+    exec sh "$raiz/.githooks/pre-push" "$@"
+  fi
+  # Uma worktree sem o hook (um ramo de antes dele) não tem o script.
+  if [ ! -f "$raiz/scripts/verificar-push.ts" ]; then
+    echo "[pre-push] $raiz não tem scripts/verificar-push.ts: nada a conferir." >&2
+    exit 0
+  fi
+fi
+unset TEM_ESTUDO_PRE_PUSH_REPASSADO
+exec node scripts/verificar-push.ts "$@"

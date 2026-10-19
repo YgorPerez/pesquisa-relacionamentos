@@ -1,5 +1,7 @@
 # Pesquisa: relacionamentos, apps de namoro e onde conhecer pessoas
 
+![fallow health](docs/badges/fallow.svg) ![react doctor](docs/badges/react-doctor.svg) ![cobertura](docs/badges/cobertura.svg)
+
 Documentação pessoal de estudos sobre como casais se conhecem, a qualidade e a duração dessas relações e o que funciona para conhecer alguém, com foco em um homem de 21 anos no Brasil.
 
 A regra é simples: **cada afirmação aponta para a fonte primária que a sustenta**, e cada estudo diz até que ponto foi conferido.

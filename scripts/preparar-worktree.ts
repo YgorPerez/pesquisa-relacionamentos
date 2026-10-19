@@ -14,7 +14,8 @@
 //    VPS, e um worktree de agente não ganha isso de graça.
 // 3. Sincroniza o código do Effect em `.repos/` (ADR 0012) a partir da cópia
 //    do principal, sem baixar de novo.
-// 4. Busca o `origin/main` e diz quantos commits o HEAD está atrás dele. Um
+// 4. Liga o hook de push (`instalar-hooks.ts`).
+// 5. Busca o `origin/main` e diz quantos commits o HEAD está atrás dele. Um
 //    worktree nasce de um ramo local, que pode estar dias atrás.
 //
 // Pode rodar de novo quantas vezes quiser. Roda no `node` puro, que lê
@@ -33,6 +34,7 @@ import {
   symlinkSync,
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
+import { instalarHooks } from './instalar-hooks.ts'
 import { portaDoCheckout, RAIZ } from './portas.ts'
 
 /** O que o principal tem, o git não leva, e o worktree precisa. */
@@ -205,6 +207,9 @@ if (import.meta.main) {
   }
 
   sincronizarReferencias(noPrincipal ? null : principal)
+  // O hook de push: auditoria e testes afetados (ADR 0020). Um
+  // `core.hooksPath` de outro lugar fica, com o aviso.
+  dizer(instalarHooks(RAIZ).texto)
   for (const linha of atrasoDoMain(RAIZ)) dizer(linha)
   dizer(
     `Pronto. \`pnpm dev\` sobe em http://localhost:${portaDoCheckout('dev')}; ` +
