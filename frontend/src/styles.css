@@ -6,6 +6,7 @@
 @import './ui/componentes.css';
 @import './ui/fichas.css';
 @import './ui/guias.css';
+@import './ui/perfil.css';
 
 *,
 *::before,

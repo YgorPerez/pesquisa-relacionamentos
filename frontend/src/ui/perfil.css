@@ -1,0 +1,206 @@
+/* O Perfil na página (DESIGN.md, "Perfil: destacar sem esconder" e "Opções
+ * do Perfil"). Amarelo só para o que vale para você; "não há dado" é anel
+ * vazio em tinta, sem rosa (The Three Inks Rule). */
+
+/* ---------- link abaixo da resposta curta: sublinhado tracejado ---------- */
+.link-perfil {
+  display: inline-block;
+  min-height: var(--alvo-de-toque);
+  padding: 12px 0 4px;
+  margin: 0 0 var(--espaco-xs);
+  font-family: var(--tipo-label-familia);
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: underline dashed 2px;
+  text-underline-offset: 5px;
+}
+
+.link-perfil small {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cor-tinta-2);
+}
+
+/* ---------- aviso tracejado acima do título ---------- */
+.aviso-perfil {
+  margin: var(--espaco-md) 0 0;
+}
+
+/* ---------- selo "vale para você" ---------- */
+.selo-voce {
+  display: inline-block;
+  margin: 6px 8px 0 0;
+  padding: 1px 8px;
+  font-family: var(--tipo-label-familia);
+  font-size: var(--tipo-label-tamanho);
+  font-weight: 700;
+  line-height: var(--tipo-label-altura);
+  color: var(--cor-tinta);
+  background: var(--cor-amarelo-voce);
+  border-radius: var(--raio-mao-2);
+}
+
+/* ---------- não há dado: anel vazio antes, frase em negrito no fim ---------- */
+.anel-vazio {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: var(--raio-bolota);
+}
+
+.vale-sem-dado strong {
+  color: var(--cor-tinta);
+}
+
+/* ---------- "Para o seu Perfil" abaixo da resposta curta ---------- */
+.para-o-seu-perfil {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1.5px dotted var(--cor-tinta);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+.para-o-seu-perfil .selo-voce {
+  margin-top: 0;
+}
+
+/* ---------- caixa do Perfil ---------- */
+.caixa-perfil {
+  margin-top: var(--espaco-md);
+  padding: 16px;
+  background: var(--cor-folha);
+  border: var(--traco-painel) solid var(--cor-tinta);
+  border-radius: var(--raio-mao-2);
+}
+
+.perfil-campo {
+  margin: 0 0 var(--espaco-sm);
+  padding: 0;
+  border: 0;
+}
+
+.perfil-campo legend,
+.perfil-rotulo {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+  font-weight: 700;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* O rádio fica invisível por cima da opção inteira. */
+.opcao {
+  position: relative;
+  cursor: pointer;
+}
+
+.opcao input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.opcao span {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  padding: 10px 16px;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: var(--raio-mao);
+  background: var(--cor-papel);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.opcao input:checked + span {
+  background: var(--cor-amarelo-voce);
+}
+
+.opcao input:focus-visible + span {
+  outline: 3px solid var(--cor-tinta);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--cor-amarelo-voce);
+}
+
+.perfil-idade {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.campo {
+  width: 6.5rem;
+  min-height: var(--alvo-de-toque);
+  padding: 6px 10px;
+  border: var(--traco-controle) solid var(--cor-tinta);
+  border-radius: var(--raio-mao-2);
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: var(--tipo-body-familia);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.perfil-dica,
+.perfil-privado {
+  font-size: var(--tipo-label-tamanho);
+  color: var(--cor-tinta-2);
+}
+
+.perfil-privado {
+  margin: var(--espaco-sm) 0 0;
+}
+
+.perfil-erro {
+  margin: 0 0 var(--espaco-sm);
+  font-weight: 700;
+}
+
+.perfil-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.perfil-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.perfil-resumo p {
+  margin: 0;
+}
+
+.perfil-resumo b {
+  padding: 0 3px;
+  background: var(--cor-amarelo-voce);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.perfil-contagem {
+  margin: var(--espaco-sm) 0 0;
+  padding-top: 10px;
+  border-top: 1.5px dotted var(--cor-tinta);
+  font-size: 15.5px;
+  font-weight: 700;
+}
