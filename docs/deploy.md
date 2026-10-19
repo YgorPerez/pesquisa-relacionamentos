@@ -2,14 +2,16 @@
 
 O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.com. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O único banco é o SQLite do GoatCounter, fora do app.
 
-| Peça                                               | Onde                                                                                                             |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Imagem                                             | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`)                                                |
-| Formato do log, vhosts, TLS e rotação              | `frontend/nginx/log-sem-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
-| Troca blue/green, volta e contêiner do GoatCounter | `frontend/scripts/vps.ts`                                                                                        |
-| Preparação da VPS, uma vez                         | `frontend/scripts/preparar-vps.sh`                                                                               |
-| Passos do mantenedor                               | `frontend/scripts/wizard-deploy.sh`                                                                              |
-| Workflow                                           | `.github/workflows/deploy.yml`                                                                                   |
+| Peça                                                           | Onde                                                                                                             |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Imagem                                                         | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`)                                                |
+| Formato do log, vhosts, TLS e rotação                          | `frontend/nginx/log-sem-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
+| Etapas e scripts da VPS (troca blue/green, volta, GoatCounter) | `frontend/scripts/plano-do-deploy.ts` ([ADR 0007](adr/0007-o-plano-do-deploy-fica-separado-do-ssh.md))           |
+| Execução pelo SSH, com o tempo de cada etapa                   | `frontend/scripts/vps.ts`, `cronometro.ts` ([ADR 0009](adr/0009-o-log-do-deploy-diz-o-tempo-de-cada-etapa.md))   |
+| Conferência de fora                                            | `frontend/scripts/conferir-no-ar.ts` ([ADR 0008](adr/0008-o-deploy-confere-os-assets-de-fora.md))                |
+| Preparação da VPS, uma vez                                     | `frontend/scripts/preparar-vps.sh`                                                                               |
+| Passos do mantenedor                                           | `frontend/scripts/wizard-deploy.sh`                                                                              |
+| Workflow                                                       | `.github/workflows/deploy.yml`                                                                                   |
 
 ## Antes do primeiro deploy
 
@@ -46,9 +48,11 @@ Cada push na `main` que mexe no site (`frontend/`, `packages/`, o conteúdo, o l
    - instala o vhost, o TLS e a rotação, e reescreve o include `/etc/nginx/temestudo/temestudo-app.conf` com a porta nova;
    - roda `nginx -t` e recarrega o Nginx;
    - espera os workers velhos terminarem os pedidos e só então para o contêiner antigo.
-4. De fora, o job confere que `https://temestudo.com/` responde com `Referrer-Policy: strict-origin` e que o http leva ao https com a query. Se `https://stats.temestudo.com/` não responde, sai só um aviso no resumo do run.
+4. De fora, o `conferir-no-ar.ts` confere que `https://temestudo.com/` responde com `Referrer-Policy: strict-origin`, que cada `/assets/*.js` e `/assets/*.css` citado na página chega com o tipo dele, e não como HTML, e que o http leva ao https com a query. Ele tenta por até 60 s e, se não passa, o job falha. Se `https://stats.temestudo.com/` não responde, sai só um aviso no resumo do run.
 
-Se o contêiner novo não responde ou o `nginx -t` recusa a configuração, o script desfaz o que trocou, apaga o contêiner novo e sai com erro. O site fica na versão que estava. Dois deploys não correm juntos: o `concurrency` do workflow faz o segundo esperar, e na VPS um `flock` em `publicar.lock` segura a troca.
+O log do `publicar` diz quanto levou cada etapa (`[vps] Envio levou 8,1 s.`, `Imagem`, `GoatCounter`, `Troca`) e o total.
+
+Se o contêiner novo não responde ou o `nginx -t` recusa a configuração, o script desfaz o que trocou, apaga o contêiner novo e sai com erro. O site fica na versão que estava. Esses caminhos, a troca, a volta e o GoatCounter têm teste numa VPS de mentira (`vps.test.ts`, `docker-de-mentira.ts`), sem Docker, dentro do `pnpm test`. Dois deploys não correm juntos: o `concurrency` do workflow faz o segundo esperar, e na VPS um `flock` em `publicar.lock` segura a troca.
 
 Para publicar a `main` sem um push: Actions, Deploy, "Run workflow" com `voltar` vazio, ou `gh workflow run deploy.yml --ref main`.
 
@@ -115,7 +119,7 @@ A contagem de visitas roda em https://stats.temestudo.com, num contêiner própr
 - **Vhost:** `frontend/nginx/temestudo-stats.conf` sai junto com o `temestudo.conf`, com o mesmo `log_format` sem query e os mesmos arquivos de log. O bloco `:80` serve o desafio do certbot, porque o `default_server` recusa host que não conhece. O Nginx passa ao GoatCounter só o IP de quem visita, de onde ele tira o país.
 - **Certificado:** um só para `temestudo.com`, `www` e `stats`, tirado pelo `preparar-vps.sh`. Num certificado antigo sem o `stats`, rodar o script de novo acrescenta o nome (`--expand`).
 - **O que o site manda:** o envio é nosso (`frontend/src/analytics/goatcounter.ts`), e não o `count.js`, que manda sempre o `location.search` com o Perfil. Vão o caminho sem query, a referência sem query, a largura da tela e, nos eventos, o nome. Com GPC, DNT ou a chave do rodapé desligada, o arquivo nem carrega.
-- **Configuração do site no GoatCounter:** retenção de 31 dias, e só referência, tamanho de tela e país ligados (`collect` = 26, `COLETA_DO_STATS` no `vps.ts`). Sessões, região, navegador e sistema e idioma ficam desligados. Todo deploy confere as duas e, se alguém mexeu, volta ao combinado e reinicia o contêiner, porque o GoatCounter lê a configuração ao subir.
+- **Configuração do site no GoatCounter:** retenção de 31 dias, e só referência, tamanho de tela e país ligados (`collect` = 26, `COLETA_DO_STATS` no `plano-do-deploy.ts`). Sessões, região, navegador e sistema e idioma ficam desligados. Todo deploy confere as duas e, se alguém mexeu, volta ao combinado e reinicia o contêiner, porque o GoatCounter lê a configuração ao subir.
 
 ### Site e login
 

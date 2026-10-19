@@ -6,15 +6,15 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vp dev --port 4310 --strictPort",
+    "dev": "node ../scripts/dev.ts",
     "build": "vp build",
-    "start": "PORT=${PORT:-4311} node .output/server/index.mjs",
+    "start": "node ../scripts/dev.ts start",
     "typecheck": "tsc --noEmit",
     "cn:tabelas": "cn build --full --quiet --css src/styles.css -o src/platform/cn-tabelas.js",
     "test": "vp test run",
     "test:coverage": "vp test run --coverage",
     "e2e": "playwright test",
-    "storybook": "storybook dev --port 6310 --no-open",
+    "storybook": "node ../scripts/dev.ts storybook",
     "build-storybook": "storybook build",
     "test:stories": "vp test run --config vitest.stories.config.ts",
     "fallow": "fallow dead-code && fallow dupes && fallow health --coverage coverage/coverage-final.json --min-score 90",
@@ -33,7 +33,8 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "shadcn": "^4.22.1",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",

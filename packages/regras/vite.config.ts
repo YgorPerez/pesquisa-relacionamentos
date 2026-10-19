@@ -1,7 +1,13 @@
 import { defineConfig } from 'vite-plus'
+import { workersDoVitest } from '../../scripts/fila-da-maquina.ts'
+
+// A rodada entra na fila da máquina antes de começar e leva os workers que
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
+const workers = await workersDoVitest()
 
 export default defineConfig({
   test: {
+    ...(workers ? { maxWorkers: workers } : {}),
     // O piso é a cobertura de quando ele entrou (ADR 0005): sobe com ela,
     // nunca desce.
     coverage: {

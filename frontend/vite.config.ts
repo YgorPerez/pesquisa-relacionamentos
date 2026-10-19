@@ -4,8 +4,13 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, type PluginOption } from 'vite-plus'
+import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
 import { acervo } from './vite/acervo.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
+
+// A rodada entra na fila da máquina antes de começar e leva os workers que
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
+const workers = await workersDoVitest()
 
 // O Vitest só precisa do React: o Start e o nitro montam o servidor, que
 // teste de unidade nenhum usa. O app inteiro é testado pelo Playwright,
@@ -33,6 +38,7 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins,
   test: {
+    ...(workers ? { maxWorkers: workers } : {}),
     include: [
       'src/**/*.test.ts',
       'nginx/**/*.test.ts',

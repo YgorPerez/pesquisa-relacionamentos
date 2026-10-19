@@ -7,7 +7,7 @@
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm --filter frontend build",
     "start": "pnpm --filter frontend start",
-    "check": "vp check && vp run -r --cache test:coverage && vp run --filter frontend fallow && vp run --filter frontend doctor",
+    "check": "vp check && node frontend/lint/pastas.ts && vp run -r --cache test:coverage && vp run --filter frontend fallow && vp run --filter frontend doctor",
     "fmt": "vp fmt",
     "lint": "vp lint",
     "test": "vp test run && vp run --filter ./frontend --filter './packages/*' --cache test",

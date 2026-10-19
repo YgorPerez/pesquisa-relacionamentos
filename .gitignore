@@ -3,10 +3,12 @@
 # O que `npx impeccable install --project --providers=claude,codex -y` gera: a
 # skill com um binário de 23 MB de uma plataforma só, os agentes e o gancho do
 # Codex. Quem precisar roda o comando de novo (docs/agents/design.md). O gancho
-# do Claude vai para .claude/settings.local.json, que já é ignorado.
-.claude/skills/impeccable/
+# do Claude vai para .claude/settings.local.json, que já é ignorado. Sem a
+# barra no fim: num worktree, o `preparar-worktree.ts` põe aqui um link para a
+# pasta do principal, e o padrão com barra só pega pasta de verdade.
+.claude/skills/impeccable
 .claude/agents/impeccable-*
-.agents/skills/impeccable/
+.agents/skills/impeccable
 .codex/hooks.json
 .impeccable/review/
 .impeccable/critique/
@@ -16,6 +18,10 @@
 # O monorepo pnpm (frontend/, packages/).
 node_modules/
 
+# O código do Effect para os agentes lerem (`scripts/sincronizar-referencias.ts`,
+# ADR 0012): um clone raso que o script refaz quando a versão muda.
+.repos/
+
 # O que o `pnpm check` deixa: a cobertura de cada pacote, que a `fallow
 # health` lê, e o cache da fallow.
 coverage/
@@ -23,8 +29,9 @@ coverage/
 
 # A pasta privada de Fontes locais (#37): o texto completo que não tem licença
 # aberta fica só na máquina de quem escreve e de quem revisa a Ficha. A âncora
-# `/` deixa de fora as fixtures de `scripts/fixtures/conferencia/`.
-/fontes/privado/
+# `/` deixa de fora as fixtures de `scripts/fixtures/conferencia/`; sem a barra
+# no fim, o link que o `preparar-worktree.ts` põe num worktree também fica fora.
+/fontes/privado
 
 # O que o `frontend/scripts/wizard-deploy.sh` lembra entre uma rodada e outra.
 .env.deploy
