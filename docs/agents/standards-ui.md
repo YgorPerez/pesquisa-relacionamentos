@@ -2,28 +2,29 @@
 
 Como o front monta a interface. Siga ao escrever uma tela e confira a mudança contra isto ao revisar (a skill `code-review` lê este arquivo como fonte de padrões). Adaptado do `standards-ui.md` do Festival dos Macacos, que veio do revisor `ui-consistency` do t3code.
 
-O lint já recusa o `localStorage` fora do `armazenado()` (`estado/localstorage-pelo-armazenado`), e o `tokens.test.ts` confere cada token contra o `DESIGN.md`. Não repita esses achados: procure o que uma regra de lint não vê.
+O lint já recusa o `localStorage` fora do `armazenado()`, a classe que o Tailwind não conhece, a cor e o valor arbitrário fora do tema, o retoque num componente de `ui/shadcn/`, o `<h1>` fora do `Display`, a retícula fora de `src/ui/`, a cor escrita à mão e o `title` do HTML (os plugins do `vite.config.ts` da raiz, ADRs 0028 e 0029). O `tokens.test.ts` confere cada token contra o `DESIGN.md`. Não repita esses achados: procure o que uma regra de lint não vê.
 
 Ao revisar, olhe só as linhas que a mudança tocou. Não builde o projeto nem peça captura. Se o diff não deixa a violação óbvia, não há achado.
 
 ## 1. A peça compartilhada, não uma cópia dela
 
-As peças do site moram em `frontend/src/ui/`: `Botao` (variantes `principal` e `leve`), `Degraus` e `DegrausCheios`, `StatusDeVerificacao`, `ForcaDaEvidencia` e `SeloVoce`, `FichasCitadas`, a `Faixa` do Grupo possível, o `Rodape`.
+Os controles são primitivos do Base UI vestidos em `frontend/src/ui/shadcn/` (ADR 0027): `Button` (por trás do `Botao`, `principal` e `leve`, e a forma `seta`), `Toggle` (o chip), `RadioGroup`, `Checkbox`, `Switch`, `Input` e `Collapsible`. As peças de página moram em `ui/pagina.tsx` (`Folha`, `Coluna`, `Display`, `Lead`) e `ui/secao.tsx` (`Secao`, `Headline`, `Painel`, `Aviso`); as do site em `ui/`: `Degraus`, `StatusDeVerificacao`, `ForcaDaEvidencia`, `MetaDaFicha`, `SeloVoce`, `FichasCitadas`, a linha grande da Pergunta, a `Faixa` do Grupo possível, o `Rodape`.
 
-- Aponte um `<button>`, `<input>` ou `<select>` cru com cara de controle quando a peça existe.
-- Um visual que o `DESIGN.md` nomeia (o bloco "Components") é uma variante da peça, como o `Botao` faz com `principal` e `leve`. Aponte o mesmo visual escrito à mão na chamada. A correção é uma variante.
-- Não aponte o elemento cru que de propósito não é controle: um `<summary>`, a referência numerada (`.ref`), uma linha de tabela do acervo.
+- Aponte um `<button>`, `<input>`, `<select>` ou rádio cru com cara de controle quando a peça existe. O controle novo é Base UI, nunca o elemento do HTML com o estado na mão.
+- Um visual que o `DESIGN.md` nomeia (o bloco "Components") é uma variante da peça, como o `Button` faz com `principal` e `leve`. Aponte o mesmo visual escrito à mão na chamada. A correção é uma variante em `ui/shadcn/` ou na peça.
+- Não aponte o elemento cru que de propósito não é controle: a referência numerada (`.ref`), uma linha de tabela do acervo, o `<details>` do Markdown.
 
 ## 2. Os tokens do DESIGN.md, não um valor solto
 
-- Uma cor, um raio, um espaço ou uma fonte vem de uma variável de `ui/tokens.css` (`--cor-*`, `--raio-*`, `--espaco-*`, `--tipo-*`). Aponte um hex, um `rgb()` ou um tamanho fixo novo no CSS de uma peça.
-- Um valor novo ganha nome no YAML do `DESIGN.md` e em `tokens.css` na mesma mudança, nunca um valor de uma vez só.
-- Aponte um `style={{ ... }}` novo com um valor fixo. Um valor calculado em tempo de execução (a largura do laço da Ficha circulada, por exemplo) pode.
+- Uma cor, um raio, um espaço, uma fonte ou um tamanho de letra é uma classe do tema de `ui/tokens.css` (`bg-papel`, `rounded-mao`, `p-md`, `font-label`, `text-nota`). O `text-label` e os outros seis tipos do DESIGN.md já trazem entrelinha e peso: aponte o tipo usado só pelo tamanho sem a entrelinha e o peso que a peça quer.
+- Um valor novo ganha nome no YAML do `DESIGN.md` e em `tokens.css` na mesma mudança, e o `pnpm cn:tabelas` roda junto.
+- Aponte um `style={{ ... }}` novo com um valor fixo. Um valor calculado em tempo de execução (a largura de uma fatia da barra) pode.
 
-## 3. O CSS no dono
+## 3. As classes no componente, o CSS à mão só no que o Tailwind não cobre
 
-- O estilo de uma peça vai no `.css` dela, ao lado do `.tsx` (`ui/perfil.css` com `ui/perfil.tsx`). Aponte uma regra nova em `styles.css` ou em `componentes.css` para algo que só uma peça renderiza.
-- `styles.css` e `ui/componentes.css` ficam com o que vale para o site todo: a base do documento, as fontes, as classes que várias peças dividem (`.com-reticula`, `.botao`).
+- O estilo vai nas classes do próprio componente. Aponte um `.css` novo ao lado de uma peça ou uma regra nova em `styles.css`.
+- `ui/desenhos.css` guarda só o que o Tailwind não cobre (ADR 0026): os desenhos em SVG e pseudo-elemento, o HTML do Markdown do acervo e a animação do laço. Aponte uma regra lá que dava para escrever com classes.
+- O teste acha a peça pelo papel ou pelo `data-slot`, nunca por uma classe do Tailwind.
 
 ## 4. Composto, não copiado
 

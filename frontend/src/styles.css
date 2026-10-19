@@ -5,7 +5,7 @@
  *
  * Sem o preflight do Tailwind: ele zera as margens, as listas e os títulos
  * do navegador, e a base do site sempre foi a do navegador com os retoques
- * de baixo. Com ele, o visual mudava. */
+ * de baixo. Com ele, o visual mudava (ADR 0026). */
 
 /* A ordem das camadas, como no `tailwindcss/index.css`: a utilidade ganha
  * da base e dos desenhos. */

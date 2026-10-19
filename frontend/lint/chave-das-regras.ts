@@ -4,7 +4,7 @@
 // cada arquivo que o lint lê (ADR 0002). O que sobra daquele papel é o outro
 // lado da mesma pergunta, "as regras que valem são as que a gente acha que
 // valem?", e é o que este arquivo confere no `lint` do `vite.config.ts` da
-// raiz (ADR do #54):
+// raiz (ADR 0029):
 //
 // - todo plugin local de `frontend/lint/` está em `lint.jsPlugins`;
 // - toda regra de um plugin local está ligada em algum lugar, e toda regra

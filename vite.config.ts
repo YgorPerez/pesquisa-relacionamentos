@@ -112,7 +112,7 @@ export default defineConfig({
       './frontend/lint/sem-import-js.ts',
       // O design system: as classes do Tailwind contra o tema de
       // `frontend/src/ui/tokens.css` e os componentes de `src/ui/shadcn/`,
-      // achados pelo `frontend/components.json` (ADR do #54).
+      // achados pelo `frontend/components.json` (ADR 0028).
       '@shadcn/lint',
     ],
     settings: {
