@@ -13,7 +13,8 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "storybook": "storybook dev --port 6310 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:stories": "vitest run --config vitest.stories.config.ts"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.41",
@@ -33,6 +34,8 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/browser-playwright": "5.0.4",
+    "playwright": "1.64.0",
     "storybook": "^10.6.1",
     "typescript": "catalog:",
     "vite": "catalog:",

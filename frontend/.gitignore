@@ -9,3 +9,6 @@ storybook-static
 # Playwright: os artefatos de falha.
 test-results
 playwright-report
+
+# Testes das stories: as capturas de falha.
+.vitest

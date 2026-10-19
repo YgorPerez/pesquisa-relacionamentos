@@ -12,7 +12,8 @@
     "conferir": "node scripts/conferir-ficha.ts",
     "e2e": "pnpm --filter frontend e2e",
     "storybook": "pnpm --filter frontend storybook",
-    "build-storybook": "pnpm --filter frontend build-storybook"
+    "build-storybook": "pnpm --filter frontend build-storybook",
+    "test:stories": "pnpm --filter frontend test:stories"
   },
   "packageManager": "pnpm@12.10.1"
 }

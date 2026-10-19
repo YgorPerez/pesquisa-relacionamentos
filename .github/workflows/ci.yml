@@ -63,6 +63,20 @@ jobs:
       - name: Build do Storybook
         run: pnpm build-storybook
 
+      # Cada story num Chrome de verdade, no celular e no desktop
+      # (`frontend/vitest.stories.config.ts`), com o Chrome da imagem ubuntu.
+      - name: Testes das stories
+        run: pnpm test:stories
+
+      - name: Guardar capturas das stories
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: stories-falhas
+          path: frontend/.vitest/
+          if-no-files-found: ignore
+          retention-days: 14
+
       # O `playwright.config.ts` usa o Chrome da máquina (`channel: 'chrome'`),
       # e a imagem ubuntu do GitHub já traz o Google Chrome.
       - name: E2E

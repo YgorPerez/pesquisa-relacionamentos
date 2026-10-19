@@ -46,6 +46,16 @@ function comReferencias(markdown: string, numeros: Numeracao): string {
   )
 }
 
+/** Um trecho em linha com `[@slug]` e `==…==`, numerando as Fichas na ordem
+ * dada: o mesmo HTML do Guia, para a story do anel de referência. */
+export function trechoComReferencias(
+  markdown: string,
+  fichas: ReadonlyArray<{ readonly slug: string; readonly titulo: string }>,
+): string {
+  const numeros: Numeracao = new Map(fichas.map((f, i) => [f.slug, { n: i + 1, titulo: f.titulo }]))
+  return htmlEmLinha(comReferencias(markdown, numeros))
+}
+
 /** Texto em linha com as referências das Fichas da lista antes da pontuação
  * final: "por app ①." */
 function textoComFichas(texto: string, fichas: ReadonlyArray<string>, numeros: Numeracao): string {
