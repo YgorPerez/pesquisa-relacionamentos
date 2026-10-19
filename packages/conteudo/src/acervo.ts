@@ -1,13 +1,25 @@
 // O acervo inteiro: lê as pastas do repositório e devolve o modelo tipado ou
 // a lista de erros do build. A leitura do disco fica em `lerArquivos`; o
 // resto (`montarAcervo`) é função pura sobre textos, e é ela que recebe as
-// regras entre arquivos (DOI repetido e a Ficha citada pelos dados agora;
-// referências dos Guias, Temas e sitemap nos tickets seguintes).
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+// regras entre arquivos (DOI repetido, referências, Confiança, `ordem` dos
+// Temas, a Ficha citada pelos dados; o sitemap entra no #29).
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { parse as lerYaml } from 'yaml'
 import { MetaDados } from './esquema.ts'
 import { lerFicha, type Ficha } from './ficha.ts'
+import {
+  lerDica,
+  lerGuia,
+  lerTema,
+  type Dica,
+  type DicaLida,
+  type Guia,
+  type GuiaLido,
+  type ItemLido,
+  type Tema,
+} from './itens.ts'
+import { ligar } from './publicacao.ts'
 import { decodificar, problema, type Problema } from './problemas.ts'
 
 /** Um arquivo de conteúdo, com o caminho relativo à raiz (`estudos/x.md`). */
@@ -25,6 +37,12 @@ export interface OrigemDosDados extends MetaDados {
 export interface Acervo {
   /** As Fichas em ordem de slug. */
   readonly fichas: ReadonlyArray<Ficha>
+  /** Os Temas em ordem de slug. */
+  readonly temas: ReadonlyArray<Tema>
+  /** Os Guias Tema a Tema, na `ordem` de cada um. */
+  readonly guias: ReadonlyArray<Guia>
+  /** Todas as Dicas em ordem de slug, publicadas ou não (`publicada`). */
+  readonly dicas: ReadonlyArray<Dica>
   /** Os `.meta.yaml` de `dados/`, em ordem de caminho. */
   readonly dados: ReadonlyArray<OrigemDosDados>
 }
@@ -38,8 +56,12 @@ export type Resultado =
     }
 
 /** As pastas que o pacote lê. Arquivo que começa com `_` é modelo ou
- * metadado da pasta e não vira item. */
+ * metadado da pasta e não vira item; o `_tema.md` de cada pasta de Guias é o
+ * Tema. */
 const PASTA_FICHAS = 'estudos'
+const PASTA_DICAS = 'dicas'
+const PASTA_GUIAS = 'guias'
+const ARQUIVO_DO_TEMA = '_tema.md'
 /** Os dados das calculadoras. Só os `.meta.yaml` entram: os CSV são grandes
  * e quem os lê é a calculadora. */
 const PASTA_DADOS = 'dados'
@@ -47,24 +69,41 @@ const SUFIXO_META = '.meta.yaml'
 
 const ehItem = (nome: string) => nome.endsWith('.md') && !nome.startsWith('_')
 
+function lerPasta(raiz: string, pasta: string, aceita: (nome: string) => boolean): Arquivo[] {
+  const dir = join(raiz, pasta)
+  if (!existsSync(dir)) return []
+  return readdirSync(dir)
+    .filter((nome) => aceita(nome) && statSync(join(dir, nome)).isFile())
+    .sort()
+    .map((nome) => ({ caminho: `${pasta}/${nome}`, texto: readFileSync(join(dir, nome), 'utf8') }))
+}
+
 /** Lê do disco os arquivos de conteúdo de uma raiz de repositório. */
 export function lerArquivos(raiz: string): ReadonlyArray<Arquivo> {
-  const arquivos: Arquivo[] = []
-  const pasta = join(raiz, PASTA_FICHAS)
-  if (existsSync(pasta)) {
-    for (const nome of readdirSync(pasta).filter(ehItem).sort())
-      arquivos.push({ caminho: `${PASTA_FICHAS}/${nome}`, texto: readFileSync(join(pasta, nome), 'utf8') })
-  }
+  const guias = join(raiz, PASTA_GUIAS)
+  const temas = existsSync(guias)
+    ? readdirSync(guias)
+        .filter((nome) => statSync(join(guias, nome)).isDirectory())
+        .sort()
+    : []
+  return [
+    ...lerPasta(raiz, PASTA_FICHAS, ehItem),
+    ...lerPasta(raiz, PASTA_DICAS, ehItem),
+    ...temas.flatMap((tema) =>
+      lerPasta(raiz, `${PASTA_GUIAS}/${tema}`, (nome) => ehItem(nome) || nome === ARQUIVO_DO_TEMA),
+    ),
+    ...lerMetas(raiz),
+  ]
+}
+
+function lerMetas(raiz: string): Arquivo[] {
   const dados = join(raiz, PASTA_DADOS)
-  if (existsSync(dados)) {
-    const metas = readdirSync(dados, { recursive: true, encoding: 'utf8' })
-      .map((c) => c.split('\\').join('/'))
-      .filter((c) => c.endsWith(SUFIXO_META))
-      .sort()
-    for (const caminho of metas)
-      arquivos.push({ caminho: `${PASTA_DADOS}/${caminho}`, texto: readFileSync(join(dados, caminho), 'utf8') })
-  }
-  return arquivos
+  if (!existsSync(dados)) return []
+  return readdirSync(dados, { recursive: true, encoding: 'utf8' })
+    .map((c) => c.split('\\').join('/'))
+    .filter((c) => c.endsWith(SUFIXO_META))
+    .sort()
+    .map((c) => ({ caminho: `${PASTA_DADOS}/${c}`, texto: readFileSync(join(dados, c), 'utf8') }))
 }
 
 /** Monta o acervo a partir dos textos, sem tocar no disco. */
@@ -72,23 +111,43 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
   const erros: Problema[] = []
   const avisos: Problema[] = []
   const fichas: Ficha[] = []
+  const temas: Tema[] = []
   const metas: Arquivo[] = []
+  const guias: GuiaLido[] = []
+  const dicas: DicaLida[] = []
 
-  for (const arquivo of arquivos) {
-    if (arquivo.caminho.startsWith(`${PASTA_DADOS}/`) && arquivo.caminho.endsWith(SUFIXO_META)) {
-      metas.push(arquivo)
-      continue
+  const quebrados = new Set<string>()
+  const guardar = <T>(caminho: string, lido: ItemLido<T>, onde: T[]) => {
+    if (lido.ok) onde.push(lido.item)
+    else {
+      erros.push(...lido.erros)
+      quebrados.add(caminho)
     }
-    if (!arquivo.caminho.startsWith(`${PASTA_FICHAS}/`)) continue
-    const nome = arquivo.caminho.slice(PASTA_FICHAS.length + 1)
-    if (!ehItem(nome) || nome.includes('/')) continue
-    const lida = lerFicha(arquivo.caminho, arquivo.texto)
-    if (lida.ok) fichas.push(lida.ficha)
-    else erros.push(...lida.erros)
+  }
+
+  for (const { caminho, texto } of arquivos) {
+    const partes = caminho.split('/')
+    const nome = partes[partes.length - 1] ?? ''
+    if (partes[0] === PASTA_DADOS && nome.endsWith(SUFIXO_META)) {
+      metas.push({ caminho, texto })
+    } else if (partes[0] === PASTA_FICHAS && partes.length === 2 && ehItem(nome)) {
+      const lida = lerFicha(caminho, texto)
+      guardar(caminho, lida.ok ? { ok: true, item: lida.ficha } : lida, fichas)
+    } else if (partes[0] === PASTA_DICAS && partes.length === 2 && ehItem(nome)) {
+      guardar(caminho, lerDica(caminho, texto), dicas)
+    } else if (partes[0] === PASTA_GUIAS && partes.length === 3) {
+      if (nome === ARQUIVO_DO_TEMA) guardar(caminho, lerTema(caminho, texto), temas)
+      else if (ehItem(nome)) guardar(caminho, lerGuia(caminho, texto), guias)
+    }
   }
 
   fichas.sort((a, b) => a.slug.localeCompare(b.slug))
+  temas.sort((a, b) => a.slug.localeCompare(b.slug))
+  dicas.sort((a, b) => a.slug.localeCompare(b.slug))
   erros.push(...doisRepetidos(fichas))
+
+  const ligados = ligar({ fichas, temas, guias, dicas, quebrados })
+  erros.push(...ligados.erros)
 
   const dados: OrigemDosDados[] = []
   for (const meta of [...metas].sort((a, b) => a.caminho.localeCompare(b.caminho))) {
@@ -99,7 +158,11 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
 
   return erros.length > 0
     ? { ok: false, erros, avisos }
-    : { ok: true, acervo: { fichas, dados }, avisos }
+    : {
+        ok: true,
+        acervo: { fichas, temas: ligados.temas, guias: ligados.guias, dicas: ligados.dicas, dados },
+        avisos,
+      }
 }
 
 /** Lê e monta: o que o build e o app chamam. */

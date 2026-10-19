@@ -5,6 +5,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./caminhos": "./src/caminhos.ts",
+    "./consultas": "./src/consultas.ts",
     "./listas": "./src/listas.ts"
   },
   "scripts": {

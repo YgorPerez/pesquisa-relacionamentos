@@ -1,7 +1,7 @@
 // O frontmatter da Ficha (#10, #5, #16), em Effect Schema. O validador do
 // build e o app leem o mesmo esquema; as listas fechadas vêm de `listas.ts`.
 import { Schema } from 'effect'
-import { CASAIS, DESENHOS, FORCAS, GENEROS, PROCURA, STATUS } from './listas.ts'
+import { CALCULADORAS, CASAIS, DESENHOS, FORCAS, GENEROS, PROCURA, STATUS } from './listas.ts'
 
 const Texto = Schema.String.check(Schema.isMinLength(1, { message: 'não pode ficar vazio' }))
 
@@ -75,3 +75,61 @@ export const FrontmatterFicha = Schema.Struct({
   seo: Schema.optional(Seo),
 })
 export type FrontmatterFicha = typeof FrontmatterFicha.Type
+
+const Slugs = Schema.Array(Slug)
+
+/** `guias/<tema>/_tema.md`: o corpo é o parágrafo de contexto. */
+export const FrontmatterTema = Schema.Struct({
+  titulo: Texto,
+  ordem: Slugs,
+  antes: Schema.optional(Slugs),
+  seo: Schema.optional(Seo),
+})
+export type FrontmatterTema = typeof FrontmatterTema.Type
+
+/** `dicas/<slug>.md`: o corpo é o texto da Dica. */
+export const FrontmatterDica = Schema.Struct({
+  fichas: Slugs,
+  forca: Schema.Literals(FORCAS),
+  inferencia: Schema.optional(Schema.Boolean),
+  vale_para: Schema.optional(Cobre),
+  antes: Schema.optional(Slugs),
+  seo: Schema.optional(Seo),
+})
+export type FrontmatterDica = typeof FrontmatterDica.Type
+
+export const AchadoDoGuia = Schema.Struct({
+  texto: Texto,
+  fichas: Slugs,
+  pais: Schema.optional(Texto),
+  periodo: Schema.optional(Texto),
+  vale_para: Schema.optional(Cobre),
+})
+
+const Lado = Schema.Struct({ titulo: Texto, texto: Texto, fichas: Slugs })
+
+/** A evidência diverge: os dois lados numa tabela e qual tem o melhor desenho (#7). */
+export const Divergencia = Schema.Struct({
+  melhor_desenho: Texto,
+  lados: Schema.Tuple([Lado, Lado]),
+})
+export type Divergencia = typeof Divergencia.Type
+
+export const Mito = Schema.Struct({ afirmacao: Texto, por_que_nao: Texto, fichas: Slugs })
+export type Mito = typeof Mito.Type
+
+/** `guias/<tema>/<slug>.md`: o corpo traz a resposta curta (antes do primeiro
+ * `##`), "Varia conforme o Perfil?" e Limitações. */
+export const FrontmatterGuia = Schema.Struct({
+  pergunta: Texto,
+  confianca: Schema.Literals(FORCAS),
+  achados: Schema.Array(AchadoDoGuia),
+  divergencia: Schema.optional(Divergencia),
+  dicas: Schema.optional(Slugs),
+  mitos: Schema.optional(Schema.Array(Mito)),
+  relacionadas: Schema.optional(Slugs),
+  calculadora: Schema.optional(Schema.Literals(CALCULADORAS)),
+  antes: Schema.optional(Slugs),
+  seo: Schema.optional(Seo),
+})
+export type FrontmatterGuia = typeof FrontmatterGuia.Type
