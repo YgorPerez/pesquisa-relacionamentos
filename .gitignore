@@ -15,3 +15,8 @@
 
 # O monorepo pnpm (frontend/, packages/).
 node_modules/
+
+# A pasta privada de Fontes locais (#37): o texto completo que não tem licença
+# aberta fica só na máquina de quem escreve e de quem revisa a Ficha. A âncora
+# `/` deixa de fora as fixtures de `scripts/fixtures/conferencia/`.
+/fontes/privado/
