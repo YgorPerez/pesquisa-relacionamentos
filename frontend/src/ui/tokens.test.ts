@@ -1,6 +1,8 @@
-// Os tokens do `DESIGN.md` chegam aos componentes como variáveis CSS em
-// `tokens.css`. A fonte da verdade é o cabeçalho YAML do `DESIGN.md`: se um
-// dos dois mudar sem o outro, este teste avisa.
+// Os tokens do `DESIGN.md` são o tema do Tailwind, no `@theme` de
+// `tokens.css`: `--color-papel` vira `bg-papel`, `--radius-mao` vira
+// `rounded-mao`, `--spacing-md` vira `p-md`, `--text-label` vira `text-label`.
+// A fonte da verdade é o cabeçalho YAML do `DESIGN.md`: se um dos dois mudar
+// sem o outro, este teste avisa.
 
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -20,6 +22,7 @@ type Design = {
       fontSize: string
       fontWeight: number
       lineHeight: number
+      letterSpacing?: string
     }
   >
 }
@@ -31,11 +34,13 @@ function lerDesign(): Design {
   return parse(cabecalho) as Design
 }
 
-/** As variáveis declaradas no `:root` de `tokens.css`, pelo nome sem `--`. */
+/** As variáveis do `@theme` de `tokens.css`, pelo nome sem `--`. */
 function lerVariaveis(): Map<string, string> {
   const css = readFileSync(resolve(import.meta.dirname, 'tokens.css'), 'utf8')
+  const tema = /@theme static \{([\s\S]*?)\n\}/.exec(css)?.[1]
+  if (!tema) throw new Error('tokens.css sem `@theme static`')
   const variaveis = new Map<string, string>()
-  for (const [, nome, valor] of css.matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)) {
+  for (const [, nome, valor] of tema.matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)) {
     // O formatador quebra um valor longo em várias linhas; no CSS o espaço
     // a mais não conta, e aqui também não.
     const umaLinha = valor!
@@ -51,35 +56,51 @@ function lerVariaveis(): Map<string, string> {
 const design = lerDesign()
 const variaveis = lerVariaveis()
 
-describe('tokens.css', () => {
+describe('o tema do Tailwind em tokens.css', () => {
   it.each(Object.entries(design.colors))(
     'tem a cor %s do DESIGN.md',
     (nome, cor) => {
-      expect(variaveis.get(`cor-${nome}`)).toBe(cor)
+      expect(variaveis.get(`color-${nome}`)).toBe(cor)
     },
   )
+
+  it('não tem cor fora do DESIGN.md', () => {
+    const cores = [...variaveis.keys()].filter((nome) =>
+      nome.startsWith('color-'),
+    )
+    expect(cores).toEqual(
+      Object.keys(design.colors).map((nome) => `color-${nome}`),
+    )
+  })
 
   it.each(Object.entries(design.rounded))(
     'tem o raio %s do DESIGN.md',
     (nome, raio) => {
-      expect(variaveis.get(`raio-${nome}`)).toBe(raio)
+      expect(variaveis.get(`radius-${nome}`)).toBe(raio)
     },
   )
 
   it.each(Object.entries(design.spacing))(
     'tem o espaço %s do DESIGN.md',
     (nome, espaco) => {
-      expect(variaveis.get(`espaco-${nome}`)).toBe(espaco)
+      expect(variaveis.get(`spacing-${nome}`)).toBe(espaco)
     },
   )
 
   it.each(Object.entries(design.typography))(
     'tem o tipo %s do DESIGN.md',
     (nome, tipo) => {
-      expect(variaveis.get(`tipo-${nome}-familia`)).toBe(tipo.fontFamily)
-      expect(variaveis.get(`tipo-${nome}-tamanho`)).toBe(tipo.fontSize)
-      expect(variaveis.get(`tipo-${nome}-peso`)).toBe(String(tipo.fontWeight))
-      expect(variaveis.get(`tipo-${nome}-altura`)).toBe(String(tipo.lineHeight))
+      expect(variaveis.get(`font-${nome}`)).toBe(tipo.fontFamily)
+      expect(variaveis.get(`text-${nome}`)).toBe(tipo.fontSize)
+      expect(variaveis.get(`text-${nome}--font-weight`)).toBe(
+        String(tipo.fontWeight),
+      )
+      expect(variaveis.get(`text-${nome}--line-height`)).toBe(
+        String(tipo.lineHeight),
+      )
+      expect(variaveis.get(`text-${nome}--letter-spacing`)).toBe(
+        tipo.letterSpacing,
+      )
     },
   )
 

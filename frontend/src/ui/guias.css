@@ -6,8 +6,8 @@
 .etiqueta-tema {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
-  font-family: var(--tipo-label-familia);
+  min-height: var(--spacing-toque);
+  font-family: var(--font-label);
   font-size: 14px;
   font-weight: 700;
   line-height: 1.2;
@@ -15,9 +15,9 @@
 }
 
 .etiqueta-tema span {
-  background: var(--cor-folha);
-  border: var(--traco-etiqueta) solid var(--cor-tinta);
-  border-radius: var(--raio-mao-2);
+  background: var(--color-folha);
+  border: var(--traco-etiqueta) solid var(--color-tinta);
+  border-radius: var(--radius-mao-2);
   padding: 5px 10px;
 }
 
@@ -41,17 +41,17 @@
   padding: 0 6px;
   margin: 0 1px 0 0.3em;
   vertical-align: 2px;
-  font-family: var(--tipo-label-familia);
+  font-family: var(--font-label);
   font-size: 13px;
   font-weight: 700;
   line-height: 1;
-  color: var(--cor-agua-tinta);
+  color: var(--color-agua-tinta);
   text-decoration: none;
-  border-radius: var(--raio-redondo);
+  border-radius: var(--radius-redondo);
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26' preserveAspectRatio='none'%3E%3Cpath d='M17 2.6C24 3 28 7.5 27.6 13.2 27.2 19.4 21.8 23.6 14.6 23.4 7.4 23.2 2.3 18.8 2.5 12.6 2.7 6.8 8.2 2.2 15.6 2.9 18.5 3.2 20.4 3.9 21.4 4.8' fill='none' stroke='%230d6359' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
       center / 100% 100% no-repeat,
-    var(--cor-folha);
+    var(--color-folha);
 }
 
 .ref + .ref {
@@ -66,8 +66,8 @@
 }
 
 .ref:hover {
-  background-color: var(--cor-agua-fonte);
-  color: var(--cor-tinta);
+  background-color: var(--color-agua-fonte);
+  color: var(--color-tinta);
 }
 
 /* ---------- número-chave em rosa, na altura inteira da letra ---------- */
@@ -92,31 +92,31 @@
   gap: 14px;
   margin: 0 0 12px;
   padding-bottom: 12px;
-  border-bottom: 1.5px dotted var(--cor-tinta);
+  border-bottom: 1.5px dotted var(--color-tinta);
 }
 
 .confianca-rotulo {
   margin: 0;
-  font-family: var(--tipo-label-familia);
-  font-size: var(--tipo-label-tamanho);
+  font-family: var(--font-label);
+  font-size: var(--text-label);
   font-weight: 700;
   line-height: 1.25;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .confianca-nivel {
   display: block;
-  font-family: var(--tipo-title-familia);
+  font-family: var(--font-title);
   font-size: 21px;
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.01em;
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 .resposta {
-  font-size: var(--tipo-lead-tamanho);
-  line-height: var(--tipo-lead-altura);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
 }
 
 /* Nota de margem 1 de 2: a seta que manda às Fichas. */
@@ -127,7 +127,7 @@
   gap: 6px;
   max-width: 24rem;
   margin: 8px 0 0 auto;
-  color: var(--cor-agua-tinta);
+  color: var(--color-agua-tinta);
 }
 
 .seta-fontes svg {
@@ -138,10 +138,10 @@
 .seta-fontes a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
-  font-family: var(--tipo-nota-de-margem-familia);
-  font-size: var(--tipo-nota-de-margem-tamanho);
-  line-height: var(--tipo-nota-de-margem-altura);
+  min-height: var(--spacing-toque);
+  font-family: var(--font-nota-de-margem);
+  font-size: var(--text-nota-de-margem);
+  line-height: var(--text-nota-de-margem--line-height);
   text-decoration: none;
 }
 
@@ -160,7 +160,7 @@
   font-size: 15px;
   font-style: italic;
   line-height: 1.4;
-  color: var(--cor-agua-tinta);
+  color: var(--color-agua-tinta);
 }
 
 .seta-nota {
@@ -175,7 +175,7 @@
 }
 
 .dica + .dica {
-  margin-top: var(--espaco-lg);
+  margin-top: var(--spacing-lg);
 }
 
 .dica > p {
@@ -197,8 +197,8 @@
 .link-leve {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
-  font-size: var(--tipo-label-tamanho);
+  min-height: var(--spacing-toque);
+  font-size: var(--text-label);
   font-weight: 700;
 }
 
@@ -206,18 +206,18 @@
   margin: 4px 0 0;
   font-size: 15px;
   font-style: italic;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .vale {
   margin: 6px 0 0;
-  font-size: var(--tipo-label-tamanho);
+  font-size: var(--text-label);
   line-height: 1.45;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .vale b {
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 /* ---------- O que a evidência diz ---------- */
@@ -230,9 +230,9 @@
 .achado-guia {
   display: grid;
   grid-template-columns: minmax(58px, max-content) 1fr;
-  gap: var(--espaco-sm);
+  gap: var(--spacing-sm);
   padding: 16px 0;
-  border-top: 1.5px dotted var(--cor-tinta);
+  border-top: 1.5px dotted var(--color-tinta);
 }
 
 .achado-guia:first-child {
@@ -252,10 +252,10 @@
   max-width: 7.5rem;
   height: max-content;
   padding: 7px 6px 6px;
-  border: var(--traco-controle) solid var(--cor-tinta);
-  border-radius: var(--raio-mao-2);
-  background: var(--cor-folha);
-  font-family: var(--tipo-title-familia);
+  border: var(--traco-controle) solid var(--color-tinta);
+  border-radius: var(--radius-mao-2);
+  background: var(--color-folha);
+  font-family: var(--font-title);
   font-size: 16px;
   font-weight: 700;
   line-height: 1.1;
@@ -266,16 +266,16 @@
 .onde small {
   display: block;
   margin-top: 3px;
-  font-family: var(--tipo-label-familia);
+  font-family: var(--font-label);
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 /* A divergência: os dois lados lado a lado, sem média. */
 .divergencia {
-  margin-top: var(--espaco-md);
+  margin-top: var(--spacing-md);
 }
 
 .divergencia table {
@@ -283,9 +283,9 @@
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
-  border: var(--traco-painel) solid var(--cor-tinta);
-  border-radius: var(--raio-mao);
-  background: var(--cor-folha);
+  border: var(--traco-painel) solid var(--color-tinta);
+  border-radius: var(--radius-mao);
+  background: var(--color-folha);
   font-size: 15.5px;
   line-height: 1.5;
 }
@@ -298,16 +298,16 @@
 }
 
 .divergencia th {
-  font-family: var(--tipo-title-familia);
+  font-family: var(--font-title);
   font-size: 17px;
   font-weight: 700;
   line-height: 1.25;
-  border-bottom: 1.5px dotted var(--cor-tinta);
+  border-bottom: 1.5px dotted var(--color-tinta);
 }
 
 .divergencia th + th,
 .divergencia td + td {
-  border-left: 1.5px dotted var(--cor-tinta);
+  border-left: 1.5px dotted var(--color-tinta);
 }
 
 .melhor-desenho {
@@ -317,9 +317,9 @@
 
 /* ---------- Mito riscado ---------- */
 .mito {
-  background: var(--cor-folha);
-  border: var(--traco-painel) solid var(--cor-tinta);
-  border-radius: var(--raio-mao);
+  background: var(--color-folha);
+  border: var(--traco-painel) solid var(--color-tinta);
+  border-radius: var(--radius-mao);
   padding: 16px 18px;
 }
 
@@ -329,17 +329,17 @@
 
 .mito-frase {
   margin: 0;
-  font-family: var(--tipo-title-familia);
-  font-size: var(--tipo-title-tamanho);
+  font-family: var(--font-title);
+  font-size: var(--text-title);
   font-weight: 600;
   line-height: 1.35;
-  letter-spacing: var(--tipo-title-espacamento);
+  letter-spacing: var(--text-title--letter-spacing);
 }
 
 /* O risco: faixa rosa de 30% da altura no meio da linha. Não é marca-texto. */
 .mito-frase s {
   text-decoration: none;
-  background: linear-gradient(var(--cor-rosa-mito), var(--cor-rosa-mito)) center
+  background: linear-gradient(var(--color-rosa-mito), var(--color-rosa-mito)) center
     60% / 100% 30% repeat-x;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -362,16 +362,16 @@
   grid-template-columns: 34px 1fr;
   gap: 10px;
   padding: 14px 10px 14px 6px;
-  border-radius: var(--raio-mao-2);
+  border-radius: var(--radius-mao-2);
   scroll-margin-top: 30vh;
 }
 
 .ficha-citada + .ficha-citada {
-  border-top: 1.5px dotted var(--cor-tinta);
+  border-top: 1.5px dotted var(--color-tinta);
 }
 
 .ficha-citada:target {
-  background: color-mix(in srgb, var(--cor-agua-fonte) 30%, transparent);
+  background: color-mix(in srgb, var(--color-agua-fonte) 30%, transparent);
 }
 
 .ficha-citada:focus {
@@ -385,19 +385,19 @@
   width: 30px;
   height: 30px;
   margin-top: 7px;
-  border: var(--traco-controle) solid var(--cor-agua-tinta);
-  border-radius: var(--raio-bolota);
-  font-family: var(--tipo-label-familia);
+  border: var(--traco-controle) solid var(--color-agua-tinta);
+  border-radius: var(--radius-bolota);
+  font-family: var(--font-label);
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
-  color: var(--cor-agua-tinta);
+  color: var(--color-agua-tinta);
 }
 
 .legenda-curta {
   margin: 12px 0 0;
-  font-size: var(--tipo-label-tamanho);
-  color: var(--cor-tinta-2);
+  font-size: var(--text-label);
+  color: var(--color-tinta-2);
 }
 
 /* ---------- linhas grandes de Pergunta (relacionadas, calculadoras) ---------- */
@@ -409,7 +409,7 @@
 }
 
 .linhas-pergunta > li + li {
-  margin-top: var(--espaco-md);
+  margin-top: var(--spacing-md);
 }
 
 .linha-pergunta {
@@ -417,22 +417,22 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   padding: 16px;
-  background: var(--cor-folha);
-  border: var(--traco-painel) solid var(--cor-tinta);
-  border-radius: var(--raio-mao-2);
+  background: var(--color-folha);
+  border: var(--traco-painel) solid var(--color-tinta);
+  border-radius: var(--radius-mao-2);
   text-decoration: none;
 }
 
 .linha-pergunta:hover {
-  background: var(--cor-amarelo-voce);
+  background: var(--color-amarelo-voce);
 }
 
 .linha-pergunta b {
   display: block;
   margin-bottom: 4px;
-  font-family: var(--tipo-title-familia);
+  font-family: var(--font-title);
   font-size: 19px;
   font-weight: 700;
   line-height: 1.25;
@@ -446,7 +446,7 @@
 }
 
 .linha-pergunta:hover .secundario {
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 /* ---------- página do Tema ---------- */
@@ -466,7 +466,7 @@
 }
 
 .pergunta-do-tema .headline a:hover {
-  background: var(--cor-amarelo-voce);
+  background: var(--color-amarelo-voce);
 }
 
 .pergunta-do-tema .selo-meta {
@@ -485,7 +485,7 @@
 .tema-no-inicio .link-tema {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   text-decoration-thickness: 2px;
 }
 
@@ -501,7 +501,7 @@
 .perguntas-do-tema a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
 }
 
 /* ---------- lista de Dicas ---------- */
@@ -512,14 +512,14 @@
 }
 
 .dica-da-lista {
-  padding: var(--espaco-sm) 0;
+  padding: var(--spacing-sm) 0;
 }
 
 .dica-da-lista + .dica-da-lista {
-  border-top: 1.5px dotted var(--cor-tinta);
+  border-top: 1.5px dotted var(--color-tinta);
 }
 
 .inferencia-curta {
   font-style: italic;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }

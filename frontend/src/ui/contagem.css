@@ -24,7 +24,7 @@
 
 .ajudou-obrigado {
   margin: 0;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .ajudou-obrigado:empty {
@@ -43,10 +43,10 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   cursor: pointer;
   font-weight: 700;
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 /* O checkbox fica invisível por cima da chave inteira, como nas opções. */
@@ -69,9 +69,9 @@
   flex: none;
   width: 46px;
   height: 26px;
-  border: var(--traco-controle) solid var(--cor-tinta);
+  border: var(--traco-controle) solid var(--color-tinta);
   border-radius: 13px 12px 13px 12px;
-  background: var(--cor-papel);
+  background: var(--color-papel);
 }
 
 .chave-trilho::after {
@@ -81,14 +81,14 @@
   left: 3px;
   width: 17px;
   height: 17px;
-  border: var(--traco-controle) solid var(--cor-tinta);
-  border-radius: var(--raio-bolota);
-  background: var(--cor-folha);
+  border: var(--traco-controle) solid var(--color-tinta);
+  border-radius: var(--radius-bolota);
+  background: var(--color-folha);
   transition: transform 0.15s ease-out;
 }
 
 .chave input:checked + .chave-trilho {
-  background: var(--cor-amarelo-voce);
+  background: var(--color-amarelo-voce);
 }
 
 .chave input:checked + .chave-trilho::after {
@@ -100,13 +100,13 @@
 }
 
 .chave input:disabled ~ span:last-child {
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .chave input:focus-visible + .chave-trilho {
-  outline: 3px solid var(--cor-tinta);
+  outline: 3px solid var(--color-tinta);
   outline-offset: 3px;
-  box-shadow: 0 0 0 7px var(--cor-amarelo-voce);
+  box-shadow: 0 0 0 7px var(--color-amarelo-voce);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -117,17 +117,17 @@
 
 .chave-nota {
   font-size: 14.5px;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 /* ---------- rodapé do site ---------- */
 .rodape-site {
-  max-width: var(--largura-pagina);
+  max-width: var(--container-pagina);
   margin: 0 auto;
-  padding: var(--espaco-md);
-  border-top: var(--traco-painel) solid var(--cor-tinta);
+  padding: var(--spacing-md);
+  border-top: var(--traco-painel) solid var(--color-tinta);
   font-size: 15px;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .rodape-site-dentro {
@@ -141,22 +141,22 @@
 .rodape-site a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   font-weight: 700;
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 /* No desktop, o rodapé continua a folha da página sobre a retícula. */
 @media (min-width: 900px) {
   .rodape-site {
-    background: var(--cor-papel);
-    border: var(--traco-painel) solid var(--cor-tinta);
+    background: var(--color-papel);
+    border: var(--traco-painel) solid var(--color-tinta);
     border-top: 0;
-    padding: var(--espaco-md) 64px;
+    padding: var(--spacing-md) 64px;
   }
 }
 
 /* ---------- página de privacidade ---------- */
 .privacidade .chave-contagem {
-  margin-top: var(--espaco-sm);
+  margin-top: var(--spacing-sm);
 }

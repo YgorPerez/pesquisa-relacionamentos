@@ -1,73 +1,137 @@
-/* Os tokens do DESIGN.md ("O zine sério"), como variáveis CSS. Os nomes
- * seguem o cabeçalho YAML de lá: `cor-<nome>`, `raio-<nome>`,
- * `espaco-<nome>` e `tipo-<nome>-<familia|tamanho|peso|altura>`. O
- * `tokens.test.ts` confere cada valor contra o DESIGN.md. */
+/* Os tokens do DESIGN.md ("O zine sério") como o tema do Tailwind. Os nomes
+ * seguem o cabeçalho YAML de lá: a cor `papel` é `--color-papel` (`bg-papel`,
+ * `text-papel`), o raio `mao` é `--radius-mao` (`rounded-mao`), o espaço `md`
+ * é `--spacing-md` (`p-md`, `gap-md`) e o tipo `label` é `--font-label` com
+ * `--text-label` (`font-label text-label`), que já traz entrelinha, peso e
+ * espaçamento dele. O `tokens.test.ts` confere cada valor contra o DESIGN.md.
+ *
+ * `static` põe toda variável no `:root`, usada ou não: os desenhos de
+ * `desenhos.css` e as `@utility` leem `var(--color-tinta)` direto.
+ *
+ * As escalas do Tailwind que o DESIGN.md não tem saem (`initial`): uma
+ * `bg-red-500` ou uma `font-sans` não existe aqui, e o `@shadcn/lint` a
+ * aponta. O espaço (`--spacing`, 4px) fica: `p-2.5` é 10px, e as medidas do
+ * desenho que não são token caem nele. */
 
-:root {
-  --cor-papel: #f5f8f8;
-  --cor-folha: #fcfdfd;
-  --cor-tinta: #1a1c1c;
-  --cor-tinta-2: #414948;
-  --cor-amarelo-voce: #ecd36f;
-  --cor-rosa-mito: #e7a3b6;
-  --cor-agua-fonte: #95cfc5;
-  --cor-agua-tinta: #0d6359;
+@theme static {
+  --color-*: initial;
+  --color-papel: #f5f8f8;
+  --color-folha: #fcfdfd;
+  --color-tinta: #1a1c1c;
+  --color-tinta-2: #414948;
+  --color-amarelo-voce: #ecd36f;
+  --color-rosa-mito: #e7a3b6;
+  --color-agua-fonte: #95cfc5;
+  --color-agua-tinta: #0d6359;
 
-  --tipo-display-familia:
+  --font-*: initial;
+  --font-display:
     Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-display-tamanho: clamp(33px, 8.6vw, 50px);
-  --tipo-display-peso: 700;
-  --tipo-display-altura: 1.06;
-  --tipo-display-espacamento: -0.022em;
-
-  --tipo-headline-familia:
+  --font-headline:
     Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-headline-tamanho: 25px;
-  --tipo-headline-peso: 700;
-  --tipo-headline-altura: 1.15;
-  --tipo-headline-espacamento: -0.015em;
-
-  --tipo-title-familia:
+  --font-title:
     Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-title-tamanho: 19.5px;
-  --tipo-title-peso: 600;
-  --tipo-title-altura: 1.3;
-  --tipo-title-espacamento: -0.01em;
+  --font-nota-de-margem: Kalam, Atkinson Hyperlegible, cursive;
+  --font-lead: Atkinson Hyperlegible, system-ui, sans-serif;
+  --font-body: Atkinson Hyperlegible, system-ui, sans-serif;
+  --font-label: Atkinson Hyperlegible, system-ui, sans-serif;
 
-  --tipo-nota-de-margem-familia: Kalam, Atkinson Hyperlegible, cursive;
-  --tipo-nota-de-margem-tamanho: 17px;
-  --tipo-nota-de-margem-peso: 400;
-  --tipo-nota-de-margem-altura: 1.3;
+  /* Os sete tipos do DESIGN.md, com entrelinha, peso e espaçamento. */
+  --text-*: initial;
+  --text-display: clamp(33px, 8.6vw, 50px);
+  --text-display--font-weight: 700;
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.022em;
+  --text-headline: 25px;
+  --text-headline--font-weight: 700;
+  --text-headline--line-height: 1.15;
+  --text-headline--letter-spacing: -0.015em;
+  --text-title: 19.5px;
+  --text-title--font-weight: 600;
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.01em;
+  --text-nota-de-margem: 17px;
+  --text-nota-de-margem--font-weight: 400;
+  --text-nota-de-margem--line-height: 1.3;
+  --text-lead: 18.5px;
+  --text-lead--font-weight: 400;
+  --text-lead--line-height: 1.58;
+  --text-body: 17px;
+  --text-body--font-weight: 400;
+  --text-body--line-height: 1.6;
+  --text-label: 14.5px;
+  --text-label--font-weight: 700;
+  --text-label--line-height: 1.35;
+  /* Os tamanhos de letra fora dos sete tipos. Só o tamanho: a entrelinha e o
+   * peso ficam com quem os usa. */
+  --text-miudo: 12px;
+  --text-anel: 13px;
+  --text-etiqueta: 14px;
+  --text-nota: 15px;
+  --text-aviso: 15.5px;
+  --text-medio: 16px;
+  --text-grande: 18px;
+  --text-linha: 19px;
+  --text-nivel: 21px;
+  --text-display-ficha: clamp(29px, 7.4vw, 42px);
+  --text-frase-do-cartao: clamp(20px, 5.4vw, 24px);
 
-  --tipo-lead-familia: Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-lead-tamanho: 18.5px;
-  --tipo-lead-peso: 400;
-  --tipo-lead-altura: 1.58;
+  /* As entrelinhas sem unidade. O `leading-<número>` do Tailwind é da escala
+   * de espaço (`leading-6` é 24px), e estas têm nome. */
+  --leading-*: initial;
+  --leading-cerrada: 1.1;
+  --leading-headline: 1.15;
+  --leading-curta: 1.2;
+  --leading-tight: 1.25;
+  --leading-title: 1.3;
+  --leading-label: 1.35;
+  --leading-folgada: 1.4;
+  --leading-nota: 1.45;
+  --leading-normal: 1.5;
+  --leading-detalhe: 1.55;
+  --leading-lead: 1.58;
+  --leading-body: 1.6;
 
-  --tipo-body-familia: Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-body-tamanho: 17px;
-  --tipo-body-peso: 400;
-  --tipo-body-altura: 1.6;
+  --tracking-*: initial;
+  --tracking-headline: -0.015em;
+  --tracking-title: -0.01em;
+  --tracking-normal: 0;
 
-  --tipo-label-familia: Atkinson Hyperlegible, system-ui, sans-serif;
-  --tipo-label-tamanho: 14.5px;
-  --tipo-label-peso: 700;
-  --tipo-label-altura: 1.35;
+  --radius-*: initial;
+  --radius-mao: 7px 3px 6px 4px / 4px 6px 3px 7px;
+  --radius-mao-2: 3px 7px 4px 6px / 6px 4px 7px 3px;
+  --radius-bolota: 50% 47% 52% 48%;
+  --radius-redondo: 50%;
+  /* O trilho da chave e a amostra da legenda da barra. */
+  --radius-trilho: 13px 12px 13px 12px;
+  --radius-amostra: 3px;
 
-  --raio-mao: 7px 3px 6px 4px / 4px 6px 3px 7px;
-  --raio-mao-2: 3px 7px 4px 6px / 6px 4px 7px 3px;
-  --raio-bolota: 50% 47% 52% 48%;
-  --raio-redondo: 50%;
+  --spacing-xs: 6px;
+  --spacing-sm: 14px;
+  --spacing-md: 18px;
+  --spacing-lg: 30px;
+  --spacing-secao: 44px;
+  --spacing-rodape: 56px;
+  /* O alvo de toque mínimo (DESIGN.md, Do's and Don'ts). */
+  --spacing-toque: 44px;
 
-  --espaco-xs: 6px;
-  --espaco-sm: 14px;
-  --espaco-md: 18px;
-  --espaco-lg: 30px;
-  --espaco-secao: 44px;
-  --espaco-rodape: 56px;
+  /* A coluna da página e a medida do texto. */
+  --container-pagina: 46rem;
+  --container-texto: min(38rem, 66ch);
+
+  /* A folha sobre a retícula começa aqui (`folha:`). */
+  --breakpoint-*: initial;
+  --breakpoint-folha: 900px;
+
+  /* O foco: o anel amarelo por fora do contorno de 3px em tinta. */
+  --shadow-*: initial;
+  --shadow-foco: 0 0 0 7px var(--color-amarelo-voce);
+
+  --ease-sai: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* A única elevação: retícula fina de pontos em tinta a 62%, deslocada
-   * atrás do contorno (The Halftone Rule). */
+   * atrás do contorno (The Halftone Rule). Quem a desenha é a `@utility
+   * reticula` de `desenhos.css`. */
   --reticula: radial-gradient(
       circle,
       rgba(26, 28, 28, 0.62) 0.8px,
@@ -84,13 +148,9 @@
     )
     0 0 / 6px 6px;
 
-  /* Contornos (Shapes). */
+  /* Os contornos (Shapes). O Tailwind só tem `border-<inteiro>`: o de 1.8px e
+   * o de 1.5px entram por variável, `border-(length:--traco-controle)`. */
   --traco-painel: 2px;
   --traco-controle: 1.8px;
   --traco-etiqueta: 1.5px;
-
-  --alvo-de-toque: 44px;
-  --largura-pagina: 46rem;
-  --largura-texto: min(38rem, 66ch);
-  --sai: cubic-bezier(0.16, 1, 0.3, 1);
 }

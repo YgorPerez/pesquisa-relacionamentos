@@ -7,31 +7,31 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  margin: 0 calc(-1 * var(--espaco-xs));
+  margin: 0 calc(-1 * var(--spacing-xs));
   padding: 10px 14px 8px;
 }
 
 .gp-rotulo {
   margin: 0;
-  font-family: var(--tipo-label-familia);
-  font-size: var(--tipo-label-tamanho);
+  font-family: var(--font-label);
+  font-size: var(--text-label);
   font-weight: 700;
-  line-height: var(--tipo-label-altura);
-  color: var(--cor-tinta-2);
+  line-height: var(--text-label--line-height);
+  color: var(--color-tinta-2);
 }
 
 h3.gp-rotulo {
-  margin-top: var(--espaco-md);
+  margin-top: var(--spacing-md);
   margin-bottom: 8px;
 }
 
 .gp-faixa {
   margin: 2px 0 0;
-  font-family: var(--tipo-headline-familia);
-  font-size: var(--tipo-headline-tamanho);
+  font-family: var(--font-headline);
+  font-size: var(--text-headline);
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: var(--tipo-headline-espacamento);
+  letter-spacing: var(--text-headline--letter-spacing);
 }
 
 .gp-instavel {
@@ -39,10 +39,10 @@ h3.gp-rotulo {
   margin-left: 10px;
   padding: 0 8px;
   vertical-align: 3px;
-  border: var(--traco-controle) dashed var(--cor-tinta);
-  border-radius: var(--raio-mao-2);
-  font-family: var(--tipo-label-familia);
-  font-size: var(--tipo-label-tamanho);
+  border: var(--traco-controle) dashed var(--color-tinta);
+  border-radius: var(--radius-mao-2);
+  font-family: var(--font-label);
+  font-size: var(--text-label);
   font-weight: 700;
   letter-spacing: 0;
 }
@@ -61,7 +61,7 @@ h3.gp-rotulo {
 .gp-linha2 a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   font-weight: 700;
 }
 
@@ -72,14 +72,14 @@ h3.gp-rotulo {
 
 @media (prefers-reduced-motion: no-preference) {
   .gp-carregando {
-    transition: opacity 0.2s var(--sai) 0.15s;
+    transition: opacity 0.2s var(--ease-sai) 0.15s;
   }
 }
 
 /* ---------- cartão do Guia B5 ---------- */
 .cartao-gp-frase {
   margin: 6px 0 0;
-  font-family: var(--tipo-title-familia);
+  font-family: var(--font-title);
   font-size: clamp(20px, 5.4vw, 24px);
   font-weight: 600;
   line-height: 1.45;
@@ -92,7 +92,7 @@ h3.gp-rotulo {
   margin: 8px 0 0;
   font-size: 15px;
   line-height: 1.5;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .cartao-gp-sub {
@@ -101,11 +101,11 @@ h3.gp-rotulo {
 
 .cartao-gp-ligados b,
 .cartao-gp-pesa b {
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
 }
 
 .gp-intro {
-  margin: 22px 0 var(--espaco-md);
+  margin: 22px 0 var(--spacing-md);
 }
 
 .gp-aviso {
@@ -115,20 +115,20 @@ h3.gp-rotulo {
 .gp-dica,
 .gp-motivo {
   margin: 8px 0 0;
-  font-size: var(--tipo-label-tamanho);
+  font-size: var(--text-label);
   line-height: 1.45;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .gp-motivo {
-  color: var(--cor-tinta);
+  color: var(--color-tinta);
   font-weight: 700;
 }
 
 /* ---------- Requisitos em linhas ---------- */
 .gp-req {
-  padding: var(--espaco-md) 0 var(--espaco-sm);
-  border-top: 1.5px dotted var(--cor-tinta);
+  padding: var(--spacing-md) 0 var(--spacing-sm);
+  border-top: 1.5px dotted var(--color-tinta);
 }
 
 .gp-req:first-child {
@@ -147,10 +147,10 @@ h3.gp-rotulo {
 
 .gp-req-titulo {
   margin: 0;
-  font-family: var(--tipo-title-familia);
-  font-size: var(--tipo-title-tamanho);
+  font-family: var(--font-title);
+  font-size: var(--text-title);
   font-weight: 700;
-  letter-spacing: var(--tipo-title-espacamento);
+  letter-spacing: var(--text-title--letter-spacing);
 }
 
 .gp-req-valor {
@@ -161,15 +161,15 @@ h3.gp-rotulo {
 /* O valor de um Requisito ligado leva o amarelo de "vale para você". */
 .gp-req-ligado .gp-req-valor {
   padding: 0 4px;
-  background: var(--cor-amarelo-voce);
-  border-radius: var(--raio-mao-2);
+  background: var(--color-amarelo-voce);
+  border-radius: var(--radius-mao-2);
 }
 
 .gp-req-custo {
   min-height: 1.4em;
   margin: 10px 0 0;
   font-size: 15px;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .gp-opcoes {
@@ -201,12 +201,12 @@ h3.gp-rotulo {
 .gp-passo {
   display: inline-grid;
   place-items: center;
-  width: var(--alvo-de-toque);
-  height: var(--alvo-de-toque);
+  width: var(--spacing-toque);
+  height: var(--spacing-toque);
   padding: 0;
-  border: var(--traco-controle) solid var(--cor-tinta);
-  border-radius: var(--raio-mao);
-  background: var(--cor-folha);
+  border: var(--traco-controle) solid var(--color-tinta);
+  border-radius: var(--radius-mao);
+  background: var(--color-folha);
   cursor: pointer;
 }
 
@@ -216,7 +216,7 @@ h3.gp-rotulo {
 }
 
 .gp-passo:not(:disabled):active {
-  background: var(--cor-amarelo-voce);
+  background: var(--color-amarelo-voce);
 }
 
 .gp-numero {
@@ -234,7 +234,7 @@ h3.gp-rotulo {
 
 .gp-unidade {
   font-size: 15px;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 /* ---------- caixa de marcar em chip ---------- */
@@ -292,7 +292,7 @@ h3.gp-rotulo {
   align-items: center;
   gap: 2px 12px;
   padding: 10px 0;
-  border-top: 1.5px dotted var(--cor-tinta);
+  border-top: 1.5px dotted var(--color-tinta);
 }
 
 .gp-pesa-nome {
@@ -303,7 +303,7 @@ h3.gp-rotulo {
   display: block;
   font-size: 14.5px;
   font-weight: 400;
-  color: var(--cor-tinta-2);
+  color: var(--color-tinta-2);
 }
 
 .gp-pesa-custo {
@@ -317,15 +317,15 @@ h3.gp-rotulo {
 }
 
 .gp-dobra {
-  margin-top: var(--espaco-sm);
-  border-top: var(--traco-painel) solid var(--cor-tinta);
+  margin-top: var(--spacing-sm);
+  border-top: var(--traco-painel) solid var(--color-tinta);
 }
 
 .gp-dobra summary {
   display: flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
-  font-family: var(--tipo-title-familia);
+  min-height: var(--spacing-toque);
+  font-family: var(--font-title);
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
@@ -342,7 +342,7 @@ h3.gp-rotulo {
   justify-content: space-between;
   gap: 12px;
   padding: 6px 0;
-  border-bottom: 1.5px dotted var(--cor-tinta);
+  border-bottom: 1.5px dotted var(--color-tinta);
   font-size: 15.5px;
 }
 
@@ -352,7 +352,7 @@ h3.gp-rotulo {
 }
 
 .gp-ressalvas {
-  margin: 10px 0 var(--espaco-sm);
+  margin: 10px 0 var(--spacing-sm);
   padding-left: 1.1em;
   font-size: 15px;
   line-height: 1.5;
@@ -365,15 +365,15 @@ h3.gp-rotulo {
 /* ---------- Do Guia ---------- */
 .gp-do-guia .gp-rotulo {
   margin-bottom: 10px;
-  color: var(--cor-tinta);
-  font-family: var(--tipo-title-familia);
+  color: var(--color-tinta);
+  font-family: var(--font-title);
   font-size: 19px;
 }
 
 .gp-ler-guia {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   margin-top: 6px;
   font-weight: 700;
 }

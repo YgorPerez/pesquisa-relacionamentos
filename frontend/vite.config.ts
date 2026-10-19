@@ -1,4 +1,5 @@
 import babel from '@rolldown/plugin-babel'
+import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
@@ -14,6 +15,9 @@ const plugins: PluginOption[] = process.env.VITEST
   : [
       acervo(),
       grupoPossivel(),
+      // As classes do Tailwind (`styles.css`, `ui/tokens.css`), antes do
+      // Start, como no Festival.
+      tailwindcss(),
       tanstackStart(),
       nitro(),
       viteReact(),

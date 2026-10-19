@@ -16,7 +16,7 @@
 .ficha-citada .laco path,
 .ficha-citada .seta-laco path {
   fill: none;
-  stroke: var(--cor-agua-tinta);
+  stroke: var(--color-agua-tinta);
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -25,8 +25,8 @@
 }
 
 .ficha-citada .laco path {
-  fill: color-mix(in srgb, var(--cor-agua-fonte) 30%, transparent);
-  animation: desenha-traco 0.9s var(--sai) forwards;
+  fill: color-mix(in srgb, var(--color-agua-fonte) 30%, transparent);
+  animation: desenha-traco 0.9s var(--ease-sai) forwards;
 }
 
 .ficha-citada .seta-laco {
@@ -38,7 +38,7 @@
 }
 
 .ficha-citada .seta-laco path {
-  animation: desenha-traco 0.5s var(--sai) 0.7s forwards;
+  animation: desenha-traco 0.5s var(--ease-sai) 0.7s forwards;
 }
 
 @keyframes desenha-traco {
@@ -63,14 +63,14 @@
 .voltar-texto {
   display: inline-flex;
   align-items: center;
-  min-height: var(--alvo-de-toque);
+  min-height: var(--spacing-toque);
   margin-top: 6px;
   padding: 4px 0;
   border: 0;
   background: none;
   color: inherit;
-  font-family: var(--tipo-label-familia);
-  font-size: var(--tipo-label-tamanho);
+  font-family: var(--font-label);
+  font-size: var(--text-label);
   font-weight: 700;
   text-decoration: underline;
   text-decoration-thickness: 1.5px;

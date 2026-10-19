@@ -33,7 +33,7 @@ function IconeDoStatus({ status }: { status: Status }) {
       {status === 'ok' && (
         <path
           d="M6 10.5l3 3 6-8"
-          stroke="var(--cor-agua-tinta)"
+          stroke="var(--color-agua-tinta)"
           strokeWidth="2.4"
         />
       )}
