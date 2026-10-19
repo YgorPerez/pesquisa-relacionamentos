@@ -2,6 +2,7 @@
 // HTML no servidor, com as referências `[@slug]` numeradas pela ordem das
 // Fichas citadas e o número-chave `==…==` em rosa.
 import type { Acervo, Cobre, Dica, Ficha, Forca, Guia, Tema } from '@tem-estudo/conteudo'
+import { dicaPublicada } from '@tem-estudo/conteudo/consultas'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 
 const ESCAPAR: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }
@@ -282,3 +283,17 @@ export function vistaDaDica(dica: Dica, acervo: Acervo): DicaVista {
     guias: acervo.guias.filter((g) => g.dicas.includes(dica.slug)).map(resumoDoGuia),
   }
 }
+
+export interface CitadaEm {
+  readonly guias: ReadonlyArray<GuiaResumo>
+  readonly dicas: ReadonlyArray<DicaResumo>
+}
+
+/** Os Guias e as Dicas publicadas que citam a Ficha, para a página dela. O
+ * Guia conta também quando a Ficha entra só por uma Dica dele. */
+export const citadaEm = (slug: string, acervo: Acervo): CitadaEm => ({
+  guias: acervo.guias.filter((g) => g.fichasCitadas.includes(slug)).map(resumoDoGuia),
+  dicas: acervo.dicas
+    .filter((d) => dicaPublicada(d) && d.fichas.includes(slug))
+    .map(resumoDaDica),
+})

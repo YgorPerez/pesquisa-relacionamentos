@@ -33,3 +33,9 @@ Entre 18 e 24 anos, a fatia sobe para 24% [@silva-2020-apps-brasil].
 
 - O estudo brasileiro só ouviu capitais.
 - Ninguém separou app de rede social.
+
+<details id="detalhe-capitais"><summary>Quais capitais</summary>
+
+São Paulo, Recife e Porto Alegre.
+
+</details>

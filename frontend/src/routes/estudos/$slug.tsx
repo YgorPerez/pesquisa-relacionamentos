@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarFicha } from '#/conteudo/fichas'
+import { LinhaDePergunta } from '#/ui/guia'
 import {
   ForcaDaEvidencia,
   LegendaDasFichas,
@@ -166,6 +167,44 @@ function PaginaDaFicha() {
             Limitações
           </h2>
           <Html className="prosa limites" html={ficha.limitacoesHtml} />
+        </section>
+
+        <section className="secao" aria-labelledby="citada-em">
+          <h2 id="citada-em" className="headline">
+            Citada em
+          </h2>
+          {ficha.citadaEm.guias.length === 0 && ficha.citadaEm.dicas.length === 0 ? (
+            <p className="secundario">Nenhum Guia nem Dica publicada cita esta Ficha ainda.</p>
+          ) : (
+            <>
+              {ficha.citadaEm.guias.length > 0 && (
+                <>
+                  <h3 className="title citada-subtitulo">Guias</h3>
+                  <ul className="linhas-pergunta">
+                    {ficha.citadaEm.guias.map((guia) => (
+                      <li key={guia.slug}>
+                        <LinhaDePergunta guia={guia} />
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {ficha.citadaEm.dicas.length > 0 && (
+                <>
+                  <h3 className="title citada-subtitulo">Dicas</h3>
+                  <ul className="dicas-que-citam">
+                    {ficha.citadaEm.dicas.map((dica) => (
+                      <li key={dica.slug}>
+                        <Link to="/dicas/$slug" params={{ slug: dica.slug }}>
+                          {dica.texto}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </>
+          )}
         </section>
 
         <section className="secao" aria-labelledby="como-ler">

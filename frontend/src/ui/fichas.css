@@ -96,6 +96,31 @@
   text-decoration: underline;
 }
 
+/* ---------- onde a Ficha é citada ---------- */
+.citada-subtitulo {
+  margin: var(--espaco-md) 0 var(--espaco-sm);
+}
+
+.dicas-que-citam {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dicas-que-citam > li + li {
+  border-top: 1.5px dotted var(--cor-tinta);
+}
+
+.dicas-que-citam a {
+  display: flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  padding: 8px 0;
+  font-weight: 700;
+  text-decoration-color: var(--cor-agua-tinta);
+  text-underline-offset: 4px;
+}
+
 /* ---------- página da Ficha ---------- */
 .display-ficha {
   font-size: clamp(29px, 7.4vw, 42px);

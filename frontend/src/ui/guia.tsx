@@ -4,6 +4,7 @@
 import type { Forca } from '@tem-estudo/conteudo'
 import { Link } from '@tanstack/react-router'
 import type { FichaCitada, GuiaResumo } from '#/conteudo/vista-guia'
+import { LacoDaFicha, type FichaCirculada } from './navegacao'
 import { Degraus, ForcaDaEvidencia, StatusDeVerificacao } from './selos'
 
 export function Html({
@@ -42,12 +43,24 @@ export function ConfiancaCurta({ confianca }: { confianca: Forca }) {
   )
 }
 
-export function FichasCitadas({ fichas }: { fichas: ReadonlyArray<FichaCitada> }) {
+export function FichasCitadas({
+  fichas,
+  circulada,
+  voltarAoTexto,
+}: {
+  fichas: ReadonlyArray<FichaCitada>
+  /** A Ficha que o leitor tocou no texto, com o laço e "voltar ao texto". */
+  circulada?: FichaCirculada | null
+  voltarAoTexto?: () => void
+}) {
   return (
     <>
       <ol className="fichas-citadas">
-        {fichas.map((ficha) => (
-          <li key={ficha.slug} id={ficha.ancora} className="ficha-citada" tabIndex={-1}>
+        {fichas.map((ficha) => {
+          const alvo = circulada?.slug === ficha.slug
+          return (
+          <li key={ficha.slug} id={ficha.ancora} className="ficha-citada" data-alvo={alvo || undefined} tabIndex={-1}>
+            {alvo && <LacoDaFicha key={circulada.vez} />}
             <span className="ficha-n" aria-hidden="true">
               {ficha.n}
             </span>
@@ -60,9 +73,15 @@ export function FichasCitadas({ fichas }: { fichas: ReadonlyArray<FichaCitada> }
                 <ForcaDaEvidencia forca={ficha.forca} />
                 <span>{ficha.contexto}</span>
               </div>
+              {alvo && voltarAoTexto && (
+                <button type="button" className="voltar-texto" onClick={voltarAoTexto}>
+                  voltar ao texto
+                </button>
+              )}
             </div>
           </li>
-        ))}
+          )
+        })}
       </ol>
       <p className="legenda-curta">
         Status: lido no original (conferido no texto completo) ou parcial (só no resumo ou na página
@@ -78,12 +97,15 @@ const Seta = () => (
   </svg>
 )
 
-/** Uma Pergunta como linha grande: a Pergunta, a primeira frase da resposta e a seta. */
-export function LinhaDePergunta({ guia }: { guia: GuiaResumo }) {
+/** Uma Pergunta como linha grande: a Pergunta, a primeira frase da resposta e
+ * a seta. `de` é a Pergunta do Guia de onde se sai, que o outro Guia mostra
+ * em "Voltar para <Pergunta>". */
+export function LinhaDePergunta({ guia, de }: { guia: GuiaResumo; de?: string }) {
   return (
     <Link
       to="/$tema/$slug"
       params={{ tema: guia.tema, slug: guia.slug }}
+      state={de ? { de } : undefined}
       className="linha-pergunta com-reticula"
     >
       <span>

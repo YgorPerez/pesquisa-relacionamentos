@@ -7,6 +7,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { fichaIndexavel } from '@tem-estudo/conteudo/caminhos'
 import { STATUS } from '@tem-estudo/conteudo/listas'
 import { resumo, vista, type FichaResumo, type FichaVista } from './vista'
+import { citadaEm, type CitadaEm } from './vista-guia'
 
 const ORDEM_DO_STATUS: ReadonlyArray<string> = STATUS
 
@@ -29,9 +30,9 @@ export const buscarFicha = createServerFn({ method: 'GET' })
     if (typeof slug !== 'string') throw new Error('slug inválido')
     return slug
   })
-  .handler(async ({ data: slug }): Promise<FichaVista> => {
+  .handler(async ({ data: slug }): Promise<FichaVista & { citadaEm: CitadaEm }> => {
     const { default: acervo } = await import('virtual:acervo')
     const ficha = acervo.fichas.find((f) => f.slug === slug)
     if (!ficha) throw notFound()
-    return vista(ficha, fichaIndexavel(ficha))
+    return { ...vista(ficha, fichaIndexavel(ficha)), citadaEm: citadaEm(slug, acervo) }
   })

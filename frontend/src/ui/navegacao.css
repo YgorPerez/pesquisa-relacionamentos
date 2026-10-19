@@ -1,0 +1,89 @@
+/* ---------- a Ficha circulada (assinatura do DESIGN.md) ---------- */
+.ficha-citada {
+  isolation: isolate;
+}
+
+.ficha-citada .laco {
+  position: absolute;
+  inset: -10px;
+  z-index: -1;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ficha-citada .laco path,
+.ficha-citada .seta-laco path {
+  fill: none;
+  stroke: var(--cor-agua-tinta);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.ficha-citada .laco path {
+  fill: color-mix(in srgb, var(--cor-agua-fonte) 30%, transparent);
+  animation: desenha-traco 0.9s var(--sai) forwards;
+}
+
+.ficha-citada .seta-laco {
+  position: absolute;
+  left: -14px;
+  top: -26px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ficha-citada .seta-laco path {
+  animation: desenha-traco 0.5s var(--sai) 0.7s forwards;
+}
+
+@keyframes desenha-traco {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ficha-citada .laco path,
+  .ficha-citada .seta-laco path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Com JavaScript, o laço faz o papel do :target. */
+.ficha-citada[data-alvo] {
+  background: none;
+}
+
+.voltar-texto {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-de-toque);
+  margin-top: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--tipo-label-familia);
+  font-size: var(--tipo-label-tamanho);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* ---------- "Voltar para <Pergunta>": o voltar sem caixa, como botão ---------- */
+.voltar-guia {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
