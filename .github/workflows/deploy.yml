@@ -173,16 +173,11 @@ jobs:
           GOATCOUNTER_EMAIL: ${{ vars.GOATCOUNTER_EMAIL }}
         run: node scripts/vps.ts --publicar .output "$GITHUB_SHA"
 
-      # De fora, pela internet: o site responde com o cabeçalho, e o http
-      # leva ao https com a query junto.
+      # De fora, pela internet (ADR 0008): a página chega com o
+      # Referrer-Policy, cada asset que ela cita chega com o tipo dele, e
+      # não como HTML, e o http leva ao https com a query junto.
       - name: Conferir o site no ar
-        run: |
-          cabecalhos=$(curl -fsS -D - -o /dev/null "https://temestudo.com/?conferencia=$GITHUB_SHA")
-          printf '%s\n' "$cabecalhos" | grep -i '^referrer-policy: strict-origin' \
-            || { echo "O site no ar não manda Referrer-Policy: strict-origin." >&2; exit 1; }
-          destino=$(curl -fsS -o /dev/null -w '%{redirect_url}' "http://temestudo.com/?x=1")
-          [ "$destino" = "https://temestudo.com/?x=1" ] \
-            || { echo "O http leva a $destino, não ao https." >&2; exit 1; }
+        run: node scripts/conferir-no-ar.ts temestudo.com "$GITHUB_SHA"
 
       # O GoatCounter (#35) sobe junto, mas fora dele o site segue no ar: um
       # problema aqui vira aviso. Antes da etapa de login do wizard, ele
@@ -228,3 +223,6 @@ jobs:
           else
             node scripts/vps.ts --voltar "$VOLTAR"
           fi
+
+      - name: Conferir o site no ar
+        run: node scripts/conferir-no-ar.ts temestudo.com "$GITHUB_SHA"
