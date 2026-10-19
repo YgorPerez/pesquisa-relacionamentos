@@ -9,6 +9,7 @@ export {
   type Acervo,
   type Arquivo,
   type Opcoes,
+  type OrigemDosDados,
   type Resultado,
 } from './acervo.ts'
 export {

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarGuia } from '#/conteudo/guias'
 import { ConfiancaDaResposta, FichasCitadas, Html, LinhaDePergunta } from '#/ui/guia'
+import { usePontoNoHistorico, useReferencias, VoltarParaGuia } from '#/ui/navegacao'
 import { ForcaDaEvidencia } from '#/ui/selos'
 
 export const Route = createFileRoute('/$tema/$slug')({
@@ -30,10 +31,13 @@ const Marcador = () => (
 
 function PaginaDoGuia() {
   const guia = Route.useLoaderData()
+  const { circulada, voltarAoTexto } = useReferencias(guia.slug)
+  usePontoNoHistorico()
 
   return (
     <main className="folha">
       <div className="coluna">
+        <VoltarParaGuia />
         <h1 className="display" dangerouslySetInnerHTML={{ __html: guia.perguntaHtml }} />
 
         <section className="painel com-reticula resposta-curta" aria-labelledby="t-resposta">
@@ -167,7 +171,7 @@ function PaginaDoGuia() {
             <Marcador />
             cada número do texto leva à Ficha com o mesmo número aqui
           </p>
-          <FichasCitadas fichas={guia.fichas} />
+          <FichasCitadas fichas={guia.fichas} circulada={circulada} voltarAoTexto={voltarAoTexto} />
         </section>
 
         {guia.relacionadas.length > 0 && (
@@ -178,7 +182,7 @@ function PaginaDoGuia() {
             <ul className="linhas-pergunta">
               {guia.relacionadas.map((outro) => (
                 <li key={outro.slug}>
-                  <LinhaDePergunta guia={outro} />
+                  <LinhaDePergunta guia={outro} de={guia.pergunta} />
                 </li>
               ))}
             </ul>

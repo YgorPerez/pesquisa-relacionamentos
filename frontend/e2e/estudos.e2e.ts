@@ -117,6 +117,31 @@ test.describe('/estudos/<slug>', () => {
     await expect(page.getByRole('heading', { name: 'Brasil na amostra' })).toBeVisible()
   })
 
+  test('lista os Guias e as Dicas que citam a Ficha, com link', async ({ page }) => {
+    await page.goto('/estudos/silva-2020-apps-brasil')
+    const citada = page.getByRole('region', { name: 'Citada em' })
+    await expect(citada.getByRole('heading', { level: 3 })).toHaveText(['Guias', 'Dicas'])
+    await expect(citada.locator('.linha-pergunta')).toHaveText([
+      /Onde os casais se conhecem hoje\?/,
+      /App ou presencial, onde tenho mais chance\?/,
+    ])
+    const dica = citada.getByRole('link', { name: 'Use o app como complemento, não como o único caminho.' })
+    expect((await dica.boundingBox())?.height).toBeGreaterThanOrEqual(44)
+    await dica.tap()
+    await expect(page).toHaveURL('/dicas/apps-como-complemento')
+
+    await page.goto('/estudos/silva-2020-apps-brasil')
+    await page.getByRole('region', { name: 'Citada em' }).locator('.linha-pergunta').first().tap()
+    await expect(page).toHaveURL('/onde-conhecer-pessoas/onde-os-casais-se-conhecem')
+  })
+
+  test('Ficha que nada publicado cita diz isso', async ({ page }) => {
+    await page.goto('/estudos/lima-2015-encontros')
+    await expect(page.getByRole('region', { name: 'Citada em' })).toContainText(
+      'Nenhum Guia nem Dica publicada cita esta Ficha ainda.',
+    )
+  })
+
   test('voltar leva à lista', async ({ page }) => {
     await page.goto('/estudos/lima-2015-encontros')
     const voltar = page.getByRole('link', { name: 'Todos os estudos' })
