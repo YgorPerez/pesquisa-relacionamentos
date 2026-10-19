@@ -39,4 +39,4 @@ Quanto a atratividade física e a perspectiva de renda de **pessoas reais** (par
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito de atratividade (≈ 0,40) e de renda (≈ 0,10) sobre a avaliação romântica, e ausência de diferença entre sexos no comportamento real.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito de atratividade (≈ 0,40) e de renda (≈ 0,10) sobre a avaliação romântica, e ausência de diferença entre sexos no comportamento real.

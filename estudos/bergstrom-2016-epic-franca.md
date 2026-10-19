@@ -51,4 +51,4 @@ Desenho, como descrito antes da migração: transversal retrospectivo (história
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): referência de amostra aleatória fora dos EUA, crítica a painéis com cotas e diferença entre primeira união e recasamento.
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): referência de amostra aleatória fora dos EUA, crítica a painéis com cotas e diferença entre primeira união e recasamento.

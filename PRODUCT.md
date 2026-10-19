@@ -51,8 +51,9 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 ## Evidence on Hand
 
 - `estudos/`: cerca de 30 Fichas. Pela decisão do #6, todas contam como ⬜ até serem refeitas com Fonte local e trecho conferido.
-- `relatorios/`, `pesquisas/` e `dicas/`: sínteses internas, base para os Guias.
-- `fontes/pdfs/`: Fontes locais de acesso aberto.
+- `relatorios/` e `dicas/`: sínteses internas, base para os Guias.
+- `fontes/`: Fontes locais de licença aberta. As outras ficam em `fontes/privado/`, fora do git.
+- Fila do acervo: issues com o label `acervo`, trabalhadas pela skill `acervo` (#37).
 - `prototipos/prioridades.prototype.html`: protótipo descartável de Prioridades vs. evidência.
 - Não há depoimentos, usuários, métricas de uso nem imprensa. Nada disso pode ser inventado.
 

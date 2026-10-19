@@ -9,11 +9,11 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 | Pasta/arquivo | O que tem |
 |---|---|
 | [`estudos/`](estudos/) | Uma ficha por estudo ou fonte: o que mediu, números principais, limitações e status de verificação |
-| [`relatorios/`](relatorios/) | Sínteses que cruzam vários estudos para responder a uma pergunta |
-| [`pesquisas/`](pesquisas/) | Resultados de tickets de pesquisa: o que foi encontrado, resolvido e o que ficou em aberto |
+| [`relatorios/`](relatorios/) | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo |
 | [`dicas/`](dicas/) | Conclusões práticas, cada uma ligada aos estudos que a sustentam |
-| [`fontes/pdfs/`](fontes/pdfs/) | Cópias locais de artigos de acesso aberto |
-| [`perguntas-abertas.md`](perguntas-abertas.md) | O que ainda falta verificar ou pesquisar |
+| [`fontes/`](fontes/) | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `fontes/privado/`, que fica fora do git |
+
+O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https://github.com/YgorPerez/pesquisa-relacionamentos/issues?q=is%3Aissue+is%3Aopen+label%3Aacervo). O passo a passo para trabalhar uma delas está na skill [`acervo`](.claude/skills/acervo/SKILL.md).
 
 ## Convenções
 
@@ -29,7 +29,7 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 - **Moderada:** bom desenho, mas uma única amostra, transversal ou com algum viés conhecido.
 - **Fraca:** amostra pequena, não representativa, comercial ou com conflito de interesse relevante.
 
-**Nomes de arquivo:** `estudos/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `relatorios/<AAAA-MM-DD>-<tema>.md`. Pesquisas: `pesquisas/<AAAA-MM-DD>-<tema>.md`.
+**Nomes de arquivo:** `estudos/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `relatorios/<AAAA-MM-DD>-<tema>.md`. Fonte local: `fontes/<slug-da-ficha>.<pdf|html|txt>` ou `fontes/privado/<slug-da-ficha>.<pdf|html|txt>`.
 
 Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/conteudo`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
 
@@ -80,12 +80,10 @@ Desde a migração para frontmatter (#26), todas as fichas estão `nao-verificad
 ## Relatórios
 
 - [2026-10-18: Casamentos, apps de namoro e onde procurar](relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md)
-
-## Pesquisas
-
-- [2026-10-18: Dados oficiais para estimar o Grupo possível](pesquisas/2026-10-18-dados-grupo-possivel.md) (ticket #2)
-- [2026-10-18: Características do parceiro, o que se diz vs. o que prevê](pesquisas/2026-10-18-caracteristicas-parceiro.md) (ticket #3)
-- [2026-10-18: Onde casais se conhecem, especialmente no Brasil](pesquisas/2026-10-18-onde-casais-se-conhecem.md) (ticket #4)
+- [2026-10-18: Dados oficiais para estimar o Grupo possível](relatorios/2026-10-18-dados-grupo-possivel.md) (ticket #2)
+- [2026-10-18: Características do parceiro, o que se diz vs. o que prevê](relatorios/2026-10-18-caracteristicas-parceiro.md) (ticket #3)
+- [2026-10-18: Onde casais se conhecem, especialmente no Brasil](relatorios/2026-10-18-onde-casais-se-conhecem.md) (ticket #4)
+- [2026-10-18: Base legal LGPD para o estado do link em log e analytics](relatorios/2026-10-18-lgpd-estado-link.md) (ticket #18)
 
 ## Dicas práticas
 

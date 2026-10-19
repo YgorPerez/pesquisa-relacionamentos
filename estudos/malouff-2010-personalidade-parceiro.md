@@ -45,4 +45,4 @@ Desenho, como descrito antes da migração: meta-análise de estudos correlacion
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): direção dos efeitos de personalidade do parceiro. Para o **tamanho**, usamos [Dyrenforth et al. 2010](dyrenforth-2010-personalidade-similaridade.md), que tem amostras representativas.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): direção dos efeitos de personalidade do parceiro. Para o **tamanho**, usamos [Dyrenforth et al. 2010](dyrenforth-2010-personalidade-similaridade.md), que tem amostras representativas.

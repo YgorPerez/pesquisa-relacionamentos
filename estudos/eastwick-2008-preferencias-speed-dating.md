@@ -43,4 +43,4 @@ Desenho, como descrito antes da migração: 7 eventos de speed dating com encont
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): evidência clássica de que o que as pessoas *dizem* querer prevê mal o que as atrai.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): evidência clássica de que o que as pessoas *dizem* querer prevê mal o que as atrai.

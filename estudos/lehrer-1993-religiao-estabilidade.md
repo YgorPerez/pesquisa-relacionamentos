@@ -41,4 +41,4 @@ Desenho, como descrito antes da migração: análise de sobrevivência dos casam
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): homogamia religiosa e divórcio (direção do efeito, sem tamanho).
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): homogamia religiosa e divórcio (direção do efeito, sem tamanho).

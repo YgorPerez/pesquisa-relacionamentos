@@ -43,4 +43,4 @@ Desenho, como descrito antes da migração: transversal, painel online.
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): único número brasileiro com metodologia mínima publicada sobre como o parceiro atual foi conhecido.
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): único número brasileiro com metodologia mínima publicada sobre como o parceiro atual foi conhecido.

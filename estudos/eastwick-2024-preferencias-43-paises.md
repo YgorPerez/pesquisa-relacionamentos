@@ -51,4 +51,4 @@ Desenho, como descrito antes da migração: registered report transversal. Parti
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): principal fonte sobre a diferença entre o que se declara e o que se revela, e sobre o peso pequeno do "match" com a lista pessoal de requisitos.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): principal fonte sobre a diferença entre o que se declara e o que se revela, e sobre o peso pequeno do "match" com a lista pessoal de requisitos.

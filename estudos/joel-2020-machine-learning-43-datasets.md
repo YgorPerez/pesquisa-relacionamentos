@@ -62,4 +62,4 @@ Desenho, como descrito antes da migração: longitudinal diádico; random forest
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): principal evidência de que traços do parceiro explicam pouco e a dinâmica da relação explica muito.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): principal evidência de que traços do parceiro explicam pouco e a dinâmica da relação explica muito.
