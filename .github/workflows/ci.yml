@@ -46,8 +46,19 @@ jobs:
       - name: Testes
         run: pnpm test
 
+      # O build confere o sitemap que está no ar: um caminho publicado que
+      # sumiu sem `antes` derruba o passo (`frontend/vite/acervo.ts`). Antes
+      # do primeiro deploy não há sitemap, e o build segue sem a conferência.
       - name: Build
-        run: pnpm build
+        run: |
+          # O `<urlset` separa o sitemap de uma página de domínio estacionado.
+          if curl -fsSL --max-time 20 https://temestudo.com/sitemap.xml -o "$RUNNER_TEMP/sitemap-anterior.xml" \
+            && grep -q '<urlset' "$RUNNER_TEMP/sitemap-anterior.xml"; then
+            export SITEMAP_ANTERIOR="$RUNNER_TEMP/sitemap-anterior.xml"
+          else
+            echo "::warning::Não baixei https://temestudo.com/sitemap.xml; o build não confere os caminhos publicados."
+          fi
+          pnpm build
 
       - name: Build do Storybook
         run: pnpm build-storybook

@@ -6,10 +6,15 @@ import { ForcaDaEvidencia } from '#/ui/selos'
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
   head: ({ loaderData: guia }) => ({
+    // A prévia do link repete o título e a descrição de busca; a imagem é a
+    // fixa do site, da raiz.
     meta: guia
       ? [
-          { title: `${guia.pergunta} · Tem estudo?` },
-          { name: 'description', content: guia.descricao },
+          { title: `${guia.busca.titulo} · Tem estudo?` },
+          { name: 'description', content: guia.busca.descricao },
+          { property: 'og:type', content: 'article' },
+          { property: 'og:title', content: guia.busca.titulo },
+          { property: 'og:description', content: guia.busca.descricao },
         ]
       : [],
   }),

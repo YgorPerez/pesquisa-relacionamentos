@@ -6,6 +6,7 @@ achados:
     fichas: [costa-2018-satisfacao]
 dicas: [apps-como-complemento]
 relacionadas: [onde-os-casais-se-conhecem]
+antes: [app-ou-bar, escolher-parceiro/onde-procurar]
 ---
 
 Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].

@@ -2,6 +2,7 @@
 referencia: "Silva A, Souza B. *Apps de namoro no Brasil*. Revista Exemplo 12(3):45–67, 2020."
 link: https://doi.org/10.1234/exemplo.2020.1
 status: ok
+antes: [silva-2020]
 verificado_em: 2026-10-19
 forca: forte
 forca_porque: "Amostra probabilística nacional, grande."
