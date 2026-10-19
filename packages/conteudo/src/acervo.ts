@@ -20,6 +20,12 @@ import {
   type Tema,
 } from './itens.ts'
 import { ligar } from './publicacao.ts'
+import {
+  ARQUIVO_DE_PRIORIDADES,
+  META_DE_PRIORIDADES,
+  lerPrioridades,
+  type Prioridades,
+} from './prioridades.ts'
 import { decodificar, problema, type Problema } from './problemas.ts'
 
 /** Um arquivo de conteúdo, com o caminho relativo à raiz (`estudos/x.md`). */
@@ -45,6 +51,8 @@ export interface Acervo {
   readonly dicas: ReadonlyArray<Dica>
   /** Os `.meta.yaml` de `dados/`, em ordem de caminho. */
   readonly dados: ReadonlyArray<OrigemDosDados>
+  /** O arquivo de Prioridades, ou `null` enquanto ele não existe. */
+  readonly prioridades: Prioridades | null
 }
 
 export type Resultado =
@@ -93,7 +101,13 @@ export function lerArquivos(raiz: string): ReadonlyArray<Arquivo> {
       lerPasta(raiz, `${PASTA_GUIAS}/${tema}`, (nome) => ehItem(nome) || nome === ARQUIVO_DO_TEMA),
     ),
     ...lerMetas(raiz),
+    ...lerSeExiste(raiz, ARQUIVO_DE_PRIORIDADES),
   ]
+}
+
+function lerSeExiste(raiz: string, caminho: string): Arquivo[] {
+  const completo = join(raiz, caminho)
+  return existsSync(completo) ? [{ caminho, texto: readFileSync(completo, 'utf8') }] : []
 }
 
 function lerMetas(raiz: string): Arquivo[] {
@@ -101,7 +115,9 @@ function lerMetas(raiz: string): Arquivo[] {
   if (!existsSync(dados)) return []
   return readdirSync(dados, { recursive: true, encoding: 'utf8' })
     .map((c) => c.split('\\').join('/'))
-    .filter((c) => c.endsWith(SUFIXO_META))
+    // Arquivo ou pasta que começa com `_` é rascunho e fica fora do build,
+    // como `dicas/_sem-ficha.md`.
+    .filter((c) => c.endsWith(SUFIXO_META) && !c.split('/').some((parte) => parte.startsWith('_')))
     .sort()
     .map((c) => ({ caminho: `${PASTA_DADOS}/${c}`, texto: readFileSync(join(dados, c), 'utf8') }))
 }
@@ -115,6 +131,7 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
   const metas: Arquivo[] = []
   const guias: GuiaLido[] = []
   const dicas: DicaLida[] = []
+  let arquivoDePrioridades: Arquivo | null = null
 
   const quebrados = new Set<string>()
   const guardar = <T>(caminho: string, lido: ItemLido<T>, onde: T[]) => {
@@ -128,7 +145,9 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
   for (const { caminho, texto } of arquivos) {
     const partes = caminho.split('/')
     const nome = partes[partes.length - 1] ?? ''
-    if (partes[0] === PASTA_DADOS && nome.endsWith(SUFIXO_META)) {
+    if (caminho === ARQUIVO_DE_PRIORIDADES) {
+      arquivoDePrioridades = { caminho, texto }
+    } else if (partes[0] === PASTA_DADOS && nome.endsWith(SUFIXO_META)) {
       metas.push({ caminho, texto })
     } else if (partes[0] === PASTA_FICHAS && partes.length === 2 && ehItem(nome)) {
       const lida = lerFicha(caminho, texto)
@@ -156,11 +175,23 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
     else erros.push(...lida.erros)
   }
 
+  let prioridades: Prioridades | null = null
+  if (arquivoDePrioridades) {
+    const lidas = lerPrioridades(
+      arquivoDePrioridades.caminho,
+      arquivoDePrioridades.texto,
+      fichas,
+      metas.some((m) => m.caminho === META_DE_PRIORIDADES),
+    )
+    if (lidas.ok) prioridades = lidas.prioridades
+    else erros.push(...lidas.erros)
+  }
+
   return erros.length > 0
     ? { ok: false, erros, avisos }
     : {
         ok: true,
-        acervo: { fichas, temas: ligados.temas, guias: ligados.guias, dicas: ligados.dicas, dados },
+        acervo: { fichas, temas: ligados.temas, guias: ligados.guias, dicas: ligados.dicas, dados, prioridades },
         avisos,
       }
 }

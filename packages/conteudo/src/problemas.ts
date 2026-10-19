@@ -39,7 +39,7 @@ function traduzir(original: string, valor: unknown): string {
   if (mensagem === 'Expected number') return `precisa ser um número${mostrado}`
   if (mensagem === 'Missing key') return 'campo obrigatório ausente'
   if (mensagem === 'Expected no excess property') return 'campo desconhecido'
-  const lista = /^Expected ((?:"[^"]*"(?: \| )?)+)$/.exec(mensagem)
+  const lista = /^Expected ((?:(?:"[^"]*"|-?\d+)(?: \| )?)+)$/.exec(mensagem)
   if (lista?.[1]) {
     const opcoes = lista[1].split(' | ').map((o) => o.replace(/"/g, ''))
     return `valor fora da lista fechada (${opcoes.join(' | ')})${mostrado}`

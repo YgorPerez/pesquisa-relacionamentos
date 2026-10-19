@@ -43,6 +43,12 @@ export {
   type Status,
 } from './listas.ts'
 export type { Achado, Ficha } from './ficha.ts'
+export type {
+  Caracteristica,
+  CelulaDePrioridade,
+  Prioridades,
+  SatisfacaoExplicada,
+} from './prioridades.ts'
 export type { Secao } from './markdown.ts'
 export { referenciasNoTexto } from './publicacao.ts'
 export { formatarProblemas, type Problema } from './problemas.ts'
