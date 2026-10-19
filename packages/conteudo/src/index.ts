@@ -8,9 +8,24 @@ export {
   montarAcervo,
   type Acervo,
   type Arquivo,
+  type Opcoes,
   type OrigemDosDados,
   type Resultado,
 } from './acervo.ts'
+export {
+  buscaDaDica,
+  buscaDaFicha,
+  buscaDoGuia,
+  buscaDoTema,
+  caminhosDoSitemap,
+  LIMITES,
+  ORIGEM,
+  redirecionamentos,
+  robotsTxt,
+  sitemapXml,
+  textoPuro,
+  type Busca,
+} from './busca.ts'
 export {
   caminhoDaDica,
   caminhoDaFicha,

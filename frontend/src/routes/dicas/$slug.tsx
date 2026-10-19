@@ -7,7 +7,7 @@ export const Route = createFileRoute('/dicas/$slug')({
   loader: ({ params }) => buscarDica({ data: params.slug }),
   head: ({ loaderData: dica }) => ({
     meta: dica
-      ? [{ title: `${dica.texto} · Tem estudo?` }, { name: 'description', content: dica.texto }]
+      ? [{ title: `${dica.busca.titulo} · Tem estudo?` }, { name: 'description', content: dica.busca.descricao }]
       : [],
   }),
   notFoundComponent: DicaNaoExiste,

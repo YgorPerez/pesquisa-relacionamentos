@@ -2,7 +2,7 @@
 // a lista de erros do build. A leitura do disco fica em `lerArquivos`; o
 // resto (`montarAcervo`) é função pura sobre textos, e é ela que recebe as
 // regras entre arquivos (DOI repetido, referências, Confiança, `ordem` dos
-// Temas, a Ficha citada pelos dados; o sitemap entra no #29).
+// Temas, a Ficha citada pelos dados, `antes` e o último sitemap publicado).
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { parse as lerYaml } from 'yaml'
@@ -27,6 +27,7 @@ import {
   type Prioridades,
 } from './prioridades.ts'
 import { decodificar, problema, type Problema } from './problemas.ts'
+import { avisosDeBusca, conferirSitemapAnterior, errosDoAntes } from './regras-de-busca.ts'
 
 /** Um arquivo de conteúdo, com o caminho relativo à raiz (`estudos/x.md`). */
 export interface Arquivo {
@@ -122,8 +123,14 @@ function lerMetas(raiz: string): Arquivo[] {
     .map((c) => ({ caminho: `${PASTA_DADOS}/${c}`, texto: readFileSync(join(dados, c), 'utf8') }))
 }
 
+export interface Opcoes {
+  /** O `sitemap.xml` que está no ar. Com ele, o build falha se um caminho
+   * publicado sumiu sem estar no `antes` de algum arquivo. */
+  readonly sitemapAnterior?: string
+}
+
 /** Monta o acervo a partir dos textos, sem tocar no disco. */
-export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
+export function montarAcervo(arquivos: ReadonlyArray<Arquivo>, opcoes: Opcoes = {}): Resultado {
   const erros: Problema[] = []
   const avisos: Problema[] = []
   const fichas: Ficha[] = []
@@ -187,18 +194,25 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>): Resultado {
     else erros.push(...lidas.erros)
   }
 
-  return erros.length > 0
-    ? { ok: false, erros, avisos }
-    : {
-        ok: true,
-        acervo: { fichas, temas: ligados.temas, guias: ligados.guias, dicas: ligados.dicas, dados, prioridades },
-        avisos,
-      }
+  if (erros.length > 0) return { ok: false, erros, avisos }
+  const acervo: Acervo = {
+    fichas,
+    temas: ligados.temas,
+    guias: ligados.guias,
+    dicas: ligados.dicas,
+    dados,
+    prioridades,
+  }
+  avisos.push(...avisosDeBusca(acervo))
+  erros.push(...errosDoAntes(acervo))
+  if (opcoes.sitemapAnterior !== undefined)
+    erros.push(...conferirSitemapAnterior(acervo, opcoes.sitemapAnterior))
+  return erros.length > 0 ? { ok: false, erros, avisos } : { ok: true, acervo, avisos }
 }
 
 /** Lê e monta: o que o build e o app chamam. */
-export function carregarAcervo(raiz: string): Resultado {
-  return montarAcervo(lerArquivos(raiz))
+export function carregarAcervo(raiz: string, opcoes: Opcoes = {}): Resultado {
+  return montarAcervo(lerArquivos(raiz), opcoes)
 }
 
 type MetaLida =

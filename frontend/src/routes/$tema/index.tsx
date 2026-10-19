@@ -6,7 +6,7 @@ export const Route = createFileRoute('/$tema/')({
   loader: ({ params }) => buscarTema({ data: params.tema }),
   head: ({ loaderData: tema }) => ({
     meta: tema
-      ? [{ title: `${tema.titulo} · Tem estudo?` }, { name: 'description', content: tema.descricao }]
+      ? [{ title: `${tema.busca.titulo} · Tem estudo?` }, { name: 'description', content: tema.busca.descricao }]
       : [],
   }),
   notFoundComponent: TemaNaoExiste,
