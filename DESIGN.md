@@ -1,5 +1,5 @@
 ---
-name: evidência! (nome provisório)
+name: Tem estudo?
 description: Guias sobre relacionamentos com a fonte junto, num zine impresso com cuidado.
 colors:
   papel: "#f5f8f8"
@@ -117,7 +117,7 @@ components:
     padding: "5px 10px"
 ---
 
-# Design System: evidência! (nome provisório)
+# Design System: Tem estudo?
 
 ## Overview
 
@@ -139,7 +139,7 @@ Celular primeiro, uma coluna. No desktop a coluna vira uma folha com contorno so
 - Contornos de 1,8 a 2px quase retos, com só uma leve irregularidade de mão.
 - Sombra de retícula fina deslocada, sem desfoque.
 - Confiança e Força em três degraus desenhados à mão, sempre com a palavra.
-- Textos em PT-BR. O nome do site ainda não existe; "evidência!" é provisório.
+- Textos em PT-BR. O site se chama "Tem estudo?".
 
 ## Colors
 

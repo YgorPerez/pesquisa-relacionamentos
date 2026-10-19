@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Decidida no mapa (#1): a mesma do Festival dos Macacos. Monorepo pnpm neste repositório, TanStack Start (React 19, Router, Query), Base UI e Storybook no front; Effect 4 com Drizzle/libSQL no back; contratos compartilhados; Vitest e Playwright; um contêiner por ambiente numa VPS. Os protótipos em `prototipos/` são HTML estático descartável.
+Decidida no mapa (#1): a mesma do Festival dos Macacos. Monorepo pnpm neste repositório, TanStack Start (React 19, Router, Query), Base UI e Storybook no front; renderização no servidor sem banco no MVP (o conteúdo entra no build); Vitest e Playwright. Roda num contêiner Docker atrás do Nginx numa VPS própria da Hostinger, só em produção, publicado a cada merge na main (#20). Os protótipos em `prototipos/` são HTML estático descartável.
 
 ## Users
 
@@ -39,11 +39,11 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 - Grupo possível (#8): número em faixa, "o que mais pesa", Requisito sem dado desabilitado com o motivo.
 - Prioridades (#9, #19): o usuário toca nas três características que mais importam, na ordem; a evidência agrupa em degraus por desfecho, sem nota de compatibilidade.
 - Fora do MVP: guias de comportamento/atração e de apps na prática, chat com IA, contas, outras línguas e países.
-- Em aberto: nome do site e domínio, deploy, SEO e URLs, privacidade do estado no link, analytics.
+- Em aberto: analytics (#22).
 
 ## Brand Commitments
 
-- Nome: ainda não existe.
+- Nome: **Tem estudo?**, em temestudo.com.
 - Voz: um amigo que leu os estudos. Direto, PT-BR coloquial, franco sobre o que a evidência não sabe. Sem jargão, sem paternalismo, sem tom de coach.
 - Linha ética: evidência, nunca táticas de manipulação.
 - Toda prosa passa pela skill `unslop`.
