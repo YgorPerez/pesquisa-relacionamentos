@@ -12,3 +12,6 @@
 .impeccable/critique/
 .impeccable/questions/
 .impeccable/rounds/
+
+# O monorepo pnpm (frontend/, packages/).
+node_modules/

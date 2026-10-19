@@ -1,0 +1,35 @@
+# O workspace do repo, no molde do Festival dos Macacos: um `pnpm install` na
+# raiz instala tudo, com um lockfile só. O conteúdo (`estudos/`, `dicas/`,
+# `relatorios/`, `fontes/`) fica onde está: não é pacote, e o app vai lê-lo
+# no build. `packages/` recebe os pacotes puros (Conteúdo, Regras).
+packages:
+  - frontend
+  - packages/*
+
+# As versões que mais de um pacote vai usar, escritas uma vez. Quem depende
+# de uma delas pede `catalog:` no `package.json`.
+catalog:
+  "@types/node": 24.19.1
+  typescript: 7.0.2
+  vite: 8.3.3
+  vitest: 5.0.4
+
+# Pacotes com script de pós-instalação que podem rodar. O pnpm bloqueia os que
+# não estão na lista e falha a instalação.
+allowBuilds:
+  esbuild: true
+
+# Um Vite só no workspace, para o app, o Storybook e o Vitest verem o mesmo.
+overrides:
+  vite: "catalog:"
+  # O `trustPolicy` abaixo recusa o semver 6, que vem do babel do Storybook
+  # (ainda pede `^6`). O 7 é o que o resto da árvore já usa, como no Festival.
+  semver@6: ^7.8.5
+
+# Uma versão recém-publicada só entra depois de um dia, o tempo em que o npm
+# costuma despublicar a que veio com malware.
+minimumReleaseAge: 1440
+
+# Uma atualização não pode chegar com menos garantia (procedência, assinatura)
+# do que a versão que ela substitui.
+trustPolicy: no-downgrade

@@ -1,0 +1,83 @@
+/* Os tokens do DESIGN.md ("O zine sério"), como variáveis CSS. Os nomes
+ * seguem o cabeçalho YAML de lá: `cor-<nome>`, `raio-<nome>`,
+ * `espaco-<nome>` e `tipo-<nome>-<familia|tamanho|peso|altura>`. O
+ * `tokens.test.ts` confere cada valor contra o DESIGN.md. */
+
+:root {
+  --cor-papel: #f5f8f8;
+  --cor-folha: #fcfdfd;
+  --cor-tinta: #1a1c1c;
+  --cor-tinta-2: #414948;
+  --cor-amarelo-voce: #ecd36f;
+  --cor-rosa-mito: #e7a3b6;
+  --cor-agua-fonte: #95cfc5;
+  --cor-agua-tinta: #0d6359;
+
+  --tipo-display-familia: Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-display-tamanho: clamp(33px, 8.6vw, 50px);
+  --tipo-display-peso: 700;
+  --tipo-display-altura: 1.06;
+  --tipo-display-espacamento: -0.022em;
+
+  --tipo-headline-familia: Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-headline-tamanho: 25px;
+  --tipo-headline-peso: 700;
+  --tipo-headline-altura: 1.15;
+  --tipo-headline-espacamento: -0.015em;
+
+  --tipo-title-familia: Bricolage Grotesque, Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-title-tamanho: 19.5px;
+  --tipo-title-peso: 600;
+  --tipo-title-altura: 1.3;
+  --tipo-title-espacamento: -0.01em;
+
+  --tipo-nota-de-margem-familia: Kalam, Atkinson Hyperlegible, cursive;
+  --tipo-nota-de-margem-tamanho: 17px;
+  --tipo-nota-de-margem-peso: 400;
+  --tipo-nota-de-margem-altura: 1.3;
+
+  --tipo-lead-familia: Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-lead-tamanho: 18.5px;
+  --tipo-lead-peso: 400;
+  --tipo-lead-altura: 1.58;
+
+  --tipo-body-familia: Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-body-tamanho: 17px;
+  --tipo-body-peso: 400;
+  --tipo-body-altura: 1.6;
+
+  --tipo-label-familia: Atkinson Hyperlegible, system-ui, sans-serif;
+  --tipo-label-tamanho: 14.5px;
+  --tipo-label-peso: 700;
+  --tipo-label-altura: 1.35;
+
+  --raio-mao: 7px 3px 6px 4px / 4px 6px 3px 7px;
+  --raio-mao-2: 3px 7px 4px 6px / 6px 4px 7px 3px;
+  --raio-bolota: 50% 47% 52% 48%;
+  --raio-redondo: 50%;
+
+  --espaco-xs: 6px;
+  --espaco-sm: 14px;
+  --espaco-md: 18px;
+  --espaco-lg: 30px;
+  --espaco-secao: 44px;
+  --espaco-rodape: 56px;
+
+  /* A única elevação: retícula fina de pontos em tinta a 62%, deslocada
+   * atrás do contorno (The Halftone Rule). */
+  --reticula: radial-gradient(circle, rgba(26, 28, 28, 0.62) 0.8px, transparent 1.2px) 0 0 / 4px 4px;
+  --reticula-deslocamento: translate(5px, 6px);
+  /* O fundo do desktop, a partir de 900px: a mesma retícula, mais clara e
+   * mais aberta. */
+  --reticula-fundo: radial-gradient(circle, rgba(26, 28, 28, 0.12) 0.8px, transparent 1.2px) 0 0 / 6px 6px;
+
+  /* Contornos (Shapes). */
+  --traco-painel: 2px;
+  --traco-controle: 1.8px;
+  --traco-etiqueta: 1.5px;
+
+  --alvo-de-toque: 44px;
+  --largura-pagina: 46rem;
+  --largura-texto: min(38rem, 66ch);
+  --sai: cubic-bezier(0.16, 1, 0.3, 1);
+}

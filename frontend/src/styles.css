@@ -1,0 +1,64 @@
+/* A base do site no sistema do DESIGN.md: papel frio, tinta, uma coluna,
+ * celular primeiro. Cada componente traz o próprio CSS ao lado dele. */
+
+@import './ui/fontes.css';
+@import './ui/tokens.css';
+@import './ui/componentes.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: var(--tipo-body-familia);
+  font-size: var(--tipo-body-tamanho);
+  font-weight: var(--tipo-body-peso);
+  line-height: var(--tipo-body-altura);
+}
+
+::selection {
+  background: var(--cor-amarelo-voce);
+  color: var(--cor-tinta);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-tinta);
+  outline-offset: 3px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 7px var(--cor-amarelo-voce);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* No desktop a coluna vira uma folha com contorno sobre a retícula fina. */
+@media (min-width: 900px) {
+  body {
+    background: var(--reticula-fundo), var(--cor-papel);
+  }
+}

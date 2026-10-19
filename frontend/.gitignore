@@ -1,0 +1,11 @@
+node_modules
+.output
+.nitro
+.tanstack
+storybook-static
+*.local
+.env
+
+# Playwright: os artefatos de falha.
+test-results
+playwright-report

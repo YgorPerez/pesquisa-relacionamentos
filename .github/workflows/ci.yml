@@ -1,0 +1,69 @@
+# Os testes e o build em cada PR e em cada push na main, no molde do `pr.yml`
+# do Festival dos Macacos. O deploy entra em outro workflow, com o ticket
+# dele.
+name: CI
+
+"on":
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Um push novo na mesma branch cancela a rodada anterior: o resultado que
+# conta é o do último commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  testes-e-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Sem `version`, a ação lê o `packageManager` do `package.json` da raiz.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Tipos
+        run: pnpm typecheck
+
+      # O Vitest dos pacotes e os testes dos scripts da raiz (`node --test`).
+      - name: Testes
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Build do Storybook
+        run: pnpm build-storybook
+
+      # O `playwright.config.ts` usa o Chrome da máquina (`channel: 'chrome'`),
+      # e a imagem ubuntu do GitHub já traz o Google Chrome.
+      - name: E2E
+        run: pnpm e2e
+
+      # O trace e a captura de tela do que falhou, em `test-results/`.
+      - name: Guardar traces do e2e
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-results
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 14

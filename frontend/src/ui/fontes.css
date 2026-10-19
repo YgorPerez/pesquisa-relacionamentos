@@ -1,0 +1,68 @@
+/* As fontes do DESIGN.md, auto-hospedadas: os woff2 latinos do @fontsource,
+ * em `src/fontes/`, com a licença OFL de cada uma ao lado. O latino cobre o
+ * português inteiro. */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('../fontes/bricolage-grotesque-latin-wght-normal.woff2') format('woff2');
+  font-weight: 500 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/atkinson-hyperlegible-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/atkinson-hyperlegible-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/atkinson-hyperlegible-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Os algarismos vêm da Source Sans 3, dentro da família da Atkinson, só de
+ * 0 a 9: o zero cortado da Atkinson fazia os números parecerem código
+ * (The Plain Digits Rule). Declaradas depois, estas faces ganham das de cima
+ * nesses caracteres. */
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/source-sans-3-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/source-sans-3-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fontes/source-sans-3-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url('../fontes/kalam-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
