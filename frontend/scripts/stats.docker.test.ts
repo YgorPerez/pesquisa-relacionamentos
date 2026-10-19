@@ -10,7 +10,7 @@ import { mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, test } from 'vite-plus/test'
-import { garantirOStats, pararOStatsSemSite, STATS } from './vps.ts'
+import { garantirOStats, pararOStatsSemSite, STATS } from './plano-do-deploy.ts'
 
 const LIGADO = process.env.TESTAR_GOATCOUNTER === '1'
 
