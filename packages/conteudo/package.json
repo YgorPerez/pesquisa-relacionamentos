@@ -4,6 +4,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./busca": "./src/busca.ts",
     "./caminhos": "./src/caminhos.ts",
     "./consultas": "./src/consultas.ts",
     "./listas": "./src/listas.ts"
