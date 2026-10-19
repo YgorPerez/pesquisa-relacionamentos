@@ -98,6 +98,24 @@ export const REQUISITOS_PADRAO: Requisitos = {
   naoFuma: false,
 }
 
+/** O que o `procura` do Perfil decide na conta, num lugar só. */
+export interface QuemSeProcura {
+  /** Os códigos de sexo do Censo na conta: 0 homem, 1 mulher. */
+  readonly sexos: ReadonlyArray<0 | 1>
+  /** Quem se procura, para a frase. */
+  readonly alvo: 'homens' | 'mulheres' | 'pessoas'
+  /** "Sem filhos": o Censo só pergunta às mulheres. */
+  readonly filhos: 'vale' | 'so-mulheres' | 'sem-dado'
+}
+
+const HOMENS: QuemSeProcura = { sexos: [0], alvo: 'homens', filhos: 'sem-dado' }
+const MULHERES: QuemSeProcura = { sexos: [1], alvo: 'mulheres', filhos: 'vale' }
+const PESSOAS: QuemSeProcura = { sexos: [0, 1], alvo: 'pessoas', filhos: 'so-mulheres' }
+
+/** Sem dizer quem procura, a conta junta os dois, como em `ambos`. */
+export const quemSeProcura = (perfil: Perfil | null): QuemSeProcura =>
+  perfil?.procura === 'homens' ? HOMENS : perfil?.procura === 'mulheres' ? MULHERES : PESSOAS
+
 /** A idade procurada: a escolhida, ou a do Perfil ±5, ou qualquer uma. */
 export function idadeProcurada(perfil: Perfil | null, requisitos: Requisitos): Faixa {
   if (requisitos.idade) return requisitos.idade
@@ -239,7 +257,7 @@ export function valorDoRequisito(
     case 'religiao':
       return r.religioes.length ? `religião ${ou(r.religioes.map((c) => ROTULO_DA_RELIGIAO[c]))}` : 'qualquer religião'
     case 'filhos':
-      if (perfil?.procura === 'homens') return 'sem dado para homens'
+      if (quemSeProcura(perfil).filhos === 'sem-dado') return 'sem dado para homens'
       return r.semFilhos ? 'sem filhos' : 'com ou sem filhos'
     case 'altura': {
       const { min, max } = r.altura

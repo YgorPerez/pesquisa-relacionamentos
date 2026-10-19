@@ -103,7 +103,7 @@ function PaginaDoGrupoPossivel() {
   const valor = (k: RequisitoDoVisitante | 'orientacao') => valorDoRequisito(k, perfil, r, municipio)
   const custo = (k: RequisitoDoVisitante) => estimativa.custos.find((c) => c.requisito === k)
   const ligado = (k: RequisitoDoVisitante) => estimativa.ligados.includes(k)
-  const filhos = perfil?.procura === 'homens' ? 'sem-dado' : perfil?.procura === 'mulheres' ? 'vale' : 'so-mulheres'
+  const { filhos } = estimativa
   const idMotivoFilhos = useId()
   const maisPesa = useRef<HTMLHeadingElement>(null)
   const fortes = estimativa.ressalvas.filter((x) => x.forte)

@@ -28,8 +28,10 @@ import {
   idadeProcurada,
   IDADE_PROCURADA_MAXIMA,
   IDADE_PROCURADA_MINIMA,
+  quemSeProcura,
   RELIGIOES,
   RENDAS,
+  type QuemSeProcura,
   type Requisitos,
 } from './requisitos.ts'
 
@@ -88,7 +90,7 @@ export interface Ressalva {
 
 export interface Estimativa {
   /** Quem se procura, para a frase: "mulheres", "homens" ou "pessoas". */
-  readonly alvo: 'homens' | 'mulheres' | 'pessoas'
+  readonly alvo: QuemSeProcura['alvo']
   /** Os Requisitos que entram na conta, na ordem do funil. */
   readonly ligados: ReadonlyArray<RequisitoId>
   readonly resultado: Contagem & { readonly instavel: boolean }
@@ -102,19 +104,10 @@ export interface Estimativa {
   readonly ingenua: number
   readonly ressalvas: ReadonlyArray<Ressalva>
   /** "Sem filhos": vale, só para as mulheres (procura ambos) ou sem dado (procura homens). */
-  readonly filhos: 'vale' | 'so-mulheres' | 'sem-dado'
+  readonly filhos: QuemSeProcura['filhos']
 }
 
 // --- partes da conta ---------------------------------------------------------
-
-const sexosProcurados = (perfil: Perfil | null): ReadonlyArray<number> =>
-  perfil?.procura === 'homens' ? [0] : perfil?.procura === 'mulheres' ? [1] : [0, 1]
-
-const alvo = (perfil: Perfil | null): Estimativa['alvo'] =>
-  perfil?.procura === 'homens' ? 'homens' : perfil?.procura === 'mulheres' ? 'mulheres' : 'pessoas'
-
-const filhos = (perfil: Perfil | null): Estimativa['filhos'] =>
-  perfil?.procura === 'homens' ? 'sem-dado' : perfil?.procura === 'mulheres' ? 'vale' : 'so-mulheres'
 
 /** Os Requisitos que mudam a conta. */
 export function requisitosLigados({ perfil, requisitos: r }: EntradaDaConta): RequisitoId[] {
@@ -128,7 +121,7 @@ export function requisitosLigados({ perfil, requisitos: r }: EntradaDaConta): Re
     renda: r.renda !== null,
     cor: r.cores.length > 0,
     religiao: r.religioes.length > 0,
-    filhos: r.semFilhos && filhos(perfil) !== 'sem-dado',
+    filhos: r.semFilhos && quemSeProcura(perfil).filhos !== 'sem-dado',
     altura: r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA,
     fumo: r.naoFuma,
   }
@@ -211,7 +204,7 @@ function contar(entrada: EntradaDaConta, dados: DadosDaConta, ligados: ReadonlyS
 
   // Tudo o que depende só de sexo × grupo (e união, no município) sai antes do laço.
   const idade = ligados.has('idade') ? idadeProcurada(perfil, r) : { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA }
-  const sexos = sexosProcurados(perfil)
+  const { sexos } = quemSeProcura(perfil)
   const G = GRUPOS_DE_IDADE.length
   const fator = new Float64Array(SEXOS.length * G)
   const pns: Intervalo[] = []
@@ -323,7 +316,7 @@ function ressalvas(entrada: EntradaDaConta, ligados: ReadonlyArray<RequisitoId>,
       forte: true,
       texto: 'Sem dizer quem você procura, a conta junta homens e mulheres.',
     },
-    tem('filhos') && filhos(perfil) === 'so-mulheres' && {
+    tem('filhos') && quemSeProcura(perfil).filhos === 'so-mulheres' && {
       id: 'filhos-so-mulheres',
       forte: true,
       texto: 'O Censo só pergunta filhos às mulheres: "sem filhos" vale para elas, e os homens entram com ou sem filhos.',
@@ -389,8 +382,9 @@ export function estimarGrupo(entrada: EntradaDaConta, dados: DadosDaConta): Esti
 
   const { semResposta: _, ...resultado } = atual
   const { semResposta: __, ...daBase } = base
+  const procurado = quemSeProcura(entrada.perfil)
   return {
-    alvo: alvo(entrada.perfil),
+    alvo: procurado.alvo,
     ligados,
     resultado: { ...resultado, instavel: atual.registros < REGISTROS_PARA_ESTAVEL },
     base: daBase,
@@ -398,6 +392,6 @@ export function estimarGrupo(entrada: EntradaDaConta, dados: DadosDaConta): Esti
     funil,
     ingenua,
     ressalvas: ressalvas(entrada, ligados, atual),
-    filhos: filhos(entrada.perfil),
+    filhos: procurado.filhos,
   }
 }

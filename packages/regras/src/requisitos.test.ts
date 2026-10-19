@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   idadeProcurada,
   lerRequisitos,
+  quemSeProcura,
   REQUISITOS_PADRAO,
   soltar,
   valorDoRequisito,
@@ -93,5 +94,22 @@ describe('idadeProcurada', () => {
   it('sem idade no Perfil, qualquer idade; depois de mexer, a escolhida', () => {
     expect(idadeProcurada(null, REQUISITOS_PADRAO)).toEqual({ min: 18, max: 80 })
     expect(idadeProcurada({ idade: 30 }, { ...REQUISITOS_PADRAO, idade: { min: 40, max: 50 } })).toEqual({ min: 40, max: 50 })
+  })
+})
+
+describe('quemSeProcura', () => {
+  it('procurando mulheres: o sexo 1 do Censo, "mulheres" e o filtro de filhos vale', () => {
+    expect(quemSeProcura({ procura: 'mulheres' })).toEqual({ sexos: [1], alvo: 'mulheres', filhos: 'vale' })
+  })
+
+  it('procurando homens: o sexo 0, "homens" e sem dado de filhos', () => {
+    expect(quemSeProcura({ procura: 'homens' })).toEqual({ sexos: [0], alvo: 'homens', filhos: 'sem-dado' })
+  })
+
+  it('procurando os dois, ou sem dizer: os dois sexos, "pessoas" e filhos só para as mulheres', () => {
+    const ambos = { sexos: [0, 1], alvo: 'pessoas', filhos: 'so-mulheres' }
+    expect(quemSeProcura({ procura: 'ambos' })).toEqual(ambos)
+    expect(quemSeProcura({ genero: 'homem' })).toEqual(ambos)
+    expect(quemSeProcura(null)).toEqual(ambos)
   })
 })

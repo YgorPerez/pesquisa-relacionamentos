@@ -21,9 +21,11 @@ import {
   IDADE_PROCURADA_MAXIMA,
   IDADE_PROCURADA_MINIMA,
   lerRequisitos,
+  quemSeProcura,
   REQUISITOS_PADRAO,
   valorDoRequisito,
   type Faixa,
+  type QuemSeProcura,
   type Requisitos,
 } from './requisitos.ts'
 
@@ -238,7 +240,7 @@ function outrosRequisitos(perfil: Perfil | null, r: Requisitos): string[] {
     r.renda && valor('renda'),
     r.cores.length > 0 && valor('cor'),
     r.religioes.length > 0 && valor('religiao'),
-    r.semFilhos && perfil?.procura !== 'homens' && valor('filhos'),
+    r.semFilhos && quemSeProcura(perfil).filhos !== 'sem-dado' && valor('filhos'),
     (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA) && valor('altura'),
     r.naoFuma && valor('fumo'),
   ].filter((x): x is string => typeof x === 'string')
@@ -262,7 +264,7 @@ const maiuscula = (texto: string) => texto.charAt(0).toUpperCase() + texto.slice
 
 /** O que a prévia precisa da conta (`Estimativa` encaixa). */
 export interface ContaDaPrevia {
-  readonly alvo: 'homens' | 'mulheres' | 'pessoas'
+  readonly alvo: QuemSeProcura['alvo']
   readonly resultado: { readonly min: number; readonly max: number }
 }
 
