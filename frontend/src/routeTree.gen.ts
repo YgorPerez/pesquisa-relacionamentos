@@ -10,12 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TemaIndexRouteImport } from './routes/$tema/index'
+import { Route as TemaSlugRouteImport } from './routes/$tema/$slug'
+import { Route as DicasIndexRouteImport } from './routes/dicas/index'
+import { Route as DicasSlugRouteImport } from './routes/dicas/$slug'
 import { Route as EstudosIndexRouteImport } from './routes/estudos/index'
 import { Route as EstudosSlugRouteImport } from './routes/estudos/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemaIndexRoute = TemaIndexRouteImport.update({
+  id: '/$tema/',
+  path: '/$tema/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemaSlugRoute = TemaSlugRouteImport.update({
+  id: '/$tema/$slug',
+  path: '/$tema/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DicasIndexRoute = DicasIndexRouteImport.update({
+  id: '/dicas/',
+  path: '/dicas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DicasSlugRoute = DicasSlugRouteImport.update({
+  id: '/dicas/$slug',
+  path: '/dicas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstudosIndexRoute = EstudosIndexRouteImport.update({
@@ -31,31 +55,69 @@ const EstudosSlugRoute = EstudosSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$tema/$slug': typeof TemaSlugRoute
+  '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
+  '/$tema/': typeof TemaIndexRoute
+  '/dicas/': typeof DicasIndexRoute
   '/estudos/': typeof EstudosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$tema/$slug': typeof TemaSlugRoute
+  '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
+  '/$tema': typeof TemaIndexRoute
+  '/dicas': typeof DicasIndexRoute
   '/estudos': typeof EstudosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$tema/$slug': typeof TemaSlugRoute
+  '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
+  '/$tema/': typeof TemaIndexRoute
+  '/dicas/': typeof DicasIndexRoute
   '/estudos/': typeof EstudosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/estudos/$slug' | '/estudos/'
+  fullPaths:
+    | '/'
+    | '/$tema/$slug'
+    | '/dicas/$slug'
+    | '/estudos/$slug'
+    | '/$tema/'
+    | '/dicas/'
+    | '/estudos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/estudos/$slug' | '/estudos'
-  id: '__root__' | '/' | '/estudos/$slug' | '/estudos/'
+  to:
+    | '/'
+    | '/$tema/$slug'
+    | '/dicas/$slug'
+    | '/estudos/$slug'
+    | '/$tema'
+    | '/dicas'
+    | '/estudos'
+  id:
+    | '__root__'
+    | '/'
+    | '/$tema/$slug'
+    | '/dicas/$slug'
+    | '/estudos/$slug'
+    | '/$tema/'
+    | '/dicas/'
+    | '/estudos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TemaSlugRoute: typeof TemaSlugRoute
+  DicasSlugRoute: typeof DicasSlugRoute
   EstudosSlugRoute: typeof EstudosSlugRoute
+  TemaIndexRoute: typeof TemaIndexRoute
+  DicasIndexRoute: typeof DicasIndexRoute
   EstudosIndexRoute: typeof EstudosIndexRoute
 }
 
@@ -66,6 +128,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$tema/': {
+      id: '/$tema/'
+      path: '/$tema'
+      fullPath: '/$tema/'
+      preLoaderRoute: typeof TemaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$tema/$slug': {
+      id: '/$tema/$slug'
+      path: '/$tema/$slug'
+      fullPath: '/$tema/$slug'
+      preLoaderRoute: typeof TemaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dicas/': {
+      id: '/dicas/'
+      path: '/dicas'
+      fullPath: '/dicas/'
+      preLoaderRoute: typeof DicasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dicas/$slug': {
+      id: '/dicas/$slug'
+      path: '/dicas/$slug'
+      fullPath: '/dicas/$slug'
+      preLoaderRoute: typeof DicasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estudos/': {
@@ -87,7 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TemaSlugRoute: TemaSlugRoute,
+  DicasSlugRoute: DicasSlugRoute,
   EstudosSlugRoute: EstudosSlugRoute,
+  TemaIndexRoute: TemaIndexRoute,
+  DicasIndexRoute: DicasIndexRoute,
   EstudosIndexRoute: EstudosIndexRoute,
 }
 export const routeTree = rootRouteImport

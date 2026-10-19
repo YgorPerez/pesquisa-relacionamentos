@@ -1,0 +1,83 @@
+// Temas, Guias e Dicas para as páginas, lidos no servidor como as Fichas
+// (`fichas.ts`): o navegador recebe só a vista pronta de cada página.
+import { notFound } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+import {
+  dicaPorSlug,
+  dicaPublicada,
+  guiaPorSlug,
+  temaPorSlug,
+} from '@tem-estudo/conteudo/consultas'
+import {
+  resumoDaDica,
+  resumoDoGuia,
+  vistaDaDica,
+  vistaDoGuia,
+  vistaDoTema,
+  type DicaResumo,
+  type DicaVista,
+  type GuiaResumo,
+  type GuiaVista,
+  type TemaVista,
+} from './vista-guia'
+
+const texto = (valor: unknown, nome: string): string => {
+  if (typeof valor !== 'string') throw new Error(`${nome} inválido`)
+  return valor
+}
+
+export interface TemaNoInicio {
+  readonly slug: string
+  readonly titulo: string
+  readonly guias: ReadonlyArray<GuiaResumo>
+}
+
+/** Os Temas com as Perguntas na ordem, para a página inicial. */
+export const listarTemas = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<ReadonlyArray<TemaNoInicio>> => {
+    const { default: acervo } = await import('virtual:acervo')
+    return acervo.temas.map((tema) => ({
+      slug: tema.slug,
+      titulo: tema.titulo,
+      guias: acervo.guias.filter((g) => g.tema === tema.slug).map(resumoDoGuia),
+    }))
+  },
+)
+
+export const buscarTema = createServerFn({ method: 'GET' })
+  .validator((slug: unknown) => texto(slug, 'tema'))
+  .handler(async ({ data: slug }): Promise<TemaVista> => {
+    const { default: acervo } = await import('virtual:acervo')
+    const tema = temaPorSlug(acervo, slug)
+    if (!tema) throw notFound()
+    return vistaDoTema(tema, acervo)
+  })
+
+export const buscarGuia = createServerFn({ method: 'GET' })
+  .validator((dados: unknown) => {
+    const { tema, slug } = (dados ?? {}) as Record<string, unknown>
+    return { tema: texto(tema, 'tema'), slug: texto(slug, 'slug') }
+  })
+  .handler(async ({ data }): Promise<GuiaVista> => {
+    const { default: acervo } = await import('virtual:acervo')
+    const guia = guiaPorSlug(acervo, data.slug)
+    if (!guia || guia.tema !== data.tema) throw notFound()
+    return vistaDoGuia(guia, acervo)
+  })
+
+/** As Dicas publicadas: as que se apoiam só em Fichas ✅ ou 🟡. */
+export const listarDicas = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<ReadonlyArray<DicaResumo>> => {
+    const { default: acervo } = await import('virtual:acervo')
+    return acervo.dicas.filter(dicaPublicada).map(resumoDaDica)
+  },
+)
+
+export const buscarDica = createServerFn({ method: 'GET' })
+  .validator((slug: unknown) => texto(slug, 'slug'))
+  .handler(async ({ data: slug }): Promise<DicaVista> => {
+    const { default: acervo } = await import('virtual:acervo')
+    const dica = dicaPorSlug(acervo, slug)
+    if (!dica || !dicaPublicada(dica)) throw notFound()
+    return vistaDaDica(dica, acervo)
+  })
