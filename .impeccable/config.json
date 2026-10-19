@@ -524,6 +524,18 @@
         ],
         "createdAt": "2026-10-19T14:40:49.441Z",
         "reason": "agent: section.sec background is only a 6px hand-drawn rule at the top, not a filled container"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "bricolage",
+        "createdAt": "2026-10-19T16:55:09.420Z",
+        "reason": "agent: alias de @font-face para Bricolage Grotesque, a fonte display do DESIGN.md"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "atkinson",
+        "createdAt": "2026-10-19T16:55:09.434Z",
+        "reason": "agent: alias de @font-face para Atkinson Hyperlegible, a fonte de corpo do DESIGN.md"
       }
     ]
   }
