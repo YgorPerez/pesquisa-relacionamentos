@@ -8,6 +8,7 @@ export {
   montarAcervo,
   type Acervo,
   type Arquivo,
+  type OrigemDosDados,
   type Resultado,
 } from './acervo.ts'
 export {
