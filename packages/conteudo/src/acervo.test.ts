@@ -296,6 +296,7 @@ describe('o acervo do repositório', () => {
     expect(acervo.dados.map((d) => [d.arquivo, d.ficha])).toEqual([
       ['dados/grupo-possivel/censo-2022.meta.yaml', 'ibge-2022-censo-amostra'],
       ['dados/grupo-possivel/pns-2019.meta.yaml', 'ibge-2019-pns'],
+      ['dados/grupo-possivel/sidra-10185-municipios.meta.yaml', 'ibge-2022-censo-amostra'],
       ['dados/grupo-possivel/sidra-9514-idade.meta.yaml', 'ibge-2022-censo-amostra'],
       ['dados/grupo-possivel/sidra-9514-municipios.meta.yaml', 'ibge-2022-censo-amostra'],
     ])

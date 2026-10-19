@@ -11,6 +11,7 @@ import {
 import {
   resumoDaDica,
   resumoDoGuia,
+  semMarcas,
   vistaDaDica,
   vistaDoGuia,
   vistaDoTema,
@@ -63,6 +64,33 @@ export const buscarGuia = createServerFn({ method: 'GET' })
     const guia = guiaPorSlug(acervo, data.slug)
     if (!guia || guia.tema !== data.tema) throw notFound()
     return vistaDoGuia(guia, acervo)
+  })
+
+export interface GuiaDaCalculadora {
+  readonly tema: string
+  readonly slug: string
+  readonly pergunta: string
+  readonly confianca: GuiaVista['confianca']
+  /** A resposta curta em texto puro: as referências levam a Fichas da página do Guia. */
+  readonly resposta: string
+}
+
+/** O Guia que hospeda a calculadora (`calculadora:` no frontmatter), para o
+ * bloco "Do Guia" da página dela; `null` enquanto nenhum Guia publicado a hospeda. */
+export const buscarGuiaDaCalculadora = createServerFn({ method: 'GET' })
+  .validator((nome: unknown) => texto(nome, 'calculadora'))
+  .handler(async ({ data: nome }): Promise<GuiaDaCalculadora | null> => {
+    const { default: acervo } = await import('virtual:acervo')
+    const guia = acervo.guias.find((g) => g.calculadora === nome)
+    if (!guia) return null
+    const resumo = resumoDoGuia(guia)
+    return {
+      tema: guia.tema,
+      slug: guia.slug,
+      pergunta: resumo.pergunta,
+      confianca: guia.confianca,
+      resposta: semMarcas(guia.respostaCurta),
+    }
   })
 
 /** As Dicas publicadas: as que se apoiam só em Fichas ✅ ou 🟡. */

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GrupoPossivelRouteImport } from './routes/grupo-possivel'
 import { Route as TemaIndexRouteImport } from './routes/$tema/index'
 import { Route as TemaSlugRouteImport } from './routes/$tema/$slug'
 import { Route as DicasIndexRouteImport } from './routes/dicas/index'
@@ -20,6 +21,11 @@ import { Route as EstudosSlugRouteImport } from './routes/estudos/$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrupoPossivelRoute = GrupoPossivelRouteImport.update({
+  id: '/grupo-possivel',
+  path: '/grupo-possivel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TemaIndexRoute = TemaIndexRouteImport.update({
@@ -55,6 +61,7 @@ const EstudosSlugRoute = EstudosSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/grupo-possivel': typeof GrupoPossivelRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/grupo-possivel': typeof GrupoPossivelRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/grupo-possivel': typeof GrupoPossivelRoute
   '/$tema/$slug': typeof TemaSlugRoute
   '/dicas/$slug': typeof DicasSlugRoute
   '/estudos/$slug': typeof EstudosSlugRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/grupo-possivel'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/grupo-possivel'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/grupo-possivel'
     | '/$tema/$slug'
     | '/dicas/$slug'
     | '/estudos/$slug'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GrupoPossivelRoute: typeof GrupoPossivelRoute
   TemaSlugRoute: typeof TemaSlugRoute
   DicasSlugRoute: typeof DicasSlugRoute
   EstudosSlugRoute: typeof EstudosSlugRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grupo-possivel': {
+      id: '/grupo-possivel'
+      path: '/grupo-possivel'
+      fullPath: '/grupo-possivel'
+      preLoaderRoute: typeof GrupoPossivelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$tema/': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GrupoPossivelRoute: GrupoPossivelRoute,
   TemaSlugRoute: TemaSlugRoute,
   DicasSlugRoute: DicasSlugRoute,
   EstudosSlugRoute: EstudosSlugRoute,

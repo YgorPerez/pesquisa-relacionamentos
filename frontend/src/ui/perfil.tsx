@@ -155,10 +155,13 @@ export function CaixaDoPerfil({
   perfil,
   comDado,
   totalDeAchados,
+  rotuloDoBotao = 'Ver o que vale para mim',
 }: {
   perfil: Perfil | null
   comDado: number | null
   totalDeAchados: number
+  /** O texto do botão que salva; a calculadora usa o dela. */
+  rotuloDoBotao?: string
 }) {
   const id = useId()
   const [editando, setEditando] = useState(false)
@@ -252,7 +255,7 @@ export function CaixaDoPerfil({
             </p>
           )}
           <div className="perfil-acoes">
-            <Botao type="submit">Ver o que vale para mim</Botao>
+            <Botao type="submit">{rotuloDoBotao}</Botao>
             {perfil && (
               <Botao variante="leve" onClick={apagar}>
                 Apagar o Perfil
