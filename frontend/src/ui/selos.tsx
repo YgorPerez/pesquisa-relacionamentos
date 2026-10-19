@@ -1,26 +1,17 @@
 // Status de verificação e Força da evidência, sempre desenhados e escritos
 // (DESIGN.md: "Don't mostrar Confiança, Status ou Força só por cor").
-import type { Desenho, Forca, Status } from '@tem-estudo/conteudo'
+import type { Forca, Status } from '@tem-estudo/conteudo'
 
-export const PALAVRA_DO_STATUS: Record<Status, string> = {
+const PALAVRA_DO_STATUS: Record<Status, string> = {
   ok: 'lido no original',
   parcial: 'parcial',
   'nao-verificado': 'não verificado',
 }
 
-export const PALAVRA_DO_DESENHO: Record<Desenho, string> = {
-  longitudinal: 'longitudinal (acompanha as mesmas pessoas no tempo)',
-  transversal: 'transversal (um retrato num momento)',
-  experimento: 'experimento',
-  plataforma: 'dados de plataforma',
-  administrativo: 'registro administrativo',
-  'meta-analise': 'meta-análise (junta vários estudos)',
-}
-
 const DEGRAUS_DA_FORCA: Record<Forca, number> = { fraca: 1, moderada: 2, forte: 3 }
 
 /** Caixa com visto (lido), caixa hachurada (parcial), caixa vazia (não verificado). */
-export function IconeDoStatus({ status }: { status: Status }) {
+function IconeDoStatus({ status }: { status: Status }) {
   return (
     <svg
       className="icone-status"

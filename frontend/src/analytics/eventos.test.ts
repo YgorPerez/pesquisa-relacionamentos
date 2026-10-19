@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { EVENTOS } from './eventos'
 
 // Os nomes são o que aparece no painel do GoatCounter (#21): mudar um quebra

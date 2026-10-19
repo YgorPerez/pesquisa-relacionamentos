@@ -108,7 +108,8 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
   if (!lida.ok) return geral(`a Ficha não passa no build: ${lida.erros.map((e) => e.mensagem).join('; ')}`)
 
   const fonte = opcoes.fonte ?? acharFonte(raiz, slug)
-  if (!fonte) return geral(`sem Fonte local: nenhum fontes/${slug}.{${EXTENSOES}} nem fontes/privado/${slug}.{${EXTENSOES}}`)
+  const extensoes = EXTENSOES.join(',')
+  if (!fonte) return geral(`sem Fonte local: nenhum fontes/${slug}.{${extensoes}} nem fontes/privado/${slug}.{${extensoes}}`)
   if (!existsSync(join(raiz, fonte))) return geral(`a Fonte local ${fonte} não existe`)
   const texto = normalizar(lerFonte(raiz, fonte))
   if (lida.ficha.achados.length === 0) return { ...geral('a tabela de Achados está vazia'), fonte }

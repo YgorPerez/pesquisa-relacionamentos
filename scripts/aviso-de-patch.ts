@@ -74,7 +74,7 @@ function arquivosDoSed(argumentos: string): string[] {
   }
   const arquivos = scriptPorOpcao ? soltas : soltas.slice(1)
   return arquivos.filter(
-    (arquivo) => arquivo !== "''" && /[A-Za-z]/.test(arquivo) && /^[\w.\/~$-]+$/.test(arquivo),
+    (arquivo) => arquivo !== "''" && /[A-Za-z]/.test(arquivo) && /^[\w./~$-]+$/.test(arquivo),
   )
 }
 

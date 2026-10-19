@@ -1,7 +1,7 @@
 // As probabilidades da PNS 2019 por sexo × faixa de idade, com o intervalo
 // do desenho amostral (estrato e UPA), sobre registros de exemplo.
 import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vite-plus/test'
 import { estimarPns, type RegistroPns } from './pns.ts'
 
 const adulto = (parcial: Partial<RegistroPns>): RegistroPns => ({

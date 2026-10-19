@@ -3,7 +3,7 @@
 // escrever erro ou aviso no console. Roda com `pnpm test:stories`, fora do
 // `pnpm test`: o navegador pesa.
 import { composeStories } from '@storybook/react-vite'
-import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vite-plus/test'
 
 const MODULOS = import.meta.glob<Parameters<typeof composeStories>[0]>('../../**/*.stories.tsx', { eager: true })
 
@@ -23,14 +23,14 @@ it('acha as stories', () => {
   expect(Object.keys(MODULOS).length).toBeGreaterThan(0)
 })
 
-for (const [arquivo, modulo] of Object.entries(MODULOS).sort(([a], [b]) => (a < b ? -1 : 1))) {
-  describe(arquivo.replace(/^(\.\.\/)+/, ''), () => {
-    const stories = Object.entries(composeStories(modulo)) as Array<[string, { run: () => Promise<void> }]>
-    for (const [nome, story] of stories) {
-      it(nome, async () => {
-        await story.run()
-        expect([...erros.mock.calls, ...avisos.mock.calls].map(emTexto)).toEqual([])
-      })
-    }
+const ARQUIVOS = Object.entries(MODULOS)
+  .sort(([a], [b]) => (a < b ? -1 : 1))
+  .map(([arquivo, modulo]) => [arquivo.replace(/^(\.\.\/)+/, ''), modulo] as const)
+
+describe.each(ARQUIVOS)('%s', (_arquivo, modulo) => {
+  const stories = Object.entries(composeStories(modulo)) as Array<[string, { run: () => Promise<void> }]>
+  it.each(stories)('%s', async (_nome, story) => {
+    await story.run()
+    expect([...erros.mock.calls, ...avisos.mock.calls].map(emTexto)).toEqual([])
   })
-}
+})

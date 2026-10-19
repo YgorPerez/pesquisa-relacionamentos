@@ -246,9 +246,22 @@ export interface DadosDoLugar {
   readonly pns: Pns
 }
 
-/** Abre um pacote (que veio da rede: confere o formato antes). */
-export function abrirPacote(pacote: Pacote): DadosDoLugar {
-  if (pacote?.versao !== 1 || !Array.isArray(pacote.celulas)) throw new Error('pacote do Grupo possível em formato desconhecido')
+/** O pacote da versão que este código lê. */
+function ehPacote(valor: unknown): valor is Pacote {
+  return (
+    typeof valor === 'object' &&
+    valor !== null &&
+    'versao' in valor &&
+    valor.versao === 1 &&
+    'celulas' in valor &&
+    Array.isArray(valor.celulas)
+  )
+}
+
+/** Abre um pacote (que veio da rede ou do disco, como JSON: confere o
+ * formato antes). */
+export function abrirPacote(pacote: unknown): DadosDoLugar {
+  if (!ehPacote(pacote)) throw new Error('pacote do Grupo possível em formato desconhecido')
   const n = pacote.celulas.length
   const colunas = Array.from({ length: RAIOS.length }, () => new Uint8Array(n))
   const partes: number[] = []

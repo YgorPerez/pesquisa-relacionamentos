@@ -2,7 +2,7 @@
 // degrau, a medida, o texto simples e a Ficha, e o viés por gênero.
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { formatarProblemas, lerArquivos, montarAcervo, type Arquivo, type Resultado } from './index.ts'
 
 const fixture = (nome: string) => fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))

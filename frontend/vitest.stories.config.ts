@@ -2,8 +2,8 @@
 // molde do Festival dos Macacos, fica fora do `vite.config.ts` porque a
 // story se monta com o Vite do Storybook (`.storybook/vite.config.ts`), e
 // não com o do app (TanStack Start e nitro).
-import { playwright } from '@vitest/browser-playwright'
-import { defineConfig, mergeConfig } from 'vitest/config'
+import { playwright } from 'vite-plus/test/browser-playwright'
+import { defineConfig, mergeConfig } from 'vite-plus'
 import doStorybook from './.storybook/vite.config.ts'
 
 export default mergeConfig(

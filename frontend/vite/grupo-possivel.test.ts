@@ -5,7 +5,7 @@ import { abrirPacote, type LugarDoPacote } from '@tem-estudo/regras/grupo-possiv
 import { estimarGrupo } from '@tem-estudo/regras/grupo-possivel'
 import { formatarQuantidade } from '@tem-estudo/regras/numeros'
 import { REQUISITOS_PADRAO, type Requisitos } from '@tem-estudo/regras/requisitos'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { montarPacotes } from './grupo-possivel.ts'
 
 const montados = montarPacotes(resolve(import.meta.dirname, '../../dados/grupo-possivel'))

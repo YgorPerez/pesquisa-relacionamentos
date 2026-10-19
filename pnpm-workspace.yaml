@@ -9,12 +9,22 @@ packages:
 # As versões que mais de um pacote vai usar, escritas uma vez. Quem depende
 # de uma delas pede `catalog:` no `package.json`.
 catalog:
+  # O `prepare` da raiz aplica o patch dele no `typescript` e no Oxlint do
+  # Vite+ (ADR 0004). Cada versão dele aceita uma lista curta de Oxlint e de
+  # `oxlint-tsgolint`: suba os dois juntos com o `vite-plus`.
+  "@effect/tsgo": 0.53.4
+  "@total-typescript/ts-reset": 0.6.1
   "@types/node": 24.19.1
+  "@vitest/browser-playwright": 5.0.5
+  "@vitest/coverage-v8": 5.0.5
   # O Schema só decodifica igual com o mesmo `effect` no pacote e no app.
   effect: 4.0.2
   typescript: 7.0.2
-  vite: 8.3.3
-  vitest: 5.0.4
+  # O Vite do workspace é o núcleo do Vite+, e o Vitest é o que ele traz
+  # (`vp toolchain`). Os três sobem juntos (ADR 0002).
+  vite: npm:@voidzero-dev/vite-plus-core@1.3.0
+  vite-plus: 1.3.0
+  vitest: 5.0.5
   yaml: ^2.8.1
 
 # Pacotes com script de pós-instalação que podem rodar. O pnpm bloqueia os que
@@ -22,12 +32,24 @@ catalog:
 allowBuilds:
   esbuild: true
 
-# Um Vite só no workspace, para o app, o Storybook e o Vitest verem o mesmo.
+# Um Vite e um Vitest só no workspace, os do Vite+, para o app, o Storybook,
+# os plugins e o `vp test` verem a mesma cópia. Dois Vites quebram o
+# `instanceof` do TanStack Start (vite-plus#1391).
 overrides:
-  vite: "catalog:"
+  vite@*: "catalog:"
+  vitest@*: "catalog:"
   # O `trustPolicy` abaixo recusa o semver 6, que vem do babel do Storybook
   # (ainda pede `^6`). O 7 é o que o resto da árvore já usa, como no Festival.
   semver@6: ^7.8.5
+
+# O React Doctor traz um Oxlint dele (1.81), e o plugin dele só roda nessa
+# versão: com o 1.88 do Vite+ o lint dele quebra. Ele fica com o seu, mas fora
+# de `node_modules/.pnpm/node_modules`: dali, o `NODE_PATH` que o pnpm dá aos
+# scripts o entregava ao patch do `@effect/tsgo` no `prepare`, que recusa o
+# 1.81. Assim o patch acha só o Oxlint do Vite+ (ADR 0004).
+hoistPattern:
+  - "*"
+  - "!oxlint"
 
 # Uma versão recém-publicada só entra depois de um dia, o tempo em que o npm
 # costuma despublicar a que veio com malware.
@@ -36,3 +58,12 @@ minimumReleaseAge: 1440
 # Uma atualização não pode chegar com menos garantia (procedência, assinatura)
 # do que a versão que ela substitui.
 trustPolicy: no-downgrade
+
+# Os plugins pedem `vite` e `vitest` por faixa de versão, e o núcleo do Vite+
+# tem a numeração dele (1.3.0). O que o `vp migrate` escreve.
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+    # O Storybook 10.6 ainda declara o Vite+ 0.x como par opcional.
+    - vite-plus

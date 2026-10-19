@@ -70,7 +70,7 @@ export interface FichaVista extends FichaResumo {
 const numero = new Intl.NumberFormat('pt-BR')
 
 /** "EUA · 2017 · 5.421 participantes", a linha curta de contexto da lista. */
-export function contexto(ficha: Pick<Ficha, 'paises' | 'periodo' | 'amostra'>): string {
+function contexto(ficha: Pick<Ficha, 'paises' | 'periodo' | 'amostra'>): string {
   const { paises } = ficha
   const partes = [
     paises.length === 0

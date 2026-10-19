@@ -2,7 +2,7 @@
 // um degrau por desfecho, a Ficha da fonte e a barra da Joel.
 import type { BarraDaSatisfacao, CaracteristicaVista, FichaDaPrioridade } from '#/conteudo/vista-prioridades'
 
-export const FICHA: FichaDaPrioridade = {
+const FICHA: FichaDaPrioridade = {
   slug: 'costa-2018-satisfacao',
   nome: 'Costa (2018)',
   status: 'parcial',

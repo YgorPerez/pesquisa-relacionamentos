@@ -3,7 +3,7 @@
 // 2015 só numa Dica ⬜, que não vai ao ar.
 import { resolve } from 'node:path'
 import { carregarAcervo } from '@tem-estudo/conteudo'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { citadaEm } from './vista-guia'
 
 const resultado = carregarAcervo(resolve(import.meta.dirname, '../../e2e/acervo'))

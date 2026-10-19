@@ -24,6 +24,11 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
+        with:
+          # A `fallow health` do `pnpm check` conta quanto cada arquivo mudou
+          # nos últimos meses, e o score entra nessa conta. Com o clone raso
+          # de um commit só, o score daqui sairia diferente do da máquina.
+          fetch-depth: 0
 
       # Sem `version`, a ação lê o `packageManager` do `package.json` da raiz.
       - name: Setup pnpm
@@ -39,12 +44,15 @@ jobs:
       - name: Instalar dependências
         run: pnpm install --frozen-lockfile
 
+      # O `tsc` de cada pacote, com os diagnósticos do Effect (ADR 0004).
       - name: Tipos
         run: pnpm typecheck
 
-      # O Vitest dos pacotes e os testes dos scripts da raiz (`node --test`).
-      - name: Testes
-        run: pnpm test
+      # O mesmo `pnpm check` da máquina (ADR 0002 e 0005): formato, lint e
+      # tipos (`vp check`), os testes com o piso de cobertura, a fallow e o
+      # React Doctor.
+      - name: Check
+        run: pnpm check
 
       # O build confere o sitemap que está no ar: um caminho publicado que
       # sumiu sem `antes` derruba o passo (`frontend/vite/acervo.ts`). Antes

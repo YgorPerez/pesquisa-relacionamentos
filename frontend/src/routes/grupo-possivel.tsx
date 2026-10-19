@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import type { Estimativa } from '@tem-estudo/regras/grupo-possivel'
 import { formatarQuantidade } from '@tem-estudo/regras/numeros'
 import {
   ALTURA_MAXIMA,
@@ -23,7 +24,7 @@ import {
   type RequisitoDoVisitante,
   type Requisitos,
 } from '@tem-estudo/regras/requisitos'
-import { ehLink, fraseDoLink, lerLink, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
+import { ehLink, fraseDoLink, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
 import { useId, useRef, type ReactNode } from 'react'
 import { buscarGuiaDaCalculadora } from '#/conteudo/guias'
 import { buscarPreviaDoGrupo, metaDaPrevia } from '#/conteudo/previa'
@@ -35,7 +36,7 @@ import {
   useGrupoPossivel,
   useRequisitosSalvos,
 } from '#/estado/grupo-possivel'
-import { gravarPerfil, usePerfil } from '#/estado/perfil'
+import { usePerfil } from '#/estado/perfil'
 import { contarUsoDaCalculadora } from '#/analytics/contagem'
 import { Botao } from '#/ui/botao'
 import {
@@ -43,12 +44,11 @@ import {
   Faixa,
   LinhaDoRequisito,
   Marcar,
-  NOME_DO_ALVO,
   NumeroPreso,
   Opcoes,
   Passos,
-  textoDoCusto,
 } from '#/ui/grupo-possivel'
+import { NOME_DO_ALVO, textoDoCusto } from '#/ui/grupo-possivel.textos'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import { CaixaDoPerfil } from '#/ui/perfil'
 
@@ -77,19 +77,11 @@ export const Route = createFileRoute('/grupo-possivel')({
   component: PaginaDoGrupoPossivel,
 })
 
-const aplicarLink = (query: string) => {
-  const estado = lerLink('grupo-possivel', query)
-  if (estado?.calculadora !== 'grupo-possivel') return false
-  gravarPerfil(estado.perfil)
-  gravarRequisitos(estado.requisitos)
-  return true
-}
-
 const qualquer = 'qualquer'
 
 function PaginaDoGrupoPossivel() {
   const { guia } = Route.useLoaderData()
-  const trocou = useLinkRecebido(aplicarLink)
+  const trocou = useLinkRecebido('grupo-possivel') !== null
   const perfil = usePerfil()
   const salvos = useRequisitosSalvos()
   const { estimativa, carregando, falhou, tentar, uf } = useGrupoPossivel(perfil, salvos)
@@ -108,7 +100,6 @@ function PaginaDoGrupoPossivel() {
   const { filhos } = estimativa
   const idMotivoFilhos = useId()
   const maisPesa = useRef<HTMLHeadingElement>(null)
-  const fortes = estimativa.ressalvas.filter((x) => x.forte)
   const lugarNome = valor('lugar')
   const link: EstadoDoLink = { calculadora: 'grupo-possivel', perfil, requisitos: salvos }
 
@@ -203,13 +194,7 @@ function PaginaDoGrupoPossivel() {
         descricao={filhos === 'vale' ? undefined : idMotivoFilhos}
         aoMudar={(semFilhos) => mudar({ semFilhos })}
       />,
-      filhos !== 'vale' && (
-        <p className="gp-motivo" id={idMotivoFilhos}>
-          {filhos === 'sem-dado'
-            ? 'O Censo só pergunta filhos às mulheres. Procurando homens, não dá para filtrar.'
-            : 'O Censo só pergunta filhos às mulheres: procurando homens e mulheres, o filtro vale só para elas.'}
-        </p>
-      ),
+      <MotivoDosFilhos filhos={filhos} id={idMotivoFilhos} />,
     ),
     altura: linha(
       'altura',
@@ -255,24 +240,7 @@ function PaginaDoGrupoPossivel() {
           Diga quem você procura e ligue os seus Requisitos. O número de cima muda junto, com dados do Censo 2022 e da
           PNS 2019.
         </p>
-        {trocou && (
-          <p className="aviso" role="status">
-            Este link trocou o seu Perfil e os seus Requisitos salvos pelos de quem mandou.
-          </p>
-        )}
-        {falhou && (
-          <p className="aviso" role="alert">
-            Não deu para baixar os dados da conta.{' '}
-            <Botao variante="leve" onClick={tentar}>
-              Tentar de novo
-            </Botao>
-          </p>
-        )}
-        {fortes.map((aviso) => (
-          <p key={aviso.id} className="aviso gp-aviso" role="note">
-            {aviso.texto}
-          </p>
-        ))}
+        <AvisosDaConta trocou={trocou} falhou={falhou} tentar={tentar} ressalvas={estimativa.ressalvas} />
 
         <section className="secao" aria-labelledby="t-perfil">
           <h2 id="t-perfil" className="headline">
@@ -307,30 +275,7 @@ function PaginaDoGrupoPossivel() {
             <h3 className="gp-rotulo" ref={maisPesa} tabIndex={-1}>
               O que mais pesa
             </h3>
-            {estimativa.custos.length === 0 ? (
-              <p className="gp-dica">
-                Nenhum Requisito ligado ainda. Cada um que você ligar aparece aqui, do que mais encolhe o grupo ao que
-                menos.
-              </p>
-            ) : (
-              <ul className="gp-pesa">
-                {estimativa.custos.map((c) => {
-                  const k = c.requisito as RequisitoDoVisitante
-                  return (
-                    <li key={k}>
-                      <span className="gp-pesa-nome">
-                        {TITULO_DO_REQUISITO[k]}
-                        <small>{valor(k)}</small>
-                      </span>
-                      <span className="gp-pesa-custo">{textoDoCusto(c)}</span>
-                      <Botao variante="leve" onClick={() => soltarERever(k)} aria-label={`Soltar ${TITULO_DO_REQUISITO[k].toLowerCase()}`}>
-                        soltar
-                      </Botao>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
+            <CustosDaConta custos={estimativa.custos} valor={valor} aoSoltar={soltarERever} />
             <Dobras estimativa={estimativa} perfil={perfil} requisitos={r} municipio={municipio} />
           </div>
         </section>
@@ -341,23 +286,117 @@ function PaginaDoGrupoPossivel() {
           aviso={AVISO_DA_CONTAGEM}
         />
 
-        {guia && (
-          <section className="secao" aria-labelledby="t-do-guia">
-            <h2 id="t-do-guia" className="headline">
-              Do Guia
-            </h2>
-            <div className="painel com-reticula gp-do-guia">
-              <p className="gp-rotulo">{guia.pergunta}</p>
-              <ConfiancaDaResposta confianca={guia.confianca} />
-              <p className="resposta">{guia.resposta}</p>
-              <Link to="/$tema/$slug" params={{ tema: guia.tema, slug: guia.slug }} className="gp-ler-guia">
-                Ler o Guia inteiro
-              </Link>
-            </div>
-          </section>
-        )}
+        {guia && <DoGuia guia={guia} />}
       </div>
     </main>
+  )
+}
+
+/** O aviso do link recebido, o de dados que não chegaram e as ressalvas
+ * fortes da conta, no topo da página. */
+function AvisosDaConta({
+  trocou,
+  falhou,
+  tentar,
+  ressalvas,
+}: {
+  trocou: boolean
+  falhou: boolean
+  tentar: () => void
+  ressalvas: Estimativa['ressalvas']
+}) {
+  return (
+    <>
+      {trocou && (
+        <p className="aviso" role="status">
+          Este link trocou o seu Perfil e os seus Requisitos salvos pelos de quem mandou.
+        </p>
+      )}
+      {falhou && (
+        <p className="aviso" role="alert">
+          Não deu para baixar os dados da conta.{' '}
+          <Botao variante="leve" onClick={tentar}>
+            Tentar de novo
+          </Botao>
+        </p>
+      )}
+      {ressalvas
+        .filter((x) => x.forte)
+        .map((aviso) => (
+          <p key={aviso.id} className="aviso gp-aviso" role="note">
+            {aviso.texto}
+          </p>
+        ))}
+    </>
+  )
+}
+
+/** Por que o filtro de filhos não vale, ou vale só para as mulheres. */
+function MotivoDosFilhos({ filhos, id }: { filhos: Estimativa['filhos']; id: string }) {
+  if (filhos === 'vale') return null
+  return (
+    <p className="gp-motivo" id={id}>
+      {filhos === 'sem-dado'
+        ? 'O Censo só pergunta filhos às mulheres. Procurando homens, não dá para filtrar.'
+        : 'O Censo só pergunta filhos às mulheres: procurando homens e mulheres, o filtro vale só para elas.'}
+    </p>
+  )
+}
+
+/** "O que mais pesa": cada Requisito ligado, do que mais encolhe o grupo ao
+ * que menos, com o botão de soltá-lo. */
+function CustosDaConta({
+  custos,
+  valor,
+  aoSoltar,
+}: {
+  custos: Estimativa['custos']
+  valor: (k: RequisitoDoVisitante) => string
+  aoSoltar: (k: RequisitoDoVisitante) => void
+}) {
+  if (custos.length === 0)
+    return (
+      <p className="gp-dica">
+        Nenhum Requisito ligado ainda. Cada um que você ligar aparece aqui, do que mais encolhe o grupo ao que menos.
+      </p>
+    )
+  return (
+    <ul className="gp-pesa">
+      {custos.map((c) => {
+        const k = c.requisito as RequisitoDoVisitante
+        return (
+          <li key={k}>
+            <span className="gp-pesa-nome">
+              {TITULO_DO_REQUISITO[k]}
+              <small>{valor(k)}</small>
+            </span>
+            <span className="gp-pesa-custo">{textoDoCusto(c)}</span>
+            <Botao variante="leve" onClick={() => aoSoltar(k)} aria-label={`Soltar ${TITULO_DO_REQUISITO[k].toLowerCase()}`}>
+              soltar
+            </Botao>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+/** O bloco "Do Guia": a Pergunta que hospeda a calculadora e a resposta curta. */
+function DoGuia({ guia }: { guia: NonNullable<ReturnType<typeof Route.useLoaderData>['guia']> }) {
+  return (
+    <section className="secao" aria-labelledby="t-do-guia">
+      <h2 id="t-do-guia" className="headline">
+        Do Guia
+      </h2>
+      <div className="painel com-reticula gp-do-guia">
+        <p className="gp-rotulo">{guia.pergunta}</p>
+        <ConfiancaDaResposta confianca={guia.confianca} />
+        <p className="resposta">{guia.resposta}</p>
+        <Link to="/$tema/$slug" params={{ tema: guia.tema, slug: guia.slug }} className="gp-ler-guia">
+          Ler o Guia inteiro
+        </Link>
+      </div>
+    </section>
   )
 }
 

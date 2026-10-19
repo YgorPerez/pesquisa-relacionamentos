@@ -1,7 +1,7 @@
 // A conferência dos microdados contra números publicados do SIDRA: o passo
 // que barra o pipeline quando pesos ou códigos estão errados.
 import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vite-plus/test'
 import type { Agregado, Celula } from './censo.ts'
 import { conferir, conferirPns, type Publicado, type PublicadoPns } from './conferencia.ts'
 import type { RegistroPns } from './pns.ts'

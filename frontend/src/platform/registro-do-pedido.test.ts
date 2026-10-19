@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { comRegistro } from './registro-do-pedido'
 
 // O link de compartilhamento leva o Perfil na query (ADR 0001). O log do app

@@ -2,7 +2,7 @@
 // regras de publicação do #7 e do #10. Os casos que falham partem da
 // fixture válida e trocam um arquivo só.
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   caminhoDaDica,
   caminhoDoGuia,

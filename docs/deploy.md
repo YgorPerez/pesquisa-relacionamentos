@@ -135,7 +135,7 @@ Entre em https://stats.temestudo.com com o e-mail e essa senha, e confira em Set
 
 Para conferir sem o navegador: `ssh root@<ip> docker exec temestudo-stats goatcounter db query "select settings from sites"`.
 
-O teste `frontend/scripts/stats.docker.test.ts` roda esse caminho num GoatCounter local, em Docker: `TESTAR_GOATCOUNTER=1 pnpm --filter frontend exec vitest run scripts/stats.docker.test.ts`.
+O teste `frontend/scripts/stats.docker.test.ts` roda esse caminho num GoatCounter local, em Docker: `TESTAR_GOATCOUNTER=1 pnpm --filter frontend exec vp test run scripts/stats.docker.test.ts`.
 
 ### Revisão do painel
 

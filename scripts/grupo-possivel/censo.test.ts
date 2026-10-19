@@ -3,7 +3,7 @@
 // `;`, peso com ponto decimal, e só as colunas que o agregador lê (as outras
 // cento e tantas não mudam nada).
 import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vite-plus/test'
 import { agregarPessoas, celulasEmCsv } from './censo.ts'
 
 const CABECALHO = 'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110'

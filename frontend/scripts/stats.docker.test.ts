@@ -4,12 +4,12 @@
 // senha numa pasta temporária. Puxa a imagem e sobe um contêiner, então só
 // roda com TESTAR_GOATCOUNTER=1:
 //
-//   TESTAR_GOATCOUNTER=1 pnpm --filter frontend exec vitest run scripts/stats.docker.test.ts
+//   TESTAR_GOATCOUNTER=1 pnpm --filter frontend exec vp test run scripts/stats.docker.test.ts
 import { spawnSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { afterAll, beforeAll, describe, expect, test } from 'vitest'
+import { afterAll, beforeAll, describe, expect, test } from 'vite-plus/test'
 import { garantirOStats, pararOStatsSemSite, STATS } from './vps.ts'
 
 const LIGADO = process.env.TESTAR_GOATCOUNTER === '1'

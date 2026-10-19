@@ -84,13 +84,13 @@ export function fichasDoNumeroChave(markdown: string): ReadonlyArray<string> | n
   return slugs.length > 0 ? slugs : null
 }
 
-export const primeiraFrase = (markdown: string): string => {
+const primeiraFrase = (markdown: string): string => {
   const texto = semMarcas(markdown)
   return /^.+?[.!?](?=\s|$)/.exec(texto)?.[0] ?? texto
 }
 
 /** A Pergunta com a única palavra em amarelo (`==palavra==`). */
-export const perguntaHtml = (pergunta: string) =>
+const perguntaHtml = (pergunta: string) =>
   escapar(pergunta).replace(/==([^=]+)==/, '<span class="marca-texto">$1</span>')
 
 const IDADE_MAXIMA = 120
@@ -114,15 +114,16 @@ function umCobre(cobre: Cobre): string {
 }
 
 /** A nota "Vale para:" de um achado ou Dica, tirada do `cobre`. */
-export function valePara(cobres: ReadonlyArray<Cobre>): string {
+function valePara(cobres: ReadonlyArray<Cobre>): string {
   const frases = [...new Set(cobres.map(umCobre))]
-  if (frases.length === 0 || frases.every((f) => f === ''))
+  // Sem frase nenhuma, o `every` também dá `true`.
+  if (frases.every((f) => f === ''))
     return 'o estudo não separou por gênero, orientação nem idade.'
   return `${frases.map((f) => f || 'sem recorte por gênero ou idade').join('; ')}.`
 }
 
 /** País e ano da amostra, curtos para a caixinha ao lado do achado. */
-export function ondeEQuando(paises: ReadonlyArray<string>, periodo: string) {
+function ondeEQuando(paises: ReadonlyArray<string>, periodo: string) {
   return {
     pais: paises.length === 0 ? 'país não informado' : paises.length > 2 ? `${paises.length} países` : paises.join(', '),
     periodo,
@@ -139,7 +140,7 @@ export interface DicaNoGuia {
   readonly cobre: ReadonlyArray<Cobre>
 }
 
-export interface AchadoVista {
+interface AchadoVista {
   readonly html: string
   readonly pais: string
   readonly periodo: string

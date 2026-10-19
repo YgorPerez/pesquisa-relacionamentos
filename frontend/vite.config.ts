@@ -1,8 +1,8 @@
-/// <reference types="vitest/config" />
+import babel from '@rolldown/plugin-babel'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
+import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
-import { defineConfig, type PluginOption } from 'vite'
+import { defineConfig, type PluginOption } from 'vite-plus'
 import { acervo } from './vite/acervo.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
 
@@ -11,13 +11,41 @@ import { grupoPossivel } from './vite/grupo-possivel.ts'
 // sobre o build (`playwright.config.ts`).
 const plugins: PluginOption[] = process.env.VITEST
   ? [viteReact()]
-  : [acervo(), grupoPossivel(), tanstackStart(), nitro(), viteReact()]
+  : [
+      acervo(),
+      grupoPossivel(),
+      tanstackStart(),
+      nitro(),
+      viteReact(),
+      // O React Compiler memoiza cada componente e hook no build. O plugin 6
+      // do React não traz mais o Babel, e o compilador ainda é um plugin do
+      // Babel: roda pelo `@rolldown/plugin-babel`, só no bundle do navegador
+      // (o preset pula o SSR). Uma tela que o compilador quebrar sai dele com
+      // `'use no memo'` no topo (ADR 0003).
+      babel({ presets: [reactCompilerPreset()] }),
+    ]
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins,
   test: {
-    include: ['src/**/*.test.ts', 'nginx/**/*.test.ts', 'scripts/**/*.test.ts', 'vite/**/*.test.ts'],
+    include: [
+      'src/**/*.test.ts',
+      'nginx/**/*.test.ts',
+      'scripts/**/*.test.ts',
+      'vite/**/*.test.ts',
+      'lint/**/*.test.ts',
+    ],
     environment: 'node',
+    // A cobertura serve à `fallow health` (o formato `json`) e tem um piso
+    // (ADR 0005): o de quando ele entrou, que sobe com ela e nunca desce. É
+    // baixo porque as telas são testadas pelo e2e e pelas stories, que não
+    // entram nesta conta.
+    coverage: {
+      provider: 'v8',
+      reporter: ['text-summary', 'json'],
+      include: ['{src,vite,nginx,scripts,lint}/**/*.{ts,tsx}'],
+      thresholds: { statements: 12, branches: 7, functions: 9, lines: 12 },
+    },
   },
 })

@@ -2,7 +2,7 @@
 // lugar do ajuste proporcional pela população (#31): a soma dos municípios
 // tem de dar a UF publicada na mesma tabela.
 import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vite-plus/test'
 import type { CelulaConjugal } from './conferencia.ts'
 import { conferirMunicipios, municipiosEmCsv, type ConjugalDoMunicipio } from './municipios.ts'
 

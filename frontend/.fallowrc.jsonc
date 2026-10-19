@@ -1,0 +1,22 @@
+// O que o grafo estático da fallow não enxerga. Nada aqui afrouxa um limite:
+// as três análises (`dead-code`, `dupes`, `health`) rodam cruas, como no
+// Festival dos Macacos (ADR 0005).
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "dynamicallyLoaded": [
+    // A imagem do Open Graph se faz na mão, `node scripts/imagem-og.ts` (o
+    // comentário no topo dele). Nenhum import aponta para ele.
+    "scripts/imagem-og.ts",
+    // O React Doctor acha o `doctor.config.ts` pelo nome, na raiz do projeto
+    // que ele varre. Nenhum import aponta para ele.
+    "doctor.config.ts",
+  ],
+  "duplicates": {
+    "ignore": [
+      // O TanStack Router gera este arquivo a cada build, e a árvore de
+      // rotas repete a mesma forma para cada rota: um clone que ninguém pode
+      // refatorar, porque o gerador o reescreve. Só o `dupes` deixa de olhar.
+      "src/routeTree.gen.ts",
+    ],
+  },
+}

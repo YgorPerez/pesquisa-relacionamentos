@@ -47,7 +47,7 @@ test.describe('/prioridades', () => {
     await expect(renda).toHaveAccessibleDescription(dica)
     // O Playwright não toca no que está aria-disabled; o toque forçado é o do dedo.
     await tocar(renda, { force: true })
-    expect((await salvo(page)).topo3).toEqual(['gentileza', 'parecido', 'idade'])
+    expect(await salvo(page)).toMatchObject({ topo3: ['gentileza', 'parecido', 'idade'] })
 
     for (const botao of await chips(page).getByRole('button').all())
       expect((await botao.boundingBox())?.height).toBeGreaterThanOrEqual(44)

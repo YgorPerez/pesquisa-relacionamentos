@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import censo from '../fixtures/grupo-possivel/censo-2022.csv?raw'
 import idades from '../fixtures/grupo-possivel/sidra-9514-idade.csv?raw'
 import municipios from '../fixtures/grupo-possivel/sidra-10185-municipios.csv?raw'

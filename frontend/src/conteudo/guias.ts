@@ -28,7 +28,7 @@ const texto = (valor: unknown, nome: string): string => {
   return valor
 }
 
-export interface TemaNoInicio {
+interface TemaNoInicio {
   readonly slug: string
   readonly titulo: string
   readonly guias: ReadonlyArray<GuiaResumo>
@@ -73,7 +73,7 @@ export const buscarGuia = createServerFn({ method: 'GET' })
     }
   })
 
-export interface GuiaDaCalculadora {
+interface GuiaDaCalculadora {
   readonly tema: string
   readonly slug: string
   readonly pergunta: string

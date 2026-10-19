@@ -2,7 +2,7 @@
 // sitemap, robots, os 301 do `antes` e a conferência contra o último
 // sitemap publicado. Os casos partem da fixture válida e trocam um arquivo.
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   buscaDaDica,
   buscaDaFicha,

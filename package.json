@@ -3,17 +3,27 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "effect-tsgo patch --typescript --oxlint",
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm --filter frontend build",
     "start": "pnpm --filter frontend start",
-    "test": "pnpm -r test && node --test \"scripts/**/*.test.ts\"",
+    "check": "vp check && vp run -r --cache test:coverage && vp run --filter frontend fallow && vp run --filter frontend doctor",
+    "fmt": "vp fmt",
+    "lint": "vp lint",
+    "test": "vp test run && vp run --filter ./frontend --filter './packages/*' --cache test",
+    "test:coverage": "vp test run --coverage",
     "dados:grupo-possivel": "node scripts/grupo-possivel/pipeline.ts",
-    "typecheck": "pnpm -r typecheck",
+    "typecheck": "vp run -r --cache typecheck",
     "conferir": "node scripts/conferir-ficha.ts",
     "e2e": "pnpm --filter frontend e2e",
     "storybook": "pnpm --filter frontend storybook",
     "build-storybook": "pnpm --filter frontend build-storybook",
     "test:stories": "pnpm --filter frontend test:stories"
+  },
+  "devDependencies": {
+    "@effect/tsgo": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@12.10.1"
 }

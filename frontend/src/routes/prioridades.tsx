@@ -9,12 +9,12 @@ import {
   type Desfecho,
 } from '@tem-estudo/regras/prioridades'
 import { fraseDoLink, lerLink, previaDePrioridades, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { buscarPrioridades } from '#/conteudo/guias'
 import { metaDaPrevia } from '#/conteudo/previa'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { useLinkRecebido } from '#/estado/link'
-import { gravarPerfil, perfilSalvo, usePerfil } from '#/estado/perfil'
+import { usePerfil } from '#/estado/perfil'
 import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
 import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
 import { contarUsoDaCalculadora } from '#/analytics/contagem'
@@ -76,22 +76,10 @@ function PaginaDePrioridades() {
 function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const { caracteristicas } = vista
   const ids = useMemo(() => idsDe(vista), [vista])
-  const [trocouGenero, setTrocouGenero] = useState(false)
-  const aplicarLink = useCallback(
-    (query: string) => {
-      const link = lerLink('prioridades', query, ids)
-      if (link?.calculadora !== 'prioridades') return false
-      // O link leva só o gênero: quem se procura e a idade salvos ficam.
-      if (link.genero) {
-        gravarPerfil({ ...perfilSalvo.ler(), genero: link.genero })
-        setTrocouGenero(true)
-      }
-      gravarPrioridades(link.prioridades)
-      return true
-    },
-    [ids],
-  )
-  const trocou = useLinkRecebido(aplicarLink)
+  const recebido = useLinkRecebido('prioridades', ids)
+  const trocou = recebido !== null
+  const trocouGenero =
+    recebido?.calculadora === 'prioridades' && recebido.genero !== null
   const estado = usePrioridades(ids)
   const perfil = usePerfil()
   const genero = perfil?.genero

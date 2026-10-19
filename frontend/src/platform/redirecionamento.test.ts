@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { comRedirecionamentos } from './redirecionamento'
 
 const MAPA = { '/estudos/silva-2020': '/estudos/silva-2020-apps-brasil' }

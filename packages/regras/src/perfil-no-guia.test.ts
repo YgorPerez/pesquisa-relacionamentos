@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { perfilNoGuia } from './perfil-no-guia.ts'
 import type { Cobre } from './vale-para-voce.ts'
 

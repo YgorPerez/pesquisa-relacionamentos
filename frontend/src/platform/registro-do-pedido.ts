@@ -13,7 +13,7 @@ type Fetch<Resto extends unknown[]> = (
   ...resto: Resto
 ) => Response | Promise<Response>
 
-export const REFERRER_POLICY = 'strict-origin'
+const REFERRER_POLICY = 'strict-origin'
 
 type Opcoes = {
   /** Onde a linha vai. No servidor, o stdout que o `docker logs` lê. */

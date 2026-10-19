@@ -6,15 +6,18 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev --port 4310 --strictPort",
-    "build": "vite build",
+    "dev": "vp dev --port 4310 --strictPort",
+    "build": "vp build",
     "start": "PORT=${PORT:-4311} node .output/server/index.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vp test run",
+    "test:coverage": "vp test run --coverage",
     "e2e": "playwright test",
     "storybook": "storybook dev --port 6310 --no-open",
     "build-storybook": "storybook build",
-    "test:stories": "vitest run --config vitest.stories.config.ts"
+    "test:stories": "vp test run --config vitest.stories.config.ts",
+    "fallow": "fallow dead-code && fallow dupes && fallow health --coverage coverage/coverage-final.json --min-score 90",
+    "doctor": "react-doctor --no-score --blocking warning"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.41",
@@ -22,24 +25,32 @@
     "@tem-estudo/conteudo": "workspace:*",
     "@tem-estudo/regras": "workspace:*",
     "marked": "^18.1.1",
-    "nitro": "3.0.260903-beta",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@babel/core": "^7.29.7",
     "@playwright/test": "1.64.0",
+    "@rolldown/plugin-babel": "^0.2.4",
     "@storybook/react-vite": "^10.6.1",
+    "@total-typescript/ts-reset": "catalog:",
+    "@types/babel__core": "^7.20.5",
     "@types/node": "catalog:",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "@vitest/browser-playwright": "5.0.4",
+    "@vitest/browser-playwright": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "fallow": "3.31.0",
+    "nitro": "3.0.260903-beta",
     "playwright": "1.64.0",
+    "react-doctor": "^0.9.17",
     "storybook": "^10.6.1",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vitest": "catalog:",
+    "vite-plus": "catalog:",
     "yaml": "catalog:"
   }
 }

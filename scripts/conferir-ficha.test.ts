@@ -4,7 +4,7 @@
 
 import assert from 'node:assert/strict'
 import { fileURLToPath } from 'node:url'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vite-plus/test'
 import { conferirFicha, main } from './conferir-ficha.ts'
 
 const raiz = fileURLToPath(new URL('./fixtures/conferencia/', import.meta.url))

@@ -109,7 +109,7 @@ function PaginaDoGuia() {
           </h2>
           <ol className="achados-guia">
             {guia.achados.map((achado, i) => (
-              <li key={i} className="achado-guia">
+              <li key={achado.html} className="achado-guia">
                 <span className="onde">
                   {achado.pais}
                   <small>{achado.periodo}</small>

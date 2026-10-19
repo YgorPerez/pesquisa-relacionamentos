@@ -70,7 +70,7 @@ const Atencao = () => (
 )
 
 /** A Ficha de uma célula: nome, Status e Força desenhados e escritos. */
-export function FonteDaCelula({ ficha }: { ficha: FichaDaPrioridade }) {
+function FonteDaCelula({ ficha }: { ficha: FichaDaPrioridade }) {
   return (
     <p className="fonte-da-celula">
       <Link to="/estudos/$slug" params={{ slug: ficha.slug }} className="fonte-nome">
@@ -223,7 +223,7 @@ export function AlertaDoTopo3({ frase }: { frase: string | null }) {
 }
 
 /** Texto simples, medida, Ficha com Status, Força e amostra, e o viés. */
-export function DetalheDaCaracteristica({
+function DetalheDaCaracteristica({
   car,
   desfecho,
   genero,

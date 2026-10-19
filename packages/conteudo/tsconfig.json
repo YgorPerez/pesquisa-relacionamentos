@@ -12,7 +12,11 @@
     "allowImportingTsExtensions": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "types": ["node"]
+    "types": ["node"],
+    // Os diagnósticos do Effect no `tsc`, pelo patch do `@effect/tsgo` que o
+    // `prepare` da raiz aplica (ADR 0004). O Oxlint dá os mesmos, pelo
+    // plugin `effecttsgo` do `vite.config.ts` da raiz.
+    "plugins": [{ "name": "@effect/language-service" }]
   },
   "include": ["src/**/*.ts"]
 }

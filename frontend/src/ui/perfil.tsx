@@ -13,7 +13,14 @@ import {
 } from '@tem-estudo/regras/perfil'
 import type { PerfilNoGuia } from '@tem-estudo/regras/perfil-no-guia'
 import type { Veredito } from '@tem-estudo/regras/vale-para-voce'
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import {
+  useEffect,
+  useEffectEvent,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react'
 import { gravarPerfil } from '#/estado/perfil'
 import { Botao } from './botao'
 import { Html } from './guia'
@@ -178,11 +185,13 @@ export function CaixaDoPerfil({
   }
 
   // O link "Seu Perfil: … · mudar" lá em cima abre o formulário aqui.
+  // O evento lê o Perfil de agora, sem refazer a escuta a cada mudança.
+  const aoPedir = useEffectEvent(() => abrir(perfil))
   useEffect(() => {
-    const aoPedir = () => abrir(perfil)
-    window.addEventListener(MUDAR, aoPedir)
-    return () => window.removeEventListener(MUDAR, aoPedir)
-  }, [perfil])
+    const ouvir = () => aoPedir()
+    window.addEventListener(MUDAR, ouvir)
+    return () => window.removeEventListener(MUDAR, ouvir)
+  }, [])
 
   // Ao abrir para mudar, o foco vai para a primeira opção; ao salvar, para o resumo.
   useEffect(() => {

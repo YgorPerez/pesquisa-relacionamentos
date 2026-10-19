@@ -3,7 +3,7 @@
 // que hospeda a calculadora.
 import { resolve } from 'node:path'
 import { carregarAcervo } from '@tem-estudo/conteudo'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { vistaDasPrioridades } from './vista-prioridades'
 
 const resultado = carregarAcervo(resolve(import.meta.dirname, '../../e2e/acervo'))

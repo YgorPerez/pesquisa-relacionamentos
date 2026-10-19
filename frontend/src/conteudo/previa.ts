@@ -27,22 +27,28 @@ async function pacote(base: string, lugar: LugarDoPacote): Promise<DadosDoLugar 
   const chave = `${base}/${lugar}`
   let pedido = abertos.get(chave)
   if (!pedido) {
-    pedido = lerPacote(base, lugar).then((bruto) => (bruto ? abrirPacote(bruto as never) : null))
+    pedido = lerPacote(base, lugar).then((bruto) => (bruto ? abrirPacote(bruto) : null))
     abertos.set(chave, pedido)
   }
   return pedido
 }
 
 async function lerPacote(base: string, lugar: LugarDoPacote): Promise<unknown> {
-  const { readFile } = await import('node:fs/promises')
-  const { dirname, join } = await import('node:path')
-  const { fileURLToPath } = await import('node:url')
-  const arquivo = join('public', base, `${lugar}.json`)
-  for (let pasta = dirname(fileURLToPath(import.meta.url)); ; pasta = dirname(pasta)) {
+  const [fs, caminho, url] = await Promise.all([
+    import('node:fs/promises'),
+    import('node:path'),
+    import('node:url'),
+  ])
+  const arquivo = caminho.join('public', base, `${lugar}.json`)
+  for (
+    let pasta = caminho.dirname(url.fileURLToPath(import.meta.url));
+    ;
+    pasta = caminho.dirname(pasta)
+  ) {
     try {
-      return JSON.parse(await readFile(join(pasta, arquivo), 'utf8'))
+      return JSON.parse(await fs.readFile(caminho.join(pasta, arquivo), 'utf8'))
     } catch {
-      if (dirname(pasta) === pasta) break
+      if (caminho.dirname(pasta) === pasta) break
     }
   }
   const { getRequestUrl } = await import('@tanstack/react-start/server')

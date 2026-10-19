@@ -3,7 +3,7 @@
 // todo dia guardando 3, e toda resposta leva `Referrer-Policy: strict-origin`.
 
 import { readFileSync } from 'node:fs'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { CONFIGURACAO_DO_HOST, STATS } from '../scripts/vps.ts'
 
 const pasta = new URL('./', import.meta.url)

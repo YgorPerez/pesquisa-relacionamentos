@@ -15,7 +15,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
 import { carregarAcervo, formatarProblemas, lerArquivos, type Acervo } from '@tem-estudo/conteudo'
 import { robotsTxt, sitemapXml } from '@tem-estudo/conteudo/busca'
-import type { Plugin } from 'vite'
+import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:acervo'
 const RESOLVIDO = `\0${ID}`

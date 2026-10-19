@@ -2,7 +2,14 @@
 // "voltar ao texto", o "Voltar para <Pergunta>" de quem veio de outro Guia e
 // o ponto da leitura (rolagem e seções abertas) guardado no histórico.
 import { useRouter, useRouterState } from '@tanstack/react-router'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import { laco } from './laco'
 
 declare module '@tanstack/react-router' {
@@ -28,10 +35,17 @@ export interface FichaCirculada {
 export function useReferencias(pagina: string) {
   const [circulada, setCirculada] = useState<FichaCirculada | null>(null)
   const origem = useRef<HTMLElement | null>(null)
+  // Outra página começa sem Ficha circulada. Trocado durante o render, e não
+  // num efeito, para a página nova não pintar uma vez com o laço da velha.
+  // O `origem` velho não precisa sair: só um toque novo mostra o "voltar ao
+  // texto", e o toque grava o dele.
+  const [paginaVista, setPaginaVista] = useState(pagina)
+  if (paginaVista !== pagina) {
+    setPaginaVista(pagina)
+    setCirculada(null)
+  }
 
   useEffect(() => {
-    setCirculada(null)
-    origem.current = null
     const tocar = (evento: MouseEvent) => {
       if (evento.defaultPrevented || evento.button !== 0) return
       if (evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) return
@@ -45,7 +59,7 @@ export function useReferencias(pagina: string) {
     }
     document.addEventListener('click', tocar)
     return () => document.removeEventListener('click', tocar)
-  }, [pagina])
+  }, [])
 
   const voltarAoTexto = useCallback(() => {
     setCirculada(null)
@@ -116,6 +130,9 @@ export function usePontoNoHistorico() {
   }, [])
 
   useLayoutEffect(() => {
+    // Só a entrada que o router já desenhou: a barra pode estar numa que
+    // ainda carrega.
+    if (window.history.state?.__TSR_key !== entrada) return
     const ponto = window.history.state?.ponto as { scroll: number; abertas: string[] } | undefined
     if (!ponto) return
     for (const id of ponto.abertas) {
@@ -136,14 +153,17 @@ const SetaVoltar = () => (
   </svg>
 )
 
+/** Estar no navegador não muda depois de hidratar: ninguém a avisar. */
+const semAvisos = () => () => {}
+
 /** "Voltar para <Pergunta>", quando a página veio de outro Guia. Faz o mesmo
  * que o voltar do navegador. */
 export function VoltarParaGuia() {
   const router = useRouter()
   const de = useRouterState({ select: (s) => s.location.state.de })
   // O servidor não conhece o histórico: o botão só aparece depois da hidratação.
-  const [noNavegador, setNoNavegador] = useState(false)
-  useEffect(() => setNoNavegador(true), [])
+  // A hidratação lê o `false` do servidor, e o render seguinte o `true`.
+  const noNavegador = useSyncExternalStore(semAvisos, () => true, () => false)
   if (!noNavegador || !de) return null
 
   return (

@@ -38,7 +38,7 @@ export interface BarraDaSatisfacao {
 }
 
 /** O bloco "Do Guia" no fim da página. */
-export interface GuiaDaCalculadora {
+interface GuiaDaCalculadora {
   readonly tema: string
   readonly slug: string
   readonly pergunta: string

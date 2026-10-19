@@ -23,7 +23,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { arquivoDaChave } from './chave-ssh.ts'
 
-export type Vps = {
+type Vps = {
   host: string
   porta: string
   usuario: string
@@ -32,7 +32,7 @@ export type Vps = {
 
 /** O app na VPS, que só serve este site. O GoatCounter (#35) fica fora
  * deste par, num contêiner próprio. */
-export const APP = {
+const APP = {
   container: 'temestudo-app',
   pasta: '/opt/temestudo',
   portas: [3011, 3031],
@@ -140,7 +140,7 @@ echo "Imagem ${APP.container}:sha-${sha} montada."
 /** A troca sem janela. Com `comConfiguracao`, o vhost e a rotação que vieram
  * em `envio/` entram junto com a porta nova, e voltam ao que eram se o
  * `nginx -t` recusar. */
-export function trocarOApp(sha: string, comConfiguracao: boolean) {
+function trocarOApp(sha: string, comConfiguracao: boolean) {
   const { container, portas, host, include, vhost } = APP
   const destinos = CONFIGURACAO_DO_HOST.map(([, destino]) => `"${destino}"`).join(' ')
   const instalar = comConfiguracao
@@ -218,13 +218,13 @@ export type ConteinerDoStats = { readonly [K in keyof typeof STATS]: (typeof STA
 
 /** O que o GoatCounter coleta: só referência (2), tamanho de tela (8) e país
  * (16). Sem sessões (128), região (32), navegador e sistema (4), idioma (64). */
-export const COLETA_DO_STATS = 2 + 8 + 16
+const COLETA_DO_STATS = 2 + 8 + 16
 /** Os dias que o GoatCounter guarda as visitas. */
-export const RETENCAO_DO_STATS = 31
+const RETENCAO_DO_STATS = 31
 /** O e-mail do login do GoatCounter quando o `GOATCOUNTER_EMAIL` não diz outro. */
-export const EMAIL_DO_STATS = 'admin@temestudo.com'
+const EMAIL_DO_STATS = 'admin@temestudo.com'
 /** Onde a VPS guarda a senha que o primeiro deploy sorteia (root, 600). */
-export const SENHA_DO_STATS = `${APP.pasta}/goatcounter-senha`
+const SENHA_DO_STATS = `${APP.pasta}/goatcounter-senha`
 
 /** O e-mail vai dentro de um script bash: só o formato simples passa. */
 const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
@@ -308,7 +308,7 @@ fi
 }
 
 /** Publica o `.output` do build com o SHA do commit. */
-export function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps: Vps; dizer: (l: string) => void }) {
+function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps: Vps; dizer: (l: string) => void }) {
   if (!SHA.test(sha)) throw new Error(`"${sha}" não é um SHA.`)
   const obra = mkdtempSync(join(tmpdir(), 'publicar-temestudo-'))
   try {
@@ -353,7 +353,7 @@ export function publicar({ saida, sha, vps, dizer }: { saida: string; sha: strin
 
 /** Volta a uma imagem que a VPS guardou: a do SHA pedido, ou a do deploy
  * anterior. O vhost fica como está. */
-export function voltar({ sha, vps, dizer }: { sha?: string; vps: Vps; dizer: (l: string) => void }) {
+function voltar({ sha, vps, dizer }: { sha?: string; vps: Vps; dizer: (l: string) => void }) {
   const alvo = sha ?? naVps(vps, 'cat anterior 2>/dev/null || true').trim()
   if (!alvo) throw new Error('A VPS não guardou um deploy anterior: diga o SHA.')
   if (!SHA.test(alvo)) throw new Error(`"${alvo}" não é um SHA.`)

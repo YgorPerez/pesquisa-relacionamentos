@@ -21,11 +21,11 @@ import {
 } from '@tem-estudo/regras/grupo-possivel-dados'
 import { estimarGrupo, type Estimativa } from '@tem-estudo/regras/grupo-possivel'
 import { REQUISITOS_PADRAO, UFS } from '@tem-estudo/regras/requisitos'
-import type { Plugin } from 'vite'
+import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:grupo-possivel'
 const RESOLVIDO = `\0${ID}`
-export const CAMINHO = '/dados/grupo-possivel'
+const CAMINHO = '/dados/grupo-possivel'
 
 const ARQUIVOS: Record<keyof ArquivosDoGrupo, string> = {
   censo: 'censo-2022.csv',

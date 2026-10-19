@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarFicha } from '#/conteudo/fichas'
-import { LinhaDePergunta } from '#/ui/guia'
+import { Html, LinhaDePergunta } from '#/ui/guia'
 import {
   ForcaDaEvidencia,
   LegendaDasFichas,
-  PALAVRA_DO_DESENHO,
   StatusDeVerificacao,
 } from '#/ui/selos'
+import { PALAVRA_DO_DESENHO } from '#/ui/selos.textos'
 
 export const Route = createFileRoute('/estudos/$slug')({
   loader: ({ params }) => buscarFicha({ data: params.slug }),
@@ -29,11 +29,6 @@ const numero = new Intl.NumberFormat('pt-BR')
 const data = (iso: string) => {
   const [ano, mes, dia] = iso.split('-')
   return `${dia}/${mes}/${ano}`
-}
-
-function Html({ html, como = 'div', className }: { html: string; como?: 'div' | 'span'; className?: string }) {
-  const Tag = como
-  return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />
 }
 
 function PaginaDaFicha() {
@@ -129,8 +124,8 @@ function PaginaDaFicha() {
             Achados
           </h2>
           <ol className="achados">
-            {ficha.achados.map((achado, i) => (
-              <li key={i} className="achado">
+            {ficha.achados.map((achado) => (
+              <li key={`${achado.medida}|${achado.valor}|${achado.onde}`} className="achado">
                 <Html className="achado-valor" html={achado.valor} />
                 <div>
                   <Html como="span" className="achado-medida" html={achado.medida} />

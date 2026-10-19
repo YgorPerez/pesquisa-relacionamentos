@@ -2,7 +2,7 @@
 // topo, os controles dos Requisitos (todos sem arrastar: botões de passo,
 // campo de número, opções e caixas de marcar) e a conta com as dobras.
 import type { Custo, Estimativa, RequisitoId } from '@tem-estudo/regras/grupo-possivel'
-import { formatarFaixa, formatarGanho, formatarQuantidade, formatarVezes } from '@tem-estudo/regras/numeros'
+import { formatarFaixa, formatarQuantidade, formatarVezes } from '@tem-estudo/regras/numeros'
 import type { Perfil } from '@tem-estudo/regras/perfil'
 import {
   TITULO_DO_REQUISITO,
@@ -10,20 +10,8 @@ import {
   type Requisitos,
 } from '@tem-estudo/regras/requisitos'
 import { Link } from '@tanstack/react-router'
-import { useEffect, useId, useState, type ReactNode } from 'react'
-
-/** Quem atende, para a frase: "mulheres", "homens" ou "pessoas". */
-export const NOME_DO_ALVO: Record<Estimativa['alvo'], string> = {
-  homens: 'homens',
-  mulheres: 'mulheres',
-  pessoas: 'pessoas',
-}
-
-/** "soltar só este: ×3,4 (+670)". Abaixo de 5%, diz que quase não muda. */
-export function textoDoCusto(custo: Custo): string {
-  if (custo.vezes < 1.05) return 'soltar este quase não muda o grupo'
-  return `soltar só este: ${formatarVezes(custo.vezes)} (${formatarGanho(custo.ganho)})`
-}
+import { useId, useState, type ReactNode } from 'react'
+import { NOME_DO_ALVO, textoDoCusto } from './grupo-possivel.textos'
 
 /** A faixa com os números no marca-texto rosa e, se for o caso, "instável". */
 export function Faixa({ estimativa }: { estimativa: Estimativa }) {
@@ -40,7 +28,7 @@ export function Faixa({ estimativa }: { estimativa: Estimativa }) {
 }
 
 /** "o que mais pesa: idade (×3,4)". */
-export function MaisPesa({ estimativa }: { estimativa: Estimativa }) {
+function MaisPesa({ estimativa }: { estimativa: Estimativa }) {
   const primeiro = estimativa.custos[0]
   if (!primeiro) return <>nenhum Requisito corta o grupo</>
   return (
@@ -133,7 +121,13 @@ export function Passos({
 }) {
   const id = useId()
   const [texto, setTexto] = useState(String(valor))
-  useEffect(() => setTexto(String(valor)), [valor])
+  // Um valor novo de fora (os botões, outra aba) reescreve o campo. Trocado
+  // durante o render, como o React manda ajustar o estado quando a prop muda.
+  const [valorVisto, setValorVisto] = useState(valor)
+  if (valorVisto !== valor) {
+    setValorVisto(valor)
+    setTexto(String(valor))
+  }
   const mudar = (novo: number) => aoMudar(Math.min(max, Math.max(min, novo)))
 
   return (
@@ -164,8 +158,10 @@ export function Passos({
           aria-describedby={`${id}-unidade`}
           onChange={(e) => {
             setTexto(e.target.value)
-            const n = Number(e.target.value)
-            if (e.target.value !== '' && Number.isInteger(n) && n >= min && n <= max) aoMudar(n)
+            // Vazio ou incompleto dá `NaN`, que não é inteiro: só o número
+            // inteiro dentro da faixa muda o Requisito.
+            const n = e.target.valueAsNumber
+            if (Number.isInteger(n) && n >= min && n <= max) aoMudar(n)
           }}
           onBlur={() => setTexto(String(valor))}
         />
@@ -206,6 +202,7 @@ export function Opcoes<T extends string>({
   dica?: string
 }) {
   const nome = useId()
+  const marcado = new Set(marcados)
   return (
     <fieldset className="gp-opcoes">
       <legend className="visualmente-oculto">{legenda}</legend>
@@ -216,7 +213,7 @@ export function Opcoes<T extends string>({
               type={tipo}
               name={nome}
               value={valor}
-              checked={marcados.includes(valor)}
+              checked={marcado.has(valor)}
               onChange={(e) => aoMudar(valor, e.target.checked)}
             />
             <span>{rotulos[valor]}</span>
