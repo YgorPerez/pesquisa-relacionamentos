@@ -111,12 +111,12 @@ test.describe('/prioridades', () => {
       'rgb(65, 73, 72)',
     )
 
-    await expect(page.locator('.alerta')).toHaveText(
+    await expect(page.locator('[data-slot="alerta"]')).toHaveText(
       'No seu topo 3, para satisfação: ser parecido comigo pesa quase nada; para renda não há boa evidência.',
     )
     // Sem nota nem número: o único algarismo é o do "topo 3".
     expect(
-      (await page.locator('.alerta').textContent())?.replace('topo 3', ''),
+      (await page.locator('[data-slot="alerta"]').textContent())?.replace('topo 3', ''),
     ).not.toMatch(/\d/)
   })
 
@@ -157,8 +157,8 @@ test.describe('/prioridades', () => {
     page,
   }) => {
     await abrir(page)
-    await page.locator('.aviso').scrollIntoViewIfNeeded()
-    const caixa = await page.locator('.desfecho-preso').boundingBox()
+    await page.locator('[data-slot="aviso"]').scrollIntoViewIfNeeded()
+    const caixa = await page.locator('[data-slot="desfecho-preso"]').boundingBox()
     expect(caixa?.y).toBeLessThanOrEqual(1)
   })
 
@@ -297,7 +297,7 @@ test.describe('cartão do Guia B1', () => {
       name: 'Onde ficam as suas prioridades?',
     })
     await expect(cartao).toContainText('Seu topo 3 cabe na fatia de 5%:')
-    await expect(cartao.locator('.topo3-no-cartao li')).toHaveText([
+    await expect(cartao.locator('[data-slot="topo3-no-cartao"] li')).toHaveText([
       /Química sexual.*pesa$/,
       /Ser parecido comigo.*quase nada$/,
       /Renda.*não sabemos$/,

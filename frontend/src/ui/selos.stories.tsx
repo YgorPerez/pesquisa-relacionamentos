@@ -4,6 +4,7 @@ import {
   LegendaDasFichas,
   StatusDeVerificacao,
 } from './selos'
+import { MetaDaFicha } from './guia'
 
 const meta = {
   component: LegendaDasFichas,
@@ -20,10 +21,10 @@ export const Legenda: Story = {}
 /** Como os selos aparecem lado a lado na lista de Fichas. */
 export const NaLinhaDaFicha: Story = {
   render: () => (
-    <div className="ficha-meta">
+    <MetaDaFicha>
       <StatusDeVerificacao status="parcial" />
       <ForcaDaEvidencia forca="moderada" />
-      <span>EUA · 2017 · n = 5.421</span>
-    </div>
+      <span className="text-tinta-2">EUA · 2017 · n = 5.421</span>
+    </MetaDaFicha>
   ),
 }

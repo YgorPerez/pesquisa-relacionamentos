@@ -16,7 +16,7 @@ import {
 import { cn } from '@/platform/cn'
 import { Botao } from './botao'
 import { Headline, Secao } from './pagina'
-import { Switch } from './shadcn/switch'
+import { Switch } from '@/ui/shadcn/switch'
 
 /** O texto de cada um dos quatro motivos do "não" (#21). Sem campo livre. */
 const TEXTO_DO_MOTIVO: Readonly<Record<MotivoDoNao, string>> = {

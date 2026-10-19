@@ -5,7 +5,7 @@
 import { useState } from 'react'
 import { Botao } from './botao'
 import { Headline, Secao } from './pagina'
-import { Input } from './shadcn/input'
+import { Input } from '@/ui/shadcn/input'
 
 type Copia =
   | { readonly tipo: 'nada' }
@@ -64,7 +64,8 @@ export function Compartilhar({
       </p>
       {copia.tipo === 'falhou' && (
         <Input
-          className="mt-xs w-full text-nota font-normal"
+          texto
+          className="mt-xs w-full"
           readOnly
           value={copia.link}
           aria-label="Link para copiar"

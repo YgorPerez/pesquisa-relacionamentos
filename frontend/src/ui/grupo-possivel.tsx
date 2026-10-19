@@ -18,8 +18,26 @@ import {
   type Requisitos,
 } from '@tem-estudo/regras/requisitos'
 import { Link } from '@tanstack/react-router'
-import { useId, useState, type ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
+import { NumberField } from '@base-ui/react/number-field'
+import { cn } from '@/platform/cn'
+import { Button } from '@/ui/shadcn/button'
+import { Checkbox } from '@/ui/shadcn/checkbox'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/ui/shadcn/collapsible'
+import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { NOME_DO_ALVO, textoDoCusto } from './grupo-possivel.textos'
+import { Headline, Secao } from './pagina'
+
+/** Enquanto os dados chegam, o número antigo fica, apagado. */
+const CARREGANDO =
+  'opacity-55 motion-safe:transition-opacity motion-safe:delay-150 motion-safe:duration-200 motion-safe:ease-sai'
+
+/** A nota miúda embaixo de um controle ou na conta. */
+const DICA = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'
 
 /** A faixa com os números no marca-texto rosa e, se for o caso, "instável". */
 export function Faixa({ estimativa }: { estimativa: Estimativa }) {
@@ -28,10 +46,17 @@ export function Faixa({ estimativa }: { estimativa: Estimativa }) {
   const [, antes = '', numeros = texto] =
     /^(entre |cerca de )?(.*)$/.exec(texto) ?? []
   return (
-    <p className="gp-faixa">
+    <p
+      className="m-0 mt-0.5 font-headline text-headline leading-tight"
+      data-slot="gp-faixa"
+    >
       {antes}
       <mark className="numero-chave">{numeros}</mark>
-      {instavel && <span className="gp-instavel">instável</span>}
+      {instavel && (
+        <span className="ml-2.5 inline-block rounded-mao-2 border-(length:--traco-controle) fio-tracejado border-tinta px-2 py-0 align-[3px] font-label text-label leading-tight font-bold tracking-normal">
+          instável
+        </span>
+      )}
     </p>
   )
 }
@@ -63,25 +88,34 @@ export function NumeroPreso({
 }) {
   return (
     <section
-      className="gp-preso painel"
+      className="sticky top-0 z-2 -mx-xs rounded-mao border-2 border-tinta bg-folha px-3.5 pt-2.5 pb-2"
       aria-labelledby="gp-preso-titulo"
       aria-busy={carregando}
+      data-slot="gp-preso"
     >
-      <h2 id="gp-preso-titulo" className="gp-rotulo">
+      <h2
+        id="gp-preso-titulo"
+        className="m-0 font-label text-label text-tinta-2"
+      >
         Grupo possível
       </h2>
       <div
         aria-live="polite"
         aria-atomic="true"
-        className={carregando ? 'gp-carregando' : undefined}
+        className={carregando ? CARREGANDO : undefined}
       >
         <Faixa estimativa={estimativa} />
       </div>
-      <p className="gp-linha2">
+      <p className="m-0 mt-xs flex flex-wrap items-center justify-between gap-x-3 gap-y-0 text-nota leading-label">
         <span>
           <MaisPesa estimativa={estimativa} />
         </span>
-        <a href="#a-conta">ver a conta</a>
+        <a
+          href="#a-conta"
+          className="inline-flex min-h-toque items-center font-bold"
+        >
+          ver a conta
+        </a>
       </p>
     </section>
   )
@@ -105,16 +139,29 @@ export function LinhaDoRequisito({
 }) {
   return (
     <div
-      className={ligado ? 'gp-req gp-req-ligado' : 'gp-req'}
+      className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta pt-md pb-sm first:border-t-0 first:pt-1"
       id={`req-${requisito}`}
     >
-      <div className="gp-req-cab">
-        <h3 className="gp-req-titulo">{TITULO_DO_REQUISITO[requisito]}</h3>
-        <span className="gp-req-valor">{valor}</span>
+      <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+        <h3 className="m-0 font-title text-title leading-body font-bold">
+          {TITULO_DO_REQUISITO[requisito]}
+        </h3>
+        <span
+          className={cn(
+            'text-aviso font-bold',
+            ligado && 'rounded-mao-2 bg-amarelo-voce px-1',
+          )}
+          data-slot="gp-req-valor"
+        >
+          {valor}
+        </span>
       </div>
       {children}
       {nota}
-      <p className="gp-req-custo">
+      <p
+        className="m-0 mt-2.5 min-h-[1.4em] text-nota text-tinta-2"
+        data-slot="gp-req-custo"
+      >
         {custo ? textoDoCusto(custo) : ligado ? '' : 'não corta ninguém'}
       </p>
     </div>
@@ -151,7 +198,9 @@ const Mais = () => (
 )
 
 /** Um número com botões de passo e campo para digitar: troca o slider, que
- * pede arrastar. Cada toque muda o valor e a conta. */
+ * pede arrastar. Cada toque muda o valor e a conta. O `NumberField` do Base UI
+ * cuida dos passos, das setas do teclado e do campo; só o inteiro dentro da
+ * faixa chega ao Requisito. */
 export function Passos({
   rotulo,
   valor,
@@ -171,70 +220,55 @@ export function Passos({
   aoMudar: (valor: number) => void
 }) {
   const id = useId()
-  const [texto, setTexto] = useState(String(valor))
-  // Um valor novo de fora (os botões, outra aba) reescreve o campo. Trocado
-  // durante o render, como o React manda ajustar o estado quando a prop muda.
-  const [valorVisto, setValorVisto] = useState(valor)
-  if (valorVisto !== valor) {
-    setValorVisto(valor)
-    setTexto(String(valor))
-  }
-  const mudar = (novo: number) => aoMudar(Math.min(max, Math.max(min, novo)))
-
   return (
-    <div className="gp-passos">
-      <label htmlFor={id} className="gp-passos-rotulo">
+    <NumberField.Root
+      id={id}
+      value={valor}
+      min={min}
+      max={max}
+      step={passo}
+      onValueChange={(n) => {
+        // Vazio ou incompleto não muda o Requisito: só o inteiro na faixa.
+        if (n !== null && Number.isInteger(n) && n >= min && n <= max)
+          aoMudar(n)
+      }}
+    >
+      <label htmlFor={id} className="mb-1.5 block text-nota font-bold">
         {rotulo}
       </label>
-      <div className="gp-passos-controle">
-        <button
-          type="button"
-          className="gp-passo"
-          onClick={() => mudar(valor - passo)}
+      <NumberField.Group className="flex items-center gap-1.5">
+        <NumberField.Decrement
+          className={PASSO}
           disabled={valor <= min}
           aria-label={`${rotulo}: menos ${passo}`}
-          aria-controls={id}
         >
           <Menos />
-        </button>
-        <input
-          id={id}
-          className="campo gp-numero"
-          type="number"
+        </NumberField.Decrement>
+        <NumberField.Input
+          className="min-h-toque w-[4.2rem] rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 text-center font-body text-grande font-bold text-tinta"
           inputMode="numeric"
-          min={min}
-          max={max}
-          step={passo}
-          value={texto}
           aria-describedby={`${id}-unidade`}
-          onChange={(e) => {
-            setTexto(e.target.value)
-            // Vazio ou incompleto dá `NaN`, que não é inteiro: só o número
-            // inteiro dentro da faixa muda o Requisito.
-            const n = e.target.valueAsNumber
-            if (Number.isInteger(n) && n >= min && n <= max) aoMudar(n)
-          }}
-          onBlur={() => setTexto(String(valor))}
         />
-        <button
-          type="button"
-          className="gp-passo"
-          onClick={() => mudar(valor + passo)}
+        <NumberField.Increment
+          className={PASSO}
           disabled={valor >= max}
           aria-label={`${rotulo}: mais ${passo}`}
-          aria-controls={id}
         >
           <Mais />
-        </button>
-        <span id={`${id}-unidade`} className="gp-unidade">
+        </NumberField.Increment>
+        <span id={`${id}-unidade`} className="text-nota text-tinta-2">
           {unidade(valor)}
         </span>
-      </div>
-    </div>
+      </NumberField.Group>
+    </NumberField.Root>
   )
 }
 
-/** Opções em chips (o rádio ou a caixa fica invisível por cima). */
+/** O botão de passo: o quadrado de 44px, amarelo enquanto apertado. */
+const PASSO =
+  'inline-grid size-toque cursor-pointer place-items-center rounded-mao border-(length:--traco-controle) border-tinta bg-folha p-0 active:not-disabled:bg-amarelo-voce disabled:cursor-default disabled:opacity-40'
+
+/** Opções em chips: a opção inteira é o rádio ou a caixa de marcar. */
 export function Opcoes<T extends string>({
   legenda,
   tipo,
@@ -252,26 +286,40 @@ export function Opcoes<T extends string>({
   aoMudar: (valor: T, marcado: boolean) => void
   dica?: string
 }) {
-  const nome = useId()
+  const id = useId()
   const marcado = new Set(marcados)
   return (
-    <fieldset className="gp-opcoes">
-      <legend className="visualmente-oculto">{legenda}</legend>
-      <div className="opcoes">
-        {valores.map((valor) => (
-          <label key={valor} className="opcao">
-            <input
-              type={tipo}
-              name={nome}
-              value={valor}
-              checked={marcado.has(valor)}
-              onChange={(e) => aoMudar(valor, e.target.checked)}
-            />
-            <span>{rotulos[valor]}</span>
-          </label>
-        ))}
-      </div>
-      {dica && <p className="gp-dica">{dica}</p>}
+    <fieldset className="m-0 border-0 p-0">
+      <legend id={id} className="sr-only">
+        {legenda}
+      </legend>
+      {tipo === 'radio' ? (
+        <RadioGroup
+          aria-labelledby={id}
+          value={marcados[0] ?? null}
+          onValueChange={(valor) => aoMudar(valor as T, true)}
+        >
+          {valores.map((valor) => (
+            <RadioGroupItem key={valor} value={valor}>
+              {rotulos[valor]}
+            </RadioGroupItem>
+          ))}
+        </RadioGroup>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {valores.map((valor) => (
+            <span key={valor} className="relative">
+              <Checkbox
+                checked={marcado.has(valor)}
+                onCheckedChange={(sim) => aoMudar(valor, sim)}
+              >
+                {rotulos[valor]}
+              </Checkbox>
+            </span>
+          ))}
+        </div>
+      )}
+      {dica && <p className={DICA}>{dica}</p>}
     </fieldset>
   )
 }
@@ -291,29 +339,29 @@ export function Marcar({
   descricao?: string
 }) {
   return (
-    <label
-      className={
-        desabilitado ? 'opcao gp-marcar gp-desabilitado' : 'opcao gp-marcar'
-      }
+    <span
+      className={cn(
+        'relative inline-flex',
+        desabilitado ? 'cursor-not-allowed' : 'cursor-pointer',
+      )}
     >
-      <input
-        type="checkbox"
+      <Checkbox
+        visto
         checked={marcado}
         disabled={desabilitado}
         aria-describedby={descricao}
-        onChange={(e) => aoMudar(e.target.checked)}
-      />
-      <span>
+        onCheckedChange={(sim) => aoMudar(sim)}
+      >
         <Visto marcado={marcado} />
         {rotulo}
-      </span>
-    </label>
+      </Checkbox>
+    </span>
   )
 }
 
 const Visto = ({ marcado }: { marcado: boolean }) => (
   <svg
-    className="gp-visto"
+    className="flex-none"
     width="20"
     height="20"
     viewBox="0 0 20 20"
@@ -350,9 +398,12 @@ export function Dobras({
     valorDoRequisito(k, perfil, requisitos, municipio)
   return (
     <>
-      <details className="gp-dobra" id="gp-corte-a-corte">
-        <summary>Corte a corte</summary>
-        <ol className="gp-funil">
+      <Collapsible id="gp-corte-a-corte" variante="cheia" className="mt-sm">
+        <CollapsibleTrigger variante="cheia">
+          Corte a corte
+        </CollapsibleTrigger>
+        <CollapsibleContent hiddenUntilFound>
+        <ol className="m-0 list-none p-0" data-slot="gp-funil">
           <li>
             <span>
               {NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil
@@ -366,14 +417,18 @@ export function Dobras({
             </li>
           ))}
         </ol>
-        <p className="gp-dica">
+        <p className={DICA}>
           A ordem dos cortes não muda o resultado final.
         </p>
-      </details>
-      <details className="gp-dobra" id="gp-incerteza">
-        <summary>De onde vem a incerteza</summary>
+        </CollapsibleContent>
+      </Collapsible>
+      <Collapsible id="gp-incerteza" variante="cheia" className="mt-sm">
+        <CollapsibleTrigger variante="cheia">
+          De onde vem a incerteza
+        </CollapsibleTrigger>
+        <CollapsibleContent hiddenUntilFound>
         {ligados.length > 1 && (
-          <p className="gp-ingenua">
+          <p className="m-0 mb-2.5 text-aviso">
             Se só multiplicássemos a porcentagem que cada Requisito deixa
             sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
             {diferenca >= 0 ? '+' : '−'}
@@ -381,19 +436,22 @@ export function Dobras({
             juntos; por isso o site cruza os dados.
           </p>
         )}
-        <p className="gp-dica">
+        <p className={DICA}>
           A faixa junta o erro de amostra do Censo (
           {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
           com o intervalo da PNS.
         </p>
-        <ul className="gp-ressalvas">
+        <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
           {ressalvas
             .filter((r) => !r.forte)
             .map((r) => (
-              <li key={r.id}>{r.texto}</li>
+              <li key={r.id} className="not-first:mt-1.5">
+                {r.texto}
+              </li>
             ))}
         </ul>
-      </details>
+        </CollapsibleContent>
+      </Collapsible>
     </>
   )
 }
@@ -441,22 +499,25 @@ export function CartaoDoGrupoPossivel({
   carregando: boolean
 }) {
   return (
-    <section className="secao cartao-calculadora" aria-labelledby="t-cartao-gp">
-      <h2 id="t-cartao-gp" className="headline">
+    <Secao aria-labelledby="t-cartao-gp">
+      <Headline id="t-cartao-gp">
         {usado ? 'Seu Grupo possível' : 'Faça a conta'}
-      </h2>
-      <div className="painel com-reticula">
+      </Headline>
+      <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs">
         {usado ? (
           <div
             aria-busy={carregando}
-            className={carregando ? 'gp-carregando' : undefined}
+            className={carregando ? CARREGANDO : undefined}
           >
             <Faixa estimativa={estimativa} />
-            <p className="cartao-gp-sub">
+            <p className="m-0 mt-1 text-nota leading-normal text-tinta-2">
               {NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você
               pediu
             </p>
-            <p className="cartao-gp-ligados">
+            <p
+              className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
+              data-slot="cartao-gp-ligados"
+            >
               Seus Requisitos:{' '}
               {ligados.length > 0
                 ? ligados.map((valor, i) => (
@@ -468,14 +529,22 @@ export function CartaoDoGrupoPossivel({
                 : 'nenhum'}
               .
             </p>
-            <p className="cartao-gp-pesa">
+            <p
+              className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
+              data-slot="cartao-gp-pesa"
+            >
               <MaisPesa estimativa={estimativa} />
             </p>
           </div>
         ) : (
           <>
-            <p className="rotulo-calculadora">Grupo possível</p>
-            <p className="cartao-gp-frase">
+            <p className="font-label text-label leading-body text-tinta-2">
+              Grupo possível
+            </p>
+            <p
+              className="font-title text-frase-do-cartao leading-nota font-semibold tracking-title"
+              data-slot="cartao-gp-frase"
+            >
               No Brasil,{' '}
               <AdultosNoBrasil quantidade={estimativa.resultado.central} /> não
               moram com companheiro(a). Quantos deles atendem ao que você
@@ -483,13 +552,17 @@ export function CartaoDoGrupoPossivel({
             </p>
           </>
         )}
-        <p className="acoes-calculadora">
-          <Link to="/grupo-possivel" className="botao com-reticula botao-link">
+        <p>
+          <Button
+            nativeButton={false}
+            render={<Link to="/grupo-possivel" />}
+            forma="seta"
+          >
             {usado ? 'Ajustar os Requisitos' : 'Fazer a conta'}
             <Seta />
-          </Link>
+          </Button>
         </p>
       </div>
-    </section>
+    </Secao>
   )
 }

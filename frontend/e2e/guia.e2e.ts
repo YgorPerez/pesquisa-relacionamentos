@@ -78,13 +78,13 @@ test.describe('página do Guia', () => {
     const evidencia = page.getByRole('region', {
       name: 'O que a evidência diz',
     })
-    const achados = evidencia.locator('ol.achados-guia > li')
+    const achados = evidencia.locator('ol[data-slot="achados-guia"] > li')
     await expect(achados).toHaveCount(2)
-    await expect(achados.nth(0).locator('.onde')).toHaveText('Brasil2019')
+    await expect(achados.nth(0).locator('[data-slot="onde"]')).toHaveText('Brasil2019')
     await expect(achados.nth(0)).toContainText(
       'Vale para: homens e mulheres, de 18 a 35 anos.',
     )
-    await expect(achados.nth(1).locator('.onde')).toHaveText('EUA2017')
+    await expect(achados.nth(1).locator('[data-slot="onde"]')).toHaveText('EUA2017')
     await expect(achados.nth(1)).toContainText(
       'Vale para: casais homem-mulher.',
     )
@@ -100,7 +100,7 @@ test.describe('página do Guia', () => {
       'O lugar quase não importa',
     ])
     await expect(tabela.getByRole('cell')).toHaveCount(2)
-    await expect(page.locator('.melhor-desenho')).toContainText(
+    await expect(page.locator('[data-slot="melhor-desenho"]')).toContainText(
       'A amostra brasileira foi sorteada',
     )
   })
@@ -112,7 +112,7 @@ test.describe('página do Guia', () => {
     ).toContainText('Entre 18 e 24 anos, a fatia sobe para 24%')
     const mito = page
       .getByRole('region', { name: 'O que circula por aí e não se sustenta' })
-      .locator('.mito')
+      .locator('[data-slot="mito"]')
     await expect(mito.locator('s')).toHaveText(
       'Mais da metade dos casais se conhece por app.',
     )
@@ -209,10 +209,10 @@ test.describe('página do Tema', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Onde conhecer pessoas',
     )
-    await expect(page.locator('.contexto')).toContainText(
+    await expect(page.locator('[data-slot="contexto"]')).toContainText(
       'Onde os casais se conhecem hoje e se o lugar muda a relação.',
     )
-    const perguntas = page.locator('ol.perguntas > li')
+    const perguntas = page.locator('ol[data-slot="perguntas"] > li')
     await expect(perguntas.getByRole('heading', { level: 2 })).toHaveText([
       'Onde os casais se conhecem hoje?',
       'App ou presencial, onde tenho mais chance?',
@@ -261,7 +261,7 @@ test.describe('Dicas', () => {
   test('/dicas lista só as Dicas publicadas, com a Força', async ({ page }) => {
     await page.goto('/dicas')
     await expect(page).toHaveTitle('Dicas · Tem estudo?')
-    const dicas = page.locator('ol.dicas > li')
+    const dicas = page.locator('ol[data-slot="dicas"] > li')
     await expect(dicas).toHaveCount(1)
     await expect(dicas.first()).toContainText(
       'Use o app como complemento, não como o único caminho.',

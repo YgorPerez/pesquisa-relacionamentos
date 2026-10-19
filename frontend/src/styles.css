@@ -16,11 +16,6 @@
 @import './ui/fontes.css';
 @import './ui/tokens.css';
 @import './ui/desenhos.css';
-@import './ui/componentes.css';
-@import './ui/fichas.css';
-@import './ui/guias.css';
-@import './ui/grupo-possivel.css';
-@import './ui/prioridades.css';
 
 /* O `hover:` do Tailwind só vale onde há mouse (`@media (hover: hover)`). O
  * do site vale também no toque, como sempre valeu. */

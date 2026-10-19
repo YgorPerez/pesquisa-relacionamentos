@@ -24,7 +24,11 @@ function PaginaDoTema() {
     <Folha>
       <Coluna>
         <Display>{tema.titulo}</Display>
-        <Html className="prosa m-0 text-lead" html={tema.contextoHtml} />
+        <Html
+          className="prosa m-0 text-lead"
+          slot="contexto"
+          html={tema.contextoHtml}
+        />
 
         <ol className="m-0 list-none p-0" data-slot="perguntas">
           {tema.guias.map((guia) => (

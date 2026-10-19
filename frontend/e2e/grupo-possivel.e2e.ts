@@ -5,7 +5,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { tocar } from './toque'
 
 const PAGINA = '/grupo-possivel'
-const faixa = (page: Page) => page.locator('.gp-preso .gp-faixa')
+const faixa = (page: Page) => page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
 const requisito = (page: Page, id: string) => page.locator(`#req-${id}`)
 
 async function dizerPerfil(
@@ -30,8 +30,9 @@ async function dizerPerfil(
 /** Espera o número mudar e devolve o novo. */
 async function mudou(page: Page, antes: string): Promise<string> {
   await expect(faixa(page)).not.toHaveText(antes)
-  await expect(page.locator('.gp-preso [aria-live]')).not.toHaveClass(
-    /gp-carregando/,
+  await expect(page.locator('[data-slot="gp-preso"]')).toHaveAttribute(
+    'aria-busy',
+    'false',
   )
   return (await faixa(page).textContent()) ?? ''
 }
@@ -47,7 +48,7 @@ test.describe('Grupo possível', () => {
     await expect(
       page.getByRole('note').filter({ hasText: 'é um teto' }),
     ).toBeVisible()
-    const titulos = await page.locator('main h2.headline').allTextContents()
+    const titulos = await page.locator('main h2[data-slot="headline"]').allTextContents()
     expect(titulos.slice(0, 3)).toEqual([
       'Seu Perfil',
       'Seus Requisitos',
@@ -87,7 +88,7 @@ test.describe('Grupo possível', () => {
     await tocar(escolaridade.getByRole('radio', { name: 'superior completo' }))
     atual = await mudou(page, atual)
     await expect(faixa(page)).toBeInViewport()
-    await expect(escolaridade.locator('.gp-req-custo')).toHaveText(
+    await expect(escolaridade.locator('[data-slot="gp-req-custo"]')).toHaveText(
       /^soltar só este: ×[\d,]+ \(\+.+\)$/,
     )
 
@@ -95,7 +96,7 @@ test.describe('Grupo possível', () => {
       requisito(page, 'idade').getByRole('button', { name: 'até: mais 1' }),
     )
     atual = await mudou(page, atual)
-    await expect(requisito(page, 'idade').locator('.gp-req-valor')).toHaveText(
+    await expect(requisito(page, 'idade').locator('[data-slot="gp-req-valor"]')).toHaveText(
       '23 a 34 anos',
     )
 
@@ -138,14 +139,14 @@ test.describe('Grupo possível', () => {
     await preta.focus()
     await page.keyboard.press('Space')
     await mudou(page, atual)
-    await expect(requisito(page, 'cor').locator('.gp-req-valor')).toHaveText(
+    await expect(requisito(page, 'cor').locator('[data-slot="gp-req-valor"]')).toHaveText(
       'cor preta',
     )
 
     // A idade também se digita.
     const ate = requisito(page, 'idade').getByLabel('até', { exact: true })
     await ate.fill('40')
-    await expect(requisito(page, 'idade').locator('.gp-req-valor')).toHaveText(
+    await expect(requisito(page, 'idade').locator('[data-slot="gp-req-valor"]')).toHaveText(
       '19 a 40 anos',
     )
   })
@@ -197,7 +198,7 @@ test.describe('Grupo possível', () => {
     const lugar = requisito(page, 'lugar')
     await lugar.getByLabel('Estado').selectOption('AC')
     await lugar.getByLabel('Município').selectOption({ label: 'Rio Branco' })
-    await expect(lugar.locator('.gp-req-valor')).toHaveText('Rio Branco (AC)')
+    await expect(lugar.locator('[data-slot="gp-req-valor"]')).toHaveText('Rio Branco (AC)')
     await expect(page.locator('#a-conta')).toContainText(
       'mulheres em Rio Branco (AC) atendem',
     )
@@ -223,13 +224,13 @@ test.describe('Grupo possível', () => {
     await dizerPerfil(page, 'mulher', 'homens', '25')
     const incerteza = page.locator('#gp-incerteza')
     await expect(incerteza).not.toHaveAttribute('open')
-    await tocar(incerteza.locator('summary'))
+    await tocar(incerteza.getByRole('button', { name: 'De onde vem a incerteza' }))
     await expect(incerteza).toContainText(
       /Se só multiplicássemos .+ daria .+ \([+−]\d+%\)/,
     )
     await expect(incerteza).toContainText('inclui quem namora')
-    await tocar(page.locator('#gp-corte-a-corte summary'))
-    await expect(page.locator('.gp-funil li').first()).toContainText(
+    await tocar(page.locator('#gp-corte-a-corte button'))
+    await expect(page.locator('[data-slot="gp-funil"] li').first()).toContainText(
       'homens de 18 anos ou mais no Brasil',
     )
   })
@@ -252,7 +253,7 @@ test.describe('Grupo possível', () => {
   test('os controles têm pelo menos 44px', async ({ page }) => {
     await page.goto(PAGINA)
     const controles = page.locator(
-      '#req-idade button, #req-idade input, .gp-req label.opcao, .gp-req select, .gp-preso a',
+      '#req-idade button, #req-idade input:not([aria-hidden="true"]), [id^="req-"] [data-slot="radio-group-item"], [id^="req-"] [data-slot="checkbox"], [id^="req-"] select, [data-slot="gp-preso"] a',
     )
     expect(await controles.count()).toBeGreaterThan(20)
     for (const c of await controles.all())

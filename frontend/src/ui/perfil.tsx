@@ -28,8 +28,8 @@ import { cn } from '@/platform/cn'
 import { Botao } from './botao'
 import { Html } from './guia'
 import { Aviso } from './pagina'
-import { Input } from './shadcn/input'
-import { RadioGroup, RadioGroupItem } from './shadcn/radio-group'
+import { Input } from '@/ui/shadcn/input'
+import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 
 /** O link que leva à caixa e o pedido de abrir o formulário já preenchido. */
 const MUDAR = 'tem-estudo:mudar-perfil'

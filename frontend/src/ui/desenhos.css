@@ -49,6 +49,12 @@
   --tw-border-style: dashed;
 }
 
+/* O chip não pisca o realce azul do navegador ao toque: o amarelo é a
+ * resposta. O Tailwind não tem utilidade para isso. */
+@utility sem-realce-no-toque {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Cada seção abre com a régua desenhada à mão, no alto. */
 @utility regua {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 6' preserveAspectRatio='none'%3E%3Cpath d='M1 3.4C120 2.6 260 3.6 380 2.9S540 3.3 599 2.8' stroke='%231a1c1c' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")

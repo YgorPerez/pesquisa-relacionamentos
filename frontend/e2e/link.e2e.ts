@@ -14,7 +14,7 @@ import {
 import { tocar } from './toque'
 
 const SITE = 'https://temestudo.com'
-const faixa = (page: Page) => page.locator('.gp-preso .gp-faixa')
+const faixa = (page: Page) => page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
 const salvo = (page: Page, chave: string) =>
   page.evaluate(
     (k) => JSON.parse(localStorage.getItem(`tem-estudo:${k}`) ?? 'null'),
@@ -94,9 +94,10 @@ test.describe('link do Grupo possível', () => {
       'Este link mostra: homem, 30, procura mulheres, ensino superior, em Rio Branco (AC).',
     )
     await expect(compartilhar(page)).toContainText('sem guardar o gênero')
-    await expect(page.locator('.gp-preso [aria-live]')).not.toHaveClass(
-      /gp-carregando/,
-    )
+    await expect(page.locator('[data-slot="gp-preso"]')).toHaveAttribute(
+    'aria-busy',
+    'false',
+  )
     const numero = (await faixa(page).textContent()) ?? ''
 
     const link = await copiarLink(page)

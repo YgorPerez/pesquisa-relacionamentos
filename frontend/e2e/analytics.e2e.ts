@@ -71,7 +71,7 @@ async function percorrer(
     .getByRole('button', { name: 'Difícil de entender' })
     .click()
   await expect(ajudou(page)).toContainText('Obrigado')
-  await page.locator('.fichas-citadas a.ficha-titulo').first().click()
+  await page.locator('[data-slot="fichas-citadas"] li > div > a').first().click()
   await expect(page).toHaveURL(/\/estudos\//)
   // A visita da Ficha sai depois da navegação: espere antes de sair dela.
   await expect

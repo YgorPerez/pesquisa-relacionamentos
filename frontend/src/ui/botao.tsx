@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react'
-import { Button } from './shadcn/button'
+import { Button } from '@/ui/shadcn/button'
 
 type Props = ComponentProps<typeof Button> & {
   /** `principal` é amarelo com a retícula atrás; `leve` é folha, sem

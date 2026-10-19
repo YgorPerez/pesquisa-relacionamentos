@@ -23,7 +23,7 @@ test.describe('cartão do Guia B5', () => {
   }) => {
     await abrir(page, GUIA_B5)
     const sem = cartao(page, SEM_USO)
-    await expect(sem.locator('.cartao-gp-frase')).toHaveText(
+    await expect(sem.locator('[data-slot="cartao-gp-frase"]')).toHaveText(
       /^No Brasil, [\d,]+ (mil|milhão de|milhões de) adultos não moram com companheiro\(a\)\. Quantos deles atendem ao que você procura\?$/,
     )
     await expect(sem.locator('mark.numero-chave')).toHaveText(
@@ -32,7 +32,7 @@ test.describe('cartão do Guia B5', () => {
     await expect(cartao(page, COM_USO)).toHaveCount(0)
 
     // Entre as Dicas e "O que a evidência diz".
-    const titulos = await page.locator('main h2.headline').allTextContents()
+    const titulos = await page.locator('main h2[data-slot="headline"]').allTextContents()
     expect(titulos.indexOf(SEM_USO)).toBe(
       titulos.indexOf('O que a evidência diz') - 1,
     )
@@ -54,12 +54,12 @@ test.describe('cartão do Guia B5', () => {
     )
     await abrir(page, GUIA_B5)
     const com = cartao(page, COM_USO)
-    await expect(com.locator('.gp-faixa')).toHaveText(/^entre .+ e .+/)
-    await expect(com.locator('.gp-faixa mark.numero-chave')).toBeVisible()
-    await expect(com.locator('.cartao-gp-ligados')).toHaveText(
+    await expect(com.locator('[data-slot="gp-faixa"]')).toHaveText(/^entre .+ e .+/)
+    await expect(com.locator('[data-slot="gp-faixa"] mark.numero-chave')).toBeVisible()
+    await expect(com.locator('[data-slot="cartao-gp-ligados"]')).toHaveText(
       'Seus Requisitos: 25 a 35 anos, não mora com companheiro(a), se interessa por homens.',
     )
-    await expect(com.locator('.cartao-gp-pesa')).toHaveText(
+    await expect(com.locator('[data-slot="cartao-gp-pesa"]')).toHaveText(
       /^o que mais pesa: .+ \(×[\d,]+\)$/,
     )
     await expect(
@@ -78,7 +78,7 @@ test.describe('cartão do Guia B5', () => {
     await expect(page).toHaveURL('/grupo-possivel')
     await page.waitForLoadState('networkidle')
 
-    const faixa = page.locator('.gp-preso .gp-faixa')
+    const faixa = page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
     const antes = (await faixa.textContent()) ?? ''
     await tocar(
       page
@@ -86,19 +86,20 @@ test.describe('cartão do Guia B5', () => {
         .getByRole('radio', { name: 'superior completo' }),
     )
     await expect(faixa).not.toHaveText(antes)
-    await expect(page.locator('.gp-preso [aria-live]')).not.toHaveClass(
-      /gp-carregando/,
-    )
+    await expect(page.locator('[data-slot="gp-preso"]')).toHaveAttribute(
+    'aria-busy',
+    'false',
+  )
     const naPagina = (await faixa.textContent()) ?? ''
 
     await tocar(page.getByRole('link', { name: 'Ler o Guia inteiro' }))
     await expect(page).toHaveURL(GUIA_B5)
     const com = cartao(page, COM_USO)
-    await expect(com.locator('.gp-faixa')).toHaveText(naPagina)
-    await expect(com.locator('.cartao-gp-ligados')).toHaveText(
+    await expect(com.locator('[data-slot="gp-faixa"]')).toHaveText(naPagina)
+    await expect(com.locator('[data-slot="cartao-gp-ligados"]')).toHaveText(
       'Seus Requisitos: não mora com companheiro(a), pelo menos superior completo.',
     )
-    await expect(com.locator('.cartao-gp-pesa')).toContainText('escolaridade')
+    await expect(com.locator('[data-slot="cartao-gp-pesa"]')).toContainText('escolaridade')
 
     // E de volta pelo botão do cartão, com a conta onde ficou.
     await tocar(com.getByRole('link', { name: 'Ajustar os Requisitos' }))

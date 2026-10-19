@@ -56,6 +56,22 @@ import {
 import { NOME_DO_ALVO, textoDoCusto } from '#/ui/grupo-possivel.textos'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import { CaixaDoPerfil } from '#/ui/perfil'
+import { cn } from '@/platform/cn'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Secao,
+} from '#/ui/pagina'
+
+/** A nota miúda embaixo de um controle. */
+const DICA = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'
+
+/** Enquanto os dados chegam, o número antigo fica, apagado. */
+const CARREGANDO =
+  'opacity-55 motion-safe:transition-opacity motion-safe:delay-150 motion-safe:duration-200 motion-safe:ease-sai'
 
 export const Route = createFileRoute('/grupo-possivel')({
   loader: async ({ location }) => {
@@ -140,7 +156,7 @@ function PaginaDoGrupoPossivel() {
   const controles: Record<RequisitoDoVisitante, ReactNode> = {
     idade: linha(
       'idade',
-      <div className="gp-par">
+      <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Passos
           rotulo="Idade de"
           valor={idade.min}
@@ -249,7 +265,7 @@ function PaginaDoGrupoPossivel() {
     ),
     altura: linha(
       'altura',
-      <div className="gp-par">
+      <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Passos
           rotulo="Altura de"
           valor={r.altura.min}
@@ -290,16 +306,16 @@ function PaginaDoGrupoPossivel() {
   }
 
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">
+    <Folha>
+      <Coluna>
+        <Display>
           Quantas pessoas atendem ao que você{' '}
           <span className="marca-texto">procura</span>?
-        </h1>
+        </Display>
 
         <NumeroPreso estimativa={estimativa} carregando={carregando} />
 
-        <p className="gp-intro">
+        <p className="mx-0 mt-5.5 mb-md">
           Diga quem você procura e ligue os seus Requisitos. O número de cima
           muda junto, com dados do Censo 2022 e da PNS 2019.
         </p>
@@ -310,11 +326,9 @@ function PaginaDoGrupoPossivel() {
           ressalvas={estimativa.ressalvas}
         />
 
-        <section className="secao" aria-labelledby="t-perfil">
-          <h2 id="t-perfil" className="headline">
-            Seu Perfil
-          </h2>
-          <p className="gp-dica">
+        <Secao aria-labelledby="t-perfil">
+          <Headline id="t-perfil">Seu Perfil</Headline>
+          <p className={DICA}>
             A conta parte de quem você é e de quem você procura.
           </p>
           <CaixaDoPerfil
@@ -324,35 +338,35 @@ function PaginaDoGrupoPossivel() {
             rotuloDoBotao="Usar na conta"
           />
           {(perfil?.genero === 'homem' || perfil?.genero === 'mulher') && (
-            <p className="gp-dica">
+            <p className={DICA}>
               A orientação entra pelo seu Perfil: a conta só conta quem{' '}
               {valor('orientacao')}, pela PNS 2019.
             </p>
           )}
-        </section>
+        </Secao>
 
-        <section className="secao" aria-labelledby="t-requisitos">
-          <h2 id="t-requisitos" className="headline">
-            Seus Requisitos
-          </h2>
-          <div className={carregando ? 'gp-reqs gp-carregando' : 'gp-reqs'}>
+        <Secao aria-labelledby="t-requisitos">
+          <Headline id="t-requisitos">Seus Requisitos</Headline>
+          <div className={carregando ? CARREGANDO : undefined}>
             {REQUISITOS.map((k) => controles[k])}
           </div>
-        </section>
+        </Secao>
 
-        <section className="secao" id="a-conta" aria-labelledby="t-conta">
-          <h2 id="t-conta" className="headline">
-            A conta
-          </h2>
-          <div className={carregando ? 'gp-carregando' : undefined}>
+        <Secao id="a-conta" aria-labelledby="t-conta">
+          <Headline id="t-conta">A conta</Headline>
+          <div className={carregando ? CARREGANDO : undefined}>
             <Faixa estimativa={estimativa} />
-            <p className="gp-sub">
+            <p className="m-0 mt-1.5">
               {NOME_DO_ALVO[estimativa.alvo]} em{' '}
               {lugarNome === 'Brasil inteiro' ? 'todo o Brasil' : lugarNome}{' '}
               atendem a tudo o que você pediu. Estimativa central:{' '}
               {formatarQuantidade(estimativa.resultado.central)}.
             </p>
-            <h3 className="gp-rotulo" ref={maisPesa} tabIndex={-1}>
+            <h3
+              className="m-0 mt-md mb-2 font-label text-label text-tinta-2"
+              ref={maisPesa}
+              tabIndex={-1}
+            >
               O que mais pesa
             </h3>
             <CustosDaConta
@@ -367,7 +381,7 @@ function PaginaDoGrupoPossivel() {
               municipio={municipio}
             />
           </div>
-        </section>
+        </Secao>
 
         <Compartilhar
           query={queryDoLink(link)}
@@ -376,8 +390,8 @@ function PaginaDoGrupoPossivel() {
         />
 
         {guia && <DoGuia guia={guia} />}
-      </div>
-    </main>
+      </Coluna>
+    </Folha>
   )
 }
 
@@ -397,25 +411,25 @@ function AvisosDaConta({
   return (
     <>
       {trocou && (
-        <p className="aviso" role="status">
+        <Aviso role="status">
           Este link trocou o seu Perfil e os seus Requisitos salvos pelos de
           quem mandou.
-        </p>
+        </Aviso>
       )}
       {falhou && (
-        <p className="aviso" role="alert">
+        <Aviso role="alert">
           Não deu para baixar os dados da conta.{' '}
           <Botao variante="leve" onClick={tentar}>
             Tentar de novo
           </Botao>
-        </p>
+        </Aviso>
       )}
       {ressalvas
         .filter((x) => x.forte)
         .map((aviso) => (
-          <p key={aviso.id} className="aviso gp-aviso" role="note">
+          <Aviso key={aviso.id} className="font-bold" role="note">
             {aviso.texto}
-          </p>
+          </Aviso>
         ))}
     </>
   )
@@ -431,7 +445,7 @@ function MotivoDosFilhos({
 }) {
   if (filhos === 'vale') return null
   return (
-    <p className="gp-motivo" id={id}>
+    <p className="m-0 mt-2 text-label leading-nota font-bold text-tinta" id={id}>
       {filhos === 'sem-dado'
         ? 'O Censo só pergunta filhos às mulheres. Procurando homens, não dá para filtrar.'
         : 'O Censo só pergunta filhos às mulheres: procurando homens e mulheres, o filtro vale só para elas.'}
@@ -452,24 +466,30 @@ function CustosDaConta({
 }) {
   if (custos.length === 0)
     return (
-      <p className="gp-dica">
+      <p className={DICA}>
         Nenhum Requisito ligado ainda. Cada um que você ligar aparece aqui, do
         que mais encolhe o grupo ao que menos.
       </p>
     )
   return (
-    <ul className="gp-pesa">
+    <ul className="m-0 list-none p-0">
       {custos.map((c) => {
         const k = c.requisito as RequisitoDoVisitante
         return (
-          <li key={k}>
-            <span className="gp-pesa-nome">
+          <li
+            key={k}
+            className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-0.5 border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-2.5"
+          >
+            <span className="font-bold">
               {TITULO_DO_REQUISITO[k]}
-              <small>{valor(k)}</small>
+              <small className="block text-label leading-body font-normal text-tinta-2">
+                {valor(k)}
+              </small>
             </span>
-            <span className="gp-pesa-custo">{textoDoCusto(c)}</span>
+            <span className="col-1 text-nota">{textoDoCusto(c)}</span>
             <Botao
               variante="leve"
+              className="col-2 row-span-2 row-start-1"
               onClick={() => aoSoltar(k)}
               aria-label={`Soltar ${TITULO_DO_REQUISITO[k].toLowerCase()}`}
             >
@@ -489,23 +509,23 @@ function DoGuia({
   guia: NonNullable<ReturnType<typeof Route.useLoaderData>['guia']>
 }) {
   return (
-    <section className="secao" aria-labelledby="t-do-guia">
-      <h2 id="t-do-guia" className="headline">
-        Do Guia
-      </h2>
-      <div className="painel com-reticula gp-do-guia">
-        <p className="gp-rotulo">{guia.pergunta}</p>
+    <Secao aria-labelledby="t-do-guia">
+      <Headline id="t-do-guia">Do Guia</Headline>
+      <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mb-2.5">
+        <p className="font-title text-linha leading-label font-bold text-tinta">
+          {guia.pergunta}
+        </p>
         <ConfiancaDaResposta confianca={guia.confianca} />
-        <p className="resposta">{guia.resposta}</p>
+        <p className="text-lead">{guia.resposta}</p>
         <Link
           to="/$tema/$slug"
           params={{ tema: guia.tema, slug: guia.slug }}
-          className="gp-ler-guia"
+          className="mt-1.5 inline-flex min-h-toque items-center font-bold"
         >
           Ler o Guia inteiro
         </Link>
       </div>
-    </section>
+    </Secao>
   )
 }
 
@@ -527,13 +547,13 @@ function Lugar({
       )
     : []
   return (
-    <div className="gp-lugar">
-      <label htmlFor={`${id}-uf`} className="gp-passos-rotulo">
+    <div className="grid gap-x-0 gap-y-1">
+      <label htmlFor={`${id}-uf`} className="mb-1.5 block text-nota font-bold">
         Estado
       </label>
       <select
         id={`${id}-uf`}
-        className="campo gp-lista"
+        className="min-h-toque w-full max-w-88 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 font-body text-medio font-bold text-tinta"
         value={uf ?? ''}
         onChange={(e) => {
           const escolhida = UFS.find((u) => u.sigla === e.target.value)
@@ -549,12 +569,15 @@ function Lugar({
       </select>
       {uf && (
         <>
-          <label htmlFor={`${id}-municipio`} className="gp-passos-rotulo">
+          <label
+            htmlFor={`${id}-municipio`}
+            className={cn('mb-1.5 block text-nota font-bold', 'mt-2.5')}
+          >
             Município
           </label>
           <select
             id={`${id}-municipio`}
-            className="campo gp-lista"
+            className="min-h-toque w-full max-w-88 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 font-body text-medio font-bold text-tinta"
             value={requisitos.lugar?.municipio ?? ''}
             disabled={!municipios}
             onChange={(e) =>

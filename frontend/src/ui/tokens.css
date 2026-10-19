@@ -120,6 +120,7 @@
   --spacing-toque: 44px;
   /* O recuo de uma lista numerada ou com bolinha. */
   --spacing-marcador: 1.3em;
+  --spacing-marcador-curto: 1.1em;
 
   /* A coluna da página e a medida do texto. */
   --container-pagina: 46rem;
@@ -162,4 +163,6 @@
   --traco-painel: 2px;
   --traco-controle: 1.8px;
   --traco-etiqueta: 1.5px;
+  /* O contorno de fora do livro aberto na estante. */
+  --traco-aberto: 2.4px;
 }

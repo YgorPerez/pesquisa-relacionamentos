@@ -61,6 +61,7 @@ export function Headline({ className, ...props }: ComponentProps<'h2'>) {
         'm-0 mb-sm font-headline text-headline text-balance',
         className,
       )}
+      data-slot="headline"
       {...props}
     />
   )
@@ -75,6 +76,7 @@ export function Aviso({ className, ...props }: ComponentProps<'p'>) {
         'm-0 mb-md rounded-mao-2 border-2 fio-tracejado border-tinta bg-folha px-md py-sm text-aviso leading-normal [[data-slot=voltar]+&]:mt-sm',
         className,
       )}
+      data-slot="aviso"
       {...props}
     />
   )

@@ -13,14 +13,21 @@ export function Html({
   html,
   como = 'div',
   className,
+  slot,
 }: {
   html: string
   como?: 'div' | 'span' | 'p'
   className?: string
+  /** O `data-slot`, por onde o teste acha o bloco. */
+  slot?: string
 }) {
   const Tag = como
   return (
-    <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />
+    <Tag
+      className={className}
+      data-slot={slot}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   )
 }
 

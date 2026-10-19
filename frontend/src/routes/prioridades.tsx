@@ -32,6 +32,20 @@ import {
   Estante,
   SeletorDeDesfecho,
 } from '#/ui/prioridades'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Secao,
+} from '#/ui/pagina'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/ui/shadcn/collapsible'
 
 export const Route = createFileRoute('/prioridades')({
   loader: async ({ location }) => {
@@ -68,22 +82,22 @@ const idsDe = (vista: PrioridadesVista) =>
 function PaginaDePrioridades() {
   const { vista } = Route.useLoaderData()
   return (
-    <main className="folha">
-      <div className="coluna">
-        <h1 className="display">
+    <Folha>
+      <Coluna>
+        <Display>
           O que você <span className="marca-texto">valoriza</span> pesa mesmo?
-        </h1>
+        </Display>
         {vista ? (
           <Calculadora vista={vista} />
         ) : (
-          <p className="aviso">
+          <Aviso>
             Esta conta entra no ar quando os estudos que ela usa forem
             conferidos na fonte. Enquanto isso,{' '}
             <Link to="/estudos">veja os estudos do acervo</Link>.
-          </p>
+          </Aviso>
         )}
-      </div>
-    </main>
+      </Coluna>
+    </Folha>
   )
 }
 
@@ -116,16 +130,16 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
 
   return (
     <>
-      <p className="lead">
+      <Lead>
         Das dez, quais são as três que mais importam para você num parceiro?
         Toque nelas na ordem.
-      </p>
+      </Lead>
       {trocou && (
-        <p className="aviso" role="status">
+        <Aviso role="status">
           {trocouGenero
             ? 'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.'
             : 'Este link trocou o seu topo 3 salvo pelo de quem mandou.'}
-        </p>
+        </Aviso>
       )}
 
       <EscolhaDoTopo3
@@ -134,14 +148,22 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         aoTocar={tocar}
       />
 
-      <div className="desfecho-preso">
+      <div
+        className="sticky top-0 z-5 -mx-md mt-lg mb-0 border-b-2 border-tinta bg-papel px-md py-2.5 folha:-mx-16 folha:px-16"
+        data-slot="desfecho-preso"
+      >
         <SeletorDeDesfecho desfecho={desfecho} aoEscolher={escolherDesfecho} />
       </div>
 
       {desfecho === 'satisfacao' && (
-        <details className="dobra" id="antes-da-lista" open>
-          <summary>
+        <Collapsible
+          id="antes-da-lista"
+          defaultOpen
+          className="mt-md"
+        >
+          <CollapsibleTrigger>
             <svg
+              className="flex-none transition-transform duration-250 ease-sai group-data-panel-open:rotate-90 motion-reduce:transition-none"
               width="14"
               height="16"
               viewBox="0 0 14 16"
@@ -155,15 +177,17 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
               <path d="M4 2.5l6.5 5.6L4 13.6" />
             </svg>
             Antes: o parceiro explica pouco da satisfação
-          </summary>
-          <BarraDaSatisfacao barra={vista.barra} />
-        </details>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <BarraDaSatisfacao barra={vista.barra} />
+          </CollapsibleContent>
+        </Collapsible>
       )}
 
       <AlertaDoTopo3 frase={alertaDoTopo3(caracteristicas, topo3, desfecho)} />
 
       <section aria-labelledby="t-estante">
-        <h2 id="t-estante" className="visualmente-oculto">
+        <h2 id="t-estante" className="sr-only">
           Onde a evidência põe cada uma, para{' '}
           {NOME_DO_DESFECHO[desfecho].toLowerCase()}
         </h2>
@@ -175,15 +199,15 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
           aoAbrir={setAberta}
           genero={genero}
         />
-        <p className="dica-estante">
+        <p className="mx-0 mt-sm mb-lg text-nota text-tinta-2">
           Toque numa característica para ver o estudo.
         </p>
       </section>
 
-      <p className="aviso" role="note">
+      <Aviso role="note">
         Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da
         Austrália, e um cobre 43 países. Quase todos são de casais homem-mulher.
-      </p>
+      </Aviso>
 
       <Compartilhar
         query={queryDoLink(link)}
@@ -192,25 +216,25 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       />
 
       {vista.doGuia && (
-        <section className="secao do-guia" aria-labelledby="t-do-guia">
-          <h2 id="t-do-guia" className="headline">
-            Do Guia
-          </h2>
-          <div className="painel com-reticula">
-            <p className="rotulo-calculadora">{vista.doGuia.pergunta}</p>
+        <Secao aria-labelledby="t-do-guia">
+          <Headline id="t-do-guia">Do Guia</Headline>
+          <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
+            <p className="font-title text-title leading-body font-bold tracking-normal text-tinta">
+              {vista.doGuia.pergunta}
+            </p>
             <ConfiancaDaResposta confianca={vista.doGuia.confianca} />
-            <p className="resposta">{vista.doGuia.resposta}</p>
+            <p className="text-lead">{vista.doGuia.resposta}</p>
             <p>
               <Link
                 to="/$tema/$slug"
                 params={{ tema: vista.doGuia.tema, slug: vista.doGuia.slug }}
-                className="link-forte"
+                className="inline-flex min-h-toque items-center font-bold"
               >
                 Ler o Guia inteiro
               </Link>
             </p>
           </div>
-        </section>
+        </Secao>
       )}
     </>
   )

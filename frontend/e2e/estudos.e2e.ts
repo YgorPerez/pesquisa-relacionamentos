@@ -21,7 +21,7 @@ test.describe('/estudos', () => {
       'estudos',
     )
 
-    const itens = page.locator('ol.fichas > li')
+    const itens = page.locator('ol[data-slot="fichas"] > li')
     // As conferidas primeiro: lida no original, parcial, não verificada.
     await expect(itens.getByRole('link')).toHaveText([
       'Silva e Souza (2020): apps de namoro no Brasil',
@@ -81,7 +81,7 @@ test.describe('/estudos/<slug>', () => {
       'Silva e Souza 2020: apps de namoro no Brasil · Tem estudo?',
     )
 
-    const dados = page.locator('.ficha-dados')
+    const dados = page.locator('[data-slot="ficha-dados"]')
     await expect(dados).toContainText(
       'Silva A, Souza B. Apps de namoro no Brasil.',
     )
@@ -97,14 +97,14 @@ test.describe('/estudos/<slug>', () => {
       'Financiado pela universidade; sem conflito declarado.',
     )
     await expect(dados).toContainText('CC BY 4.0')
-    await expect(page.locator('.ficha-meta-grande')).toContainText(
+    await expect(page.locator('[data-slot="ficha-meta-grande"]')).toContainText(
       'lido no original',
     )
-    await expect(page.locator('.ficha-meta-grande')).toContainText(
+    await expect(page.locator('[data-slot="ficha-meta-grande"]')).toContainText(
       'evidência forte',
     )
 
-    const achados = page.locator('ol.achados > li')
+    const achados = page.locator('ol[data-slot="achados"] > li')
     await expect(achados).toHaveCount(2)
     await expect(achados.first()).toContainText('18%')
     await expect(achados.first()).toContainText('Conheceram o parceiro por app')
@@ -129,10 +129,10 @@ test.describe('/estudos/<slug>', () => {
     page,
   }) => {
     await page.goto('/estudos/costa-2018-satisfacao')
-    await expect(page.locator('.ficha-dados')).toContainText(
+    await expect(page.locator('[data-slot="ficha-dados"]')).toContainText(
       'Conferido em parte em 18/10/2026.',
     )
-    await expect(page.locator('.ficha-dados')).toContainText('Não declarado.')
+    await expect(page.locator('[data-slot="ficha-dados"]')).toContainText('Não declarado.')
     await expect(page.locator('meta[name="robots"]')).toHaveCount(0)
   })
 
@@ -147,10 +147,10 @@ test.describe('/estudos/<slug>', () => {
 
     await page.goto('/estudos/lima-2015-encontros')
     await expect(page.getByRole('note')).toContainText('Ficha não verificada.')
-    await expect(page.locator('.ficha-meta-grande')).toContainText(
+    await expect(page.locator('[data-slot="ficha-meta-grande"]')).toContainText(
       'não verificado',
     )
-    await expect(page.locator('.ficha-dados')).toContainText(
+    await expect(page.locator('[data-slot="ficha-dados"]')).toContainText(
       'Ainda não conferida na fonte.',
     )
     await expect(
@@ -170,7 +170,7 @@ test.describe('/estudos/<slug>', () => {
       'Guias',
       'Dicas',
     ])
-    await expect(citada.locator('.linha-pergunta')).toHaveText([
+    await expect(citada.locator('[data-slot="linha-pergunta"]')).toHaveText([
       /Onde os casais se conhecem hoje\?/,
       /App ou presencial, onde tenho mais chance\?/,
     ])
@@ -185,7 +185,7 @@ test.describe('/estudos/<slug>', () => {
     await tocar(
       page
         .getByRole('region', { name: 'Citada em' })
-        .locator('.linha-pergunta')
+        .locator('[data-slot="linha-pergunta"]')
         .first(),
     )
     await expect(page).toHaveURL(
