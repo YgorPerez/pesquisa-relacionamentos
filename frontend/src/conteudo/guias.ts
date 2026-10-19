@@ -60,7 +60,7 @@ export const buscarGuia = createServerFn({ method: 'GET' })
     const { tema, slug } = (dados ?? {}) as Record<string, unknown>
     return { tema: texto(tema, 'tema'), slug: texto(slug, 'slug') }
   })
-  .handler(async ({ data }): Promise<GuiaVista & { prioridades: PrioridadesVista | null }> => {
+  .handler(async ({ data }): Promise<GuiaVista & { prioridades: PrioridadesVista | null; grupoPossivel: boolean }> => {
     const { default: acervo } = await import('virtual:acervo')
     const guia = guiaPorSlug(acervo, data.slug)
     if (!guia || guia.tema !== data.tema) throw notFound()
@@ -68,6 +68,8 @@ export const buscarGuia = createServerFn({ method: 'GET' })
       ...vistaDoGuia(guia, acervo),
       // O cartão do B1 lê o mesmo arquivo da página `/prioridades`.
       prioridades: guia.calculadora === 'prioridades' ? vistaDasPrioridades(acervo) : null,
+      // O cartão do B5 faz a conta no navegador, com os dados do build.
+      grupoPossivel: guia.calculadora === 'grupo-possivel',
     }
   })
 
