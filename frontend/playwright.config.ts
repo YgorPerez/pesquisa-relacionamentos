@@ -1,7 +1,7 @@
 // O app inteiro no navegador, sobre o servidor SSR do build (`pnpm build`),
 // como ele vai para produção. `pnpm e2e` constrói e sobe sozinho.
 //
-// A porta é a do e2e no checkout (`scripts/portas.ts`, ADR 0007): 4312 no
+// A porta é a do e2e no checkout (`scripts/portas.ts`, ADR 0010): 4312 no
 // principal, a do bloco num worktree, então dois worktrees rodam o e2e ao
 // mesmo tempo sem combinar nada. `E2E_PORTA` escolhe outra.
 // Os arquivos terminam em `.e2e.ts`, e não `.spec.ts`, porque o Vitest pega
@@ -15,7 +15,7 @@ import { portaDoCheckout } from '../scripts/portas.ts'
 const porta = Number(process.env.E2E_PORTA ?? portaDoCheckout('e2e'))
 
 // A rodada entra na fila da máquina antes de subir o servidor, e abre os
-// Chrome que ela der (`scripts/fila-da-maquina.ts`, ADR 0010). Sozinha, a
+// Chrome que ela der (`scripts/fila-da-maquina.ts`, ADR 0013). Sozinha, a
 // metade dos núcleos, o padrão do Playwright. Os workers leem esta config de
 // novo e herdam `FILA_DA_MAQUINA`, então não entram outra vez.
 const METADE = Math.max(1, Math.floor(availableParallelism() / 2))

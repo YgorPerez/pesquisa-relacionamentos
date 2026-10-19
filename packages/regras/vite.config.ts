@@ -2,7 +2,7 @@ import { defineConfig } from 'vite-plus'
 import { workersDoVitest } from '../../scripts/fila-da-maquina.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
-// ela der (`scripts/fila-da-maquina.ts`, ADR 0010).
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
 const workers = await workersDoVitest()
 
 export default defineConfig({

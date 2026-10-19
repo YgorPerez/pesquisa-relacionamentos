@@ -8,7 +8,7 @@ import { defineConfig } from 'vite-plus'
 import { workersDoVitest } from './scripts/fila-da-maquina.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
-// ela der (`scripts/fila-da-maquina.ts`, ADR 0010).
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
 const workers = await workersDoVitest()
 
 /** O que não é código nosso, ou é texto que o build lê byte a byte. */
@@ -42,7 +42,7 @@ const FORA = [
   'skills-lock.json',
   '.impeccable/**',
   '.claude/worktrees/**',
-  // O código do Effect que os agentes leem (ADR 0009).
+  // O código do Effect que os agentes leem (ADR 0012).
   '.repos/**',
 ]
 

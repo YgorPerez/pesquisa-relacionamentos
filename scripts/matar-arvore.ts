@@ -1,5 +1,5 @@
 // Sobe um filho num grupo de processos só dele e, para pará-lo, para a árvore
-// inteira pelo PID que o `spawn` deu, nunca por nome ou padrão (ADR 0008,
+// inteira pelo PID que o `spawn` deu, nunca por nome ou padrão (ADR 0011,
 // `AGENTS.md`, "Quatro jeitos de se machucar", item 3). Outras sessões rodam
 // os seus `node`, `vite` e `playwright` na mesma máquina.
 //

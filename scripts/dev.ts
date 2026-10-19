@@ -1,4 +1,4 @@
-// Sobe o app ou o Storybook deste checkout na porta dele (ADR 0007): as de
+// Sobe o app ou o Storybook deste checkout na porta dele (ADR 0010): as de
 // sempre no principal, as do bloco num worktree (`./portas.ts`), então dois
 // worktrees sobem lado a lado sem combinar nada.
 //

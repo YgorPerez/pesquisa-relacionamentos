@@ -8,7 +8,7 @@ Cada rodada do Vitest e do Playwright escolhe os workers pelos núcleos, como se
 - **A filtrada é leve e nunca espera.** Leva a sua parte do orçamento (um worker por núcleo), dividido pelas rodadas que rodam, e nunca menos de um worker.
 - **A entrada está na config de cada ferramenta**, e não no `package.json`: os `vite.config.ts` da raiz, do `frontend/` e dos pacotes, o `frontend/vitest.stories.config.ts` e o `frontend/playwright.config.ts` chamam `scripts/fila-da-maquina.ts` ao carregar. Assim `pnpm test`, `vp test` e `pnpm exec playwright` passam todos por ela.
 - **O estado é um arquivo por rodada em `<tmp>/fila-dos-testes-tem-estudo`**, escrito sob uma trava de pasta. A pasta não é a do Festival: uma suíte dele dura até 20 min, e a nossa inteira, segundos; dividir a fila deixaria a nossa esperando a dele.
-- **Uma rodada morta solta a vez sozinha.** O arquivo leva o PID do dono, que o renova a cada 30 s. Sem PID vivo, ou 5 min sem sinal, o próximo leitor apaga o arquivo. A fila só pergunta se o PID existe e nunca para processo (ADR 0008).
+- **Uma rodada morta solta a vez sozinha.** O arquivo leva o PID do dono, que o renova a cada 30 s. Sem PID vivo, ou 5 min sem sinal, o próximo leitor apaga o arquivo. A fila só pergunta se o PID existe e nunca para processo (ADR 0011).
 - **Fora da fila:** o CI (`CI` definido), o modo watch, o `--list`, a UI do Playwright, e o que roda dentro de uma rodada que já entrou (os workers do Playwright herdam `FILA_DA_MAQUINA`). `FILA_DA_MAQUINA=fora` pula a fila de propósito.
 
 ## Consequências

@@ -7,7 +7,7 @@ Outras sessões rodam os seus `node`, `vite` e Chrome na mesma máquina. Um `pki
 - **Quem sobe um filho guarda o PID e para por ele.** `scripts/matar-arvore.ts` sobe o filho num shell e num grupo de processos só dele (`subirComGrupo`) e o para com `matar`, que manda o sinal ao grupo inteiro (no Windows, `taskkill /T` no PID). Assim o `vite` embaixo do `pnpm exec` morre junto, e nada fora do grupo recebe o sinal. `comLimite` faz o mesmo quando o filho passa do tempo.
 - **O `scripts/dev.ts` usa os dois.** Ctrl-C, `SIGTERM` ou a saída do script levam o filho e a árvore dele.
 - **Um agente para só o que ele subiu**: o PID que guardou, ou o dono da porta do próprio worktree (`ss -ltnp 'sport = :<porta>'`). Os comandos estão em `docs/agents/ambiente.md`.
-- **A fila dos testes (ADR 0010) nunca mata processo.** Só pergunta se um PID existe.
+- **A fila dos testes (ADR 0013) nunca mata processo.** Só pergunta se um PID existe.
 
 ## Consequências
 

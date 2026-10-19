@@ -8,7 +8,7 @@ O CI e a imagem do Docker rodam o Node 24. A máquina Linux tem o v26 no PATH (d
 
 ## Um worktree
 
-Cada worktree tem as suas dependências e as suas portas ([ADR 0007](../adr/0007-cada-worktree-se-prepara-e-tem-as-suas-portas.md)).
+Cada worktree tem as suas dependências e as suas portas ([ADR 0010](../adr/0010-cada-worktree-se-prepara-e-tem-as-suas-portas.md)).
 
 - O T3 Code prepara o worktree novo sozinho, pelo `t3.json`. Em qualquer outro lugar, rode `node scripts/preparar-worktree.ts` uma vez, na raiz do worktree. Ele faz o `pnpm install`, liga do principal os `frontend/.env*`, a pasta `fontes/privado/` e a skill do impeccable, sincroniza `.repos/` e diz quantos commits você está atrás do `origin/main`. O `.env` da raiz e o `.env.deploy` não vêm, de propósito.
 - As portas do worktree: `node scripts/portas.ts`. No principal são 4310 (dev), 4311 (start), 4312 (e2e), 6310 (Storybook) e 6311 (Vitest das stories). Num worktree, um bloco entre 40100 e 48099.
@@ -20,11 +20,11 @@ Cada worktree tem as suas dependências e as suas portas ([ADR 0007](../adr/0007
 
 - Um comando que leva minutos (o `pnpm e2e`, o `pnpm check`, o build) roda em segundo plano (`run_in_background` da ferramenta Bash), com a saída num log que termina em `echo exit=$?`. O harness avisa quando ele sai. Siga com o que não depende dele.
 - Para esperar algo que o harness não vê (uma linha no log de um processo que você subiu em segundo plano), use a ferramenta Monitor. Um `until grep …; do sleep …` em primeiro plano trava a sessão e morre no limite de 10 min.
-- Os testes revezam a máquina ([ADR 0010](../adr/0010-os-testes-dividem-a-maquina-por-uma-fila.md)). Uma rodada sem filtro (a suíte de um pacote, `pnpm e2e`, `pnpm test:stories`) espera a vez de qualquer outra rodada inteira, de qualquer worktree, e escreve `[fila] esperando a vez` com quem está na frente. Uma filtrada (um arquivo, `-t`, `-g`) nunca espera, só leva menos workers. Uma rodada morta solta a vez em até 5 min.
+- Os testes revezam a máquina ([ADR 0013](../adr/0013-os-testes-dividem-a-maquina-por-uma-fila.md)). Uma rodada sem filtro (a suíte de um pacote, `pnpm e2e`, `pnpm test:stories`) espera a vez de qualquer outra rodada inteira, de qualquer worktree, e escreve `[fila] esperando a vez` com quem está na frente. Uma filtrada (um arquivo, `-t`, `-g`) nunca espera, só leva menos workers. Uma rodada morta solta a vez em até 5 min.
 
 ## Parar
 
-Pare só um PID que você guardou ao subir, ou o dono da porta do seu worktree. Outras sessões rodam os seus `node`, `vite` e Chrome na mesma máquina ([ADR 0008](../adr/0008-um-script-para-so-a-arvore-que-ele-subiu.md)).
+Pare só um PID que você guardou ao subir, ou o dono da porta do seu worktree. Outras sessões rodam os seus `node`, `vite` e Chrome na mesma máquina ([ADR 0011](../adr/0011-um-script-para-so-a-arvore-que-ele-subiu.md)).
 
 | O quê                     | Linux                         | Windows                                   |
 | ------------------------- | ----------------------------- | ----------------------------------------- |

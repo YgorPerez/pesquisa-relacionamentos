@@ -1,4 +1,4 @@
-// Onde um arquivo pode morar (ADR 0011, do ADR-0049 do Festival dos Macacos).
+// Onde um arquivo pode morar (ADR 0014, do ADR-0049 do Festival dos Macacos).
 // Cada pasta de `frontend/src/` tem um papel (`AGENTS.md`, "Onde um arquivo
 // mora"), e os pacotes são planos. Nenhum linter olha a árvore, então é este
 // script que olha: lista o que está fora do lugar e sai com erro.

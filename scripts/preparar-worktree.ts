@@ -1,5 +1,5 @@
 // Deixa um checkout pronto para o dev, os testes e o e2e, sem passo na mão
-// (ADR 0007, do ADR-0038 do Festival dos Macacos). O T3 Code roda isto em todo
+// (ADR 0010, do ADR-0038 do Festival dos Macacos). O T3 Code roda isto em todo
 // worktree que cria (`t3.json`, com `T3CODE_PROJECT_ROOT` apontando para o
 // checkout principal); fora dele, `node scripts/preparar-worktree.ts` na raiz
 // do worktree faz o mesmo, e acha o principal pelo git.
@@ -12,7 +12,7 @@
 //    `pnpm conferir` lê) e a skill do impeccable. O `.env` da raiz e o
 //    `.env.deploy` ficam de fora: levam o token da Hostinger e o acesso à
 //    VPS, e um worktree de agente não ganha isso de graça.
-// 3. Sincroniza o código do Effect em `.repos/` (ADR 0009) a partir da cópia
+// 3. Sincroniza o código do Effect em `.repos/` (ADR 0012) a partir da cópia
 //    do principal, sem baixar de novo.
 // 4. Busca o `origin/main` e diz quantos commits o HEAD está atrás dele. Um
 //    worktree nasce de um ramo local, que pode estar dias atrás.

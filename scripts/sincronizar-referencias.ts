@@ -1,5 +1,5 @@
 // Traz para `.repos/` o código-fonte do Effect v4, na versão exata do
-// `catalog:` do `pnpm-workspace.yaml` (ADR 0009, do ADR-0039 do Festival dos
+// `catalog:` do `pnpm-workspace.yaml` (ADR 0012, do ADR-0039 do Festival dos
 // Macacos). A API da v4 difere da v3 que o agente leu, e quem escreve código
 // Effect (o Schema do `packages/conteudo`) lê `.repos/effect-smol/LLMS.md` e o
 // fonte dali antes de inventar uma função.

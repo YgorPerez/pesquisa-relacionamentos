@@ -1,4 +1,4 @@
-// As portas de cada checkout (ADR 0007, do ADR-0038 do Festival dos Macacos).
+// As portas de cada checkout (ADR 0010, do ADR-0038 do Festival dos Macacos).
 // O principal fica nas de sempre; cada worktree ganha um bloco só dele, tirado
 // de um hash do próprio caminho, e com isso vários agentes sobem o dev, o
 // start, o e2e e o Storybook ao mesmo tempo na mesma máquina sem combinar

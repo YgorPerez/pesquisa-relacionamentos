@@ -1,4 +1,4 @@
-// A fila dos testes da máquina toda (ADR 0010, do ADR-0054 do Festival dos
+// A fila dos testes da máquina toda (ADR 0013, do ADR-0054 do Festival dos
 // Macacos). Vários agentes rodam testes em worktrees diferentes ao mesmo
 // tempo, e cada rodada dimensionaria os seus workers pelos núcleos como se
 // estivesse sozinha. No Festival, com três suítes juntas, cada uma levou o

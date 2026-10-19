@@ -9,11 +9,11 @@ import { portaDoCheckout } from '../scripts/portas.ts'
 import doStorybook from './.storybook/vite.config.ts'
 
 // A rodada entra na fila da máquina antes de abrir os Chrome
-// (`scripts/fila-da-maquina.ts`, ADR 0010).
+// (`scripts/fila-da-maquina.ts`, ADR 0013).
 const workers = await workersDoVitest()
 
 // O servidor que o Vitest sobe para o Chrome abrir as stories, na porta do
-// checkout (`scripts/portas.ts`, ADR 0007). Sem ela, dois worktrees disputam a
+// checkout (`scripts/portas.ts`, ADR 0010). Sem ela, dois worktrees disputam a
 // 63315 do Vitest. `STORIES_PORTA` escolhe outra.
 const porta = Number(process.env.STORIES_PORTA ?? portaDoCheckout('stories'))
 

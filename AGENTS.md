@@ -41,7 +41,7 @@ O app fica em `frontend/`, os pacotes puros em `packages/` (`conteudo`, que lê 
 - `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook).
 - `fontes/`: os arquivos de fonte.
 
-O teste mora ao lado do que testa. `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0011). Uma pasta nova pede uma linha lá e uma aqui.
+O teste mora ao lado do que testa. `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
 
 ## Toda superfície
 
@@ -61,12 +61,12 @@ Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 
 1. **Um push na `main` pode publicar o site.** O `deploy.yml` publica a cada push que muda o site, quando os secrets da VPS existem (`docs/agents/integracao.md`). Dê push na `main` só quando o usuário pedir. Trabalho de ticket vai para o ramo `ticket/*`.
 2. **O checkout principal é compartilhado.** Outras sessões trabalham nele enquanto você trabalha. Lá, nunca troque de ramo, nunca `git add -A` (adicione por caminho), nunca reformate arquivo que você não tocou e nunca rode um segundo Playwright. Trabalhe num worktree, preparado como diz `docs/agents/ambiente.md`.
-3. **Matar por padrão.** Nunca pare um `node`, `vite` ou Chrome por nome, caminho ou padrão (`pkill`, `killall`): outras sessões rodam os seus. Pare só o PID que você guardou ao subir, ou o dono da porta do seu worktree (ADR 0008).
+3. **Matar por padrão.** Nunca pare um `node`, `vite` ou Chrome por nome, caminho ou padrão (`pkill`, `killall`): outras sessões rodam os seus. Pare só o PID que você guardou ao subir, ou o dono da porta do seu worktree (ADR 0011).
 4. **Segredos e Fontes privadas.** O `.env` da raiz guarda o token da Hostinger e o acesso à VPS, e o `.env.deploy` o que o wizard do deploy lembra. Nunca os leia para um log, um commit ou um comentário, e nunca troque um secret do GitHub sem perguntar. `fontes/privado/` guarda texto sem licença aberta: ele nunca entra no git, e o Trecho de uma Ficha cita só o que a Ficha precisa.
 
 ## Código do Effect
 
-O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0009).
+O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
 
 ## Verificar
 
@@ -121,4 +121,4 @@ Single-context: `GLOSSARY.md` e `docs/adr/` na raiz. Ver `docs/agents/domain.md`
 
 ### Skills vendorizadas
 
-O Claude Code instala as skills do [`mattpocock/skills`](https://github.com/mattpocock/skills) como plugin (`.claude/settings.json`). Para o Codex e outros harnesses, `.agents/skills/` guarda 27 delas na mesma versão, com o hash de cada uma em `skills-lock.json` (ADR 0012). Não as edite à mão: `npx skills update` sobrescreve. Antes de acrescentar ou atualizar uma, leia `.agents/skills/NOTICE.md`; o que é deste repositório vai para `docs/agents/`.
+O Claude Code instala as skills do [`mattpocock/skills`](https://github.com/mattpocock/skills) como plugin (`.claude/settings.json`). Para o Codex e outros harnesses, `.agents/skills/` guarda 27 delas na mesma versão, com o hash de cada uma em `skills-lock.json` (ADR 0015). Não as edite à mão: `npx skills update` sobrescreve. Antes de acrescentar ou atualizar uma, leia `.agents/skills/NOTICE.md`; o que é deste repositório vai para `docs/agents/`.

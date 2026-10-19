@@ -4,7 +4,7 @@ Vários agentes trabalham aqui ao mesmo tempo, cada um num worktree, na mesma m�
 
 ## Decisão
 
-- **O `t3.json` roda `node scripts/preparar-worktree.ts` quando o T3 Code cria um worktree.** Fora dele (o worktree de um agente do Claude Code, um `git worktree add`), quem criou roda o mesmo comando. Ele faz o `pnpm install`, liga do principal o que o git não leva (`frontend/.env*`, `fontes/privado/`, a skill do impeccable), sincroniza `.repos/` (ADR 0009) e diz quantos commits o HEAD está atrás do `origin/main`.
+- **O `t3.json` roda `node scripts/preparar-worktree.ts` quando o T3 Code cria um worktree.** Fora dele (o worktree de um agente do Claude Code, um `git worktree add`), quem criou roda o mesmo comando. Ele faz o `pnpm install`, liga do principal o que o git não leva (`frontend/.env*`, `fontes/privado/`, a skill do impeccable), sincroniza `.repos/` (ADR 0012) e diz quantos commits o HEAD está atrás do `origin/main`.
 - **O `.env` da raiz e o `.env.deploy` nunca são ligados.** Levam o token da Hostinger e o acesso à VPS.
 - **Cada worktree tem um bloco de 10 portas** (`scripts/portas.ts`): dev +0, start +1, e2e +2, Storybook +3, Vitest das stories +4. O bloco sai de um sha256 do caminho, um de 800 entre 40100 e 48099. Abaixo de 40100 ficam os blocos do Festival, que roda na mesma máquina. O principal (`.git` é pasta) fica em 4310, 4311, 4312, 6310 e 6311.
 - **`pnpm dev`, `pnpm start` e `pnpm storybook` passam por `scripts/dev.ts`**, que recusa a porta ocupada e diz qual variável a troca (`DEV_PORTA`, `START_PORTA`, `STORYBOOK_PORTA`). O `pnpm e2e` lê a porta no `playwright.config.ts` (`E2E_PORTA`), e o `pnpm test:stories` no `vitest.stories.config.ts` (`STORIES_PORTA`).

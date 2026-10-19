@@ -8,7 +8,7 @@ import { acervo } from './vite/acervo.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
-// ela der (`scripts/fila-da-maquina.ts`, ADR 0010).
+// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
 const workers = await workersDoVitest()
 
 // O Vitest só precisa do React: o Start e o nitro montam o servidor, que
