@@ -1,0 +1,81 @@
+# Os selos do README: a nota da `fallow health`, o score do React Doctor e a
+# cobertura de linhas (ADR 0023). Roda depois de cada push na `main` que mexe
+# no código, mede de novo e grava o resultado em `docs/badges/*.svg`
+# (`.github/scripts/badges.ts`). O README só aponta para o SVG, então nenhum
+# número fica escrito à mão.
+#
+# São os mesmos comandos do `pnpm check`, menos o portão: a fallow roda com
+# `--min-score 0`, que nunca falha, porque quem cobra a nota é o PR. O React
+# Doctor roda sem `--no-score`, ao contrário do `check`: o score sai da API
+# dele, e sem ela vem `null`.
+name: Badges
+
+'on':
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - 'packages/**'
+      - 'scripts/**'
+      - '.github/workflows/badges.yml'
+      - '.github/scripts/badges.ts'
+  workflow_dispatch:
+
+# O commit dos selos volta para a `main` com o token do próprio workflow, que
+# não dispara outros workflows: o deploy não roda por causa dele.
+permissions:
+  contents: write
+
+jobs:
+  medir-e-gravar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      # A cobertura de cada pacote, que também dá à fallow o CRAP exato de
+      # cada função.
+      - name: Medir
+        run: |
+          pnpm exec vp run -r test:coverage
+          pnpm exec vp test run --coverage
+          cd frontend
+          pnpm exec fallow health --coverage coverage/coverage-final.json --min-score 0 --format json > coverage/health.json
+          pnpm exec react-doctor --json --no-supply-chain -y --json-out coverage/doctor.json
+
+      - name: Escrever os selos
+        run: node .github/scripts/badges.ts
+
+      # Só commita se algum selo mudou. A `main` recebe push de várias
+      # sessões, daí o rebase com repetição antes de subir.
+      - name: Commitar os selos
+        run: |
+          git add docs/badges
+          if git diff --cached --quiet; then
+            echo "Selos iguais aos da main; nada a commitar."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Selos: acompanham ${GITHUB_SHA::7}"
+          for tentativa in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 15
+          done
+          exit 1

@@ -1,0 +1,45 @@
+# O portão das supressões (ADR 0017). Falha se o código passa do teto de
+# `.github/teto-de-supressoes.json`, ou se uma supressão nova não diz por quê.
+# Um PR que acrescenta uma supressão com motivo, ou mexe na configuração de
+# um auditor, só fica verde depois que uma pessoa põe o rótulo
+# `supressao-revisada`.
+#
+# Fica fora do `pr.yml` porque roda também quando um rótulo entra ou sai, e o
+# `pr.yml` levaria o e2e inteiro junto a cada rótulo.
+name: Supressões
+
+'on':
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supressoes-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  supressoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          # O script compara com o ponto em que o PR saiu da base.
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # O checkout de um `pull_request` é o merge do PR com a base; o alvo é
+      # a ponta do PR.
+      - name: Supressões novas e o teto
+        env:
+          ROTULOS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          BASE: origin/${{ github.base_ref }}
+          ALVO: ${{ github.event.pull_request.head.sha }}
+        run: node .github/scripts/supressoes.ts --base "$BASE" --alvo "$ALVO"

@@ -1,0 +1,44 @@
+# A evidência de tela (docs/agents/evidencia-de-tela.md, ADR 0018). Um PR que
+# muda tela só fica verde com prints e vídeos de antes e depois na seção
+# "## Tela" da descrição, ou com "Nenhuma mudança de tela" marcado.
+#
+# Fica fora do `pr.yml` porque roda também quando a descrição muda (`edited`):
+# pôr os anexos deixa o check verde sem push, e o `pr.yml` levaria o e2e
+# inteiro junto a cada edição. Roda também no rascunho, ao contrário do
+# Festival: leva segundos, e quem abre o rascunho já vê o que vai faltar.
+name: Evidência de tela
+
+'on':
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: evidencia-de-tela-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  evidencia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Só o script: a descrição e os arquivos vêm da API.
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Prints e vídeos de antes e depois
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: node .github/scripts/evidencia-de-tela.ts "$PR"

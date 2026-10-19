@@ -1,0 +1,51 @@
+# A suíte inteira toda noite na `main` (ADR 0022), do Festival dos Macacos.
+# Um PR roda a suíte inteira só sobre o diff dele com a base; dois PRs que
+# entram no mesmo dia podem quebrar juntos o que nenhum quebrou sozinho. A
+# noite pega isso. Os jobs são os do `pr.yml`, chamado daqui, e o último
+# abre, comenta ou fecha a issue "Suíte noturna vermelha"
+# (`scripts/suite-noturna.ts`).
+#
+# 07:00 UTC são 04:00 em Brasília. O agendamento só roda o arquivo que está
+# na `main`.
+name: Suíte noturna
+
+'on':
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  suite:
+    uses: ./.github/workflows/pr.yml
+
+  avisar:
+    needs: suite
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # O fim do log de cada job que falhou, para a issue dizer o que foi.
+      - name: Abrir, comentar ou fechar a issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          gh run view "$GITHUB_RUN_ID" --log-failed 2>/dev/null | tail -200 > "$RUNNER_TEMP/falhas.log" || true
+          node scripts/suite-noturna.ts --sha "${GITHUB_SHA::7}" --jobs "$NEEDS" \
+            --url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --log "$RUNNER_TEMP/falhas.log"

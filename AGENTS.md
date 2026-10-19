@@ -17,7 +17,7 @@ O `git push`/`fetch` deste repo já está fixado na conta YgorPerez (credential 
 - **Bloqueio:** dependências nativas do GitHub: `gh api --method POST repos/YgorPerez/pesquisa-relacionamentos/issues/<filho>/dependencies/blocked_by -F issue_id=<database id do bloqueador>` (database id: `gh api repos/YgorPerez/pesquisa-relacionamentos/issues/<n> --jq .id`).
 - **Fronteira:** `gh api repos/YgorPerez/pesquisa-relacionamentos/issues/<mapa>/sub_issues --jq '.[] | select(.state=="open" and .issue_dependencies_summary.blocked_by==0 and (.assignees|length)==0) | "#\(.number) \(.title)"'`
 - **Assumir:** `gh issue edit <n> --add-assignee @me`, a primeira escrita da sessão.
-- **Resolver:** comente a resposta no ticket (`gh issue comment <n>`), feche-o (`gh issue close <n>`) e acrescente uma linha (resumo + link) em "Decisions so far" no corpo do mapa.
+- **Resolver:** um ticket com código fecha pelo PR dele ("Pull requests", abaixo). Um sem código (`research`, `grilling`): comente a resposta no ticket (`gh issue comment <n>`) e feche-o (`gh issue close <n>`). Nos dois, acrescente uma linha (resumo + link do PR ou do comentário) em "Decisions so far" no corpo do mapa.
 
 ## Domínio
 
@@ -26,7 +26,7 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 ## Onde olhar
 
 - Antes de subir, esperar ou parar um processo (o dev, um teste, o e2e), ou quando um comando se porta diferente do que você espera nesta máquina, leia `docs/agents/ambiente.md`. Tem o preparo do worktree, as portas dele, a fila dos testes e os comandos para parar.
-- Antes de um push, de um merge, ou de confiar num check do GitHub, leia `docs/agents/integracao.md`. Tem os workflows que rodam hoje, os ramos `spec/*` e `ticket/*` e o que passa antes do push.
+- Antes de um push, de abrir ou mesclar um PR, ou de confiar num check do GitHub, leia `docs/agents/integracao.md`. Tem os workflows que rodam em cada PR, os ramos `spec/*` e `ticket/*`, o hook de push, o teto de supressões e o merge.
 - Antes de rodar vários agentes em paralelo, leia `docs/agents/orquestrar.md`.
 
 ## Onde um arquivo mora
@@ -49,7 +49,7 @@ Antes de dar por pronto um trabalho no front, passe pelas superfícies que uma m
 
 ## Testar o app
 
-Depois de uma mudança no front, abra a página uma vez num navegador headless contra o servidor do próprio worktree: `pnpm build && pnpm start` sobe na porta `start` do worktree (`node scripts/portas.ts`), e um script do Playwright em `/tmp`, com `channel: 'chrome'`, abre a página no Pixel 7 e tira a captura. As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
+Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/testar-app/`): ela sobe o app do worktree, abre a página num Chrome sem tela e tira os prints e os vídeos de antes e depois que o PR pede (`frontend/scripts/capturar.ts`). As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
 
 ## Padrões de código
 
@@ -70,11 +70,24 @@ O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que v
 
 ## Verificar
 
-- Rode a menor prova do que você mudou: os testes que tocou (`pnpm exec vp test run <arquivo>` na pasta do pacote), e o lint e os tipos (`pnpm check`). Mudou o app, `pnpm build` e `pnpm e2e` em segundo plano. O que roda antes de um push está em `docs/agents/integracao.md`.
+- Rode a menor prova do que você mudou: `node scripts/prova-minima.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integracao.md`.
 - Formate com `pnpm fmt` (o Oxfmt do Vite+) e confira com `pnpm check`. Os testes importam de `vite-plus/test`.
 - Teste o comportamento, não a fiação. Não renderize um componente em markup estático para conferir as props, e não escreva um teste que repete a implementação.
 - O teste espera pelo que confere: uma promessa, um efeito, uma condição na página. Um teste que precisa de um timer ou de um sleep para passar está errado.
-- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar.
+- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/teto-de-supressoes.json`, ADR 0017).
+
+## Pull requests
+
+Um ticket com código entra por um PR do ramo `ticket/<n>-<nome>` para o ramo do spec, e fecha por ele (ADR 0025). Onde um skill que abre ou revisa PR diz outra coisa, vale esta seção.
+
+- Um assunto por PR. Se a descrição precisa de "também", divida.
+- O título segue os commits: `Ticket #<n>: <o que mudou>`.
+- O corpo segue `.github/pull_request_template.md`: o problema, o que mudou, a tela e a verificação. Termina com o modelo e o harness que fizeram o trabalho, e com `Closes #<n>` de cada issue que resolve.
+- Uma mudança de tela traz, na seção `## Tela`, o print e o vídeo de cada tela que mudou, antes e depois (skill `testar-app`). O check `Evidência de tela` falha sem eles, a menos que `Nenhuma mudança de tela` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/evidencia-de-tela.md`.
+- A verificação diz a menor prova que rodou, e cada supressão nova com o motivo.
+- Depois de cada push, acompanhe o PR até ficar verde no último commit: os checks e cada comentário que chegou depois. Conserte o que for real; responda o que você descarta, com o motivo.
+- Nunca ponha o rótulo `supressao-revisada`: é a assinatura de uma pessoa.
+- O merge é `gh pr merge <pr> --merge`, só com tudo verde. Num PR para um `spec/*`, o GitHub não fecha a issue: quem mescla a fecha (`docs/agents/integracao.md`, "O merge").
 
 ## Documentação
 
