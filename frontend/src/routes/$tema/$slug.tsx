@@ -9,6 +9,10 @@ import { usePrioridades } from '#/estado/prioridades'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { CartaoDePrioridades } from '#/ui/prioridades'
 import { Compartilhar } from '#/ui/compartilhar'
+import { useGrupoPossivel, useRequisitosSalvos } from '#/estado/grupo-possivel'
+import { CartaoDoGrupoPossivel } from '#/ui/grupo-possivel'
+import type { Perfil } from '@tem-estudo/regras/perfil'
+import { REQUISITOS_PADRAO, valorDoRequisito } from '@tem-estudo/regras/requisitos'
 
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
@@ -94,6 +98,7 @@ function PaginaDoGuia() {
         )}
 
         {guia.prioridades && <CartaoDoB1 prioridades={guia.prioridades} />}
+        {guia.grupoPossivel && <CartaoDoB5 perfil={perfil} />}
 
         <section className="secao" aria-labelledby="t-evidencia">
           <h2 id="t-evidencia" className="headline">
@@ -213,6 +218,22 @@ function PaginaDoGuia() {
 function CartaoDoB1({ prioridades }: { prioridades: PrioridadesVista }) {
   const { topo3 } = usePrioridades(prioridades.caracteristicas.map((c) => c.id))
   return <CartaoDePrioridades barra={prioridades.barra} caracteristicas={prioridades.caracteristicas} topo3={topo3} />
+}
+
+/** O cartão do Grupo possível, com a conta que o visitante deixou na página. */
+function CartaoDoB5({ perfil }: { perfil: Perfil | null }) {
+  const salvos = useRequisitosSalvos()
+  const { estimativa, carregando, uf } = useGrupoPossivel(perfil, salvos)
+  const r = salvos ?? REQUISITOS_PADRAO
+  const municipio = r.lugar?.municipio ? uf?.municipios.get(r.lugar.municipio)?.nome : undefined
+  return (
+    <CartaoDoGrupoPossivel
+      estimativa={estimativa}
+      usado={perfil !== null || salvos !== null}
+      ligados={estimativa.ligados.map((k) => valorDoRequisito(k, perfil, r, municipio))}
+      carregando={carregando}
+    />
+  )
 }
 
 function GuiaNaoExiste() {
