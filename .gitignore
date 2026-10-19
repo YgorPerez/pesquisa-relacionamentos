@@ -23,3 +23,6 @@ node_modules/
 
 # O que o `frontend/scripts/wizard-deploy.sh` lembra entre uma rodada e outra.
 .env.deploy
+
+# Credenciais locais do deploy (token da Hostinger, VPS).
+.env
