@@ -36,7 +36,7 @@ Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos
 
 ## Índice de estudos
 
-Desde a migração para frontmatter (#26), todas as fichas estão `nao-verificado` até serem refeitas com Fonte local e trecho conferido (#6). O Status abaixo é o de antes da migração e fica guardado no comentário `# Antes da migração` de cada ficha.
+Desde a migração para frontmatter (#26), as fichas antigas estão `nao-verificado` até serem refeitas com Fonte local e trecho conferido (#6). O Status delas abaixo é o de antes da migração e fica guardado no comentário `# Antes da migração` de cada ficha. As duas do IBGE que sustentam o Grupo possível (#36) já foram feitas pelo processo novo.
 
 ### Como os casais se conhecem
 - [Rosenfeld, Thomas & Hausen 2019](estudos/rosenfeld-2019-disintermediating-friends.md): online virou o canal mais comum nos EUA (39% em 2017) · ✅ · forte
@@ -77,6 +77,8 @@ Desde a migração para frontmatter (#26), todas as fichas estão `nao-verificad
 
 ### Brasil: dados oficiais
 - [IBGE Registro Civil 2024](estudos/ibge-2024-registro-civil.md): idade ao casar, divórcios, duração · ✅ · forte
+- [IBGE Censo 2022, microdados da amostra](estudos/ibge-2022-censo-amostra.md): base do Grupo possível; o arquivo público vai só até a UF e traz a idade em grupos de 5 anos · ✅ · forte
+- [IBGE PNS 2019](estudos/ibge-2019-pns.md): orientação sexual dos adultos (1,4% dos homens e 0,9% das mulheres homossexuais), altura e tabaco · ✅ · moderada
 
 ## Relatórios
 
