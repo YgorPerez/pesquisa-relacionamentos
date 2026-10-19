@@ -20,6 +20,7 @@ import {
   type GuiaVista,
   type TemaVista,
 } from './vista-guia'
+import { vistaDasPrioridades, type PrioridadesVista } from './vista-prioridades'
 
 const texto = (valor: unknown, nome: string): string => {
   if (typeof valor !== 'string') throw new Error(`${nome} inválido`)
@@ -58,12 +59,24 @@ export const buscarGuia = createServerFn({ method: 'GET' })
     const { tema, slug } = (dados ?? {}) as Record<string, unknown>
     return { tema: texto(tema, 'tema'), slug: texto(slug, 'slug') }
   })
-  .handler(async ({ data }): Promise<GuiaVista> => {
+  .handler(async ({ data }): Promise<GuiaVista & { prioridades: PrioridadesVista | null }> => {
     const { default: acervo } = await import('virtual:acervo')
     const guia = guiaPorSlug(acervo, data.slug)
     if (!guia || guia.tema !== data.tema) throw notFound()
-    return vistaDoGuia(guia, acervo)
+    return {
+      ...vistaDoGuia(guia, acervo),
+      // O cartão do B1 lê o mesmo arquivo da página `/prioridades`.
+      prioridades: guia.calculadora === 'prioridades' ? vistaDasPrioridades(acervo) : null,
+    }
   })
+
+/** A calculadora de Prioridades; `null` enquanto o arquivo não está no build. */
+export const buscarPrioridades = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<PrioridadesVista | null> => {
+    const { default: acervo } = await import('virtual:acervo')
+    return vistaDasPrioridades(acervo)
+  },
+)
 
 /** As Dicas publicadas: as que se apoiam só em Fichas ✅ ou 🟡. */
 export const listarDicas = createServerFn({ method: 'GET' }).handler(
