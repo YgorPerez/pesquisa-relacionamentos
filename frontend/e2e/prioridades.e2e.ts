@@ -1,8 +1,9 @@
-// Prioridades vs. evidência (#33) no celular, sobre o conteúdo de fixture
+// Prioridades vs. evidência (#33), sobre o conteúdo de fixture
 // (`e2e/acervo/dados/prioridades`): os degraus do rascunho real, com as
 // Fichas da fixture. Em satisfação: "pesa" tem a química sexual; "quase
 // nada", ser parecido; "não sabemos", renda, escolaridade, religião e idade.
 import { expect, test, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const GUIA_B1 = '/escolher-parceiro/que-caracteristicas-preveem'
 
@@ -23,14 +24,14 @@ test.describe('/prioridades', () => {
     await abrir(page)
     await expect(page.getByRole('status').filter({ hasText: 'Nenhuma escolhida ainda' })).toBeVisible()
 
-    await chip(page, 'Renda').tap()
-    await chip(page, 'Aparência').tap()
+    await tocar(chip(page, 'Renda'))
+    await tocar(chip(page, 'Aparência'))
     await expect(chip(page, 'Renda')).toHaveAccessibleName('sua 1ª: Renda')
     await expect(chip(page, 'Aparência')).toHaveAccessibleName('sua 2ª: Aparência')
     await expect(chip(page, 'Aparência')).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByText('Falta 1.')).toBeVisible()
 
-    await chip(page, 'Renda').tap()
+    await tocar(chip(page, 'Renda'))
     await expect(chip(page, 'Aparência')).toHaveAccessibleName('sua 1ª: Aparência')
     await expect(chip(page, 'Renda')).toHaveAttribute('aria-pressed', 'false')
     expect(await salvo(page)).toEqual({ topo3: ['aparencia'], desfecho: 'satisfacao' })
@@ -38,14 +39,14 @@ test.describe('/prioridades', () => {
 
   test('com três, os outros chips ficam indisponíveis com a dica de troca', async ({ page }) => {
     await abrir(page)
-    for (const nome of ['Gentileza', 'Ser parecido comigo', 'Idade parecida']) await chip(page, nome).tap()
+    for (const nome of ['Gentileza', 'Ser parecido comigo', 'Idade parecida']) await tocar(chip(page, nome))
     const dica = 'Pronto. Para trocar, toque numa das escolhidas e ela sai.'
     await expect(page.getByRole('status').filter({ hasText: dica })).toBeVisible()
     const renda = chip(page, 'Renda')
     await expect(renda).toHaveAttribute('aria-disabled', 'true')
     await expect(renda).toHaveAccessibleDescription(dica)
     // O Playwright não toca no que está aria-disabled; o toque forçado é o do dedo.
-    await renda.tap({ force: true })
+    await tocar(renda, { force: true })
     expect((await salvo(page)).topo3).toEqual(['gentileza', 'parecido', 'idade'])
 
     for (const botao of await chips(page).getByRole('button').all())
@@ -54,7 +55,7 @@ test.describe('/prioridades', () => {
 
   test('as escolhidas aparecem numeradas na prateleira em que caem, e o alerta diz em frase', async ({ page }) => {
     await abrir(page)
-    for (const nome of ['Renda', 'Química sexual', 'Ser parecido comigo']) await chip(page, nome).tap()
+    for (const nome of ['Renda', 'Química sexual', 'Ser parecido comigo']) await tocar(chip(page, nome))
 
     await expect(prateleira(page, 'pesa').getByRole('button', { name: 'sua 2ª: Química sexual' })).toBeVisible()
     await expect(prateleira(page, 'quase nada').getByRole('button', { name: 'sua 3ª: Ser parecido comigo' })).toBeVisible()
@@ -73,10 +74,10 @@ test.describe('/prioridades', () => {
 
   test('o desfecho muda as prateleiras; a barra da Joel só aparece em satisfação, recolhível', async ({ page }) => {
     await abrir(page)
-    await chip(page, 'Aparência').tap()
+    await tocar(chip(page, 'Aparência'))
     const joel = page.getByRole('img', { name: /45% explicado pela relação, 5% pelo parceiro, 50% sem explicação/ })
     await expect(joel).toBeVisible()
-    await page.getByText('Antes: o parceiro explica pouco da satisfação').tap()
+    await tocar(page.getByText('Antes: o parceiro explica pouco da satisfação'))
     await expect(joel).toBeHidden()
 
     await page.getByRole('radio', { name: 'Atração' }).check()
@@ -100,7 +101,7 @@ test.describe('/prioridades', () => {
     await abrir(page)
 
     const aparencia = prateleira(page, 'pesa pouco').getByRole('button', { name: 'Aparência' })
-    await aparencia.tap()
+    await tocar(aparencia)
     await expect(aparencia).toHaveAttribute('aria-expanded', 'true')
     const detalhe = page.getByRole('region', { name: 'Aparência, satisfação' })
     await expect(detalhe).toContainText('Só os maridos ficam um pouco mais satisfeitos, e só no começo.')
@@ -112,7 +113,7 @@ test.describe('/prioridades', () => {
     await expect(detalhe).toContainText('As pessoas dão menos peso à aparência')
 
     // Renda tem viés só por gênero: com "mulher" no Perfil, vale o das mulheres.
-    await prateleira(page, 'não sabemos').getByRole('button', { name: 'Renda' }).tap()
+    await tocar(prateleira(page, 'não sabemos').getByRole('button', { name: 'Renda' }))
     await expect(page.getByRole('region', { name: 'Aparência, satisfação' })).toHaveCount(0)
     const renda = page.getByRole('region', { name: 'Renda, satisfação' })
     await expect(renda).toContainText('Mulheres tendem a dar mais peso à renda')
@@ -126,7 +127,7 @@ test.describe('/prioridades', () => {
     const doGuia = page.getByRole('region', { name: 'Do Guia' })
     await expect(doGuia).toContainText('Que características do parceiro preveem uma boa relação?')
     await expect(doGuia).toContainText('moderada')
-    await doGuia.getByRole('link', { name: 'Ler o Guia inteiro' }).tap()
+    await tocar(doGuia.getByRole('link', { name: 'Ler o Guia inteiro' }))
     await expect(page).toHaveURL(GUIA_B1)
   })
 
@@ -150,7 +151,7 @@ test.describe('/prioridades', () => {
 
   test('o topo 3 e o desfecho voltam depois de recarregar', async ({ page }) => {
     await abrir(page)
-    await chip(page, 'Gentileza').tap()
+    await tocar(chip(page, 'Gentileza'))
     await page.getByRole('radio', { name: 'Atração' }).check()
     await page.reload()
     await expect(chip(page, 'Gentileza')).toHaveAccessibleName('sua 1ª: Gentileza')
@@ -167,13 +168,13 @@ test.describe('cartão do Guia B1', () => {
     await expect(cartao).not.toContainText('Seu topo 3')
     const botao = cartao.getByRole('link', { name: 'Escolher as suas três e comparar' })
     expect((await botao.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await botao.tap()
+    await tocar(botao)
     await expect(page).toHaveURL('/prioridades')
   })
 
   test('com topo 3, cada um com o degrau em satisfação, mesmo com outro desfecho na página', async ({ page }) => {
     await abrir(page)
-    for (const nome of ['Química sexual', 'Ser parecido comigo', 'Renda']) await chip(page, nome).tap()
+    for (const nome of ['Química sexual', 'Ser parecido comigo', 'Renda']) await tocar(chip(page, nome))
     await page.getByRole('radio', { name: 'Duração' }).check()
 
     await page.goto(GUIA_B1)
@@ -184,7 +185,7 @@ test.describe('cartão do Guia B1', () => {
       /Ser parecido comigo.*quase nada$/,
       /Renda.*não sabemos$/,
     ])
-    await cartao.getByRole('link', { name: 'Ver a lista inteira' }).tap()
+    await tocar(cartao.getByRole('link', { name: 'Ver a lista inteira' }))
     await expect(chip(page, 'Química sexual')).toHaveAccessibleName('sua 1ª: Química sexual')
   })
 

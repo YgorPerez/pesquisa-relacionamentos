@@ -1,6 +1,7 @@
-// As Fichas no celular, sobre o conteúdo de fixture (`e2e/acervo`): uma ✅
+// As Fichas, sobre o conteúdo de fixture (`e2e/acervo`): uma ✅
 // (silva-2020), uma 🟡 (costa-2018) e uma ⬜ (lima-2015).
 import { expect, test, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const semRolagemLateral = async (page: Page) => {
   const { pagina, tela } = await page.evaluate(() => ({
@@ -48,7 +49,7 @@ test.describe('/estudos', () => {
     await page.goto('/estudos')
     const link = page.getByRole('link', { name: 'Costa (2018): satisfação e onde os casais se conheceram' })
     expect((await link.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await link.tap()
+    await tocar(link)
     await expect(page).toHaveURL('/estudos/costa-2018-satisfacao')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Costa (2018): satisfação e onde os casais se conheceram',
@@ -127,11 +128,11 @@ test.describe('/estudos/<slug>', () => {
     ])
     const dica = citada.getByRole('link', { name: 'Use o app como complemento, não como o único caminho.' })
     expect((await dica.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await dica.tap()
+    await tocar(dica)
     await expect(page).toHaveURL('/dicas/apps-como-complemento')
 
     await page.goto('/estudos/silva-2020-apps-brasil')
-    await page.getByRole('region', { name: 'Citada em' }).locator('.linha-pergunta').first().tap()
+    await tocar(page.getByRole('region', { name: 'Citada em' }).locator('.linha-pergunta').first())
     await expect(page).toHaveURL('/onde-conhecer-pessoas/onde-os-casais-se-conhecem')
   })
 
@@ -146,7 +147,7 @@ test.describe('/estudos/<slug>', () => {
     await page.goto('/estudos/lima-2015-encontros')
     const voltar = page.getByRole('link', { name: 'Todos os estudos' })
     expect((await voltar.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await voltar.tap()
+    await tocar(voltar)
     await expect(page).toHaveURL('/estudos')
   })
 

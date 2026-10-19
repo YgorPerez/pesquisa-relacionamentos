@@ -4,6 +4,7 @@
 // nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
 import { expect, test, type Page } from '@playwright/test'
 import { queryDoLink } from '@tem-estudo/regras/link'
+import { tocar } from './toque'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
 /** A query de um link de verdade, com o Perfil. */
@@ -70,8 +71,8 @@ async function percorrer(page: Page, comPerfil: boolean, envios: Record<string, 
 
   await abrir(page, '/prioridades')
   const chips = page.getByRole('region', { name: 'Seu topo 3' })
-  await chips.getByRole('button', { name: /Renda$/ }).tap()
-  await chips.getByRole('button', { name: /Aparência$/ }).tap()
+  await tocar(chips.getByRole('button', { name: /Renda$/ }))
+  await tocar(chips.getByRole('button', { name: /Aparência$/ }))
   await page.waitForLoadState('networkidle')
 }
 

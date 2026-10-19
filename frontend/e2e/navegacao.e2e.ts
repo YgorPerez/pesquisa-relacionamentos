@@ -1,6 +1,7 @@
-// A referência que circula a Ficha e a navegação entre Guias (#28), no
-// celular, sobre o conteúdo de fixture (`e2e/acervo`).
+// A referência que circula a Ficha e a navegação entre Guias (#28), sobre o
+// conteúdo de fixture (`e2e/acervo`).
 import { expect, test, type Locator, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
 const OUTRO = '/onde-conhecer-pessoas/app-ou-presencial'
@@ -38,7 +39,7 @@ test.describe('referência que circula a Ficha', () => {
   test('tocar rola até a Ficha, desenha o laço e a seta e mostra "voltar ao texto"', async ({ page }) => {
     await page.goto(GUIA)
     const ref = refDaResposta(page)
-    await ref.tap()
+    await tocar(ref)
 
     const ficha = page.locator('#ficha-silva-2020-apps-brasil')
     await expect(ficha).toBeInViewport()
@@ -70,7 +71,7 @@ test.describe('referência que circula a Ficha', () => {
   test('com prefers-reduced-motion, laço e seta aparecem prontos', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto(GUIA)
-    await refDaResposta(page).tap()
+    await tocar(refDaResposta(page))
     const ficha = page.locator('#ficha-silva-2020-apps-brasil')
     await expect(ficha.locator('svg.laco path')).toHaveCSS('animation-name', 'none')
     await expect(ficha.locator('svg.laco path')).toHaveCSS('stroke-dashoffset', '0px')
@@ -83,11 +84,11 @@ test.describe('referência que circula a Ficha', () => {
     // A Ficha 1 é citada na resposta curta e de novo no Mito: sai do Mito.
     const mito = page.getByRole('region', { name: 'O que circula por aí e não se sustenta' })
     const ref = mito.getByRole('link', { name: /^Ficha 1:/ })
-    await ref.tap()
+    await tocar(ref)
     const ficha = page.locator('#ficha-silva-2020-apps-brasil')
     await expect(ficha).toBeInViewport()
 
-    await ficha.getByRole('button', { name: 'voltar ao texto' }).tap()
+    await tocar(ficha.getByRole('button', { name: 'voltar ao texto' }))
     await expect(ref).toBeFocused()
     await expect(ref).toBeInViewport()
     await expect(page.locator('svg.laco')).toHaveCount(0)
@@ -114,15 +115,12 @@ test.describe('navegação entre Guias', () => {
     await expect(page.getByRole('button', { name: /^Voltar para/ })).toHaveCount(0)
 
     await page.goto(GUIA)
-    await page
-      .getByRole('region', { name: 'Perguntas relacionadas' })
-      .getByRole('link', { name: /App ou presencial/ })
-      .tap()
+    await tocar(page.getByRole('region', { name: 'Perguntas relacionadas' }).getByRole('link', { name: /App ou presencial/ }))
     await expect(page).toHaveURL(OUTRO)
     const voltar = page.getByRole('button', { name: 'Voltar para Onde os casais se conhecem hoje?' })
     await expect(voltar).toBeVisible()
     expect((await voltar.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await voltar.tap()
+    await tocar(voltar)
     await expect(page).toHaveURL(GUIA)
     // Foi um passo para trás no histórico, não uma entrada nova.
     await page.goForward()
@@ -133,7 +131,7 @@ test.describe('navegação entre Guias', () => {
     test(`voltar por ${como} restaura a rolagem e as seções abertas`, async ({ page }) => {
       await page.goto(GUIA)
       const detalhe = page.locator('details#detalhe-capitais')
-      await detalhe.locator('summary').tap()
+      await tocar(detalhe.locator('summary'))
       await expect(detalhe).toHaveAttribute('open', '')
 
       const relacionada = page
@@ -142,11 +140,11 @@ test.describe('navegação entre Guias', () => {
       await relacionada.scrollIntoViewIfNeeded()
       const antes = await page.evaluate(() => scrollY)
       expect(antes).toBeGreaterThan(300)
-      await relacionada.tap()
+      await tocar(relacionada)
       await expect(page).toHaveURL(OUTRO)
       await expect(page.getByRole('heading', { level: 1 })).toHaveText('App ou presencial, onde tenho mais chance?')
 
-      if (como === 'o botão') await page.getByRole('button', { name: /^Voltar para/ }).tap()
+      if (como === 'o botão') await tocar(page.getByRole('button', { name: /^Voltar para/ }))
       else await page.goBack()
 
       await expect(page).toHaveURL(GUIA)

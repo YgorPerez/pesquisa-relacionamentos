@@ -4,6 +4,7 @@
 // redes mostra o resultado sem o Perfil de quem mandou. Sobre a fixture
 // `e2e/acervo` (dados do Grupo possível só do Acre).
 import { devices, expect, test, type Browser, type BrowserContext, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const SITE = 'https://temestudo.com'
 const faixa = (page: Page) => page.locator('.gp-preso .gp-faixa')
@@ -126,7 +127,7 @@ test.describe('link de Prioridades', () => {
   test('copiar, abrir em outro aparelho: o topo 3 do link troca o salvo', async ({ page, context, browser }) => {
     await comAreaDeTransferencia(context)
     await page.goto('/prioridades', { waitUntil: 'networkidle' })
-    for (const nome of ['Renda', 'Química sexual', 'Ser parecido comigo']) await chip(page, nome).tap()
+    for (const nome of ['Renda', 'Química sexual', 'Ser parecido comigo']) await tocar(chip(page, nome))
     await page.getByRole('radio', { name: 'Duração' }).check()
     await expect(compartilhar(page)).toContainText(
       'Este link mostra: topo 3 renda, química sexual e ser parecido comigo, em duração.',
@@ -149,7 +150,7 @@ test.describe('link de Prioridades', () => {
       localStorage.setItem('tem-estudo:perfil', JSON.stringify({ genero: 'mulher', procura: 'homens', idade: 41 })),
     )
     await page.goto('/prioridades', { waitUntil: 'networkidle' })
-    await chip(page, 'Renda').tap()
+    await tocar(chip(page, 'Renda'))
     await expect(compartilhar(page)).toContainText('Este link mostra: mulher, topo 3 renda, em satisfação.')
     const link = new URL(await copiarLink(page))
     expect(link.search).toBe('?v=1&genero=mulher&topo=renda&desfecho=satisfacao')

@@ -1,7 +1,6 @@
 // O Guia, o Tema, o início e as Dicas sobre o conteúdo de fixture
 // (`e2e/acervo`): um Tema com dois Guias, uma Dica publicada (inferência) e
-// uma que se apoia numa Ficha ⬜ e fica fora do site. Roda no celular e no
-// desktop.
+// uma que se apoia numa Ficha ⬜ e fica fora do site.
 import { expect, test, type Page } from '@playwright/test'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'

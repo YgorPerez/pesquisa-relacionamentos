@@ -2,6 +2,7 @@
 // `app-ou-presencial` declara `calculadora: grupo-possivel`, e os dados são
 // só os do Acre (o "Brasil" da fixture).
 import { expect, test, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const GUIA_B5 = '/onde-conhecer-pessoas/app-ou-presencial'
 const SEM_USO = 'Faça a conta'
@@ -31,7 +32,7 @@ test.describe('cartão do Guia B5', () => {
 
     const botao = sem.getByRole('link', { name: 'Fazer a conta' })
     expect((await botao.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    await botao.tap()
+    await tocar(botao)
     await expect(page).toHaveURL('/grupo-possivel')
   })
 
@@ -53,18 +54,18 @@ test.describe('cartão do Guia B5', () => {
 
   test('reflete o que o visitante deixou em /grupo-possivel, indo e voltando', async ({ page }) => {
     await abrir(page, GUIA_B5)
-    await cartao(page, SEM_USO).getByRole('link', { name: 'Fazer a conta' }).tap()
+    await tocar(cartao(page, SEM_USO).getByRole('link', { name: 'Fazer a conta' }))
     await expect(page).toHaveURL('/grupo-possivel')
     await page.waitForLoadState('networkidle')
 
     const faixa = page.locator('.gp-preso .gp-faixa')
     const antes = (await faixa.textContent()) ?? ''
-    await page.locator('#req-escolaridade').getByRole('radio', { name: 'superior completo' }).tap()
+    await tocar(page.locator('#req-escolaridade').getByRole('radio', { name: 'superior completo' }))
     await expect(faixa).not.toHaveText(antes)
     await expect(page.locator('.gp-preso [aria-live]')).not.toHaveClass(/gp-carregando/)
     const naPagina = (await faixa.textContent()) ?? ''
 
-    await page.getByRole('link', { name: 'Ler o Guia inteiro' }).tap()
+    await tocar(page.getByRole('link', { name: 'Ler o Guia inteiro' }))
     await expect(page).toHaveURL(GUIA_B5)
     const com = cartao(page, COM_USO)
     await expect(com.locator('.gp-faixa')).toHaveText(naPagina)
@@ -74,7 +75,7 @@ test.describe('cartão do Guia B5', () => {
     await expect(com.locator('.cartao-gp-pesa')).toContainText('escolaridade')
 
     // E de volta pelo botão do cartão, com a conta onde ficou.
-    await com.getByRole('link', { name: 'Ajustar os Requisitos' }).tap()
+    await tocar(com.getByRole('link', { name: 'Ajustar os Requisitos' }))
     await expect(page).toHaveURL('/grupo-possivel')
     await expect(page.locator('#req-escolaridade').getByRole('radio', { name: 'superior completo' })).toBeChecked()
     await expect(faixa).toHaveText(naPagina)

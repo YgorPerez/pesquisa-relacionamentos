@@ -9,7 +9,7 @@ test.describe('página inicial', () => {
     expect(html).toContain('Tem estudo?')
   })
 
-  test('abre no celular com o nome do site, no papel e na tinta do DESIGN.md', async ({
+  test('abre com o nome do site, no papel e na tinta do DESIGN.md', async ({
     page,
   }) => {
     await page.goto('/')

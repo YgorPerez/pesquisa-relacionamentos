@@ -2,6 +2,7 @@
 // linhas do Acre tiradas dos dados de verdade (o "Brasil" da fixture é só o
 // Acre). O Guia `app-ou-presencial` da fixture hospeda a calculadora.
 import { expect, test, type Page } from '@playwright/test'
+import { tocar } from './toque'
 
 const PAGINA = '/grupo-possivel'
 const faixa = (page: Page) => page.locator('.gp-preso .gp-faixa')
@@ -44,24 +45,24 @@ test.describe('Grupo possível', () => {
     await expect(page.getByRole('note').filter({ hasText: 'é um teto' })).toHaveCount(0)
   })
 
-  test('por toque: o número fica preso no topo e muda a cada toque', async ({ page }) => {
+  test('por toque (clique no desktop): o número fica preso no topo e muda a cada toque', async ({ page }) => {
     await page.goto(PAGINA)
     await dizerPerfil(page, 'mulher', 'homens', '28')
     let atual = await mudou(page, '')
 
     const escolaridade = requisito(page, 'escolaridade')
-    await escolaridade.getByRole('radio', { name: 'superior completo' }).tap()
+    await tocar(escolaridade.getByRole('radio', { name: 'superior completo' }))
     atual = await mudou(page, atual)
     await expect(faixa(page)).toBeInViewport()
     await expect(escolaridade.locator('.gp-req-custo')).toHaveText(/^soltar só este: ×[\d,]+ \(\+.+\)$/)
 
-    await requisito(page, 'idade').getByRole('button', { name: 'até: mais 1' }).tap()
+    await tocar(requisito(page, 'idade').getByRole('button', { name: 'até: mais 1' }))
     atual = await mudou(page, atual)
     await expect(requisito(page, 'idade').locator('.gp-req-valor')).toHaveText('23 a 34 anos')
 
     // "o que mais pesa" com "soltar": soltar a escolaridade volta ao "qualquer".
-    await page.getByRole('link', { name: 'ver a conta' }).tap()
-    await page.getByRole('button', { name: 'Soltar escolaridade' }).tap()
+    await tocar(page.getByRole('link', { name: 'ver a conta' }))
+    await tocar(page.getByRole('button', { name: 'Soltar escolaridade' }))
     await mudou(page, atual)
     await expect(escolaridade.getByRole('radio', { name: 'qualquer' })).toBeChecked()
   })
@@ -140,10 +141,10 @@ test.describe('Grupo possível', () => {
     await dizerPerfil(page, 'mulher', 'homens', '25')
     const incerteza = page.locator('#gp-incerteza')
     await expect(incerteza).not.toHaveAttribute('open')
-    await incerteza.locator('summary').tap()
+    await tocar(incerteza.locator('summary'))
     await expect(incerteza).toContainText(/Se só multiplicássemos .+ daria .+ \([+−]\d+%\)/)
     await expect(incerteza).toContainText('inclui quem namora')
-    await page.locator('#gp-corte-a-corte summary').tap()
+    await tocar(page.locator('#gp-corte-a-corte summary'))
     await expect(page.locator('.gp-funil li').first()).toContainText('homens de 18 anos ou mais no Brasil')
   })
 
@@ -152,7 +153,7 @@ test.describe('Grupo possível', () => {
     const bloco = page.getByRole('region', { name: 'Do Guia' })
     await expect(bloco).toContainText('App ou presencial, onde tenho mais chance?')
     await expect(bloco).toContainText('A diferença de satisfação entre os dois caminhos é pequena.')
-    await bloco.getByRole('link', { name: 'Ler o Guia inteiro' }).tap()
+    await tocar(bloco.getByRole('link', { name: 'Ler o Guia inteiro' }))
     await expect(page).toHaveURL('/onde-conhecer-pessoas/app-ou-presencial')
   })
 
