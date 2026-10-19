@@ -1,3 +1,7 @@
+---
+ticket: 3
+---
+
 # Que características do parceiro preveem um bom relacionamento?
 
 *Pesquisa feita em 18/10/2026 para o ticket #3. Usa fontes primárias: artigos no PMC e no PubMed, manuscritos aceitos dos autores e PDFs publicados. Cada número aponta para a Ficha correspondente. As Fichas marcadas com 🟡 foram conferidas só pelo resumo, e o texto avisa quando um número não pôde ser conferido.*

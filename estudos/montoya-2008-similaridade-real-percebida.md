@@ -45,4 +45,4 @@ A comparação foi feita em três contextos: sem interação (por exemplo, perfi
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): "ter coisas em comum" importa mais como percepção do que como fato medido.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): "ter coisas em comum" importa mais como percepção do que como fato medido.

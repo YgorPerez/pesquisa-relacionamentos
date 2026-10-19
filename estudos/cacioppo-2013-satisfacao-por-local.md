@@ -89,7 +89,7 @@ Fonte: seção *Methods*, p. 10139–10140.
 
 ### Possíveis vieses na medida de satisfação
 
-Análise nossa; o artigo não discute esses vieses. O formato do questionário foi conferido no PDF; as referências de literatura estão ⬜ não verificadas (ver [perguntas abertas](../perguntas-abertas.md)).
+Análise nossa; o artigo não discute esses vieses. O formato do questionário foi conferido no PDF; as referências de literatura estão ⬜ não verificadas (ver a [issue #46](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/46)).
 
 | Viés | Por que se aplica aqui |
 |---|---|

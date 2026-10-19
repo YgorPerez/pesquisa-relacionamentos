@@ -56,4 +56,4 @@ Razões de risco versus casais com marido mais escolarizado (Tabela 3, Modelo 2)
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): homogamia educacional e divórcio.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): homogamia educacional e divórcio.

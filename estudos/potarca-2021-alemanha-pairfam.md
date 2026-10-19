@@ -46,4 +46,4 @@ Desenho, como descrito antes da migração: longitudinal (modelos de risco compe
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): evidência longitudinal de que casais online não casam menos (na Alemanha, homens casam mais).
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): evidência longitudinal de que casais online não casam menos (na Alemanha, homens casam mais).

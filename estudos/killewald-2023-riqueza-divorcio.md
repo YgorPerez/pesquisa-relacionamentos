@@ -40,4 +40,4 @@ Desenho, como descrito antes da migração: observacional, com muitos controles.
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): dinheiro importa sobretudo para sair da falta de dinheiro, não em níveis altos.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): dinheiro importa sobretudo para sair da falta de dinheiro, não em níveis altos.

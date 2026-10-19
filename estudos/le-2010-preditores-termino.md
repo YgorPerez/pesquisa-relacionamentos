@@ -41,4 +41,4 @@ Desenho, como descrito antes da migração: meta-análise de estudos que medem p
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): reforça [Joel et al. 2020](joel-2020-machine-learning-43-datasets.md): a dinâmica da relação prevê mais que a personalidade.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): reforça [Joel et al. 2020](joel-2020-machine-learning-43-datasets.md): a dinâmica da relação prevê mais que a personalidade.

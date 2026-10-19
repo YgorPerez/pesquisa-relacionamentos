@@ -57,4 +57,4 @@ Razões de risco (hazard ratios) de divórcio, modelo multivariado, todas as pes
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): diferença de idade e de escolaridade, religião, renda e "casar pela aparência". Toda essa evidência é fraca.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): diferença de idade e de escolaridade, religião, renda e "casar pela aparência". Toda essa evidência é fraca.

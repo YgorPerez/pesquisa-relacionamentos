@@ -64,4 +64,4 @@ Médias simples, **sem ponderação e sem teste estatístico**, calculadas em 20
 ## Como usamos
 
 - [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 1.3 e 2.1: estoque de casais online fora dos EUA e evidência contrária a Cacioppo.
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): o Brasil está na amostra; recorte brasileiro.
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): o Brasil está na amostra; recorte brasileiro.

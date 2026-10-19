@@ -1,3 +1,7 @@
+---
+ticket: 4
+---
+
 # Onde casais se conhecem, especialmente no Brasil: o que mais se sabe
 
 *Pesquisa de 18/10/2026 para o ticket #4. Complementa o [relatório de 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md) e as Fichas já existentes (HCMST, Cacioppo, Kowal, Potarca 2020, Pew, IBGE, Mobile Time). Cada número aponta para a Ficha ou a fonte primária; o que não foi conferido no original está marcado.*

@@ -52,4 +52,4 @@ Tabela 1 do artigo (percentuais por período em que o casal passou a morar junto
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: onde casais se conhecem](../pesquisas/2026-10-18-onde-casais-se-conhecem.md): na Grã-Bretanha, amigos/família seguiam como principal canal; o online cresceu às custas de bares e lugares públicos.
+- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): na Grã-Bretanha, amigos/família seguiam como principal canal; o online cresceu às custas de bares e lugares públicos.

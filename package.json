@@ -9,6 +9,7 @@
     "test": "pnpm -r test && node --test \"scripts/**/*.test.ts\"",
     "dados:grupo-possivel": "node scripts/grupo-possivel/pipeline.ts",
     "typecheck": "pnpm -r typecheck",
+    "conferir": "node scripts/conferir-ficha.ts",
     "e2e": "pnpm --filter frontend e2e",
     "storybook": "pnpm --filter frontend storybook",
     "build-storybook": "pnpm --filter frontend build-storybook"

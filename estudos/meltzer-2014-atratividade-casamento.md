@@ -44,4 +44,4 @@ Desenho, como descrito antes da migração: longitudinal. Até 8 medições de s
 
 ## Como usamos
 
-- [Pesquisa 2026-10-18: características do parceiro](../pesquisas/2026-10-18-caracteristicas-parceiro.md): contraponto à meta-análise de [Eastwick et al. 2014](eastwick-2014-meta-analise-preferencias.md) sobre atratividade em relações longas.
+- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): contraponto à meta-análise de [Eastwick et al. 2014](eastwick-2014-meta-analise-preferencias.md) sobre atratividade em relações longas.

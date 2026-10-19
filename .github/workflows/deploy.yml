@@ -1,0 +1,204 @@
+# Cada merge na main publica o site em https://temestudo.com (spec #23,
+# "Deploy"; `docs/deploy.md`). O job `testes-e-build` roda os testes e o build
+# do conteúdo. O `publicar` manda esse mesmo build à VPS por SSH, e o
+# `frontend/scripts/vps.ts` troca o contêiner sem tirar o site do ar.
+#
+# Sem os secrets `VPS_*` o publicar é pulado com um aviso, e o workflow sai
+# verde. Eles entram pelo `frontend/scripts/wizard-deploy.sh`.
+name: Deploy
+
+"on":
+  push:
+    branches: [main]
+    # O que muda o site. Um commit só de documentação não publica nada.
+    paths:
+      - "frontend/**"
+      - "packages/**"
+      - "estudos/**"
+      - "guias/**"
+      - "dicas/**"
+      - "dados/**"
+      - "relatorios/**"
+      - "fontes/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/deploy.yml"
+  # Pela aba Actions: publica a main de agora, ou, com `voltar`, troca para
+  # uma imagem que a VPS guardou ("anterior" para a do deploy de antes).
+  workflow_dispatch:
+    inputs:
+      voltar:
+        description: 'Voltar a uma versão: "anterior" ou o SHA. Vazio publica a main.'
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+# Um deploy por vez, e o mais novo espera o anterior em vez de cortá-lo no
+# meio da troca.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  # Os secrets não entram num `if:`. Este job diz se os quatro existem.
+  segredos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      prontos: ${{ steps.conferir.outputs.prontos }}
+    steps:
+      - id: conferir
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          if [ -n "$VPS_HOST" ] && [ -n "$VPS_USER" ] && [ -n "$VPS_SSH_KEY" ]; then
+            echo "prontos=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "prontos=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Deploy pulado::Faltam os secrets VPS_HOST, VPS_USER e VPS_SSH_KEY (VPS_PORT é opcional). Rode frontend/scripts/wizard-deploy.sh. Nada foi publicado."
+          fi
+
+  testes-e-build:
+    if: inputs.voltar == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Tipos
+        run: pnpm typecheck
+
+      - name: Testes
+        run: pnpm test
+
+      # O `pnpm e2e` monta um build sobre o conteúdo de fixture
+      # (`frontend/e2e/acervo`) e roda o Playwright sobre ele.
+      - name: E2E
+        run: pnpm e2e
+
+      - name: Guardar traces do e2e
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-results
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # O build que vai para a VPS, com o acervo do repositório. Ele vem
+      # depois do e2e, que deixou no `.output` o build da fixture. Conteúdo
+      # com erro derruba este passo, e nada é publicado.
+      - name: Build do conteúdo
+        run: pnpm build
+
+      # O upload-artifact pula pastas com ponto, como o `.output`: vai num tar.
+      - name: Empacotar o build
+        run: tar -czf build.tar.gz -C frontend .output
+
+      - name: Guardar o build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build.tar.gz
+          retention-days: 7
+
+  publicar:
+    needs: [segredos, testes-e-build]
+    if: needs.segredos.outputs.prontos == 'true' && inputs.voltar == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: producao
+      url: https://temestudo.com
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Baixar o build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: frontend
+
+      - name: Abrir o build
+        run: tar -xzf build.tar.gz && rm build.tar.gz
+
+      - name: Publicar na VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: node scripts/vps.ts --publicar .output "$GITHUB_SHA"
+
+      # De fora, pela internet: o site responde com o cabeçalho, e o http
+      # leva ao https com a query junto.
+      - name: Conferir o site no ar
+        run: |
+          cabecalhos=$(curl -fsS -D - -o /dev/null "https://temestudo.com/?conferencia=$GITHUB_SHA")
+          printf '%s\n' "$cabecalhos" | grep -i '^referrer-policy: strict-origin' \
+            || { echo "O site no ar não manda Referrer-Policy: strict-origin." >&2; exit 1; }
+          destino=$(curl -fsS -o /dev/null -w '%{redirect_url}' "http://temestudo.com/?x=1")
+          [ "$destino" = "https://temestudo.com/?x=1" ] \
+            || { echo "O http leva a $destino, não ao https." >&2; exit 1; }
+
+  voltar:
+    needs: segredos
+    if: needs.segredos.outputs.prontos == 'true' && inputs.voltar != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: producao
+      url: https://temestudo.com
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Voltar à versão pedida
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VOLTAR: ${{ inputs.voltar }}
+        run: |
+          if [ "$VOLTAR" = anterior ]; then
+            node scripts/vps.ts --voltar
+          else
+            node scripts/vps.ts --voltar "$VOLTAR"
+          fi
