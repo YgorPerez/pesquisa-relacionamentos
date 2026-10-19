@@ -43,14 +43,18 @@ const conteudo = (page: Page) =>
   page.evaluate(() => ({
     secoes: [...document.querySelectorAll('main h2')].map((h) => h.textContent),
     achados: [
-      ...document.querySelectorAll('ol[data-slot="achados-guia"] > li p:first-child'),
+      ...document.querySelectorAll(
+        'ol[data-slot="achados-guia"] > li p:first-child',
+      ),
     ].map((p) => p.textContent),
     dicas: [
-      ...document.querySelectorAll('[data-slot="dicas-do-guia"] > li > p:first-child'),
+      ...document.querySelectorAll(
+        '[data-slot="dicas-do-guia"] > li > p:first-child',
+      ),
     ].map((p) => p.textContent),
-    fichas: [...document.querySelectorAll('[data-slot="fichas-citadas"] > li')].map(
-      (li) => li.id,
-    ),
+    fichas: [
+      ...document.querySelectorAll('[data-slot="fichas-citadas"] > li'),
+    ].map((li) => li.id),
     notas: [...document.querySelectorAll('[data-slot="vale"]')].length,
   }))
 
@@ -77,7 +81,9 @@ test.describe('Perfil no Guia', () => {
   }) => {
     await page.goto(GUIA)
     const form = page.getByRole('form', { name: 'Seu Perfil' })
-    for (const opcao of await form.locator('[data-slot="radio-group-item"]').all()) {
+    for (const opcao of await form
+      .locator('[data-slot="radio-group-item"]')
+      .all()) {
       expect((await opcao.boundingBox())?.height).toBeGreaterThanOrEqual(44)
     }
     expect(
@@ -97,25 +103,33 @@ test.describe('Perfil no Guia', () => {
     await page.goto(GUIA)
     await dizerPerfil(page, { genero: 'homem', procura: 'homens', idade: '30' })
 
-    await expect(achados(page).nth(0).locator('[data-slot="selo-voce"]')).toHaveText(
-      'vale para você',
-    )
+    await expect(
+      achados(page).nth(0).locator('[data-slot="selo-voce"]'),
+    ).toHaveText('vale para você')
     await expect(achados(page).nth(0)).toContainText(
       'Vale para: homens e mulheres, de 18 a 35 anos.',
     )
     await expect(achados(page).nth(0)).not.toContainText(SEM_DADO)
     // Casais homem-mulher não valem para homem que procura homens.
-    await expect(achados(page).nth(1).locator('[data-slot="selo-voce"]')).toHaveCount(0)
-    await expect(achados(page).nth(1).locator('[data-slot="anel-vazio"]')).toHaveCount(1)
+    await expect(
+      achados(page).nth(1).locator('[data-slot="selo-voce"]'),
+    ).toHaveCount(0)
+    await expect(
+      achados(page).nth(1).locator('[data-slot="anel-vazio"]'),
+    ).toHaveCount(1)
     await expect(achados(page).nth(1)).toContainText(
       `Vale para: casais homem-mulher. ${SEM_DADO}`,
     )
     await expect(
-      page.getByRole('region', { name: 'Dicas' }).locator('[data-slot="selo-voce"]'),
+      page
+        .getByRole('region', { name: 'Dicas' })
+        .locator('[data-slot="selo-voce"]'),
     ).toHaveText('vale para você')
 
     const resposta = page.getByRole('region', { name: 'Resposta curta' })
-    await expect(resposta.locator('[data-slot="para-o-seu-perfil"]')).toHaveText(
+    await expect(
+      resposta.locator('[data-slot="para-o-seu-perfil"]'),
+    ).toHaveText(
       'vale para você o número em destaque vem de um estudo com pessoas do seu Perfil.',
     )
     const caixa = page.getByRole('region', { name: 'Varia conforme o Perfil?' })
@@ -144,7 +158,9 @@ test.describe('Perfil no Guia', () => {
         name: /Seu Perfil: homem, procura homens, 30 anos/,
       }),
     ).toBeVisible()
-    await expect(achados(page).nth(0).locator('[data-slot="selo-voce"]')).toBeVisible()
+    await expect(
+      achados(page).nth(0).locator('[data-slot="selo-voce"]'),
+    ).toBeVisible()
 
     // No outro Guia, o único achado é de casais homem-mulher: aviso acima do título.
     await page.goto(OUTRO_GUIA)
@@ -194,12 +210,12 @@ test.describe('Perfil no Guia', () => {
   test('quem procura ambos vê de qual lado há dado', async ({ page }) => {
     await page.goto(GUIA)
     await dizerPerfil(page, { genero: 'homem', procura: 'ambos', idade: '30' })
-    await expect(achados(page).nth(0).locator('[data-slot="selo-voce"]')).toHaveText(
-      'vale para você',
-    )
-    await expect(achados(page).nth(1).locator('[data-slot="selo-voce"]')).toHaveText(
-      'vale para você quando procura mulheres',
-    )
+    await expect(
+      achados(page).nth(0).locator('[data-slot="selo-voce"]'),
+    ).toHaveText('vale para você')
+    await expect(
+      achados(page).nth(1).locator('[data-slot="selo-voce"]'),
+    ).toHaveText('vale para você quando procura mulheres')
   })
 
   test('"mudar" abre o formulário preenchido, e apagar volta ao Guia sem Perfil', async ({

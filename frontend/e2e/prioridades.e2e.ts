@@ -116,7 +116,10 @@ test.describe('/prioridades', () => {
     )
     // Sem nota nem número: o único algarismo é o do "topo 3".
     expect(
-      (await page.locator('[data-slot="alerta"]').textContent())?.replace('topo 3', ''),
+      (await page.locator('[data-slot="alerta"]').textContent())?.replace(
+        'topo 3',
+        '',
+      ),
     ).not.toMatch(/\d/)
   })
 
@@ -158,7 +161,9 @@ test.describe('/prioridades', () => {
   }) => {
     await abrir(page)
     await page.locator('[data-slot="aviso"]').scrollIntoViewIfNeeded()
-    const caixa = await page.locator('[data-slot="desfecho-preso"]').boundingBox()
+    const caixa = await page
+      .locator('[data-slot="desfecho-preso"]')
+      .boundingBox()
     expect(caixa?.y).toBeLessThanOrEqual(1)
   })
 
@@ -297,11 +302,13 @@ test.describe('cartão do Guia B1', () => {
       name: 'Onde ficam as suas prioridades?',
     })
     await expect(cartao).toContainText('Seu topo 3 cabe na fatia de 5%:')
-    await expect(cartao.locator('[data-slot="topo3-no-cartao"] li')).toHaveText([
-      /Química sexual.*pesa$/,
-      /Ser parecido comigo.*quase nada$/,
-      /Renda.*não sabemos$/,
-    ])
+    await expect(cartao.locator('[data-slot="topo3-no-cartao"] li')).toHaveText(
+      [
+        /Química sexual.*pesa$/,
+        /Ser parecido comigo.*quase nada$/,
+        /Renda.*não sabemos$/,
+      ],
+    )
     await tocar(cartao.getByRole('link', { name: 'Ver a lista inteira' }))
     await expect(chip(page, 'Química sexual')).toHaveAccessibleName(
       'sua 1ª: Química sexual',

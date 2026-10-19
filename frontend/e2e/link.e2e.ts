@@ -14,7 +14,8 @@ import {
 import { tocar } from './toque'
 
 const SITE = 'https://temestudo.com'
-const faixa = (page: Page) => page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
+const faixa = (page: Page) =>
+  page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
 const salvo = (page: Page, chave: string) =>
   page.evaluate(
     (k) => JSON.parse(localStorage.getItem(`tem-estudo:${k}`) ?? 'null'),
@@ -95,9 +96,9 @@ test.describe('link do Grupo possível', () => {
     )
     await expect(compartilhar(page)).toContainText('sem guardar o gênero')
     await expect(page.locator('[data-slot="gp-preso"]')).toHaveAttribute(
-    'aria-busy',
-    'false',
-  )
+      'aria-busy',
+      'false',
+    )
     const numero = (await faixa(page).textContent()) ?? ''
 
     const link = await copiarLink(page)

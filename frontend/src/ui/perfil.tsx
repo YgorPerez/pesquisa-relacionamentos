@@ -27,7 +27,7 @@ import { gravarPerfil } from '#/estado/perfil'
 import { cn } from '@/platform/cn'
 import { Botao } from './botao'
 import { Html } from './guia'
-import { Aviso } from './pagina'
+import { Aviso } from './secao'
 import { Input } from '@/ui/shadcn/input'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 

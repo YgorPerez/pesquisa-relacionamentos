@@ -29,9 +29,7 @@ function Privacidade() {
         </Lead>
 
         <Secao className="prosa" aria-labelledby="p-aparelho">
-          <Headline id="p-aparelho">
-            O que fica no seu aparelho
-          </Headline>
+          <Headline id="p-aparelho">O que fica no seu aparelho</Headline>
           <p>
             O Perfil (seu gênero, quem você procura e sua idade), os Requisitos
             do Grupo possível, o seu topo 3 em Prioridades e a escolha de ser
@@ -47,9 +45,7 @@ function Privacidade() {
         </Secao>
 
         <Secao className="prosa" aria-labelledby="p-link">
-          <Headline id="p-link">
-            O que vai no link
-          </Headline>
+          <Headline id="p-link">O que vai no link</Headline>
           <p>
             Só quando você toca em “Copiar link” numa calculadora. O link leva o
             que a conta usa: o Perfil e os Requisitos, ou o topo 3 e o desfecho.
@@ -67,9 +63,7 @@ function Privacidade() {
         </Secao>
 
         <Secao className="prosa" aria-labelledby="p-servidor">
-          <Headline id="p-servidor">
-            O que o servidor anota
-          </Headline>
+          <Headline id="p-servidor">O que o servidor anota</Headline>
           <p>
             Como todo site, o servidor anota cada pedido: o endereço IP, a hora,
             a página sem nada depois do “?”, a resposta e quanto tempo levou.
@@ -115,9 +109,7 @@ function Privacidade() {
         </Secao>
 
         <Secao className="prosa" aria-labelledby="p-nao-contar">
-          <Headline id="p-nao-contar">
-            Não ser contado
-          </Headline>
+          <Headline id="p-nao-contar">Não ser contado</Headline>
           <p>
             Se o seu navegador pede para não ser rastreado (Global Privacy
             Control ou Do Not Track), a contagem nem carrega. Você também pode

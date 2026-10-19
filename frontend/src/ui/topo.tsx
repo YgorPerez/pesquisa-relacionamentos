@@ -18,7 +18,10 @@ export function Topo() {
   return (
     <header className="border-b-2 border-tinta bg-papel">
       <div className="mx-auto flex max-w-pagina items-center justify-between gap-3 px-md py-xs">
-        <Link to="/" className="inline-flex min-h-toque items-center font-headline text-nivel leading-none font-bold tracking-headline no-underline">
+        <Link
+          to="/"
+          className="inline-flex min-h-toque items-center font-headline text-nivel leading-none font-bold tracking-headline no-underline"
+        >
           Tem estudo?
         </Link>
         {tema?.tema && (
@@ -27,7 +30,9 @@ export function Topo() {
             params={{ tema: tema.tema }}
             className="group inline-flex min-h-toque items-center font-label text-etiqueta leading-curta font-bold no-underline"
           >
-            <span className="rounded-mao-2 border-(length:--traco-etiqueta) border-tinta bg-folha px-2.5 py-1.25 group-hover:underline group-hover:decoration-(length:--traco-etiqueta) group-hover:underline-offset-4">{tema.temaTitulo}</span>
+            <span className="rounded-mao-2 border-(length:--traco-etiqueta) border-tinta bg-folha px-2.5 py-1.25 group-hover:underline group-hover:decoration-(length:--traco-etiqueta) group-hover:underline-offset-4">
+              {tema.temaTitulo}
+            </span>
           </Link>
         )}
       </div>

@@ -1,9 +1,12 @@
 // As peças de toda página (DESIGN.md, Layout e Typography): a folha, a
-// coluna de texto, o título `display`, o `lead`, a seção com a régua à mão e
-// o título dela, e o aviso tracejado. Cada uma é o elemento do HTML com as
-// classes do tema; quem a usa acrescenta o lugar (`className`).
+// coluna de texto, o título `display` e o `lead`. Cada uma é o elemento do
+// HTML com as classes do tema; quem a usa acrescenta o lugar (`className`).
+// As rotas pegam daqui também as peças de dentro da página (`ui/secao.tsx`),
+// que as outras peças de `ui/` importam direto.
 import type { ComponentProps } from 'react'
 import { cn } from '@/platform/cn'
+
+export { Aviso, Headline, Painel, Secao } from './secao'
 
 /** A página: uma coluna no celular; a partir de 900px, a folha com contorno
  * sobre a retícula do fundo. */
@@ -44,40 +47,4 @@ export function Display({
 
 export function Lead({ className, ...props }: ComponentProps<'p'>) {
   return <p className={cn('m-0 text-lead', className)} {...props} />
-}
-
-/** A seção abre com a régua desenhada à mão, 20px acima do título. */
-export function Secao({ className, ...props }: ComponentProps<'section'>) {
-  return (
-    <section className={cn('regua mt-secao pt-5', className)} {...props} />
-  )
-}
-
-/** O título de uma seção. */
-export function Headline({ className, ...props }: ComponentProps<'h2'>) {
-  return (
-    <h2
-      className={cn(
-        'm-0 mb-sm font-headline text-headline text-balance',
-        className,
-      )}
-      data-slot="headline"
-      {...props}
-    />
-  )
-}
-
-/** O aviso tracejado: a Ficha não verificada, o que ainda não entrou no ar.
- * Logo depois de um voltar, ganha ar em cima. */
-export function Aviso({ className, ...props }: ComponentProps<'p'>) {
-  return (
-    <p
-      className={cn(
-        'm-0 mb-md rounded-mao-2 border-2 fio-tracejado border-tinta bg-folha px-md py-sm text-aviso leading-normal [[data-slot=voltar]+&]:mt-sm',
-        className,
-      )}
-      data-slot="aviso"
-      {...props}
-    />
-  )
 }

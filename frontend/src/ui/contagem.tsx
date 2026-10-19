@@ -15,7 +15,7 @@ import {
 } from '#/analytics/eventos'
 import { cn } from '@/platform/cn'
 import { Botao } from './botao'
-import { Headline, Secao } from './pagina'
+import { Headline, Secao } from './secao'
 import { Switch } from '@/ui/shadcn/switch'
 
 /** O texto de cada um dos quatro motivos do "não" (#21). Sem campo livre. */

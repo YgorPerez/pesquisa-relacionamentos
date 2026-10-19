@@ -8,6 +8,7 @@ import { ORIGEM } from '@tem-estudo/conteudo/busca'
 import type { ReactNode } from 'react'
 import { Topo } from '#/ui/topo'
 import { Rodape } from '#/ui/contagem'
+import { CORES_DA_MARCA } from '#/ui/marca'
 import { useContarVisitas } from '#/analytics/contagem'
 import bricolage from '../fontes/bricolage-grotesque-latin-wght-normal.woff2?url'
 import atkinson from '../fontes/atkinson-hyperlegible-latin-400-normal.woff2?url'
@@ -25,7 +26,7 @@ const META_DO_SITE = [
     content:
       'Onde conhecer pessoas e como escolher parceiro, com o estudo de onde saiu cada resposta.',
   },
-  { name: 'theme-color', content: '#f5f8f8' },
+  { name: 'theme-color', content: CORES_DA_MARCA.papel },
   { property: 'og:site_name', content: 'Tem estudo?' },
   { property: 'og:locale', content: 'pt_BR' },
   { property: 'og:type', content: 'website' },
@@ -41,6 +42,11 @@ const META_DO_SITE = [
 
 const LINKS_DO_SITE = [
   { rel: 'stylesheet', href: css },
+  // Os ícones e o manifesto da marca (`scripts/icones-da-marca.ts`): a aba,
+  // a tela de início do iPhone, que não lê o manifesto, e a do Android.
+  { rel: 'icon', href: '/favicon-32.png', type: 'image/png', sizes: '32x32' },
+  { rel: 'apple-touch-icon', href: '/icone-180.png' },
+  { rel: 'manifest', href: '/manifest.webmanifest' },
   // O título e o corpo da primeira tela; o CSS só as pediria depois de chegar.
   {
     rel: 'preload',

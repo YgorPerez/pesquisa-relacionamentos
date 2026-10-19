@@ -1,8 +1,15 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { listarDicas } from '#/conteudo/guias'
-import { ForcaDaEvidencia } from '#/ui/selos'
-import { MetaDaFicha } from '#/ui/guia'
-import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
+import { ForcaDaEvidencia, MetaDaFicha } from '#/ui/selos'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Secao,
+} from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/')({
   loader: () => listarDicas(),
@@ -60,7 +67,9 @@ function Dicas() {
                   <MetaDaFicha>
                     <ForcaDaEvidencia forca={dica.forca} />
                     {dica.inferencia && (
-                      <span className="text-tinta-2 italic">Inferência nossa</span>
+                      <span className="text-tinta-2 italic">
+                        Inferência nossa
+                      </span>
                     )}
                   </MetaDaFicha>
                 </li>

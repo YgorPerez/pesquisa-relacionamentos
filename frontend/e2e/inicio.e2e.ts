@@ -77,4 +77,20 @@ test.describe('página inicial', () => {
       .boundingBox()
     expect(caixa?.height).toBeGreaterThanOrEqual(44)
   })
+
+  test('o <head> leva o ícone da aba, o do iPhone e o manifesto, e todos respondem', async ({
+    page,
+    request,
+  }) => {
+    await page.goto('/')
+    for (const rel of ['icon', 'apple-touch-icon', 'manifest']) {
+      const href = await page.locator(`link[rel="${rel}"]`).getAttribute('href')
+      expect(href, rel).toBeTruthy()
+      expect((await request.get(href!)).status(), rel).toBe(200)
+    }
+    const manifesto = await (await request.get('/manifest.webmanifest')).json()
+    expect(manifesto.name).toBe('Tem estudo?')
+    for (const icone of manifesto.icons)
+      expect((await request.get(icone.src)).status(), icone.src).toBe(200)
+  })
 })

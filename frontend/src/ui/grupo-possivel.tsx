@@ -30,7 +30,7 @@ import {
 } from '@/ui/shadcn/collapsible'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { NOME_DO_ALVO, textoDoCusto } from './grupo-possivel.textos'
-import { Headline, Secao } from './pagina'
+import { Headline, Painel, Secao } from './secao'
 
 /** Enquanto os dados chegam, o número antigo fica, apagado. */
 const CARREGANDO =
@@ -399,27 +399,23 @@ export function Dobras({
   return (
     <>
       <Collapsible id="gp-corte-a-corte" variante="cheia" className="mt-sm">
-        <CollapsibleTrigger variante="cheia">
-          Corte a corte
-        </CollapsibleTrigger>
+        <CollapsibleTrigger variante="cheia">Corte a corte</CollapsibleTrigger>
         <CollapsibleContent hiddenUntilFound>
-        <ol className="m-0 list-none p-0" data-slot="gp-funil">
-          <li>
-            <span>
-              {NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil
-            </span>
-            <b>{formatarQuantidade(base.central)}</b>
-          </li>
-          {funil.map((etapa) => (
-            <li key={etapa.requisito}>
-              <span>{valor(etapa.requisito)}</span>
-              <b>{formatarQuantidade(etapa.central)}</b>
+          <ol className="m-0 list-none p-0" data-slot="gp-funil">
+            <li>
+              <span>
+                {NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil
+              </span>
+              <b>{formatarQuantidade(base.central)}</b>
             </li>
-          ))}
-        </ol>
-        <p className={DICA}>
-          A ordem dos cortes não muda o resultado final.
-        </p>
+            {funil.map((etapa) => (
+              <li key={etapa.requisito}>
+                <span>{valor(etapa.requisito)}</span>
+                <b>{formatarQuantidade(etapa.central)}</b>
+              </li>
+            ))}
+          </ol>
+          <p className={DICA}>A ordem dos cortes não muda o resultado final.</p>
         </CollapsibleContent>
       </Collapsible>
       <Collapsible id="gp-incerteza" variante="cheia" className="mt-sm">
@@ -427,29 +423,29 @@ export function Dobras({
           De onde vem a incerteza
         </CollapsibleTrigger>
         <CollapsibleContent hiddenUntilFound>
-        {ligados.length > 1 && (
-          <p className="m-0 mb-2.5 text-aviso">
-            Se só multiplicássemos a porcentagem que cada Requisito deixa
-            sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
-            {diferenca >= 0 ? '+' : '−'}
-            {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
-            juntos; por isso o site cruza os dados.
+          {ligados.length > 1 && (
+            <p className="m-0 mb-2.5 text-aviso">
+              Se só multiplicássemos a porcentagem que cada Requisito deixa
+              sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
+              {diferenca >= 0 ? '+' : '−'}
+              {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
+              juntos; por isso o site cruza os dados.
+            </p>
+          )}
+          <p className={DICA}>
+            A faixa junta o erro de amostra do Censo (
+            {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
+            com o intervalo da PNS.
           </p>
-        )}
-        <p className={DICA}>
-          A faixa junta o erro de amostra do Censo (
-          {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
-          com o intervalo da PNS.
-        </p>
-        <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
-          {ressalvas
-            .filter((r) => !r.forte)
-            .map((r) => (
-              <li key={r.id} className="not-first:mt-1.5">
-                {r.texto}
-              </li>
-            ))}
-        </ul>
+          <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
+            {ressalvas
+              .filter((r) => !r.forte)
+              .map((r) => (
+                <li key={r.id} className="not-first:mt-1.5">
+                  {r.texto}
+                </li>
+              ))}
+          </ul>
         </CollapsibleContent>
       </Collapsible>
     </>
@@ -503,7 +499,7 @@ export function CartaoDoGrupoPossivel({
       <Headline id="t-cartao-gp">
         {usado ? 'Seu Grupo possível' : 'Faça a conta'}
       </Headline>
-      <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs">
+      <Painel className="[&>p]:m-0 [&>p]:mt-xs">
         {usado ? (
           <div
             aria-busy={carregando}
@@ -562,7 +558,7 @@ export function CartaoDoGrupoPossivel({
             <Seta />
           </Button>
         </p>
-      </div>
+      </Painel>
     </Secao>
   )
 }

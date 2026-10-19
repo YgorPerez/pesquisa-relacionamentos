@@ -1,9 +1,18 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarDica } from '#/conteudo/guias'
-import { FichasCitadas, LinhaDePergunta } from '#/ui/guia'
+import { FichasCitadas } from '#/ui/guia'
+import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { ForcaDaEvidencia } from '#/ui/selos'
 import { LinkDeVoltar } from '#/ui/navegacao'
-import { Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
+import {
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Painel,
+  Secao,
+} from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/$slug')({
   loader: ({ params }) => buscarDica({ data: params.slug }),
@@ -29,8 +38,9 @@ function PaginaDaDica() {
 
         <Display ficha>{dica.texto}</Display>
 
-        <section
-          className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0"
+        <Painel
+          como="section"
+          className="[&>p]:m-0"
           aria-label="Quanto a evidência pesa"
         >
           <div className="mt-0 flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -45,12 +55,10 @@ function PaginaDaDica() {
           <p className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2">
             <b className="text-tinta">Vale para:</b> {dica.valePara}
           </p>
-        </section>
+        </Painel>
 
         <Secao aria-labelledby="t-guias">
-          <Headline id="t-guias">
-            Aparece nos Guias
-          </Headline>
+          <Headline id="t-guias">Aparece nos Guias</Headline>
           {dica.guias.length === 0 ? (
             <p className="text-tinta-2">Nenhum Guia traz esta Dica ainda.</p>
           ) : (
@@ -65,9 +73,7 @@ function PaginaDaDica() {
         </Secao>
 
         <Secao aria-labelledby="t-fichas">
-          <Headline id="t-fichas">
-            Fichas citadas
-          </Headline>
+          <Headline id="t-fichas">Fichas citadas</Headline>
           <FichasCitadas fichas={dica.fichas} />
         </Secao>
       </Coluna>

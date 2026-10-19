@@ -1,6 +1,8 @@
 // Status de verificação e Força da evidência, sempre desenhados e escritos
 // (DESIGN.md: "Don't mostrar Confiança, Status ou Força só por cor").
 import type { Forca, Status } from '@tem-estudo/conteudo'
+import type { ReactNode } from 'react'
+import { cn } from '@/platform/cn'
 
 const PALAVRA_DO_STATUS: Record<Status, string> = {
   ok: 'lido no original',
@@ -49,7 +51,10 @@ function IconeDoStatus({ status }: { status: Status }) {
 
 export function StatusDeVerificacao({ status }: { status: Status }) {
   return (
-    <span className="inline-flex items-center gap-1.5 font-label text-label" data-status={status}>
+    <span
+      className="inline-flex items-center gap-1.5 font-label text-label"
+      data-status={status}
+    >
       <IconeDoStatus status={status} />
       {PALAVRA_DO_STATUS[status]}
     </span>
@@ -108,7 +113,10 @@ export function ForcaDaEvidencia({
   rotulo?: boolean
 }) {
   return (
-    <span className="inline-flex items-center gap-1.5 font-label text-label" data-forca={forca}>
+    <span
+      className="inline-flex items-center gap-1.5 font-label text-label"
+      data-forca={forca}
+    >
       <Degraus nivel={forca} />
       {rotulo ? `evidência ${forca}` : forca}
     </span>
@@ -123,7 +131,9 @@ export function LegendaDasFichas() {
         <dt className="text-tinta">
           <StatusDeVerificacao status="ok" />
         </dt>
-        <dd className="m-0">os números foram conferidos no texto completo do estudo.</dd>
+        <dd className="m-0">
+          os números foram conferidos no texto completo do estudo.
+        </dd>
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
@@ -137,13 +147,17 @@ export function LegendaDasFichas() {
         <dt className="text-tinta">
           <StatusDeVerificacao status="nao-verificado" />
         </dt>
-        <dd className="m-0">ainda não conferido na fonte. Não sustenta nenhum Guia.</dd>
+        <dd className="m-0">
+          ainda não conferido na fonte. Não sustenta nenhum Guia.
+        </dd>
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
           <ForcaDaEvidencia forca="forte" />
         </dt>
-        <dd className="m-0">amostra grande e representativa, replicado ou meta-análise.</dd>
+        <dd className="m-0">
+          amostra grande e representativa, replicado ou meta-análise.
+        </dd>
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
@@ -164,5 +178,27 @@ export function LegendaDasFichas() {
         </dd>
       </div>
     </dl>
+  )
+}
+
+/** A linha de metadados de uma Ficha: Status, Força e o contexto. A `grande`
+ * fica embaixo do título da página da Ficha. */
+export function MetaDaFicha({
+  grande = false,
+  children,
+}: {
+  grande?: boolean
+  children: ReactNode
+}) {
+  return (
+    <div
+      className={cn(
+        'flex flex-wrap items-center text-label leading-label font-normal',
+        grande ? 'm-0 mb-lg gap-x-md gap-y-2.5' : 'mt-xs gap-x-sm gap-y-1.5',
+      )}
+      data-slot={grande ? 'ficha-meta-grande' : 'ficha-meta'}
+    >
+      {children}
+    </div>
   )
 }

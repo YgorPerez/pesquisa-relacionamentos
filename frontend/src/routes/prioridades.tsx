@@ -39,6 +39,7 @@ import {
   Folha,
   Headline,
   Lead,
+  Painel,
   Secao,
 } from '#/ui/pagina'
 import {
@@ -156,11 +157,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       </div>
 
       {desfecho === 'satisfacao' && (
-        <Collapsible
-          id="antes-da-lista"
-          defaultOpen
-          className="mt-md"
-        >
+        <Collapsible id="antes-da-lista" defaultOpen className="mt-md">
           <CollapsibleTrigger>
             <svg
               className="flex-none transition-transform duration-250 ease-sai group-data-panel-open:rotate-90 motion-reduce:transition-none"
@@ -218,7 +215,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       {vista.doGuia && (
         <Secao aria-labelledby="t-do-guia">
           <Headline id="t-do-guia">Do Guia</Headline>
-          <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
+          <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
             <p className="font-title text-title leading-body font-bold tracking-normal text-tinta">
               {vista.doGuia.pergunta}
             </p>
@@ -233,7 +230,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
                 Ler o Guia inteiro
               </Link>
             </p>
-          </div>
+          </Painel>
         </Secao>
       )}
     </>

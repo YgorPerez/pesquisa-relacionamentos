@@ -80,11 +80,15 @@ test.describe('página do Guia', () => {
     })
     const achados = evidencia.locator('ol[data-slot="achados-guia"] > li')
     await expect(achados).toHaveCount(2)
-    await expect(achados.nth(0).locator('[data-slot="onde"]')).toHaveText('Brasil2019')
+    await expect(achados.nth(0).locator('[data-slot="onde"]')).toHaveText(
+      'Brasil2019',
+    )
     await expect(achados.nth(0)).toContainText(
       'Vale para: homens e mulheres, de 18 a 35 anos.',
     )
-    await expect(achados.nth(1).locator('[data-slot="onde"]')).toHaveText('EUA2017')
+    await expect(achados.nth(1).locator('[data-slot="onde"]')).toHaveText(
+      'EUA2017',
+    )
     await expect(achados.nth(1)).toContainText(
       'Vale para: casais homem-mulher.',
     )

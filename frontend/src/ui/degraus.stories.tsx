@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { EtiquetaDoPeso, PesoDaEvidencia } from './prioridades'
-import { Degraus, ForcaDaEvidencia } from './selos'
-import { MetaDaFicha } from './guia'
+import { Degraus, ForcaDaEvidencia, MetaDaFicha } from './selos'
 
 const meta = {
   component: Degraus,

@@ -23,7 +23,7 @@ import type {
 } from '#/conteudo/vista-prioridades'
 import { Button as ButtonPrimitive } from '@base-ui/react/button'
 import { cn } from '@/platform/cn'
-import { Headline, Secao } from './pagina'
+import { Headline, Painel, Secao } from './secao'
 import { DegrausCheios, ForcaDaEvidencia, StatusDeVerificacao } from './selos'
 import { Button } from '@/ui/shadcn/button'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
@@ -61,8 +61,7 @@ export function EtiquetaDoPeso({ degrau: n }: { degrau: Degrau }) {
   )
 }
 
-const PASSO =
-  'm-0 mb-2 p-0 font-label text-label leading-title text-tinta-2'
+const PASSO = 'm-0 mb-2 p-0 font-label text-label leading-title text-tinta-2'
 
 const ordinal = (i: number) => `sua ${i + 1}ª`
 
@@ -158,10 +157,7 @@ export function BarraDaSatisfacao({
         role="img"
         aria-label={`Satisfação: ${barra.relacao}% explicado pela relação, ${barra.parceiro}% pelo parceiro, ${barra.semExplicacao}% sem explicação`}
       >
-        <span
-          className="bg-tinta"
-          style={{ width: `${barra.relacao}%` }}
-        />
+        <span className="bg-tinta" style={{ width: `${barra.relacao}%` }} />
         <span
           className="box-border min-w-2.5 border-x-2 border-tinta bg-folha"
           style={{ width: `${barra.parceiro}%` }}
@@ -176,7 +172,9 @@ export function BarraDaSatisfacao({
           <i className={cn(AMOSTRA, 'bg-tinta')} />
           <b>{barra.relacao}%</b>
         </dt>
-        <dd className="m-0">como vocês se tratam: compromisso, gratidão, conflito, sexo</dd>
+        <dd className="m-0">
+          como vocês se tratam: compromisso, gratidão, conflito, sexo
+        </dd>
         <dt className={LEGENDA}>
           <i className={cn(AMOSTRA, 'bg-folha')} />
           <b>{barra.parceiro}%</b>
@@ -407,7 +405,9 @@ export function Estante({
                 })}
               </ul>
             ) : (
-              <p className="m-0 px-1 py-2 text-nota text-tinta-2 italic">nenhuma</p>
+              <p className="m-0 px-1 py-2 text-nota text-tinta-2 italic">
+                nenhuma
+              </p>
             )}
             <div
               className="reticula mt-1.5 h-2.75 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha group-data-[degrau=0]/prateleira:fio-tracejado group-data-[degrau=0]/prateleira:after:hidden"
@@ -447,14 +447,17 @@ export function CartaoDePrioridades({
       <Headline id="t-cartao-prioridades">
         Onde ficam as suas prioridades?
       </Headline>
-      <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs">
+      <Painel className="[&>p]:m-0 [&>p]:mt-xs">
         <BarraDaSatisfacao barra={barra} curta />
         {escolhidas.length > 0 && (
           <>
             <p className="font-label text-label leading-body text-tinta-2">
               Seu topo 3 cabe na fatia de {barra.parceiro}%:
             </p>
-            <ol className="m-0 mt-2.5 list-none p-0" data-slot="topo3-no-cartao">
+            <ol
+              className="m-0 mt-2.5 list-none p-0"
+              data-slot="topo3-no-cartao"
+            >
               {escolhidas.map((car, i) => (
                 <li
                   key={car.id}
@@ -486,7 +489,7 @@ export function CartaoDePrioridades({
             <Seta />
           </Button>
         </p>
-      </div>
+      </Painel>
     </Secao>
   )
 }

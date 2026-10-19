@@ -63,6 +63,7 @@ import {
   Display,
   Folha,
   Headline,
+  Painel,
   Secao,
 } from '#/ui/pagina'
 
@@ -445,7 +446,10 @@ function MotivoDosFilhos({
 }) {
   if (filhos === 'vale') return null
   return (
-    <p className="m-0 mt-2 text-label leading-nota font-bold text-tinta" id={id}>
+    <p
+      className="m-0 mt-2 text-label leading-nota font-bold text-tinta"
+      id={id}
+    >
       {filhos === 'sem-dado'
         ? 'O Censo só pergunta filhos às mulheres. Procurando homens, não dá para filtrar.'
         : 'O Censo só pergunta filhos às mulheres: procurando homens e mulheres, o filtro vale só para elas.'}
@@ -511,7 +515,7 @@ function DoGuia({
   return (
     <Secao aria-labelledby="t-do-guia">
       <Headline id="t-do-guia">Do Guia</Headline>
-      <div className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 [&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mb-2.5">
+      <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mb-2.5">
         <p className="font-title text-linha leading-label font-bold text-tinta">
           {guia.pergunta}
         </p>
@@ -524,7 +528,7 @@ function DoGuia({
         >
           Ler o Guia inteiro
         </Link>
-      </div>
+      </Painel>
     </Secao>
   )
 }

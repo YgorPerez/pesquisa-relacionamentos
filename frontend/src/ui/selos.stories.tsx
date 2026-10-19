@@ -3,8 +3,8 @@ import {
   ForcaDaEvidencia,
   LegendaDasFichas,
   StatusDeVerificacao,
+  MetaDaFicha,
 } from './selos'
-import { MetaDaFicha } from './guia'
 
 const meta = {
   component: LegendaDasFichas,

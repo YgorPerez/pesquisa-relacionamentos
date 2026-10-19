@@ -7,6 +7,9 @@
     // A imagem do Open Graph se faz na mão, `node scripts/imagem-og.ts` (o
     // comentário no topo dele). Nenhum import aponta para ele.
     "scripts/imagem-og.ts",
+    // Os ícones e o manifesto da marca, também na mão:
+    // `node scripts/icones-da-marca.ts`.
+    "scripts/icones-da-marca.ts",
     // O React Doctor acha o `doctor.config.ts` pelo nome, na raiz do projeto
     // que ele varre. Nenhum import aponta para ele.
     "doctor.config.ts",

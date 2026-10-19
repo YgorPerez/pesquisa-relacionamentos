@@ -9,5 +9,7 @@ export default defineConfig({
   // (ADR 0003).
   plugins: [
     tailwindcss(),
-    viteReact(), babel({ presets: [reactCompilerPreset()] })],
+    viteReact(),
+    babel({ presets: [reactCompilerPreset()] }),
+  ],
 })

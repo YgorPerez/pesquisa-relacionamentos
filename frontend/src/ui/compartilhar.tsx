@@ -4,7 +4,7 @@
 // sem query.
 import { useState } from 'react'
 import { Botao } from './botao'
-import { Headline, Secao } from './pagina'
+import { Headline, Secao } from './secao'
 import { Input } from '@/ui/shadcn/input'
 
 type Copia =
@@ -47,15 +47,20 @@ export function Compartilhar({
         ? { 'aria-label': 'Compartilhar' }
         : { 'aria-labelledby': 't-compartilhar' })}
     >
-      {!semTitulo && (
-        <Headline id="t-compartilhar">Compartilhar</Headline>
-      )}
+      {!semTitulo && <Headline id="t-compartilhar">Compartilhar</Headline>}
       <div className="flex flex-wrap items-center gap-sm">
         <Botao onClick={copiar}>Copiar link</Botao>
         <p className="m-0 flex-[1_1_14rem] leading-nota">{frase}</p>
       </div>
-      {aviso && <p className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2">{aviso}</p>}
-      <p role="status" className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2 empty:m-0">
+      {aviso && (
+        <p className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2">
+          {aviso}
+        </p>
+      )}
+      <p
+        role="status"
+        className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2 empty:m-0"
+      >
         {copia.tipo === 'copiado'
           ? 'Link copiado.'
           : copia.tipo === 'falhou'

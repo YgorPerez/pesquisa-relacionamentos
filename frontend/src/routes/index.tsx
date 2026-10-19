@@ -1,7 +1,16 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { listarTemas } from '#/conteudo/guias'
-import { LinhaDaCalculadora } from '#/ui/guia'
-import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
+import { LinhaDaCalculadora } from '#/ui/linha-da-pergunta'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Painel,
+  Secao,
+} from '#/ui/pagina'
 
 export const Route = createFileRoute('/')({
   loader: () => listarTemas(),
@@ -51,9 +60,10 @@ function Inicio() {
             </Aviso>
           ) : (
             temas.map((tema) => (
-              <article
+              <Painel
+                como="article"
                 key={tema.slug}
-                className="reticula rounded-mao border-2 border-tinta bg-folha px-md pt-md pb-4 not-first-of-type:mt-lg"
+                className="not-first-of-type:mt-lg"
               >
                 <h3 className="m-0 font-title text-title">
                   <Link
@@ -77,7 +87,7 @@ function Inicio() {
                     </li>
                   ))}
                 </ol>
-              </article>
+              </Painel>
             ))
           )}
         </Secao>

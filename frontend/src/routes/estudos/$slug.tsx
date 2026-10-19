@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { buscarFicha } from '#/conteudo/fichas'
-import { Html, LinhaDePergunta, MetaDaFicha } from '#/ui/guia'
+import { Html } from '#/ui/guia'
+import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { LinkDeVoltar } from '#/ui/navegacao'
 import {
   Aviso,
@@ -16,6 +17,7 @@ import {
   ForcaDaEvidencia,
   LegendaDasFichas,
   StatusDeVerificacao,
+  MetaDaFicha,
 } from '#/ui/selos'
 import { PALAVRA_DO_DESENHO } from '#/ui/selos.textos'
 
@@ -43,7 +45,13 @@ const data = (iso: string) => {
 }
 
 /** Uma linha dos dados da Ficha, com o fio pontilhado em cima. */
-function Dado({ titulo, children }: { titulo: ReactNode; children: ReactNode }) {
+function Dado({
+  titulo,
+  children,
+}: {
+  titulo: ReactNode
+  children: ReactNode
+}) {
   return (
     <div className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-3 first:border-t-0 first:pt-0">
       <dt className="font-label text-label leading-body text-tinta-2">

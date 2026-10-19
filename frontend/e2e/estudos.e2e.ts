@@ -132,7 +132,9 @@ test.describe('/estudos/<slug>', () => {
     await expect(page.locator('[data-slot="ficha-dados"]')).toContainText(
       'Conferido em parte em 18/10/2026.',
     )
-    await expect(page.locator('[data-slot="ficha-dados"]')).toContainText('Não declarado.')
+    await expect(page.locator('[data-slot="ficha-dados"]')).toContainText(
+      'Não declarado.',
+    )
     await expect(page.locator('meta[name="robots"]')).toHaveCount(0)
   })
 

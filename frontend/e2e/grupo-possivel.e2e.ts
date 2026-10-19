@@ -5,7 +5,8 @@ import { expect, test, type Page } from '@playwright/test'
 import { tocar } from './toque'
 
 const PAGINA = '/grupo-possivel'
-const faixa = (page: Page) => page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
+const faixa = (page: Page) =>
+  page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
 const requisito = (page: Page, id: string) => page.locator(`#req-${id}`)
 
 async function dizerPerfil(
@@ -48,7 +49,9 @@ test.describe('Grupo possível', () => {
     await expect(
       page.getByRole('note').filter({ hasText: 'é um teto' }),
     ).toBeVisible()
-    const titulos = await page.locator('main h2[data-slot="headline"]').allTextContents()
+    const titulos = await page
+      .locator('main h2[data-slot="headline"]')
+      .allTextContents()
     expect(titulos.slice(0, 3)).toEqual([
       'Seu Perfil',
       'Seus Requisitos',
@@ -96,9 +99,9 @@ test.describe('Grupo possível', () => {
       requisito(page, 'idade').getByRole('button', { name: 'até: mais 1' }),
     )
     atual = await mudou(page, atual)
-    await expect(requisito(page, 'idade').locator('[data-slot="gp-req-valor"]')).toHaveText(
-      '23 a 34 anos',
-    )
+    await expect(
+      requisito(page, 'idade').locator('[data-slot="gp-req-valor"]'),
+    ).toHaveText('23 a 34 anos')
 
     // "o que mais pesa" com "soltar": soltar a escolaridade volta ao "qualquer".
     await tocar(page.getByRole('link', { name: 'ver a conta' }))
@@ -139,16 +142,16 @@ test.describe('Grupo possível', () => {
     await preta.focus()
     await page.keyboard.press('Space')
     await mudou(page, atual)
-    await expect(requisito(page, 'cor').locator('[data-slot="gp-req-valor"]')).toHaveText(
-      'cor preta',
-    )
+    await expect(
+      requisito(page, 'cor').locator('[data-slot="gp-req-valor"]'),
+    ).toHaveText('cor preta')
 
     // A idade também se digita.
     const ate = requisito(page, 'idade').getByLabel('até', { exact: true })
     await ate.fill('40')
-    await expect(requisito(page, 'idade').locator('[data-slot="gp-req-valor"]')).toHaveText(
-      '19 a 40 anos',
-    )
+    await expect(
+      requisito(page, 'idade').locator('[data-slot="gp-req-valor"]'),
+    ).toHaveText('19 a 40 anos')
   })
 
   test('"sem filhos" fica desabilitado procurando homens e parcial procurando ambos', async ({
@@ -198,7 +201,9 @@ test.describe('Grupo possível', () => {
     const lugar = requisito(page, 'lugar')
     await lugar.getByLabel('Estado').selectOption('AC')
     await lugar.getByLabel('Município').selectOption({ label: 'Rio Branco' })
-    await expect(lugar.locator('[data-slot="gp-req-valor"]')).toHaveText('Rio Branco (AC)')
+    await expect(lugar.locator('[data-slot="gp-req-valor"]')).toHaveText(
+      'Rio Branco (AC)',
+    )
     await expect(page.locator('#a-conta')).toContainText(
       'mulheres em Rio Branco (AC) atendem',
     )
@@ -224,15 +229,17 @@ test.describe('Grupo possível', () => {
     await dizerPerfil(page, 'mulher', 'homens', '25')
     const incerteza = page.locator('#gp-incerteza')
     await expect(incerteza).not.toHaveAttribute('open')
-    await tocar(incerteza.getByRole('button', { name: 'De onde vem a incerteza' }))
+    await tocar(
+      incerteza.getByRole('button', { name: 'De onde vem a incerteza' }),
+    )
     await expect(incerteza).toContainText(
       /Se só multiplicássemos .+ daria .+ \([+−]\d+%\)/,
     )
     await expect(incerteza).toContainText('inclui quem namora')
     await tocar(page.locator('#gp-corte-a-corte button'))
-    await expect(page.locator('[data-slot="gp-funil"] li').first()).toContainText(
-      'homens de 18 anos ou mais no Brasil',
-    )
+    await expect(
+      page.locator('[data-slot="gp-funil"] li').first(),
+    ).toContainText('homens de 18 anos ou mais no Brasil')
   })
 
   test('o bloco "Do Guia" traz a resposta curta e leva ao Guia', async ({

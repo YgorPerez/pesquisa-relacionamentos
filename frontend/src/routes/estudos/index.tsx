@@ -4,9 +4,17 @@ import {
   ForcaDaEvidencia,
   LegendaDasFichas,
   StatusDeVerificacao,
+  MetaDaFicha,
 } from '#/ui/selos'
-import { MetaDaFicha } from '#/ui/guia'
-import { Aviso, Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
+import {
+  Aviso,
+  Coluna,
+  Display,
+  Folha,
+  Headline,
+  Lead,
+  Secao,
+} from '#/ui/pagina'
 
 export const Route = createFileRoute('/estudos/')({
   loader: () => listarFichas(),
@@ -77,9 +85,7 @@ function Estudos() {
         </Secao>
 
         <Secao aria-labelledby="como-ler">
-          <Headline id="como-ler">
-            Como ler
-          </Headline>
+          <Headline id="como-ler">Como ler</Headline>
           <LegendaDasFichas />
         </Secao>
       </Coluna>

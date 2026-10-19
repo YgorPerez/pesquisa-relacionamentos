@@ -101,6 +101,14 @@ export default defineConfig({
       // `vite-plus/prefer-vite-plus-imports`: o Vitest e o Vite vêm do Vite+.
       { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },
       './frontend/lint/estado.ts',
+      // As peças do DESIGN.md e os donos delas, a cor que não é token, o
+      // `title` que não abre no toque e o import relativo com `.js` (#54).
+      // `frontend/lint/chave-das-regras.test.ts` confere que cada plugin
+      // daqui tem as regras ligadas.
+      './frontend/lint/coesao.ts',
+      './frontend/lint/cor-do-tema.ts',
+      './frontend/lint/sem-title-nativo.ts',
+      './frontend/lint/sem-import-js.ts',
       // O design system: as classes do Tailwind contra o tema de
       // `frontend/src/ui/tokens.css` e os componentes de `src/ui/shadcn/`,
       // achados pelo `frontend/components.json` (ADR do #54).
@@ -127,6 +135,9 @@ export default defineConfig({
       'react/rule-suppression': 'error',
       'react/syntax': 'error',
       'react/todo': 'error',
+      // O `.js` num import relativo não resolve pelo `node` que roda os
+      // scripts do repo, em lugar nenhum.
+      'modulos/sem-import-js': 'error',
     },
     overrides: [
       {
@@ -160,6 +171,40 @@ export default defineConfig({
             { allow: ['layout'] },
           ],
         },
+      },
+      {
+        // O app: o `title` do HTML não abre no toque, e um pacote de ícones
+        // prontos não entra (os do site são desenhados à mão).
+        files: ['frontend/src/**'],
+        rules: {
+          'html/sem-title-nativo': 'error',
+          'coesao/icone-a-mao': 'error',
+        },
+      },
+      {
+        // O `<h1>` é o `Display`, dono dele.
+        files: ['frontend/src/**'],
+        excludeFiles: ['frontend/src/ui/pagina.tsx'],
+        rules: { 'coesao/h1-do-dono': 'error' },
+      },
+      {
+        // A retícula é das peças de `src/ui/` (o `Painel`, o `Botao`).
+        files: ['frontend/src/**'],
+        excludeFiles: ['frontend/src/ui/**'],
+        rules: { 'coesao/reticula-do-dono': 'error' },
+      },
+      {
+        // A cor escrita à mão. `ui/marca.ts` é a dona das cores fora do CSS;
+        // o teste, a story e a moldura do Storybook não são tela.
+        files: ['frontend/src/**'],
+        excludeFiles: [
+          'frontend/src/ui/marca.ts',
+          'frontend/src/**/*.test.{ts,tsx}',
+          'frontend/src/**/*.stories.tsx',
+          'frontend/src/**/storybook/**',
+          'frontend/src/platform/cn-tabelas.js',
+        ],
+        rules: { 'tema/cor-crua': 'error' },
       },
       {
         // Os diagnósticos do Effect, pelo patch do `@effect/tsgo` (ADR 0004).

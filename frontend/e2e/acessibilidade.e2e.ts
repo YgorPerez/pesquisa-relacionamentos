@@ -105,7 +105,9 @@ test('o Guia com as seções abertas e a Ficha circulada passa no axe', async ({
     waitUntil: 'networkidle',
   })
   for (const resumo of await page
-    .locator('main details:not([open]) > summary, main [data-slot="collapsible-trigger"]:not([data-panel-open])')
+    .locator(
+      'main details:not([open]) > summary, main [data-slot="collapsible-trigger"]:not([data-panel-open])',
+    )
     .all())
     await resumo.click()
   await page
