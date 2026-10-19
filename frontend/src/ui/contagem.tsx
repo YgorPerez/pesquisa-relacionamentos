@@ -3,15 +3,16 @@
 import { Link } from '@tanstack/react-router'
 import { useId, useState } from 'react'
 import { contarEvento, gravarContagem, useEstadoDaContagem } from '#/analytics/contagem'
+import { EVENTOS, MOTIVOS_DO_NAO, type Evento, type MotivoDoNao } from '#/analytics/eventos'
 import { Botao } from './botao'
 
-/** Os quatro motivos do "não", fechados (#21). Sem campo livre. */
-export const MOTIVOS = [
-  { id: 'nao-respondeu', texto: 'Não respondeu minha dúvida' },
-  { id: 'nao-confio', texto: 'Não confio na resposta' },
-  { id: 'dificil', texto: 'Difícil de entender' },
-  { id: 'nao-vale', texto: 'Não vale para mim' },
-] as const
+/** O texto de cada um dos quatro motivos do "não" (#21). Sem campo livre. */
+const TEXTO_DO_MOTIVO: Readonly<Record<MotivoDoNao, string>> = {
+  'nao-respondeu': 'Não respondeu minha dúvida',
+  'nao-confio': 'Não confio na resposta',
+  dificil: 'Difícil de entender',
+  'nao-vale': 'Não vale para mim',
+}
 
 type Passo = 'pergunta' | 'motivo' | 'respondido'
 
@@ -19,7 +20,7 @@ type Passo = 'pergunta' | 'motivo' | 'respondido'
 export function Ajudou({ guia }: { guia: string }) {
   const [passo, setPasso] = useState<Passo>('pergunta')
   const estado = useEstadoDaContagem()
-  const responder = (evento: string) => {
+  const responder = (evento: Evento) => {
     contarEvento(evento)
     setPasso('respondido')
   }
@@ -31,7 +32,7 @@ export function Ajudou({ guia }: { guia: string }) {
       </h2>
       {passo === 'pergunta' && (
         <div className="ajudou-botoes">
-          <Botao variante="leve" onClick={() => responder(`ajudou/sim/${guia}`)}>
+          <Botao variante="leve" onClick={() => responder(EVENTOS.ajudouSim(guia))}>
             Sim
           </Botao>
           <Botao variante="leve" onClick={() => setPasso('motivo')}>
@@ -44,9 +45,9 @@ export function Ajudou({ guia }: { guia: string }) {
           <p id="t-motivo" className="ajudou-pergunta">
             O que faltou?
           </p>
-          {MOTIVOS.map((m) => (
-            <Botao key={m.id} variante="leve" onClick={() => responder(`ajudou/nao/${m.id}/${guia}`)}>
-              {m.texto}
+          {MOTIVOS_DO_NAO.map((motivo) => (
+            <Botao key={motivo} variante="leve" onClick={() => responder(EVENTOS.ajudouNao(motivo, guia))}>
+              {TEXTO_DO_MOTIVO[motivo]}
             </Botao>
           ))}
         </div>

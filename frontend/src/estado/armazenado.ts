@@ -15,7 +15,8 @@ export interface Armazenado<T> {
   readonly assinar: (aviso: () => void) => () => void
 }
 
-const PREFIXO = 'tem-estudo:'
+/** O começo de toda chave do site no localStorage e no sessionStorage. */
+export const PREFIXO = 'tem-estudo:'
 
 function armazenamento(): Storage | null {
   try {

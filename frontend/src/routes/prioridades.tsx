@@ -17,7 +17,7 @@ import { useLinkRecebido } from '#/estado/link'
 import { gravarPerfil, perfilSalvo, usePerfil } from '#/estado/perfil'
 import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
 import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
-import { contarUmaVezPorVisita } from '#/analytics/contagem'
+import { contarUsoDaCalculadora } from '#/analytics/contagem'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import {
   AlertaDoTopo3,
@@ -102,7 +102,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
 
   const mexer = (novo: typeof estado) => {
     gravarPrioridades(novo)
-    contarUmaVezPorVisita('calculadora/prioridades')
+    contarUsoDaCalculadora('prioridades')
   }
   const tocar = (id: string) => mexer({ ...estado, topo3: alternarNoTopo3(topo3, id) })
   const escolherDesfecho = (d: Desfecho) => mexer({ ...estado, desfecho: d })

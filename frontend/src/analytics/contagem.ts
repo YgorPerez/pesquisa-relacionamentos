@@ -8,7 +8,8 @@
 // localStorage e nada do link a lê, então abrir um link não a desfaz.
 import { useEffect, useSyncExternalStore } from 'react'
 import { useRouterState } from '@tanstack/react-router'
-import { armazenado } from '#/estado/armazenado'
+import { armazenado, PREFIXO } from '#/estado/armazenado'
+import { EVENTOS, type CalculadoraContada, type Evento } from './eventos'
 
 const ENDPOINT = 'https://stats.temestudo.com/count'
 
@@ -67,28 +68,33 @@ function mandar(caminho: string, evento: boolean) {
   })
 }
 
-/** Um evento sem valores: `ajudou/sim/<guia>`, `ficha/<guia>/<ficha>`… */
-export const contarEvento = (nome: string) => mandar(nome, true)
+/** Um evento sem valores, de `EVENTOS` (`eventos.ts`). */
+export const contarEvento = (evento: Evento) => mandar(evento, true)
 
 /** O mesmo evento uma vez por visita (a sessão da aba). */
-export function contarUmaVezPorVisita(nome: string) {
-  const chave = `tem-estudo:contou:${nome}`
+function contarUmaVezPorVisita(evento: Evento) {
+  const chave = `${PREFIXO}contou:${evento}`
   try {
     if (sessionStorage.getItem(chave)) return
     sessionStorage.setItem(chave, '1')
   } catch {
     // Sem sessionStorage, conta a cada vez que a página pedir.
   }
-  contarEvento(nome)
+  contarEvento(evento)
 }
 
-/** Conta cada página que o router mostra, pelo caminho sem query. Na raiz. */
+/** O visitante mexeu na calculadora: conta uma vez por visita. */
+export const contarUsoDaCalculadora = (calculadora: CalculadoraContada) =>
+  contarUmaVezPorVisita(EVENTOS.calculadora(calculadora))
+
+/** Conta cada página que o router mostra, pelo caminho sem query. Na raiz.
+ * Só a troca de caminho conta: religar a chave não manda a página em que se
+ * está, e a contagem volta na próxima. */
 export function useContarVisitas() {
   const caminho = useRouterState({ select: (s) => s.resolvedLocation?.pathname })
-  const estado = useEstadoDaContagem()
   useEffect(() => {
-    if (caminho && estado === 'conta') mandar(caminho, false)
-  }, [caminho, estado])
+    if (caminho) mandar(caminho, false)
+  }, [caminho])
 }
 
 /** No Guia: tocar numa Ficha (o título na lista ou um link no texto) conta
@@ -99,7 +105,7 @@ export function useContarFichasAbertas(guia: string) {
     const aoClicar = (evento: MouseEvent) => {
       const link = (evento.target as Element | null)?.closest?.('main a[href^="/estudos/"]')
       const ficha = link?.getAttribute('href')?.match(/^\/estudos\/([a-z0-9-]+)$/)?.[1]
-      if (ficha) contarEvento(`ficha/${guia}/${ficha}`)
+      if (ficha) contarEvento(EVENTOS.fichaAberta(guia, ficha))
     }
     document.addEventListener('click', aoClicar, true)
     return () => document.removeEventListener('click', aoClicar, true)

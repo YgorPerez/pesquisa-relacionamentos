@@ -3,8 +3,15 @@
 // máquina. Eles levam o caminho sem query, a referência, a largura da tela e,
 // nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
 import { expect, test, type Page } from '@playwright/test'
+import { queryDoLink } from '@tem-estudo/regras/link'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
+/** A query de um link de verdade, com o Perfil. */
+const QUERY_COM_PERFIL = queryDoLink({
+  calculadora: 'grupo-possivel',
+  perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
+  requisitos: null,
+})
 const STATS = 'https://stats.temestudo.com/'
 const CAMPOS = ['p', 'r', 's', 'e', 'b', 'rnd']
 
@@ -71,7 +78,7 @@ async function percorrer(page: Page, comPerfil: boolean, envios: Record<string, 
 test.describe('contagem de uso', () => {
   test('cada página conta o caminho sem query, e os eventos saem com o nome certo', async ({ page }) => {
     const { envios } = gravarEnvios(page)
-    await abrir(page, `${GUIA}?v=1&g=h&p=m&i=30`)
+    await abrir(page, `${GUIA}?${QUERY_COM_PERFIL}`)
     await expect.poll(() => envios.length).toBeGreaterThan(0)
     expect(envios[0].p).toBe(GUIA)
     expect(envios[0].e).toBeUndefined()
@@ -165,7 +172,7 @@ test.describe('contagem de uso', () => {
     expect(await page.evaluate(() => localStorage.getItem('tem-estudo:nao-contar'))).toBe('true')
 
     pedidos.length = 0
-    await abrir(page, '/grupo-possivel?v=1&g=h&p=m&i=30&contar=1')
+    await abrir(page, `/grupo-possivel?${QUERY_COM_PERFIL}&contar=1`)
     await abrir(page, GUIA)
     await ajudou(page).getByRole('button', { name: 'Sim' }).click()
     await expect(ajudou(page)).toContainText('não sai do aparelho')
@@ -178,6 +185,10 @@ test.describe('contagem de uso', () => {
     await expect(daPagina).not.toBeChecked()
     await daPagina.check()
     await expect(page.getByRole('contentinfo').getByRole('switch', { name: 'Contar minhas visitas' })).toBeChecked()
+    // Religar não conta a página em que se está; a próxima conta.
+    await page.waitForTimeout(500)
+    expect(pedidos).toEqual([])
+    await page.getByRole('banner').getByRole('link').first().click()
     await expect.poll(() => pedidos.length).toBeGreaterThan(0)
   })
 })
