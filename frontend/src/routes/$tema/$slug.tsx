@@ -8,6 +8,7 @@ import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
 import { usePrioridades } from '#/estado/prioridades'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { CartaoDePrioridades } from '#/ui/prioridades'
+import { Compartilhar } from '#/ui/compartilhar'
 
 export const Route = createFileRoute('/$tema/$slug')({
   loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
@@ -201,6 +202,8 @@ function PaginaDoGuia() {
             </ul>
           </section>
         )}
+
+        <Compartilhar semTitulo frase="O link leva só o endereço do Guia, sem o seu Perfil." />
       </div>
     </main>
   )
