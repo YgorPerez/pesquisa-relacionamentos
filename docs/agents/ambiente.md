@@ -31,7 +31,9 @@ Pare só um PID que você guardou ao subir, ou o dono da porta do seu worktree. 
 | O `dev.ts` que você subiu | `kill <pid do dev.ts>`        | `taskkill /T /F /PID <pid do dev.ts>`     |
 | Quem ocupa a sua porta    | `ss -ltnp 'sport = :<porta>'` | `Get-NetTCPConnection -LocalPort <porta>` |
 
-No `SIGTERM`, o `scripts/dev.ts` para a árvore inteira do filho (o grupo de processos, pelo `matar` de `scripts/matar-arvore.ts`), então no Linux um `kill` simples do PID dele basta. O PID de um comando em segundo plano é o `$!` logo depois de subi-lo.
+No `SIGTERM`, o `scripts/dev.ts` para a árvore inteira do filho (o grupo de processos e cada descendente, pelo `matar` de `scripts/matar-arvore.ts`), então no Linux um `kill` simples do PID dele basta.
+
+Em segundo plano, suba com `node scripts/dev.ts` (ou `node scripts/dev.ts start`, `node scripts/dev.ts storybook`) e guarde o `$!` logo depois. Com `pnpm dev`, o `$!` é o do pnpm, que não repassa o `SIGTERM`: o `kill` dele deixa o dev de pé na porta.
 
 ## Hábitos de shell
 

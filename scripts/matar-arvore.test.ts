@@ -13,10 +13,10 @@ let n = 0
  * (o `; true` impede o shell de virar o neto). O neto grava o PID dele num
  * arquivo, para o teste ver se ele morreu junto. O stdout não serve: sob o
  * `vp run --cache`, a saída do neto não chega pelo pipe. */
-function filho(segundos: number) {
+function filho(segundos: number, prefixo = '') {
   const arquivo = join(PASTA, `neto-${++n}`)
   const f = subirComGrupo(
-    `${JSON.stringify(process.execPath)} -e "require('node:fs').writeFileSync('${arquivo}', String(process.pid)); setTimeout(() => {}, ${segundos * 1000})"; true`,
+    `${prefixo}${JSON.stringify(process.execPath)} -e "require('node:fs').writeFileSync('${arquivo}', String(process.pid)); setTimeout(() => {}, ${segundos * 1000})"; true`,
     { stdio: 'ignore' },
   )
   return Object.assign(f, { arquivo })
@@ -54,6 +54,19 @@ describe('matar', () => {
     await fim(f)
     await expect.poll(() => vivo(neto)).toBe(false)
   })
+
+  // O `vp dev` põe o Vite num grupo de processos dele: o sinal ao grupo do
+  // filho não chega lá, e o PID pai, sim.
+  it.skipIf(process.platform === 'win32')(
+    'para também o neto que abriu um grupo próprio',
+    async () => {
+      const f = filho(60, 'setsid ')
+      const neto = await pidDoNeto(f)
+      matar(f)
+      await fim(f)
+      await expect.poll(() => vivo(neto)).toBe(false)
+    },
+  )
 
   it('não toca num processo que ele não subiu', async () => {
     // Um processo de outra sessão, fora do grupo do filho.

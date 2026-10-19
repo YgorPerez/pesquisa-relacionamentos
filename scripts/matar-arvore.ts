@@ -24,23 +24,51 @@ export function subirComGrupo(comando: string, opcoes: SpawnOptions = {}) {
   })
 }
 
+/** Os PIDs abaixo de `pid`, pelo PID pai de cada processo (`ps`). Pega quem
+ * abriu um grupo próprio, como o Vite que o `vp dev` sobe. */
+function descendentes(pid: number) {
+  const { stdout } = spawnSync('ps', ['-A', '-o', 'pid=,ppid='], {
+    encoding: 'utf8',
+  })
+  const filhos = new Map<number, number[]>()
+  for (const linha of (stdout ?? '').split('\n')) {
+    const [p, pai] = linha.trim().split(/\s+/).map(Number)
+    if (!p || !pai) continue
+    filhos.set(pai, [...(filhos.get(pai) ?? []), p])
+  }
+  const achados: number[] = []
+  const fila = [pid]
+  while (fila.length > 0)
+    for (const p of filhos.get(fila.shift()!) ?? []) {
+      achados.push(p)
+      fila.push(p)
+    }
+  return achados
+}
+
 /** Mata a árvore do filho, e não só ele: com `shell: true` o PID é o do
  * shell, e o trabalho de verdade está embaixo. No Windows é o `taskkill /T`
- * desse PID; no resto, o grupo que o `subirComGrupo` criou. Um filho que já
- * saiu fica: o PID dele pode ser de outro processo agora. */
+ * desse PID; no resto, o grupo que o `subirComGrupo` criou e cada
+ * descendente achado pelo PID pai, que pode ter saído do grupo. Um filho que
+ * já saiu fica: o PID dele pode ser de outro processo agora. */
 export function matar(filho: ChildProcess) {
   const { pid } = filho
   if (pid === undefined || filho.exitCode !== null || filho.signalCode !== null)
     return
-  if (process.platform === 'win32')
+  if (process.platform === 'win32') {
     spawnSync('taskkill', ['/T', '/F', '/PID', String(pid)], {
       stdio: 'ignore',
     })
-  else
+    return
+  }
+  // A lista sai antes do sinal: um processo morto some da árvore, e o neto
+  // dele vai para o init.
+  const abaixo = descendentes(pid)
+  for (const alvo of [-pid, ...abaixo])
     try {
-      process.kill(-pid, 'SIGTERM')
+      process.kill(alvo, 'SIGTERM')
     } catch {
-      // O grupo já tinha acabado.
+      // Já tinha acabado.
     }
 }
 
