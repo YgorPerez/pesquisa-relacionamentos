@@ -2,8 +2,17 @@
 // "Contar minhas visitas" e o rodapé do site, que a leva.
 import { Link } from '@tanstack/react-router'
 import { useId, useState } from 'react'
-import { contarEvento, gravarContagem, useEstadoDaContagem } from '#/analytics/contagem'
-import { EVENTOS, MOTIVOS_DO_NAO, type Evento, type MotivoDoNao } from '#/analytics/eventos'
+import {
+  contarEvento,
+  gravarContagem,
+  useEstadoDaContagem,
+} from '#/analytics/contagem'
+import {
+  EVENTOS,
+  MOTIVOS_DO_NAO,
+  type Evento,
+  type MotivoDoNao,
+} from '#/analytics/eventos'
 import { Botao } from './botao'
 
 /** O texto de cada um dos quatro motivos do "não" (#21). Sem campo livre. */
@@ -32,7 +41,10 @@ export function Ajudou({ guia }: { guia: string }) {
       </h2>
       {passo === 'pergunta' && (
         <div className="ajudou-botoes">
-          <Botao variante="leve" onClick={() => responder(EVENTOS.ajudouSim(guia))}>
+          <Botao
+            variante="leve"
+            onClick={() => responder(EVENTOS.ajudouSim(guia))}
+          >
             Sim
           </Botao>
           <Botao variante="leve" onClick={() => setPasso('motivo')}>
@@ -46,7 +58,11 @@ export function Ajudou({ guia }: { guia: string }) {
             O que faltou?
           </p>
           {MOTIVOS_DO_NAO.map((motivo) => (
-            <Botao key={motivo} variante="leve" onClick={() => responder(EVENTOS.ajudouNao(motivo, guia))}>
+            <Botao
+              key={motivo}
+              variante="leve"
+              onClick={() => responder(EVENTOS.ajudouNao(motivo, guia))}
+            >
               {TEXTO_DO_MOTIVO[motivo]}
             </Botao>
           ))}

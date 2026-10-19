@@ -6,7 +6,9 @@ import { carregarAcervo } from '@tem-estudo/conteudo'
 import { describe, expect, it } from 'vite-plus/test'
 import { vistaDasPrioridades } from './vista-prioridades'
 
-const resultado = carregarAcervo(resolve(import.meta.dirname, '../../e2e/acervo'))
+const resultado = carregarAcervo(
+  resolve(import.meta.dirname, '../../e2e/acervo'),
+)
 if (!resultado.ok) throw new Error('fixture do e2e inválida')
 const { acervo } = resultado
 
@@ -26,18 +28,29 @@ describe('vistaDasPrioridades', () => {
         amostra: 'Casais casados recrutados online.',
       },
     })
-    expect(aparencia?.duracao).toEqual({ degrau: 0, medida: null, texto: 'Nenhum estudo lido mede isso.', ficha: null })
+    expect(aparencia?.duracao).toEqual({
+      degrau: 0,
+      medida: null,
+      texto: 'Nenhum estudo lido mede isso.',
+      ficha: null,
+    })
   })
 
   it('traz a barra da satisfação e o Guia que hospeda a calculadora', () => {
     const vista = vistaDasPrioridades(acervo)
-    expect(vista?.barra).toMatchObject({ relacao: 45, parceiro: 5, semExplicacao: 50, ficha: { slug: 'silva-2020-apps-brasil' } })
+    expect(vista?.barra).toMatchObject({
+      relacao: 45,
+      parceiro: 5,
+      semExplicacao: 50,
+      ficha: { slug: 'silva-2020-apps-brasil' },
+    })
     expect(vista?.doGuia).toEqual({
       tema: 'escolher-parceiro',
       slug: 'que-caracteristicas-preveem',
       pergunta: 'Que características do parceiro preveem uma boa relação?',
       confianca: 'moderada',
-      resposta: 'Como vocês se tratam pesa mais que a lista de qualidades do parceiro.',
+      resposta:
+        'Como vocês se tratam pesa mais que a lista de qualidades do parceiro.',
     })
   })
 

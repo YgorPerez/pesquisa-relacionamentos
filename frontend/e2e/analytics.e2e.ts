@@ -43,8 +43,14 @@ async function abrir(page: Page, caminho: string) {
 
 async function dizerPerfil(page: Page, botao: string) {
   const form = page.getByRole('form', { name: 'Seu Perfil' })
-  await form.getByRole('group', { name: 'Você é' }).getByRole('radio', { name: 'homem', exact: true }).check()
-  await form.getByRole('group', { name: 'Você procura' }).getByRole('radio', { name: 'mulheres', exact: true }).check()
+  await form
+    .getByRole('group', { name: 'Você é' })
+    .getByRole('radio', { name: 'homem', exact: true })
+    .check()
+  await form
+    .getByRole('group', { name: 'Você procura' })
+    .getByRole('radio', { name: 'mulheres', exact: true })
+    .check()
   await form.getByLabel('Sua idade').fill('30')
   await form.getByRole('button', { name: botao }).click()
 }
@@ -53,19 +59,29 @@ const ajudou = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
 
 /** Uma visita inteira: o Guia com "Ajudou?" e uma Ficha aberta dele, e as
  * duas calculadoras mexidas duas vezes cada. */
-async function percorrer(page: Page, comPerfil: boolean, envios: Record<string, string>[]) {
+async function percorrer(
+  page: Page,
+  comPerfil: boolean,
+  envios: Record<string, string>[],
+) {
   await abrir(page, GUIA)
   if (comPerfil) await dizerPerfil(page, 'Ver o que vale para mim')
   await ajudou(page).getByRole('button', { name: 'Não' }).click()
-  await ajudou(page).getByRole('button', { name: 'Difícil de entender' }).click()
+  await ajudou(page)
+    .getByRole('button', { name: 'Difícil de entender' })
+    .click()
   await expect(ajudou(page)).toContainText('Obrigado')
   await page.locator('.fichas-citadas a.ficha-titulo').first().click()
   await expect(page).toHaveURL(/\/estudos\//)
   // A visita da Ficha sai depois da navegação: espere antes de sair dela.
-  await expect.poll(() => envios.some((e) => e.p.startsWith('/estudos/'))).toBe(true)
+  await expect
+    .poll(() => envios.some((e) => e.p.startsWith('/estudos/')))
+    .toBe(true)
 
   await abrir(page, '/grupo-possivel')
-  const fuma = page.locator('#req-fumo').getByRole('checkbox', { name: 'Só quem não fuma' })
+  const fuma = page
+    .locator('#req-fumo')
+    .getByRole('checkbox', { name: 'Só quem não fuma' })
   await fuma.check()
   await fuma.uncheck()
 
@@ -77,7 +93,9 @@ async function percorrer(page: Page, comPerfil: boolean, envios: Record<string, 
 }
 
 test.describe('contagem de uso', () => {
-  test('cada página conta o caminho sem query, e os eventos saem com o nome certo', async ({ page }) => {
+  test('cada página conta o caminho sem query, e os eventos saem com o nome certo', async ({
+    page,
+  }) => {
     const { envios } = gravarEnvios(page)
     await abrir(page, `${GUIA}?${QUERY_COM_PERFIL}`)
     await expect.poll(() => envios.length).toBeGreaterThan(0)
@@ -87,19 +105,27 @@ test.describe('contagem de uso', () => {
 
     await ajudou(page).getByRole('button', { name: 'Sim' }).click()
     await expect(ajudou(page)).toContainText('Obrigado')
-    await expect.poll(() => envios.map((e) => e.p)).toContain('ajudou/sim/onde-os-casais-se-conhecem')
+    await expect
+      .poll(() => envios.map((e) => e.p))
+      .toContain('ajudou/sim/onde-os-casais-se-conhecem')
     const evento = envios.find((e) => e.p.startsWith('ajudou/'))
     expect(evento?.e).toBe('true')
   })
 
-  test('"Ajudou?" no fim do Guia: sim, ou não com um de quatro motivos, sem campo livre', async ({ page }) => {
+  test('"Ajudou?" no fim do Guia: sim, ou não com um de quatro motivos, sem campo livre', async ({
+    page,
+  }) => {
     const { envios } = gravarEnvios(page)
     await abrir(page, GUIA)
     const titulos = await page.locator('main h2').allTextContents()
-    expect(titulos.indexOf('Ajudou?')).toBe(titulos.indexOf('Fichas citadas') + 1)
+    expect(titulos.indexOf('Ajudou?')).toBe(
+      titulos.indexOf('Fichas citadas') + 1,
+    )
 
     await ajudou(page).getByRole('button', { name: 'Não' }).click()
-    const motivos = ajudou(page).getByRole('group', { name: 'O que faltou?' }).getByRole('button')
+    const motivos = ajudou(page)
+      .getByRole('group', { name: 'O que faltou?' })
+      .getByRole('button')
     await expect(motivos).toHaveText([
       'Não respondeu minha dúvida',
       'Não confio na resposta',
@@ -112,10 +138,14 @@ test.describe('contagem de uso', () => {
     await expect(ajudou(page).locator('input, textarea')).toHaveCount(0)
     await motivos.filter({ hasText: 'Não confio na resposta' }).click()
     await expect(ajudou(page)).toContainText('Obrigado')
-    await expect.poll(() => envios.map((e) => e.p)).toContain('ajudou/nao/nao-confio/onde-os-casais-se-conhecem')
+    await expect
+      .poll(() => envios.map((e) => e.p))
+      .toContain('ajudou/nao/nao-confio/onde-os-casais-se-conhecem')
   })
 
-  test('nenhum envio leva campo do Perfil, nem se ele foi preenchido', async ({ browser }) => {
+  test('nenhum envio leva campo do Perfil, nem se ele foi preenchido', async ({
+    browser,
+  }) => {
     const visitas: Record<string, string>[][] = []
     for (const comPerfil of [false, true]) {
       const contexto = await browser.newContext({ ...test.info().project.use })
@@ -145,7 +175,9 @@ test.describe('contagem de uso', () => {
     ['GPC', 'globalPrivacyControl'],
     ['Do Not Track', 'doNotTrack'],
   ] as const) {
-    test(`com ${nome}, o script nem carrega e a chave diz por quê`, async ({ page }) => {
+    test(`com ${nome}, o script nem carrega e a chave diz por quê`, async ({
+      page,
+    }) => {
       await page.addInitScript((sinal) => {
         Object.defineProperty(Navigator.prototype, sinal, {
           get: () => (sinal === 'doNotTrack' ? '1' : true),
@@ -155,37 +187,57 @@ test.describe('contagem de uso', () => {
       await abrir(page, GUIA)
       await ajudou(page).getByRole('button', { name: 'Sim' }).click()
       await abrir(page, '/privacidade')
-      const chave = page.getByRole('main').getByRole('switch', { name: 'Contar minhas visitas' })
+      const chave = page
+        .getByRole('main')
+        .getByRole('switch', { name: 'Contar minhas visitas' })
       await expect(chave).not.toBeChecked()
       await expect(chave).toBeDisabled()
-      await expect(page.getByRole('main')).toContainText('seu navegador pede para não contar')
+      await expect(page.getByRole('main')).toContainText(
+        'seu navegador pede para não contar',
+      )
       expect(pedidos).toEqual([])
     })
   }
 
-  test('a chave do rodapé desliga a contagem, e um link recebido não a religa', async ({ page }) => {
+  test('a chave do rodapé desliga a contagem, e um link recebido não a religa', async ({
+    page,
+  }) => {
     const { pedidos } = gravarEnvios(page)
     await abrir(page, '/')
     await expect.poll(() => pedidos.length).toBeGreaterThan(0)
-    const chave = page.getByRole('contentinfo').getByRole('switch', { name: 'Contar minhas visitas' })
+    const chave = page
+      .getByRole('contentinfo')
+      .getByRole('switch', { name: 'Contar minhas visitas' })
     await expect(chave).toBeChecked()
     await chave.uncheck()
-    expect(await page.evaluate(() => localStorage.getItem('tem-estudo:nao-contar'))).toBe('true')
+    expect(
+      await page.evaluate(() => localStorage.getItem('tem-estudo:nao-contar')),
+    ).toBe('true')
 
     pedidos.length = 0
     await abrir(page, `/grupo-possivel?${QUERY_COM_PERFIL}&contar=1`)
     await abrir(page, GUIA)
     await ajudou(page).getByRole('button', { name: 'Sim' }).click()
     await expect(ajudou(page)).toContainText('não sai do aparelho')
-    await expect(page.getByRole('contentinfo').getByRole('switch', { name: 'Contar minhas visitas' })).not.toBeChecked()
+    await expect(
+      page
+        .getByRole('contentinfo')
+        .getByRole('switch', { name: 'Contar minhas visitas' }),
+    ).not.toBeChecked()
     expect(pedidos).toEqual([])
 
     // A da página de privacidade é a mesma preferência.
     await abrir(page, '/privacidade')
-    const daPagina = page.getByRole('main').getByRole('switch', { name: 'Contar minhas visitas' })
+    const daPagina = page
+      .getByRole('main')
+      .getByRole('switch', { name: 'Contar minhas visitas' })
     await expect(daPagina).not.toBeChecked()
     await daPagina.check()
-    await expect(page.getByRole('contentinfo').getByRole('switch', { name: 'Contar minhas visitas' })).toBeChecked()
+    await expect(
+      page
+        .getByRole('contentinfo')
+        .getByRole('switch', { name: 'Contar minhas visitas' }),
+    ).toBeChecked()
     // Religar não conta a página em que se está; a próxima conta.
     await page.waitForTimeout(500)
     expect(pedidos).toEqual([])
@@ -194,9 +246,13 @@ test.describe('contagem de uso', () => {
   })
 })
 
-test('a página de privacidade diz o que fica no aparelho, no link, no log e no analytics', async ({ page }) => {
+test('a página de privacidade diz o que fica no aparelho, no link, no log e no analytics', async ({
+  page,
+}) => {
   await abrir(page, '/privacidade')
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacidade')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Privacidade',
+  )
   const secoes = await page.locator('main h2').allTextContents()
   expect(secoes).toEqual([
     'O que fica no seu aparelho',
@@ -207,12 +263,13 @@ test('a página de privacidade diz o que fica no aparelho, no link, no log e no 
   ])
   await expect(page.getByRole('main')).toContainText('31 dias')
   // A coleta do GoatCounter não tem sessões (`COLETA_DO_STATS`, `scripts/vps.ts`).
-  await expect(page.getByRole('main')).toContainText('não liga as páginas de uma mesma visita')
+  await expect(page.getByRole('main')).toContainText(
+    'não liga as páginas de uma mesma visita',
+  )
   await expect(page.getByRole('main')).not.toContainText('8 horas')
   await expect(page.getByRole('main')).toContainText('3 dias')
   await expect(page.getByRole('main')).toContainText('14 dias')
-  await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Privacidade' })).toHaveAttribute(
-    'href',
-    '/privacidade',
-  )
+  await expect(
+    page.getByRole('contentinfo').getByRole('link', { name: 'Privacidade' }),
+  ).toHaveAttribute('href', '/privacidade')
 })

@@ -8,7 +8,13 @@ import { CARACTERISTICAS } from './prioridades.exemplo'
 /** Os chips do topo 3 com estado de verdade: tocar dá o próximo número. */
 function Chips({ inicio }: { inicio: ReadonlyArray<string> }) {
   const [topo3, setTopo3] = useState(inicio)
-  return <EscolhaDoTopo3 caracteristicas={CARACTERISTICAS} topo3={topo3} aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))} />
+  return (
+    <EscolhaDoTopo3
+      caracteristicas={CARACTERISTICAS}
+      topo3={topo3}
+      aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))}
+    />
+  )
 }
 
 const meta = {
@@ -34,7 +40,8 @@ export const Cheio: Story = { args: { inicio: ['renda', 'sexo', 'parecido'] } }
 export const TocarENumerar: Story = {
   play: async ({ canvasElement }) => {
     const tela = within(canvasElement)
-    const chip = (nome: string) => tela.getByRole('button', { name: new RegExp(`${nome}$`) })
+    const chip = (nome: string) =>
+      tela.getByRole('button', { name: new RegExp(`${nome}$`) })
     await userEvent.click(chip('Renda'))
     await userEvent.click(chip('Aparência'))
     await expect(chip('Aparência')).toHaveAccessibleName('sua 2ª: Aparência')

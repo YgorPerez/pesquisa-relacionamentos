@@ -52,15 +52,31 @@ function acharFonte(raiz: string, slug: string): string | null {
 
 /** O texto da fonte, de um arquivo de texto ou de um PDF via `pdftotext`. */
 function lerFonte(raiz: string, caminho: string): string {
-  if (/\.html?$/.test(caminho)) return textoDoHtml(readFileSync(join(raiz, caminho), 'utf8'))
-  if (!caminho.endsWith('.pdf')) return readFileSync(join(raiz, caminho), 'utf8')
-  const r = spawnSync('pdftotext', ['-enc', 'UTF-8', join(raiz, caminho), '-'], { encoding: 'utf8' })
+  if (/\.html?$/.test(caminho))
+    return textoDoHtml(readFileSync(join(raiz, caminho), 'utf8'))
+  if (!caminho.endsWith('.pdf'))
+    return readFileSync(join(raiz, caminho), 'utf8')
+  const r = spawnSync(
+    'pdftotext',
+    ['-enc', 'UTF-8', join(raiz, caminho), '-'],
+    { encoding: 'utf8' },
+  )
   if (r.status !== 0)
-    throw new Error(`pdftotext falhou em ${caminho} (instale o poppler-utils): ${(r.stderr || r.error?.message || '').trim()}`)
+    throw new Error(
+      `pdftotext falhou em ${caminho} (instale o poppler-utils): ${(r.stderr || r.error?.message || '').trim()}`,
+    )
   return r.stdout
 }
 
-const ENTIDADES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', shy: '­' }
+const ENTIDADES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  shy: '­',
+}
 
 /** O texto de um snapshot de página: sem script, style e tags, com as entidades lidas. */
 function textoDoHtml(html: string): string {
@@ -68,8 +84,10 @@ function textoDoHtml(html: string): string {
     .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (inteira, nome: string) => {
-      if (nome.startsWith('#x') || nome.startsWith('#X')) return String.fromCodePoint(parseInt(nome.slice(2), 16))
-      if (nome.startsWith('#')) return String.fromCodePoint(Number(nome.slice(1)))
+      if (nome.startsWith('#x') || nome.startsWith('#X'))
+        return String.fromCodePoint(parseInt(nome.slice(2), 16))
+      if (nome.startsWith('#'))
+        return String.fromCodePoint(Number(nome.slice(1)))
       return ENTIDADES[nome.toLowerCase()] ?? inteira
     })
 }
@@ -105,22 +123,32 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
   })
 
   const lida = lerFicha(arquivo, readFileSync(join(raiz, arquivo), 'utf8'))
-  if (!lida.ok) return geral(`a Ficha não passa no build: ${lida.erros.map((e) => e.mensagem).join('; ')}`)
+  if (!lida.ok)
+    return geral(
+      `a Ficha não passa no build: ${lida.erros.map((e) => e.mensagem).join('; ')}`,
+    )
 
   const fonte = opcoes.fonte ?? acharFonte(raiz, slug)
   const extensoes = EXTENSOES.join(',')
-  if (!fonte) return geral(`sem Fonte local: nenhum fontes/${slug}.{${extensoes}} nem fontes/privado/${slug}.{${extensoes}}`)
-  if (!existsSync(join(raiz, fonte))) return geral(`a Fonte local ${fonte} não existe`)
+  if (!fonte)
+    return geral(
+      `sem Fonte local: nenhum fontes/${slug}.{${extensoes}} nem fontes/privado/${slug}.{${extensoes}}`,
+    )
+  if (!existsSync(join(raiz, fonte)))
+    return geral(`a Fonte local ${fonte} não existe`)
   const texto = normalizar(lerFonte(raiz, fonte))
-  if (lida.ficha.achados.length === 0) return { ...geral('a tabela de Achados está vazia'), fonte }
+  if (lida.ficha.achados.length === 0)
+    return { ...geral('a tabela de Achados está vazia'), fonte }
 
   let conferidas = 0
   lida.ficha.achados.forEach((achado, i) => {
     const antes = falhas.length
-    const falha = (motivo: string) => falhas.push({ linha: i + 1, medida: achado.medida, motivo })
+    const falha = (motivo: string) =>
+      falhas.push({ linha: i + 1, medida: achado.medida, motivo })
     const trecho = achado.trecho ? limparTrecho(achado.trecho) : ''
     if (!trecho) falha('sem Trecho')
-    else if (!texto.includes(normalizar(trecho))) falha(`o Trecho não está na fonte: "${trecho}"`)
+    else if (!texto.includes(normalizar(trecho)))
+      falha(`o Trecho não está na fonte: "${trecho}"`)
     if (achado.calculo) {
       // Um número calculado não está no Trecho; o Trecho traz os insumos e o
       // Cálculo tem de devolver o Valor.
@@ -128,14 +156,19 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
       if (!saida.ok) falha(saida.motivo)
       else {
         const doCalculo = numeros(saida.texto)
-        const faltam = numeros(achado.valor).filter((n) => !doCalculo.some((c) => mesmoNumero(n, c)))
+        const faltam = numeros(achado.valor).filter(
+          (n) => !doCalculo.some((c) => mesmoNumero(n, c)),
+        )
         if (faltam.length > 0)
-          falha(`o Cálculo deu "${saida.texto}", que não reproduz ${faltam.map((n) => n.bruto).join(', ')}`)
+          falha(
+            `o Cálculo deu "${saida.texto}", que não reproduz ${faltam.map((n) => n.bruto).join(', ')}`,
+          )
       }
     } else if (trecho) {
       const noTrecho = numeros(trecho)
       for (const n of numeros(achado.valor)) {
-        if (!noTrecho.some((t) => mesmoNumero(n, t))) falha(`o número ${n.bruto} não aparece no Trecho`)
+        if (!noTrecho.some((t) => mesmoNumero(n, t)))
+          falha(`o número ${n.bruto} não aparece no Trecho`)
       }
     }
     if (falhas.length === antes) conferidas++
@@ -152,7 +185,9 @@ const INTERPRETES: Record<string, string> = {
   sh: 'bash',
 }
 
-type Saida = { readonly ok: true; readonly texto: string } | { readonly ok: false; readonly motivo: string }
+type Saida =
+  | { readonly ok: true; readonly texto: string }
+  | { readonly ok: false; readonly motivo: string }
 
 /**
  * Roda a célula Cálculo: o caminho de um script do repositório, relativo à
@@ -164,12 +199,27 @@ function rodarCalculo(raiz: string, celula: string): Saida {
   const ext = script.replace(/^.*\./, '')
   const interprete = INTERPRETES[ext]
   if (script.startsWith('/') || script.split('/').includes('..'))
-    return { ok: false, motivo: `o Cálculo precisa ser um caminho dentro do repositório: ${script}` }
-  if (!existsSync(join(raiz, script))) return { ok: false, motivo: `o script do Cálculo não existe: ${script}` }
-  if (!interprete) return { ok: false, motivo: `não sei rodar .${ext}; use ${Object.keys(INTERPRETES).join(', ')}` }
-  const r = spawnSync(interprete, [script, ...args], { cwd: raiz, encoding: 'utf8', timeout: 60_000 })
+    return {
+      ok: false,
+      motivo: `o Cálculo precisa ser um caminho dentro do repositório: ${script}`,
+    }
+  if (!existsSync(join(raiz, script)))
+    return { ok: false, motivo: `o script do Cálculo não existe: ${script}` }
+  if (!interprete)
+    return {
+      ok: false,
+      motivo: `não sei rodar .${ext}; use ${Object.keys(INTERPRETES).join(', ')}`,
+    }
+  const r = spawnSync(interprete, [script, ...args], {
+    cwd: raiz,
+    encoding: 'utf8',
+    timeout: 60_000,
+  })
   if (r.status !== 0)
-    return { ok: false, motivo: `o Cálculo ${script} falhou: ${(r.stderr || r.error?.message || '').trim()}` }
+    return {
+      ok: false,
+      motivo: `o Cálculo ${script} falhou: ${(r.stderr || r.error?.message || '').trim()}`,
+    }
   return { ok: true, texto: r.stdout.trim() }
 }
 
@@ -186,10 +236,12 @@ interface Numero {
  * cada número guarda todas as leituras que a escrita permite.
  */
 export function numeros(texto: string): Numero[] {
-  return [...texto.matchAll(/(?<![\d.,])(?:\d+(?:[.,]\d+)*|[.,]\d+)/g)].map(([bruto]) => ({
-    bruto,
-    leituras: leituras(bruto),
-  }))
+  return [...texto.matchAll(/(?<![\d.,])(?:\d+(?:[.,]\d+)*|[.,]\d+)/g)].map(
+    ([bruto]) => ({
+      bruto,
+      leituras: leituras(bruto),
+    }),
+  )
 }
 
 function leituras(bruto: string): number[] {
@@ -207,7 +259,9 @@ function leituras(bruto: string): number[] {
   // separador diferente no fim, o último é o decimal ("1,204.5", "1.204,5").
   if (new Set(seps).size === 1) return milhar ? [Number(partes.join(''))] : []
   const ultimo = partes.pop() ?? ''
-  return partes.slice(1).every((p) => p.length === 3) ? [Number(`${partes.join('')}.${ultimo}`)] : []
+  return partes.slice(1).every((p) => p.length === 3)
+    ? [Number(`${partes.join('')}.${ultimo}`)]
+    : []
 }
 
 function mesmoNumero(a: Numero, b: Numero): boolean {
@@ -219,10 +273,14 @@ export interface Ambiente {
   readonly escrever: (linha: string) => void
 }
 
-const USO = 'uso: node scripts/conferir-ficha.ts estudos/<slug>.md [mais Fichas] [--fonte <caminho>]'
+const USO =
+  'uso: node scripts/conferir-ficha.ts estudos/<slug>.md [mais Fichas] [--fonte <caminho>]'
 
 /** A linha de comando: devolve o código de saída, 1 em qualquer falha. */
-export function main(argv: ReadonlyArray<string>, { raiz, escrever }: Ambiente): number {
+export function main(
+  argv: ReadonlyArray<string>,
+  { raiz, escrever }: Ambiente,
+): number {
   const fichas: string[] = []
   let fonte: string | undefined
   for (let i = 0; i < argv.length; i++) {
@@ -242,7 +300,9 @@ export function main(argv: ReadonlyArray<string>, { raiz, escrever }: Ambiente):
   let falhou = false
   for (const ficha of fichas) {
     const r = conferirFicha(ficha, { raiz, ...(fonte ? { fonte } : {}) })
-    const comFalha = new Set(r.falhas.flatMap((f) => (f.linha === null ? [] : [f.linha]))).size
+    const comFalha = new Set(
+      r.falhas.flatMap((f) => (f.linha === null ? [] : [f.linha])),
+    ).size
     const resumo = `${r.conferidas} de ${r.conferidas + comFalha} linhas conferidas`
     const onde = r.fonte ? ` (${r.fonte})` : ''
     if (r.falhas.length === 0) {
@@ -252,13 +312,20 @@ export function main(argv: ReadonlyArray<string>, { raiz, escrever }: Ambiente):
     falhou = true
     escrever(`FALHA ${ficha}${onde}: ${resumo}`)
     for (const f of r.falhas)
-      escrever(f.linha === null ? `  ${f.motivo}` : `  linha ${f.linha} (${f.medida}): ${f.motivo}`)
+      escrever(
+        f.linha === null
+          ? `  ${f.motivo}`
+          : `  linha ${f.linha} (${f.medida}): ${f.motivo}`,
+      )
   }
   return falhou ? 1 : 0
 }
 
 if (import.meta.main) {
-  process.exitCode = main(process.argv.slice(2), { raiz: process.cwd(), escrever: (l) => console.log(l) })
+  process.exitCode = main(process.argv.slice(2), {
+    raiz: process.cwd(),
+    escrever: (l) => console.log(l),
+  })
 }
 
 /** Tira as aspas de fora e a ênfase markdown que a célula da tabela pode ter. */

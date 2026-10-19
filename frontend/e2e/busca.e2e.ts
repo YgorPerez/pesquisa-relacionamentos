@@ -8,11 +8,15 @@ const SITE = 'https://temestudo.com'
 const GUIA = '/onde-conhecer-pessoas/app-ou-presencial'
 
 test.describe('sitemap e robots', () => {
-  test('o sitemap lista as páginas indexadas e deixa a Ficha ⬜ de fora', async ({ request }) => {
+  test('o sitemap lista as páginas indexadas e deixa a Ficha ⬜ de fora', async ({
+    request,
+  }) => {
     const resposta = await request.get('/sitemap.xml')
     expect(resposta.status()).toBe(200)
     expect(resposta.headers()['content-type']).toContain('xml')
-    const locs = [...(await resposta.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
+    const locs = [
+      ...(await resposta.text()).matchAll(/<loc>([^<]+)<\/loc>/g),
+    ].map((m) => m[1])
     expect(locs).toEqual([
       `${SITE}/`,
       `${SITE}/escolher-parceiro`,
@@ -38,17 +42,30 @@ test.describe('sitemap e robots', () => {
 })
 
 test.describe('canonical e noindex', () => {
-  test('a página sem query é indexada, com canonical para ela mesma', async ({ page }) => {
+  test('a página sem query é indexada, com canonical para ela mesma', async ({
+    page,
+  }) => {
     await page.goto(GUIA)
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE}${GUIA}`)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${SITE}${GUIA}`,
+    )
     await expect(page.locator('meta[name="robots"]')).toHaveCount(0)
   })
 
-  test('a URL com query de estado leva noindex e canonical sem a query', async ({ page }) => {
+  test('a URL com query de estado leva noindex e canonical sem a query', async ({
+    page,
+  }) => {
     await page.goto(`${GUIA}?g=mulher&p=homens&i=30`)
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex')
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'noindex',
+    )
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1)
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE}${GUIA}`)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      `${SITE}${GUIA}`,
+    )
   })
 
   test('o noindex da query já vem no HTML do servidor', async ({ request }) => {
@@ -59,17 +76,31 @@ test.describe('canonical e noindex', () => {
 
   test('a Ficha ⬜ leva noindex', async ({ page }) => {
     await page.goto('/estudos/lima-2015-encontros')
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex')
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'noindex',
+    )
   })
 })
 
 test.describe('Open Graph', () => {
-  test('o Guia leva o título e a descrição de busca e a imagem fixa do site', async ({ page, request }) => {
+  test('o Guia leva o título e a descrição de busca e a imagem fixa do site', async ({
+    page,
+    request,
+  }) => {
     await page.goto(GUIA)
-    const og = (propriedade: string) => page.locator(`meta[property="og:${propriedade}"]`)
-    await expect(og('title')).toHaveAttribute('content', 'App ou presencial, onde tenho mais chance?')
-    const descricao = await page.locator('meta[name="description"]').getAttribute('content')
-    expect(descricao).toBe('Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena.')
+    const og = (propriedade: string) =>
+      page.locator(`meta[property="og:${propriedade}"]`)
+    await expect(og('title')).toHaveAttribute(
+      'content',
+      'App ou presencial, onde tenho mais chance?',
+    )
+    const descricao = await page
+      .locator('meta[name="description"]')
+      .getAttribute('content')
+    expect(descricao).toBe(
+      'Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena.',
+    )
     await expect(og('description')).toHaveAttribute('content', descricao!)
     await expect(og('url')).toHaveAttribute('content', `${SITE}${GUIA}`)
     await expect(og('image')).toHaveAttribute('content', `${SITE}/og.png`)
@@ -83,28 +114,40 @@ test.describe('Open Graph', () => {
 test.describe('301', () => {
   const semSeguir = { maxRedirects: 0 }
 
-  test('caminho com barra final vai para o sem barra, com a query', async ({ request }) => {
+  test('caminho com barra final vai para o sem barra, com a query', async ({
+    request,
+  }) => {
     const resposta = await request.get('/estudos/?v=1', semSeguir)
     expect(resposta.status()).toBe(301)
     expect(resposta.headers().location).toBe('/estudos?v=1')
   })
 
-  test('o `antes` da Ficha e do Guia leva ao caminho de hoje', async ({ request }) => {
+  test('o `antes` da Ficha e do Guia leva ao caminho de hoje', async ({
+    request,
+  }) => {
     const ficha = await request.get('/estudos/silva-2020', semSeguir)
     expect(ficha.status()).toBe(301)
     expect(ficha.headers().location).toBe('/estudos/silva-2020-apps-brasil')
 
-    const guia = await request.get('/onde-conhecer-pessoas/app-ou-bar?g=mulher', semSeguir)
+    const guia = await request.get(
+      '/onde-conhecer-pessoas/app-ou-bar?g=mulher',
+      semSeguir,
+    )
     expect(guia.status()).toBe(301)
     expect(guia.headers().location).toBe(`${GUIA}?g=mulher`)
 
-    const deOutroTema = await request.get('/escolher-parceiro/onde-procurar', semSeguir)
+    const deOutroTema = await request.get(
+      '/escolher-parceiro/onde-procurar',
+      semSeguir,
+    )
     expect(deOutroTema.headers().location).toBe(GUIA)
   })
 
   test('o navegador chega à página nova', async ({ page }) => {
     await page.goto('/onde-conhecer-pessoas/app-ou-bar/')
     await expect(page).toHaveURL(GUIA)
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('App ou presencial')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(
+      'App ou presencial',
+    )
   })
 })

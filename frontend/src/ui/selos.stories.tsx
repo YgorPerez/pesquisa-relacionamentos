@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ForcaDaEvidencia, LegendaDasFichas, StatusDeVerificacao } from './selos'
+import {
+  ForcaDaEvidencia,
+  LegendaDasFichas,
+  StatusDeVerificacao,
+} from './selos'
 
 const meta = {
   component: LegendaDasFichas,

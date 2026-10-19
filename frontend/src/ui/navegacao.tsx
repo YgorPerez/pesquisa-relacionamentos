@@ -48,10 +48,12 @@ export function useReferencias(pagina: string) {
   useEffect(() => {
     const tocar = (evento: MouseEvent) => {
       if (evento.defaultPrevented || evento.button !== 0) return
-      if (evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) return
+      if (evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey)
+        return
       const ref = (evento.target as Element | null)?.closest?.('main a.ref')
       const href = ref?.getAttribute('href')
-      if (!(ref instanceof HTMLElement) || !href?.startsWith(PREFIXO_DA_ANCORA)) return
+      if (!(ref instanceof HTMLElement) || !href?.startsWith(PREFIXO_DA_ANCORA))
+        return
       evento.preventDefault()
       origem.current = ref
       const slug = href.slice(PREFIXO_DA_ANCORA.length)
@@ -97,7 +99,13 @@ export function LacoDaFicha() {
       <svg ref={svg} className="laco" aria-hidden="true">
         <path pathLength={1} />
       </svg>
-      <svg className="seta-laco" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+      <svg
+        className="seta-laco"
+        width="34"
+        height="34"
+        viewBox="0 0 34 34"
+        aria-hidden="true"
+      >
         <path pathLength={1} d="M3 3c4 12 10 20 22 26M25 29l-9 1M25 29l-2-9" />
       </svg>
     </>
@@ -105,23 +113,42 @@ export function LacoDaFicha() {
 }
 
 function salvarPonto() {
-  const abertas = [...document.querySelectorAll('main details[open][id]')].map((d) => d.id)
-  window.history.replaceState({ ...window.history.state, ponto: { scroll: scrollY, abertas } }, '')
+  const abertas = [...document.querySelectorAll('main details[open][id]')].map(
+    (d) => d.id,
+  )
+  window.history.replaceState(
+    { ...window.history.state, ponto: { scroll: scrollY, abertas } },
+    '',
+  )
 }
 
 /** Guarda na entrada do histórico a rolagem e as seções abertas antes de
  * sair da página, e as devolve quando o leitor volta a ela. */
 export function usePontoNoHistorico() {
   // A entrada já carregada e desenhada, não a que está carregando.
-  const entrada = useRouterState({ select: (s) => s.resolvedLocation?.state.__TSR_key })
+  const entrada = useRouterState({
+    select: (s) => s.resolvedLocation?.state.__TSR_key,
+  })
 
   useEffect(() => {
     const sair = (evento: MouseEvent) => {
-      if (evento.button !== 0 || evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) return
+      if (
+        evento.button !== 0 ||
+        evento.metaKey ||
+        evento.ctrlKey ||
+        evento.shiftKey ||
+        evento.altKey
+      )
+        return
       const link = (evento.target as Element | null)?.closest?.('a[href]')
-      if (!(link instanceof HTMLAnchorElement) || link.target === '_blank') return
+      if (!(link instanceof HTMLAnchorElement) || link.target === '_blank')
+        return
       const destino = new URL(link.href)
-      if (destino.origin !== location.origin || destino.pathname === location.pathname) return
+      if (
+        destino.origin !== location.origin ||
+        destino.pathname === location.pathname
+      )
+        return
       salvarPonto()
     }
     // Na captura: antes de o router empilhar a página nova.
@@ -133,7 +160,9 @@ export function usePontoNoHistorico() {
     // Só a entrada que o router já desenhou: a barra pode estar numa que
     // ainda carrega.
     if (window.history.state?.__TSR_key !== entrada) return
-    const ponto = window.history.state?.ponto as { scroll: number; abertas: string[] } | undefined
+    const ponto = window.history.state?.ponto as
+      | { scroll: number; abertas: string[] }
+      | undefined
     if (!ponto) return
     for (const id of ponto.abertas) {
       const secao = document.getElementById(id)
@@ -148,7 +177,17 @@ export function usePontoNoHistorico() {
 }
 
 const SetaVoltar = () => (
-  <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    width="22"
+    height="14"
+    viewBox="0 0 22 14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
   </svg>
 )
@@ -163,7 +202,11 @@ export function VoltarParaGuia() {
   const de = useRouterState({ select: (s) => s.location.state.de })
   // O servidor não conhece o histórico: o botão só aparece depois da hidratação.
   // A hidratação lê o `false` do servidor, e o render seguinte o `true`.
-  const noNavegador = useSyncExternalStore(semAvisos, () => true, () => false)
+  const noNavegador = useSyncExternalStore(
+    semAvisos,
+    () => true,
+    () => false,
+  )
   if (!noNavegador || !de) return null
 
   return (

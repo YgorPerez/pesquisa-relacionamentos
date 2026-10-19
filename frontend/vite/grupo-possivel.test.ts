@@ -1,28 +1,42 @@
 // Os dados de verdade (`dados/grupo-possivel/`) pelos pacotes que o navegador
 // baixa, contra o caso conferido à mão no #36.
 import { resolve } from 'node:path'
-import { abrirPacote, type LugarDoPacote } from '@tem-estudo/regras/grupo-possivel-dados'
+import {
+  abrirPacote,
+  type LugarDoPacote,
+} from '@tem-estudo/regras/grupo-possivel-dados'
 import { estimarGrupo } from '@tem-estudo/regras/grupo-possivel'
 import { formatarQuantidade } from '@tem-estudo/regras/numeros'
-import { REQUISITOS_PADRAO, type Requisitos } from '@tem-estudo/regras/requisitos'
+import {
+  REQUISITOS_PADRAO,
+  type Requisitos,
+} from '@tem-estudo/regras/requisitos'
 import { describe, expect, it } from 'vite-plus/test'
 import { montarPacotes } from './grupo-possivel.ts'
 
-const montados = montarPacotes(resolve(import.meta.dirname, '../../dados/grupo-possivel'))
-const abrir = (lugar: LugarDoPacote) => abrirPacote(JSON.parse(montados.pacotes.get(lugar)!))
+const montados = montarPacotes(
+  resolve(import.meta.dirname, '../../dados/grupo-possivel'),
+)
+const abrir = (lugar: LugarDoPacote) =>
+  abrirPacote(JSON.parse(montados.pacotes.get(lugar)!))
 const brasil = abrir('BR')
 const sp = abrir('SP')
 
 const mulheresDe25a29 = (lugar: Requisitos['lugar']) =>
   estimarGrupo(
-    { perfil: { procura: 'mulheres' }, requisitos: { ...REQUISITOS_PADRAO, idade: { min: 25, max: 29 }, lugar } },
+    {
+      perfil: { procura: 'mulheres' },
+      requisitos: { ...REQUISITOS_PADRAO, idade: { min: 25, max: 29 }, lugar },
+    },
     { brasil, uf: sp },
   )
 
 describe('os pacotes do Grupo possível', () => {
   it('um do Brasil e um por UF, cada um bem menor que o CSV', () => {
     expect(montados.pacotes.size).toBe(28)
-    const maior = Math.max(...[...montados.pacotes.values()].map((t) => t.length))
+    const maior = Math.max(
+      ...[...montados.pacotes.values()].map((t) => t.length),
+    )
     expect(maior).toBeLessThan(4_000_000)
   })
 

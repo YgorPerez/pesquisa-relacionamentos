@@ -8,7 +8,11 @@ const PALAVRA_DO_STATUS: Record<Status, string> = {
   'nao-verificado': 'não verificado',
 }
 
-const DEGRAUS_DA_FORCA: Record<Forca, number> = { fraca: 1, moderada: 2, forte: 3 }
+const DEGRAUS_DA_FORCA: Record<Forca, number> = {
+  fraca: 1,
+  moderada: 2,
+  forte: 3,
+}
 
 /** Caixa com visto (lido), caixa hachurada (parcial), caixa vazia (não verificado). */
 function IconeDoStatus({ status }: { status: Status }) {
@@ -27,10 +31,17 @@ function IconeDoStatus({ status }: { status: Status }) {
     >
       <path d="M3 3.5h14v13H3z" transform="rotate(-1 10 10)" />
       {status === 'ok' && (
-        <path d="M6 10.5l3 3 6-8" stroke="var(--cor-agua-tinta)" strokeWidth="2.4" />
+        <path
+          d="M6 10.5l3 3 6-8"
+          stroke="var(--cor-agua-tinta)"
+          strokeWidth="2.4"
+        />
       )}
       {status === 'parcial' && (
-        <path d="M4.5 16L16 4.5M4 10.5L10.5 4M9.5 16L16 9.5" strokeWidth="1.4" />
+        <path
+          d="M4.5 16L16 4.5M4 10.5L10.5 4M9.5 16L16 9.5"
+          strokeWidth="1.4"
+        />
       )}
     </svg>
   )
@@ -52,12 +63,24 @@ const DEGRAUS = [
 ]
 
 /** Os três degraus desenhados à mão, cheios conforme o nível. */
-export function Degraus({ nivel, largura = 36 }: { nivel: Forca; largura?: number }) {
+export function Degraus({
+  nivel,
+  largura = 36,
+}: {
+  nivel: Forca
+  largura?: number
+}) {
   return <DegrausCheios cheios={DEGRAUS_DA_FORCA[nivel]} largura={largura} />
 }
 
 /** Os mesmos degraus com 1 a 3 cheios: o peso que a evidência dá em Prioridades. */
-export function DegrausCheios({ cheios, largura = 36 }: { cheios: number; largura?: number }) {
+export function DegrausCheios({
+  cheios,
+  largura = 36,
+}: {
+  cheios: number
+  largura?: number
+}) {
   return (
     <svg
       className="degraus"
@@ -77,7 +100,13 @@ export function DegrausCheios({ cheios, largura = 36 }: { cheios: number; largur
   )
 }
 
-export function ForcaDaEvidencia({ forca, rotulo = false }: { forca: Forca; rotulo?: boolean }) {
+export function ForcaDaEvidencia({
+  forca,
+  rotulo = false,
+}: {
+  forca: Forca
+  rotulo?: boolean
+}) {
   return (
     <span className="selo-meta" data-forca={forca}>
       <Degraus nivel={forca} />
@@ -100,7 +129,9 @@ export function LegendaDasFichas() {
         <dt>
           <StatusDeVerificacao status="parcial" />
         </dt>
-        <dd>conferido no resumo ou na página oficial, não no texto completo.</dd>
+        <dd>
+          conferido no resumo ou na página oficial, não no texto completo.
+        </dd>
       </div>
       <div>
         <dt>
@@ -118,13 +149,19 @@ export function LegendaDasFichas() {
         <dt>
           <ForcaDaEvidencia forca="moderada" />
         </dt>
-        <dd>bom desenho, mas uma amostra só, um retrato num momento ou um viés conhecido.</dd>
+        <dd>
+          bom desenho, mas uma amostra só, um retrato num momento ou um viés
+          conhecido.
+        </dd>
       </div>
       <div>
         <dt>
           <ForcaDaEvidencia forca="fraca" />
         </dt>
-        <dd>amostra pequena, não representativa, comercial ou com conflito de interesse.</dd>
+        <dd>
+          amostra pequena, não representativa, comercial ou com conflito de
+          interesse.
+        </dd>
       </div>
     </dl>
   )

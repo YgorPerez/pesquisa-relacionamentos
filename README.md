@@ -6,13 +6,13 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 
 ## Estrutura
 
-| Pasta/arquivo | O que tem |
-|---|---|
-| [`estudos/`](estudos/) | Uma ficha por estudo ou fonte: o que mediu, números principais, limitações e status de verificação |
-| [`relatorios/`](relatorios/) | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo |
-| [`dicas/`](dicas/) | Conclusões práticas, cada uma ligada aos estudos que a sustentam |
-| [`fontes/`](fontes/) | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `fontes/privado/`, que fica fora do git |
-| [`docs/deploy.md`](docs/deploy.md) | Como o site vai ao ar em temestudo.com e como voltar à versão anterior |
+| Pasta/arquivo                      | O que tem                                                                                                                                       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`estudos/`](estudos/)             | Uma ficha por estudo ou fonte: o que mediu, números principais, limitações e status de verificação                                              |
+| [`relatorios/`](relatorios/)       | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo                                          |
+| [`dicas/`](dicas/)                 | Conclusões práticas, cada uma ligada aos estudos que a sustentam                                                                                |
+| [`fontes/`](fontes/)               | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `fontes/privado/`, que fica fora do git |
+| [`docs/deploy.md`](docs/deploy.md) | Como o site vai ao ar em temestudo.com e como voltar à versão anterior                                                                          |
 
 O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https://github.com/YgorPerez/pesquisa-relacionamentos/issues?q=is%3Aissue+is%3Aopen+label%3Aacervo). O passo a passo para trabalhar uma delas está na skill [`acervo`](.claude/skills/acervo/SKILL.md).
 
@@ -39,6 +39,7 @@ Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos
 Desde a migração para frontmatter (#26), as fichas antigas estão `nao-verificado` até serem refeitas com Fonte local e trecho conferido (#6). O Status delas abaixo é o de antes da migração e fica guardado no comentário `# Antes da migração` de cada ficha. As duas do IBGE que sustentam o Grupo possível (#36) já foram feitas pelo processo novo.
 
 ### Como os casais se conhecem
+
 - [Rosenfeld, Thomas & Hausen 2019](estudos/rosenfeld-2019-disintermediating-friends.md): online virou o canal mais comum nos EUA (39% em 2017) · ✅ · forte
 - [Pew Research 2023 e 2020](estudos/pew-2023-2020-online-dating.md): 10% dos adultos com parceiro o conheceram online (20% < 30 anos); homens recebem poucas mensagens · ✅ · forte
 - [Mobile Time/Opinion Box 2025](estudos/mobiletime-2025-apps-relacionamento-brasil.md): 29% dos brasileiros de 16–29 já tiveram encontro por app · ✅ · moderada
@@ -47,6 +48,7 @@ Desde a migração para frontmatter (#26), as fichas antigas estão `nao-verific
 - [Lampard 2020](estudos/lampard-2020-natsal-reino-unido.md): Grã-Bretanha: 10,9% online em 2008–2012; amigos/família seguem na frente · ✅ · forte
 
 ### Qualidade e duração
+
 - [Rosenfeld 2017](estudos/rosenfeld-2017-marriage-choice-couplehood.md): como se conheceram não prevê término; online casa mais rápido · ✅ · forte
 - [Cacioppo et al. 2013](estudos/cacioppo-2013-satisfacao-por-local.md): satisfação por local onde se conheceram · ✅ · moderada (financiado pela eHarmony)
 - [Kowal et al. 2025](estudos/kowal-2025-50-paises.md): online ligado a satisfação um pouco menor em 50 países · ✅ · moderada
@@ -56,11 +58,13 @@ Desde a migração para frontmatter (#26), as fichas antigas estão `nao-verific
 - [Haack & Falcke 2017](estudos/haack-2017-relacionamentos-mediados-internet.md): Brasil: relações mantidas pela internet vs. presenciais · ✅ · fraca
 
 ### Dinâmica dos apps
+
 - [Bruch & Newman 2018](estudos/bruch-2018-aspirational-pursuit.md): as pessoas miram ~25% "acima"; resposta cai com a distância · ✅ · moderada
 - [Tyson et al. 2016](estudos/tyson-2016-tinder.md): 0,6% de match para perfis masculinos de teste · ✅ · fraca
 - [Start.io (estimativa)](estudos/startio-tinder-brasil-genero.md): ~71% de homens no Tinder Brasil · 🟡 · fraca
 
 ### Características do parceiro
+
 - [Joel et al. 2020](estudos/joel-2020-machine-learning-43-datasets.md): em 11.196 casais, percepções da relação explicam 45% da satisfação; traços do parceiro, 5% · ✅ · forte
 - [Malouff et al. 2010](estudos/malouff-2010-personalidade-parceiro.md): neuroticismo baixo, amabilidade, conscienciosidade e extroversão do parceiro se associam à satisfação · 🟡 · forte
 - [Dyrenforth et al. 2010](estudos/dyrenforth-2010-personalidade-similaridade.md): personalidade do parceiro explica 1–3%; similaridade, < 0,5% · 🟡 · forte
@@ -76,6 +80,7 @@ Desde a migração para frontmatter (#26), as fichas antigas estão `nao-verific
 - [Killewald et al. 2023](estudos/killewald-2023-riqueza-divorcio.md): patrimônio do casal reduz divórcio, sobretudo saindo do zero · 🟡 · moderada
 
 ### Brasil: dados oficiais
+
 - [IBGE Registro Civil 2024](estudos/ibge-2024-registro-civil.md): idade ao casar, divórcios, duração · ✅ · forte
 - [IBGE Censo 2022, microdados da amostra](estudos/ibge-2022-censo-amostra.md): base do Grupo possível; o arquivo público vai só até a UF e traz a idade em grupos de 5 anos · ✅ · forte
 - [IBGE PNS 2019](estudos/ibge-2019-pns.md): orientação sexual dos adultos (1,4% dos homens e 0,9% das mulheres homossexuais), altura e tabaco · ✅ · moderada

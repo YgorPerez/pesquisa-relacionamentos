@@ -38,8 +38,10 @@ export interface AchadoDoGuia {
   readonly recorte: boolean
 }
 
-export interface Guia
-  extends Omit<FrontmatterGuia, 'achados' | 'dicas' | 'mitos' | 'relacionadas'> {
+export interface Guia extends Omit<
+  FrontmatterGuia,
+  'achados' | 'dicas' | 'mitos' | 'relacionadas'
+> {
   readonly slug: string
   /** O slug do Tema, a pasta do arquivo. */
   readonly tema: string
@@ -80,7 +82,11 @@ export const SECOES_DO_GUIA = {
   limitacoes: 'Limitações',
 } as const
 
-type Lido<T> = { readonly valor: T | null; readonly corpo: string; readonly erros: Problema[] }
+type Lido<T> = {
+  readonly valor: T | null
+  readonly corpo: string
+  readonly erros: Problema[]
+}
 
 function lerFrontmatter<S extends Schema.Decoder<unknown>>(
   esquema: S,
@@ -97,15 +103,22 @@ function lerFrontmatter<S extends Schema.Decoder<unknown>>(
   try {
     dados = lerYaml(frontmatter) ?? {}
   } catch (e) {
-    erros.push(problema(arquivo, `o frontmatter não é YAML válido: ${(e as Error).message}`))
+    erros.push(
+      problema(
+        arquivo,
+        `o frontmatter não é YAML válido: ${(e as Error).message}`,
+      ),
+    )
     return { valor: null, corpo, erros }
   }
   const decodificado = decodificar(esquema, dados, arquivo)
-  if (!decodificado.ok) return { valor: null, corpo, erros: [...decodificado.problemas] }
+  if (!decodificado.ok)
+    return { valor: null, corpo, erros: [...decodificado.problemas] }
   return { valor: decodificado.valor, corpo, erros }
 }
 
-const nomeSemMd = (arquivo: string) => arquivo.replace(/^.*\//, '').replace(/\.md$/, '')
+const nomeSemMd = (arquivo: string) =>
+  arquivo.replace(/^.*\//, '').replace(/\.md$/, '')
 
 export type ItemLido<T> =
   | { readonly ok: true; readonly item: T }
@@ -114,9 +127,14 @@ export type ItemLido<T> =
 /** `guias/<tema>/_tema.md`. */
 export function lerTema(arquivo: string, texto: string): ItemLido<Tema> {
   const slug = arquivo.split('/')[1] ?? ''
-  const { valor, corpo, erros } = lerFrontmatter(FrontmatterTema, arquivo, texto)
+  const { valor, corpo, erros } = lerFrontmatter(
+    FrontmatterTema,
+    arquivo,
+    texto,
+  )
   const contexto = corpo.trim()
-  if (valor && !contexto) erros.push(problema(arquivo, 'falta o parágrafo de contexto no corpo'))
+  if (valor && !contexto)
+    erros.push(problema(arquivo, 'falta o parágrafo de contexto no corpo'))
   const reservadas: ReadonlyArray<string> = ROTAS_RESERVADAS
   if (reservadas.includes(slug))
     erros.push(
@@ -126,7 +144,12 @@ export function lerTema(arquivo: string, texto: string): ItemLido<Tema> {
       ),
     )
   else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
-    erros.push(problema(arquivo, 'o nome da pasta do Tema precisa ser minúsculo, sem acento, com hífen'))
+    erros.push(
+      problema(
+        arquivo,
+        'o nome da pasta do Tema precisa ser minúsculo, sem acento, com hífen',
+      ),
+    )
   if (!valor || erros.length > 0) return { ok: false, erros }
   return { ok: true, item: { ...valor, slug, arquivo, contexto } }
 }
@@ -141,10 +164,23 @@ export type GuiaLido = Omit<Guia, 'achados' | 'fichasCitadas'> & {
 export function lerGuia(arquivo: string, texto: string): ItemLido<GuiaLido> {
   const [, tema = '', nome = ''] = arquivo.split('/')
   const slug = nomeSemMd(nome)
-  const { valor, corpo, erros } = lerFrontmatter(FrontmatterGuia, arquivo, texto)
+  const { valor, corpo, erros } = lerFrontmatter(
+    FrontmatterGuia,
+    arquivo,
+    texto,
+  )
   const lido = lerCorpo(corpo)
-  if (lido.titulo) erros.push(problema(arquivo, 'o Guia não leva título "#": a Pergunta vem de `pergunta`'))
-  if (!lido.abertura) erros.push(problema(arquivo, 'falta a resposta curta antes do primeiro "##"'))
+  if (lido.titulo)
+    erros.push(
+      problema(
+        arquivo,
+        'o Guia não leva título "#": a Pergunta vem de `pergunta`',
+      ),
+    )
+  if (!lido.abertura)
+    erros.push(
+      problema(arquivo, 'falta a resposta curta antes do primeiro "##"'),
+    )
   const conhecidas: ReadonlyArray<string> = Object.values(SECOES_DO_GUIA)
   for (const titulo of conhecidas) {
     if (!lido.secoes.some((s) => s.titulo === titulo))
@@ -163,10 +199,17 @@ export function lerGuia(arquivo: string, texto: string): ItemLido<GuiaLido> {
   if (valor) {
     const amarelas = valor.pergunta.match(/==[^=]+==/g) ?? []
     if (amarelas.length > 1)
-      erros.push(problema(arquivo, 'a Pergunta leva no máximo uma palavra em amarelo (==palavra==)', 'pergunta'))
+      erros.push(
+        problema(
+          arquivo,
+          'a Pergunta leva no máximo uma palavra em amarelo (==palavra==)',
+          'pergunta',
+        ),
+      )
   }
   if (!valor || erros.length > 0) return { ok: false, erros }
-  const secao = (titulo: string) => lido.secoes.find((s) => s.titulo === titulo)?.markdown ?? ''
+  const secao = (titulo: string) =>
+    lido.secoes.find((s) => s.titulo === titulo)?.markdown ?? ''
   return {
     ok: true,
     item: {
@@ -184,18 +227,35 @@ export function lerGuia(arquivo: string, texto: string): ItemLido<GuiaLido> {
   }
 }
 
-export type DicaLida = FrontmatterDica & { readonly slug: string; readonly arquivo: string; readonly texto: string }
+export type DicaLida = FrontmatterDica & {
+  readonly slug: string
+  readonly arquivo: string
+  readonly texto: string
+}
 
 /** `dicas/<slug>.md`. */
 export function lerDica(arquivo: string, texto: string): ItemLido<DicaLida> {
   const slug = nomeSemMd(arquivo)
-  const { valor, corpo, erros } = lerFrontmatter(FrontmatterDica, arquivo, texto)
+  const { valor, corpo, erros } = lerFrontmatter(
+    FrontmatterDica,
+    arquivo,
+    texto,
+  )
   const textoDaDica = corpo.trim()
-  if (valor && !textoDaDica) erros.push(problema(arquivo, 'falta o texto da Dica no corpo'))
+  if (valor && !textoDaDica)
+    erros.push(problema(arquivo, 'falta o texto da Dica no corpo'))
   if (valor && valor.fichas.length === 0)
-    erros.push(problema(arquivo, 'uma Dica cita pelo menos uma Ficha', 'fichas'))
+    erros.push(
+      problema(arquivo, 'uma Dica cita pelo menos uma Ficha', 'fichas'),
+    )
   if (valor?.inferencia && valor.forca === 'forte')
-    erros.push(problema(arquivo, `uma Inferência tem Força moderada no máximo (veio ${valor.forca})`, 'forca'))
+    erros.push(
+      problema(
+        arquivo,
+        `uma Inferência tem Força moderada no máximo (veio ${valor.forca})`,
+        'forca',
+      ),
+    )
   if (!valor || erros.length > 0) return { ok: false, erros }
   return { ok: true, item: { ...valor, slug, arquivo, texto: textoDaDica } }
 }

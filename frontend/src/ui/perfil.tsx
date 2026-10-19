@@ -53,27 +53,44 @@ export function LinkDoPerfil({ perfil }: { perfil: Perfil | null }) {
 export function AvisoSemDado({ perfil }: { perfil: Perfil }) {
   return (
     <p className="aviso aviso-perfil" role="note">
-      Nenhum estudo deste Guia separou pessoas com o seu Perfil (<b>{descreverPerfil(perfil)}</b>). O que
-      segue vem de outras amostras: vale como pista, não como resposta para você.
+      Nenhum estudo deste Guia separou pessoas com o seu Perfil (
+      <b>{descreverPerfil(perfil)}</b>). O que segue vem de outras amostras:
+      vale como pista, não como resposta para você.
     </p>
   )
 }
 
 /** O selo amarelo. Para quem procura ambos, diz de qual lado há dado. */
 export function SeloVoce({ so }: { so?: 'homens' | 'mulheres' | undefined }) {
-  return <span className="selo-voce">{so ? `vale para você quando procura ${so}` : 'vale para você'}</span>
+  return (
+    <span className="selo-voce">
+      {so ? `vale para você quando procura ${so}` : 'vale para você'}
+    </span>
+  )
 }
 
 /** A nota "Vale para:" de um achado ou Dica, que fica sempre. Com Perfil,
  * ganha o selo (cobre) ou o anel vazio e a frase de que não há dado. */
-export function NotaValePara({ texto, veredito }: { texto: string; veredito: Veredito | null }) {
+export function NotaValePara({
+  texto,
+  veredito,
+}: {
+  texto: string
+  veredito: Veredito | null
+}) {
   return (
     <>
       {veredito?.cobre && <SeloVoce so={veredito.so} />}
-      <p className={veredito && !veredito.cobre ? 'vale vale-sem-dado' : 'vale'}>
-        {veredito && !veredito.cobre && <span className="anel-vazio" aria-hidden="true" />}
+      <p
+        className={veredito && !veredito.cobre ? 'vale vale-sem-dado' : 'vale'}
+      >
+        {veredito && !veredito.cobre && (
+          <span className="anel-vazio" aria-hidden="true" />
+        )}
         <b>Vale para:</b> {texto}
-        {veredito && !veredito.cobre && <strong> Não há dado deste estudo para o seu Perfil.</strong>}
+        {veredito && !veredito.cobre && (
+          <strong> Não há dado deste estudo para o seu Perfil.</strong>
+        )}
       </p>
     </>
   )
@@ -91,7 +108,8 @@ export function ParaOSeuPerfil({
   if (chave.vale)
     return (
       <p className="para-o-seu-perfil">
-        <SeloVoce /> o número em destaque vem de um estudo com pessoas do seu Perfil.
+        <SeloVoce /> o número em destaque vem de um estudo com pessoas do seu
+        Perfil.
       </p>
     )
   const outro = chave.achado === null ? undefined : achados[chave.achado]
@@ -111,14 +129,27 @@ export function ParaOSeuPerfil({
 }
 
 function contagem(comDado: number, total: number): string {
-  if (total === 1) return comDado ? 'O único achado tem dado para o seu Perfil.' : 'O único achado não tem dado para o seu Perfil.'
-  if (comDado === 0) return `Nenhum dos ${total} achados tem dado para o seu Perfil.`
-  if (comDado === total) return `Os ${total} achados têm dado para o seu Perfil.`
+  if (total === 1)
+    return comDado
+      ? 'O único achado tem dado para o seu Perfil.'
+      : 'O único achado não tem dado para o seu Perfil.'
+  if (comDado === 0)
+    return `Nenhum dos ${total} achados tem dado para o seu Perfil.`
+  if (comDado === total)
+    return `Os ${total} achados têm dado para o seu Perfil.`
   return `${comDado} de ${total} achados ${comDado === 1 ? 'tem' : 'têm'} dado para o seu Perfil.`
 }
 
-const ROTULO_DO_GENERO = { homem: 'homem', mulher: 'mulher', outro: 'outro' } as const
-const ROTULO_DA_PROCURA = { homens: 'homens', mulheres: 'mulheres', ambos: 'ambos' } as const
+const ROTULO_DO_GENERO = {
+  homem: 'homem',
+  mulher: 'mulher',
+  outro: 'outro',
+} as const
+const ROTULO_DA_PROCURA = {
+  homens: 'homens',
+  mulheres: 'mulheres',
+  ambos: 'ambos',
+} as const
 
 function Opcoes<T extends string>({
   legenda,
@@ -172,14 +203,22 @@ export function CaixaDoPerfil({
 }) {
   const id = useId()
   const [editando, setEditando] = useState(false)
-  const [rascunho, setRascunho] = useState<{ genero?: string; procura?: string; idade: string }>({ idade: '' })
+  const [rascunho, setRascunho] = useState<{
+    genero?: string
+    procura?: string
+    idade: string
+  }>({ idade: '' })
   const [erro, setErro] = useState<string | null>(null)
   const caixa = useRef<HTMLDivElement>(null)
   const resumo = useRef<HTMLParagraphElement>(null)
   const formAberto = !perfil || editando
 
   const abrir = (atual: Perfil | null) => {
-    setRascunho({ genero: atual?.genero, procura: atual?.procura, idade: atual?.idade?.toString() ?? '' })
+    setRascunho({
+      genero: atual?.genero,
+      procura: atual?.procura,
+      idade: atual?.idade?.toString() ?? '',
+    })
     setErro(null)
     setEditando(true)
   }
@@ -195,7 +234,10 @@ export function CaixaDoPerfil({
 
   // Ao abrir para mudar, o foco vai para a primeira opção; ao salvar, para o resumo.
   useEffect(() => {
-    if (editando) caixa.current?.querySelector<HTMLInputElement>('input:checked, input')?.focus()
+    if (editando)
+      caixa.current
+        ?.querySelector<HTMLInputElement>('input:checked, input')
+        ?.focus()
   }, [editando])
 
   const salvar = (evento: FormEvent<HTMLFormElement>) => {
@@ -250,7 +292,9 @@ export function CaixaDoPerfil({
                 max={IDADE_MAXIMA}
                 step={1}
                 value={rascunho.idade}
-                onChange={(e) => setRascunho((r) => ({ ...r, idade: e.target.value }))}
+                onChange={(e) =>
+                  setRascunho((r) => ({ ...r, idade: e.target.value }))
+                }
                 aria-describedby={`${id}-idade-dica`}
               />
               <span id={`${id}-idade-dica`} className="perfil-dica">
@@ -271,7 +315,9 @@ export function CaixaDoPerfil({
               </Botao>
             )}
           </div>
-          <p className="perfil-privado">Fica só neste navegador. Nada some da página.</p>
+          <p className="perfil-privado">
+            Fica só neste navegador. Nada some da página.
+          </p>
         </form>
       ) : (
         <div className="perfil-resumo">

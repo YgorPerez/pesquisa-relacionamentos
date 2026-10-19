@@ -46,13 +46,21 @@ export const FAIXAS_PNS = [
 ] as const
 
 /** Y008, na ordem do dicionário. */
-export const ORIENTACOES = ['heterossexual', 'bissexual', 'homossexual', 'outra', 'nao-sabe', 'recusou'] as const
+export const ORIENTACOES = [
+  'heterossexual',
+  'bissexual',
+  'homossexual',
+  'outra',
+  'nao-sabe',
+  'recusou',
+] as const
 /** P050: diariamente, menos que diariamente, não fuma. */
 export const FUMO = ['diario', 'ocasional', 'nao'] as const
 export const ALTURA_MIN = 140
 export const ALTURA_MAX = 200
 
-const faixaDe = (idade: number) => FAIXAS_PNS.find((f) => idade >= f.min && idade <= f.max)?.faixa
+const faixaDe = (idade: number) =>
+  FAIXAS_PNS.find((f) => idade >= f.min && idade <= f.max)?.faixa
 
 interface Pergunta {
   readonly medida: LinhaPns['medida']
@@ -61,7 +69,10 @@ interface Pergunta {
   readonly indicador: (r: RegistroPns, categoria: string) => boolean
 }
 
-const alturas = Array.from({ length: ALTURA_MAX - ALTURA_MIN + 1 }, (_, i) => `ate-${ALTURA_MIN + i}`)
+const alturas = Array.from(
+  { length: ALTURA_MAX - ALTURA_MIN + 1 },
+  (_, i) => `ate-${ALTURA_MIN + i}`,
+)
 
 const PERGUNTAS: ReadonlyArray<Pergunta> = [
   {
@@ -92,11 +103,24 @@ export function estimarPns(registros: ReadonlyArray<RegistroPns>): LinhaPns[] {
   for (const pergunta of PERGUNTAS) {
     for (const sexo of ['homem', 'mulher'] as const) {
       for (const { faixa } of FAIXAS_PNS) {
-        const dominio = registros.filter((r) => r.sexo === sexo && faixaDe(r.idade) === faixa && pergunta.respondeu(r))
+        const dominio = registros.filter(
+          (r) =>
+            r.sexo === sexo &&
+            faixaDe(r.idade) === faixa &&
+            pergunta.respondeu(r),
+        )
         if (dominio.length === 0) continue
         for (const categoria of pergunta.categorias) {
-          const estimativa = proporcao(dominio, (r) => pergunta.indicador(r, categoria))
-          linhas.push({ medida: pergunta.medida, sexo, idade: faixa, categoria, ...estimativa })
+          const estimativa = proporcao(dominio, (r) =>
+            pergunta.indicador(r, categoria),
+          )
+          linhas.push({
+            medida: pergunta.medida,
+            sexo,
+            idade: faixa,
+            categoria,
+            ...estimativa,
+          })
         }
       }
     }
@@ -112,12 +136,20 @@ export interface Proporcao {
 }
 
 /** A proporção ponderada de `y` no domínio, com o intervalo de 95%. */
-export function proporcao(dominio: ReadonlyArray<RegistroPns>, y: (r: RegistroPns) => boolean): Proporcao {
+export function proporcao(
+  dominio: ReadonlyArray<RegistroPns>,
+  y: (r: RegistroPns) => boolean,
+): Proporcao {
   const total = dominio.reduce((s, r) => s + r.peso, 0)
   const sim = dominio.reduce((s, r) => s + (y(r) ? r.peso : 0), 0)
   const p = sim / total
   const erro = Z95 * Math.sqrt(variancia(dominio, total, p, y))
-  return { p, p_min: Math.max(0, p - erro), p_max: Math.min(1, p + erro), n_registros: dominio.length }
+  return {
+    p,
+    p_min: Math.max(0, p - erro),
+    p_max: Math.min(1, p + erro),
+    n_registros: dominio.length,
+  }
 }
 
 /**
@@ -170,7 +202,11 @@ const campo = (linha: string, nome: keyof typeof POSICOES) => {
 const CODIGOS_ORIENTACAO: Readonly<Record<string, string>> = Object.fromEntries(
   ORIENTACOES.map((o, i) => [String(i + 1), o]),
 )
-const CODIGOS_FUMO: Readonly<Record<string, string>> = { '1': 'diario', '2': 'ocasional', '3': 'nao' }
+const CODIGOS_FUMO: Readonly<Record<string, string>> = {
+  '1': 'diario',
+  '2': 'ocasional',
+  '3': 'nao',
+}
 
 /**
  * Uma linha do `PNS_2019.txt` (texto posicional). Devolve `null` para quem
@@ -180,7 +216,12 @@ export function lerRegistroPns(linha: string): RegistroPns | null {
   if (campo(linha, 'M001') !== '1') return null
   const idade = Number(campo(linha, 'C008'))
   if (!(idade >= 18)) return null
-  const sexo = campo(linha, 'C006') === '1' ? 'homem' : campo(linha, 'C006') === '2' ? 'mulher' : null
+  const sexo =
+    campo(linha, 'C006') === '1'
+      ? 'homem'
+      : campo(linha, 'C006') === '2'
+        ? 'mulher'
+        : null
   const peso = Number(campo(linha, 'V00291'))
   if (!sexo || !(peso > 0)) return null
   const altura = Number(campo(linha, 'P00404'))
@@ -196,11 +237,31 @@ export function lerRegistroPns(linha: string): RegistroPns | null {
   }
 }
 
-const COLUNAS_PNS = ['medida', 'sexo', 'idade', 'categoria', 'p', 'p_min', 'p_max', 'n_registros'] as const
+const COLUNAS_PNS = [
+  'medida',
+  'sexo',
+  'idade',
+  'categoria',
+  'p',
+  'p_min',
+  'p_max',
+  'n_registros',
+] as const
 
 export function pnsEmCsv(linhas: ReadonlyArray<LinhaPns>): string {
   const saida = [COLUNAS_PNS.join(',')]
   for (const l of linhas)
-    saida.push([l.medida, l.sexo, l.idade, l.categoria, l.p.toFixed(5), l.p_min.toFixed(5), l.p_max.toFixed(5), l.n_registros].join(','))
+    saida.push(
+      [
+        l.medida,
+        l.sexo,
+        l.idade,
+        l.categoria,
+        l.p.toFixed(5),
+        l.p_min.toFixed(5),
+        l.p_max.toFixed(5),
+        l.n_registros,
+      ].join(','),
+    )
   return saida.join('\n') + '\n'
 }

@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { formatarFaixa, formatarGanho, formatarQuantidade, formatarVezes } from './numeros.ts'
+import {
+  formatarFaixa,
+  formatarGanho,
+  formatarQuantidade,
+  formatarVezes,
+} from './numeros.ts'
 
 describe('formatarQuantidade', () => {
   it('arredonda a 2 algarismos e escreve mil e milhões', () => {

@@ -1,4 +1,9 @@
-import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from '@tanstack/react-router'
 import { ORIGEM } from '@tem-estudo/conteudo/busca'
 import type { ReactNode } from 'react'
 import { Topo } from '#/ui/topo'
@@ -17,7 +22,8 @@ const META_DO_SITE = [
   { title: 'Tem estudo?' },
   {
     name: 'description',
-    content: 'Onde conhecer pessoas e como escolher parceiro, com o estudo de onde saiu cada resposta.',
+    content:
+      'Onde conhecer pessoas e como escolher parceiro, com o estudo de onde saiu cada resposta.',
   },
   { name: 'theme-color', content: '#f5f8f8' },
   { property: 'og:site_name', content: 'Tem estudo?' },
@@ -26,19 +32,35 @@ const META_DO_SITE = [
   { property: 'og:image', content: `${ORIGEM}/og.png` },
   { property: 'og:image:width', content: '1200' },
   { property: 'og:image:height', content: '630' },
-  { property: 'og:image:alt', content: 'Tem estudo? Dúvida de relacionamento, com a fonte junto.' },
+  {
+    property: 'og:image:alt',
+    content: 'Tem estudo? Dúvida de relacionamento, com a fonte junto.',
+  },
   { name: 'twitter:card', content: 'summary_large_image' },
 ]
 
 const LINKS_DO_SITE = [
   { rel: 'stylesheet', href: css },
   // O título e o corpo da primeira tela; o CSS só as pediria depois de chegar.
-  { rel: 'preload', href: bricolage, as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' as const },
-  { rel: 'preload', href: atkinson, as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' as const },
+  {
+    rel: 'preload',
+    href: bricolage,
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous' as const,
+  },
+  {
+    rel: 'preload',
+    href: atkinson,
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous' as const,
+  },
 ]
 
 /** O caminho da página sem barra final: o do canonical. */
-const semBarraFinal = (caminho: string) => (caminho.length > 1 ? caminho.replace(/\/+$/, '') : '/')
+const semBarraFinal = (caminho: string) =>
+  caminho.length > 1 ? caminho.replace(/\/+$/, '') : '/'
 
 export const Route = createRootRoute({
   head: ({ matches }) => {

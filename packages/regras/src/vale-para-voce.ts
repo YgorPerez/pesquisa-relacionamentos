@@ -16,18 +16,37 @@ export interface Cobre {
 
 /** `null`: sem Perfil, não há o que decidir. `so`: quem procura ambos e só um
  * dos lados tem dado (o selo diz qual). */
-export type Veredito = { readonly cobre: false } | { readonly cobre: true; readonly so?: Lado }
+export type Veredito =
+  | { readonly cobre: false }
+  | { readonly cobre: true; readonly so?: Lado }
 
 /** Os lados do Perfil que este `cobre` inclui; vazio se não inclui o Perfil. */
-function ladosCobertos(perfil: Perfil, cobre: Cobre): ReadonlyArray<Lado | undefined> {
+function ladosCobertos(
+  perfil: Perfil,
+  cobre: Cobre,
+): ReadonlyArray<Lado | undefined> {
   const { genero, procura, idade } = perfil
-  if (idade !== undefined && cobre.idades && (idade < cobre.idades.min || idade > cobre.idades.max)) return []
+  if (
+    idade !== undefined &&
+    cobre.idades &&
+    (idade < cobre.idades.min || idade > cobre.idades.max)
+  )
+    return []
   // "outro" só casa com o que não separou por gênero; o par do casal também separa.
   if (genero === 'outro' && (cobre.generos || cobre.casal)) return []
-  if ((genero === 'homem' || genero === 'mulher') && cobre.generos && !cobre.generos.includes(genero)) return []
+  if (
+    (genero === 'homem' || genero === 'mulher') &&
+    cobre.generos &&
+    !cobre.generos.includes(genero)
+  )
+    return []
 
   const lados: ReadonlyArray<Lado | undefined> =
-    procura === undefined ? [undefined] : procura === 'ambos' ? ['homens', 'mulheres'] : [procura]
+    procura === undefined
+      ? [undefined]
+      : procura === 'ambos'
+        ? ['homens', 'mulheres']
+        : [procura]
   return lados.filter((lado) => {
     if (lado === undefined) return true
     if (cobre.procura && !cobre.procura.includes(lado)) return false
@@ -41,7 +60,10 @@ function ladosCobertos(perfil: Perfil, cobre: Cobre): ReadonlyArray<Lado | undef
 
 /** Se um achado ou Dica vale para o Perfil: basta um dos `cobre` (um por
  * Ficha citada, ou o `vale_para` do recorte) cobrir. */
-export function valeParaVoce(perfil: Perfil | null, cobres: ReadonlyArray<Cobre>): Veredito | null {
+export function valeParaVoce(
+  perfil: Perfil | null,
+  cobres: ReadonlyArray<Cobre>,
+): Veredito | null {
   if (!perfil || perfilVazio(perfil)) return null
   const lados = new Set(cobres.flatMap((cobre) => ladosCobertos(perfil, cobre)))
   if (lados.size === 0) return { cobre: false }

@@ -12,11 +12,11 @@ catalog:
   # O `prepare` da raiz aplica o patch dele no `typescript` e no Oxlint do
   # Vite+ (ADR 0004). Cada versão dele aceita uma lista curta de Oxlint e de
   # `oxlint-tsgolint`: suba os dois juntos com o `vite-plus`.
-  "@effect/tsgo": 0.53.4
-  "@total-typescript/ts-reset": 0.6.1
-  "@types/node": 24.19.1
-  "@vitest/browser-playwright": 5.0.5
-  "@vitest/coverage-v8": 5.0.5
+  '@effect/tsgo': 0.53.4
+  '@total-typescript/ts-reset': 0.6.1
+  '@types/node': 24.19.1
+  '@vitest/browser-playwright': 5.0.5
+  '@vitest/coverage-v8': 5.0.5
   # O Schema só decodifica igual com o mesmo `effect` no pacote e no app.
   effect: 4.0.2
   typescript: 7.0.2
@@ -36,8 +36,8 @@ allowBuilds:
 # os plugins e o `vp test` verem a mesma cópia. Dois Vites quebram o
 # `instanceof` do TanStack Start (vite-plus#1391).
 overrides:
-  vite@*: "catalog:"
-  vitest@*: "catalog:"
+  vite@*: 'catalog:'
+  vitest@*: 'catalog:'
   # O `trustPolicy` abaixo recusa o semver 6, que vem do babel do Storybook
   # (ainda pede `^6`). O 7 é o que o resto da árvore já usa, como no Festival.
   semver@6: ^7.8.5
@@ -48,8 +48,8 @@ overrides:
 # scripts o entregava ao patch do `@effect/tsgo` no `prepare`, que recusa o
 # 1.81. Assim o patch acha só o Oxlint do Vite+ (ADR 0004).
 hoistPattern:
-  - "*"
-  - "!oxlint"
+  - '*'
+  - '!oxlint'
 
 # Uma versão recém-publicada só entra depois de um dia, o tempo em que o npm
 # costuma despublicar a que veio com malware.

@@ -61,7 +61,8 @@ function decodificar(query: string): Parametros | null {
   for (const par of query.replace(/^\?/, '').split('&')) {
     if (par === '') continue
     const i = par.indexOf('=')
-    const [chave, valor] = i < 0 ? [par, ''] : [par.slice(0, i), par.slice(i + 1)]
+    const [chave, valor] =
+      i < 0 ? [par, ''] : [par.slice(0, i), par.slice(i + 1)]
     try {
       const nome = decodeURIComponent(chave)
       if (!parametros.has(nome)) parametros.set(nome, decodeURIComponent(valor))
@@ -74,7 +75,12 @@ function decodificar(query: string): Parametros | null {
 
 /** Escapa cada valor, menos a vírgula das listas, que fica legível. */
 const codificar = (pares: ReadonlyArray<readonly [string, string]>): string =>
-  pares.map(([chave, valor]) => `${chave}=${encodeURIComponent(valor).replace(/%2C/g, ',')}`).join('&')
+  pares
+    .map(
+      ([chave, valor]) =>
+        `${chave}=${encodeURIComponent(valor).replace(/%2C/g, ',')}`,
+    )
+    .join('&')
 
 const faixaEscrita = ({ min, max }: Faixa) => `${min}-${max}`
 
@@ -83,7 +89,8 @@ function faixaLida(texto: string | undefined): Faixa | null {
   return m ? { min: Number(m[1]), max: Number(m[2]) } : null
 }
 
-const lista = (texto: string | undefined): string[] => (texto ? texto.split(',') : [])
+const lista = (texto: string | undefined): string[] =>
+  texto ? texto.split(',') : []
 
 // --- versão 1 ------------------------------------------------------------------
 // v=1&genero=homem&procura=mulheres&idade=30
@@ -93,12 +100,23 @@ const lista = (texto: string | undefined): string[] => (texto ? texto.split(',')
 //   Prioridades: só o gênero do Perfil, &topo=renda,sexo,calma&desfecho=satisfacao
 
 const CHAVES_DOS_REQUISITOS_V1 = [
-  'idades', 'uf', 'municipio', 'companheiro', 'escolaridade', 'renda', 'cor', 'religiao', 'sem-filhos', 'altura',
+  'idades',
+  'uf',
+  'municipio',
+  'companheiro',
+  'escolaridade',
+  'renda',
+  'cor',
+  'religiao',
+  'sem-filhos',
+  'altura',
   'nao-fuma',
 ] as const
 
 function escreverV1(estado: EstadoDoLink): Array<readonly [string, string]> {
-  const pares: Array<readonly [string, string]> = [['v', String(VERSAO_DO_LINK)]]
+  const pares: Array<readonly [string, string]> = [
+    ['v', String(VERSAO_DO_LINK)],
+  ]
   if (estado.calculadora === 'prioridades') {
     if (estado.genero) pares.push(['genero', estado.genero])
     const { topo3, desfecho } = estado.prioridades
@@ -119,33 +137,48 @@ function escreverV1(estado: EstadoDoLink): Array<readonly [string, string]> {
     pares.push(['uf', r.lugar.uf])
     if (r.lugar.municipio) pares.push(['municipio', r.lugar.municipio])
   }
-  if (r.companheiro !== padrao.companheiro) pares.push(['companheiro', r.companheiro ? 'sim' : 'nao'])
+  if (r.companheiro !== padrao.companheiro)
+    pares.push(['companheiro', r.companheiro ? 'sim' : 'nao'])
   if (r.escolaridade) pares.push(['escolaridade', r.escolaridade])
   if (r.renda) pares.push(['renda', r.renda])
   if (r.cores.length > 0) pares.push(['cor', r.cores.join(',')])
   if (r.religioes.length > 0) pares.push(['religiao', r.religioes.join(',')])
   if (r.semFilhos) pares.push(['sem-filhos', 'sim'])
-  if (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA) pares.push(['altura', faixaEscrita(r.altura)])
+  if (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA)
+    pares.push(['altura', faixaEscrita(r.altura)])
   if (r.naoFuma) pares.push(['nao-fuma', 'sim'])
   return pares
 }
 
-function lerV1(calculadora: CalculadoraComLink, q: Parametros, ids?: ReadonlyArray<string>): EstadoDoLink {
+function lerV1(
+  calculadora: CalculadoraComLink,
+  q: Parametros,
+  ids?: ReadonlyArray<string>,
+): EstadoDoLink {
   if (calculadora === 'prioridades') {
     // Os links de antes levavam `procura` e `idade` também: ficam de fora.
     const genero = lerPerfil({ genero: q.get('genero') })?.genero ?? null
-    const prioridades = lerPrioridades({ topo3: lista(q.get('topo')), desfecho: q.get('desfecho') }, ids)!
+    const prioridades = lerPrioridades(
+      { topo3: lista(q.get('topo')), desfecho: q.get('desfecho') },
+      ids,
+    )!
     return { calculadora, genero, prioridades }
   }
 
-  const perfil = lerPerfil({ genero: q.get('genero'), procura: q.get('procura'), idade: q.get('idade') })
+  const perfil = lerPerfil({
+    genero: q.get('genero'),
+    procura: q.get('procura'),
+    idade: q.get('idade'),
+  })
 
-  if (!CHAVES_DOS_REQUISITOS_V1.some((chave) => q.has(chave))) return { calculadora, perfil, requisitos: null }
+  if (!CHAVES_DOS_REQUISITOS_V1.some((chave) => q.has(chave)))
+    return { calculadora, perfil, requisitos: null }
   const uf = q.get('uf')
   const requisitos = lerRequisitos({
     idade: faixaLida(q.get('idades')),
     lugar: uf ? { uf, municipio: q.get('municipio') } : null,
-    companheiro: q.get('companheiro') === 'nao' ? false : REQUISITOS_PADRAO.companheiro,
+    companheiro:
+      q.get('companheiro') === 'nao' ? false : REQUISITOS_PADRAO.companheiro,
     escolaridade: q.get('escolaridade'),
     renda: q.get('renda'),
     cores: lista(q.get('cor')),
@@ -164,31 +197,44 @@ const LEITORES: Readonly<Record<string, typeof lerV1>> = {
 
 // --- a frase do que o link revela (story 63) -------------------------------------
 
-const GENERO_NA_FRASE: Readonly<Record<NonNullable<Perfil['genero']>, string>> = {
-  homem: 'homem',
-  mulher: 'mulher',
-  outro: 'outro gênero',
-}
+const GENERO_NA_FRASE: Readonly<Record<NonNullable<Perfil['genero']>, string>> =
+  {
+    homem: 'homem',
+    mulher: 'mulher',
+    outro: 'outro gênero',
+  }
 
-const PROCURA_NA_FRASE: Readonly<Record<NonNullable<Perfil['procura']>, string>> = {
+const PROCURA_NA_FRASE: Readonly<
+  Record<NonNullable<Perfil['procura']>, string>
+> = {
   homens: 'homens',
   mulheres: 'mulheres',
   ambos: 'homens e mulheres',
 }
 
-const ESCOLARIDADE_NA_FRASE: Readonly<Record<NonNullable<Requisitos['escolaridade']>, string>> = {
+const ESCOLARIDADE_NA_FRASE: Readonly<
+  Record<NonNullable<Requisitos['escolaridade']>, string>
+> = {
   fundamental: 'ensino fundamental',
   medio: 'ensino médio',
   superior: 'ensino superior',
 }
 
 const emLista = (itens: ReadonlyArray<string>): string =>
-  itens.length < 2 ? (itens[0] ?? '') : `${itens.slice(0, -1).join(', ')} e ${itens.at(-1)}`
+  itens.length < 2
+    ? (itens[0] ?? '')
+    : `${itens.slice(0, -1).join(', ')} e ${itens.at(-1)}`
 
 /** "de 25 a 35", "de 40 anos ou mais"; vazio se a faixa é qualquer idade. */
 function idadesNaFrase(idade: Faixa | null): string {
-  if (!idade || (idade.min <= IDADE_PROCURADA_MINIMA && idade.max >= IDADE_PROCURADA_MAXIMA)) return ''
-  return idade.max >= IDADE_PROCURADA_MAXIMA ? `de ${idade.min} anos ou mais` : `de ${idade.min} a ${idade.max}`
+  if (
+    !idade ||
+    (idade.min <= IDADE_PROCURADA_MINIMA && idade.max >= IDADE_PROCURADA_MAXIMA)
+  )
+    return ''
+  return idade.max >= IDADE_PROCURADA_MAXIMA
+    ? `de ${idade.min} anos ou mais`
+    : `de ${idade.min} a ${idade.max}`
 }
 
 function perfilNaFrase(perfil: Perfil | null): string[] {
@@ -208,12 +254,19 @@ export interface OpcoesDaFrase {
 /** "Este link mostra: homem, 30, procura mulheres de 25 a 35, ensino superior,
  * em SP.": tudo o que a query leva, em português, para o visitante decidir se
  * compartilha. */
-export function fraseDoLink(estado: EstadoDoLink, opcoes: OpcoesDaFrase = {}): string {
+export function fraseDoLink(
+  estado: EstadoDoLink,
+  opcoes: OpcoesDaFrase = {},
+): string {
   if (estado.calculadora === 'prioridades') {
     const partes = estado.genero ? [GENERO_NA_FRASE[estado.genero]] : []
     const { topo3, desfecho } = estado.prioridades
     const nomes = topo3.map((id) => (opcoes.nomes?.[id] ?? id).toLowerCase())
-    partes.push(nomes.length ? `topo 3 ${emLista(nomes)}` : 'nenhuma característica escolhida')
+    partes.push(
+      nomes.length
+        ? `topo 3 ${emLista(nomes)}`
+        : 'nenhuma característica escolhida',
+    )
     return `Este link mostra: ${partes.join(', ')}, em ${NOME_DO_DESFECHO[desfecho].toLowerCase()}.`
   }
 
@@ -222,32 +275,49 @@ export function fraseDoLink(estado: EstadoDoLink, opcoes: OpcoesDaFrase = {}): s
   const r = estado.requisitos
   const idades = idadesNaFrase(r?.idade ?? null)
   if (perfil?.procura || idades)
-    partes.push(['procura', perfil?.procura ? PROCURA_NA_FRASE[perfil.procura] : 'pessoas', idades].filter(Boolean).join(' '))
+    partes.push(
+      [
+        'procura',
+        perfil?.procura ? PROCURA_NA_FRASE[perfil.procura] : 'pessoas',
+        idades,
+      ]
+        .filter(Boolean)
+        .join(' '),
+    )
   if (r) {
     partes.push(...outrosRequisitos(perfil, r))
     if (r.lugar) partes.push(lugarNaFrase(r, opcoes.municipio))
   }
-  if (partes.length === 0) return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
+  if (partes.length === 0)
+    return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
   return `Este link mostra: ${partes.join(', ')}.`
 }
 
 /** Os Requisitos fora do padrão, menos a idade e o lugar, que a frase diz à parte. */
 function outrosRequisitos(perfil: Perfil | null, r: Requisitos): string[] {
-  const valor = (k: Parameters<typeof valorDoRequisito>[0]) => valorDoRequisito(k, perfil, r)
+  const valor = (k: Parameters<typeof valorDoRequisito>[0]) =>
+    valorDoRequisito(k, perfil, r)
   return [
     r.companheiro !== REQUISITOS_PADRAO.companheiro && valor('companheiro'),
     r.escolaridade && ESCOLARIDADE_NA_FRASE[r.escolaridade],
     r.renda && valor('renda'),
     r.cores.length > 0 && valor('cor'),
     r.religioes.length > 0 && valor('religiao'),
-    r.semFilhos && quemSeProcura(perfil).filhos !== 'sem-dado' && valor('filhos'),
-    (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA) && valor('altura'),
+    r.semFilhos &&
+      quemSeProcura(perfil).filhos !== 'sem-dado' &&
+      valor('filhos'),
+    (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA) &&
+      valor('altura'),
     r.naoFuma && valor('fumo'),
   ].filter((x): x is string => typeof x === 'string')
 }
 
 const lugarNaFrase = (r: Requisitos, municipio: string | undefined): string =>
-  !r.lugar ? 'no Brasil' : r.lugar.municipio && municipio ? `em ${municipio} (${r.lugar.uf})` : `em ${r.lugar.uf}`
+  !r.lugar
+    ? 'no Brasil'
+    : r.lugar.municipio && municipio
+      ? `em ${municipio} (${r.lugar.uf})`
+      : `em ${r.lugar.uf}`
 
 // --- a prévia nas redes (story 66) -----------------------------------------------
 // O Open Graph da calculadora aberta com estado. Diz o resultado e quem se
@@ -260,7 +330,8 @@ export interface Previa {
   readonly descricao: string
 }
 
-const maiuscula = (texto: string) => texto.charAt(0).toUpperCase() + texto.slice(1)
+const maiuscula = (texto: string) =>
+  texto.charAt(0).toUpperCase() + texto.slice(1)
 
 /** O que a prévia precisa da conta (`Estimativa` encaixa). */
 export interface ContaDaPrevia {
@@ -303,7 +374,9 @@ export function previaDePrioridades(
   prioridades: EstadoDasPrioridades,
 ): Previa | null {
   const { topo3, desfecho } = prioridades
-  const nomes = topo3.flatMap((id) => caracteristicas.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()))
+  const nomes = topo3.flatMap((id) =>
+    caracteristicas.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()),
+  )
   if (nomes.length === 0) return null
   return {
     titulo: `Topo 3: ${emLista(nomes)}`,
@@ -316,7 +389,8 @@ export function previaDePrioridades(
 // --- interface -----------------------------------------------------------------
 
 /** A query do link, sem o `?`: "v=1&genero=homem&…". */
-export const queryDoLink = (estado: EstadoDoLink): string => codificar(escreverV1(estado))
+export const queryDoLink = (estado: EstadoDoLink): string =>
+  codificar(escreverV1(estado))
 
 /** A query é de um link de calculadora (tem `v`), válida ou não. A página
  * limpa esta da barra; outra query (de campanha, digamos) fica. */

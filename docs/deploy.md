@@ -2,14 +2,14 @@
 
 O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.com. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O único banco é o SQLite do GoatCounter, fora do app.
 
-| Peça | Onde |
-|---|---|
-| Imagem | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`) |
-| Formato do log, vhosts, TLS e rotação | `frontend/nginx/log-sem-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
-| Troca blue/green, volta e contêiner do GoatCounter | `frontend/scripts/vps.ts` |
-| Preparação da VPS, uma vez | `frontend/scripts/preparar-vps.sh` |
-| Passos do mantenedor | `frontend/scripts/wizard-deploy.sh` |
-| Workflow | `.github/workflows/deploy.yml` |
+| Peça                                               | Onde                                                                                                             |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Imagem                                             | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`)                                                |
+| Formato do log, vhosts, TLS e rotação              | `frontend/nginx/log-sem-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
+| Troca blue/green, volta e contêiner do GoatCounter | `frontend/scripts/vps.ts`                                                                                        |
+| Preparação da VPS, uma vez                         | `frontend/scripts/preparar-vps.sh`                                                                               |
+| Passos do mantenedor                               | `frontend/scripts/wizard-deploy.sh`                                                                              |
+| Workflow                                           | `.github/workflows/deploy.yml`                                                                                   |
 
 ## Antes do primeiro deploy
 
@@ -25,12 +25,12 @@ No DNS da Hostinger, o registro A de `@` vem apontando para a página de estacio
 
 O workflow lê estes secrets do repositório:
 
-| Secret | O que é |
-|---|---|
-| `VPS_HOST` | O IPv4 da VPS |
-| `VPS_USER` | `root`. A troca escreve em `/etc/nginx` e recarrega o Nginx |
-| `VPS_PORT` | A porta do SSH. Opcional, o padrão é 22 |
-| `VPS_SSH_KEY` | A chave privada inteira, a do `~/.ssh/temestudo-deploy` |
+| Secret        | O que é                                                     |
+| ------------- | ----------------------------------------------------------- |
+| `VPS_HOST`    | O IPv4 da VPS                                               |
+| `VPS_USER`    | `root`. A troca escreve em `/etc/nginx` e recarrega o Nginx |
+| `VPS_PORT`    | A porta do SSH. Opcional, o padrão é 22                     |
+| `VPS_SSH_KEY` | A chave privada inteira, a do `~/.ssh/temestudo-deploy`     |
 
 Sem `VPS_HOST`, `VPS_USER` ou `VPS_SSH_KEY`, o workflow roda os testes e o build, pula a publicação e deixa um aviso "Deploy pulado" no resumo do run. O CI continua verde.
 
@@ -79,17 +79,17 @@ Para ver as imagens que a VPS tem: `ssh root@<ip> docker images temestudo-app`.
 
 ## Na VPS
 
-| O quê | Onde |
-|---|---|
-| Pasta do app | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`, `goatcounter-senha`) |
-| Desafio do certbot | `/opt/temestudo/acme` |
-| Vhosts | `/etc/nginx/sites-available/temestudo.conf` e `temestudo-stats.conf`, com link em `sites-enabled/` |
-| GoatCounter | contêiner `temestudo-stats` em `127.0.0.1:3051`, banco no volume `temestudo-stats` |
-| Formato do access_log | `/etc/nginx/conf.d/temestudo-log-sem-query.conf` |
-| Porta do contêiner no ar | `/etc/nginx/temestudo/temestudo-app.conf` |
-| Logs do Nginx | `/var/log/nginx/temestudo/access.log` e `error.log` |
-| Rotação | `/etc/logrotate.d/temestudo` |
-| Log do app | `docker logs temestudo-app` (10 MB × 3 arquivos) |
+| O quê                    | Onde                                                                                               |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| Pasta do app             | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`, `goatcounter-senha`)             |
+| Desafio do certbot       | `/opt/temestudo/acme`                                                                              |
+| Vhosts                   | `/etc/nginx/sites-available/temestudo.conf` e `temestudo-stats.conf`, com link em `sites-enabled/` |
+| GoatCounter              | contêiner `temestudo-stats` em `127.0.0.1:3051`, banco no volume `temestudo-stats`                 |
+| Formato do access_log    | `/etc/nginx/conf.d/temestudo-log-sem-query.conf`                                                   |
+| Porta do contêiner no ar | `/etc/nginx/temestudo/temestudo-app.conf`                                                          |
+| Logs do Nginx            | `/var/log/nginx/temestudo/access.log` e `error.log`                                                |
+| Rotação                  | `/etc/logrotate.d/temestudo`                                                                       |
+| Log do app               | `docker logs temestudo-app` (10 MB × 3 arquivos)                                                   |
 
 Os vhosts do repositório são os que valem. A troca reinstala os dois a cada deploy e guarda o anterior como `.anterior` ao lado. Uma mudança feita à mão na VPS some no próximo deploy.
 

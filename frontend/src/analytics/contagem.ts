@@ -23,18 +23,23 @@ interface SinaisDoNavegador {
 }
 
 /** GPC ligado ou DNT "1"/"yes" (o valor que navegadores antigos usavam). */
-export function navegadorPedeParaNaoContar(navegador: SinaisDoNavegador): boolean {
+export function navegadorPedeParaNaoContar(
+  navegador: SinaisDoNavegador,
+): boolean {
   if (navegador.globalPrivacyControl === true) return true
   return navegador.doNotTrack === '1' || navegador.doNotTrack === 'yes'
 }
 
 /** `true` quando o visitante desligou a chave; nada salvo = conta. */
-const naoContarSalvo = armazenado<true>('nao-contar', (bruto) => (bruto === true ? true : null))
+const naoContarSalvo = armazenado<true>('nao-contar', (bruto) =>
+  bruto === true ? true : null,
+)
 
 export type EstadoDaContagem = 'conta' | 'desligada' | 'navegador'
 
 function estadoAgora(): EstadoDaContagem {
-  if (navegadorPedeParaNaoContar(navigator as SinaisDoNavegador)) return 'navegador'
+  if (navegadorPedeParaNaoContar(navigator as SinaisDoNavegador))
+    return 'navegador'
   return naoContarSalvo.ler() ? 'desligada' : 'conta'
 }
 
@@ -91,7 +96,9 @@ export const contarUsoDaCalculadora = (calculadora: CalculadoraContada) =>
  * Só a troca de caminho conta: religar a chave não manda a página em que se
  * está, e a contagem volta na próxima. */
 export function useContarVisitas() {
-  const caminho = useRouterState({ select: (s) => s.resolvedLocation?.pathname })
+  const caminho = useRouterState({
+    select: (s) => s.resolvedLocation?.pathname,
+  })
   useEffect(() => {
     if (caminho) mandar(caminho, false)
   }, [caminho])
@@ -103,8 +110,12 @@ export function useContarVisitas() {
 export function useContarFichasAbertas(guia: string) {
   useEffect(() => {
     const aoClicar = (evento: MouseEvent) => {
-      const link = (evento.target as Element | null)?.closest?.('main a[href^="/estudos/"]')
-      const ficha = link?.getAttribute('href')?.match(/^\/estudos\/([a-z0-9-]+)$/)?.[1]
+      const link = (evento.target as Element | null)?.closest?.(
+        'main a[href^="/estudos/"]',
+      )
+      const ficha = link
+        ?.getAttribute('href')
+        ?.match(/^\/estudos\/([a-z0-9-]+)$/)?.[1]
       if (ficha) contarEvento(EVENTOS.fichaAberta(guia, ficha))
     }
     document.addEventListener('click', aoClicar, true)

@@ -18,8 +18,8 @@ export const listarFichas = createServerFn({ method: 'GET' }).handler(
     return [...acervo.fichas]
       .sort(
         (a, b) =>
-          ORDEM_DO_STATUS.indexOf(a.status) - ORDEM_DO_STATUS.indexOf(b.status) ||
-          a.slug.localeCompare(b.slug),
+          ORDEM_DO_STATUS.indexOf(a.status) -
+            ORDEM_DO_STATUS.indexOf(b.status) || a.slug.localeCompare(b.slug),
       )
       .map(resumo)
   },
@@ -30,9 +30,14 @@ export const buscarFicha = createServerFn({ method: 'GET' })
     if (typeof slug !== 'string') throw new Error('slug inválido')
     return slug
   })
-  .handler(async ({ data: slug }): Promise<FichaVista & { citadaEm: CitadaEm }> => {
-    const { default: acervo } = await import('virtual:acervo')
-    const ficha = acervo.fichas.find((f) => f.slug === slug)
-    if (!ficha) throw notFound()
-    return { ...vista(ficha, fichaIndexavel(ficha)), citadaEm: citadaEm(slug, acervo) }
-  })
+  .handler(
+    async ({ data: slug }): Promise<FichaVista & { citadaEm: CitadaEm }> => {
+      const { default: acervo } = await import('virtual:acervo')
+      const ficha = acervo.fichas.find((f) => f.slug === slug)
+      if (!ficha) throw notFound()
+      return {
+        ...vista(ficha, fichaIndexavel(ficha)),
+        citadaEm: citadaEm(slug, acervo),
+      }
+    },
+  )

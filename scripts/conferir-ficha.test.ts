@@ -22,7 +22,10 @@ describe('conferirFicha', () => {
   it('o Trecho casa com a palavra que a fonte hifenizou no fim da linha', () => {
     // A fonte quebra "relation-\nship"; o Trecho escreve "relationship".
     const r = conferir('lima-2021-conferida')
-    assert.equal(r.falhas.some((f) => f.medida === 'Satisfação, app × amigos'), false)
+    assert.equal(
+      r.falhas.some((f) => f.medida === 'Satisfação, app × amigos'),
+      false,
+    )
   })
 
   it('lê um snapshot HTML como texto, sem as tags e com as entidades', () => {
@@ -32,7 +35,10 @@ describe('conferirFicha', () => {
   })
 
   it('aponta o Trecho que não está na fonte, o número fora do Trecho e a linha sem Trecho', () => {
-    const r = conferir('lima-2021-erros', 'fontes/privado/lima-2021-conferida.txt')
+    const r = conferir(
+      'lima-2021-erros',
+      'fontes/privado/lima-2021-conferida.txt',
+    )
     assert.deepEqual(
       r.falhas.map((f) => [f.linha, f.medida]),
       [
@@ -48,7 +54,10 @@ describe('conferirFicha', () => {
   })
 
   it('roda o Cálculo e barra o Valor que ele não reproduz', () => {
-    const r = conferir('lima-2021-calculo', 'fontes/privado/lima-2021-conferida.txt')
+    const r = conferir(
+      'lima-2021-calculo',
+      'fontes/privado/lima-2021-conferida.txt',
+    )
     assert.deepEqual(
       r.falhas.map((f) => [f.linha, f.motivo]),
       [[2, 'o Cálculo deu "35.7", que não reproduz 40']],
@@ -71,9 +80,16 @@ describe('main', () => {
   })
 
   it('sai com 1 e lista as falhas por linha', () => {
-    const { codigo, saida } = rodar('estudos/lima-2021-erros.md', '--fonte', 'fontes/privado/lima-2021-conferida.txt')
+    const { codigo, saida } = rodar(
+      'estudos/lima-2021-erros.md',
+      '--fonte',
+      'fontes/privado/lima-2021-conferida.txt',
+    )
     assert.equal(codigo, 1)
-    assert.match(saida, /linha 2 \(Número errado\): o número 19 não aparece no Trecho/)
+    assert.match(
+      saida,
+      /linha 2 \(Número errado\): o número 19 não aparece no Trecho/,
+    )
   })
 
   it('sai com 1 quando não acha a Fonte local', () => {

@@ -45,7 +45,10 @@ export function lerCorpo(corpo: string): Corpo {
   return {
     titulo,
     abertura: abertura.join('\n').trim(),
-    secoes: secoes.map((s) => ({ titulo: s.titulo, markdown: s.linhas.join('\n').trim() })),
+    secoes: secoes.map((s) => ({
+      titulo: s.titulo,
+      markdown: s.linhas.join('\n').trim(),
+    })),
   }
 }
 
@@ -65,17 +68,20 @@ const celulas = (linha: string): string[] =>
     .split(/(?<!\\)\|/)
     .map((c) => c.trim().replace(/\\\|/g, '|'))
 
-const ehSeparador = (linha: string) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(linha)
+const ehSeparador = (linha: string) =>
+  /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(linha)
 
 /** A primeira tabela do markdown, ou `null` se não houver. */
 export function primeiraTabela(markdown: string): Tabela | null {
   const linhas = markdown.split('\n')
   const inicio = linhas.findIndex(
-    (linha, i) => linha.trim().startsWith('|') && ehSeparador(linhas[i + 1] ?? ''),
+    (linha, i) =>
+      linha.trim().startsWith('|') && ehSeparador(linhas[i + 1] ?? ''),
   )
   if (inicio === -1) return null
   let fim = inicio + 2
-  while (fim < linhas.length && (linhas[fim] ?? '').trim().startsWith('|')) fim++
+  while (fim < linhas.length && (linhas[fim] ?? '').trim().startsWith('|'))
+    fim++
   return {
     cabecalho: celulas(linhas[inicio] ?? ''),
     linhas: linhas.slice(inicio + 2, fim).map(celulas),

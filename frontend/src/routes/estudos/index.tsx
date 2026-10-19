@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { listarFichas } from '#/conteudo/fichas'
-import { ForcaDaEvidencia, LegendaDasFichas, StatusDeVerificacao } from '#/ui/selos'
+import {
+  ForcaDaEvidencia,
+  LegendaDasFichas,
+  StatusDeVerificacao,
+} from '#/ui/selos'
 
 export const Route = createFileRoute('/estudos/')({
   loader: () => listarFichas(),
@@ -17,7 +21,8 @@ export const Route = createFileRoute('/estudos/')({
   component: Estudos,
 })
 
-const contar = (n: number, um: string, varios: string) => `${n} ${n === 1 ? um : varios}`
+const contar = (n: number, um: string, varios: string) =>
+  `${n} ${n === 1 ? um : varios}`
 
 function Estudos() {
   const fichas = Route.useLoaderData()
@@ -30,9 +35,9 @@ function Estudos() {
           Os <span className="marca-texto">estudos</span> por trás das respostas
         </h1>
         <p className="lead">
-          Cada Ficha resume um estudo: o que mediu, os números com o trecho do original e o que ele
-          não consegue dizer. Ao lado de cada uma, até onde a gente conferiu e quanto a evidência
-          pesa.
+          Cada Ficha resume um estudo: o que mediu, os números com o trecho do
+          original e o que ele não consegue dizer. Ao lado de cada uma, até onde
+          a gente conferiu e quanto a evidência pesa.
         </p>
 
         <section className="secao" aria-labelledby="lista">
@@ -41,14 +46,19 @@ function Estudos() {
           </h2>
           {conferidas === 0 && (
             <p className="aviso">
-              Nenhuma Ficha foi conferida no original ainda. Todas estão sendo refeitas com a fonte
-              aberta ao lado, e até lá nenhuma sustenta um Guia.
+              Nenhuma Ficha foi conferida no original ainda. Todas estão sendo
+              refeitas com a fonte aberta ao lado, e até lá nenhuma sustenta um
+              Guia.
             </p>
           )}
           <ol className="fichas">
             {fichas.map((ficha) => (
               <li key={ficha.slug} className="ficha">
-                <Link to="/estudos/$slug" params={{ slug: ficha.slug }} className="ficha-titulo">
+                <Link
+                  to="/estudos/$slug"
+                  params={{ slug: ficha.slug }}
+                  className="ficha-titulo"
+                >
                   {ficha.titulo}
                 </Link>
                 <div className="ficha-meta">

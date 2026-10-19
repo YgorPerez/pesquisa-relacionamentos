@@ -21,8 +21,16 @@ export default mergeConfig(
         provider: playwright({ launchOptions: { channel: 'chrome' } }),
         // Cada story no celular e no desktop, como o e2e.
         instances: [
-          { browser: 'chromium', name: 'celular', viewport: { width: 412, height: 915 } },
-          { browser: 'chromium', name: 'desktop', viewport: { width: 1280, height: 800 } },
+          {
+            browser: 'chromium',
+            name: 'celular',
+            viewport: { width: 412, height: 915 },
+          },
+          {
+            browser: 'chromium',
+            name: 'desktop',
+            viewport: { width: 1280, height: 800 },
+          },
         ],
       },
     },

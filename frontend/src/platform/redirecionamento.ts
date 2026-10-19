@@ -20,7 +20,10 @@ export function comRedirecionamentos<Resto extends unknown[]>(
     const semBarra = limpo.length > 1 ? limpo.replace(/\/+$/, '') || '/' : limpo
     const destino = Object.hasOwn(mapa, semBarra) ? mapa[semBarra] : semBarra
     if (destino && destino !== url.pathname)
-      return new Response(null, { status: 301, headers: { location: `${destino}${url.search}` } })
+      return new Response(null, {
+        status: 301,
+        headers: { location: `${destino}${url.search}` },
+      })
     return fetch(request, ...resto)
   }
 }

@@ -4,7 +4,13 @@
 // Effect. As regras que viram erro ou aviso do build ficam em
 // `regras-de-busca.ts`.
 import type { Acervo } from './acervo.ts'
-import { caminhoDaDica, caminhoDaFicha, caminhoDoGuia, caminhoDoTema, fichaIndexavel } from './caminhos.ts'
+import {
+  caminhoDaDica,
+  caminhoDaFicha,
+  caminhoDoGuia,
+  caminhoDoTema,
+  fichaIndexavel,
+} from './caminhos.ts'
 import type { Ficha } from './ficha.ts'
 import type { Dica, Guia, Tema } from './itens.ts'
 import { CALCULADORAS, ROTAS_RESERVADAS } from './listas.ts'
@@ -33,29 +39,53 @@ export function textoPuro(markdown: string): string {
 }
 
 /** Corta numa palavra, com reticências, para caber no limite. */
-export function cortar(texto: string, limite: number = LIMITES.descricao): string {
-  return texto.length <= limite ? texto : `${texto.slice(0, limite - 1).replace(/\s+\S*$/, '')}…`
+export function cortar(
+  texto: string,
+  limite: number = LIMITES.descricao,
+): string {
+  return texto.length <= limite
+    ? texto
+    : `${texto.slice(0, limite - 1).replace(/\s+\S*$/, '')}…`
 }
 
-const comSeo = (seo: { titulo?: string; descricao?: string } | undefined, derivado: Busca): Busca => ({
+const comSeo = (
+  seo: { titulo?: string; descricao?: string } | undefined,
+  derivado: Busca,
+): Busca => ({
   titulo: seo?.titulo ?? derivado.titulo,
   descricao: seo?.descricao ?? derivado.descricao,
 })
 
 /** Guia: a Pergunta e a resposta curta. */
-export const buscaDoGuia = (guia: Pick<Guia, 'pergunta' | 'respostaCurta' | 'seo'>): Busca =>
-  comSeo(guia.seo, { titulo: textoPuro(guia.pergunta), descricao: cortar(textoPuro(guia.respostaCurta)) })
+export const buscaDoGuia = (
+  guia: Pick<Guia, 'pergunta' | 'respostaCurta' | 'seo'>,
+): Busca =>
+  comSeo(guia.seo, {
+    titulo: textoPuro(guia.pergunta),
+    descricao: cortar(textoPuro(guia.respostaCurta)),
+  })
 
 /** Tema: o título e o parágrafo de contexto. */
-export const buscaDoTema = (tema: Pick<Tema, 'titulo' | 'contexto' | 'seo'>): Busca =>
-  comSeo(tema.seo, { titulo: textoPuro(tema.titulo), descricao: cortar(textoPuro(tema.contexto)) })
+export const buscaDoTema = (
+  tema: Pick<Tema, 'titulo' | 'contexto' | 'seo'>,
+): Busca =>
+  comSeo(tema.seo, {
+    titulo: textoPuro(tema.titulo),
+    descricao: cortar(textoPuro(tema.contexto)),
+  })
 
 /** Ficha: "Autor ano: tema" e o primeiro achado. */
-export function buscaDaFicha(ficha: Pick<Ficha, 'titulo' | 'achados' | 'referencia' | 'seo'>): Busca {
+export function buscaDaFicha(
+  ficha: Pick<Ficha, 'titulo' | 'achados' | 'referencia' | 'seo'>,
+): Busca {
   const primeiro = ficha.achados[0]
   return comSeo(ficha.seo, {
     titulo: textoPuro(ficha.titulo.replace(/\s*\((\d{4}[a-z]?)\)/, ' $1')),
-    descricao: cortar(textoPuro(primeiro ? `${primeiro.medida}: ${primeiro.valor}.` : ficha.referencia)),
+    descricao: cortar(
+      textoPuro(
+        primeiro ? `${primeiro.medida}: ${primeiro.valor}.` : ficha.referencia,
+      ),
+    ),
   })
 }
 
@@ -93,13 +123,16 @@ export function caminhosDoSite(acervo: Acervo): Set<string> {
 }
 
 export function sitemapXml(acervo: Acervo): string {
-  const urls = caminhosDoSitemap(acervo).map((c) => `  <url><loc>${ORIGEM}${c}</loc></url>`)
+  const urls = caminhosDoSitemap(acervo).map(
+    (c) => `  <url><loc>${ORIGEM}${c}</loc></url>`,
+  )
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`
 }
 
 /** Tudo liberado: o que fica fora da busca leva `noindex` na página, que o
  * buscador só lê se puder abrir a página. */
-export const robotsTxt = (): string => `User-agent: *\nAllow: /\n\nSitemap: ${ORIGEM}/sitemap.xml\n`
+export const robotsTxt = (): string =>
+  `User-agent: *\nAllow: /\n\nSitemap: ${ORIGEM}/sitemap.xml\n`
 
 /** Um caminho antigo declarado no `antes` de um arquivo. */
 export interface CaminhoAntigo {
@@ -116,17 +149,32 @@ export function caminhosAntigos(acervo: Acervo): CaminhoAntigo[] {
   const lista: CaminhoAntigo[] = []
   for (const ficha of acervo.fichas)
     for (const slug of ficha.antes ?? [])
-      lista.push({ antigo: `/estudos/${slug}`, novo: caminhoDaFicha(ficha), arquivo: ficha.arquivo })
+      lista.push({
+        antigo: `/estudos/${slug}`,
+        novo: caminhoDaFicha(ficha),
+        arquivo: ficha.arquivo,
+      })
   for (const dica of acervo.dicas)
     for (const slug of dica.antes ?? [])
-      lista.push({ antigo: `/dicas/${slug}`, novo: caminhoDaDica(dica), arquivo: dica.arquivo })
+      lista.push({
+        antigo: `/dicas/${slug}`,
+        novo: caminhoDaDica(dica),
+        arquivo: dica.arquivo,
+      })
   for (const tema of acervo.temas)
     for (const slug of tema.antes ?? [])
-      lista.push({ antigo: `/${slug}`, novo: caminhoDoTema(tema), arquivo: tema.arquivo })
+      lista.push({
+        antigo: `/${slug}`,
+        novo: caminhoDoTema(tema),
+        arquivo: tema.arquivo,
+      })
   for (const guia of acervo.guias) {
     const novo = caminhoDoGuia(guia)
     const antes = guia.antes ?? []
-    const temas = [guia.tema, ...(acervo.temas.find((t) => t.slug === guia.tema)?.antes ?? [])]
+    const temas = [
+      guia.tema,
+      ...(acervo.temas.find((t) => t.slug === guia.tema)?.antes ?? []),
+    ]
     const slugs = [guia.slug, ...antes.filter((a) => !a.includes('/'))]
     for (const slug of slugs)
       for (const tema of temas) {

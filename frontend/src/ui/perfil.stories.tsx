@@ -18,7 +18,11 @@ export const SemPerfil: Story = {}
 export const ValeParaVoce: Story = { args: { veredito: { cobre: true } } }
 
 /** Quem procura ambos e só um lado tem dado. */
-export const SoUmLado: Story = { args: { veredito: { cobre: true, so: 'mulheres' } } }
+export const SoUmLado: Story = {
+  args: { veredito: { cobre: true, so: 'mulheres' } },
+}
 
 /** O achado não cobre: anel vazio e a frase em negrito, sem rosa. */
-export const SemDado: Story = { args: { texto: 'casais homem-mulher.', veredito: { cobre: false } } }
+export const SemDado: Story = {
+  args: { texto: 'casais homem-mulher.', veredito: { cobre: false } },
+}

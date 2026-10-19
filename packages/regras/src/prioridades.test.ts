@@ -27,11 +27,32 @@ const CARS: ReadonlyArray<CaracteristicaComEvidencia> = [
     atracao: celula(2),
     satisfacao: celula(0),
     duracao: celula(0),
-    vies: { homem: 'Homens declaram menos.', mulher: 'Mulheres declaram mais.' },
+    vies: {
+      homem: 'Homens declaram menos.',
+      mulher: 'Mulheres declaram mais.',
+    },
   },
-  { id: 'parecido', nome: 'Ser parecido comigo', atracao: celula(1), satisfacao: celula(1), duracao: celula(0) },
-  { id: 'gentileza', nome: 'Gentileza', atracao: celula(0), satisfacao: celula(2), duracao: celula(1) },
-  { id: 'idade', nome: 'Idade parecida', atracao: celula(0), satisfacao: celula(0), duracao: celula(1) },
+  {
+    id: 'parecido',
+    nome: 'Ser parecido comigo',
+    atracao: celula(1),
+    satisfacao: celula(1),
+    duracao: celula(0),
+  },
+  {
+    id: 'gentileza',
+    nome: 'Gentileza',
+    atracao: celula(0),
+    satisfacao: celula(2),
+    duracao: celula(1),
+  },
+  {
+    id: 'idade',
+    nome: 'Idade parecida',
+    atracao: celula(0),
+    satisfacao: celula(0),
+    duracao: celula(1),
+  },
 ]
 
 describe('degrau', () => {
@@ -45,15 +66,23 @@ describe('degrau', () => {
 describe('alternarNoTopo3', () => {
   it('tocar dá o próximo número', () => {
     expect(alternarNoTopo3([], 'renda')).toEqual(['renda'])
-    expect(alternarNoTopo3(['renda'], 'aparencia')).toEqual(['renda', 'aparencia'])
+    expect(alternarNoTopo3(['renda'], 'aparencia')).toEqual([
+      'renda',
+      'aparencia',
+    ])
   })
 
   it('tocar de novo tira e renumera as outras', () => {
-    expect(alternarNoTopo3(['renda', 'aparencia', 'idade'], 'renda')).toEqual(['aparencia', 'idade'])
+    expect(alternarNoTopo3(['renda', 'aparencia', 'idade'], 'renda')).toEqual([
+      'aparencia',
+      'idade',
+    ])
   })
 
   it('com três escolhidas, tocar numa quarta não muda nada', () => {
-    expect(alternarNoTopo3(['renda', 'aparencia', 'idade'], 'gentileza')).toEqual(['renda', 'aparencia', 'idade'])
+    expect(
+      alternarNoTopo3(['renda', 'aparencia', 'idade'], 'gentileza'),
+    ).toEqual(['renda', 'aparencia', 'idade'])
   })
 })
 
@@ -68,7 +97,11 @@ describe('prateleiras', () => {
   })
 
   it('as escolhidas vêm primeiro na prateleira, na ordem do topo 3', () => {
-    const [, poucoPeso, , semDado] = prateleiras(CARS, 'satisfacao', ['idade', 'gentileza', 'renda'])
+    const [, poucoPeso, , semDado] = prateleiras(CARS, 'satisfacao', [
+      'idade',
+      'gentileza',
+      'renda',
+    ])
     expect(poucoPeso?.ids).toEqual(['gentileza', 'aparencia'])
     expect(semDado?.ids).toEqual(['idade', 'renda'])
   })
@@ -76,7 +109,9 @@ describe('prateleiras', () => {
 
 describe('alertaDoTopo3', () => {
   it('sem nada em "quase nada" ou "não sabemos", não há alerta', () => {
-    expect(alertaDoTopo3(CARS, ['aparencia', 'gentileza'], 'satisfacao')).toBeNull()
+    expect(
+      alertaDoTopo3(CARS, ['aparencia', 'gentileza'], 'satisfacao'),
+    ).toBeNull()
     expect(alertaDoTopo3(CARS, [], 'satisfacao')).toBeNull()
   })
 
@@ -93,10 +128,14 @@ describe('alertaDoTopo3', () => {
   })
 
   it('junta os dois casos e põe o plural, na ordem do topo 3', () => {
-    expect(alertaDoTopo3(CARS, ['idade', 'aparencia', 'gentileza'], 'atracao')).toBe(
+    expect(
+      alertaDoTopo3(CARS, ['idade', 'aparencia', 'gentileza'], 'atracao'),
+    ).toBe(
       'No seu topo 3, para atração: para idade parecida e gentileza não há boa evidência.',
     )
-    expect(alertaDoTopo3(CARS, ['gentileza', 'idade', 'parecido'], 'duracao')).toBe(
+    expect(
+      alertaDoTopo3(CARS, ['gentileza', 'idade', 'parecido'], 'duracao'),
+    ).toBe(
       'No seu topo 3, para duração: gentileza e idade parecida pesam quase nada; para ser parecido comigo não há boa evidência.',
     )
   })
@@ -108,9 +147,15 @@ describe('alertaDoTopo3', () => {
 
 describe('viesPara', () => {
   it('o viés que vale para todos aparece com ou sem gênero', () => {
-    expect(viesPara(CARS[0]!, undefined)).toBe('Pesa mais na atração do que se diz.')
-    expect(viesPara(CARS[0]!, 'mulher')).toBe('Pesa mais na atração do que se diz.')
-    expect(viesPara(CARS[0]!, 'outro')).toBe('Pesa mais na atração do que se diz.')
+    expect(viesPara(CARS[0]!, undefined)).toBe(
+      'Pesa mais na atração do que se diz.',
+    )
+    expect(viesPara(CARS[0]!, 'mulher')).toBe(
+      'Pesa mais na atração do que se diz.',
+    )
+    expect(viesPara(CARS[0]!, 'outro')).toBe(
+      'Pesa mais na atração do que se diz.',
+    )
   })
 
   it('o viés por gênero segue o gênero do Perfil', () => {
@@ -130,7 +175,9 @@ describe('viesPara', () => {
 
 describe('lerPrioridades', () => {
   it('aceita o topo 3 ordenado e o desfecho', () => {
-    expect(lerPrioridades({ topo3: ['renda', 'aparencia'], desfecho: 'duracao' })).toEqual({
+    expect(
+      lerPrioridades({ topo3: ['renda', 'aparencia'], desfecho: 'duracao' }),
+    ).toEqual({
       topo3: ['renda', 'aparencia'],
       desfecho: 'duracao',
     })
@@ -144,14 +191,21 @@ describe('lerPrioridades', () => {
   })
 
   it('descarta repetidas, não texto, e o que passa de três', () => {
-    expect(lerPrioridades({ topo3: ['renda', 'renda', 7, 'Não Slug', 'a', 'b', 'c'], desfecho: 'atracao' })).toEqual({
+    expect(
+      lerPrioridades({
+        topo3: ['renda', 'renda', 7, 'Não Slug', 'a', 'b', 'c'],
+        desfecho: 'atracao',
+      }),
+    ).toEqual({
       topo3: ['renda', 'a', 'b'],
       desfecho: 'atracao',
     })
   })
 
   it('fica só com as ids que existem, quando a lista é dada', () => {
-    expect(lerPrioridades({ topo3: ['renda', 'sumiu'] }, ['renda', 'aparencia'])).toEqual({
+    expect(
+      lerPrioridades({ topo3: ['renda', 'sumiu'] }, ['renda', 'aparencia']),
+    ).toEqual({
       topo3: ['renda'],
       desfecho: 'satisfacao',
     })
@@ -160,6 +214,9 @@ describe('lerPrioridades', () => {
   it('devolve null para o que não é um objeto', () => {
     expect(lerPrioridades(null)).toBeNull()
     expect(lerPrioridades('renda')).toBeNull()
-    expect(lerPrioridades({ topo3: 'renda' })).toEqual({ topo3: [], desfecho: 'satisfacao' })
+    expect(lerPrioridades({ topo3: 'renda' })).toEqual({
+      topo3: [],
+      desfecho: 'satisfacao',
+    })
   })
 })

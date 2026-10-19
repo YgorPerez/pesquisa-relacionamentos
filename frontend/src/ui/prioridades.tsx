@@ -24,11 +24,21 @@ import type {
 import { DegrausCheios, ForcaDaEvidencia, StatusDeVerificacao } from './selos'
 
 /** Os três degraus cheios conforme o peso, ou o anel vazio de "não sabemos". */
-export function PesoDaEvidencia({ degrau: n, largura = 36 }: { degrau: Degrau; largura?: number }) {
+export function PesoDaEvidencia({
+  degrau: n,
+  largura = 36,
+}: {
+  degrau: Degrau
+  largura?: number
+}) {
   return n > 0 ? (
     <DegrausCheios cheios={n} largura={largura} />
   ) : (
-    <span className="anel-do-peso" style={{ width: largura / 3, height: largura / 3 }} aria-hidden="true" />
+    <span
+      className="anel-do-peso"
+      style={{ width: largura / 3, height: largura / 3 }}
+      aria-hidden="true"
+    />
   )
 }
 
@@ -56,13 +66,33 @@ function Posicao({ i }: { i: number }) {
 }
 
 const Seta = () => (
-  <svg width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    width="26"
+    height="16"
+    viewBox="0 0 26 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M2 8.5C9 7.4 16 8.2 23 8M23 8l-6-5.5M23 8l-6 5.5" />
   </svg>
 )
 
 const Atencao = () => (
-  <svg className="alerta-icone" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    className="alerta-icone"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M12.4 2.6c5.4.2 9 4 8.9 9.2-.2 5.4-4.1 9-9.3 8.9-5.3-.1-9.1-3.9-8.9-9.2.2-5 4-8.8 9.6-8.9" />
     <path d="M12 7.2l-.2 6.4" strokeWidth="2.6" />
     <circle cx="11.8" cy="16.8" r=".6" fill="currentColor" strokeWidth="1.6" />
@@ -73,7 +103,11 @@ const Atencao = () => (
 function FonteDaCelula({ ficha }: { ficha: FichaDaPrioridade }) {
   return (
     <p className="fonte-da-celula">
-      <Link to="/estudos/$slug" params={{ slug: ficha.slug }} className="fonte-nome">
+      <Link
+        to="/estudos/$slug"
+        params={{ slug: ficha.slug }}
+        className="fonte-nome"
+      >
         {ficha.nome}
       </Link>
       <StatusDeVerificacao status={ficha.status} />
@@ -84,13 +118,20 @@ function FonteDaCelula({ ficha }: { ficha: FichaDaPrioridade }) {
 
 /** A barra da Joel 2020: o que explica a satisfação com a relação. A curta
  * vai no cartão do B1; a longa abre com a frase e diz que a lista cabe nos 5%. */
-export function BarraDaSatisfacao({ barra, curta = false }: { barra: Barra; curta?: boolean }) {
+export function BarraDaSatisfacao({
+  barra,
+  curta = false,
+}: {
+  barra: Barra
+  curta?: boolean
+}) {
   return (
     <div className="barra-satisfacao">
       {!curta && (
         <p>
-          <b>Antes da lista.</b> No estudo que juntou 43 bases de casais, o que mais explicou a satisfação foi
-          como a pessoa vive a relação, não quem o parceiro é.
+          <b>Antes da lista.</b> No estudo que juntou 43 bases de casais, o que
+          mais explicou a satisfação foi como a pessoa vive a relação, não quem
+          o parceiro é.
         </p>
       )}
       <div
@@ -98,9 +139,18 @@ export function BarraDaSatisfacao({ barra, curta = false }: { barra: Barra; curt
         role="img"
         aria-label={`Satisfação: ${barra.relacao}% explicado pela relação, ${barra.parceiro}% pelo parceiro, ${barra.semExplicacao}% sem explicação`}
       >
-        <span className="fatia-relacao" style={{ width: `${barra.relacao}%` }} />
-        <span className="fatia-parceiro" style={{ width: `${barra.parceiro}%` }} />
-        <span className="fatia-sem" style={{ width: `${barra.semExplicacao}%` }} />
+        <span
+          className="fatia-relacao"
+          style={{ width: `${barra.relacao}%` }}
+        />
+        <span
+          className="fatia-parceiro"
+          style={{ width: `${barra.parceiro}%` }}
+        />
+        <span
+          className="fatia-sem"
+          style={{ width: `${barra.semExplicacao}%` }}
+        />
       </div>
       <dl className="barra-legenda">
         <dt>
@@ -112,7 +162,10 @@ export function BarraDaSatisfacao({ barra, curta = false }: { barra: Barra; curt
           <i className="fatia-parceiro" />
           <b>{barra.parceiro}%</b>
         </dt>
-        <dd>tudo o que se sabe do parceiro{curta ? '' : ': a lista abaixo inteira cabe aqui'}</dd>
+        <dd>
+          tudo o que se sabe do parceiro
+          {curta ? '' : ': a lista abaixo inteira cabe aqui'}
+        </dd>
         <dt>
           <i className="fatia-sem" />
           <b>{barra.semExplicacao}%</b>
@@ -125,8 +178,10 @@ export function BarraDaSatisfacao({ barra, curta = false }: { barra: Barra; curt
 }
 
 function estadoDaEscolha(quantas: number): string {
-  if (quantas >= TAMANHO_DO_TOPO) return 'Pronto. Para trocar, toque numa das escolhidas e ela sai.'
-  if (quantas === 0) return 'Nenhuma escolhida ainda. Dá para ver as prateleiras mesmo assim.'
+  if (quantas >= TAMANHO_DO_TOPO)
+    return 'Pronto. Para trocar, toque numa das escolhidas e ela sai.'
+  if (quantas === 0)
+    return 'Nenhuma escolhida ainda. Dá para ver as prateleiras mesmo assim.'
   const falta = TAMANHO_DO_TOPO - quantas
   return falta > 1 ? `Faltam ${falta}.` : 'Falta 1.'
 }
@@ -237,12 +292,19 @@ function DetalheDaCaracteristica({
   const celula = car[desfecho]
   const vies = viesPara(car, genero)
   return (
-    <div id={id} className="detalhe-caracteristica" role="region" aria-label={`${car.nome}, ${NOME_DO_DESFECHO[desfecho].toLowerCase()}`}>
+    <div
+      id={id}
+      className="detalhe-caracteristica"
+      role="region"
+      aria-label={`${car.nome}, ${NOME_DO_DESFECHO[desfecho].toLowerCase()}`}
+    >
       <p className="detalhe-titulo">
         {car.nome} · {NOME_DO_DESFECHO[desfecho].toLowerCase()}
       </p>
       <p>{celula.texto}</p>
-      {celula.medida && <p className="detalhe-medida">Medida: {celula.medida}</p>}
+      {celula.medida && (
+        <p className="detalhe-medida">Medida: {celula.medida}</p>
+      )}
       {celula.ficha && (
         <>
           <FonteDaCelula ficha={celula.ficha} />
@@ -276,9 +338,17 @@ export function Estante({
     <div className="estante">
       {prateleiras(caracteristicas, desfecho, topo3).map((prat) => {
         const detalhe = `detalhe-${prat.degrau}`
-        const abertaAqui = aberta !== null && prat.ids.includes(aberta) ? porId.get(aberta) : undefined
+        const abertaAqui =
+          aberta !== null && prat.ids.includes(aberta)
+            ? porId.get(aberta)
+            : undefined
         return (
-          <section key={prat.degrau} className="prateleira" data-degrau={prat.degrau} aria-labelledby={`prat-${prat.degrau}`}>
+          <section
+            key={prat.degrau}
+            className="prateleira"
+            data-degrau={prat.degrau}
+            aria-labelledby={`prat-${prat.degrau}`}
+          >
             <h3 id={`prat-${prat.degrau}`} className="prateleira-titulo">
               <PesoDaEvidencia degrau={prat.degrau} largura={42} />
               {prat.nome}
@@ -308,7 +378,14 @@ export function Estante({
               <p className="prateleira-vazia">nenhuma</p>
             )}
             <div className="tabua" aria-hidden="true" />
-            {abertaAqui && <DetalheDaCaracteristica car={abertaAqui} desfecho={desfecho} genero={genero} id={detalhe} />}
+            {abertaAqui && (
+              <DetalheDaCaracteristica
+                car={abertaAqui}
+                desfecho={desfecho}
+                genero={genero}
+                id={detalhe}
+              />
+            )}
           </section>
         )
       })}
@@ -327,9 +404,14 @@ export function CartaoDePrioridades({
   caracteristicas: ReadonlyArray<CaracteristicaVista>
   topo3: ReadonlyArray<string>
 }) {
-  const escolhidas = topo3.flatMap((id) => caracteristicas.filter((c) => c.id === id))
+  const escolhidas = topo3.flatMap((id) =>
+    caracteristicas.filter((c) => c.id === id),
+  )
   return (
-    <section className="secao cartao-calculadora" aria-labelledby="t-cartao-prioridades">
+    <section
+      className="secao cartao-calculadora"
+      aria-labelledby="t-cartao-prioridades"
+    >
       <h2 id="t-cartao-prioridades" className="headline">
         Onde ficam as suas prioridades?
       </h2>
@@ -337,7 +419,9 @@ export function CartaoDePrioridades({
         <BarraDaSatisfacao barra={barra} curta />
         {escolhidas.length > 0 && (
           <>
-            <p className="rotulo-calculadora">Seu topo 3 cabe na fatia de {barra.parceiro}%:</p>
+            <p className="rotulo-calculadora">
+              Seu topo 3 cabe na fatia de {barra.parceiro}%:
+            </p>
             <ol className="topo3-no-cartao">
               {escolhidas.map((car, i) => (
                 <li key={car.id}>
@@ -354,7 +438,9 @@ export function CartaoDePrioridades({
         )}
         <p className="acoes-calculadora">
           <Link to="/prioridades" className="botao com-reticula botao-link">
-            {escolhidas.length > 0 ? 'Ver a lista inteira' : 'Escolher as suas três e comparar'}
+            {escolhidas.length > 0
+              ? 'Ver a lista inteira'
+              : 'Escolher as suas três e comparar'}
             <Seta />
           </Link>
         </p>

@@ -22,7 +22,11 @@ export function Topo() {
           Tem estudo?
         </Link>
         {tema?.tema && (
-          <Link to="/$tema" params={{ tema: tema.tema }} className="etiqueta-tema">
+          <Link
+            to="/$tema"
+            params={{ tema: tema.tema }}
+            className="etiqueta-tema"
+          >
             <span>{tema.temaTitulo}</span>
           </Link>
         )}

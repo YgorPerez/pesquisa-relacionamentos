@@ -5,7 +5,10 @@ import { navegadorPedeParaNaoContar } from './contagem'
 const ENDPOINT = 'https://stats.temestudo.com/count'
 const campos = (url: string): Record<string, string> => {
   const u = new URL(url)
-  return { endereco: `${u.origin}${u.pathname}`, ...Object.fromEntries(u.searchParams) }
+  return {
+    endereco: `${u.origin}${u.pathname}`,
+    ...Object.fromEntries(u.searchParams),
+  }
 }
 
 describe('urlDaContagem', () => {
@@ -27,7 +30,12 @@ describe('urlDaContagem', () => {
   })
 
   test('o caminho perde a query e o fragmento, se vierem', () => {
-    const url = urlDaContagem(ENDPOINT, { caminho: '/?v=1&g=h#perfil', largura: 390, robo: 0, rnd: 'x' })
+    const url = urlDaContagem(ENDPOINT, {
+      caminho: '/?v=1&g=h#perfil',
+      largura: 390,
+      robo: 0,
+      rnd: 'x',
+    })
     expect(campos(url).p).toBe('/')
   })
 
@@ -51,7 +59,13 @@ describe('urlDaContagem', () => {
   })
 
   test('referência que não é endereço fica de fora', () => {
-    const url = urlDaContagem(ENDPOINT, { caminho: '/', referencia: 'lixo', largura: 1, robo: 0, rnd: 'z' })
+    const url = urlDaContagem(ENDPOINT, {
+      caminho: '/',
+      referencia: 'lixo',
+      largura: 1,
+      robo: 0,
+      rnd: 'z',
+    })
     expect(campos(url).r).toBeUndefined()
   })
 })

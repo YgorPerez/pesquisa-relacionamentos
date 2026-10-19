@@ -38,7 +38,11 @@ export interface CaracteristicaComEvidencia {
   readonly satisfacao: { readonly degrau: Degrau }
   readonly duracao: { readonly degrau: Degrau }
   /** A distância entre o que se declara e o que se escolhe, por gênero. */
-  readonly vies?: { readonly todos?: string; readonly homem?: string; readonly mulher?: string }
+  readonly vies?: {
+    readonly todos?: string
+    readonly homem?: string
+    readonly mulher?: string
+  }
 }
 
 export interface EstadoDasPrioridades {
@@ -47,11 +51,17 @@ export interface EstadoDasPrioridades {
   readonly desfecho: Desfecho
 }
 
-export const degrau = (car: CaracteristicaComEvidencia, desfecho: Desfecho): Degrau => car[desfecho].degrau
+export const degrau = (
+  car: CaracteristicaComEvidencia,
+  desfecho: Desfecho,
+): Degrau => car[desfecho].degrau
 
 /** Tocar numa característica: entra com o próximo número; se já está, sai e as
  * outras sobem. Com três, as outras não entram (o visitante troca tirando uma). */
-export function alternarNoTopo3(topo3: ReadonlyArray<string>, id: string): ReadonlyArray<string> {
+export function alternarNoTopo3(
+  topo3: ReadonlyArray<string>,
+  id: string,
+): ReadonlyArray<string> {
   if (topo3.includes(id)) return topo3.filter((outra) => outra !== id)
   return topo3.length >= TAMANHO_DO_TOPO ? topo3 : [...topo3, id]
 }
@@ -84,7 +94,9 @@ export function prateleiras(
 }
 
 const emLista = (nomes: ReadonlyArray<string>): string =>
-  nomes.length < 2 ? (nomes[0] ?? '') : `${nomes.slice(0, -1).join(', ')} e ${nomes[nomes.length - 1]}`
+  nomes.length < 2
+    ? (nomes[0] ?? '')
+    : `${nomes.slice(0, -1).join(', ')} e ${nomes[nomes.length - 1]}`
 
 /** A frase do alerta: o que do topo 3 cai em "quase nada" ou em "não sabemos"
  * no desfecho. Sem número e sem julgamento; `null` quando não há o que dizer. */
@@ -93,12 +105,18 @@ export function alertaDoTopo3(
   topo3: ReadonlyArray<string>,
   desfecho: Desfecho,
 ): string | null {
-  const escolhidas = topo3.flatMap((id) => caracteristicas.filter((c) => c.id === id))
-  const nomes = (n: Degrau) => escolhidas.filter((c) => degrau(c, desfecho) === n).map((c) => c.nome.toLowerCase())
+  const escolhidas = topo3.flatMap((id) =>
+    caracteristicas.filter((c) => c.id === id),
+  )
+  const nomes = (n: Degrau) =>
+    escolhidas
+      .filter((c) => degrau(c, desfecho) === n)
+      .map((c) => c.nome.toLowerCase())
   const quaseNada = nomes(1)
   const semDado = nomes(0)
   const partes = [
-    quaseNada.length > 0 && `${emLista(quaseNada)} ${quaseNada.length > 1 ? 'pesam' : 'pesa'} quase nada`,
+    quaseNada.length > 0 &&
+      `${emLista(quaseNada)} ${quaseNada.length > 1 ? 'pesam' : 'pesa'} quase nada`,
     semDado.length > 0 && `para ${emLista(semDado)} não há boa evidência`,
   ].filter(Boolean)
   if (partes.length === 0) return null
@@ -107,10 +125,14 @@ export function alertaDoTopo3(
 
 /** A nota de viés que vale para o gênero do Perfil. A de um gênero só não
  * aparece para quem não disse o gênero ou disse "outro". */
-export function viesPara(car: CaracteristicaComEvidencia, genero: GeneroDoPerfil | undefined): string | null {
+export function viesPara(
+  car: CaracteristicaComEvidencia,
+  genero: GeneroDoPerfil | undefined,
+): string | null {
   const vies = car.vies
   if (!vies) return null
-  if (genero === 'homem' || genero === 'mulher') return vies[genero] ?? vies.todos ?? null
+  if (genero === 'homem' || genero === 'mulher')
+    return vies[genero] ?? vies.todos ?? null
   return vies.todos ?? null
 }
 
@@ -119,8 +141,12 @@ const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 /** Lê o estado de fonte não confiável (localStorage, query do link do #34):
  * fica o que é válido. `ids`, quando dada, limita o topo 3 às características
  * que existem nos dados. */
-export function lerPrioridades(valor: unknown, ids?: ReadonlyArray<string>): EstadoDasPrioridades | null {
-  if (typeof valor !== 'object' || valor === null || Array.isArray(valor)) return null
+export function lerPrioridades(
+  valor: unknown,
+  ids?: ReadonlyArray<string>,
+): EstadoDasPrioridades | null {
+  if (typeof valor !== 'object' || valor === null || Array.isArray(valor))
+    return null
   const bruto = valor as Record<string, unknown>
   const lista = Array.isArray(bruto.topo3) ? bruto.topo3 : []
   const topo3: string[] = []
@@ -130,6 +156,7 @@ export function lerPrioridades(valor: unknown, ids?: ReadonlyArray<string>): Est
     if (ids && !ids.includes(id)) continue
     topo3.push(id)
   }
-  const desfecho = DESFECHOS.find((d) => d === bruto.desfecho) ?? DESFECHO_INICIAL
+  const desfecho =
+    DESFECHOS.find((d) => d === bruto.desfecho) ?? DESFECHO_INICIAL
   return { topo3, desfecho }
 }

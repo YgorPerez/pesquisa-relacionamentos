@@ -9,8 +9,19 @@ function Calculadora() {
   const [aberta, setAberta] = useState<string | null>(null)
   return (
     <>
-      <EscolhaDoTopo3 caracteristicas={CARACTERISTICAS} topo3={topo3} aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))} />
-      <Estante caracteristicas={CARACTERISTICAS} desfecho="satisfacao" topo3={topo3} aberta={aberta} aoAbrir={setAberta} genero={undefined} />
+      <EscolhaDoTopo3
+        caracteristicas={CARACTERISTICAS}
+        topo3={topo3}
+        aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))}
+      />
+      <Estante
+        caracteristicas={CARACTERISTICAS}
+        desfecho="satisfacao"
+        topo3={topo3}
+        aberta={aberta}
+        aoAbrir={setAberta}
+        genero={undefined}
+      />
     </>
   )
 }
@@ -29,5 +40,11 @@ export const ChipsEPrateleiras: Story = {}
 
 /** O cartão do Guia B1 com um topo 3 escolhido. */
 export const CartaoDoB1: Story = {
-  render: () => <CartaoDePrioridades barra={BARRA} caracteristicas={CARACTERISTICAS} topo3={['sexo', 'parecido', 'renda']} />,
+  render: () => (
+    <CartaoDePrioridades
+      barra={BARRA}
+      caracteristicas={CARACTERISTICAS}
+      topo3={['sexo', 'parecido', 'renda']}
+    />
+  ),
 }

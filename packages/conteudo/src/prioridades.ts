@@ -12,9 +12,14 @@ import { decodificar, problema, type Problema } from './problemas.ts'
 export const ARQUIVO_DE_PRIORIDADES = 'dados/prioridades/prioridades.yaml'
 export const META_DE_PRIORIDADES = 'dados/prioridades/prioridades.meta.yaml'
 
-const Texto = Schema.String.check(Schema.isMinLength(1, { message: 'não pode ficar vazio' }))
+const Texto = Schema.String.check(
+  Schema.isMinLength(1, { message: 'não pode ficar vazio' }),
+)
 const Porcento = Schema.Int.check(
-  Schema.isBetween({ minimum: 0, maximum: 100 }, { message: 'porcentagem inteira de 0 a 100' }),
+  Schema.isBetween(
+    { minimum: 0, maximum: 100 },
+    { message: 'porcentagem inteira de 0 a 100' },
+  ),
 )
 
 /** Uma célula característica × desfecho. Sem Ficha, só o degrau 0. */
@@ -57,7 +62,9 @@ const ArquivoDePrioridades = Schema.Struct({
   caracteristicas: Schema.Array(Caracteristica),
 })
 
-export interface Prioridades extends Schema.Schema.Type<typeof ArquivoDePrioridades> {
+export interface Prioridades extends Schema.Schema.Type<
+  typeof ArquivoDePrioridades
+> {
   /** Caminho do arquivo a partir da raiz do repositório. */
   readonly arquivo: string
 }
@@ -74,9 +81,14 @@ export function fichaDosDados(
   fichas: ReadonlyArray<Ficha>,
 ): Problema | null {
   const ficha = fichas.find((f) => f.slug === slug)
-  if (!ficha) return problema(arquivo, `não existe a Ficha estudos/${slug}.md`, campo)
+  if (!ficha)
+    return problema(arquivo, `não existe a Ficha estudos/${slug}.md`, campo)
   if (ficha.status === 'nao-verificado')
-    return problema(arquivo, `${slug} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`, campo)
+    return problema(
+      arquivo,
+      `${slug} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`,
+      campo,
+    )
   return null
 }
 
@@ -102,7 +114,10 @@ export function lerPrioridades(
   try {
     valor = lerYaml(texto) ?? {}
   } catch (e) {
-    return { ok: false, erros: [problema(arquivo, `não é YAML válido: ${(e as Error).message}`)] }
+    return {
+      ok: false,
+      erros: [problema(arquivo, `não é YAML válido: ${(e as Error).message}`)],
+    }
   }
   const lido = decodificar(ArquivoDePrioridades, valor, arquivo)
   if (!lido.ok) return { ok: false, erros: lido.problemas }
@@ -112,14 +127,29 @@ export function lerPrioridades(
   const soma = barra.relacao + barra.parceiro + barra.sem_explicacao
   if (soma !== 100)
     erros.push(
-      problema(arquivo, `relação, parceiro e sem explicação somam ${soma}%, e não 100%`, 'satisfacao_explicada'),
+      problema(
+        arquivo,
+        `relação, parceiro e sem explicação somam ${soma}%, e não 100%`,
+        'satisfacao_explicada',
+      ),
     )
-  const daBarra = fichaDosDados(arquivo, 'satisfacao_explicada.ficha', barra.ficha, fichas)
+  const daBarra = fichaDosDados(
+    arquivo,
+    'satisfacao_explicada.ficha',
+    barra.ficha,
+    fichas,
+  )
   if (daBarra) erros.push(daBarra)
 
   caracteristicas.forEach((car, i) => {
     if (caracteristicas.findIndex((outra) => outra.id === car.id) !== i)
-      erros.push(problema(arquivo, `a característica "${car.id}" aparece mais de uma vez`, `caracteristicas.${i}.id`))
+      erros.push(
+        problema(
+          arquivo,
+          `a característica "${car.id}" aparece mais de uma vez`,
+          `caracteristicas.${i}.id`,
+        ),
+      )
     for (const desfecho of DESFECHOS) {
       const celula = car[desfecho]
       const campo = `caracteristicas.${i}.${desfecho}.ficha`
@@ -139,5 +169,7 @@ export function lerPrioridades(
     }
   })
 
-  return erros.length > 0 ? { ok: false, erros } : { ok: true, prioridades: { arquivo, ...lido.valor } }
+  return erros.length > 0
+    ? { ok: false, erros }
+    : { ok: true, prioridades: { arquivo, ...lido.valor } }
 }

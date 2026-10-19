@@ -1,22 +1,47 @@
 // Guias, Temas e Dicas no formato que as páginas desenham. O markdown vira
 // HTML no servidor, com as referências `[@slug]` numeradas pela ordem das
 // Fichas citadas e o número-chave `==…==` em rosa.
-import type { Acervo, Cobre, Dica, Ficha, Forca, Guia, Tema } from '@tem-estudo/conteudo'
-import { buscaDaDica, buscaDoGuia, buscaDoTema, type Busca } from '@tem-estudo/conteudo/busca'
+import type {
+  Acervo,
+  Cobre,
+  Dica,
+  Ficha,
+  Forca,
+  Guia,
+  Tema,
+} from '@tem-estudo/conteudo'
+import {
+  buscaDaDica,
+  buscaDoGuia,
+  buscaDoTema,
+  type Busca,
+} from '@tem-estudo/conteudo/busca'
 import { dicaPublicada } from '@tem-estudo/conteudo/consultas'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 
-const ESCAPAR: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }
-const escapar = (texto: string) => texto.replace(/[&<>"]/g, (c) => ESCAPAR[c] ?? c)
+const ESCAPAR: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+}
+const escapar = (texto: string) =>
+  texto.replace(/[&<>"]/g, (c) => ESCAPAR[c] ?? c)
 
 /** As Fichas numeradas de uma página: a referência N leva à Ficha N da lista. */
-type Numeracao = ReadonlyMap<string, { readonly n: number; readonly titulo: string }>
+type Numeracao = ReadonlyMap<
+  string,
+  { readonly n: number; readonly titulo: string }
+>
 
 function numerar(slugs: ReadonlyArray<string>, acervo: Acervo): Numeracao {
   return new Map(
     slugs.map((slug, i) => [
       slug,
-      { n: i + 1, titulo: acervo.fichas.find((f) => f.slug === slug)?.titulo ?? slug },
+      {
+        n: i + 1,
+        titulo: acervo.fichas.find((f) => f.slug === slug)?.titulo ?? slug,
+      },
     ]),
   )
 }
@@ -34,7 +59,10 @@ const REFS = /\s*((?:\[@[a-z0-9-]+\]\s*)+)/g
 /** Troca `[@slug]` pelo número no anel e gruda o número na palavra anterior
  * e na pontuação seguinte (The Glued Ref Rule). */
 function comReferencias(markdown: string, numeros: Numeracao): string {
-  const marcado = markdown.replace(/==([^=\n]+)==/g, '<mark class="numero-chave">$1</mark>')
+  const marcado = markdown.replace(
+    /==([^=\n]+)==/g,
+    '<mark class="numero-chave">$1</mark>',
+  )
   return marcado.replace(
     /([^\s<>[\]]*)\s*((?:\[@[a-z0-9-]+\]\s*)*\[@[a-z0-9-]+\])([.,;:!?]*)/g,
     (_, palavra: string, refs: string, pontuacao: string) => {
@@ -52,15 +80,22 @@ export function trechoComReferencias(
   markdown: string,
   fichas: ReadonlyArray<{ readonly slug: string; readonly titulo: string }>,
 ): string {
-  const numeros: Numeracao = new Map(fichas.map((f, i) => [f.slug, { n: i + 1, titulo: f.titulo }]))
+  const numeros: Numeracao = new Map(
+    fichas.map((f, i) => [f.slug, { n: i + 1, titulo: f.titulo }]),
+  )
   return htmlEmLinha(comReferencias(markdown, numeros))
 }
 
 /** Texto em linha com as referências das Fichas da lista antes da pontuação
  * final: "por app ①." */
-function textoComFichas(texto: string, fichas: ReadonlyArray<string>, numeros: Numeracao): string {
+function textoComFichas(
+  texto: string,
+  fichas: ReadonlyArray<string>,
+  numeros: Numeracao,
+): string {
   const refs = fichas.map((s) => `[@${s}]`).join('')
-  const [, corpo = '', ponto = ''] = /^([\s\S]*?)([.!?]*)$/.exec(texto.trimEnd()) ?? []
+  const [, corpo = '', ponto = ''] =
+    /^([\s\S]*?)([.!?]*)$/.exec(texto.trimEnd()) ?? []
   return htmlEmLinha(comReferencias(`${corpo}${refs}${ponto}`, numeros))
 }
 
@@ -78,9 +113,15 @@ export function semMarcas(markdown: string): string {
 /** As Fichas citadas na frase do número-chave (`==…==`) da resposta curta:
  * é o `cobre` delas que diz se o número vale para o Perfil. `null` se não há
  * número marcado ou se a frase dele não cita Ficha. */
-export function fichasDoNumeroChave(markdown: string): ReadonlyArray<string> | null {
-  const frase = markdown.split(/(?<=[.!?])\s+/).find((f) => /==[^=\n]+==/.test(f))
-  const slugs = [...(frase ?? '').matchAll(/\[@([a-z0-9-]+)\]/g)].map((m) => m[1] ?? '')
+export function fichasDoNumeroChave(
+  markdown: string,
+): ReadonlyArray<string> | null {
+  const frase = markdown
+    .split(/(?<=[.!?])\s+/)
+    .find((f) => /==[^=\n]+==/.test(f))
+  const slugs = [...(frase ?? '').matchAll(/\[@([a-z0-9-]+)\]/g)].map(
+    (m) => m[1] ?? '',
+  )
   return slugs.length > 0 ? slugs : null
 }
 
@@ -91,7 +132,10 @@ const primeiraFrase = (markdown: string): string => {
 
 /** A Pergunta com a única palavra em amarelo (`==palavra==`). */
 const perguntaHtml = (pergunta: string) =>
-  escapar(pergunta).replace(/==([^=]+)==/, '<span class="marca-texto">$1</span>')
+  escapar(pergunta).replace(
+    /==([^=]+)==/,
+    '<span class="marca-texto">$1</span>',
+  )
 
 const IDADE_MAXIMA = 120
 
@@ -100,8 +144,10 @@ function umCobre(cobre: Cobre): string {
   if (cobre.casal === 'hetero') partes.push('casais homem-mulher')
   else if (cobre.casal === 'mesmo-sexo') partes.push('casais do mesmo sexo')
   const generos = cobre.generos ?? []
-  if (generos.length === 1) partes.push(generos[0] === 'homem' ? 'só homens' : 'só mulheres')
-  else if (generos.length === 2 && !cobre.casal) partes.push('homens e mulheres')
+  if (generos.length === 1)
+    partes.push(generos[0] === 'homem' ? 'só homens' : 'só mulheres')
+  else if (generos.length === 2 && !cobre.casal)
+    partes.push('homens e mulheres')
   const procura = cobre.procura ?? []
   if (procura.length === 1) partes.push(`que procuram ${procura[0]}`)
   if (cobre.idades)
@@ -125,7 +171,12 @@ function valePara(cobres: ReadonlyArray<Cobre>): string {
 /** País e ano da amostra, curtos para a caixinha ao lado do achado. */
 function ondeEQuando(paises: ReadonlyArray<string>, periodo: string) {
   return {
-    pais: paises.length === 0 ? 'país não informado' : paises.length > 2 ? `${paises.length} países` : paises.join(', '),
+    pais:
+      paises.length === 0
+        ? 'país não informado'
+        : paises.length > 2
+          ? `${paises.length} países`
+          : paises.join(', '),
     periodo,
   }
 }
@@ -172,10 +223,16 @@ export interface GuiaVista extends GuiaResumo {
   readonly achados: ReadonlyArray<AchadoVista>
   readonly divergencia: {
     readonly melhorDesenhoHtml: string
-    readonly lados: ReadonlyArray<{ readonly titulo: string; readonly html: string }>
+    readonly lados: ReadonlyArray<{
+      readonly titulo: string
+      readonly html: string
+    }>
   } | null
   readonly perfilHtml: string
-  readonly mitos: ReadonlyArray<{ readonly afirmacao: string; readonly porQueNaoHtml: string }>
+  readonly mitos: ReadonlyArray<{
+    readonly afirmacao: string
+    readonly porQueNaoHtml: string
+  }>
   readonly limitacoesHtml: string
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly relacionadas: ReadonlyArray<GuiaResumo>
@@ -197,16 +254,24 @@ export function resumoDoGuia(guia: Guia): GuiaResumo {
 const fichaDoAcervo = (acervo: Acervo, slug: string): Ficha | undefined =>
   acervo.fichas.find((f) => f.slug === slug)
 
-function fichasCitadas(slugs: ReadonlyArray<string>, acervo: Acervo): FichaCitada[] {
+function fichasCitadas(
+  slugs: ReadonlyArray<string>,
+  acervo: Acervo,
+): FichaCitada[] {
   return slugs.flatMap((slug, i) => {
     const ficha = fichaDoAcervo(acervo, slug)
     return ficha ? [{ ...resumo(ficha), n: i + 1, ancora: ancora(slug) }] : []
   })
 }
 
-function cobreDaChave(respostaCurta: string, acervo: Acervo): ReadonlyArray<Cobre> | null {
+function cobreDaChave(
+  respostaCurta: string,
+  acervo: Acervo,
+): ReadonlyArray<Cobre> | null {
   const slugs = fichasDoNumeroChave(respostaCurta)
-  return slugs && slugs.flatMap((slug) => fichaDoAcervo(acervo, slug)?.cobre ?? [])
+  return (
+    slugs && slugs.flatMap((slug) => fichaDoAcervo(acervo, slug)?.cobre ?? [])
+  )
 }
 
 export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
@@ -240,7 +305,9 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
     })),
     divergencia: guia.divergencia
       ? {
-          melhorDesenhoHtml: htmlEmLinha(comReferencias(guia.divergencia.melhor_desenho, numeros)),
+          melhorDesenhoHtml: htmlEmLinha(
+            comReferencias(guia.divergencia.melhor_desenho, numeros),
+          ),
           lados: guia.divergencia.lados.map((l) => ({
             titulo: l.titulo,
             html: textoComFichas(l.texto, l.fichas, numeros),
@@ -281,7 +348,10 @@ export function vistaDoTema(tema: Tema, acervo: Acervo): TemaVista {
     // no Guia, e o Tema não faz afirmação nova (#7).
     guias: acervo.guias
       .filter((g) => g.tema === tema.slug)
-      .map((g) => ({ ...resumoDoGuia(g), respostaHtml: html(semReferencias(g.respostaCurta)) })),
+      .map((g) => ({
+        ...resumoDoGuia(g),
+        respostaHtml: html(semReferencias(g.respostaCurta)),
+      })),
   }
 }
 
@@ -314,7 +384,9 @@ export function vistaDaDica(dica: Dica, acervo: Acervo): DicaVista {
     ...resumoDaDica(dica),
     valePara: valePara(dica.cobre),
     fichas: fichasCitadas(dica.fichas, acervo),
-    guias: acervo.guias.filter((g) => g.dicas.includes(dica.slug)).map(resumoDoGuia),
+    guias: acervo.guias
+      .filter((g) => g.dicas.includes(dica.slug))
+      .map(resumoDoGuia),
     busca: buscaDaDica(dica),
   }
 }
@@ -327,7 +399,9 @@ export interface CitadaEm {
 /** Os Guias e as Dicas publicadas que citam a Ficha, para a página dela. O
  * Guia conta também quando a Ficha entra só por uma Dica dele. */
 export const citadaEm = (slug: string, acervo: Acervo): CitadaEm => ({
-  guias: acervo.guias.filter((g) => g.fichasCitadas.includes(slug)).map(resumoDoGuia),
+  guias: acervo.guias
+    .filter((g) => g.fichasCitadas.includes(slug))
+    .map(resumoDoGuia),
   dicas: acervo.dicas
     .filter((d) => dicaPublicada(d) && d.fichas.includes(slug))
     .map(resumoDaDica),

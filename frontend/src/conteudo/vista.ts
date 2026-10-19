@@ -25,8 +25,10 @@ const marked = new Marked({
   },
 })
 
-export const html = (markdown: string) => marked.parse(markdown, { async: false })
-export const htmlEmLinha = (markdown: string) => marked.parseInline(markdown, { async: false })
+export const html = (markdown: string) =>
+  marked.parse(markdown, { async: false })
+export const htmlEmLinha = (markdown: string) =>
+  marked.parseInline(markdown, { async: false })
 
 export interface AchadoVista {
   readonly medida: string
@@ -60,7 +62,10 @@ export interface FichaVista extends FichaResumo {
   readonly oQueMediuHtml: string
   readonly achados: ReadonlyArray<AchadoVista>
   readonly notasDosAchadosHtml: string | null
-  readonly outrasSecoes: ReadonlyArray<{ readonly titulo: string; readonly html: string }>
+  readonly outrasSecoes: ReadonlyArray<{
+    readonly titulo: string
+    readonly html: string
+  }>
   readonly limitacoesHtml: string
   readonly indexar: boolean
   /** Título e descrição de busca (#15). */
@@ -70,7 +75,9 @@ export interface FichaVista extends FichaResumo {
 const numero = new Intl.NumberFormat('pt-BR')
 
 /** "EUA · 2017 · 5.421 participantes", a linha curta de contexto da lista. */
-function contexto(ficha: Pick<Ficha, 'paises' | 'periodo' | 'amostra'>): string {
+function contexto(
+  ficha: Pick<Ficha, 'paises' | 'periodo' | 'amostra'>,
+): string {
   const { paises } = ficha
   const partes = [
     paises.length === 0
@@ -118,8 +125,13 @@ export function vista(ficha: Ficha, indexar: boolean): FichaVista {
     licenca: ficha.licenca ?? null,
     oQueMediuHtml: html(ficha.oQueMediu),
     achados: ficha.achados.map(vistaDoAchado),
-    notasDosAchadosHtml: ficha.notasDosAchados ? html(ficha.notasDosAchados) : null,
-    outrasSecoes: ficha.outrasSecoes.map((s) => ({ titulo: s.titulo, html: html(s.markdown) })),
+    notasDosAchadosHtml: ficha.notasDosAchados
+      ? html(ficha.notasDosAchados)
+      : null,
+    outrasSecoes: ficha.outrasSecoes.map((s) => ({
+      titulo: s.titulo,
+      html: html(s.markdown),
+    })),
     limitacoesHtml: html(ficha.limitacoes),
     indexar,
     busca: buscaDaFicha(ficha),

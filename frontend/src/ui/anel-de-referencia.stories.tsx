@@ -4,19 +4,34 @@ import { trechoComReferencias } from '#/conteudo/vista-guia'
 import { Html } from './guia'
 
 const FICHAS = [
-  { slug: 'silva-2020-apps-brasil', titulo: 'Silva e Souza (2020): apps de namoro no Brasil' },
-  { slug: 'costa-2018-satisfacao', titulo: 'Costa (2018): satisfação e onde os casais se conheceram' },
+  {
+    slug: 'silva-2020-apps-brasil',
+    titulo: 'Silva e Souza (2020): apps de namoro no Brasil',
+  },
+  {
+    slug: 'costa-2018-satisfacao',
+    titulo: 'Costa (2018): satisfação e onde os casais se conheceram',
+  },
 ]
 
 /** Um parágrafo do Guia, com o HTML que o servidor monta do markdown. */
 function Paragrafo({ markdown }: { markdown: string }) {
-  return <Html como="p" className="prosa" html={trechoComReferencias(markdown, FICHAS)} />
+  return (
+    <Html
+      como="p"
+      className="prosa"
+      html={trechoComReferencias(markdown, FICHAS)}
+    />
+  )
 }
 
 const meta = {
   component: Paragrafo,
   parameters: { layout: 'padded' },
-  args: { markdown: 'No Brasil, ==18%== dos casais se conheceram por app [@silva-2020-apps-brasil].' },
+  args: {
+    markdown:
+      'No Brasil, ==18%== dos casais se conheceram por app [@silva-2020-apps-brasil].',
+  },
 } satisfies Meta<typeof Paragrafo>
 
 export default meta
@@ -45,5 +60,8 @@ export const DuasReferencias: Story = {
 /** No fim de uma linha estreita, o anel desce junto com a palavra. */
 export const NaQuebraDeLinha: Story = {
   decorators: [(Story) => <div style={{ maxWidth: 220 }}>{Story()}</div>],
-  args: { markdown: 'Quase um em cada cinco casais brasileiros se conheceu por aplicativo [@costa-2018-satisfacao].' },
+  args: {
+    markdown:
+      'Quase um em cada cinco casais brasileiros se conheceu por aplicativo [@costa-2018-satisfacao].',
+  },
 }

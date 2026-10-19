@@ -1,16 +1,30 @@
 // O frontmatter da Ficha (#10, #5, #16), em Effect Schema. O validador do
 // build e o app leem o mesmo esquema; as listas fechadas vêm de `listas.ts`.
 import { Schema } from 'effect'
-import { CALCULADORAS, CASAIS, DESENHOS, FORCAS, GENEROS, PROCURA, STATUS } from './listas.ts'
+import {
+  CALCULADORAS,
+  CASAIS,
+  DESENHOS,
+  FORCAS,
+  GENEROS,
+  PROCURA,
+  STATUS,
+} from './listas.ts'
 
-const Texto = Schema.String.check(Schema.isMinLength(1, { message: 'não pode ficar vazio' }))
+const Texto = Schema.String.check(
+  Schema.isMinLength(1, { message: 'não pode ficar vazio' }),
+)
 
 const Data = Schema.String.check(
-  Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { message: 'use a data como AAAA-MM-DD' }),
+  Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, {
+    message: 'use a data como AAAA-MM-DD',
+  }),
 )
 
 const Url = Schema.String.check(
-  Schema.isPattern(/^https?:\/\/\S+$/, { message: 'precisa ser uma URL começando com http' }),
+  Schema.isPattern(/^https?:\/\/\S+$/, {
+    message: 'precisa ser uma URL começando com http',
+  }),
 )
 
 /** Slug de arquivo: minúsculas, sem acento, com hífen (#15). */
@@ -21,7 +35,10 @@ export const Slug = Schema.String.check(
 )
 
 const Idade = Schema.Int.check(
-  Schema.isBetween({ minimum: 0, maximum: 120 }, { message: 'idade entre 0 e 120' }),
+  Schema.isBetween(
+    { minimum: 0, maximum: 120 },
+    { message: 'idade entre 0 e 120' },
+  ),
 )
 
 /** Quem a amostra cobre. Chave ausente quer dizer que o estudo não separou. */
@@ -115,7 +132,11 @@ export const Divergencia = Schema.Struct({
 })
 export type Divergencia = typeof Divergencia.Type
 
-export const Mito = Schema.Struct({ afirmacao: Texto, por_que_nao: Texto, fichas: Slugs })
+export const Mito = Schema.Struct({
+  afirmacao: Texto,
+  por_que_nao: Texto,
+  fichas: Slugs,
+})
 export type Mito = typeof Mito.Type
 
 /** `guias/<tema>/<slug>.md`: o corpo traz a resposta curta (antes do primeiro
@@ -123,9 +144,13 @@ export type Mito = typeof Mito.Type
 /** O `antes` do Guia: o slug antigo no mesmo Tema, ou `tema/slug` quando o
  * Guia veio de outro Tema. */
 const CaminhoDeGuia = Schema.String.check(
-  Schema.isPattern(/^(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-    message: 'use o slug antigo ou tema/slug, em minúsculas sem acento, com hífen',
-  }),
+  Schema.isPattern(
+    /^(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?[a-z0-9]+(?:-[a-z0-9]+)*$/,
+    {
+      message:
+        'use o slug antigo ou tema/slug, em minúsculas sem acento, com hífen',
+    },
+  ),
 )
 
 export const FrontmatterGuia = Schema.Struct({

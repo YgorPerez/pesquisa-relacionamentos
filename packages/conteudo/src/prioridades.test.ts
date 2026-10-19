@@ -3,15 +3,26 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
-import { formatarProblemas, lerArquivos, montarAcervo, type Arquivo, type Resultado } from './index.ts'
+import {
+  formatarProblemas,
+  lerArquivos,
+  montarAcervo,
+  type Arquivo,
+  type Resultado,
+} from './index.ts'
 
-const fixture = (nome: string) => fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))
+const fixture = (nome: string) =>
+  fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))
 const ficha = (slug: string): Arquivo => ({
   caminho: `estudos/${slug}.md`,
   texto: readFileSync(`${fixture('valido')}/estudos/${slug}.md`, 'utf8'),
 })
 // silva-2020 é ✅, costa-2018 é 🟡, lima-2015 é ⬜.
-const FICHAS = [ficha('silva-2020-apps-brasil'), ficha('costa-2018-satisfacao'), ficha('lima-2015-encontros')]
+const FICHAS = [
+  ficha('silva-2020-apps-brasil'),
+  ficha('costa-2018-satisfacao'),
+  ficha('lima-2015-encontros'),
+]
 
 const ARQUIVO = 'dados/prioridades/prioridades.yaml'
 const META: Arquivo = {
@@ -44,7 +55,12 @@ caracteristicas:
     vies: { homem: Homens dão menos peso., mulher: Mulheres dão mais peso. }
 `
 
-const com = (texto: string, ...outros: Arquivo[]): Arquivo[] => [...FICHAS, META, { caminho: ARQUIVO, texto }, ...outros]
+const com = (texto: string, ...outros: Arquivo[]): Arquivo[] => [
+  ...FICHAS,
+  META,
+  { caminho: ARQUIVO, texto },
+  ...outros,
+]
 
 function erros(resultado: Resultado): string[] {
   if (resultado.ok) throw new Error('o acervo devia ter falhado')
@@ -66,7 +82,14 @@ describe('arquivo de Prioridades', () => {
       parceiro: 5,
       sem_explicacao: 50,
     })
-    expect(prioridades?.caracteristicas.map((c) => [c.id, c.atracao.degrau, c.satisfacao.degrau, c.duracao.degrau])).toEqual([
+    expect(
+      prioridades?.caracteristicas.map((c) => [
+        c.id,
+        c.atracao.degrau,
+        c.satisfacao.degrau,
+        c.duracao.degrau,
+      ]),
+    ).toEqual([
       ['aparencia', 3, 2, 0],
       ['renda', 2, 0, 1],
     ])
@@ -76,13 +99,18 @@ describe('arquivo de Prioridades', () => {
       texto_simples: 'Quem é mais bonito atrai mais.',
       ficha: 'silva-2020-apps-brasil',
     })
-    expect(prioridades?.caracteristicas[1]?.vies).toEqual({ homem: 'Homens dão menos peso.', mulher: 'Mulheres dão mais peso.' })
+    expect(prioridades?.caracteristicas[1]?.vies).toEqual({
+      homem: 'Homens dão menos peso.',
+      mulher: 'Mulheres dão mais peso.',
+    })
   })
 
   it('o .meta.yaml dele entra nos dados como os outros', () => {
     const resultado = montarAcervo(com(PRIORIDADES))
     if (!resultado.ok) throw new Error(formatarProblemas(resultado.erros))
-    expect(resultado.acervo.dados.map((d) => d.arquivo)).toEqual(['dados/prioridades/prioridades.meta.yaml'])
+    expect(resultado.acervo.dados.map((d) => d.arquivo)).toEqual([
+      'dados/prioridades/prioridades.meta.yaml',
+    ])
   })
 
   it('sem o arquivo, não há Prioridades', () => {
@@ -90,13 +118,20 @@ describe('arquivo de Prioridades', () => {
   })
 
   it('falha sem o .meta.yaml ao lado', () => {
-    expect(erros(montarAcervo([...FICHAS, { caminho: ARQUIVO, texto: PRIORIDADES }]))).toEqual([
+    expect(
+      erros(
+        montarAcervo([...FICHAS, { caminho: ARQUIVO, texto: PRIORIDADES }]),
+      ),
+    ).toEqual([
       `${ARQUIVO}: falta o prioridades.meta.yaml ao lado, com a Ficha, as variáveis, a data, o script e a versão`,
     ])
   })
 
   it('falha quando uma célula cita Ficha ⬜ ou que não existe', () => {
-    const texto = PRIORIDADES.replace('ficha: costa-2018-satisfacao }\n    duracao: { degrau: 0', 'ficha: lima-2015-encontros }\n    duracao: { degrau: 0').replace(
+    const texto = PRIORIDADES.replace(
+      'ficha: costa-2018-satisfacao }\n    duracao: { degrau: 0',
+      'ficha: lima-2015-encontros }\n    duracao: { degrau: 0',
+    ).replace(
       'Pesa pouco na atração., ficha: silva-2020-apps-brasil',
       'Pesa pouco na atração., ficha: sumida-2000',
     )
@@ -107,14 +142,20 @@ describe('arquivo de Prioridades', () => {
   })
 
   it('falha quando a barra da satisfação cita Ficha ⬜', () => {
-    const texto = PRIORIDADES.replace('  ficha: silva-2020-apps-brasil\n  relacao', '  ficha: lima-2015-encontros\n  relacao')
+    const texto = PRIORIDADES.replace(
+      '  ficha: silva-2020-apps-brasil\n  relacao',
+      '  ficha: lima-2015-encontros\n  relacao',
+    )
     expect(erros(montarAcervo(com(texto)))).toEqual([
       `${ARQUIVO}: satisfacao_explicada.ficha: lima-2015-encontros é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`,
     ])
   })
 
   it('falha quando um degrau acima de "não sabemos" não diz a Ficha', () => {
-    const texto = PRIORIDADES.replace('Pesa pouco na atração., ficha: silva-2020-apps-brasil', 'Pesa pouco na atração.')
+    const texto = PRIORIDADES.replace(
+      'Pesa pouco na atração., ficha: silva-2020-apps-brasil',
+      'Pesa pouco na atração.',
+    )
     expect(erros(montarAcervo(com(texto)))).toEqual([
       `${ARQUIVO}: caracteristicas.1.atracao.ficha: o degrau 2 precisa da Ficha que o sustenta; sem Ficha, só o 0 ("não sabemos")`,
     ])
@@ -127,7 +168,10 @@ describe('arquivo de Prioridades', () => {
     expect(erros(montarAcervo(com(texto)))).toEqual([
       `${ARQUIVO}: caracteristicas.0.atracao.degrau: valor fora da lista fechada (0 | 1 | 2 | 3) (veio 4)`,
     ])
-    const semDegrauRuim = PRIORIDADES.replace('id: renda', 'id: aparencia').replace('parceiro: 5', 'parceiro: 6')
+    const semDegrauRuim = PRIORIDADES.replace(
+      'id: renda',
+      'id: aparencia',
+    ).replace('parceiro: 5', 'parceiro: 6')
     expect(erros(montarAcervo(com(semDegrauRuim)))).toEqual([
       `${ARQUIVO}: satisfacao_explicada: relação, parceiro e sem explicação somam 101%, e não 100%`,
       `${ARQUIVO}: caracteristicas.1.id: a característica "aparencia" aparece mais de uma vez`,
@@ -162,17 +206,31 @@ describe('o rascunho de Prioridades do repositório', () => {
     ])
     const problemas = resultado.ok ? [] : resultado.erros.map((e) => e.mensagem)
     expect(problemas.length).toBeGreaterThan(0)
-    expect(problemas.filter((m) => !m.includes('é ⬜ (não verificada)'))).toEqual([])
+    expect(
+      problemas.filter((m) => !m.includes('é ⬜ (não verificada)')),
+    ).toEqual([])
 
     // Com as Fichas citadas marcadas como conferidas, o mesmo rascunho passa.
     const conferidas = lerArquivos(raiz).map((a) =>
       a.caminho.startsWith('estudos/')
-        ? { ...a, texto: a.texto.replace(/^status: nao-verificado$/m, 'status: parcial\nverificado_em: 2026-10-19') }
+        ? {
+            ...a,
+            texto: a.texto.replace(
+              /^status: nao-verificado$/m,
+              'status: parcial\nverificado_em: 2026-10-19',
+            ),
+          }
         : a,
     )
-    const publicado = montarAcervo([...conferidas, rascunho('prioridades.yaml'), rascunho('prioridades.meta.yaml')])
+    const publicado = montarAcervo([
+      ...conferidas,
+      rascunho('prioridades.yaml'),
+      rascunho('prioridades.meta.yaml'),
+    ])
     if (!publicado.ok) throw new Error(formatarProblemas(publicado.erros))
-    expect(publicado.acervo.prioridades?.caracteristicas.map((c) => c.id)).toEqual([
+    expect(
+      publicado.acervo.prioridades?.caracteristicas.map((c) => c.id),
+    ).toEqual([
       'aparencia',
       'sexo',
       'renda',

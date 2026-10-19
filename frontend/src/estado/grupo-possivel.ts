@@ -7,10 +7,20 @@
 // Perfil. A conta roda aqui, sobre os pacotes por lugar que o build grava
 // (`vite/grupo-possivel.ts`, baixados por `pacotes-do-grupo.ts`): nada do
 // que o visitante pede sai do aparelho.
-import type { DadosDoLugar, LugarDoPacote } from '@tem-estudo/regras/grupo-possivel-dados'
-import { estimarGrupo, type Estimativa } from '@tem-estudo/regras/grupo-possivel'
+import type {
+  DadosDoLugar,
+  LugarDoPacote,
+} from '@tem-estudo/regras/grupo-possivel-dados'
+import {
+  estimarGrupo,
+  type Estimativa,
+} from '@tem-estudo/regras/grupo-possivel'
 import type { Perfil } from '@tem-estudo/regras/perfil'
-import { lerRequisitos, REQUISITOS_PADRAO, type Requisitos } from '@tem-estudo/regras/requisitos'
+import {
+  lerRequisitos,
+  REQUISITOS_PADRAO,
+  type Requisitos,
+} from '@tem-estudo/regras/requisitos'
 import { useEffect, useMemo, useState } from 'react'
 import grupoPossivel from 'virtual:grupo-possivel'
 import { armazenado, useArmazenado } from './armazenado'
@@ -24,7 +34,8 @@ import {
 const requisitosSalvos = armazenado<Requisitos>('grupo-possivel', lerRequisitos)
 
 /** Os Requisitos salvos; `null` se o visitante nunca mexeu (e no servidor). */
-export const useRequisitosSalvos = (): Requisitos | null => useArmazenado(requisitosSalvos)
+export const useRequisitosSalvos = (): Requisitos | null =>
+  useArmazenado(requisitosSalvos)
 
 /** Salva os Requisitos (validados como quem lê); `null` apaga. */
 export const gravarRequisitos = (requisitos: Requisitos | null) =>
@@ -49,7 +60,10 @@ export interface ContaNoNavegador {
 }
 
 /** A conta do Perfil e dos Requisitos, refeita a cada mudança. */
-export function useGrupoPossivel(perfil: Perfil | null, salvos: Requisitos | null): ContaNoNavegador {
+export function useGrupoPossivel(
+  perfil: Perfil | null,
+  salvos: Requisitos | null,
+): ContaNoNavegador {
   const requisitos = salvos ?? REQUISITOS_PADRAO
   const uf = requisitos.lugar?.uf
   const precisa: LugarDoPacote[] = uf ? ['BR', uf] : ['BR']
@@ -72,7 +86,10 @@ export function useGrupoPossivel(perfil: Perfil | null, salvos: Requisitos | nul
       return estimarGrupo({ perfil, requisitos }, dados)
     } catch {
       // Um município salvo que os dados de agora não têm: vale a UF inteira.
-      const naUf = { ...requisitos, lugar: requisitos.lugar && { uf: requisitos.lugar.uf } }
+      const naUf = {
+        ...requisitos,
+        lugar: requisitos.lugar && { uf: requisitos.lugar.uf },
+      }
       return estimarGrupo({ perfil, requisitos: naUf }, dados)
     }
   }, [prontos, deExemplo, perfil, requisitos, brasil, daUf])

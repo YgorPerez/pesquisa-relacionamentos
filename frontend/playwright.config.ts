@@ -31,7 +31,10 @@ export default defineConfig({
     // A suíte inteira também no desktop, onde a coluna vira folha sobre a
     // retícula. Um teste que só faz sentido num dos dois diz isso nele, com
     // `test.skip(!isMobile, …)` ou o contrário.
-    { name: 'desktop', use: { ...devices['Desktop Chrome'], channel: 'chrome' } },
+    {
+      name: 'desktop',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    },
   ],
   // O build do e2e lê o conteúdo de fixture (`e2e/acervo`), com uma Ficha de
   // cada Status, e não o acervo do repositório. Rode `pnpm build` de novo

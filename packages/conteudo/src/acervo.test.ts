@@ -12,7 +12,8 @@ import {
   type Resultado,
 } from './index.ts'
 
-const fixture = (nome: string) => fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))
+const fixture = (nome: string) =>
+  fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))
 
 function acervoDe(resultado: Resultado): Acervo {
   if (!resultado.ok) throw new Error(formatarProblemas(resultado.erros))
@@ -38,7 +39,10 @@ describe('carregar o acervo', () => {
   })
 
   it('devolve a Ficha com o frontmatter, o título e o DOI tirado do link', () => {
-    const ficha = fichaPorSlug(acervoDe(carregarAcervo(fixture('valido'))), 'silva-2020-apps-brasil')
+    const ficha = fichaPorSlug(
+      acervoDe(carregarAcervo(fixture('valido'))),
+      'silva-2020-apps-brasil',
+    )
     expect(ficha).toMatchObject({
       arquivo: 'estudos/silva-2020-apps-brasil.md',
       titulo: 'Silva e Souza (2020): apps de namoro no Brasil',
@@ -61,14 +65,20 @@ describe('carregar o acervo', () => {
   })
 
   it('corta o corpo em O que mediu, Achados com trecho, Limitações e Como usamos', () => {
-    const ficha = fichaPorSlug(acervoDe(carregarAcervo(fixture('valido'))), 'silva-2020-apps-brasil')
-    expect(ficha?.oQueMediu).toBe('Quantos adultos jovens conheceram o parceiro atual por app.')
+    const ficha = fichaPorSlug(
+      acervoDe(carregarAcervo(fixture('valido'))),
+      'silva-2020-apps-brasil',
+    )
+    expect(ficha?.oQueMediu).toBe(
+      'Quantos adultos jovens conheceram o parceiro atual por app.',
+    )
     expect(ficha?.achados).toEqual([
       {
         medida: 'Conheceram o parceiro por app',
         valor: '18%',
         onde: 'Tabela 2, p. 50',
-        trecho: '"18% dos participantes conheceram o parceiro atual por aplicativo"',
+        trecho:
+          '"18% dos participantes conheceram o parceiro atual por aplicativo"',
         calculo: null,
       },
       {
@@ -84,12 +94,18 @@ describe('carregar o acervo', () => {
   })
 
   it('aceita Ficha não verificada sem trecho, sem data e com seção a mais', () => {
-    const ficha = fichaPorSlug(acervoDe(carregarAcervo(fixture('valido'))), 'lima-2015-encontros')
+    const ficha = fichaPorSlug(
+      acervoDe(carregarAcervo(fixture('valido'))),
+      'lima-2015-encontros',
+    )
     expect(ficha?.status).toBe('nao-verificado')
     expect(ficha?.verificado_em).toBeUndefined()
     expect(ficha?.achados[0]?.trecho).toBeNull()
     expect(ficha?.outrasSecoes).toEqual([
-      { titulo: 'Brasil na amostra', markdown: 'Nenhum participante brasileiro.' },
+      {
+        titulo: 'Brasil na amostra',
+        markdown: 'Nenhum participante brasileiro.',
+      },
     ])
     expect(ficha?.comoUsamos).toBeNull()
     expect(ficha?.doi).toBe('10.5555/lima.2015')
@@ -159,9 +175,9 @@ X.
 
 X.
 `
-    expect(errosDe(montarAcervo([{ caminho: 'estudos/x-2020.md', texto }]))).toEqual([
-      'estudos/x-2020.md: cobre.idades: min (40) passa de max (30)',
-    ])
+    expect(
+      errosDe(montarAcervo([{ caminho: 'estudos/x-2020.md', texto }])),
+    ).toEqual(['estudos/x-2020.md: cobre.idades: min (40) passa de max (30)'])
   })
 
   it('dois Estudos com o mesmo DOI falham, mesmo escrito de outro jeito', () => {
@@ -183,7 +199,11 @@ X.
       '| Medida | Valor | Onde | Trecho |',
       '| Medida | Valor | Onde no texto |',
     )
-    expect(errosDe(montarAcervo([{ caminho: 'estudos/lima-2015-encontros.md', texto }]))).toEqual([
+    expect(
+      errosDe(
+        montarAcervo([{ caminho: 'estudos/lima-2015-encontros.md', texto }]),
+      ),
+    ).toEqual([
       'estudos/lima-2015-encontros.md: Achados: a tabela precisa das colunas | Medida | Valor | Onde | Trecho | (e | Cálculo | opcional), veio | Medida | Valor | Onde no texto |',
     ])
   })
@@ -201,13 +221,18 @@ X.
       errosDe(
         montarAcervo([
           { caminho: 'estudos/sem-2020.md', texto: '# Sem (2020): nada\n' },
-          { caminho: 'estudos/quebrado-2020.md', texto: '---\nstatus: [ok\n---\n# Q\n' },
+          {
+            caminho: 'estudos/quebrado-2020.md',
+            texto: '---\nstatus: [ok\n---\n# Q\n',
+          },
         ]),
       ),
     ).toEqual(
       expect.arrayContaining([
         'estudos/sem-2020.md: falta o frontmatter (o bloco --- do topo)',
-        expect.stringMatching(/^estudos\/quebrado-2020\.md: o frontmatter não é YAML válido/),
+        expect.stringMatching(
+          /^estudos\/quebrado-2020\.md: o frontmatter não é YAML válido/,
+        ),
       ]),
     )
   })
@@ -225,7 +250,10 @@ describe('origem dos dados (.meta.yaml)', () => {
     caminho: `estudos/${slug}.md`,
     texto: textoDaFixture(pasta, slug),
   })
-  const meta = (corpo: string) => ({ caminho: 'dados/grupo-possivel/censo.meta.yaml', texto: corpo })
+  const meta = (corpo: string) => ({
+    caminho: 'dados/grupo-possivel/censo.meta.yaml',
+    texto: corpo,
+  })
   const META_OK = `ficha: silva-2020-apps-brasil
 tabela: ["Microdados, arquivo de pessoas"]
 variaveis: [P0110, P0150]
@@ -249,13 +277,23 @@ versao: "arquivo de 2026-09-14"
   })
 
   it('aceita o .meta.yaml que cita uma Ficha ✅', () => {
-    const resultado = montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(META_OK)])
+    const resultado = montarAcervo([
+      ficha('valido', 'silva-2020-apps-brasil'),
+      meta(META_OK),
+    ])
     expect(acervoDe(resultado).dados[0]?.variaveis).toEqual(['P0110', 'P0150'])
   })
 
   it('falha quando o .meta.yaml cita uma Ficha ⬜', () => {
-    const texto = META_OK.replace('silva-2020-apps-brasil', 'lima-2015-encontros')
-    expect(errosDe(montarAcervo([ficha('valido', 'lima-2015-encontros'), meta(texto)]))).toEqual([
+    const texto = META_OK.replace(
+      'silva-2020-apps-brasil',
+      'lima-2015-encontros',
+    )
+    expect(
+      errosDe(
+        montarAcervo([ficha('valido', 'lima-2015-encontros'), meta(texto)]),
+      ),
+    ).toEqual([
       'dados/grupo-possivel/censo.meta.yaml: ficha: lima-2015-encontros é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡',
     ])
   })
@@ -267,15 +305,30 @@ versao: "arquivo de 2026-09-14"
   })
 
   it('falha com campo ausente, data errada ou sem tabela nem variáveis', () => {
-    const texto = 'ficha: silva-2020-apps-brasil\nbaixado_em: ontem\nscript: x.ts\n'
-    expect(errosDe(montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(texto)]))).toEqual(
+    const texto =
+      'ficha: silva-2020-apps-brasil\nbaixado_em: ontem\nscript: x.ts\n'
+    expect(
+      errosDe(
+        montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(texto)]),
+      ),
+    ).toEqual(
       expect.arrayContaining([
         'dados/grupo-possivel/censo.meta.yaml: baixado_em: use a data como AAAA-MM-DD (veio "ontem")',
         'dados/grupo-possivel/censo.meta.yaml: versao: campo obrigatório ausente',
       ]),
     )
-    const semTabela = META_OK.replace(/^tabela:.*\n/m, '').replace(/^variaveis:.*\n/m, '')
-    expect(errosDe(montarAcervo([ficha('valido', 'silva-2020-apps-brasil'), meta(semTabela)]))).toEqual([
+    const semTabela = META_OK.replace(/^tabela:.*\n/m, '').replace(
+      /^variaveis:.*\n/m,
+      '',
+    )
+    expect(
+      errosDe(
+        montarAcervo([
+          ficha('valido', 'silva-2020-apps-brasil'),
+          meta(semTabela),
+        ]),
+      ),
+    ).toEqual([
       'dados/grupo-possivel/censo.meta.yaml: diga a tabela ou as variáveis de onde os dados saíram',
     ])
   })
@@ -285,7 +338,9 @@ describe('o acervo do repositório', () => {
   it('carrega as Fichas: as 30 antigas não verificadas até serem refeitas (#6), as do IBGE conferidas (#36)', () => {
     const raiz = fileURLToPath(new URL('../../..', import.meta.url))
     const acervo = acervoDe(carregarAcervo(raiz))
-    const conferidas = acervo.fichas.filter((f) => f.status !== 'nao-verificado').map((f) => f.slug)
+    const conferidas = acervo.fichas
+      .filter((f) => f.status !== 'nao-verificado')
+      .map((f) => f.slug)
     expect(conferidas).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
     expect(acervo.fichas).toHaveLength(32)
   })
@@ -296,9 +351,18 @@ describe('o acervo do repositório', () => {
     expect(acervo.dados.map((d) => [d.arquivo, d.ficha])).toEqual([
       ['dados/grupo-possivel/censo-2022.meta.yaml', 'ibge-2022-censo-amostra'],
       ['dados/grupo-possivel/pns-2019.meta.yaml', 'ibge-2019-pns'],
-      ['dados/grupo-possivel/sidra-10185-municipios.meta.yaml', 'ibge-2022-censo-amostra'],
-      ['dados/grupo-possivel/sidra-9514-idade.meta.yaml', 'ibge-2022-censo-amostra'],
-      ['dados/grupo-possivel/sidra-9514-municipios.meta.yaml', 'ibge-2022-censo-amostra'],
+      [
+        'dados/grupo-possivel/sidra-10185-municipios.meta.yaml',
+        'ibge-2022-censo-amostra',
+      ],
+      [
+        'dados/grupo-possivel/sidra-9514-idade.meta.yaml',
+        'ibge-2022-censo-amostra',
+      ],
+      [
+        'dados/grupo-possivel/sidra-9514-municipios.meta.yaml',
+        'ibge-2022-censo-amostra',
+      ],
     ])
   })
 

@@ -8,23 +8,23 @@
 # verde. Eles entram pelo `frontend/scripts/wizard-deploy.sh`.
 name: Deploy
 
-"on":
+'on':
   push:
     branches: [main]
     # O que muda o site. Um commit só de documentação não publica nada.
     paths:
-      - "frontend/**"
-      - "packages/**"
-      - "estudos/**"
-      - "guias/**"
-      - "dicas/**"
-      - "dados/**"
-      - "relatorios/**"
-      - "fontes/**"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "pnpm-workspace.yaml"
-      - ".github/workflows/deploy.yml"
+      - 'frontend/**'
+      - 'packages/**'
+      - 'estudos/**'
+      - 'guias/**'
+      - 'dicas/**'
+      - 'dados/**'
+      - 'relatorios/**'
+      - 'fontes/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/deploy.yml'
   # Pela aba Actions: publica a main de agora, ou, com `voltar`, troca para
   # uma imagem que a VPS guardou ("anterior" para a do deploy de antes).
   workflow_dispatch:
@@ -32,7 +32,7 @@ name: Deploy
       voltar:
         description: 'Voltar a uma versão: "anterior" ou o SHA. Vazio publica a main.'
         type: string
-        default: ""
+        default: ''
 
 permissions:
   contents: read

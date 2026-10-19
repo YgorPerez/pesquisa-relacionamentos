@@ -20,13 +20,20 @@ export interface PerfilNoGuia {
   readonly comDado: number
   /** A linha "Para o seu Perfil: …". Quando o número-chave não vale, `achado`
    * é o índice do primeiro achado que vale, ou `null` se nenhum vale. */
-  readonly chave: { readonly vale: true } | { readonly vale: false; readonly achado: number | null } | null
+  readonly chave:
+    | { readonly vale: true }
+    | { readonly vale: false; readonly achado: number | null }
+    | null
 }
 
-export function perfilNoGuia(perfil: Perfil | null, guia: CobresDoGuia): PerfilNoGuia | null {
+export function perfilNoGuia(
+  perfil: Perfil | null,
+  guia: CobresDoGuia,
+): PerfilNoGuia | null {
   if (perfilVazio(perfil)) return null
   // Com Perfil, `valeParaVoce` sempre decide.
-  const veredito = (cobres: ReadonlyArray<Cobre>) => valeParaVoce(perfil, cobres) as Veredito
+  const veredito = (cobres: ReadonlyArray<Cobre>) =>
+    valeParaVoce(perfil, cobres) as Veredito
   const achados = guia.achados.map(veredito)
   const primeiro = achados.findIndex((v) => v.cobre)
   return {

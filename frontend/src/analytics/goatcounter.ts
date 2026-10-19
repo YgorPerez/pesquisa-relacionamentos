@@ -23,7 +23,9 @@ export interface Contagem {
 
 const semQuery = (texto: string) => texto.replace(/[?#].*$/s, '')
 
-function referenciaSemQuery(referencia: string | undefined): string | undefined {
+function referenciaSemQuery(
+  referencia: string | undefined,
+): string | undefined {
   if (!referencia) return undefined
   try {
     const url = new URL(referencia)
@@ -45,12 +47,20 @@ export function urlDaContagem(endpoint: string, c: Contagem): string {
 }
 
 /** Manda uma contagem. `no-cors` e sem cookie: a resposta não importa. */
-export function enviar(endpoint: string, contagem: Omit<Contagem, 'largura' | 'robo' | 'rnd'>) {
+export function enviar(
+  endpoint: string,
+  contagem: Omit<Contagem, 'largura' | 'robo' | 'rnd'>,
+) {
   const url = urlDaContagem(endpoint, {
     ...contagem,
     largura: window.screen.width,
     robo: navigator.webdriver ? 153 : 0,
     rnd: Math.random().toString(36).slice(2, 7),
   })
-  void fetch(url, { method: 'POST', mode: 'no-cors', credentials: 'omit', keepalive: true }).catch(() => {})
+  void fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    credentials: 'omit',
+    keepalive: true,
+  }).catch(() => {})
 }

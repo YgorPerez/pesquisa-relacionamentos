@@ -22,15 +22,24 @@ export interface Perfil {
 
 /** Sem gênero, sem quem procura e sem idade: é como não ter Perfil. */
 export const perfilVazio = (perfil: Perfil | null): boolean =>
-  !perfil || (perfil.genero === undefined && perfil.procura === undefined && perfil.idade === undefined)
+  !perfil ||
+  (perfil.genero === undefined &&
+    perfil.procura === undefined &&
+    perfil.idade === undefined)
 
-const umDe = <T extends string>(lista: ReadonlyArray<T>, valor: unknown): T | undefined =>
-  lista.find((item) => item === valor)
+const umDe = <T extends string>(
+  lista: ReadonlyArray<T>,
+  valor: unknown,
+): T | undefined => lista.find((item) => item === valor)
 
 /** A idade como o Perfil aceita: inteira, de 18 a 120. Fora disso, `undefined`. */
 export function idadeValida(valor: unknown): number | undefined {
-  const numero = typeof valor === 'string' && valor.trim() !== '' ? Number(valor) : valor
-  return typeof numero === 'number' && Number.isInteger(numero) && numero >= IDADE_MINIMA && numero <= IDADE_MAXIMA
+  const numero =
+    typeof valor === 'string' && valor.trim() !== '' ? Number(valor) : valor
+  return typeof numero === 'number' &&
+    Number.isInteger(numero) &&
+    numero >= IDADE_MINIMA &&
+    numero <= IDADE_MAXIMA
     ? numero
     : undefined
 }

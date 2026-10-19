@@ -10,7 +10,11 @@ export interface Problema {
   readonly mensagem: string
 }
 
-export function problema(arquivo: string, texto: string, campo?: string): Problema {
+export function problema(
+  arquivo: string,
+  texto: string,
+  campo?: string,
+): Problema {
   const onde = campo ? `${arquivo}: ${campo}` : arquivo
   return { arquivo, ...(campo ? { campo } : {}), mensagem: `${onde}: ${texto}` }
 }
@@ -44,9 +48,11 @@ function traduzir(original: string, valor: unknown): string {
     const opcoes = lista[1].split(' | ').map((o) => o.replace(/"/g, ''))
     return `valor fora da lista fechada (${opcoes.join(' | ')})${mostrado}`
   }
-  if (mensagem === 'Expected an integer') return `precisa ser um número inteiro${mostrado}`
+  if (mensagem === 'Expected an integer')
+    return `precisa ser um número inteiro${mostrado}`
   if (mensagem === 'Expected string') return `precisa ser texto${mostrado}`
-  if (mensagem === 'Expected boolean') return `precisa ser true ou false${mostrado}`
+  if (mensagem === 'Expected boolean')
+    return `precisa ser true ou false${mostrado}`
   if (mensagem === 'Expected array') return `precisa ser uma lista${mostrado}`
   if (mensagem === 'Expected object') return `precisa ser um objeto${mostrado}`
   return `${mensagem}${mostrado}`

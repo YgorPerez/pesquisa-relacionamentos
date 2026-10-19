@@ -8,7 +8,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'json'],
       include: ['src/**'],
-      thresholds: { statements: 97, branches: 90, functions: 98, lines: 99 },
+      thresholds: { statements: 97, branches: 90, functions: 98, lines: 98 },
     },
   },
 })

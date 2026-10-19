@@ -28,7 +28,9 @@ describe('o registro de cada pedido no servidor', () => {
     const { fetch, linhas } = montar(() => new Response(null, { status: 302 }))
 
     await fetch(
-      new Request('https://temestudo.com/?g=mulher%20trans&o=bi#topo', { method: 'HEAD' }),
+      new Request('https://temestudo.com/?g=mulher%20trans&o=bi#topo', {
+        method: 'HEAD',
+      }),
     )
 
     expect(linhas).toEqual(['HEAD / 302 12ms'])
@@ -48,7 +50,9 @@ describe('o registro de cada pedido no servidor', () => {
   })
 
   test('um redirecionamento, que tem os cabeçalhos imutáveis, também leva o cabeçalho', async () => {
-    const { fetch } = montar(() => Response.redirect('https://temestudo.com/', 301))
+    const { fetch } = montar(() =>
+      Response.redirect('https://temestudo.com/', 301),
+    )
 
     const resposta = await fetch(new Request(LINK))
 

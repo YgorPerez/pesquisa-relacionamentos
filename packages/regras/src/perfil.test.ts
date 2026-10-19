@@ -3,7 +3,9 @@ import { descreverPerfil, lerPerfil } from './perfil.ts'
 
 describe('lerPerfil', () => {
   it('aceita o Perfil completo', () => {
-    expect(lerPerfil({ genero: 'mulher', procura: 'ambos', idade: 24 })).toEqual({
+    expect(
+      lerPerfil({ genero: 'mulher', procura: 'ambos', idade: 24 }),
+    ).toEqual({
       genero: 'mulher',
       procura: 'ambos',
       idade: 24,
@@ -15,9 +17,15 @@ describe('lerPerfil', () => {
   })
 
   it('descarta o que está fora das listas e a idade abaixo de 18 ou quebrada', () => {
-    expect(lerPerfil({ genero: 'gato', procura: 'homens', idade: 17 })).toEqual({ procura: 'homens' })
-    expect(lerPerfil({ genero: 'homem', idade: 30.5 })).toEqual({ genero: 'homem' })
-    expect(lerPerfil({ genero: 'homem', idade: '' })).toEqual({ genero: 'homem' })
+    expect(lerPerfil({ genero: 'gato', procura: 'homens', idade: 17 })).toEqual(
+      { procura: 'homens' },
+    )
+    expect(lerPerfil({ genero: 'homem', idade: 30.5 })).toEqual({
+      genero: 'homem',
+    })
+    expect(lerPerfil({ genero: 'homem', idade: '' })).toEqual({
+      genero: 'homem',
+    })
   })
 
   it('devolve null quando nada sobra', () => {
@@ -30,8 +38,12 @@ describe('lerPerfil', () => {
 
 describe('descreverPerfil', () => {
   it('escreve o Perfil numa linha', () => {
-    expect(descreverPerfil({ genero: 'homem', procura: 'homens', idade: 30 })).toBe('homem, procura homens, 30 anos')
-    expect(descreverPerfil({ genero: 'outro', procura: 'ambos' })).toBe('outro gênero, procura homens e mulheres')
+    expect(
+      descreverPerfil({ genero: 'homem', procura: 'homens', idade: 30 }),
+    ).toBe('homem, procura homens, 30 anos')
+    expect(descreverPerfil({ genero: 'outro', procura: 'ambos' })).toBe(
+      'outro gênero, procura homens e mulheres',
+    )
     expect(descreverPerfil({ idade: 45 })).toBe('45 anos')
   })
 })

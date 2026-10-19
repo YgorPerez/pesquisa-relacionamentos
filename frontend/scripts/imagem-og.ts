@@ -76,7 +76,9 @@ h1 {
 </body></html>`
 
 const navegador = await chromium.launch({ channel: 'chrome' })
-const pagina = await navegador.newPage({ viewport: { width: 1200, height: 630 } })
+const pagina = await navegador.newPage({
+  viewport: { width: 1200, height: 630 },
+})
 await pagina.setContent(html)
 await pagina.evaluate(() => document.fonts.ready)
 const destino = resolve(aqui, '../public/og.png')

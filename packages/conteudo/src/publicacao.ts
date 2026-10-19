@@ -2,7 +2,15 @@
 // Fichas citadas, e as regras de publicação do #7 e do #10 barram o build.
 import type { Cobre } from './esquema.ts'
 import type { Ficha } from './ficha.ts'
-import { SECOES_DO_GUIA, type AchadoDoGuia, type Dica, type DicaLida, type Guia, type GuiaLido, type Tema } from './itens.ts'
+import {
+  SECOES_DO_GUIA,
+  type AchadoDoGuia,
+  type Dica,
+  type DicaLida,
+  type Guia,
+  type GuiaLido,
+  type Tema,
+} from './itens.ts'
 import type { Forca } from './listas.ts'
 import { problema, type Problema } from './problemas.ts'
 
@@ -21,7 +29,9 @@ function herdado(
   proprio: { pais?: string; periodo?: string; vale_para?: Cobre },
 ) {
   return {
-    paises: proprio.pais ? [proprio.pais] : unicos(fichas.flatMap((f) => f.paises)),
+    paises: proprio.pais
+      ? [proprio.pais]
+      : unicos(fichas.flatMap((f) => f.paises)),
     periodo: proprio.periodo ?? unicos(fichas.map((f) => f.periodo)).join('; '),
     cobre: proprio.vale_para ? [proprio.vale_para] : fichas.map((f) => f.cobre),
     recorte: proprio.vale_para !== undefined,
@@ -47,14 +57,26 @@ export interface Ligados {
 
 /** As Fichas de um Guia na ordem da página: resposta curta, Dicas, achados,
  * divergência, Perfil, Mitos e Limitações. */
-function fichasNaOrdemDaPagina(guia: GuiaLido, dicas: ReadonlyMap<string, DicaLida>): string[] {
+function fichasNaOrdemDaPagina(
+  guia: GuiaLido,
+  dicas: ReadonlyMap<string, DicaLida>,
+): string[] {
   return unicos([
     ...referenciasNoTexto(guia.respostaCurta),
     ...guia.dicas.flatMap((slug) => dicas.get(slug)?.fichas ?? []),
-    ...guia.achados.flatMap((a) => [...referenciasNoTexto(a.texto), ...a.fichas]),
-    ...(guia.divergencia?.lados.flatMap((l) => [...referenciasNoTexto(l.texto), ...l.fichas]) ?? []),
+    ...guia.achados.flatMap((a) => [
+      ...referenciasNoTexto(a.texto),
+      ...a.fichas,
+    ]),
+    ...(guia.divergencia?.lados.flatMap((l) => [
+      ...referenciasNoTexto(l.texto),
+      ...l.fichas,
+    ]) ?? []),
     ...referenciasNoTexto(guia.variaConformePerfil),
-    ...guia.mitos.flatMap((m) => [...referenciasNoTexto(m.por_que_nao), ...m.fichas]),
+    ...guia.mitos.flatMap((m) => [
+      ...referenciasNoTexto(m.por_que_nao),
+      ...m.fichas,
+    ]),
     ...referenciasNoTexto(guia.limitacoes),
   ])
 }
@@ -73,15 +95,27 @@ function citacoesDoGuia(guia: GuiaLido): Citacao[] {
       { campo: `achados.${i}.fichas`, fichas: a.fichas },
     ]),
     ...(guia.divergencia?.lados.flatMap((l, i) => [
-      { campo: `divergencia.lados.${i}.texto`, fichas: referenciasNoTexto(l.texto) },
+      {
+        campo: `divergencia.lados.${i}.texto`,
+        fichas: referenciasNoTexto(l.texto),
+      },
       { campo: `divergencia.lados.${i}.fichas`, fichas: l.fichas },
     ]) ?? []),
-    { campo: SECOES_DO_GUIA.perfil, fichas: referenciasNoTexto(guia.variaConformePerfil) },
+    {
+      campo: SECOES_DO_GUIA.perfil,
+      fichas: referenciasNoTexto(guia.variaConformePerfil),
+    },
     ...guia.mitos.flatMap((m, i) => [
-      { campo: `mitos.${i}.por_que_nao`, fichas: referenciasNoTexto(m.por_que_nao) },
+      {
+        campo: `mitos.${i}.por_que_nao`,
+        fichas: referenciasNoTexto(m.por_que_nao),
+      },
       { campo: `mitos.${i}.fichas`, fichas: m.fichas },
     ]),
-    { campo: SECOES_DO_GUIA.limitacoes, fichas: referenciasNoTexto(guia.limitacoes) },
+    {
+      campo: SECOES_DO_GUIA.limitacoes,
+      fichas: referenciasNoTexto(guia.limitacoes),
+    },
   ]
 }
 
@@ -90,11 +124,16 @@ const NIVEL: Record<Forca, number> = { fraca: 1, moderada: 2, forte: 3 }
 /** A Confiança nunca passa da Ficha mais forte que sustenta a resposta, e
  * fica em moderada no máximo quando todas são 🟡 (#7). As Dicas não contam:
  * cada uma traz a própria Força. */
-function tetoDaConfianca(guia: GuiaLido, citadas: ReadonlyArray<Ficha>): Problema[] {
+function tetoDaConfianca(
+  guia: GuiaLido,
+  citadas: ReadonlyArray<Ficha>,
+): Problema[] {
   const fichas = citadas.filter((f) => f.status !== 'nao-verificado')
   if (fichas.length === 0) return []
   const confianca = NIVEL[guia.confianca]
-  const maisForte = fichas.reduce((a, b) => (NIVEL[b.forca] > NIVEL[a.forca] ? b : a))
+  const maisForte = fichas.reduce((a, b) =>
+    NIVEL[b.forca] > NIVEL[a.forca] ? b : a,
+  )
   if (confianca > NIVEL[maisForte.forca])
     return [
       problema(
@@ -121,25 +160,52 @@ function temasEGuias(lidos: Lidos): Problema[] {
   const temas = new Map(lidos.temas.map((t) => [t.slug, t]))
   for (const tema of unicos(lidos.guias.map((g) => g.tema)))
     if (!temas.has(tema) && !lidos.quebrados.has(`guias/${tema}/_tema.md`))
-      erros.push(problema(`guias/${tema}`, 'falta o _tema.md com o título e a ordem dos Guias'))
+      erros.push(
+        problema(
+          `guias/${tema}`,
+          'falta o _tema.md com o título e a ordem dos Guias',
+        ),
+      )
 
   for (const tema of lidos.temas) {
-    const lidosDaPasta = lidos.guias.filter((g) => g.tema === tema.slug).map((g) => g.slug)
+    const lidosDaPasta = lidos.guias
+      .filter((g) => g.tema === tema.slug)
+      .map((g) => g.slug)
     const daPasta = [
       ...lidosDaPasta,
       ...[...lidos.quebrados].flatMap((c) => {
-        const achado = new RegExp(`^guias/${tema.slug}/([^_/][^/]*)\\.md$`).exec(c)
+        const achado = new RegExp(
+          `^guias/${tema.slug}/([^_/][^/]*)\\.md$`,
+        ).exec(c)
         return achado?.[1] ? [achado[1]] : []
       }),
     ]
     for (const slug of lidosDaPasta)
       if (!tema.ordem.includes(slug))
-        erros.push(problema(tema.arquivo, `o Guia "${slug}" está na pasta e falta na ordem`, 'ordem'))
+        erros.push(
+          problema(
+            tema.arquivo,
+            `o Guia "${slug}" está na pasta e falta na ordem`,
+            'ordem',
+          ),
+        )
     tema.ordem.forEach((slug, i) => {
       if (tema.ordem.indexOf(slug) !== i)
-        erros.push(problema(tema.arquivo, `o Guia "${slug}" aparece mais de uma vez`, 'ordem'))
+        erros.push(
+          problema(
+            tema.arquivo,
+            `o Guia "${slug}" aparece mais de uma vez`,
+            'ordem',
+          ),
+        )
       else if (!daPasta.includes(slug))
-        erros.push(problema(tema.arquivo, `o Guia "${slug}" não existe em guias/${tema.slug}/`, 'ordem'))
+        erros.push(
+          problema(
+            tema.arquivo,
+            `o Guia "${slug}" não existe em guias/${tema.slug}/`,
+            'ordem',
+          ),
+        )
     })
   }
 
@@ -148,7 +214,10 @@ function temasEGuias(lidos: Lidos): Problema[] {
     const outro = primeiro.get(guia.slug)
     if (outro)
       erros.push(
-        problema(guia.arquivo, `o slug "${guia.slug}" já é do Guia ${outro.arquivo}; o Guia é citado só pelo slug`),
+        problema(
+          guia.arquivo,
+          `o slug "${guia.slug}" já é do Guia ${outro.arquivo}; o Guia é citado só pelo slug`,
+        ),
       )
     else primeiro.set(guia.slug, guia)
   }
@@ -166,35 +235,75 @@ export function ligar(lidos: Lidos): Ligados {
       return ficha ? [ficha] : []
     })
 
-  const fichaQueFalta = (arquivo: string, campo: string, slugs: ReadonlyArray<string>) => {
+  const fichaQueFalta = (
+    arquivo: string,
+    campo: string,
+    slugs: ReadonlyArray<string>,
+  ) => {
     for (const slug of slugs)
       if (!fichaPorSlug.has(slug) && !lidos.quebrados.has(`estudos/${slug}.md`))
-        erros.push(problema(arquivo, `a Ficha "${slug}" não existe em estudos/`, campo))
+        erros.push(
+          problema(arquivo, `a Ficha "${slug}" não existe em estudos/`, campo),
+        )
   }
 
-  const naoVerificada = (slug: string) => fichaPorSlug.get(slug)?.status === 'nao-verificado'
-  const SO_VERIFICADA = 'que não foi verificada (⬜); um Guia só cita Ficha ✅ ou 🟡'
+  const naoVerificada = (slug: string) =>
+    fichaPorSlug.get(slug)?.status === 'nao-verificado'
+  const SO_VERIFICADA =
+    'que não foi verificada (⬜); um Guia só cita Ficha ✅ ou 🟡'
 
   erros.push(...temasEGuias(lidos))
-  for (const dica of lidos.dicas) fichaQueFalta(dica.arquivo, 'fichas', dica.fichas)
+  for (const dica of lidos.dicas)
+    fichaQueFalta(dica.arquivo, 'fichas', dica.fichas)
   for (const guia of lidos.guias) {
     for (const { campo, fichas } of citacoesDoGuia(guia)) {
       fichaQueFalta(guia.arquivo, campo, fichas)
       for (const slug of unicos(fichas).filter(naoVerificada))
-        erros.push(problema(guia.arquivo, `cita a Ficha "${slug}", ${SO_VERIFICADA}`, campo))
+        erros.push(
+          problema(
+            guia.arquivo,
+            `cita a Ficha "${slug}", ${SO_VERIFICADA}`,
+            campo,
+          ),
+        )
     }
     for (const slug of guia.dicas) {
       const dica = dicaPorSlug.get(slug)
-      if (!dica && !lidos.quebrados.has(`dicas/${slug}.md`)) erros.push(problema(guia.arquivo, `a Dica "${slug}" não existe em dicas/`, 'dicas'))
+      if (!dica && !lidos.quebrados.has(`dicas/${slug}.md`))
+        erros.push(
+          problema(
+            guia.arquivo,
+            `a Dica "${slug}" não existe em dicas/`,
+            'dicas',
+          ),
+        )
       for (const ficha of dica?.fichas.filter(naoVerificada) ?? [])
-        erros.push(problema(guia.arquivo, `a Dica "${slug}" cita a Ficha "${ficha}", ${SO_VERIFICADA}`, 'dicas'))
+        erros.push(
+          problema(
+            guia.arquivo,
+            `a Dica "${slug}" cita a Ficha "${ficha}", ${SO_VERIFICADA}`,
+            'dicas',
+          ),
+        )
     }
     const citadas = citacoesDoGuia(guia).flatMap((c) => c.fichas)
-    if (citadas.length === 0) erros.push(problema(guia.arquivo, 'o Guia não cita nenhuma Ficha'))
+    if (citadas.length === 0)
+      erros.push(problema(guia.arquivo, 'o Guia não cita nenhuma Ficha'))
     erros.push(...tetoDaConfianca(guia, fichasDe(citadas)))
     for (const slug of guia.relacionadas)
-      if (!guiaPorSlug.has(slug) && ![...lidos.quebrados].some((c) => c.startsWith('guias/') && c.endsWith(`/${slug}.md`)))
-        erros.push(problema(guia.arquivo, `o Guia "${slug}" não existe em guias/`, 'relacionadas'))
+      if (
+        !guiaPorSlug.has(slug) &&
+        ![...lidos.quebrados].some(
+          (c) => c.startsWith('guias/') && c.endsWith(`/${slug}.md`),
+        )
+      )
+        erros.push(
+          problema(
+            guia.arquivo,
+            `o Guia "${slug}" não existe em guias/`,
+            'relacionadas',
+          ),
+        )
   }
 
   const dicas: Dica[] = lidos.dicas.map((lida) => {
@@ -207,30 +316,33 @@ export function ligar(lidos: Lidos): Ligados {
       forca: lida.forca,
       inferencia: lida.inferencia ?? false,
       ...herdado(fichas, lida),
-      publicada: fichas.length === lida.fichas.length && fichas.every((f) => f.status !== 'nao-verificado'),
+      publicada:
+        fichas.length === lida.fichas.length &&
+        fichas.every((f) => f.status !== 'nao-verificado'),
       ...(lida.antes ? { antes: lida.antes } : {}),
       ...(lida.seo ? { seo: lida.seo } : {}),
     }
   })
 
   const ordemDosGuias = new Map(
-    lidos.temas.flatMap((t, i) => t.ordem.map((slug, j) => [`${t.slug}/${slug}`, i * 1000 + j] as const)),
+    lidos.temas.flatMap((t, i) =>
+      t.ordem.map((slug, j) => [`${t.slug}/${slug}`, i * 1000 + j] as const),
+    ),
   )
   const guias: Guia[] = [...lidos.guias]
     .sort(
       (a, b) =>
         (ordemDosGuias.get(`${a.tema}/${a.slug}`) ?? Infinity) -
-          (ordemDosGuias.get(`${b.tema}/${b.slug}`) ?? Infinity) || a.arquivo.localeCompare(b.arquivo),
+          (ordemDosGuias.get(`${b.tema}/${b.slug}`) ?? Infinity) ||
+        a.arquivo.localeCompare(b.arquivo),
     )
     .map((lido) => ({
       ...lido,
-      achados: lido.achados.map(
-        (a): AchadoDoGuia => ({
-          texto: a.texto,
-          fichas: a.fichas,
-          ...herdado(fichasDe(a.fichas), a),
-        }),
-      ),
+      achados: lido.achados.map((a): AchadoDoGuia => ({
+        texto: a.texto,
+        fichas: a.fichas,
+        ...herdado(fichasDe(a.fichas), a),
+      })),
       fichasCitadas: fichasNaOrdemDaPagina(lido, dicaPorSlug),
     }))
 

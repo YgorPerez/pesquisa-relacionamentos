@@ -4,7 +4,11 @@
 
 type Modo = 'perto' | 'baixo' | 'cima'
 
-const ARREDONDAR: Record<Modo, (x: number) => number> = { perto: Math.round, baixo: Math.floor, cima: Math.ceil }
+const ARREDONDAR: Record<Modo, (x: number) => number> = {
+  perto: Math.round,
+  baixo: Math.floor,
+  cima: Math.ceil,
+}
 
 /** Arredonda a 2 algarismos significativos (abaixo de 100, à unidade). */
 export function arredondar2(x: number, modo: Modo = 'perto'): number {
@@ -13,7 +17,8 @@ export function arredondar2(x: number, modo: Modo = 'perto'): number {
   return ARREDONDAR[modo](x / passo) * passo
 }
 
-const decimal = (x: number) => x.toLocaleString('pt-BR', { maximumFractionDigits: 1 })
+const decimal = (x: number) =>
+  x.toLocaleString('pt-BR', { maximumFractionDigits: 1 })
 
 function escrever(v: number): string {
   if (v < 1000) return String(v)
@@ -33,14 +38,19 @@ export function formatarQuantidade(x: number): string {
 export function formatarFaixa(min: number, max: number): string {
   const de = arredondar2(Math.max(0, min), 'baixo')
   const ate = arredondar2(Math.max(0, max), 'cima')
-  return de === ate ? `cerca de ${escrever(de)}` : `entre ${escrever(de)} e ${escrever(ate)}`
+  return de === ate
+    ? `cerca de ${escrever(de)}`
+    : `entre ${escrever(de)} e ${escrever(ate)}`
 }
 
 /** "×3,4", "×13". */
 export function formatarVezes(vezes: number): string {
   if (!Number.isFinite(vezes)) return 'de ninguém para alguém'
-  return vezes >= 10 ? `×${Math.round(vezes)}` : `×${decimal(Math.round(vezes * 10) / 10)}`
+  return vezes >= 10
+    ? `×${Math.round(vezes)}`
+    : `×${decimal(Math.round(vezes * 10) / 10)}`
 }
 
 /** "+670", "+48 mil". */
-export const formatarGanho = (ganho: number): string => `+${ganho < 1 ? '0' : escrever(arredondar2(ganho))}`
+export const formatarGanho = (ganho: number): string =>
+  `+${ganho < 1 ? '0' : escrever(arredondar2(ganho))}`

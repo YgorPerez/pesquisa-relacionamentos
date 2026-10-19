@@ -339,7 +339,8 @@
 /* O risco: faixa rosa de 30% da altura no meio da linha. Não é marca-texto. */
 .mito-frase s {
   text-decoration: none;
-  background: linear-gradient(var(--cor-rosa-mito), var(--cor-rosa-mito)) center 60% / 100% 30% repeat-x;
+  background: linear-gradient(var(--cor-rosa-mito), var(--cor-rosa-mito)) center
+    60% / 100% 30% repeat-x;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }

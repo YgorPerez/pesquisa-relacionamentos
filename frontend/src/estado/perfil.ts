@@ -9,4 +9,5 @@ export const perfilSalvo = armazenado<Perfil>('perfil', lerPerfil)
 export const usePerfil = (): Perfil | null => useArmazenado(perfilSalvo)
 
 /** Salva o Perfil (passa pela mesma validação de quem lê); `null` apaga. */
-export const gravarPerfil = (perfil: Perfil | null) => perfilSalvo.gravar(perfil && lerPerfil(perfil))
+export const gravarPerfil = (perfil: Perfil | null) =>
+  perfilSalvo.gravar(perfil && lerPerfil(perfil))

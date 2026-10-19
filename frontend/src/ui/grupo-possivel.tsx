@@ -1,8 +1,16 @@
 // As peças da página do Grupo possível (#19, variante A): o número preso no
 // topo, os controles dos Requisitos (todos sem arrastar: botões de passo,
 // campo de número, opções e caixas de marcar) e a conta com as dobras.
-import type { Custo, Estimativa, RequisitoId } from '@tem-estudo/regras/grupo-possivel'
-import { formatarFaixa, formatarQuantidade, formatarVezes } from '@tem-estudo/regras/numeros'
+import type {
+  Custo,
+  Estimativa,
+  RequisitoId,
+} from '@tem-estudo/regras/grupo-possivel'
+import {
+  formatarFaixa,
+  formatarQuantidade,
+  formatarVezes,
+} from '@tem-estudo/regras/numeros'
 import type { Perfil } from '@tem-estudo/regras/perfil'
 import {
   TITULO_DO_REQUISITO,
@@ -17,7 +25,8 @@ import { NOME_DO_ALVO, textoDoCusto } from './grupo-possivel.textos'
 export function Faixa({ estimativa }: { estimativa: Estimativa }) {
   const { min, max, instavel } = estimativa.resultado
   const texto = formatarFaixa(min, max)
-  const [, antes = '', numeros = texto] = /^(entre |cerca de )?(.*)$/.exec(texto) ?? []
+  const [, antes = '', numeros = texto] =
+    /^(entre |cerca de )?(.*)$/.exec(texto) ?? []
   return (
     <p className="gp-faixa">
       {antes}
@@ -33,20 +42,39 @@ function MaisPesa({ estimativa }: { estimativa: Estimativa }) {
   if (!primeiro) return <>nenhum Requisito corta o grupo</>
   return (
     <>
-      o que mais pesa: <b>{TITULO_DO_REQUISITO[primeiro.requisito as keyof typeof TITULO_DO_REQUISITO].toLowerCase()}</b>{' '}
+      o que mais pesa:{' '}
+      <b>
+        {TITULO_DO_REQUISITO[
+          primeiro.requisito as keyof typeof TITULO_DO_REQUISITO
+        ].toLowerCase()}
+      </b>{' '}
       ({formatarVezes(primeiro.vezes)})
     </>
   )
 }
 
 /** O Grupo possível preso no topo enquanto a página rola. */
-export function NumeroPreso({ estimativa, carregando }: { estimativa: Estimativa; carregando: boolean }) {
+export function NumeroPreso({
+  estimativa,
+  carregando,
+}: {
+  estimativa: Estimativa
+  carregando: boolean
+}) {
   return (
-    <section className="gp-preso painel" aria-labelledby="gp-preso-titulo" aria-busy={carregando}>
+    <section
+      className="gp-preso painel"
+      aria-labelledby="gp-preso-titulo"
+      aria-busy={carregando}
+    >
       <h2 id="gp-preso-titulo" className="gp-rotulo">
         Grupo possível
       </h2>
-      <div aria-live="polite" aria-atomic="true" className={carregando ? 'gp-carregando' : undefined}>
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className={carregando ? 'gp-carregando' : undefined}
+      >
         <Faixa estimativa={estimativa} />
       </div>
       <p className="gp-linha2">
@@ -76,25 +104,48 @@ export function LinhaDoRequisito({
   nota?: ReactNode
 }) {
   return (
-    <div className={ligado ? 'gp-req gp-req-ligado' : 'gp-req'} id={`req-${requisito}`}>
+    <div
+      className={ligado ? 'gp-req gp-req-ligado' : 'gp-req'}
+      id={`req-${requisito}`}
+    >
       <div className="gp-req-cab">
         <h3 className="gp-req-titulo">{TITULO_DO_REQUISITO[requisito]}</h3>
         <span className="gp-req-valor">{valor}</span>
       </div>
       {children}
       {nota}
-      <p className="gp-req-custo">{custo ? textoDoCusto(custo) : ligado ? '' : 'não corta ninguém'}</p>
+      <p className="gp-req-custo">
+        {custo ? textoDoCusto(custo) : ligado ? '' : 'não corta ninguém'}
+      </p>
     </div>
   )
 }
 
 const Menos = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M3 9.2c4-.3 8-.1 12-.3" />
   </svg>
 )
 const Mais = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
     <path d="M3 9.2c4-.3 8-.1 12-.3M9.1 3c-.2 4 .1 8-.1 12" />
   </svg>
 )
@@ -240,7 +291,11 @@ export function Marcar({
   descricao?: string
 }) {
   return (
-    <label className={desabilitado ? 'opcao gp-marcar gp-desabilitado' : 'opcao gp-marcar'}>
+    <label
+      className={
+        desabilitado ? 'opcao gp-marcar gp-desabilitado' : 'opcao gp-marcar'
+      }
+    >
       <input
         type="checkbox"
         checked={marcado}
@@ -257,7 +312,18 @@ export function Marcar({
 }
 
 const Visto = ({ marcado }: { marcado: boolean }) => (
-  <svg className="gp-visto" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    className="gp-visto"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M3 3.4c4.6-.4 9.2-.2 13.8-.3.3 4.5.2 9 .3 13.5-4.6.3-9.2.2-13.8.3-.2-4.5-.1-9-.3-13.5Z" />
     {marcado && <path d="M5.6 10.4l3 3.1 6-7.6" strokeWidth="2.2" />}
   </svg>
@@ -276,15 +342,21 @@ export function Dobras({
   municipio: string | undefined
 }) {
   const { base, funil, ingenua, ressalvas, ligados, resultado } = estimativa
-  const diferenca = resultado.central > 0 ? (ingenua - resultado.central) / resultado.central : 0
-  const valor = (k: RequisitoId) => valorDoRequisito(k, perfil, requisitos, municipio)
+  const diferenca =
+    resultado.central > 0
+      ? (ingenua - resultado.central) / resultado.central
+      : 0
+  const valor = (k: RequisitoId) =>
+    valorDoRequisito(k, perfil, requisitos, municipio)
   return (
     <>
       <details className="gp-dobra" id="gp-corte-a-corte">
         <summary>Corte a corte</summary>
         <ol className="gp-funil">
           <li>
-            <span>{NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil</span>
+            <span>
+              {NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil
+            </span>
             <b>{formatarQuantidade(base.central)}</b>
           </li>
           {funil.map((etapa) => (
@@ -294,20 +366,25 @@ export function Dobras({
             </li>
           ))}
         </ol>
-        <p className="gp-dica">A ordem dos cortes não muda o resultado final.</p>
+        <p className="gp-dica">
+          A ordem dos cortes não muda o resultado final.
+        </p>
       </details>
       <details className="gp-dobra" id="gp-incerteza">
         <summary>De onde vem a incerteza</summary>
         {ligados.length > 1 && (
           <p className="gp-ingenua">
-            Se só multiplicássemos a porcentagem que cada Requisito deixa sozinho no Brasil, daria{' '}
-            <b>{formatarQuantidade(ingenua)}</b> ({diferenca >= 0 ? '+' : '−'}
-            {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam juntos; por isso o site cruza os dados.
+            Se só multiplicássemos a porcentagem que cada Requisito deixa
+            sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
+            {diferenca >= 0 ? '+' : '−'}
+            {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
+            juntos; por isso o site cruza os dados.
           </p>
         )}
         <p className="gp-dica">
-          A faixa junta o erro de amostra do Censo ({Math.round(resultado.registros).toLocaleString('pt-BR')} registros) com o
-          intervalo da PNS.
+          A faixa junta o erro de amostra do Censo (
+          {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
+          com o intervalo da PNS.
         </p>
         <ul className="gp-ressalvas">
           {ressalvas
@@ -322,7 +399,17 @@ export function Dobras({
 }
 
 const Seta = () => (
-  <svg width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    width="26"
+    height="16"
+    viewBox="0 0 26 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M2 8.5C9 7.4 16 8.2 23 8M23 8l-6-5.5M23 8l-6 5.5" />
   </svg>
 )
@@ -360,9 +447,15 @@ export function CartaoDoGrupoPossivel({
       </h2>
       <div className="painel com-reticula">
         {usado ? (
-          <div aria-busy={carregando} className={carregando ? 'gp-carregando' : undefined}>
+          <div
+            aria-busy={carregando}
+            className={carregando ? 'gp-carregando' : undefined}
+          >
             <Faixa estimativa={estimativa} />
-            <p className="cartao-gp-sub">{NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você pediu</p>
+            <p className="cartao-gp-sub">
+              {NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você
+              pediu
+            </p>
             <p className="cartao-gp-ligados">
               Seus Requisitos:{' '}
               {ligados.length > 0
@@ -383,8 +476,10 @@ export function CartaoDoGrupoPossivel({
           <>
             <p className="rotulo-calculadora">Grupo possível</p>
             <p className="cartao-gp-frase">
-              No Brasil, <AdultosNoBrasil quantidade={estimativa.resultado.central} /> não moram com companheiro(a).
-              Quantos deles atendem ao que você procura?
+              No Brasil,{' '}
+              <AdultosNoBrasil quantidade={estimativa.resultado.central} /> não
+              moram com companheiro(a). Quantos deles atendem ao que você
+              procura?
             </p>
           </>
         )}

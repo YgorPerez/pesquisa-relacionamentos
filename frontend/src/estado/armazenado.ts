@@ -29,7 +29,10 @@ function armazenamento(): Storage | null {
 
 /** Uma parte do estado local, em `tem-estudo:<chave>`. `validar` recebe o JSON
  * cru e devolve o valor ou `null`. */
-export function armazenado<T>(chave: string, validar: (bruto: unknown) => T | null): Armazenado<T> {
+export function armazenado<T>(
+  chave: string,
+  validar: (bruto: unknown) => T | null,
+): Armazenado<T> {
   const nome = PREFIXO + chave
   const avisos = new Set<() => void>()
   // O `useSyncExternalStore` compara por referência: guarde o último lido.
@@ -77,7 +80,8 @@ export function armazenado<T>(chave: string, validar: (bruto: unknown) => T | nu
     if (avisos.size === 1) window.addEventListener('storage', aoMudarEmOutraAba)
     return () => {
       avisos.delete(aviso)
-      if (avisos.size === 0) window.removeEventListener('storage', aoMudarEmOutraAba)
+      if (avisos.size === 0)
+        window.removeEventListener('storage', aoMudarEmOutraAba)
     }
   }
 

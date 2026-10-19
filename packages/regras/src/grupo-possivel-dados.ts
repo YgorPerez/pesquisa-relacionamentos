@@ -8,15 +8,34 @@
 //
 // Lado do build: `lerBaseDoGrupo` (os CSV) → `pacoteDoLugar` (JSON).
 // Lado do navegador: `abrirPacote` (JSON → colunas tipadas para a conta).
-import { CORES, ESCOLARIDADES, RELIGIOES, RENDAS, UFS, type Uf } from './requisitos.ts'
+import {
+  CORES,
+  ESCOLARIDADES,
+  RELIGIOES,
+  RENDAS,
+  UFS,
+  type Uf,
+} from './requisitos.ts'
 
 export const SEXOS = ['homem', 'mulher'] as const
 export type Sexo = (typeof SEXOS)[number]
 
 /** Os grupos de idade do microdado, de 5 anos, a partir de 15. */
 export const GRUPOS_DE_IDADE = [
-  '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49',
-  '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80+',
+  '15-19',
+  '20-24',
+  '25-29',
+  '30-34',
+  '35-39',
+  '40-44',
+  '45-49',
+  '50-54',
+  '55-59',
+  '60-64',
+  '65-69',
+  '70-74',
+  '75-79',
+  '80+',
 ] as const
 
 /** Idades simples do SIDRA 9514: 15 a 99 e "100+" (posição 85). */
@@ -34,7 +53,8 @@ export interface Municipio {
 }
 
 /** A posição de sexo × grupo × união (1 = vive em união) nas tabelas por célula. */
-export const indiceConjugal = (sexo: number, grupo: number, uniao: number) => (sexo * GRUPOS_DE_IDADE.length + grupo) * 2 + uniao
+export const indiceConjugal = (sexo: number, grupo: number, uniao: number) =>
+  (sexo * GRUPOS_DE_IDADE.length + grupo) * 2 + uniao
 export const CELULAS_CONJUGAIS = SEXOS.length * GRUPOS_DE_IDADE.length * 2
 
 interface LinhaDoCenso {
@@ -61,11 +81,21 @@ export interface BaseDoGrupo {
 // --- código da célula ------------------------------------------------------
 // Cada dimensão vira um índice; "sem dado" é 0 e o valor i da lista é i + 1.
 // Sexo, grupo e união não têm "sem dado".
-const RAIOS = [2, GRUPOS_DE_IDADE.length, 2, ESCOLARIDADES.length + 1, RENDAS.length + 1, CORES.length + 1, RELIGIOES.length + 1, 3] as const
+const RAIOS = [
+  2,
+  GRUPOS_DE_IDADE.length,
+  2,
+  ESCOLARIDADES.length + 1,
+  RENDAS.length + 1,
+  CORES.length + 1,
+  RELIGIOES.length + 1,
+  3,
+] as const
 
 function codificar(partes: ReadonlyArray<number>): number {
   let codigo = 0
-  for (let i = 0; i < RAIOS.length; i++) codigo = codigo * RAIOS[i]! + partes[i]!
+  for (let i = 0; i < RAIOS.length; i++)
+    codigo = codigo * RAIOS[i]! + partes[i]!
   return codigo
 }
 
@@ -79,27 +109,51 @@ function decodificar(codigo: number, saida: number[]): void {
 // --- leitura dos CSV -------------------------------------------------------
 
 function linhasCsv(texto: string): { cabecalho: string[]; linhas: string[][] } {
-  const [primeira = '', ...resto] = texto.split(/\r?\n/).filter((l) => l.trim() !== '')
-  return { cabecalho: primeira.split(','), linhas: resto.map((l) => l.split(',')) }
+  const [primeira = '', ...resto] = texto
+    .split(/\r?\n/)
+    .filter((l) => l.trim() !== '')
+  return {
+    cabecalho: primeira.split(','),
+    linhas: resto.map((l) => l.split(',')),
+  }
 }
 
-function indiceOuErro(lista: ReadonlyArray<string>, valor: string | undefined, nome: string): number {
+function indiceOuErro(
+  lista: ReadonlyArray<string>,
+  valor: string | undefined,
+  nome: string,
+): number {
   const i = lista.indexOf(valor ?? '')
   if (i < 0) throw new Error(`${nome} desconhecido no CSV: "${valor}"`)
   return i
 }
 
 /** "" é sem dado (0); um valor da lista é a posição + 1. */
-function indiceOpcional(lista: ReadonlyArray<string>, valor: string | undefined, nome: string): number {
-  return valor === '' || valor === undefined ? 0 : indiceOuErro(lista, valor, nome) + 1
+function indiceOpcional(
+  lista: ReadonlyArray<string>,
+  valor: string | undefined,
+  nome: string,
+): number {
+  return valor === '' || valor === undefined
+    ? 0
+    : indiceOuErro(lista, valor, nome) + 1
 }
 
 function lerCenso(texto: string): LinhaDoCenso[] {
   const { cabecalho, linhas } = linhasCsv(texto)
   const col = (nome: string) => indiceOuErro(cabecalho, nome, 'coluna')
   const c = {
-    sexo: col('sexo'), idade: col('idade'), uf: col('uf'), uniao: col('uniao'), escolaridade: col('escolaridade'),
-    renda: col('renda'), cor: col('cor'), religiao: col('religiao'), filhos: col('filhos'), peso: col('peso'), n: col('n_registros'),
+    sexo: col('sexo'),
+    idade: col('idade'),
+    uf: col('uf'),
+    uniao: col('uniao'),
+    escolaridade: col('escolaridade'),
+    renda: col('renda'),
+    cor: col('cor'),
+    religiao: col('religiao'),
+    filhos: col('filhos'),
+    peso: col('peso'),
+    n: col('n_registros'),
   }
   return linhas.map((l) => ({
     uf: l[c.uf] ?? '',
@@ -122,7 +176,10 @@ function lerIdades(texto: string): Map<string, Idades> {
   const { linhas } = linhasCsv(texto)
   const porLocal = new Map<string, { homem: number[]; mulher: number[] }>()
   for (const [local = '', sexo = '', idade = '', pessoas = '0'] of linhas) {
-    const atual = porLocal.get(local) ?? { homem: Array(IDADES_SIMPLES).fill(0), mulher: Array(IDADES_SIMPLES).fill(0) }
+    const atual = porLocal.get(local) ?? {
+      homem: Array(IDADES_SIMPLES).fill(0),
+      mulher: Array(IDADES_SIMPLES).fill(0),
+    }
     porLocal.set(local, atual)
     const posicao = idade === '100+' ? IDADES_SIMPLES - 1 : Number(idade) - 15
     atual[SEXOS[indiceOuErro(SEXOS, sexo, 'sexo')]!][posicao] = Number(pessoas)
@@ -220,7 +277,12 @@ export function pacoteDoLugar(base: BaseDoGrupo, lugar: LugarDoPacote): Pacote {
     pesos: codigos.map((c) => Math.round(somas.get(c)!.peso)),
     registros: codigos.map((c) => somas.get(c)!.registros),
     idades,
-    municipios: lugar === 'BR' ? [] : base.municipios.filter((m) => m.uf === lugar).map((m) => [m.codigo, m.nome, ...m.pessoas]),
+    municipios:
+      lugar === 'BR'
+        ? []
+        : base.municipios
+            .filter((m) => m.uf === lugar)
+            .map((m) => [m.codigo, m.nome, ...m.pessoas]),
     pns: base.pns,
   }
 }
@@ -261,7 +323,8 @@ function ehPacote(valor: unknown): valor is Pacote {
 /** Abre um pacote (que veio da rede ou do disco, como JSON: confere o
  * formato antes). */
 export function abrirPacote(pacote: unknown): DadosDoLugar {
-  if (!ehPacote(pacote)) throw new Error('pacote do Grupo possível em formato desconhecido')
+  if (!ehPacote(pacote))
+    throw new Error('pacote do Grupo possível em formato desconhecido')
   const n = pacote.celulas.length
   const colunas = Array.from({ length: RAIOS.length }, () => new Uint8Array(n))
   const partes: number[] = []
@@ -269,12 +332,29 @@ export function abrirPacote(pacote: unknown): DadosDoLugar {
     decodificar(pacote.celulas[i]!, partes)
     for (let d = 0; d < RAIOS.length; d++) colunas[d]![i] = partes[d]!
   }
-  const [sexo, grupo, uniao, escolaridade, renda, cor, religiao, filhos] = colunas as [Uint8Array, Uint8Array, Uint8Array, Uint8Array, Uint8Array, Uint8Array, Uint8Array, Uint8Array]
+  const [sexo, grupo, uniao, escolaridade, renda, cor, religiao, filhos] =
+    colunas as [
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+      Uint8Array,
+    ]
   const uf = pacote.lugar === 'BR' ? undefined : pacote.lugar
   return {
     lugar: pacote.lugar,
     tamanho: n,
-    sexo, grupo, uniao, escolaridade, renda, cor, religiao, filhos,
+    sexo,
+    grupo,
+    uniao,
+    escolaridade,
+    renda,
+    cor,
+    religiao,
+    filhos,
     peso: Float64Array.from(pacote.pesos),
     registros: Float64Array.from(pacote.registros),
     idades: pacote.idades,
@@ -282,7 +362,12 @@ export function abrirPacote(pacote: unknown): DadosDoLugar {
       uf
         ? pacote.municipios.map(([codigo, nome, ...pessoas]) => [
             String(codigo),
-            { codigo: String(codigo), nome: String(nome), uf, pessoas: pessoas.map(Number) },
+            {
+              codigo: String(codigo),
+              nome: String(nome),
+              uf,
+              pessoas: pessoas.map(Number),
+            },
           ])
         : [],
     ),

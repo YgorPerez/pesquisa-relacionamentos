@@ -79,14 +79,20 @@ function opcoes({ porta, chave }: Vps, portaComo: '-p' | '-P') {
   ]
 }
 
-function rodar(comando: string, args: string[], cwd?: string, entrada?: string) {
+function rodar(
+  comando: string,
+  args: string[],
+  cwd?: string,
+  entrada?: string,
+) {
   const r = spawnSync(comando, args, {
     cwd,
     input: entrada,
     encoding: 'utf8',
     stdio: ['pipe', 'pipe', 'inherit'],
   })
-  if (r.status !== 0) throw new Error(`${comando} falhou (saiu com ${r.status}).`)
+  if (r.status !== 0)
+    throw new Error(`${comando} falhou (saiu com ${r.status}).`)
   return r.stdout
 }
 
@@ -142,7 +148,9 @@ echo "Imagem ${APP.container}:sha-${sha} montada."
  * `nginx -t` recusar. */
 function trocarOApp(sha: string, comConfiguracao: boolean) {
   const { container, portas, host, include, vhost } = APP
-  const destinos = CONFIGURACAO_DO_HOST.map(([, destino]) => `"${destino}"`).join(' ')
+  const destinos = CONFIGURACAO_DO_HOST.map(
+    ([, destino]) => `"${destino}"`,
+  ).join(' ')
   const instalar = comConfiguracao
     ? String.raw`install -d -m 755 /var/log/nginx/temestudo /opt/temestudo/acme /etc/nginx/temestudo
 for ARQ in ${destinos}; do
@@ -214,7 +222,11 @@ echo "App sha-${sha} no ar na porta $NOVA, para ${host}."
 }
 
 /** O contêiner do GoatCounter: o `STATS`, ou outro no teste local. */
-export type ConteinerDoStats = { readonly [K in keyof typeof STATS]: (typeof STATS)[K] extends number ? number : string }
+export type ConteinerDoStats = {
+  readonly [K in keyof typeof STATS]: (typeof STATS)[K] extends number
+    ? number
+    : string
+}
 
 /** O que o GoatCounter coleta: só referência (2), tamanho de tela (8) e país
  * (16). Sem sessões (128), região (32), navegador e sistema (4), idioma (64). */
@@ -244,7 +256,8 @@ export function garantirOStats({
   stats = STATS,
   arquivoDaSenha = SENHA_DO_STATS,
 }: { email?: string; stats?: ConteinerDoStats; arquivoDaSenha?: string } = {}) {
-  if (!EMAIL.test(email)) throw new Error(`"${email}" não é um e-mail que o deploy aceite.`)
+  if (!EMAIL.test(email))
+    throw new Error(`"${email}" não é um e-mail que o deploy aceite.`)
   const { container, imagem, volume, porta, host } = stats
   const gc = `docker exec ${container} goatcounter`
   return String.raw`docker volume create ${volume} >/dev/null
@@ -308,7 +321,17 @@ fi
 }
 
 /** Publica o `.output` do build com o SHA do commit. */
-function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps: Vps; dizer: (l: string) => void }) {
+function publicar({
+  saida,
+  sha,
+  vps,
+  dizer,
+}: {
+  saida: string
+  sha: string
+  vps: Vps
+  dizer: (l: string) => void
+}) {
   if (!SHA.test(sha)) throw new Error(`"${sha}" não é um SHA.`)
   const obra = mkdtempSync(join(tmpdir(), 'publicar-temestudo-'))
   try {
@@ -318,7 +341,8 @@ function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps:
     const frontend = resolve(saida, '..')
     copyFileSync(join(frontend, 'Dockerfile'), join(obra, 'Dockerfile'))
     const nomes = CONFIGURACAO_DO_HOST.map(([nome]) => nome)
-    for (const nome of nomes) copyFileSync(join(frontend, 'nginx', nome), join(obra, nome))
+    for (const nome of nomes)
+      copyFileSync(join(frontend, 'nginx', nome), join(obra, nome))
     naVps(vps, 'rm -rf envio && mkdir -p envio')
     dizer('O build vai para a VPS.')
     rodar(
@@ -335,9 +359,16 @@ function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps:
     dizer(naVps(vps, montarAImagem(sha)).trim())
     // O GoatCounter fora do ar não segura o site: o deploy segue com um aviso.
     try {
-      dizer(naVps(vps, garantirOStats({ email: process.env.GOATCOUNTER_EMAIL || undefined })).trim())
+      dizer(
+        naVps(
+          vps,
+          garantirOStats({ email: process.env.GOATCOUNTER_EMAIL || undefined }),
+        ).trim(),
+      )
     } catch (erro) {
-      dizer(`Aviso: o GoatCounter não subiu (${(erro as Error).message}). O site segue.`)
+      dizer(
+        `Aviso: o GoatCounter não subiu (${(erro as Error).message}). O site segue.`,
+      )
       // Um GoatCounter sem site no ar mostra a tela de criar conta a quem chegar.
       try {
         dizer(naVps(vps, pararOStatsSemSite()).trim())
@@ -353,9 +384,18 @@ function publicar({ saida, sha, vps, dizer }: { saida: string; sha: string; vps:
 
 /** Volta a uma imagem que a VPS guardou: a do SHA pedido, ou a do deploy
  * anterior. O vhost fica como está. */
-function voltar({ sha, vps, dizer }: { sha?: string; vps: Vps; dizer: (l: string) => void }) {
+function voltar({
+  sha,
+  vps,
+  dizer,
+}: {
+  sha?: string
+  vps: Vps
+  dizer: (l: string) => void
+}) {
   const alvo = sha ?? naVps(vps, 'cat anterior 2>/dev/null || true').trim()
-  if (!alvo) throw new Error('A VPS não guardou um deploy anterior: diga o SHA.')
+  if (!alvo)
+    throw new Error('A VPS não guardou um deploy anterior: diga o SHA.')
   if (!SHA.test(alvo)) throw new Error(`"${alvo}" não é um SHA.`)
   dizer(`Voltando para sha-${alvo}.`)
   dizer(naVps(vps, trocarOApp(alvo, false)).trim())
@@ -363,9 +403,20 @@ function voltar({ sha, vps, dizer }: { sha?: string; vps: Vps; dizer: (l: string
 
 /** A VPS das variáveis `VPS_*` do ambiente, ou nenhuma sem o `VPS_HOST`. */
 function daLinhaDeComando(): Vps | undefined {
-  const { VPS_HOST: host, VPS_PORT: porta = '22', VPS_USER: usuario = 'root', VPS_SSH_KEY: chave } =
-    process.env
-  return host ? { host, porta: porta || '22', usuario: usuario || 'root', chave: arquivoDaChave(chave) } : undefined
+  const {
+    VPS_HOST: host,
+    VPS_PORT: porta = '22',
+    VPS_USER: usuario = 'root',
+    VPS_SSH_KEY: chave,
+  } = process.env
+  return host
+    ? {
+        host,
+        porta: porta || '22',
+        usuario: usuario || 'root',
+        chave: arquivoDaChave(chave),
+      }
+    : undefined
 }
 
 if (import.meta.main) {
@@ -379,7 +430,8 @@ if (import.meta.main) {
     process.exit(1)
   }
   if (!vps) uso()
-  else if (modo === '--publicar' && a && b) publicar({ saida: resolve(a), sha: b, vps, dizer })
+  else if (modo === '--publicar' && a && b)
+    publicar({ saida: resolve(a), sha: b, vps, dizer })
   else if (modo === '--voltar') voltar({ sha: a, vps, dizer })
   else uso()
 }

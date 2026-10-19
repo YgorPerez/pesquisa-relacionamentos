@@ -19,7 +19,10 @@ import {
   type ArquivosDoGrupo,
   type LugarDoPacote,
 } from '@tem-estudo/regras/grupo-possivel-dados'
-import { estimarGrupo, type Estimativa } from '@tem-estudo/regras/grupo-possivel'
+import {
+  estimarGrupo,
+  type Estimativa,
+} from '@tem-estudo/regras/grupo-possivel'
 import { REQUISITOS_PADRAO, UFS } from '@tem-estudo/regras/requisitos'
 import type { Plugin } from 'vite-plus'
 
@@ -44,26 +47,40 @@ export interface DadosMontados {
 /** Lê `dados/grupo-possivel/` e monta os pacotes. */
 export function montarPacotes(pasta: string): DadosMontados {
   const textos = Object.fromEntries(
-    Object.entries(ARQUIVOS).map(([chave, nome]) => [chave, readFileSync(resolve(pasta, nome), 'utf8')]),
+    Object.entries(ARQUIVOS).map(([chave, nome]) => [
+      chave,
+      readFileSync(resolve(pasta, nome), 'utf8'),
+    ]),
   ) as unknown as ArquivosDoGrupo
   const base = lerBaseDoGrupo(textos)
   const lugares: LugarDoPacote[] = [
     'BR',
-    ...UFS.map((u) => u.sigla).filter((uf) => base.censo.some((linha) => linha.uf === uf)),
+    ...UFS.map((u) => u.sigla).filter((uf) =>
+      base.censo.some((linha) => linha.uf === uf),
+    ),
   ]
-  const pacotes = new Map(lugares.map((lugar) => [lugar, JSON.stringify(pacoteDoLugar(base, lugar))]))
+  const pacotes = new Map(
+    lugares.map((lugar) => [lugar, JSON.stringify(pacoteDoLugar(base, lugar))]),
+  )
   const hash = createHash('sha256')
   for (const texto of pacotes.values()) hash.update(texto)
   const brasil = abrirPacote(JSON.parse(pacotes.get('BR')!))
   return {
     versao: hash.digest('hex').slice(0, 10),
     pacotes,
-    exemplo: estimarGrupo({ perfil: null, requisitos: REQUISITOS_PADRAO }, { brasil }),
+    exemplo: estimarGrupo(
+      { perfil: null, requisitos: REQUISITOS_PADRAO },
+      { brasil },
+    ),
   }
 }
 
 export function grupoPossivel(): Plugin {
-  const raiz = resolve(import.meta.dirname, '..', process.env.CONTEUDO_RAIZ ?? '..')
+  const raiz = resolve(
+    import.meta.dirname,
+    '..',
+    process.env.CONTEUDO_RAIZ ?? '..',
+  )
   const pasta = resolve(raiz, 'dados', 'grupo-possivel')
   let montados: DadosMontados | undefined
   const dados = () => (montados ??= montarPacotes(pasta))
@@ -75,7 +92,8 @@ export function grupoPossivel(): Plugin {
     },
     load(id) {
       if (id !== RESOLVIDO) return undefined
-      for (const nome of Object.values(ARQUIVOS)) this.addWatchFile(resolve(pasta, nome))
+      for (const nome of Object.values(ARQUIVOS))
+        this.addWatchFile(resolve(pasta, nome))
       const { versao, pacotes, exemplo } = dados()
       return `export default ${JSON.stringify({
         base: `${CAMINHO}/${versao}`,
@@ -88,13 +106,22 @@ export function grupoPossivel(): Plugin {
       if (this.environment.name !== 'client') return
       const { versao, pacotes } = dados()
       for (const [lugar, texto] of pacotes)
-        this.emitFile({ type: 'asset', fileName: `${CAMINHO.slice(1)}/${versao}/${lugar}.json`, source: texto })
+        this.emitFile({
+          type: 'asset',
+          fileName: `${CAMINHO.slice(1)}/${versao}/${lugar}.json`,
+          source: texto,
+        })
     },
     configureServer(servidor) {
       servidor.middlewares.use(CAMINHO, (pedido, resposta, seguir) => {
         const [, versao, arquivo] = (pedido.url ?? '').split('/')
-        const lugar = arquivo?.replace(/\.json$/, '') as LugarDoPacote | undefined
-        const texto = lugar && versao === dados().versao ? dados().pacotes.get(lugar) : undefined
+        const lugar = arquivo?.replace(/\.json$/, '') as
+          | LugarDoPacote
+          | undefined
+        const texto =
+          lugar && versao === dados().versao
+            ? dados().pacotes.get(lugar)
+            : undefined
         if (!texto) return seguir()
         resposta.setHeader('content-type', 'application/json')
         resposta.end(texto)

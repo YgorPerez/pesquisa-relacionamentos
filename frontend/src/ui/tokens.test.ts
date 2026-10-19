@@ -15,7 +15,12 @@ type Design = {
   spacing: Record<string, string>
   typography: Record<
     string,
-    { fontFamily: string; fontSize: string; fontWeight: number; lineHeight: number }
+    {
+      fontFamily: string
+      fontSize: string
+      fontWeight: number
+      lineHeight: number
+    }
   >
 }
 
@@ -31,7 +36,14 @@ function lerVariaveis(): Map<string, string> {
   const css = readFileSync(resolve(import.meta.dirname, 'tokens.css'), 'utf8')
   const variaveis = new Map<string, string>()
   for (const [, nome, valor] of css.matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)) {
-    variaveis.set(nome!, valor!.trim())
+    // O formatador quebra um valor longo em várias linhas; no CSS o espaço
+    // a mais não conta, e aqui também não.
+    const umaLinha = valor!
+      .replace(/\s+/g, ' ')
+      .replace(/\( /g, '(')
+      .replace(/ \)/g, ')')
+      .trim()
+    variaveis.set(nome!, umaLinha)
   }
   return variaveis
 }
@@ -40,24 +52,36 @@ const design = lerDesign()
 const variaveis = lerVariaveis()
 
 describe('tokens.css', () => {
-  it.each(Object.entries(design.colors))('tem a cor %s do DESIGN.md', (nome, cor) => {
-    expect(variaveis.get(`cor-${nome}`)).toBe(cor)
-  })
+  it.each(Object.entries(design.colors))(
+    'tem a cor %s do DESIGN.md',
+    (nome, cor) => {
+      expect(variaveis.get(`cor-${nome}`)).toBe(cor)
+    },
+  )
 
-  it.each(Object.entries(design.rounded))('tem o raio %s do DESIGN.md', (nome, raio) => {
-    expect(variaveis.get(`raio-${nome}`)).toBe(raio)
-  })
+  it.each(Object.entries(design.rounded))(
+    'tem o raio %s do DESIGN.md',
+    (nome, raio) => {
+      expect(variaveis.get(`raio-${nome}`)).toBe(raio)
+    },
+  )
 
-  it.each(Object.entries(design.spacing))('tem o espaço %s do DESIGN.md', (nome, espaco) => {
-    expect(variaveis.get(`espaco-${nome}`)).toBe(espaco)
-  })
+  it.each(Object.entries(design.spacing))(
+    'tem o espaço %s do DESIGN.md',
+    (nome, espaco) => {
+      expect(variaveis.get(`espaco-${nome}`)).toBe(espaco)
+    },
+  )
 
-  it.each(Object.entries(design.typography))('tem o tipo %s do DESIGN.md', (nome, tipo) => {
-    expect(variaveis.get(`tipo-${nome}-familia`)).toBe(tipo.fontFamily)
-    expect(variaveis.get(`tipo-${nome}-tamanho`)).toBe(tipo.fontSize)
-    expect(variaveis.get(`tipo-${nome}-peso`)).toBe(String(tipo.fontWeight))
-    expect(variaveis.get(`tipo-${nome}-altura`)).toBe(String(tipo.lineHeight))
-  })
+  it.each(Object.entries(design.typography))(
+    'tem o tipo %s do DESIGN.md',
+    (nome, tipo) => {
+      expect(variaveis.get(`tipo-${nome}-familia`)).toBe(tipo.fontFamily)
+      expect(variaveis.get(`tipo-${nome}-tamanho`)).toBe(tipo.fontSize)
+      expect(variaveis.get(`tipo-${nome}-peso`)).toBe(String(tipo.fontWeight))
+      expect(variaveis.get(`tipo-${nome}-altura`)).toBe(String(tipo.lineHeight))
+    },
+  )
 
   it('tem a retícula fina da elevação, deslocada 5px e 6px', () => {
     expect(variaveis.get('reticula')).toBe(

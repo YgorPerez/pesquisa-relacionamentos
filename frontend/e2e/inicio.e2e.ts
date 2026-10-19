@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
 
 test.describe('página inicial', () => {
-  test('o servidor responde / já com a página desenhada', async ({ request }) => {
+  test('o servidor responde / já com a página desenhada', async ({
+    request,
+  }) => {
     const resposta = await request.get('/')
     expect(resposta.status()).toBe(200)
     const html = await resposta.text()
@@ -66,9 +68,13 @@ test.describe('página inicial', () => {
     for (const url of fontes) expect(new URL(url).origin).toBe(origem)
   })
 
-  test('o nome do site no topo tem altura de toque de 44px', async ({ page }) => {
+  test('o nome do site no topo tem altura de toque de 44px', async ({
+    page,
+  }) => {
     await page.goto('/')
-    const caixa = await page.getByRole('link', { name: 'Tem estudo?' }).boundingBox()
+    const caixa = await page
+      .getByRole('link', { name: 'Tem estudo?' })
+      .boundingBox()
     expect(caixa?.height).toBeGreaterThanOrEqual(44)
   })
 })

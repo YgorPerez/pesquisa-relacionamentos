@@ -1,9 +1,24 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { buscarGuia } from '#/conteudo/guias'
-import { ConfiancaDaResposta, FichasCitadas, Html, LinhaDePergunta } from '#/ui/guia'
-import { usePontoNoHistorico, useReferencias, VoltarParaGuia } from '#/ui/navegacao'
+import {
+  ConfiancaDaResposta,
+  FichasCitadas,
+  Html,
+  LinhaDePergunta,
+} from '#/ui/guia'
+import {
+  usePontoNoHistorico,
+  useReferencias,
+  VoltarParaGuia,
+} from '#/ui/navegacao'
 import { ForcaDaEvidencia } from '#/ui/selos'
-import { AvisoSemDado, CaixaDoPerfil, LinkDoPerfil, NotaValePara, ParaOSeuPerfil } from '#/ui/perfil'
+import {
+  AvisoSemDado,
+  CaixaDoPerfil,
+  LinkDoPerfil,
+  NotaValePara,
+  ParaOSeuPerfil,
+} from '#/ui/perfil'
 import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
 import { usePrioridades } from '#/estado/prioridades'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
@@ -14,10 +29,14 @@ import { Compartilhar } from '#/ui/compartilhar'
 import { useGrupoPossivel, useRequisitosSalvos } from '#/estado/grupo-possivel'
 import { CartaoDoGrupoPossivel } from '#/ui/grupo-possivel'
 import type { Perfil } from '@tem-estudo/regras/perfil'
-import { REQUISITOS_PADRAO, valorDoRequisito } from '@tem-estudo/regras/requisitos'
+import {
+  REQUISITOS_PADRAO,
+  valorDoRequisito,
+} from '@tem-estudo/regras/requisitos'
 
 export const Route = createFileRoute('/$tema/$slug')({
-  loader: ({ params }) => buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
+  loader: ({ params }) =>
+    buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
   head: ({ loaderData: guia }) => ({
     // A prévia do link repete o título e a descrição de busca; a imagem é a
     // fixa do site, da raiz.
@@ -36,7 +55,18 @@ export const Route = createFileRoute('/$tema/$slug')({
 })
 
 const Marcador = () => (
-  <svg className="seta-nota" width="30" height="34" viewBox="0 0 30 34" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    className="seta-nota"
+    width="30"
+    height="34"
+    viewBox="0 0 30 34"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M24 3C10 6 4 16 8 30M8 30l-4-7M8 30l6-5" />
   </svg>
 )
@@ -53,19 +83,37 @@ function PaginaDoGuia() {
       <div className="coluna">
         <VoltarParaGuia />
         {perfil && noGuia?.comDado === 0 && <AvisoSemDado perfil={perfil} />}
-        <h1 className="display" dangerouslySetInnerHTML={{ __html: guia.perguntaHtml }} />
+        <h1
+          className="display"
+          dangerouslySetInnerHTML={{ __html: guia.perguntaHtml }}
+        />
 
-        <section className="painel com-reticula resposta-curta" aria-labelledby="t-resposta">
+        <section
+          className="painel com-reticula resposta-curta"
+          aria-labelledby="t-resposta"
+        >
           <h2 id="t-resposta" className="visualmente-oculto">
             Resposta curta
           </h2>
           <ConfiancaDaResposta confianca={guia.confianca} />
           <Html className="resposta prosa" html={guia.respostaHtml} />
-          {noGuia && <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />}
+          {noGuia && (
+            <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />
+          )}
         </section>
 
         <div className="seta-fontes">
-          <svg width="44" height="40" viewBox="0 0 44 40" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            width="44"
+            height="40"
+            viewBox="0 0 44 40"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M6 4c4 16 14 26 32 30M38 34l-9 2M38 34l-3-8" />
           </svg>
           <a href="#fichas">quer conferir? as Fichas estão lá no fim</a>
@@ -84,16 +132,24 @@ function PaginaDoGuia() {
                   <Html como="p" html={dica.html} />
                   <div className="dica-meta">
                     <ForcaDaEvidencia forca={dica.forca} rotulo />
-                    <Link to="/dicas/$slug" params={{ slug: dica.slug }} className="link-leve">
+                    <Link
+                      to="/dicas/$slug"
+                      params={{ slug: dica.slug }}
+                      className="link-leve"
+                    >
                       sobre esta Dica
                     </Link>
                   </div>
                   {dica.inferencia && (
                     <p className="inferencia">
-                      Inferência nossa: nenhum estudo testou isso direto. Saiu das Fichas citadas.
+                      Inferência nossa: nenhum estudo testou isso direto. Saiu
+                      das Fichas citadas.
                     </p>
                   )}
-                  <NotaValePara texto={dica.valePara} veredito={noGuia?.dicas[i] ?? null} />
+                  <NotaValePara
+                    texto={dica.valePara}
+                    veredito={noGuia?.dicas[i] ?? null}
+                  />
                 </li>
               ))}
             </ul>
@@ -116,7 +172,10 @@ function PaginaDoGuia() {
                 </span>
                 <div>
                   <Html como="p" html={achado.html} />
-                  <NotaValePara texto={achado.valePara} veredito={noGuia?.achados[i] ?? null} />
+                  <NotaValePara
+                    texto={achado.valePara}
+                    veredito={noGuia?.achados[i] ?? null}
+                  />
                 </div>
               </li>
             ))}
@@ -137,7 +196,10 @@ function PaginaDoGuia() {
                 <tbody>
                   <tr>
                     {guia.divergencia.lados.map((lado) => (
-                      <td key={lado.titulo} dangerouslySetInnerHTML={{ __html: lado.html }} />
+                      <td
+                        key={lado.titulo}
+                        dangerouslySetInnerHTML={{ __html: lado.html }}
+                      />
                     ))}
                   </tr>
                 </tbody>
@@ -172,7 +234,11 @@ function PaginaDoGuia() {
                 <p className="mito-frase">
                   <s>{mito.afirmacao}</s>
                 </p>
-                <Html como="p" className="mito-porque" html={mito.porQueNaoHtml} />
+                <Html
+                  como="p"
+                  className="mito-porque"
+                  html={mito.porQueNaoHtml}
+                />
               </article>
             ))}
           </section>
@@ -193,7 +259,11 @@ function PaginaDoGuia() {
             <Marcador />
             cada número do texto leva à Ficha com o mesmo número aqui
           </p>
-          <FichasCitadas fichas={guia.fichas} circulada={circulada} voltarAoTexto={voltarAoTexto} />
+          <FichasCitadas
+            fichas={guia.fichas}
+            circulada={circulada}
+            voltarAoTexto={voltarAoTexto}
+          />
         </section>
 
         <Ajudou key={guia.slug} guia={guia.slug} />
@@ -213,7 +283,10 @@ function PaginaDoGuia() {
           </section>
         )}
 
-        <Compartilhar semTitulo frase="O link leva só o endereço do Guia, sem o seu Perfil." />
+        <Compartilhar
+          semTitulo
+          frase="O link leva só o endereço do Guia, sem o seu Perfil."
+        />
       </div>
     </main>
   )
@@ -222,7 +295,13 @@ function PaginaDoGuia() {
 /** O cartão de Prioridades, com o topo 3 que o visitante deixou na página. */
 function CartaoDoB1({ prioridades }: { prioridades: PrioridadesVista }) {
   const { topo3 } = usePrioridades(prioridades.caracteristicas.map((c) => c.id))
-  return <CartaoDePrioridades barra={prioridades.barra} caracteristicas={prioridades.caracteristicas} topo3={topo3} />
+  return (
+    <CartaoDePrioridades
+      barra={prioridades.barra}
+      caracteristicas={prioridades.caracteristicas}
+      topo3={topo3}
+    />
+  )
 }
 
 /** O cartão do Grupo possível, com a conta que o visitante deixou na página. */
@@ -230,12 +309,16 @@ function CartaoDoB5({ perfil }: { perfil: Perfil | null }) {
   const salvos = useRequisitosSalvos()
   const { estimativa, carregando, uf } = useGrupoPossivel(perfil, salvos)
   const r = salvos ?? REQUISITOS_PADRAO
-  const municipio = r.lugar?.municipio ? uf?.municipios.get(r.lugar.municipio)?.nome : undefined
+  const municipio = r.lugar?.municipio
+    ? uf?.municipios.get(r.lugar.municipio)?.nome
+    : undefined
   return (
     <CartaoDoGrupoPossivel
       estimativa={estimativa}
       usado={perfil !== null || salvos !== null}
-      ligados={estimativa.ligados.map((k) => valorDoRequisito(k, perfil, r, municipio))}
+      ligados={estimativa.ligados.map((k) =>
+        valorDoRequisito(k, perfil, r, municipio),
+      )}
       carregando={carregando}
     />
   )
@@ -247,7 +330,8 @@ function GuiaNaoExiste() {
       <div className="coluna">
         <h1 className="display">Esse Guia não existe</h1>
         <p className="lead">
-          O endereço pode ter mudado. <Link to="/">Veja os Temas na página inicial</Link>.
+          O endereço pode ter mudado.{' '}
+          <Link to="/">Veja os Temas na página inicial</Link>.
         </p>
       </div>
     </main>

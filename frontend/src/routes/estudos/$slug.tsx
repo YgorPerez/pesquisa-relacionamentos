@@ -39,7 +39,17 @@ function PaginaDaFicha() {
     <main className="folha">
       <div className="coluna">
         <Link to="/estudos" className="voltar">
-          <svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            width="22"
+            height="14"
+            viewBox="0 0 22 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
           </svg>
           Todos os estudos
@@ -47,8 +57,9 @@ function PaginaDaFicha() {
 
         {naoVerificada && (
           <p className="aviso" role="note">
-            <strong>Ficha não verificada.</strong> Os números abaixo ainda não foram conferidos no
-            texto original. Ela não sustenta nenhum Guia até ser refeita com a fonte aberta.
+            <strong>Ficha não verificada.</strong> Os números abaixo ainda não
+            foram conferidos no texto original. Ela não sustenta nenhum Guia até
+            ser refeita com a fonte aberta.
           </p>
         )}
 
@@ -64,8 +75,14 @@ function PaginaDaFicha() {
             <dt>Referência</dt>
             <dd>
               <Html como="span" html={ficha.referenciaHtml} />{' '}
-              <a href={ficha.link} className="link-fonte" rel="noopener" target="_blank">
-                Abrir o estudo<span className="visualmente-oculto"> (abre em outra aba)</span>
+              <a
+                href={ficha.link}
+                className="link-fonte"
+                rel="noopener"
+                target="_blank"
+              >
+                Abrir o estudo
+                <span className="visualmente-oculto"> (abre em outra aba)</span>
               </a>
             </dd>
           </div>
@@ -86,7 +103,9 @@ function PaginaDaFicha() {
             <dd>
               {ficha.n !== null && <strong>{numero.format(ficha.n)}. </strong>}
               <Html como="span" html={ficha.amostraHtml} />{' '}
-              {ficha.representativa ? 'Representativa da população.' : 'Não é representativa da população.'}
+              {ficha.representativa
+                ? 'Representativa da população.'
+                : 'Não é representativa da população.'}
             </dd>
           </div>
           <div>
@@ -96,13 +115,21 @@ function PaginaDaFicha() {
           <div>
             <dt>País e período</dt>
             <dd>
-              {ficha.paises.length > 0 ? ficha.paises.join(', ') : 'País não informado'} ·{' '}
-              {ficha.periodo}
+              {ficha.paises.length > 0
+                ? ficha.paises.join(', ')
+                : 'País não informado'}{' '}
+              · {ficha.periodo}
             </dd>
           </div>
           <div>
             <dt>Financiamento e conflito de interesse</dt>
-            <dd>{ficha.conflitoHtml ? <Html como="span" html={ficha.conflitoHtml} /> : 'Não declarado.'}</dd>
+            <dd>
+              {ficha.conflitoHtml ? (
+                <Html como="span" html={ficha.conflitoHtml} />
+              ) : (
+                'Não declarado.'
+              )}
+            </dd>
           </div>
           {ficha.licenca && (
             <div>
@@ -125,16 +152,25 @@ function PaginaDaFicha() {
           </h2>
           <ol className="achados">
             {ficha.achados.map((achado) => (
-              <li key={`${achado.medida}|${achado.valor}|${achado.onde}`} className="achado">
+              <li
+                key={`${achado.medida}|${achado.valor}|${achado.onde}`}
+                className="achado"
+              >
                 <Html className="achado-valor" html={achado.valor} />
                 <div>
-                  <Html como="span" className="achado-medida" html={achado.medida} />
+                  <Html
+                    como="span"
+                    className="achado-medida"
+                    html={achado.medida}
+                  />
                   {achado.trecho ? (
                     <blockquote className="trecho">
                       <Html como="span" html={achado.trecho} />
                     </blockquote>
                   ) : (
-                    <p className="trecho-ausente">Trecho do original ainda não conferido.</p>
+                    <p className="trecho-ausente">
+                      Trecho do original ainda não conferido.
+                    </p>
                   )}
                   {achado.onde && achado.onde !== '—' && (
                     <p className="achado-onde">
@@ -145,11 +181,17 @@ function PaginaDaFicha() {
               </li>
             ))}
           </ol>
-          {ficha.notasDosAchadosHtml && <Html className="prosa" html={ficha.notasDosAchadosHtml} />}
+          {ficha.notasDosAchadosHtml && (
+            <Html className="prosa" html={ficha.notasDosAchadosHtml} />
+          )}
         </section>
 
         {ficha.outrasSecoes.map((secao, i) => (
-          <section key={secao.titulo} className="secao" aria-labelledby={`secao-${i}`}>
+          <section
+            key={secao.titulo}
+            className="secao"
+            aria-labelledby={`secao-${i}`}
+          >
             <h2 id={`secao-${i}`} className="headline">
               {secao.titulo}
             </h2>
@@ -168,8 +210,11 @@ function PaginaDaFicha() {
           <h2 id="citada-em" className="headline">
             Citada em
           </h2>
-          {ficha.citadaEm.guias.length === 0 && ficha.citadaEm.dicas.length === 0 ? (
-            <p className="secundario">Nenhum Guia nem Dica publicada cita esta Ficha ainda.</p>
+          {ficha.citadaEm.guias.length === 0 &&
+          ficha.citadaEm.dicas.length === 0 ? (
+            <p className="secundario">
+              Nenhum Guia nem Dica publicada cita esta Ficha ainda.
+            </p>
           ) : (
             <>
               {ficha.citadaEm.guias.length > 0 && (
@@ -219,7 +264,8 @@ function FichaNaoExiste() {
       <div className="coluna">
         <h1 className="display">Essa Ficha não existe</h1>
         <p className="lead">
-          O endereço pode ter mudado. <Link to="/estudos">Veja todos os estudos</Link>.
+          O endereço pode ter mudado.{' '}
+          <Link to="/estudos">Veja todos os estudos</Link>.
         </p>
       </div>
     </main>

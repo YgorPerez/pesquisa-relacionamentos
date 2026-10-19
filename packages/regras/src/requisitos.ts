@@ -36,18 +36,45 @@ export const UFS = [
 export type Uf = (typeof UFS)[number]['sigla']
 
 /** Os valores do CSV do #36, do menor ao maior quando há ordem. */
-export const ESCOLARIDADES = ['sem-fundamental', 'fundamental', 'medio', 'superior'] as const
+export const ESCOLARIDADES = [
+  'sem-fundamental',
+  'fundamental',
+  'medio',
+  'superior',
+] as const
 export type Escolaridade = (typeof ESCOLARIDADES)[number]
 export const RENDAS = ['sem-renda', 'ate-1', '1-2', '2-5', '5+'] as const
 export type Renda = (typeof RENDAS)[number]
-export const CORES = ['branca', 'preta', 'parda', 'amarela', 'indigena'] as const
+export const CORES = [
+  'branca',
+  'preta',
+  'parda',
+  'amarela',
+  'indigena',
+] as const
 export type Cor = (typeof CORES)[number]
-export const RELIGIOES = ['catolica', 'evangelica', 'espirita', 'umbanda-candomble', 'sem-religiao', 'outra'] as const
+export const RELIGIOES = [
+  'catolica',
+  'evangelica',
+  'espirita',
+  'umbanda-candomble',
+  'sem-religiao',
+  'outra',
+] as const
 export type Religiao = (typeof RELIGIOES)[number]
 
 /** A escolaridade e a renda mínimas que dá para pedir (o menor degrau é "qualquer"). */
-export const ESCOLARIDADES_MINIMAS = ['fundamental', 'medio', 'superior'] as const satisfies ReadonlyArray<Escolaridade>
-export const RENDAS_MINIMAS = ['ate-1', '1-2', '2-5', '5+'] as const satisfies ReadonlyArray<Renda>
+export const ESCOLARIDADES_MINIMAS = [
+  'fundamental',
+  'medio',
+  'superior',
+] as const satisfies ReadonlyArray<Escolaridade>
+export const RENDAS_MINIMAS = [
+  'ate-1',
+  '1-2',
+  '2-5',
+  '5+',
+] as const satisfies ReadonlyArray<Renda>
 
 /** A idade procurada vai de 18 a 80, e 80 quer dizer "80 ou mais". */
 export const IDADE_PROCURADA_MINIMA = 18
@@ -110,26 +137,46 @@ export interface QuemSeProcura {
 
 const HOMENS: QuemSeProcura = { sexos: [0], alvo: 'homens', filhos: 'sem-dado' }
 const MULHERES: QuemSeProcura = { sexos: [1], alvo: 'mulheres', filhos: 'vale' }
-const PESSOAS: QuemSeProcura = { sexos: [0, 1], alvo: 'pessoas', filhos: 'so-mulheres' }
+const PESSOAS: QuemSeProcura = {
+  sexos: [0, 1],
+  alvo: 'pessoas',
+  filhos: 'so-mulheres',
+}
 
 /** Sem dizer quem procura, a conta junta os dois, como em `ambos`. */
 export const quemSeProcura = (perfil: Perfil | null): QuemSeProcura =>
-  perfil?.procura === 'homens' ? HOMENS : perfil?.procura === 'mulheres' ? MULHERES : PESSOAS
+  perfil?.procura === 'homens'
+    ? HOMENS
+    : perfil?.procura === 'mulheres'
+      ? MULHERES
+      : PESSOAS
 
 /** A idade procurada: a escolhida, ou a do Perfil ±5, ou qualquer uma. */
-export function idadeProcurada(perfil: Perfil | null, requisitos: Requisitos): Faixa {
+export function idadeProcurada(
+  perfil: Perfil | null,
+  requisitos: Requisitos,
+): Faixa {
   if (requisitos.idade) return requisitos.idade
-  if (perfil?.idade === undefined) return { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA }
+  if (perfil?.idade === undefined)
+    return { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA }
   return {
-    min: Math.max(IDADE_PROCURADA_MINIMA, Math.min(IDADE_PROCURADA_MAXIMA, perfil.idade - 5)),
+    min: Math.max(
+      IDADE_PROCURADA_MINIMA,
+      Math.min(IDADE_PROCURADA_MAXIMA, perfil.idade - 5),
+    ),
     max: Math.min(IDADE_PROCURADA_MAXIMA, perfil.idade + 5),
   }
 }
 
-const umDe = <T extends string>(lista: ReadonlyArray<T>, valor: unknown): T | undefined =>
-  lista.find((item) => item === valor)
+const umDe = <T extends string>(
+  lista: ReadonlyArray<T>,
+  valor: unknown,
+): T | undefined => lista.find((item) => item === valor)
 
-const variosDe = <T extends string>(lista: ReadonlyArray<T>, valor: unknown): T[] =>
+const variosDe = <T extends string>(
+  lista: ReadonlyArray<T>,
+  valor: unknown,
+): T[] =>
   Array.isArray(valor) ? lista.filter((item) => valor.includes(item)) : []
 
 function faixa(valor: unknown, min: number, max: number): Faixa | null {
@@ -147,22 +194,38 @@ function lugar(valor: unknown): Lugar | null {
   const uf = UFS.find((u) => u.sigla === bruto.uf)
   if (!uf) return null
   const municipio = bruto.municipio
-  return typeof municipio === 'string' && /^\d{7}$/.test(municipio) && municipio.startsWith(uf.codigo)
+  return typeof municipio === 'string' &&
+    /^\d{7}$/.test(municipio) &&
+    municipio.startsWith(uf.codigo)
     ? { uf: uf.sigla, municipio }
     : { uf: uf.sigla }
 }
 
 /** Os Requisitos que o visitante pode ligar e soltar (a orientação vem do Perfil). */
 export const REQUISITOS = [
-  'idade', 'lugar', 'companheiro', 'escolaridade', 'renda', 'cor', 'religiao', 'filhos', 'altura', 'fumo',
+  'idade',
+  'lugar',
+  'companheiro',
+  'escolaridade',
+  'renda',
+  'cor',
+  'religiao',
+  'filhos',
+  'altura',
+  'fumo',
 ] as const
 export type RequisitoDoVisitante = (typeof REQUISITOS)[number]
 
 /** Os Requisitos com aquele de volta ao padrão "qualquer" (o botão "soltar"). */
-export function soltar(requisitos: Requisitos, requisito: RequisitoDoVisitante): Requisitos {
+export function soltar(
+  requisitos: Requisitos,
+  requisito: RequisitoDoVisitante,
+): Requisitos {
   const p = REQUISITOS_PADRAO
   const solto: Record<RequisitoDoVisitante, Partial<Requisitos>> = {
-    idade: { idade: { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA } },
+    idade: {
+      idade: { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA },
+    },
     lugar: { lugar: null },
     companheiro: { companheiro: false },
     escolaridade: { escolaridade: null },
@@ -176,7 +239,9 @@ export function soltar(requisitos: Requisitos, requisito: RequisitoDoVisitante):
   return { ...requisitos, ...solto[requisito] }
 }
 
-export const TITULO_DO_REQUISITO: Readonly<Record<RequisitoDoVisitante | 'orientacao', string>> = {
+export const TITULO_DO_REQUISITO: Readonly<
+  Record<RequisitoDoVisitante | 'orientacao', string>
+> = {
   idade: 'Idade',
   lugar: 'Onde',
   companheiro: 'Disponível',
@@ -190,13 +255,17 @@ export const TITULO_DO_REQUISITO: Readonly<Record<RequisitoDoVisitante | 'orient
   fumo: 'Cigarro',
 }
 
-export const ROTULO_DA_ESCOLARIDADE: Readonly<Record<(typeof ESCOLARIDADES_MINIMAS)[number], string>> = {
+export const ROTULO_DA_ESCOLARIDADE: Readonly<
+  Record<(typeof ESCOLARIDADES_MINIMAS)[number], string>
+> = {
   fundamental: 'fundamental completo',
   medio: 'médio completo',
   superior: 'superior completo',
 }
 
-export const ROTULO_DA_RENDA: Readonly<Record<(typeof RENDAS_MINIMAS)[number], string>> = {
+export const ROTULO_DA_RENDA: Readonly<
+  Record<(typeof RENDAS_MINIMAS)[number], string>
+> = {
   'ate-1': 'tem alguma renda',
   '1-2': 'mais de 1 salário mínimo',
   '2-5': 'mais de 2 salários mínimos',
@@ -221,9 +290,12 @@ export const ROTULO_DA_RELIGIAO: Readonly<Record<Religiao, string>> = {
 }
 
 const ou = (itens: ReadonlyArray<string>) =>
-  itens.length < 2 ? itens.join('') : `${itens.slice(0, -1).join(', ')} ou ${itens.at(-1)}`
+  itens.length < 2
+    ? itens.join('')
+    : `${itens.slice(0, -1).join(', ')} ou ${itens.at(-1)}`
 
-export const nomeDaUf = (uf: Uf): string => UFS.find((u) => u.sigla === uf)?.nome ?? uf
+export const nomeDaUf = (uf: Uf): string =>
+  UFS.find((u) => u.sigla === uf)?.nome ?? uf
 
 /** O valor de um Requisito escrito como na frase: "25 a 35 anos", "pelo menos
  * superior completo", "qualquer religião". `municipio` é o nome, quando há. */
@@ -236,28 +308,42 @@ export function valorDoRequisito(
   switch (requisito) {
     case 'idade': {
       const { min, max } = idadeProcurada(perfil, r)
-      if (min <= IDADE_PROCURADA_MINIMA && max >= IDADE_PROCURADA_MAXIMA) return 'qualquer idade'
-      return max >= IDADE_PROCURADA_MAXIMA ? `${min} anos ou mais` : `${min} a ${max} anos`
+      if (min <= IDADE_PROCURADA_MINIMA && max >= IDADE_PROCURADA_MAXIMA)
+        return 'qualquer idade'
+      return max >= IDADE_PROCURADA_MAXIMA
+        ? `${min} anos ou mais`
+        : `${min} a ${max} anos`
     }
     case 'lugar':
       if (!r.lugar) return 'Brasil inteiro'
-      return r.lugar.municipio && municipio ? `${municipio} (${r.lugar.uf})` : nomeDaUf(r.lugar.uf)
+      return r.lugar.municipio && municipio
+        ? `${municipio} (${r.lugar.uf})`
+        : nomeDaUf(r.lugar.uf)
     case 'companheiro':
-      return r.companheiro ? 'não mora com companheiro(a)' : 'mora ou não com companheiro(a)'
+      return r.companheiro
+        ? 'não mora com companheiro(a)'
+        : 'mora ou não com companheiro(a)'
     case 'orientacao':
       return perfil?.genero === 'homem' || perfil?.genero === 'mulher'
         ? `se interessa por ${perfil.genero === 'homem' ? 'homens' : 'mulheres'}`
         : 'qualquer orientação'
     case 'escolaridade':
-      return r.escolaridade ? `pelo menos ${ROTULO_DA_ESCOLARIDADE[r.escolaridade]}` : 'qualquer escolaridade'
+      return r.escolaridade
+        ? `pelo menos ${ROTULO_DA_ESCOLARIDADE[r.escolaridade]}`
+        : 'qualquer escolaridade'
     case 'renda':
       return r.renda ? ROTULO_DA_RENDA[r.renda] : 'qualquer renda'
     case 'cor':
-      return r.cores.length ? `cor ${ou(r.cores.map((c) => ROTULO_DA_COR[c]))}` : 'qualquer cor ou raça'
+      return r.cores.length
+        ? `cor ${ou(r.cores.map((c) => ROTULO_DA_COR[c]))}`
+        : 'qualquer cor ou raça'
     case 'religiao':
-      return r.religioes.length ? `religião ${ou(r.religioes.map((c) => ROTULO_DA_RELIGIAO[c]))}` : 'qualquer religião'
+      return r.religioes.length
+        ? `religião ${ou(r.religioes.map((c) => ROTULO_DA_RELIGIAO[c]))}`
+        : 'qualquer religião'
     case 'filhos':
-      if (quemSeProcura(perfil).filhos === 'sem-dado') return 'sem dado para homens'
+      if (quemSeProcura(perfil).filhos === 'sem-dado')
+        return 'sem dado para homens'
       return r.semFilhos ? 'sem filhos' : 'com ou sem filhos'
     case 'altura': {
       const { min, max } = r.altura
@@ -274,12 +360,17 @@ export function valorDoRequisito(
 /** Lê os Requisitos de fonte não confiável (localStorage, link): o que não for
  * válido volta ao padrão. Nunca falha. */
 export function lerRequisitos(valor: unknown): Requisitos {
-  const bruto = (typeof valor === 'object' && valor !== null ? valor : {}) as Record<string, unknown>
+  const bruto = (
+    typeof valor === 'object' && valor !== null ? valor : {}
+  ) as Record<string, unknown>
   const p = REQUISITOS_PADRAO
   return {
     idade: faixa(bruto.idade, IDADE_PROCURADA_MINIMA, IDADE_PROCURADA_MAXIMA),
     lugar: lugar(bruto.lugar),
-    companheiro: typeof bruto.companheiro === 'boolean' ? bruto.companheiro : p.companheiro,
+    companheiro:
+      typeof bruto.companheiro === 'boolean'
+        ? bruto.companheiro
+        : p.companheiro,
     escolaridade: umDe(ESCOLARIDADES_MINIMAS, bruto.escolaridade) ?? null,
     renda: umDe(RENDAS_MINIMAS, bruto.renda) ?? null,
     cores: variosDe(CORES, bruto.cores),

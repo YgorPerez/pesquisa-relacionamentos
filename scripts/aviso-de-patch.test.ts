@@ -16,31 +16,43 @@ EOF`
 
   it('a variável sem valor conhecido aparece pelo nome', () => {
     assert.deepEqual(
-      escritasPorScript(`python3 - <<'EOF'\nimport sys\nopen(sys.argv[1],'w')\nEOF`),
+      escritasPorScript(
+        `python3 - <<'EOF'\nimport sys\nopen(sys.argv[1],'w')\nEOF`,
+      ),
       ['sys.argv[1]'],
     )
   })
 
   it('acha o sed -i num arquivo', () => {
-    assert.deepEqual(escritasPorScript("sed -i 's/a/b/' estudos/joel.md"), ['estudos/joel.md'])
-    assert.deepEqual(escritasPorScript('sed -i s/a/b/ README.md'), ['README.md'])
-    assert.deepEqual(escritasPorScript("cd x && sed -i -e 's/a/b/' -e 's/c/d/' a.md b.md"), [
-      'a.md',
-      'b.md',
+    assert.deepEqual(escritasPorScript("sed -i 's/a/b/' estudos/joel.md"), [
+      'estudos/joel.md',
     ])
+    assert.deepEqual(escritasPorScript('sed -i s/a/b/ README.md'), [
+      'README.md',
+    ])
+    assert.deepEqual(
+      escritasPorScript("cd x && sed -i -e 's/a/b/' -e 's/c/d/' a.md b.md"),
+      ['a.md', 'b.md'],
+    )
   })
 
   it('o que só lê, ou escreve em /tmp, passa sem aviso', () => {
     assert.deepEqual(
-      escritasPorScript(`python3 -c "import json; print(json.load(open('x.json')))"`),
+      escritasPorScript(
+        `python3 -c "import json; print(json.load(open('x.json')))"`,
+      ),
       [],
     )
     assert.deepEqual(
-      escritasPorScript(`python3 - <<'EOF'\nopen('/tmp/corpo.md','w').write('x')\nEOF`),
+      escritasPorScript(
+        `python3 - <<'EOF'\nopen('/tmp/corpo.md','w').write('x')\nEOF`,
+      ),
       [],
     )
     assert.deepEqual(
-      escritasPorScript(`python3 - <<'EOF'\np='/tmp/map.md'; s=open(p).read()\nopen(p,'w').write(s)\nEOF`),
+      escritasPorScript(
+        `python3 - <<'EOF'\np='/tmp/map.md'; s=open(p).read()\nopen(p,'w').write(s)\nEOF`,
+      ),
       [],
     )
     assert.deepEqual(escritasPorScript('sed -n 1,20p scripts/a.ts'), [])
@@ -56,7 +68,9 @@ EOF`
     )
     assert.deepEqual(escritasPorScript('echo "teste: sed -i s/a/b/ x.md"'), [])
     assert.deepEqual(
-      escritasPorScript(`cat > /tmp/issue.md <<'EOF'\nsed -i 's/a/b/' x.md\nopen(p, 'w')\nEOF`),
+      escritasPorScript(
+        `cat > /tmp/issue.md <<'EOF'\nsed -i 's/a/b/' x.md\nopen(p, 'w')\nEOF`,
+      ),
       [],
     )
   })

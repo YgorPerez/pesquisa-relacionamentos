@@ -1,7 +1,13 @@
 // O arquivo de Prioridades no formato que a página `/prioridades` e o cartão
 // do Guia B1 desenham: cada célula com a Ficha já resumida (nome curto,
 // Status, Força e amostra), para o navegador não receber o acervo.
-import type { Acervo, CelulaDePrioridade, Ficha, Forca, Status } from '@tem-estudo/conteudo'
+import type {
+  Acervo,
+  CelulaDePrioridade,
+  Ficha,
+  Forca,
+  Status,
+} from '@tem-estudo/conteudo'
 import type { Degrau } from '@tem-estudo/regras/prioridades'
 import { semMarcas } from './vista-guia'
 
@@ -27,7 +33,11 @@ export interface CaracteristicaVista {
   readonly atracao: CelulaVista
   readonly satisfacao: CelulaVista
   readonly duracao: CelulaVista
-  readonly vies?: { readonly todos?: string; readonly homem?: string; readonly mulher?: string }
+  readonly vies?: {
+    readonly todos?: string
+    readonly homem?: string
+    readonly mulher?: string
+  }
 }
 
 export interface BarraDaSatisfacao {
@@ -52,7 +62,8 @@ export interface PrioridadesVista {
   readonly doGuia: GuiaDaCalculadora | null
 }
 
-const semFormatacao = (texto: string) => texto.replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim()
+const semFormatacao = (texto: string) =>
+  texto.replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim()
 
 function fichaDaPrioridade(ficha: Ficha): FichaDaPrioridade {
   return {

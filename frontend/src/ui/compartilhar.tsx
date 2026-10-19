@@ -5,7 +5,10 @@
 import { useState } from 'react'
 import { Botao } from './botao'
 
-type Copia = { readonly tipo: 'nada' } | { readonly tipo: 'copiado' } | { readonly tipo: 'falhou'; readonly link: string }
+type Copia =
+  | { readonly tipo: 'nada' }
+  | { readonly tipo: 'copiado' }
+  | { readonly tipo: 'falhou'; readonly link: string }
 
 export function Compartilhar({
   query,
@@ -39,7 +42,9 @@ export function Compartilhar({
   return (
     <section
       className="secao compartilhar"
-      {...(semTitulo ? { 'aria-label': 'Compartilhar' } : { 'aria-labelledby': 't-compartilhar' })}
+      {...(semTitulo
+        ? { 'aria-label': 'Compartilhar' }
+        : { 'aria-labelledby': 't-compartilhar' })}
     >
       {!semTitulo && (
         <h2 id="t-compartilhar" className="headline">
@@ -52,7 +57,11 @@ export function Compartilhar({
       </div>
       {aviso && <p className="compartilhar-aviso">{aviso}</p>}
       <p role="status" className="compartilhar-status">
-        {copia.tipo === 'copiado' ? 'Link copiado.' : copia.tipo === 'falhou' ? 'Não deu para copiar. O link está aqui embaixo:' : ''}
+        {copia.tipo === 'copiado'
+          ? 'Link copiado.'
+          : copia.tipo === 'falhou'
+            ? 'Não deu para copiar. O link está aqui embaixo:'
+            : ''}
       </p>
       {copia.tipo === 'falhou' && (
         <input
@@ -68,4 +77,5 @@ export function Compartilhar({
   )
 }
 
-export const AVISO_DA_CONTAGEM = 'O site conta as visitas do link sem guardar o gênero nem quem se procura.'
+export const AVISO_DA_CONTAGEM =
+  'O site conta as visitas do link sem guardar o gênero nem quem se procura.'

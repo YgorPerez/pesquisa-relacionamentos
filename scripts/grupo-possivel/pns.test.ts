@@ -16,8 +16,20 @@ const adulto = (parcial: Partial<RegistroPns>): RegistroPns => ({
   ...parcial,
 })
 
-const linha = (linhas: ReturnType<typeof estimarPns>, medida: string, categoria: string, sexo = 'homem', idade = '18-24') =>
-  linhas.find((l) => l.medida === medida && l.categoria === categoria && l.sexo === sexo && l.idade === idade)
+const linha = (
+  linhas: ReturnType<typeof estimarPns>,
+  medida: string,
+  categoria: string,
+  sexo = 'homem',
+  idade = '18-24',
+) =>
+  linhas.find(
+    (l) =>
+      l.medida === medida &&
+      l.categoria === categoria &&
+      l.sexo === sexo &&
+      l.idade === idade,
+  )
 
 describe('estimarPns', () => {
   it('dá a proporção ponderada pelo peso do morador selecionado', () => {
@@ -56,14 +68,20 @@ describe('estimarPns', () => {
   })
 
   it('deixa fora do denominador quem não respondeu aquela pergunta', () => {
-    const linhas = estimarPns([adulto({ upa: 'A', fumo: null }), adulto({ upa: 'B', fumo: 'diario' })])
+    const linhas = estimarPns([
+      adulto({ upa: 'A', fumo: null }),
+      adulto({ upa: 'B', fumo: 'diario' }),
+    ])
     assert.equal(linha(linhas, 'fumo', 'diario')?.p, 1)
     assert.equal(linha(linhas, 'fumo', 'diario')?.n_registros, 1)
     assert.equal(linha(linhas, 'orientacao', 'heterossexual')?.n_registros, 2)
   })
 
   it('dá a altura como proporção acumulada até cada centímetro de 140 a 200', () => {
-    const linhas = estimarPns([adulto({ upa: 'A', altura: 160 }), adulto({ upa: 'B', altura: 180 })])
+    const linhas = estimarPns([
+      adulto({ upa: 'A', altura: 160 }),
+      adulto({ upa: 'B', altura: 180 }),
+    ])
     assert.equal(linha(linhas, 'altura', 'ate-159')?.p, 0)
     assert.equal(linha(linhas, 'altura', 'ate-160')?.p, 0.5)
     assert.equal(linha(linhas, 'altura', 'ate-179')?.p, 0.5)

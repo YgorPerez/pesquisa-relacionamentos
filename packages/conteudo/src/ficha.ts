@@ -2,7 +2,12 @@
 // que o site desenha (O que mediu, Achados, Limitações).
 import { parse as lerYaml } from 'yaml'
 import { FrontmatterFicha } from './esquema.ts'
-import { dividirFrontmatter, lerCorpo, primeiraTabela, type Secao } from './markdown.ts'
+import {
+  dividirFrontmatter,
+  lerCorpo,
+  primeiraTabela,
+  type Secao,
+} from './markdown.ts'
 import { decodificar, problema, type Problema } from './problemas.ts'
 
 /** Uma linha da tabela de Achados. */
@@ -69,22 +74,37 @@ export function lerFicha(arquivo: string, texto: string): FichaLida {
     try {
       dados = lerYaml(frontmatter) ?? {}
     } catch (e) {
-      erros.push(problema(arquivo, `o frontmatter não é YAML válido: ${(e as Error).message}`))
+      erros.push(
+        problema(
+          arquivo,
+          `o frontmatter não é YAML válido: ${(e as Error).message}`,
+        ),
+      )
     }
   }
 
-  const decodificado = dados === null ? null : decodificar(FrontmatterFicha, dados, arquivo)
+  const decodificado =
+    dados === null ? null : decodificar(FrontmatterFicha, dados, arquivo)
   if (decodificado && !decodificado.ok) erros.push(...decodificado.problemas)
 
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
-    erros.push(problema(arquivo, 'o nome do arquivo precisa ser minúsculo, sem acento, com hífen'))
+    erros.push(
+      problema(
+        arquivo,
+        'o nome do arquivo precisa ser minúsculo, sem acento, com hífen',
+      ),
+    )
 
   const lido = lerCorpo(corpo)
-  if (!lido.titulo) erros.push(problema(arquivo, 'falta o título "# Autor (ano): tema" no corpo'))
+  if (!lido.titulo)
+    erros.push(
+      problema(arquivo, 'falta o título "# Autor (ano): tema" no corpo'),
+    )
 
   const secao = (titulo: string) => lido.secoes.find((s) => s.titulo === titulo)
   for (const titulo of [SECOES.oQueMediu, SECOES.achados, SECOES.limitacoes]) {
-    if (!secao(titulo)) erros.push(problema(arquivo, `falta a seção "## ${titulo}"`, titulo))
+    if (!secao(titulo))
+      erros.push(problema(arquivo, `falta a seção "## ${titulo}"`, titulo))
   }
 
   const achados: Achado[] = []
@@ -94,13 +114,16 @@ export function lerFicha(arquivo: string, texto: string): FichaLida {
     const tabela = primeiraTabela(secaoAchados.markdown)
     const esperado = COLUNAS.join(' | ')
     if (!tabela) {
-      erros.push(problema(arquivo, `falta a tabela | ${esperado} |`, SECOES.achados))
+      erros.push(
+        problema(arquivo, `falta a tabela | ${esperado} |`, SECOES.achados),
+      )
     } else {
       const cabecalho = tabela.cabecalho
       const certo =
         COLUNAS.every((c, i) => cabecalho[i] === c) &&
         (cabecalho.length === COLUNAS.length ||
-          (cabecalho.length === COLUNAS.length + 1 && cabecalho[4] === COLUNA_CALCULO))
+          (cabecalho.length === COLUNAS.length + 1 &&
+            cabecalho[4] === COLUNA_CALCULO))
       if (!certo) {
         erros.push(
           problema(
@@ -111,13 +134,33 @@ export function lerFicha(arquivo: string, texto: string): FichaLida {
         )
       } else {
         tabela.linhas.forEach((linha, i) => {
-          const [medida = '', valor = '', onde = '', trecho = '', calculo = ''] = linha
+          const [
+            medida = '',
+            valor = '',
+            onde = '',
+            trecho = '',
+            calculo = '',
+          ] = linha
           if (!medida || !valor)
-            erros.push(problema(arquivo, `a linha ${i + 1} da tabela precisa de Medida e Valor`, SECOES.achados))
-          achados.push({ medida, valor, onde, trecho: trecho || null, calculo: calculo || null })
+            erros.push(
+              problema(
+                arquivo,
+                `a linha ${i + 1} da tabela precisa de Medida e Valor`,
+                SECOES.achados,
+              ),
+            )
+          achados.push({
+            medida,
+            valor,
+            onde,
+            trecho: trecho || null,
+            calculo: calculo || null,
+          })
         })
       }
-      notasDosAchados = [tabela.antes, tabela.depois].filter(Boolean).join('\n\n')
+      notasDosAchados = [tabela.antes, tabela.depois]
+        .filter(Boolean)
+        .join('\n\n')
     }
   }
 
@@ -125,7 +168,13 @@ export function lerFicha(arquivo: string, texto: string): FichaLida {
     const fm = decodificado.valor
     if (fm.status !== 'nao-verificado') {
       if (!fm.verificado_em)
-        erros.push(problema(arquivo, 'uma Ficha ok ou parcial precisa da data da conferência', 'verificado_em'))
+        erros.push(
+          problema(
+            arquivo,
+            'uma Ficha ok ou parcial precisa da data da conferência',
+            'verificado_em',
+          ),
+        )
     }
     if (fm.status === 'ok') {
       achados.forEach((a, i) => {
@@ -141,10 +190,17 @@ export function lerFicha(arquivo: string, texto: string): FichaLida {
     }
     const idades = fm.cobre.idades
     if (idades && idades.min > idades.max)
-      erros.push(problema(arquivo, `min (${idades.min}) passa de max (${idades.max})`, 'cobre.idades'))
+      erros.push(
+        problema(
+          arquivo,
+          `min (${idades.min}) passa de max (${idades.max})`,
+          'cobre.idades',
+        ),
+      )
   }
 
-  if (erros.length > 0 || !decodificado?.ok || !lido.titulo) return { ok: false, erros }
+  if (erros.length > 0 || !decodificado?.ok || !lido.titulo)
+    return { ok: false, erros }
 
   const conhecidas: ReadonlyArray<string> = Object.values(SECOES)
   return {

@@ -17,7 +17,9 @@ export function Html({
   className?: string
 }) {
   const Tag = como
-  return <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />
+  return (
+    <Tag className={className} dangerouslySetInnerHTML={{ __html: html }} />
+  )
 }
 
 /** Três degraus de 72px ao lado de "Confiança da resposta" e do nível. */
@@ -59,40 +61,65 @@ export function FichasCitadas({
         {fichas.map((ficha) => {
           const alvo = circulada?.slug === ficha.slug
           return (
-          <li key={ficha.slug} id={ficha.ancora} className="ficha-citada" data-alvo={alvo || undefined} tabIndex={-1}>
-            {alvo && <LacoDaFicha key={circulada.vez} />}
-            <span className="ficha-n" aria-hidden="true">
-              {ficha.n}
-            </span>
-            <div>
-              <Link to="/estudos/$slug" params={{ slug: ficha.slug }} className="ficha-titulo">
-                {ficha.titulo}
-              </Link>
-              <div className="ficha-meta">
-                <StatusDeVerificacao status={ficha.status} />
-                <ForcaDaEvidencia forca={ficha.forca} />
-                <span>{ficha.contexto}</span>
+            <li
+              key={ficha.slug}
+              id={ficha.ancora}
+              className="ficha-citada"
+              data-alvo={alvo || undefined}
+              tabIndex={-1}
+            >
+              {alvo && <LacoDaFicha key={circulada.vez} />}
+              <span className="ficha-n" aria-hidden="true">
+                {ficha.n}
+              </span>
+              <div>
+                <Link
+                  to="/estudos/$slug"
+                  params={{ slug: ficha.slug }}
+                  className="ficha-titulo"
+                >
+                  {ficha.titulo}
+                </Link>
+                <div className="ficha-meta">
+                  <StatusDeVerificacao status={ficha.status} />
+                  <ForcaDaEvidencia forca={ficha.forca} />
+                  <span>{ficha.contexto}</span>
+                </div>
+                {alvo && voltarAoTexto && (
+                  <button
+                    type="button"
+                    className="voltar-texto"
+                    onClick={voltarAoTexto}
+                  >
+                    voltar ao texto
+                  </button>
+                )}
               </div>
-              {alvo && voltarAoTexto && (
-                <button type="button" className="voltar-texto" onClick={voltarAoTexto}>
-                  voltar ao texto
-                </button>
-              )}
-            </div>
-          </li>
+            </li>
           )
         })}
       </ol>
       <p className="legenda-curta">
-        Status: lido no original (conferido no texto completo) ou parcial (só no resumo ou na página
-        oficial). Força: forte, moderada ou fraca, conforme o desenho e o tamanho do estudo.
+        Status: lido no original (conferido no texto completo) ou parcial (só no
+        resumo ou na página oficial). Força: forte, moderada ou fraca, conforme
+        o desenho e o tamanho do estudo.
       </p>
     </>
   )
 }
 
 const Seta = () => (
-  <svg width="30" height="20" viewBox="0 0 30 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    width="30"
+    height="20"
+    viewBox="0 0 30 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M2 11c8-2 16-1 25-1M27 10l-7-7M27 10l-7 7" />
   </svg>
 )
@@ -100,7 +127,13 @@ const Seta = () => (
 /** Uma Pergunta como linha grande: a Pergunta, a primeira frase da resposta e
  * a seta. `de` é a Pergunta do Guia de onde se sai, que o outro Guia mostra
  * em "Voltar para <Pergunta>". */
-export function LinhaDePergunta({ guia, de }: { guia: GuiaResumo; de?: string }) {
+export function LinhaDePergunta({
+  guia,
+  de,
+}: {
+  guia: GuiaResumo
+  de?: string
+}) {
   return (
     <Link
       to="/$tema/$slug"

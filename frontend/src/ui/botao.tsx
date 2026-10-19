@@ -7,7 +7,12 @@ type Props = ComponentProps<'button'> & {
 }
 
 /** O botão do DESIGN.md: contorno de mão, 44px de altura, sobe 1px no hover. */
-export function Botao({ variante = 'principal', className, type = 'button', ...props }: Props) {
+export function Botao({
+  variante = 'principal',
+  className,
+  type = 'button',
+  ...props
+}: Props) {
   const classes = [
     'botao',
     variante === 'principal' ? 'com-reticula' : 'botao-leve',

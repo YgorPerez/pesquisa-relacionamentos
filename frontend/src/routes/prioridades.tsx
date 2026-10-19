@@ -8,7 +8,13 @@ import {
   alternarNoTopo3,
   type Desfecho,
 } from '@tem-estudo/regras/prioridades'
-import { fraseDoLink, lerLink, previaDePrioridades, queryDoLink, type EstadoDoLink } from '@tem-estudo/regras/link'
+import {
+  fraseDoLink,
+  lerLink,
+  previaDePrioridades,
+  queryDoLink,
+  type EstadoDoLink,
+} from '@tem-estudo/regras/link'
 import { useMemo, useState } from 'react'
 import { buscarPrioridades } from '#/conteudo/guias'
 import { metaDaPrevia } from '#/conteudo/previa'
@@ -32,8 +38,14 @@ export const Route = createFileRoute('/prioridades')({
     const vista = await buscarPrioridades()
     // A prévia do link, para o robô da rede social: o topo 3 e o alerta,
     // sem o Perfil. Só no servidor; no navegador ela não serve a ninguém.
-    const estado = vista && typeof window === 'undefined' ? lerLink('prioridades', location.searchStr, idsDe(vista)) : null
-    const previa = estado?.calculadora === 'prioridades' ? previaDePrioridades(vista!.caracteristicas, estado.prioridades) : null
+    const estado =
+      vista && typeof window === 'undefined'
+        ? lerLink('prioridades', location.searchStr, idsDe(vista))
+        : null
+    const previa =
+      estado?.calculadora === 'prioridades'
+        ? previaDePrioridades(vista!.caracteristicas, estado.prioridades)
+        : null
     return { vista, previa }
   },
   head: ({ loaderData }) => ({
@@ -50,7 +62,8 @@ export const Route = createFileRoute('/prioridades')({
   component: PaginaDePrioridades,
 })
 
-const idsDe = (vista: PrioridadesVista) => vista.caracteristicas.map((c) => c.id)
+const idsDe = (vista: PrioridadesVista) =>
+  vista.caracteristicas.map((c) => c.id)
 
 function PaginaDePrioridades() {
   const { vista } = Route.useLoaderData()
@@ -64,7 +77,8 @@ function PaginaDePrioridades() {
           <Calculadora vista={vista} />
         ) : (
           <p className="aviso">
-            Esta conta entra no ar quando os estudos que ela usa forem conferidos na fonte. Enquanto isso,{' '}
+            Esta conta entra no ar quando os estudos que ela usa forem
+            conferidos na fonte. Enquanto isso,{' '}
             <Link to="/estudos">veja os estudos do acervo</Link>.
           </p>
         )}
@@ -85,20 +99,26 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const genero = perfil?.genero
   const [aberta, setAberta] = useState<string | null>(null)
   const { topo3, desfecho } = estado
-  const link: EstadoDoLink = { calculadora: 'prioridades', genero: genero ?? null, prioridades: estado }
+  const link: EstadoDoLink = {
+    calculadora: 'prioridades',
+    genero: genero ?? null,
+    prioridades: estado,
+  }
   const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
 
   const mexer = (novo: typeof estado) => {
     gravarPrioridades(novo)
     contarUsoDaCalculadora('prioridades')
   }
-  const tocar = (id: string) => mexer({ ...estado, topo3: alternarNoTopo3(topo3, id) })
+  const tocar = (id: string) =>
+    mexer({ ...estado, topo3: alternarNoTopo3(topo3, id) })
   const escolherDesfecho = (d: Desfecho) => mexer({ ...estado, desfecho: d })
 
   return (
     <>
       <p className="lead">
-        Das dez, quais são as três que mais importam para você num parceiro? Toque nelas na ordem.
+        Das dez, quais são as três que mais importam para você num parceiro?
+        Toque nelas na ordem.
       </p>
       {trocou && (
         <p className="aviso" role="status">
@@ -108,7 +128,11 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         </p>
       )}
 
-      <EscolhaDoTopo3 caracteristicas={caracteristicas} topo3={topo3} aoTocar={tocar} />
+      <EscolhaDoTopo3
+        caracteristicas={caracteristicas}
+        topo3={topo3}
+        aoTocar={tocar}
+      />
 
       <div className="desfecho-preso">
         <SeletorDeDesfecho desfecho={desfecho} aoEscolher={escolherDesfecho} />
@@ -117,7 +141,17 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
       {desfecho === 'satisfacao' && (
         <details className="dobra" id="antes-da-lista" open>
           <summary>
-            <svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              width="14"
+              height="16"
+              viewBox="0 0 14 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <path d="M4 2.5l6.5 5.6L4 13.6" />
             </svg>
             Antes: o parceiro explica pouco da satisfação
@@ -130,7 +164,8 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
 
       <section aria-labelledby="t-estante">
         <h2 id="t-estante" className="visualmente-oculto">
-          Onde a evidência põe cada uma, para {NOME_DO_DESFECHO[desfecho].toLowerCase()}
+          Onde a evidência põe cada uma, para{' '}
+          {NOME_DO_DESFECHO[desfecho].toLowerCase()}
         </h2>
         <Estante
           caracteristicas={caracteristicas}
@@ -140,15 +175,21 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
           aoAbrir={setAberta}
           genero={genero}
         />
-        <p className="dica-estante">Toque numa característica para ver o estudo.</p>
+        <p className="dica-estante">
+          Toque numa característica para ver o estudo.
+        </p>
       </section>
 
       <p className="aviso" role="note">
-        Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da Austrália, e um cobre 43 países. Quase
-        todos são de casais homem-mulher.
+        Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da
+        Austrália, e um cobre 43 países. Quase todos são de casais homem-mulher.
       </p>
 
-      <Compartilhar query={queryDoLink(link)} frase={fraseDoLink(link, { nomes })} aviso={AVISO_DA_CONTAGEM} />
+      <Compartilhar
+        query={queryDoLink(link)}
+        frase={fraseDoLink(link, { nomes })}
+        aviso={AVISO_DA_CONTAGEM}
+      />
 
       {vista.doGuia && (
         <section className="secao do-guia" aria-labelledby="t-do-guia">

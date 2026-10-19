@@ -34,9 +34,7 @@ function semTextoCitado(comando: string): string {
     const heredoc = linha.match(/<<-?\s*['"]?(\w+)['"]?/)
     if (heredoc) fim = heredoc[1] ?? null
   }
-  return fora
-    .join('\n')
-    .replace(/'[^']*'|"(?:[^"\\]|\\.)*"/g, "''")
+  return fora.join('\n').replace(/'[^']*'|"(?:[^"\\]|\\.)*"/g, "''")
 }
 
 /** Valores de atribuições simples (`p='x.md'`, `p = Path("x.md")`), para
@@ -52,7 +50,10 @@ function variaveis(comando: string): Map<string, string> {
 
 /** O caminho de um argumento de Python: o literal sem aspas, o valor da
  * variável, ou o nome dela quando não se sabe o valor. */
-function caminhoPython(argumento: string, valores: Map<string, string>): string {
+function caminhoPython(
+  argumento: string,
+  valores: Map<string, string>,
+): string {
   const literal = argumento.match(/^(?:Path\(\s*)?['"]([^'"]+)['"]\)?$/)
   if (literal) return literal[1] ?? ''
   return valores.get(argumento) ?? argumento
@@ -62,7 +63,8 @@ function caminhoPython(argumento: string, valores: Map<string, string>): string 
  * script quando ele não veio por `-e` ou `-f`. */
 function arquivosDoSed(argumentos: string): string[] {
   const partes = argumentos.trim().split(/\s+/)
-  if (!partes.some((parte) => /^(-[a-zA-Z]*i|--in-place)/.test(parte))) return []
+  if (!partes.some((parte) => /^(-[a-zA-Z]*i|--in-place)/.test(parte)))
+    return []
   let scriptPorOpcao = false
   const soltas: string[] = []
   for (let i = 0; i < partes.length; i++) {
@@ -74,7 +76,10 @@ function arquivosDoSed(argumentos: string): string[] {
   }
   const arquivos = scriptPorOpcao ? soltas : soltas.slice(1)
   return arquivos.filter(
-    (arquivo) => arquivo !== "''" && /[A-Za-z]/.test(arquivo) && /^[\w./~$-]+$/.test(arquivo),
+    (arquivo) =>
+      arquivo !== "''" &&
+      /[A-Za-z]/.test(arquivo) &&
+      /^[\w./~$-]+$/.test(arquivo),
   )
 }
 
@@ -90,7 +95,9 @@ export function escritasPorScript(comando: string): string[] {
       /\bopen\(\s*([^,)]+?)\s*,\s*['"][wa]\+?['"]/g,
     ))
       escritas.push(caminhoPython(achado[1] ?? '', valores))
-    for (const achado of comando.matchAll(/((?:Path\(\s*)?[\w.'"/]+\)?)\.write_text\(/g))
+    for (const achado of comando.matchAll(
+      /((?:Path\(\s*)?[\w.'"/]+\)?)\.write_text\(/g,
+    ))
       escritas.push(caminhoPython(achado[1] ?? '', valores))
   }
   for (const achado of comandos.matchAll(

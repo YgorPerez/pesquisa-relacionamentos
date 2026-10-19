@@ -27,7 +27,11 @@ import {
   type Prioridades,
 } from './prioridades.ts'
 import { decodificar, problema, type Problema } from './problemas.ts'
-import { avisosDeBusca, conferirSitemapAnterior, errosDoAntes } from './regras-de-busca.ts'
+import {
+  avisosDeBusca,
+  conferirSitemapAnterior,
+  errosDoAntes,
+} from './regras-de-busca.ts'
 
 /** Um arquivo de conteúdo, com o caminho relativo à raiz (`estudos/x.md`). */
 export interface Arquivo {
@@ -57,7 +61,11 @@ export interface Acervo {
 }
 
 export type Resultado =
-  | { readonly ok: true; readonly acervo: Acervo; readonly avisos: ReadonlyArray<Problema> }
+  | {
+      readonly ok: true
+      readonly acervo: Acervo
+      readonly avisos: ReadonlyArray<Problema>
+    }
   | {
       readonly ok: false
       readonly erros: ReadonlyArray<Problema>
@@ -78,13 +86,20 @@ const SUFIXO_META = '.meta.yaml'
 
 const ehItem = (nome: string) => nome.endsWith('.md') && !nome.startsWith('_')
 
-function lerPasta(raiz: string, pasta: string, aceita: (nome: string) => boolean): Arquivo[] {
+function lerPasta(
+  raiz: string,
+  pasta: string,
+  aceita: (nome: string) => boolean,
+): Arquivo[] {
   const dir = join(raiz, pasta)
   if (!existsSync(dir)) return []
   return readdirSync(dir)
     .filter((nome) => aceita(nome) && statSync(join(dir, nome)).isFile())
     .sort()
-    .map((nome) => ({ caminho: `${pasta}/${nome}`, texto: readFileSync(join(dir, nome), 'utf8') }))
+    .map((nome) => ({
+      caminho: `${pasta}/${nome}`,
+      texto: readFileSync(join(dir, nome), 'utf8'),
+    }))
 }
 
 /** Lê do disco os arquivos de conteúdo de uma raiz de repositório. */
@@ -99,7 +114,11 @@ export function lerArquivos(raiz: string): ReadonlyArray<Arquivo> {
     ...lerPasta(raiz, PASTA_FICHAS, ehItem),
     ...lerPasta(raiz, PASTA_DICAS, ehItem),
     ...temas.flatMap((tema) =>
-      lerPasta(raiz, `${PASTA_GUIAS}/${tema}`, (nome) => ehItem(nome) || nome === ARQUIVO_DO_TEMA),
+      lerPasta(
+        raiz,
+        `${PASTA_GUIAS}/${tema}`,
+        (nome) => ehItem(nome) || nome === ARQUIVO_DO_TEMA,
+      ),
     ),
     ...lerMetas(raiz),
     ...lerSeExiste(raiz, ARQUIVO_DE_PRIORIDADES),
@@ -108,19 +127,30 @@ export function lerArquivos(raiz: string): ReadonlyArray<Arquivo> {
 
 function lerSeExiste(raiz: string, caminho: string): Arquivo[] {
   const completo = join(raiz, caminho)
-  return existsSync(completo) ? [{ caminho, texto: readFileSync(completo, 'utf8') }] : []
+  return existsSync(completo)
+    ? [{ caminho, texto: readFileSync(completo, 'utf8') }]
+    : []
 }
 
 function lerMetas(raiz: string): Arquivo[] {
   const dados = join(raiz, PASTA_DADOS)
   if (!existsSync(dados)) return []
-  return readdirSync(dados, { recursive: true, encoding: 'utf8' })
-    .map((c) => c.split('\\').join('/'))
-    // Arquivo ou pasta que começa com `_` é rascunho e fica fora do build,
-    // como `dicas/_sem-ficha.md`.
-    .filter((c) => c.endsWith(SUFIXO_META) && !c.split('/').some((parte) => parte.startsWith('_')))
-    .sort()
-    .map((c) => ({ caminho: `${PASTA_DADOS}/${c}`, texto: readFileSync(join(dados, c), 'utf8') }))
+  return (
+    readdirSync(dados, { recursive: true, encoding: 'utf8' })
+      .map((c) => c.split('\\').join('/'))
+      // Arquivo ou pasta que começa com `_` é rascunho e fica fora do build,
+      // como `dicas/_sem-ficha.md`.
+      .filter(
+        (c) =>
+          c.endsWith(SUFIXO_META) &&
+          !c.split('/').some((parte) => parte.startsWith('_')),
+      )
+      .sort()
+      .map((c) => ({
+        caminho: `${PASTA_DADOS}/${c}`,
+        texto: readFileSync(join(dados, c), 'utf8'),
+      }))
+  )
 }
 
 export interface Opcoes {
@@ -130,7 +160,10 @@ export interface Opcoes {
 }
 
 /** Monta o acervo a partir dos textos, sem tocar no disco. */
-export function montarAcervo(arquivos: ReadonlyArray<Arquivo>, opcoes: Opcoes = {}): Resultado {
+export function montarAcervo(
+  arquivos: ReadonlyArray<Arquivo>,
+  opcoes: Opcoes = {},
+): Resultado {
   const erros: Problema[] = []
   const avisos: Problema[] = []
   const fichas: Ficha[] = []
@@ -156,13 +189,22 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>, opcoes: Opcoes = 
       arquivoDePrioridades = { caminho, texto }
     } else if (partes[0] === PASTA_DADOS && nome.endsWith(SUFIXO_META)) {
       metas.push({ caminho, texto })
-    } else if (partes[0] === PASTA_FICHAS && partes.length === 2 && ehItem(nome)) {
+    } else if (
+      partes[0] === PASTA_FICHAS &&
+      partes.length === 2 &&
+      ehItem(nome)
+    ) {
       const lida = lerFicha(caminho, texto)
       guardar(caminho, lida.ok ? { ok: true, item: lida.ficha } : lida, fichas)
-    } else if (partes[0] === PASTA_DICAS && partes.length === 2 && ehItem(nome)) {
+    } else if (
+      partes[0] === PASTA_DICAS &&
+      partes.length === 2 &&
+      ehItem(nome)
+    ) {
       guardar(caminho, lerDica(caminho, texto), dicas)
     } else if (partes[0] === PASTA_GUIAS && partes.length === 3) {
-      if (nome === ARQUIVO_DO_TEMA) guardar(caminho, lerTema(caminho, texto), temas)
+      if (nome === ARQUIVO_DO_TEMA)
+        guardar(caminho, lerTema(caminho, texto), temas)
       else if (ehItem(nome)) guardar(caminho, lerGuia(caminho, texto), guias)
     }
   }
@@ -176,7 +218,9 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>, opcoes: Opcoes = 
   erros.push(...ligados.erros)
 
   const dados: OrigemDosDados[] = []
-  for (const meta of [...metas].sort((a, b) => a.caminho.localeCompare(b.caminho))) {
+  for (const meta of [...metas].sort((a, b) =>
+    a.caminho.localeCompare(b.caminho),
+  )) {
     const lida = lerMeta(meta, fichas)
     if (lida.ok) dados.push(lida.origem)
     else erros.push(...lida.erros)
@@ -207,7 +251,9 @@ export function montarAcervo(arquivos: ReadonlyArray<Arquivo>, opcoes: Opcoes = 
   erros.push(...errosDoAntes(acervo))
   if (opcoes.sitemapAnterior !== undefined)
     erros.push(...conferirSitemapAnterior(acervo, opcoes.sitemapAnterior))
-  return erros.length > 0 ? { ok: false, erros, avisos } : { ok: true, acervo, avisos }
+  return erros.length > 0
+    ? { ok: false, erros, avisos }
+    : { ok: true, acervo, avisos }
 }
 
 /** Lê e monta: o que o build e o app chamam. */
@@ -220,26 +266,50 @@ type MetaLida =
   | { readonly ok: false; readonly erros: ReadonlyArray<Problema> }
 
 /** Um número só publica com Ficha ✅ ou 🟡, como uma afirmação (#10). */
-function lerMeta({ caminho, texto }: Arquivo, fichas: ReadonlyArray<Ficha>): MetaLida {
+function lerMeta(
+  { caminho, texto }: Arquivo,
+  fichas: ReadonlyArray<Ficha>,
+): MetaLida {
   let valor: unknown
   try {
     valor = lerYaml(texto) ?? {}
   } catch (e) {
-    return { ok: false, erros: [problema(caminho, `não é YAML válido: ${(e as Error).message}`)] }
+    return {
+      ok: false,
+      erros: [problema(caminho, `não é YAML válido: ${(e as Error).message}`)],
+    }
   }
   const decodificado = decodificar(MetaDados, valor, caminho)
   if (!decodificado.ok) return { ok: false, erros: decodificado.problemas }
   const meta = decodificado.valor
   const erros: Problema[] = []
   if (!meta.tabela?.length && !meta.variaveis?.length)
-    erros.push(problema(caminho, 'diga a tabela ou as variáveis de onde os dados saíram'))
+    erros.push(
+      problema(
+        caminho,
+        'diga a tabela ou as variáveis de onde os dados saíram',
+      ),
+    )
   const ficha = fichaPorSlug({ fichas }, meta.ficha)
-  if (!ficha) erros.push(problema(caminho, `não existe a Ficha ${PASTA_FICHAS}/${meta.ficha}.md`, 'ficha'))
+  if (!ficha)
+    erros.push(
+      problema(
+        caminho,
+        `não existe a Ficha ${PASTA_FICHAS}/${meta.ficha}.md`,
+        'ficha',
+      ),
+    )
   else if (ficha.status === 'nao-verificado')
     erros.push(
-      problema(caminho, `${meta.ficha} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`, 'ficha'),
+      problema(
+        caminho,
+        `${meta.ficha} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`,
+        'ficha',
+      ),
     )
-  return erros.length > 0 ? { ok: false, erros } : { ok: true, origem: { arquivo: caminho, ...meta } }
+  return erros.length > 0
+    ? { ok: false, erros }
+    : { ok: true, origem: { arquivo: caminho, ...meta } }
 }
 
 /** Dois Estudos com o mesmo DOI viram duas Fichas do mesmo estudo. */
@@ -252,16 +322,21 @@ function doisRepetidos(fichas: ReadonlyArray<Ficha>): Problema[] {
   return [...porDoi.entries()]
     .filter(([, mesmas]) => mesmas.length > 1)
     .flatMap(([doi, mesmas]) =>
-      mesmas.slice(1).map((ficha) =>
-        problema(
-          ficha.arquivo,
-          `o DOI ${doi} já está em ${mesmas[0]?.arquivo}; um Estudo tem uma Ficha só`,
-          'link',
+      mesmas
+        .slice(1)
+        .map((ficha) =>
+          problema(
+            ficha.arquivo,
+            `o DOI ${doi} já está em ${mesmas[0]?.arquivo}; um Estudo tem uma Ficha só`,
+            'link',
+          ),
         ),
-      ),
     )
 }
 
-export function fichaPorSlug(acervo: Pick<Acervo, 'fichas'>, slug: string): Ficha | undefined {
+export function fichaPorSlug(
+  acervo: Pick<Acervo, 'fichas'>,
+  slug: string,
+): Ficha | undefined {
   return acervo.fichas.find((f) => f.slug === slug)
 }

@@ -13,12 +13,17 @@ export const dicaPorSlug = (acervo: Acervo, slug: string): Dica | undefined =>
   acervo.dicas.find((d) => d.slug === slug)
 
 /** Os Guias do Tema, na `ordem` dele. */
-export const guiasDoTema = (acervo: Acervo, tema: string): ReadonlyArray<Guia> =>
-  acervo.guias.filter((g) => g.tema === tema)
+export const guiasDoTema = (
+  acervo: Acervo,
+  tema: string,
+): ReadonlyArray<Guia> => acervo.guias.filter((g) => g.tema === tema)
 
 /** Os Guias que trazem a Dica, na ordem dos Temas. */
-export const guiasComADica = (acervo: Acervo, dica: string): ReadonlyArray<Guia> =>
-  acervo.guias.filter((g) => g.dicas.includes(dica))
+export const guiasComADica = (
+  acervo: Acervo,
+  dica: string,
+): ReadonlyArray<Guia> => acervo.guias.filter((g) => g.dicas.includes(dica))
 
 /** Só a Dica com todas as Fichas ✅ ou 🟡 vai para o site. */
-export const dicaPublicada = (dica: Pick<Dica, 'publicada'>): boolean => dica.publicada
+export const dicaPublicada = (dica: Pick<Dica, 'publicada'>): boolean =>
+  dica.publicada
