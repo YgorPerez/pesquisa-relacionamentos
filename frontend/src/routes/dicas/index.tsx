@@ -2,15 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { leituras } from '#/conteudo/leituras'
 import { ForcaDaEvidencia, MetaDaFicha } from '#/ui/selos'
-import {
-  Aviso,
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Aviso, Headline, Secao } from '#/ui/secao'
 
 export const Route = createFileRoute('/dicas/')({
   loader: async ({ context }) => {

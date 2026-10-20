@@ -1,7 +1,6 @@
 // As peças de toda página (DESIGN.md, Layout e Typography): a folha, a
 // coluna de texto, o título `display` e o `lead`. Cada uma é o elemento do
 // HTML com as classes do tema; quem a usa acrescenta o lugar (`className`).
-// As rotas as pegam por `ui/pagina.ts`.
 import type { ComponentProps } from 'react'
 import { cn } from '@/platform/cn'
 

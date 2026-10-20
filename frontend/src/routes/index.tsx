@@ -2,16 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { leituras } from '#/conteudo/leituras'
 import { LinhaDaCalculadora } from '#/ui/linha-da-pergunta'
-import {
-  Aviso,
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Painel,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
 
 export const Route = createFileRoute('/')({
   // Só espera a leitura: os dados vão ao navegador pelo `queryClient`, e não

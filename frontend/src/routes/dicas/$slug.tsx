@@ -5,15 +5,8 @@ import { FichasCitadas } from '#/ui/guia'
 import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { ForcaDaEvidencia } from '#/ui/selos'
 import { LinkDeVoltar } from '#/ui/navegacao'
-import {
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Painel,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Headline, Painel, Secao } from '#/ui/secao'
 
 export const Route = createFileRoute('/dicas/$slug')({
   // O `loaderData` leva só o que o `head` usa; a Dica vai pelo `queryClient`.

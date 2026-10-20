@@ -34,16 +34,8 @@ import {
   Estante,
   SeletorDeDesfecho,
 } from '#/ui/prioridades'
-import {
-  Aviso,
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Painel,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
 import {
   Collapsible,
   CollapsibleContent,

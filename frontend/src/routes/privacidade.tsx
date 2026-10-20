@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ChaveDaContagem } from '#/ui/contagem'
-import { Coluna, Display, Folha, Headline, Lead, Secao } from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Headline, Secao } from '#/ui/secao'
 
 export const Route = createFileRoute('/privacidade')({
   head: () => ({

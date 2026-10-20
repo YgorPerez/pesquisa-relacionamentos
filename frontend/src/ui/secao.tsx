@@ -1,6 +1,6 @@
 // As peças de dentro da página (DESIGN.md, Layout e Components): a seção com
 // a régua à mão e o título dela, o painel com a retícula e o aviso
-// tracejado. As rotas as pegam por `ui/pagina.tsx`.
+// tracejado.
 import type { ComponentProps, HTMLAttributes } from 'react'
 import { cn } from '@/platform/cn'
 

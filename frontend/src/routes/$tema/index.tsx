@@ -2,7 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { leituras } from '#/conteudo/leituras'
 import { ConfiancaCurta, Html } from '#/ui/guia'
-import { Coluna, Display, Folha, Headline, Lead } from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Headline } from '#/ui/secao'
 
 export const Route = createFileRoute('/$tema/')({
   // O `loaderData` leva só o que o `head` usa; o Tema vai pelo `queryClient`.

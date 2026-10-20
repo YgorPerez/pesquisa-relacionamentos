@@ -60,15 +60,8 @@ import { NOME_DO_ALVO, textoDoCusto } from '#/ui/grupo-possivel.textos'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import { CaixaDoPerfil } from '#/ui/perfil'
 import { Select } from '@/ui/shadcn/select'
-import {
-  Aviso,
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Painel,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha } from '#/ui/folha'
+import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
 
 /** A nota miúda embaixo de um controle. */
 const DICA = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'

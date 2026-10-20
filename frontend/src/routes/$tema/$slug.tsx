@@ -8,15 +8,8 @@ import {
   useReferencias,
   VoltarParaGuia,
 } from '#/ui/navegacao'
-import {
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Painel,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Headline, Painel, Secao } from '#/ui/secao'
 import {
   AvisoSemDado,
   CaixaDoPerfil,

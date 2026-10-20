@@ -5,15 +5,8 @@ import { leituras } from '#/conteudo/leituras'
 import { Html } from '#/ui/guia'
 import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { LinkDeVoltar } from '#/ui/navegacao'
-import {
-  Aviso,
-  Coluna,
-  Display,
-  Folha,
-  Headline,
-  Lead,
-  Secao,
-} from '#/ui/pagina'
+import { Coluna, Display, Folha, Lead } from '#/ui/folha'
+import { Aviso, Headline, Secao } from '#/ui/secao'
 import {
   ForcaDaEvidencia,
   LegendaDasFichas,
