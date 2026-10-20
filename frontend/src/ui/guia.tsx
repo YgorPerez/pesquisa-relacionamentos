@@ -90,49 +90,14 @@ export function FichasCitadas({
   return (
     <>
       <ol className="m-0 list-none p-0" data-slot="fichas-citadas">
-        {fichas.map((ficha) => {
-          const alvo = circulada?.slug === ficha.slug
-          return (
-            <li
-              key={ficha.slug}
-              id={ficha.ancora}
-              className="ficha-citada relative isolate grid scroll-mt-[30vh] grid-cols-[34px_1fr] gap-2.5 rounded-mao-2 pt-3.5 pr-2.5 pb-3.5 pl-1.5 not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta target:bg-agua-fonte/30 focus:shadow-none focus:outline-none data-alvo:target:bg-transparent"
-              data-alvo={alvo || undefined}
-              tabIndex={-1}
-            >
-              {alvo && <LacoDaFicha key={circulada.vez} />}
-              <span
-                className="mt-1.75 grid size-7.5 place-items-center rounded-bolota border-(length:--traco-controle) border-agua-tinta font-label text-nota leading-none font-bold text-agua-tinta"
-                aria-hidden="true"
-              >
-                {ficha.n}
-              </span>
-              <div>
-                <Link
-                  to="/estudos/$slug"
-                  params={{ slug: ficha.slug }}
-                  className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
-                >
-                  {ficha.titulo}
-                </Link>
-                <MetaDaFicha>
-                  <StatusDeVerificacao status={ficha.status} />
-                  <ForcaDaEvidencia forca={ficha.forca} />
-                  <span className="text-tinta-2">{ficha.contexto}</span>
-                </MetaDaFicha>
-                {alvo && voltarAoTexto && (
-                  <Button
-                    variant="sublinhado"
-                    className="mt-1.5"
-                    onClick={voltarAoTexto}
-                  >
-                    voltar ao texto
-                  </Button>
-                )}
-              </div>
-            </li>
-          )
-        })}
+        {fichas.map((ficha) => (
+          <ItemDaFicha
+            key={ficha.slug}
+            ficha={ficha}
+            circulada={circulada?.slug === ficha.slug ? circulada : null}
+            voltarAoTexto={voltarAoTexto}
+          />
+        ))}
       </ol>
       <p className="mt-3 mb-0 text-label leading-body font-normal text-tinta-2">
         Status: lido no original (conferido no texto completo) ou parcial (só no
@@ -140,5 +105,58 @@ export function FichasCitadas({
         o desenho e o tamanho do estudo.
       </p>
     </>
+  )
+}
+
+/** Uma Ficha citada: o número, o título com o Status e a Força e, se o
+ * leitor veio do texto até ela (`circulada`), o laço e "voltar ao texto". */
+function ItemDaFicha({
+  ficha,
+  circulada,
+  voltarAoTexto,
+}: {
+  ficha: FichaCitada
+  circulada: FichaCirculada | null
+  voltarAoTexto: (() => void) | undefined
+}) {
+  const alvo = circulada !== null
+  return (
+    <li
+      id={ficha.ancora}
+      className="ficha-citada relative isolate grid scroll-mt-[30vh] grid-cols-[34px_1fr] gap-2.5 rounded-mao-2 pt-3.5 pr-2.5 pb-3.5 pl-1.5 not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta target:bg-agua-fonte/30 focus:shadow-none focus:outline-none data-alvo:target:bg-transparent"
+      data-alvo={alvo || undefined}
+      tabIndex={-1}
+    >
+      {alvo && <LacoDaFicha key={circulada.vez} />}
+      <span
+        className="mt-1.75 grid size-7.5 place-items-center rounded-bolota border-(length:--traco-controle) border-agua-tinta font-label text-nota leading-none font-bold text-agua-tinta"
+        aria-hidden="true"
+      >
+        {ficha.n}
+      </span>
+      <div>
+        <Link
+          to="/estudos/$slug"
+          params={{ slug: ficha.slug }}
+          className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
+        >
+          {ficha.titulo}
+        </Link>
+        <MetaDaFicha>
+          <StatusDeVerificacao status={ficha.status} />
+          <ForcaDaEvidencia forca={ficha.forca} />
+          <span className="text-tinta-2">{ficha.contexto}</span>
+        </MetaDaFicha>
+        {alvo && voltarAoTexto && (
+          <Button
+            variant="sublinhado"
+            className="mt-1.5"
+            onClick={voltarAoTexto}
+          >
+            voltar ao texto
+          </Button>
+        )}
+      </div>
+    </li>
   )
 }
