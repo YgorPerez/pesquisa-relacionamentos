@@ -31,7 +31,7 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 
 ## Onde um arquivo mora
 
-O app fica em `frontend/`, os pacotes puros em `packages/` (`conteudo`, que lê e valida o acervo, e `regras`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
+O app fica em `frontend/`, os pacotes puros em `packages/` (`content`, que lê e valida o acervo, e `rules`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
 
 - `routes/`: só arquivos de rota.
 - `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.textos.ts` de cada uma ao lado. O CSS à mão fica só em `ui/desenhos.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
@@ -68,7 +68,7 @@ Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 
 ## Código do Effect
 
-O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
+O `packages/content` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
 
 ## Verificar
 

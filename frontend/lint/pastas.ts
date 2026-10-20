@@ -63,11 +63,11 @@ const REGRAS: Regra[] = [
     motivo:
       'O teste mora ao lado do que ele testa, como `<nome>.test.ts`, e não numa pasta de testes.',
   },
-  ...['packages/conteudo/src', 'packages/regras/src'].map((pasta) => ({
+  ...['packages/content/src', 'packages/rules/src'].map((pasta) => ({
     pasta,
     fora: (a: string) => a.includes('/'),
     motivo:
-      'O pacote é plano: um arquivo por assunto, importado pelo subcaminho (`@tem-estudo/regras/<nome>`).',
+      'O pacote é plano: um arquivo por assunto, importado pelo subcaminho (`@tem-estudo/rules/<nome>`).',
   })),
 ]
 

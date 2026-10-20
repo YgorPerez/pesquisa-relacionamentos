@@ -15,12 +15,12 @@
 import { readFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
 import {
-  carregarAcervo,
-  formatarProblemas,
-  lerArquivos,
-  type Acervo,
-} from '@tem-estudo/conteudo'
-import { robotsTxt, sitemapXml } from '@tem-estudo/conteudo/busca'
+  loadLibrary,
+  formatProblems,
+  readFiles,
+  type Library,
+} from '@tem-estudo/content'
+import { robotsTxt, sitemapXml } from '@tem-estudo/content/search'
 import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:acervo'
@@ -34,23 +34,23 @@ export function acervo({
   raiz: string
   anterior: string | undefined
 }): Plugin {
-  let montado: Acervo | null = null
+  let montado: Library | null = null
 
   const carregar = (
     avisar: (mensagem: string) => void,
     falhar: (mensagem: string) => never,
-  ): Acervo => {
-    const resultado = carregarAcervo(
+  ): Library => {
+    const resultado = loadLibrary(
       raiz,
-      anterior ? { sitemapAnterior: readFileSync(anterior, 'utf8') } : {},
+      anterior ? { previousSitemap: readFileSync(anterior, 'utf8') } : {},
     )
-    for (const aviso of resultado.avisos) avisar(aviso.mensagem)
+    for (const aviso of resultado.warnings) avisar(aviso.message)
     if (!resultado.ok) {
       falhar(
-        `O conteúdo em ${relative(process.cwd(), raiz) || '.'} tem ${resultado.erros.length} erro(s):\n${formatarProblemas(resultado.erros)}`,
+        `O conteúdo em ${relative(process.cwd(), raiz) || '.'} tem ${resultado.errors.length} erro(s):\n${formatProblems(resultado.errors)}`,
       )
     }
-    return resultado.acervo
+    return resultado.library
   }
 
   return {
@@ -60,8 +60,8 @@ export function acervo({
     },
     load(id) {
       if (id !== RESOLVIDO) return undefined
-      for (const arquivo of lerArquivos(raiz))
-        this.addWatchFile(resolve(raiz, arquivo.caminho))
+      for (const arquivo of readFiles(raiz))
+        this.addWatchFile(resolve(raiz, arquivo.path))
       montado = carregar(
         (m) => this.warn(m),
         (m) => this.error(m),

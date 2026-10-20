@@ -1,37 +1,37 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import type { Estimativa } from '@tem-estudo/regras/grupo-possivel'
-import { formatarQuantidade } from '@tem-estudo/regras/numeros'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+import type { Estimate } from '@tem-estudo/rules/possible-group'
+import { formatAmount } from '@tem-estudo/rules/numbers'
+import type { Profile } from '@tem-estudo/rules/profile'
 import {
-  ALTURA_MAXIMA,
-  ALTURA_MINIMA,
-  CORES,
-  ESCOLARIDADES_MINIMAS,
-  idadeProcurada,
-  IDADE_PROCURADA_MAXIMA,
-  IDADE_PROCURADA_MINIMA,
-  RELIGIOES,
-  RENDAS_MINIMAS,
-  REQUISITOS,
-  REQUISITOS_PADRAO,
-  ROTULO_DA_COR,
-  ROTULO_DA_ESCOLARIDADE,
-  ROTULO_DA_RELIGIAO,
-  ROTULO_DA_RENDA,
-  soltar,
-  TITULO_DO_REQUISITO,
-  UFS,
-  valorDoRequisito,
-  type RequisitoDoVisitante,
-  type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+  MAX_HEIGHT,
+  MIN_HEIGHT,
+  COLORS,
+  MIN_EDUCATIONS,
+  soughtAge,
+  MAX_SOUGHT_AGE,
+  MIN_SOUGHT_AGE,
+  RELIGIONS,
+  MIN_INCOMES,
+  REQUIREMENTS,
+  DEFAULT_REQUIREMENTS,
+  COLOR_LABEL,
+  EDUCATION_LABEL,
+  RELIGION_LABEL,
+  INCOME_LABEL,
+  release,
+  REQUIREMENT_TITLE,
+  STATES,
+  requirementValue,
+  type VisitorRequirement,
+  type Requirements,
+} from '@tem-estudo/rules/requirements'
 import {
-  ehLink,
-  fraseDoLink,
-  queryDoLink,
-  type EstadoDoLink,
-} from '@tem-estudo/regras/link'
+  isLink,
+  linkSentence,
+  linkQuery,
+  type LinkState,
+} from '@tem-estudo/rules/link'
 import { useId, useRef, type ReactNode } from 'react'
 import type { GuiaDaCalculadora } from '#/conteudo/guias'
 import { leituras } from '#/conteudo/leituras'
@@ -77,7 +77,7 @@ export const Route = createFileRoute('/grupo-possivel')({
     // A prévia do link só no servidor, para o robô da rede social; no
     // navegador, nada do estado sai do aparelho. Ela fica no `loaderData`,
     // porque só o `head` a usa; o Guia vai pelo `queryClient`.
-    const comLink = typeof window === 'undefined' && ehLink(location.searchStr)
+    const comLink = typeof window === 'undefined' && isLink(location.searchStr)
     const [, previa] = await Promise.all([
       context.queryClient.query(leituras.guiaDaCalculadora('grupo-possivel')),
       comLink ? buscarPreviaDoGrupo({ data: location.searchStr }) : null,
@@ -101,13 +101,13 @@ export const Route = createFileRoute('/grupo-possivel')({
 const qualquer = 'qualquer'
 
 /** Toda mudança do visitante nos Requisitos passa aqui, e conta o uso. */
-function gravarEContar(novos: Requisitos) {
+function gravarEContar(novos: Requirements) {
   gravarRequisitos(novos)
   contarUsoDaCalculadora('grupo-possivel')
 }
 
 /** O valor de um Requisito escrito como na tela ("25 a 35 anos"). */
-type ValorDoRequisito = (k: RequisitoDoVisitante | 'orientacao') => string
+type ValorDoRequisito = (k: VisitorRequirement | 'orientacao') => string
 
 function PaginaDoGrupoPossivel() {
   const { data: guia } = useSuspenseQuery(
@@ -117,16 +117,16 @@ function PaginaDoGrupoPossivel() {
   const perfil = usePerfil()
   const salvos = useRequisitosSalvos()
   const conta = useGrupoPossivel(perfil, salvos)
-  const r = salvos ?? REQUISITOS_PADRAO
+  const r = salvos ?? DEFAULT_REQUIREMENTS
   const municipio = r.lugar?.municipio
-    ? conta.uf?.municipios.get(r.lugar.municipio)?.nome
+    ? conta.uf?.municipalities.get(r.lugar.municipio)?.name
     : undefined
   const valor: ValorDoRequisito = (k) =>
-    valorDoRequisito(k, perfil, r, municipio)
-  const link: EstadoDoLink = {
-    calculadora: 'grupo-possivel',
-    perfil,
-    requisitos: salvos,
+    requirementValue(k, perfil, r, municipio)
+  const link: LinkState = {
+    calculator: 'grupo-possivel',
+    profile: perfil,
+    requirements: salvos,
   }
 
   return (
@@ -149,8 +149,8 @@ function PaginaDoGrupoPossivel() {
         />
 
         <Compartilhar
-          query={queryDoLink(link)}
-          frase={fraseDoLink(link, { municipio })}
+          query={linkQuery(link)}
+          frase={linkSentence(link, { municipality: municipio })}
           aviso={AVISO_DA_CONTAGEM}
         />
 
@@ -189,7 +189,7 @@ function TopoDaConta({
         trocou={trocou}
         falhou={conta.falhou}
         tentar={conta.tentar}
-        ressalvas={conta.estimativa.ressalvas}
+        ressalvas={conta.estimativa.caveats}
       />
     </>
   )
@@ -200,7 +200,7 @@ function SeuPerfil({
   perfil,
   valor,
 }: {
-  perfil: Perfil | null
+  perfil: Profile | null
   valor: ValorDoRequisito
 }) {
   return (
@@ -233,8 +233,8 @@ function SeusRequisitos({
   conta,
   valor,
 }: {
-  perfil: Perfil | null
-  requisitos: Requisitos
+  perfil: Profile | null
+  requisitos: Requirements
   conta: ContaNoNavegador
   valor: ValorDoRequisito
 }) {
@@ -244,27 +244,27 @@ function SeusRequisitos({
     perfil,
     requisitos,
     mudar: (mudanca) => gravarEContar({ ...requisitos, ...mudanca }),
-    municipios: conta.uf?.municipios,
-    filhos: estimativa.filhos,
+    municipios: conta.uf?.municipalities,
+    filhos: estimativa.children,
     idMotivoFilhos,
   }
   return (
     <Secao aria-labelledby="t-requisitos">
       <Headline id="t-requisitos">Seus Requisitos</Headline>
       <div className={conta.carregando ? CARREGANDO : undefined}>
-        {REQUISITOS.map((k) => {
+        {REQUIREMENTS.map((k) => {
           const Controle = CONTROLE[k]
           return (
             <LinhaDoRequisito
               key={k}
               requisito={k}
               valor={valor(k)}
-              custo={estimativa.custos.find((c) => c.requisito === k)}
-              ligado={estimativa.ligados.includes(k)}
+              custo={estimativa.costs.find((c) => c.requirement === k)}
+              ligado={estimativa.active.includes(k)}
               nota={
                 k === 'filhos' ? (
                   <MotivoDosFilhos
-                    filhos={estimativa.filhos}
+                    filhos={estimativa.children}
                     id={idMotivoFilhos}
                   />
                 ) : undefined
@@ -281,12 +281,12 @@ function SeusRequisitos({
 
 /** O que o controle de um Requisito lê e como ele muda os Requisitos. */
 interface PropsDoControle {
-  perfil: Perfil | null
-  requisitos: Requisitos
-  mudar: (mudanca: Partial<Requisitos>) => void
+  perfil: Profile | null
+  requisitos: Requirements
+  mudar: (mudanca: Partial<Requirements>) => void
   /** Os municípios da UF escolhida, quando já chegaram. */
-  municipios: ReadonlyMap<string, { nome: string }> | undefined
-  filhos: Estimativa['filhos']
+  municipios: ReadonlyMap<string, { name: string }> | undefined
+  filhos: Estimate['children']
   /** O id do motivo de o filtro de filhos não valer, que a caixa cita. */
   idMotivoFilhos: string
 }
@@ -304,18 +304,18 @@ function alternar<T extends string>(
 
 /** O controle de cada Requisito, que vai dentro da linha dele. */
 const CONTROLE: Record<
-  RequisitoDoVisitante,
+  VisitorRequirement,
   (props: PropsDoControle) => ReactNode
 > = {
   idade: ({ perfil, requisitos, mudar }) => {
-    const idade = idadeProcurada(perfil, requisitos)
+    const idade = soughtAge(perfil, requisitos)
     return (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Passos
           rotulo="Idade de"
           valor={idade.min}
-          min={IDADE_PROCURADA_MINIMA}
-          max={IDADE_PROCURADA_MAXIMA}
+          min={MIN_SOUGHT_AGE}
+          max={MAX_SOUGHT_AGE}
           unidade={() => 'anos'}
           aoMudar={(min) =>
             mudar({ idade: { min, max: Math.max(min, idade.max) } })
@@ -324,11 +324,9 @@ const CONTROLE: Record<
         <Passos
           rotulo="até"
           valor={idade.max}
-          min={IDADE_PROCURADA_MINIMA}
-          max={IDADE_PROCURADA_MAXIMA}
-          unidade={(v) =>
-            v >= IDADE_PROCURADA_MAXIMA ? 'anos ou mais' : 'anos'
-          }
+          min={MIN_SOUGHT_AGE}
+          max={MAX_SOUGHT_AGE}
+          unidade={(v) => (v >= MAX_SOUGHT_AGE ? 'anos ou mais' : 'anos')}
           aoMudar={(max) =>
             mudar({ idade: { min: Math.min(max, idade.min), max } })
           }
@@ -350,8 +348,8 @@ const CONTROLE: Record<
     <Opcoes
       legenda="Escolaridade mínima"
       tipo="radio"
-      valores={[qualquer, ...ESCOLARIDADES_MINIMAS]}
-      rotulos={{ qualquer, ...ROTULO_DA_ESCOLARIDADE }}
+      valores={[qualquer, ...MIN_EDUCATIONS]}
+      rotulos={{ qualquer, ...EDUCATION_LABEL }}
       marcados={[requisitos.escolaridade ?? qualquer]}
       aoMudar={(v) => mudar({ escolaridade: v === qualquer ? null : v })}
     />
@@ -360,8 +358,8 @@ const CONTROLE: Record<
     <Opcoes
       legenda="Renda mínima"
       tipo="radio"
-      valores={[qualquer, ...RENDAS_MINIMAS]}
-      rotulos={{ qualquer, ...ROTULO_DA_RENDA }}
+      valores={[qualquer, ...MIN_INCOMES]}
+      rotulos={{ qualquer, ...INCOME_LABEL }}
       marcados={[requisitos.renda ?? qualquer]}
       aoMudar={(v) => mudar({ renda: v === qualquer ? null : v })}
       dica="Em salários mínimos de julho de 2022 (R$ 1.212)."
@@ -371,11 +369,11 @@ const CONTROLE: Record<
     <Opcoes
       legenda="Cor ou raça"
       tipo="checkbox"
-      valores={CORES}
-      rotulos={ROTULO_DA_COR}
+      valores={COLORS}
+      rotulos={COLOR_LABEL}
       marcados={requisitos.cores}
       aoMudar={(v, marcado) =>
-        mudar({ cores: alternar(CORES, requisitos.cores, v, marcado) })
+        mudar({ cores: alternar(COLORS, requisitos.cores, v, marcado) })
       }
       dica="Nenhuma marcada é qualquer uma."
     />
@@ -384,12 +382,12 @@ const CONTROLE: Record<
     <Opcoes
       legenda="Religião"
       tipo="checkbox"
-      valores={RELIGIOES}
-      rotulos={ROTULO_DA_RELIGIAO}
+      valores={RELIGIONS}
+      rotulos={RELIGION_LABEL}
       marcados={requisitos.religioes}
       aoMudar={(v, marcado) =>
         mudar({
-          religioes: alternar(RELIGIOES, requisitos.religioes, v, marcado),
+          religioes: alternar(RELIGIONS, requisitos.religioes, v, marcado),
         })
       }
       dica="Nenhuma marcada é qualquer uma."
@@ -409,10 +407,10 @@ const CONTROLE: Record<
       <Passos
         rotulo="Altura de"
         valor={altura.min}
-        min={ALTURA_MINIMA}
-        max={ALTURA_MAXIMA}
+        min={MIN_HEIGHT}
+        max={MAX_HEIGHT}
         passo={5}
-        unidade={(v) => (v <= ALTURA_MINIMA ? 'cm ou menos' : 'cm')}
+        unidade={(v) => (v <= MIN_HEIGHT ? 'cm ou menos' : 'cm')}
         aoMudar={(min) =>
           mudar({ altura: { min, max: Math.max(min, altura.max) } })
         }
@@ -420,10 +418,10 @@ const CONTROLE: Record<
       <Passos
         rotulo="até"
         valor={altura.max}
-        min={ALTURA_MINIMA}
-        max={ALTURA_MAXIMA}
+        min={MIN_HEIGHT}
+        max={MAX_HEIGHT}
         passo={5}
-        unidade={(v) => (v >= ALTURA_MAXIMA ? 'cm ou mais' : 'cm')}
+        unidade={(v) => (v >= MAX_HEIGHT ? 'cm ou mais' : 'cm')}
         aoMudar={(max) =>
           mudar({ altura: { min: Math.min(max, altura.min), max } })
         }
@@ -449,16 +447,16 @@ function AConta({
   valor,
 }: {
   conta: ContaNoNavegador
-  perfil: Perfil | null
-  requisitos: Requisitos
+  perfil: Profile | null
+  requisitos: Requirements
   municipio: string | undefined
   valor: ValorDoRequisito
 }) {
   const maisPesa = useRef<HTMLHeadingElement>(null)
   const lugarNome = valor('lugar')
   // O botão some com a linha que ele soltou; o foco vai para o título da lista.
-  const soltarERever = (k: RequisitoDoVisitante) => {
-    gravarEContar(soltar(requisitos, k))
+  const soltarERever = (k: VisitorRequirement) => {
+    gravarEContar(release(requisitos, k))
     maisPesa.current?.focus()
   }
   return (
@@ -467,10 +465,10 @@ function AConta({
       <div className={carregando ? CARREGANDO : undefined}>
         <Faixa estimativa={estimativa} />
         <p className="m-0 mt-1.5">
-          {NOME_DO_ALVO[estimativa.alvo]} em{' '}
+          {NOME_DO_ALVO[estimativa.target]} em{' '}
           {lugarNome === 'Brasil inteiro' ? 'todo o Brasil' : lugarNome} atendem
           a tudo o que você pediu. Estimativa central:{' '}
-          {formatarQuantidade(estimativa.resultado.central)}.
+          {formatAmount(estimativa.result.central)}.
         </p>
         <h3
           className="m-0 mt-md mb-2 font-label text-label text-tinta-2"
@@ -480,7 +478,7 @@ function AConta({
           O que mais pesa
         </h3>
         <CustosDaConta
-          custos={estimativa.custos}
+          custos={estimativa.costs}
           valor={valor}
           aoSoltar={soltarERever}
         />
@@ -506,7 +504,7 @@ function AvisosDaConta({
   trocou: boolean
   falhou: boolean
   tentar: () => void
-  ressalvas: Estimativa['ressalvas']
+  ressalvas: Estimate['caveats']
 }) {
   return (
     <>
@@ -525,10 +523,10 @@ function AvisosDaConta({
         </Aviso>
       )}
       {ressalvas
-        .filter((x) => x.forte)
+        .filter((x) => x.strong)
         .map((aviso) => (
           <Aviso key={aviso.id} className="font-bold" role="note">
-            {aviso.texto}
+            {aviso.text}
           </Aviso>
         ))}
     </>
@@ -540,7 +538,7 @@ function MotivoDosFilhos({
   filhos,
   id,
 }: {
-  filhos: Estimativa['filhos']
+  filhos: Estimate['children']
   id: string
 }) {
   if (filhos === 'vale') return null
@@ -563,9 +561,9 @@ function CustosDaConta({
   valor,
   aoSoltar,
 }: {
-  custos: Estimativa['custos']
-  valor: (k: RequisitoDoVisitante) => string
-  aoSoltar: (k: RequisitoDoVisitante) => void
+  custos: Estimate['costs']
+  valor: (k: VisitorRequirement) => string
+  aoSoltar: (k: VisitorRequirement) => void
 }) {
   if (custos.length === 0)
     return (
@@ -577,14 +575,14 @@ function CustosDaConta({
   return (
     <ul className="m-0 list-none p-0">
       {custos.map((c) => {
-        const k = c.requisito as RequisitoDoVisitante
+        const k = c.requirement as VisitorRequirement
         return (
           <li
             key={k}
             className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-0.5 border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-2.5"
           >
             <span className="font-bold">
-              {TITULO_DO_REQUISITO[k]}
+              {REQUIREMENT_TITLE[k]}
               <small className="block text-label leading-body font-normal text-tinta-2">
                 {valor(k)}
               </small>
@@ -594,7 +592,7 @@ function CustosDaConta({
               variante="leve"
               className="col-2 row-span-2 row-start-1"
               onClick={() => aoSoltar(k)}
-              aria-label={`Soltar ${TITULO_DO_REQUISITO[k].toLowerCase()}`}
+              aria-label={`Soltar ${REQUIREMENT_TITLE[k].toLowerCase()}`}
             >
               soltar
             </Botao>
@@ -634,16 +632,16 @@ function Lugar({
   municipios,
   mudar,
 }: {
-  requisitos: Requisitos
-  municipios: ReadonlyMap<string, { nome: string }> | undefined
-  mudar: (mudanca: Partial<Requisitos>) => void
+  requisitos: Requirements
+  municipios: ReadonlyMap<string, { name: string }> | undefined
+  mudar: (mudanca: Partial<Requirements>) => void
 }) {
   const uf = requisitos.lugar?.uf
   const ufs = [
     { value: null, label: 'Brasil inteiro' },
-    ...UFS.filter((u) => LUGARES_COM_DADOS.includes(u.sigla)).map((u) => ({
-      value: u.sigla,
-      label: u.nome,
+    ...STATES.filter((u) => LUGARES_COM_DADOS.includes(u.abbr)).map((u) => ({
+      value: u.abbr,
+      label: u.name,
     })),
   ]
   const lista = [
@@ -653,8 +651,8 @@ function Lugar({
     },
     ...(municipios
       ? [...municipios]
-          .sort(([, a], [, b]) => a.nome.localeCompare(b.nome, 'pt-BR'))
-          .map(([codigo, m]) => ({ value: codigo, label: m.nome }))
+          .sort(([, a], [, b]) => a.name.localeCompare(b.name, 'pt-BR'))
+          .map(([codigo, m]) => ({ value: codigo, label: m.name }))
       : []),
   ]
   return (
@@ -664,8 +662,8 @@ function Lugar({
         items={ufs}
         value={uf ?? null}
         onValueChange={(sigla) => {
-          const escolhida = UFS.find((u) => u.sigla === sigla)
-          mudar({ lugar: escolhida ? { uf: escolhida.sigla } : null })
+          const escolhida = STATES.find((u) => u.abbr === sigla)
+          mudar({ lugar: escolhida ? { uf: escolhida.abbr } : null })
         }}
       />
       {uf && (

@@ -19,8 +19,8 @@ beforeAll(() => {
     'frontend/src/platform/storybook/com-router.tsx',
     'frontend/src/router.tsx',
     'frontend/src/routeTree.gen.ts',
-    'packages/regras/src/perfil.ts',
-    'packages/regras/src/perfil.test.ts',
+    'packages/rules/src/profile.ts',
+    'packages/rules/src/profile.test.ts',
     // Fora.
     'frontend/src/routes/$tema/-cartao.tsx',
     'frontend/src/routes/guia.css',
@@ -29,7 +29,7 @@ beforeAll(() => {
     'frontend/src/lib/datas.ts',
     'frontend/src/util.ts',
     'frontend/src/ui/__tests__/guia.test.ts',
-    'packages/regras/src/grupo/conta.ts',
+    'packages/rules/src/grupo/conta.ts',
   ]) {
     const caminho = join(raiz, arquivo)
     mkdirSync(dirname(caminho), { recursive: true })
@@ -52,7 +52,7 @@ it('acha cada arquivo fora do lugar, e só eles', () => {
     'frontend/src/routes/guia.test.ts',
     'frontend/src/ui/__tests__/guia.test.ts',
     'frontend/src/util.ts',
-    'packages/regras/src/grupo/conta.ts',
+    'packages/rules/src/grupo/conta.ts',
   ])
 })
 

@@ -1,7 +1,7 @@
 # O workspace do repo, no molde do Festival dos Macacos: um `pnpm install` na
 # raiz instala tudo, com um lockfile só. O conteúdo (`estudos/`, `dicas/`,
 # `relatorios/`, `fontes/`) fica onde está: não é pacote, e o app vai lê-lo
-# no build. `packages/` recebe os pacotes puros (Conteúdo, Regras).
+# no build. `packages/` recebe os pacotes puros (`content`, `rules`).
 packages:
   - frontend
   - packages/*

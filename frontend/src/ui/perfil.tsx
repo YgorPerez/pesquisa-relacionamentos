@@ -5,16 +5,16 @@
 // para você; "não há dado" é anel vazio em tinta, sem rosa (The Three Inks
 // Rule).
 import {
-  descreverPerfil,
-  GENEROS_DO_PERFIL,
-  IDADE_MAXIMA,
-  IDADE_MINIMA,
-  lerPerfil,
-  PROCURA_DO_PERFIL,
-  type Perfil,
-} from '@tem-estudo/regras/perfil'
-import type { PerfilNoGuia } from '@tem-estudo/regras/perfil-no-guia'
-import type { Veredito } from '@tem-estudo/regras/vale-para-voce'
+  describeProfile,
+  PROFILE_GENDERS,
+  MAX_AGE,
+  MIN_AGE,
+  readProfile,
+  PROFILE_SEEKS,
+  type Profile,
+} from '@tem-estudo/rules/profile'
+import type { ProfileInGuide } from '@tem-estudo/rules/profile-in-guide'
+import type { Verdict } from '@tem-estudo/rules/applies-to-you'
 import {
   useEffect,
   useEffectEvent,
@@ -39,7 +39,7 @@ const MIUDO = 'text-etiqueta font-normal text-tinta-2'
 
 /** Abaixo da resposta curta. Sem Perfil convida; com Perfil, resume e oferece
  * mudar. O sublinhado é tracejado. */
-export function LinkDoPerfil({ perfil }: { perfil: Perfil | null }) {
+export function LinkDoPerfil({ perfil }: { perfil: Profile | null }) {
   return (
     <a
       className="m-0 mb-xs inline-block min-h-toque px-0 pt-3 pb-1 font-label text-aviso leading-label font-bold underline decoration-dashed decoration-2 underline-offset-5"
@@ -48,7 +48,7 @@ export function LinkDoPerfil({ perfil }: { perfil: Perfil | null }) {
     >
       {perfil ? (
         <>
-          Seu Perfil: {descreverPerfil(perfil)}{' '}
+          Seu Perfil: {describeProfile(perfil)}{' '}
           <small className={MIUDO}>· mudar</small>
         </>
       ) : (
@@ -64,11 +64,11 @@ export function LinkDoPerfil({ perfil }: { perfil: Perfil | null }) {
 }
 
 /** Acima do título, só quando nenhum achado do Guia tem dado para o Perfil. */
-export function AvisoSemDado({ perfil }: { perfil: Perfil }) {
+export function AvisoSemDado({ perfil }: { perfil: Profile }) {
   return (
     <Aviso className="m-0 mt-md" role="note" data-slot="aviso-perfil">
       Nenhum estudo deste Guia separou pessoas com o seu Perfil (
-      <b>{descreverPerfil(perfil)}</b>). O que segue vem de outras amostras:
+      <b>{describeProfile(perfil)}</b>). O que segue vem de outras amostras:
       vale como pista, não como resposta para você.
     </Aviso>
   )
@@ -102,16 +102,16 @@ export function NotaValePara({
   veredito,
 }: {
   texto: string
-  veredito: Veredito | null
+  veredito: Verdict | null
 }) {
   return (
     <>
-      {veredito?.cobre && <SeloVoce so={veredito.so} />}
+      {veredito?.covered && <SeloVoce so={veredito.only} />}
       <p
         className="m-0 mt-xs text-label leading-nota font-normal text-tinta-2"
         data-slot="vale"
       >
-        {veredito && !veredito.cobre && (
+        {veredito && !veredito.covered && (
           <span
             className="mr-1.5 inline-block size-3 rounded-bolota border-(length:--traco-controle) border-tinta align-[-1px]"
             aria-hidden="true"
@@ -119,7 +119,7 @@ export function NotaValePara({
           />
         )}
         <b className="text-tinta">Vale para:</b> {texto}
-        {veredito && !veredito.cobre && (
+        {veredito && !veredito.covered && (
           <strong className="text-tinta">
             {' '}
             Não há dado deste estudo para o seu Perfil.
@@ -138,18 +138,18 @@ export function ParaOSeuPerfil({
   chave,
   achados,
 }: {
-  chave: PerfilNoGuia['chave']
+  chave: ProfileInGuide['key']
   achados: ReadonlyArray<{ readonly html: HtmlSeguro }>
 }) {
   if (!chave) return null
-  if (chave.vale)
+  if (chave.applies)
     return (
       <p className={PARA_O_SEU_PERFIL} data-slot="para-o-seu-perfil">
         <SeloVoce className="mt-0" /> o número em destaque vem de um estudo com
         pessoas do seu Perfil.
       </p>
     )
-  const outro = chave.achado === null ? undefined : achados[chave.achado]
+  const outro = chave.finding === null ? undefined : achados[chave.finding]
   return (
     <p className={PARA_O_SEU_PERFIL} data-slot="para-o-seu-perfil">
       <b>Para o seu Perfil:</b>{' '}
@@ -247,14 +247,14 @@ function useAoPedirParaMudar(aoPedir: () => void) {
 
 /** A edição do Perfil na caixa: o rascunho, o erro, abrir para mudar, salvar
  * e apagar, e para onde o foco vai em cada passo. */
-function useEdicaoDoPerfil(perfil: Perfil | null) {
+function useEdicaoDoPerfil(perfil: Profile | null) {
   const [editando, setEditando] = useState(false)
   const [rascunho, setRascunho] = useState<Rascunho>({ idade: '' })
   const [erro, setErro] = useState<string | null>(null)
   const caixa = useRef<HTMLDivElement>(null)
   const resumo = useRef<HTMLParagraphElement>(null)
 
-  const abrir = (atual: Perfil | null) => {
+  const abrir = (atual: Profile | null) => {
     setRascunho({
       genero: atual?.genero,
       procura: atual?.procura,
@@ -278,7 +278,7 @@ function useEdicaoDoPerfil(perfil: Perfil | null) {
 
   const salvar = (evento: FormEvent<HTMLFormElement>) => {
     evento.preventDefault()
-    const novo = lerPerfil(rascunho)
+    const novo = readProfile(rascunho)
     if (!novo) {
       setErro('Escolha ao menos uma opção ou diga a sua idade.')
       return
@@ -311,7 +311,7 @@ export function CaixaDoPerfil({
   totalDeAchados,
   rotuloDoBotao = 'Ver o que vale para mim',
 }: {
-  perfil: Perfil | null
+  perfil: Profile | null
   comDado: number | null
   totalDeAchados: number
   /** O texto do botão que salva; a calculadora usa o dela. */
@@ -336,7 +336,7 @@ export function CaixaDoPerfil({
           <p ref={resumo} tabIndex={-1} className="m-0">
             Seu Perfil:{' '}
             <b className="bg-amarelo-voce px-0.75 box-decoration-clone">
-              {descreverPerfil(perfil)}
+              {describeProfile(perfil)}
             </b>
           </p>
           <Botao variante="leve" onClick={() => abrir(perfil)}>
@@ -375,16 +375,16 @@ function FormularioDoPerfil({
     <form onSubmit={salvar} aria-label="Seu Perfil">
       <Opcoes
         legenda="Você é"
-        valores={GENEROS_DO_PERFIL}
+        valores={PROFILE_GENDERS}
         rotulos={ROTULO_DO_GENERO}
-        marcado={rascunho.genero as Perfil['genero']}
+        marcado={rascunho.genero as Profile['genero']}
         aoMarcar={(genero) => setRascunho((r) => ({ ...r, genero }))}
       />
       <Opcoes
         legenda="Você procura"
-        valores={PROCURA_DO_PERFIL}
+        valores={PROFILE_SEEKS}
         rotulos={ROTULO_DA_PROCURA}
-        marcado={rascunho.procura as Perfil['procura']}
+        marcado={rascunho.procura as Profile['procura']}
         aoMarcar={(procura) => setRascunho((r) => ({ ...r, procura }))}
       />
       <CampoDaIdade
@@ -430,15 +430,15 @@ function CampoDaIdade({
           id={`${id}-idade`}
           type="number"
           inputMode="numeric"
-          min={IDADE_MINIMA}
-          max={IDADE_MAXIMA}
+          min={MIN_AGE}
+          max={MAX_AGE}
           step={1}
           value={valor}
           onChange={(e) => aoMudar(e.target.value)}
           aria-describedby={`${id}-idade-dica`}
         />
         <span id={`${id}-idade-dica`} className={NOTA}>
-          a partir de {IDADE_MINIMA}
+          a partir de {MIN_AGE}
         </span>
       </div>
     </div>

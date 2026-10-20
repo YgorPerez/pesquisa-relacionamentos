@@ -1,5 +1,5 @@
 import handler, { createServerEntry } from '@tanstack/react-start/server-entry'
-import { redirecionamentos } from '@tem-estudo/conteudo/busca'
+import { redirects } from '@tem-estudo/content/search'
 import acervo from 'virtual:acervo'
 import { comRedirecionamentos } from '#/platform/redirecionamento'
 import { comRegistro } from '#/platform/registro-do-pedido'
@@ -9,7 +9,5 @@ import { comRegistro } from '#/platform/registro-do-pedido'
 // `platform/registro-do-pedido.ts`). Antes do app, os 301 da barra final e
 // do `antes` (`platform/redirecionamento.ts`).
 export default createServerEntry({
-  fetch: comRegistro(
-    comRedirecionamentos(redirecionamentos(acervo), handler.fetch),
-  ),
+  fetch: comRegistro(comRedirecionamentos(redirects(acervo), handler.fetch)),
 })

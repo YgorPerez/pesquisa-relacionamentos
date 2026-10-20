@@ -3,15 +3,15 @@
 // máquina. Eles levam o caminho sem query, a referência, a largura da tela e,
 // nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
 import { expect, test, type Page } from '@playwright/test'
-import { queryDoLink } from '@tem-estudo/regras/link'
+import { linkQuery } from '@tem-estudo/rules/link'
 import { tocar } from './toque'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
 /** A query de um link de verdade, com o Perfil. */
-const QUERY_COM_PERFIL = queryDoLink({
-  calculadora: 'grupo-possivel',
-  perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
-  requisitos: null,
+const QUERY_COM_PERFIL = linkQuery({
+  calculator: 'grupo-possivel',
+  profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+  requirements: null,
 })
 const STATS = 'https://stats.temestudo.cloud/'
 const CAMPOS = ['p', 'r', 's', 'e', 'b', 'rnd']

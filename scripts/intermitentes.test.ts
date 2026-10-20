@@ -233,7 +233,7 @@ describe('falhasDoLog, no Vitest', () => {
 
   it('no backend, cada arquivo leva a pasta do pacote em que rodou', () => {
     const log = [
-      ' RUN  v5.0.4 /repo/packages/regras',
+      ' RUN  v5.0.4 /repo/packages/rules',
       ' Test Files  19 passed (19)',
       ' RUN  v5.0.4 /repo/backend',
       ' FAIL  src/temporadas/eu.test.ts > a Temporada Eu responde a tempo',
@@ -289,7 +289,7 @@ describe('falhasDoLog, no Vitest', () => {
       [
         'um Vitest que acabou sem o resumo',
         [
-          ' RUN  v5.0.4 /repo/packages/regras',
+          ' RUN  v5.0.4 /repo/packages/rules',
           ' FAIL  src/a.test.ts > um',
           ' Test Files  1 failed | 3 passed (4)',
           ' RUN  v5.0.4 /repo/backend',

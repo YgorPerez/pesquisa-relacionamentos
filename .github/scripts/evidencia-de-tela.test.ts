@@ -62,7 +62,7 @@ describe('mudaTela', () => {
       'frontend/src/conteudo/virtual-acervo.d.ts',
       'frontend/e2e/perfil.e2e.ts',
       'frontend/scripts/capturar.ts',
-      'packages/regras/src/grupo-possivel.ts',
+      'packages/rules/src/possible-group.ts',
       'estudos/algum-estudo.md',
     ])
       expect({ caminho, tela: mudaTela(caminho) }).toEqual({

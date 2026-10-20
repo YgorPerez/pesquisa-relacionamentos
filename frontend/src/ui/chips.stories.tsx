@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { alternarNoTopo3 } from '@tem-estudo/regras/prioridades'
+import { toggleInTop3 } from '@tem-estudo/rules/priorities'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import { EscolhaDoTopo3 } from './prioridades'
@@ -12,7 +12,7 @@ function Chips({ inicio }: { inicio: ReadonlyArray<string> }) {
     <EscolhaDoTopo3
       caracteristicas={CARACTERISTICAS}
       topo3={topo3}
-      aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))}
+      aoTocar={(id) => setTopo3(toggleInTop3(topo3, id))}
     />
   )
 }

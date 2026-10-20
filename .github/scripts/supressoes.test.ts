@@ -94,14 +94,14 @@ describe('lerDiff', () => {
         diff('frontend/doctor.config.ts', '+      files: ["x"],'),
         diff('frontend/package.json', '+    "react": "^19.4.0",'),
         diff(
-          'packages/regras/package.json',
+          'packages/rules/package.json',
           '+    "fallow": "fallow health --min-score 50",',
         ),
       ].join('\n'),
     )
     expect([...lido.configuracao.keys()]).toEqual([
       'frontend/doctor.config.ts',
-      'packages/regras/package.json',
+      'packages/rules/package.json',
     ])
   })
 })
@@ -112,7 +112,7 @@ describe('contarNoGrep', () => {
       `abc:frontend/src/ui/a.tsx:3:// ${OX}-next-line x -- motivo`,
       `abc:frontend/src/ui/b.tsx:9:  // ${OX} y -- motivo`,
       `abc:frontend/src/ui/b.tsx:20:const t = "texto que cita ${OX}"`,
-      `abc:packages/conteudo/src/c.ts:1:// ${TS} motivo`,
+      `abc:packages/content/src/c.ts:1:// ${TS} motivo`,
       `abc:frontend/src/routeTree.gen.ts:3:// @ts-${'nocheck'}`,
       `abc:docs/x.md:1:// ${OX}`,
     ].join('\n')

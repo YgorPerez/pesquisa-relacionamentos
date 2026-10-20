@@ -42,8 +42,8 @@ export type Passo = {
  * o `vp check` confere os tipos dos scripts. */
 const PACOTES: Readonly<Record<string, string>> = {
   frontend: 'frontend',
-  'packages/conteudo': '@tem-estudo/conteudo',
-  'packages/regras': '@tem-estudo/regras',
+  'packages/content': '@tem-estudo/content',
+  'packages/rules': '@tem-estudo/rules',
 }
 
 /** Os passos da prova de um diff. `existe` diz se um arquivo do repo existe
@@ -61,7 +61,7 @@ export function planoDaProva({
   const pastas = new Set(plano.pacotes)
   // O app importa os pacotes puros: o tipo que muda lá quebra aqui.
   if ([...pastas].some((p) => p.startsWith('packages/'))) pastas.add('frontend')
-  const ordem = ['packages/conteudo', 'packages/regras', 'frontend', '.']
+  const ordem = ['packages/content', 'packages/rules', 'frontend', '.']
   const afetadas = ordem.filter((p) => pastas.has(p))
   const passos: Passo[] = []
 

@@ -21,8 +21,8 @@ describe('coberturaDeLinhas', () => {
         },
       },
       {
-        pasta: '/repo/packages/regras',
-        arquivos: { '/repo/packages/regras/src/b.ts': arquivo([5, 3]) },
+        pasta: '/repo/packages/rules',
+        arquivos: { '/repo/packages/rules/src/b.ts': arquivo([5, 3]) },
       },
     ])
     // 2 de 3 linhas: 66,6% sai 66.

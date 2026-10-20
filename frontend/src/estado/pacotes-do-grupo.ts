@@ -4,16 +4,16 @@
 // pedem o mesmo lugar dividem o pedido. A conta (`grupo-possivel.ts`) só lê
 // daqui.
 import {
-  abrirPacote,
-  type DadosDoLugar,
-  type LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
+  openPack,
+  type PlaceData,
+  type PackPlace,
+} from '@tem-estudo/rules/possible-group-data'
 import { useSyncExternalStore } from 'react'
 import grupoPossivel from 'virtual:grupo-possivel'
 
-const abertos = new Map<LugarDoPacote, DadosDoLugar>()
-const pedidos = new Map<LugarDoPacote, Promise<void>>()
-const falhas = new Set<LugarDoPacote>()
+const abertos = new Map<PackPlace, PlaceData>()
+const pedidos = new Map<PackPlace, Promise<void>>()
+const falhas = new Set<PackPlace>()
 const avisos = new Set<() => void>()
 const avisar = () => {
   avisos.forEach((aviso) => aviso())
@@ -23,7 +23,7 @@ const avisar = () => {
  * falhou só se pede `deNovo` (o "Tentar de novo" da página): a página pede a
  * cada render, e sem rede cada falha pedia outra vez, sem parar, e o aviso
  * da falha piscava. */
-export function pedirPacote(lugar: LugarDoPacote, deNovo = false) {
+export function pedirPacote(lugar: PackPlace, deNovo = false) {
   if (abertos.has(lugar) || pedidos.has(lugar)) return
   if (falhas.has(lugar) && !deNovo) return
   falhas.delete(lugar)
@@ -33,7 +33,7 @@ export function pedirPacote(lugar: LugarDoPacote, deNovo = false) {
       return resposta.json()
     })
     .then((pacote) => {
-      abertos.set(lugar, abrirPacote(pacote))
+      abertos.set(lugar, openPack(pacote))
     })
     .catch(() => {
       falhas.add(lugar)
@@ -56,8 +56,8 @@ const assinar = (aviso: () => void) => {
  * rede?). Lidos como snapshot do store, e não direto do `Map` no render: o
  * React Compiler guarda o que o render calcula, e só um valor que vem de
  * hook avisa que mudou. `undefined` não pede nada. */
-export function usePacote(lugar: LugarDoPacote | undefined): {
-  dados: DadosDoLugar | undefined
+export function usePacote(lugar: PackPlace | undefined): {
+  dados: PlaceData | undefined
   falhou: boolean
 } {
   const dados = useSyncExternalStore(

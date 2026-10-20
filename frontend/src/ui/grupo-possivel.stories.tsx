@@ -4,17 +4,14 @@
 // conta de uma mulher de 28 anos que procura homens, com superior completo e
 // sem fumo.
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { abrirPacote } from '@tem-estudo/regras/grupo-possivel-dados'
+import { openPack } from '@tem-estudo/rules/possible-group-data'
+import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import type { Profile } from '@tem-estudo/rules/profile'
 import {
-  estimarGrupo,
-  type Estimativa,
-} from '@tem-estudo/regras/grupo-possivel'
-import type { Perfil } from '@tem-estudo/regras/perfil'
-import {
-  REQUISITOS_PADRAO,
-  ROTULO_DA_ESCOLARIDADE,
-  type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+  DEFAULT_REQUIREMENTS,
+  EDUCATION_LABEL,
+  type Requirements,
+} from '@tem-estudo/rules/requirements'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import grupoPossivel from 'virtual:grupo-possivel'
@@ -29,20 +26,20 @@ import {
   Passos,
 } from './grupo-possivel'
 
-const PERFIL: Perfil = { genero: 'mulher', procura: 'homens', idade: 28 }
-const REQUISITOS: Requisitos = {
-  ...REQUISITOS_PADRAO,
+const PERFIL: Profile = { genero: 'mulher', procura: 'homens', idade: 28 }
+const REQUISITOS: Requirements = {
+  ...DEFAULT_REQUIREMENTS,
   escolaridade: 'superior',
   naoFuma: true,
 }
 
-async function conta(): Promise<{ estimativa: Estimativa }> {
+async function conta(): Promise<{ estimativa: Estimate }> {
   const resposta = await fetch(`${grupoPossivel.base}/BR.json`)
-  const brasil = abrirPacote(await resposta.json())
+  const brasil = openPack(await resposta.json())
   return {
-    estimativa: estimarGrupo(
-      { perfil: PERFIL, requisitos: REQUISITOS },
-      { brasil },
+    estimativa: estimateGroup(
+      { profile: PERFIL, requirements: REQUISITOS },
+      { brazil: brasil },
     ),
   }
 }
@@ -88,7 +85,7 @@ export const LinhasDosRequisitos: Story = {
     const [escolaridade, setEscolaridade] = useState('superior')
     const [fuma, setFuma] = useState(true)
     const custo = (k: string) =>
-      estimativa.custos.find((c) => c.requisito === k)
+      estimativa.costs.find((c) => c.requirement === k)
     return (
       <>
         <LinhaDoRequisito
@@ -108,7 +105,7 @@ export const LinhasDosRequisitos: Story = {
         </LinhaDoRequisito>
         <LinhaDoRequisito
           requisito="escolaridade"
-          valor={ROTULO_DA_ESCOLARIDADE.superior}
+          valor={EDUCATION_LABEL.superior}
           custo={custo('escolaridade')}
           ligado
         >
@@ -118,8 +115,8 @@ export const LinhasDosRequisitos: Story = {
             valores={['qualquer', 'medio', 'superior']}
             rotulos={{
               qualquer: 'qualquer',
-              medio: ROTULO_DA_ESCOLARIDADE.medio,
-              superior: ROTULO_DA_ESCOLARIDADE.superior,
+              medio: EDUCATION_LABEL.medio,
+              superior: EDUCATION_LABEL.superior,
             }}
             marcados={[escolaridade]}
             aoMudar={setEscolaridade}

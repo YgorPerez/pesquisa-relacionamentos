@@ -68,7 +68,7 @@ describe('planoDoDiff', () => {
       'frontend/src/ui/desenhos.css',
       'frontend/src/ui/fontes.css',
       'frontend/src/platform/redirecionamento.ts',
-      'packages/regras/src/grupo-possivel.ts',
+      'packages/rules/src/possible-group.ts',
       'frontend/e2e/acervo/estudos/x.md',
       'scripts/fila-da-maquina.ts',
       '.github/workflows/pr.yml',
@@ -92,7 +92,7 @@ describe('planoDoDiff', () => {
 
   it('o acervo roda o Conteúdo e o build, que o lê', () => {
     expect(planoDoDiff(['estudos/costa-2018.md'])).toMatchObject({
-      pacotes: ['packages/conteudo'],
+      pacotes: ['packages/content'],
       build: true,
       specs: [],
     })

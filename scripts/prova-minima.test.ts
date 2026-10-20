@@ -42,11 +42,11 @@ describe('planoDaProva', () => {
   })
 
   it('um pacote puro leva junto os tipos e os testes do app, que o importa', () => {
-    expect(nomes(plano(['packages/regras/src/grupo-possivel.ts']))).toEqual(
+    expect(nomes(plano(['packages/rules/src/possible-group.ts']))).toEqual(
       expect.arrayContaining([
-        'tipos:@tem-estudo/regras',
+        'tipos:@tem-estudo/rules',
         'tipos:frontend',
-        'vitest:packages/regras',
+        'vitest:packages/rules',
         'vitest:frontend',
       ]),
     )

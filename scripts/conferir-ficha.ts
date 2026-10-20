@@ -13,7 +13,7 @@
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { lerFicha } from '../packages/conteudo/src/ficha.ts'
+import { readFactSheet } from '../packages/content/src/fact-sheet.ts'
 
 export interface Falha {
   /** A linha da tabela de Achados, a partir de 1; `null` quando a falha é da Ficha inteira. */
@@ -122,10 +122,10 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
     conferidas: 0,
   })
 
-  const lida = lerFicha(arquivo, readFileSync(join(raiz, arquivo), 'utf8'))
+  const lida = readFactSheet(arquivo, readFileSync(join(raiz, arquivo), 'utf8'))
   if (!lida.ok)
     return geral(
-      `a Ficha não passa no build: ${lida.erros.map((e) => e.mensagem).join('; ')}`,
+      `a Ficha não passa no build: ${lida.errors.map((e) => e.message).join('; ')}`,
     )
 
   const fonte = opcoes.fonte ?? acharFonte(raiz, slug)
@@ -137,26 +137,26 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
   if (!existsSync(join(raiz, fonte)))
     return geral(`a Fonte local ${fonte} não existe`)
   const texto = normalizar(lerFonte(raiz, fonte))
-  if (lida.ficha.achados.length === 0)
+  if (lida.factSheet.findings.length === 0)
     return { ...geral('a tabela de Achados está vazia'), fonte }
 
   let conferidas = 0
-  lida.ficha.achados.forEach((achado, i) => {
+  lida.factSheet.findings.forEach((achado, i) => {
     const antes = falhas.length
     const falha = (motivo: string) =>
-      falhas.push({ linha: i + 1, medida: achado.medida, motivo })
-    const trecho = achado.trecho ? limparTrecho(achado.trecho) : ''
+      falhas.push({ linha: i + 1, medida: achado.measure, motivo })
+    const trecho = achado.excerpt ? limparTrecho(achado.excerpt) : ''
     if (!trecho) falha('sem Trecho')
     else if (!texto.includes(normalizar(trecho)))
       falha(`o Trecho não está na fonte: "${trecho}"`)
-    if (achado.calculo) {
+    if (achado.calculation) {
       // Um número calculado não está no Trecho; o Trecho traz os insumos e o
       // Cálculo tem de devolver o Valor.
-      const saida = rodarCalculo(raiz, achado.calculo)
+      const saida = rodarCalculo(raiz, achado.calculation)
       if (!saida.ok) falha(saida.motivo)
       else {
         const doCalculo = numeros(saida.texto)
-        const faltam = numeros(achado.valor).filter(
+        const faltam = numeros(achado.value).filter(
           (n) => !doCalculo.some((c) => mesmoNumero(n, c)),
         )
         if (faltam.length > 0)
@@ -166,7 +166,7 @@ export function conferirFicha(arquivo: string, opcoes: Opcoes): Conferencia {
       }
     } else if (trecho) {
       const noTrecho = numeros(trecho)
-      for (const n of numeros(achado.valor)) {
+      for (const n of numeros(achado.value)) {
         if (!noTrecho.some((t) => mesmoNumero(n, t)))
           falha(`o número ${n.bruto} não aparece no Trecho`)
       }

@@ -15,14 +15,14 @@ type Story = StoryObj<typeof meta>
 export const SemPerfil: Story = {}
 
 /** O achado cobre o Perfil: selo amarelo, e a nota continua. */
-export const ValeParaVoce: Story = { args: { veredito: { cobre: true } } }
+export const ValeParaVoce: Story = { args: { veredito: { covered: true } } }
 
 /** Quem procura ambos e só um lado tem dado. */
 export const SoUmLado: Story = {
-  args: { veredito: { cobre: true, so: 'mulheres' } },
+  args: { veredito: { covered: true, only: 'mulheres' } },
 }
 
 /** O achado não cobre: anel vazio e a frase em negrito, sem rosa. */
 export const SemDado: Story = {
-  args: { texto: 'casais homem-mulher.', veredito: { cobre: false } },
+  args: { texto: 'casais homem-mulher.', veredito: { covered: false } },
 }

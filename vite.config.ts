@@ -33,8 +33,8 @@ const FORA = [
   'relatorios/**',
   'fontes/**',
   'dados/**',
-  'packages/conteudo/fixtures/**',
-  'packages/regras/fixtures/**',
+  'packages/content/fixtures/**',
+  'packages/rules/fixtures/**',
   'scripts/fixtures/**',
   'frontend/e2e/acervo/**',
   // Vendorizado: as skills de terceiros e o que o `impeccable` gera.
@@ -225,7 +225,7 @@ export default defineConfig({
         // Os diagnósticos do Effect, pelo patch do `@effect/tsgo` (ADR 0004).
         // Só o Conteúdo usa o Effect.
         // O `typeAware` do preset já está ligado acima.
-        files: ['packages/conteudo/**'],
+        files: ['packages/content/**'],
         plugins: effectRecomendado.plugins,
         rules: effectRecomendado.rules,
       },

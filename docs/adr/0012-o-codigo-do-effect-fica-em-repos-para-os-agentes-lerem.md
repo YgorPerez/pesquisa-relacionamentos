@@ -1,6 +1,6 @@
 # O código do Effect fica em `.repos/` para os agentes lerem
 
-O `packages/conteudo` valida o frontmatter com o Schema do `effect@4.0.2`. A API da v4 mudou nomes e módulos da v3, e quase tudo que o agente leu sobre Effect é v3 ou um release candidate da v4. De memória, ele escreve uma função que não existe, ou que existe com outro comportamento. Copiado do [ADR-0039 do Festival dos Macacos](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0039-the-effect-source-sits-in-repos-for-agents-to-read.md), que copiou do t3code.
+O `packages/content` valida o frontmatter com o Schema do `effect@4.0.2`. A API da v4 mudou nomes e módulos da v3, e quase tudo que o agente leu sobre Effect é v3 ou um release candidate da v4. De memória, ele escreve uma função que não existe, ou que existe com outro comportamento. Copiado do [ADR-0039 do Festival dos Macacos](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0039-the-effect-source-sits-in-repos-for-agents-to-read.md), que copiou do t3code.
 
 ## Decisão
 

@@ -26,8 +26,8 @@ export const Route = createFileRoute('/estudos/$slug')({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: loaderData.busca.descricao },
+          { title: `${loaderData.busca.title} · Tem estudo?` },
+          { name: 'description', content: loaderData.busca.description },
           // Ficha ⬜ fica fora da busca até ser conferida (#15).
           ...(loaderData.indexar
             ? []

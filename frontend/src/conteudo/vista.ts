@@ -1,7 +1,7 @@
 // A Ficha do pacote de conteúdo no formato que as páginas desenham: o
 // markdown já virou HTML no servidor, e o navegador recebe só o que mostra.
-import type { Achado, Ficha } from '@tem-estudo/conteudo'
-import { buscaDaFicha, type Busca } from '@tem-estudo/conteudo/busca'
+import type { Finding, FactSheet } from '@tem-estudo/content'
+import { factSheetSearch, type SearchMeta } from '@tem-estudo/content/search'
 import { Marked } from 'marked'
 import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 
@@ -43,8 +43,8 @@ export interface AchadoVista {
 export interface FichaResumo {
   readonly slug: string
   readonly titulo: string
-  readonly status: Ficha['status']
-  readonly forca: Ficha['forca']
+  readonly status: FactSheet['status']
+  readonly forca: FactSheet['forca']
   readonly contexto: string
 }
 
@@ -53,7 +53,7 @@ export interface FichaVista extends FichaResumo {
   readonly link: string
   readonly verificadoEm: string | null
   readonly forcaPorque: string
-  readonly desenho: Ficha['desenho']
+  readonly desenho: FactSheet['desenho']
   readonly paises: ReadonlyArray<string>
   readonly periodo: string
   readonly amostraHtml: HtmlSeguro
@@ -71,14 +71,14 @@ export interface FichaVista extends FichaResumo {
   readonly limitacoesHtml: HtmlSeguro
   readonly indexar: boolean
   /** Título e descrição de busca (#15). */
-  readonly busca: Busca
+  readonly busca: SearchMeta
 }
 
 const numero = new Intl.NumberFormat('pt-BR')
 
 /** "EUA · 2017 · 5.421 participantes", a linha curta de contexto da lista. */
 function contexto(
-  ficha: Pick<Ficha, 'paises' | 'periodo' | 'amostra'>,
+  ficha: Pick<FactSheet, 'paises' | 'periodo' | 'amostra'>,
 ): string {
   const { paises } = ficha
   const partes = [
@@ -93,24 +93,24 @@ function contexto(
   return partes.filter(Boolean).join(' · ')
 }
 
-const vistaDoAchado = (a: Achado): AchadoVista => ({
-  medida: htmlEmLinha(a.medida),
-  valor: htmlEmLinha(a.valor),
-  onde: htmlEmLinha(a.onde),
-  trecho: a.trecho ? htmlEmLinha(a.trecho) : null,
+const vistaDoAchado = (a: Finding): AchadoVista => ({
+  medida: htmlEmLinha(a.measure),
+  valor: htmlEmLinha(a.value),
+  onde: htmlEmLinha(a.locator),
+  trecho: a.excerpt ? htmlEmLinha(a.excerpt) : null,
 })
 
-export function resumo(ficha: Ficha): FichaResumo {
+export function resumo(ficha: FactSheet): FichaResumo {
   return {
     slug: ficha.slug,
-    titulo: ficha.titulo,
+    titulo: ficha.title,
     status: ficha.status,
     forca: ficha.forca,
     contexto: contexto(ficha),
   }
 }
 
-export function vista(ficha: Ficha, indexar: boolean): FichaVista {
+export function vista(ficha: FactSheet, indexar: boolean): FichaVista {
   return {
     ...resumo(ficha),
     referenciaHtml: htmlEmLinha(ficha.referencia),
@@ -125,17 +125,15 @@ export function vista(ficha: Ficha, indexar: boolean): FichaVista {
     n: ficha.amostra.n ?? null,
     conflitoHtml: ficha.conflito ? htmlEmLinha(ficha.conflito) : null,
     licenca: ficha.licenca ?? null,
-    oQueMediuHtml: html(ficha.oQueMediu),
-    achados: ficha.achados.map(vistaDoAchado),
-    notasDosAchadosHtml: ficha.notasDosAchados
-      ? html(ficha.notasDosAchados)
-      : null,
-    outrasSecoes: ficha.outrasSecoes.map((s) => ({
-      titulo: s.titulo,
+    oQueMediuHtml: html(ficha.whatItMeasured),
+    achados: ficha.findings.map(vistaDoAchado),
+    notasDosAchadosHtml: ficha.findingsNotes ? html(ficha.findingsNotes) : null,
+    outrasSecoes: ficha.otherSections.map((s) => ({
+      titulo: s.title,
       html: html(s.markdown),
     })),
-    limitacoesHtml: html(ficha.limitacoes),
+    limitacoesHtml: html(ficha.limitations),
     indexar,
-    busca: buscaDaFicha(ficha),
+    busca: factSheetSearch(ficha),
   }
 }

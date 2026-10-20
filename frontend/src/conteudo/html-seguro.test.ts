@@ -3,8 +3,8 @@
 // fontes de fora. Estes testes passam Markdown malicioso por `html` e
 // `htmlEmLinha` e conferem que só sai o que o acervo de fato usa.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/conteudo'
-import { guiaPorSlug } from '@tem-estudo/conteudo/consultas'
+import { loadLibrary } from '@tem-estudo/content'
+import { guideBySlug } from '@tem-estudo/content/queries'
 import { describe, expect, it } from 'vite-plus/test'
 import { html, htmlEmLinha } from './vista'
 import { vistaDoGuia } from './vista-guia'
@@ -66,13 +66,13 @@ describe('html do acervo', () => {
 })
 
 describe('o acervo passa pelo filtro sem mudar', () => {
-  const resultado = carregarAcervo(
+  const resultado = loadLibrary(
     resolve(import.meta.dirname, '../../e2e/acervo'),
   )
   if (!resultado.ok) throw new Error('fixture do e2e inválida')
-  const { acervo } = resultado
+  const { library: acervo } = resultado
   const guia = (slug: string) => {
-    const achado = guiaPorSlug(acervo, slug)
+    const achado = guideBySlug(acervo, slug)
     if (!achado) throw new Error(`sem o Guia ${slug}`)
     return vistaDoGuia(achado, acervo)
   }
