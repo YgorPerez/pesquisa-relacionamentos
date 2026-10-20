@@ -75,6 +75,7 @@ O `packages/content` valida com o Schema do Effect v4, cuja API difere da que vo
 - Rode a menor prova do que você mudou: `node scripts/minimal-proof.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integration.md`.
 - Formate com `pnpm fmt` (o Oxfmt do Vite+) e confira com `pnpm check`. Os testes importam de `vite-plus/test`.
 - Teste o comportamento, não a fiação. Não renderize um componente em markup estático para conferir as props, e não escreva um teste que repete a implementação.
+- Um teste que lê o acervo de verdade (`studies/`, `tips/`, `data/`) confere regras que valem para qualquer Ficha ou Dica. Quais existem e quantas são mudam a cada PR de acervo.
 - O teste espera pelo que confere: uma promessa, um efeito, uma condição na página. Um teste que precisa de um timer ou de um sleep para passar está errado.
 - Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/suppression-ceiling.json`, ADR 0017).
 
