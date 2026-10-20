@@ -1,5 +1,5 @@
 {
-  "leia": "How many suppressions of each directive the code may have (.github/scripts/suppressions.ts, docs/agents/integracao.md). It only goes down: raising a number waits for a person to add the supressao-revisada label to the PR.",
+  "leia": "How many suppressions of each directive the code may have (.github/scripts/suppressions.ts, docs/agents/integration.md). It only goes down: raising a number waits for a person to add the supressao-revisada label to the PR.",
   "teto": {
     "oxlint-disable": 0,
     "eslint-disable": 0,

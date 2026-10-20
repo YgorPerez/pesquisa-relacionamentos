@@ -1,6 +1,6 @@
 # Mostrar a tela no pull request
 
-Nenhum check compara telas, então quem revisa só vê uma tela que mudou se o PR a mostrar ([ADR 0018](../adr/0018-o-pr-que-muda-tela-mostra-o-antes-e-o-depois.md)). Um PR que muda tela traz, na seção `## Screen` da descrição, um print e um vídeo de cada tela que mudou, antes e depois. O print mostra o layout; o vídeo mostra o que um print não mostra: uma entrada, uma transição, um toque e o que ele abre.
+Nenhum check compara telas, então quem revisa só vê uma tela que mudou se o PR a mostrar ([ADR 0018](../adr/0018-a-pr-that-changes-a-screen-shows-before-and-after.md)). Um PR que muda tela traz, na seção `## Screen` da descrição, um print e um vídeo de cada tela que mudou, antes e depois. O print mostra o layout; o vídeo mostra o que um print não mostra: uma entrada, uma transição, um toque e o que ele abre.
 
 ## O que o check conta
 
@@ -18,7 +18,7 @@ Marcar `- [x] No screen change` na seção passa o check, para a mudança num ar
 
 ## Tirar
 
-A skill `testar-app` sobe o antes e o depois e tira as capturas. O comando é `frontend/scripts/capture.ts`, que tira o print e, com `--video`, grava do carregamento ao último `--tap`, no celular (390×844) e no desktop (1280×800). Por padrão ele abre o `pnpm start` do checkout:
+A skill `test-app` sobe o antes e o depois e tira as capturas. O comando é `frontend/scripts/capture.ts`, que tira o print e, com `--video`, grava do carregamento ao último `--tap`, no celular (390×844) e no desktop (1280×800). Por padrão ele abre o `pnpm start` do checkout:
 
 ```bash
 cd frontend

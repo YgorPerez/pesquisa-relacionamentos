@@ -4,7 +4,7 @@ A nota da fallow, o score do React Doctor e a cobertura mudam a cada merge. Escr
 
 ## Decisão
 
-- **O `badges.yml` mede depois de cada push na `main` que mexe no código** (a cobertura de cada pacote, `fallow health --min-score 0`, `react-doctor --json`) e grava `docs/badges/fallow.svg`, `react-doctor.svg` e `cobertura.svg` com `.github/scripts/badges.ts`. Só commita se um selo mudou, com o token do workflow, que não dispara o deploy.
+- **O `badges.yml` mede depois de cada push na `main` que mexe no código** (a cobertura de cada pacote, `fallow health --min-score 0`, `react-doctor --json`) e grava `docs/badges/fallow.svg`, `react-doctor.svg` e `coverage.svg` com `.github/scripts/badges.ts`. Só commita se um selo mudou, com o token do workflow, que não dispara o deploy.
 - **A cobertura do selo é a de linhas de todo o código**: o app, os pacotes e os scripts, sem testes, stories e o gerado.
 - **O selo não é portão.** Quem cobra a nota e o piso é o `pnpm check` do PR.
 

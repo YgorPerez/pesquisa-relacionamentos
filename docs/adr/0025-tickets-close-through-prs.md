@@ -8,7 +8,7 @@ Até o spec #23, um ticket fechava com um comentário e um `gh issue close`, e o
 - **O PR entra verde**: todos os checks do último commit passaram e nenhum comentário ficou sem resposta. O merge é `gh pr merge <pr> --merge`, sem squash.
 - **O GitHub só fecha a issue sozinho num PR para o ramo padrão.** Num PR para um `spec/*`, quem faz o merge fecha a issue: `gh issue close <n> --comment "Entrou em spec/<n> por #<pr>."`. O PR do spec para a `main` leva `Closes #<spec>`.
 - **Ticket sem código** (`research`, `grilling`, `prototype` sem código para entrar) segue fechando por comentário.
-- **O implementador abre o PR quando o orquestrador pede**; senão, dá push no ramo e o orquestrador abre (`docs/agents/orquestrar.md`).
+- **O implementador abre o PR quando o orquestrador pede**; senão, dá push no ramo e o orquestrador abre (`docs/agents/orchestration.md`).
 
 ## Consequências
 

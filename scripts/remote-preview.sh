@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publishes a repository folder at a temporary public https link (Cloudflare
 # Quick Tunnel, no account), to open a prototype on a phone. See
-# docs/agents/preview-remoto.md.
+# docs/agents/remote-preview.md.
 #
 #   scripts/remote-preview.sh [folder] [port]   # default: prototypes 8765; prints the link and exits
 #   scripts/remote-preview.sh stop              # takes down the server and the tunnel

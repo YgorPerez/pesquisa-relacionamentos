@@ -165,6 +165,6 @@ if (import.meta.main) {
   writeFileSync('docs/badges/fallow.svg', fallow)
   writeFileSync('docs/badges/react-doctor.svg', reactDoctor)
   // The README points at this file name.
-  writeFileSync('docs/badges/cobertura.svg', coverage)
+  writeFileSync('docs/badges/coverage.svg', coverage)
   console.log(summary)
 }

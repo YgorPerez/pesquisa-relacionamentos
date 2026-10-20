@@ -6,7 +6,7 @@
 //
 // The default target is `main`; to gather tickets into a spec,
 // `--target spec/23-mvp`. With the PR's CI up, a ticket goes in by merging its
-// PR (`docs/agents/integracao.md`). This is for merging several branches at
+// PR (`docs/agents/integration.md`). This is for merging several branches at
 // once with a single suite, or for when CI does not run.
 //
 // Runs in a clean worktree, never in the main checkout nor in the worktree of

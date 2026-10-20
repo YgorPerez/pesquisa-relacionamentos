@@ -1,5 +1,5 @@
 ---
-name: testar-app
+name: test-app
 description: Test the Tem estudo? site once, in a headless Chrome against the worktree's own build, after a frontend change. Use to see a changed page work with the real acervo before calling the change done, and to take the before and after screenshots and videos a pull request that changes a screen needs (the "Evidência de tela" check). Not for unit tests, stories (`pnpm test:stories`) or the Playwright suite (`pnpm e2e`).
 ---
 
@@ -21,11 +21,11 @@ No seu worktree, nunca no checkout principal (`AGENTS.md`, "Quatro jeitos de se 
 
 1. Uma vez por worktree, `node scripts/prepare-worktree.ts` na raiz.
 2. `pnpm build`, e então `node scripts/dev.ts start` em segundo plano, guardando o PID. Ele escreve `[dev] up: <url>` quando responde. Depois de um `pnpm e2e`, faça o build de novo: o e2e deixa o build com o acervo de fixture.
-3. Deixe o app de pé enquanto o usuário olha ou você itera. Depois, pare aquele PID e nada mais (`docs/agents/ambiente.md`, "Parar").
+3. Deixe o app de pé enquanto o usuário olha ou você itera. Depois, pare aquele PID e nada mais (`docs/agents/environment.md`, "Parar").
 
 ## O antes e o depois
 
-Um PR que muda tela precisa de pelo menos dois prints e dois vídeos na seção `## Screen` (`docs/agents/evidencia-de-tela.md`). O depois é o seu worktree. O antes é o ramo de destino num segundo worktree, com o build e o `start` dele, nas portas dele. A receita está em [references/recipes.md](references/recipes.md).
+Um PR que muda tela precisa de pelo menos dois prints e dois vídeos na seção `## Screen` (`docs/agents/screen-evidence.md`). O depois é o seu worktree. O antes é o ramo de destino num segundo worktree, com o build e o `start` dele, nas portas dele. A receita está em [references/recipes.md](references/recipes.md).
 
 ## Duas armadilhas
 

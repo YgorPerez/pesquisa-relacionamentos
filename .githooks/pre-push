@@ -1,5 +1,5 @@
 #!/bin/sh
-# The push gate (docs/agents/integracao.md, ADR 0020), from Festival dos
+# The push gate (docs/agents/integration.md, ADR 0020), from Festival dos
 # Macacos. Git runs this at the worktree root. Only `node`, no pnpm: pnpm is
 # run by `scripts/verify-push.ts`. `git push --no-verify` skips this hook.
 #

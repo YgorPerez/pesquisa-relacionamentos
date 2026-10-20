@@ -53,7 +53,7 @@ Pare o `start` do antes pelo PID e remova a worktree: `git worktree remove --for
 
 ## Anexar no PR
 
-Escreva a seção `## Screen` com os caminhos locais e anexe com `gh pr edit --attach`, da pasta das capturas. A tabela e o comando estão em `docs/agents/evidencia-de-tela.md`, "Anexar". Confira o check depois:
+Escreva a seção `## Screen` com os caminhos locais e anexe com `gh pr edit --attach`, da pasta das capturas. A tabela e o comando estão em `docs/agents/screen-evidence.md`, "Anexar". Confira o check depois:
 
 ```bash
 GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/screen-evidence.ts <pr>
