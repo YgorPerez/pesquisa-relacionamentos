@@ -4,13 +4,14 @@ ticket: 4
 
 # Onde casais se conhecem, especialmente no Brasil: o que mais se sabe
 
-*Pesquisa de 18/10/2026 para o ticket #4. Complementa o [relatório de 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md) e as Fichas já existentes (HCMST, Cacioppo, Kowal, Potarca 2020, Pew, IBGE, Mobile Time). Cada número aponta para a Ficha ou a fonte primária; o que não foi conferido no original está marcado.*
+*Pesquisa de 18/10/2026 para o ticket #4. Complementa o [relatório de 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md) e as Fichas já existentes (HCMST, Cacioppo, Kowal, Potarca 2020, Pew, IBGE, Mobile Time). Cada número aponta para a Ficha ou a fonte primária; o que não foi conferido no original está marcado. Atualizado em 20/10/2026 com a busca no SciELO, no Catálogo de Teses da CAPES, no Datafolha, no Ipsos e no IBGE (#48).*
 
 ---
 
 ## Resumo
 
-1. **Brasil: continua não havendo pesquisa representativa sobre onde os casais se conhecem.** Não achei nada do IBGE (o Registro Civil e a PNAD não perguntam isso), do Datafolha nem do Ipsos com metodologia publicada. O que existe:
+1. **Brasil: não há pesquisa representativa sobre onde os casais se conhecem.** A busca de 20/10/2026 no SciELO, no Catálogo de Teses da CAPES, no acervo do Datafolha, no Ipsos e nos questionários do IBGE (Registro Civil, PNAD, PNS 2019) não achou nenhuma pergunta do tipo "onde vocês se conheceram" feita a uma amostra nacional (ver 1.3 e 1.4). O que existe:
+   - **Datafolha 2009:** a única amostra nacional achada com algum número sobre o tema. 19% dos brasileiros de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido se encontrar com essa pessoa (15% entre 18 e 24 anos). Não pergunta como o casal atual se conheceu ([Ficha](../studies/datafolha-2009-sexualidade-brasileiros.md)).
    - **Kowal et al. 2025 inclui o Brasil.** São 119 brasileiros com parceiro, 19% deles conheceram o parceiro online. No Brasil, as médias de satisfação de quem se conheceu online e offline são praticamente iguais (4,48 vs. 4,50), mas o grupo online tem só 23 pessoas ([Ficha](../studies/kowal-2025-50-paises.md); cálculo próprio com os dados abertos).
    - **Opinion Box 2017:** 23% dos internautas com parceiro o conheceram online (17% em sites e redes sociais, 6% em apps). É um painel online, então o número tende a ser alto ([Ficha](../studies/opinionbox-2017-relacionamentos-brasil.md)).
    - **Acadêmico:** os estudos brasileiros sobre o tema são pequenos e qualitativos, ou comparam outra coisa, como relações mantidas pela internet ([Haack & Falcke 2017](../studies/haack-2017-relacionamentos-mediados-internet.md)).
@@ -55,13 +56,23 @@ O recorte brasileiro abaixo é cálculo próprio, sem ponderação e sem teste e
 |---|---|---|
 | [Opinion Box 2017](../studies/opinionbox-2017-relacionamentos-brasil.md) | 23% dos internautas com parceiro o conheceram online (17% sites e redes sociais; 6% apps). n = 1.735, painel online | ✅ · fraca |
 | [Mobile Time/Opinion Box 2025](../studies/mobiletime-2025-apps-relacionamento-brasil.md) | 23% dos brasileiros com smartphone já tiveram encontro por app (29% entre 16–29 anos). Mede encontros, não casais | ✅ · moderada |
-| Casamentos.com.br 2021 (via [Agência Brasil](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia)) | "Quase 20%" de 3,4 mil casais de 26–40 anos com planos de casar se conheceram pela internet e redes sociais; 36% das histórias online começaram em app | ⬜ só cobertura jornalística; relatório original não encontrado. Amostra de usuários de um portal de casamentos |
+| Casamentos.com.br, via [Agência Brasil, 12/06/2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia) | "Quase 20%" de 3,4 mil casais de 26–40 anos com planos de casar se conheceram pela internet e redes sociais. Dos encontros online, 36% em app, cerca de 33% no Facebook, 15% no Instagram e 7% em grupos de WhatsApp | ⬜ o relatório original foi procurado e não existe publicado ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)). Toda a cobertura copia a mesma matéria, sem data de campo, texto da pergunta nem forma de recrutamento; só a data da matéria é conhecida. Amostra de usuários de um portal de casamentos |
 
-Não encontrei pesquisa Datafolha ou Ipsos sobre como os brasileiros conheceram o parceiro.
+### 1.3 Pesquisas de opinião nacionais (Datafolha, Ipsos, outras)
 
-### 1.3 Pesquisa acadêmica brasileira
+Busca de 20/10/2026. Nenhuma pergunta como o entrevistado conheceu o parceiro atual.
 
-As buscas no OpenAlex, em repositórios e por busca geral (o SciELO bloqueou a busca automática) só acharam estudos de outro tipo:
+- **Datafolha:** a busca do site da Folha restrita ao Datafolha (`search.folha.uol.com.br/search?site=datafolha`) com "namoro", "casais conheceram", "relacionamento amoroso", "aplicativos de namoro", "conheceu parceiro" e "como conheceu" trouxe só três pesquisas de opinião: *Sexualidade dos Brasileiros* (2009), *Família fica ainda mais importante para brasileiros* (2007, opiniões sobre o namoro dos filhos) e *Para 85%, a cor da pele não interfere em relacionamentos amorosos* (2023). Li as duas primeiras e o relatório de tabelas da de 2009 (201 páginas).
+  - **[Datafolha 2009](../studies/datafolha-2009-sexualidade-brasileiros.md):** 1.888 entrevistas com pessoas de 18 a 60 anos em 125 municípios, por cotas em pontos de fluxo. Na P.26, 19% já tinham conhecido alguém pela internet e 8% tinham ido se encontrar com a pessoa; entre 18 e 24 anos, 32% e 15%; entre casados, 12% e 4%. O questionário não pergunta onde o casal atual se conheceu. É o número de amostra nacional mais próximo do tema, mas mede outra coisa, e é de antes dos apps · ✅ · moderada.
+  - A página de busca do próprio site do Datafolha (`/busca/?q=`) responde 404.
+- **Ipsos (e Ipec, o antigo Ibope, comprado pela Ipsos em 2025):** buscas gerais por pesquisa Ipsos ou Ipec sobre onde ou como o brasileiro conheceu o parceiro não acharam nenhuma. A página da Ipsos Brasil que aparece trata de satisfação com a vida sexual. O estudo Match Group/Ipsos de 2023 cobre Alemanha, Índia, Japão, Turquia e EUA, sem o Brasil.
+- **Outras, sem Ficha:**
+  - Instituto Locomotiva, junho de 2021 (1.105 pessoas de 16 anos ou mais, via [SBT News](https://sbtnews.sbt.com.br/noticia/brasil/170365-amor-em-tempos-de-pandemia-45-milhoes-de-brasileiros-comecaram-a-namorar)): 28% começaram um relacionamento na pandemia e 20% usaram app de namoro para falar com o parceiro. Não diz onde o casal se conheceu, e a matéria não descreve a amostra.
+  - happn com YouGov (via Instituto de Longevidade): segundo o fundador do happn, 20% encontraram o parceiro atual ou o último em redes sociais, site ou app. Pesquisa de uma empresa de app, sem relatório publicado.
+
+### 1.4 Pesquisa acadêmica brasileira
+
+Em 18/10/2026, as buscas no OpenAlex, em repositórios e por busca geral (o SciELO bloqueou a busca automática) só acharam estudos de outro tipo. Em 20/10/2026, a busca direta no SciELO e no Catálogo de Teses da CAPES, descrita abaixo da lista, também não achou nenhum estudo que meça onde os casais brasileiros se conhecem.
 
 - **Comparativo:** [Haack & Falcke 2017](../studies/haack-2017-relacionamentos-mediados-internet.md) compara 43 relações mantidas pela internet com 43 presenciais. As presenciais tiveram mais compromisso, paixão, intimidade e satisfação. **Não** compara casais que se conheceram online com os que se conheceram offline: muitas das relações online ainda não tinham tido encontro presencial.
 - **Qualitativos ou de perfis:**
@@ -72,7 +83,23 @@ As buscas no OpenAlex, em repositórios e por busca geral (o SciELO bloqueou a b
   - comparação qualitativa de solteiros na Polônia e no Brasil durante a pandemia ([Władza Sądzenia 2024](https://doi.org/10.18778/2300-1690.27.02)).
 
   Nenhum deles mede a distribuição de onde os casais se conhecem nem a qualidade por contexto de encontro. Não fiz Fichas desses estudos.
-- **IBGE:** as estatísticas do Registro Civil e a PNAD Contínua não têm pergunta sobre o local de encontro (ver a [Ficha do IBGE](../studies/ibge-2024-registro-civil.md)).
+- **IBGE:** as estatísticas do Registro Civil e a PNAD Contínua não têm pergunta sobre o local de encontro (ver a [Ficha do IBGE](../studies/ibge-2024-registro-civil.md)). O dicionário de variáveis da PNS 2019 também não: "parceiro" aparece só em perguntas sobre IST e violência, e "Internet/Redes Sociais/Celular" só como meio de uma agressão.
+
+**SciELO** (search.scielo.org, 20/10/2026). A página passa por um desafio de JavaScript que barra o `curl` (HTTP 403); com um Chrome sem tela, a busca respondeu. Cada consulta procura todos os termos em todos os índices; entre parênteses, o número de resultados:
+
+- "como se conheceram casais" (0), "onde os casais se conheceram" (0), "casais conheceram internet" (0), "conheceram o parceiro" (2), "how couples met" (1), "partner choice Brazil" (1), "online dating Brazil" (6);
+- "formação de casais" (51), "escolha do cônjuge" (7), "escolha conjugal" (35), "mercado matrimonial" (19), "encontro do parceiro" (42);
+- "namoro online" (6), "namoro virtual" (4), "aplicativos de namoro" (4), "Tinder" (25), "relacionamentos online" (66), "sites de relacionamento" (34).
+
+O que veio são estudos de saúde sexual com usuários de apps (IST, HIV, chemsex), etnografias (Tinder, *Mana*; o app evangélico Amor em Cristo, *Religião & Sociedade*; biossociabilidade gay online), estudos qualitativos de escolha conjugal com cinco casais (Silva, Menezes & Lopes 2010, *Estudos de Psicologia*) ou com avós e netas de Goiás (Pereira & Silva 2013, *Psicologia em Estudo*), um ensaio histórico sobre a escolha do cônjuge (Levy 2009, *Revista Brasileira de Estudos de População*) e muitos resultados sem relação com o tema. Os dois de "conheceram o parceiro" tratam de IST entre usuários de apps.
+
+**Catálogo de Teses da CAPES** (catalogodeteses.capes.gov.br, 20/10/2026, pela API `POST /catalogo-teses/rest/busca`, frase entre aspas; entre parênteses, o total):
+
+- "namoro online" (1), "aplicativos de namoro" (2), "namoro virtual" (3), "online dating" (5), "conheceram pela internet" (2), "relacionamentos online" (14), "encontros online" (51), "Tinder" (139), "sites de relacionamento" (107);
+- "escolha conjugal" (4), "escolha do cônjuge" (18), "mercado matrimonial" (12), "mercado de casamento" (9), "formação de casais" (48), "formação do casal" (10), "homogamia" (19), "onde se conheceram" (230), "como se conheceram" (186.223, a busca casa palavras soltas);
+- "aplicativos de relacionamento" deu erro do servidor (JBoss).
+
+A API devolve título, programa e ano, sem resumo. As dissertações e teses do tema são etnografias e estudos qualitativos sobre Tinder, Grindr e sites de relacionamento, análises de perfis e estudos de escolha do cônjuge com poucas pessoas. As mais próximas, *O virtual é real: estudo exploratório da formação de casais por meio da Internet* (Unifor, 2008) e *O amor na rede: um estudo fenomenológico dos namoros virtuais* (Unifor, 2010), são exploratórias. Os estudos quantitativos de casais usam o Censo, a PNAD ou o World Values Survey (seletividade por idade, homogamia educacional, homogamia de valores), que não perguntam onde o casal se conheceu. Os dois resultados de "conheceram pela internet" não são do tema.
 
 ## 2. HCMST 2020–2022: os números de 53%–66%
 
@@ -124,8 +151,8 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 
 - Conferir no site do Ined (fora do ar em 2026-10-18) a fiche ERFI-2 nº 22 com os 24% de 2020–2024 e criar Ficha.
 - Ler o texto completo de Sharabi & Dorrance-Hall 2024 e de Potarca 2021.
-- Procurar o relatório original da Casamentos.com.br (2021).
-- Buscar diretamente no SciELO e no Catálogo de Teses da CAPES (o SciELO bloqueou a busca automática).
+- ~~Procurar o relatório original da Casamentos.com.br.~~ Procurado em 2026-10-20 e não encontrado: só há a matéria da Agência Brasil de 12/06/2021 e cópias dela ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)).
+- ~~Buscar diretamente no SciELO e no Catálogo de Teses da CAPES.~~ Feito em 2026-10-20 (seção 1.4), junto com Datafolha, Ipsos e IBGE (seção 1.3): não há pesquisa representativa sobre onde os casais brasileiros se conhecem ([#48](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/48)). Uma pesquisa assim teria de ser encomendada ou incluída num levantamento nacional.
 
 ## Fontes consultadas nesta pesquisa
 
@@ -138,3 +165,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 - Opinion Box 2017, post original.
 - Agência Brasil, 12/06/2021 (Casamentos.com.br).
 - PsyPost (cobertura de Sharabi & Dorrance-Hall 2024).
+- Em 2026-10-20: busca do SciELO (https://search.scielo.org/) e API do Catálogo de Teses da CAPES (https://catalogodeteses.capes.gov.br/), com as consultas da seção 1.4; resumos no SciELO e no OpenAlex dos artigos citados ali.
+- Datafolha, *Sexualidade dos Brasileiros*, página de 23/02/2010 e relatório de tabelas (http://media.folha.uol.com.br/datafolha/2013/05/02/sexualidade_23022010.pdf); página *Família fica ainda mais importante para brasileiros* (07/10/2007); busca do site da Folha restrita ao Datafolha.
+- Dicionário de variáveis da PNS 2019 (https://ftp.ibge.gov.br/PNS/2019/Microdados/Documentacao/Dicionario_e_input_20220530.zip).
+- SBT News, 12/06/2021 (Instituto Locomotiva); Instituto de Longevidade (happn/YouGov).
