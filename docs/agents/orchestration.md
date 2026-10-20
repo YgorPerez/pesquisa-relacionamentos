@@ -18,3 +18,12 @@ Para o orquestrador que entrega vários tickets de um spec a subagentes ao mesmo
 ## Ramos que se sobrepõem
 
 Dois ramos que mexem no mesmo parágrafo, ou que acrescentam uma ADR com o mesmo número, conflitam no merge. Faça o merge do ramo que entrou antes no que vem depois, renumere a ADR ali se preciso (o número é o próximo livre em `docs/adr/`), e diga no relatório do ticket que ele contém o outro.
+
+## Várias issues do acervo
+
+Um agente por issue `acervo`, cada um no seu worktree, pela skill `library`. Onze rodaram juntos em 20/10/2026. Muda o seguinte:
+
+- **A `sources/private/` é uma só.** Todo worktree liga o mesmo clone do repo privado, então dois agentes que commitam nele ao mesmo tempo se atropelam. O agente salva a Fonte privada lá e lista no relatório; o orquestrador commita por caminho (`git -C sources/private add <arquivo>`) e dá push, um agente de cada vez.
+- **O orquestrador abre o PR**, depois do push das Fontes privadas daquele agente. Aberto antes, o check `Fichas` não acha a Fonte e fica vermelho. O agente dá push no ramo `acervo/<n>-<slug>` e para.
+- **Cada Ficha tem um dono.** Diga no prompt de cada agente quais arquivos de `studies/`, `reports/` e `scripts/calculations/` são dele; uma Ficha que duas issues citam fica com uma só. `tips/` e os Guias ficam de fora: o que uma Ficha muda numa Dica vem no relatório, e o orquestrador abre a issue.
+- **O relatório traz:** o ramo, cada Ficha com Status e Força, cada Fonte privada com a URL de onde veio, o que ficou `ready-for-human` e por quê, a saída do `pnpm verify` e cada Dica, Guia ou Ficha que um achado muda.
