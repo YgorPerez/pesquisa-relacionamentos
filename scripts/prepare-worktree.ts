@@ -9,7 +9,7 @@
 //    `@effect/tsgo` patch (ADR 0004).
 // 2. In a worktree, links in here what git does not carry and the main
 //    checkout has: the frontend's `.env` files, the local sources' private
-//    folder (`fontes/privado/`, which `pnpm verify` reads) and the impeccable
+//    folder (`sources/private/`, which `pnpm verify` reads) and the impeccable
 //    skill. The root `.env` and `.env.deploy` stay out: they carry the
 //    Hostinger token and VPS access, and an agent's worktree does not get
 //    those for free.
@@ -42,10 +42,27 @@ import { checkoutPort, ROOT } from './ports.ts'
 const FROM_MAIN = [
   'frontend/.env',
   'frontend/.env.local',
-  'fontes/privado',
+  'sources/private',
   '.claude/skills/impeccable',
   '.agents/skills/impeccable',
 ]
+
+/** Where a main checkout that has not moved its private folder yet keeps it
+ * (the content folders were in Portuguese before #70). */
+const FORMERLY: Readonly<Record<string, string>> = {
+  'sources/private': 'fontes/privado',
+}
+
+/** The path in the main checkout to link `relative` from: the current one,
+ * or the old one while only the old one exists there. */
+export function mainPathFor(main: string, relative: string) {
+  const formerly = FORMERLY[relative]
+  return formerly &&
+    !existsSync(join(main, relative)) &&
+    existsSync(join(main, formerly))
+    ? formerly
+    : relative
+}
 
 function say(line: string) {
   console.log(`[prepare] ${line}`)
@@ -75,8 +92,9 @@ export function link(
   worktree: string,
   relative: string,
   createLink: typeof symlinkSync = symlinkSync,
+  fromRelative: string = relative,
 ) {
-  const source = join(main, relative)
+  const source = join(main, fromRelative)
   const target = join(worktree, relative)
   if (!existsSync(source))
     return `${relative}: the main checkout does not have it. Skipped.`
@@ -203,7 +221,11 @@ if (import.meta.main) {
   run('pnpm install --frozen-lockfile --config.confirm-modules-purge=false')
 
   if (!inMain) {
-    if (main) for (const relative of FROM_MAIN) say(link(main, ROOT, relative))
+    if (main)
+      for (const relative of FROM_MAIN)
+        say(
+          link(main, ROOT, relative, symlinkSync, mainPathFor(main, relative)),
+        )
     else say('No main checkout: the .env files are up to you.')
   }
 
