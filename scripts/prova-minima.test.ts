@@ -14,6 +14,7 @@ describe('planoDaProva', () => {
       'tipos:frontend',
       'vitest:frontend',
       'pastas',
+      'pecas',
       'check',
       'pula stories',
     ])

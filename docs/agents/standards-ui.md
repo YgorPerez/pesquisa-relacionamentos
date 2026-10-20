@@ -8,7 +8,7 @@ Ao revisar, olhe só as linhas que a mudança tocou. Não builde o projeto nem p
 
 ## 1. A peça compartilhada, não uma cópia dela
 
-Os controles são primitivos do Base UI vestidos em `frontend/src/ui/shadcn/` (ADR 0027): `Button` (por trás do `Botao`, `principal` e `leve`, e a forma `seta`), `Toggle` (o chip), `RadioGroup`, `Checkbox`, `Switch`, `Input` e `Collapsible`. As peças de página moram em `ui/pagina.tsx` (`Folha`, `Coluna`, `Display`, `Lead`) e `ui/secao.tsx` (`Secao`, `Headline`, `Painel`, `Aviso`); as do site em `ui/`: `Degraus`, `StatusDeVerificacao`, `ForcaDaEvidencia`, `MetaDaFicha`, `SeloVoce`, `FichasCitadas`, a linha grande da Pergunta, a `Faixa` do Grupo possível, o `Rodape`.
+Os controles são primitivos do Base UI vestidos em `frontend/src/ui/shadcn/` (ADR 0027): `Button` (por trás do `Botao`, `principal` e `leve`, e a forma `seta`), `Toggle` (o chip), `RadioGroup`, `Checkbox`, `Switch`, `Input` e `Collapsible`. As peças de página moram em `ui/folha.tsx` (`Folha`, `Coluna`, `Display`, `Lead`) e `ui/secao.tsx` (`Secao`, `Headline`, `Painel`, `Aviso`); as do site em `ui/`: `Degraus`, `StatusDeVerificacao`, `ForcaDaEvidencia`, `MetaDaFicha`, `SeloVoce`, `FichasCitadas`, a linha grande da Pergunta, a `Faixa` do Grupo possível, o `Rodape`.
 
 - Aponte um `<button>`, `<input>`, `<select>` ou rádio cru com cara de controle quando a peça existe. O controle novo é Base UI, nunca o elemento do HTML com o estado na mão.
 - Um visual que o `DESIGN.md` nomeia (o bloco "Components") é uma variante da peça, como o `Button` faz com `principal` e `leve`. Aponte o mesmo visual escrito à mão na chamada. A correção é uma variante em `ui/shadcn/` ou na peça.

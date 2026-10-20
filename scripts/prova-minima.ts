@@ -10,7 +10,8 @@
 // 1. os tipos (`typecheck`, com os diagnósticos do Effect) de cada pacote que
 //    o diff toca e do app, que importa os pacotes;
 // 2. o Vitest com `--changed <base>` em cada pasta afetada (`afetados.ts`);
-// 3. as pastas do app (`frontend/lint/pastas.ts`), se o app mudou;
+// 3. as pastas do app (`frontend/lint/pastas.ts`) e a story de cada peça
+//    (`frontend/lint/stories.ts`), se o app mudou;
 // 4. o `vp check` nos arquivos mudados: formato, lint e tipos.
 //
 // Um passo que falha não para os outros. No fim, uma linha por passo, e sai
@@ -89,11 +90,19 @@ export function planoDaProva({
       ],
     })
   if (arquivos.some((a) => a.startsWith('frontend/src/')))
-    passos.push({
-      nome: 'pastas',
-      pasta: '.',
-      comando: ['node', 'frontend/lint/pastas.ts'],
-    })
+    passos.push(
+      {
+        nome: 'pastas',
+        pasta: '.',
+        comando: ['node', 'frontend/lint/pastas.ts'],
+      },
+      // Cada peça de `src/ui/` com story (ADR 0036).
+      {
+        nome: 'pecas',
+        pasta: '.',
+        comando: ['node', 'frontend/lint/stories.ts'],
+      },
+    )
   const existentes = arquivos.filter(existe)
   if (existentes.length > 0)
     passos.push({

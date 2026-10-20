@@ -108,6 +108,13 @@ export function filasDaSuite({
         comando: 'node frontend/lint/pastas.ts',
         pula: semApp,
       },
+      // Cada peça de `src/ui/` com story (ADR 0036).
+      {
+        nome: 'pecas',
+        pasta: '.',
+        comando: 'node frontend/lint/stories.ts',
+        pula: semApp,
+      },
       ...testes,
       // A `fallow health` lê a cobertura da suíte inteira: com a de alguns
       // testes, a nota cairia sem nada ter piorado.

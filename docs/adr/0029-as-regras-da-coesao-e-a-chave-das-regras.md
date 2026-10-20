@@ -2,7 +2,7 @@
 
 O Festival dos Macacos prende cada peça ao dono por lint (`lint/coesao.ts`, `lint/cor-do-tema.ts`) e tem duas regras em GritQL (`sem-title-nativo`, `sem-import-js`). Aqui elas são `jsPlugins` do Oxlint (ADR 0006), cada uma com o `RuleTester`, e o conteúdo é o deste site:
 
-- `coesao/h1-do-dono`: o `<h1>` é o `Display` de `ui/pagina.tsx`.
+- `coesao/h1-do-dono`: o `<h1>` é o `Display` de `ui/folha.tsx`.
 - `coesao/reticula-do-dono`: a retícula, a única elevação, é das peças de `src/ui/` (o `Painel`, o `Botao`).
 - `coesao/icone-a-mao`: pacote de ícones prontos não entra.
 - `tema/cor-crua`: uma cor escrita à mão numa string (`#f5f8f8`, `rgb()`). A dona das cores fora do CSS é `ui/marca.ts`. Sem modo escuro, a regra do Festival (a cor que não muda no escuro) não se aplica.

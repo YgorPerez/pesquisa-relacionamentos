@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, within } from 'storybook/test'
-import { trechoComReferencias } from '#/conteudo/vista-guia'
 import { Html } from './guia'
+import { trecho } from './guia.exemplo'
 
 const FICHAS = [
   {
@@ -16,13 +16,7 @@ const FICHAS = [
 
 /** Um parágrafo do Guia, com o HTML que o servidor monta do markdown. */
 function Paragrafo({ markdown }: { markdown: string }) {
-  return (
-    <Html
-      como="p"
-      className="prosa"
-      html={trechoComReferencias(markdown, FICHAS)}
-    />
-  )
+  return <Html como="p" className="prosa" html={trecho(markdown, FICHAS)} />
 }
 
 const meta = {

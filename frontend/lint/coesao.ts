@@ -4,7 +4,7 @@
 // ligada no `vite.config.ts` da raiz só fora das pastas dos donos, com o
 // motivo.
 //
-// `h1-do-dono`: o `<h1>` da página é o `Display` (`ui/pagina.tsx`).
+// `h1-do-dono`: o `<h1>` da página é o `Display` (`ui/folha.tsx`).
 // `reticula-do-dono`: a retícula, a única elevação do site (The Halftone
 // Rule), é das peças de `src/ui/`: o `Painel`, o `Botao`, a linha grande da
 // Pergunta. A tela pede a peça.
@@ -27,7 +27,7 @@ const h1DoDono = defineRule({
     docs: { description: 'O `<h1>` da página é o `Display`.' },
     messages: {
       doDono:
-        'O título da página é o `Display` de `ui/pagina.tsx`: passe o texto a ele (DESIGN.md, Typography, `display`).',
+        'O título da página é o `Display` de `ui/folha.tsx`: passe o texto a ele (DESIGN.md, Typography, `display`).',
     },
     schema: [],
   },
@@ -47,7 +47,7 @@ const reticulaDoDono = defineRule({
     docs: { description: 'A retícula é das peças de `src/ui/`.' },
     messages: {
       doDono:
-        'A retícula é a única elevação do site, e quem a desenha é uma peça de `src/ui/`: o `Painel` (`ui/pagina.tsx`), o `Botao`, a linha grande da Pergunta. Use a peça, ou crie a variante lá (DESIGN.md, Elevation & Depth).',
+        'A retícula é a única elevação do site, e quem a desenha é uma peça de `src/ui/`: o `Painel` (`ui/secao.tsx`), o `Botao`, a linha grande da Pergunta. Use a peça, ou crie a variante lá (DESIGN.md, Elevation & Depth).',
     },
     schema: [],
   },

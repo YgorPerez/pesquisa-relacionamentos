@@ -1,12 +1,9 @@
 // As peças de toda página (DESIGN.md, Layout e Typography): a folha, a
 // coluna de texto, o título `display` e o `lead`. Cada uma é o elemento do
 // HTML com as classes do tema; quem a usa acrescenta o lugar (`className`).
-// As rotas pegam daqui também as peças de dentro da página (`ui/secao.tsx`),
-// que as outras peças de `ui/` importam direto.
+// As rotas as pegam por `ui/pagina.ts`.
 import type { ComponentProps } from 'react'
 import { cn } from '@/platform/cn'
-
-export { Aviso, Headline, Painel, Secao } from './secao'
 
 /** A página: uma coluna no celular; a partir de 900px, a folha com contorno
  * sobre a retícula do fundo. */

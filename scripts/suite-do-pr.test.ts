@@ -10,7 +10,7 @@ describe('filasDaSuite', () => {
   it('a completa roda cada passo do pr.yml, com a cobertura, a fallow e o e2e inteiro', () => {
     const filas = filasDaSuite({ plano: null, base: BASE })
     expect(nomes(filas)).toEqual([
-      ['check', 'pastas', 'testes', 'fallow', 'doctor'],
+      ['check', 'pastas', 'pecas', 'testes', 'fallow', 'doctor'],
       ['tipos', 'supressoes'],
       ['stories'],
       ['build', 'storybook', 'e2e'],
@@ -27,7 +27,7 @@ describe('filasDaSuite', () => {
       base: BASE,
     })
     expect(nomes(filas)).toEqual([
-      ['check', 'pastas', 'testes:frontend', 'fallow', 'doctor'],
+      ['check', 'pastas', 'pecas', 'testes:frontend', 'fallow', 'doctor'],
       ['tipos', 'supressoes'],
       ['stories'],
       ['build', 'storybook', 'e2e'],
@@ -52,7 +52,14 @@ describe('filasDaSuite', () => {
       base: BASE,
     })
     expect(nomes(filas)).toEqual([
-      ['check', 'pula pastas', 'testes:.', 'pula fallow', 'pula doctor'],
+      [
+        'check',
+        'pula pastas',
+        'pula pecas',
+        'testes:.',
+        'pula fallow',
+        'pula doctor',
+      ],
       ['tipos', 'supressoes'],
       ['pula stories'],
       ['pula build', 'pula storybook', 'pula e2e'],
