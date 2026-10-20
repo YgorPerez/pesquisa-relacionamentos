@@ -30,6 +30,8 @@ export const Botoes: Story = {
     <div className="flex flex-wrap gap-2.5">
       <Button>Usar na conta</Button>
       <Button variant="leve">mudar</Button>
+      <Button variant="voltar">Voltar para a Pergunta</Button>
+      <Button variant="sublinhado">voltar ao texto</Button>
     </div>
   ),
 }

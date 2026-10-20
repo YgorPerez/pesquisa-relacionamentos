@@ -5,6 +5,7 @@ import type { Forca } from '@tem-estudo/conteudo'
 import { Link } from '@tanstack/react-router'
 import type { FichaCitada } from '#/conteudo/vista-guia'
 import { cn } from '@/platform/cn'
+import { Button } from '@/ui/shadcn/button'
 import { LacoDaFicha, type FichaCirculada } from './navegacao'
 import {
   Degraus,
@@ -119,13 +120,13 @@ export function FichasCitadas({
                   <span className="text-tinta-2">{ficha.contexto}</span>
                 </MetaDaFicha>
                 {alvo && voltarAoTexto && (
-                  <button
-                    type="button"
-                    className="mt-1.5 inline-flex min-h-toque cursor-pointer items-center border-0 bg-transparent px-0 py-1 font-label text-label leading-body text-inherit underline decoration-(length:--traco-etiqueta) underline-offset-4"
+                  <Button
+                    variant="sublinhado"
+                    className="mt-1.5"
                     onClick={voltarAoTexto}
                   >
                     voltar ao texto
-                  </button>
+                  </Button>
                 )}
               </div>
             </li>

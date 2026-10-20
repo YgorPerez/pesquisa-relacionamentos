@@ -11,7 +11,7 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react'
-import { cn } from '@/platform/cn'
+import { Button } from '@/ui/shadcn/button'
 import { laco } from './laco'
 
 declare module '@tanstack/react-router' {
@@ -194,10 +194,6 @@ const SetaVoltar = () => (
   </svg>
 )
 
-/** O voltar do DESIGN.md: negrito com a seta, sem caixa. */
-const VOLTAR =
-  'mt-sm inline-flex min-h-toque items-center gap-2 font-label text-aviso font-bold no-underline hover:underline'
-
 /** "Todos os estudos", "Todas as Dicas": o voltar para a lista. */
 export function LinkDeVoltar({
   to,
@@ -207,10 +203,15 @@ export function LinkDeVoltar({
   children: ReactNode
 }) {
   return (
-    <Link to={to} className={VOLTAR} data-slot="voltar">
+    <Button
+      variant="voltar"
+      nativeButton={false}
+      render={<Link to={to} />}
+      data-slot="voltar"
+    >
       <SetaVoltar />
       {children}
-    </Link>
+    </Button>
   )
 }
 
@@ -232,12 +233,8 @@ export function VoltarParaGuia() {
   if (!noNavegador || !de) return null
 
   return (
-    <button
-      type="button"
-      className={cn(
-        VOLTAR,
-        'cursor-pointer border-0 bg-transparent p-0 text-left text-inherit',
-      )}
+    <Button
+      variant="voltar"
       data-slot="voltar"
       onClick={() => {
         salvarPonto()
@@ -246,6 +243,6 @@ export function VoltarParaGuia() {
     >
       <SetaVoltar />
       Voltar para {de}
-    </button>
+    </Button>
   )
 }
