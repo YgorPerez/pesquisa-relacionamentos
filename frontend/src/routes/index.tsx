@@ -29,11 +29,58 @@ const CALCULADORAS = [
   },
 ] as const
 
+/** "Os Temas": cada Tema com as Perguntas dele ou, sem Guia publicado, o
+ * caminho para os estudos. */
+function OsTemas() {
+  const { data: temas } = useSuspenseQuery(leituras.temas())
+  return (
+    <Secao aria-labelledby="temas">
+      <Headline id="temas">Os Temas</Headline>
+      {temas.length === 0 ? (
+        <Aviso>
+          Os Guias entram no ar quando os estudos que os sustentam forem
+          conferidos na fonte. Enquanto isso,{' '}
+          <Link to="/estudos">veja os estudos do acervo</Link>.
+        </Aviso>
+      ) : (
+        temas.map((tema) => (
+          <Painel
+            como="article"
+            key={tema.slug}
+            className="not-first-of-type:mt-lg"
+          >
+            <h3 className="m-0 font-title text-title">
+              <Link
+                to="/$tema"
+                params={{ tema: tema.slug }}
+                className="inline-flex min-h-toque items-center decoration-2"
+              >
+                {tema.titulo}
+              </Link>
+            </h3>
+            <ol className="mt-1 mb-0 pl-marcador">
+              {tema.guias.map((guia) => (
+                <li key={guia.slug} className="not-first:mt-0.5">
+                  <Link
+                    to="/$tema/$slug"
+                    params={{ tema: guia.tema, slug: guia.slug }}
+                    className="inline-flex min-h-toque items-center"
+                  >
+                    {guia.pergunta}
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </Painel>
+        ))
+      )}
+    </Secao>
+  )
+}
+
 /** A página inicial: a frase do site, os Temas com as Perguntas e os atalhos
  * para as calculadoras. */
 function Inicio() {
-  const { data: temas } = useSuspenseQuery(leituras.temas())
-
   return (
     <Folha>
       <Coluna>
@@ -47,47 +94,7 @@ function Inicio() {
           pesquisa ainda não sabe.
         </Lead>
 
-        <Secao aria-labelledby="temas">
-          <Headline id="temas">Os Temas</Headline>
-          {temas.length === 0 ? (
-            <Aviso>
-              Os Guias entram no ar quando os estudos que os sustentam forem
-              conferidos na fonte. Enquanto isso,{' '}
-              <Link to="/estudos">veja os estudos do acervo</Link>.
-            </Aviso>
-          ) : (
-            temas.map((tema) => (
-              <Painel
-                como="article"
-                key={tema.slug}
-                className="not-first-of-type:mt-lg"
-              >
-                <h3 className="m-0 font-title text-title">
-                  <Link
-                    to="/$tema"
-                    params={{ tema: tema.slug }}
-                    className="inline-flex min-h-toque items-center decoration-2"
-                  >
-                    {tema.titulo}
-                  </Link>
-                </h3>
-                <ol className="mt-1 mb-0 pl-marcador">
-                  {tema.guias.map((guia) => (
-                    <li key={guia.slug} className="not-first:mt-0.5">
-                      <Link
-                        to="/$tema/$slug"
-                        params={{ tema: guia.tema, slug: guia.slug }}
-                        className="inline-flex min-h-toque items-center"
-                      >
-                        {guia.pergunta}
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              </Painel>
-            ))
-          )}
-        </Secao>
+        <OsTemas />
 
         <Secao aria-labelledby="calculadoras">
           <Headline id="calculadoras">Faça a conta</Headline>
