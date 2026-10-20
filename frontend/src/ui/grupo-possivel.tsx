@@ -38,6 +38,9 @@ const CARREGANDO =
 
 /** A nota miúda embaixo de um controle ou na conta. */
 const DICA = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'
+/** Uma linha do "Corte a corte": o corte à esquerda, quantos sobram à direita. */
+const ETAPA =
+  'flex justify-between gap-3 border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta py-1.5'
 
 /** A faixa com os números no marca-texto rosa e, se for o caso, "instável". */
 export function Faixa({ estimativa }: { estimativa: Estimativa }) {
@@ -419,12 +422,12 @@ function CorteACorte({
       <CollapsibleTrigger variante="cheia">Corte a corte</CollapsibleTrigger>
       <CollapsibleContent hiddenUntilFound>
         <ol className="m-0 list-none p-0" data-slot="gp-funil">
-          <li>
+          <li className={ETAPA}>
             <span>{NOME_DO_ALVO[alvo]} de 18 anos ou mais no Brasil</span>
             <b>{formatarQuantidade(base.central)}</b>
           </li>
           {funil.map((etapa) => (
-            <li key={etapa.requisito}>
+            <li key={etapa.requisito} className={ETAPA}>
               <span>{valor(etapa.requisito)}</span>
               <b>{formatarQuantidade(etapa.central)}</b>
             </li>
