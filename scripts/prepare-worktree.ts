@@ -7,12 +7,14 @@
 // 1. `pnpm install --frozen-lockfile` at the root, which sets up the whole
 //    workspace (`frontend/`, `packages/*`) and, through `prepare`, applies the
 //    `@effect/tsgo` patch (ADR 0004).
-// 2. In a worktree, links in here what git does not carry and the main
-//    checkout has: the frontend's `.env` files, the local sources' private
-//    folder (`sources/private/`, which `pnpm verify` reads) and the impeccable
-//    skill. The root `.env` and `.env.deploy` stay out: they carry the
-//    Hostinger token and VPS access, and an agent's worktree does not get
-//    those for free.
+// 2. Clones the private sources repo into the main checkout's
+//    `sources/private/` when it is missing there (ADR 0040,
+//    `private-sources.ts`). Without access, it says so and goes on.
+//    In a worktree, links in here what git does not carry and the main
+//    checkout has: the frontend's `.env` files, that `sources/private/`
+//    (which `pnpm verify` reads) and the impeccable skill. The root `.env`
+//    and `.env.deploy` stay out: they carry the Hostinger token and VPS
+//    access, and an agent's worktree does not get those for free.
 // 3. Syncs the Effect code in `.repos/` (ADR 0012) from the main checkout's
 //    copy, without downloading it again.
 // 4. Turns on the push hook (`install-hooks.ts`).
@@ -37,32 +39,20 @@ import {
 import { basename, dirname, join, resolve } from 'node:path'
 import { installHooks } from './install-hooks.ts'
 import { checkoutPort, ROOT } from './ports.ts'
+import {
+  dropLegacyLink,
+  ensurePrivateSources,
+  PRIVATE_SOURCES,
+} from './private-sources.ts'
 
 /** What the main checkout has, git does not carry, and the worktree needs. */
 const FROM_MAIN = [
   'frontend/.env',
   'frontend/.env.local',
-  'sources/private',
+  PRIVATE_SOURCES,
   '.claude/skills/impeccable',
   '.agents/skills/impeccable',
 ]
-
-/** Where a main checkout that has not moved its private folder yet keeps it
- * (the content folders were in Portuguese before #70). */
-const FORMERLY: Readonly<Record<string, string>> = {
-  'sources/private': 'fontes/privado',
-}
-
-/** The path in the main checkout to link `relative` from: the current one,
- * or the old one while only the old one exists there. */
-export function mainPathFor(main: string, relative: string) {
-  const formerly = FORMERLY[relative]
-  return formerly &&
-    !existsSync(join(main, relative)) &&
-    existsSync(join(main, formerly))
-    ? formerly
-    : relative
-}
 
 function say(line: string) {
   console.log(`[prepare] ${line}`)
@@ -92,9 +82,8 @@ export function link(
   worktree: string,
   relative: string,
   createLink: typeof symlinkSync = symlinkSync,
-  fromRelative: string = relative,
 ) {
-  const source = join(main, fromRelative)
+  const source = join(main, relative)
   const target = join(worktree, relative)
   if (!existsSync(source))
     return `${relative}: the main checkout does not have it. Skipped.`
@@ -220,13 +209,16 @@ if (import.meta.main) {
   // `node_modules` aborted the install.
   run('pnpm install --frozen-lockfile --config.confirm-modules-purge=false')
 
+  // The private sources are cloned into the main checkout, and a worktree
+  // links them from there like the rest (ADR 0040).
+  if (main) for (const line of ensurePrivateSources(main)) say(line)
+
   if (!inMain) {
-    if (main)
-      for (const relative of FROM_MAIN)
-        say(
-          link(main, ROOT, relative, symlinkSync, mainPathFor(main, relative)),
-        )
-    else say('No main checkout: the .env files are up to you.')
+    if (main) {
+      const dropped = dropLegacyLink(main, ROOT)
+      if (dropped) say(dropped)
+      for (const relative of FROM_MAIN) say(link(main, ROOT, relative))
+    } else say('No main checkout: the .env files are up to you.')
   }
 
   syncReferences(inMain ? null : main)

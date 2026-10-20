@@ -19,10 +19,11 @@ Vocabulário em `GLOSSARY.md`; rubrica de Força em `README.md`; campos da Ficha
 
 4. **Salvar a Fonte local.** O nome é o slug da Ficha: `<sobrenome>-<ano>-<tema-curto>`, minúsculo, sem acento.
    - Licença aberta (CC BY, CC BY-SA, CC0, domínio público, dado aberto do governo): `sources/<slug>.pdf`, e a licença vai no campo `license` da Ficha, como a página do editor escreve.
-   - O resto, inclusive PDF grátis no site do autor, CC BY-NC e CC BY-ND: `mkdir -p sources/private && curl -L -o sources/private/<slug>.pdf <url>`. Essa pasta fica fora do git.
+   - O resto, inclusive PDF grátis no site do autor, CC BY-NC e CC BY-ND: `curl -L -o sources/private/<slug>.pdf <url>`, ou `python3 -I scripts/fetch-sources.py` para uma lista de DOIs. `sources/private/` é um clone do repo privado `YgorPerez/pesquisa-relacionamentos-fontes`, fora do git do público (ADR 0040). Se ela não existe, rode `node scripts/prepare-worktree.ts`, que a clona.
    - Página sem PDF: salve o HTML (`sources/private/<slug>.html`). O script lê pdf, html, txt e md.
+   - Fonte privada nova vai para o repo privado: `git -C sources/private add <slug>.pdf && git -C sources/private commit -m "Add <slug>" && git -C sources/private push`. Sem esse push, o CI marca a Ficha ✅ como sem Fonte e o PR fica vermelho.
 
-   Pronto quando `pdftotext sources/<...>/<slug>.pdf - | head` mostra o texto do artigo. Um PDF escaneado sem texto não confere: trate como fonte ilegível (passo 3).
+   Pronto quando `pdftotext sources/<...>/<slug>.pdf - | head` mostra o texto do artigo e a Fonte privada está no repo privado. Um PDF escaneado sem texto não confere: trate como fonte ilegível (passo 3).
 
 5. **Preencher a Ficha.** Copie `studies/_modelo.md` para `studies/<slug>.md` (ou edite a Ficha que você refaz, apagando o comentário `# Antes da migração`).
    - `status: verified` e `verified_on: <hoje>`. `partial` só quando a fonte primária inteira é um resumo, página oficial ou comunicado, sem texto mais completo publicado.
@@ -36,4 +37,4 @@ Vocabulário em `GLOSSARY.md`; rubrica de Força em `README.md`; campos da Ficha
 
 6. **Conferir.** `pnpm verify studies/<slug>.md` (com `--source <caminho>` se a Fonte local não segue o slug) até sair `ok`, e `pnpm build`, que valida o frontmatter. Uma linha que não passa é corrigida ou sai da tabela. Pronto quando os dois saem com código 0.
 
-7. **Abrir o PR.** Branch `acervo/<n>-<slug>`, commit em inglês (ADR 0039), `gh pr create` com `Closes #<n>` no corpo, a URL de onde a Fonte local foi baixada (o revisor numa máquina sem `sources/private/` baixa de novo) e a saída do `pnpm verify`. O PR mexe só em `studies/`, `reports/`, `sources/` e `scripts/calculations/`. Quando a Ficha muda o que um Guia ou uma Dica afirma, abra uma issue nova dizendo qual Guia e o que muda. O merge é do revisor. Pronto quando o PR está aberto e linkado à issue.
+7. **Abrir o PR.** Branch `acervo/<n>-<slug>`, commit em inglês (ADR 0039), `gh pr create` com `Closes #<n>` no corpo, a URL de onde a Fonte local foi baixada e a saída do `pnpm verify`. O check `Fichas` roda a mesma conferência no CI, contra o repo privado. O PR mexe só em `studies/`, `reports/`, `sources/` e `scripts/calculations/`. Quando a Ficha muda o que um Guia ou uma Dica afirma, abra uma issue nova dizendo qual Guia e o que muda. O merge é do revisor. Pronto quando o PR está aberto e linkado à issue.

@@ -3,7 +3,10 @@
 
 Looks up every known open copy (published version, accepted manuscript,
 preprint) in Unpaywall, OpenAlex and Semantic Scholar, and saves the first
-one that is an actual PDF to sources/private/<slug>.pdf.
+one that is an actual PDF to sources/private/<slug>.pdf. That folder is a
+clone of the private sources repo (ADR 0040), which
+`node scripts/prepare-worktree.ts` sets up; at the end, the script prints the
+commands that commit and push the new files there.
 
 Usage:
     python3 -I scripts/fetch-sources.py list.txt
@@ -24,7 +27,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TARGET_DIR = ROOT / "fontes" / "privado"
+TARGET_DIR = ROOT / "sources" / "private"
 EMAIL = os.environ.get("UNPAYWALL_EMAIL", "unpaywall@example.org")
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) temestudo-sources/1.0"
 
@@ -107,9 +110,14 @@ def download(doi, slug):
 def main():
     if len(sys.argv) != 2:
         sys.exit(__doc__)
+    if not TARGET_DIR.is_dir():
+        sys.exit(
+            "sources/private/ is missing: run `node scripts/prepare-worktree.ts`, "
+            "which clones the private sources repo there."
+        )
     source = sys.stdin if sys.argv[1] == "-" else open(sys.argv[1], encoding="utf-8")
-    TARGET_DIR.mkdir(parents=True, exist_ok=True)
     missing = 0
+    saved = []
     for line in source:
         line = line.strip()
         if not line or line.startswith("#"):
@@ -119,8 +127,29 @@ def main():
         slug = parts[1] if len(parts) > 1 else slug_from_doi(doi)
         result = download(doi, slug)
         missing += result.startswith("no open copy")
+        if result.startswith("OK "):
+            saved.append(f"{slug}.pdf")
         print(f"{doi}  {result}")
+    if saved:
+        print(push_instructions(saved))
     sys.exit(1 if missing else 0)
+
+
+def push_instructions(files):
+    """The commands that put the new files in the private repo, where CI and
+    the other machines read them."""
+    lines = ["", "Commit and push them to the private sources repo:"]
+    if not (TARGET_DIR / ".git").exists():
+        lines.append(
+            "  (sources/private/ is not a clone of it: move these files into one, "
+            "made by `node scripts/prepare-worktree.ts`)"
+        )
+    lines += [
+        f"  git -C sources/private add {' '.join(files)}",
+        f'  git -C sources/private commit -m "Add {", ".join(files)}"',
+        "  git -C sources/private push",
+    ]
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":

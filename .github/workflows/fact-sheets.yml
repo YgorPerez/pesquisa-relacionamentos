@@ -1,0 +1,110 @@
+# The Fact sheet gate (#78, ADR 0040). Clones the private sources repo into
+# `sources/private/` with a read-only deploy key and runs `verify-fact-sheet`
+# on each Fact sheet marked verified: the ones a PR touches, or all of them on
+# a push to main. A broken excerpt turns it red (`.github/scripts/fact-sheets.ts`
+# says what else does).
+#
+# Without the `SOURCES_DEPLOY_KEY` secret (a PR from a fork, a copy of the
+# repo), nothing is verified: the job says so in a warning and in the summary,
+# and ends green.
+name: Fichas
+
+'on':
+  pull_request:
+    # What can change a verification.
+    paths:
+      - 'studies/**'
+      - 'sources/**'
+      - 'scripts/calculations/**'
+      - 'scripts/verify-fact-sheet.ts'
+      - 'packages/content/**'
+      - '.github/scripts/fact-sheets.ts'
+      - '.github/workflows/fact-sheets.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'studies/**'
+      - 'sources/**'
+      - 'scripts/calculations/**'
+      - 'scripts/verify-fact-sheet.ts'
+      - 'packages/content/**'
+      - '.github/scripts/fact-sheets.ts'
+      - '.github/workflows/fact-sheets.yml'
+  # From the Actions tab, after pushing sources to the private repo: checks
+  # every verified Fact sheet on main.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fact-sheets-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fichas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Secrets cannot go in an `if:`. This step says whether the key exists.
+      - name: Deploy key
+        id: key
+        env:
+          SOURCES_DEPLOY_KEY: ${{ secrets.SOURCES_DEPLOY_KEY }}
+        run: |
+          if [ -n "$SOURCES_DEPLOY_KEY" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Fact sheets NOT verified::Missing the SOURCES_DEPLOY_KEY secret (a PR from a fork has no access to it), so the private sources could not be cloned and no Fact sheet was checked."
+            echo "### Fact sheets NOT verified: no SOURCES_DEPLOY_KEY secret, so the private sources were not cloned." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Checkout
+        if: steps.key.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          # The script compares against the point where the PR left the base.
+          fetch-depth: 0
+
+      - name: Checkout the private sources
+        if: steps.key.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: YgorPerez/pesquisa-relacionamentos-fontes
+          path: sources/private
+          ssh-key: ${{ secrets.SOURCES_DEPLOY_KEY }}
+          persist-credentials: false
+
+      - name: Setup pnpm
+        if: steps.key.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        if: steps.key.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      # `verify-fact-sheet` reads the Fact sheet through `packages/content`.
+      - name: Install dependencies
+        if: steps.key.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+
+      # `pdftotext` reads the PDFs.
+      - name: Install poppler-utils
+        if: steps.key.outputs.ready == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - name: Verify the Fact sheets
+        if: steps.key.outputs.ready == 'true'
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+        run: |
+          if [ -n "$BASE" ]; then
+            node .github/scripts/fact-sheets.ts --base "$BASE"
+          else
+            node .github/scripts/fact-sheets.ts --all
+          fi

@@ -1,7 +1,8 @@
 // Fact sheet verification (#37): for each Achados row, the excerpt is in the
 // local source, the number in the Valor is in the excerpt and the `Cálculo`
-// reproduces the Valor. Runs only on the machine of whoever writes or reviews,
-// because the local source may sit in the private folder, outside git.
+// reproduces the Valor. The private folder is a clone of the private sources
+// repo (ADR 0040): on a machine, `prepare-worktree.ts` sets it up; in CI,
+// `.github/scripts/fact-sheets.ts` runs this on the verified fact sheets.
 //
 //   pnpm verify studies/<slug>.md [more fact sheets] [--source <path>]
 //
@@ -40,7 +41,8 @@ export interface Options {
 
 const EXTENSIONS = ['pdf', 'html', 'txt', 'md'] as const
 
-function findSource(root: string, slug: string): string | null {
+/** The fact sheet's local source, relative to `root`, or `null`. */
+export function findSource(root: string, slug: string): string | null {
   for (const folder of ['sources', 'sources/private']) {
     for (const ext of EXTENSIONS) {
       const path = `${folder}/${slug}.${ext}`

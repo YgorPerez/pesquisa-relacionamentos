@@ -28,12 +28,13 @@ coverage/
 .fallow/
 
 # A pasta privada de Fontes locais (#37): o texto completo que não tem licença
-# aberta fica só na máquina de quem escreve e de quem revisa a Ficha. A âncora
-# `/` deixa de fora as fixtures de `scripts/fixtures/verification/`; sem a barra
-# no fim, o link que o `prepare-worktree.ts` põe num worktree também fica fora.
+# aberta. É um clone do repo privado `pesquisa-relacionamentos-fontes` (ADR
+# 0040), nunca um submódulo. A âncora `/` deixa de fora as fixtures de
+# `scripts/fixtures/verification/`; sem a barra no fim, o link que o
+# `prepare-worktree.ts` põe num worktree também fica fora.
 /sources/private
-# O nome antigo da mesma pasta (antes do #70), para um checkout que ainda não a
-# moveu para `sources/private` não mostrar o texto privado como arquivo novo.
+# O nome antigo da mesma pasta (antes do #70), que nada lê mais, para um
+# checkout que ainda a tem não mostrar o texto privado como arquivo novo.
 /fontes/privado
 
 # O que o `frontend/scripts/deploy-wizard.sh` lembra entre uma rodada e outra.
