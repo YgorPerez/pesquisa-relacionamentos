@@ -42,7 +42,7 @@ Inquérito domiciliar com um morador selecionado por domicílio. Para o Grupo po
 
 As tabelas trazem, por linha, Total, Homem e Mulher (Tabela 1.1.1) ou Total, Heterossexual, Homossexual ou Bissexual e Recusou ou não sabia (Tabela 1.2.1), cada um com o percentual e os limites inferior e superior. O pipeline do Grupo possível reproduz a Tabela 1.1.1 por sexo a partir do microdado, na casa decimal publicada.
 
-Fonte local: `fontes/privado/ibge-2019-pns.txt` (o texto das Tabelas 1.1.1 e 1.2.1, do dicionário e da nota técnica) e os originais em `fontes/privado/ibge-2019-pns/`, fora do git. O microdado fica no cache do pipeline, fora do repositório.
+Fonte local: `sources/ibge-2019-pns.txt`, com o texto das Tabelas 1.1.1 e 1.2.1, das linhas do dicionário e da página 1 da nota técnica, cada um sob a URL de onde saiu. O microdado fica no cache do pipeline, fora do repositório.
 
 ## Limitações
 

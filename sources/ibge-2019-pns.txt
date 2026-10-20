@@ -1,0 +1,147 @@
+# IBGE (2019): Pesquisa Nacional de Saúde, trechos citados na Ficha
+
+Texto extraído dos documentos oficiais do IBGE (dados abertos do Executivo federal), só com as partes que a Ficha `studies/ibge-2019-pns.md` cita. Planilhas: uma linha por linha da planilha, células separadas por tabulação, valores como a planilha os mostra. PDF: saída de `pdftotext -enc UTF-8` da página citada. Baixado em 2026-10-20.
+
+## Dicionário de variáveis da PNS 2019 (dicionario_PNS_microdados_2019.xls): Y008, P00404, P050
+
+URL: https://ftp.ibge.gov.br/PNS/2019/Microdados/Documentacao/Dicionario_e_input_20220530.zip
+
+Cabeçalho da planilha e as linhas das três variáveis.
+
+Posição inicial	Tamanho	Código da variável	Quesito	Categorias
+nº	descrição	Tipo	Descrição
+
+1304	1	Y008	Y8	Qual é a sua orientação sexual?	1	Heterosexual
+2	Bissexual
+3	Homosexual
+4	Outra orientação
+5	Não sabe
+6	Recusou-se a responder
+
+617	3	P00404	Altura - Final (em cm) (3 inteiros)	1 a 299	Centímetros
+999	Ignorado
+Não aplicável
+
+711	1	P050	P50	Atualmente, o(a) Sr(a) fuma algum produto do tabaco?	1	Sim, diariamente
+2	Sim, menos que diariamente
+3	Não fumo atualmente
+9	Ignorado
+Não aplicável
+
+## Orientação sexual autoidentificada da população adulta, Tabela 1.1.1
+
+URL: https://ftp.ibge.gov.br/PNS/2019/Orientacao_Sexual_Autoidentificada_da_Populacao_Adulta/PNS_2019_Orientacao_Sexual_Autoidentificada_xls.zip
+
+Arquivo `Tabela 1.1.1.xls` do zip.
+
+Tabela 1.1.1 - Distribuição das pessoas de 18 anos ou mais de idade, por sexo, com indicação do intervalo de confiança de 95%, segundo a orientação sexual - Brasil - 2019
+Orientação sexual	Distribuição das pessoas de 18 anos ou mais de idade (%)
+Total	Sexo
+Homem	Mulher
+Distribui-ção	Intervalo de confiança de 95%	Distribui-ção	Intervalo de confiança de 95%	Distribui-ção	Intervalo de confiança de 95%
+Limite inferior	Limite superior	Limite inferior	Limite superior	Limite inferior	Limite superior
+Total	100,0	-	-	100,0	-	-	100,0	-	-
+Heterossexual	94,8	94,5	95,0	94,7	94,3	95,1	94,8	94,4	95,2
+Bissexual	0,7	0,6	0,8	0,5	0,4	0,7	0,8	0,7	1,0
+Homossexual	1,2	1,0	1,3	1,4	1,2	1,6	0,9	0,8	1,1
+Outra orientação sexual	0,1	0,0	0,1	0,0	0,0	0,1	0,1	0,1	0,1
+Não sabe	1,1	1,0	1,2	1,1	0,9	1,3	1,1	0,9	1,3
+Recusou-se a responder	2,3	2,1	2,5	2,3	2,0	2,6	2,3	2,0	2,5
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional de Saúde 2019.
+
+## Orientação sexual autoidentificada da população adulta, Tabela 1.2.1
+
+URL: https://ftp.ibge.gov.br/PNS/2019/Orientacao_Sexual_Autoidentificada_da_Populacao_Adulta/PNS_2019_Orientacao_Sexual_Autoidentificada_xls.zip
+
+Arquivo `Tabela 1.2.1.xls` do zip.
+
+Tabela 1.2.1 - Distribuição das pessoas de 18 anos ou mais de idade, por características socioeconômicas, com indicação do intervalo de confiança de 95%, segundo a orientação sexual - Brasil - 2019
+Características socioeconômicas	Distribuição das pessoas de 18 anos ou mais de idade (%)
+Total (1)	Orientação sexual
+Heterossexual	Homossexual ou Bissexual	Se recusou a responder ou não sabia
+Distribui-ção	Intervalo de confiança de 95%	Distribui-ção	Intervalo de confiança de 95%	Distribui-ção	Intervalo de confiança de 95%	Distribui-ção	Intervalo de confiança de 95%
+Limite infe- rior	Limite supe- rior	Limite infe- rior	Limite supe- rior	Limite infe- rior	Limite supe- rior	Limite infe- rior	Limite supe- rior
+Total (2)	100,0	-	-	94,8	94,5	95,0	1,8	1,7	2,0	3,4	3,1	3,6
+Sexo
+Homem	100,0	-	-	94,7	94,3	95,1	1,9	1,7	2,2	3,4	3,0	3,8
+Mulher	100,0	-	-	94,8	94,4	95,2	1,8	1,6	2,0	3,3	3,1	3,6
+Idade
+18 a 29	100,0	-	-	89,8	88,9	90,6	4,8	4,2	5,5	5,3	4,7	6,0
+30 a 39	100,0	-	-	95,4	94,8	95,8	1,9	1,6	2,3	2,7	2,4	3,1
+40 a 59	100,0	-	-	96,0	95,6	96,4	1,0	0,8	1,1	3,0	2,6	3,5
+60 ou mais	100,0	-	-	97,2	96,8	97,6	0,2	0,2	0,3	2,5	2,2	2,9
+Nivel de Instrução
+Sem instrução e fundamental incompleto	100,0	-	-	95,9	95,5	96,3	0,5	0,3	0,6	3,6	3,2	4,0
+Fundamental completo e médio incompleto	100,0	-	-	92,7	91,7	93,7	2,5	1,9	3,3	4,7	4,1	5,5
+Médio completo e superior incompleto	100,0	-	-	94,3	93,8	94,8	2,3	2,1	2,7	3,3	2,9	3,7
+Superior completo	100,0	-	-	95,1	94,4	95,7	3,2	2,7	3,7	1,7	1,3	2,2
+Cou ou raça
+Branca	100,0	-	-	95,3	94,8	95,7	1,8	1,5	2,0	2,9	2,6	3,3
+Preta	100,0	-	-	94,7	93,7	95,5	1,9	1,4	2,5	3,4	2,9	4,1
+Parda	100,0	-	-	94,3	93,8	94,7	1,9	1,6	2,1	3,8	3,5	4,2
+Rendimento domiciliar per capita
+Sem rendimento a 1/2 salário mínimo	100,0	-	-	94,3	93,7	94,9	1,3	1,1	1,6	4,3	3,8	4,9
+Mais de 1/2 a 1 do salário mínimo	100,0	-	-	94,8	94,2	95,2	1,6	1,3	1,9	3,6	3,2	4,0
+Mais de 1 a 3 salários mínimos	100,0	-	-	95,0	94,5	95,4	1,9	1,7	2,3	3,1	2,7	3,5
+Mais de 3 a 5 salários mínimos	100,0	-	-	94,8	93,6	95,8	3,1	2,3	4,2	2,0	1,5	2,8
+Mais de 5 salários mínimos	100,0	-	-	95,1	94,2	95,9	3,5	2,8	4,3	1,4	1,0	2,0
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional de Saúde 2019.
+(1) Inclusive as pessoas que declararam outra orientação sexual
+(2) Inclusive as pessoas de cor ou raça amarela e indígena
+
+## Nota técnica PNS 01/2021 (medidas antropométricas)
+
+URL: https://ftp.ibge.gov.br/PNS/Documentacao_Geral/nota_tecnica_pns_2021_01.pdf
+
+### Página 1 do PDF
+
+Pesquisa Nacional de Saúde - PNS
+Nota técnica 01/2021
+Medidas antropométricas da PNS 2013 e 2019
+A presente nota técnica visa esclarecer os métodos utilizados para a construção dos
+indicadores dos diferentes estados nutricionais, os quais envolvem a classificação das pessoas
+entre aquelas com déficit de peso, excesso de peso e obesidade.
+O módulo de antropometria da PNS 2013 foi aplicado para todos os moradores selecionados
+com idade igual ou superior a 18 anos. Em 2019, entretanto, a aferição dessas medidas ocorreu
+em uma subamostra dos moradores selecionados de 15 anos ou mais de idade.
+Além disso, métodos distintos foram considerados na análise dos dados dos adultos (pessoas
+com 18 anos ou mais) e dos adolescentes (pessoas entre 15 e 17 anos) avaliados no módulo de
+antropometria da pesquisa. Essa diferenciação entre os estados nutricionais de adolescentes e
+de adultos impõe-se, inclusive, pelos seguintes fatores: características peculiares do padrão de
+crescimento nas várias idades; diferenças quanto às distribuições de referência; critérios
+diagnósticos; e interpretação de indicadores. No entanto, ambos se baseiam no Índice de Massa
+Corporal (IMC), cuja fórmula encontra-se ilustrada a seguir:
+
+IMC =
+
+Peso (em kg)
+2
+
+(Altura (em m))
+
+(1)
+
+Estado nutricional das pessoas de 15 a 17 anos de idade
+Para as pessoas de 15 a 17 anos de idade, a avaliação do perfil antropométrico nutricional
+foi feita de forma a atender as recomendações da Organização Mundial de Saúde – OMS (ONIS
+et al., 2007), a qual orienta os países a se basearem em uma distribuição de referência mundial
+do IMC de adolescentes segundo sexo e idade (em meses).
+Dessa forma, inicialmente calculou-se a idade em meses dos adolescentes por meio da
+seguinte fórmula:
+
+Idade em meses = [Idade em anos (variável C008) ∗ 12] + 6
+
+(2)
+
+O passo seguinte foi calcular o IMC dessa população e comparar o resultado da medida de
+cada um dos entrevistados com a tabela de referência da OMS. Dessa forma, os adolescentes
+foram classificados nos seguintes grupos:
+i) Déficit de peso: adolescente cujo IMC ≤ −2DP, sendo DP o desvio-padrão da
+distribuição de referência da OMS para um indivíduo da mesma idade, em meses, e
+sexo. (Em 2019, a amostra da Pesquisa não permitiu estimativas com a precisão
+requerida para o indicador déficit de peso para as pessoas de 15 a 17 anos de idade.
+
+Pesquisa Nacional de Saúde | Medidas antropométricas da PNS 2013 e 2019
+Nota técnica 01/2021
+
+1

@@ -1,0 +1,447 @@
+# IBGE (2022): Censo Demográfico, microdados da amostra, trechos citados na Ficha
+
+Texto extraído dos documentos oficiais do IBGE (dados abertos do Executivo federal), só com as páginas que a Ficha `studies/ibge-2022-censo-amostra.md` cita. PDF: saída de `pdftotext -enc UTF-8` de cada página citada. SIDRA: a resposta da API de agregados, sem mudança. Baixado em 2026-10-20.
+
+## Notas metodológicas 03/2026: Controle estatístico de confidencialidade dos microdados do CD2022
+
+URL: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/Documentacao/Notas%20metodol%c3%b3gicas/Notas%20metodol%c3%b3gicas%2003-2026%20-%20Controle%20estat%c3%adstico%20de%20confidencialidade%20dos%20microdados%20do%20CD2022.pdf
+
+### Página 8 do PDF
+
+•
+
+mecanismos de rastreabilidade e controle de acesso.
+
+Assim, uma nova metodologia de divulgação dos microdados da amostra do Censo Demográfico foi proposta, alterando a forma como essas informações foram divulgadas no Censo Demográfico 2010.
+
+Modalidades de acesso aos microdados
+Microdados de acesso público
+Os microdados de acesso público são disponibilizados para download no portal eletrônico
+do IBGE, sem necessidade de identificação individual do usuário para acesso ao arquivo. Essa
+modalidade apresenta menor nível de detalhamento geográfico e menor quantidade de variáveis,
+em comparação com as modalidades de acesso controlado e restrito. O processo de controle
+estatístico de confidencialidade aplicado aos microdados de acesso público compreendeu as
+seguintes medidas:
+•
+
+a Unidade da Federação constituiu o nível geográfico mais desagregado disponibilizado nessa modalidade;
+
+•
+
+foi adotada uma subamostra de 50% dos domicílios nos setores censitários que possuíam fração amostral de 100% (aproximadamente 116 mil domicílios, correspondentes a cerca de 1,5% dos domicílios, foram suprimidos nesse processo, sendo os
+registros restantes reponderados);
+
+•
+
+a variável de idade foi recodificada em grupos quinquenais, com recodificação adicional para a categoria superior a 80 anos. Essa medida reduz a granularidade da
+informação e, consequentemente, a possibilidade de identificação a partir da combinação entre idade e outras características;
+
+•
+
+após os controles anteriores, registros que permanecessem com risco de revelação
+superior ao limite estabelecido foram submetidos à supressão local de determinadas
+características. Entre as variáveis afetadas encontram-se sexo e idade. Nos casos
+correspondentes, também foram suprimidas variáveis que dependiam diretamente
+do sexo, como as relacionadas à fecundidade;
+
+•
+
+após a aplicação dos procedimentos anteriores, foi realizada supressão global dos
+domicílios que permanecessem com risco elevado (aproximadamente 50 domicílios
+suprimidos nessa etapa final de controle);
+
+•
+
+após a seleção das subamostras e as supressões, os pesos amostrais foram recalibrados. A calibração das Áreas de Ponderação (APONDs) foi realizada após a aplicação dos procedimentos de redução do risco, de modo a adequar os pesos à composição final da base disponibilizada;
+
+8
+
+### Página 11 do PDF
+
+•
+
+não alterar ou modificar o conteúdo dos arquivos disponibilizados, nem compartilhar,
+redistribuir, transferir ou ceder os arquivos a terceiros, sob qualquer forma;
+
+•
+
+não publicar ou disponibilizar os arquivos em repositórios, plataformas de armazenamento em nuvem ou outros ambientes acessíveis a terceiros;
+
+•
+
+não utilizar os microdados para finalidades comerciais, publicitárias ou de marketing,
+nem para finalidade alheia à pesquisa estatística declarada;
+
+•
+
+abster-se de qualquer uso incompatível com o Termo de Uso, o Termo de Compromisso ou a legislação aplicável;
+
+•
+
+reconhecer a existência de mecanismos internos de rastreabilidade utilizados pelo
+IBGE para fins de auditoria e, quando necessário, para subsidiar processos decorrentes de uso indevido;
+
+•
+
+não tentar identificar, remover, modificar ou neutralizar os mecanismos de rastreabilidade;
+
+•
+
+estar ciente de que o IBGE poderá solicitar informações relacionadas aos arquivos
+utilizados em trabalhos, análises, estudos ou atividades envolvendo os dados, com
+a finalidade de verificar o cumprimento das obrigações estabelecidas;
+
+•
+
+estar ciente de que o uso indevido dos microdados poderá sujeitar o usuário às penalidades previstas na Lei nº 5.534/1968, na Lei nº 13.709/2018 e demais normas
+aplicáveis.
+
+O Termo de Compromisso é gerado automaticamente pelo sistema a partir das informações
+fornecidas pelo usuário e pode ser armazenado pelo próprio solicitante.
+
+Relação com os resultados oficiais
+Os usuários devem considerar que os resultados produzidos a partir dos microdados de
+acesso público e de acesso controlado podem não coincidir exatamente com os resultados divulgados pelo IBGE nas tabulações do SIDRA e do BME. Para os microdados de acesso controlado, o processo de calibração desenvolvido assegura a coincidência, até o nível de área de
+ponderação, para a população total e por sexo. No caso dos microdados de acesso público, o
+processo de calibração garante, no nível de Unidade da Federação, a coincidência apenas dos
+resultados referentes à população total. Para os demais indicadores, podem ocorrer divergências
+em relação aos resultados divulgados pelo IBGE nas tabulações do SIDRA e do BME, em decorrência dos tratamentos aplicados aos microdados para a preservação da confidencialidade
+das informações, que incluem:
+•
+
+subamostragem;
+
+•
+
+supressão de registros;
+
+•
+
+recodificação de variáveis;
+
+11
+
+## Notas metodológicas 05/2026: Microdados da amostra do CD2022
+
+URL: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/Documentacao/Notas%20metodol%c3%b3gicas/Notas%20metodol%c3%b3gicas%2005-2026%20-%20Microdados%20da%20amostra%20do%20CD2022.pdf
+
+### Página 12 do PDF
+
+•
+
+Relatórios de acompanhamento - resumo de informações da coleta e de questionários
+com pendências para facilitar o acompanhamento do trabalho do recenseador.
+
+A autoentrevista assistida por computador - CASI foi uma inovação introduzida na operação
+censitária de 2010 e foi mantida para o Censo 2022. A possibilidade do preenchimento do
+questionário pela Internet procurou alcançar o informante que, embora disposto a participar do
+Censo, optou por não fornecer as informações no momento da visita do recenseador. A opção
+de preenchimento do questionário pela Internet era registrada no DMC do recenseador com um
+código de identificação do domicílio e um tíquete eletrônico era gerado exclusivamente para
+aquele domicílio. O total de questionários realizados pela modalidade de autopreenchimento pela
+Internet foi de 410.598, o que correspondeu a 0,6% do total.
+Pela primeira vez foi oferecida ao informante a possibilidade de responder o Censo por
+telefone. A entrevista por telefone assistida por computador - CATI foi utilizada pelos
+recenseadores com seus próprios dispositivos móveis de coleta. Também foi utilizada como
+modalidade de coleta oferecida pelos agentes da Central de Apoio ao Censo - CAC, tendo
+funcionado por meio do número 0800 721 8181, diariamente, das 8h às 21h30. No decorrer da
+operação censitária, o IBGE, com apoio da Agência Nacional de Telecomunicações - Anatel,
+disponibilizou um serviço de atendimento telefônico via tridígito 137 (denominado “Disque
+Censo”), considerado um serviço de utilidade pública para todos os cidadãos que ainda não
+haviam respondido o Censo 2022. O total de questionários aplicados no Brasil pela modalidade
+de entrevista por telefone foi de 412.598, equivalente a 0,6% do total de questionários.
+O quantitativo total de Questionários Básicos foi de 65.463.616, equivalente a 89,4% do total
+de questionários aplicados e com tempo médio de preenchimento de seis (6) minutos. O
+Questionário da Amostra foi realizado 7.793.421 vezes, equivalente a 10,6% do total de
+questionários e com tempo médio de preenchimento de 16 minutos.
+
+Acompanhamento e controle
+O Censo Demográfico 2022 contou com um amplo procedimento de supervisão, que teve
+como objetivo garantir a cobertura e controlar a qualidade dos dados da coleta ao longo de todo
+o período da operação. Com esse propósito, o IBGE criou procedimentos e funcionalidades
+capazes de avaliar, com precisão, as atividades realizadas pelos recenseadores nos diversos
+níveis geográficos, especialmente nos setores censitários, de forma a:
+• Avaliar a qualidade do percurso realizado pelo recenseador durante seu trabalho de
+coleta, de modo a evitar problemas relacionados a falhas de cobertura de endereços
+no setor censitário;
+• Avaliar a qualidade da cobertura dos endereços, a fim de que o Cadastro Nacional de
+Endereços para Fins Estatísticos - CNEFE fosse atualizado da maneira mais correta
+possível;
+
+Censo Demográfico 2022
+Notas metodológicas 05/2026 - Microdados da amostra do CD2022
+
+12
+
+### Página 20 do PDF
+
+As embaixadas, consulados e representações do Brasil no exterior são considerados
+Território Nacional, porém não foram incluídos no Censo Demográfico. Atualmente, a maioria
+dos funcionários brasileiros reside em domicílios fora das representações diplomáticas.
+Os domicílios localizados no Território Nacional habitados por povos indígenas em situação
+de isolamento voluntário estão previamente definidos, por sua localização espacial, como fora
+do âmbito da pesquisa.
+
+Conceitos e definições
+Data de referência
+O Censo brasileiro adota o conceito de população residente ou “de direito”, ou seja, a população
+é enumerada no seu local de residência habitual, considerando todos os moradores dos
+domicílios particulares – permanentes e improvisados – e coletivos, na data de referência.
+A investigação das características dos domicílios e das pessoas neles residentes teve como
+data de referência a meia-noite do dia 31 de julho para 1° de agosto de 2022. Portanto, de acordo
+com este critério, as pessoas nascidas após esta data não foram incluídas no Censo 2022, pois
+não faziam parte do conjunto de moradores do domicílio na data de referência. Já as pessoas
+falecidas após esta data foram incluídas, pois eram moradoras do domicílio na data de referência.
+
+Semana de referência
+Para os quesitos do bloco de trabalho que se referiam a um período de uma semana, o
+Censo Demográfico 2022 utilizou como semana de referência a última semana de julho – isto é,
+de 25 a 31 de julho de 2022.
+
+População residente
+A população residente é constituída pelos moradores dos domicílios na data de referência.
+
+Morador
+É a pessoa que tem o domicílio como local habitual de residência e nele se encontrava na data
+de referência, ou que, embora ausente na data de referência, tem o domicílio como residência
+habitual, desde que essa ausência não seja superior a 12 meses em relação àquela data, em
+decorrência dos seguintes motivos:
+• Viagens: a passeio, a serviço, a negócio, de estudos etc.;
+• Afastamento de sua comunidade tradicional por motivo de caça, pesca, extração
+vegetal, trabalho na roça, participação em festas ou rituais;
+• Internação em estabelecimento de ensino ou hospedagem em outro domicílio,
+pensionato, república de estudantes, visando facilitar a frequência à escola durante o
+ano letivo;
+Censo Demográfico 2022
+Notas metodológicas 05/2026 - Microdados da amostra do CD2022
+
+20
+
+### Página 41 do PDF
+
+• Não sabe
+• Sem declaração
+O grupo “Umbanda e Candomblé” compreende também outras religiões afrobrasileiras.
+O
+
+grupo
+
+“Outras
+
+religiosidades”
+
+compreende
+
+também
+
+as
+
+declarações
+
+de
+
+multirreligiosidade e as declarações de religiosidade mal definidas.
+
+Fecundidade
+O recenseamento do tema fecundidade abrangeu as mulheres de 12 anos ou mais de
+idade, o número de filhos nascidos vivos que essas mulheres tiveram até a data de referência
+de 31 de julho de 2022, por sexo, e o número de filhos tidos que estavam vivos na data de
+referência. Em relação ao último(a) filho(a) tido(a) nascido(a) vivo(a) até a data de referência,
+investigou-se a idade, por meio do mês e ano de nascimento ou, no caso de não saber estas
+informações, da idade na data de referência (idade presumida).
+
+Filho(a) nascido(a) vivo(a)
+Considerou-se como filho(a) nascido(a) vivo(a) aquele(a) que, após o parto,
+independentemente do tempo de duração da gravidez, manifestou qualquer sinal de vida
+(respiração, choro, movimentos de músculos de contração voluntária, batimento cardíaco,
+pulsação do cordão umbilical etc.), ainda que tenha falecido em seguida.
+
+Filho(a) nascido(a) vivo(a) no período de referência de 12 meses
+Definiu-se como filho(a) nascido(a) vivo(a) no período de referência de 12 meses aquele(a)
+nascido(a) vivo(a) entre agosto de 2021 e julho de 2022.
+
+Nupcialidade
+A investigação da nupcialidade abrangeu as pessoas de 10 anos ou mais de idade.
+
+Estado conjugal
+O estado conjugal da pessoa de 10 anos ou mais de idade foi classificado em:
+• Vivia em união - para a pessoa que vivia em união conjugal com cônjuge ou
+companheiro(a) que era morador no domicílio;
+• Não vivia, mas já viveu em união - para a pessoa cujo cônjuge ou companheiro(a)
+perdeu a condição de morador no domicílio ou a que teve união conjugal dissolvida; ou
+• Nunca viveu em união - para a pessoa que nunca viveu em companhia de cônjuge ou
+companheiro(a).
+
+Natureza da união conjugal
+A natureza da união da pessoa de 10 anos ou mais de idade que vivia em união conjugal
+foi classificada como:
+
+Censo Demográfico 2022
+Notas metodológicas 05/2026 - Microdados da amostra do CD2022
+
+41
+
+## Dicionário de Variáveis, Microdados CD2022
+
+URL: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/Documentacao/Layout%20e%20dicion%c3%a1rio/Dicion%c3%a1rio%20de%20Vari%c3%a1veis%20-%20Microdados%20CD2022.pdf
+
+### Página 19 do PDF
+
+por apenas um Município, estes grafados apenas com o nome do município (ex: " Manaus (AM)").
+A relação de códigos encontra-se no arquivo: “Municipios_BR_Recortes_Territoriais_2022.xlsx”.
+
+P0080 – Município
+O Município é uma unidade político-administrativa dotada de governo próprio, autonomia
+administrativa e limites territoriais definidos. É composto por uma sede municipal e pode incluir
+distritos, sendo responsável pela gestão de serviços públicos locais, da promoção do
+ordenamento territorial, da proteção do patrimônio histórico-cultural local, entre outras
+competências definidas na Constituição Federal. A relação de códigos encontra-se no arquivo:
+“Municipios_BR_Recortes_Territoriais_2022.xlsx”.
+
+P0090 – Área de Ponderação
+Define-se área de ponderação como sendo uma unidade geográfica formada por um
+agrupamento de setores censitários para a aplicação dos procedimentos de calibração das
+estimativas com as informações do Questionário da Amostra do Censo Demográfico. É, também,
+a menor unidade geográfica para identificação dos microdados da amostra, de maneira a
+preservar o sigilo em relação aos informantes da pesquisa. A relação de códigos encontra-se no
+arquivo: “Lista das Áreas de Ponderação_Mircrodado_Publico.xlsx”.
+
+P0099 – Setor
+O Setor Censitário é principal unidade territorial de coleta e divulgação de dados estatísticos do
+IBGE. Cada Setor Censitário corresponde a uma porção em que o território nacional é
+fragmentado, considerando-se as estruturas territoriais, para permitir o levantamento de
+estatísticas nos prazos estabelecidos para a coleta. São identificados por um geocódigo único
+em nível nacional, composto a partir dos geocódigos do Subdistrito, do Distrito, do Município, do
+Estado e da Grande Região em que cada Setor está inserido. É a unidade territorial de coleta
+dos Censos Demográficos. A relação de códigos encontra-se no arquivo: “Composição das Áreas
+de Ponderação.xlsx”.
+
+P0100 – Controle
+A variável de controle é um identificador numérico único atribuído a cada domicílio,
+utilizado para realizar o relacionamento (linkagem) entre as diferentes bases de dados do Censo
+(pessoas, domicílios, famílias e mortalidade). Essa variável permite associar corretamente os
+registros pertencentes ao mesmo domicílio, garantindo a integração e a consistência das
+informações para análise estatística.
+
+P0101 – Número de ordem do morador
+O número de ordem dos moradores é um identificador sequencial atribuído a cada pessoa
+residente em um domicílio recenseado, utilizado para individualizar os moradores dentro da
+unidade domiciliar e organizar o registro das informações coletadas.
+
+P0110 – Peso Amostral (acesso público)
+O peso amostral, ou fator de expansão da amostra, é o valor numérico associado a cada
+unidade selecionada em uma amostra probabilística para indicar quantas unidades da
+população-alvo ela representa. Em uma pesquisa por amostragem, como o questionário da
+amostra do Censo Demográfico 2022, cada domicílio selecionado “expande” a informação para
+o restante da população que não foi entrevistada com o questionário detalhado. Assim, para cada
+unidade domiciliar selecionada na amostra do Censo Demográfico 2022, foi associado um fator
+de expansão ou peso obtido através do ajuste de um peso amostral inicial. Este peso também
+foi atribuído a cada um de seus moradores. Por unidades domiciliares pesquisadas, entende-se
+os domicílios particulares ocupados e as famílias e pessoas sós, moradoras em domicílio coletivo
+
+### Página 22 do PDF
+
+• Domicílio particular permanente: É o domicílio que foi construído a fim de servir
+exclusivamente para habitação e, na data de referência, tinha a finalidade de servir de
+moradia a uma ou mais pessoas.
+Classificação da Informação:
+1 – Domicílio particular permanente ocupado: É o domicílio particular permanente que,
+na data de referência, estava ocupado por moradores e no qual foi realizada a entrevista.
+5 – Domicílio particular improvisado ocupado: É aquele domicílio que pode estar
+localizado em uma edificação que não tenha dependências destinadas exclusivamente à
+moradia (por exemplo, dentro de um bar), ou em calçadas, praças ou viadutos, como também
+estruturas móveis ou abrigos naturais (como grutas ou cavernas) e que, na data de referência,
+estavam ocupados por moradores.
+6 – Domicílio coletivo com morador: Um domicílio coletivo com morador é uma
+instituição ou estabelecimento onde as pessoas vivem sob normas de subordinação
+administrativa (como regras internas da instituição), mas existe pelo menos uma pessoa que
+declarou ter aquele local como sua residência habitual na data de referência. Ou seja, além de
+cumprir a função institucional (como hotel, asilo, quartel etc.), o local é considerado moradia para
+alguém que reside ali de forma permanente ou habitual, não apenas temporariamente.
+
+P0140 – Situação do domicílio
+Situação do domicílio, segundo a sua área de localização (urbana ou rural).
+Classificação da Informação:
+1 – Urbana: Quando a situação do setor é umas destas a seguir: área urbana de alta
+densidade de edificações, área urbana de baixa densidade de edificações, núcleo urbano.
+2 – Rural: Quando a situação do setor é uma destas a seguir: povoado, núcleo rural,
+lugarejo, área rural (exclusive aglomerados), massas de água.
+
+P0150 – Sexo
+Sexo biológico do morador (atribuído ao nascer).
+1 – Masculino
+2 – Feminino
+9 – Ignorado
+Obs.: Variável elaborada com restrições para atender aos critérios de controle estatístico de
+confidencialidade.
+
+P0160 – Sexo
+Sexo biológico do morador (atribuído ao nascer).
+1 – Masculino
+2 - Feminino
+
+P0170 – Condição no domicílio da pessoa, categoria
+A condição no domicílio é caracterizada pela relação existente entre a pessoa responsável
+pela unidade domiciliar (domicílio particular ou unidade de habitação em domicílio coletivo) e
+cada um dos demais moradores.
+Classificação da Informação:
+
+### Página 28 do PDF
+
+P0320 – Filhos homens nascidos vivos da pessoa, número
+Investigou-se a quantidade de filhos homens nascidos vivos para mulher de 12 anos ou
+mais de idade. Considerou-se como filho nascido vivo aquele que, após o parto,
+independentemente do tempo de duração da gravidez, manifestou qualquer sinal de vida
+(respiração, choro, movimentos de músculos de contração voluntária, batimento cardíaco etc.),
+ainda que tenha falecido em seguida. Registrou-se, segundo o sexo, o número de filhos tidos
+nascidos vivos até 31 de julho de 2022.
+
+P0330 – Filhas mulheres nascidas vivas da pessoa, número
+Investigou-se a quantidade de filhas mulheres nascidas vivas para mulher de 12 anos ou
+mais de idade. Considerou-se como filha nascida viva aquele que, após o parto,
+independentemente do tempo de duração da gravidez, manifestou qualquer sinal de vida
+(respiração, choro, movimentos de músculos de contração voluntária, batimento cardíaco etc.),
+ainda que tenha falecido em seguida. Registrou-se, segundo o sexo, o número de filhos tidos
+nascidos vivos até 31 de julho de 2022.
+
+P0340 – Filhos nascidos vivos da pessoa, número
+A variável indica o total de filhos nascidos vivos da pessoa até 31 de julho de 2022.
+
+P0350 – Filhos homens vivos da pessoa, número
+Investigou-se a quantidade de filhos homens da mulher de 12 anos ou mais de idade que
+estavam vivos em 31 de julho de 2022.
+
+P0360 – Filhas mulheres vivas da pessoa, número
+Investiga-se a quantidade de filhas mulheres da mulher de 12 anos ou mais de idade que
+estavam vivas em 31 de julho de 2022.
+
+P0370 – Filhos vivos da pessoa, número
+A variável indica o total de filhos da pessoa que estavam vivos em 31 de julho de 2022.
+
+P0380 – Idade calculada do último filho nascido vivo da pessoa,
+categoria.
+A variável indica a idade do último filho nascido vivo da pessoa em 31 de julho de 2022.
+01 - 0 a 4 anos
+02 - 5 a 9 anos
+03 - 10 a 14 anos
+04 - 15 a 19 anos
+05 - 20 a 24 anos
+06 - 25 a 29 anos
+07 - 30 a 34 anos
+08 - 35 a 39 anos
+09 - 40 a 44 anos
+10 - 45 a 49 anos
+11 - 50 a 54 anos
+12 - 55 a 59 anos
+
+## SIDRA 9514, variável 93, Brasil, sexo, idade e forma de declaração totais
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/9514/periodos/2022/variaveis/93?localidades=N1[all]&classificacao=2[6794]|287[100362]|286[113635]
+
+[{"id":"93","variavel":"População residente","unidade":"Pessoas","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"287","nome":"Idade","categoria":{"100362":"Total"}},{"id":"286","nome":"Forma de declaração da idade","categoria":{"113635":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"203080756"}}]}]}]
+
+## SIDRA 10185, variável 140, São Paulo, Não viviam em união, Mulheres, 25 a 29 anos, cor ou raça total
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/10185/periodos/2022/variaveis/140?localidades=N3[35]&classificacao=464[12109]|2[5]|58[1145]|86[95251]
+
+[{"id":"140","variavel":"Pessoas de 10 anos ou mais de idade","unidade":"Pessoas","resultados":[{"classificacoes":[{"id":"464","nome":"Estado conjugal","categoria":{"12109":"Não viviam em união"}},{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"1145":"25 a 29 anos"}},{"id":"86","nome":"Cor ou raça","categoria":{"95251":"Total"}}],"series":[{"localidade":{"id":"35","nivel":{"id":"N3","nome":"Unidade da Federação"},"nome":"São Paulo"},"serie":{"2022":"747507"}}]}]}]
