@@ -4,7 +4,7 @@
 // `sem-import-js`: um import relativo nomeia o arquivo que existe,
 // `./laco.ts`, e não `./laco.js`. O `.js` que aponta para um `.ts` só resolve
 // pelo Vite ou pelo `tsc`; o `node` sozinho, que roda os scripts do repo
-// tirando os tipos (`node scripts/conferir-ficha.ts`), não o acha. Pega o
+// tirando os tipos (`node scripts/verify-fact-sheet.ts`), não o acha. Pega o
 // `import` e o `export ... from`, o `import()` e o tipo `import('...')`; não
 // olha pacote.
 

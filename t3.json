@@ -2,8 +2,8 @@
   "$schema": "https://t3.codes/schema/t3.json",
   "scripts": [
     {
-      "name": "Preparar worktree",
-      "command": "node scripts/preparar-worktree.ts",
+      "name": "Prepare worktree",
+      "command": "node scripts/prepare-worktree.ts",
       "icon": "configure",
       "runOnWorktreeCreate": true
     }

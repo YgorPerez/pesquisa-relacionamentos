@@ -22,11 +22,11 @@ import { copyFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import {
-  emailOpcional,
-  lerVariaveis,
-  porta as umaPorta,
-  usuario as umUsuario,
-} from '../../scripts/variaveis.ts'
+  optionalEmail as emailOpcional,
+  readEnv as lerVariaveis,
+  port as umaPorta,
+  user as umUsuario,
+} from '../../scripts/env.ts'
 import { arquivoDaChave } from './chave-ssh.ts'
 import { cronometro } from './cronometro.ts'
 import {

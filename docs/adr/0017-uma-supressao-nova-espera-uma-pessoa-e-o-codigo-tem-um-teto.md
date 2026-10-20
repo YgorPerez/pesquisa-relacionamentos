@@ -4,11 +4,11 @@ Um `oxlint-disable` é o caminho mais curto para passar de um lint vermelho, e v
 
 ## Decisão
 
-- **`.github/scripts/supressoes.ts` conta e lê.** As diretivas são `oxlint-disable`, `eslint-disable` (que o Oxlint também obedece), `react-doctor-disable`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `@effect-diagnostics`, `fallow-ignore`, os `ignore` de cobertura e o `'use no memo'`. Só vale a que abre um comentário; a citada no meio de uma frase não conta.
-- **O teto.** `.github/teto-de-supressoes.json` diz quantas de cada a árvore pode ter. Passou, falha, com ou sem rótulo. Quem tira uma baixa o número; subir é mudar a configuração de um auditor.
+- **`.github/scripts/suppressions.ts` conta e lê.** As diretivas são `oxlint-disable`, `eslint-disable` (que o Oxlint também obedece), `react-doctor-disable`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `@effect-diagnostics`, `fallow-ignore`, os `ignore` de cobertura e o `'use no memo'`. Só vale a que abre um comentário; a citada no meio de uma frase não conta.
+- **O teto.** `.github/suppression-ceiling.json` diz quantas de cada a árvore pode ter. Passou, falha, com ou sem rótulo. Quem tira uma baixa o número; subir é mudar a configuração de um auditor.
 - **Sem motivo falha sempre.** O motivo vai depois do `--` no Oxlint, no React Doctor e na fallow, depois da diretiva no TypeScript, e num comentário na mesma linha do `'use no memo'`.
 - **Com motivo, ou com a configuração de um auditor mudada, o PR espera uma pessoa** pôr o rótulo `supressao-revisada`. Configuração é o `vite.config.ts` de cada pacote, o `vitest.*config.ts`, o `doctor.config.ts`, o `.fallowrc.jsonc`, cada `tsconfig*.json`, as regras de `frontend/lint/`, o teto, e as linhas dos scripts de auditoria nos `package.json`. Agente nenhum põe o rótulo.
-- **Roda no `supressoes.yml`**, a cada PR e a cada rótulo, e **no hook de push** (ADR 0020), onde o teto e o motivo barram e o resto só avisa.
+- **Roda no `suppressions.yml`**, a cada PR e a cada rótulo, e **no hook de push** (ADR 0020), onde o teto e o motivo barram e o resto só avisa.
 
 ## Opções consideradas
 

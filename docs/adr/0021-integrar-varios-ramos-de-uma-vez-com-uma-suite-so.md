@@ -1,14 +1,14 @@
 # Integrar vários ramos de uma vez, com uma suíte só
 
-Um ticket entra pelo merge do PR dele. Quando o orquestrador junta vários tickets num spec, um merge por vez roda o CI de cada um sobre um destino que já mudou, e o conflito entre dois só aparece no último. Do `integrar-main.ts` e do `antes-de-integrar.ts` do Festival dos Macacos.
+Um ticket entra pelo merge do PR dele. Quando o orquestrador junta vários tickets num spec, um merge por vez roda o CI de cada um sobre um destino que já mudou, e o conflito entre dois só aparece no último. Do `merge-branches.ts` e do `before-merge.ts` do Festival dos Macacos.
 
 ## Decisão
 
-- **`node scripts/integrar-main.ts [--destino <ramo>] <ramo...>`**, de uma worktree limpa só para isso, faz merge de cada ramo sobre o `origin/<destino>` buscado (sem squash), roda a auditoria, o `antes-de-integrar.ts` e a suíte do diff, e dá push sem force pelo hook. O destino padrão é a `main`.
-- **Uma integração por repositório de cada vez**: a vez é um arquivo com o PID em `<git-common-dir>/integrar-main.vez`; a de um dono morto é tomada sem matar nada.
+- **`node scripts/merge-branches.ts [--target <ramo>] <ramo...>`**, de uma worktree limpa só para isso, faz merge de cada ramo sobre o `origin/<destino>` buscado (sem squash), roda a auditoria, o `before-merge.ts` e a suíte do diff, e dá push sem force pelo hook. O destino padrão é a `main`.
+- **Uma integração por repositório de cada vez**: a vez é um arquivo com o PID em `<git-common-dir>/merge-branches.lock`; a de um dono morto é tomada sem matar nada.
 - **Num conflito, ou num vermelho, para sem publicar.** Se o destino andou durante a suíte, para e pede outra rodada.
-- **`--ensaio`** faz merge de cada ramo numa worktree temporária e diz ok ou os arquivos em conflito, sem suíte e sem push.
-- **`node scripts/antes-de-integrar.ts [--base <ref>]`** confere em segundos o que o `pnpm check` só barra no fim: a `fallow dead-code`, o React Doctor, e se alguma penalidade da `fallow health` subiu desde a base. O front está com 90 e o piso é 90.
+- **`--dry-run`** faz merge de cada ramo numa worktree temporária e diz ok ou os arquivos em conflito, sem suíte e sem push.
+- **`node scripts/before-merge.ts [--base <ref>]`** confere em segundos o que o `pnpm check` só barra no fim: a `fallow dead-code`, o React Doctor, e se alguma penalidade da `fallow health` subiu desde a base. O front está com 90 e o piso é 90.
 
 ## Opções consideradas
 

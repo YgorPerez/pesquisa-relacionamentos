@@ -68,15 +68,15 @@ Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 
 ## Código do Effect
 
-O `packages/content` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
+O `packages/content` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sync-references.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
 
 ## Verificar
 
-- Rode a menor prova do que você mudou: `node scripts/prova-minima.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integracao.md`.
+- Rode a menor prova do que você mudou: `node scripts/minimal-proof.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integracao.md`.
 - Formate com `pnpm fmt` (o Oxfmt do Vite+) e confira com `pnpm check`. Os testes importam de `vite-plus/test`.
 - Teste o comportamento, não a fiação. Não renderize um componente em markup estático para conferir as props, e não escreva um teste que repete a implementação.
 - O teste espera pelo que confere: uma promessa, um efeito, uma condição na página. Um teste que precisa de um timer ou de um sleep para passar está errado.
-- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/teto-de-supressoes.json`, ADR 0017).
+- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/suppression-ceiling.json`, ADR 0017).
 
 ## Pull requests
 
@@ -85,7 +85,7 @@ Um ticket com código entra por um PR do ramo `ticket/<n>-<nome>` para o ramo do
 - Um assunto por PR. Se a descrição precisa de "também", divida.
 - O título segue os commits: `Ticket #<n>: <o que mudou>`.
 - O corpo segue `.github/pull_request_template.md`: o problema, o que mudou, a tela e a verificação. Termina com o modelo e o harness que fizeram o trabalho, e com `Closes #<n>` de cada issue que resolve.
-- Uma mudança de tela traz, na seção `## Tela`, o print e o vídeo de cada tela que mudou, antes e depois (skill `testar-app`). O check `Evidência de tela` falha sem eles, a menos que `Nenhuma mudança de tela` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/evidencia-de-tela.md`.
+- Uma mudança de tela traz, na seção `## Screen`, o print e o vídeo de cada tela que mudou, antes e depois (skill `testar-app`). O check `Evidência de tela` falha sem eles, a menos que `No screen change` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/evidencia-de-tela.md`.
 - A verificação diz a menor prova que rodou, e cada supressão nova com o motivo.
 - Depois de cada push, acompanhe o PR até ficar verde no último commit: os checks e cada comentário que chegou depois. Conserte o que for real; responda o que você descarta, com o motivo.
 - Nunca ponha o rótulo `supressao-revisada`: é a assinatura de uma pessoa.
@@ -102,7 +102,7 @@ A maior parte das mudanças não pede doc: os agentes leem o código.
 
 ## Acervo
 
-Issue `acervo`, Ficha nova ou refeita em `estudos/`, revisão de PR de acervo: siga a skill `acervo` (`.claude/skills/acervo/SKILL.md`; checklist do revisor em `REVISOR.md`). A conferência roda com `pnpm conferir estudos/<slug>.md`. A fila do que falta verificar ou pesquisar são as issues `acervo`; sínteses vão para `relatorios/`.
+Issue `acervo`, Ficha nova ou refeita em `estudos/`, revisão de PR de acervo: siga a skill `acervo` (`.claude/skills/acervo/SKILL.md`; checklist do revisor em `REVISOR.md`). A conferência roda com `pnpm verify estudos/<slug>.md`. A fila do que falta verificar ou pesquisar são as issues `acervo`; sínteses vão para `relatorios/`.
 
 ## Perguntar
 
@@ -128,7 +128,7 @@ Os cinco labels canônicos (`needs-triage`, `needs-info`, `ready-for-agent`, `re
 
 ### Preview remoto
 
-Para o usuário abrir um protótipo no celular, `scripts/preview-remoto.sh` publica `prototipos/` num link https temporário. Ver `docs/agents/preview-remoto.md`.
+Para o usuário abrir um protótipo no celular, `scripts/remote-preview.sh` publica `prototipos/` num link https temporário. Ver `docs/agents/preview-remoto.md`.
 
 ### Domain docs
 

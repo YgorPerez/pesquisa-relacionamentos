@@ -5,15 +5,15 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv, type PluginOption } from 'vite-plus'
-import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
+import { vitestWorkers } from '../scripts/machine-queue.ts'
 import { acervo } from './vite/acervo.ts'
 import { lerAmbienteDoBuild } from './vite/ambiente.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
 import { manifestoSemPreload } from './vite/manifesto-sem-preload.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
-// ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// ela der (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
 /** O conteúdo de fixture do e2e, que os testes de tela leem. */
 const FIXTURE = fileURLToPath(new URL('e2e/acervo', import.meta.url))

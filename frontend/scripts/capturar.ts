@@ -10,7 +10,7 @@
 // todo navegador, o Safari incluído.
 //
 // O app padrão é o `pnpm start` deste checkout, e o Storybook o `pnpm
-// storybook` dele (`scripts/portas.ts`).
+// storybook` dele (`scripts/ports.ts`).
 //
 // Com `--story <id> --em 0,500,1000`, fotografa uma story do Storybook em
 // instantes da animação, em vez de uma rota (`capturarStory`).
@@ -20,7 +20,7 @@ import { mkdir, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { type Browser, chromium, type Page } from '@playwright/test'
-import { portaPedida } from '../../scripts/portas.ts'
+import { requestedPort } from '../../scripts/ports.ts'
 import {
   idsDoIndice,
   idsParecidos,
@@ -292,8 +292,8 @@ if (import.meta.main) {
   }
   const opcoes = lerArgumentos(argv, {
     saida: join(tmpdir(), 'capturas'),
-    app: `http://localhost:${portaPedida('start')}`,
-    storybook: `http://localhost:${portaPedida('storybook')}`,
+    app: `http://localhost:${requestedPort('start')}`,
+    storybook: `http://localhost:${requestedPort('storybook')}`,
   })
   if ('erro' in opcoes) {
     console.error(`${opcoes.erro}\n\n${USO}`)

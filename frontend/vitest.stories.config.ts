@@ -4,18 +4,18 @@
 // não com o do app (TanStack Start e nitro).
 import { playwright } from 'vite-plus/test/browser-playwright'
 import { defineConfig, mergeConfig } from 'vite-plus'
-import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
-import { portaPedida } from '../scripts/portas.ts'
+import { vitestWorkers } from '../scripts/machine-queue.ts'
+import { requestedPort } from '../scripts/ports.ts'
 import doStorybook from './.storybook/vite.config.ts'
 
 // A rodada entra na fila da máquina antes de abrir os Chrome
-// (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
 // O servidor que o Vitest sobe para o Chrome abrir as stories, na porta do
-// checkout (`scripts/portas.ts`, ADR 0010). Sem ela, dois worktrees disputam a
-// 63315 do Vitest. `STORIES_PORTA` escolhe outra.
-const porta = portaPedida('stories')
+// checkout (`scripts/ports.ts`, ADR 0010). Sem ela, dois worktrees disputam a
+// 63315 do Vitest. `STORIES_PORT` escolhe outra.
+const porta = requestedPort('stories')
 
 export default mergeConfig(
   doStorybook,

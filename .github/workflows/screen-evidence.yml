@@ -1,0 +1,46 @@
+# Screen evidence (docs/agents/evidencia-de-tela.md, ADR 0018). A PR that
+# changes a screen only goes green with before and after screenshots and
+# videos in the "## Screen" section of the description, or with "No screen
+# change" ticked.
+#
+# Kept out of `pr.yml` because it also runs when the description changes
+# (`edited`): adding the attachments turns the check green without a push,
+# and `pr.yml` would bring the whole e2e along on every edit. It also runs on
+# drafts, unlike the Festival: it takes seconds, and whoever opens the draft
+# already sees what will be missing.
+name: Evidência de tela
+
+'on':
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: screen-evidence-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  evidencia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Just the script: the description and the files come from the API.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Before and after screenshots and videos
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: node .github/scripts/screen-evidence.ts "$PR"

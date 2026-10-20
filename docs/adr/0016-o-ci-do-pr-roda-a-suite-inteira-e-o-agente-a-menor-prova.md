@@ -5,7 +5,7 @@ Até aqui, o agente rodava o `pnpm check`, o build e o e2e inteiros antes de cad
 ## Decisão
 
 - **O `pr.yml` é o portão, e roda a suíte inteira a cada push num PR**, em três jobs paralelos: `check` (`pnpm typecheck` e `pnpm check`), `stories` (o build do Storybook e `pnpm test:stories`) e `e2e` (o build com a conferência do sitemap e `pnpm e2e`). O `ci.yml` virou o `pr.yml`.
-- **Na máquina, o agente roda a menor prova do que mudou**: `node scripts/prova-minima.ts [--base <ramo>]`. Do diff contra o merge-base, ele roda os tipos dos pacotes afetados e do app que os importa, o Vitest com `--changed` em cada pasta afetada, as pastas do app e o `vp check` nos arquivos mudados. Um passo que falha não para os outros.
+- **Na máquina, o agente roda a menor prova do que mudou**: `node scripts/minimal-proof.ts [--base <ramo>]`. Do diff contra o merge-base, ele roda os tipos dos pacotes afetados e do app que os importa, o Vitest com `--changed` em cada pasta afetada, as pastas do app e o `vp check` nos arquivos mudados. Um passo que falha não para os outros.
 - **O trabalho acaba quando o CI fica verde no último commit do PR**, e não quando a rodada local passa. Um job vermelho se lê com `gh run view <id> --log-failed`.
 
 ## Consequências

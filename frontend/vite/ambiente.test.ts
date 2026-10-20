@@ -55,7 +55,7 @@ describe('lerAmbienteDoBuild', () => {
 
   it('uma raiz que não existe para o build antes de ler o acervo', () => {
     expect(() => lerAmbienteDoBuild({ CONTEUDO_RAIZ: 'e2e/acrevo' })).toThrow(
-      'CONTEUDO_RAIZ="e2e/acrevo": esperado uma pasta que existe',
+      'CONTEUDO_RAIZ="e2e/acrevo": expected an existing folder',
     )
   })
 
@@ -63,13 +63,13 @@ describe('lerAmbienteDoBuild', () => {
     expect(() =>
       lerAmbienteDoBuild({ SITEMAP_ANTERIOR: '/tmp/nao-existe.xml' }),
     ).toThrow(
-      'SITEMAP_ANTERIOR="/tmp/nao-existe.xml": esperado um arquivo que existe',
+      'SITEMAP_ANTERIOR="/tmp/nao-existe.xml": expected an existing file',
     )
   })
 
   it('a contagem em localhost só aceita 1 ou 0', () => {
     expect(() =>
       lerAmbienteDoBuild({ VITE_CONTAR_EM_LOCALHOST: 'true' }),
-    ).toThrow('VITE_CONTAR_EM_LOCALHOST="true": esperado 1 ou 0')
+    ).toThrow('VITE_CONTAR_EM_LOCALHOST="true": expected 1 or 0')
   })
 })

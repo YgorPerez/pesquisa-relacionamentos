@@ -4,9 +4,9 @@ O `packages/content` valida o frontmatter com o Schema do `effect@4.0.2`. A API 
 
 ## Decisão
 
-- **`node scripts/sincronizar-referencias.ts` clona o repositório do Effect em `.repos/effect-smol`**, na tag `effect@<versão>` do `catalog:` do `pnpm-workspace.yaml`: um clone raso de uma tag, uns 60 MB. Não faz nada se o clone já está nela, e clona de novo quando a versão muda.
+- **`node scripts/sync-references.ts` clona o repositório do Effect em `.repos/effect-smol`**, na tag `effect@<versão>` do `catalog:` do `pnpm-workspace.yaml`: um clone raso de uma tag, uns 60 MB. Não faz nada se o clone já está nela, e clona de novo quando a versão muda.
 - **`.repos/` fica no `.gitignore`**, fora do formato e do lint.
-- **O `scripts/preparar-worktree.ts` sincroniza a partir da cópia do principal** (`--de`), sem baixar do GitHub.
+- **O `scripts/prepare-worktree.ts` sincroniza a partir da cópia do principal** (`--from`), sem baixar do GitHub.
 - **Ler, nunca importar nem editar.** A entrada é `.repos/effect-smol/LLMS.md`; o fonte de um módulo está em `packages/effect/src/`. O `AGENTS.md` diz isso em "Código do Effect".
 
 ## Consequências
