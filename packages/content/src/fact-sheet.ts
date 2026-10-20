@@ -63,7 +63,7 @@ export type ParsedFactSheet =
   | { readonly ok: true; readonly factSheet: FactSheet }
   | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** Reads the text of an `estudos/<slug>.md` file. */
+/** Reads the text of a `studies/<slug>.md` file. */
 export function readFactSheet(file: string, text: string): ParsedFactSheet {
   const slug = file.replace(/^.*\//, '').replace(/\.md$/, '')
   const errors: Problem[] = []
@@ -173,35 +173,35 @@ export function readFactSheet(file: string, text: string): ParsedFactSheet {
 
   if (decoded?.ok) {
     const fm = decoded.value
-    if (fm.status !== 'nao-verificado') {
-      if (!fm.verificado_em)
+    if (fm.status !== 'unverified') {
+      if (!fm.verified_on)
         errors.push(
           problem(
             file,
-            'an ok or partial fact sheet needs the date it was checked',
-            'verificado_em',
+            'a verified or partial fact sheet needs the date it was checked',
+            'verified_on',
           ),
         )
     }
-    if (fm.status === 'ok') {
+    if (fm.status === 'verified') {
       findings.forEach((finding, i) => {
         if (!finding.excerpt)
           errors.push(
             problem(
               file,
-              `row ${i + 1} ("${finding.measure}") has no Trecho; an ok fact sheet quotes the original in every finding`,
+              `row ${i + 1} ("${finding.measure}") has no Trecho; a verified fact sheet quotes the original in every finding`,
               SECTIONS.findings,
             ),
           )
       })
     }
-    const ages = fm.cobre.idades
+    const ages = fm.covers.ages
     if (ages && ages.min > ages.max)
       errors.push(
         problem(
           file,
           `min (${ages.min}) is above max (${ages.max})`,
-          'cobre.idades',
+          'covers.ages',
         ),
       )
   }

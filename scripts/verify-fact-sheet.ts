@@ -3,10 +3,10 @@
 // reproduces the Valor. Runs only on the machine of whoever writes or reviews,
 // because the local source may sit in the private folder, outside git.
 //
-//   pnpm verify estudos/<slug>.md [more fact sheets] [--source <path>]
+//   pnpm verify studies/<slug>.md [more fact sheets] [--source <path>]
 //
-// Without `--source`, looks for `fontes/<slug>.<ext>` and then
-// `fontes/privado/<slug>.<ext>`, with ext pdf, html, txt or md. A pdf goes
+// Without `--source`, looks for `sources/<slug>.<ext>` and then
+// `sources/private/<slug>.<ext>`, with ext pdf, html, txt or md. A pdf goes
 // through `pdftotext` (poppler-utils); html loses its tags. Any failure exits
 // with code 1.
 
@@ -41,7 +41,7 @@ export interface Options {
 const EXTENSIONS = ['pdf', 'html', 'txt', 'md'] as const
 
 function findSource(root: string, slug: string): string | null {
-  for (const folder of ['fontes', 'fontes/privado']) {
+  for (const folder of ['sources', 'sources/private']) {
     for (const ext of EXTENSIONS) {
       const path = `${folder}/${slug}.${ext}`
       if (existsSync(join(root, path))) return path
@@ -129,7 +129,7 @@ export function verifyFactSheet(file: string, options: Options): Verification {
   const extensions = EXTENSIONS.join(',')
   if (!source)
     return whole(
-      `no local source: no fontes/${slug}.{${extensions}} nor fontes/privado/${slug}.{${extensions}}`,
+      `no local source: no sources/${slug}.{${extensions}} nor sources/private/${slug}.{${extensions}}`,
     )
   if (!existsSync(join(root, source)))
     return whole(`the local source ${source} does not exist`)
@@ -273,7 +273,7 @@ export interface Environment {
 }
 
 const USAGE =
-  'usage: node scripts/verify-fact-sheet.ts estudos/<slug>.md [more fact sheets] [--source <path>]'
+  'usage: node scripts/verify-fact-sheet.ts studies/<slug>.md [more fact sheets] [--source <path>]'
 
 /** The command line: returns the exit code, 1 on any failure. */
 export function main(

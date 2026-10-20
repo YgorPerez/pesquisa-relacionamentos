@@ -1,6 +1,0 @@
-# Fixture do e2e.
-ficha: silva-2020-apps-brasil
-variaveis: [degrau, medida, texto_simples, ficha, vies]
-baixado_em: 2026-10-19
-script: compilado à mão a partir das Fichas de cada célula
-versao: "fixture"

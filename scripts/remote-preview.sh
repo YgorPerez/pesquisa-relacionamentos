@@ -3,7 +3,7 @@
 # Quick Tunnel, no account), to open a prototype on a phone. See
 # docs/agents/preview-remoto.md.
 #
-#   scripts/remote-preview.sh [folder] [port]   # default: prototipos 8765; prints the link and exits
+#   scripts/remote-preview.sh [folder] [port]   # default: prototypes 8765; prints the link and exits
 #   scripts/remote-preview.sh stop              # takes down the server and the tunnel
 
 set -euo pipefail

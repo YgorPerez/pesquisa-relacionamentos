@@ -1,5 +1,0 @@
----
-referencia: <citação>
----
-
-# <modelo>

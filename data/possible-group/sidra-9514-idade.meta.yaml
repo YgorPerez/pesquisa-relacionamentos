@@ -1,0 +1,7 @@
+# Gerado por scripts/possible-group/pipeline.ts. Não edite à mão: rode `pnpm data:possible-group`.
+fact_sheet: ibge-2022-censo-amostra
+table: ["SIDRA 9514"]
+variables: ["93 População residente", "2 Sexo", "287 Idade (15 a 100 anos ou mais)"]
+downloaded_on: 2026-10-19
+script: scripts/possible-group/pipeline.ts
+version: "Censo 2022, universo"

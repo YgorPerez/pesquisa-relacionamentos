@@ -91,7 +91,7 @@ describe('planForDiff', () => {
   })
 
   it('the library runs Content and the build, which reads it', () => {
-    expect(planForDiff(['estudos/costa-2018.md'])).toMatchObject({
+    expect(planForDiff(['studies/costa-2018.md'])).toMatchObject({
       packages: ['packages/content'],
       build: true,
       specs: [],

@@ -32,7 +32,7 @@ const count = (n: number, one: string, many: string) =>
 
 function FactSheetsPage() {
   const { data: factSheets } = useSuspenseQuery(reads.factSheets())
-  const checked = factSheets.filter((f) => f.status !== 'nao-verificado').length
+  const checked = factSheets.filter((f) => f.status !== 'unverified').length
 
   return (
     <Sheet>

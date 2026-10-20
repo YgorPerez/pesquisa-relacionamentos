@@ -248,7 +248,7 @@ function SharePriorities({
     gender: gender ?? null,
     priorities: state,
   }
-  const names = Object.fromEntries(traits.map((c) => [c.id, c.nome]))
+  const names = Object.fromEntries(traits.map((c) => [c.id, c.name]))
   return (
     <Share
       query={linkQuery(link)}

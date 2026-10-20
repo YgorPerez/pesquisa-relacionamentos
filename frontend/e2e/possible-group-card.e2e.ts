@@ -1,5 +1,5 @@
 // The Possible group card in the B5 Guide (#32), over the fixture: the
-// `app-ou-presencial` Guide declares `calculadora: grupo-possivel`, and the
+// `app-ou-presencial` Guide declares `calculator: possible-group`, and the
 // data is only Acre's (the fixture's "Brazil").
 import { expect, test, type Page } from '@playwright/test'
 import { tap } from './touch'

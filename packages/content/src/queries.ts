@@ -16,7 +16,7 @@ export const topicBySlug = (
 export const tipBySlug = (library: Library, slug: string): Tip | undefined =>
   library.tips.find((d) => d.slug === slug)
 
-/** The topic's guides, in its `ordem`. */
+/** The topic's guides, in its `order`. */
 export const topicGuides = (
   library: Library,
   topic: string,
@@ -26,7 +26,7 @@ export const topicGuides = (
 export const guidesWithTip = (
   library: Library,
   tip: string,
-): ReadonlyArray<Guide> => library.guides.filter((g) => g.dicas.includes(tip))
+): ReadonlyArray<Guide> => library.guides.filter((g) => g.tips.includes(tip))
 
 /** Only a tip whose fact sheets are all ✅ or 🟡 goes to the site. */
 export const isTipPublished = (tip: Pick<Tip, 'published'>): boolean =>

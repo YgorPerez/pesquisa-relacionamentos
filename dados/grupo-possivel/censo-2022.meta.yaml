@@ -1,8 +1,0 @@
-# Gerado por scripts/possible-group/pipeline.ts. Não edite à mão: rode `pnpm data:possible-group`.
-ficha: ibge-2022-censo-amostra
-tabela: ["Microdados da amostra, acesso público, arquivo de pessoas"]
-variaveis: ["P0020", "P0110", "P0150", "P0180", "P0210", "P0280", "P0340", "P0410", "P0760", "P1110"]
-baixado_em: 2026-10-19
-script: scripts/possible-group/pipeline.ts
-versao: "Todas_as_UFs.zip publicado em 2026-09-14"
-conferencia: "Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: maior diferença de 1,84% no Brasil (tolerância 2,50%) e de 2,49 pontos na proporção sem união nas UFs (tolerância 3,00). Fora do CSV: 19216 registros com sexo ou idade suprimidos."

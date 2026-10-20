@@ -3,17 +3,18 @@
 import type { Strength, VerificationStatus } from '@tem-estudo/content'
 import type { ReactNode } from 'react'
 import { cn } from '@/platform/cn'
+import { STRENGTH_WORD } from './badges.copy'
 
 const STATUS_WORD: Record<VerificationStatus, string> = {
-  ok: 'lido no original',
-  parcial: 'parcial',
-  'nao-verificado': 'não verificado',
+  verified: 'lido no original',
+  partial: 'parcial',
+  unverified: 'não verificado',
 }
 
 const STEPS_BY_STRENGTH: Record<Strength, number> = {
-  fraca: 1,
-  moderada: 2,
-  forte: 3,
+  weak: 1,
+  moderate: 2,
+  strong: 3,
 }
 
 /** A box with a check (read), a hatched box (partial), an empty box
@@ -33,14 +34,14 @@ function StatusIcon({ status }: { status: VerificationStatus }) {
       aria-hidden="true"
     >
       <path d="M3 3.5h14v13H3z" transform="rotate(-1 10 10)" />
-      {status === 'ok' && (
+      {status === 'verified' && (
         <path
           d="M6 10.5l3 3 6-8"
           className="stroke-agua-tinta"
           strokeWidth="2.4"
         />
       )}
-      {status === 'parcial' && (
+      {status === 'partial' && (
         <path
           d="M4.5 16L16 4.5M4 10.5L10.5 4M9.5 16L16 9.5"
           strokeWidth="1.4"
@@ -121,10 +122,12 @@ export function StrengthBadge({
   return (
     <span
       className="inline-flex items-center gap-1.5 font-label text-label"
-      data-forca={strength}
+      data-strength={strength}
     >
       <Steps level={strength} />
-      {withLabel ? `evidência ${strength}` : strength}
+      {withLabel
+        ? `evidência ${STRENGTH_WORD[strength]}`
+        : STRENGTH_WORD[strength]}
     </span>
   )
 }
@@ -135,7 +138,7 @@ export function FactSheetLegend() {
     <dl className="m-0 text-nota text-tinta-2">
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <VerificationStatusBadge status="ok" />
+          <VerificationStatusBadge status="verified" />
         </dt>
         <dd className="m-0">
           os números foram conferidos no texto completo do estudo.
@@ -143,7 +146,7 @@ export function FactSheetLegend() {
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <VerificationStatusBadge status="parcial" />
+          <VerificationStatusBadge status="partial" />
         </dt>
         <dd className="m-0">
           conferido no resumo ou na página oficial, não no texto completo.
@@ -151,7 +154,7 @@ export function FactSheetLegend() {
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <VerificationStatusBadge status="nao-verificado" />
+          <VerificationStatusBadge status="unverified" />
         </dt>
         <dd className="m-0">
           ainda não conferido na fonte. Não sustenta nenhum Guia.
@@ -159,7 +162,7 @@ export function FactSheetLegend() {
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <StrengthBadge strength="forte" />
+          <StrengthBadge strength="strong" />
         </dt>
         <dd className="m-0">
           amostra grande e representativa, replicado ou meta-análise.
@@ -167,7 +170,7 @@ export function FactSheetLegend() {
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <StrengthBadge strength="moderada" />
+          <StrengthBadge strength="moderate" />
         </dt>
         <dd className="m-0">
           bom desenho, mas uma amostra só, um retrato num momento ou um viés
@@ -176,7 +179,7 @@ export function FactSheetLegend() {
       </div>
       <div className="grid gap-0.5 py-2">
         <dt className="text-tinta">
-          <StrengthBadge strength="fraca" />
+          <StrengthBadge strength="weak" />
         </dt>
         <dd className="m-0">
           amostra pequena, não representativa, comercial ou com conflito de

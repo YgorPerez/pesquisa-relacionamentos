@@ -13,7 +13,7 @@ import {
   VerificationStatusBadge,
   FactSheetMeta,
 } from '#/ui/badges'
-import { DESIGN_NAME } from '#/ui/badges.copy'
+import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
 
 export const Route = createFileRoute('/estudos/$slug')({
   // The `loaderData` carries only what the `head` uses; the Fact sheet goes
@@ -74,7 +74,7 @@ function useFactSheet() {
 
 function FactSheetPage() {
   const factSheet = useFactSheet()
-  const unverified = factSheet.status === 'nao-verificado'
+  const unverified = factSheet.status === 'unverified'
 
   return (
     <Sheet>
@@ -148,10 +148,10 @@ function FactSheetData() {
       </DataRow>
       <DataRow title="Verificação">
         {factSheet.verifiedOn
-          ? `${factSheet.status === 'ok' ? 'Lido no original' : 'Conferido em parte'} em ${formatDate(factSheet.verifiedOn)}.`
+          ? `${factSheet.status === 'verified' ? 'Lido no original' : 'Conferido em parte'} em ${formatDate(factSheet.verifiedOn)}.`
           : 'Ainda não conferida na fonte.'}
       </DataRow>
-      <DataRow title={`Por que ${factSheet.strength}`}>
+      <DataRow title={`Por que ${STRENGTH_WORD[factSheet.strength]}`}>
         {factSheet.strengthReason}
       </DataRow>
       <DataRow title="Amostra">

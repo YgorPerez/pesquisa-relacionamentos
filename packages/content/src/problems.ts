@@ -2,9 +2,9 @@
 import { Result, Schema, SchemaIssue } from 'effect'
 
 export interface Problem {
-  /** Path relative to the repository root, like `estudos/joel-2020.md`. */
+  /** Path relative to the repository root, like `studies/joel-2020.md`. */
   readonly file: string
-  /** The frontmatter field (`cobre.generos.0`) or the body section. */
+  /** The frontmatter field (`covers.genders.0`) or the body section. */
   readonly field?: string
   /** The whole sentence, already with file and field, ready for the terminal. */
   readonly message: string

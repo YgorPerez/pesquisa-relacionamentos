@@ -14,8 +14,8 @@ import {
 const fixture = (name: string) =>
   fileURLToPath(new URL(`../fixtures/${name}`, import.meta.url))
 const factSheet = (slug: string): ContentFile => ({
-  path: `estudos/${slug}.md`,
-  text: readFileSync(`${fixture('valid')}/estudos/${slug}.md`, 'utf8'),
+  path: `studies/${slug}.md`,
+  text: readFileSync(`${fixture('valid')}/studies/${slug}.md`, 'utf8'),
 })
 // silva-2020 is ✅, costa-2018 is 🟡, lima-2015 is ⬜.
 const FACT_SHEETS = [
@@ -24,35 +24,35 @@ const FACT_SHEETS = [
   factSheet('lima-2015-encontros'),
 ]
 
-const FILE = 'dados/prioridades/prioridades.yaml'
+const FILE = 'data/priorities/priorities.yaml'
 const META: ContentFile = {
-  path: 'dados/prioridades/prioridades.meta.yaml',
-  text: `ficha: silva-2020-apps-brasil
-variaveis: [degrau, medida, texto_simples, ficha, vies]
-baixado_em: 2026-10-19
+  path: 'data/priorities/priorities.meta.yaml',
+  text: `fact_sheet: silva-2020-apps-brasil
+variables: [level, measure, plain_text, fact_sheet, bias]
+downloaded_on: 2026-10-19
 script: compilado à mão a partir das Fichas de cada célula
-versao: "1"
+version: "1"
 `,
 }
 
-const PRIORITIES = `satisfacao_explicada:
-  ficha: silva-2020-apps-brasil
-  relacao: 45
-  parceiro: 5
-  sem_explicacao: 50
-caracteristicas:
+const PRIORITIES = `explained_satisfaction:
+  fact_sheet: silva-2020-apps-brasil
+  relationship: 45
+  partner: 5
+  unexplained: 50
+traits:
   - id: aparencia
-    nome: Aparência
-    atracao: { degrau: 3, medida: "r ≈ 0,40", texto_simples: Quem é mais bonito atrai mais., ficha: silva-2020-apps-brasil }
-    satisfacao: { degrau: 2, texto_simples: "Só um pouco, e só no começo.", ficha: costa-2018-satisfacao }
-    duracao: { degrau: 0, texto_simples: Nenhum estudo lido mede isso. }
-    vies: { todos: As pessoas dão menos peso à aparência quando dizem o que querem. }
+    name: Aparência
+    attraction: { level: 3, measure: "r ≈ 0,40", plain_text: Quem é mais bonito atrai mais., fact_sheet: silva-2020-apps-brasil }
+    satisfaction: { level: 2, plain_text: "Só um pouco, e só no começo.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 0, plain_text: Nenhum estudo lido mede isso. }
+    bias: { all: As pessoas dão menos peso à aparência quando dizem o que querem. }
   - id: renda
-    nome: Renda
-    atracao: { degrau: 2, texto_simples: Pesa pouco na atração., ficha: silva-2020-apps-brasil }
-    satisfacao: { degrau: 0, texto_simples: Nenhum estudo lido mede isso. }
-    duracao: { degrau: 1, texto_simples: Quase nada., ficha: costa-2018-satisfacao }
-    vies: { homem: Homens dão menos peso., mulher: Mulheres dão mais peso. }
+    name: Renda
+    attraction: { level: 2, plain_text: Pesa pouco na atração., fact_sheet: silva-2020-apps-brasil }
+    satisfaction: { level: 0, plain_text: Nenhum estudo lido mede isso. }
+    duration: { level: 1, plain_text: Quase nada., fact_sheet: costa-2018-satisfacao }
+    bias: { man: Homens dão menos peso., woman: Mulheres dão mais peso. }
 `
 
 const filesWith = (text: string, ...others: ContentFile[]): ContentFile[] => [
@@ -76,32 +76,32 @@ describe('priorities file', () => {
   it("reads the traits with each outcome's level and the satisfaction bar", () => {
     const priorities = prioritiesOf(buildLibrary(filesWith(PRIORITIES)))
     expect(priorities?.file).toBe(FILE)
-    expect(priorities?.satisfacao_explicada).toEqual({
-      ficha: 'silva-2020-apps-brasil',
-      relacao: 45,
-      parceiro: 5,
-      sem_explicacao: 50,
+    expect(priorities?.explained_satisfaction).toEqual({
+      fact_sheet: 'silva-2020-apps-brasil',
+      relationship: 45,
+      partner: 5,
+      unexplained: 50,
     })
     expect(
-      priorities?.caracteristicas.map((c) => [
+      priorities?.traits.map((c) => [
         c.id,
-        c.atracao.degrau,
-        c.satisfacao.degrau,
-        c.duracao.degrau,
+        c.attraction.level,
+        c.satisfaction.level,
+        c.duration.level,
       ]),
     ).toEqual([
       ['aparencia', 3, 2, 0],
       ['renda', 2, 0, 1],
     ])
-    expect(priorities?.caracteristicas[0]?.atracao).toEqual({
-      degrau: 3,
-      medida: 'r ≈ 0,40',
-      texto_simples: 'Quem é mais bonito atrai mais.',
-      ficha: 'silva-2020-apps-brasil',
+    expect(priorities?.traits[0]?.attraction).toEqual({
+      level: 3,
+      measure: 'r ≈ 0,40',
+      plain_text: 'Quem é mais bonito atrai mais.',
+      fact_sheet: 'silva-2020-apps-brasil',
     })
-    expect(priorities?.caracteristicas[1]?.vies).toEqual({
-      homem: 'Homens dão menos peso.',
-      mulher: 'Mulheres dão mais peso.',
+    expect(priorities?.traits[1]?.bias).toEqual({
+      man: 'Homens dão menos peso.',
+      woman: 'Mulheres dão mais peso.',
     })
   })
 
@@ -109,7 +109,7 @@ describe('priorities file', () => {
     const result = buildLibrary(filesWith(PRIORITIES))
     if (!result.ok) throw new Error(formatProblems(result.errors))
     expect(result.library.data.map((d) => d.file)).toEqual([
-      'dados/prioridades/prioridades.meta.yaml',
+      'data/priorities/priorities.meta.yaml',
     ])
   })
 
@@ -121,65 +121,65 @@ describe('priorities file', () => {
     expect(
       errors(buildLibrary([...FACT_SHEETS, { path: FILE, text: PRIORITIES }])),
     ).toEqual([
-      `${FILE}: missing the prioridades.meta.yaml next to it, with the fact sheet, the variables, the date, the script and the version`,
+      `${FILE}: missing the priorities.meta.yaml next to it, with the fact sheet, the variables, the date, the script and the version`,
     ])
   })
 
   it('fails when a cell cites a ⬜ or missing fact sheet', () => {
     const text = PRIORITIES.replace(
-      'ficha: costa-2018-satisfacao }\n    duracao: { degrau: 0',
-      'ficha: lima-2015-encontros }\n    duracao: { degrau: 0',
+      'fact_sheet: costa-2018-satisfacao }\n    duration: { level: 0',
+      'fact_sheet: lima-2015-encontros }\n    duration: { level: 0',
     ).replace(
-      'Pesa pouco na atração., ficha: silva-2020-apps-brasil',
-      'Pesa pouco na atração., ficha: sumida-2000',
+      'Pesa pouco na atração., fact_sheet: silva-2020-apps-brasil',
+      'Pesa pouco na atração., fact_sheet: sumida-2000',
     )
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
-      `${FILE}: caracteristicas.0.satisfacao.ficha: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
-      `${FILE}: caracteristicas.1.atracao.ficha: the fact sheet estudos/sumida-2000.md does not exist`,
+      `${FILE}: traits.0.satisfaction.fact_sheet: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
+      `${FILE}: traits.1.attraction.fact_sheet: the fact sheet studies/sumida-2000.md does not exist`,
     ])
   })
 
   it('fails when the satisfaction bar cites a ⬜ fact sheet', () => {
     const text = PRIORITIES.replace(
-      '  ficha: silva-2020-apps-brasil\n  relacao',
-      '  ficha: lima-2015-encontros\n  relacao',
+      '  fact_sheet: silva-2020-apps-brasil\n  relationship',
+      '  fact_sheet: lima-2015-encontros\n  relationship',
     )
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
-      `${FILE}: satisfacao_explicada.ficha: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
+      `${FILE}: explained_satisfaction.fact_sheet: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
     ])
   })
 
   it('fails when a level above "não sabemos" does not name the fact sheet', () => {
     const text = PRIORITIES.replace(
-      'Pesa pouco na atração., ficha: silva-2020-apps-brasil',
+      'Pesa pouco na atração., fact_sheet: silva-2020-apps-brasil',
       'Pesa pouco na atração.',
     )
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
-      `${FILE}: caracteristicas.1.atracao.ficha: level 2 needs the fact sheet that backs it; without a fact sheet, only 0 ("não sabemos")`,
+      `${FILE}: traits.1.attraction.fact_sheet: level 2 needs the fact sheet that backs it; without a fact sheet, only 0 ("não sabemos")`,
     ])
   })
 
   it('fails with a level outside 0 to 3, a repeated id and a bar that does not add up to 100', () => {
-    const text = PRIORITIES.replace('degrau: 3, medida', 'degrau: 4, medida')
+    const text = PRIORITIES.replace('level: 3, measure', 'level: 4, measure')
       .replace('id: renda', 'id: aparencia')
-      .replace('parceiro: 5', 'parceiro: 6')
+      .replace('partner: 5', 'partner: 6')
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
-      `${FILE}: caracteristicas.0.atracao.degrau: value outside the closed list (0 | 1 | 2 | 3) (got 4)`,
+      `${FILE}: traits.0.attraction.level: value outside the closed list (0 | 1 | 2 | 3) (got 4)`,
     ])
     const validLevels = PRIORITIES.replace(
       'id: renda',
       'id: aparencia',
-    ).replace('parceiro: 5', 'parceiro: 6')
+    ).replace('partner: 5', 'partner: 6')
     expect(errors(buildLibrary(filesWith(validLevels)))).toEqual([
-      `${FILE}: satisfacao_explicada: relacao, parceiro and sem_explicacao add up to 101%, not 100%`,
-      `${FILE}: caracteristicas.1.id: the trait "aparencia" appears more than once`,
+      `${FILE}: explained_satisfaction: relationship, partner and unexplained add up to 101%, not 100%`,
+      `${FILE}: traits.1.id: the trait "aparencia" appears more than once`,
     ])
   })
 
   it('fails with an unknown field and a bias with no gender at all', () => {
-    const text = PRIORITIES.replace('vies: { todos:', 'vies: { todas:')
+    const text = PRIORITIES.replace('bias: { all:', 'bias: { todas:')
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
-      `${FILE}: caracteristicas.0.vies.todas: unknown field`,
+      `${FILE}: traits.0.bias.todas: unknown field`,
     ])
   })
 })
@@ -189,18 +189,18 @@ describe("the repository's priorities draft", () => {
 
   it('stays out of the build while the fact sheets it cites are ⬜ (#39)', () => {
     const paths = readFiles(root).map((a) => a.path)
-    expect(paths.filter((c) => c.startsWith('dados/prioridades/'))).toEqual([])
+    expect(paths.filter((c) => c.startsWith('data/priorities/'))).toEqual([])
   })
 
   it('only fails for citing ⬜ fact sheets: with the fact sheets checked, it publishes', () => {
     const draft = (name: string): ContentFile => ({
-      path: `dados/prioridades/${name}`,
-      text: readFileSync(`${root}/dados/prioridades/_${name}`, 'utf8'),
+      path: `data/priorities/${name}`,
+      text: readFileSync(`${root}/data/priorities/_${name}`, 'utf8'),
     })
     const result = buildLibrary([
       ...readFiles(root),
-      draft('prioridades.yaml'),
-      draft('prioridades.meta.yaml'),
+      draft('priorities.yaml'),
+      draft('priorities.meta.yaml'),
     ])
     const problems = result.ok ? [] : result.errors.map((e) => e.message)
     expect(problems.length).toBeGreaterThan(0)
@@ -210,25 +210,23 @@ describe("the repository's priorities draft", () => {
 
     // With the cited fact sheets marked as checked, the same draft passes.
     const checked = readFiles(root).map((a) =>
-      a.path.startsWith('estudos/')
+      a.path.startsWith('studies/')
         ? {
             ...a,
             text: a.text.replace(
-              /^status: nao-verificado$/m,
-              'status: parcial\nverificado_em: 2026-10-19',
+              /^status: unverified$/m,
+              'status: partial\nverified_on: 2026-10-19',
             ),
           }
         : a,
     )
     const published = buildLibrary([
       ...checked,
-      draft('prioridades.yaml'),
-      draft('prioridades.meta.yaml'),
+      draft('priorities.yaml'),
+      draft('priorities.meta.yaml'),
     ])
     if (!published.ok) throw new Error(formatProblems(published.errors))
-    expect(
-      published.library.priorities?.caracteristicas.map((c) => c.id),
-    ).toEqual([
+    expect(published.library.priorities?.traits.map((c) => c.id)).toEqual([
       'aparencia',
       'sexo',
       'renda',

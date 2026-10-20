@@ -66,7 +66,7 @@ describe('changesScreen', () => {
       'frontend/e2e/profile.e2e.ts',
       'frontend/scripts/capture.ts',
       'packages/rules/src/possible-group.ts',
-      'estudos/algum-estudo.md',
+      'studies/algum-estudo.md',
     ])
       expect({ path, screen: changesScreen(path) }).toEqual({
         path,

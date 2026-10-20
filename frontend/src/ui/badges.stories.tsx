@@ -22,8 +22,8 @@ export const Legend: Story = {}
 export const InTheFactSheetRow: Story = {
   render: () => (
     <FactSheetMeta>
-      <VerificationStatusBadge status="parcial" />
-      <StrengthBadge strength="moderada" />
+      <VerificationStatusBadge status="partial" />
+      <StrengthBadge strength="moderate" />
       <span className="text-tinta-2">EUA · 2017 · n = 5.421</span>
     </FactSheetMeta>
   ),

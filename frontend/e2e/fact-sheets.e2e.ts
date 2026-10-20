@@ -33,21 +33,21 @@ test.describe('/estudos', () => {
     await expect(silva).toContainText('lido no original')
     await expect(silva).toContainText('forte')
     await expect(silva).toContainText('Brasil · 2019 · n = 2.400')
-    await expect(silva.locator('[data-status="ok"] svg')).toBeVisible()
+    await expect(silva.locator('[data-status="verified"] svg')).toBeVisible()
     await expect(
-      silva.locator('[data-forca="forte"] svg path[fill="currentColor"]'),
+      silva.locator('[data-strength="strong"] svg path[fill="currentColor"]'),
     ).toHaveCount(3)
 
     const costa = items.nth(1)
     await expect(costa).toContainText('parcial')
     await expect(
-      costa.locator('[data-forca="moderada"] svg path[fill="currentColor"]'),
+      costa.locator('[data-strength="moderate"] svg path[fill="currentColor"]'),
     ).toHaveCount(2)
 
     const lima = items.nth(2)
     await expect(lima).toContainText('não verificado')
     await expect(
-      lima.locator('[data-forca="fraca"] svg path[fill="currentColor"]'),
+      lima.locator('[data-strength="weak"] svg path[fill="currentColor"]'),
     ).toHaveCount(1)
 
     await noSideScroll(page)

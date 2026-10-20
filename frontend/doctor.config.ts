@@ -17,7 +17,7 @@ export default defineConfig({
         // `Html` is the only place in the app that injects HTML, and it only
         // accepts the `SafeHtml` type, which no string becomes without going
         // through the filter: what the server built with `marked` from the
-        // library's Markdown (`estudos/`, `dicas/`, the Guides). The input is
+        // library's Markdown (`studies/`, `tips/`, the Guides). The input is
         // sanitized in `src/content/safe-html.ts`, which `html` and
         // `inlineHtml` from `src/content/view.ts` go through: a closed list of
         // tags and attributes, `href` only http(s), an anchor or a relative

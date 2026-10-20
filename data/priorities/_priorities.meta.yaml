@@ -1,0 +1,7 @@
+# Rascunho, como o _priorities.yaml ao lado: sai do `_` no #39.
+# A Ficha principal é a da barra da satisfação; cada célula cita a sua.
+fact_sheet: joel-2020-machine-learning-43-datasets
+variables: [level, measure, plain_text, fact_sheet, bias]
+downloaded_on: 2026-10-18
+script: compilado à mão a partir das Fichas de cada célula (pesquisa do #3, protótipo do #9)
+version: "rascunho 1, antes da conferência das Fichas"

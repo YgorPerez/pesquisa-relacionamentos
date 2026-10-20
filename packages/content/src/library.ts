@@ -2,7 +2,7 @@
 // or the build's list of errors. Reading the disk lives in `readFiles`; the
 // rest (`buildLibrary`) is a pure function over texts, and it is the one that
 // applies the rules across files (repeated DOI, references, confidence, the
-// topics' `ordem`, the fact sheet cited by the data, `antes` and the last
+// topics' `order`, the fact sheet cited by the data, `previous` and the last
 // published sitemap).
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -34,7 +34,7 @@ import {
   beforeErrors,
 } from './search-rules.ts'
 
-/** A content file, with its path relative to the root (`estudos/x.md`). */
+/** A content file, with its path relative to the root (`studies/x.md`). */
 export interface ContentFile {
   readonly path: string
   readonly text: string
@@ -51,11 +51,11 @@ export interface Library {
   readonly factSheets: ReadonlyArray<FactSheet>
   /** The topics in slug order. */
   readonly topics: ReadonlyArray<Topic>
-  /** The guides topic by topic, in each one's `ordem`. */
+  /** The guides topic by topic, in each one's `order`. */
   readonly guides: ReadonlyArray<Guide>
   /** Every tip in slug order, published or not (`published`). */
   readonly tips: ReadonlyArray<Tip>
-  /** The `.meta.yaml` files of `dados/`, in path order. */
+  /** The `.meta.yaml` files of `data/`, in path order. */
   readonly data: ReadonlyArray<DataOrigin>
   /** The priorities file, or `null` while it does not exist. */
   readonly priorities: Priorities | null
@@ -73,16 +73,16 @@ export type LoadResult =
       readonly warnings: ReadonlyArray<Problem>
     }
 
-/** The folders the package reads (the content contract, still in Portuguese).
- * A file starting with `_` is a template or folder metadata and does not
- * become an item; the `_tema.md` of each guide folder is the topic. */
-const FACT_SHEETS_FOLDER = 'estudos'
-const TIPS_FOLDER = 'dicas'
-const GUIDES_FOLDER = 'guias'
-const TOPIC_FILE = '_tema.md'
+/** The folders the package reads (the content contract). A file starting
+ * with `_` is a template or folder metadata and does not become an item; the
+ * `_topic.md` of each guide folder is the topic. */
+const FACT_SHEETS_FOLDER = 'studies'
+const TIPS_FOLDER = 'tips'
+const GUIDES_FOLDER = 'guides'
+const TOPIC_FILE = '_topic.md'
 /** The calculators' data. Only the `.meta.yaml` files come in: the CSVs are
  * large and the calculator is the one that reads them. */
-const DATA_FOLDER = 'dados'
+const DATA_FOLDER = 'data'
 const META_SUFFIX = '.meta.yaml'
 
 const isItem = (name: string) => name.endsWith('.md') && !name.startsWith('_')
@@ -140,7 +140,7 @@ function readMetas(root: string): ContentFile[] {
     readdirSync(data, { recursive: true, encoding: 'utf8' })
       .map((c) => c.split('\\').join('/'))
       // A file or folder starting with `_` is a draft and stays out of the
-      // build, like `dicas/_sem-ficha.md`.
+      // build, like `tips/_sem-ficha.md`.
       .filter(
         (c) =>
           c.endsWith(META_SUFFIX) &&
@@ -156,7 +156,7 @@ function readMetas(root: string): ContentFile[] {
 
 export interface LoadOptions {
   /** The `sitemap.xml` that is live. With it, the build fails if a published
-   * path disappeared without being in some file's `antes`. */
+   * path disappeared without being in some file's `previous`. */
   readonly previousSitemap?: string
 }
 
@@ -284,25 +284,25 @@ function readMeta(
   if (!decoded.ok) return { ok: false, errors: decoded.problems }
   const meta = decoded.value
   const errors: Problem[] = []
-  if (!meta.tabela?.length && !meta.variaveis?.length)
+  if (!meta.table?.length && !meta.variables?.length)
     errors.push(
       problem(path, 'say the table or the variables the data came from'),
     )
-  const factSheet = factSheetBySlug({ factSheets }, meta.ficha)
+  const factSheet = factSheetBySlug({ factSheets }, meta.fact_sheet)
   if (!factSheet)
     errors.push(
       problem(
         path,
-        `the fact sheet ${FACT_SHEETS_FOLDER}/${meta.ficha}.md does not exist`,
-        'ficha',
+        `the fact sheet ${FACT_SHEETS_FOLDER}/${meta.fact_sheet}.md does not exist`,
+        'fact_sheet',
       ),
     )
-  else if (factSheet.status === 'nao-verificado')
+  else if (factSheet.status === 'unverified')
     errors.push(
       problem(
         path,
-        `${meta.ficha} is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
-        'ficha',
+        `${meta.fact_sheet} is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
+        'fact_sheet',
       ),
     )
   return errors.length > 0

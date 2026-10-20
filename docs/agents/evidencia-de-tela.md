@@ -10,7 +10,7 @@ Nenhum check compara telas, então quem revisa só vê uma tela que mudou se o P
 GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/screen-evidence.ts <pr>
 ```
 
-Arquivo de tela é todo arquivo em `frontend/src/` ou `frontend/public/`, menos testes, stories, `.d.ts`, `.md`, `platform/`, `analytics/`, `server.ts`, `*.server.ts` e o `routeTree.gen.ts`. O acervo (`estudos/`, `dicas/`) não conta: a Ficha tem a revisão dela.
+Arquivo de tela é todo arquivo em `frontend/src/` ou `frontend/public/`, menos testes, stories, `.d.ts`, `.md`, `platform/`, `analytics/`, `server.ts`, `*.server.ts` e o `routeTree.gen.ts`. O acervo (`studies/`, `tips/`) não conta: a Ficha tem a revisão dela.
 
 Quando um deles muda, a seção `## Screen` precisa de pelo menos duas imagens diferentes e dois vídeos diferentes. O script lê a descrição como o GitHub a mostra (`body_html`), porque o markdown não diz o que é um anexo: o mesmo `https://github.com/user-attachments/assets/<uuid>` vira um player se é vídeo e um link se é imagem. Uma imagem conta quando vira `<img>`, um vídeo quando vira `<video>`, e o mesmo arquivo duas vezes conta uma.
 

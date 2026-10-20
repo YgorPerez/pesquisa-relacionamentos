@@ -26,14 +26,14 @@ describe('failureSummary', () => {
       sha: 'abc1234',
       jobs: JOBS,
       url: 'https://github.com/x/y/actions/runs/1',
-      log: 'line 1\n  1 failed\n    e2e/perfil.e2e.ts:72:1 › o perfil',
+      log: 'line 1\n  1 failed\n    e2e/profile.e2e.ts:72:1 › the profile',
     })
     expect(body).toMatch(/on `main` at abc1234/)
     expect(body).toMatch(/- `e2e`: failure/)
     expect(body).toMatch(/- `stories`: cancelled/)
     expect(body).not.toMatch(/`check`/)
     expect(body).toMatch(/actions\/runs\/1/)
-    expect(body).toMatch(/perfil\.e2e\.ts:72:1/)
+    expect(body).toMatch(/profile\.e2e\.ts:72:1/)
   })
 
   it('cuts a long log from the start, and keeps the end', () => {

@@ -1,0 +1,6 @@
+# Fixture: a origem de um arquivo de dados, citando uma Ficha ✅.
+fact_sheet: silva-2020-apps-brasil
+table: ["SIDRA 9514"]
+downloaded_on: 2026-10-19
+script: scripts/possible-group/pipeline.ts
+version: "Censo 2022, universo"

@@ -1,5 +1,5 @@
 // Priorities vs. evidence (#33), over the fixture content
-// (`e2e/library/dados/prioridades`): the real draft's levels, with the
+// (`e2e/library/data/priorities`): the real draft's levels, with the
 // fixture's Fact sheets. In satisfaction: "pesa" has sexual chemistry; "quase
 // nada", being alike; "não sabemos", income, education, religion and age.
 import { expect, test, type Page } from '@playwright/test'

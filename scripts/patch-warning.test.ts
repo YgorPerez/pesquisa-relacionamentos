@@ -7,11 +7,11 @@ import { patchWarning, scriptWrites } from './patch-warning.ts'
 describe('scriptWrites', () => {
   it('finds Python that opens a repository file for writing', () => {
     const command = `python3 - <<'EOF'
-p='estudos/a.md'
+p='studies/a.md'
 s=open(p).read()
 open(p,'w').write(s)
 EOF`
-    assert.deepEqual(scriptWrites(command), ['estudos/a.md'])
+    assert.deepEqual(scriptWrites(command), ['studies/a.md'])
   })
 
   it('a variable with no known value shows up by name', () => {
@@ -22,8 +22,8 @@ EOF`
   })
 
   it('finds sed -i on a file', () => {
-    assert.deepEqual(scriptWrites("sed -i 's/a/b/' estudos/joel.md"), [
-      'estudos/joel.md',
+    assert.deepEqual(scriptWrites("sed -i 's/a/b/' studies/joel.md"), [
+      'studies/joel.md',
     ])
     assert.deepEqual(scriptWrites('sed -i s/a/b/ README.md'), ['README.md'])
     assert.deepEqual(

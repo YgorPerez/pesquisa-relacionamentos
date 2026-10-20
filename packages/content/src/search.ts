@@ -1,10 +1,11 @@
 // What goes to search engines and what keeps links alive (#15): each page's
-// title and description, sitemap, robots and the 301s from `antes`. Only
+// title and description, sitemap, robots and the 301s from `previous`. Only
 // outside types and the lists: the app server imports from here without
 // pulling `node:fs` or Effect. The rules that become build errors or warnings
 // live in `search-rules.ts`.
 import type { Library } from './library.ts'
 import {
+  calculatorPath,
   tipPath,
   factSheetPath,
   guidePath,
@@ -49,41 +50,41 @@ export function truncate(
 }
 
 const withSeo = (
-  seo: { titulo?: string; descricao?: string } | undefined,
+  seo: { title?: string; description?: string } | undefined,
   derived: SearchMeta,
 ): SearchMeta => ({
-  title: seo?.titulo ?? derived.title,
-  description: seo?.descricao ?? derived.description,
+  title: seo?.title ?? derived.title,
+  description: seo?.description ?? derived.description,
 })
 
 /** Guide: the question and the short answer. */
 export const guideSearch = (
-  guide: Pick<Guide, 'pergunta' | 'shortAnswer' | 'seo'>,
+  guide: Pick<Guide, 'question' | 'shortAnswer' | 'seo'>,
 ): SearchMeta =>
   withSeo(guide.seo, {
-    title: plainText(guide.pergunta),
+    title: plainText(guide.question),
     description: truncate(plainText(guide.shortAnswer)),
   })
 
 /** Topic: the title and the context paragraph. */
 export const topicSearch = (
-  topic: Pick<Topic, 'titulo' | 'context' | 'seo'>,
+  topic: Pick<Topic, 'title' | 'context' | 'seo'>,
 ): SearchMeta =>
   withSeo(topic.seo, {
-    title: plainText(topic.titulo),
+    title: plainText(topic.title),
     description: truncate(plainText(topic.context)),
   })
 
 /** Fact sheet: "Author year: topic" and the first finding. */
 export function factSheetSearch(
-  factSheet: Pick<FactSheet, 'title' | 'findings' | 'referencia' | 'seo'>,
+  factSheet: Pick<FactSheet, 'title' | 'findings' | 'reference' | 'seo'>,
 ): SearchMeta {
   const first = factSheet.findings[0]
   return withSeo(factSheet.seo, {
     title: plainText(factSheet.title.replace(/\s*\((\d{4}[a-z]?)\)/, ' $1')),
     description: truncate(
       plainText(
-        first ? `${first.measure}: ${first.value}.` : factSheet.referencia,
+        first ? `${first.measure}: ${first.value}.` : factSheet.reference,
       ),
     ),
   })
@@ -108,7 +109,7 @@ export function sitemapPaths(library: Library): string[] {
     ...library.tips.filter((d) => d.published).map(tipPath),
     '/estudos',
     ...library.factSheets.filter(isFactSheetIndexable).map(factSheetPath),
-    ...CALCULATORS.map((c) => `/${c}`),
+    ...CALCULATORS.map(calculatorPath),
   ]
 }
 
@@ -134,35 +135,35 @@ export function sitemapXml(library: Library): string {
 export const robotsTxt = (): string =>
   `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`
 
-/** An old path declared in a file's `antes`. */
+/** An old path declared in a file's `previous`. */
 export interface OldPath {
   readonly old: string
   readonly current: string
   readonly file: string
 }
 
-/** Each file's old paths, in library order. The `antes` of a fact sheet, a tip
+/** Each file's old paths, in library order. The `previous` of a fact sheet, a tip
  * and a topic lists slugs; a guide's lists slugs in the same topic or
  * `topic/slug` when the guide changed topic. A renamed topic takes its guides
  * along, with each one's old slugs. */
 export function oldPaths(library: Library): OldPath[] {
   const list: OldPath[] = []
   for (const factSheet of library.factSheets)
-    for (const slug of factSheet.antes ?? [])
+    for (const slug of factSheet.previous ?? [])
       list.push({
         old: `/estudos/${slug}`,
         current: factSheetPath(factSheet),
         file: factSheet.file,
       })
   for (const tip of library.tips)
-    for (const slug of tip.antes ?? [])
+    for (const slug of tip.previous ?? [])
       list.push({
         old: `/dicas/${slug}`,
         current: tipPath(tip),
         file: tip.file,
       })
   for (const topic of library.topics)
-    for (const slug of topic.antes ?? [])
+    for (const slug of topic.previous ?? [])
       list.push({
         old: `/${slug}`,
         current: topicPath(topic),
@@ -170,10 +171,10 @@ export function oldPaths(library: Library): OldPath[] {
       })
   for (const guide of library.guides) {
     const current = guidePath(guide)
-    const before = guide.antes ?? []
+    const before = guide.previous ?? []
     const topics = [
       guide.topic,
-      ...(library.topics.find((t) => t.slug === guide.topic)?.antes ?? []),
+      ...(library.topics.find((t) => t.slug === guide.topic)?.previous ?? []),
     ]
     const slugs = [guide.slug, ...before.filter((a) => !a.includes('/'))]
     for (const slug of slugs)

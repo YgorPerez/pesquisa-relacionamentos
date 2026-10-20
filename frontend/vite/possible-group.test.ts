@@ -1,4 +1,4 @@
-// The real data (`dados/grupo-possivel/`) through the packs the browser
+// The real data (`data/possible-group/`) through the packs the browser
 // downloads, against the case checked by hand in #36.
 import { resolve } from 'node:path'
 import { openPack, type PackPlace } from '@tem-estudo/rules/possible-group-data'
@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vite-plus/test'
 import { buildPacks } from './possible-group.ts'
 
 const built = buildPacks(
-  resolve(import.meta.dirname, '../../dados/grupo-possivel'),
+  resolve(import.meta.dirname, '../../data/possible-group'),
 )
 const open = (place: PackPlace) => openPack(JSON.parse(built.packs.get(place)!))
 const brazil = open('BR')

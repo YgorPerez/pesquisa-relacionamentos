@@ -4,17 +4,23 @@
 // para o seu Perfil." goes.
 import { isProfileEmpty, type Profile } from './profile.ts'
 
+/** The side someone seeking both may have data for, in the profile's
+ * values. */
 type Side = 'homens' | 'mulheres'
 
-/** What the sample covered, in the shape of a fact sheet's `cobre` and of the
- * findings' and tips' `vale_para`. A missing key means the study did not
- * split by it. */
+/** What the sample covered, in the shape of a fact sheet's `covers` and of
+ * the findings' and tips' `applies_to`. A missing key means the study did not
+ * split by it. The values are the content's, in English; the profile's stay
+ * in Portuguese because the link carries them. */
 export interface Coverage {
-  readonly generos?: ReadonlyArray<'homem' | 'mulher'>
-  readonly procura?: ReadonlyArray<Side>
-  readonly idades?: { readonly min: number; readonly max: number }
-  readonly casal?: 'hetero' | 'mesmo-sexo'
+  readonly genders?: ReadonlyArray<'man' | 'woman'>
+  readonly seeks?: ReadonlyArray<'men' | 'women'>
+  readonly ages?: { readonly min: number; readonly max: number }
+  readonly couple?: 'different-sex' | 'same-sex'
 }
+
+const COVERAGE_GENDER = { homem: 'man', mulher: 'woman' } as const
+const COVERAGE_SIDE = { homens: 'men', mulheres: 'women' } as const
 
 /** `null`: without a profile, there is nothing to decide. `only`: someone
  * seeking both, and only one side has data (the badge says which). */
@@ -22,7 +28,7 @@ export type Verdict =
   | { readonly covered: false }
   | { readonly covered: true; readonly only?: Side }
 
-/** The profile's sides this `cobre` includes; empty if it does not include
+/** The profile's sides this `covers` includes; empty if it does not include
  * the profile. */
 function coveredSides(
   profile: Profile,
@@ -31,17 +37,17 @@ function coveredSides(
   const { gender, seeks, age } = profile
   if (
     age !== undefined &&
-    coverage.idades &&
-    (age < coverage.idades.min || age > coverage.idades.max)
+    coverage.ages &&
+    (age < coverage.ages.min || age > coverage.ages.max)
   )
     return []
   // "outro" only matches what did not split by gender; the couple's pair
   // splits too.
-  if (gender === 'outro' && (coverage.generos || coverage.casal)) return []
+  if (gender === 'outro' && (coverage.genders || coverage.couple)) return []
   if (
     (gender === 'homem' || gender === 'mulher') &&
-    coverage.generos &&
-    !coverage.generos.includes(gender)
+    coverage.genders &&
+    !coverage.genders.includes(COVERAGE_GENDER[gender])
   )
     return []
 
@@ -53,17 +59,18 @@ function coveredSides(
         : [seeks]
   return sides.filter((side) => {
     if (side === undefined) return true
-    if (coverage.procura && !coverage.procura.includes(side)) return false
-    if (coverage.casal && (gender === 'homem' || gender === 'mulher')) {
+    if (coverage.seeks && !coverage.seeks.includes(COVERAGE_SIDE[side]))
+      return false
+    if (coverage.couple && (gender === 'homem' || gender === 'mulher')) {
       const sameSex = (gender === 'homem') === (side === 'homens')
-      return sameSex === (coverage.casal === 'mesmo-sexo')
+      return sameSex === (coverage.couple === 'same-sex')
     }
     return true
   })
 }
 
-/** Whether a finding or tip applies to the profile: one of the `cobre` (one
- * per cited fact sheet, or the scope's `vale_para`) covering it is enough. */
+/** Whether a finding or tip applies to the profile: one of the `covers` (one
+ * per cited fact sheet, or the scope's `applies_to`) covering it is enough. */
 export function appliesToYou(
   profile: Profile | null,
   coverages: ReadonlyArray<Coverage>,

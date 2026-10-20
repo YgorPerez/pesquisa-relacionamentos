@@ -9,49 +9,49 @@ import {
   type TraitWithEvidence,
 } from './priorities.ts'
 
-const cell = (n: 0 | 1 | 2 | 3) => ({ degrau: n })
+const cell = (n: 0 | 1 | 2 | 3) => ({ level: n })
 
 /** Five traits with sample levels, as in the priorities file. */
 const TRAITS: ReadonlyArray<TraitWithEvidence> = [
   {
     id: 'aparencia',
-    nome: 'Aparência',
-    atracao: cell(3),
-    satisfacao: cell(2),
-    duracao: cell(0),
-    vies: { todos: 'Pesa mais na atração do que se diz.' },
+    name: 'Aparência',
+    attraction: cell(3),
+    satisfaction: cell(2),
+    duration: cell(0),
+    bias: { all: 'Pesa mais na atração do que se diz.' },
   },
   {
     id: 'renda',
-    nome: 'Renda',
-    atracao: cell(2),
-    satisfacao: cell(0),
-    duracao: cell(0),
-    vies: {
-      homem: 'Homens declaram menos.',
-      mulher: 'Mulheres declaram mais.',
+    name: 'Renda',
+    attraction: cell(2),
+    satisfaction: cell(0),
+    duration: cell(0),
+    bias: {
+      man: 'Homens declaram menos.',
+      woman: 'Mulheres declaram mais.',
     },
   },
   {
     id: 'parecido',
-    nome: 'Ser parecido comigo',
-    atracao: cell(1),
-    satisfacao: cell(1),
-    duracao: cell(0),
+    name: 'Ser parecido comigo',
+    attraction: cell(1),
+    satisfaction: cell(1),
+    duration: cell(0),
   },
   {
     id: 'gentileza',
-    nome: 'Gentileza',
-    atracao: cell(0),
-    satisfacao: cell(2),
-    duracao: cell(1),
+    name: 'Gentileza',
+    attraction: cell(0),
+    satisfaction: cell(2),
+    duration: cell(1),
   },
   {
     id: 'idade',
-    nome: 'Idade parecida',
-    atracao: cell(0),
-    satisfacao: cell(0),
-    duracao: cell(1),
+    name: 'Idade parecida',
+    attraction: cell(0),
+    satisfaction: cell(0),
+    duration: cell(1),
   },
 ]
 

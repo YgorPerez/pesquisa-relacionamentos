@@ -1,37 +1,38 @@
 // The content's closed lists (#10, #5, #16), with no dependency at all: the
 // browser imports from here without pulling Effect along. The values are the
-// content contract and stay in Portuguese until #70.
+// content contract, in English since #70.
 
 /** Verification status: ✅ read in the original, 🟡 partial, ⬜ unverified. */
 export const VERIFICATION_STATUSES = [
-  'ok',
-  'parcial',
-  'nao-verificado',
+  'verified',
+  'partial',
+  'unverified',
 ] as const
 export type VerificationStatus = (typeof VERIFICATION_STATUSES)[number]
 
 /** Strength of the evidence of a fact sheet and a tip, and a guide's
  * confidence. */
-export const STRENGTHS = ['forte', 'moderada', 'fraca'] as const
+export const STRENGTHS = ['strong', 'moderate', 'weak'] as const
 export type Strength = (typeof STRENGTHS)[number]
 
 export const DESIGNS = [
   'longitudinal',
-  'transversal',
-  'experimento',
-  'plataforma',
-  'administrativo',
-  'meta-analise',
+  'cross-sectional',
+  'experiment',
+  'platform',
+  'administrative',
+  'meta-analysis',
 ] as const
 export type Design = (typeof DESIGNS)[number]
 
-/** What a study covers. `outro` and `ambos` exist only in the profile (#5). */
-export const GENDERS = ['homem', 'mulher'] as const
-export const SEEKS = ['homens', 'mulheres'] as const
-export const COUPLES = ['hetero', 'mesmo-sexo'] as const
+/** What a study covers. The profile's `outro` and `ambos` have no match
+ * here (#5). */
+export const GENDERS = ['man', 'woman'] as const
+export const SEEKS = ['men', 'women'] as const
+export const COUPLES = ['different-sex', 'same-sex'] as const
 
 /** The calculators a guide can host. */
-export const CALCULATORS = ['grupo-possivel', 'prioridades'] as const
+export const CALCULATORS = ['possible-group', 'priorities'] as const
 export type Calculator = (typeof CALCULATORS)[number]
 
 /** The app's fixed paths, which no topic can use as its slug (#15). They are

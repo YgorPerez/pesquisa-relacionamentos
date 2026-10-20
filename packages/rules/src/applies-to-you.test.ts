@@ -3,22 +3,22 @@ import type { Profile } from './profile.ts'
 import { appliesToYou, type Coverage, type Verdict } from './applies-to-you.ts'
 
 const HETERO: Coverage = {
-  generos: ['homem', 'mulher'],
-  procura: ['homens', 'mulheres'],
-  casal: 'hetero',
+  genders: ['man', 'woman'],
+  seeks: ['men', 'women'],
+  couple: 'different-sex',
 }
 const SAME_SEX: Coverage = {
-  generos: ['homem', 'mulher'],
-  procura: ['homens', 'mulheres'],
-  casal: 'mesmo-sexo',
+  genders: ['man', 'woman'],
+  seeks: ['men', 'women'],
+  couple: 'same-sex',
 }
 const UNSCOPED: Coverage = {}
 const YOUNG: Coverage = {
-  generos: ['homem', 'mulher'],
-  idades: { min: 18, max: 35 },
+  genders: ['man', 'woman'],
+  ages: { min: 18, max: 35 },
 }
-const ONLY_HUSBANDS: Coverage = { generos: ['homem'], procura: ['mulheres'] }
-const ONLY_SEEKING_MEN: Coverage = { procura: ['homens'] }
+const ONLY_HUSBANDS: Coverage = { genders: ['man'], seeks: ['women'] }
+const ONLY_SEEKING_MEN: Coverage = { seeks: ['men'] }
 
 const manMen: Profile = { gender: 'homem', seeks: 'homens', age: 30 }
 const manWomen: Profile = {

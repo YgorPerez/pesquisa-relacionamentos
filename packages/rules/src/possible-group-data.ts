@@ -223,7 +223,7 @@ function readPns(text: string): Pns {
   )
 }
 
-/** The files of `dados/grupo-possivel/`, as text. */
+/** The files of `data/possible-group/`, as text. */
 export interface GroupFiles {
   /** `censo-2022.csv` */
   readonly census: string

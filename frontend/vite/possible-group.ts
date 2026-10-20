@@ -42,7 +42,7 @@ export interface BuiltData {
   readonly example: Estimate
 }
 
-/** Reads `dados/grupo-possivel/` and builds the packs. */
+/** Reads `data/possible-group/` and builds the packs. */
 export function buildPacks(folder: string): BuiltData {
   const texts = Object.fromEntries(
     Object.entries(FILES).map(([key, name]) => [
@@ -75,7 +75,7 @@ export function buildPacks(folder: string): BuiltData {
 
 /** `raiz` is the library's root, already validated (`vite/environment.ts`). */
 export function possibleGroup({ root }: { root: string }): Plugin {
-  const folder = resolve(root, 'dados', 'grupo-possivel')
+  const folder = resolve(root, 'data', 'possible-group')
   let built: BuiltData | undefined
   const data = () => (built ??= buildPacks(folder))
 

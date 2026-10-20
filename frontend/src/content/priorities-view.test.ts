@@ -13,20 +13,20 @@ describe('vistaDasPrioridades', () => {
   it('brings each cell with the Fact sheet summarized: short name, Status, Strength and sample', () => {
     const view = buildPrioritiesView(library)
     const looks = view?.traits.find((c) => c.id === 'aparencia')
-    expect(looks?.satisfacao).toEqual({
-      degrau: 2,
+    expect(looks?.satisfaction).toEqual({
+      level: 2,
       measure: 'r = 0,10, só maridos',
       text: 'Só os maridos ficam um pouco mais satisfeitos, e só no começo.',
       factSheet: {
         slug: 'costa-2018-satisfacao',
         name: 'Costa (2018)',
-        status: 'parcial',
-        strength: 'moderada',
+        status: 'partial',
+        strength: 'moderate',
         sample: 'Casais casados recrutados online.',
       },
     })
-    expect(looks?.duracao).toEqual({
-      degrau: 0,
+    expect(looks?.duration).toEqual({
+      level: 0,
       measure: null,
       text: 'Nenhum estudo lido mede isso.',
       factSheet: null,
@@ -45,7 +45,7 @@ describe('vistaDasPrioridades', () => {
       topic: 'escolher-parceiro',
       slug: 'que-caracteristicas-preveem',
       question: 'Que características do parceiro preveem uma boa relação?',
-      confidence: 'moderada',
+      confidence: 'moderate',
       answer:
         'Como vocês se tratam pesa mais que a lista de qualidades do parceiro.',
     })
