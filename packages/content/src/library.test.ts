@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
@@ -338,14 +338,21 @@ version: "arquivo de 2026-09-14"
 })
 
 describe("the repository's library", () => {
-  it('loads the fact sheets: the 30 old ones unverified until they are redone (#6), the IBGE ones checked (#36)', () => {
+  // Acervo PRs add and redo fact sheets every week, so this checks that each
+  // one in studies/ loads, not which ones exist.
+  it('loads every fact sheet in studies/, the IBGE ones checked (#36)', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
+    const files = readdirSync(`${root}/studies`).filter(
+      (name) => name.endsWith('.md') && !name.startsWith('_'),
+    )
     const checked = library.factSheets
       .filter((f) => f.status !== 'unverified')
       .map((f) => f.slug)
-    expect(checked).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
-    expect(library.factSheets).toHaveLength(32)
+    expect(library.factSheets).toHaveLength(files.length)
+    expect(checked).toEqual(
+      expect.arrayContaining(['ibge-2019-pns', 'ibge-2022-censo-amostra']),
+    )
   })
 
   it('the possible group data cites the Census and PNS fact sheets', () => {
