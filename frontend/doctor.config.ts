@@ -1,7 +1,9 @@
 // As exceções do React Doctor, cada uma presa aos arquivos listados e com o
 // motivo, como no Festival dos Macacos (ADR 0005). Um arquivo novo que caia
 // numa destas regras falha o gate como qualquer outro. Uma exceção nova
-// espera uma pessoa ler (ADR 0036 do Festival).
+// espera uma pessoa ler, como uma supressão (ADR 0017 daqui, que veio da
+// ADR-0036 do Festival:
+// https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0036-a-new-suppression-waits-for-a-person.md).
 
 import { defineConfig } from 'react-doctor/api'
 
