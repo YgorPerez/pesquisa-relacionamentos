@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -13,6 +14,9 @@ import { manifestoSemPreload } from './vite/manifesto-sem-preload.ts'
 // A rodada entra na fila da máquina antes de começar e leva os workers que
 // ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
 const workers = await workersDoVitest()
+
+/** O conteúdo de fixture do e2e, que os testes de tela leem. */
+const FIXTURE = fileURLToPath(new URL('e2e/acervo', import.meta.url))
 
 // O Vitest só precisa do React: o Start e o nitro montam o servidor, que
 // teste de unidade nenhum usa. O app inteiro é testado pelo Playwright,
@@ -51,14 +55,59 @@ export default defineConfig(({ mode }) => ({
   plugins: process.env.VITEST ? [viteReact()] : doApp(mode),
   test: {
     ...(workers ? { maxWorkers: workers } : {}),
-    include: [
-      'src/**/*.test.ts',
-      'nginx/**/*.test.ts',
-      'scripts/**/*.test.ts',
-      'vite/**/*.test.ts',
-      'lint/**/*.test.ts',
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'logica',
+          include: [
+            'src/**/*.test.ts',
+            'nginx/**/*.test.ts',
+            'scripts/**/*.test.ts',
+            'vite/**/*.test.ts',
+            'lint/**/*.test.ts',
+          ],
+          environment: 'node',
+        },
+      },
+      {
+        // As telas no jsdom, com a Testing Library (ADR 0035): o router de
+        // verdade, sobre o acervo e os dados de fixture do e2e
+        // (`e2e/acervo`). As server functions rodam no próprio teste
+        // (`src/platform/telas/servidor-no-teste.ts`), e os pacotes do Grupo
+        // possível chegam pelo MSW (`src/platform/telas/rede.ts`).
+        extends: true,
+        plugins: [
+          acervo({ raiz: FIXTURE, anterior: undefined }),
+          grupoPossivel({ raiz: FIXTURE }),
+        ],
+        resolve: {
+          alias: [
+            {
+              find: /^@tanstack\/react-start$/,
+              replacement: fileURLToPath(
+                new URL(
+                  'src/platform/telas/servidor-no-teste.ts',
+                  import.meta.url,
+                ),
+              ),
+            },
+          ],
+        },
+        test: {
+          name: 'telas',
+          include: ['src/**/*.test.tsx'],
+          // As stories rodam num Chrome (`vitest.stories.config.ts`).
+          exclude: ['src/**/*.navegador.test.tsx'],
+          environment: 'jsdom',
+          setupFiles: ['./src/platform/telas/telas.ts'],
+          // Em localhost, a contagem não sai (`analytics/contagem.ts`).
+          environmentOptions: { jsdom: { url: 'http://localhost/' } },
+          // A primeira tela de um arquivo compila as rotas dentro do teste.
+          testTimeout: 30_000,
+        },
+      },
     ],
-    environment: 'node',
     // A cobertura serve à `fallow health` (o formato `json`) e tem um piso
     // (ADR 0005): o de quando ele entrou, que sobe com ela e nunca desce. É
     // baixo porque as telas são testadas pelo e2e e pelas stories, que não

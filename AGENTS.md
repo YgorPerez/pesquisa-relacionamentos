@@ -38,10 +38,10 @@ O app fica em `frontend/`, os pacotes puros em `packages/` (`conteudo`, que lê 
 - `conteudo/`: as server functions que leem o acervo e montam a vista de cada página.
 - `estado/`: o que fica no navegador (`localStorage`, link recebido).
 - `analytics/`: a contagem do GoatCounter.
-- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook).
+- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook, o apoio dos testes de tela em `platform/telas/`).
 - `fontes/`: os arquivos de fonte.
 
-O teste mora ao lado do que testa. `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
+O teste mora ao lado do que testa: o de uma tela é um `*.test.tsx` ao lado da peça dela em `ui/`, no jsdom (ADR 0035), e toda peça de `ui/` tem story (ADR 0036). `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
 
 ## Toda superfície
 

@@ -19,9 +19,13 @@ const avisar = () => {
   avisos.forEach((aviso) => aviso())
 }
 
-/** Pede o pacote do lugar, se ele ainda não chegou nem está a caminho. */
-export function pedirPacote(lugar: LugarDoPacote) {
+/** Pede o pacote do lugar, se ele ainda não chegou nem está a caminho. O que
+ * falhou só se pede `deNovo` (o "Tentar de novo" da página): a página pede a
+ * cada render, e sem rede cada falha pedia outra vez, sem parar, e o aviso
+ * da falha piscava. */
+export function pedirPacote(lugar: LugarDoPacote, deNovo = false) {
   if (abertos.has(lugar) || pedidos.has(lugar)) return
+  if (falhas.has(lugar) && !deNovo) return
   falhas.delete(lugar)
   const pedido = fetch(`${grupoPossivel.base}/${lugar}.json`)
     .then((resposta) => {

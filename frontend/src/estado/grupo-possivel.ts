@@ -100,7 +100,7 @@ export function useGrupoPossivel(
     estimativa,
     carregando: !deExemplo && !calculada,
     falhou: doBrasil.falhou || daUfPedida.falhou,
-    tentar: () => precisa.forEach(pedirPacote),
+    tentar: () => precisa.forEach((lugar) => pedirPacote(lugar, true)),
     uf: daUf,
   }
 }

@@ -16,6 +16,9 @@
     // O React Doctor acha o `doctor.config.ts` pelo nome, na raiz do projeto
     // que ele varre. Nenhum import aponta para ele.
     "doctor.config.ts",
+    // O `@tanstack/react-start` dos testes de tela: o projeto `telas` do
+    // `vite.config.ts` aponta para ele por alias, e nenhum import (ADR 0035).
+    "src/platform/telas/servidor-no-teste.ts",
   ],
   "duplicates": {
     "ignore": [
