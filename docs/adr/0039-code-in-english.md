@@ -1,25 +1,35 @@
-# O código é em inglês; o que sai do código fica em PT-BR
+# Code, ADRs, issues and commits are in English; what the visitor sees stays in PT-BR
 
-O repositório nasceu todo em português, do nome dos arquivos às chaves do frontmatter. Em 20/10/2026 o usuário decidiu que o código passa para o inglês (#65).
+The repository started out entirely in Portuguese, from file names to frontmatter keys. On 2026-10-20 the user decided that the code moves to English (#65), and so do ADRs, issues, pull requests and commit messages.
 
-## Decisão
+## Decision
 
-Vão para o inglês os nomes de arquivo e de pasta, os identificadores, os comentários, as mensagens de CLI, de build e de log, os nomes dos pacotes e dos comandos do `package.json`, as pastas de conteúdo (`studies/`, `tips/`, `data/`, `sources/`, `reports/`, `prototypes/`), as chaves do frontmatter e os valores das listas fechadas. Cada termo do domínio tem um nome em inglês, escrito no `GLOSSARY.md`, e todo identificador usa esse nome.
+These are in English:
 
-Ficam em PT-BR:
+- file and folder names, identifiers, comments, and CLI, build and log messages;
+- package names and `package.json` commands;
+- the content folders (`studies/`, `tips/`, `data/`, `sources/`, `reports/`, `prototypes/`), frontmatter keys and the values of closed lists;
+- `localStorage` keys, migrated from the old keys so a saved Profile survives;
+- analytics event names;
+- ADRs, issues, pull requests and commit messages.
 
-- as URLs públicas: os caminhos fixos (`/estudos`, `/dicas`, `/prioridades`, `/grupo-possivel`, `/privacidade`) e os slugs de Tema, Guia, Ficha e Dica, que são os nomes dos arquivos de conteúdo. Por isso os arquivos de `frontend/src/routes/` mantêm os segmentos em português;
-- os parâmetros e os valores da query do link (ADR 0001);
-- as chaves do `localStorage` e o formato do que já está salvo;
-- os nomes dos eventos do analytics;
-- o texto da interface e a prosa do conteúdo;
-- a prosa dos docs, das issues, dos PRs e dos commits.
+Each domain term has an English name, written in `GLOSSARY.md`, and every identifier uses that name.
 
-## Por quê
+These stay in PT-BR:
 
-O que fica em português é o que alguém de fora já guardou ou viu: um link compartilhado, um Perfil salvo no navegador, a série de um evento, a URL que um buscador indexou. Traduzir isso quebra o que está no ar sem ganho para quem lê o código. Todo o resto é lido só por quem mantém o repositório.
+- public URLs: the fixed paths (`/estudos`, `/dicas`, `/prioridades`, `/grupo-possivel`, `/privacidade`) and the Topic, Guide, Fact sheet and Tip slugs, which are the content file names. That is why the files in `frontend/src/routes/` keep their Portuguese segments;
+- the parameters and values of the shared-link query (ADR 0001);
+- interface copy and the prose of the content (Fact sheets, Tips, reports);
+- `GLOSSARY.md`, `AGENTS.md` and `docs/agents/`, whose prose is the domain vocabulary and the house rules.
 
-## Consequências
+## Why
 
-- Código novo nasce em inglês. Um nome do domínio que não está no glossário entra lá antes de virar identificador.
-- Quem lê a URL ou o link e procura o código passa pelo glossário: `/grupo-possivel` é a rota de `possible-group`.
+The site is for Brazilian visitors, so what they see or share stays in their language: a URL a search engine indexed, a link someone sent a friend, the copy on the page. Everything else is read only by whoever maintains the repository.
+
+`localStorage` and analytics changed despite being stored outside the code: the key migration keeps saved data, and analytics only keeps 31 days, so the break in the event series is short.
+
+## Consequences
+
+- New code, ADRs, issues and commits are written in English. A domain name missing from the glossary goes there before it becomes an identifier.
+- Someone reading a URL or a link and looking for the code goes through the glossary: `/grupo-possivel` is the `possible-group` route.
+- Git history keeps its Portuguese commit messages; they are not rewritten.
