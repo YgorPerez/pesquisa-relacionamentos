@@ -1,8 +1,8 @@
-# Os ícones e o manifesto saem da marca por script
+# Icons and manifest come from the brand by script
 
-Como no Festival dos Macacos (`frontend/scripts/brand-icons.ts`), os ícones do site são desenhados por script, a partir da marca, e não à mão num editor. `node frontend/scripts/brand-icons.ts` desenha no Chrome o "?" do título em Bricolage sobre o marca-texto amarelo, no papel, e grava em `frontend/public/` o `favicon-32.png`, o `icone-180.png` (o iPhone, que não lê o manifesto), os de 192 e 512px e o `manifest.webmanifest`. As cores, os tamanhos e o manifesto vêm de `src/ui/marca.ts`, que o `marca.test.ts` confere contra o DESIGN.md e contra o que está em `public/`. O `<head>` liga os três (`__root.tsx`), e a `theme-color` também lê de `marca.ts`.
+As in the Festival dos Macacos (`frontend/scripts/brand-icons.ts`), the site's icons are drawn by a script from the brand, not by hand in an editor. `node frontend/scripts/brand-icons.ts` draws in Chrome the "?" of the title in Bricolage over the yellow highlighter, on the paper, and writes to `frontend/public/` the `favicon-32.png`, the `icone-180.png` (for the iPhone, which does not read the manifest), the 192 and 512px ones and the `manifest.webmanifest`. The colors, sizes and manifest come from `src/ui/brand.ts`, which `brand.test.ts` checks against DESIGN.md and against what is in `public/`. The `<head>` links all three (`__root.tsx`), and the `theme-color` also reads from `brand.ts`.
 
-## Consequências
+## Consequences
 
-- O manifesto não faz do site um app: `display: browser`, sem service worker (a spec #23 deixa o PWA de fora).
-- Mudou a marca, rode o script de novo; o teste falha se o manifesto gravado não for o de `marca.ts`.
+- The manifest does not make the site an app: `display: browser`, no service worker (spec #23 leaves the PWA out).
+- If the brand changes, run the script again; the test fails if the written manifest is not the one from `brand.ts`.

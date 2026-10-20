@@ -1,13 +1,13 @@
-# A interface é Tailwind, com os tokens do DESIGN.md como tema
+# The interface is Tailwind, with the DESIGN.md tokens as the theme
 
-Como no Festival dos Macacos, o site se veste com as classes do Tailwind v4 no próprio componente, e não com um `.css` por peça. O tema é o cabeçalho YAML do `DESIGN.md`: `frontend/src/ui/tokens.css` é um `@theme static` com `--color-papel`, `--radius-mao`, `--spacing-md`, `--font-label` e `--text-label` (com entrelinha, peso e espaçamento do tipo), e o `tokens.test.ts` confere cada um. As escalas do Tailwind que o DESIGN.md não tem (as cores, as fontes, os tamanhos de letra) saem com `initial`, e `bg-red-500` não existe aqui.
+As in Festival dos Macacos, the site is styled with Tailwind v4 classes on the component itself, not with one `.css` file per piece. The theme is the YAML header of `DESIGN.md`: `frontend/src/ui/tokens.css` is an `@theme static` with `--color-papel`, `--radius-mao`, `--spacing-md`, `--font-label` and `--text-label` (with the type's line height, weight and letter spacing), and `tokens.test.ts` checks each one. The Tailwind scales that DESIGN.md does not have (colors, fonts, font sizes) are dropped with `initial`, and `bg-red-500` does not exist here.
 
-Diferente do Festival, o Tailwind entra sem o preflight. Ele zera as margens, as listas e os títulos do navegador, e a base do site sempre foi a do navegador com os retoques de `styles.css`; com ele, toda página mudava. Por isso a borda de um lado só usa `fio-pontilhado` e `fio-tracejado`: o `border-dotted` põe o estilo nos quatro lados, e sem o preflight o lado sem largura ganharia a largura `medium` do navegador.
+Unlike the Festival, Tailwind comes in without the preflight. The preflight resets the browser's margins, lists and headings, and the site's base has always been the browser's, with the touch-ups in `styles.css`; with it, every page would change. That is why a border on one side only uses `fio-pontilhado` and `fio-tracejado`: `border-dotted` puts the style on all four sides, and without the preflight the side with no width would get the browser's `medium` width.
 
-O que o Tailwind não cobre fica em `ui/desenhos.css`, com o motivo de cada bloco: os desenhos à mão em SVG (a retícula, a régua, o marca-texto, o anel da referência, o risco do Mito), o HTML que sai do Markdown do acervo, que não tem `className` (`.prosa`, `.ref`, `.nw`, `.numero-chave`, `.marca-texto`, a lista fechada de `conteudo/html-seguro.ts`), e a animação do laço da Ficha.
+What Tailwind does not cover lives in `ui/drawings.css`, with the reason for each block: the hand-drawn SVG drawings (the halftone, the ruler, the highlighter, the reference ring, the Myth's strike), the HTML that comes out of the library's Markdown, which has no `className` (`.prosa`, `.ref`, `.nw`, `.numero-chave`, `.marca-texto`, the closed list in `content/safe-html.ts`), and the animation of the loop around the Fact sheet.
 
-## Consequências
+## Consequences
 
-- O `hover:` do Tailwind só vale onde há mouse; o site redefine a variante para valer no toque também, como o CSS de antes.
-- O foco (`:focus-visible`) fica na camada das utilidades, depois delas: ganha de uma classe do mesmo peso e perde para `focus:outline-none`, como antes.
-- A migração não mudou o visual: as capturas de antes e depois das páginas no celular e no desktop batem pixel a pixel, salvo 7 pixels de um pontilhado no Grupo possível depois de mexer nos Requisitos, a 3 níveis de cor de diferença.
+- Tailwind's `hover:` only applies where there is a mouse; the site redefines the variant so it applies on touch too, as the CSS did before.
+- Focus (`:focus-visible`) sits in the utilities layer, after them: it beats a class of the same weight and loses to `focus:outline-none`, as before.
+- The migration did not change the look: the before and after captures of the pages on mobile and desktop match pixel for pixel, except for 7 pixels of a dotted line in the Possible group after changing the Requirements, 3 color levels apart.

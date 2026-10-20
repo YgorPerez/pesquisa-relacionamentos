@@ -1,18 +1,18 @@
-# Uma tela se testa no jsdom, e o e2e guarda as jornadas
+# Screens are tested in jsdom, and e2e guards the journeys
 
-O front tinha duas camadas de teste: as contas puras no Node e o Playwright sobre o build, no celular e no desktop. Tudo o que uma tela faz com um toque (a calculadora que muda o número, o Perfil que marca os achados) só se provava no e2e, que builda o site antes de começar. O Festival dos Macacos (ADR-0045 dele, `docs/adr/0045-a-screen-is-tested-in-jsdom-against-the-contract-and-e2e-keeps-the-journeys.md`) achou que a maior parte dos testes de e2e era isso: uma tela, dado o que chega a ela.
+The frontend had two test layers: the pure calculations in Node and Playwright over the build, on mobile and desktop. Everything a screen does on a tap (the calculator that changes the number, the Profile that marks the findings) could only be proven in e2e, which builds the site before it starts. The Festival dos Macacos (its ADR-0045, `docs/adr/0045-a-screen-is-tested-in-jsdom-against-the-contract-and-e2e-keeps-the-journeys.md`) found that most of its e2e tests were exactly that: one screen, given what reaches it.
 
-## Decisão
+## Decision
 
-- **O comportamento de uma tela se testa no jsdom, com a Testing Library.** O arquivo é `*.test.tsx`, ao lado da peça de `src/ui/` da tela (`routes/` só tem rotas). O `vite.config.ts` do front divide o Vitest em dois projetos: `logic` (`*.test.ts`, no Node) e `screens` (`*.test.tsx`, no jsdom, com `src/platform/screens/setup.ts`). O teste usa o `user-event` e acha as coisas por papel e rótulo.
-- **A rota abre no router de verdade** (`abrirTela(url)`, `src/platform/screens/open-screen.tsx`), com o `queryClient` dela: o loader, o `notFound` e o estado salvo no aparelho rodam como no navegador. A raiz desenha só o `<body>` (topo, página, rodapé); o `<head>` é do e2e.
-- **As server functions rodam no próprio teste.** No jsdom não há servidor nem o plugin do Start, então o `@tanstack/react-start` vira `src/platform/screens/test-server.ts`: o `handler` roda depois do `validator`, sobre o acervo e os dados de fixture do e2e (`e2e/library`), e a resposta passa por um `structuredClone`. Aqui não há uma API com contrato, como no Festival; o contrato é o tipo de cada server function, que o teste lê do módulo de verdade.
-- **A rede é o MSW** (`src/platform/screens/network.ts`). O único `fetch` das telas, o dos pacotes do Grupo possível, sai dos dados de fixture, montados pelo `montarPacotes` do build. `semRede()` derruba o pedido. Um pedido sem resposta escrita falha o teste.
-- **Um erro ou aviso no console falha o teste**, como nas stories.
-- **O e2e guarda o que precisa do site inteiro:** o HTML do servidor e a hidratação, o `<head>` e o Open Graph, o layout (o número preso no topo, 44 px de toque), o teclado de verdade e a área de transferência.
+- **A screen's behavior is tested in jsdom, with Testing Library.** The file is `*.test.tsx`, next to the screen's piece in `src/ui/` (`routes/` only has routes). The frontend's `vite.config.ts` splits Vitest into two projects: `logic` (`*.test.ts`, in Node) and `screens` (`*.test.tsx`, in jsdom, with `src/platform/screens/setup.ts`). The test uses `user-event` and finds things by role and label.
+- **The route opens in the real router** (`openScreen(url)`, `src/platform/screens/open-screen.tsx`), with its `queryClient`: the loader, `notFound` and the state saved on the device run as in the browser. The root renders only the `<body>` (header, page, footer); the `<head>` belongs to e2e.
+- **Server functions run inside the test itself.** In jsdom there is no server and no Start plugin, so `@tanstack/react-start` becomes `src/platform/screens/test-server.ts`: the `handler` runs after the `validator`, over the e2e fixture library and data (`e2e/library`), and the response goes through a `structuredClone`. Here there is no API with a contract, as in the Festival; the contract is each server function's type, which the test reads from the real module.
+- **The network is MSW** (`src/platform/screens/network.ts`). The screens' only `fetch`, the Possible group packs, comes from the fixture data, built by the build's `buildPacks`. `goOffline()` drops the request. A request with no written response fails the test.
+- **An error or warning in the console fails the test**, as in the stories.
+- **e2e guards what needs the whole site:** the server HTML and hydration, the `<head>` and Open Graph, the layout (the number pinned to the top, 44 px touch targets), the real keyboard and the clipboard.
 
-## Consequências
+## Consequences
 
-- O primeiro teste de tela achou um bug: sem rede, o Grupo possível pedia o pacote de novo a cada render, sem parar, e o aviso da falha piscava. Agora o que falhou só se pede de novo pelo "Tentar de novo".
-- Um comportamento novo de tela ganha um `.test.tsx`; uma jornada entre páginas, ou o que depende de layout, ganha um teste de e2e.
-- Os pacotes guardados em `estado/pacotes-do-grupo.ts` vivem até o fim do arquivo de teste. O teste que derruba a rede mora num arquivo só dele.
+- The first screen test found a bug: offline, Possible group requested the pack again on every render, endlessly, and the failure notice flickered. Now what failed is only requested again through "Tentar de novo".
+- A new screen behavior gets a `.test.tsx`; a journey across pages, or something that depends on layout, gets an e2e test.
+- The packs kept in `state/group-packs.ts` live until the end of the test file. The test that drops the network lives in a file of its own.

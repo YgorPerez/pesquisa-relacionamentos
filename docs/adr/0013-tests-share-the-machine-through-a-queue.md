@@ -1,18 +1,18 @@
-# Os testes de vários worktrees dividem a máquina por uma fila
+# Tests from several worktrees share the machine through a queue
 
-Cada rodada do Vitest e do Playwright escolhe os workers pelos núcleos, como se estivesse sozinha na máquina. Com vários agentes testando ao mesmo tempo, as rodadas brigam pelos mesmos núcleos e todas ficam lentas; no Festival dos Macacos, três suítes juntas levaram o quádruplo do tempo, e testes com prazo estouraram. Copiado do [ADR-0054 do Festival](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0054-test-runs-share-the-machine-through-one-queue-and-a-worker-budget.md).
+Each Vitest and Playwright run picks its workers from the core count, as if it were alone on the machine. With several agents testing at the same time, the runs fight over the same cores and all of them slow down; in Festival dos Macacos, three suites together took four times as long, and tests with deadlines timed out. Copied from [Festival ADR-0054](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0054-test-runs-share-the-machine-through-one-queue-and-a-worker-budget.md).
 
-## Decisão
+## Decision
 
-- **A rodada sem filtro é pesada, e as pesadas rodam uma de cada vez**, na ordem de chegada, com os workers que usariam sozinhas. Sem filtro quer dizer sem arquivo, pasta, `-t`, `-g`, `--project` ou `--shard`: a fronteira sai dos argumentos, e nenhuma lista de comandos precisa ficar em dia.
-- **A filtrada é leve e nunca espera.** Leva a sua parte do orçamento (um worker por núcleo), dividido pelas rodadas que rodam, e nunca menos de um worker.
-- **A entrada está na config de cada ferramenta**, e não no `package.json`: os `vite.config.ts` da raiz, do `frontend/` e dos pacotes, o `frontend/vitest.stories.config.ts` e o `frontend/playwright.config.ts` chamam `scripts/machine-queue.ts` ao carregar. Assim `pnpm test`, `vp test` e `pnpm exec playwright` passam todos por ela.
-- **O estado é um arquivo por rodada em `<tmp>/tem-estudo-test-queue`**, escrito sob uma trava de pasta. A pasta não é a do Festival: uma suíte dele dura até 20 min, e a nossa inteira, segundos; dividir a fila deixaria a nossa esperando a dele.
-- **Uma rodada morta solta a vez sozinha.** O arquivo leva o PID do dono, que o renova a cada 30 s. Sem PID vivo, ou 5 min sem sinal, o próximo leitor apaga o arquivo. A fila só pergunta se o PID existe e nunca para processo (ADR 0011).
-- **Fora da fila:** o CI (`CI` definido), o modo watch, o `--list`, a UI do Playwright, e o que roda dentro de uma rodada que já entrou (os workers do Playwright herdam `MACHINE_QUEUE`). `MACHINE_QUEUE=off` pula a fila de propósito.
+- **An unfiltered run is heavy, and heavy runs go one at a time**, in order of arrival, with the workers they would use alone. Unfiltered means no file, folder, `-t`, `-g`, `--project` or `--shard`: the boundary comes from the arguments, and no list of commands has to be kept up to date.
+- **A filtered run is light and never waits.** It takes its share of the budget (one worker per core), divided by the runs in progress, and never less than one worker.
+- **The entry point is in each tool's config**, not in `package.json`: the `vite.config.ts` files at the root, in `frontend/` and in the packages, `frontend/vitest.stories.config.ts` and `frontend/playwright.config.ts` call `scripts/machine-queue.ts` when they load. That way `pnpm test`, `vp test` and `pnpm exec playwright` all go through it.
+- **The state is one file per run in `<tmp>/tem-estudo-test-queue`**, written under a folder lock. The folder is not Festival's: one of its suites lasts up to 20 min, and our whole suite takes seconds; sharing the queue would leave ours waiting for theirs.
+- **A dead run gives up its turn on its own.** The file holds the owner's PID, which the owner renews every 30 s. With no live PID, or 5 min without a signal, the next reader deletes the file. The queue only asks whether the PID exists and never stops a process (ADR 0011).
+- **Outside the queue:** CI (`CI` set), watch mode, `--list`, the Playwright UI, and whatever runs inside a run that has already entered (Playwright's workers inherit `MACHINE_QUEUE`). `MACHINE_QUEUE=off` skips the queue on purpose.
 
-## Consequências
+## Consequences
 
-- O `pnpm check` roda a suíte de cada pacote como pesada, uma depois da outra. São segundos cada.
-- Quem espera a vez vê `[queue] waiting for a turn` uma vez por minuto, com o comando, o worktree e o PID de quem está na frente. A espera conta no limite de tempo do comando: rode a suíte inteira em segundo plano.
-- O orçamento é da máquina, mas só entre os worktrees deste repositório: os testes do Festival não entram na conta.
+- `pnpm check` runs each package's suite as heavy, one after the other. Each takes seconds.
+- Whoever is waiting for a turn sees `[queue] waiting for a turn` once a minute, with the command, the worktree and the PID of the run ahead. The wait counts toward the command's time limit: run the full suite in the background.
+- The budget is the machine's, but only among this repository's worktrees: Festival's tests are not counted.

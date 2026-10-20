@@ -1,16 +1,16 @@
-# As regras da coesão, e a chave das regras confere as ligadas
+# The cohesion rules, and the rule config check verifies which rules are on
 
-O Festival dos Macacos prende cada peça ao dono por lint (`lint/coesao.ts`, `lint/cor-do-tema.ts`) e tem duas regras em GritQL (`sem-title-nativo`, `sem-import-js`). Aqui elas são `jsPlugins` do Oxlint (ADR 0006), cada uma com o `RuleTester`, e o conteúdo é o deste site:
+Festival dos Macacos ties each piece to its owner through lint (`lint/coesao.ts`, `lint/cor-do-tema.ts`) and has two GritQL rules (`sem-title-nativo`, `sem-import-js`). Here they are Oxlint `jsPlugins` (ADR 0006), each with its `RuleTester`, and the content is this site's:
 
-- `cohesion/h1-owner`: o `<h1>` é o `Display` de `ui/sheet.tsx`.
-- `cohesion/halftone-owner`: a retícula, a única elevação, é das peças de `src/ui/` (o `Painel`, o `Botao`).
-- `cohesion/hand-drawn-icons`: pacote de ícones prontos não entra.
-- `theme/raw-color`: uma cor escrita à mão numa string (`#f5f8f8`, `rgb()`). A dona das cores fora do CSS é `ui/brand.ts`. Sem modo escuro, a regra do Festival (a cor que não muda no escuro) não se aplica.
-- `html/no-native-title`: o `title` do HTML não abre no toque.
-- `modules/no-js-import`: o import relativo nomeia o `.ts`, para o `node` rodar os scripts.
+- `cohesion/h1-owner`: the `<h1>` is the `Display` in `ui/sheet.tsx`.
+- `cohesion/halftone-owner`: the halftone, the only elevation, belongs to the pieces in `src/ui/` (the `Panel`, the `SiteButton`).
+- `cohesion/hand-drawn-icons`: ready-made icon packages do not go in.
+- `theme/raw-color`: a color written by hand in a string (`#f5f8f8`, `rgb()`). The owner of colors outside CSS is `ui/brand.ts`. With no dark mode, the Festival's rule (the color that does not change in dark mode) does not apply.
+- `html/no-native-title`: the HTML `title` does not open on touch.
+- `modules/no-js-import`: a relative import names the `.ts` file, so `node` can run the scripts.
 
-O `lint/chave-das-regras.ts` do Festival é a chave de cache do ESLint. O Oxlint não tem esse cache, e o `vp run --cache` anota sozinho o que o lint lê. Aqui o `frontend/lint/rule-config.ts` confere o outro lado: que todo plugin local está em `lint.jsPlugins`, que toda regra dele está ligada, que nenhuma regra ligada falta no plugin, e que as do `@shadcn/lint` valem no app e não em `ui/shadcn/`. O `frontend/lint/rule-config.test.ts` roda isso sobre a config de verdade.
+The Festival's `lint/chave-das-regras.ts` is the ESLint cache key. Oxlint has no such cache, and `vp run --cache` records by itself what the lint reads. Here `frontend/lint/rule-config.ts` checks the other side: that every local plugin is in `lint.jsPlugins`, that every rule in it is on, that no rule that is on is missing from the plugin, and that the `@shadcn/lint` rules apply in the app and not in `ui/shadcn/`. `frontend/lint/rule-config.test.ts` runs this on the real config.
 
-## Consequências
+## Consequences
 
-- Um plugin novo em `frontend/lint/` sem regra ligada falha o teste, e não fica esquecido.
+- A new plugin in `frontend/lint/` with no rule turned on fails the test, and is not forgotten.

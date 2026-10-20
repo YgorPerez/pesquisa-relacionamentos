@@ -1,16 +1,16 @@
-# O PR que muda tela mostra o antes e o depois
+# A PR that changes a screen shows before and after
 
-Nenhum check compara telas. Quem revisa só vê uma tela que mudou se o PR a mostrar, e um print não mostra a entrada de uma animação nem o que um toque abre. Do `screen-evidence.ts` do Festival dos Macacos.
+No check compares screens. A reviewer only sees that a screen changed if the PR shows it, and a screenshot does not show an animation's entrance or what a tap opens. From Festival dos Macacos's `screen-evidence.ts`.
 
-## Decisão
+## Decision
 
-- **Um PR que muda um arquivo de tela traz, na seção `## Screen`, pelo menos dois prints e dois vídeos diferentes**, antes e depois. Arquivo de tela é o que mora em `frontend/src/` ou `frontend/public/`, menos testes, stories, tipos, `platform/`, `analytics/`, `server.ts` e a árvore de rotas gerada.
-- **`- [x] No screen change` passa**, para o refactor que deixa toda tela igual. O PR diz por quê.
-- **O `screen-evidence.yml` confere** a cada push e a cada edição da descrição. Conta pelo `body_html` da API: só o HTML diz se um anexo é imagem ou vídeo.
-- **`frontend/scripts/capture.ts` tira os dois**, no celular e no desktop, e a skill `test-app` diz como subir o antes e o depois.
-- **Roda também no rascunho**, ao contrário do Festival: leva segundos, e o rascunho já mostra o que vai faltar.
+- **A PR that changes a screen file carries, in its `## Screen` section, at least two screenshots and two different videos**, before and after. A screen file is one that lives in `frontend/src/` or `frontend/public/`, except tests, stories, types, `platform/`, `analytics/`, `server.ts` and the generated route tree.
+- **`- [x] No screen change` passes**, for a refactor that leaves every screen the same. The PR says why.
+- **`screen-evidence.yml` checks** on every push and every description edit. It counts from the API's `body_html`: only the HTML tells whether an attachment is an image or a video.
+- **`frontend/scripts/capture.ts` takes both**, on mobile and desktop, and the `test-app` skill says how to start the before and the after.
+- **It also runs on drafts**, unlike Festival: it takes seconds, and the draft already shows what will be missing.
 
-## Consequências
+## Consequences
 
-- Uma mudança só no acervo (`estudos/`, `dicas/`) não pede prints: a Ficha tem a revisão dela (skill `acervo`).
-- Os anexos ficam no PR, nunca no git (`AGENTS.md`, "Documentação").
+- A change only to the library (`studies/`, `tips/`) does not need screenshots: the Fact sheet has its own review (the `library` skill).
+- Attachments stay in the PR, never in git (`AGENTS.md`, "Documentação").

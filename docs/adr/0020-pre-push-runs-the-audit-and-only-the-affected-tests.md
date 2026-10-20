@@ -1,16 +1,16 @@
-# O pre-push roda a auditoria e só os testes afetados
+# Pre-push runs the audit and only the affected tests
 
-Um push que quebra um teste só aparece no CI, minutos depois, e outro agente pode já ter feito merge do ramo. Rodar a suíte inteira a cada push seria o custo que o ADR 0016 tirou. Do `verify-push.ts` do Festival dos Macacos (#1054 dele), sem o certificado.
+A push that breaks a test only shows up in CI, minutes later, and another agent may already have merged the branch. Running the whole suite on every push would bring back the cost that ADR 0016 removed. Taken from Festival dos Macacos's `verify-push.ts` (its #1054), without the certificate.
 
-## Decisão
+## Decision
 
-- **`.githooks/pre-push` roda `node scripts/verify-push.ts`**, e o `prepare-worktree.ts` liga o hook com `scripts/install-hooks.ts` (`core.hooksPath = .githooks`, comum a todas as worktrees). O hook de uma worktree passa a vez ao da worktree que faz o push.
-- **Cada ref do push passa pela auditoria das supressões** (ADR 0017) contra o destino: o ramo do remoto de que o commit está mais perto, a `main` ou um `spec/*`.
-- **E pelo Vitest só das pastas que o push afeta** (`affected.ts`), com `--changed`: no primeiro push do ramo, desde o merge-base com o destino; nos seguintes, desde o que o remoto já tinha. Sem e2e, sem stories.
-- **A `main` só anda para a frente**, e apagá-la não passa.
-- **`SKIP_TESTS="<motivo>" git push`** pula os testes, não a auditoria, e anota o motivo em `<git-common-dir>/push-skip-tests.log`.
+- **`.githooks/pre-push` runs `node scripts/verify-push.ts`**, and `prepare-worktree.ts` turns the hook on with `scripts/install-hooks.ts` (`core.hooksPath = .githooks`, shared by every worktree). The hook of one worktree hands over to the hook of the worktree doing the push.
+- **Each ref in the push goes through the suppression audit** (ADR 0017) against the target: the remote branch the commit is closest to, `main` or a `spec/*`.
+- **And through Vitest for only the folders the push affects** (`affected.ts`), with `--changed`: on the branch's first push, since the merge-base with the target; on later pushes, since what the remote already had. No e2e, no stories.
+- **`main` only moves forward**, and deleting it is refused.
+- **`SKIP_TESTS="<reason>" git push`** skips the tests, not the audit, and writes the reason to `<git-common-dir>/push-skip-tests.log`.
 
-## Consequências
+## Consequences
 
-- O hook é do cliente: `git push --no-verify` o pula, e o servidor não confere nada. Ele segura o engano, não quem quer passar.
-- Um push só de documentação não roda teste nenhum.
+- The hook is client-side: `git push --no-verify` skips it, and the server checks nothing. It catches mistakes, not someone who wants to get through.
+- A documentation-only push runs no tests.

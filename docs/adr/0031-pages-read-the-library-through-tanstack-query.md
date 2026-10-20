@@ -1,11 +1,11 @@
-# As páginas leem o acervo pelo TanStack Query, com SSR
+# Pages read the library through TanStack Query, with SSR
 
-Como no Festival dos Macacos (`frontend/src/router.tsx`, `platform/leituras.ts`), cada server function que uma página lê tem uma leitura em `src/conteudo/leituras.ts`. O loader a pede com `context.queryClient.query(...)` e a tela a lê com `useSuspenseQuery(...)`. O `router.tsx` cria um `QueryClient` por router (o servidor cria um por pedido, então o que um visitante leu não vaza para outro) e liga o `setupRouterSsrQueryIntegration` do `@tanstack/react-router-ssr-query`. Com isso, o que o servidor leu vai junto do HTML, e a hidratação não pede nada de novo.
+As in the Festival dos Macacos (`frontend/src/router.tsx`, `platform/leituras.ts`), each server function a page reads has a read in `src/content/reads.ts`. The loader requests it with `context.queryClient.query(...)` and the screen reads it with `useSuspenseQuery(...)`. `router.tsx` creates one `QueryClient` per router (the server creates one per request, so what one visitor read does not leak to another) and wires up `setupRouterSsrQueryIntegration` from `@tanstack/react-router-ssr-query`. With that, what the server read goes along with the HTML, and hydration requests nothing new.
 
-Diferente do Festival, toda leitura é `staleTime: 'static'`. O acervo entra no build (`vite/acervo.ts`) e só muda no próximo deploy. Antes, voltar a uma página já vista pedia os dados de novo, porque o router dá o loader por velho logo depois de rodar; agora sai do cache.
+Unlike the Festival, every read is `staleTime: 'static'`. The library goes into the build (`vite/library.ts`) and only changes on the next deploy. Before, going back to a page already seen requested the data again, because the router considers the loader stale right after it runs; now it comes from the cache.
 
-## Consequências
+## Consequences
 
-- O loader devolve só o que o `head` e o topo leem (`busca`, `tema`, `temaTitulo`, a prévia do link). A vista inteira vai pelo `queryClient`; devolvida também pelo loader, iria duas vezes no HTML.
-- Leitura nova: uma entrada em `leituras`, o loader pede, a tela lê. `e2e/reads.e2e.ts` falha se uma página pedir server function ao hidratar.
-- Estado de fora do React continua por `useSyncExternalStore` (`estado/`), não por query: o React Compiler quebra a leitura direta (ADR 0003).
+- The loader returns only what the `head` and the header read (`search`, `topic`, `topicTitle`, the link preview). The whole view goes through the `queryClient`; if the loader returned it too, it would go twice into the HTML.
+- A new read: one entry in `reads`, the loader requests it, the screen reads it. `e2e/reads.e2e.ts` fails if a page requests a server function while hydrating.
+- State from outside React still goes through `useSyncExternalStore` (`state/`), not through a query: the React Compiler breaks the direct read (ADR 0003).

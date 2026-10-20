@@ -1,9 +1,9 @@
-# O tamanho do PR vira rótulo
+# PR size becomes a label
 
-Quem abre a lista de PRs não vê o que é uma linha e o que é uma tarde de leitura, e um PR que cresceu demais só aparece quando alguém começa a revisá-lo. Do `pr-size.ts` do Festival dos Macacos, que o tirou do `pr-size.yml` do t3code.
+Someone opening the PR list cannot tell a one-line change from an afternoon of reading, and a PR that grew too large only shows up when someone starts reviewing it. Taken from Festival dos Macacos's `pr-size.ts`, which took it from t3code's `pr-size.yml`.
 
-## Decisão
+## Decision
 
-- **O `pr-size.yml` põe um rótulo de `tamanho:PP` (0 a 9 linhas) a `tamanho:XG` (1000 ou mais)** a cada push num PR, e tira o velho.
-- **Conta só o que alguém escreveu**: lockfile, árvore de rotas, selo, skill vendorizada e binário ficam fora. Num PR que muda código e teste, o teste não conta; num PR só de teste, conta.
-- **Só rotula, nunca reprova.** Um PR grande às vezes é o certo, e quem decide é quem revisa.
+- **`pr-size.yml` sets a label from `tamanho:PP` (0 to 9 lines) to `tamanho:XG` (1000 or more)** on each push to a PR, and removes the old one.
+- **It counts only what someone wrote**: lockfile, route tree, badge, vendored skill and binaries are left out. In a PR that changes code and tests, the tests do not count; in a test-only PR, they do.
+- **It only labels, never fails.** A large PR is sometimes the right one, and the reviewer decides.

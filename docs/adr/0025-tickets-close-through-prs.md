@@ -1,15 +1,15 @@
-# Os tickets fecham por PR
+# Tickets close through PRs
 
-Até o spec #23, um ticket fechava com um comentário e um `gh issue close`, e o código entrava por merge direto no ramo do spec. Nada mostrava, num lugar só, o diff, os checks e a conversa de cada ticket. Com o `pr.yml` e os outros checks (ADR 0016 a 0018), o PR é esse lugar, como no Festival dos Macacos.
+Until spec #23, a ticket closed with a comment and a `gh issue close`, and the code went in by a direct merge into the spec branch. Nothing showed, in one place, each ticket's diff, checks and conversation. With `pr.yml` and the other checks (ADR 0016 to 0018), the PR is that place, as in Festival dos Macacos.
 
-## Decisão
+## Decision
 
-- **Um ticket de código entra por um PR do ramo `ticket/<n>-<nome>` para o ramo do spec** (ou para a `main`, num ticket fora de spec), no modelo `.github/pull_request_template.md`, com `Closes #<n>`.
-- **O PR entra verde**: todos os checks do último commit passaram e nenhum comentário ficou sem resposta. O merge é `gh pr merge <pr> --merge`, sem squash.
-- **O GitHub só fecha a issue sozinho num PR para o ramo padrão.** Num PR para um `spec/*`, quem faz o merge fecha a issue: `gh issue close <n> --comment "Entrou em spec/<n> por #<pr>."`. O PR do spec para a `main` leva `Closes #<spec>`.
-- **Ticket sem código** (`research`, `grilling`, `prototype` sem código para entrar) segue fechando por comentário.
-- **O implementador abre o PR quando o orquestrador pede**; senão, dá push no ramo e o orquestrador abre (`docs/agents/orchestration.md`).
+- **A code ticket goes in through a PR from the `ticket/<n>-<name>` branch into the spec branch** (or into `main`, for a ticket outside a spec), using the `.github/pull_request_template.md` template, with `Closes #<n>`.
+- **The PR goes in green**: every check on the last commit passed and no comment was left unanswered. The merge is `gh pr merge <pr> --merge`, no squash.
+- **GitHub only closes the issue by itself for a PR into the default branch.** For a PR into a `spec/*`, whoever merges closes the issue: `gh issue close <n> --comment "Entrou em spec/<n> por #<pr>."`. The spec's PR into `main` carries `Closes #<spec>`.
+- **A ticket without code** (`research`, `grilling`, a `prototype` with no code to merge) still closes by comment.
+- **The implementer opens the PR when the orchestrator asks**; otherwise, it pushes the branch and the orchestrator opens it (`docs/agents/orchestration.md`).
 
-## Consequências
+## Consequences
 
-- A linha em "Decisions so far" do mapa aponta para o PR, que guarda o diff e a conversa.
+- The line in the map's "Decisions so far" points to the PR, which keeps the diff and the conversation.

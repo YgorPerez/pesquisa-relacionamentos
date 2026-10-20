@@ -1,14 +1,14 @@
-# O CI do PR roda a suíte inteira, e o agente roda a menor prova
+# PR CI runs the full suite, and the agent runs the minimal proof
 
-Até aqui, o agente rodava o `pnpm check`, o build e o e2e inteiros antes de cada push, e o `ci.yml` repetia tudo no PR. Vários agentes dividem a mesma máquina (ADR 0013): a suíte inteira de cada um disputa os núcleos com a dos outros, e a cópia local não prova nada que o CI não prove de novo. Copiado do [ADR-0035 do Festival dos Macacos](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0035-the-pull-requests-ci-runs-the-whole-suite-and-an-agent-runs-the-smallest-proof.md).
+Until now, the agent ran the full `pnpm check`, build and e2e before each push, and `ci.yml` repeated all of it on the PR. Several agents share the same machine (ADR 0013): each one's full suite competes for cores with the others', and the local copy proves nothing that CI does not prove again. Copied from [Festival dos Macacos ADR-0035](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0035-the-pull-requests-ci-runs-the-whole-suite-and-an-agent-runs-the-smallest-proof.md).
 
-## Decisão
+## Decision
 
-- **O `pr.yml` é o portão, e roda a suíte inteira a cada push num PR**, em três jobs paralelos: `check` (`pnpm typecheck` e `pnpm check`), `stories` (o build do Storybook e `pnpm test:stories`) e `e2e` (o build com a conferência do sitemap e `pnpm e2e`). O `ci.yml` virou o `pr.yml`.
-- **Na máquina, o agente roda a menor prova do que mudou**: `node scripts/minimal-proof.ts [--base <ramo>]`. Do diff contra o merge-base, ele roda os tipos dos pacotes afetados e do app que os importa, o Vitest com `--changed` em cada pasta afetada, as pastas do app e o `vp check` nos arquivos mudados. Um passo que falha não para os outros.
-- **O trabalho acaba quando o CI fica verde no último commit do PR**, e não quando a rodada local passa. Um job vermelho se lê com `gh run view <id> --log-failed`.
+- **`pr.yml` is the gate, and runs the full suite on every push to a PR**, in three parallel jobs: `check` (`pnpm typecheck` and `pnpm check`), `stories` (the Storybook build and `pnpm test:stories`) and `e2e` (the build with the sitemap check and `pnpm e2e`). `ci.yml` became `pr.yml`.
+- **On the machine, the agent runs the minimal proof of what changed**: `node scripts/minimal-proof.ts [--base <branch>]`. From the diff against the merge-base, it runs the types of the affected packages and of the app that imports them, Vitest with `--changed` in each affected folder, the app folder check, and `vp check` on the changed files. A failing step does not stop the others.
+- **The work is done when CI is green on the PR's last commit**, not when the local run passes. A red job is read with `gh run view <id> --log-failed`.
 
-## Consequências
+## Consequences
 
-- Uma spec do e2e que o agente tocou ainda roda na mão, `pnpm e2e <spec>`; a menor prova não sobe o e2e.
-- O repositório é público: o Actions não custa nada, e a regra "não mescle PR vermelho" é das pessoas e dos agentes, porque não há proteção de ramo.
+- An e2e spec the agent touched still runs by hand, `pnpm e2e <spec>`; the minimal proof does not start e2e.
+- The repository is public: Actions costs nothing, and the rule "do not merge a red PR" belongs to people and agents, because there is no branch protection.

@@ -1,15 +1,15 @@
-# Um script para só a árvore de processos que ele subiu
+# A script stops only the process tree it started
 
-Outras sessões rodam os seus `node`, `vite` e Chrome na mesma máquina. Um `pkill -f vite` ou um `kill` pelo nome derruba o dev ou o e2e de outro worktree no meio da rodada. No Festival dos Macacos isso já aconteceu, e virou o item 3 dos "Four ways to hurt yourself" do AGENTS.md dele.
+Other sessions run their own `node`, `vite` and Chrome on the same machine. A `pkill -f vite` or a `kill` by name takes down another worktree's dev server or e2e run halfway through. In Festival dos Macacos this already happened, and it became item 3 of the "Four ways to hurt yourself" in its AGENTS.md.
 
-## Decisão
+## Decision
 
-- **Quem sobe um filho guarda o PID e para por ele.** `scripts/kill-tree.ts` sobe o filho num shell e num grupo de processos só dele (`subirComGrupo`) e o para com `matar`, que manda o sinal ao grupo inteiro (no Windows, `taskkill /T` no PID). Assim o `vite` embaixo do `pnpm exec` morre junto, e nada fora do grupo recebe o sinal. `comLimite` faz o mesmo quando o filho passa do tempo.
-- **O `scripts/dev.ts` usa os dois.** Ctrl-C, `SIGTERM` ou a saída do script levam o filho e a árvore dele.
-- **Um agente para só o que ele subiu**: o PID que guardou, ou o dono da porta do próprio worktree (`ss -ltnp 'sport = :<porta>'`). Os comandos estão em `docs/agents/environment.md`.
-- **A fila dos testes (ADR 0013) nunca mata processo.** Só pergunta se um PID existe.
+- **Whoever starts a child keeps its PID and stops it by that PID.** `scripts/kill-tree.ts` starts the child in a shell and in a process group of its own (`spawnWithGroup`) and stops it with `killTree`, which sends the signal to the whole group (on Windows, `taskkill /T` on the PID). That way the `vite` under `pnpm exec` dies too, and nothing outside the group gets the signal. `withTimeout` does the same when the child runs past its time.
+- **`scripts/dev.ts` uses both.** Ctrl-C, `SIGTERM` or the script exiting take the child and its tree with them.
+- **An agent stops only what it started**: the PID it kept, or the owner of its own worktree's port (`ss -ltnp 'sport = :<port>'`). The commands are in `docs/agents/environment.md`.
+- **The test queue (ADR 0013) never kills a process.** It only asks whether a PID exists.
 
-## Consequências
+## Consequences
 
-- Um filho que já saiu não recebe sinal: o PID dele pode ter ido para outro processo.
-- Quem subir um processo longo num script novo usa `subirComGrupo` e `matar`, e não `spawn` direto.
+- A child that has already exited gets no signal: its PID may now belong to another process.
+- Anyone starting a long-running process in a new script uses `spawnWithGroup` and `killTree`, not `spawn` directly.

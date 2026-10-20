@@ -1,15 +1,15 @@
-# As skills do Matt Pocock ficam vendorizadas para o Codex
+# Matt Pocock's skills are vendored for Codex
 
-O Claude Code instala as skills do [`mattpocock/skills`](https://github.com/mattpocock/skills) como plugin (`.claude/settings.json`). O Codex e os outros harnesses não leem plugin do Claude Code, e um agente do Codex trabalhava aqui sem `tdd`, `code-review` ou `grilling`. O Festival dos Macacos resolveu isso com uma cópia em `.agents/skills/` e o `skills-lock.json`, gerenciados pelo CLI [`skills`](https://skills.sh).
+Claude Code installs the skills from [`mattpocock/skills`](https://github.com/mattpocock/skills) as a plugin (`.claude/settings.json`). Codex and the other harnesses do not read Claude Code plugins, and a Codex agent was working here without `tdd`, `code-review` or `grilling`. Festival dos Macacos solved this with a copy in `.agents/skills/` and `skills-lock.json`, managed by the [`skills`](https://skills.sh) CLI.
 
-## Decisão
+## Decision
 
-- **`.agents/skills/` tem as 27 skills de `engineering` e `productivity`, e o `skills-lock.json` o hash de cada uma.** É a mesma versão do Festival (`main` @ `6fd9479`, de 06/10/2026), com as mesmas edições locais em `grilling` e `handoff` (`.agents/skills/NOTICE.md`).
-- **Ninguém edita as skills à mão:** `npx skills update` sobrescreve. O que é deste repositório vai para `AGENTS.md` e `docs/agents/`, que as skills leem.
-- **O impeccable fica fora do lock e do git.** Ele instala com o comando dele (`docs/agents/design.md`), e o `prepare-worktree.ts` liga a cópia do principal.
-- **`.claude/skills/grilling` continua a cópia editada para o Claude Code**, igual à de `.agents/skills/grilling`. As duas mudam juntas.
+- **`.agents/skills/` holds the 27 skills from `engineering` and `productivity`, and `skills-lock.json` holds the hash of each.** It is the same version as Festival's (`main` @ `6fd9479`, from 2026-10-06), with the same local edits to `grilling` and `handoff` (`.agents/skills/NOTICE.md`).
+- **Nobody edits the skills by hand:** `npx skills update` overwrites them. What belongs to this repository goes into `AGENTS.md` and `docs/agents/`, which the skills read.
+- **impeccable stays out of the lock and out of git.** It installs with its own command (`docs/agents/design.md`), and `prepare-worktree.ts` links the main checkout's copy.
+- **`.claude/skills/grilling` remains the copy edited for Claude Code**, identical to `.agents/skills/grilling`. The two change together.
 
-## Consequências
+## Consequences
 
-- `.agents/` e `skills-lock.json` ficam fora do formato e do lint, como as outras skills de terceiros.
-- Uma atualização do upstream é um commit só com `npx skills update` e a revisão do diff de `grilling` e `handoff`.
+- `.agents/` and `skills-lock.json` stay outside formatting and lint, like the other third-party skills.
+- An upstream update is a single commit with `npx skills update` and a review of the `grilling` and `handoff` diff.

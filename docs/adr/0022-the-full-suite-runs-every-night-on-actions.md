@@ -1,16 +1,16 @@
-# A suíte inteira roda toda noite, no Actions
+# The full suite runs every night, on Actions
 
-O CI de um PR prova o diff dele contra a base daquele momento. Dois PRs que entram no mesmo dia podem quebrar juntos o que nenhum quebrou sozinho, e a `main` não roda nada depois do merge. Do `nightly-suite.ts` do Festival dos Macacos, que roda numa worktree da máquina pelo Agendador de Tarefas do Windows.
+A PR's CI proves its diff against the base at that moment. Two PRs that go in on the same day can together break what neither broke alone, and `main` runs nothing after the merge. Taken from Festival dos Macacos's `nightly-suite.ts`, which runs in a worktree on the machine through the Windows Task Scheduler.
 
-## Decisão
+## Decision
 
-- **O `nightly-suite.yml` roda às 04:00 de Brasília** (e com `workflow_dispatch`), chamando o `pr.yml` como workflow reutilizável: os mesmos jobs, na `main`.
-- **O último job avisa** (`scripts/nightly-suite.ts`): a primeira noite vermelha abre a issue "Suíte noturna vermelha", com o SHA, os jobs que não passaram, o link da rodada e o fim do log; a seguinte comenta nela; a primeira verde a fecha.
+- **`nightly-suite.yml` runs at 04:00 Brasília time** (and on `workflow_dispatch`), calling `pr.yml` as a reusable workflow: the same jobs, on `main`.
+- **The last job reports** (`scripts/nightly-suite.ts`): the first red night opens the "Suíte noturna vermelha" issue, with the SHA, the jobs that failed, the run link and the end of the log; the next one comments on it; the first green one closes it.
 
-## Opções consideradas
+## Options considered
 
-**Na máquina, como no Festival.** Lá o Actions estava desligado por falta de pagamento. Este repositório é público, o Actions roda de graça, e a máquina fica para os agentes.
+**On the machine, as in the Festival.** There, Actions was off for lack of payment. This repository is public, Actions runs for free, and the machine is left to the agents.
 
-## Consequências
+## Consequences
 
-- O agendamento só roda o arquivo que está na `main`: a suíte noturna começa quando o spec #23 entrar nela.
+- The schedule only runs the file that is on `main`: the nightly suite starts when spec #23 goes into it.

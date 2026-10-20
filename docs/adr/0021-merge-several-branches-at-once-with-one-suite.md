@@ -1,19 +1,19 @@
-# Integrar vários ramos de uma vez, com uma suíte só
+# Merge several branches at once, with a single suite
 
-Um ticket entra pelo merge do PR dele. Quando o orquestrador junta vários tickets num spec, um merge por vez roda o CI de cada um sobre um destino que já mudou, e o conflito entre dois só aparece no último. Do `merge-branches.ts` e do `before-merge.ts` do Festival dos Macacos.
+A ticket goes in by merging its PR. When the orchestrator brings several tickets into a spec, merging one at a time runs each one's CI on a target that has already changed, and a conflict between two only shows up at the last one. Taken from Festival dos Macacos's `merge-branches.ts` and `before-merge.ts`.
 
-## Decisão
+## Decision
 
-- **`node scripts/merge-branches.ts [--target <ramo>] <ramo...>`**, de uma worktree limpa só para isso, faz merge de cada ramo sobre o `origin/<destino>` buscado (sem squash), roda a auditoria, o `before-merge.ts` e a suíte do diff, e dá push sem force pelo hook. O destino padrão é a `main`.
-- **Uma integração por repositório de cada vez**: a vez é um arquivo com o PID em `<git-common-dir>/merge-branches.lock`; a de um dono morto é tomada sem matar nada.
-- **Num conflito, ou num vermelho, para sem publicar.** Se o destino andou durante a suíte, para e pede outra rodada.
-- **`--dry-run`** faz merge de cada ramo numa worktree temporária e diz ok ou os arquivos em conflito, sem suíte e sem push.
-- **`node scripts/before-merge.ts [--base <ref>]`** confere em segundos o que o `pnpm check` só barra no fim: a `fallow dead-code`, o React Doctor, e se alguma penalidade da `fallow health` subiu desde a base. O front está com 90 e o piso é 90.
+- **`node scripts/merge-branches.ts [--target <branch>] <branch...>`**, from a clean worktree kept for this alone, merges each branch onto the fetched `origin/<target>` (no squash), runs the audit, `before-merge.ts` and the diff's suite, and pushes without force through the hook. The default target is `main`.
+- **One merge run per repository at a time**: the turn is a file holding the PID at `<git-common-dir>/merge-branches.lock`; one whose owner is dead is taken over without killing anything.
+- **On a conflict, or a red result, it stops without publishing.** If the target moved during the suite, it stops and asks for another run.
+- **`--dry-run`** merges each branch in a temporary worktree and reports ok or the conflicting files, with no suite and no push.
+- **`node scripts/before-merge.ts [--base <ref>]`** checks in seconds what `pnpm check` only blocks at the end: `fallow dead-code`, React Doctor, and whether any `fallow health` penalty went up since the base. The frontend is at 90 and the floor is 90.
 
-## Opções consideradas
+## Options considered
 
-**Fazer merge da ponta sobre o destino novo e rodar de novo, até três vezes, como o Festival.** Lá várias integrações por hora disputavam a `main`. Aqui elas são poucas, e parar é mais simples.
+**Merge the tip onto the new target and run again, up to three times, as the Festival does.** There, several merge runs per hour competed for `main`. Here they are few, and stopping is simpler.
 
-## Consequências
+## Consequences
 
-- Cada teste que só passou na repetição vira um comentário na issue "Testes intermitentes".
+- Each test that only passed on retry becomes a comment on the "Testes intermitentes" issue.

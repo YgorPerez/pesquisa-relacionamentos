@@ -1,12 +1,12 @@
-# As variáveis de ambiente passam pelo T3 Env
+# Environment variables go through T3 Env
 
-Como no Festival dos Macacos (`frontend/src/env.server.ts`, `platform/variaveis-do-servidor.ts`), o repositório lê as variáveis com o `createEnv` do `@t3-oss/env-core`, e não com `process.env.X ?? padrão` espalhado. `scripts/env.ts` tem os tipos (`port`, `folder`, `optionalFile`, `flag`) e `readEnv`. `scripts/ports.ts` (`requestedPort`) lê `DEV_PORT`, `START_PORT`, `E2E_PORT`, `STORYBOOK_PORT` e `STORIES_PORT`; `frontend/vite/environment.ts` lê `CONTENT_ROOT`, `SITEMAP_ANTERIOR` e `VITE_COUNT_ON_LOCALHOST`, uma vez, quando o `vite.config.ts` carrega. O `frontend/scripts/vps.ts` lê o `GOATCOUNTER_EMAIL` antes da primeira etapa do deploy.
+As in the Festival dos Macacos (`frontend/src/env.server.ts`, `platform/variaveis-do-servidor.ts`), the repository reads variables with `createEnv` from `@t3-oss/env-core`, not with `process.env.X ?? default` scattered around. `scripts/env.ts` has the types (`port`, `folder`, `optionalFile`, `flag`) and `readEnv`. `scripts/ports.ts` (`requestedPort`) reads `DEV_PORT`, `START_PORT`, `E2E_PORT`, `STORYBOOK_PORT` and `STORIES_PORT`; `frontend/vite/environment.ts` reads `CONTENT_ROOT`, `SITEMAP_ANTERIOR` and `VITE_COUNT_ON_LOCALHOST`, once, when `vite.config.ts` loads. `frontend/scripts/vps.ts` reads `GOATCOUNTER_EMAIL` before the first deploy step.
 
-O porquê é falhar no começo. Antes, uma `CONTENT_ROOT` com erro de digitação só aparecia como acervo vazio ou erro no meio do build, e `E2E_PORT=abc` virava `NaN` no Playwright. Agora o comando para antes de começar, com uma mensagem que diz cada variável errada, o valor e o que se esperava.
+The reason is to fail at the start. Before, a `CONTENT_ROOT` with a typo only showed up as an empty library or an error in the middle of the build, and `E2E_PORT=abc` became `NaN` in Playwright. Now the command stops before it starts, with a message that names each wrong variable, its value and what was expected.
 
-Diferente do Festival, os tipos são Standard Schema escritos à mão, e não Schema do Effect: o app não usa Effect (spec #23), e um zod pesaria mais que as linhas de `env.ts`. Também não há `env.ts` no navegador: a única variável do bundle, `VITE_COUNT_ON_LOCALHOST`, já é validada no build.
+Unlike the Festival, the types are hand-written Standard Schema, not Effect Schema: the app does not use Effect (spec #23), and zod would weigh more than the lines of `env.ts`. There is also no `env.ts` in the browser: the only variable in the bundle, `VITE_COUNT_ON_LOCALHOST`, is already validated at build time.
 
-## Consequências
+## Consequences
 
-- Variável nova: um tipo em `env.ts`, se faltar, e uma chave no `lerVariaveis` de quem a usa. Chave em branco conta como ausente.
-- As `VPS_*` do deploy ainda são lidas direto: a falta do `VPS_HOST` já para o `vps.ts` com o uso.
+- A new variable: a type in `env.ts`, if one is missing, and a key in the `readEnv` call of whoever uses it. A blank key counts as absent.
+- The deploy's `VPS_*` variables are still read directly: a missing `VPS_HOST` already stops `vps.ts` with the usage.

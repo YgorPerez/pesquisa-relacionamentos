@@ -1,17 +1,17 @@
-# O deploy confere os assets de fora
+# The deploy checks the assets from outside
 
-O Festival teve o site no ar apontando para um bundle apagado: o HTML citava `assets/index-*.js` e o servidor respondia a página de erro, em HTML, com status 200. Desde então o deploy de lá confere de fora (`conferir-no-ar.ts`) que o bundle chega como JavaScript.
+The Festival once had the site live pointing at a deleted bundle: the HTML cited `assets/index-*.js` and the server answered with the error page, in HTML, with status 200. Since then its deploy checks from outside (`conferir-no-ar.ts`) that the bundle arrives as JavaScript.
 
-Aqui o último passo do `publicar` e do `voltar` no `deploy.yml` roda `node scripts/check-live.ts temestudo.cloud <sha>`. Pela internet, ele confere:
+Here the last step of `publicar` and `voltar` in `deploy.yml` runs `node scripts/check-live.ts temestudo.cloud <sha>`. Over the internet, it checks:
 
-- que `https://temestudo.cloud/?conferencia=<sha>` responde 200 com `Referrer-Policy: strict-origin`;
-- que cada `/assets/*.js` e `/assets/*.css` citado na página responde 200 com o tipo dele (`javascript`, `text/css`), e não com HTML;
-- que `http://temestudo.cloud/?x=1` leva a `https://temestudo.cloud/?x=1`.
+- that `https://temestudo.cloud/?check=<sha>` responds 200 with `Referrer-Policy: strict-origin`;
+- that each `/assets/*.js` and `/assets/*.css` cited in the page responds 200 with its type (`javascript`, `text/css`), and not with HTML;
+- that `http://temestudo.cloud/?x=1` leads to `https://temestudo.cloud/?x=1`.
 
-Ele tenta de novo a cada 5 s, por até 60 s, porque o contêiner acabou de trocar. Se não passa, o job falha com o motivo.
+It retries every 5 s, for up to 60 s, because the container has just been swapped. If it does not pass, the job fails with the reason.
 
-## Consequências
+## Consequences
 
-- A conferência de antes, com `curl` no workflow, só via o cabeçalho e a redireção. Ela está contida nesta.
-- A página precisa citar pelo menos um `/assets/*.js`. Uma página de domínio estacionado, ou o build sem bundle, falha.
-- O `content-type` dos assets vem do Nitro, que serve o `public/` pelo Node. Se o Nginx passar a servir os assets do disco, a conferência segue valendo sem mudança.
+- The earlier check, with `curl` in the workflow, only saw the header and the redirect. It is contained in this one.
+- The page must cite at least one `/assets/*.js`. A parked domain page, or a build without a bundle, fails.
+- The assets' `content-type` comes from Nitro, which serves `public/` through Node. If Nginx starts serving the assets from disk, the check still holds without change.

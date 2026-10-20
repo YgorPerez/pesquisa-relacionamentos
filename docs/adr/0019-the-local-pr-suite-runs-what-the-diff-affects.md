@@ -1,19 +1,19 @@
-# A suíte do PR na máquina roda o que o diff afeta
+# The PR suite on the machine runs what the diff affects
 
-Às vezes um ramo precisa da suíte antes do PR, ou o CI não rodou. Rodar tudo em sequência leva minutos e ocupa a máquina dos outros agentes. Do `pr-suite.ts` do Festival dos Macacos, sem os certificados dele.
+Sometimes a branch needs the suite before the PR, or CI did not run. Running everything in sequence takes minutes and ties up the other agents' machine. From Festival dos Macacos's `pr-suite.ts`, without its certificates.
 
-## Decisão
+## Decision
 
-- **`node scripts/pr-suite.ts [--base <ramo>] [--full] [--plan]`** roda os passos do `pr.yml` em quatro filas ao mesmo tempo: o `check` em partes (o `vp check`, as pastas, os testes, a fallow, o doctor), os tipos e a auditoria, as stories, e o build com o e2e. O build e o e2e ficam na mesma fila porque os dois escrevem o `frontend/.output`.
-- **Por padrão, só o que o diff afeta** (`scripts/affected.ts`): o Vitest com `--changed` nas pastas afetadas, as stories se o app mudou, e as specs do e2e dos termos que mudaram, pela tabela `TERMOS_DAS_SPECS`. Um lockfile, uma config, `platform/`, um pacote de `packages/` ou um estilo de todas as páginas rodam tudo. Um arquivo do app sem termo roda o e2e inteiro.
-- **Um teste que falha roda de novo, sozinho, uma vez** (`scripts/flaky.ts`). Passou, o passo conta verde e o manifesto anota o intermitente.
-- **Cada rodada guarda os logs e um `manifest.json` numa pasta só dela** (`scripts/suite-log.ts`).
-- **Antes de rodar, lista os PRs abertos que mexem nos mesmos arquivos** (`scripts/overlapping-prs.ts`).
+- **`node scripts/pr-suite.ts [--base <branch>] [--full] [--plan]`** runs the `pr.yml` steps in four queues at once: `check` in parts (`vp check`, the folders, the tests, fallow, doctor), the types and the audit, the stories, and the build with e2e. The build and e2e share a queue because both write `frontend/.output`.
+- **By default, only what the diff affects** (`scripts/affected.ts`): Vitest with `--changed` in the affected folders, the stories if the app changed, and the e2e specs for the terms that changed, through the `SPEC_TERMS` table. A lockfile, a config, `platform/`, a package in `packages/` or a style used by every page runs everything. An app file with no term runs the whole e2e.
+- **A failing test runs again, alone, once** (`scripts/flaky.ts`). If it passes, the step counts as green and the manifest records the flaky test.
+- **Each run keeps its logs and a `manifest.json` in a folder of its own** (`scripts/suite-log.ts`).
+- **Before running, it lists the open PRs that touch the same files** (`scripts/overlapping-prs.ts`).
 
-## Opções consideradas
+## Options considered
 
-**O certificado do Festival**, que o hook cobra antes de um push na `main`. Lá o Actions estava desligado, e a suíte local era o único portão. Aqui o portão é o CI do PR (ADR 0016), e um certificado local repetiria o que ele prova.
+**Festival's certificate**, which the hook requires before a push to `main`. There, Actions was turned off, and the local suite was the only gate. Here the gate is PR CI (ADR 0016), and a local certificate would repeat what it proves.
 
-## Consequências
+## Consequences
 
-- Uma spec nova entra em `TERMOS_DAS_SPECS`; o teste de `affected.ts` falha até ela entrar.
+- A new spec goes into `SPEC_TERMS`; the `affected.ts` test fails until it does.

@@ -1,13 +1,13 @@
-# Os selos do README são SVGs commitados
+# README badges are committed SVGs
 
-A nota da fallow, o score do React Doctor e a cobertura mudam a cada merge. Escritos à mão no README, ficam velhos no primeiro. Do `badges.yml` do Festival dos Macacos.
+The fallow score, the React Doctor score and the coverage change with every merge. Written by hand in the README, they go stale at the first one. Taken from Festival dos Macacos's `badges.yml`.
 
-## Decisão
+## Decision
 
-- **O `badges.yml` mede depois de cada push na `main` que mexe no código** (a cobertura de cada pacote, `fallow health --min-score 0`, `react-doctor --json`) e grava `docs/badges/fallow.svg`, `react-doctor.svg` e `coverage.svg` com `.github/scripts/badges.ts`. Só commita se um selo mudou, com o token do workflow, que não dispara o deploy.
-- **A cobertura do selo é a de linhas de todo o código**: o app, os pacotes e os scripts, sem testes, stories e o gerado.
-- **O selo não é portão.** Quem cobra a nota e o piso é o `pnpm check` do PR.
+- **`badges.yml` measures after each push to `main` that touches code** (each package's coverage, `fallow health --min-score 0`, `react-doctor --json`) and writes `docs/badges/fallow.svg`, `react-doctor.svg` and `coverage.svg` with `.github/scripts/badges.ts`. It only commits if a badge changed, with the workflow's token, which does not trigger the deploy.
+- **The badge's coverage is line coverage of all the code**: the app, the packages and the scripts, excluding tests, stories and generated code.
+- **The badge is not a gate.** What enforces the score and the floor is the PR's `pnpm check`.
 
-## Opções consideradas
+## Options considered
 
-**O endpoint do shields.io.** O repositório é público e o shields alcançaria um JSON, mas o selo ficaria dependendo de um serviço de fora; o SVG no repositório não depende de nada.
+**The shields.io endpoint.** The repository is public and shields could reach a JSON file, but the badge would depend on an outside service; the SVG in the repository depends on nothing.

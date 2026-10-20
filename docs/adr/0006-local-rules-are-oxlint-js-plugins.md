@@ -1,12 +1,12 @@
-# Regras locais são `jsPlugins` do Oxlint
+# Local rules are Oxlint `jsPlugins`
 
-O Festival escreve as regras dele em GritQL para o Biome e em plugins do ESLint (`coesao`, `tema`, o `@shadcn/lint`). Aqui uma regra do repositório é um plugin JavaScript do Oxlint: um arquivo em `frontend/lint/` que exporta `definePlugin` de `vite-plus/lint/plugins`, com um `.test.ts` ao lado que roda o `RuleTester` de `vite-plus/lint/plugins-dev`. O arquivo entra em `lint.jsPlugins` no `vite.config.ts` da raiz, e a regra é ligada em `lint.overrides` só nas pastas onde vale.
+The Festival writes its rules in GritQL for Biome and as ESLint plugins (`coesao`, `tema`, `@shadcn/lint`). Here a repository rule is an Oxlint JavaScript plugin: a file in `frontend/lint/` that exports `definePlugin` from `vite-plus/lint/plugins`, with a `.test.ts` next to it that runs the `RuleTester` from `vite-plus/lint/plugins-dev`. The file goes in `lint.jsPlugins` in the root `vite.config.ts`, and the rule is turned on in `lint.overrides` only in the folders where it applies.
 
-O primeiro é o `state` (`frontend/lint/state.ts`), com a regra `state/localstorage-through-stored`: no app, o `localStorage` só passa por `stored()`, que valida o que lê. O dono, `src/state/stored.ts`, fica fora do override.
+The first is `state` (`frontend/lint/state.ts`), with the rule `state/localstorage-through-stored`: in the app, `localStorage` only goes through `stored()`, which validates what it reads. Its owner, `src/state/stored.ts`, stays out of the override.
 
-## Consequências
+## Consequences
 
-- O plugin é TypeScript, e o Oxlint o carrega pelo Node, que tira os tipos sozinho. Nada é compilado antes.
-- Os plugins importam a API do Vite+, não `oxlint` nem `@oxlint/plugins` direto: assim a API é a do Oxlint que carrega o plugin.
-- Regra de plugin JavaScript não lê tipos. Uma regra que precisa deles fica fora daqui.
-- O `@shadcn/lint` e os plugins `cohesion` e `theme` entram no #54 do mesmo jeito. Se o `@shadcn/lint` não rodar no Oxlint, ele vai para um ESLint mínimo de reserva, só com ele.
+- The plugin is TypeScript, and Oxlint loads it through Node, which strips the types by itself. Nothing is compiled beforehand.
+- The plugins import the Vite+ API, not `oxlint` or `@oxlint/plugins` directly: that way the API is the one of the Oxlint that loads the plugin.
+- A JavaScript plugin rule does not read types. A rule that needs them stays out of here.
+- `@shadcn/lint` and the `cohesion` and `theme` plugins come in with #54 the same way. If `@shadcn/lint` does not run on Oxlint, it goes to a minimal fallback ESLint, with only it.

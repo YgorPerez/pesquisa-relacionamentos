@@ -1,22 +1,22 @@
-# Uma supressão nova espera uma pessoa, e o código tem um teto
+# A new suppression waits for a person, and the code has a ceiling
 
-Um `oxlint-disable` é o caminho mais curto para passar de um lint vermelho, e vários agentes dão push aqui todo dia. O código tem hoje zero supressões (fora o `routeTree.gen.ts`, gerado). Do [ADR-0036 do Festival dos Macacos](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0036-a-new-suppression-waits-for-a-person.md), com um teto que o Festival recusou.
+An `oxlint-disable` is the shortest way past a red lint, and several agents push here every day. The code has zero suppressions today (apart from `routeTree.gen.ts`, which is generated). From [Festival dos Macacos ADR-0036](https://github.com/Escala-as-Dores/festival-macacos/blob/main/docs/adr/0036-a-new-suppression-waits-for-a-person.md), with a ceiling that Festival rejected.
 
-## Decisão
+## Decision
 
-- **`.github/scripts/suppressions.ts` conta e lê.** As diretivas são `oxlint-disable`, `eslint-disable` (que o Oxlint também obedece), `react-doctor-disable`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `@effect-diagnostics`, `fallow-ignore`, os `ignore` de cobertura e o `'use no memo'`. Só vale a que abre um comentário; a citada no meio de uma frase não conta.
-- **O teto.** `.github/suppression-ceiling.json` diz quantas de cada a árvore pode ter. Passou, falha, com ou sem rótulo. Quem tira uma baixa o número; subir é mudar a configuração de um auditor.
-- **Sem motivo falha sempre.** O motivo vai depois do `--` no Oxlint, no React Doctor e na fallow, depois da diretiva no TypeScript, e num comentário na mesma linha do `'use no memo'`.
-- **Com motivo, ou com a configuração de um auditor mudada, o PR espera uma pessoa** pôr o rótulo `supressao-revisada`. Configuração é o `vite.config.ts` de cada pacote, o `vitest.*config.ts`, o `doctor.config.ts`, o `.fallowrc.jsonc`, cada `tsconfig*.json`, as regras de `frontend/lint/`, o teto, e as linhas dos scripts de auditoria nos `package.json`. Agente nenhum põe o rótulo.
-- **Roda no `suppressions.yml`**, a cada PR e a cada rótulo, e **no hook de push** (ADR 0020), onde o teto e o motivo barram e o resto só avisa.
+- **`.github/scripts/suppressions.ts` counts and reads.** The directives are `oxlint-disable`, `eslint-disable` (which Oxlint also obeys), `react-doctor-disable`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `@effect-diagnostics`, `fallow-ignore`, the coverage `ignore` comments, and `'use no memo'`. Only one that opens a comment counts; one quoted in the middle of a sentence does not.
+- **The ceiling.** `.github/suppression-ceiling.json` says how many of each the tree may have. Over it, it fails, with or without the label. Whoever removes one lowers the number; raising it is changing an auditor's configuration.
+- **No reason always fails.** The reason goes after `--` in Oxlint, React Doctor and fallow, after the directive in TypeScript, and in a comment on the same line as `'use no memo'`.
+- **With a reason, or with an auditor's configuration changed, the PR waits for a person** to add the `supressao-revisada` label. Configuration means each package's `vite.config.ts`, `vitest.*config.ts`, `doctor.config.ts`, `.fallowrc.jsonc`, each `tsconfig*.json`, the rules in `frontend/lint/`, the ceiling, and the audit script lines in the `package.json` files. No agent adds the label.
+- **It runs in `suppressions.yml`**, on every PR and every label, and **in the push hook** (ADR 0020), where the ceiling and the reason block and the rest only warns.
 
-## Opções consideradas
+## Options considered
 
-**Só o diff, como o Festival.** O Festival recusou o teto porque trocar uma supressão lida por outra não lida mantém a contagem. Aqui o diff continua lido: a troca aparece como supressão nova e pede o rótulo. O teto acrescenta o que o diff não vê, a soma que só sobe.
+**Only the diff, as in Festival.** Festival rejected the ceiling because swapping a reviewed suppression for an unreviewed one keeps the count. Here the diff is still read: the swap shows up as a new suppression and asks for the label. The ceiling adds what the diff does not see, the total that only goes up.
 
-**A aprovação num terminal (`--aprovar`), como no hook do Festival.** Lá, a maior parte das mudanças vai direto para a `main`, sem PR. Aqui tudo passa por PR, e o rótulo basta.
+**Approval in a terminal (`--aprovar`), as in Festival's hook.** There, most changes go straight to `main`, without a PR. Here everything goes through a PR, and the label is enough.
 
-## Consequências
+## Consequences
 
-- Mover código que carrega uma supressão conta como acrescentá-la.
-- Um PR que mexe no `vite.config.ts` fica vermelho no `Supressões` até alguém ler.
+- Moving code that carries a suppression counts as adding it.
+- A PR that touches `vite.config.ts` stays red on `Supressões` until someone reads it.

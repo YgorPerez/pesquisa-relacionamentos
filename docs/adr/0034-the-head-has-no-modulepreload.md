@@ -1,10 +1,10 @@
-# O `<head>` não leva `modulepreload`
+# The `<head>` has no `modulepreload`
 
-O TanStack Start põe no `<head>` um `modulepreload` para cada chunk que a rota importa: dez no início. Eles saem no mesmo instante que o CSS e as duas fontes da primeira tela, e no 4G lento dividem a banda com eles. O plugin `frontend/vite/manifest-without-preload.ts`, copiado do Festival dos Macacos, apaga os `preloads` de toda rota no manifesto do Start. O navegador pede o CSS, as fontes e a entrada (o `<script>` do `<head>`), e acha o resto do JS lendo a entrada.
+TanStack Start puts a `modulepreload` in the `<head>` for each chunk the route imports: ten on the home page. They go out at the same instant as the CSS and the two first-screen fonts, and on slow 4G they share the bandwidth with them. The `frontend/vite/manifest-without-preload.ts` plugin, copied from the Festival dos Macacos, deletes the `preloads` of every route in Start's manifest. The browser requests the CSS, the fonts and the entry (the `<script>` in the `<head>`), and finds the rest of the JS by reading the entry.
 
-O corte é no manifesto, e não no HTML: o servidor desenha o `<head>` com ele e o manda ao navegador, que desenha o `<head>` de novo ao hidratar. Tirar as tags só do HTML faria os dois divergirem.
+The cut is in the manifest, not in the HTML: the server renders the `<head>` from it and sends it to the browser, which renders the `<head>` again when hydrating. Removing the tags only from the HTML would make the two diverge.
 
-## Consequências
+## Consequences
 
-- No #59, o LCP caiu uns 40 ms em toda página (ADR 0033). O JS chega um pouco depois da primeira pintura, o que é o objetivo.
-- Um TanStack que gere o módulo do manifesto de outro jeito derruba o build, com o nome do módulo no erro, em vez de voltar a pôr os chunks no `<head>` calado.
+- In #59, LCP dropped about 40 ms on every page (ADR 0033). The JS arrives a little after the first paint, which is the goal.
+- A TanStack version that generates the manifest module differently breaks the build, with the module name in the error, instead of silently putting the chunks back in the `<head>`.
