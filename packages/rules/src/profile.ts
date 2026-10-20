@@ -4,12 +4,12 @@
 // from here. The values are what the link carries, so they stay in
 // Portuguese (ADR 0039); the keys are the stored JSON's.
 
-/** The gender in the profile. `outro` does not exist in the fact sheets'
- * `cobre` (#5). */
+/** The gender in the profile. `outro` has no match in the fact sheets'
+ * `covers` (#5). */
 export const PROFILE_GENDERS = ['homem', 'mulher', 'outro'] as const
 export type ProfileGender = (typeof PROFILE_GENDERS)[number]
 
-/** Who the visitor seeks. `ambos` does not exist in the fact sheets' `cobre`
+/** Who the visitor seeks. `ambos` has no match in the fact sheets' `covers`
  * (#5). */
 export const PROFILE_SEEKS = ['homens', 'mulheres', 'ambos'] as const
 export type ProfileSeeks = (typeof PROFILE_SEEKS)[number]

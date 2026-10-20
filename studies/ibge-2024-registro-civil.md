@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "IBGE. *Estatísticas do Registro Civil 2024*."
+reference: "IBGE. *Estatísticas do Registro Civil 2024*."
 link: https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/031ad256f70356ed66b25e4ff01767cc.pdf
-status: nao-verificado
-forca: forte
-forca_porque: "Registro administrativo."
-paises: [Brasil]
-periodo: "2024 (com séries desde 2004)"
-amostra:
-  descricao: "Todos os registros civis de casamento e divórcio."
-  representativa: true
-desenho: administrativo
-conflito: "Órgão oficial."
-cobre:
-  generos: [homem, mulher]
+status: unverified
+strength: strong
+strength_reason: "Registro administrativo."
+countries: [Brasil]
+period: "2024 (com séries desde 2004)"
+sample:
+  description: "Todos os registros civis de casamento e divórcio."
+  representative: true
+design: administrative
+conflict: "Órgão oficial."
+covers:
+  genders: [man, woman]
 ---
 
 # IBGE (2024): Estatísticas do Registro Civil
@@ -43,4 +43,4 @@ Casamentos e divórcios do registro civil brasileiro: quantos houve, idade médi
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.2; argumento de "sem pressa" nas dicas.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.2; argumento de "sem pressa" nas dicas.

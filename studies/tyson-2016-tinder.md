@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Tyson G, Perta VC, Haddadi H, Seto MC. *A First Look at User Activity on Tinder*. ASONAM 2016."
+reference: "Tyson G, Perta VC, Haddadi H, Seto MC. *A First Look at User Activity on Tinder*. ASONAM 2016."
 link: https://arxiv.org/abs/1607.01952
-status: nao-verificado
-forca: fraca
-forca_porque: "Só 14 perfis falsos, numa cidade."
-paises: [Reino Unido]
-periodo: "2016"
-amostra:
+status: unverified
+strength: weak
+strength_reason: "Só 14 perfis falsos, numa cidade."
+countries: [Reino Unido]
+period: "2016"
+sample:
   n: 14
-  descricao: "14 perfis falsos com fotos de banco de imagens, em Londres."
-  representativa: false
-desenho: experimento
-conflito: "Acadêmico."
-cobre: {}
+  description: "14 perfis falsos com fotos de banco de imagens, em Londres."
+  representative: false
+design: experiment
+conflict: "Acadêmico."
+covers: {}
 ---
 
 # Tyson et al. (2016): primeiro olhar sobre a atividade no Tinder
@@ -41,4 +41,4 @@ Desenho, como descrito antes da migração: experimento de campo com perfis de t
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 4, sempre com a ressalva de evidência fraca.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 4, sempre com a ressalva de evidência fraca.

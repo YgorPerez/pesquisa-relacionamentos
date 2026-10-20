@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (manuscrito aceito após revisão por pares; pesquisa de 2026-10-18)
-referencia: "Lampard R. *Meeting online or offline? Patterns and trends for co-resident couples in early 21st Century Britain*. Sociological Research Online, 2020. Texto completo aberto (manuscrito aceito, WRAP, Warwick): https://wrap.warwick.ac.uk/131685/"
+reference: "Lampard R. *Meeting online or offline? Patterns and trends for co-resident couples in early 21st Century Britain*. Sociological Research Online, 2020. Texto completo aberto (manuscrito aceito, WRAP, Warwick): https://wrap.warwick.ac.uk/131685/"
 link: https://doi.org/10.1177/1360780419895524
-status: nao-verificado
-forca: forte
-forca_porque: "Amostra probabilística de domicílios (NATSAL-3), com 6.716 casais co-residentes na análise."
-paises: [Reino Unido]
-periodo: "NATSAL-3, 2010–2012; casais que passaram a morar juntos de 1990 a 2012"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Amostra probabilística de domicílios (NATSAL-3), com 6.716 casais co-residentes na análise."
+countries: [Reino Unido]
+period: "NATSAL-3, 2010–2012; casais que passaram a morar juntos de 1990 a 2012"
+sample:
   n: 6716
-  descricao: "NATSAL-3 tem 15.162 pessoas de 16–74 anos em amostra probabilística de domicílios da Grã-Bretanha; a análise usa 6.716 casais co-residentes (4.701 desde 1990)."
-  representativa: true
-desenho: transversal
-conflito: "Pesquisa acadêmica; NATSAL é financiada por fontes públicas; nenhum conflito identificado."
-cobre:
-  idades: { min: 16, max: 74 }
+  description: "NATSAL-3 tem 15.162 pessoas de 16–74 anos em amostra probabilística de domicílios da Grã-Bretanha; a análise usa 6.716 casais co-residentes (4.701 desde 1990)."
+  representative: true
+design: cross-sectional
+conflict: "Pesquisa acadêmica; NATSAL é financiada por fontes públicas; nenhum conflito identificado."
+covers:
+  ages: { min: 16, max: 74 }
 ---
 
 # Lampard (2020): onde casais britânicos que moram juntos se conheceram
@@ -52,4 +52,4 @@ Tabela 1 do artigo (percentuais por período em que o casal passou a morar junto
 
 ## Como usamos
 
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): na Grã-Bretanha, amigos/família seguiam como principal canal; o online cresceu às custas de bares e lugares públicos.
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): na Grã-Bretanha, amigos/família seguiam como principal canal; o online cresceu às custas de bares e lugares públicos.

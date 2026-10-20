@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Pew Research Center (2023). *From Looking for Love to Swiping the Field: Online Dating in the U.S.* https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/ (resumo: https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/). Pew Research Center (2020). *The Virtues and Downsides of Online Dating*. https://www.pewresearch.org/internet/2020/02/06/users-of-online-dating-platforms-experience-both-positive-and-negative-aspects-of-courtship-on-the-web/"
+reference: "Pew Research Center (2023). *From Looking for Love to Swiping the Field: Online Dating in the U.S.* https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/ (resumo: https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/). Pew Research Center (2020). *The Virtues and Downsides of Online Dating*. https://www.pewresearch.org/internet/2020/02/06/users-of-online-dating-platforms-experience-both-positive-and-negative-aspects-of-courtship-on-the-web/"
 link: https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/
-status: nao-verificado
-forca: forte
-forca_porque: "Painel probabilístico."
-paises: [EUA]
-periodo: "2023: dados de julho de 2022; 2020: dados de 2019"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Painel probabilístico."
+countries: [EUA]
+period: "2023: dados de julho de 2022; 2020: dados de 2019"
+sample:
   n: 6034
-  descricao: "Pesquisa de 2023 com n = 6.034 (dados de julho de 2022), em painel probabilístico. O tamanho da pesquisa de 2020 não aparece no texto lido."
-  representativa: true
-desenho: transversal
-conflito: "Pew é independente; nenhum conflito."
-cobre:
-  generos: [homem, mulher]
+  description: "Pesquisa de 2023 com n = 6.034 (dados de julho de 2022), em painel probabilístico. O tamanho da pesquisa de 2020 não aparece no texto lido."
+  representative: true
+design: cross-sectional
+conflict: "Pew é independente; nenhum conflito."
+covers:
+  genders: [man, woman]
 ---
 
 # Pew Research Center (2023 e 2020): namoro online nos EUA
@@ -45,4 +45,4 @@ Duas pesquisas com adultos americanos (2023 e 2020): uso de apps e sites de namo
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 1.3 e 4.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 1.3 e 4.

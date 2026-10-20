@@ -10,7 +10,7 @@ O CI e a imagem do Docker rodam o Node 24. A máquina Linux tem o v26 no PATH (d
 
 Cada worktree tem as suas dependências e as suas portas ([ADR 0010](../adr/0010-cada-worktree-se-prepara-e-tem-as-suas-portas.md)).
 
-- O T3 Code prepara o worktree novo sozinho, pelo `t3.json`. Em qualquer outro lugar, rode `node scripts/prepare-worktree.ts` uma vez, na raiz do worktree. Ele faz o `pnpm install`, liga do principal os `frontend/.env*`, a pasta `fontes/privado/` e a skill do impeccable, sincroniza `.repos/` e diz quantos commits você está atrás do `origin/main`. O `.env` da raiz e o `.env.deploy` não vêm, de propósito.
+- O T3 Code prepara o worktree novo sozinho, pelo `t3.json`. Em qualquer outro lugar, rode `node scripts/prepare-worktree.ts` uma vez, na raiz do worktree. Ele faz o `pnpm install`, liga do principal os `frontend/.env*`, a pasta `sources/private/` e a skill do impeccable, sincroniza `.repos/` e diz quantos commits você está atrás do `origin/main`. O `.env` da raiz e o `.env.deploy` não vêm, de propósito.
 - As portas do worktree: `node scripts/ports.ts`. No principal são 4310 (dev), 4311 (start), 4312 (e2e), 6310 (Storybook) e 6311 (Vitest das stories). Num worktree, um bloco entre 40100 e 48099.
 - `pnpm dev`, `pnpm start` e `pnpm storybook` sobem na porta do worktree e escrevem `[dev] up: <url>` quando respondem. `pnpm e2e`, `pnpm test:stories` e `pnpm test:storybook` (que sobe o Storybook na porta dele) também usam a do worktree.
 - Troque a porta só quando um script disser que ela está ocupada: `DEV_PORT`, `START_PORT`, `STORYBOOK_PORT`, `E2E_PORT` ou `STORIES_PORT`.

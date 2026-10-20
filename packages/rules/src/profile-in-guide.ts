@@ -6,7 +6,7 @@ import { isProfileEmpty, type Profile } from './profile.ts'
 import { appliesToYou, type Coverage, type Verdict } from './applies-to-you.ts'
 
 export interface GuideCoverages {
-  /** The `cobre` of the fact sheets cited next to the key number (`==…==`);
+  /** The `covers` of the fact sheets cited next to the key number (`==…==`);
    * `null` if the short answer marked no number. */
   readonly key: ReadonlyArray<Coverage> | null
   /** One item per finding, in page order. */

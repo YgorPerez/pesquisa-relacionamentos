@@ -6,7 +6,7 @@
 // 3. Aggregates the Census and reads the PNS.
 // 4. Cross-checks both against the published numbers. If anything does not
 //    match, exits with an error before writing any file.
-// 5. Writes to `dados/grupo-possivel/` the Census CSV, the PNS probabilities
+// 5. Writes to `data/possible-group/` the Census CSV, the PNS probabilities
 //    and the SIDRA tables for exact age and municipality (population from
 //    9514, marital status from 10185), each with its `.meta.yaml`.
 //
@@ -37,7 +37,7 @@ import {
 import { fetchSidra, type SidraValue } from './sidra.ts'
 
 const ROOT = join(import.meta.dirname, '..', '..')
-const OUTPUT = join(ROOT, 'dados', 'grupo-possivel')
+const OUTPUT = join(ROOT, 'data', 'possible-group')
 const SCRIPT = relative(ROOT, import.meta.filename)
 
 const CENSUS_FACT_SHEET = 'ibge-2022-censo-amostra'
@@ -203,18 +203,18 @@ async function maritalStatusByMunicipality(): Promise<MunicipalityMarital[]> {
 }
 
 const META_10185_MUNICIPALITIES = (total: number) => ({
-  ficha: CENSUS_FACT_SHEET,
-  tabela: ['SIDRA 10185'],
-  variaveis: [
+  fact_sheet: CENSUS_FACT_SHEET,
+  table: ['SIDRA 10185'],
+  variables: [
     '140 Pessoas de 10 anos ou mais de idade',
     '464 Estado conjugal (viviam ou não em união)',
     '2 Sexo',
     '58 Grupo de idade (15 anos ou mais)',
     '86 Cor ou raça (total)',
   ],
-  baixado_em: today(),
-  versao: `Censo 2022, amostra, ${total} municípios`,
-  conferencia:
+  downloaded_on: today(),
+  version: `Censo 2022, amostra, ${total} municípios`,
+  cross_check:
     'A soma dos municípios dá a UF publicada na mesma tabela, em cada sexo × grupo de idade × união.',
 })
 
@@ -326,14 +326,14 @@ async function municipalities(
 
 // --- .meta.yaml ----------------------------------------------------------
 
-/** The `.meta.yaml` keys, which stay in Portuguese: they are data. */
+/** The `.meta.yaml` keys, the content contract's (`DataMeta`). */
 interface Meta {
-  readonly ficha: string
-  readonly tabela?: ReadonlyArray<string>
-  readonly variaveis?: ReadonlyArray<string>
-  readonly baixado_em: string
-  readonly versao: string
-  readonly conferencia?: string
+  readonly fact_sheet: string
+  readonly table?: ReadonlyArray<string>
+  readonly variables?: ReadonlyArray<string>
+  readonly downloaded_on: string
+  readonly version: string
+  readonly cross_check?: string
 }
 
 const quote = (text: string) => JSON.stringify(text)
@@ -344,13 +344,13 @@ function metaToYaml(meta: Meta): string {
   return (
     [
       `# Gerado por ${SCRIPT}. Não edite à mão: rode \`pnpm data:possible-group\`.`,
-      `ficha: ${meta.ficha}`,
-      meta.tabela ? `tabela: ${list(meta.tabela)}` : null,
-      meta.variaveis ? `variaveis: ${list(meta.variaveis)}` : null,
-      `baixado_em: ${meta.baixado_em}`,
+      `fact_sheet: ${meta.fact_sheet}`,
+      meta.table ? `table: ${list(meta.table)}` : null,
+      meta.variables ? `variables: ${list(meta.variables)}` : null,
+      `downloaded_on: ${meta.downloaded_on}`,
       `script: ${SCRIPT}`,
-      `versao: ${quote(meta.versao)}`,
-      meta.conferencia ? `conferencia: ${quote(meta.conferencia)}` : null,
+      `version: ${quote(meta.version)}`,
+      meta.cross_check ? `cross_check: ${quote(meta.cross_check)}` : null,
     ]
       .filter((l) => l !== null)
       .join('\n') + '\n'
@@ -360,7 +360,7 @@ function metaToYaml(meta: Meta): string {
 function write(name: string, content: string, meta: Meta) {
   writeFileSync(join(OUTPUT, `${name}.csv`), content)
   writeFileSync(join(OUTPUT, `${name}.meta.yaml`), metaToYaml(meta))
-  console.log(`wrote dados/grupo-possivel/${name}.csv`)
+  console.log(`wrote data/possible-group/${name}.csv`)
 }
 
 // --- main ----------------------------------------------------------------
@@ -433,9 +433,9 @@ async function main() {
   ])
 
   write('censo-2022', cellsToCsv(aggregate.cells), {
-    ficha: CENSUS_FACT_SHEET,
-    tabela: ['Microdados da amostra, acesso público, arquivo de pessoas'],
-    variaveis: [
+    fact_sheet: CENSUS_FACT_SHEET,
+    table: ['Microdados da amostra, acesso público, arquivo de pessoas'],
+    variables: [
       'P0020',
       'P0110',
       'P0150',
@@ -447,18 +447,18 @@ async function main() {
       'P0760',
       'P1110',
     ],
-    baixado_em: fileDate(censusZip),
-    versao: `Todas_as_UFs.zip publicado em ${censusVersion}`,
-    conferencia:
+    downloaded_on: fileDate(censusZip),
+    version: `Todas_as_UFs.zip publicado em ${censusVersion}`,
+    cross_check:
       `Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: ` +
       `maior diferença de ${pct(check.maxDifferenceBrazil)}% no Brasil (tolerância ${pct(BRAZIL_TOLERANCE)}%) ` +
       `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
       `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
   })
   write('pns-2019', pnsToCsv(estimatePns(records)), {
-    ficha: PNS_FACT_SHEET,
-    tabela: ['Microdados da PNS 2019, morador selecionado de 18 anos ou mais'],
-    variaveis: [
+    fact_sheet: PNS_FACT_SHEET,
+    table: ['Microdados da PNS 2019, morador selecionado de 18 anos ou mais'],
+    variables: [
       'V0024',
       'UPA_PNS',
       'V00291',
@@ -469,32 +469,32 @@ async function main() {
       'P00404',
       'P050',
     ],
-    baixado_em: fileDate(pnsZip),
-    versao: `PNS_2019_20220525.zip publicado em ${pnsVersion}`,
-    conferencia:
+    downloaded_on: fileDate(pnsZip),
+    version: `PNS_2019_20220525.zip publicado em ${pnsVersion}`,
+    cross_check:
       'Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada.',
   })
   write('sidra-9514-idade', ageCsv, {
-    ficha: CENSUS_FACT_SHEET,
-    tabela: ['SIDRA 9514'],
-    variaveis: [
+    fact_sheet: CENSUS_FACT_SHEET,
+    table: ['SIDRA 9514'],
+    variables: [
       '93 População residente',
       '2 Sexo',
       '287 Idade (15 a 100 anos ou mais)',
     ],
-    baixado_em: today(),
-    versao: 'Censo 2022, universo',
+    downloaded_on: today(),
+    version: 'Censo 2022, universo',
   })
   write('sidra-9514-municipios', municipalitiesCsv.csv, {
-    ficha: CENSUS_FACT_SHEET,
-    tabela: ['SIDRA 9514'],
-    variaveis: [
+    fact_sheet: CENSUS_FACT_SHEET,
+    table: ['SIDRA 9514'],
+    variables: [
       '93 População residente',
       '2 Sexo',
       '287 Idade (grupos de 5 anos a partir de 15, 80 ou mais somados)',
     ],
-    baixado_em: today(),
-    versao: `Censo 2022, universo, ${municipalitiesCsv.total} municípios`,
+    downloaded_on: today(),
+    version: `Censo 2022, universo, ${municipalitiesCsv.total} municípios`,
   })
   write(
     'sidra-10185-municipios',

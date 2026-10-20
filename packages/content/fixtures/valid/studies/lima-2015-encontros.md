@@ -1,17 +1,17 @@
 ---
-referencia: "Lima D. Encontros presenciais e duração, 2015."
+reference: "Lima D. Encontros presenciais e duração, 2015."
 link: https://doi.org/10.5555/LIMA.2015
-status: nao-verificado
-forca: fraca
-forca_porque: "Amostra pequena de conveniência."
-paises: []
-periodo: "não informado"
-amostra:
+status: unverified
+strength: weak
+strength_reason: "Amostra pequena de conveniência."
+countries: []
+period: "não informado"
+sample:
   n: 120
-  descricao: "120 estudantes universitários."
-  representativa: false
-desenho: longitudinal
-cobre: {}
+  description: "120 estudantes universitários."
+  representative: false
+design: longitudinal
+covers: {}
 ---
 
 # Lima (2015): encontros presenciais e duração

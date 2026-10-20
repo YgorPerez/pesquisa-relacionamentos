@@ -5,7 +5,7 @@
 import { readFileSync } from 'node:fs'
 
 const [header = '', ...lines] = readFileSync(
-  'dados/grupo-possivel/censo-2022.csv',
+  'data/possible-group/censo-2022.csv',
   'utf8',
 )
   .trim()

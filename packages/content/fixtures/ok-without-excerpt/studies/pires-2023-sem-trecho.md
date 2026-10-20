@@ -1,16 +1,16 @@
 ---
-referencia: "Pires I. Ficha ok sem trecho, 2023."
+reference: "Pires I. Ficha ok sem trecho, 2023."
 link: https://exemplo.org/pires-2023
-status: ok
-forca: forte
-forca_porque: "Exemplo."
-paises: [Brasil]
-periodo: "2022"
-amostra:
-  descricao: "Exemplo."
-  representativa: true
-desenho: transversal
-cobre: {}
+status: verified
+strength: strong
+strength_reason: "Exemplo."
+countries: [Brasil]
+period: "2022"
+sample:
+  description: "Exemplo."
+  representative: true
+design: cross-sectional
+covers: {}
 ---
 
 # Pires (2023): ok sem trecho

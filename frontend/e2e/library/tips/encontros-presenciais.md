@@ -1,6 +1,6 @@
 ---
-fichas: [lima-2015-encontros]
-forca: fraca
+fact_sheets: [lima-2015-encontros]
+strength: weak
 ---
 
 Encontros presenciais duram mais.

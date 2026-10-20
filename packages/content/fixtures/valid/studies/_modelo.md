@@ -1,5 +1,5 @@
 ---
-referencia: <citação>
+reference: <citação>
 ---
 
 # <modelo>

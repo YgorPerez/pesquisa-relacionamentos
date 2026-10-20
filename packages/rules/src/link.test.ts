@@ -324,17 +324,17 @@ describe('social preview', () => {
     const traits = [
       {
         id: 'renda',
-        nome: 'Renda',
-        atracao: { degrau: 2 },
-        satisfacao: { degrau: 0 },
-        duracao: { degrau: 0 },
+        name: 'Renda',
+        attraction: { level: 2 },
+        satisfaction: { level: 0 },
+        duration: { level: 0 },
       },
       {
         id: 'sexo',
-        nome: 'Química sexual',
-        atracao: { degrau: 3 },
-        satisfacao: { degrau: 3 },
-        duracao: { degrau: 1 },
+        name: 'Química sexual',
+        attraction: { level: 3 },
+        satisfaction: { level: 3 },
+        duration: { level: 1 },
       },
     ] as const
     const preview = prioritiesPreview(traits, {

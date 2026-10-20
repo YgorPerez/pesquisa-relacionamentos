@@ -1,5 +1,5 @@
 // The Priorities screen (`/prioridades`) in jsdom (ADR 0035), over the
-// fixture content (`e2e/library/dados/prioridades`). In satisfaction: "pesa"
+// fixture content (`e2e/library/data/priorities`). In satisfaction: "pesa"
 // has sexual chemistry; "quase nada", being alike; "não sabemos", income,
 // education, religion and age. The picker stuck on scroll, the colors, the
 // chip size and the keyboard stay in the e2e (`e2e/priorities.e2e.ts`).

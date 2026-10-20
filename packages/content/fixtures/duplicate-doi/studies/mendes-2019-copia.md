@@ -1,16 +1,16 @@
 ---
-referencia: "Mendes G. A mesma, com o DOI escrito de outro jeito, 2019."
+reference: "Mendes G. A mesma, com o DOI escrito de outro jeito, 2019."
 link: http://dx.doi.org/10.9999/repetido.2019
-status: nao-verificado
-forca: moderada
-forca_porque: "Exemplo."
-paises: [Brasil]
-periodo: "2018"
-amostra:
-  descricao: "Exemplo."
-  representativa: false
-desenho: transversal
-cobre: {}
+status: unverified
+strength: moderate
+strength_reason: "Exemplo."
+countries: [Brasil]
+period: "2018"
+sample:
+  description: "Exemplo."
+  representative: false
+design: cross-sectional
+covers: {}
 ---
 
 # Mendes (2019): a cópia

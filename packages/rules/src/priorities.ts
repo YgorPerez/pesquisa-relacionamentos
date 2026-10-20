@@ -3,12 +3,20 @@
 // per outcome. There is no score or compatibility number: only the shelf each
 // one falls on and a sentence when the top 3 falls on "quase nada" or "não
 // sabemos". The state is the ordered top 3 and the outcome; it is stored in
-// the browser and carried by the link. The outcome values are the link's and
-// the priorities file's, so they stay in Portuguese.
+// the browser and carried by the link. The outcome values are the link's, so
+// they stay in Portuguese; the priorities file keys each outcome in English
+// (`OUTCOME_KEY`).
 import type { ProfileGender } from './profile.ts'
 
 export const OUTCOMES = ['atracao', 'satisfacao', 'duracao'] as const
 export type Outcome = (typeof OUTCOMES)[number]
+
+/** The priorities file's key for each outcome (#70). */
+export const OUTCOME_KEY = {
+  atracao: 'attraction',
+  satisfacao: 'satisfaction',
+  duracao: 'duration',
+} as const satisfies Record<Outcome, string>
 
 export const OUTCOME_NAME: Record<Outcome, string> = {
   atracao: 'Atração',
@@ -37,15 +45,15 @@ export const TOP_SIZE = 3
  * The keys are the priorities file's. */
 export interface TraitWithEvidence {
   readonly id: string
-  readonly nome: string
-  readonly atracao: { readonly degrau: Level }
-  readonly satisfacao: { readonly degrau: Level }
-  readonly duracao: { readonly degrau: Level }
+  readonly name: string
+  readonly attraction: { readonly level: Level }
+  readonly satisfaction: { readonly level: Level }
+  readonly duration: { readonly level: Level }
   /** The gap between what people state and what they choose, by gender. */
-  readonly vies?: {
-    readonly todos?: string
-    readonly homem?: string
-    readonly mulher?: string
+  readonly bias?: {
+    readonly all?: string
+    readonly man?: string
+    readonly woman?: string
   }
 }
 
@@ -56,7 +64,7 @@ export interface PrioritiesState {
 }
 
 export const level = (trait: TraitWithEvidence, outcome: Outcome): Level =>
-  trait[outcome].degrau
+  trait[OUTCOME_KEY[outcome]].level
 
 /** Tapping a trait: it comes in with the next number; if it is already in, it
  * leaves and the others move up. With three, others do not come in (the
@@ -113,7 +121,7 @@ export function top3Alert(
   const names = (n: Level) =>
     chosen
       .filter((c) => level(c, outcome) === n)
-      .map((c) => c.nome.toLowerCase())
+      .map((c) => c.name.toLowerCase())
   const almostNothing = names(1)
   const noData = names(0)
   const parts = [
@@ -125,17 +133,20 @@ export function top3Alert(
   return `No seu topo 3, para ${OUTCOME_NAME[outcome].toLowerCase()}: ${parts.join('; ')}.`
 }
 
+/** The priorities file's bias key for each gender with one (#70). */
+const BIAS_KEY = { homem: 'man', mulher: 'woman' } as const
+
 /** The bias note that applies to the profile's gender. A single-gender one
  * does not show for someone who did not say their gender or said "outro". */
 export function biasFor(
   trait: TraitWithEvidence,
   gender: ProfileGender | undefined,
 ): string | null {
-  const bias = trait.vies
+  const bias = trait.bias
   if (!bias) return null
   if (gender === 'homem' || gender === 'mulher')
-    return bias[gender] ?? bias.todos ?? null
-  return bias.todos ?? null
+    return bias[BIAS_KEY[gender]] ?? bias.all ?? null
+  return bias.all ?? null
 }
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/

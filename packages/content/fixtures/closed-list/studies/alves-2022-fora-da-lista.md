@@ -1,20 +1,20 @@
 ---
-referencia: "Alves F. Valores fora das listas fechadas, 2022."
+reference: "Alves F. Valores fora das listas fechadas, 2022."
 link: https://exemplo.org/alves-2022
-status: nao-verificado
-forca: muito-forte
-forca_porque: "Exemplo."
-paises: [Brasil]
-periodo: "2021"
-amostra:
-  descricao: "Exemplo."
-  representativa: false
-desenho: survey
-cobre:
-  generos: [homem, outro]
-  procura: [ambos]
-  casal: misto
-  idades: { min: 40, max: 30 }
+status: unverified
+strength: muito-forte
+strength_reason: "Exemplo."
+countries: [Brasil]
+period: "2021"
+sample:
+  description: "Exemplo."
+  representative: false
+design: survey
+covers:
+  genders: [man, outro]
+  seeks: [ambos]
+  couple: misto
+  ages: { min: 40, max: 30 }
 ---
 
 # Alves (2022): fora da lista

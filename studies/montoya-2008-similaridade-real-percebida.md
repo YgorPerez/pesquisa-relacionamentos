@@ -1,18 +1,18 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo; o texto completo é pago (data: 2026-10-18)
-referencia: "Montoya RM, Horton RS, Kirchner J. *Is actual similarity necessary for attraction? A meta-analysis of actual and perceived similarity*. Journal of Social and Personal Relationships 25(6):889–922, 2008. Resumo: https://researchportal.murdoch.edu.au/esploro/outputs/journalArticle/Is-actual-similarity-necessary-for-attraction/991005635870107891"
+reference: "Montoya RM, Horton RS, Kirchner J. *Is actual similarity necessary for attraction? A meta-analysis of actual and perceived similarity*. Journal of Social and Personal Relationships 25(6):889–922, 2008. Resumo: https://researchportal.murdoch.edu.au/esploro/outputs/journalArticle/Is-actual-similarity-necessary-for-attraction/991005635870107891"
 link: https://doi.org/10.1177/0265407508096700
-status: nao-verificado
-forca: forte
-forca_porque: "Meta-análise grande. Para relações existentes, o achado é um resultado nulo dentro da meta-análise."
-paises: []
-periodo: "não informado no texto lido"
-amostra:
-  descricao: "460 tamanhos de efeito de 313 estudos de laboratório e de campo."
-  representativa: false
-desenho: meta-analise
-conflito: "Não conferido."
-cobre: {}
+status: unverified
+strength: strong
+strength_reason: "Meta-análise grande. Para relações existentes, o achado é um resultado nulo dentro da meta-análise."
+countries: []
+period: "não informado no texto lido"
+sample:
+  description: "460 tamanhos de efeito de 313 estudos de laboratório e de campo."
+  representative: false
+design: meta-analysis
+conflict: "Não conferido."
+covers: {}
 ---
 
 # Montoya, Horton & Kirchner (2008): similaridade real vs. percebida (meta-análise)
@@ -45,4 +45,4 @@ A comparação foi feita em três contextos: sem interação (por exemplo, perfi
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): "ter coisas em comum" importa mais como percepção do que como fato medido.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): "ter coisas em comum" importa mais como percepção do que como fato medido.

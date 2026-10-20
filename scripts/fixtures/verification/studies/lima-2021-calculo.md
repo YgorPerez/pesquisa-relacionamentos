@@ -1,18 +1,18 @@
 ---
-referencia: "Lima A. *Exemplo*. Journal of Example Studies 14(2):101–120, 2021."
+reference: "Lima A. *Exemplo*. Journal of Example Studies 14(2):101–120, 2021."
 link: https://doi.org/10.1234/lima-2021-calculo
-status: ok
-verificado_em: 2026-10-19
-forca: moderada
-forca_porque: "Uma amostra só, não probabilística."
-paises: [Brasil]
-periodo: "2020"
-amostra:
+status: verified
+verified_on: 2026-10-19
+strength: moderate
+strength_reason: "Uma amostra só, não probabilística."
+countries: [Brasil]
+period: "2020"
+sample:
   n: 1204
-  descricao: "1.204 adultos com parceiro, painel online."
-  representativa: false
-desenho: transversal
-cobre: {}
+  description: "1.204 adultos com parceiro, painel online."
+  representative: false
+design: cross-sectional
+covers: {}
 ---
 
 # Lima (2021): exemplo com cálculo

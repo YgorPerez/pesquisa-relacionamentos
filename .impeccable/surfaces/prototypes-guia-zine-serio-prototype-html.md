@@ -1,7 +1,7 @@
 ---
 version: 1
-slug: "prototipos-guia-zine-serio-prototype-html"
-primary_target: "prototipos/guia-zine-serio.prototype.html"
+slug: "prototypes-guia-zine-serio-prototype-html"
+primary_target: "prototypes/guia-zine-serio.prototype.html"
 related_targets: []
 ---
 
@@ -9,7 +9,7 @@ related_targets: []
 
 Modo: Read. Quem chega tem uma dúvida concreta (a Pergunta) e quer a resposta curta com a Confiança, o caminho até a Ficha (Status de verificação e Força da evidência), o "vale para você" do Perfil e os Mitos desmontados. Celular primeiro. Sensação de saída: alívio com os pés no chão. Evitar cara de blog de autoajuda e de artigo científico.
 
-Histórico: o usuário escolheu o fanzine desenhado, achou infantil, comparou com Prancha de patente e Padrão da categoria em página inteira, e escolheu o "zine sério" (prototipos/guia-zine-serio.prototype.html), pedindo marca-texto cobrindo a letra inteira.
+Histórico: o usuário escolheu o fanzine desenhado, achou infantil, comparou com Prancha de patente e Padrão da categoria em página inteira, e escolheu o "zine sério" (prototypes/guia-zine-serio.prototype.html), pedindo marca-texto cobrindo a letra inteira.
 
 ## Direction contract
 

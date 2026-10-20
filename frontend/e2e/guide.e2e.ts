@@ -42,11 +42,11 @@ test.describe('Guide page', () => {
     await page.goto(GUIDE)
     const answer = page.getByRole('region', { name: 'Resposta curta' })
     await expect(answer).toContainText('Confiança da resposta')
-    await expect(answer.locator('[data-confianca="moderada"]')).toContainText(
+    await expect(answer.locator('[data-confidence="moderate"]')).toContainText(
       'moderada',
     )
     await expect(
-      answer.locator('[data-confianca] svg path[fill="currentColor"]'),
+      answer.locator('[data-confidence] svg path[fill="currentColor"]'),
     ).toHaveCount(2)
     await expect(answer.locator('mark.numero-chave')).toHaveText(
       '18% dos adultos jovens',
@@ -67,7 +67,7 @@ test.describe('Guide page', () => {
       'Use o app como complemento, não como o único caminho12.',
     )
     await expect(tips).toContainText('Inferência nossa')
-    await expect(tips.locator('[data-forca="moderada"]')).toContainText(
+    await expect(tips.locator('[data-strength="moderate"]')).toContainText(
       'moderada',
     )
     // One reference per Fact sheet, glued, before the final period.

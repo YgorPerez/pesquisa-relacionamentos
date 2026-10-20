@@ -1,21 +1,21 @@
 ---
 # Antes da migração: ✅ lido no original, via PMC (data: 2026-10-18)
-referencia: "Schwartz CR, Han H. *The reversal of the gender gap in education and trends in marital dissolution*. American Sociological Review 79(4):605–629, 2014. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC4212646/"
+reference: "Schwartz CR, Han H. *The reversal of the gender gap in education and trends in marital dissolution*. American Sociological Review 79(4):605–629, 2014. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC4212646/"
 link: https://doi.org/10.1177/0003122414539682
-status: nao-verificado
-forca: forte
-forca_porque: "Grandes amostras nacionais dos EUA, mais de 50 anos de coortes."
-paises: [EUA]
-periodo: "casamentos formados entre 1950 e 2004"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Grandes amostras nacionais dos EUA, mais de 50 anos de coortes."
+countries: [EUA]
+period: "casamentos formados entre 1950 e 2004"
+sample:
   n: 39589
-  descricao: "NSFG (1973–1995, 2002, 2006–2010) e PSID combinados; N = 39.589 no modelo agrupado (Tabela 3)."
-  representativa: false
-desenho: transversal
-conflito: "Acadêmico; não conferido em detalhe."
-cobre:
-  generos: [homem, mulher]
-  casal: hetero
+  description: "NSFG (1973–1995, 2002, 2006–2010) e PSID combinados; N = 39.589 no modelo agrupado (Tabela 3)."
+  representative: false
+design: cross-sectional
+conflict: "Acadêmico; não conferido em detalhe."
+covers:
+  genders: [man, woman]
+  couple: different-sex
 ---
 
 # Schwartz & Han (2014): escolaridade relativa dos cônjuges e divórcio
@@ -56,4 +56,4 @@ Razões de risco versus casais com marido mais escolarizado (Tabela 3, Modelo 2)
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): homogamia educacional e divórcio.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): homogamia educacional e divórcio.

@@ -11,7 +11,7 @@ import { buildPacks } from '../../../vite/possible-group.ts'
 
 const DATA = resolve(
   import.meta.dirname,
-  '../../../e2e/library/dados/grupo-possivel',
+  '../../../e2e/library/data/possible-group',
 )
 
 let built: ReturnType<typeof buildPacks> | undefined

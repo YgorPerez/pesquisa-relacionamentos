@@ -1,17 +1,17 @@
 ---
-referencia: "Rocha E. Uma Ficha com campos inválidos, 2021."
+reference: "Rocha E. Uma Ficha com campos inválidos, 2021."
 link: doi 10.1/abc
 status: talvez
-forca: forte
-forca_porque: "Exemplo."
-paises: [Brasil]
-periodo: "2020"
-amostra:
+strength: strong
+strength_reason: "Exemplo."
+countries: [Brasil]
+period: "2020"
+sample:
   n: muitos
-  descricao: "Exemplo."
-  representativa: sim
-desenho: transversal
-cobre: {}
+  description: "Exemplo."
+  representative: sim
+design: cross-sectional
+covers: {}
 autor: Rocha
 ---
 

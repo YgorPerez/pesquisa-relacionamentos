@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (manuscrito aceito, não a versão diagramada; data: 2026-10-18)
-referencia: "Eastwick PW, Sparks J, Finkel EJ, Meza EM, Adamkovič M, et al. (mais de 100 coautores; Psychological Science Accelerator). *A worldwide test of the predictive validity of ideal partner preference matching*. Journal of Personality and Social Psychology, 2024 (volume não conferido). Texto completo aberto (manuscrito aceito): https://storre.stir.ac.uk/bitstream/1893/36463/1/PreferenceMatching_FinalSubmission.pdf"
+reference: "Eastwick PW, Sparks J, Finkel EJ, Meza EM, Adamkovič M, et al. (mais de 100 coautores; Psychological Science Accelerator). *A worldwide test of the predictive validity of ideal partner preference matching*. Journal of Personality and Social Psychology, 2024 (volume não conferido). Texto completo aberto (manuscrito aceito): https://storre.stir.ac.uk/bitstream/1893/36463/1/PreferenceMatching_FinalSubmission.pdf"
 link: https://doi.org/10.1037/pspp0000524
-status: nao-verificado
-forca: forte
-forca_porque: "Forte para a pergunta \"o match com o ideal prevê a avaliação do parceiro?\" (registered report pré-registrado, N grande, 43 países). Moderada para conclusões sobre qualidade de longo prazo, porque o desenho é transversal."
-paises: []
-periodo: "não informado no texto lido"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Forte para a pergunta \"o match com o ideal prevê a avaliação do parceiro?\" (registered report pré-registrado, N grande, 43 países). Moderada para conclusões sobre qualidade de longo prazo, porque o desenho é transversal."
+countries: []
+period: "não informado no texto lido"
+sample:
   n: 10358
-  descricao: "N = 10.358, entre pessoas em relacionamento e solteiras, de 43 países, em 22 idiomas."
-  representativa: false
-desenho: transversal
-conflito: "Consórcio acadêmico; não conferido em detalhe."
-cobre:
-  generos: [homem, mulher]
+  description: "N = 10.358, entre pessoas em relacionamento e solteiras, de 43 países, em 22 idiomas."
+  representative: false
+design: cross-sectional
+conflict: "Consórcio acadêmico; não conferido em detalhe."
+covers:
+  genders: [man, woman]
 ---
 
 # Eastwick et al. (2024): teste mundial do "match" de preferências ideais (43 países)
@@ -51,4 +51,4 @@ Desenho, como descrito antes da migração: registered report transversal. Parti
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): principal fonte sobre a diferença entre o que se declara e o que se revela, e sobre o peso pequeno do "match" com a lista pessoal de requisitos.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): principal fonte sobre a diferença entre o que se declara e o que se revela, e sobre o peso pequeno do "match" com a lista pessoal de requisitos.

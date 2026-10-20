@@ -386,7 +386,7 @@ export function prioritiesPreview(
 ): Preview | null {
   const { top3, outcome } = priorities
   const names = top3.flatMap((id) =>
-    traits.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()),
+    traits.filter((c) => c.id === id).map((c) => c.name.toLowerCase()),
   )
   if (names.length === 0) return null
   return {

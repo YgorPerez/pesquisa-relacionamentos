@@ -1,19 +1,19 @@
 ---
 # Antes da migração: 🟡 parcial (página comercial; metodologia não publicada)
-referencia: "Start.io. *Dating Users – Tinder in Brazil* (página de audiência)."
+reference: "Start.io. *Dating Users – Tinder in Brazil* (página de audiência)."
 link: https://www.start.io/audience/dating-users-tinder-in-brazil
-status: nao-verificado
-forca: fraca
-forca_porque: "Estimativa comercial, com gênero inferido de sinais do aparelho e metodologia não publicada."
-paises: [Brasil]
-periodo: "data não informada"
-amostra:
-  descricao: "Usuários da rede de anúncios da Start.io. O gênero é inferido a partir de sinais do aparelho, sem pesquisa com usuários."
-  representativa: false
-desenho: plataforma
-conflito: "Empresa que vende segmentação de anúncios."
-cobre:
-  generos: [homem, mulher]
+status: unverified
+strength: weak
+strength_reason: "Estimativa comercial, com gênero inferido de sinais do aparelho e metodologia não publicada."
+countries: [Brasil]
+period: "data não informada"
+sample:
+  description: "Usuários da rede de anúncios da Start.io. O gênero é inferido a partir de sinais do aparelho, sem pesquisa com usuários."
+  representative: false
+design: platform
+conflict: "Empresa que vende segmentação de anúncios."
+covers:
+  genders: [man, woman]
 ---
 
 # Start.io: estimativa de gênero dos usuários do Tinder no Brasil
@@ -36,4 +36,4 @@ A proporção estimada de homens e mulheres entre usuários do Tinder no Brasil,
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.3, com ressalva.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.3, com ressalva.

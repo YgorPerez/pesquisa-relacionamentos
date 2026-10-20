@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Potarca G. *The demography of swiping right. An overview of couples who met through dating apps in Switzerland*. PLOS ONE 15(12):e0243733, 2020."
+reference: "Potarca G. *The demography of swiping right. An overview of couples who met through dating apps in Switzerland*. PLOS ONE 15(12):e0243733, 2020."
 link: https://doi.org/10.1371/journal.pone.0243733
-status: nao-verificado
-forca: moderada
-forca_porque: "Pesquisa oficial, mas transversal, só Suíça e com subgrupo de app pequeno (104)."
-paises: [Suíça]
-periodo: "2018 (Family and Generations Survey)"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Pesquisa oficial, mas transversal, só Suíça e com subgrupo de app pequeno (104)."
+countries: [Suíça]
+period: "2018 (Family and Generations Survey)"
+sample:
   n: 3245
-  descricao: "3.245 pessoas com relação iniciada nos últimos 10 anos, da Family and Generations Survey 2018 (pesquisa oficial); 104 casais de app (4,1%)."
-  representativa: false
-desenho: transversal
-conflito: "Acadêmico; nenhum conflito identificado."
-cobre:
-  generos: [homem, mulher]
+  description: "3.245 pessoas com relação iniciada nos últimos 10 anos, da Family and Generations Survey 2018 (pesquisa oficial); 104 casais de app (4,1%)."
+  representative: false
+design: cross-sectional
+conflict: "Acadêmico; nenhum conflito identificado."
+covers:
+  genders: [man, woman]
 ---
 
 # Potarca (2020): casais formados por app na Suíça
@@ -43,4 +43,4 @@ Casais formados por app comparados com os demais:
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 2.1 e 4: único estudo que separa apps; homens jovens competem com mais velhos nos apps.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 2.1 e 4: único estudo que separa apps; homens jovens competem com mais velhos nos apps.

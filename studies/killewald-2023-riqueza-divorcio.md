@@ -1,18 +1,18 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo no PubMed (data: 2026-10-18)
-referencia: "Killewald A, Lee A, England P. *Wealth and divorce*. Demography 60(1):147–171, 2023. Resumo: PubMed 36661229."
+reference: "Killewald A, Lee A, England P. *Wealth and divorce*. Demography 60(1):147–171, 2023. Resumo: PubMed 36661229."
 link: https://doi.org/10.1215/00703370-10413021
-status: nao-verificado
-forca: moderada
-forca_porque: "Observacional, EUA; base de dados e N não conferidos."
-paises: [EUA]
-periodo: "não informado no texto lido"
-amostra:
-  descricao: "Não conferido."
-  representativa: false
-desenho: transversal
-conflito: "Não conferido."
-cobre: {}
+status: unverified
+strength: moderate
+strength_reason: "Observacional, EUA; base de dados e N não conferidos."
+countries: [EUA]
+period: "não informado no texto lido"
+sample:
+  description: "Não conferido."
+  representative: false
+design: cross-sectional
+conflict: "Não conferido."
+covers: {}
 ---
 
 # Killewald, Lee & England (2023): riqueza do casal e divórcio
@@ -40,4 +40,4 @@ Desenho, como descrito antes da migração: observacional, com muitos controles.
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): dinheiro importa sobretudo para sair da falta de dinheiro, não em níveis altos.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): dinheiro importa sobretudo para sair da falta de dinheiro, não em níveis altos.

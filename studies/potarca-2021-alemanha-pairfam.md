@@ -1,22 +1,22 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo (PubMed). O artigo é de acesso aberto, mas o site da editora bloqueou o download automático (data: 2026-10-18)
-referencia: "Potarca G. *Online Dating Is Shifting Educational Inequalities in Marriage Formation in Germany*. Demography 58(5):1977–2007, 2021. Resumo: https://pubmed.ncbi.nlm.nih.gov/34410350"
+reference: "Potarca G. *Online Dating Is Shifting Educational Inequalities in Marriage Formation in Germany*. Demography 58(5):1977–2007, 2021. Resumo: https://pubmed.ncbi.nlm.nih.gov/34410350"
 link: https://doi.org/10.1215/00703370-9420350
-status: nao-verificado
-forca: moderada
-forca_porque: "Painel longitudinal (pairfam), mas só Alemanha e conferido só no resumo."
-paises: [Alemanha]
-periodo: "2008–2019 (painel pairfam)"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Painel longitudinal (pairfam), mas só Alemanha e conferido só no resumo."
+countries: [Alemanha]
+period: "2008–2019 (painel pairfam)"
+sample:
   n: 3561
-  descricao: "N = 3.561 adultos com parceiro (casais heterossexuais, 18–48 anos), do painel pairfam."
-  representativa: false
-desenho: longitudinal
-conflito: "Acadêmico (Universidade de Genebra/NCCR LIVES); nenhum conflito identificado."
-cobre:
-  generos: [homem, mulher]
-  idades: { min: 18, max: 48 }
-  casal: hetero
+  description: "N = 3.561 adultos com parceiro (casais heterossexuais, 18–48 anos), do painel pairfam."
+  representative: false
+design: longitudinal
+conflict: "Acadêmico (Universidade de Genebra/NCCR LIVES); nenhum conflito identificado."
+covers:
+  genders: [man, woman]
+  ages: { min: 18, max: 48 }
+  couple: different-sex
 ---
 
 # Potarca (2021): namoro online e transição para o casamento na Alemanha
@@ -46,4 +46,4 @@ Desenho, como descrito antes da migração: longitudinal (modelos de risco compe
 
 ## Como usamos
 
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): evidência longitudinal de que casais online não casam menos (na Alemanha, homens casam mais).
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): evidência longitudinal de que casais online não casam menos (na Alemanha, homens casam mais).

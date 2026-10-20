@@ -28,11 +28,11 @@ const IGNORED = [
   // The library: the content package checks each Excerpt against its
   // Source, and a realigned table or a wrapped line changes what it reads.
   // The fixtures of the content and verification tests are the same format.
-  'estudos/**',
-  'dicas/**',
-  'relatorios/**',
-  'fontes/**',
-  'dados/**',
+  'studies/**',
+  'tips/**',
+  'reports/**',
+  'sources/**',
+  'data/**',
   'packages/content/fixtures/**',
   'packages/rules/fixtures/**',
   'scripts/fixtures/**',

@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Bruch EE, Newman MEJ. *Aspirational pursuit of mates in online dating markets*. Science Advances 4(8):eaap9815, 2018."
+reference: "Bruch EE, Newman MEJ. *Aspirational pursuit of mates in online dating markets*. Science Advances 4(8):eaap9815, 2018."
 link: https://doi.org/10.1126/sciadv.aap9815
-status: nao-verificado
-forca: moderada
-forca_porque: "Comportamento real numa plataforma, mas um só site, em 4 cidades dos EUA, em 2014."
-paises: [EUA]
-periodo: "2014"
-amostra:
-  descricao: "Mensagens de usuários de um site de namoro gratuito em 4 cidades dos EUA."
-  representativa: false
-desenho: plataforma
-conflito: "Acadêmico; nenhum conflito identificado."
-cobre:
-  generos: [homem, mulher]
+status: unverified
+strength: moderate
+strength_reason: "Comportamento real numa plataforma, mas um só site, em 4 cidades dos EUA, em 2014."
+countries: [EUA]
+period: "2014"
+sample:
+  description: "Mensagens de usuários de um site de namoro gratuito em 4 cidades dos EUA."
+  representative: false
+design: platform
+conflict: "Acadêmico; nenhum conflito identificado."
+covers:
+  genders: [man, woman]
 ---
 
 # Bruch & Newman (2018): busca "aspiracional" em sites de namoro
@@ -38,4 +38,4 @@ Para quem os usuários de um site de namoro mandam mensagem, comparando a "desej
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 4 e 6.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 4 e 6.

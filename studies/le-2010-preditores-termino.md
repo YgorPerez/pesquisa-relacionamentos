@@ -1,19 +1,19 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo. O PDF não estava acessível e os tamanhos de efeito por preditor não foram conferidos (data: 2026-10-18)
-referencia: "Le B, Dove NL, Agnew CR, Korn MS, Mutso AA. *Predicting nonmarital romantic relationship dissolution: A meta-analytic synthesis*. Personal Relationships 17(3):377–390, 2010. Registro: https://scholarship.haverford.edu/psychology_facpubs/271"
+reference: "Le B, Dove NL, Agnew CR, Korn MS, Mutso AA. *Predicting nonmarital romantic relationship dissolution: A meta-analytic synthesis*. Personal Relationships 17(3):377–390, 2010. Registro: https://scholarship.haverford.edu/psychology_facpubs/271"
 link: https://doi.org/10.1111/j.1475-6811.2010.01285.x
-status: nao-verificado
-forca: forte
-forca_porque: "Meta-análise de estudos longitudinais."
-paises: []
-periodo: "33 anos de estudos (anos não informados no texto lido)"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Meta-análise de estudos longitudinais."
+countries: []
+period: "33 anos de estudos (anos não informados no texto lido)"
+sample:
   n: 37761
-  descricao: "137 estudos, 37.761 participantes."
-  representativa: false
-desenho: meta-analise
-conflito: "Não conferido."
-cobre: {}
+  description: "137 estudos, 37.761 participantes."
+  representative: false
+design: meta-analysis
+conflict: "Não conferido."
+covers: {}
 ---
 
 # Le et al. (2010): o que prevê o término de namoros (meta-análise)
@@ -41,4 +41,4 @@ Desenho, como descrito antes da migração: meta-análise de estudos que medem p
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): reforça [Joel et al. 2020](joel-2020-machine-learning-43-datasets.md): a dinâmica da relação prevê mais que a personalidade.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): reforça [Joel et al. 2020](joel-2020-machine-learning-43-datasets.md): a dinâmica da relação prevê mais que a personalidade.

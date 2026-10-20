@@ -21,24 +21,24 @@ export interface PriorityFactSheet {
 }
 
 export interface CellView {
-  readonly degrau: Level
+  readonly level: Level
   readonly measure: string | null
   readonly text: string
   readonly factSheet: PriorityFactSheet | null
 }
 
-/** A trait as the rules read it (`TraitWithEvidence`): `nome`, the outcome
- * keys and `vies` mirror the priorities file. */
+/** A trait as the rules read it (`TraitWithEvidence`): `name`, the outcome
+ * keys and `bias` mirror the priorities file. */
 export interface TraitView {
   readonly id: string
-  readonly nome: string
-  readonly atracao: CellView
-  readonly satisfacao: CellView
-  readonly duracao: CellView
-  readonly vies?: {
-    readonly todos?: string
-    readonly homem?: string
-    readonly mulher?: string
+  readonly name: string
+  readonly attraction: CellView
+  readonly satisfaction: CellView
+  readonly duration: CellView
+  readonly bias?: {
+    readonly all?: string
+    readonly man?: string
+    readonly woman?: string
   }
 }
 
@@ -72,8 +72,8 @@ function priorityFactSheet(factSheet: FactSheet): PriorityFactSheet {
     slug: factSheet.slug,
     name: factSheet.title.split(':')[0]?.trim() ?? factSheet.title,
     status: factSheet.status,
-    strength: factSheet.forca,
-    sample: withoutFormatting(factSheet.amostra.descricao),
+    strength: factSheet.strength,
+    sample: withoutFormatting(factSheet.sample.description),
   }
 }
 
@@ -88,34 +88,34 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
     return priorityFactSheet(found)
   }
   const cell = (c: PriorityCell): CellView => ({
-    degrau: c.degrau,
-    measure: c.medida ?? null,
-    text: c.texto_simples,
-    factSheet: c.ficha ? factSheet(c.ficha) : null,
+    level: c.level,
+    measure: c.measure ?? null,
+    text: c.plain_text,
+    factSheet: c.fact_sheet ? factSheet(c.fact_sheet) : null,
   })
-  const { satisfacao_explicada: bar } = priorities
-  const guide = library.guides.find((g) => g.calculadora === 'prioridades')
+  const { explained_satisfaction: bar } = priorities
+  const guide = library.guides.find((g) => g.calculator === 'priorities')
   return {
     bar: {
-      relationship: bar.relacao,
-      partner: bar.parceiro,
-      unexplained: bar.sem_explicacao,
-      factSheet: factSheet(bar.ficha),
+      relationship: bar.relationship,
+      partner: bar.partner,
+      unexplained: bar.unexplained,
+      factSheet: factSheet(bar.fact_sheet),
     },
-    traits: priorities.caracteristicas.map((c) => ({
+    traits: priorities.traits.map((c) => ({
       id: c.id,
-      nome: c.nome,
-      atracao: cell(c.atracao),
-      satisfacao: cell(c.satisfacao),
-      duracao: cell(c.duracao),
-      ...(c.vies ? { vies: c.vies } : {}),
+      name: c.name,
+      attraction: cell(c.attraction),
+      satisfaction: cell(c.satisfaction),
+      duration: cell(c.duration),
+      ...(c.bias ? { bias: c.bias } : {}),
     })),
     fromGuide: guide
       ? {
           topic: guide.topic,
           slug: guide.slug,
-          question: withoutMarks(guide.pergunta),
-          confidence: guide.confianca,
+          question: withoutMarks(guide.question),
+          confidence: guide.confidence,
           answer: withoutMarks(guide.shortAnswer),
         }
       : null,

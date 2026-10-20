@@ -2,16 +2,16 @@
 // from 0 to 3, the measure, the plain text and the fact sheet, plus the bias
 // by gender. The `/prioridades` calculator and the B1 guide card read this
 // same file. Every number follows the claims rule: the cited fact sheet must
-// exist and be ✅ or 🟡. The YAML keys are the content contract and stay in
-// Portuguese.
+// exist and be ✅ or 🟡. The YAML keys are the content contract, in English
+// since #70. The trait ids are the link's values and stay in Portuguese.
 import { Schema } from 'effect'
 import { parse as parseYaml } from 'yaml'
 import { Slug } from './schema.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import { decode, problem, type Problem } from './problems.ts'
 
-export const PRIORITIES_FILE = 'dados/prioridades/prioridades.yaml'
-export const PRIORITIES_META = 'dados/prioridades/prioridades.meta.yaml'
+export const PRIORITIES_FILE = 'data/priorities/priorities.yaml'
+export const PRIORITIES_META = 'data/priorities/priorities.meta.yaml'
 
 const Text = Schema.String.check(
   Schema.isMinLength(1, { message: 'cannot be empty' }),
@@ -25,42 +25,42 @@ const Percent = Schema.Int.check(
 
 /** A trait × outcome cell. Without a fact sheet, only level 0. */
 const Cell = Schema.Struct({
-  degrau: Schema.Literals([0, 1, 2, 3]),
-  medida: Schema.optional(Text),
-  texto_simples: Text,
-  ficha: Schema.optional(Slug),
+  level: Schema.Literals([0, 1, 2, 3]),
+  measure: Schema.optional(Text),
+  plain_text: Text,
+  fact_sheet: Schema.optional(Slug),
 })
 export type PriorityCell = typeof Cell.Type
 
 /** The gap between what people state and what they choose. */
 const Bias = Schema.Struct({
-  todos: Schema.optional(Text),
-  homem: Schema.optional(Text),
-  mulher: Schema.optional(Text),
+  all: Schema.optional(Text),
+  man: Schema.optional(Text),
+  woman: Schema.optional(Text),
 })
 
 const Trait = Schema.Struct({
   id: Slug,
-  nome: Text,
-  atracao: Cell,
-  satisfacao: Cell,
-  duracao: Cell,
-  vies: Schema.optional(Bias),
+  name: Text,
+  attraction: Cell,
+  satisfaction: Cell,
+  duration: Cell,
+  bias: Schema.optional(Bias),
 })
 export type Trait = typeof Trait.Type
 
 /** The Joel 2020 bar: where satisfaction comes from, in percent. */
 const ExplainedSatisfaction = Schema.Struct({
-  ficha: Slug,
-  relacao: Percent,
-  parceiro: Percent,
-  sem_explicacao: Percent,
+  fact_sheet: Slug,
+  relationship: Percent,
+  partner: Percent,
+  unexplained: Percent,
 })
 export type ExplainedSatisfaction = typeof ExplainedSatisfaction.Type
 
 const PrioritiesFileSchema = Schema.Struct({
-  satisfacao_explicada: ExplainedSatisfaction,
-  caracteristicas: Schema.Array(Trait),
+  explained_satisfaction: ExplainedSatisfaction,
+  traits: Schema.Array(Trait),
 })
 
 export interface Priorities extends Schema.Schema.Type<
@@ -85,10 +85,10 @@ export function dataFactSheetProblem(
   if (!factSheet)
     return problem(
       file,
-      `the fact sheet estudos/${slug}.md does not exist`,
+      `the fact sheet studies/${slug}.md does not exist`,
       field,
     )
-  if (factSheet.status === 'nao-verificado')
+  if (factSheet.status === 'unverified')
     return problem(
       file,
       `${slug} is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
@@ -97,7 +97,7 @@ export function dataFactSheetProblem(
   return null
 }
 
-const OUTCOMES = ['atracao', 'satisfacao', 'duracao'] as const
+const OUTCOMES = ['attraction', 'satisfaction', 'duration'] as const
 
 export function readPriorities(
   file: string,
@@ -111,7 +111,7 @@ export function readPriorities(
       errors: [
         problem(
           file,
-          'missing the prioridades.meta.yaml next to it, with the fact sheet, the variables, the date, the script and the version',
+          'missing the priorities.meta.yaml next to it, with the fact sheet, the variables, the date, the script and the version',
         ),
       ],
     }
@@ -126,22 +126,22 @@ export function readPriorities(
   }
   const parsed = decode(PrioritiesFileSchema, value, file)
   if (!parsed.ok) return { ok: false, errors: parsed.problems }
-  const { satisfacao_explicada: bar, caracteristicas: traits } = parsed.value
+  const { explained_satisfaction: bar, traits } = parsed.value
 
   const errors: Problem[] = []
-  const sum = bar.relacao + bar.parceiro + bar.sem_explicacao
+  const sum = bar.relationship + bar.partner + bar.unexplained
   if (sum !== 100)
     errors.push(
       problem(
         file,
-        `relacao, parceiro and sem_explicacao add up to ${sum}%, not 100%`,
-        'satisfacao_explicada',
+        `relationship, partner and unexplained add up to ${sum}%, not 100%`,
+        'explained_satisfaction',
       ),
     )
   const fromBar = dataFactSheetProblem(
     file,
-    'satisfacao_explicada.ficha',
-    bar.ficha,
+    'explained_satisfaction.fact_sheet',
+    bar.fact_sheet,
     factSheets,
   )
   if (fromBar) errors.push(fromBar)
@@ -152,24 +152,29 @@ export function readPriorities(
         problem(
           file,
           `the trait "${trait.id}" appears more than once`,
-          `caracteristicas.${i}.id`,
+          `traits.${i}.id`,
         ),
       )
     for (const outcome of OUTCOMES) {
       const cell = trait[outcome]
-      const field = `caracteristicas.${i}.${outcome}.ficha`
-      if (cell.ficha === undefined) {
-        if (cell.degrau > 0)
+      const field = `traits.${i}.${outcome}.fact_sheet`
+      if (cell.fact_sheet === undefined) {
+        if (cell.level > 0)
           errors.push(
             problem(
               file,
-              `level ${cell.degrau} needs the fact sheet that backs it; without a fact sheet, only 0 ("não sabemos")`,
+              `level ${cell.level} needs the fact sheet that backs it; without a fact sheet, only 0 ("não sabemos")`,
               field,
             ),
           )
         continue
       }
-      const fromCell = dataFactSheetProblem(file, field, cell.ficha, factSheets)
+      const fromCell = dataFactSheetProblem(
+        file,
+        field,
+        cell.fact_sheet,
+        factSheets,
+      )
       if (fromCell) errors.push(fromCell)
     }
   })

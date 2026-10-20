@@ -10,56 +10,56 @@ import type {
 const FACT_SHEET: PriorityFactSheet = {
   slug: 'costa-2018-satisfacao',
   name: 'Costa (2018)',
-  status: 'parcial',
-  strength: 'moderada',
+  status: 'partial',
+  strength: 'moderate',
   sample: 'Casais casados recrutados online.',
 }
 
 const cell = (
-  degrau: 0 | 1 | 2 | 3,
+  level: 0 | 1 | 2 | 3,
   text = 'Nenhum estudo lido mede isso.',
 ): CellView => ({
-  degrau,
+  level,
   measure: null,
   text,
-  factSheet: degrau > 0 ? FACT_SHEET : null,
+  factSheet: level > 0 ? FACT_SHEET : null,
 })
 
 export const TRAITS: ReadonlyArray<TraitView> = [
   {
     id: 'aparencia',
-    nome: 'Aparência',
-    atracao: cell(3),
-    satisfacao: cell(2, 'Só um pouco, e só no começo.'),
-    duracao: cell(0),
+    name: 'Aparência',
+    attraction: cell(3),
+    satisfaction: cell(2, 'Só um pouco, e só no começo.'),
+    duration: cell(0),
   },
   {
     id: 'sexo',
-    nome: 'Química sexual',
-    atracao: cell(3),
-    satisfacao: cell(3),
-    duracao: cell(0),
+    name: 'Química sexual',
+    attraction: cell(3),
+    satisfaction: cell(3),
+    duration: cell(0),
   },
   {
     id: 'renda',
-    nome: 'Renda',
-    atracao: cell(2),
-    satisfacao: cell(0),
-    duracao: cell(0),
+    name: 'Renda',
+    attraction: cell(2),
+    satisfaction: cell(0),
+    duration: cell(0),
   },
   {
     id: 'parecido',
-    nome: 'Ser parecido comigo',
-    atracao: cell(1),
-    satisfacao: cell(1),
-    duracao: cell(0),
+    name: 'Ser parecido comigo',
+    attraction: cell(1),
+    satisfaction: cell(1),
+    duration: cell(0),
   },
   {
     id: 'idade',
-    nome: 'Idade parecida',
-    atracao: cell(0),
-    satisfacao: cell(0),
-    duracao: cell(0),
+    name: 'Idade parecida',
+    attraction: cell(0),
+    satisfaction: cell(0),
+    duration: cell(0),
   },
 ]
 
@@ -70,7 +70,7 @@ export const SPLIT: SatisfactionSplit = {
   factSheet: {
     ...FACT_SHEET,
     name: 'Joel et al. (2020)',
-    status: 'ok',
-    strength: 'forte',
+    status: 'verified',
+    strength: 'strong',
   },
 }

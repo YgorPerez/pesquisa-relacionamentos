@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18). Lista de países e recorte do Brasil conferidos nos dados abertos do OSF (https://osf.io/uzf37, arquivo `Dataset_Relationship_Formation.csv`)
-referencia: "Kowal M. et al. *Meeting partners online is related to lower relationship satisfaction and love: Data from 50 countries*. Telematics and Informatics 101:102309, 2025."
+reference: "Kowal M. et al. *Meeting partners online is related to lower relationship satisfaction and love: Data from 50 countries*. Telematics and Informatics 101:102309, 2025."
 link: https://doi.org/10.1016/j.tele.2025.102309
-status: nao-verificado
-forca: moderada
-forca_porque: "Amostra grande em 50 países, mas de painel online com cotas e transversal."
-paises: [Argélia, Argentina, Austrália, Bangladesh, Bolívia, Brasil, Bulgária, Chile, China, Colômbia, Equador, Egito, Etiópia, França, Alemanha, Gana, Grécia, Guatemala, Honduras, Índia, Indonésia, Itália, Japão, Cazaquistão, Quênia, Malásia, México, Marrocos, Nova Zelândia, Nicarágua, Nigéria, Paquistão, Panamá, Paraguai, Peru, Filipinas, Polônia, Romênia, Singapura, África do Sul, Coreia do Sul, Espanha, Sri Lanka, Tailândia, Turquia, Reino Unido, EUA, Uganda, Venezuela, Vietnã]
-periodo: "2024"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Amostra grande em 50 países, mas de painel online com cotas e transversal."
+countries: [Argélia, Argentina, Austrália, Bangladesh, Bolívia, Brasil, Bulgária, Chile, China, Colômbia, Equador, Egito, Etiópia, França, Alemanha, Gana, Grécia, Guatemala, Honduras, Índia, Indonésia, Itália, Japão, Cazaquistão, Quênia, Malásia, México, Marrocos, Nova Zelândia, Nicarágua, Nigéria, Paquistão, Panamá, Paraguai, Peru, Filipinas, Polônia, Romênia, Singapura, África do Sul, Coreia do Sul, Espanha, Sri Lanka, Tailândia, Turquia, Reino Unido, EUA, Uganda, Venezuela, Vietnã]
+period: "2024"
+sample:
   n: 6646
-  descricao: "6.646 pessoas com parceiro, recrutadas por painel online com cotas (Syno International)."
-  representativa: false
-desenho: transversal
-conflito: "Acadêmico; nenhum conflito identificado."
-cobre: {}
+  description: "6.646 pessoas com parceiro, recrutadas por painel online com cotas (Syno International)."
+  representative: false
+design: cross-sectional
+conflict: "Acadêmico; nenhum conflito identificado."
+covers: {}
 ---
 
 # Kowal et al. (2025): conhecer-se online e satisfação em 50 países
@@ -63,5 +63,5 @@ Médias simples, **sem ponderação e sem teste estatístico**, calculadas em 20
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 1.3 e 2.1: estoque de casais online fora dos EUA e evidência contrária a Cacioppo.
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): o Brasil está na amostra; recorte brasileiro.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 1.3 e 2.1: estoque de casais online fora dos EUA e evidência contrária a Cacioppo.
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): o Brasil está na amostra; recorte brasileiro.

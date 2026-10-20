@@ -1,18 +1,18 @@
 ---
-referencia: "Costa C. *Satisfação e onde os casais se conheceram*. Estudos Exemplo 4:1–20, 2018."
+reference: "Costa C. *Satisfação e onde os casais se conheceram*. Estudos Exemplo 4:1–20, 2018."
 link: https://exemplo.org/costa-2018
-status: parcial
-verificado_em: 2026-10-18
-forca: moderada
-forca_porque: "Amostra única e transversal."
-paises: [EUA]
-periodo: "2017"
-amostra:
-  descricao: "Casais casados recrutados online."
-  representativa: false
-desenho: transversal
-cobre:
-  casal: hetero
+status: partial
+verified_on: 2026-10-18
+strength: moderate
+strength_reason: "Amostra única e transversal."
+countries: [EUA]
+period: "2017"
+sample:
+  description: "Casais casados recrutados online."
+  representative: false
+design: cross-sectional
+covers:
+  couple: different-sex
 ---
 
 # Costa (2018): satisfação e onde os casais se conheceram

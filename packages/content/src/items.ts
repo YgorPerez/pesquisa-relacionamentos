@@ -1,6 +1,6 @@
 // Topic, guide and tip read file by file: the decoded frontmatter and the cut
 // body. What depends on other files (inheritance from the fact sheets,
-// references, confidence, `ordem`) lives in `publication.ts`.
+// references, confidence, `order`) lives in `publication.ts`.
 import type { Schema } from 'effect'
 import { parse as parseYaml } from 'yaml'
 import {
@@ -16,7 +16,7 @@ import { splitFrontmatter, readBody } from './markdown.ts'
 import { decode, problem, type Problem } from './problems.ts'
 
 export interface Topic extends TopicFrontmatter {
-  /** The folder name in `guias/`, which becomes the path `/<topic>`. */
+  /** The folder name in `guides/`, which becomes the path `/<topic>`. */
   readonly slug: string
   readonly file: string
   /** The context paragraph, in markdown. */
@@ -26,33 +26,33 @@ export interface Topic extends TopicFrontmatter {
 /** A guide finding with what it inherited from the cited fact sheets. The
  * inherited keys keep the frontmatter names. */
 export interface GuideFinding {
-  readonly texto: string
-  readonly fichas: ReadonlyArray<string>
-  /** The finding's `pais` or the fact sheets' countries, without repeats. */
-  readonly paises: ReadonlyArray<string>
-  /** The finding's `periodo` or the fact sheets' periods, joined. */
-  readonly periodo: string
-  /** Who the finding covers: `[vale_para]` if it declared a scope, otherwise
-   * the `cobre` of each cited fact sheet. It applies to the profile any of
+  readonly text: string
+  readonly fact_sheets: ReadonlyArray<string>
+  /** The finding's `country` or the fact sheets' countries, without repeats. */
+  readonly countries: ReadonlyArray<string>
+  /** The finding's `period` or the fact sheets' periods, joined. */
+  readonly period: string
+  /** Who the finding covers: `[applies_to]` if it declared a scope, otherwise
+   * the `covers` of each cited fact sheet. It applies to the profile any of
    * them covers. */
-  readonly cobre: ReadonlyArray<Coverage>
-  /** Whether `cobre` came from `vale_para` (a scope) and not from the fact
+  readonly covers: ReadonlyArray<Coverage>
+  /** Whether `covers` came from `applies_to` (a scope) and not from the fact
    * sheets. */
   readonly scoped: boolean
 }
 
 export interface Guide extends Omit<
   GuideFrontmatter,
-  'achados' | 'dicas' | 'mitos' | 'relacionadas'
+  'findings' | 'tips' | 'myths' | 'related'
 > {
   readonly slug: string
   /** The topic slug, the file's folder. */
   readonly topic: string
   readonly file: string
-  readonly achados: ReadonlyArray<GuideFinding>
-  readonly dicas: ReadonlyArray<string>
-  readonly mitos: ReadonlyArray<Myth>
-  readonly relacionadas: ReadonlyArray<string>
+  readonly findings: ReadonlyArray<GuideFinding>
+  readonly tips: ReadonlyArray<string>
+  readonly myths: ReadonlyArray<Myth>
+  readonly related: ReadonlyArray<string>
   /** The markdown before the first `##`. References like `[@fact-sheet-slug]`
    * and the key number like `==39% dos casais==`. */
   readonly shortAnswer: string
@@ -67,16 +67,16 @@ export interface Tip {
   readonly slug: string
   readonly file: string
   readonly text: string
-  readonly fichas: ReadonlyArray<string>
-  readonly forca: Strength
-  readonly inferencia: boolean
-  readonly paises: ReadonlyArray<string>
-  readonly periodo: string
-  readonly cobre: ReadonlyArray<Coverage>
+  readonly fact_sheets: ReadonlyArray<string>
+  readonly strength: Strength
+  readonly inference: boolean
+  readonly countries: ReadonlyArray<string>
+  readonly period: string
+  readonly covers: ReadonlyArray<Coverage>
   readonly scoped: boolean
   /** A tip only goes to the site if all its fact sheets are ✅ or 🟡. */
   readonly published: boolean
-  readonly antes?: ReadonlyArray<string>
+  readonly previous?: ReadonlyArray<string>
   readonly seo?: TipFrontmatter['seo']
 }
 
@@ -128,7 +128,7 @@ export type ParsedItem<T> =
   | { readonly ok: true; readonly item: T }
   | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** `guias/<topic>/_tema.md`. */
+/** `guides/<topic>/_topic.md`. */
 export function readTopic(file: string, text: string): ParsedItem<Topic> {
   const slug = file.split('/')[1] ?? ''
   const { value, body, errors } = readFrontmatter(TopicFrontmatter, file, text)
@@ -155,13 +155,13 @@ export function readTopic(file: string, text: string): ParsedItem<Topic> {
 }
 
 /** The guide still without the fact sheets' inheritance: the findings'
- * `paises`, `periodo` and `cobre`, and `citedFactSheets`, arrive in
+ * `countries`, `period` and `covers`, and `citedFactSheets`, arrive in
  * `publication.ts`. */
-export type ParsedGuide = Omit<Guide, 'achados' | 'citedFactSheets'> & {
-  readonly achados: GuideFrontmatter['achados']
+export type ParsedGuide = Omit<Guide, 'findings' | 'citedFactSheets'> & {
+  readonly findings: GuideFrontmatter['findings']
 }
 
-/** `guias/<topic>/<slug>.md`. */
+/** `guides/<topic>/<slug>.md`. */
 export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
   const [, topic = '', name = ''] = file.split('/')
   const slug = nameWithoutMd(name)
@@ -171,7 +171,7 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
     errors.push(
       problem(
         file,
-        'a guide has no "#" title: the question comes from `pergunta`',
+        'a guide has no "#" title: the question comes from `question`',
       ),
     )
   if (!parsed.opening)
@@ -192,13 +192,13 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
       )
   }
   if (value) {
-    const highlights = value.pergunta.match(/==[^=]+==/g) ?? []
+    const highlights = value.question.match(/==[^=]+==/g) ?? []
     if (highlights.length > 1)
       errors.push(
         problem(
           file,
           'the question highlights at most one word in yellow (==word==)',
-          'pergunta',
+          'question',
         ),
       )
   }
@@ -212,9 +212,9 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
       slug,
       topic,
       file,
-      dicas: value.dicas ?? [],
-      mitos: value.mitos ?? [],
-      relacionadas: value.relacionadas ?? [],
+      tips: value.tips ?? [],
+      myths: value.myths ?? [],
+      related: value.related ?? [],
       shortAnswer: parsed.opening,
       variesByProfile: section(GUIDE_SECTIONS.profile),
       limitations: section(GUIDE_SECTIONS.limitations),
@@ -228,21 +228,23 @@ export type ParsedTip = TipFrontmatter & {
   readonly text: string
 }
 
-/** `dicas/<slug>.md`. */
+/** `tips/<slug>.md`. */
 export function readTip(file: string, text: string): ParsedItem<ParsedTip> {
   const slug = nameWithoutMd(file)
   const { value, body, errors } = readFrontmatter(TipFrontmatter, file, text)
   const tipText = body.trim()
   if (value && !tipText)
     errors.push(problem(file, 'missing the tip text in the body'))
-  if (value && value.fichas.length === 0)
-    errors.push(problem(file, 'a tip cites at least one fact sheet', 'fichas'))
-  if (value?.inferencia && value.forca === 'forte')
+  if (value && value.fact_sheets.length === 0)
+    errors.push(
+      problem(file, 'a tip cites at least one fact sheet', 'fact_sheets'),
+    )
+  if (value?.inference && value.strength === 'strong')
     errors.push(
       problem(
         file,
-        `an inference has at most moderate strength (got ${value.forca})`,
-        'forca',
+        `an inference has at most moderate strength (got ${value.strength})`,
+        'strength',
       ),
     )
   if (!value || errors.length > 0) return { ok: false, errors }

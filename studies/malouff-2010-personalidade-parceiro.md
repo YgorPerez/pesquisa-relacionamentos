@@ -1,21 +1,21 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo no repositório da University of New England. O texto completo é pago e os r por traço não foram conferidos (data: 2026-10-18)
-referencia: "Malouff JM, Thorsteinsson EB, Schutte NS, Bhullar N, Rooke SE. *The Five-Factor Model of personality and relationship satisfaction of intimate partners: A meta-analysis*. Journal of Research in Personality 44(1):124–127, 2010. Registro com resumo: https://hdl.handle.net/1959.11/7370"
+reference: "Malouff JM, Thorsteinsson EB, Schutte NS, Bhullar N, Rooke SE. *The Five-Factor Model of personality and relationship satisfaction of intimate partners: A meta-analysis*. Journal of Research in Personality 44(1):124–127, 2010. Registro com resumo: https://hdl.handle.net/1959.11/7370"
 link: https://doi.org/10.1016/j.jrp.2009.09.004
-status: nao-verificado
-forca: forte
-forca_porque: "Meta-análise, mas os efeitos são pequenos e a maioria dos estudos é transversal."
-paises: []
-periodo: "não informado no texto lido"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Meta-análise, mas os efeitos são pequenos e a maioria dos estudos é transversal."
+countries: []
+period: "não informado no texto lido"
+sample:
   n: 3848
-  descricao: "19 amostras, 3.848 participantes, todos parceiros íntimos heterossexuais."
-  representativa: false
-desenho: meta-analise
-conflito: "Não conferido."
-cobre:
-  generos: [homem, mulher]
-  casal: hetero
+  description: "19 amostras, 3.848 participantes, todos parceiros íntimos heterossexuais."
+  representative: false
+design: meta-analysis
+conflict: "Não conferido."
+covers:
+  genders: [man, woman]
+  couple: different-sex
 ---
 
 # Malouff et al. (2010): personalidade do parceiro e satisfação (meta-análise)
@@ -45,4 +45,4 @@ Desenho, como descrito antes da migração: meta-análise de estudos correlacion
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): direção dos efeitos de personalidade do parceiro. Para o **tamanho**, usamos [Dyrenforth et al. 2010](dyrenforth-2010-personalidade-similaridade.md), que tem amostras representativas.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): direção dos efeitos de personalidade do parceiro. Para o **tamanho**, usamos [Dyrenforth et al. 2010](dyrenforth-2010-personalidade-similaridade.md), que tem amostras representativas.

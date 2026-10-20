@@ -31,6 +31,7 @@ export {
   factSheetPath,
   guidePath,
   topicPath,
+  calculatorPath,
   isFactSheetIndexable,
 } from './paths.ts'
 export {

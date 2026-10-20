@@ -3,7 +3,7 @@
 
 Looks up every known open copy (published version, accepted manuscript,
 preprint) in Unpaywall, OpenAlex and Semantic Scholar, and saves the first
-one that is an actual PDF to fontes/privado/<slug>.pdf.
+one that is an actual PDF to sources/private/<slug>.pdf.
 
 Usage:
     python3 -I scripts/fetch-sources.py list.txt

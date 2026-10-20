@@ -1,18 +1,18 @@
 ---
 # Antes da migração: 🟡 parcial: só o resumo no PubMed. Os números de probabilidade de dissolução que circulam em sites não foram conferidos (data: 2026-10-18)
-referencia: "Lehrer EL, Chiswick CU. *Religion as a determinant of marital stability*. Demography 30(3):385–404, 1993. Resumo: PubMed 8405605."
+reference: "Lehrer EL, Chiswick CU. *Religion as a determinant of marital stability*. Demography 30(3):385–404, 1993. Resumo: PubMed 8405605."
 link: https://doi.org/10.2307/2061647
-status: nao-verificado
-forca: moderada
-forca_porque: "Amostra nacional grande, mas dados de 1987–88, só EUA, observacional."
-paises: [EUA]
-periodo: "1987–1988"
-amostra:
-  descricao: "National Survey of Families and Households (NSFH) 1987–1988; tamanho não conferido."
-  representativa: false
-desenho: transversal
-conflito: "Não conferido."
-cobre: {}
+status: unverified
+strength: moderate
+strength_reason: "Amostra nacional grande, mas dados de 1987–88, só EUA, observacional."
+countries: [EUA]
+period: "1987–1988"
+sample:
+  description: "National Survey of Families and Households (NSFH) 1987–1988; tamanho não conferido."
+  representative: false
+design: cross-sectional
+conflict: "Não conferido."
+covers: {}
 ---
 
 # Lehrer & Chiswick (1993): religião do casal e estabilidade do casamento
@@ -41,4 +41,4 @@ Desenho, como descrito antes da migração: análise de sobrevivência dos casam
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): homogamia religiosa e divórcio (direção do efeito, sem tamanho).
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): homogamia religiosa e divórcio (direção do efeito, sem tamanho).

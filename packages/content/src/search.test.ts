@@ -1,5 +1,5 @@
 // Search and stable links (#15, #29): each page's title and description,
-// sitemap, robots, the 301s from `antes` and the check against the last
+// sitemap, robots, the 301s from `previous` and the check against the last
 // published sitemap. The cases start from the valid fixture and swap a file.
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
@@ -63,10 +63,10 @@ const buildWith = (swaps: Record<string, Swap>) =>
 const inFrontmatter = (lines: string) => (original: string) =>
   original.replace(/\n---\n/, `\n${lines}\n---\n`)
 
-const GUIDE = 'guias/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OTHER_GUIDE = 'guias/onde-conhecer/app-ou-presencial.md'
-const TOPIC = 'guias/onde-conhecer/_tema.md'
-const SILVA = 'estudos/silva-2020-apps-brasil.md'
+const GUIDE = 'guides/onde-conhecer/onde-os-casais-se-conhecem.md'
+const OTHER_GUIDE = 'guides/onde-conhecer/app-ou-presencial.md'
+const TOPIC = 'guides/onde-conhecer/_topic.md'
+const SILVA = 'studies/silva-2020-apps-brasil.md'
 
 describe('search title and description', () => {
   const library = libraryOf(buildLibrary(filesWith()))
@@ -129,7 +129,7 @@ describe('search title and description', () => {
 
   it('`seo` overrides title and description', () => {
     const seo =
-      'seo:\n  titulo: Onde os casais se conhecem\n  descricao: Uma descrição escrita à mão.'
+      'seo:\n  title: Onde os casais se conhecem\n  description: Uma descrição escrita à mão.'
     const swapped = libraryOf(
       buildWith({
         [GUIDE]: inFrontmatter(seo),
@@ -160,21 +160,21 @@ describe('search title and description', () => {
     const question =
       'Onde os casais brasileiros de todas as idades se conhecem hoje em dia?'
     const result = buildWith({
-      [GUIDE]: (t) => t.replace(/^pergunta: .*$/m, `pergunta: ${question}`),
+      [GUIDE]: (t) => t.replace(/^question: .*$/m, `question: ${question}`),
     })
     expect(result.ok).toBe(true)
     expect(warningsOf(result)).toEqual([
-      `${GUIDE}: pergunta: the search title has ${question.length} characters and the limit is 60; write a shorter one in seo.titulo`,
+      `${GUIDE}: question: the search title has ${question.length} characters and the limit is 60; write a shorter one in seo.title`,
     ])
   })
 
   it('warns when the `seo` description goes over 155 characters', () => {
     const longText = 'a'.repeat(160)
     const result = buildWith({
-      [SILVA]: inFrontmatter(`seo:\n  descricao: ${longText}`),
+      [SILVA]: inFrontmatter(`seo:\n  description: ${longText}`),
     })
     expect(warningsOf(result)).toEqual([
-      `${SILVA}: seo.descricao: the search description has 160 characters and the limit is 155`,
+      `${SILVA}: seo.description: the search description has 160 characters and the limit is 155`,
     ])
   })
 })
@@ -218,16 +218,16 @@ describe('sitemap and robots', () => {
   })
 })
 
-describe('antes: 301 from the old path', () => {
+describe('previous: 301 from the old path', () => {
   it("a fact sheet, tip and guide point the old slug to today's path", () => {
     const library = libraryOf(
       buildWith({
-        [SILVA]: inFrontmatter('antes: [silva-2020-apps]'),
-        'dicas/apps-como-complemento.md': inFrontmatter(
-          'antes: [app-complemento]',
+        [SILVA]: inFrontmatter('previous: [silva-2020-apps]'),
+        'tips/apps-como-complemento.md': inFrontmatter(
+          'previous: [app-complemento]',
         ),
         [GUIDE]: inFrontmatter(
-          'antes: [onde-casais-se-conhecem, escolher-parceiro/onde-se-conhecem]',
+          'previous: [onde-casais-se-conhecem, escolher-parceiro/onde-se-conhecem]',
         ),
       }),
     )
@@ -244,8 +244,8 @@ describe('antes: 301 from the old path', () => {
   it('a renamed topic takes its guides along, with the old slugs', () => {
     const library = libraryOf(
       buildWith({
-        [TOPIC]: inFrontmatter('antes: [conhecer-gente]'),
-        [OTHER_GUIDE]: inFrontmatter('antes: [app-ou-bar]'),
+        [TOPIC]: inFrontmatter('previous: [conhecer-gente]'),
+        [OTHER_GUIDE]: inFrontmatter('previous: [app-ou-bar]'),
       }),
     )
     expect(redirects(library)).toEqual({
@@ -258,19 +258,21 @@ describe('antes: 301 from the old path', () => {
     })
   })
 
-  it('without `antes`, no redirect', () => {
+  it('without `previous`, no redirect', () => {
     expect(redirects(libraryOf(buildLibrary(filesWith())))).toEqual({})
   })
 
-  it('fails when `antes` points to a path that still exists', () => {
+  it('fails when `previous` points to a path that still exists', () => {
     expect(
       errorsOf(
         buildWith({
-          [OTHER_GUIDE]: inFrontmatter('antes: [onde-os-casais-se-conhecem]'),
+          [OTHER_GUIDE]: inFrontmatter(
+            'previous: [onde-os-casais-se-conhecem]',
+          ),
         }),
       ),
     ).toContain(
-      `${OTHER_GUIDE}: antes: the path /onde-conhecer/onde-os-casais-se-conhecem is still a page of the site; "antes" only lists paths that disappeared`,
+      `${OTHER_GUIDE}: previous: the path /onde-conhecer/onde-os-casais-se-conhecem is still a page of the site; "previous" only lists paths that disappeared`,
     )
   })
 
@@ -278,20 +280,20 @@ describe('antes: 301 from the old path', () => {
     expect(
       errorsOf(
         buildWith({
-          [GUIDE]: inFrontmatter('antes: [velho]'),
-          [OTHER_GUIDE]: inFrontmatter('antes: [velho]'),
+          [GUIDE]: inFrontmatter('previous: [velho]'),
+          [OTHER_GUIDE]: inFrontmatter('previous: [velho]'),
         }),
       ),
     ).toContain(
-      `${OTHER_GUIDE}: antes: the path /onde-conhecer/velho is already in the "antes" of ${GUIDE}`,
+      `${OTHER_GUIDE}: previous: the path /onde-conhecer/velho is already in the "previous" of ${GUIDE}`,
     )
   })
 
-  it("fails when the topic's `antes` is a site route", () => {
+  it("fails when the topic's `previous` is a site route", () => {
     expect(
-      errorsOf(buildWith({ [TOPIC]: inFrontmatter('antes: [estudos]') })),
+      errorsOf(buildWith({ [TOPIC]: inFrontmatter('previous: [estudos]') })),
     ).toContain(
-      `${TOPIC}: antes: the path /estudos is still a page of the site; "antes" only lists paths that disappeared`,
+      `${TOPIC}: previous: the path /estudos is still a page of the site; "previous" only lists paths that disappeared`,
     )
   })
 })
@@ -314,7 +316,7 @@ describe('the last published sitemap', () => {
     )
   })
 
-  it("fails when a path disappeared without being in some file's `antes`", () => {
+  it("fails when a path disappeared without being in some file's `previous`", () => {
     const previous = sitemap(
       '/',
       '/onde-conhecer/app-ou-bar',
@@ -323,17 +325,17 @@ describe('the last published sitemap', () => {
     expect(
       errorsOf(buildLibrary(filesWith(), { previousSitemap: previous })),
     ).toEqual([
-      'published sitemap.xml: /onde-conhecer/app-ou-bar disappeared from the site; declare the old path in the "antes" of the file that replaced it',
-      'published sitemap.xml: /estudos/silva-2020 disappeared from the site; declare the old path in the "antes" of the file that replaced it',
+      'published sitemap.xml: /onde-conhecer/app-ou-bar disappeared from the site; declare the old path in the "previous" of the file that replaced it',
+      'published sitemap.xml: /estudos/silva-2020 disappeared from the site; declare the old path in the "previous" of the file that replaced it',
     ])
   })
 
-  it('passes when the path that disappeared is in `antes`', () => {
+  it('passes when the path that disappeared is in `previous`', () => {
     const previous = sitemap('/onde-conhecer/app-ou-bar', '/estudos/silva-2020')
     const result = buildLibrary(
       filesWith({
-        [OTHER_GUIDE]: inFrontmatter('antes: [app-ou-bar]'),
-        [SILVA]: inFrontmatter('antes: [silva-2020]'),
+        [OTHER_GUIDE]: inFrontmatter('previous: [app-ou-bar]'),
+        [SILVA]: inFrontmatter('previous: [silva-2020]'),
       }),
       { previousSitemap: previous },
     )

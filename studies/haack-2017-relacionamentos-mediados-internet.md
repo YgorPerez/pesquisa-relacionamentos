@@ -1,21 +1,21 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Haack KR, Falcke D. *Rel@cionamentos.com: diferenciando os relacionamentos amorosos mediados e não mediados pela internet*. Revista Colombiana de Psicología 26(1):31–44, 2017. Acesso aberto."
+reference: "Haack KR, Falcke D. *Rel@cionamentos.com: diferenciando os relacionamentos amorosos mediados e não mediados pela internet*. Revista Colombiana de Psicología 26(1):31–44, 2017. Acesso aberto."
 link: https://doi.org/10.15446/rcp.v26n1.53241
-status: nao-verificado
-forca: fraca
-forca_porque: "Amostra pequena (86), por conveniência e \"bola de neve\", e transversal."
-paises: [Brasil]
-periodo: "coleta antes de 2015 (artigo recebido em setembro de 2015)"
-amostra:
+status: unverified
+strength: weak
+strength_reason: "Amostra pequena (86), por conveniência e \"bola de neve\", e transversal."
+countries: [Brasil]
+period: "coleta antes de 2015 (artigo recebido em setembro de 2015)"
+sample:
   n: 86
-  descricao: "86 usuários de sites de relacionamento de 13 estados (42 homens, 44 mulheres, 18–55 anos, média 29,5), recrutados por convites em redes sociais e \"bola de neve\". De 276 respondentes, 43 estavam em relação mediada pela internet; 43 em relação presencial foram pareados por sexo, idade e tempo de relação. Casados e quem morava junto foram excluídos."
-  representativa: false
-desenho: transversal
-conflito: "Acadêmico (Unisinos); nenhum conflito identificado."
-cobre:
-  generos: [homem, mulher]
-  idades: { min: 18, max: 55 }
+  description: "86 usuários de sites de relacionamento de 13 estados (42 homens, 44 mulheres, 18–55 anos, média 29,5), recrutados por convites em redes sociais e \"bola de neve\". De 276 respondentes, 43 estavam em relação mediada pela internet; 43 em relação presencial foram pareados por sexo, idade e tempo de relação. Casados e quem morava junto foram excluídos."
+  representative: false
+design: cross-sectional
+conflict: "Acadêmico (Unisinos); nenhum conflito identificado."
+covers:
+  genders: [man, woman]
+  ages: { min: 18, max: 55 }
 ---
 
 # Haack & Falcke (2017): relacionamentos amorosos mediados e não mediados pela internet no Brasil
@@ -46,4 +46,4 @@ Desenho, como descrito antes da migração: transversal, comparativo (análise d
 
 ## Como usamos
 
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): exemplo do que existe na literatura acadêmica brasileira e de por que ela ainda não responde à pergunta.
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): exemplo do que existe na literatura acadêmica brasileira e de por que ela ainda não responde à pergunta.

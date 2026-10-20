@@ -1,24 +1,24 @@
 ---
-referencia: "Silva A, Souza B. *Apps de namoro no Brasil*. Revista Exemplo 12(3):45–67, 2020."
+reference: "Silva A, Souza B. *Apps de namoro no Brasil*. Revista Exemplo 12(3):45–67, 2020."
 link: https://doi.org/10.1234/exemplo.2020.1
-status: ok
-antes: [silva-2020]
-verificado_em: 2026-10-19
-forca: forte
-forca_porque: "Amostra probabilística nacional, grande."
-paises: [Brasil]
-periodo: "2019"
-amostra:
+status: verified
+previous: [silva-2020]
+verified_on: 2026-10-19
+strength: strong
+strength_reason: "Amostra probabilística nacional, grande."
+countries: [Brasil]
+period: "2019"
+sample:
   n: 2400
-  descricao: "2.400 adultos de 18 a 35 anos, amostra probabilística."
-  representativa: true
-desenho: transversal
-conflito: "Financiado pela universidade; sem conflito declarado."
-licenca: CC BY 4.0
-cobre:
-  generos: [homem, mulher]
-  procura: [homens, mulheres]
-  idades: { min: 18, max: 35 }
+  description: "2.400 adultos de 18 a 35 anos, amostra probabilística."
+  representative: true
+design: cross-sectional
+conflict: "Financiado pela universidade; sem conflito declarado."
+license: CC BY 4.0
+covers:
+  genders: [man, woman]
+  seeks: [men, women]
+  ages: { min: 18, max: 35 }
 ---
 
 # Silva e Souza (2020): apps de namoro no Brasil

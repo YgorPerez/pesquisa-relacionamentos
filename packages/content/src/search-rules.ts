@@ -1,5 +1,5 @@
 // The build rules about search and links (#15): warnings for long titles and
-// descriptions, `antes` entries that cannot hold, and the last published
+// descriptions, `previous` entries that cannot hold, and the last published
 // sitemap.
 import type { Library } from './library.ts'
 import {
@@ -27,8 +27,8 @@ function itemWarnings(
     warnings.push(
       problem(
         file,
-        `the search title has ${search.title.length} characters and the limit is ${LIMITS.title}; write a shorter one in seo.titulo`,
-        seo?.titulo ? 'seo.titulo' : titleField,
+        `the search title has ${search.title.length} characters and the limit is ${LIMITS.title}; write a shorter one in seo.title`,
+        seo?.title ? 'seo.title' : titleField,
       ),
     )
   if (search.description.length > LIMITS.description)
@@ -36,7 +36,7 @@ function itemWarnings(
       problem(
         file,
         `the search description has ${search.description.length} characters and the limit is ${LIMITS.description}`,
-        'seo.descricao',
+        'seo.description',
       ),
     )
   return warnings
@@ -48,10 +48,10 @@ function itemWarnings(
 export function searchWarnings(library: Library): Problem[] {
   return [
     ...library.topics.flatMap((t) =>
-      itemWarnings(t.file, topicSearch(t), t.seo, 'titulo'),
+      itemWarnings(t.file, topicSearch(t), t.seo, 'title'),
     ),
     ...library.guides.flatMap((g) =>
-      itemWarnings(g.file, guideSearch(g), g.seo, 'pergunta'),
+      itemWarnings(g.file, guideSearch(g), g.seo, 'question'),
     ),
     ...library.tips
       .filter((d) => d.published)
@@ -62,7 +62,7 @@ export function searchWarnings(library: Library): Problem[] {
   ]
 }
 
-/** `antes` only lists paths that disappeared, and each has a single owner. */
+/** `previous` only lists paths that disappeared, and each has a single owner. */
 export function beforeErrors(library: Library): Problem[] {
   const errors: Problem[] = []
   const site = sitePaths(library)
@@ -72,8 +72,8 @@ export function beforeErrors(library: Library): Problem[] {
       errors.push(
         problem(
           file,
-          `the path ${old} is still a page of the site; "antes" only lists paths that disappeared`,
-          'antes',
+          `the path ${old} is still a page of the site; "previous" only lists paths that disappeared`,
+          'previous',
         ),
       )
       continue
@@ -84,8 +84,8 @@ export function beforeErrors(library: Library): Problem[] {
       errors.push(
         problem(
           file,
-          `the path ${old} is already in the "antes" of ${other}`,
-          'antes',
+          `the path ${old} is already in the "previous" of ${other}`,
+          'previous',
         ),
       )
   }
@@ -98,7 +98,7 @@ const withoutTrailingSlash = (path: string) =>
   path.length > 1 ? path.replace(/\/+$/, '') : path
 
 /** Every path of the last published sitemap is still a page or is in some
- * file's `antes`: no link breaks by accident. */
+ * file's `previous`: no link breaks by accident. */
 export function checkPreviousSitemap(library: Library, xml: string): Problem[] {
   const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(
     (m) => m[1] ?? '',
@@ -121,7 +121,7 @@ export function checkPreviousSitemap(library: Library, xml: string): Problem[] {
     .map((path) =>
       problem(
         PUBLISHED_SITEMAP,
-        `${path} disappeared from the site; declare the old path in the "antes" of the file that replaced it`,
+        `${path} disappeared from the site; declare the old path in the "previous" of the file that replaced it`,
       ),
     )
 }

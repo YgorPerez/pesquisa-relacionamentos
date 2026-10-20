@@ -1,21 +1,21 @@
 ---
-referencia: "IBGE. *Censo Demográfico 2022: microdados da amostra, acesso público*, com o Dicionário de Variáveis e as Notas metodológicas 03/2026 (controle de confidencialidade) e 05/2026 (microdados da amostra). Rio de Janeiro: IBGE, 2026."
+reference: "IBGE. *Censo Demográfico 2022: microdados da amostra, acesso público*, com o Dicionário de Variáveis e as Notas metodológicas 03/2026 (controle de confidencialidade) e 05/2026 (microdados da amostra). Rio de Janeiro: IBGE, 2026."
 link: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/
-status: ok
-verificado_em: 2026-10-19
-forca: forte
-forca_porque: "Questionário da amostra do Censo, aplicado 7,8 milhões de vezes; o arquivo público perde o município e a idade exata."
-paises: [Brasil]
-periodo: "2022 (data de referência: 31 de julho)"
-amostra:
+status: verified
+verified_on: 2026-10-19
+strength: strong
+strength_reason: "Questionário da amostra do Censo, aplicado 7,8 milhões de vezes; o arquivo público perde o município e a idade exata."
+countries: [Brasil]
+period: "2022 (data de referência: 31 de julho)"
+sample:
   n: 7793421
-  descricao: "7.793.421 questionários da amostra, 10,6% do total de questionários do Censo; o arquivo público traz um registro por morador, com peso amostral."
-  representativa: true
-desenho: transversal
-conflito: "Órgão oficial de estatística."
-licenca: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o FTP do IBGE não traz termo de licença."
-cobre:
-  generos: [homem, mulher]
+  description: "7.793.421 questionários da amostra, 10,6% do total de questionários do Censo; o arquivo público traz um registro por morador, com peso amostral."
+  representative: true
+design: cross-sectional
+conflict: "Órgão oficial de estatística."
+license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o FTP do IBGE não traz termo de licença."
+covers:
+  genders: [man, woman]
 ---
 
 # IBGE (2022): Censo Demográfico, microdados da amostra
@@ -58,4 +58,4 @@ Fonte local: `fontes/privado/ibge-2022-censo-amostra.txt` (o texto das duas nota
 ## Como usamos
 
 - Dados do Grupo possível: `dados/grupo-possivel/censo-2022.csv` e as tabelas do SIDRA 9514 ao lado, gerados por `scripts/possible-group/pipeline.ts`.
-- [Relatório 2026-10-18 sobre os dados do Grupo possível](../relatorios/2026-10-18-dados-grupo-possivel.md).
+- [Relatório 2026-10-18 sobre os dados do Grupo possível](../reports/2026-10-18-dados-grupo-possivel.md).

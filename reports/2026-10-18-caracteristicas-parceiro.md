@@ -10,15 +10,15 @@ ticket: 3
 
 ## TL;DR
 
-1. **Traços do parceiro explicam pouco. A relação que se constrói explica muito.** Joel et al. (2020) analisaram 11.196 casais em 43 bases longitudinais. As percepções da pessoa sobre a própria relação explicaram **45%** da variância da satisfação. As diferenças individuais **do parceiro** explicaram **5%**. Somadas às variáveis da relação, as características do parceiro acrescentaram **0% a 3,5%**. Prever a *mudança* de satisfação ao longo do tempo falhou: nenhuma análise passou de **5%** ([ficha](../estudos/joel-2020-machine-learning-43-datasets.md)) · ✅ · forte.
-2. **Personalidade do parceiro: importa, mas é pouco.** Neuroticismo baixo, amabilidade e conscienciosidade são os traços que mais aparecem ([Malouff et al. 2010](../estudos/malouff-2010-personalidade-parceiro.md), 🟡). Em amostras nacionais de 3 países, a personalidade do parceiro explicou **1% a 3%** da satisfação ([Dyrenforth et al. 2010](../estudos/dyrenforth-2010-personalidade-similaridade.md), 🟡, forte).
-3. **"Ser parecido" quase não importa; "sentir que é parecido" importa.** A similaridade de personalidade explicou **< 0,5%** da satisfação além dos traços de cada um ([Dyrenforth](../estudos/dyrenforth-2010-personalidade-similaridade.md)). A similaridade *real* não prevê atração em relações existentes; a *percebida* prevê ([Montoya et al. 2008](../estudos/montoya-2008-similaridade-real-percebida.md), 🟡).
-4. **O que as pessoas dizem querer prevê mal o que as atrai de fato.** As preferências declaradas antes de um speed dating não previram o desejo real ([Eastwick & Finkel 2008](../estudos/eastwick-2008-preferencias-speed-dating.md), ✅). No teste com 10.358 pessoas em 43 países, o "match" traço a traço com a lista pessoal teve β médio = **0,04**. Ter traços que *todo mundo* valoriza pesou cerca de **3 vezes mais** que o encaixe na lista pessoal ([Eastwick et al. 2024](../estudos/eastwick-2024-preferencias-43-paises.md), ✅).
-5. **Aparência e renda:** com pessoas reais, a atratividade prevê a avaliação romântica com r ≈ **0,40** e a renda com r ≈ **0,10**, sem diferença entre homens e mulheres ([Eastwick et al. 2014](../estudos/eastwick-2014-meta-analise-preferencias.md), 🟡). No casamento, o efeito da aparência é pequeno: r = **0,10** na satisfação inicial dos maridos e nulo para as esposas ([Meltzer et al. 2014](../estudos/meltzer-2014-atratividade-casamento.md), ✅). Num estudo fraco, quem casou dizendo que "a aparência foi importante" teve risco de divórcio **1,29 vez** maior ([Francis-Tan & Mialon 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md)).
+1. **Traços do parceiro explicam pouco. A relação que se constrói explica muito.** Joel et al. (2020) analisaram 11.196 casais em 43 bases longitudinais. As percepções da pessoa sobre a própria relação explicaram **45%** da variância da satisfação. As diferenças individuais **do parceiro** explicaram **5%**. Somadas às variáveis da relação, as características do parceiro acrescentaram **0% a 3,5%**. Prever a *mudança* de satisfação ao longo do tempo falhou: nenhuma análise passou de **5%** ([ficha](../studies/joel-2020-machine-learning-43-datasets.md)) · ✅ · forte.
+2. **Personalidade do parceiro: importa, mas é pouco.** Neuroticismo baixo, amabilidade e conscienciosidade são os traços que mais aparecem ([Malouff et al. 2010](../studies/malouff-2010-personalidade-parceiro.md), 🟡). Em amostras nacionais de 3 países, a personalidade do parceiro explicou **1% a 3%** da satisfação ([Dyrenforth et al. 2010](../studies/dyrenforth-2010-personalidade-similaridade.md), 🟡, forte).
+3. **"Ser parecido" quase não importa; "sentir que é parecido" importa.** A similaridade de personalidade explicou **< 0,5%** da satisfação além dos traços de cada um ([Dyrenforth](../studies/dyrenforth-2010-personalidade-similaridade.md)). A similaridade *real* não prevê atração em relações existentes; a *percebida* prevê ([Montoya et al. 2008](../studies/montoya-2008-similaridade-real-percebida.md), 🟡).
+4. **O que as pessoas dizem querer prevê mal o que as atrai de fato.** As preferências declaradas antes de um speed dating não previram o desejo real ([Eastwick & Finkel 2008](../studies/eastwick-2008-preferencias-speed-dating.md), ✅). No teste com 10.358 pessoas em 43 países, o "match" traço a traço com a lista pessoal teve β médio = **0,04**. Ter traços que *todo mundo* valoriza pesou cerca de **3 vezes mais** que o encaixe na lista pessoal ([Eastwick et al. 2024](../studies/eastwick-2024-preferencias-43-paises.md), ✅).
+5. **Aparência e renda:** com pessoas reais, a atratividade prevê a avaliação romântica com r ≈ **0,40** e a renda com r ≈ **0,10**, sem diferença entre homens e mulheres ([Eastwick et al. 2014](../studies/eastwick-2014-meta-analise-preferencias.md), 🟡). No casamento, o efeito da aparência é pequeno: r = **0,10** na satisfação inicial dos maridos e nulo para as esposas ([Meltzer et al. 2014](../studies/meltzer-2014-atratividade-casamento.md), ✅). Num estudo fraco, quem casou dizendo que "a aparência foi importante" teve risco de divórcio **1,29 vez** maior ([Francis-Tan & Mialon 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md)).
 6. **Homogamia e fatores sociodemográficos (todos observacionais):**
-   - **Escolaridade:** casais com a mesma escolaridade ficaram mais estáveis nas coortes recentes dos EUA (HR = **0,78** vs. marido mais escolarizado). A esposa ter mais estudo **deixou** de ser fator de risco ([Schwartz & Han 2014](../estudos/schwartz-2014-homogamia-educacional.md), ✅, forte).
-   - **Religião:** uniões inter-religiosas tendem a se dissolver mais ([Lehrer & Chiswick 1993](../estudos/lehrer-1993-religiao-estabilidade.md), 🟡).
-   - **Diferença de idade:** a evidência é **fraca**. No único estudo lido, HR = **1,022 por ano** de diferença, numa amostra do mTurk com codificação ambígua ([Francis-Tan & Mialon 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md)). Os números da imprensa ("10 anos = 39% mais divórcio") não aparecem no artigo.
+   - **Escolaridade:** casais com a mesma escolaridade ficaram mais estáveis nas coortes recentes dos EUA (HR = **0,78** vs. marido mais escolarizado). A esposa ter mais estudo **deixou** de ser fator de risco ([Schwartz & Han 2014](../studies/schwartz-2014-homogamia-educacional.md), ✅, forte).
+   - **Religião:** uniões inter-religiosas tendem a se dissolver mais ([Lehrer & Chiswick 1993](../studies/lehrer-1993-religiao-estabilidade.md), 🟡).
+   - **Diferença de idade:** a evidência é **fraca**. No único estudo lido, HR = **1,022 por ano** de diferença, numa amostra do mTurk com codificação ambígua ([Francis-Tan & Mialon 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md)). Os números da imprensa ("10 anos = 39% mais divórcio") não aparecem no artigo.
 
 **Resumo para o produto:** um parceiro emocionalmente estável, gentil e responsável ajuda um pouco. O que mais prevê um bom relacionamento é o que acontece *dentro* dele: compromisso percebido, apreciação, satisfação sexual e pouco conflito. Listas longas de Requisitos específicos têm pouca base empírica.
 
@@ -28,8 +28,8 @@ ticket: 3
 
 Preferências declaradas são medidas pedindo que a pessoa avalie a importância de cada atributo num parceiro ideal.
 
-- **Diferenças entre sexos aparecem no que se declara.** Homens dão mais peso declarado à aparência, e mulheres à renda e ao status. Isso se replicou no speed dating de Northwestern ([Eastwick & Finkel 2008](../estudos/eastwick-2008-preferencias-speed-dating.md)) e nos 43 países ([Eastwick et al. 2024](../estudos/eastwick-2024-preferencias-43-paises.md)).
-- **No ranking declarado de 35 atributos (43 países), sobem traços de caráter e temperamento.** "Confident", "a good listener", "patient" e "calm, emotionally stable" ficam bem mais altos no ranking declarado do que no revelado ([Eastwick et al. 2024](../estudos/eastwick-2024-preferencias-43-paises.md), Tabela 5).
+- **Diferenças entre sexos aparecem no que se declara.** Homens dão mais peso declarado à aparência, e mulheres à renda e ao status. Isso se replicou no speed dating de Northwestern ([Eastwick & Finkel 2008](../studies/eastwick-2008-preferencias-speed-dating.md)) e nos 43 países ([Eastwick et al. 2024](../studies/eastwick-2024-preferencias-43-paises.md)).
+- **No ranking declarado de 35 atributos (43 países), sobem traços de caráter e temperamento.** "Confident", "a good listener", "patient" e "calm, emotionally stable" ficam bem mais altos no ranking declarado do que no revelado ([Eastwick et al. 2024](../studies/eastwick-2024-preferencias-43-paises.md), Tabela 5).
 
 ## 2. O que de fato se associa a desejo, satisfação e duração
 
@@ -37,33 +37,33 @@ Preferências declaradas são medidas pedindo que a pessoa avalie a importância
 
 | Característica | O que se diz | O que se revela / prevê | Fonte | Força |
 |---|---|---|---|---|
-| Atratividade física | homens dizem valorizar mais | r ≈ 0,40 com a avaliação romântica, **igual nos dois sexos**. Homens e, sobretudo, mulheres **subestimam** esse peso quando declaram | [Eastwick 2014](../estudos/eastwick-2014-meta-analise-preferencias.md), [Eastwick 2024](../estudos/eastwick-2024-preferencias-43-paises.md) | forte (atração); transversal |
-| Atratividade no casamento | — | marido: r = 0,10 na satisfação inicial e nada na trajetória; esposa: nulo | [Meltzer 2014](../estudos/meltzer-2014-atratividade-casamento.md) | moderada; contestado |
-| "A aparência do parceiro foi decisiva para casar" | — | HR de divórcio = 1,29 (homens 1,49) | [Francis-Tan 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
-| Renda / perspectiva financeira | mulheres dizem valorizar mais | r ≈ 0,10 com a avaliação romântica, **igual nos dois sexos**. Mulheres **superestimam** e homens subestimam esse peso (cerca de 4 posições em 35) | [Eastwick 2014](../estudos/eastwick-2014-meta-analise-preferencias.md), [Eastwick 2024](../estudos/eastwick-2024-preferencias-43-paises.md) | forte (atração) |
-| Dinheiro do casal (não do parceiro) | — | mais patrimônio, menos divórcio, sobretudo ao sair do zero (US$ 0 → 40 mil ≈ US$ 40 mil → 400 mil) | [Killewald 2023](../estudos/killewald-2023-riqueza-divorcio.md) | moderada; 🟡 |
-| "A riqueza do parceiro foi decisiva para casar" | — | HR de divórcio = 1,34 (mulheres 1,57; p < 0,10) | [Francis-Tan 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
-| "Bom amante" | 12º de 35 no declarado | **1º** de 35 no revelado | [Eastwick 2024](../estudos/eastwick-2024-preferencias-43-paises.md) | forte (transversal) |
-| Satisfação sexual (dentro da relação) | — | entre os 5 melhores preditores de satisfação | [Joel 2020](../estudos/joel-2020-machine-learning-43-datasets.md) | forte |
-| Calma / estabilidade emocional | alta no declarado | mais baixa no revelado da avaliação imediata, **mas** neuroticismo baixo do parceiro é o traço mais consistente para a satisfação de longo prazo | [Eastwick 2024](../estudos/eastwick-2024-preferencias-43-paises.md), [Malouff 2010](../estudos/malouff-2010-personalidade-parceiro.md), [Dyrenforth 2010](../estudos/dyrenforth-2010-personalidade-similaridade.md) | forte na direção, pequena no tamanho |
-| Encaixe com a minha lista de ideais | as pessoas acreditam que importa | β = 0,19 no padrão geral (0,11 descontando o normativo); **β = 0,04** por traço | [Eastwick 2024](../estudos/eastwick-2024-preferencias-43-paises.md) | forte |
-| Ser parecido (personalidade) | "temos que ser parecidos" | < 0,5% da variância da satisfação | [Dyrenforth 2010](../estudos/dyrenforth-2010-personalidade-similaridade.md) | forte; 🟡 |
-| Ser parecido (atitudes etc.) em relações existentes | — | similaridade real não significativa; a percebida prevê | [Montoya 2008](../estudos/montoya-2008-similaridade-real-percebida.md) | forte; 🟡 |
+| Atratividade física | homens dizem valorizar mais | r ≈ 0,40 com a avaliação romântica, **igual nos dois sexos**. Homens e, sobretudo, mulheres **subestimam** esse peso quando declaram | [Eastwick 2014](../studies/eastwick-2014-meta-analise-preferencias.md), [Eastwick 2024](../studies/eastwick-2024-preferencias-43-paises.md) | forte (atração); transversal |
+| Atratividade no casamento | — | marido: r = 0,10 na satisfação inicial e nada na trajetória; esposa: nulo | [Meltzer 2014](../studies/meltzer-2014-atratividade-casamento.md) | moderada; contestado |
+| "A aparência do parceiro foi decisiva para casar" | — | HR de divórcio = 1,29 (homens 1,49) | [Francis-Tan 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
+| Renda / perspectiva financeira | mulheres dizem valorizar mais | r ≈ 0,10 com a avaliação romântica, **igual nos dois sexos**. Mulheres **superestimam** e homens subestimam esse peso (cerca de 4 posições em 35) | [Eastwick 2014](../studies/eastwick-2014-meta-analise-preferencias.md), [Eastwick 2024](../studies/eastwick-2024-preferencias-43-paises.md) | forte (atração) |
+| Dinheiro do casal (não do parceiro) | — | mais patrimônio, menos divórcio, sobretudo ao sair do zero (US$ 0 → 40 mil ≈ US$ 40 mil → 400 mil) | [Killewald 2023](../studies/killewald-2023-riqueza-divorcio.md) | moderada; 🟡 |
+| "A riqueza do parceiro foi decisiva para casar" | — | HR de divórcio = 1,34 (mulheres 1,57; p < 0,10) | [Francis-Tan 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
+| "Bom amante" | 12º de 35 no declarado | **1º** de 35 no revelado | [Eastwick 2024](../studies/eastwick-2024-preferencias-43-paises.md) | forte (transversal) |
+| Satisfação sexual (dentro da relação) | — | entre os 5 melhores preditores de satisfação | [Joel 2020](../studies/joel-2020-machine-learning-43-datasets.md) | forte |
+| Calma / estabilidade emocional | alta no declarado | mais baixa no revelado da avaliação imediata, **mas** neuroticismo baixo do parceiro é o traço mais consistente para a satisfação de longo prazo | [Eastwick 2024](../studies/eastwick-2024-preferencias-43-paises.md), [Malouff 2010](../studies/malouff-2010-personalidade-parceiro.md), [Dyrenforth 2010](../studies/dyrenforth-2010-personalidade-similaridade.md) | forte na direção, pequena no tamanho |
+| Encaixe com a minha lista de ideais | as pessoas acreditam que importa | β = 0,19 no padrão geral (0,11 descontando o normativo); **β = 0,04** por traço | [Eastwick 2024](../studies/eastwick-2024-preferencias-43-paises.md) | forte |
+| Ser parecido (personalidade) | "temos que ser parecidos" | < 0,5% da variância da satisfação | [Dyrenforth 2010](../studies/dyrenforth-2010-personalidade-similaridade.md) | forte; 🟡 |
+| Ser parecido (atitudes etc.) em relações existentes | — | similaridade real não significativa; a percebida prevê | [Montoya 2008](../studies/montoya-2008-similaridade-real-percebida.md) | forte; 🟡 |
 
 **Atenção:** "revelado" em Eastwick 2014/2024 significa associação com quanto se gosta da pessoa **agora**, e não com a duração. Para duração e qualidade ao longo do tempo, as melhores fontes são Joel 2020, Le 2010 e os estudos de divórcio.
 
 ### 2.2 Personalidade do parceiro
 
-- **Direção:** neuroticismo baixo, amabilidade, conscienciosidade e, de forma mais fraca, extroversão do parceiro se associam a maior satisfação. Não há diferença entre homens e mulheres nem entre casados e namorados ([Malouff 2010](../estudos/malouff-2010-personalidade-parceiro.md), 19 amostras, N = 3.848; os r por traço **não foram conferidos**).
-- **Tamanho:** em 3 amostras nacionais de casados (N = 5.278, 6.554 e 11.418), a personalidade do **parceiro** explicou **1% a 3%** da satisfação com a relação. A da **própria** pessoa explicou **~6%** ([Dyrenforth 2010](../estudos/dyrenforth-2010-personalidade-similaridade.md)).
+- **Direção:** neuroticismo baixo, amabilidade, conscienciosidade e, de forma mais fraca, extroversão do parceiro se associam a maior satisfação. Não há diferença entre homens e mulheres nem entre casados e namorados ([Malouff 2010](../studies/malouff-2010-personalidade-parceiro.md), 19 amostras, N = 3.848; os r por traço **não foram conferidos**).
+- **Tamanho:** em 3 amostras nacionais de casados (N = 5.278, 6.554 e 11.418), a personalidade do **parceiro** explicou **1% a 3%** da satisfação com a relação. A da **própria** pessoa explicou **~6%** ([Dyrenforth 2010](../studies/dyrenforth-2010-personalidade-similaridade.md)).
 - No machine learning de Joel 2020, amabilidade (54%) e conscienciosidade (43%) foram os traços do Big Five que mais vezes apareceram como preditores úteis entre as bases. Isso é taxa de sucesso, não tamanho de efeito.
-- Para o **término** de namoros, a personalidade tem "utilidade preditiva limitada"; o apego é a exceção parcial ([Le 2010](../estudos/le-2010-preditores-termino.md), 🟡).
+- Para o **término** de namoros, a personalidade tem "utilidade preditiva limitada"; o apego é a exceção parcial ([Le 2010](../studies/le-2010-preditores-termino.md), 🟡).
 
 **Leitura honesta:** escolher alguém emocionalmente estável e gentil é uma das poucas "características do parceiro" com evidência consistente. Mesmo assim, o efeito é pequeno (um dígito de % da variância).
 
 ### 2.3 O que mais prevê: a dinâmica da relação
 
-Melhores preditores de satisfação em 43 bases ([Joel 2020](../estudos/joel-2020-machine-learning-43-datasets.md)):
+Melhores preditores de satisfação em 43 bases ([Joel 2020](../studies/joel-2020-machine-learning-43-datasets.md)):
 
 1. compromisso percebido do parceiro;
 2. apreciação;
@@ -71,7 +71,7 @@ Melhores preditores de satisfação em 43 bases ([Joel 2020](../estudos/joel-202
 4. satisfação percebida do parceiro;
 5. conflito.
 
-Para o término de namoros, os preditores mais fortes são compromisso, amor, inclusão do outro no self e dependência, além do apoio da rede social ([Le 2010](../estudos/le-2010-preditores-termino.md)).
+Para o término de namoros, os preditores mais fortes são compromisso, amor, inclusão do outro no self e dependência, além do apoio da rede social ([Le 2010](../studies/le-2010-preditores-termino.md)).
 
 Entre as características individuais da *própria pessoa*, as mais preditivas foram:
 
@@ -87,11 +87,11 @@ Ou seja, o estado da própria pessoa conta mais que os traços do parceiro.
 
 | Fator | Achado | Fonte | Força |
 |---|---|---|---|
-| Mesma escolaridade | HR = 0,78 vs. marido mais escolarizado na coorte 2000–04 (era 1,09 em 1950–54) | [Schwartz & Han 2014](../estudos/schwartz-2014-homogamia-educacional.md) | forte |
+| Mesma escolaridade | HR = 0,78 vs. marido mais escolarizado na coorte 2000–04 (era 1,09 em 1950–54) | [Schwartz & Han 2014](../studies/schwartz-2014-homogamia-educacional.md) | forte |
 | Esposa mais escolarizada | HR = 1,51 em 1950–54 → 0,82 (não significativo) em 2000–04: o risco desapareceu | idem | forte |
-| Diferença de escolaridade (qualquer) | HR = 1,25 | [Francis-Tan 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
-| Religiões diferentes | mais dissolução; efeito menor quanto mais próximas as religiões; compatibilidade religiosa com peso comparável ao da idade ao casar | [Lehrer & Chiswick 1993](../estudos/lehrer-1993-religiao-estabilidade.md) | moderada; 🟡 |
-| Frequentar culto regularmente | HR = 0,63 | [Francis-Tan 2015](../estudos/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
+| Diferença de escolaridade (qualquer) | HR = 1,25 | [Francis-Tan 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
+| Religiões diferentes | mais dissolução; efeito menor quanto mais próximas as religiões; compatibilidade religiosa com peso comparável ao da idade ao casar | [Lehrer & Chiswick 1993](../studies/lehrer-1993-religiao-estabilidade.md) | moderada; 🟡 |
+| Frequentar culto regularmente | HR = 0,63 | [Francis-Tan 2015](../studies/francis-tan-2015-gastos-casamento-divorcio.md) | fraca |
 | Diferença de idade | HR = 1,022 por ano (1,034 em casados desde 2008); codificação ambígua | idem | fraca |
 | Idade ao casar | HR = 0,912 por ano a mais | idem | fraca (mas a direção bate com a literatura demográfica) |
 | Conhecer bem / namorar mais tempo antes | HR = 0,56 ("conhecia muito bem") e 0,76 (namoro ≥ 3 anos vs. < 1 ano) | idem | fraca |

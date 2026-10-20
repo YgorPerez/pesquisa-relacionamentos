@@ -14,6 +14,7 @@ import {
   FactSheetMeta,
   VerificationStatusBadge,
 } from './badges'
+import { STRENGTH_WORD } from './badges.copy'
 
 export function Html({
   html,
@@ -42,13 +43,13 @@ export function AnswerConfidence({ confidence }: { confidence: Strength }) {
   return (
     <div
       className="m-0 mb-3 flex items-center gap-sm border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta pb-3"
-      data-confianca={confidence}
+      data-confidence={confidence}
     >
       <Steps level={confidence} width={72} />
       <p className="m-0 font-label text-label leading-tight text-tinta-2">
         Confiança da resposta
         <span className="block font-title text-nivel leading-headline font-bold tracking-title text-tinta">
-          {confidence}
+          {STRENGTH_WORD[confidence]}
         </span>
       </p>
     </div>
@@ -69,10 +70,10 @@ export function ShortConfidence({
         'inline-flex items-center gap-1.5 font-label text-label',
         className,
       )}
-      data-confianca={confidence}
+      data-confidence={confidence}
     >
       <Steps level={confidence} />
-      confiança {confidence}
+      confiança {STRENGTH_WORD[confidence]}
     </span>
   )
 }

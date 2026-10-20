@@ -1,19 +1,19 @@
 ---
 # Antes da migração: 🟡 parcial: resumo no PubMed. Texto completo pago, sem PDF aberto encontrado (data: 2026-10-18)
-referencia: "Eastwick PW, Luchies LB, Finkel EJ, Hunt LL. *The predictive validity of ideal partner preferences: A review and meta-analysis*. Psychological Bulletin 140(3):623–665, 2014. Resumo: PubMed 23586697."
+reference: "Eastwick PW, Luchies LB, Finkel EJ, Hunt LL. *The predictive validity of ideal partner preferences: A review and meta-analysis*. Psychological Bulletin 140(3):623–665, 2014. Resumo: PubMed 23586697."
 link: https://doi.org/10.1037/a0032432
-status: nao-verificado
-forca: forte
-forca_porque: "Meta-análise, k = 97."
-paises: []
-periodo: "não informado no texto lido"
-amostra:
-  descricao: "97 estudos (k = 97) da literatura de atração e de relacionamentos."
-  representativa: false
-desenho: meta-analise
-conflito: "Não conferido. Há debate publicado: comentário de Schmitt (2014) e réplica dos autores (PubMed 24773504)."
-cobre:
-  generos: [homem, mulher]
+status: unverified
+strength: strong
+strength_reason: "Meta-análise, k = 97."
+countries: []
+period: "não informado no texto lido"
+sample:
+  description: "97 estudos (k = 97) da literatura de atração e de relacionamentos."
+  representative: false
+design: meta-analysis
+conflict: "Não conferido. Há debate publicado: comentário de Schmitt (2014) e réplica dos autores (PubMed 24773504)."
+covers:
+  genders: [man, woman]
 ---
 
 # Eastwick et al. (2014): validade preditiva das preferências ideais (meta-análise)
@@ -39,4 +39,4 @@ Quanto a atratividade física e a perspectiva de renda de **pessoas reais** (par
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito de atratividade (≈ 0,40) e de renda (≈ 0,10) sobre a avaliação romântica, e ausência de diferença entre sexos no comportamento real.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito de atratividade (≈ 0,40) e de renda (≈ 0,10) sobre a avaliação romântica, e ausência de diferença entre sexos no comportamento real.

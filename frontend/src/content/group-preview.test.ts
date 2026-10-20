@@ -9,7 +9,7 @@ import { buildPacks } from '../../vite/possible-group.ts'
 import { buildGroupPreview } from './group-preview'
 
 const built = buildPacks(
-  resolve(import.meta.dirname, '../../e2e/library/dados/grupo-possivel'),
+  resolve(import.meta.dirname, '../../e2e/library/data/possible-group'),
 )
 const data = {
   places: [...built.packs.keys()],

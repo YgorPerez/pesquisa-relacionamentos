@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vite-plus/test'
 import { profileInGuide } from './profile-in-guide.ts'
 import type { Coverage } from './applies-to-you.ts'
 
-const HETERO: Coverage = { casal: 'hetero' }
+const HETERO: Coverage = { couple: 'different-sex' }
 const YOUNG: Coverage = {
-  generos: ['homem', 'mulher'],
-  procura: ['homens', 'mulheres'],
-  idades: { min: 18, max: 35 },
+  genders: ['man', 'woman'],
+  seeks: ['men', 'women'],
+  ages: { min: 18, max: 35 },
 }
 
 // The e2e fixture's guide: the key number comes from the young people's fact

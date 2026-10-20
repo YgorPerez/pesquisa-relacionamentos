@@ -51,7 +51,7 @@ describe('the library HTML', () => {
     expect(inlineHtml('<a href="https://a.example" rel="opener">a</a>')).toBe(
       '<a href="https://a.example" rel="noopener noreferrer">a</a>',
     )
-    expect(inlineHtml('[outra](../estudos/costa-2018.md)')).toBe(
+    expect(inlineHtml('[outra](../studies/costa-2018.md)')).toBe(
       '<a href="/estudos/costa-2018">outra</a>',
     )
     expect(inlineHtml('[acima](#limitacoes)')).toBe(

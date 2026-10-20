@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original, via PMC (data: 2026-10-18)
-referencia: "Joel S, Eastwick PW, Allison CJ, et al. *Machine learning uncovers the most robust self-report predictors of relationship quality across 43 longitudinal couples studies*. PNAS 117(32):19061–19071, 2020. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC7431040/"
+reference: "Joel S, Eastwick PW, Allison CJ, et al. *Machine learning uncovers the most robust self-report predictors of relationship quality across 43 longitudinal couples studies*. PNAS 117(32):19061–19071, 2020. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC7431040/"
 link: https://doi.org/10.1073/pnas.1917036117
-status: nao-verificado
-forca: forte
-forca_porque: "43 bases longitudinais, 11.196 casais, resultados agregados entre bases."
-paises: []
-periodo: "não informado no texto lido"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "43 bases longitudinais, 11.196 casais, resultados agregados entre bases."
+countries: []
+period: "não informado no texto lido"
+sample:
   n: 11196
-  descricao: "11.196 casais (22.163 participantes na linha de base), de 43 bases de 29 laboratórios (86 pesquisadores). Média de cerca de 4 ondas ao longo de cerca de 14 meses (de 2 a 48 meses). 2.413 medidas de linha de base, quase todas de autorrelato."
-  representativa: false
-desenho: meta-analise
-conflito: "39 bolsas nacionais ou universitárias (NSF, SSHRC, NIMH, NICHD, Fetzer, Templeton, entre outras). Os autores declaram \"no competing interest\"."
-cobre: {}
+  description: "11.196 casais (22.163 participantes na linha de base), de 43 bases de 29 laboratórios (86 pesquisadores). Média de cerca de 4 ondas ao longo de cerca de 14 meses (de 2 a 48 meses). 2.413 medidas de linha de base, quase todas de autorrelato."
+  representative: false
+design: meta-analysis
+conflict: "39 bolsas nacionais ou universitárias (NSF, SSHRC, NIMH, NICHD, Fetzer, Templeton, entre outras). Os autores declaram \"no competing interest\"."
+covers: {}
 ---
 
 # Joel et al. (2020): machine learning em 43 bases de casais
@@ -62,4 +62,4 @@ Desenho, como descrito antes da migração: longitudinal diádico; random forest
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): principal evidência de que traços do parceiro explicam pouco e a dinâmica da relação explica muito.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): principal evidência de que traços do parceiro explicam pouco e a dinâmica da relação explica muito.

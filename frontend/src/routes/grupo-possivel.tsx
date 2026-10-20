@@ -81,7 +81,7 @@ export const Route = createFileRoute('/grupo-possivel')({
     // `queryClient`.
     const withLink = typeof window === 'undefined' && isLink(location.searchStr)
     const [, preview] = await Promise.all([
-      context.queryClient.query(reads.calculatorGuide('grupo-possivel')),
+      context.queryClient.query(reads.calculatorGuide('possible-group')),
       withLink ? fetchGroupPreview({ data: location.searchStr }) : null,
     ])
     return { preview }
@@ -115,7 +115,7 @@ type RequirementValue = (k: VisitorRequirement | 'orientation') => string
 
 function PossibleGroupPage() {
   const { data: guide } = useSuspenseQuery(
-    reads.calculatorGuide('grupo-possivel'),
+    reads.calculatorGuide('possible-group'),
   )
   const replaced = useReceivedLink('grupo-possivel') !== null
   const profile = useProfile()

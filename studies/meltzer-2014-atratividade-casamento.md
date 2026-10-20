@@ -1,21 +1,21 @@
 ---
 # Antes da migração: ✅ lido no original, via PMC (data: 2026-10-18)
-referencia: "Meltzer AL, McNulty JK, Jackson GL, Karney BR. *Sex differences in the implications of partner physical attractiveness for the trajectory of marital satisfaction*. Journal of Personality and Social Psychology 106(3):418–428, 2014. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC4011637/"
+reference: "Meltzer AL, McNulty JK, Jackson GL, Karney BR. *Sex differences in the implications of partner physical attractiveness for the trajectory of marital satisfaction*. Journal of Personality and Social Psychology 106(3):418–428, 2014. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC4011637/"
 link: https://doi.org/10.1037/a0034424
-status: nao-verificado
-forca: moderada
-forca_porque: "Longitudinal, com atratividade avaliada por terceiros, mas amostra modesta e só recém-casados americanos; o resultado é contestado."
-paises: [EUA]
-periodo: "não informado no texto lido"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Longitudinal, com atratividade avaliada por terceiros, mas amostra modesta e só recém-casados americanos; o resultado é contestado."
+countries: [EUA]
+period: "não informado no texto lido"
+sample:
   n: 458
-  descricao: "458 casais recém-casados em 4 estudos (82 + 169 + 72 + 135), do norte da Flórida, do norte de Ohio e do leste do Tennessee."
-  representativa: false
-desenho: longitudinal
-conflito: "NICHD, NSF, NIMH e Fetzer Institute."
-cobre:
-  generos: [homem, mulher]
-  casal: hetero
+  description: "458 casais recém-casados em 4 estudos (82 + 169 + 72 + 135), do norte da Flórida, do norte de Ohio e do leste do Tennessee."
+  representative: false
+design: longitudinal
+conflict: "NICHD, NSF, NIMH e Fetzer Institute."
+covers:
+  genders: [man, woman]
+  couple: different-sex
 ---
 
 # Meltzer et al. (2014): atratividade do cônjuge e satisfação conjugal
@@ -44,4 +44,4 @@ Desenho, como descrito antes da migração: longitudinal. Até 8 medições de s
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): contraponto à meta-análise de [Eastwick et al. 2014](eastwick-2014-meta-analise-preferencias.md) sobre atratividade em relações longas.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): contraponto à meta-análise de [Eastwick et al. 2014](eastwick-2014-meta-analise-preferencias.md) sobre atratividade em relações longas.

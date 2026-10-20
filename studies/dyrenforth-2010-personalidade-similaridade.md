@@ -1,18 +1,18 @@
 ---
 # Antes da migração: 🟡 parcial: resumo no PubMed. Existe uma tese da autora (Michigan State, https://d.lib.msu.edu/etd/684), que não foi lida (data: 2026-10-18)
-referencia: "Dyrenforth PS, Kashy DA, Donnellan MB, Lucas RE. *Predicting relationship and life satisfaction from personality in nationally representative samples from three countries: the relative importance of actor, partner, and similarity effects*. Journal of Personality and Social Psychology 99(4):690–702, 2010. Resumo: PubMed 20718544."
+reference: "Dyrenforth PS, Kashy DA, Donnellan MB, Lucas RE. *Predicting relationship and life satisfaction from personality in nationally representative samples from three countries: the relative importance of actor, partner, and similarity effects*. Journal of Personality and Social Psychology 99(4):690–702, 2010. Resumo: PubMed 20718544."
 link: https://doi.org/10.1037/a0020385
-status: nao-verificado
-forca: forte
-forca_porque: "Três amostras nacionais representativas, com replicação entre elas."
-paises: [Austrália, Reino Unido, Alemanha]
-periodo: "não informado no texto lido"
-amostra:
-  descricao: "Casais casados de amostras nacionais representativas (nomes das bases e anos não conferidos). Austrália N = 5.278, Reino Unido N = 6.554, Alemanha N = 11.418."
-  representativa: true
-desenho: transversal
-conflito: "Não conferido."
-cobre: {}
+status: unverified
+strength: strong
+strength_reason: "Três amostras nacionais representativas, com replicação entre elas."
+countries: [Austrália, Reino Unido, Alemanha]
+period: "não informado no texto lido"
+sample:
+  description: "Casais casados de amostras nacionais representativas (nomes das bases e anos não conferidos). Austrália N = 5.278, Reino Unido N = 6.554, Alemanha N = 11.418."
+  representative: true
+design: cross-sectional
+conflict: "Não conferido."
+covers: {}
 ---
 
 # Dyrenforth et al. (2010): personalidade própria, do parceiro e similaridade em 3 países
@@ -45,4 +45,4 @@ Desenho, como descrito antes da migração: correlacional diádico (modelo ator-
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito da personalidade do parceiro (1% a 3%) e evidência de que a similaridade de personalidade quase não importa.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): tamanho do efeito da personalidade do parceiro (1% a 3%) e evidência de que a similaridade de personalidade quase não importa.

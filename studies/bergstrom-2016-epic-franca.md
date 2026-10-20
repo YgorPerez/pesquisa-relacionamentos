@@ -1,21 +1,21 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18; PDF oficial do boletim, hospedado por terceiro)
-referencia: "Bergström M. *Sites de rencontres : qui les utilise en France ? Qui y trouve son conjoint ?* Population & Sociétés n° 530, Ined, fevereiro de 2016. O site do Ined estava fora do ar em 2026-10-18; o texto completo foi lido numa cópia do PDF original: https://www.parent-solo.fr/fichiers/population-112102.societes"
+reference: "Bergström M. *Sites de rencontres : qui les utilise en France ? Qui y trouve son conjoint ?* Population & Sociétés n° 530, Ined, fevereiro de 2016. O site do Ined estava fora do ar em 2026-10-18; o texto completo foi lido numa cópia do PDF original: https://www.parent-solo.fr/fichiers/population-112102.societes"
 link: https://www.ined.fr/fr/publications/editions/population-et-societes/sites-de-rencontres-qui-les-utilise-en-france-qui-y-trouve-son-conjoint/
-status: nao-verificado
-forca: forte
-forca_porque: "Amostra aleatória e representativa de 7.825 pessoas (pesquisa Épic, Ined-Insee)."
-paises: [França]
-periodo: "2013–2014 (pesquisa Épic), com comparação com a pesquisa CSF de 2006"
-amostra:
+status: unverified
+strength: strong
+strength_reason: "Amostra aleatória e representativa de 7.825 pessoas (pesquisa Épic, Ined-Insee)."
+countries: [França]
+period: "2013–2014 (pesquisa Épic), com comparação com a pesquisa CSF de 2006"
+sample:
   n: 7825
-  descricao: "7.825 pessoas de 26 a 65 anos, amostra aleatória e representativa, que descreveram 14.699 relações importantes."
-  representativa: true
-desenho: transversal
-conflito: "Instituto público de demografia (Ined) e de estatística (Insee); nenhum conflito."
-cobre:
-  generos: [homem, mulher]
-  idades: { min: 26, max: 65 }
+  description: "7.825 pessoas de 26 a 65 anos, amostra aleatória e representativa, que descreveram 14.699 relações importantes."
+  representative: true
+design: cross-sectional
+conflict: "Instituto público de demografia (Ined) e de estatística (Insee); nenhum conflito."
+covers:
+  genders: [man, woman]
+  ages: { min: 26, max: 65 }
 ---
 
 # Bergström (2016): quem usa sites de encontro na França e quem encontra o cônjuge neles
@@ -51,4 +51,4 @@ Desenho, como descrito antes da migração: transversal retrospectivo (história
 
 ## Como usamos
 
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): referência de amostra aleatória fora dos EUA, crítica a painéis com cotas e diferença entre primeira união e recasamento.
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): referência de amostra aleatória fora dos EUA, crítica a painéis com cotas e diferença entre primeira união e recasamento.

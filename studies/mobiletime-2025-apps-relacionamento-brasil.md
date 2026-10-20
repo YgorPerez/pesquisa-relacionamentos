@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (pesquisa de 2026-10-18)
-referencia: "Mobile Time e Opinion Box. *Apps de relacionamento*, abril de 2025."
+reference: "Mobile Time e Opinion Box. *Apps de relacionamento*, abril de 2025."
 link: https://www.mobiletime.com.br/noticias/22/04/2025/apps-de-relacionamento/
-status: nao-verificado
-forca: moderada
-forca_porque: "Survey online com 2.019 pessoas e margem de erro publicada, mas só donos de smartphone que respondem pesquisa online."
-paises: [Brasil]
-periodo: "entrevistas de 12 a 27 de março de 2025"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Survey online com 2.019 pessoas e margem de erro publicada, mas só donos de smartphone que respondem pesquisa online."
+countries: [Brasil]
+period: "entrevistas de 12 a 27 de março de 2025"
+sample:
   n: 2019
-  descricao: "2.019 internautas brasileiros com smartphone; margem de erro de 2,2 p.p."
-  representativa: false
-desenho: transversal
-conflito: "Empresas de pesquisa de mercado; sem vínculo com apps identificado."
-cobre:
-  generos: [homem, mulher]
+  description: "2.019 internautas brasileiros com smartphone; margem de erro de 2,2 p.p."
+  representative: false
+design: cross-sectional
+conflict: "Empresas de pesquisa de mercado; sem vínculo com apps identificado."
+covers:
+  genders: [man, woman]
 ---
 
 # Mobile Time/Opinion Box (2025): apps de relacionamento no Brasil
@@ -43,4 +43,4 @@ Desenho, como descrito antes da migração: survey online transversal.
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.1: único dado de uso de apps no Brasil com metodologia publicada.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 3.1: único dado de uso de apps no Brasil com metodologia publicada.

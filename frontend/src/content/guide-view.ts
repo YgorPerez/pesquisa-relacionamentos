@@ -121,7 +121,7 @@ export function withoutMarks(markdown: string): string {
 }
 
 /** The Fact sheets cited in the short answer's key-number (`==…==`)
- * sentence: their `cobre` says whether the number applies to the Profile.
+ * sentence: their `covers` says whether the number applies to the Profile.
  * `null` if there is no marked number or its sentence cites no Fact sheet. */
 export function keyNumberFactSheets(
   markdown: string,
@@ -153,25 +153,26 @@ const MAX_AGE = 120
 
 function oneCoverage(coverage: Coverage): string {
   const parts: string[] = []
-  if (coverage.casal === 'hetero') parts.push('casais homem-mulher')
-  else if (coverage.casal === 'mesmo-sexo') parts.push('casais do mesmo sexo')
-  const genders = coverage.generos ?? []
+  if (coverage.couple === 'different-sex') parts.push('casais homem-mulher')
+  else if (coverage.couple === 'same-sex') parts.push('casais do mesmo sexo')
+  const genders = coverage.genders ?? []
   if (genders.length === 1)
-    parts.push(genders[0] === 'homem' ? 'só homens' : 'só mulheres')
-  else if (genders.length === 2 && !coverage.casal)
+    parts.push(genders[0] === 'man' ? 'só homens' : 'só mulheres')
+  else if (genders.length === 2 && !coverage.couple)
     parts.push('homens e mulheres')
-  const seeks = coverage.procura ?? []
-  if (seeks.length === 1) parts.push(`que procuram ${seeks[0]}`)
-  if (coverage.idades)
+  const seeks = coverage.seeks ?? []
+  if (seeks.length === 1)
+    parts.push(`que procuram ${seeks[0] === 'men' ? 'homens' : 'mulheres'}`)
+  if (coverage.ages)
     parts.push(
-      coverage.idades.max >= MAX_AGE
-        ? `a partir de ${coverage.idades.min} anos`
-        : `de ${coverage.idades.min} a ${coverage.idades.max} anos`,
+      coverage.ages.max >= MAX_AGE
+        ? `a partir de ${coverage.ages.min} anos`
+        : `de ${coverage.ages.min} a ${coverage.ages.max} anos`,
     )
   return parts.join(', ')
 }
 
-/** The "Vale para:" note of a finding or Tip, taken from the `cobre`. */
+/** The "Vale para:" note of a finding or Tip, taken from the `covers`. */
 function appliesTo(coverages: ReadonlyArray<Coverage>): string {
   const sentences = [...new Set(coverages.map(oneCoverage))]
   // With no sentence at all, `every` also gives `true`.
@@ -199,7 +200,7 @@ export interface GuideTip {
   readonly strength: Strength
   readonly inference: boolean
   readonly appliesTo: string
-  /** The raw `cobre`, for the browser to decide the "vale para você" with the
+  /** The raw `covers`, for the browser to decide the "vale para você" with the
    * Profile. */
   readonly coverage: ReadonlyArray<Coverage>
 }
@@ -230,7 +231,7 @@ export interface GuideView extends GuideSummary {
   readonly topic: string
   readonly topicTitle: string
   readonly answerHtml: SafeHtml
-  /** The `cobre` of the Fact sheets in the key-number sentence; `null`
+  /** The `covers` of the Fact sheets in the key-number sentence; `null`
    * without a marked number. */
   readonly keyCoverage: ReadonlyArray<Coverage> | null
   readonly tips: ReadonlyArray<GuideTip>
@@ -258,9 +259,9 @@ export function guideSummary(guide: Guide): GuideSummary {
   return {
     topic: guide.topic,
     slug: guide.slug,
-    question: withoutMarks(guide.pergunta),
-    questionHtml: questionHtml(guide.pergunta),
-    confidence: guide.confianca,
+    question: withoutMarks(guide.question),
+    questionHtml: questionHtml(guide.question),
+    confidence: guide.confidence,
     firstSentence: firstSentence(guide.shortAnswer),
   }
 }
@@ -289,7 +290,7 @@ function keyCoverage(
   const slugs = keyNumberFactSheets(shortAnswer)
   return (
     slugs &&
-    slugs.flatMap((slug) => factSheetInLibrary(library, slug)?.cobre ?? [])
+    slugs.flatMap((slug) => factSheetInLibrary(library, slug)?.covers ?? [])
   )
 }
 
@@ -298,53 +299,53 @@ export function guideView(guide: Guide, library: Library): GuideView {
   const topic = library.topics.find((t) => t.slug === guide.topic)
   return {
     ...guideSummary(guide),
-    topicTitle: topic?.titulo ?? guide.topic,
+    topicTitle: topic?.title ?? guide.topic,
     answerHtml: html(withReferences(guide.shortAnswer, numbers)),
     keyCoverage: keyCoverage(guide.shortAnswer, library),
-    tips: guide.dicas.flatMap((slug): GuideTip[] => {
+    tips: guide.tips.flatMap((slug): GuideTip[] => {
       const tip = library.tips.find((d) => d.slug === slug)
       return tip
         ? [
             {
               slug,
-              html: textWithFactSheets(tip.text, tip.fichas, numbers),
-              strength: tip.forca,
-              inference: tip.inferencia,
-              appliesTo: appliesTo(tip.cobre),
-              coverage: tip.cobre,
+              html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
+              strength: tip.strength,
+              inference: tip.inference,
+              appliesTo: appliesTo(tip.covers),
+              coverage: tip.covers,
             },
           ]
         : []
     }),
-    findings: guide.achados.map((a): GuideFindingView => {
-      const { country, period } = whereAndWhen(a.paises, a.periodo)
+    findings: guide.findings.map((a): GuideFindingView => {
+      const { country, period } = whereAndWhen(a.countries, a.period)
       return {
-        html: textWithFactSheets(a.texto, a.fichas, numbers),
+        html: textWithFactSheets(a.text, a.fact_sheets, numbers),
         country: country,
         period: period,
-        appliesTo: appliesTo(a.cobre),
-        coverage: a.cobre,
+        appliesTo: appliesTo(a.covers),
+        coverage: a.covers,
       }
     }),
-    divergence: guide.divergencia
+    divergence: guide.divergence
       ? {
           bestDesignHtml: inlineHtml(
-            withReferences(guide.divergencia.melhor_desenho, numbers),
+            withReferences(guide.divergence.better_design, numbers),
           ),
-          sides: guide.divergencia.lados.map((l) => ({
-            title: l.titulo,
-            html: textWithFactSheets(l.texto, l.fichas, numbers),
+          sides: guide.divergence.sides.map((l) => ({
+            title: l.title,
+            html: textWithFactSheets(l.text, l.fact_sheets, numbers),
           })),
         }
       : null,
     profileHtml: html(withReferences(guide.variesByProfile, numbers)),
-    myths: guide.mitos.map((m) => ({
-      claim: m.afirmacao,
-      whyNotHtml: textWithFactSheets(m.por_que_nao, m.fichas, numbers),
+    myths: guide.myths.map((m) => ({
+      claim: m.claim,
+      whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
     })),
     limitationsHtml: html(withReferences(guide.limitations, numbers)),
     factSheets: citedFactSheets(guide.citedFactSheets, library),
-    related: guide.relacionadas.flatMap((slug) => {
+    related: guide.related.flatMap((slug) => {
       const other = library.guides.find((g) => g.slug === slug)
       return other ? [guideSummary(other)] : []
     }),
@@ -366,7 +367,7 @@ export interface TopicView {
 export function topicView(topic: Topic, library: Library): TopicView {
   return {
     slug: topic.slug,
-    title: topic.titulo,
+    title: topic.title,
     contextHtml: html(topic.context),
     search: topicSearch(topic),
     // On the Topic page the short answer goes without the numbers: the Fact
@@ -400,17 +401,17 @@ export interface TipView extends TipSummary {
 export const tipSummary = (tip: Tip): TipSummary => ({
   slug: tip.slug,
   text: withoutMarks(tip.text),
-  strength: tip.forca,
-  inference: tip.inferencia,
+  strength: tip.strength,
+  inference: tip.inference,
 })
 
 export function tipView(tip: Tip, library: Library): TipView {
   return {
     ...tipSummary(tip),
-    appliesTo: appliesTo(tip.cobre),
-    factSheets: citedFactSheets(tip.fichas, library),
+    appliesTo: appliesTo(tip.covers),
+    factSheets: citedFactSheets(tip.fact_sheets, library),
     guides: library.guides
-      .filter((g) => g.dicas.includes(tip.slug))
+      .filter((g) => g.tips.includes(tip.slug))
       .map(guideSummary),
     search: tipSearch(tip),
   }
@@ -429,6 +430,6 @@ export const citedIn = (slug: string, library: Library): CitedIn => ({
     .filter((g) => g.citedFactSheets.includes(slug))
     .map(guideSummary),
   tips: library.tips
-    .filter((d) => isTipPublished(d) && d.fichas.includes(slug))
+    .filter((d) => isTipPublished(d) && d.fact_sheets.includes(slug))
     .map(tipSummary),
 })

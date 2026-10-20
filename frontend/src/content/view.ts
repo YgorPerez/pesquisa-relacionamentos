@@ -13,8 +13,8 @@ const REPO = 'https://github.com/YgorPerez/pesquisa-relacionamentos/blob/main'
 function rewriteLink(href: string): string {
   if (/^[a-z]+:|^#|^\//i.test(href)) return href
   const path = href.replace(/^(\.\.\/)+|^\.\//, '')
-  const factSheet = /^(?:estudos\/)?([a-z0-9-]+)\.md(#.*)?$/.exec(path)
-  if (factSheet && (href.startsWith('../estudos/') || !href.includes('/'))) {
+  const factSheet = /^(?:studies\/)?([a-z0-9-]+)\.md(#.*)?$/.exec(path)
+  if (factSheet && (href.startsWith('../studies/') || !href.includes('/'))) {
     return `/estudos/${factSheet[1]}${factSheet[2] ?? ''}`
   }
   return `${REPO}/${path}`
@@ -46,7 +46,7 @@ export interface FactSheetSummary {
   readonly slug: string
   readonly title: string
   readonly status: FactSheet['status']
-  readonly strength: FactSheet['forca']
+  readonly strength: FactSheet['strength']
   readonly context: string
 }
 
@@ -55,7 +55,7 @@ export interface FactSheetView extends FactSheetSummary {
   readonly link: string
   readonly verifiedOn: string | null
   readonly strengthReason: string
-  readonly design: FactSheet['desenho']
+  readonly design: FactSheet['design']
   readonly countries: ReadonlyArray<string>
   readonly period: string
   readonly sampleHtml: SafeHtml
@@ -80,18 +80,18 @@ const numberFormat = new Intl.NumberFormat('pt-BR')
 
 /** "EUA · 2017 · 5.421 participantes", the list's short context line. */
 function contextLine(
-  factSheet: Pick<FactSheet, 'paises' | 'periodo' | 'amostra'>,
+  factSheet: Pick<FactSheet, 'countries' | 'period' | 'sample'>,
 ): string {
-  const { paises: countries } = factSheet
+  const { countries } = factSheet
   const parts = [
     countries.length === 0
       ? 'país não informado'
       : countries.length > 3
         ? `${countries.length} países`
         : countries.join(', '),
-    factSheet.periodo,
-    factSheet.amostra.n
-      ? `n = ${numberFormat.format(factSheet.amostra.n)}`
+    factSheet.period,
+    factSheet.sample.n
+      ? `n = ${numberFormat.format(factSheet.sample.n)}`
       : null,
   ]
   return parts.filter(Boolean).join(' · ')
@@ -109,7 +109,7 @@ export function factSheetSummary(factSheet: FactSheet): FactSheetSummary {
     slug: factSheet.slug,
     title: factSheet.title,
     status: factSheet.status,
-    strength: factSheet.forca,
+    strength: factSheet.strength,
     context: contextLine(factSheet),
   }
 }
@@ -120,18 +120,18 @@ export function factSheetView(
 ): FactSheetView {
   return {
     ...factSheetSummary(factSheet),
-    referenceHtml: inlineHtml(factSheet.referencia),
+    referenceHtml: inlineHtml(factSheet.reference),
     link: factSheet.link,
-    verifiedOn: factSheet.verificado_em ?? null,
-    strengthReason: factSheet.forca_porque,
-    design: factSheet.desenho,
-    countries: factSheet.paises,
-    period: factSheet.periodo,
-    sampleHtml: inlineHtml(factSheet.amostra.descricao),
-    representative: factSheet.amostra.representativa,
-    n: factSheet.amostra.n ?? null,
-    conflictHtml: factSheet.conflito ? inlineHtml(factSheet.conflito) : null,
-    license: factSheet.licenca ?? null,
+    verifiedOn: factSheet.verified_on ?? null,
+    strengthReason: factSheet.strength_reason,
+    design: factSheet.design,
+    countries: factSheet.countries,
+    period: factSheet.period,
+    sampleHtml: inlineHtml(factSheet.sample.description),
+    representative: factSheet.sample.representative,
+    n: factSheet.sample.n ?? null,
+    conflictHtml: factSheet.conflict ? inlineHtml(factSheet.conflict) : null,
+    license: factSheet.license ?? null,
     whatItMeasuredHtml: html(factSheet.whatItMeasured),
     findings: factSheet.findings.map(findingView),
     findingsNotesHtml: factSheet.findingsNotes

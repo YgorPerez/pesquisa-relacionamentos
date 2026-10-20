@@ -101,7 +101,7 @@ const AFFECTS_ALL: ReadonlyArray<[RegExp, string]> = [
 /** Has no tests: text for people and for agents. */
 const TEXT_ONLY = /(\.md$|^docs\/|^\.claude\/|^\.agents\/|^GLOSSARY|^README)/
 /** The library, which Content validates and the build reads. */
-const LIBRARY = /^(estudos|dicas|relatorios|fontes|dados)\//
+const LIBRARY = /^(studies|tips|reports|sources|data)\//
 const FROM_ROOT = /^(\.github\/)?scripts\//
 
 export type Plan = {

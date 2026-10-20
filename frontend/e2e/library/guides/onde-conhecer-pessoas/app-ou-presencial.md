@@ -1,13 +1,13 @@
 ---
-pergunta: App ou presencial, onde tenho mais ==chance==?
-confianca: moderada
-achados:
-  - texto: A satisfação quase não muda entre quem se conheceu online e pessoalmente.
-    fichas: [costa-2018-satisfacao]
-dicas: [apps-como-complemento]
-relacionadas: [onde-os-casais-se-conhecem]
-calculadora: grupo-possivel
-antes: [app-ou-bar, escolher-parceiro/onde-procurar]
+question: App ou presencial, onde tenho mais ==chance==?
+confidence: moderate
+findings:
+  - text: A satisfação quase não muda entre quem se conheceu online e pessoalmente.
+    fact_sheets: [costa-2018-satisfacao]
+tips: [apps-como-complemento]
+related: [onde-os-casais-se-conhecem]
+calculator: possible-group
+previous: [app-ou-bar, escolher-parceiro/onde-procurar]
 ---
 
 Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].

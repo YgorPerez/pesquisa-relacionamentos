@@ -16,7 +16,7 @@
         "rule": "design-system-font",
         "value": "marcador",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.829Z",
         "reason": "agent: local @font-face aliases for Permanent Marker and Atkinson Hyperlegible, both declared in DESIGN.md"
@@ -25,7 +25,7 @@
         "rule": "design-system-font",
         "value": "atkinson",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.840Z",
         "reason": "agent: local @font-face aliases for Permanent Marker and Atkinson Hyperlegible, both declared in DESIGN.md"
@@ -34,7 +34,7 @@
         "rule": "design-system-radius",
         "value": "225px",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.851Z",
         "reason": "agent: component of the documented torto/torto-2 elliptical radius tokens"
@@ -43,7 +43,7 @@
         "rule": "design-system-radius",
         "value": "16px",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.862Z",
         "reason": "agent: component of the documented torto/torto-2 elliptical radius tokens"
@@ -52,7 +52,7 @@
         "rule": "design-system-radius",
         "value": "6px",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.873Z",
         "reason": "agent: browser focus ring rounding"
@@ -61,7 +61,7 @@
         "rule": "design-system-radius",
         "value": "999px",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.884Z",
         "reason": "agent: prototype scenario switcher, not part of the design"
@@ -70,7 +70,7 @@
         "rule": "design-system-color",
         "value": "rgba(0,0,0,.35)",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.895Z",
         "reason": "agent: prototype scenario switcher shadow, not part of the design"
@@ -79,7 +79,7 @@
         "rule": "design-system-font-size",
         "value": "11px",
         "files": [
-          "prototipos/guia.prototype.html"
+          "prototypes/guia.prototype.html"
         ],
         "createdAt": "2026-10-19T13:38:12.906Z",
         "reason": "agent: prototype scenario switcher label, not part of the design"
@@ -520,7 +520,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
-          "prototipos/guia-zine-serio.prototype.html"
+          "prototypes/guia-zine-serio.prototype.html"
         ],
         "createdAt": "2026-10-19T14:40:49.441Z",
         "reason": "agent: section.sec background is only a 6px hand-drawn rule at the top, not a filled container"

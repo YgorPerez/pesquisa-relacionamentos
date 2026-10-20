@@ -1,16 +1,16 @@
 ---
-referencia: "Mendes G. O original, 2019."
+reference: "Mendes G. O original, 2019."
 link: https://doi.org/10.9999/Repetido.2019
-status: nao-verificado
-forca: moderada
-forca_porque: "Exemplo."
-paises: [Brasil]
-periodo: "2018"
-amostra:
-  descricao: "Exemplo."
-  representativa: false
-desenho: transversal
-cobre: {}
+status: unverified
+strength: moderate
+strength_reason: "Exemplo."
+countries: [Brasil]
+period: "2018"
+sample:
+  description: "Exemplo."
+  representative: false
+design: cross-sectional
+covers: {}
 ---
 
 # Mendes (2019): o original

@@ -1,21 +1,21 @@
 ---
-referencia: "IBGE. *Pesquisa Nacional de Saúde 2019*: microdados (PNS_2019_20220525), dicionário de variáveis, tabelas de *Orientação sexual autoidentificada da população adulta* e Nota técnica 01/2021 (medidas antropométricas). Rio de Janeiro: IBGE, 2021–2022."
+reference: "IBGE. *Pesquisa Nacional de Saúde 2019*: microdados (PNS_2019_20220525), dicionário de variáveis, tabelas de *Orientação sexual autoidentificada da população adulta* e Nota técnica 01/2021 (medidas antropométricas). Rio de Janeiro: IBGE, 2021–2022."
 link: https://ftp.ibge.gov.br/PNS/2019/
-status: ok
-verificado_em: 2026-10-19
-forca: moderada
-forca_porque: "Amostra probabilística nacional grande, mas a orientação sexual é tema novo, com 3,4% de não sabe ou recusa, e a altura é quase toda autodeclarada."
-paises: [Brasil]
-periodo: "2019"
-amostra:
+status: verified
+verified_on: 2026-10-19
+strength: moderate
+strength_reason: "Amostra probabilística nacional grande, mas a orientação sexual é tema novo, com 3,4% de não sabe ou recusa, e a altura é quase toda autodeclarada."
+countries: [Brasil]
+period: "2019"
+sample:
   n: 88531
-  descricao: "88.531 moradores selecionados de 18 anos ou mais com entrevista realizada (contagem no microdado), numa amostra probabilística de domicílios com estrato e UPA."
-  representativa: true
-desenho: transversal
-conflito: "Órgão oficial de estatística."
-licenca: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o FTP do IBGE não traz termo de licença."
-cobre:
-  generos: [homem, mulher]
+  description: "88.531 moradores selecionados de 18 anos ou mais com entrevista realizada (contagem no microdado), numa amostra probabilística de domicílios com estrato e UPA."
+  representative: true
+design: cross-sectional
+conflict: "Órgão oficial de estatística."
+license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o FTP do IBGE não traz termo de licença."
+covers:
+  genders: [man, woman]
 ---
 
 # IBGE (2019): Pesquisa Nacional de Saúde
@@ -55,4 +55,4 @@ Fonte local: `fontes/privado/ibge-2019-pns.txt` (o texto das Tabelas 1.1.1 e 1.2
 ## Como usamos
 
 - Dados do Grupo possível: `dados/grupo-possivel/pns-2019.csv`, gerado por `scripts/possible-group/pipeline.ts`.
-- [Relatório 2026-10-18 sobre os dados do Grupo possível](../relatorios/2026-10-18-dados-grupo-possivel.md).
+- [Relatório 2026-10-18 sobre os dados do Grupo possível](../reports/2026-10-18-dados-grupo-possivel.md).

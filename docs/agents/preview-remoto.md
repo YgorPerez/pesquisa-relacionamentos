@@ -3,7 +3,7 @@
 Para mostrar um protótipo a quem está longe da máquina (no celular, pelo T3 Code), publique a pasta num link https temporário:
 
 ```bash
-scripts/remote-preview.sh                 # serve prototipos/ na porta 8765
+scripts/remote-preview.sh                 # serve prototypes/ na porta 8765
 scripts/remote-preview.sh relatorios 8766 # outra pasta, outra porta
 scripts/remote-preview.sh stop
 ```
@@ -18,7 +18,7 @@ O script imprime um link `https://<quatro-palavras>.trycloudflare.com/<arquivo>.
 
 ## Cuidados
 
-- **O link é público.** Quem tiver a URL vê a pasta inteira, com listagem de arquivos. Sirva só pastas sem nada privado (`prototipos/` serve), e pare o túnel quando terminar.
+- **O link é público.** Quem tiver a URL vê a pasta inteira, com listagem de arquivos. Sirva só pastas sem nada privado (`prototypes/` serve), e pare o túnel quando terminar.
 - **O link muda a cada chamada.** O Quick Tunnel não tem endereço fixo. Mande o link novo a cada rodada.
 - O Quick Tunnel é para teste: não tem garantia de uptime e limita as requisições simultâneas. Não serve para publicar o site.
 

@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (versão aceita do manuscrito, revisão de 5/6/2007; data: 2026-10-18)
-referencia: "Eastwick PW, Finkel EJ. *Sex differences in mate preferences revisited: Do people know what they initially desire in a romantic partner?* Journal of Personality and Social Psychology 94(2):245–264, 2008. Texto completo aberto (manuscrito aceito, no site de Finkel): https://faculty.wcas.northwestern.edu/eli-finkel/documents/MatePrefs_FINAL6-5-07.pdf"
+reference: "Eastwick PW, Finkel EJ. *Sex differences in mate preferences revisited: Do people know what they initially desire in a romantic partner?* Journal of Personality and Social Psychology 94(2):245–264, 2008. Texto completo aberto (manuscrito aceito, no site de Finkel): https://faculty.wcas.northwestern.edu/eli-finkel/documents/MatePrefs_FINAL6-5-07.pdf"
 link: https://doi.org/10.1037/0022-3514.94.2.245
-status: nao-verificado
-forca: moderada
-forca_porque: "Bom desenho com interações reais e seguimento, mas uma única amostra pequena de universitários."
-paises: [EUA]
-periodo: "não informado no texto lido"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Bom desenho com interações reais e seguimento, mas uma única amostra pequena de universitários."
+countries: [EUA]
+period: "não informado no texto lido"
+sample:
   n: 163
-  descricao: "163 alunos de graduação da Northwestern University (81 mulheres), idade média de 19,6 anos, recrutados por listas de e-mail."
-  representativa: false
-desenho: experimento
-conflito: "Acadêmico; nada relevante encontrado."
-cobre:
-  generos: [homem, mulher]
+  description: "163 alunos de graduação da Northwestern University (81 mulheres), idade média de 19,6 anos, recrutados por listas de e-mail."
+  representative: false
+design: experiment
+conflict: "Acadêmico; nada relevante encontrado."
+covers:
+  genders: [man, woman]
 ---
 
 # Eastwick & Finkel (2008): preferências declaradas não preveem desejo real (speed dating)
@@ -43,4 +43,4 @@ Desenho, como descrito antes da migração: 7 eventos de speed dating com encont
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): evidência clássica de que o que as pessoas *dizem* querer prevê mal o que as atrai.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): evidência clássica de que o que as pessoas *dizem* querer prevê mal o que as atrai.

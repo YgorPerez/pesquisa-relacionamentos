@@ -1,41 +1,41 @@
 ---
 # Citação completa. Markdown inline vale (*título em itálico*). Links extras
 # (PDF aberto, PMC, cópia local) vão no fim: "Texto completo aberto: <url>".
-referencia: "<Autores. *Título*. Revista volume(número):páginas, ano.>"
+reference: "<Autores. *Título*. Revista volume(número):páginas, ano.>"
 # Uma URL só, a principal: o DOI (https://doi.org/...) quando houver.
 link: <https://doi.org/...>
-# ok (lido no original) | parcial (resumo, página oficial) | nao-verificado
-status: nao-verificado
-# Obrigatório em ok e parcial: a data da conferência (AAAA-MM-DD). Uma ficha ok
+# verified (lido no original) | partial (resumo, página oficial) | unverified
+status: unverified
+# Obrigatório em verified e partial: a data da conferência (AAAA-MM-DD). Uma ficha verified
 # precisa de Trecho em cada linha dos Achados.
-# verificado_em: 2026-10-19
-# forte | moderada | fraca (rubrica no README)
-forca: <forte | moderada | fraca>
+# verified_on: 2026-10-19
+# strong | moderate | weak (rubrica no README)
+strength: <strong | moderate | weak>
 # Por que essa força, numa frase.
-forca_porque: "<amostra, desenho, viés ou conflito que justifica a força>"
+strength_reason: "<amostra, desenho, viés ou conflito que justifica a força>"
 # Países dos dados, em português: [Brasil], [EUA, França]. [] se o texto não diz.
-paises: []
+countries: []
 # Período dos dados: "2017", "2005–2013", "não informado no texto lido".
-periodo: "<período dos dados>"
-amostra:
+period: "<período dos dados>"
+sample:
   # Número principal (pessoas, casais ou registros). Omita se não houver um só.
   n: 0
-  descricao: "<n, quem são, como foram recrutados>"
+  description: "<n, quem são, como foram recrutados>"
   # true só se a amostra for probabilística/representativa da população.
-  representativa: false
-# longitudinal | transversal | experimento | plataforma | administrativo | meta-analise
-desenho: <desenho>
+  representative: false
+# longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis
+design: <design>
 # Financiamento e conflitos de interesse. Omita só se não houver informação nenhuma.
-conflito: "<quem financiou; vínculos dos autores>"
+conflict: "<quem financiou; vínculos dos autores>"
 # Quem a amostra cobre. Todas as chaves são opcionais; na dúvida, omita.
-# generos: homem | mulher (presentes na amostra)
-# procura: homens | mulheres (com quem os participantes se relacionam)
-# idades: { min, max } em anos inteiros
-# casal: hetero | mesmo-sexo, só se a amostra for restrita a um tipo de casal
-# Sem nada a dizer: cobre: {}
-cobre:
-  generos: [homem, mulher]
-  idades: { min: 18, max: 99 }
+# genders: man | woman (presentes na amostra)
+# seeks: men | women (com quem os participantes se relacionam)
+# ages: { min, max } em anos inteiros
+# couple: different-sex | same-sex, só se a amostra for restrita a um tipo de casal
+# Sem nada a dizer: covers: {}
+covers:
+  genders: [man, woman]
+  ages: { min: 18, max: 99 }
 ---
 
 # <Autor et al. (ano)>: <título curto>

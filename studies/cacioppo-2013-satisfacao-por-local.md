@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (PDF completo, 2026-10-18)
-referencia: "Cacioppo JT, Cacioppo S, Gonzaga GC, Ogburn EL, VanderWeele TJ. *Marital satisfaction and break-ups differ across on-line and off-line meeting venues*. PNAS 110(25):10135–10140, 2013. Cópia local: fontes/pdfs/cacioppo-2013-pnas.pdf"
+reference: "Cacioppo JT, Cacioppo S, Gonzaga GC, Ogburn EL, VanderWeele TJ. *Marital satisfaction and break-ups differ across on-line and off-line meeting venues*. PNAS 110(25):10135–10140, 2013. Cópia local: fontes/pdfs/cacioppo-2013-pnas.pdf"
 link: https://doi.org/10.1073/pnas.1222447110
-status: nao-verificado
-forca: moderada
-forca_porque: "Amostra grande (19.131), mas de painel online não representativo, transversal e encomendada pela eHarmony."
-paises: [EUA]
-periodo: "casamentos de 2005 a 2012; pesquisa aplicada em junho de 2012"
-amostra:
+status: unverified
+strength: moderate
+strength_reason: "Amostra grande (19.131), mas de painel online não representativo, transversal e encomendada pela eHarmony."
+countries: [EUA]
+period: "casamentos de 2005 a 2012; pesquisa aplicada em junho de 2012"
+sample:
   n: 19131
-  descricao: "19.131 pessoas casadas uma vez no período, de um painel online (uSamp) com pesos de propensão da Harris Interactive. Os autores admitem que a amostra é uma aproximação, não uma representação perfeita."
-  representativa: false
-desenho: transversal
-conflito: "Pesquisa encomendada pela eHarmony. Cacioppo era consultor científico da eHarmony; Gonzaga é ex-diretor do eHarmony Labs. Estatísticos independentes (Ogburn, VanderWeele, Harvard) supervisionaram a análise com plano pré-especificado."
-cobre:
-  generos: [homem, mulher]
+  description: "19.131 pessoas casadas uma vez no período, de um painel online (uSamp) com pesos de propensão da Harris Interactive. Os autores admitem que a amostra é uma aproximação, não uma representação perfeita."
+  representative: false
+design: cross-sectional
+conflict: "Pesquisa encomendada pela eHarmony. Cacioppo era consultor científico da eHarmony; Gonzaga é ex-diretor do eHarmony Labs. Estatísticos independentes (Ogburn, VanderWeele, Harvard) supervisionaram a análise com plano pré-especificado."
+covers:
+  genders: [man, woman]
 ---
 
 # Cacioppo et al. (2013): satisfação e separação por local onde o casal se conheceu
@@ -107,4 +107,4 @@ Análise nossa; o artigo não discute esses vieses. O formato do questionário f
 
 ## Como usamos
 
-- [Relatório 2026-10-18](../relatorios/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 2.1 e 2.2: online vs. offline e ranking de locais.
+- [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 2.1 e 2.2: online vs. offline e ranking de locais.

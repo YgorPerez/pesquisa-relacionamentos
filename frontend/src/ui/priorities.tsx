@@ -8,6 +8,7 @@ import type { ProfileGender } from '@tem-estudo/rules/profile'
 import {
   OUTCOMES,
   LEVEL_NAME,
+  OUTCOME_KEY,
   OUTCOME_NAME,
   TOP_SIZE,
   level,
@@ -240,7 +241,7 @@ export function Top3Picker({
                 }}
               >
                 {i >= 0 && <Position i={i} />}
-                {trait.nome}
+                {trait.name}
               </Toggle>
             </li>
           )
@@ -319,17 +320,17 @@ function TraitDetail({
   gender: ProfileGender | undefined
   id: string
 }) {
-  const cell = trait[outcome]
+  const cell = trait[OUTCOME_KEY[outcome]]
   const bias = biasFor(trait, gender)
   return (
     <div
       id={id}
       className="mt-sm rounded-mao border-2 border-tinta bg-folha px-3.5 py-3 text-aviso leading-detalhe [&_p]:m-0 [&_p]:mb-1.5"
       role="region"
-      aria-label={`${trait.nome}, ${OUTCOME_NAME[outcome].toLowerCase()}`}
+      aria-label={`${trait.name}, ${OUTCOME_NAME[outcome].toLowerCase()}`}
     >
       <p className="font-title text-body leading-detalhe font-bold">
-        {trait.nome} · {OUTCOME_NAME[outcome].toLowerCase()}
+        {trait.name} · {OUTCOME_NAME[outcome].toLowerCase()}
       </p>
       <p>{cell.text}</p>
       {cell.measure && <p className={DETAIL_SMALL}>Medida: {cell.measure}</p>}
@@ -480,7 +481,7 @@ function Books({
               onClick={() => onOpen(open === id ? null : id)}
             >
               {i >= 0 && <Position i={i} />}
-              {byId.get(id)?.nome}
+              {byId.get(id)?.name}
             </ButtonPrimitive>
           </li>
         )
@@ -516,7 +517,7 @@ function CardTop3({
             >
               {i + 1}
             </span>
-            <span>{trait.nome}</span>
+            <span>{trait.name}</span>
             <span className="sr-only">, em satisfação: </span>
             <WeightLabel level={level(trait, 'satisfacao')} />
           </li>

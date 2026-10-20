@@ -41,7 +41,7 @@ export const listTopics = createServerFn({ method: 'GET' }).handler(
     const { default: library } = await import('virtual:library')
     return library.topics.map((topic): HomeTopic => ({
       slug: topic.slug,
-      title: topic.titulo,
+      title: topic.title,
       guides: library.guides
         .filter((g) => g.topic === topic.slug)
         .map(guideSummary),
@@ -79,11 +79,11 @@ export const getGuide = createServerFn({ method: 'GET' })
         ...guideView(guide, library),
         // The B1 card reads the same file as the `/prioridades` page.
         priorities:
-          guide.calculadora === 'prioridades'
+          guide.calculator === 'priorities'
             ? buildPrioritiesView(library)
             : null,
         // The B5 card does the count in the browser, with the build's data.
-        possibleGroup: guide.calculadora === 'grupo-possivel',
+        possibleGroup: guide.calculator === 'possible-group',
       }
     },
   )
@@ -98,21 +98,21 @@ export interface CalculatorGuide {
   readonly answer: string
 }
 
-/** The Guide that hosts the calculator (`calculadora:` in the frontmatter),
+/** The Guide that hosts the calculator (`calculator:` in the frontmatter),
  * for the "Do Guia" block on its page; `null` while no published Guide hosts
  * it. */
 export const getCalculatorGuide = createServerFn({ method: 'GET' })
   .validator((name: unknown) => text(name, 'calculator'))
   .handler(async ({ data: name }): Promise<CalculatorGuide | null> => {
     const { default: library } = await import('virtual:library')
-    const guide = library.guides.find((g) => g.calculadora === name)
+    const guide = library.guides.find((g) => g.calculator === name)
     if (!guide) return null
     const summary = guideSummary(guide)
     return {
       topic: guide.topic,
       slug: guide.slug,
       question: summary.question,
-      confidence: guide.confianca,
+      confidence: guide.confidence,
       answer: withoutMarks(guide.shortAnswer),
     }
   })

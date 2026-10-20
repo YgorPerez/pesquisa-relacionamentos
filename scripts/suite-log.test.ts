@@ -151,12 +151,12 @@ describe('logSummary', () => {
   it("shows Vitest's test and first error, even with coverage at the end", () => {
     const log = [
       ' RUN  v5.0.5 /repo/frontend',
-      ' ✓ src/ui/laco.test.ts (4 tests) 12ms',
-      ' × src/estado/perfil.test.ts > o perfil > guarda a idade 8ms',
+      ' ✓ src/ui/loop.test.ts (4 tests) 12ms',
+      ' × src/ui/profile.test.tsx > the profile > keeps the age 8ms',
       '',
-      ' FAIL  src/estado/perfil.test.ts > o perfil > guarda a idade',
+      ' FAIL  src/ui/profile.test.tsx > the profile > keeps the age',
       'AssertionError: expected 2 to be 3 // Object.is equality',
-      ' ❯ src/estado/perfil.test.ts:41:18',
+      ' ❯ src/ui/profile.test.tsx:41:18',
       '',
       ' Test Files  1 failed | 1 passed (2)',
       '      Tests  1 failed | 4 passed (5)',
@@ -165,7 +165,7 @@ describe('logSummary', () => {
 
     const summary = logSummary(log)
 
-    expect(summary).toMatch(/perfil\.test\.ts > o perfil > guarda a idade/)
+    expect(summary).toMatch(/profile\.test\.tsx > the profile > keeps the age/)
     expect(summary).toMatch(/AssertionError: expected 2 to be 3/)
     expect(summary).toMatch(/1 failed \| 4 passed/)
     expect(summary).not.toMatch(/file-40\.ts/)

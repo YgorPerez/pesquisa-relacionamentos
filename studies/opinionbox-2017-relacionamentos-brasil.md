@@ -1,19 +1,19 @@
 ---
 # Antes da migração: ✅ lido no original (a publicação é o próprio post; não há relatório técnico nem questionário publicados) (data: 2026-10-18)
-referencia: "Opinion Box. *Pesquisa sobre relacionamentos: o brasileiro e as relações na internet*. Blog Opinion Box, 1º de setembro de 2017."
+reference: "Opinion Box. *Pesquisa sobre relacionamentos: o brasileiro e as relações na internet*. Blog Opinion Box, 1º de setembro de 2017."
 link: https://blog.opinionbox.com/pesquisa-sobre-relacionamentos/
-status: nao-verificado
-forca: fraca
-forca_porque: "Painel online de internautas de uma empresa de pesquisa de mercado, sem questionário publicado."
-paises: [Brasil]
-periodo: "agosto de 2017"
-amostra:
+status: unverified
+strength: weak
+strength_reason: "Painel online de internautas de uma empresa de pesquisa de mercado, sem questionário publicado."
+countries: [Brasil]
+period: "agosto de 2017"
+sample:
   n: 1735
-  descricao: "1.735 internautas do painel online da Opinion Box, \"de todas as faixas etárias, classes sociais e regiões\"; margem de erro informada de 2,3 p.p. (95%). 71% estavam em relação estável."
-  representativa: false
-desenho: transversal
-conflito: "Empresa de pesquisa de mercado; pesquisa própria de divulgação."
-cobre: {}
+  description: "1.735 internautas do painel online da Opinion Box, \"de todas as faixas etárias, classes sociais e regiões\"; margem de erro informada de 2,3 p.p. (95%). 71% estavam em relação estável."
+  representative: false
+design: cross-sectional
+conflict: "Empresa de pesquisa de mercado; pesquisa própria de divulgação."
+covers: {}
 ---
 
 # Opinion Box (2017): pesquisa sobre relacionamentos e internet no Brasil
@@ -43,4 +43,4 @@ Desenho, como descrito antes da migração: transversal, painel online.
 
 ## Como usamos
 
-- [Relatório 2026-10-18: onde casais se conhecem](../relatorios/2026-10-18-onde-casais-se-conhecem.md): único número brasileiro com metodologia mínima publicada sobre como o parceiro atual foi conhecido.
+- [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): único número brasileiro com metodologia mínima publicada sobre como o parceiro atual foi conhecido.

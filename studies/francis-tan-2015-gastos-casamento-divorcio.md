@@ -1,20 +1,20 @@
 ---
 # Antes da migração: ✅ lido no original (data: 2026-10-18)
-referencia: "Francis-Tan A, Mialon HM. *\"A diamond is forever\" and other fairy tales: The relationship between wedding expenses and marriage duration*. Economic Inquiry 53(4):1919–1930, 2015. Texto completo aberto (PDF da versão publicada): https://www.csus.edu/faculty/m/fred.molitor/docs/wedding%20expenses%20and%20marriage%20duration1.pdf; SSRN: https://papers.ssrn.com/abstract=2501480"
+reference: "Francis-Tan A, Mialon HM. *\"A diamond is forever\" and other fairy tales: The relationship between wedding expenses and marriage duration*. Economic Inquiry 53(4):1919–1930, 2015. Texto completo aberto (PDF da versão publicada): https://www.csus.edu/faculty/m/fred.molitor/docs/wedding%20expenses%20and%20marriage%20duration1.pdf; SSRN: https://papers.ssrn.com/abstract=2501480"
 link: https://doi.org/10.1111/ecin.12206
-status: nao-verificado
-forca: fraca
-forca_porque: "Amostra online não probabilística, dados retrospectivos, transversal."
-paises: [EUA]
-periodo: "pesquisa online feita por volta de 2014"
-amostra:
+status: unverified
+strength: weak
+strength_reason: "Amostra online não probabilística, dados retrospectivos, transversal."
+countries: [EUA]
+period: "pesquisa online feita por volta de 2014"
+sample:
   n: 3151
-  descricao: "3.151 pessoas que já foram casadas (1.455 homens e 1.696 mulheres), recrutadas no Amazon Mechanical Turk. Mais jovens, mais escolarizadas e de renda menor que a população (comparação com a ACS 2012). As regressões usam pesos populacionais."
-  representativa: false
-desenho: transversal
-conflito: "Acadêmico (Emory); nada relevante encontrado."
-cobre:
-  generos: [homem, mulher]
+  description: "3.151 pessoas que já foram casadas (1.455 homens e 1.696 mulheres), recrutadas no Amazon Mechanical Turk. Mais jovens, mais escolarizadas e de renda menor que a população (comparação com a ACS 2012). As regressões usam pesos populacionais."
+  representative: false
+design: cross-sectional
+conflict: "Acadêmico (Emory); nada relevante encontrado."
+covers:
+  genders: [man, woman]
 ---
 
 # Francis-Tan & Mialon (2015): gastos com casamento, diferença de idade e divórcio
@@ -57,4 +57,4 @@ Razões de risco (hazard ratios) de divórcio, modelo multivariado, todas as pes
 
 ## Como usamos
 
-- [Relatório 2026-10-18: características do parceiro](../relatorios/2026-10-18-caracteristicas-parceiro.md): diferença de idade e de escolaridade, religião, renda e "casar pela aparência". Toda essa evidência é fraca.
+- [Relatório 2026-10-18: características do parceiro](../reports/2026-10-18-caracteristicas-parceiro.md): diferença de idade e de escolaridade, religião, renda e "casar pela aparência". Toda essa evidência é fraca.
