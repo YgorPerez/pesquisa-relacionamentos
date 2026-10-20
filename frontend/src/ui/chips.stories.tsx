@@ -2,17 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { toggleInTop3 } from '@tem-estudo/rules/priorities'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
-import { EscolhaDoTopo3 } from './prioridades'
-import { CARACTERISTICAS } from './prioridades.exemplo'
+import { Top3Picker } from './priorities'
+import { TRAITS } from './priorities.example'
 
-/** Os chips do topo 3 com estado de verdade: tocar dá o próximo número. */
-function Chips({ inicio }: { inicio: ReadonlyArray<string> }) {
-  const [topo3, setTopo3] = useState(inicio)
+/** The top 3 chips with real state: a tap gives the next number. */
+function Chips({ initial }: { initial: ReadonlyArray<string> }) {
+  const [top3, setTop3] = useState(initial)
   return (
-    <EscolhaDoTopo3
-      caracteristicas={CARACTERISTICAS}
-      topo3={topo3}
-      aoTocar={(id) => setTopo3(toggleInTop3(topo3, id))}
+    <Top3Picker
+      traits={TRAITS}
+      top3={top3}
+      onToggle={(id) => setTop3(toggleInTop3(top3, id))}
     />
   )
 }
@@ -20,28 +20,28 @@ function Chips({ inicio }: { inicio: ReadonlyArray<string> }) {
 const meta = {
   component: Chips,
   parameters: { layout: 'padded' },
-  args: { inicio: [] },
+  args: { initial: [] },
 } satisfies Meta<typeof Chips>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-/** Nada escolhido ainda. */
-export const Vazio: Story = {}
+/** Nothing chosen yet. */
+export const Empty: Story = {}
 
-/** Dois escolhidos, numerados na ordem do toque; falta um. */
-export const Dois: Story = { args: { inicio: ['renda', 'sexo'] } }
+/** Two chosen, numbered in tap order; one is missing. */
+export const Two: Story = { args: { initial: ['renda', 'sexo'] } }
 
-/** Três escolhidos: os outros ficam indisponíveis, com a dica de troca. */
-export const Cheio: Story = { args: { inicio: ['renda', 'sexo', 'parecido'] } }
+/** Three chosen: the others become unavailable, with the swap hint. */
+export const Full: Story = { args: { initial: ['renda', 'sexo', 'parecido'] } }
 
-/** Tocar dá o próximo número, e tocar de novo tira e renumera. */
-export const TocarENumerar: Story = {
+/** A tap gives the next number, and tapping again removes and renumbers. */
+export const TapAndNumber: Story = {
   play: async ({ canvasElement }) => {
-    const tela = within(canvasElement)
-    const chip = (nome: string) =>
-      tela.getByRole('button', { name: new RegExp(`${nome}$`) })
+    const screen = within(canvasElement)
+    const chip = (name: string) =>
+      screen.getByRole('button', { name: new RegExp(`${name}$`) })
     await userEvent.click(chip('Renda'))
     await userEvent.click(chip('Aparência'))
     await expect(chip('Aparência')).toHaveAccessibleName('sua 2ª: Aparência')

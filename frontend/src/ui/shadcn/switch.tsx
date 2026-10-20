@@ -1,11 +1,11 @@
 import { Switch as SwitchPrimitive } from '@base-ui/react/switch'
 import { cn } from '@/platform/cn'
 
-/** A chave do DESIGN.md: trilho de 46 × 26px com contorno de mão, polegar
- * de bolota, e o amarelo quando ligada. Desligada à força (o navegador pede
- * para não contar), o contorno fica tracejado. No foco, o anel é o do site,
- * e o canto continua o do trilho. Vai dentro de um `<label>`, que lhe dá o
- * nome. O que veio do `base-nova` do shadcn foi trocado pelos tokens. */
+/** The DESIGN.md switch: a 46 × 26px track with a hand outline, a blob
+ * thumb, and yellow when on. Forced off (the browser asks not to count), the
+ * outline turns dashed. On focus, the ring is the site's, and the corner
+ * stays the track's. It goes inside a `<label>`, which names it. What came
+ * from shadcn's `base-nova` was swapped for the tokens. */
 function Switch({ className, ...props }: SwitchPrimitive.Root.Props) {
   return (
     <SwitchPrimitive.Root

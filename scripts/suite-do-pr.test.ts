@@ -38,7 +38,7 @@ describe('filasDaSuite', () => {
       comando: `pnpm exec vp test run --changed ${BASE} --passWithNoTests`,
     })
     expect(passo('e2e')?.comando).toBe(
-      'pnpm e2e acessibilidade.e2e.ts inicio.e2e.ts perfil.e2e.ts',
+      'pnpm e2e accessibility.e2e.ts home.e2e.ts profile.e2e.ts',
     )
     // Sem a cobertura inteira, a fallow roda só o que não depende dela.
     expect(passo('fallow')?.comando).toBe(

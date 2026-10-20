@@ -1,17 +1,17 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
-  // Cada story mora ao lado do componente dela. O título sai do caminho
-  // (`ui/grupo-possivel`), sem acento: a busca tira o do que se digita
-  // (`manager.ts`).
+  // Each story lives next to its component. The title comes from the path
+  // (`ui/possible-group`), without accents: the search strips them from what
+  // is typed (`manager.ts`).
   stories: ['../src/**/*.stories.tsx'],
-  // A imagem fixa das prévias de link (`og.png`), que a story das prévias
-  // mostra como o app de mensagem a mostra.
+  // The fixed image of the link previews (`og.png`), which the previews
+  // story shows as the messaging app shows it.
   staticDirs: ['../public'],
   framework: {
     name: '@storybook/react-vite',
-    // O `vite.config.ts` do app monta o TanStack Start e o nitro, e nenhum
-    // dos dois sabe servir uma story. O Storybook lê o dele.
+    // The app's `vite.config.ts` builds TanStack Start and nitro, and
+    // neither knows how to serve a story. Storybook reads its own.
     options: { builder: { viteConfigPath: '.storybook/vite.config.ts' } },
   },
 }

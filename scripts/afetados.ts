@@ -18,39 +18,51 @@ import { spawnSync } from 'node:child_process'
 /** Os termos que cada spec do e2e percorre. Uma spec nova entra aqui, e o
  * teste deste arquivo falha até ela entrar. */
 export const TERMOS_DAS_SPECS: Readonly<Record<string, readonly string[]>> = {
-  'acessibilidade.e2e.ts': [],
+  'accessibility.e2e.ts': [],
   'analytics.e2e.ts': ['analytics', 'contagem', 'privacidade'],
-  'busca.e2e.ts': ['busca', 'guia', 'estudos'],
-  'cartao-grupo-possivel.e2e.ts': ['grupo-possivel', 'compartilhar'],
-  'estudos.e2e.ts': ['estudos', 'selos'],
-  'grupo-possivel.e2e.ts': ['grupo-possivel'],
-  'guia.e2e.ts': ['guia', 'dicas', 'inicio'],
-  'inicio.e2e.ts': ['inicio'],
-  'leituras.e2e.ts': ['leituras'],
+  'search.e2e.ts': ['busca', 'guia', 'estudos'],
+  'possible-group-card.e2e.ts': ['grupo-possivel', 'compartilhar'],
+  'fact-sheets.e2e.ts': ['estudos', 'selos'],
+  'possible-group.e2e.ts': ['grupo-possivel'],
+  'guide.e2e.ts': ['guia', 'dicas', 'inicio'],
+  'home.e2e.ts': ['inicio'],
+  'reads.e2e.ts': ['leituras'],
   'link.e2e.ts': ['link', 'compartilhar', 'grupo-possivel', 'prioridades'],
-  'navegacao.e2e.ts': ['navegacao', 'topo', 'guia'],
-  'perfil.e2e.ts': ['perfil', 'guia'],
-  'prioridades.e2e.ts': ['prioridades', 'guia'],
-  'privacidade.e2e.ts': ['privacidade'],
+  'navigation.e2e.ts': ['navegacao', 'topo', 'guia'],
+  'profile.e2e.ts': ['perfil', 'guia'],
+  'priorities.e2e.ts': ['prioridades', 'guia'],
+  'privacy.e2e.ts': ['privacidade'],
 }
 
 /** Rodam em toda rodada que mexe no app: abrem cada página a frio, e pegam o
  * que quebra em qualquer uma. */
-const SEMPRE = ['acessibilidade.e2e.ts', 'inicio.e2e.ts']
+const SEMPRE = ['accessibility.e2e.ts', 'home.e2e.ts']
 
 /** O nome de arquivo ou de pasta que não é o termo dele. */
 const APELIDOS: Readonly<Record<string, string>> = {
   $tema: 'guia',
   guias: 'guia',
-  'vista-guia': 'guia',
-  'perfil-no-guia': 'perfil',
-  'pacotes-do-grupo': 'grupo-possivel',
-  'vista-prioridades': 'prioridades',
-  fichas: 'estudos',
-  'citada-em': 'estudos',
+  guides: 'guia',
+  'guide-view': 'guia',
+  'profile-in-guide': 'perfil',
+  'group-packs': 'grupo-possivel',
+  'priorities-view': 'prioridades',
+  'fact-sheets': 'estudos',
+  'cited-in': 'estudos',
   goatcounter: 'analytics',
-  eventos: 'analytics',
+  counting: 'analytics',
+  events: 'analytics',
   index: 'inicio',
+  home: 'inicio',
+  header: 'topo',
+  navigation: 'navegacao',
+  badges: 'selos',
+  share: 'compartilhar',
+  profile: 'perfil',
+  priorities: 'prioridades',
+  'possible-group': 'grupo-possivel',
+  reads: 'leituras',
+  search: 'busca',
 }
 
 /** O que muda por fora do grafo de imports, ou o que todo o resto usa. */
@@ -70,11 +82,11 @@ const DE_TODOS: ReadonlyArray<[RegExp, string]> = [
   ],
   [/^frontend\/src\/routes\/__root\.tsx$/, 'mudou a raiz das rotas'],
   [
-    /^frontend\/src\/ui\/(tokens|desenhos|fontes)\.css$/,
+    /^frontend\/src\/ui\/(tokens|drawings|fonts|desenhos|fontes)\.css$/,
     'mudou o estilo de todas as páginas',
   ],
   [
-    /^frontend\/src\/(conteudo\/vista|estado\/armazenado)\.ts$/,
+    /^frontend\/src\/(content\/view|state\/stored|conteudo\/vista|estado\/armazenado)\.ts$/,
     'mudou o que toda página lê',
   ],
   [/^frontend\/e2e\/(?![^/]+\.e2e\.ts$)/, 'mudou o e2e por baixo das specs'],

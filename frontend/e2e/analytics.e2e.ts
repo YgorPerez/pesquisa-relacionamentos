@@ -1,47 +1,49 @@
-// A contagem de uso (#35, ADR 0001) sobre o conteúdo de fixture. Os envios ao
-// GoatCounter de stats.temestudo.cloud são interceptados e nunca saem da
-// máquina. Eles levam o caminho sem query, a referência, a largura da tela e,
-// nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
+// The usage count (#35, ADR 0001) over the fixture content. The sends to the
+// GoatCounter at stats.temestudo.cloud are intercepted and never leave the
+// machine. They carry the path without query, the referrer, the screen width
+// and, in events, the event name. Nothing of the Profile, nor whether it was
+// filled in.
 import { expect, test, type Page } from '@playwright/test'
 import { linkQuery } from '@tem-estudo/rules/link'
-import { tocar } from './toque'
+import { tap } from './touch'
 
-const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
-/** A query de um link de verdade, com o Perfil. */
-const QUERY_COM_PERFIL = linkQuery({
+const GUIDE = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
+/** The query of a real link, with the Profile. */
+const QUERY_WITH_PROFILE = linkQuery({
   calculator: 'grupo-possivel',
-  profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+  profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
   requirements: null,
 })
 const STATS = 'https://stats.temestudo.cloud/'
-const CAMPOS = ['p', 'r', 's', 'e', 'b', 'rnd']
+const FIELDS = ['p', 'r', 's', 'e', 'b', 'rnd']
 
-/** Os envios ao GoatCounter, sem o `rnd` (que só fura o cache). */
-function gravarEnvios(page: Page) {
-  const envios: Record<string, string>[] = []
-  const pedidos: string[] = []
-  page.on('request', (pedido) => {
-    if (/goatcounter/i.test(pedido.url())) pedidos.push(pedido.url())
+/** The sends to GoatCounter, without the `rnd` (which only busts the
+ * cache). */
+function recordHits(page: Page) {
+  const hits: Record<string, string>[] = []
+  const requests: string[] = []
+  page.on('request', (request) => {
+    if (/goatcounter/i.test(request.url())) requests.push(request.url())
   })
-  void page.route(`${STATS}**`, async (rota) => {
-    const url = new URL(rota.request().url())
-    pedidos.push(url.href)
+  void page.route(`${STATS}**`, async (route) => {
+    const url = new URL(route.request().url())
+    requests.push(url.href)
     if (url.pathname === '/count') {
-      const campos = Object.fromEntries(url.searchParams)
-      delete campos.rnd
-      envios.push(campos)
+      const fields = Object.fromEntries(url.searchParams)
+      delete fields.rnd
+      hits.push(fields)
     }
-    await rota.fulfill({ status: 204 })
+    await route.fulfill({ status: 204 })
   })
-  return { envios, pedidos }
+  return { hits, requests }
 }
 
-async function abrir(page: Page, caminho: string) {
-  await page.goto(caminho, { waitUntil: 'networkidle' })
+async function open(page: Page, path: string) {
+  await page.goto(path, { waitUntil: 'networkidle' })
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 }
 
-async function dizerPerfil(page: Page, botao: string) {
+async function fillProfile(page: Page, button: string) {
   const form = page.getByRole('form', { name: 'Seu Perfil' })
   await form
     .getByRole('group', { name: 'Você é' })
@@ -52,212 +54,216 @@ async function dizerPerfil(page: Page, botao: string) {
     .getByRole('radio', { name: 'mulheres', exact: true })
     .check()
   await form.getByLabel('Sua idade').fill('30')
-  await form.getByRole('button', { name: botao }).click()
+  await form.getByRole('button', { name: button }).click()
 }
 
-const ajudou = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
+const helped = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
 
-/** Uma visita inteira: o Guia com "Ajudou?" e uma Ficha aberta dele, e as
- * duas calculadoras mexidas duas vezes cada. */
-async function percorrer(
+/** A whole visit: the Guide with "Ajudou?" and a Fact sheet opened from it,
+ * and the two calculators used twice each. */
+async function walkThrough(
   page: Page,
-  comPerfil: boolean,
-  envios: Record<string, string>[],
+  withProfile: boolean,
+  hits: Record<string, string>[],
 ) {
-  await abrir(page, GUIA)
-  if (comPerfil) await dizerPerfil(page, 'Ver o que vale para mim')
-  await ajudou(page).getByRole('button', { name: 'Não' }).click()
-  await ajudou(page)
+  await open(page, GUIDE)
+  if (withProfile) await fillProfile(page, 'Ver o que vale para mim')
+  await helped(page).getByRole('button', { name: 'Não' }).click()
+  await helped(page)
     .getByRole('button', { name: 'Difícil de entender' })
     .click()
-  await expect(ajudou(page)).toContainText('Obrigado')
+  await expect(helped(page)).toContainText('Obrigado')
   await page
     .locator('[data-slot="fichas-citadas"] li > div > a')
     .first()
     .click()
   await expect(page).toHaveURL(/\/estudos\//)
-  // A visita da Ficha sai depois da navegação: espere antes de sair dela.
+  // The Fact sheet visit goes out after the navigation: wait before leaving
+  // it.
   await expect
-    .poll(() => envios.some((e) => e.p.startsWith('/estudos/')))
+    .poll(() => hits.some((e) => e.p.startsWith('/estudos/')))
     .toBe(true)
 
-  await abrir(page, '/grupo-possivel')
-  const fuma = page
-    .locator('#req-fumo')
+  await open(page, '/grupo-possivel')
+  const smokes = page
+    .locator('#req-smoking')
     .getByRole('checkbox', { name: 'Só quem não fuma' })
-  await fuma.check()
-  await fuma.uncheck()
+  await smokes.check()
+  await smokes.uncheck()
 
-  await abrir(page, '/prioridades')
+  await open(page, '/prioridades')
   const chips = page.getByRole('region', { name: 'Seu topo 3' })
-  await tocar(chips.getByRole('button', { name: /Renda$/ }))
-  await tocar(chips.getByRole('button', { name: /Aparência$/ }))
+  await tap(chips.getByRole('button', { name: /Renda$/ }))
+  await tap(chips.getByRole('button', { name: /Aparência$/ }))
   await page.waitForLoadState('networkidle')
 }
 
-test.describe('contagem de uso', () => {
-  test('cada página conta o caminho sem query, e os eventos saem com o nome certo', async ({
+test.describe('usage count', () => {
+  test('each page counts the path without query, and the events go out with the right name', async ({
     page,
   }) => {
-    const { envios } = gravarEnvios(page)
-    await abrir(page, `${GUIA}?${QUERY_COM_PERFIL}`)
-    await expect.poll(() => envios.length).toBeGreaterThan(0)
-    expect(envios[0].p).toBe(GUIA)
-    expect(envios[0].e).toBeUndefined()
-    expect(Number(envios[0].s)).toBeGreaterThan(0)
+    const { hits } = recordHits(page)
+    await open(page, `${GUIDE}?${QUERY_WITH_PROFILE}`)
+    await expect.poll(() => hits.length).toBeGreaterThan(0)
+    expect(hits[0].p).toBe(GUIDE)
+    expect(hits[0].e).toBeUndefined()
+    expect(Number(hits[0].s)).toBeGreaterThan(0)
 
-    await ajudou(page).getByRole('button', { name: 'Sim' }).click()
-    await expect(ajudou(page)).toContainText('Obrigado')
+    await helped(page).getByRole('button', { name: 'Sim' }).click()
+    await expect(helped(page)).toContainText('Obrigado')
     await expect
-      .poll(() => envios.map((e) => e.p))
-      .toContain('ajudou/sim/onde-os-casais-se-conhecem')
-    const evento = envios.find((e) => e.p.startsWith('ajudou/'))
-    expect(evento?.e).toBe('true')
+      .poll(() => hits.map((e) => e.p))
+      .toContain('helped/yes/onde-os-casais-se-conhecem')
+    const event = hits.find((e) => e.p.startsWith('helped/'))
+    expect(event?.e).toBe('true')
   })
 
-  test('"Ajudou?" no fim do Guia: sim, ou não com um de quatro motivos, sem campo livre', async ({
+  test('"Ajudou?" at the end of the Guide: yes, or no with one of four reasons, no free field', async ({
     page,
   }) => {
-    const { envios } = gravarEnvios(page)
-    await abrir(page, GUIA)
-    const titulos = await page.locator('main h2').allTextContents()
-    expect(titulos.indexOf('Ajudou?')).toBe(
-      titulos.indexOf('Fichas citadas') + 1,
-    )
+    const { hits } = recordHits(page)
+    await open(page, GUIDE)
+    const titles = await page.locator('main h2').allTextContents()
+    expect(titles.indexOf('Ajudou?')).toBe(titles.indexOf('Fichas citadas') + 1)
 
-    await ajudou(page).getByRole('button', { name: 'Não' }).click()
-    const motivos = ajudou(page)
+    await helped(page).getByRole('button', { name: 'Não' }).click()
+    const reasons = helped(page)
       .getByRole('group', { name: 'O que faltou?' })
       .getByRole('button')
-    await expect(motivos).toHaveText([
+    await expect(reasons).toHaveText([
       'Não respondeu minha dúvida',
       'Não confio na resposta',
       'Difícil de entender',
       'Não vale para mim',
     ])
-    for (const motivo of await motivos.all()) {
-      expect((await motivo.boundingBox())?.height).toBeGreaterThanOrEqual(44)
+    for (const reason of await reasons.all()) {
+      expect((await reason.boundingBox())?.height).toBeGreaterThanOrEqual(44)
     }
-    await expect(ajudou(page).locator('input, textarea')).toHaveCount(0)
-    await motivos.filter({ hasText: 'Não confio na resposta' }).click()
-    await expect(ajudou(page)).toContainText('Obrigado')
+    await expect(helped(page).locator('input, textarea')).toHaveCount(0)
+    await reasons.filter({ hasText: 'Não confio na resposta' }).click()
+    await expect(helped(page)).toContainText('Obrigado')
     await expect
-      .poll(() => envios.map((e) => e.p))
-      .toContain('ajudou/nao/nao-confio/onde-os-casais-se-conhecem')
+      .poll(() => hits.map((e) => e.p))
+      .toContain('helped/no/do-not-trust/onde-os-casais-se-conhecem')
   })
 
-  test('nenhum envio leva campo do Perfil, nem se ele foi preenchido', async ({
+  test('no send carries a Profile field, nor whether it was filled in', async ({
     browser,
   }) => {
-    const visitas: Record<string, string>[][] = []
-    for (const comPerfil of [false, true]) {
-      const contexto = await browser.newContext({ ...test.info().project.use })
-      const page = await contexto.newPage()
-      const { envios } = gravarEnvios(page)
-      await percorrer(page, comPerfil, envios)
-      visitas.push(envios.map(({ r: _r, ...resto }) => resto))
-      for (const envio of envios) {
-        expect(CAMPOS).toEqual(expect.arrayContaining(Object.keys(envio)))
-        expect(envio.p).not.toContain('?')
-        expect(JSON.stringify(envio)).not.toMatch(/homem|mulher|30|perfil/i)
+    const visits: Record<string, string>[][] = []
+    for (const withProfile of [false, true]) {
+      const context = await browser.newContext({ ...test.info().project.use })
+      const page = await context.newPage()
+      const { hits } = recordHits(page)
+      await walkThrough(page, withProfile, hits)
+      visits.push(hits.map(({ r: _r, ...rest }) => rest))
+      for (const hit of hits) {
+        expect(FIELDS).toEqual(expect.arrayContaining(Object.keys(hit)))
+        expect(hit.p).not.toContain('?')
+        expect(JSON.stringify(hit)).not.toMatch(/homem|mulher|30|perfil/i)
       }
-      await contexto.close()
+      await context.close()
     }
-    const [semPerfil, comPerfil] = visitas
-    expect(comPerfil).toEqual(semPerfil)
-    const eventos = semPerfil.filter((e) => e.e === 'true').map((e) => e.p)
-    expect(eventos).toEqual([
-      'ajudou/nao/dificil/onde-os-casais-se-conhecem',
-      expect.stringMatching(/^ficha\/onde-os-casais-se-conhecem\/[a-z0-9-]+$/),
-      'calculadora/grupo-possivel',
-      'calculadora/prioridades',
+    const [withoutProfile, withProfile] = visits
+    expect(withProfile).toEqual(withoutProfile)
+    const events = withoutProfile.filter((e) => e.e === 'true').map((e) => e.p)
+    expect(events).toEqual([
+      'helped/no/hard-to-understand/onde-os-casais-se-conhecem',
+      expect.stringMatching(
+        /^fact-sheet\/onde-os-casais-se-conhecem\/[a-z0-9-]+$/,
+      ),
+      'calculator/possible-group',
+      'calculator/priorities',
     ])
   })
 
-  for (const [nome, sinal] of [
+  for (const [name, signal] of [
     ['GPC', 'globalPrivacyControl'],
     ['Do Not Track', 'doNotTrack'],
   ] as const) {
-    test(`com ${nome}, o script nem carrega e a chave diz por quê`, async ({
+    test(`with ${name}, the script does not even load and the switch says why`, async ({
       page,
     }) => {
-      await page.addInitScript((sinal) => {
-        Object.defineProperty(Navigator.prototype, sinal, {
-          get: () => (sinal === 'doNotTrack' ? '1' : true),
+      await page.addInitScript((signal) => {
+        Object.defineProperty(Navigator.prototype, signal, {
+          get: () => (signal === 'doNotTrack' ? '1' : true),
         })
-      }, sinal)
-      const { pedidos } = gravarEnvios(page)
-      await abrir(page, GUIA)
-      await ajudou(page).getByRole('button', { name: 'Sim' }).click()
-      await abrir(page, '/privacidade')
-      const chave = page
+      }, signal)
+      const { requests } = recordHits(page)
+      await open(page, GUIDE)
+      await helped(page).getByRole('button', { name: 'Sim' }).click()
+      await open(page, '/privacidade')
+      const toggle = page
         .getByRole('main')
         .getByRole('switch', { name: 'Contar minhas visitas' })
-      await expect(chave).not.toBeChecked()
-      await expect(chave).toBeDisabled()
+      await expect(toggle).not.toBeChecked()
+      await expect(toggle).toBeDisabled()
       await expect(page.getByRole('main')).toContainText(
         'seu navegador pede para não contar',
       )
-      expect(pedidos).toEqual([])
+      expect(requests).toEqual([])
     })
   }
 
-  test('a chave do rodapé desliga a contagem, e um link recebido não a religa', async ({
+  test('the footer switch turns the count off, and a received link does not turn it back on', async ({
     page,
   }) => {
-    const { pedidos } = gravarEnvios(page)
-    await abrir(page, '/')
-    await expect.poll(() => pedidos.length).toBeGreaterThan(0)
-    const chave = page
+    const { requests } = recordHits(page)
+    await open(page, '/')
+    await expect.poll(() => requests.length).toBeGreaterThan(0)
+    const toggle = page
       .getByRole('contentinfo')
       .getByRole('switch', { name: 'Contar minhas visitas' })
-    await expect(chave).toBeChecked()
-    await chave.uncheck()
+    await expect(toggle).toBeChecked()
+    await toggle.uncheck()
     expect(
-      await page.evaluate(() => localStorage.getItem('tem-estudo:nao-contar')),
+      await page.evaluate(() =>
+        localStorage.getItem('tem-estudo:do-not-count'),
+      ),
     ).toBe('true')
 
-    pedidos.length = 0
-    await abrir(page, `/grupo-possivel?${QUERY_COM_PERFIL}&contar=1`)
-    await abrir(page, GUIA)
-    await ajudou(page).getByRole('button', { name: 'Sim' }).click()
-    await expect(ajudou(page)).toContainText('não sai do aparelho')
+    requests.length = 0
+    await open(page, `/grupo-possivel?${QUERY_WITH_PROFILE}&contar=1`)
+    await open(page, GUIDE)
+    await helped(page).getByRole('button', { name: 'Sim' }).click()
+    await expect(helped(page)).toContainText('não sai do aparelho')
     await expect(
       page
         .getByRole('contentinfo')
         .getByRole('switch', { name: 'Contar minhas visitas' }),
     ).not.toBeChecked()
-    expect(pedidos).toEqual([])
+    expect(requests).toEqual([])
 
-    // A da página de privacidade é a mesma preferência.
-    await abrir(page, '/privacidade')
-    const daPagina = page
+    // The privacy page one is the same preference.
+    await open(page, '/privacidade')
+    const onPage = page
       .getByRole('main')
       .getByRole('switch', { name: 'Contar minhas visitas' })
-    await expect(daPagina).not.toBeChecked()
-    await daPagina.check()
+    await expect(onPage).not.toBeChecked()
+    await onPage.check()
     await expect(
       page
         .getByRole('contentinfo')
         .getByRole('switch', { name: 'Contar minhas visitas' }),
     ).toBeChecked()
-    // Religar não conta a página em que se está; a próxima conta.
+    // Turning it back on does not count the current page; the next one
+    // counts.
     await page.waitForTimeout(500)
-    expect(pedidos).toEqual([])
+    expect(requests).toEqual([])
     await page.getByRole('banner').getByRole('link').first().click()
-    await expect.poll(() => pedidos.length).toBeGreaterThan(0)
+    await expect.poll(() => requests.length).toBeGreaterThan(0)
   })
 })
 
-test('a página de privacidade diz o que fica no aparelho, no link, no log e no analytics', async ({
+test('the privacy page says what stays on the device, in the link, in the log and in analytics', async ({
   page,
 }) => {
-  await abrir(page, '/privacidade')
+  await open(page, '/privacidade')
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'Privacidade',
   )
-  const secoes = await page.locator('main h2').allTextContents()
-  expect(secoes).toEqual([
+  const sections = await page.locator('main h2').allTextContents()
+  expect(sections).toEqual([
     'O que fica no seu aparelho',
     'O que vai no link',
     'O que o servidor anota',
@@ -265,7 +271,8 @@ test('a página de privacidade diz o que fica no aparelho, no link, no log e no 
     'Não ser contado',
   ])
   await expect(page.getByRole('main')).toContainText('31 dias')
-  // A coleta do GoatCounter não tem sessões (`COLETA_DO_STATS`, `scripts/vps.ts`).
+  // GoatCounter's collection has no sessions (`COLETA_DO_STATS`,
+  // `scripts/vps.ts`).
   await expect(page.getByRole('main')).toContainText(
     'não liga as páginas de uma mesma visita',
   )

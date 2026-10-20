@@ -13,78 +13,78 @@ describe('readRequirements', () => {
   it('returns the default for junk: "não mora com companheiro(a)" on and the rest released', () => {
     expect(readRequirements(null)).toEqual(DEFAULT_REQUIREMENTS)
     expect(readRequirements('x')).toEqual(DEFAULT_REQUIREMENTS)
-    expect(DEFAULT_REQUIREMENTS.companheiro).toBe(true)
+    expect(DEFAULT_REQUIREMENTS.noLiveInPartner).toBe(true)
   })
 
   it('accepts valid requirements and comes back equal after going through JSON', () => {
     const r: Requirements = {
-      idade: { min: 25, max: 35 },
-      lugar: { uf: 'SP', municipio: '3550308' },
-      companheiro: false,
-      escolaridade: 'superior',
-      renda: '2-5',
-      cores: ['preta', 'parda'],
-      religioes: ['sem-religiao'],
-      semFilhos: true,
-      altura: { min: 160, max: 200 },
-      naoFuma: true,
+      age: { min: 25, max: 35 },
+      place: { state: 'SP', municipality: '3550308' },
+      noLiveInPartner: false,
+      education: 'superior',
+      income: '2-5',
+      colors: ['preta', 'parda'],
+      religions: ['sem-religiao'],
+      noChildren: true,
+      height: { min: 160, max: 200 },
+      nonSmoker: true,
     }
     expect(readRequirements(JSON.parse(JSON.stringify(r)))).toEqual(r)
   })
 
   it('drops what is not valid and keeps the rest', () => {
     const r = readRequirements({
-      idade: { min: 40, max: 30 },
-      lugar: { uf: 'SP', municipio: '3304557' },
-      escolaridade: 'doutorado',
-      cores: ['preta', 'azul'],
-      altura: { min: 100, max: 180 },
-      naoFuma: 'sim',
+      age: { min: 40, max: 30 },
+      place: { state: 'SP', municipality: '3304557' },
+      education: 'doutorado',
+      colors: ['preta', 'azul'],
+      height: { min: 100, max: 180 },
+      nonSmoker: 'sim',
     })
-    expect(r.idade).toBeNull()
+    expect(r.age).toBeNull()
     // Rio's municipality is not in SP: the state stays.
-    expect(r.lugar).toEqual({ uf: 'SP' })
-    expect(r.escolaridade).toBeNull()
-    expect(r.cores).toEqual(['preta'])
-    expect(r.altura).toEqual(DEFAULT_REQUIREMENTS.altura)
-    expect(r.naoFuma).toBe(false)
+    expect(r.place).toEqual({ state: 'SP' })
+    expect(r.education).toBeNull()
+    expect(r.colors).toEqual(['preta'])
+    expect(r.height).toEqual(DEFAULT_REQUIREMENTS.height)
+    expect(r.nonSmoker).toBe(false)
   })
 })
 
 describe('requirementValue', () => {
   const r: Requirements = {
     ...DEFAULT_REQUIREMENTS,
-    idade: { min: 40, max: 80 },
-    lugar: { uf: 'SP', municipio: '3550308' },
-    escolaridade: 'medio',
-    cores: ['preta', 'parda', 'indigena'],
-    altura: { min: 140, max: 175 },
+    age: { min: 40, max: 80 },
+    place: { state: 'SP', municipality: '3550308' },
+    education: 'medio',
+    colors: ['preta', 'parda', 'indigena'],
+    height: { min: 140, max: 175 },
   }
 
   it('writes each requirement as in the sentence', () => {
-    expect(requirementValue('idade', null, r)).toBe('40 anos ou mais')
-    expect(requirementValue('lugar', null, r, 'São Paulo')).toBe(
+    expect(requirementValue('age', null, r)).toBe('40 anos ou mais')
+    expect(requirementValue('place', null, r, 'São Paulo')).toBe(
       'São Paulo (SP)',
     )
-    expect(requirementValue('lugar', null, DEFAULT_REQUIREMENTS)).toBe(
+    expect(requirementValue('place', null, DEFAULT_REQUIREMENTS)).toBe(
       'Brasil inteiro',
     )
-    expect(requirementValue('escolaridade', null, r)).toBe(
+    expect(requirementValue('education', null, r)).toBe(
       'pelo menos médio completo',
     )
-    expect(requirementValue('cor', null, r)).toBe(
+    expect(requirementValue('color', null, r)).toBe(
       'cor preta, parda ou indígena',
     )
-    expect(requirementValue('altura', null, r)).toBe('até 175 cm')
-    expect(requirementValue('renda', null, r)).toBe('qualquer renda')
+    expect(requirementValue('height', null, r)).toBe('até 175 cm')
+    expect(requirementValue('income', null, r)).toBe('qualquer renda')
   })
 
   it('"sem filhos" when seeking men says there is no data', () => {
     expect(
       requirementValue(
-        'filhos',
-        { procura: 'homens' },
-        { ...r, semFilhos: true },
+        'children',
+        { seeks: 'homens' },
+        { ...r, noChildren: true },
       ),
     ).toBe('sem dado para homens')
   })
@@ -94,25 +94,25 @@ describe('release', () => {
   it('sets only that requirement back to "any"', () => {
     const r: Requirements = {
       ...DEFAULT_REQUIREMENTS,
-      cores: ['preta'],
-      naoFuma: true,
+      colors: ['preta'],
+      nonSmoker: true,
     }
-    expect(release(r, 'cor')).toEqual({ ...r, cores: [] })
-    expect(release(r, 'idade').idade).toEqual({ min: 18, max: 80 })
+    expect(release(r, 'color')).toEqual({ ...r, colors: [] })
+    expect(release(r, 'age').age).toEqual({ min: 18, max: 80 })
   })
 })
 
 describe('soughtAge', () => {
   it("starts at the profile's age ±5, within 18 to 80", () => {
-    expect(soughtAge({ idade: 30 }, DEFAULT_REQUIREMENTS)).toEqual({
+    expect(soughtAge({ age: 30 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 25,
       max: 35,
     })
-    expect(soughtAge({ idade: 20 }, DEFAULT_REQUIREMENTS)).toEqual({
+    expect(soughtAge({ age: 20 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 18,
       max: 25,
     })
-    expect(soughtAge({ idade: 79 }, DEFAULT_REQUIREMENTS)).toEqual({
+    expect(soughtAge({ age: 79 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 74,
       max: 80,
     })
@@ -125,8 +125,8 @@ describe('soughtAge', () => {
     })
     expect(
       soughtAge(
-        { idade: 30 },
-        { ...DEFAULT_REQUIREMENTS, idade: { min: 40, max: 50 } },
+        { age: 30 },
+        { ...DEFAULT_REQUIREMENTS, age: { min: 40, max: 50 } },
       ),
     ).toEqual({ min: 40, max: 50 })
   })
@@ -134,25 +134,25 @@ describe('soughtAge', () => {
 
 describe('whoIsSought', () => {
   it('seeking women: Census sex 1, "mulheres" and the children filter applies', () => {
-    expect(whoIsSought({ procura: 'mulheres' })).toEqual({
+    expect(whoIsSought({ seeks: 'mulheres' })).toEqual({
       sexes: [1],
-      target: 'mulheres',
-      children: 'vale',
+      target: 'women',
+      children: 'applies',
     })
   })
 
   it('seeking men: sex 0, "homens" and no children data', () => {
-    expect(whoIsSought({ procura: 'homens' })).toEqual({
+    expect(whoIsSought({ seeks: 'homens' })).toEqual({
       sexes: [0],
-      target: 'homens',
-      children: 'sem-dado',
+      target: 'men',
+      children: 'no-data',
     })
   })
 
   it('seeking both, or not saying: both sexes, "pessoas" and children only for women', () => {
-    const both = { sexes: [0, 1], target: 'pessoas', children: 'so-mulheres' }
-    expect(whoIsSought({ procura: 'ambos' })).toEqual(both)
-    expect(whoIsSought({ genero: 'homem' })).toEqual(both)
+    const both = { sexes: [0, 1], target: 'people', children: 'women-only' }
+    expect(whoIsSought({ seeks: 'ambos' })).toEqual(both)
+    expect(whoIsSought({ gender: 'homem' })).toEqual(both)
     expect(whoIsSought(null)).toEqual(both)
   })
 })

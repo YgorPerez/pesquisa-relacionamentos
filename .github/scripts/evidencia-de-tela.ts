@@ -109,11 +109,11 @@ export function avaliar(html: string, arquivos: readonly string[]): Veredito {
   const faltas: string[] = []
   if (imagens < 2)
     faltas.push(
-      `Faltam prints: são pelo menos 2, antes e depois, e há ${imagens}. Tire com \`node frontend/scripts/capturar.ts <rota>\` em cada lado.`,
+      `Faltam prints: são pelo menos 2, antes e depois, e há ${imagens}. Tire com \`node frontend/scripts/capture.ts <rota>\` em cada lado.`,
     )
   if (videos < 2)
     faltas.push(
-      `Faltam vídeos: são pelo menos 2, antes e depois, e há ${videos}. Grave com \`node frontend/scripts/capturar.ts <rota> --video\` em cada lado.`,
+      `Faltam vídeos: são pelo menos 2, antes e depois, e há ${videos}. Grave com \`node frontend/scripts/capture.ts <rota> --video\` em cada lado.`,
     )
   if (faltas.length === 0) return { passa: true, linhas }
   return {

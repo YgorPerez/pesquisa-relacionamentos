@@ -125,7 +125,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # O build confere o sitemap que está no ar: um caminho publicado que
-      # sumiu sem `antes` derruba o passo (`frontend/vite/acervo.ts`). Antes
+      # sumiu sem `antes` derruba o passo (`frontend/vite/library.ts`). Antes
       # do primeiro deploy não há sitemap, e o build segue sem a conferência.
       - name: Build
         run: |

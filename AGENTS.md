@@ -34,14 +34,14 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 O app fica em `frontend/`, os pacotes puros em `packages/` (`content`, que lê e valida o acervo, e `rules`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
 
 - `routes/`: só arquivos de rota.
-- `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.textos.ts` de cada uma ao lado. O CSS à mão fica só em `ui/desenhos.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
-- `conteudo/`: as server functions que leem o acervo e montam a vista de cada página.
-- `estado/`: o que fica no navegador (`localStorage`, link recebido).
+- `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.copy.ts` de cada uma ao lado. O CSS à mão fica só em `ui/drawings.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
+- `content/`: as server functions que leem o acervo e montam a vista de cada página.
+- `state/`: o que fica no navegador (`localStorage`, link recebido).
 - `analytics/`: a contagem do GoatCounter.
-- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook, o apoio dos testes de tela em `platform/telas/`).
-- `fontes/`: os arquivos de fonte.
+- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook, o apoio dos testes de tela em `platform/screens/`).
+- `fonts/`: os arquivos de fonte.
 
-O teste mora ao lado do que testa: o de uma tela é um `*.test.tsx` ao lado da peça dela em `ui/`, no jsdom (ADR 0035), e toda peça de `ui/` tem story (ADR 0036). `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
+O teste mora ao lado do que testa: o de uma tela é um `*.test.tsx` ao lado da peça dela em `ui/`, no jsdom (ADR 0035), e toda peça de `ui/` tem story (ADR 0036). `pnpm check` falha um arquivo fora do lugar (`frontend/lint/folders.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
 
 ## Toda superfície
 
@@ -49,7 +49,7 @@ Antes de dar por pronto um trabalho no front, passe pelas superfícies que uma m
 
 ## Testar o app
 
-Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/testar-app/`): ela sobe o app do worktree, abre a página num Chrome sem tela e tira os prints e os vídeos de antes e depois que o PR pede (`frontend/scripts/capturar.ts`). As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
+Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/testar-app/`): ela sobe o app do worktree, abre a página num Chrome sem tela e tira os prints e os vídeos de antes e depois que o PR pede (`frontend/scripts/capture.ts`). As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
 
 ## Padrões de código
 

@@ -1,275 +1,278 @@
-// O deploy contra uma VPS de mentira (`docker-de-mentira.ts`): o mesmo plano
-// que vai pelo SSH, rodado num bash, sem Docker nem Nginx de verdade.
+// The deploy against a fake VPS (`fake-docker.ts`): the same plan that goes
+// over SSH, run in a bash, with no real Docker or Nginx.
 import { join } from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
-import { frontendDeMentira, vpsDeMentira } from './docker-de-mentira.ts'
-import { publicar, voltar } from './vps.ts'
+import { fakeFrontend, fakeVps } from './fake-docker.ts'
+import { publish, rollback } from './vps.ts'
 
 const SHA_1 = 'aaaaaaa'
 const SHA_2 = 'bbbbbbb'
 const SHA_3 = 'ccccccc'
 
-/** O include que diz ao Nginx a porta do app. */
-const proxyPara = (porta: number) => `proxy_pass http://127.0.0.1:${porta};\n`
+/** The include that tells Nginx the app's port. */
+const proxyTo = (port: number) => `proxy_pass http://127.0.0.1:${port};\n`
 
-function umaVps() {
-  const vps = vpsDeMentira()
+function aVps() {
+  const vps = fakeVps()
   const log: string[] = []
-  const dizer = (linha: string) => log.push(linha)
+  const say = (line: string) => log.push(line)
   return {
     ...vps,
     log,
-    publicar: (sha: string) =>
-      publicar({
-        saida: frontendDeMentira(sha),
+    publish: (sha: string) =>
+      publish({
+        output: fakeFrontend(sha),
         sha,
         vps: vps.vps,
-        lugares: vps.lugares,
-        dizer,
+        paths: vps.paths,
+        say,
       }),
-    voltar: (sha?: string) =>
-      voltar({ sha, vps: vps.vps, lugares: vps.lugares, dizer }),
-    /** O que está no ar: a porta do include, e a imagem e a porta do app. */
-    noAr: () => ({
-      include: vps.ler(vps.lugares.include),
-      app: vps.conteiner('temestudo-app'),
+    rollback: (sha?: string) =>
+      rollback({ sha, vps: vps.vps, paths: vps.paths, say }),
+    /** What is live: the include's port, and the app's image and port. */
+    live: () => ({
+      include: vps.read(vps.paths.include),
+      app: vps.container('temestudo-app'),
     }),
   }
 }
 
-describe.skipIf(process.platform === 'win32')('o deploy na VPS', () => {
-  it('o primeiro deploy sobe o app na primeira porta e instala o vhost', () => {
-    const vps = umaVps()
+describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
+  it('the first deploy starts the app on the first port and installs the vhost', () => {
+    const vps = aVps()
 
-    vps.publicar(SHA_1)
+    vps.publish(SHA_1)
 
-    expect(vps.noAr()).toEqual({
-      include: proxyPara(3011),
+    expect(vps.live()).toEqual({
+      include: proxyTo(3011),
       app: {
-        imagem: `temestudo-app:sha-${SHA_1}`,
-        porta: '3011',
-        rodando: true,
+        image: `temestudo-app:sha-${SHA_1}`,
+        port: '3011',
+        running: true,
       },
     })
-    expect(vps.conteineres().sort()).toEqual([
+    expect(vps.containers().sort()).toEqual([
       'temestudo-app',
       'temestudo-stats',
     ])
-    expect(vps.ler(vps.lugares.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
-    const { sitesEnabled } = vps.lugares
-    expect(vps.ler(join(sitesEnabled, 'temestudo.conf'))).not.toBeNull()
-    expect(vps.ler(join(sitesEnabled, 'default'))).toBeNull()
-    expect(vps.ler(join(vps.lugares.pasta, 'no-ar'))).toBe(`${SHA_1}\n`)
-    expect(vps.ler(join(vps.lugares.pasta, 'anterior'))).toBeNull()
+    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
+    const { sitesEnabled } = vps.paths
+    expect(vps.read(join(sitesEnabled, 'temestudo.conf'))).not.toBeNull()
+    expect(vps.read(join(sitesEnabled, 'default'))).toBeNull()
+    expect(vps.read(join(vps.paths.folder, 'no-ar'))).toBe(`${SHA_1}\n`)
+    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBeNull()
   })
 
-  it('o log diz quanto cada etapa levou, e o total', () => {
-    const vps = umaVps()
+  it('the log says how long each step took, and the total', () => {
+    const vps = aVps()
 
-    vps.publicar(SHA_1)
+    vps.publish(SHA_1)
 
-    const tempos = vps.log.filter((l) => /levou|Total/.test(l))
-    expect(tempos.map((l) => l.replace(/[\d,]+ s/, 'N s'))).toEqual([
-      'Envio levou N s.',
-      'Imagem levou N s.',
-      'GoatCounter levou N s.',
-      'Troca levou N s.',
+    const times = vps.log.filter((l) => /took|Total/.test(l))
+    expect(times.map((l) => l.replace(/[\d.]+ s/, 'N s'))).toEqual([
+      'Upload took N s.',
+      'Image took N s.',
+      'GoatCounter took N s.',
+      'Swap took N s.',
       'Total: N s.',
     ])
   })
 
-  it('o deploy seguinte sobe na outra porta, recarrega o Nginx e para o antigo', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    vps.chamadas()
+  it('the next deploy starts on the other port, reloads Nginx and stops the old one', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    vps.calls()
 
-    vps.publicar(SHA_2)
+    vps.publish(SHA_2)
 
-    expect(vps.noAr()).toEqual({
-      include: proxyPara(3031),
+    expect(vps.live()).toEqual({
+      include: proxyTo(3031),
       app: {
-        imagem: `temestudo-app:sha-${SHA_2}`,
-        porta: '3031',
-        rodando: true,
+        image: `temestudo-app:sha-${SHA_2}`,
+        port: '3031',
+        running: true,
       },
     })
-    expect(vps.ler(join(vps.lugares.pasta, 'anterior'))).toBe(`${SHA_1}\n`)
-    const chamadas = vps.chamadas()
-    const reload = chamadas.indexOf('systemctl reload nginx')
-    const stop = chamadas.indexOf('docker stop --timeout 30 temestudo-app')
+    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_1}\n`)
+    const calls = vps.calls()
+    const reload = calls.indexOf('systemctl reload nginx')
+    const stop = calls.indexOf('docker stop --timeout 30 temestudo-app')
     expect(reload).toBeGreaterThan(-1)
-    // O antigo só para depois que o Nginx já passa ao novo.
+    // The old one only stops after Nginx already passes to the new one.
     expect(stop).toBeGreaterThan(reload)
-    expect(vps.ler(vps.lugares.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
+    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
   })
 
-  it('o terceiro deploy volta à primeira porta e apaga as imagens de antes da anterior', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    vps.publicar(SHA_2)
+  it('the third deploy goes back to the first port and deletes the images before the previous one', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    vps.publish(SHA_2)
 
-    vps.publicar(SHA_3)
+    vps.publish(SHA_3)
 
-    expect(vps.noAr().include).toBe(proxyPara(3011))
-    expect(vps.imagens()).toEqual([
+    expect(vps.live().include).toBe(proxyTo(3011))
+    expect(vps.images()).toEqual([
       'arp242/goatcounter:2.7.0',
       `temestudo-app:sha-${SHA_2}`,
       `temestudo-app:sha-${SHA_3}`,
     ])
   })
 
-  it('voltar sem SHA troca para o deploy anterior, sem mexer no vhost', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    vps.publicar(SHA_2)
+  it('rolling back without a SHA swaps to the previous deploy, without touching the vhost', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    vps.publish(SHA_2)
 
-    vps.voltar()
+    vps.rollback()
 
-    expect(vps.noAr()).toEqual({
-      include: proxyPara(3011),
+    expect(vps.live()).toEqual({
+      include: proxyTo(3011),
       app: {
-        imagem: `temestudo-app:sha-${SHA_1}`,
-        porta: '3011',
-        rodando: true,
+        image: `temestudo-app:sha-${SHA_1}`,
+        port: '3011',
+        running: true,
       },
     })
-    expect(vps.ler(vps.lugares.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
-    expect(vps.ler(join(vps.lugares.pasta, 'anterior'))).toBe(`${SHA_2}\n`)
-    expect(vps.log).toContain(`Voltando para sha-${SHA_1}.`)
+    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
+    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_2}\n`)
+    expect(vps.log).toContain(`Rolling back to sha-${SHA_1}.`)
   })
 
-  it('voltar a um SHA que a VPS não guardou não mexe no que está no ar', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    const antes = vps.noAr()
+  it('rolling back to a SHA the VPS did not keep leaves what is live alone', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    const before = vps.live()
 
-    expect(() => vps.voltar('deadbee')).toThrow(
-      'A VPS não tem a imagem temestudo-app:sha-deadbee.',
+    expect(() => vps.rollback('deadbee')).toThrow(
+      'The VPS does not have the image temestudo-app:sha-deadbee.',
     )
-    expect(vps.noAr()).toEqual(antes)
+    expect(vps.live()).toEqual(before)
   })
 
-  it('voltar sem deploy anterior pede o SHA', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
+  it('rolling back with no previous deploy asks for the SHA', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
 
-    expect(() => vps.voltar()).toThrow('diga o SHA')
+    expect(() => vps.rollback()).toThrow('give the SHA')
   })
 
-  it('o contêiner novo que não responde sai, e o antigo segue no ar', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    const antes = vps.noAr()
-    vps.chamadas()
-    vps.estragar('app-nao-responde')
+  it('a new container that does not answer goes, and the old one stays live', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    const before = vps.live()
+    vps.calls()
+    vps.breakWith('app-does-not-answer')
 
-    expect(() => vps.publicar(SHA_2)).toThrow(
-      /O app novo não respondeu em \/ na porta 3031.*o log de temestudo-app-novo/s,
+    expect(() => vps.publish(SHA_2)).toThrow(
+      /The new app did not answer on \/ at port 3031.*the log of temestudo-app-novo/s,
     )
-    expect(vps.noAr()).toEqual(antes)
-    expect(vps.conteineres()).not.toContain('temestudo-app-novo')
-    expect(vps.chamadas()).not.toContain('systemctl reload nginx')
-    expect(vps.ler(vps.lugares.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
+    expect(vps.live()).toEqual(before)
+    expect(vps.containers()).not.toContain('temestudo-app-novo')
+    expect(vps.calls()).not.toContain('systemctl reload nginx')
+    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
   })
 
-  it('o nginx -t que recusa desfaz a configuração nova, e o antigo segue no ar', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    const antes = vps.noAr()
-    vps.chamadas()
-    vps.estragar('nginx-recusa')
+  it('an nginx -t that refuses undoes the new configuration, and the old one stays live', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    const before = vps.live()
+    vps.calls()
+    vps.breakWith('nginx-refuses')
 
-    expect(() => vps.publicar(SHA_2)).toThrow(
-      /unknown directive.*O nginx -t recusou a configuração nova/s,
+    expect(() => vps.publish(SHA_2)).toThrow(
+      /unknown directive.*nginx -t refused the new configuration/s,
     )
-    expect(vps.noAr()).toEqual(antes)
-    expect(vps.conteineres()).not.toContain('temestudo-app-novo')
-    expect(vps.chamadas()).not.toContain('systemctl reload nginx')
-    for (const [nome, destino] of vps.lugares.configuracao)
-      expect(vps.ler(destino)).toBe(`${nome} ${SHA_1}\n`)
+    expect(vps.live()).toEqual(before)
+    expect(vps.containers()).not.toContain('temestudo-app-novo')
+    expect(vps.calls()).not.toContain('systemctl reload nginx')
+    for (const [name, target] of vps.paths.config)
+      expect(vps.read(target)).toBe(`${name} ${SHA_1}\n`)
   })
 
-  it('o nginx -t que recusa o primeiro deploy não deixa vhost nenhum', () => {
-    const vps = umaVps()
-    vps.estragar('nginx-recusa')
+  it('an nginx -t that refuses the first deploy leaves no vhost at all', () => {
+    const vps = aVps()
+    vps.breakWith('nginx-refuses')
 
-    expect(() => vps.publicar(SHA_1)).toThrow(/nginx -t recusou/)
-    expect(vps.noAr()).toEqual({ include: null, app: null })
-    for (const [, destino] of vps.lugares.configuracao)
-      expect(vps.ler(destino)).toBeNull()
-    expect(vps.ler(join(vps.lugares.sitesEnabled, 'temestudo.conf'))).toBeNull()
+    expect(() => vps.publish(SHA_1)).toThrow(/nginx -t refused/)
+    expect(vps.live()).toEqual({ include: null, app: null })
+    for (const [, target] of vps.paths.config)
+      expect(vps.read(target)).toBeNull()
+    expect(vps.read(join(vps.paths.sitesEnabled, 'temestudo.conf'))).toBeNull()
   })
 })
 
-describe.skipIf(process.platform === 'win32')('o GoatCounter no deploy', () => {
-  it('o primeiro deploy cria o site, guarda a senha e aplica a coleta', () => {
-    const vps = umaVps()
+describe.skipIf(process.platform === 'win32')(
+  'GoatCounter in the deploy',
+  () => {
+    it('the first deploy creates the site, keeps the password and applies the collection', () => {
+      const vps = aVps()
 
-    vps.publicar(SHA_1)
+      vps.publish(SHA_1)
 
-    expect(vps.conteiner('temestudo-stats')).toEqual({
-      imagem: 'arp242/goatcounter:2.7.0',
-      porta: '3051',
-      rodando: true,
+      expect(vps.container('temestudo-stats')).toEqual({
+        image: 'arp242/goatcounter:2.7.0',
+        port: '3051',
+        running: true,
+      })
+      expect(vps.read(vps.paths.statsPassword)).toMatch(/^[A-Za-z0-9]{40}\n$/)
+      expect(vps.statsConfigured()).toBe(true)
+      expect(vps.log.join('\n')).toContain(
+        `GoatCounter: site stats.temestudo.cloud created, login admin@temestudo.cloud, password in ${vps.paths.statsPassword}.`,
+      )
     })
-    expect(vps.ler(vps.lugares.senhaDoStats)).toMatch(/^[A-Za-z0-9]{40}\n$/)
-    expect(vps.statsConfigurado()).toBe(true)
-    expect(vps.log.join('\n')).toContain(
-      `GoatCounter: site stats.temestudo.cloud criado, login admin@temestudo.cloud, senha em ${vps.lugares.senhaDoStats}.`,
-    )
-  })
 
-  it('com ele no ar e configurado, o deploy não o troca', () => {
-    const vps = umaVps()
-    vps.publicar(SHA_1)
-    const senha = vps.ler(vps.lugares.senhaDoStats)
-    vps.chamadas()
+    it('with it live and configured, the deploy does not swap it', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      const password = vps.read(vps.paths.statsPassword)
+      vps.calls()
 
-    vps.publicar(SHA_2)
+      vps.publish(SHA_2)
 
-    const chamadas = vps.chamadas()
-    expect(chamadas.some((c) => c.startsWith('docker pull'))).toBe(false)
-    expect(chamadas.some((c) => c.startsWith('docker restart'))).toBe(false)
-    expect(vps.ler(vps.lugares.senhaDoStats)).toBe(senha)
-    expect(vps.log.join('\n')).toContain(
-      'GoatCounter arp242/goatcounter:2.7.0 já no ar na porta 3051.',
-    )
-  })
+      const calls = vps.calls()
+      expect(calls.some((c) => c.startsWith('docker pull'))).toBe(false)
+      expect(calls.some((c) => c.startsWith('docker restart'))).toBe(false)
+      expect(vps.read(vps.paths.statsPassword)).toBe(password)
+      expect(vps.log.join('\n')).toContain(
+        'GoatCounter arp242/goatcounter:2.7.0 already live on port 3051.',
+      )
+    })
 
-  it('se o site não se cria, ele fica parado, sem senha, e o site sobe mesmo assim', () => {
-    const vps = umaVps()
-    vps.estragar('falha-ao-criar-site')
+    it('if the site is not created, it stays stopped, without a password, and the site comes up anyway', () => {
+      const vps = aVps()
+      vps.breakWith('site-creation-fails')
 
-    vps.publicar(SHA_1)
+      vps.publish(SHA_1)
 
-    expect(vps.conteiner('temestudo-stats')?.rodando).toBe(false)
-    expect(vps.ler(vps.lugares.senhaDoStats)).toBeNull()
-    expect(vps.noAr().app?.rodando).toBe(true)
-    expect(
-      vps.log.some((l) =>
-        l.startsWith(
-          'Aviso: o GoatCounter não subiu (o script saiu com 1: Não deu para criar o site',
+      expect(vps.container('temestudo-stats')?.running).toBe(false)
+      expect(vps.read(vps.paths.statsPassword)).toBeNull()
+      expect(vps.live().app?.running).toBe(true)
+      expect(
+        vps.log.some((l) =>
+          l.startsWith(
+            'Warning: GoatCounter did not come up (the script exited with 1: Could not create the site',
+          ),
         ),
-      ),
-    ).toBe(true)
-  })
-
-  it('um e-mail que o deploy recusa vira aviso, e o site sobe', () => {
-    const vps = umaVps()
-
-    publicar({
-      saida: frontendDeMentira(SHA_1),
-      sha: SHA_1,
-      email: "a@b.com'; rm -rf /",
-      vps: vps.vps,
-      lugares: vps.lugares,
-      dizer: (l) => vps.log.push(l),
+      ).toBe(true)
     })
 
-    expect(vps.noAr().app?.rodando).toBe(true)
-    expect(vps.conteineres()).not.toContain('temestudo-stats')
-    expect(vps.log.join('\n')).toContain(
-      `Aviso: o GoatCounter não subiu (o script saiu com 1: "a@b.com'; rm -rf /" não é um e-mail que o deploy aceite.). O site segue.`,
-    )
-  })
-})
+    it('an e-mail the deploy refuses becomes a warning, and the site comes up', () => {
+      const vps = aVps()
+
+      publish({
+        output: fakeFrontend(SHA_1),
+        sha: SHA_1,
+        email: "a@b.com'; rm -rf /",
+        vps: vps.vps,
+        paths: vps.paths,
+        say: (l) => vps.log.push(l),
+      })
+
+      expect(vps.live().app?.running).toBe(true)
+      expect(vps.containers()).not.toContain('temestudo-stats')
+      expect(vps.log.join('\n')).toContain(
+        `Warning: GoatCounter did not come up (the script exited with 1: "a@b.com'; rm -rf /" is not an e-mail the deploy accepts.). The site goes on.`,
+      )
+    })
+  },
+)

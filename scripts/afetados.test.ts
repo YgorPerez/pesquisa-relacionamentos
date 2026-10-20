@@ -17,31 +17,31 @@ describe('TERMOS_DAS_SPECS', () => {
 
 describe('planoDoDiff', () => {
   it('uma peça de uma tela roda o front e as specs do termo dela', () => {
-    const plano = planoDoDiff(['frontend/src/ui/perfil.tsx'])
+    const plano = planoDoDiff(['frontend/src/ui/profile.tsx'])
     expect(plano.completo).toBeNull()
     expect(plano.pacotes).toEqual(['frontend'])
     expect(plano.stories).toBe(true)
     expect(plano.build).toBe(true)
     expect(plano.specs).toEqual([
-      'acessibilidade.e2e.ts',
-      'inicio.e2e.ts',
-      'perfil.e2e.ts',
+      'accessibility.e2e.ts',
+      'home.e2e.ts',
+      'profile.e2e.ts',
     ])
   })
 
   it('a rota e o estado chegam ao termo pelo apelido', () => {
     expect(planoDoDiff(['frontend/src/routes/$tema/$slug.tsx']).specs).toEqual(
       expect.arrayContaining([
-        'guia.e2e.ts',
-        'busca.e2e.ts',
-        'navegacao.e2e.ts',
+        'guide.e2e.ts',
+        'search.e2e.ts',
+        'navigation.e2e.ts',
       ]),
     )
-    expect(
-      planoDoDiff(['frontend/src/estado/pacotes-do-grupo.ts']).specs,
-    ).toContain('grupo-possivel.e2e.ts')
+    expect(planoDoDiff(['frontend/src/state/group-packs.ts']).specs).toContain(
+      'possible-group.e2e.ts',
+    )
     // Uma story importa o estado que a tela lê.
-    expect(planoDoDiff(['frontend/src/estado/perfil.ts']).stories).toBe(true)
+    expect(planoDoDiff(['frontend/src/state/profile.ts']).stories).toBe(true)
   })
 
   it('uma spec que mudou roda ela mesma, sem as stories', () => {
@@ -51,10 +51,10 @@ describe('planoDoDiff', () => {
   })
 
   it('um arquivo do app sem termo roda o e2e inteiro e diz por quê', () => {
-    const plano = planoDoDiff(['frontend/src/ui/botao.tsx'])
+    const plano = planoDoDiff(['frontend/src/ui/button.tsx'])
     expect(plano.completo).toBeNull()
     expect(plano.specs).toEqual(Object.keys(TERMOS_DAS_SPECS).sort())
-    expect(plano.motivos.join()).toContain('botao')
+    expect(plano.motivos.join()).toContain('button')
   })
 
   it('o que muda por fora do grafo roda tudo', () => {
@@ -65,11 +65,11 @@ describe('planoDoDiff', () => {
       'frontend/src/routes/__root.tsx',
       'frontend/src/styles.css',
       'frontend/src/ui/tokens.css',
-      'frontend/src/ui/desenhos.css',
-      'frontend/src/ui/fontes.css',
-      'frontend/src/platform/redirecionamento.ts',
+      'frontend/src/ui/drawings.css',
+      'frontend/src/ui/fonts.css',
+      'frontend/src/platform/redirects.ts',
       'packages/rules/src/possible-group.ts',
-      'frontend/e2e/acervo/estudos/x.md',
+      'frontend/e2e/library/estudos/x.md',
       'scripts/fila-da-maquina.ts',
       '.github/workflows/pr.yml',
     ])

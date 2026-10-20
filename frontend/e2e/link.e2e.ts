@@ -1,8 +1,9 @@
-// Compartilhar as calculadoras por link (#34): "Copiar link" leva o estado na
-// query, quem abre num outro navegador recebe esse estado no lugar do salvo,
-// a query sai da barra, a página com query fica fora da busca e a prévia das
-// redes mostra o resultado sem o Perfil de quem mandou. Sobre a fixture
-// `e2e/acervo` (dados do Grupo possível só do Acre).
+// Sharing the calculators by link (#34): "Copiar link" carries the state in
+// the query, whoever opens it in another browser gets that state in place of
+// the saved one, the query leaves the bar, the page with a query stays out of
+// search, and the networks' preview shows the result without the sender's
+// Profile. Over the `e2e/library` fixture (Possible group data from Acre
+// only).
 import {
   devices,
   expect,
@@ -11,148 +12,143 @@ import {
   type BrowserContext,
   type Page,
 } from '@playwright/test'
-import { escolher, tocar } from './toque'
+import { choose, tap } from './touch'
 
 const SITE = 'https://temestudo.cloud'
-const faixa = (page: Page) =>
+const range = (page: Page) =>
   page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
-const salvo = (page: Page, chave: string) =>
+const saved = (page: Page, key: string) =>
   page.evaluate(
     (k) => JSON.parse(localStorage.getItem(`tem-estudo:${k}`) ?? 'null'),
-    chave,
+    key,
   )
-const compartilhar = (page: Page) =>
-  page.getByRole('region', { name: 'Compartilhar' })
+const share = (page: Page) => page.getByRole('region', { name: 'Compartilhar' })
 
-async function comAreaDeTransferencia(context: BrowserContext) {
+async function withClipboard(context: BrowserContext) {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
 }
 
-async function copiarLink(page: Page): Promise<string> {
-  await compartilhar(page).getByRole('button', { name: 'Copiar link' }).click()
-  await expect(compartilhar(page).getByRole('status')).toHaveText(
-    'Link copiado.',
-  )
+async function copyLink(page: Page): Promise<string> {
+  await share(page).getByRole('button', { name: 'Copiar link' }).click()
+  await expect(share(page).getByRole('status')).toHaveText('Link copiado.')
   return page.evaluate(() => navigator.clipboard.readText())
 }
 
-/** Outro aparelho: um contexto novo, com um estado salvo diferente do do link. */
-async function outroAparelho(
-  browser: Browser,
-  salvos: Record<string, unknown>,
-) {
+/** Another device: a new context, with a saved state different from the
+ * link's. */
+async function otherDevice(browser: Browser, stored: Record<string, unknown>) {
   const context = await browser.newContext({ ...devices['Pixel 7'] })
-  await context.addInitScript((itens) => {
-    // Só na primeira carga: depois, vale o que a página gravou.
-    if (sessionStorage.getItem('semeado')) return
-    sessionStorage.setItem('semeado', '1')
-    for (const [chave, valor] of Object.entries(itens))
-      localStorage.setItem(`tem-estudo:${chave}`, JSON.stringify(valor))
-  }, salvos)
+  await context.addInitScript((items) => {
+    // Only on the first load: after that, what the page saved counts.
+    if (sessionStorage.getItem('seeded')) return
+    sessionStorage.setItem('seeded', '1')
+    for (const [key, value] of Object.entries(items))
+      localStorage.setItem(`tem-estudo:${key}`, JSON.stringify(value))
+  }, stored)
   return { context, page: await context.newPage() }
 }
 
-async function dizerPerfil(
+async function fillProfile(
   page: Page,
-  genero: string,
-  procura: string,
-  idade: string,
+  gender: string,
+  seeks: string,
+  age: string,
 ) {
   const form = page.getByRole('form', { name: 'Seu Perfil' })
   await form
     .getByRole('group', { name: 'Você é' })
-    .getByRole('radio', { name: genero, exact: true })
+    .getByRole('radio', { name: gender, exact: true })
     .check()
   await form
     .getByRole('group', { name: 'Você procura' })
-    .getByRole('radio', { name: procura, exact: true })
+    .getByRole('radio', { name: seeks, exact: true })
     .check()
-  await form.getByLabel('Sua idade').fill(idade)
+  await form.getByLabel('Sua idade').fill(age)
   await form.getByRole('button', { name: 'Usar na conta' }).click()
 }
 
-test.describe('link do Grupo possível', () => {
-  test('copiar, abrir em outro aparelho: o estado do link troca o salvo e a query sai da barra', async ({
+test.describe('Possible group link', () => {
+  test('copy, open on another device: the link state replaces the saved one and the query leaves the bar', async ({
     page,
     context,
     browser,
   }) => {
-    await comAreaDeTransferencia(context)
+    await withClipboard(context)
     await page.goto('/grupo-possivel', { waitUntil: 'networkidle' })
-    await expect(compartilhar(page)).toContainText(
+    await expect(share(page)).toContainText(
       'Este link mostra só a conta do Brasil inteiro, sem nada seu.',
     )
 
-    await dizerPerfil(page, 'homem', 'mulheres', '30')
+    await fillProfile(page, 'homem', 'mulheres', '30')
     await page
-      .locator('#req-escolaridade')
+      .locator('#req-education')
       .getByRole('radio', { name: 'superior completo' })
       .check()
-    const lugar = page.locator('#req-lugar')
-    await escolher(lugar, 'Estado', 'Acre')
-    await escolher(lugar, 'Município', 'Rio Branco')
-    await expect(compartilhar(page)).toContainText(
+    const place = page.locator('#req-place')
+    await choose(place, 'Estado', 'Acre')
+    await choose(place, 'Município', 'Rio Branco')
+    await expect(share(page)).toContainText(
       'Este link mostra: homem, 30, procura mulheres, ensino superior, em Rio Branco (AC).',
     )
-    await expect(compartilhar(page)).toContainText('sem guardar o gênero')
+    await expect(share(page)).toContainText('sem guardar o gênero')
     await expect(page.locator('[data-slot="gp-preso"]')).toHaveAttribute(
       'aria-busy',
       'false',
     )
-    const numero = (await faixa(page).textContent()) ?? ''
+    const number = (await range(page).textContent()) ?? ''
 
-    const link = await copiarLink(page)
+    const link = await copyLink(page)
     const url = new URL(link)
     expect(url.pathname).toBe('/grupo-possivel')
     expect(url.search).toBe(
       '?v=1&genero=homem&procura=mulheres&idade=30&uf=AC&municipio=1200401&escolaridade=superior',
     )
 
-    const outro = await outroAparelho(browser, {
-      perfil: { genero: 'mulher', procura: 'homens', idade: 50 },
-      'grupo-possivel': {
-        idade: null,
-        lugar: null,
-        companheiro: false,
-        escolaridade: null,
-        renda: null,
-        cores: [],
-        religioes: [],
-        semFilhos: false,
-        altura: { min: 140, max: 200 },
-        naoFuma: true,
+    const other = await otherDevice(browser, {
+      profile: { gender: 'mulher', seeks: 'homens', age: 50 },
+      requirements: {
+        age: null,
+        place: null,
+        noLiveInPartner: false,
+        education: null,
+        income: null,
+        colors: [],
+        religions: [],
+        noChildren: false,
+        height: { min: 140, max: 200 },
+        nonSmoker: true,
       },
     })
-    await outro.page.goto(`${url.pathname}${url.search}`)
-    await expect(outro.page).toHaveURL(/\/grupo-possivel$/)
+    await other.page.goto(`${url.pathname}${url.search}`)
+    await expect(other.page).toHaveURL(/\/grupo-possivel$/)
     await expect(
-      outro.page.getByRole('status').filter({ hasText: 'trocou' }),
+      other.page.getByRole('status').filter({ hasText: 'trocou' }),
     ).toContainText(
       'Este link trocou o seu Perfil e os seus Requisitos salvos pelos de quem mandou.',
     )
-    await expect(faixa(outro.page)).toHaveText(numero)
-    expect(await salvo(outro.page, 'perfil')).toEqual({
-      genero: 'homem',
-      procura: 'mulheres',
-      idade: 30,
+    await expect(range(other.page)).toHaveText(number)
+    expect(await saved(other.page, 'profile')).toEqual({
+      gender: 'homem',
+      seeks: 'mulheres',
+      age: 30,
     })
-    expect(await salvo(outro.page, 'grupo-possivel')).toMatchObject({
-      lugar: { uf: 'AC', municipio: '1200401' },
-      escolaridade: 'superior',
-      naoFuma: false,
-      companheiro: true,
+    expect(await saved(other.page, 'requirements')).toMatchObject({
+      place: { state: 'AC', municipality: '1200401' },
+      education: 'superior',
+      nonSmoker: false,
+      noLiveInPartner: true,
     })
 
-    // Recarregar sem a query fica com o estado novo, sem o aviso.
-    await outro.page.reload()
-    await expect(faixa(outro.page)).toHaveText(numero)
+    // Reloading without the query keeps the new state, without the notice.
+    await other.page.reload()
+    await expect(range(other.page)).toHaveText(number)
     await expect(
-      outro.page.getByRole('status').filter({ hasText: 'trocou' }),
+      other.page.getByRole('status').filter({ hasText: 'trocou' }),
     ).toHaveCount(0)
-    await outro.context.close()
+    await other.context.close()
   })
 
-  test('com query: noindex, canonical sem query e a prévia sem o Perfil, já no HTML do servidor', async ({
+  test('with a query: noindex, canonical without query and the preview without the Profile, already in the server HTML', async ({
     request,
   }) => {
     const html = await (
@@ -173,11 +169,11 @@ test.describe('link do Grupo possível', () => {
       'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019. Também pediu: não fuma. Faça a sua conta.',
     )
     expect(og('url')).toBe(`${SITE}/grupo-possivel`)
-    for (const texto of [og('title'), og('description')])
-      expect(texto).not.toMatch(/homem|homens|30|25|35|interessa/)
+    for (const text of [og('title'), og('description')])
+      expect(text).not.toMatch(/homem|homens|30|25|35|interessa/)
   })
 
-  test('sem query, a prévia é a da página e não há noindex', async ({
+  test("without a query, the preview is the page's and there is no noindex", async ({
     request,
   }) => {
     const html = await (await request.get('/grupo-possivel')).text()
@@ -185,103 +181,103 @@ test.describe('link do Grupo possível', () => {
     expect(html).not.toContain('<meta property="og:title" content="Entre')
   })
 
-  test('a chave de não ser contado não vai no link e o link não a toca', async ({
+  test('the opt-out of being counted does not go in the link and the link does not touch it', async ({
     browser,
   }) => {
-    const outro = await outroAparelho(browser, { 'nao-contar': true })
-    await outro.page.goto(
+    const other = await otherDevice(browser, { 'do-not-count': true })
+    await other.page.goto(
       '/grupo-possivel?v=1&genero=mulher&nao-contar=nao&contar=sim',
     )
-    await expect(outro.page).toHaveURL(/\/grupo-possivel$/)
-    expect(await salvo(outro.page, 'nao-contar')).toBe(true)
-    const chaves = await outro.page.evaluate(() =>
+    await expect(other.page).toHaveURL(/\/grupo-possivel$/)
+    expect(await saved(other.page, 'do-not-count')).toBe(true)
+    const keys = await other.page.evaluate(() =>
       Object.keys(localStorage).sort(),
     )
-    expect(chaves).toEqual(['tem-estudo:nao-contar', 'tem-estudo:perfil'])
-    await outro.context.close()
+    expect(keys).toEqual(['tem-estudo:do-not-count', 'tem-estudo:profile'])
+    await other.context.close()
   })
 })
 
-test.describe('link de Prioridades', () => {
-  const chip = (page: Page, nome: string) =>
+test.describe('Priorities link', () => {
+  const chip = (page: Page, name: string) =>
     page
       .getByRole('region', { name: 'Seu topo 3' })
-      .getByRole('button', { name: new RegExp(`${nome}$`) })
+      .getByRole('button', { name: new RegExp(`${name}$`) })
 
-  test('copiar, abrir em outro aparelho: o topo 3 do link troca o salvo', async ({
+  test('copy, open on another device: the link top 3 replaces the saved one', async ({
     page,
     context,
     browser,
   }) => {
-    await comAreaDeTransferencia(context)
+    await withClipboard(context)
     await page.goto('/prioridades', { waitUntil: 'networkidle' })
-    for (const nome of ['Renda', 'Química sexual', 'Ser parecido comigo'])
-      await tocar(chip(page, nome))
+    for (const name of ['Renda', 'Química sexual', 'Ser parecido comigo'])
+      await tap(chip(page, name))
     await page.getByRole('radio', { name: 'Duração' }).check()
-    await expect(compartilhar(page)).toContainText(
+    await expect(share(page)).toContainText(
       'Este link mostra: topo 3 renda, química sexual e ser parecido comigo, em duração.',
     )
-    const link = new URL(await copiarLink(page))
+    const link = new URL(await copyLink(page))
     expect(link.search).toBe('?v=1&topo=renda,sexo,parecido&desfecho=duracao')
 
-    const outro = await outroAparelho(browser, {
-      prioridades: { topo3: ['gentileza'], desfecho: 'atracao' },
+    const other = await otherDevice(browser, {
+      priorities: { top3: ['gentileza'], outcome: 'atracao' },
     })
-    await outro.page.goto(`${link.pathname}${link.search}`)
-    await expect(outro.page).toHaveURL(/\/prioridades$/)
-    await expect(chip(outro.page, 'Química sexual')).toHaveAccessibleName(
+    await other.page.goto(`${link.pathname}${link.search}`)
+    await expect(other.page).toHaveURL(/\/prioridades$/)
+    await expect(chip(other.page, 'Química sexual')).toHaveAccessibleName(
       'sua 2ª: Química sexual',
     )
     await expect(
-      outro.page.getByRole('radio', { name: 'Duração' }),
+      other.page.getByRole('radio', { name: 'Duração' }),
     ).toBeChecked()
-    expect(await salvo(outro.page, 'prioridades')).toEqual({
-      topo3: ['renda', 'sexo', 'parecido'],
-      desfecho: 'duracao',
+    expect(await saved(other.page, 'priorities')).toEqual({
+      top3: ['renda', 'sexo', 'parecido'],
+      outcome: 'duracao',
     })
-    await outro.context.close()
+    await other.context.close()
   })
 
-  test('do Perfil, o link leva só o gênero, e quem abre guarda o resto do seu', async ({
+  test('from the Profile, the link carries only the gender, and whoever opens it keeps the rest of theirs', async ({
     page,
     context,
     browser,
   }) => {
-    await comAreaDeTransferencia(context)
+    await withClipboard(context)
     await context.addInitScript(() =>
       localStorage.setItem(
-        'tem-estudo:perfil',
-        JSON.stringify({ genero: 'mulher', procura: 'homens', idade: 41 }),
+        'tem-estudo:profile',
+        JSON.stringify({ gender: 'mulher', seeks: 'homens', age: 41 }),
       ),
     )
     await page.goto('/prioridades', { waitUntil: 'networkidle' })
-    await tocar(chip(page, 'Renda'))
-    await expect(compartilhar(page)).toContainText(
+    await tap(chip(page, 'Renda'))
+    await expect(share(page)).toContainText(
       'Este link mostra: mulher, topo 3 renda, em satisfação.',
     )
-    const link = new URL(await copiarLink(page))
+    const link = new URL(await copyLink(page))
     expect(link.search).toBe(
       '?v=1&genero=mulher&topo=renda&desfecho=satisfacao',
     )
 
-    const outro = await outroAparelho(browser, {
-      perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
+    const other = await otherDevice(browser, {
+      profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
     })
-    await outro.page.goto(`${link.pathname}${link.search}`)
+    await other.page.goto(`${link.pathname}${link.search}`)
     await expect(
-      outro.page.getByRole('status').filter({ hasText: 'trocou' }),
+      other.page.getByRole('status').filter({ hasText: 'trocou' }),
     ).toHaveText(
       'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.',
     )
-    expect(await salvo(outro.page, 'perfil')).toEqual({
-      genero: 'mulher',
-      procura: 'mulheres',
-      idade: 30,
+    expect(await saved(other.page, 'profile')).toEqual({
+      gender: 'mulher',
+      seeks: 'mulheres',
+      age: 30,
     })
-    await outro.context.close()
+    await other.context.close()
   })
 
-  test('a prévia mostra o topo 3 e o alerta', async ({ request }) => {
+  test('the preview shows the top 3 and the alert', async ({ request }) => {
     const html = await (
       await request.get(
         '/prioridades?v=1&genero=homem&idade=33&topo=sexo,renda&desfecho=satisfacao',
@@ -297,38 +293,38 @@ test.describe('link de Prioridades', () => {
     expect(html).not.toMatch(/<meta[^>]+content="[^"]*(homem|33)[^"]*"/)
   })
 
-  test('query inválida não troca o estado salvo e sai da barra', async ({
+  test('an invalid query does not replace the saved state and leaves the bar', async ({
     browser,
   }) => {
-    const outro = await outroAparelho(browser, {
-      prioridades: { topo3: ['gentileza'], desfecho: 'atracao' },
+    const other = await otherDevice(browser, {
+      priorities: { top3: ['gentileza'], outcome: 'atracao' },
     })
-    await outro.page.goto('/prioridades?v=99&topo=renda')
-    await expect(outro.page).toHaveURL(/\/prioridades$/)
-    await expect(chip(outro.page, 'Gentileza')).toHaveAccessibleName(
+    await other.page.goto('/prioridades?v=99&topo=renda')
+    await expect(other.page).toHaveURL(/\/prioridades$/)
+    await expect(chip(other.page, 'Gentileza')).toHaveAccessibleName(
       'sua 1ª: Gentileza',
     )
-    expect(await salvo(outro.page, 'prioridades')).toEqual({
-      topo3: ['gentileza'],
-      desfecho: 'atracao',
+    expect(await saved(other.page, 'priorities')).toEqual({
+      top3: ['gentileza'],
+      outcome: 'atracao',
     })
-    await outro.context.close()
+    await other.context.close()
   })
 })
 
-test('o Compartilhar do Guia copia o link sem query', async ({
+test("the Guide's Compartilhar copies the link without query", async ({
   page,
   context,
 }) => {
-  await comAreaDeTransferencia(context)
+  await withClipboard(context)
   await page.goto('/onde-conhecer-pessoas/app-ou-presencial?genero=homem', {
     waitUntil: 'networkidle',
   })
-  const link = await copiarLink(page)
+  const link = await copyLink(page)
   expect(link).toMatch(
     /^http:\/\/localhost:\d+\/onde-conhecer-pessoas\/app-ou-presencial$/,
   )
-  await expect(compartilhar(page)).toContainText(
+  await expect(share(page)).toContainText(
     'O link leva só o endereço do Guia, sem o seu Perfil.',
   )
 })

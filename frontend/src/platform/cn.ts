@@ -1,14 +1,15 @@
-// O `cn` do app: o do pacote `cn`, que junta as classes com a semântica do
-// tailwind-merge, sabendo das escalas que o `@theme` de `ui/tokens.css`
-// declara. Sem isto ele não reconhece um nome que não seja do Tailwind, e lia
-// `text-label` como cor de texto.
+// The app's `cn`: the one from the `cn` package, which joins classes with
+// tailwind-merge semantics, knowing the scales the `@theme` of
+// `ui/tokens.css` declares. Without this it does not recognize a name that is
+// not Tailwind's, and read `text-label` as a text color.
 //
-// As tabelas vêm prontas de `cn-tabelas.js`, que o `pnpm cn:tabelas` gera do
-// `@theme`, para o navegador não compilá-las na primeira chamada (o mesmo do
-// Festival dos Macacos). `cn.test.ts` confere que cada nome do tema está nas
-// tabelas, e que elas são as que o `styles.css` de hoje gera.
+// The tables come ready from `cn-tables.js`, which `pnpm cn:tables` generates
+// from the `@theme`, so the browser does not compile them on the first call
+// (the same as the Festival dos Macacos). `cn.test.ts` checks that each theme
+// name is in the tables, and that they are the ones today's `styles.css`
+// generates.
 
 import { createCn } from 'cn/engine'
-import tabelas from './cn-tabelas'
+import tables from './cn-tables'
 
-export const cn = createCn(tabelas)
+export const cn = createCn(tables)

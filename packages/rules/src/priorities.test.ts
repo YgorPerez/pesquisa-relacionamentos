@@ -175,47 +175,47 @@ describe('biasFor', () => {
 describe('readPriorities', () => {
   it('accepts the ordered top 3 and the outcome', () => {
     expect(
-      readPriorities({ topo3: ['renda', 'aparencia'], desfecho: 'duracao' }),
+      readPriorities({ top3: ['renda', 'aparencia'], outcome: 'duracao' }),
     ).toEqual({
-      topo3: ['renda', 'aparencia'],
-      desfecho: 'duracao',
+      top3: ['renda', 'aparencia'],
+      outcome: 'duracao',
     })
   })
 
   it('without a valid outcome, it stays on satisfaction', () => {
-    expect(readPriorities({ topo3: ['renda'], desfecho: 'amor' })).toEqual({
-      topo3: ['renda'],
-      desfecho: 'satisfacao',
+    expect(readPriorities({ top3: ['renda'], outcome: 'amor' })).toEqual({
+      top3: ['renda'],
+      outcome: 'satisfacao',
     })
   })
 
   it('drops repeats, non-text, and what goes past three', () => {
     expect(
       readPriorities({
-        topo3: ['renda', 'renda', 7, 'Não Slug', 'a', 'b', 'c'],
-        desfecho: 'atracao',
+        top3: ['renda', 'renda', 7, 'Não Slug', 'a', 'b', 'c'],
+        outcome: 'atracao',
       }),
     ).toEqual({
-      topo3: ['renda', 'a', 'b'],
-      desfecho: 'atracao',
+      top3: ['renda', 'a', 'b'],
+      outcome: 'atracao',
     })
   })
 
   it('keeps only the ids that exist, when the list is given', () => {
     expect(
-      readPriorities({ topo3: ['renda', 'sumiu'] }, ['renda', 'aparencia']),
+      readPriorities({ top3: ['renda', 'sumiu'] }, ['renda', 'aparencia']),
     ).toEqual({
-      topo3: ['renda'],
-      desfecho: 'satisfacao',
+      top3: ['renda'],
+      outcome: 'satisfacao',
     })
   })
 
   it('returns null for what is not an object', () => {
     expect(readPriorities(null)).toBeNull()
     expect(readPriorities('renda')).toBeNull()
-    expect(readPriorities({ topo3: 'renda' })).toEqual({
-      topo3: [],
-      desfecho: 'satisfacao',
+    expect(readPriorities({ top3: 'renda' })).toEqual({
+      top3: [],
+      outcome: 'satisfacao',
     })
   })
 })

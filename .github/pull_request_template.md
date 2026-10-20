@@ -11,7 +11,7 @@
 ## Tela
 
 <!-- Um PR que muda tela traz, de cada tela que mudou, o print e o vídeo de antes e de depois:
-`node frontend/scripts/capturar.ts <rota> --video` em cada lado (a skill `testar-app`). O check
+`node frontend/scripts/capture.ts <rota> --video` em cada lado (a skill `testar-app`). O check
 "Evidência de tela" falha sem pelo menos dois prints e dois vídeos. Escreva a tabela com os caminhos
 locais e anexe com `gh pr edit <n> --body-file corpo.md --attach ./antes.png --attach ./antes.mp4 ...`:
 o gh troca cada caminho pelo anexo. Se a tela não muda, marque a caixa, diga por quê e apague a tabela.

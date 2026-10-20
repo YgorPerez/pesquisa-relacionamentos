@@ -6,9 +6,9 @@ storybook-static
 *.local
 .env
 
-# Playwright: os artefatos de falha.
+# Playwright: the failure artifacts.
 test-results
 playwright-report
 
-# Testes das stories: as capturas de falha.
+# Story tests: the failure screenshots.
 .vitest

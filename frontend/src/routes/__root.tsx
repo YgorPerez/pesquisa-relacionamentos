@@ -7,18 +7,19 @@ import {
 } from '@tanstack/react-router'
 import { ORIGIN } from '@tem-estudo/content/search'
 import type { ReactNode } from 'react'
-import { Topo } from '#/ui/topo'
-import { Rodape } from '#/ui/contagem'
-import { CORES_DA_MARCA } from '#/ui/marca'
-import { useContarVisitas } from '#/analytics/contagem'
-import bricolage from '../fontes/bricolage-grotesque-latin-wght-normal.woff2?url'
-import atkinson from '../fontes/atkinson-hyperlegible-latin-400-normal.woff2?url'
+import { Header } from '#/ui/header'
+import { Footer } from '#/ui/counting'
+import { BRAND_COLORS } from '#/ui/brand'
+import { useCountVisits } from '#/analytics/counting'
+import bricolage from '../fonts/bricolage-grotesque-latin-wght-normal.woff2?url'
+import atkinson from '../fonts/atkinson-hyperlegible-latin-400-normal.woff2?url'
 import css from '../styles.css?url'
 
-/** A prévia de link de qualquer página leva a imagem fixa do site
- * (`public/og.png`, gerada por `scripts/imagem-og.ts`). O Guia troca o
- * título e a descrição; a calculadora com estado, a prévia inteira (#34). */
-const META_DO_SITE = [
+/** Any page's link preview carries the site's fixed image
+ * (`public/og.png`, made by `scripts/og-image.ts`). The Guide swaps the
+ * title and the description; the calculator with state, the whole preview
+ * (#34). */
+const SITE_META = [
   { charSet: 'utf-8' },
   { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   { title: 'Tem estudo?' },
@@ -27,7 +28,7 @@ const META_DO_SITE = [
     content:
       'Onde conhecer pessoas e como escolher parceiro, com o estudo de onde saiu cada resposta.',
   },
-  { name: 'theme-color', content: CORES_DA_MARCA.papel },
+  { name: 'theme-color', content: BRAND_COLORS.papel },
   { property: 'og:site_name', content: 'Tem estudo?' },
   { property: 'og:locale', content: 'pt_BR' },
   { property: 'og:type', content: 'website' },
@@ -41,14 +42,15 @@ const META_DO_SITE = [
   { name: 'twitter:card', content: 'summary_large_image' },
 ]
 
-const LINKS_DO_SITE = [
+const SITE_LINKS = [
   { rel: 'stylesheet', href: css },
-  // Os ícones e o manifesto da marca (`scripts/icones-da-marca.ts`): a aba,
-  // a tela de início do iPhone, que não lê o manifesto, e a do Android.
+  // The brand's icons and manifest (`scripts/brand-icons.ts`): the tab, the
+  // iPhone home screen, which does not read the manifest, and Android's.
   { rel: 'icon', href: '/favicon-32.png', type: 'image/png', sizes: '32x32' },
   { rel: 'apple-touch-icon', href: '/icone-180.png' },
   { rel: 'manifest', href: '/manifest.webmanifest' },
-  // O título e o corpo da primeira tela; o CSS só as pediria depois de chegar.
+  // The first screen's title and body fonts; the CSS would only request them
+  // after it arrives.
   {
     rel: 'preload',
     href: bricolage,
@@ -65,47 +67,47 @@ const LINKS_DO_SITE = [
   },
 ]
 
-/** O caminho da página sem barra final: o do canonical. */
-const semBarraFinal = (caminho: string) =>
-  caminho.length > 1 ? caminho.replace(/\/+$/, '') : '/'
+/** The page path without a trailing slash: the canonical one. */
+const withoutTrailingSlash = (path: string) =>
+  path.length > 1 ? path.replace(/\/+$/, '') : '/'
 
-/** O que todo loader recebe: o `queryClient` das leituras
- * (`conteudo/leituras.ts`). */
-interface ContextoDoRouter {
+/** What every loader receives: the reads' `queryClient`
+ * (`content/reads.ts`). */
+interface RouterContext {
   readonly queryClient: QueryClient
 }
 
-export const Route = createRootRouteWithContext<ContextoDoRouter>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: ({ matches }) => {
-    const folha = matches[matches.length - 1]
-    const canonico = `${ORIGIN}${semBarraFinal(folha?.pathname ?? '/')}`
-    // A query guarda estado (o Perfil, a conta da calculadora): a URL com ela
-    // fica fora da busca e aponta a sem query (#15).
-    const comQuery = Object.keys(folha?.search ?? {}).length > 0
+    const leaf = matches[matches.length - 1]
+    const canonical = `${ORIGIN}${withoutTrailingSlash(leaf?.pathname ?? '/')}`
+    // The query keeps state (the Profile, the calculator's count): the URL
+    // with it stays out of search and points to the one without query (#15).
+    const withQuery = Object.keys(leaf?.search ?? {}).length > 0
     return {
       meta: [
-        ...META_DO_SITE,
-        { property: 'og:url', content: canonico },
-        ...(comQuery ? [{ name: 'robots', content: 'noindex' }] : []),
+        ...SITE_META,
+        { property: 'og:url', content: canonical },
+        ...(withQuery ? [{ name: 'robots', content: 'noindex' }] : []),
       ],
-      links: [{ rel: 'canonical', href: canonico }, ...LINKS_DO_SITE],
+      links: [{ rel: 'canonical', href: canonical }, ...SITE_LINKS],
     }
   },
-  component: Raiz,
+  component: Root,
 })
 
-function Raiz() {
-  useContarVisitas()
+function Root() {
+  useCountVisits()
   return (
-    <Documento>
-      <Topo />
+    <Document>
+      <Header />
       <Outlet />
-      <Rodape />
-    </Documento>
+      <Footer />
+    </Document>
   )
 }
 
-function Documento({ children }: { children: ReactNode }) {
+function Document({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
       <head>

@@ -105,7 +105,7 @@ export function filasDaSuite({
       {
         nome: 'pastas',
         pasta: '.',
-        comando: 'node frontend/lint/pastas.ts',
+        comando: 'node frontend/lint/folders.ts',
         pula: semApp,
       },
       // Cada peça de `src/ui/` com story (ADR 0036).

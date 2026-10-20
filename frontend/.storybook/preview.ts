@@ -1,23 +1,24 @@
 import type { Preview } from '@storybook/react-vite'
-import { comRouter } from '../src/platform/storybook/com-router'
-// Os tokens, as fontes e a base do site, como no app.
+import { withRouter } from '../src/platform/storybook/with-router'
+// The tokens, the fonts and the site's base, as in the app.
 import '../src/styles.css'
 
 const preview: Preview = {
-  // Toda story dentro de um router: a Ficha, o Guia e os cartões têm `Link`.
-  decorators: [comRouter],
+  // Every story inside a router: the Fact sheet, the Guide and the cards
+  // have `Link`.
+  decorators: [withRouter],
   parameters: {
     viewport: {
       options: {
-        celular: {
-          name: 'Celular 412×915',
+        mobile: {
+          name: 'Mobile 412×915',
           styles: { width: '412px', height: '915px' },
           type: 'mobile',
         },
       },
     },
   },
-  initialGlobals: { viewport: { value: 'celular' } },
+  initialGlobals: { viewport: { value: 'mobile' } },
 }
 
 export default preview

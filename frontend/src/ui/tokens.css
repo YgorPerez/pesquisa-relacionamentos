@@ -1,17 +1,18 @@
-/* Os tokens do DESIGN.md ("O zine sério") como o tema do Tailwind. Os nomes
- * seguem o cabeçalho YAML de lá: a cor `papel` é `--color-papel` (`bg-papel`,
- * `text-papel`), o raio `mao` é `--radius-mao` (`rounded-mao`), o espaço `md`
- * é `--spacing-md` (`p-md`, `gap-md`) e o tipo `label` é `--font-label` com
- * `--text-label` (`font-label text-label`), que já traz entrelinha, peso e
- * espaçamento dele. O `tokens.test.ts` confere cada valor contra o DESIGN.md.
+/* The DESIGN.md tokens ("O zine sério") as the Tailwind theme. The names
+ * follow its YAML header (they stay in Portuguese, as there): the color
+ * `papel` is `--color-papel` (`bg-papel`, `text-papel`), the radius `mao` is
+ * `--radius-mao` (`rounded-mao`), the spacing `md` is `--spacing-md` (`p-md`,
+ * `gap-md`) and the type `label` is `--font-label` with `--text-label`
+ * (`font-label text-label`), which already brings its line height, weight and
+ * letter spacing. `tokens.test.ts` checks each value against DESIGN.md.
  *
- * `static` põe toda variável no `:root`, usada ou não: os desenhos de
- * `desenhos.css` e as `@utility` leem `var(--color-tinta)` direto.
+ * `static` puts every variable on `:root`, used or not: the drawings in
+ * `drawings.css` and the `@utility` rules read `var(--color-tinta)` directly.
  *
- * As escalas do Tailwind que o DESIGN.md não tem saem (`initial`): uma
- * `bg-red-500` ou uma `font-sans` não existe aqui, e o `@shadcn/lint` a
- * aponta. O espaço (`--spacing`, 4px) fica: `p-2.5` é 10px, e as medidas do
- * desenho que não são token caem nele. */
+ * The Tailwind scales DESIGN.md does not have are dropped (`initial`): a
+ * `bg-red-500` or a `font-sans` does not exist here, and `@shadcn/lint`
+ * flags it. The spacing (`--spacing`, 4px) stays: `p-2.5` is 10px, and the
+ * drawing's measures that are not tokens fall on it. */
 
 @theme static {
   --color-*: initial;
@@ -36,7 +37,7 @@
   --font-body: Atkinson Hyperlegible, system-ui, sans-serif;
   --font-label: Atkinson Hyperlegible, system-ui, sans-serif;
 
-  /* Os sete tipos do DESIGN.md, com entrelinha, peso e espaçamento. */
+  /* The seven DESIGN.md types, with line height, weight and letter spacing. */
   --text-*: initial;
   --text-display: clamp(33px, 8.6vw, 50px);
   --text-display--font-weight: 700;
@@ -62,8 +63,8 @@
   --text-label: 14.5px;
   --text-label--font-weight: 700;
   --text-label--line-height: 1.35;
-  /* Os tamanhos de letra fora dos sete tipos. Só o tamanho: a entrelinha e o
-   * peso ficam com quem os usa. */
+  /* The font sizes outside the seven types. Only the size: the line height
+   * and the weight belong to whoever uses them. */
   --text-miudo: 12px;
   --text-anel: 13px;
   --text-etiqueta: 14px;
@@ -73,15 +74,16 @@
   --text-grande: 18px;
   --text-linha: 19px;
   --text-nivel: 21px;
-  /* O `display` menor, da Ficha e da Dica: só o tamanho muda. */
+  /* The smaller `display`, for the Fact sheet and the Tip: only the size
+   * changes. */
   --text-display-ficha: clamp(29px, 7.4vw, 42px);
   --text-display-ficha--font-weight: 700;
   --text-display-ficha--line-height: 1.06;
   --text-display-ficha--letter-spacing: -0.022em;
   --text-frase-do-cartao: clamp(20px, 5.4vw, 24px);
 
-  /* As entrelinhas sem unidade. O `leading-<número>` do Tailwind é da escala
-   * de espaço (`leading-6` é 24px), e estas têm nome. */
+  /* The unitless line heights. Tailwind's `leading-<number>` belongs to the
+   * spacing scale (`leading-6` is 24px), and these have names. */
   --leading-*: initial;
   --leading-cerrada: 1.1;
   --leading-headline: 1.15;
@@ -106,7 +108,7 @@
   --radius-mao-2: 3px 7px 4px 6px / 6px 4px 7px 3px;
   --radius-bolota: 50% 47% 52% 48%;
   --radius-redondo: 50%;
-  /* O trilho da chave e a amostra da legenda da barra. */
+  /* The switch track and the bar legend's swatch. */
   --radius-trilho: 13px 12px 13px 12px;
   --radius-amostra: 3px;
 
@@ -116,32 +118,32 @@
   --spacing-lg: 30px;
   --spacing-secao: 44px;
   --spacing-rodape: 56px;
-  /* O alvo de toque mínimo (DESIGN.md, Do's and Don'ts). */
+  /* The minimum touch target (DESIGN.md, Do's and Don'ts). */
   --spacing-toque: 44px;
-  /* O recuo de uma lista numerada ou com bolinha. */
+  /* The indent of a numbered or bulleted list. */
   --spacing-marcador: 1.3em;
   --spacing-marcador-curto: 1.1em;
 
-  /* A coluna da página e a medida do texto. */
+  /* The page column and the text measure. */
   --container-pagina: 46rem;
   --container-texto: min(38rem, 66ch);
 
-  /* A folha sobre a retícula começa aqui (`folha:`). */
+  /* The sheet over the halftone starts here (`folha:`). */
   --breakpoint-*: initial;
   --breakpoint-folha: 900px;
 
-  /* O foco: o anel amarelo por fora do contorno de 3px em tinta. */
+  /* The focus: the yellow ring outside the 3px ink outline. */
   --shadow-*: initial;
   --shadow-foco: 0 0 0 7px var(--color-amarelo-voce);
 
   --ease-sai: cubic-bezier(0.16, 1, 0.3, 1);
-  /* O `ease-out` do CSS, e não a curva mais seca do Tailwind: o polegar da
-   * chave anda nele. */
+  /* CSS's `ease-out`, and not Tailwind's sharper curve: the switch thumb
+   * moves on it. */
   --ease-out: ease-out;
 
-  /* A única elevação: retícula fina de pontos em tinta a 62%, deslocada
-   * atrás do contorno (The Halftone Rule). Quem a desenha é a `@utility
-   * reticula` de `desenhos.css`. */
+  /* The only elevation: a fine halftone of ink dots at 62%, offset behind
+   * the outline (The Halftone Rule). It is drawn by the `@utility reticula`
+   * in `drawings.css`. */
   --reticula: radial-gradient(
       circle,
       rgba(26, 28, 28, 0.62) 0.8px,
@@ -149,8 +151,8 @@
     )
     0 0 / 4px 4px;
   --reticula-deslocamento: translate(5px, 6px);
-  /* O fundo do desktop, a partir de 900px: a mesma retícula, mais clara e
-   * mais aberta. */
+  /* The desktop background, from 900px on: the same halftone, lighter and
+   * more open. */
   --reticula-fundo: radial-gradient(
       circle,
       rgba(26, 28, 28, 0.12) 0.8px,
@@ -158,11 +160,12 @@
     )
     0 0 / 6px 6px;
 
-  /* Os contornos (Shapes). O Tailwind só tem `border-<inteiro>`: o de 1.8px e
-   * o de 1.5px entram por variável, `border-(length:--traco-controle)`. */
+  /* The outlines (Shapes). Tailwind only has `border-<integer>`: the 1.8px
+   * and 1.5px ones come in through a variable,
+   * `border-(length:--traco-controle)`. */
   --traco-painel: 2px;
   --traco-controle: 1.8px;
   --traco-etiqueta: 1.5px;
-  /* O contorno de fora do livro aberto na estante. */
+  /* The outer outline of the open book on the shelf. */
   --traco-aberto: 2.4px;
 }

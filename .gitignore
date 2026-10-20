@@ -33,7 +33,7 @@ coverage/
 # no fim, o link que o `preparar-worktree.ts` põe num worktree também fica fora.
 /fontes/privado
 
-# O que o `frontend/scripts/wizard-deploy.sh` lembra entre uma rodada e outra.
+# O que o `frontend/scripts/deploy-wizard.sh` lembra entre uma rodada e outra.
 .env.deploy
 
 # Credenciais locais do deploy (token da Hostinger, VPS).

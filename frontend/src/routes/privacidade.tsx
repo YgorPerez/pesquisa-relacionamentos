@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ChaveDaContagem } from '#/ui/contagem'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Headline, Secao } from '#/ui/secao'
+import { CountingSwitch } from '#/ui/counting'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Headline, Section } from '#/ui/section'
 
 export const Route = createFileRoute('/privacidade')({
   head: () => ({
@@ -14,34 +14,34 @@ export const Route = createFileRoute('/privacidade')({
       },
     ],
   }),
-  component: Privacidade,
+  component: Privacy,
 })
 
-/** A página de privacidade (story 73), em linguagem simples. Os prazos são
- * os do deploy (`docs/deploy.md`) e da ADR 0001. */
-function Privacidade() {
+/** The privacy page (story 73), in plain language. The retention times are
+ * the deploy's (`docs/deploy.md`) and ADR 0001's. */
+function Privacy() {
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>Privacidade</Display>
         <Lead>
           O site não tem conta nem login. O que você diz sobre você fica no seu
           aparelho, e a gente conta as visitas sem saber quem você é.
         </Lead>
 
-        <NoAparelho />
-        <NoLink />
-        <NoServidor />
-        <NaContagem />
-        <NaoSerContado />
-      </Coluna>
-    </Folha>
+        <OnTheDevice />
+        <InTheLink />
+        <OnTheServer />
+        <InTheCount />
+        <NotBeingCounted />
+      </Column>
+    </Sheet>
   )
 }
 
-function NoAparelho() {
+function OnTheDevice() {
   return (
-    <Secao className="prosa" aria-labelledby="p-aparelho">
+    <Section className="prosa" aria-labelledby="p-aparelho">
       <Headline id="p-aparelho">O que fica no seu aparelho</Headline>
       <p>
         O Perfil (seu gênero, quem você procura e sua idade), os Requisitos do
@@ -53,13 +53,13 @@ function NoAparelho() {
         Para apagar, limpe os dados deste site nas configurações do navegador.
         Outra pessoa que use o mesmo navegador vê o que ficou salvo.
       </p>
-    </Secao>
+    </Section>
   )
 }
 
-function NoLink() {
+function InTheLink() {
   return (
-    <Secao className="prosa" aria-labelledby="p-link">
+    <Section className="prosa" aria-labelledby="p-link">
       <Headline id="p-link">O que vai no link</Headline>
       <p>
         Só quando você toca em “Copiar link” numa calculadora. O link leva o que
@@ -74,13 +74,13 @@ function NoLink() {
         procura, nunca o seu gênero ou a sua idade. O link de um Guia não leva
         nada seu, e a escolha de não ser contado nunca vai num link.
       </p>
-    </Secao>
+    </Section>
   )
 }
 
-function NoServidor() {
+function OnTheServer() {
   return (
-    <Secao className="prosa" aria-labelledby="p-servidor">
+    <Section className="prosa" aria-labelledby="p-servidor">
       <Headline id="p-servidor">O que o servidor anota</Headline>
       <p>
         Como todo site, o servidor anota cada pedido: o endereço IP, a hora, a
@@ -94,13 +94,13 @@ function NoServidor() {
         dias. O programa do site anota só a página, a resposta e o tempo, sem
         IP, e escreve por cima das linhas mais antigas.
       </p>
-    </Secao>
+    </Section>
   )
 }
 
-function NaContagem() {
+function InTheCount() {
   return (
-    <Secao className="prosa" aria-labelledby="p-contagem">
+    <Section className="prosa" aria-labelledby="p-contagem">
       <Headline id="p-contagem">O que a contagem de visitas guarda</Headline>
       <p>
         A contagem usa o GoatCounter, que roda no nosso próprio servidor, em
@@ -126,14 +126,14 @@ function NaContagem() {
         a outra. Tudo o que tem mais de 31 dias é apagado. A base é o legítimo
         interesse (LGPD, art. 7º, IX): saber se os Guias ajudam.
       </p>
-    </Secao>
+    </Section>
   )
 }
 
-/** Com a chave que desliga a contagem neste aparelho. */
-function NaoSerContado() {
+/** With the switch that turns the count off on this device. */
+function NotBeingCounted() {
   return (
-    <Secao className="prosa" aria-labelledby="p-nao-contar">
+    <Section className="prosa" aria-labelledby="p-nao-contar">
       <Headline id="p-nao-contar">Não ser contado</Headline>
       <p>
         Se o seu navegador pede para não ser rastreado (Global Privacy Control
@@ -141,7 +141,7 @@ function NaoSerContado() {
         ou no rodapé de qualquer página. A escolha fica no seu aparelho, e abrir
         um link não a desfaz.
       </p>
-      <ChaveDaContagem className="mt-sm" />
-    </Secao>
+      <CountingSwitch className="mt-sm" />
+    </Section>
   )
 }

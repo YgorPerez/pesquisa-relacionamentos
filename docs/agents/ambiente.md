@@ -14,7 +14,7 @@ Cada worktree tem as suas dependências e as suas portas ([ADR 0010](../adr/0010
 - As portas do worktree: `node scripts/portas.ts`. No principal são 4310 (dev), 4311 (start), 4312 (e2e), 6310 (Storybook) e 6311 (Vitest das stories). Num worktree, um bloco entre 40100 e 48099.
 - `pnpm dev`, `pnpm start` e `pnpm storybook` sobem na porta do worktree e escrevem `[dev] no ar: <url>` quando respondem. `pnpm e2e`, `pnpm test:stories` e `pnpm test:storybook` (que sobe o Storybook na porta dele) também usam a do worktree.
 - Troque a porta só quando um script disser que ela está ocupada: `DEV_PORTA`, `START_PORTA`, `STORYBOOK_PORTA`, `E2E_PORTA` ou `STORIES_PORTA`.
-- O e2e builda com o acervo de fixture (`CONTEUDO_RAIZ=e2e/acervo`). Depois dele, rode `pnpm build` de novo antes de `pnpm start` com o conteúdo de verdade.
+- O e2e builda com o acervo de fixture (`CONTENT_ROOT=e2e/library`). Depois dele, rode `pnpm build` de novo antes de `pnpm start` com o conteúdo de verdade.
 
 ## Esperar
 

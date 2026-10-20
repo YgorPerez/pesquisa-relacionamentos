@@ -1,6 +1,6 @@
 // As variáveis de ambiente do repositório, lidas e validadas com o T3 Env
 // (ADR 0032, no molde do `env.server.ts` do Festival dos Macacos). Quem lê:
-// `./portas.ts` (as portas de cada uso), `frontend/vite/ambiente.ts` (as do
+// `./portas.ts` (as portas de cada uso), `frontend/vite/environment.ts` (as do
 // build: o acervo, o sitemap e a contagem em localhost) e
 // `frontend/scripts/vps.ts` (a VPS e o login do GoatCounter).
 //

@@ -5,7 +5,7 @@
 # garante o contêiner do GoatCounter em stats.temestudo.cloud.
 #
 # Sem os secrets `VPS_*` o publicar é pulado com um aviso, e o workflow sai
-# verde. Eles entram pelo `frontend/scripts/wizard-deploy.sh`.
+# verde. Eles entram pelo `frontend/scripts/deploy-wizard.sh`.
 name: Deploy
 
 'on':
@@ -61,7 +61,7 @@ jobs:
             echo "prontos=true" >> "$GITHUB_OUTPUT"
           else
             echo "prontos=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Deploy pulado::Faltam os secrets VPS_HOST, VPS_USER e VPS_SSH_KEY (VPS_PORT é opcional). Rode frontend/scripts/wizard-deploy.sh. Nada foi publicado."
+            echo "::warning title=Deploy pulado::Faltam os secrets VPS_HOST, VPS_USER e VPS_SSH_KEY (VPS_PORT é opcional). Rode frontend/scripts/deploy-wizard.sh. Nada foi publicado."
           fi
 
   testes-e-build:
@@ -92,7 +92,7 @@ jobs:
         run: pnpm test
 
       # O `pnpm e2e` monta um build sobre o conteúdo de fixture
-      # (`frontend/e2e/acervo`) e roda o Playwright sobre ele.
+      # (`frontend/e2e/library`) e roda o Playwright sobre ele.
       - name: E2E
         run: pnpm e2e
 
@@ -109,7 +109,7 @@ jobs:
       # depois do e2e, que deixou no `.output` o build da fixture. Conteúdo
       # com erro derruba este passo, e nada é publicado. Ele confere o
       # sitemap que está no ar: um caminho publicado que sumiu sem `antes`
-      # também derruba (`frontend/vite/acervo.ts`). Antes do primeiro deploy
+      # também derruba (`frontend/vite/library.ts`). Antes do primeiro deploy
       # não há sitemap, e o build segue sem a conferência.
       - name: Build do conteúdo
         run: |

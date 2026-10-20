@@ -2,7 +2,7 @@ import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
 import { cn } from '@/platform/cn'
 
-/** As opções lado a lado, que quebram a linha quando não cabem. */
+/** The options side by side, wrapping when they do not fit. */
 function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   return (
     <RadioGroupPrimitive
@@ -13,10 +13,10 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   )
 }
 
-/** A `opcao` do DESIGN.md: a opção inteira é o rádio, papel com contorno de
- * mão, e amarela quando marcada. O texto vai dentro (`children`) e é o nome
- * dela. O que veio do `base-nova` do shadcn (a bolinha ao lado do texto) foi
- * trocado pelo desenho do site. */
+/** The DESIGN.md `opcao`: the whole option is the radio, paper with a hand
+ * outline, and yellow when checked. The text goes inside (`children`) and is
+ * its name. What came from shadcn's `base-nova` (the dot beside the text)
+ * was swapped for the site's drawing. */
 function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
   return (
     <span className="relative">

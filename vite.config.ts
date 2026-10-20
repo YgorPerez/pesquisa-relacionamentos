@@ -15,8 +15,8 @@ const workers = await workersDoVitest()
 const FORA = [
   // Gerado pelo TanStack Router a cada build.
   'frontend/src/routeTree.gen.ts',
-  // Gerado pelo `cn build` (`pnpm cn:tabelas`) a partir do `@theme`.
-  'frontend/src/platform/cn-tabelas.js',
+  // Gerado pelo `cn build` (`pnpm cn:tables`) a partir do `@theme`.
+  'frontend/src/platform/cn-tables.js',
   'frontend/.output/**',
   'frontend/.nitro/**',
   'frontend/.tanstack/**',
@@ -36,7 +36,7 @@ const FORA = [
   'packages/content/fixtures/**',
   'packages/rules/fixtures/**',
   'scripts/fixtures/**',
-  'frontend/e2e/acervo/**',
+  'frontend/e2e/library/**',
   // Vendorizado: as skills de terceiros e o que o `impeccable` gera.
   '.claude/skills/unslop/**',
   '.claude/skills/grilling/**',
@@ -101,17 +101,17 @@ export default defineConfig({
     jsPlugins: [
       // `vite-plus/prefer-vite-plus-imports`: o Vitest e o Vite vêm do Vite+.
       { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },
-      './frontend/lint/estado.ts',
+      './frontend/lint/state.ts',
       // As peças do DESIGN.md e os donos delas, a cor que não é token, o
       // `title` que não abre no toque e o import relativo com `.js` (#54).
-      // `frontend/lint/chave-das-regras.test.ts` confere que cada plugin
+      // `frontend/lint/rule-config.test.ts` confere que cada plugin
       // daqui tem as regras ligadas.
-      './frontend/lint/coesao.ts',
-      './frontend/lint/cor-do-tema.ts',
-      './frontend/lint/sem-title-nativo.ts',
-      './frontend/lint/sem-import-js.ts',
+      './frontend/lint/cohesion.ts',
+      './frontend/lint/theme-color.ts',
+      './frontend/lint/no-native-title.ts',
+      './frontend/lint/no-js-import.ts',
       // A espera dos testes de tela é a da Testing Library (#55).
-      './frontend/lint/sem-vi-waitfor-nas-telas.ts',
+      './frontend/lint/no-vi-waitfor-in-screens.ts',
       // O design system: as classes do Tailwind contra o tema de
       // `frontend/src/ui/tokens.css` e os componentes de `src/ui/shadcn/`,
       // achados pelo `frontend/components.json` (ADR 0028).
@@ -140,20 +140,20 @@ export default defineConfig({
       'react/todo': 'error',
       // O `.js` num import relativo não resolve pelo `node` que roda os
       // scripts do repo, em lugar nenhum.
-      'modulos/sem-import-js': 'error',
+      'modules/no-js-import': 'error',
     },
     overrides: [
       {
-        // O app: o localStorage só pelo `armazenado()`, que é o dono dele.
+        // O app: o localStorage só pelo `stored()`, que é o dono dele.
         files: ['frontend/src/**'],
         // O teste de tela (e o apoio dele) lê e limpa o aparelho para
         // conferir o que a tela salvou, como o e2e (ADR 0035).
         excludeFiles: [
-          'frontend/src/estado/armazenado.ts',
+          'frontend/src/state/stored.ts',
           'frontend/src/**/*.test.tsx',
-          'frontend/src/platform/telas/**',
+          'frontend/src/platform/screens/**',
         ],
-        rules: { 'estado/localstorage-pelo-armazenado': 'error' },
+        rules: { 'state/localstorage-through-stored': 'error' },
       },
       {
         // As classes do app contra o design system, como no `eslint.config.js`
@@ -186,40 +186,40 @@ export default defineConfig({
         // prontos não entra (os do site são desenhados à mão).
         files: ['frontend/src/**'],
         rules: {
-          'html/sem-title-nativo': 'error',
-          'coesao/icone-a-mao': 'error',
+          'html/no-native-title': 'error',
+          'cohesion/hand-drawn-icons': 'error',
         },
       },
       {
         // Os testes de tela (ADR 0035): o `vi.waitFor` desiste em 1 s, e a
         // tela que compila a rota no teste passa disso.
         files: ['frontend/src/**/*.test.tsx'],
-        rules: { 'telas/sem-vi-waitfor-nas-telas': 'error' },
+        rules: { 'screens/no-vi-waitfor-in-screens': 'error' },
       },
       {
         // O `<h1>` é o `Display`, dono dele.
         files: ['frontend/src/**'],
-        excludeFiles: ['frontend/src/ui/folha.tsx'],
-        rules: { 'coesao/h1-do-dono': 'error' },
+        excludeFiles: ['frontend/src/ui/sheet.tsx'],
+        rules: { 'cohesion/h1-owner': 'error' },
       },
       {
         // A retícula é das peças de `src/ui/` (o `Painel`, o `Botao`).
         files: ['frontend/src/**'],
         excludeFiles: ['frontend/src/ui/**'],
-        rules: { 'coesao/reticula-do-dono': 'error' },
+        rules: { 'cohesion/halftone-owner': 'error' },
       },
       {
-        // A cor escrita à mão. `ui/marca.ts` é a dona das cores fora do CSS;
+        // A cor escrita à mão. `ui/brand.ts` é a dona das cores fora do CSS;
         // o teste, a story e a moldura do Storybook não são tela.
         files: ['frontend/src/**'],
         excludeFiles: [
-          'frontend/src/ui/marca.ts',
+          'frontend/src/ui/brand.ts',
           'frontend/src/**/*.test.{ts,tsx}',
           'frontend/src/**/*.stories.tsx',
           'frontend/src/**/storybook/**',
-          'frontend/src/platform/cn-tabelas.js',
+          'frontend/src/platform/cn-tables.js',
         ],
-        rules: { 'tema/cor-crua': 'error' },
+        rules: { 'theme/raw-color': 'error' },
       },
       {
         // Os diagnósticos do Effect, pelo patch do `@effect/tsgo` (ADR 0004).

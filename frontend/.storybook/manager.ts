@@ -1,63 +1,65 @@
-// A busca da barra lateral procura nos títulos, que saem do caminho do arquivo
-// (`ui/grupo-possivel.stories.tsx` vira `ui/grupo-possivel`) e por isso não
-// têm acento: `possível` não acharia nada. Aqui o que se digita perde o
-// acento antes de a busca ler, e `possível` procura `possivel`. Copiado do
-// `manager.ts` do Festival dos Macacos (ADR 0037).
+// The sidebar search looks in the titles, which come from the file path
+// (`ui/possible-group.stories.tsx` becomes `ui/possible-group`) and so have no
+// accents: `possíble` would find nothing. Here what is typed loses its accent
+// before the search reads it, and `possíble` looks for `possible`. Copied
+// from the Festival dos Macacos `manager.ts` (ADR 0037).
 //
-// O campo é do React, pelo Downshift do `Search.tsx` do Storybook. Este ouvinte
-// fica no `document`, na captura, e roda antes do do React, que fica na raiz.
-// O valor novo entra pelo setter do `HTMLInputElement`, e não por
-// `campo.value`: o React vigia o `value` do elemento, e com o valor trocado por
-// ali ele acharia que nada mudou e a busca continuaria com o acento.
+// The field is React's, through the Downshift of Storybook's `Search.tsx`.
+// This listener sits on `document`, in the capture phase, and runs before
+// React's, which sits on the root. The new value goes in through the
+// `HTMLInputElement` setter, and not through `field.value`: React watches the
+// element's `value`, and with the value swapped that way it would think
+// nothing changed and the search would keep the accent.
 //
-// O teste é o `busca.e2e.ts`, contra o Storybook de verdade: um upgrade que
-// troque o campo quebra o teste, e não a busca em silêncio.
+// The test is `search.e2e.ts`, against the real Storybook: an upgrade that
+// swaps the field breaks the test, and not the search silently.
 
-const CAMPO = 'storybook-explorer-searchfield'
+const FIELD = 'storybook-explorer-searchfield'
 
-/** O setter do `HTMLInputElement`, chamado com o campo como `this`. */
-const escrever = (campo: HTMLInputElement, valor: string) =>
-  Reflect.set(HTMLInputElement.prototype, 'value', valor, campo)
+/** The `HTMLInputElement` setter, called with the field as `this`. */
+const write = (field: HTMLInputElement, value: string) =>
+  Reflect.set(HTMLInputElement.prototype, 'value', value, field)
 
-const semAcento = (texto: string) =>
-  texto.normalize('NFD').replace(/\p{M}/gu, '')
+const withoutAccent = (text: string) =>
+  text.normalize('NFD').replace(/\p{M}/gu, '')
 
-/** Tira o acento do campo e deixa o cursor onde estava. Diz se mudou algo. */
-function tirarAcento(campo: HTMLInputElement) {
-  const valor = campo.value
-  const limpo = semAcento(valor)
-  if (limpo === valor) return false
-  const antes = valor.slice(0, campo.selectionStart ?? valor.length)
-  const cursor = semAcento(antes).length
-  escrever(campo, limpo)
-  campo.setSelectionRange(cursor, cursor)
+/** Removes the accent from the field and leaves the cursor where it was.
+ * Says whether anything changed. */
+function removeAccent(field: HTMLInputElement) {
+  const value = field.value
+  const clean = withoutAccent(value)
+  if (clean === value) return false
+  const before = value.slice(0, field.selectionStart ?? value.length)
+  const cursor = withoutAccent(before).length
+  write(field, clean)
+  field.setSelectionRange(cursor, cursor)
   return true
 }
 
-const campoDaBusca = (evento: Event) =>
-  evento.target instanceof HTMLInputElement && evento.target.id === CAMPO
-    ? evento.target
+const searchField = (event: Event) =>
+  event.target instanceof HTMLInputElement && event.target.id === FIELD
+    ? event.target
     : undefined
 
 document.addEventListener(
   'input',
-  (evento) => {
-    const campo = campoDaBusca(evento)
-    // No meio de uma composição (o acento de tecla morta, um IME), trocar o
-    // valor desmancha o que está sendo composto. Espera o fim, abaixo.
-    if (campo && !(evento as InputEvent).isComposing) tirarAcento(campo)
+  (event) => {
+    const field = searchField(event)
+    // In the middle of a composition (a dead-key accent, an IME), swapping
+    // the value undoes what is being composed. Wait for the end, below.
+    if (field && !(event as InputEvent).isComposing) removeAccent(field)
   },
   true,
 )
 
-// O Chrome não manda `input` depois do fim da composição, então este avisa o
-// React do valor novo.
+// Chrome does not send `input` after the composition ends, so this one tells
+// React about the new value.
 document.addEventListener(
   'compositionend',
-  (evento) => {
-    const campo = campoDaBusca(evento)
-    if (campo && tirarAcento(campo))
-      campo.dispatchEvent(new Event('input', { bubbles: true }))
+  (event) => {
+    const field = searchField(event)
+    if (field && removeAccent(field))
+      field.dispatchEvent(new Event('input', { bubbles: true }))
   },
   true,
 )

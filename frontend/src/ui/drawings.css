@@ -1,0 +1,297 @@
+/* What Tailwind does not cover, and so is hand-written CSS. Everything else
+ * on the site is a Tailwind class on the component itself. The class and
+ * keyframe names are DESIGN.md's vocabulary, in Portuguese.
+ *
+ * 1. The DESIGN.md hand drawings: the halftone behind the outline, each
+ *    section's rule, the yellow highlighter, the reference ring and the
+ *    key number's pink band. They are SVG in `url(data:…)` and offset
+ *    pseudo-elements, which as Tailwind classes would be long arbitrary
+ *    values (`bg-[url(…)]`) that `no-arbitrary-values` rejects. The ones
+ *    used in JSX are `@utility`, and `@shadcn/lint` knows them.
+ * 2. The HTML that comes out of the library's Markdown
+ *    (`content/guide-view.ts`), which has no `className`: `.prosa`, `.ref`,
+ *    `.nw`, `.numero-chave` and `.marca-texto`. The names are the closed
+ *    list of `content/safe-html.ts`.
+ * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
+ *    with `stroke-dashoffset`, in `@keyframes`. */
+
+/* ---------- 1. drawings the JSX uses ---------- */
+
+/* The only elevation: a fine halftone offset behind the outline. */
+@utility reticula {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    transform: var(--reticula-deslocamento);
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--reticula);
+    pointer-events: none;
+  }
+}
+
+/* The halftone as the background itself (the bar's unexplained slice). */
+@utility fundo-reticula {
+  background: var(--reticula), var(--color-folha);
+}
+
+/* The dotted and the dashed rule on one side only (`border-t-2
+ * fio-pontilhado`). Without the preflight, Tailwind's `border-dotted` puts
+ * the style on all four sides, and the side with no width gets the browser's
+ * `medium` width. These only swap the style `border-t-*` already reads. */
+@utility fio-pontilhado {
+  --tw-border-style: dotted;
+}
+
+@utility fio-tracejado {
+  --tw-border-style: dashed;
+}
+
+/* The chip does not flash the browser's blue highlight on tap: the yellow is
+ * the response. Tailwind has no utility for this. */
+@utility sem-realce-no-toque {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Each section opens with the hand-drawn rule, at the top. */
+@utility regua {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 6' preserveAspectRatio='none'%3E%3Cpath d='M1 3.4C120 2.6 260 3.6 380 2.9S540 3.3 599 2.8' stroke='%231a1c1c' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")
+    left top / 100% 6px no-repeat;
+}
+
+/* The Myth's strike: a pink band 30% of the height across the middle of the
+ * line, and not a highlighter. A gradient with position and size, which as a
+ * class would be an arbitrary `bg-[linear-gradient(…)]`. */
+@utility risco-do-mito {
+  text-decoration: none;
+  background: linear-gradient(var(--color-rosa-mito), var(--color-rosa-mito))
+    center 60% / 100% 30% repeat-x;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@layer components {
+  /* ---------- marca-texto: the title's only yellow word ---------- */
+  .marca-texto {
+    position: relative;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  /* Covers the whole letter, from ascenders to descenders (The Full Letter
+   * Rule), and paints itself from left to right on load. */
+  .marca-texto::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: -6px;
+    right: -7px;
+    top: 10%;
+    bottom: -6%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 8C50 6 130 7 196 5l1 8-1 9 1 9-3 3C130 33 60 33 5 35l-2-8 1-9-1-8z' fill='%23ecd36f'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    transform: rotate(-0.5deg);
+    transform-origin: left center;
+    animation: marca-passa 0.8s var(--ease-sai) 0.25s both;
+  }
+
+  @keyframes marca-passa {
+    from {
+      transform: rotate(-0.5deg) scaleX(0);
+    }
+    to {
+      transform: rotate(-0.5deg) scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marca-texto::before {
+      animation: none;
+    }
+  }
+}
+
+/* ---------- 2. the library's Markdown HTML ---------- */
+
+@layer components {
+  .prosa > :first-child {
+    margin-top: 0;
+  }
+
+  .prosa > :last-child {
+    margin-bottom: 0;
+  }
+
+  .prosa p,
+  .prosa ul,
+  .prosa ol {
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .prosa ul,
+  .prosa ol {
+    padding-left: 1.3em;
+  }
+
+  .prosa li + li {
+    margin-top: var(--spacing-xs);
+  }
+
+  .prosa a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Tables left in the extra sections scroll inside them, not the page. */
+  .prosa table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  .prosa th,
+  .prosa td {
+    text-align: left;
+    vertical-align: top;
+    padding: 6px 10px 6px 0;
+    border-bottom: 1.5px dotted var(--color-tinta);
+  }
+
+  /* ---------- limitations: a short stroke drawn as the bullet ---------- */
+  .limites ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .limites li {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .limites li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 18px;
+    height: 12px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='none' stroke='%231a1c1c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M2 6.6C6 5.6 11 6.2 16 5.4'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transform: translateY(-50%);
+  }
+
+  /* ---------- reference number in the ring, stuck to the word ---------- */
+  .nw {
+    white-space: nowrap;
+  }
+
+  .ref {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    min-width: 26px;
+    height: 25px;
+    padding: 0 6px;
+    margin: 0 1px 0 0.3em;
+    vertical-align: 2px;
+    font-family: var(--font-label);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-agua-tinta);
+    text-decoration: none;
+    border-radius: var(--radius-redondo);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26' preserveAspectRatio='none'%3E%3Cpath d='M17 2.6C24 3 28 7.5 27.6 13.2 27.2 19.4 21.8 23.6 14.6 23.4 7.4 23.2 2.3 18.8 2.5 12.6 2.7 6.8 8.2 2.2 15.6 2.9 18.5 3.2 20.4 3.9 21.4 4.8' fill='none' stroke='%230d6359' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")
+        center / 100% 100% no-repeat,
+      var(--color-folha);
+  }
+
+  .ref + .ref {
+    margin-left: 2px;
+  }
+
+  /* The touch area reaches 44 × 45px without moving the line. */
+  .ref::before {
+    content: '';
+    position: absolute;
+    inset: -10px -9px;
+  }
+
+  .ref:hover {
+    background-color: var(--color-agua-fonte);
+    color: var(--color-tinta);
+  }
+
+  /* ---------- key number in pink, the whole letter height ---------- */
+  .numero-chave {
+    color: inherit;
+    font-weight: 700;
+    padding: 0 3px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 8C50 6 130 7 196 5l1 8-1 9 1 9-3 3C130 33 60 33 5 35l-2-8 1-9-1-8z' fill='%23e7a3b6'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+/* ---------- 3. the loop that circles the Fact sheet ---------- */
+
+@layer components {
+  .ficha-citada .laco {
+    position: absolute;
+    inset: -10px;
+    z-index: -1;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .ficha-citada .laco path,
+  .ficha-citada .seta-laco path {
+    fill: none;
+    stroke: var(--color-agua-tinta);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .ficha-citada .laco path {
+    fill: color-mix(in srgb, var(--color-agua-fonte) 30%, transparent);
+    animation: desenha-traco 0.9s var(--ease-sai) forwards;
+  }
+
+  .ficha-citada .seta-laco {
+    position: absolute;
+    left: -14px;
+    top: -26px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .ficha-citada .seta-laco path {
+    animation: desenha-traco 0.5s var(--ease-sai) 0.7s forwards;
+  }
+
+  @keyframes desenha-traco {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ficha-citada .laco path,
+    .ficha-citada .seta-laco path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+}
