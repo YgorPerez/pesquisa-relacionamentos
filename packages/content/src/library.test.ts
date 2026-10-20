@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
@@ -338,14 +338,21 @@ version: "arquivo de 2026-09-14"
 })
 
 describe("the repository's library", () => {
-  it('loads the fact sheets: the 30 old ones unverified until they are redone (#6), the IBGE ones checked (#36)', () => {
+  // Acervo PRs add and redo fact sheets every week, so this checks that each
+  // one in studies/ loads, not which ones exist.
+  it('loads every fact sheet in studies/, the IBGE ones checked (#36)', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
+    const files = readdirSync(`${root}/studies`).filter(
+      (name) => name.endsWith('.md') && !name.startsWith('_'),
+    )
     const checked = library.factSheets
       .filter((f) => f.status !== 'unverified')
       .map((f) => f.slug)
-    expect(checked).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
-    expect(library.factSheets).toHaveLength(32)
+    expect(library.factSheets).toHaveLength(files.length)
+    expect(checked).toEqual(
+      expect.arrayContaining(['ibge-2019-pns', 'ibge-2022-censo-amostra']),
+    )
   })
 
   it('the possible group data cites the Census and PNS fact sheets', () => {
@@ -369,7 +376,7 @@ describe("the repository's library", () => {
     ])
   })
 
-  it('carries the tips of the old table, one per file, without the ⬜ ones, and none published yet', () => {
+  it('carries the tips of the old table, one per file, without the ⬜ ones, each published once its fact sheets are checked', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
     expect(library.tips.map((d) => [d.slug, d.strength, d.inference])).toEqual([
@@ -379,8 +386,18 @@ describe("the repository's library", () => {
       ['mensagem-um-pouco-acima', 'moderate', false],
       ['sem-pressa-para-casar', 'strong', false],
     ])
-    // The fact sheets behind them are still ⬜: the tips wait for the check.
-    expect(library.tips.filter((d) => d.published)).toEqual([])
+    // Acervo PRs verify fact sheets one by one, and a tip goes up with the
+    // last of its own.
+    const checked = new Set(
+      library.factSheets
+        .filter((f) => f.status !== 'unverified')
+        .map((f) => f.slug),
+    )
+    for (const tip of library.tips)
+      expect([tip.slug, tip.published]).toEqual([
+        tip.slug,
+        tip.fact_sheets.every((slug) => checked.has(slug)),
+      ])
   })
 })
 
