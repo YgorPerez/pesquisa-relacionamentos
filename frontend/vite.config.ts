@@ -19,7 +19,8 @@ const workers = await workersDoVitest()
 const FIXTURE = fileURLToPath(new URL('e2e/acervo', import.meta.url))
 
 // O Vitest só precisa do React: o Start e o nitro montam o servidor, que
-// teste de unidade nenhum usa. O app inteiro é testado pelo Playwright,
+// nenhum teste do Vitest usa. Os testes de tela montam o router no jsdom
+// (ADR 0035), e o app inteiro, com o servidor, é testado pelo Playwright
 // sobre o build (`playwright.config.ts`).
 const doApp = (mode: string): PluginOption[] => {
   // As variáveis do build, validadas antes de qualquer plugin
@@ -120,14 +121,14 @@ export default defineConfig(({ mode }) => ({
       },
     ],
     // A cobertura serve à `fallow health` (o formato `json`) e tem um piso
-    // (ADR 0005): o de quando ele entrou, que sobe com ela e nunca desce. É
-    // baixo porque as telas são testadas pelo e2e e pelas stories, que não
-    // entram nesta conta.
+    // (ADR 0005): o valor medido, arredondado para baixo, que sobe com ela e
+    // nunca desce. Conta a lógica e os testes de tela (`telas`); o e2e e as
+    // stories ficam de fora.
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'json'],
       include: ['{src,vite,nginx,scripts,lint}/**/*.{ts,tsx}'],
-      thresholds: { statements: 12, branches: 7, functions: 9, lines: 12 },
+      thresholds: { statements: 61, branches: 65, functions: 63, lines: 62 },
     },
   },
 }))
