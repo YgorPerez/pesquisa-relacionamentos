@@ -148,10 +148,20 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
+      # O `scripts/vps.ts` lê as variáveis pelo `scripts/variaveis.ts`, que
+      # importa o `@t3-oss/env-core`: sem instalar, o node não o acha.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
 
       - name: Baixar o build
         uses: actions/download-artifact@v4
@@ -205,10 +215,19 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
+      # O mesmo `scripts/vps.ts` do publicar, que precisa das dependências.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
 
       - name: Voltar à versão pedida
         env:
