@@ -3,7 +3,7 @@ import { comRegistro } from './registro-do-pedido'
 
 // O link de compartilhamento leva o Perfil na query (ADR 0001). O log do app
 // guarda só método, caminho, status e tempo.
-const LINK = 'https://temestudo.com/grupo-possivel?v=1&g=h&p=m&i=30&f=25-35'
+const LINK = 'https://temestudo.cloud/grupo-possivel?v=1&g=h&p=m&i=30&f=25-35'
 
 function montar(resposta: () => Response | Promise<Response>) {
   const linhas: string[] = []
@@ -28,7 +28,7 @@ describe('o registro de cada pedido no servidor', () => {
     const { fetch, linhas } = montar(() => new Response(null, { status: 302 }))
 
     await fetch(
-      new Request('https://temestudo.com/?g=mulher%20trans&o=bi#topo', {
+      new Request('https://temestudo.cloud/?g=mulher%20trans&o=bi#topo', {
         method: 'HEAD',
       }),
     )
@@ -51,13 +51,13 @@ describe('o registro de cada pedido no servidor', () => {
 
   test('um redirecionamento, que tem os cabeçalhos imutáveis, também leva o cabeçalho', async () => {
     const { fetch } = montar(() =>
-      Response.redirect('https://temestudo.com/', 301),
+      Response.redirect('https://temestudo.cloud/', 301),
     )
 
     const resposta = await fetch(new Request(LINK))
 
     expect(resposta.status).toBe(301)
-    expect(resposta.headers.get('location')).toBe('https://temestudo.com/')
+    expect(resposta.headers.get('location')).toBe('https://temestudo.cloud/')
     expect(resposta.headers.get('referrer-policy')).toBe('strict-origin')
   })
 

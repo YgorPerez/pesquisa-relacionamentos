@@ -1,5 +1,5 @@
 // A contagem de uso (#35, ADR 0001) sobre o conteúdo de fixture. Os envios ao
-// GoatCounter de stats.temestudo.com são interceptados e nunca saem da
+// GoatCounter de stats.temestudo.cloud são interceptados e nunca saem da
 // máquina. Eles levam o caminho sem query, a referência, a largura da tela e,
 // nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
 import { expect, test, type Page } from '@playwright/test'
@@ -13,7 +13,7 @@ const QUERY_COM_PERFIL = queryDoLink({
   perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
   requisitos: null,
 })
-const STATS = 'https://stats.temestudo.com/'
+const STATS = 'https://stats.temestudo.cloud/'
 const CAMPOS = ['p', 'r', 's', 'e', 'b', 'rnd']
 
 /** Os envios ao GoatCounter, sem o `rnd` (que só fura o cache). */

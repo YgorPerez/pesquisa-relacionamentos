@@ -184,7 +184,7 @@ finish() {
 # Replace the example below. Set TOTAL_STAGES to match the stages you write.
 # ──────────────────────────────────────────────────────────────────────────
 
-# Os passos do deploy de temestudo.com que só o mantenedor faz (#25,
+# Os passos do deploy de temestudo.cloud que só o mantenedor faz (#25,
 # `docs/deploy.md`). Rode da raiz do repositório:
 #
 #   bash frontend/scripts/wizard-deploy.sh
@@ -206,7 +206,7 @@ export GH_REPO=YgorPerez/pesquisa-relacionamentos
 
 CHAVE_PADRAO="$HOME/.ssh/temestudo-deploy"
 
-banner "Deploy de temestudo.com"
+banner "Deploy de temestudo.cloud"
 
 # ── 1 ─────────────────────────────────────────────────────────────────────
 stage "A VPS na Hostinger"
@@ -232,7 +232,7 @@ stage "O DNS na Hostinger"
 say "O domínio foi comprado na Hostinger e o DNS fica lá. Três registros A apontam para $VPS_HOST."
 say "O certbot valida o domínio direto na VPS, então nenhum nome pode apontar para outro lugar."
 open_url "https://hpanel.hostinger.com/domains"
-step "Abra temestudo.com → DNS / Nameservers → Registros DNS."
+step "Abra temestudo.cloud → DNS / Nameservers → Registros DNS."
 note "Os nameservers precisam ser os da Hostinger (ns1/ns2.dns-parking.com), senão os registros daqui não valem."
 step "Registro A de nome @: edite para apontar a $VPS_HOST (ele vem apontando para o estacionamento)."
 step "Nome www: apague o CNAME que vem pronto e crie um A, nome www, apontando a $VPS_HOST."
@@ -241,13 +241,13 @@ step "Apague qualquer AAAA em @, www ou stats: o Let's Encrypt tentaria o IPv6 p
 note "Deixe o TTL que o painel sugere."
 pause "Enter depois de salvar os três registros."
 if command -v dig >/dev/null 2>&1; then
-  for nome in temestudo.com www.temestudo.com stats.temestudo.com; do
+  for nome in temestudo.cloud www.temestudo.cloud stats.temestudo.cloud; do
     visto=$(dig +short A "$nome" @1.1.1.1 | tail -n1)
     if [[ "$visto" == "$VPS_HOST" ]]; then say "✓ $nome → $visto"
     else warn "$nome ainda responde '${visto:-nada}'. Pode levar uns minutos; a etapa 5 precisa dele certo."; fi
   done
 else
-  note "Sem o dig aqui: confira em https://dnschecker.org que temestudo.com aponta para $VPS_HOST."
+  note "Sem o dig aqui: confira em https://dnschecker.org que temestudo.cloud aponta para $VPS_HOST."
 fi
 pause
 
@@ -261,7 +261,7 @@ if [[ -f "$VPS_SSH_KEY_PATH" ]]; then
   say "A chave $VPS_SSH_KEY_PATH já existe: ela fica como está."
 elif confirm "Gerar a chave ed25519 em $VPS_SSH_KEY_PATH, sem senha?"; then
   mkdir -p "$(dirname "$VPS_SSH_KEY_PATH")"
-  ssh-keygen -t ed25519 -N "" -C "deploy temestudo.com" -f "$VPS_SSH_KEY_PATH" >/dev/null
+  ssh-keygen -t ed25519 -N "" -C "deploy temestudo.cloud" -f "$VPS_SSH_KEY_PATH" >/dev/null
   say "✓ chave gerada."
 else
   warn "Sem chave não há deploy. Rode o wizard de novo quando quiser gerá-la."
@@ -294,7 +294,7 @@ pause
 # ── 5 ─────────────────────────────────────────────────────────────────────
 stage "Preparar a VPS"
 say "O frontend/scripts/preparar-vps.sh instala Docker, Nginx e certbot, abre 80 e 443"
-say "e tira o certificado de temestudo.com, www e stats por webroot."
+say "e tira o certificado de temestudo.cloud, www e stats por webroot."
 note "Precisa do DNS da etapa 2 já apontando para $VPS_HOST. Pode rodar de novo sem estrago."
 if confirm "Rodar o preparar-vps.sh em $VPS_USER@$VPS_HOST agora?"; then
   ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -p "$VPS_PORT" \
@@ -314,8 +314,8 @@ set_secret VPS_USER "$VPS_USER"
 set_secret VPS_PORT "$VPS_PORT"
 set_secret VPS_SSH_KEY "$(cat "$VPS_SSH_KEY_PATH")"
 say "O primeiro deploy cria o login do GoatCounter com este e-mail e uma senha sorteada."
-ask STATS_EMAIL "E-mail do login do GoatCounter (Enter vazio = admin@temestudo.com):"
-STATS_EMAIL=${STATS_EMAIL:-admin@temestudo.com}
+ask STATS_EMAIL "E-mail do login do GoatCounter (Enter vazio = admin@temestudo.cloud):"
+STATS_EMAIL=${STATS_EMAIL:-admin@temestudo.cloud}
 write_env STATS_EMAIL "$STATS_EMAIL"
 set_var GOATCOUNTER_EMAIL "$STATS_EMAIL"
 open_url "https://github.com/$GH_REPO/settings/secrets/actions"
@@ -335,16 +335,16 @@ if confirm "Disparar o workflow Deploy na main agora?"; then
 fi
 open_url "https://github.com/$GH_REPO/actions/workflows/deploy.yml"
 pause "Enter quando o run terminar verde."
-if curl -fsS -D - -o /dev/null https://temestudo.com/ 2>/dev/null | grep -qi '^referrer-policy: strict-origin'; then
-  say "✓ https://temestudo.com responde, com Referrer-Policy: strict-origin."
+if curl -fsS -D - -o /dev/null https://temestudo.cloud/ 2>/dev/null | grep -qi '^referrer-policy: strict-origin'; then
+  say "✓ https://temestudo.cloud responde, com Referrer-Policy: strict-origin."
 else
-  warn "https://temestudo.com ainda não responde como deveria. Veja o log do run e docs/deploy.md."
+  warn "https://temestudo.cloud ainda não responde como deveria. Veja o log do run e docs/deploy.md."
 fi
 pause
 
 # ── 8 ─────────────────────────────────────────────────────────────────────
 stage "O login do GoatCounter"
-say "O deploy criou o site stats.temestudo.com e o login $STATS_EMAIL, com uma senha sorteada"
+say "O deploy criou o site stats.temestudo.cloud e o login $STATS_EMAIL, com uma senha sorteada"
 say "em /opt/temestudo/goatcounter-senha, e ligou só referência, tela e país, com 31 dias."
 note "Rode esta etapa depois do primeiro deploy verde."
 SSH_VPS=(ssh -i "$VPS_SSH_KEY_PATH" -o IdentitiesOnly=yes -o BatchMode=yes -p "$VPS_PORT" "$VPS_USER@$VPS_HOST")
@@ -355,7 +355,7 @@ else
   warn "A VPS não tem /opt/temestudo/goatcounter-senha. Veja o log do deploy na linha do GoatCounter."
   SKIPPED+=("login do GoatCounter: o deploy não gravou a senha; ver docs/deploy.md, seção GoatCounter")
 fi
-open_url "https://stats.temestudo.com/settings/main"
+open_url "https://stats.temestudo.cloud/settings/main"
 step "Entre com $STATS_EMAIL e a senha acima. Em User → Password dá para trocá-la."
 step "Em Settings → Data collection, confira: Referrer, Size e Country marcados; Sessions e o resto desmarcados."
 step "Em Data retention, confira 31 dias."

@@ -9,7 +9,7 @@
 //
 // `CONTEUDO_RAIZ` troca a raiz do repositório: o e2e constrói sobre a pasta
 // de fixture `e2e/acervo`. `SITEMAP_ANTERIOR` é o caminho do `sitemap.xml`
-// que está no ar, que o CI e o deploy baixam de temestudo.com antes do build:
+// que está no ar, que o CI e o deploy baixam de temestudo.cloud antes do build:
 // com ele, o build falha se um caminho publicado sumiu sem `antes`. As duas
 // chegam aqui validadas por `vite/ambiente.ts`.
 import { readFileSync } from 'node:fs'

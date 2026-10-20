@@ -104,7 +104,7 @@ function NaContagem() {
       <Headline id="p-contagem">O que a contagem de visitas guarda</Headline>
       <p>
         A contagem usa o GoatCounter, que roda no nosso próprio servidor, em
-        stats.temestudo.com. Nenhuma empresa de fora recebe esses dados. Ela
+        stats.temestudo.cloud. Nenhuma empresa de fora recebe esses dados. Ela
         guarda:
       </p>
       <ul>

@@ -4,7 +4,7 @@
 // o Guia app-ou-presencial declaram caminhos antigos).
 import { expect, test } from '@playwright/test'
 
-const SITE = 'https://temestudo.com'
+const SITE = 'https://temestudo.cloud'
 const GUIA = '/onde-conhecer-pessoas/app-ou-presencial'
 
 test.describe('sitemap e robots', () => {

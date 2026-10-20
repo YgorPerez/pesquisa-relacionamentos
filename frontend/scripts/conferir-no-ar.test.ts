@@ -46,7 +46,7 @@ const NO_AR: Record<string, Resposta> = {
   '/assets/estilo-B3x_9a.css': { tipo: CSS, corpo: 'body{}' },
   'http /': {
     status: 301,
-    cabecalhos: { location: 'https://temestudo.com/?x=1' },
+    cabecalhos: { location: 'https://temestudo.cloud/?x=1' },
   },
 }
 
@@ -63,7 +63,7 @@ function semEspera() {
 
 const conferir = (respostas: Record<string, Resposta>) =>
   conferirNoAr({
-    host: 'temestudo.com',
+    host: 'temestudo.cloud',
     marca: 'abc1234',
     buscar: site(respostas).buscar,
     prazoMs: 10_000,
@@ -76,7 +76,7 @@ describe('conferirNoAr', () => {
     const { buscar, pedidos } = site(NO_AR)
 
     const r = await conferirNoAr({
-      host: 'temestudo.com',
+      host: 'temestudo.cloud',
       marca: 'abc1234',
       buscar,
       ...semEspera(),
@@ -85,10 +85,10 @@ describe('conferirNoAr', () => {
     expect(r).toEqual({
       ok: true,
       linhas: [
-        'temestudo.com: / chega com Referrer-Policy: strict-origin',
-        'temestudo.com: /assets/estilo-B3x_9a.css chega como text/css; charset=utf-8',
-        'temestudo.com: /assets/main-Df81kZ.js chega como text/javascript; charset=utf-8',
-        'temestudo.com: http://temestudo.com/?x=1 leva a https://temestudo.com/?x=1',
+        'temestudo.cloud: / chega com Referrer-Policy: strict-origin',
+        'temestudo.cloud: /assets/estilo-B3x_9a.css chega como text/css; charset=utf-8',
+        'temestudo.cloud: /assets/main-Df81kZ.js chega como text/javascript; charset=utf-8',
+        'temestudo.cloud: http://temestudo.cloud/?x=1 leva a https://temestudo.cloud/?x=1',
       ],
     })
     // A query fura o cache de quem estiver no meio.
@@ -106,7 +106,7 @@ describe('conferirNoAr', () => {
     expect(r).toEqual({
       ok: false,
       motivo:
-        'temestudo.com: /assets/main-Df81kZ.js chegou com 200 e text/html;charset=utf-8 (3 tentativas em 10 s)',
+        'temestudo.cloud: /assets/main-Df81kZ.js chegou com 200 e text/html;charset=utf-8 (3 tentativas em 10 s)',
     })
   })
 
@@ -156,12 +156,12 @@ describe('conferirNoAr', () => {
       ...NO_AR,
       'http /': {
         status: 301,
-        cabecalhos: { location: 'https://temestudo.com/' },
+        cabecalhos: { location: 'https://temestudo.cloud/' },
       },
     })
 
     expect(!r.ok && r.motivo).toContain(
-      'http://temestudo.com/?x=1 leva a https://temestudo.com/, não a https://temestudo.com/?x=1',
+      'http://temestudo.cloud/?x=1 leva a https://temestudo.cloud/, não a https://temestudo.cloud/?x=1',
     )
   })
 
@@ -169,7 +169,7 @@ describe('conferirNoAr', () => {
     let vezes = 0
     const { buscar } = site(NO_AR)
     const r = await conferirNoAr({
-      host: 'temestudo.com',
+      host: 'temestudo.cloud',
       marca: 'abc1234',
       buscar: async (url) => {
         if (vezes++ === 0) throw new Error('conexão recusada')
@@ -183,7 +183,7 @@ describe('conferirNoAr', () => {
 
   it('a conexão que não abre vira o motivo', async () => {
     const r = await conferirNoAr({
-      host: 'temestudo.com',
+      host: 'temestudo.cloud',
       marca: 'abc1234',
       buscar: async () => {
         throw new TypeError('fetch failed', { cause: 'ECONNREFUSED' })
@@ -195,7 +195,7 @@ describe('conferirNoAr', () => {
     expect(r).toEqual({
       ok: false,
       motivo:
-        'temestudo.com: a conexão falhou: ECONNREFUSED (1 tentativas em 0 s)',
+        'temestudo.cloud: a conexão falhou: ECONNREFUSED (1 tentativas em 0 s)',
     })
   })
 })

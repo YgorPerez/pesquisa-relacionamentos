@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vite-plus/test'
 import { urlDaContagem } from './goatcounter'
 import { navegadorPedeParaNaoContar } from './contagem'
 
-const ENDPOINT = 'https://stats.temestudo.com/count'
+const ENDPOINT = 'https://stats.temestudo.cloud/count'
 const campos = (url: string): Record<string, string> => {
   const u = new URL(url)
   return {

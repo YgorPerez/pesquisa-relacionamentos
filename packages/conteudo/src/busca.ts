@@ -16,7 +16,7 @@ import type { Dica, Guia, Tema } from './itens.ts'
 import { CALCULADORAS, ROTAS_RESERVADAS } from './listas.ts'
 
 /** O endereço do site, para o sitemap, o canonical e o Open Graph. */
-export const ORIGEM = 'https://temestudo.com'
+export const ORIGEM = 'https://temestudo.cloud'
 
 /** Até onde o Google mostra o título e a descrição sem cortar. */
 export const LIMITES = { titulo: 60, descricao: 155 } as const

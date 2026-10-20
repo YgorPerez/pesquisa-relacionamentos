@@ -67,10 +67,10 @@ docker volume rm ${TESTE.volume} >/dev/null 2>&1 || true`)
 
     test('o primeiro deploy cria o site e o usuário, com a senha aleatória num arquivo 600', () => {
       const saida = garantir()
-      expect(saida).toContain('site stats.temestudo.com criado')
+      expect(saida).toContain('site stats.temestudo.cloud criado')
       expect(consulta(`select cname from sites`)).toEqual([TESTE.host])
       expect(consulta(`select email from users`)).toEqual([
-        'admin@temestudo.com',
+        'admin@temestudo.cloud',
       ])
       const senha = readFileSync(arquivoDaSenha, 'utf8').trim()
       expect(senha).toMatch(/^[A-Za-z0-9]{32,50}$/)
@@ -81,7 +81,7 @@ docker volume rm ${TESTE.volume} >/dev/null 2>&1 || true`)
       const senha = readFileSync(arquivoDaSenha, 'utf8').trim()
       // O mesmo POST do formulário de login: certo, volta com o cookie `key`.
       const entrar = (password: string) =>
-        bash(`curl -s -o /dev/null -D - -H 'Host: ${TESTE.host}' --data-urlencode 'email=admin@temestudo.com' \
+        bash(`curl -s -o /dev/null -D - -H 'Host: ${TESTE.host}' --data-urlencode 'email=admin@temestudo.cloud' \
   --data-urlencode 'password=${password}' http://127.0.0.1:${TESTE.porta}/user/requestlogin`)
       expect(entrar(senha)).toMatch(/^set-cookie: key=/im)
       expect(entrar('errada123')).not.toMatch(/^set-cookie: key=/im)
@@ -129,9 +129,9 @@ sleep 3`)
     test('o e-mail vem do GOATCOUNTER_EMAIL num volume novo', () => {
       limpar()
       rmSync(arquivoDaSenha, { force: true })
-      garantir('outra@temestudo.com')
+      garantir('outra@temestudo.cloud')
       expect(consulta(`select email from users`)).toEqual([
-        'outra@temestudo.com',
+        'outra@temestudo.cloud',
       ])
     })
   },

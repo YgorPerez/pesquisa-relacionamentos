@@ -86,7 +86,7 @@ describe('o formato do access_log', () => {
   })
 })
 
-describe('o vhost de temestudo.com', () => {
+describe('o vhost de temestudo.cloud', () => {
   test('não declara outro log_format: todos vêm do log-sem-query.conf', () => {
     expect(de(topo, 'log_format')).toEqual([])
   })
@@ -125,7 +125,7 @@ describe('o vhost de temestudo.com', () => {
     const https = servidores.filter(
       (s) =>
         de(s.filhos, 'server_name').some((n) =>
-          n.args.includes('temestudo.com'),
+          n.args.includes('temestudo.cloud'),
         ) && de(s.filhos, 'listen').some((l) => l.args.includes('ssl')),
     )
     expect(https).toHaveLength(1)
@@ -147,7 +147,7 @@ describe('o vhost de temestudo.com', () => {
   })
 })
 
-describe('o vhost de stats.temestudo.com (GoatCounter, #35)', () => {
+describe('o vhost de stats.temestudo.cloud (GoatCounter, #35)', () => {
   const stats = ler(
     readFileSync(new URL('temestudo-stats.conf', pasta), 'utf8'),
   )
@@ -155,10 +155,10 @@ describe('o vhost de stats.temestudo.com (GoatCounter, #35)', () => {
   const todos = (bloco: Diretiva[]): Diretiva[] =>
     bloco.flatMap((d) => [d, ...(d.filhos ? todos(d.filhos) : [])])
 
-  test('só atende stats.temestudo.com, no 80 e no 443', () => {
+  test('só atende stats.temestudo.cloud, no 80 e no 443', () => {
     expect(
       blocos.map((s) => de(s.filhos, 'server_name').flatMap((n) => n.args)),
-    ).toEqual([['stats.temestudo.com'], ['stats.temestudo.com']])
+    ).toEqual([['stats.temestudo.cloud'], ['stats.temestudo.cloud']])
     expect(de(stats, 'log_format')).toEqual([])
   })
 

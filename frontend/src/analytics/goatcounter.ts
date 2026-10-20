@@ -1,4 +1,4 @@
-// O envio ao GoatCounter de stats.temestudo.com (#35). Este arquivo é "o
+// O envio ao GoatCounter de stats.temestudo.cloud (#35). Este arquivo é "o
 // script" da contagem: `contagem.ts` só o importa quando o visitante pode ser
 // contado, e com GPC, DNT ou a chave desligada ele nem chega ao navegador.
 //

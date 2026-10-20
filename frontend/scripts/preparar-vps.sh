@@ -5,8 +5,8 @@
 #   ssh root@<ip> 'bash -s -- <email do Let's Encrypt>' < frontend/scripts/preparar-vps.sh
 #
 # Instala o Docker, o Nginx e o certbot, abre as portas 80 e 443 e tira, por
-# webroot, um certificado só para temestudo.com, www.temestudo.com e
-# stats.temestudo.com (o GoatCounter, #35). O vhost de verdade e o contêiner
+# webroot, um certificado só para temestudo.cloud, www.temestudo.cloud e
+# stats.temestudo.cloud (o GoatCounter, #35). O vhost de verdade e o contêiner
 # do GoatCounter vêm com o primeiro deploy (`vps.ts`). Até lá, um vhost
 # provisório só na porta 80 serve o desafio do certbot. Pode rodar de novo:
 # o que já está feito fica como está, e um certificado sem o stats ganha o
@@ -15,8 +15,8 @@ set -euo pipefail
 
 EMAIL=${1:?"Uso: bash -s -- <email para os avisos do certificado>"}
 ACME=/opt/temestudo/acme
-CERT=/etc/letsencrypt/live/temestudo.com/fullchain.pem
-NOMES=(temestudo.com www.temestudo.com stats.temestudo.com)
+CERT=/etc/letsencrypt/live/temestudo.cloud/fullchain.pem
+NOMES=(temestudo.cloud www.temestudo.cloud stats.temestudo.cloud)
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
@@ -65,8 +65,8 @@ EOF
   fi
   # Depois do primeiro deploy, o temestudo.conf e o temestudo-stats.conf já
   # servem o desafio. O --expand acrescenta o stats a um certificado antigo.
-  certbot certonly --webroot -w "$ACME" --cert-name temestudo.com --expand \
-    -d temestudo.com -d www.temestudo.com -d stats.temestudo.com \
+  certbot certonly --webroot -w "$ACME" --cert-name temestudo.cloud --expand \
+    -d temestudo.cloud -d www.temestudo.cloud -d stats.temestudo.cloud \
     --email "$EMAIL" --agree-tos --no-eff-email -n \
     --deploy-hook 'systemctl reload nginx'
 fi

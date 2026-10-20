@@ -5,7 +5,7 @@
 // como uma página de erro em HTML, e o http leva ao https com a query junto.
 // O `deploy.yml` o chama assim:
 //
-//   node scripts/conferir-no-ar.ts temestudo.com <sha>
+//   node scripts/conferir-no-ar.ts temestudo.cloud <sha>
 //
 // A página do TanStack traz um byte NUL (o id `"__root__\0"` da rota raiz
 // desidratada), e o `grep` a lê como binária: aqui a busca é no texto.

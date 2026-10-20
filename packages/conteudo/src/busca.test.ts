@@ -203,9 +203,9 @@ describe('sitemap e robots', () => {
     expect(xml).toMatch(
       /^<\?xml version="1.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www.sitemaps.org\/schemas\/sitemap\/0.9">/,
     )
-    expect(xml).toContain('<url><loc>https://temestudo.com/</loc></url>')
+    expect(xml).toContain('<url><loc>https://temestudo.cloud/</loc></url>')
     expect(xml).toContain(
-      '<url><loc>https://temestudo.com/estudos/silva-2020-apps-brasil</loc></url>',
+      '<url><loc>https://temestudo.cloud/estudos/silva-2020-apps-brasil</loc></url>',
     )
     expect(xml).not.toContain('lima-2015-encontros')
     expect(xml).not.toContain('encontros-presenciais')
@@ -213,7 +213,7 @@ describe('sitemap e robots', () => {
 
   it('o robots libera tudo e aponta o sitemap', () => {
     expect(robotsTxt()).toBe(
-      'User-agent: *\nAllow: /\n\nSitemap: https://temestudo.com/sitemap.xml\n',
+      'User-agent: *\nAllow: /\n\nSitemap: https://temestudo.cloud/sitemap.xml\n',
     )
   })
 })
@@ -299,7 +299,7 @@ describe('antes: 301 do caminho antigo', () => {
 describe('o último sitemap publicado', () => {
   const sitemap = (...caminhos: string[]) =>
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${caminhos
-      .map((c) => `  <url><loc>https://temestudo.com${c}</loc></url>`)
+      .map((c) => `  <url><loc>https://temestudo.cloud${c}</loc></url>`)
       .join('\n')}\n</urlset>\n`
 
   it('passa quando todo caminho dele ainda é página do site, mesmo a Ficha que virou ⬜', () => {

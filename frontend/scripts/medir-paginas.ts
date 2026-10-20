@@ -1,7 +1,7 @@
 // Mede as cinco páginas no celular contra a meta (ADR 0033) e imprime uma
 // tabela. No molde do `medir-paginas.ts` do Festival dos Macacos.
 //
-//   pnpm --filter frontend medir [--site https://temestudo.com] [--vezes 5]
+//   pnpm --filter frontend medir [--site https://temestudo.cloud] [--vezes 5]
 //     [--paginas início,Ficha] [--guia <caminho>] [--ficha <caminho>]
 //     [--conferir]
 //

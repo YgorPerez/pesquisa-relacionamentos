@@ -1,8 +1,8 @@
-# Cada merge na main publica o site em https://temestudo.com (spec #23,
+# Cada merge na main publica o site em https://temestudo.cloud (spec #23,
 # "Deploy"; `docs/deploy.md`). O job `testes-e-build` roda os testes e o build
 # do conteúdo. O `publicar` manda esse mesmo build à VPS por SSH, e o
 # `frontend/scripts/vps.ts` troca o contêiner sem tirar o site do ar e
-# garante o contêiner do GoatCounter em stats.temestudo.com.
+# garante o contêiner do GoatCounter em stats.temestudo.cloud.
 #
 # Sem os secrets `VPS_*` o publicar é pulado com um aviso, e o workflow sai
 # verde. Eles entram pelo `frontend/scripts/wizard-deploy.sh`.
@@ -114,11 +114,11 @@ jobs:
       - name: Build do conteúdo
         run: |
           # O `<urlset` separa o sitemap de uma página de domínio estacionado.
-          if curl -fsSL --max-time 20 https://temestudo.com/sitemap.xml -o "$RUNNER_TEMP/sitemap-anterior.xml" \
+          if curl -fsSL --max-time 20 https://temestudo.cloud/sitemap.xml -o "$RUNNER_TEMP/sitemap-anterior.xml" \
             && grep -q '<urlset' "$RUNNER_TEMP/sitemap-anterior.xml"; then
             export SITEMAP_ANTERIOR="$RUNNER_TEMP/sitemap-anterior.xml"
           else
-            echo "::warning::Não baixei https://temestudo.com/sitemap.xml; o build não confere os caminhos publicados."
+            echo "::warning::Não baixei https://temestudo.cloud/sitemap.xml; o build não confere os caminhos publicados."
           fi
           pnpm build
 
@@ -140,7 +140,7 @@ jobs:
     timeout-minutes: 15
     environment:
       name: producao
-      url: https://temestudo.com
+      url: https://temestudo.cloud
     defaults:
       run:
         working-directory: frontend
@@ -179,7 +179,7 @@ jobs:
           VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           # O login que o primeiro deploy cria no GoatCounter. Sem a
-          # variável do repositório, vale admin@temestudo.com.
+          # variável do repositório, vale admin@temestudo.cloud.
           GOATCOUNTER_EMAIL: ${{ vars.GOATCOUNTER_EMAIL }}
         run: node scripts/vps.ts --publicar .output "$GITHUB_SHA"
 
@@ -187,17 +187,17 @@ jobs:
       # Referrer-Policy, cada asset que ela cita chega com o tipo dele, e
       # não como HTML, e o http leva ao https com a query junto.
       - name: Conferir o site no ar
-        run: node scripts/conferir-no-ar.ts temestudo.com "$GITHUB_SHA"
+        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"
 
       # O GoatCounter (#35) sobe junto, mas fora dele o site segue no ar: um
       # problema aqui vira aviso. Antes da etapa de login do wizard, ele
       # responde, mas ainda sem site criado.
       - name: Conferir o GoatCounter
         run: |
-          status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://stats.temestudo.com/ || true)
+          status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://stats.temestudo.cloud/ || true)
           case "$status" in
-            2??|3??) echo "stats.temestudo.com responde $status." ;;
-            *) echo "::warning title=GoatCounter::https://stats.temestudo.com/ respondeu '${status:-nada}'. Veja docs/deploy.md, seção GoatCounter." ;;
+            2??|3??) echo "stats.temestudo.cloud responde $status." ;;
+            *) echo "::warning title=GoatCounter::https://stats.temestudo.cloud/ respondeu '${status:-nada}'. Veja docs/deploy.md, seção GoatCounter." ;;
           esac
 
   voltar:
@@ -207,7 +207,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: producao
-      url: https://temestudo.com
+      url: https://temestudo.cloud
     defaults:
       run:
         working-directory: frontend
@@ -244,4 +244,4 @@ jobs:
           fi
 
       - name: Conferir o site no ar
-        run: node scripts/conferir-no-ar.ts temestudo.com "$GITHUB_SHA"
+        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"

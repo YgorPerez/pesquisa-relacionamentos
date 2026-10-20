@@ -92,7 +92,12 @@ export const Campos: Story = {
   render: () => (
     <div className="flex flex-col gap-2.5">
       <Input type="number" aria-label="Sua idade" defaultValue={30} />
-      <Input texto readOnly aria-label="Link" value="https://temestudo.com/" />
+      <Input
+        texto
+        readOnly
+        aria-label="Link"
+        value="https://temestudo.cloud/"
+      />
     </div>
   ),
 }

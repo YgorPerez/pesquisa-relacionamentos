@@ -43,7 +43,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 
 ## Brand Commitments
 
-- Nome: **Tem estudo?**, em temestudo.com.
+- Nome: **Tem estudo?**, em temestudo.cloud.
 - Voz: um amigo que leu os estudos. Direto, PT-BR coloquial, franco sobre o que a evidência não sabe. Sem jargão, sem paternalismo, sem tom de coach.
 - Linha ética: evidência, nunca táticas de manipulação.
 - Toda prosa passa pela skill `unslop`.

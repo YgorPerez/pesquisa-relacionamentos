@@ -16,13 +16,13 @@ const APP = {
   container: 'temestudo-app',
   pasta: '/opt/temestudo',
   portas: [3011, 3031],
-  host: 'temestudo.com',
+  host: 'temestudo.cloud',
   /** O include de uma linha de onde o vhost lê a porta (`../nginx/temestudo.conf`). */
   include: '/etc/nginx/temestudo/temestudo-app.conf',
   vhost: '/etc/nginx/sites-available/temestudo.conf',
 } as const
 
-/** O GoatCounter (#35) em stats.temestudo.com: um contêiner só, fora do par
+/** O GoatCounter (#35) em stats.temestudo.cloud: um contêiner só, fora do par
  * do app, com o SQLite num volume do Docker. A imagem é fixa: trocar a versão
  * aqui troca o contêiner no próximo deploy, e os dados ficam no volume. */
 export const STATS = {
@@ -30,7 +30,7 @@ export const STATS = {
   imagem: 'arp242/goatcounter:2.7.0',
   volume: 'temestudo-stats',
   porta: 3051,
-  host: 'stats.temestudo.com',
+  host: 'stats.temestudo.cloud',
   vhost: '/etc/nginx/sites-available/temestudo-stats.conf',
 } as const
 
@@ -228,7 +228,7 @@ const COLETA_DO_STATS = 2 + 8 + 16
 /** Os dias que o GoatCounter guarda as visitas. */
 const RETENCAO_DO_STATS = 31
 /** O e-mail do login do GoatCounter quando o `GOATCOUNTER_EMAIL` não diz outro. */
-const EMAIL_DO_STATS = 'admin@temestudo.com'
+const EMAIL_DO_STATS = 'admin@temestudo.cloud'
 
 /** O e-mail vai dentro de um script bash: só o formato simples passa. */
 const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/

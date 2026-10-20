@@ -63,7 +63,7 @@ h1 {
 }
 </style></head><body>
 <div class="folha"><div class="dentro">
-  <p class="site">temestudo.com</p>
+  <p class="site">temestudo.cloud</p>
   <h1>Tem <span class="marca">estudo</span>?</h1>
   <p class="frase">Dúvida de relacionamento, com a fonte junto<span class="ref">1</span></p>
   <div class="nota">

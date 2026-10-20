@@ -1,6 +1,6 @@
-# Deploy em temestudo.com
+# Deploy em temestudo.cloud
 
-O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.com. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O único banco é o SQLite do GoatCounter, fora do app.
+O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.cloud. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O único banco é o SQLite do GoatCounter, fora do app.
 
 | Peça                                                           | Onde                                                                                                             |
 | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -48,7 +48,7 @@ Cada push na `main` que mexe no site (`frontend/`, `packages/`, o conteúdo, o l
    - instala o vhost, o TLS e a rotação, e reescreve o include `/etc/nginx/temestudo/temestudo-app.conf` com a porta nova;
    - roda `nginx -t` e recarrega o Nginx;
    - espera os workers velhos terminarem os pedidos e só então para o contêiner antigo.
-4. De fora, o `conferir-no-ar.ts` confere que `https://temestudo.com/` responde com `Referrer-Policy: strict-origin`, que cada `/assets/*.js` e `/assets/*.css` citado na página chega com o tipo dele, e não como HTML, e que o http leva ao https com a query. Ele tenta por até 60 s e, se não passa, o job falha. Se `https://stats.temestudo.com/` não responde, sai só um aviso no resumo do run.
+4. De fora, o `conferir-no-ar.ts` confere que `https://temestudo.cloud/` responde com `Referrer-Policy: strict-origin`, que cada `/assets/*.js` e `/assets/*.css` citado na página chega com o tipo dele, e não como HTML, e que o http leva ao https com a query. Ele tenta por até 60 s e, se não passa, o job falha. Se `https://stats.temestudo.cloud/` não responde, sai só um aviso no resumo do run.
 
 O log do `publicar` diz quanto levou cada etapa (`[vps] Envio levou 8,1 s.`, `Imagem`, `GoatCounter`, `Troca`) e o total.
 
@@ -103,7 +103,7 @@ A renovação do certificado é a do pacote do certbot, que roda sozinha e recar
 
 O link de compartilhamento leva o Perfil na query ([ADR 0001](adr/0001-estado-completo-na-query.md)), e nenhum log de acesso a guarda:
 
-- O access_log do Nginx usa o `log_format temestudo_sem_query` (`/etc/nginx/conf.d/temestudo-log-sem-query.conf`), com o caminho cortado antes do `?` e sem o Referer. Uma linha fica assim: `1.2.3.4 [19/Oct/2026:16:33:25 -0300] "GET /grupo-possivel HTTP/2.0" 200 1796 0.004 "temestudo.com"`.
+- O access_log do Nginx usa o `log_format temestudo_sem_query` (`/etc/nginx/conf.d/temestudo-log-sem-query.conf`), com o caminho cortado antes do `?` e sem o Referer. Uma linha fica assim: `1.2.3.4 [19/Oct/2026:16:33:25 -0300] "GET /grupo-possivel HTTP/2.0" 200 1796 0.004 "temestudo.cloud"`.
 - Todo `server` do arquivo usa esse formato, inclusive o `default_server` que recebe os pedidos pelo IP. O site padrão do pacote sai no deploy.
 - O app escreve uma linha por pedido no stdout, com método, caminho, status e tempo: `GET /grupo-possivel 200 12ms` (`frontend/src/platform/registro-do-pedido.ts`).
 - O error_log copia a linha do pedido quando algo falha, com a query. Ele gira todo dia e não passa de 3 dias: o arquivo de hoje e 2 girados (`rotate 2`). O access_log guarda 14. Os dois ficam numa subpasta para escapar do `*.log` do `/etc/logrotate.d/nginx` do Ubuntu, que guardaria 14 dias do error_log também.
@@ -113,19 +113,19 @@ Os testes conferem isso: `frontend/src/platform/registro-do-pedido.test.ts` mand
 
 ## GoatCounter (#35)
 
-A contagem de visitas roda em https://stats.temestudo.com, num contêiner próprio (`temestudo-stats`, imagem `arp242/goatcounter:2.7.0`) em `127.0.0.1:3051`, fora do par 3011/3031. O banco é um SQLite no volume `temestudo-stats`.
+A contagem de visitas roda em https://stats.temestudo.cloud, num contêiner próprio (`temestudo-stats`, imagem `arp242/goatcounter:2.7.0`) em `127.0.0.1:3051`, fora do par 3011/3031. O banco é um SQLite no volume `temestudo-stats`.
 
 - **Deploy:** a cada publicação, o `vps.ts` cria o contêiner se ele falta, parou ou a imagem de `STATS` mudou, e o volume fica. Se o GoatCounter não sobe, o deploy do site segue com um aviso.
 - **Vhost:** `frontend/nginx/temestudo-stats.conf` sai junto com o `temestudo.conf`, com o mesmo `log_format` sem query e os mesmos arquivos de log. O bloco `:80` serve o desafio do certbot, porque o `default_server` recusa host que não conhece. O Nginx passa ao GoatCounter só o IP de quem visita, de onde ele tira o país.
-- **Certificado:** um só para `temestudo.com`, `www` e `stats`, tirado pelo `preparar-vps.sh`. Num certificado antigo sem o `stats`, rodar o script de novo acrescenta o nome (`--expand`).
+- **Certificado:** um só para `temestudo.cloud`, `www` e `stats`, tirado pelo `preparar-vps.sh`. Num certificado antigo sem o `stats`, rodar o script de novo acrescenta o nome (`--expand`).
 - **O que o site manda:** o envio é nosso (`frontend/src/analytics/goatcounter.ts`), e não o `count.js`, que manda sempre o `location.search` com o Perfil. Vão o caminho sem query, a referência sem query, a largura da tela e, nos eventos, o nome. Com GPC, DNT ou a chave do rodapé desligada, o arquivo nem carrega.
 - **Configuração do site no GoatCounter:** retenção de 31 dias, e só referência, tamanho de tela e país ligados (`collect` = 26, `COLETA_DO_STATS` no `plano-do-deploy.ts`). Sessões, região, navegador e sistema e idioma ficam desligados. Todo deploy confere as duas e, se alguém mexeu, volta ao combinado e reinicia o contêiner, porque o GoatCounter lê a configuração ao subir.
 
 ### Site e login
 
-Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a conta. Por isso o próprio deploy cria o site `stats.temestudo.com` e o usuário, antes de o vhost de `stats` entrar no Nginx:
+Sem site criado, a tela inicial do GoatCounter deixa qualquer um criar a conta. Por isso o próprio deploy cria o site `stats.temestudo.cloud` e o usuário, antes de o vhost de `stats` entrar no Nginx:
 
-- o e-mail vem da variável `GOATCOUNTER_EMAIL` do repositório (Settings, Variables), que o wizard grava na etapa 6; sem ela, `admin@temestudo.com`;
+- o e-mail vem da variável `GOATCOUNTER_EMAIL` do repositório (Settings, Variables), que o wizard grava na etapa 6; sem ela, `admin@temestudo.cloud`;
 - a senha é sorteada (40 letras e números) e fica em `/opt/temestudo/goatcounter-senha`, do root, com modo 600;
 - se a criação falha, o contêiner para, e o Nginx responde 502 em vez da tela de criar conta. Se o GoatCounter nem sobe e um contêiner antigo sem site está no ar, o deploy também o para.
 
@@ -135,7 +135,7 @@ Depois do primeiro deploy verde, a etapa 8 do wizard mostra a senha e abre o pai
 ssh root@<ip> cat /opt/temestudo/goatcounter-senha
 ```
 
-Entre em https://stats.temestudo.com com o e-mail e essa senha, e confira em Settings: em Data collection, só Referrer, Size e Country marcados; em Data retention, 31. Se trocar a senha no painel, o arquivo fica com a antiga: apague-o para não confundir.
+Entre em https://stats.temestudo.cloud com o e-mail e essa senha, e confira em Settings: em Data collection, só Referrer, Size e Country marcados; em Data retention, 31. Se trocar a senha no painel, o arquivo fica com a antiga: apague-o para não confundir.
 
 Para conferir sem o navegador: `ssh root@<ip> docker exec temestudo-stats goatcounter db query "select settings from sites"`.
 

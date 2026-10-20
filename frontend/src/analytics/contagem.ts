@@ -11,7 +11,7 @@ import { useRouterState } from '@tanstack/react-router'
 import { armazenado, PREFIXO } from '#/estado/armazenado'
 import { EVENTOS, type CalculadoraContada, type Evento } from './eventos'
 
-const ENDPOINT = 'https://stats.temestudo.com/count'
+const ENDPOINT = 'https://stats.temestudo.cloud/count'
 
 /** O build do e2e conta também em localhost, onde os envios são
  * interceptados. Fora dele, o `vite dev` e o `pnpm start` locais não contam.

@@ -13,7 +13,7 @@ import {
 } from '@playwright/test'
 import { escolher, tocar } from './toque'
 
-const SITE = 'https://temestudo.com'
+const SITE = 'https://temestudo.cloud'
 const faixa = (page: Page) =>
   page.locator('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
 const salvo = (page: Page, chave: string) =>

@@ -215,7 +215,7 @@ describe.skipIf(process.platform === 'win32')('o GoatCounter no deploy', () => {
     expect(vps.ler(vps.lugares.senhaDoStats)).toMatch(/^[A-Za-z0-9]{40}\n$/)
     expect(vps.statsConfigurado()).toBe(true)
     expect(vps.log.join('\n')).toContain(
-      `GoatCounter: site stats.temestudo.com criado, login admin@temestudo.com, senha em ${vps.lugares.senhaDoStats}.`,
+      `GoatCounter: site stats.temestudo.cloud criado, login admin@temestudo.cloud, senha em ${vps.lugares.senhaDoStats}.`,
     )
   })
 
