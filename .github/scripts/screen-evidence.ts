@@ -1,8 +1,8 @@
 // A PR that changes a screen shows the screen in its description: in the
 // `## Screen` section, screenshots and videos from before and after. CI
 // compares no screen, and a reviewer only sees what changed if the PR shows
-// it (docs/agents/evidencia-de-tela.md). It came from the Festival dos
-// Macacos `evidencia-de-tela.ts`.
+// it (docs/agents/screen-evidence.md). It came from the Festival dos
+// Macacos screen evidence script.
 //
 // Counts in the description as GitHub renders it (the API's `body_html`), not
 // in the markdown: the same bare `github.com/user-attachments/assets/<uuid>`
@@ -127,7 +127,7 @@ export function evaluate(html: string, files: readonly string[]): Verdict {
     lines: [
       ...lines,
       ...missing,
-      'Attach with `gh pr edit <n> --body-file body.md --attach ./before.png --attach ./before.mp4 ...`, or tick "- [x] No screen change" if the screen stays the same. How: docs/agents/evidencia-de-tela.md.',
+      'Attach with `gh pr edit <n> --body-file body.md --attach ./before.png --attach ./before.mp4 ...`, or tick "- [x] No screen change" if the screen stays the same. How: docs/agents/screen-evidence.md.',
     ],
   }
 }

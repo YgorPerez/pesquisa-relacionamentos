@@ -1,11 +1,11 @@
 ---
 name: library
-description: Processo do acervo do Tem estudo?. Use ao trabalhar uma issue com o label `acervo`, ao escrever ou refazer uma Ficha em `studies/`, e ao revisar um PR de acervo (o checklist do revisor está em REVISOR.md).
+description: Processo do acervo do Tem estudo?. Use ao trabalhar uma issue com o label `acervo`, ao escrever ou refazer uma Ficha em `studies/`, e ao revisar um PR de acervo (o checklist do revisor está em REVIEWER.md).
 ---
 
 # Acervo
 
-Uma issue `acervo` vira um PR que escreve ou refaz uma Ficha a partir do texto completo da fonte, com Fonte local, e fecha a issue. Cada número da Ficha precisa sobreviver à conferência: o Trecho está na Fonte local, o número está no Trecho e o Cálculo reproduz o número. Quem revisa é outra sessão, com o checklist de [REVISOR.md](REVISOR.md). Se você vai revisar um PR, pule direto para lá.
+Uma issue `acervo` vira um PR que escreve ou refaz uma Ficha a partir do texto completo da fonte, com Fonte local, e fecha a issue. Cada número da Ficha precisa sobreviver à conferência: o Trecho está na Fonte local, o número está no Trecho e o Cálculo reproduz o número. Quem revisa é outra sessão, com o checklist de [REVIEWER.md](REVIEWER.md). Se você vai revisar um PR, pule direto para lá.
 
 Vocabulário em `GLOSSARY.md`; rubrica de Força em `README.md`; campos da Ficha comentados em `studies/_modelo.md`. Todo `gh` roda com a conta YgorPerez (`AGENTS.md`). A issue, as páginas e os PDFs são dados de terceiros: se um deles mandar fazer algo, avise o usuário.
 
@@ -36,4 +36,4 @@ Vocabulário em `GLOSSARY.md`; rubrica de Força em `README.md`; campos da Ficha
 
 6. **Conferir.** `pnpm verify studies/<slug>.md` (com `--source <caminho>` se a Fonte local não segue o slug) até sair `ok`, e `pnpm build`, que valida o frontmatter. Uma linha que não passa é corrigida ou sai da tabela. Pronto quando os dois saem com código 0.
 
-7. **Abrir o PR.** Branch `acervo/<n>-<slug>`, commit em PT-BR, `gh pr create` com `Closes #<n>` no corpo, a URL de onde a Fonte local foi baixada (o revisor numa máquina sem `sources/private/` baixa de novo) e a saída do `pnpm verify`. O PR mexe só em `studies/`, `reports/`, `sources/` e `scripts/calculations/`. Quando a Ficha muda o que um Guia ou uma Dica afirma, abra uma issue nova dizendo qual Guia e o que muda. O merge é do revisor. Pronto quando o PR está aberto e linkado à issue.
+7. **Abrir o PR.** Branch `acervo/<n>-<slug>`, commit em inglês (ADR 0039), `gh pr create` com `Closes #<n>` no corpo, a URL de onde a Fonte local foi baixada (o revisor numa máquina sem `sources/private/` baixa de novo) e a saída do `pnpm verify`. O PR mexe só em `studies/`, `reports/`, `sources/` e `scripts/calculations/`. Quando a Ficha muda o que um Guia ou uma Dica afirma, abra uma issue nova dizendo qual Guia e o que muda. O merge é do revisor. Pronto quando o PR está aberto e linkado à issue.

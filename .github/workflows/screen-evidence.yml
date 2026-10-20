@@ -1,4 +1,4 @@
-# Screen evidence (docs/agents/evidencia-de-tela.md, ADR 0018). A PR that
+# Screen evidence (docs/agents/screen-evidence.md, ADR 0018). A PR that
 # changes a screen only goes green with before and after screenshots and
 # videos in the "## Screen" section of the description, or with "No screen
 # change" ticked.

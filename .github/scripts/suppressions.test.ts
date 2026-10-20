@@ -82,7 +82,7 @@ describe('readDiff', () => {
   it('does not read documentation, vendored code or the auditor itself', () => {
     const read = readDiff(
       [
-        diff('docs/agents/integracao.md', `+// ${OX}`),
+        diff('docs/agents/integration.md', `+// ${OX}`),
         diff('.agents/skills/x/a.ts', `+// ${OX}`),
         diff('.github/scripts/suppressions.test.ts', `+// ${OX}`),
       ].join('\n'),

@@ -1,5 +1,5 @@
 // Captures an app route on mobile (390×844) and desktop (1280×800), for a
-// PR's screen evidence (docs/agents/evidencia-de-tela.md) and for critique:
+// PR's screen evidence (docs/agents/screen-evidence.md) and for critique:
 // `node scripts/capture.ts <route> [options]` (`--help` lists the options).
 // Came from the Festival dos Macacos' `capturar.ts`.
 //

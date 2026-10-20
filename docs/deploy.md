@@ -6,9 +6,9 @@ O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é u
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Imagem                                                         | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`)                                                    |
 | Formato do log, vhosts, TLS e rotação                          | `frontend/nginx/log-without-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
-| Etapas e scripts da VPS (troca blue/green, volta, GoatCounter) | `frontend/scripts/deploy-plan.ts` ([ADR 0007](adr/0007-o-plano-do-deploy-fica-separado-do-ssh.md))                   |
-| Execução pelo SSH, com o tempo de cada etapa                   | `frontend/scripts/vps.ts`, `stopwatch.ts` ([ADR 0009](adr/0009-o-log-do-deploy-diz-o-tempo-de-cada-etapa.md))        |
-| Conferência de fora                                            | `frontend/scripts/check-live.ts` ([ADR 0008](adr/0008-o-deploy-confere-os-assets-de-fora.md))                        |
+| Etapas e scripts da VPS (troca blue/green, volta, GoatCounter) | `frontend/scripts/deploy-plan.ts` ([ADR 0007](adr/0007-the-deploy-plan-stays-separate-from-ssh.md))                  |
+| Execução pelo SSH, com o tempo de cada etapa                   | `frontend/scripts/vps.ts`, `stopwatch.ts` ([ADR 0009](adr/0009-the-deploy-log-times-each-step.md))                   |
+| Conferência de fora                                            | `frontend/scripts/check-live.ts` ([ADR 0008](adr/0008-the-deploy-checks-the-assets-from-outside.md))                 |
 | Preparação da VPS, uma vez                                     | `frontend/scripts/prepare-vps.sh`                                                                                    |
 | Passos do mantenedor                                           | `frontend/scripts/deploy-wizard.sh`                                                                                  |
 | Workflow                                                       | `.github/workflows/deploy.yml`                                                                                       |
@@ -101,7 +101,7 @@ A renovação do certificado é a do pacote do certbot, que roda sozinha e recar
 
 ## Logs e privacidade
 
-O link de compartilhamento leva o Perfil na query ([ADR 0001](adr/0001-estado-completo-na-query.md)), e nenhum log de acesso a guarda:
+O link de compartilhamento leva o Perfil na query ([ADR 0001](adr/0001-full-state-in-the-query.md)), e nenhum log de acesso a guarda:
 
 - O access_log do Nginx usa o `log_format temestudo_sem_query` (`/etc/nginx/conf.d/temestudo-log-sem-query.conf`), com o caminho cortado antes do `?` e sem o Referer. Uma linha fica assim: `1.2.3.4 [19/Oct/2026:16:33:25 -0300] "GET /grupo-possivel HTTP/2.0" 200 1796 0.004 "temestudo.cloud"`.
 - Todo `server` do arquivo usa esse formato, inclusive o `default_server` que recebe os pedidos pelo IP. O site padrão do pacote sai no deploy.

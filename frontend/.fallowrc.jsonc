@@ -11,7 +11,7 @@
     // `node scripts/brand-icons.ts`.
     "scripts/brand-icons.ts",
     // The PR's screen evidence capture runs by hand,
-    // `node scripts/capture.ts <route>` (docs/agents/evidencia-de-tela.md).
+    // `node scripts/capture.ts <route>` (docs/agents/screen-evidence.md).
     "scripts/capture.ts",
     // React Doctor finds `doctor.config.ts` by name, at the root of the
     // project it scans. No import points to it.

@@ -11,11 +11,11 @@
 ## Screen
 
 <!-- A PR that changes a screen brings, for each screen that changed, the screenshot and video from before and after:
-`node frontend/scripts/capture.ts <route> --video` on each side (the `testar-app` skill). The
+`node frontend/scripts/capture.ts <route> --video` on each side (the `test-app` skill). The
 "Evidência de tela" check fails without at least two screenshots and two videos. Write the table with
 local paths and attach with `gh pr edit <n> --body-file body.md --attach ./before.png --attach ./before.mp4 ...`:
 gh replaces each path with the attachment. If the screen does not change, tick the box, say why and delete the table.
-How: docs/agents/evidencia-de-tela.md -->
+How: docs/agents/screen-evidence.md -->
 
 - [ ] No screen change
 

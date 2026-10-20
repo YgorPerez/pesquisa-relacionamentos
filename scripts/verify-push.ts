@@ -216,7 +216,7 @@ export function verifyPush({
   if (refused)
     say(
       'Push refused. To push without the tests, give the reason: `SKIP_TESTS="<reason>" git push ...`; the audit still runs. ' +
-        '`git push --no-verify` skips the whole hook: do not use it to get past what is above (docs/agents/integracao.md).',
+        '`git push --no-verify` skips the whole hook: do not use it to get past what is above (docs/agents/integration.md).',
     )
   return { refused }
 }

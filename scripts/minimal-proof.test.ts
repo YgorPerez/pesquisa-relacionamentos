@@ -64,6 +64,6 @@ describe('proofPlan', () => {
   })
 
   it('text only: only the check of the text', () => {
-    expect(names(plan(['docs/agents/integracao.md']))).toEqual(['check'])
+    expect(names(plan(['docs/agents/integration.md']))).toEqual(['check'])
   })
 })

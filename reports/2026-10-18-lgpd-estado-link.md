@@ -4,7 +4,7 @@ ticket: 18
 
 # Base legal LGPD para registrar o estado do link em log e analytics
 
-**Data:** 2026-10-18 · **Ticket:** [#18](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/18) · **Contexto:** [#14](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/14), [ADR 0001](../docs/adr/0001-estado-completo-na-query.md)
+**Data:** 2026-10-18 · **Ticket:** [#18](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/18) · **Contexto:** [#14](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/14), [ADR 0001](../docs/adr/0001-full-state-in-the-query.md)
 **Status de verificação:** ✅ para a LGPD, o Marco Civil e as resoluções CD/ANPD 2/2022, 15/2024 e 19/2024: texto conferido no Planalto e no DOU. ✅ para os guias da ANPD citados (cookies, legítimo interesse, segurança para pequeno porte, agentes de tratamento) e o estudo técnico de anonimização: conferido no PDF do gov.br. 🟡 para a Resolução 32/2026 (adequação da UE): conferida só na versão oficial em inglês. Não procurei de forma exaustiva decisões sancionadoras da ANPD; não achei nenhuma sobre dado sensível inferido ou sobre logs.
 
 Este texto não é parecer jurídico. Separo o que está escrito (citação literal com localizador, em bloco de citação) do que eu concluo a partir disso (marcado como **Minha leitura**).
