@@ -2,7 +2,8 @@
 // o aviso da contagem. O copiar de verdade, com a área de transferência, é
 // do e2e (`e2e/link.e2e.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { AVISO_DA_CONTAGEM, Compartilhar } from './compartilhar'
+import { Compartilhar } from './compartilhar'
+import { AVISO_DA_CONTAGEM } from './compartilhar.textos'
 
 const meta = {
   component: Compartilhar,

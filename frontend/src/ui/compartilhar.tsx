@@ -81,6 +81,3 @@ export function Compartilhar({
     </Secao>
   )
 }
-
-export const AVISO_DA_CONTAGEM =
-  'O site conta as visitas do link sem guardar o gênero nem quem se procura.'

@@ -36,7 +36,8 @@ import type { GuiaDaCalculadora } from '#/conteudo/guias'
 import { leituras } from '#/conteudo/leituras'
 import { buscarPreviaDoGrupo, metaDaPrevia } from '#/conteudo/previa'
 import { useLinkRecebido } from '#/estado/link'
-import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
+import { Compartilhar } from '#/ui/compartilhar'
+import { AVISO_DA_CONTAGEM } from '#/ui/compartilhar.textos'
 import {
   gravarRequisitos,
   LUGARES_COM_DADOS,
