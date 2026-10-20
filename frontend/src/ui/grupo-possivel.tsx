@@ -394,66 +394,90 @@ export function Dobras({
   requisitos: Requisitos
   municipio: string | undefined
 }) {
-  const { base, funil, ingenua, ressalvas, ligados, resultado } = estimativa
+  return (
+    <>
+      <CorteACorte
+        estimativa={estimativa}
+        valor={(k) => valorDoRequisito(k, perfil, requisitos, municipio)}
+      />
+      <DeOndeVemAIncerteza estimativa={estimativa} />
+    </>
+  )
+}
+
+/** "Corte a corte": o Brasil adulto e o que sobra depois de cada Requisito. */
+function CorteACorte({
+  estimativa: { alvo, base, funil },
+  valor,
+}: {
+  estimativa: Estimativa
+  /** O Requisito escrito como na tela ("25 a 35 anos"). */
+  valor: (k: RequisitoId) => string
+}) {
+  return (
+    <Collapsible id="gp-corte-a-corte" variante="cheia" className="mt-sm">
+      <CollapsibleTrigger variante="cheia">Corte a corte</CollapsibleTrigger>
+      <CollapsibleContent hiddenUntilFound>
+        <ol className="m-0 list-none p-0" data-slot="gp-funil">
+          <li>
+            <span>{NOME_DO_ALVO[alvo]} de 18 anos ou mais no Brasil</span>
+            <b>{formatarQuantidade(base.central)}</b>
+          </li>
+          {funil.map((etapa) => (
+            <li key={etapa.requisito}>
+              <span>{valor(etapa.requisito)}</span>
+              <b>{formatarQuantidade(etapa.central)}</b>
+            </li>
+          ))}
+        </ol>
+        <p className={DICA}>A ordem dos cortes não muda o resultado final.</p>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+/** "De onde vem a incerteza": o quanto a conta ingênua erraria, o erro de
+ * amostra e as ressalvas que não vão no topo. */
+function DeOndeVemAIncerteza({
+  estimativa: { ingenua, ressalvas, ligados, resultado },
+}: {
+  estimativa: Estimativa
+}) {
   const diferenca =
     resultado.central > 0
       ? (ingenua - resultado.central) / resultado.central
       : 0
-  const valor = (k: RequisitoId) =>
-    valorDoRequisito(k, perfil, requisitos, municipio)
   return (
-    <>
-      <Collapsible id="gp-corte-a-corte" variante="cheia" className="mt-sm">
-        <CollapsibleTrigger variante="cheia">Corte a corte</CollapsibleTrigger>
-        <CollapsibleContent hiddenUntilFound>
-          <ol className="m-0 list-none p-0" data-slot="gp-funil">
-            <li>
-              <span>
-                {NOME_DO_ALVO[estimativa.alvo]} de 18 anos ou mais no Brasil
-              </span>
-              <b>{formatarQuantidade(base.central)}</b>
-            </li>
-            {funil.map((etapa) => (
-              <li key={etapa.requisito}>
-                <span>{valor(etapa.requisito)}</span>
-                <b>{formatarQuantidade(etapa.central)}</b>
+    <Collapsible id="gp-incerteza" variante="cheia" className="mt-sm">
+      <CollapsibleTrigger variante="cheia">
+        De onde vem a incerteza
+      </CollapsibleTrigger>
+      <CollapsibleContent hiddenUntilFound>
+        {ligados.length > 1 && (
+          <p className="m-0 mb-2.5 text-aviso">
+            Se só multiplicássemos a porcentagem que cada Requisito deixa
+            sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
+            {diferenca >= 0 ? '+' : '−'}
+            {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
+            juntos; por isso o site cruza os dados.
+          </p>
+        )}
+        <p className={DICA}>
+          A faixa junta o erro de amostra do Censo (
+          {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
+          com o intervalo da PNS.
+        </p>
+        <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
+          {ressalvas
+            .filter((r) => !r.forte)
+            .map((r) => (
+              <li key={r.id} className="not-first:mt-1.5">
+                {r.texto}
               </li>
             ))}
-          </ol>
-          <p className={DICA}>A ordem dos cortes não muda o resultado final.</p>
-        </CollapsibleContent>
-      </Collapsible>
-      <Collapsible id="gp-incerteza" variante="cheia" className="mt-sm">
-        <CollapsibleTrigger variante="cheia">
-          De onde vem a incerteza
-        </CollapsibleTrigger>
-        <CollapsibleContent hiddenUntilFound>
-          {ligados.length > 1 && (
-            <p className="m-0 mb-2.5 text-aviso">
-              Se só multiplicássemos a porcentagem que cada Requisito deixa
-              sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
-              {diferenca >= 0 ? '+' : '−'}
-              {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
-              juntos; por isso o site cruza os dados.
-            </p>
-          )}
-          <p className={DICA}>
-            A faixa junta o erro de amostra do Censo (
-            {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
-            com o intervalo da PNS.
-          </p>
-          <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
-            {ressalvas
-              .filter((r) => !r.forte)
-              .map((r) => (
-                <li key={r.id} className="not-first:mt-1.5">
-                  {r.texto}
-                </li>
-              ))}
-          </ul>
-        </CollapsibleContent>
-      </Collapsible>
-    </>
+        </ul>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
 
@@ -484,6 +508,67 @@ function AdultosNoBrasil({ quantidade }: { quantidade: number }) {
   )
 }
 
+/** O cartão de quem já usou a conta: a faixa, os Requisitos ligados e o que
+ * mais pesa. */
+function ContaNoCartao({
+  estimativa,
+  ligados,
+  carregando,
+}: {
+  estimativa: Estimativa
+  ligados: ReadonlyArray<string>
+  carregando: boolean
+}) {
+  return (
+    <div aria-busy={carregando} className={carregando ? CARREGANDO : undefined}>
+      <Faixa estimativa={estimativa} />
+      <p className="m-0 mt-1 text-nota leading-normal text-tinta-2">
+        {NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você pediu
+      </p>
+      <p
+        className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
+        data-slot="cartao-gp-ligados"
+      >
+        Seus Requisitos:{' '}
+        {ligados.length > 0
+          ? ligados.map((valor, i) => (
+              <span key={valor}>
+                {i > 0 && ', '}
+                <b>{valor}</b>
+              </span>
+            ))
+          : 'nenhum'}
+        .
+      </p>
+      <p
+        className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
+        data-slot="cartao-gp-pesa"
+      >
+        <MaisPesa estimativa={estimativa} />
+      </p>
+    </div>
+  )
+}
+
+/** O cartão de quem ainda não usou a conta: o número do Brasil inteiro e o
+ * convite. */
+function ConviteNoCartao({ quantidade }: { quantidade: number }) {
+  return (
+    <>
+      <p className="font-label text-label leading-body text-tinta-2">
+        Grupo possível
+      </p>
+      <p
+        className="font-title text-frase-do-cartao leading-nota font-semibold tracking-title"
+        data-slot="cartao-gp-frase"
+      >
+        No Brasil, <AdultosNoBrasil quantidade={quantidade} /> não moram com
+        companheiro(a). Quantos deles atendem ao que você procura?
+      </p>
+    </>
+  )
+}
+
 /** O cartão do Guia B5 (#19, variante A). Sem uso, o número do Brasil inteiro
  * e o convite; com Perfil ou Requisitos, a conta de agora em resumo. */
 export function CartaoDoGrupoPossivel({
@@ -506,52 +591,13 @@ export function CartaoDoGrupoPossivel({
       </Headline>
       <Painel className="[&>p]:m-0 [&>p]:mt-xs">
         {usado ? (
-          <div
-            aria-busy={carregando}
-            className={carregando ? CARREGANDO : undefined}
-          >
-            <Faixa estimativa={estimativa} />
-            <p className="m-0 mt-1 text-nota leading-normal text-tinta-2">
-              {NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você
-              pediu
-            </p>
-            <p
-              className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
-              data-slot="cartao-gp-ligados"
-            >
-              Seus Requisitos:{' '}
-              {ligados.length > 0
-                ? ligados.map((valor, i) => (
-                    <span key={valor}>
-                      {i > 0 && ', '}
-                      <b>{valor}</b>
-                    </span>
-                  ))
-                : 'nenhum'}
-              .
-            </p>
-            <p
-              className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
-              data-slot="cartao-gp-pesa"
-            >
-              <MaisPesa estimativa={estimativa} />
-            </p>
-          </div>
+          <ContaNoCartao
+            estimativa={estimativa}
+            ligados={ligados}
+            carregando={carregando}
+          />
         ) : (
-          <>
-            <p className="font-label text-label leading-body text-tinta-2">
-              Grupo possível
-            </p>
-            <p
-              className="font-title text-frase-do-cartao leading-nota font-semibold tracking-title"
-              data-slot="cartao-gp-frase"
-            >
-              No Brasil,{' '}
-              <AdultosNoBrasil quantidade={estimativa.resultado.central} /> não
-              moram com companheiro(a). Quantos deles atendem ao que você
-              procura?
-            </p>
-          </>
+          <ConviteNoCartao quantidade={estimativa.resultado.central} />
         )}
         <p>
           <Button
