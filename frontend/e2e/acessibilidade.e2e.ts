@@ -68,6 +68,12 @@ const linhas = (resultados: Resultado, prefixo = '') =>
 async function violacoes(page: Page, sobrepostos?: string): Promise<string[]> {
   const { violations } = await new AxeBuilder({ page })
     .withTags(REGRAS)
+    // Uma lista aberta do Base UI (o `Select`) põe em volta dela os
+    // `FocusGuard`: spans invisíveis com `tabindex=0` e `aria-hidden` que,
+    // ao receber o foco do Tab, o devolvem para dentro ou para fora da lista
+    // (`@base-ui/react/utils/FocusGuard`). O axe vê um focável escondido
+    // (`aria-hidden-focus`), mas o foco nunca para neles. Só eles saem.
+    .exclude('[data-base-ui-focus-guard]')
     .analyze()
   const tirar = sobrepostos
     ? `${sobrepostos} { display: none !important; }`
