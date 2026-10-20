@@ -1,22 +1,22 @@
-// Desenha os selos do README (`docs/badges/*.svg`) a partir do que a fallow,
-// o React Doctor e a cobertura acabaram de medir, como o `badges.ts` do
-// Festival dos Macacos. São SVGs commitados: nenhum número fica escrito à mão
-// no README, e o selo não depende de um serviço de fora estar no ar.
+// Draws the README badges (`docs/badges/*.svg`) from what fallow, React
+// Doctor and coverage just measured, like the Festival dos Macacos
+// `badges.ts`. They are committed SVGs: no number is written by hand in the
+// README, and the badge does not depend on an outside service being up.
 //
-// Roda no `badges.yml`, da raiz do repo, depois do `test:coverage` de cada
-// pacote, de `fallow health --format json` e de `react-doctor --json`. Na mão,
-// com os mesmos arquivos no lugar:
+// Runs in `badges.yml`, from the repo root, after each package's
+// `test:coverage`, `fallow health --format json` and `react-doctor --json`.
+// By hand, with the same files in place:
 //   node .github/scripts/badges.ts
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 
-/** O pedaço do `fallow health --format json` que o selo lê. */
+/** The part of `fallow health --format json` the badge reads. */
 type Health = { health_score: { score: number; grade: string } }
-/** O pedaço do `react-doctor --json` que o selo lê. */
+/** The part of `react-doctor --json` the badge reads. */
 type Doctor = { summary?: { score: number | null; scoreLabel: string } }
-/** Um arquivo do `coverage-final.json` (formato do istanbul): cada statement,
- * a linha em que começa e quantas vezes rodou. */
-type Cobertura = Record<
+/** A `coverage-final.json` file (istanbul format): each statement, the line
+ * it starts on and how many times it ran. */
+type Coverage = Record<
   string,
   {
     statementMap: Record<string, { start: { line: number } }>
@@ -24,8 +24,8 @@ type Cobertura = Record<
   }
 >
 
-/** A cor segue a letra da fallow: é ela que resume a nota. */
-const COR_DA_NOTA = {
+/** The color follows fallow's letter: it is what sums up the grade. */
+const GRADE_COLOR = {
   A: '#4c1',
   B: '#97ca00',
   C: '#dfb317',
@@ -33,21 +33,21 @@ const COR_DA_NOTA = {
   F: '#e05d44',
 }
 
-/** Para um número de 0 a 100 sem letra. As faixas são as do React Doctor: 90
- * é "Excellent", 75 "Good", 60 "Needs work". */
-function corDaFaixa(score: number) {
-  if (score >= 90) return COR_DA_NOTA.A
-  if (score >= 75) return COR_DA_NOTA.B
-  if (score >= 60) return COR_DA_NOTA.C
-  if (score >= 40) return COR_DA_NOTA.D
-  return COR_DA_NOTA.F
+/** For a number from 0 to 100 with no letter. The ranges are React Doctor's:
+ * 90 is "Excellent", 75 "Good", 60 "Needs work". */
+function rangeColor(score: number) {
+  if (score >= 90) return GRADE_COLOR.A
+  if (score >= 75) return GRADE_COLOR.B
+  if (score >= 60) return GRADE_COLOR.C
+  if (score >= 40) return GRADE_COLOR.D
+  return GRADE_COLOR.F
 }
 
-/** A largura média de um caractere a 11px na Verdana; as letras largas e o
- * `%` pesam mais. O `textLength` do SVG ajusta o resto. */
-function largura(texto: string) {
+/** The average width of a character at 11px in Verdana; wide letters and
+ * `%` weigh more. The SVG `textLength` adjusts the rest. */
+function width(text: string) {
   return Math.round(
-    texto
+    text
       .split('')
       .reduce(
         (total, c) =>
@@ -57,30 +57,30 @@ function largura(texto: string) {
   )
 }
 
-/** O desenho "flat" do shields: duas caixas, texto com sombra. */
-function selo(rotulo: string, mensagem: string, cor: string) {
-  const lr = largura(rotulo)
-  const lm = largura(mensagem)
+/** The shields "flat" style: two boxes, text with a shadow. */
+function badge(label: string, message: string, color: string) {
+  const lr = width(label)
+  const lm = width(message)
   const total = lr + lm
-  const texto = (t: string, x: number, l: number) =>
+  const text = (t: string, x: number, l: number) =>
     `<text aria-hidden="true" x="${x * 10}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${l * 10}">${t}</text>` +
     `<text x="${x * 10}" y="140" transform="scale(.1)" fill="#fff" textLength="${l * 10}">${t}</text>`
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="20" role="img" aria-label="${rotulo}: ${mensagem}">
-<title>${rotulo}: ${mensagem}</title>
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="20" role="img" aria-label="${label}: ${message}">
+<title>${label}: ${message}</title>
 <linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
 <clipPath id="r"><rect width="${total}" height="20" rx="3" fill="#fff"/></clipPath>
-<g clip-path="url(#r)"><rect width="${lr}" height="20" fill="#555"/><rect x="${lr}" width="${lm}" height="20" fill="${cor}"/><rect width="${total}" height="20" fill="url(#s)"/></g>
+<g clip-path="url(#r)"><rect width="${lr}" height="20" fill="#555"/><rect x="${lr}" width="${lm}" height="20" fill="${color}"/><rect width="${total}" height="20" fill="url(#s)"/></g>
 <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
-${texto(rotulo, lr / 2, lr - 10)}
-${texto(mensagem, lr + lm / 2, lm - 10)}
+${text(label, lr / 2, lr - 10)}
+${text(message, lr + lm / 2, lm - 10)}
 </g>
 </svg>
 `
 }
 
-/** O que não é código, pelo caminho a partir da pasta do pacote: testes,
- * stories, tipos, o andaime do Storybook e o que é gerado. */
-const FORA_DA_CONTA = [
+/** What is not code, by path from the package folder: tests, stories,
+ * types, the Storybook scaffolding and what is generated. */
+const NOT_COUNTED = [
   /\.test\.tsx?$/,
   /\.stories\.tsx$/,
   /\.d\.ts$/,
@@ -88,82 +88,83 @@ const FORA_DA_CONTA = [
   /^src\/routeTree\.gen\.ts$/,
 ]
 
-/** A cobertura de linhas de vários pacotes juntos, como o istanbul conta:
- * uma linha é a de início de algum statement, e está coberta se algum deles
- * rodou. Para baixo: 89,6% não é 90%. */
-export function coberturaDeLinhas(
-  pacotes: readonly { pasta: string; arquivos: Cobertura }[],
+/** Line coverage of several packages together, as istanbul counts it: a
+ * line is the start line of some statement, and it is covered if any of them
+ * ran. Rounded down: 89.6% is not 90%. */
+export function lineCoverage(
+  packages: readonly { folder: string; files: Coverage }[],
 ) {
-  let linhas = 0
-  let cobertas = 0
-  for (const { pasta, arquivos } of pacotes)
-    for (const [caminho, arquivo] of Object.entries(arquivos)) {
-      const doPacote = relative(pasta, caminho).replaceAll('\\', '/')
-      if (FORA_DA_CONTA.some((padrao) => padrao.test(doPacote))) continue
-      const porLinha = new Map<number, boolean>()
-      for (const [id, { start }] of Object.entries(arquivo.statementMap)) {
-        const rodou = (arquivo.s[id] ?? 0) > 0
-        porLinha.set(start.line, (porLinha.get(start.line) ?? false) || rodou)
+  let lines = 0
+  let covered = 0
+  for (const { folder, files } of packages)
+    for (const [path, file] of Object.entries(files)) {
+      const inPackage = relative(folder, path).replaceAll('\\', '/')
+      if (NOT_COUNTED.some((pattern) => pattern.test(inPackage))) continue
+      const byLine = new Map<number, boolean>()
+      for (const [id, { start }] of Object.entries(file.statementMap)) {
+        const ran = (file.s[id] ?? 0) > 0
+        byLine.set(start.line, (byLine.get(start.line) ?? false) || ran)
       }
-      linhas += porLinha.size
-      for (const rodou of porLinha.values()) if (rodou) cobertas += 1
+      lines += byLine.size
+      for (const ran of byLine.values()) if (ran) covered += 1
     }
-  return linhas === 0 ? 0 : Math.floor((cobertas / linhas) * 100)
+  return lines === 0 ? 0 : Math.floor((covered / lines) * 100)
 }
 
-export function selos({
+export function badges({
   health,
   doctor,
-  cobertura,
+  coverage,
 }: {
   health: Health
   doctor: Doctor
-  cobertura: number
+  coverage: number
 }) {
   const { score, grade } = health.health_score
-  const nota = `${grade} (${Math.round(score)})`
-  // Sem a API do React Doctor (`--no-score`) o score vem `null`.
-  const doDoctor = doctor.summary?.score
+  const fallowGrade = `${grade} (${Math.round(score)})`
+  // Without the React Doctor API (`--no-score`) the score comes as `null`.
+  const doctorScore = doctor.summary?.score
   return {
-    fallow: selo(
+    fallow: badge(
       'fallow health',
-      nota,
-      COR_DA_NOTA[grade as keyof typeof COR_DA_NOTA] ?? '#9f9f9f',
+      fallowGrade,
+      GRADE_COLOR[grade as keyof typeof GRADE_COLOR] ?? '#9f9f9f',
     ),
     reactDoctor:
-      typeof doDoctor === 'number'
-        ? selo(
+      typeof doctorScore === 'number'
+        ? badge(
             'react doctor',
-            `${doDoctor} · ${doctor.summary?.scoreLabel}`,
-            corDaFaixa(doDoctor),
+            `${doctorScore} · ${doctor.summary?.scoreLabel}`,
+            rangeColor(doctorScore),
           )
-        : selo('react doctor', 'sem score', '#9f9f9f'),
-    cobertura: selo('cobertura', `${cobertura}%`, corDaFaixa(cobertura)),
-    resumo: `fallow: ${nota} · react doctor: ${doDoctor ?? 'sem score'} · cobertura: ${cobertura}%`,
+        : badge('react doctor', 'no score', '#9f9f9f'),
+    coverage: badge('coverage', `${coverage}%`, rangeColor(coverage)),
+    summary: `fallow: ${fallowGrade} · react doctor: ${doctorScore ?? 'no score'} · coverage: ${coverage}%`,
   }
 }
 
-/** Os pacotes cuja cobertura entra no selo: o app, os pacotes puros e os
- * scripts da raiz. */
-const PACOTES = ['frontend', 'packages/content', 'packages/rules', '.']
+/** The packages whose coverage goes into the badge: the app, the pure
+ * packages and the root scripts. */
+const PACKAGES = ['frontend', 'packages/content', 'packages/rules', '.']
 
 if (import.meta.main) {
-  const ler = (arquivo: string) => JSON.parse(readFileSync(arquivo, 'utf8'))
-  const { fallow, reactDoctor, cobertura, resumo } = selos({
-    health: ler('frontend/coverage/health.json'),
-    doctor: ler('frontend/coverage/doctor.json'),
-    cobertura: coberturaDeLinhas(
-      PACOTES.filter((p) =>
+  const read = (file: string) => JSON.parse(readFileSync(file, 'utf8'))
+  const { fallow, reactDoctor, coverage, summary } = badges({
+    health: read('frontend/coverage/health.json'),
+    doctor: read('frontend/coverage/doctor.json'),
+    coverage: lineCoverage(
+      PACKAGES.filter((p) =>
         existsSync(join(p, 'coverage/coverage-final.json')),
       ).map((p) => ({
-        pasta: resolve(p),
-        arquivos: ler(join(p, 'coverage/coverage-final.json')),
+        folder: resolve(p),
+        files: read(join(p, 'coverage/coverage-final.json')),
       })),
     ),
   })
   mkdirSync('docs/badges', { recursive: true })
   writeFileSync('docs/badges/fallow.svg', fallow)
   writeFileSync('docs/badges/react-doctor.svg', reactDoctor)
-  writeFileSync('docs/badges/cobertura.svg', cobertura)
-  console.log(resumo)
+  // The README points at this file name.
+  writeFileSync('docs/badges/cobertura.svg', coverage)
+  console.log(summary)
 }

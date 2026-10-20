@@ -17,15 +17,15 @@ Os comandos estão em [references/recipes.md](references/recipes.md). Leia antes
 
 ## Onde
 
-No seu worktree, nunca no checkout principal (`AGENTS.md`, "Quatro jeitos de se machucar"). Cada worktree tem as suas portas (`node scripts/portas.ts`).
+No seu worktree, nunca no checkout principal (`AGENTS.md`, "Quatro jeitos de se machucar"). Cada worktree tem as suas portas (`node scripts/ports.ts`).
 
-1. Uma vez por worktree, `node scripts/preparar-worktree.ts` na raiz.
-2. `pnpm build`, e então `node scripts/dev.ts start` em segundo plano, guardando o PID. Ele escreve `[dev] no ar: <url>` quando responde. Depois de um `pnpm e2e`, faça o build de novo: o e2e deixa o build com o acervo de fixture.
+1. Uma vez por worktree, `node scripts/prepare-worktree.ts` na raiz.
+2. `pnpm build`, e então `node scripts/dev.ts start` em segundo plano, guardando o PID. Ele escreve `[dev] up: <url>` quando responde. Depois de um `pnpm e2e`, faça o build de novo: o e2e deixa o build com o acervo de fixture.
 3. Deixe o app de pé enquanto o usuário olha ou você itera. Depois, pare aquele PID e nada mais (`docs/agents/ambiente.md`, "Parar").
 
 ## O antes e o depois
 
-Um PR que muda tela precisa de pelo menos dois prints e dois vídeos na seção `## Tela` (`docs/agents/evidencia-de-tela.md`). O depois é o seu worktree. O antes é o ramo de destino num segundo worktree, com o build e o `start` dele, nas portas dele. A receita está em [references/recipes.md](references/recipes.md).
+Um PR que muda tela precisa de pelo menos dois prints e dois vídeos na seção `## Screen` (`docs/agents/evidencia-de-tela.md`). O depois é o seu worktree. O antes é o ramo de destino num segundo worktree, com o build e o `start` dele, nas portas dele. A receita está em [references/recipes.md](references/recipes.md).
 
 ## Duas armadilhas
 

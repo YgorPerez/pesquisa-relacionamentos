@@ -7,11 +7,11 @@
 // `analytics/contagem.ts` lê.
 import { resolve } from 'node:path'
 import {
-  arquivoOpcional,
-  lerVariaveis,
-  ligada,
-  pasta,
-} from '../../scripts/variaveis.ts'
+  optionalFile as arquivoOpcional,
+  readEnv as lerVariaveis,
+  flag as ligada,
+  folder as pasta,
+} from '../../scripts/env.ts'
 
 const FRONTEND = resolve(import.meta.dirname, '..')
 

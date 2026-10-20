@@ -11,7 +11,7 @@ Para o orquestrador que entrega vários tickets de um spec a subagentes ao mesmo
 
 ## Cada implementador
 
-- Trabalha no seu worktree, preparado (`node scripts/preparar-worktree.ts`), num ramo `ticket/<n>-<nome>` tirado da ponta do `origin/spec/<n>-<nome>` (`docs/agents/integracao.md`, "Os ramos").
+- Trabalha no seu worktree, preparado (`node scripts/prepare-worktree.ts`), num ramo `ticket/<n>-<nome>` tirado da ponta do `origin/spec/<n>-<nome>` (`docs/agents/integracao.md`, "Os ramos").
 - Usa as portas do próprio worktree e para só o que subiu (`docs/agents/ambiente.md`). Dois implementadores rodam o e2e juntos sem combinar nada.
 - Antes de reportar, faz o merge do ramo do spec, testa de novo e dá push no ramo do ticket. Não abre pull request nem fecha a issue: isso é do orquestrador.
 

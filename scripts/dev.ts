@@ -1,151 +1,151 @@
-// Sobe o app ou o Storybook deste checkout na porta dele (ADR 0010): as de
-// sempre no principal, as do bloco num worktree (`./portas.ts`), então dois
-// worktrees sobem lado a lado sem combinar nada.
+// Brings up this checkout's app or Storybook on its port (ADR 0010): the usual
+// ones in the main checkout, the block's in a worktree (`./ports.ts`), so two
+// worktrees run side by side without coordinating.
 //
-//   node scripts/dev.ts              o `vp dev` (pnpm dev)
-//   node scripts/dev.ts start        o servidor do build (pnpm start)
-//   node scripts/dev.ts storybook    o Storybook (pnpm storybook)
-//   DEV_PORTA=5000 node scripts/dev.ts
+//   node scripts/dev.ts              `vp dev` (pnpm dev)
+//   node scripts/dev.ts start        the build server (pnpm start)
+//   node scripts/dev.ts storybook    Storybook (pnpm storybook)
+//   DEV_PORT=5000 node scripts/dev.ts
 //
-// `DEV_PORTA`, `START_PORTA` e `STORYBOOK_PORTA` escolhem a porta; o `PORT`
-// do shell não, porque outra ferramenta pode tê-lo posto. A porta ocupada é
-// erro, e não um pulo calado para a seguinte: pode ser outro worktree no
-// mesmo bloco.
+// `DEV_PORT`, `START_PORT` and `STORYBOOK_PORT` pick the port; the shell's
+// `PORT` does not, because another tool may have set it. A busy port is an
+// error, not a silent jump to the next one: it may be another worktree in the
+// same block.
 //
-// Ctrl-C ou `kill <pid deste script>` para o que ele subiu, e só isso: a
-// árvore do filho, pelo PID dele (`./matar-arvore.ts`). Outras sessões rodam
-// os seus `node` na mesma máquina.
+// Ctrl-C or `kill <pid of this script>` stops what it spawned, and only that:
+// the child's tree, by its PID (`./kill-tree.ts`). Other sessions run their
+// own `node` on the same machine.
 //
-// Roda no `node` puro, que lê TypeScript sozinho: só sintaxe que ele apaga.
+// Runs on plain `node`, which reads TypeScript by itself: only erasable syntax.
 
 import type { ChildProcess } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { connect } from 'node:net'
 import { join } from 'node:path'
 import { createInterface } from 'node:readline'
-import { matar, subirComGrupo } from './matar-arvore.ts'
-import { ehWorktree, portaPedida, RAIZ, VARIAVEL_DA_PORTA } from './portas.ts'
+import { killTree, spawnWithGroup } from './kill-tree.ts'
+import { isWorktree, PORT_VARIABLE, requestedPort, ROOT } from './ports.ts'
 
-const USOS_DO_DEV = {
+const DEV_USES = {
   dev: {
-    comando: (porta: number) => `pnpm exec vp dev --port ${porta} --strictPort`,
+    command: (port: number) => `pnpm exec vp dev --port ${port} --strictPort`,
     env: (): Record<string, string> => ({}),
   },
   start: {
-    comando: () => 'node .output/server/index.mjs',
-    env: (porta: number) => ({ PORT: String(porta) }),
+    command: () => 'node .output/server/index.mjs',
+    env: (port: number) => ({ PORT: String(port) }),
   },
   storybook: {
-    comando: (porta: number) =>
-      `pnpm exec storybook dev --port ${porta} --no-open --exact-port`,
+    command: (port: number) =>
+      `pnpm exec storybook dev --port ${port} --no-open --exact-port`,
     env: (): Record<string, string> => ({}),
   },
 } as const
 
-type UsoDoDev = keyof typeof USOS_DO_DEV
+type DevUse = keyof typeof DEV_USES
 
-/** O que subir para `uso`, na porta do checkout em `raiz` ou na que o
- * ambiente der. Roda em `frontend/`. */
-export function comandoDoUso(
-  uso: UsoDoDev,
-  ambiente: Record<string, string | undefined>,
-  raiz = RAIZ,
+/** What to bring up for `use`, on the port of the checkout at `root` or the
+ * one the environment gives. Runs in `frontend/`. */
+export function commandForUse(
+  use: DevUse,
+  environment: Record<string, string | undefined>,
+  root = ROOT,
 ) {
-  const { comando, env } = USOS_DO_DEV[uso]
-  const porta = portaPedida(uso, ambiente, raiz)
-  return { porta, comando: comando(porta), env: env(porta) }
+  const { command, env } = DEV_USES[use]
+  const port = requestedPort(use, environment, root)
+  return { port, command: command(port), env: env(port) }
 }
 
-function portaOcupada(numero: number) {
-  return new Promise<boolean>((resolver) => {
-    const conexao = connect(numero, '127.0.0.1')
-    conexao.once('connect', () => {
-      conexao.destroy()
-      resolver(true)
+function portInUse(number: number) {
+  return new Promise<boolean>((resolve) => {
+    const connection = connect(number, '127.0.0.1')
+    connection.once('connect', () => {
+      connection.destroy()
+      resolve(true)
     })
-    conexao.once('error', () => resolver(false))
+    connection.once('error', () => resolve(false))
   })
 }
 
-async function esperar(url: string, filho: ChildProcess) {
-  while (filho.exitCode === null && filho.signalCode === null) {
-    const noAr = await fetch(url).then(
+async function waitUntilUp(url: string, child: ChildProcess) {
+  while (child.exitCode === null && child.signalCode === null) {
+    const up = await fetch(url).then(
       () => true,
       () => false,
     )
-    if (noAr) return true
-    await new Promise((pronto) => setTimeout(pronto, 250))
+    if (up) return true
+    await new Promise((ready) => setTimeout(ready, 250))
   }
   return false
 }
 
-async function subir(uso: UsoDoDev) {
-  const dizer = (linha: string) => console.log(`[dev] ${linha}`)
-  let plano: ReturnType<typeof comandoDoUso>
+async function bringUp(use: DevUse) {
+  const say = (line: string) => console.log(`[dev] ${line}`)
+  let plan: ReturnType<typeof commandForUse>
   try {
-    plano = comandoDoUso(uso, process.env)
-  } catch (erro) {
-    console.error(`[dev] ${(erro as Error).message}`)
+    plan = commandForUse(use, process.env)
+  } catch (error) {
+    console.error(`[dev] ${(error as Error).message}`)
     process.exit(1)
   }
-  const { porta, comando, env } = plano
-  const frontend = join(RAIZ, 'frontend')
-  if (uso === 'start' && !existsSync(join(frontend, '.output/server'))) {
-    console.error('[dev] Falta o build: rode `pnpm build` antes.')
+  const { port, command, env } = plan
+  const frontend = join(ROOT, 'frontend')
+  if (use === 'start' && !existsSync(join(frontend, '.output/server'))) {
+    console.error('[dev] The build is missing: run `pnpm build` first.')
     process.exit(1)
   }
-  if (await portaOcupada(porta)) {
-    const variavel = VARIAVEL_DA_PORTA[uso]
+  if (await portInUse(port)) {
+    const variable = PORT_VARIABLE[use]
     console.error(
-      `[dev] A porta ${porta} já está em uso. Pare o que você subiu nela, ou ` +
-        `escolha outra com ${variavel}. Não pare o processo de outra sessão.`,
+      `[dev] Port ${port} is already in use. Stop what you brought up on it, or ` +
+        `pick another with ${variable}. Do not stop another session's process.`,
     )
     process.exit(1)
   }
 
-  const url = `http://localhost:${porta}`
-  const origem = ehWorktree() ? `worktree ${RAIZ}` : 'checkout principal'
-  dizer(`${uso} ${url} (${origem})`)
+  const url = `http://localhost:${port}`
+  const origin = isWorktree() ? `worktree ${ROOT}` : 'main checkout'
+  say(`${use} ${url} (${origin})`)
 
-  const filho = subirComGrupo(comando, {
+  const child = spawnWithGroup(command, {
     cwd: frontend,
     env: { ...process.env, ...env },
     stdio: ['ignore', 'pipe', 'pipe'],
   })
-  for (const fluxo of [filho.stdout, filho.stderr])
-    if (fluxo)
-      createInterface({ input: fluxo }).on('line', (linha) =>
-        console.log(`[${uso}] ${linha}`),
+  for (const stream of [child.stdout, child.stderr])
+    if (stream)
+      createInterface({ input: stream }).on('line', (line) =>
+        console.log(`[${use}] ${line}`),
       )
 
-  let parando = false
-  const parar = (codigo: number) => {
-    if (parando) return
-    parando = true
-    matar(filho)
-    process.exit(codigo)
+  let stopping = false
+  const stop = (code: number) => {
+    if (stopping) return
+    stopping = true
+    killTree(child)
+    process.exit(code)
   }
-  for (const sinal of ['SIGINT', 'SIGTERM', 'SIGHUP'] as const)
-    process.on(sinal, () => parar(0))
-  // A última rede: saindo por onde for, a árvore do filho vai junto.
-  process.on('exit', () => matar(filho))
-  filho.on('exit', (codigo, sinal) => {
-    if (parando) return
-    dizer(`${uso} saiu (${sinal ?? codigo}).`)
-    parar(codigo || 1)
+  for (const signal of ['SIGINT', 'SIGTERM', 'SIGHUP'] as const)
+    process.on(signal, () => stop(0))
+  // The last safety net: however we exit, the child's tree goes too.
+  process.on('exit', () => killTree(child))
+  child.on('exit', (code, signal) => {
+    if (stopping) return
+    say(`${use} exited (${signal ?? code}).`)
+    stop(code || 1)
   })
 
-  // O `localhost` pode virar ::1 na checagem; o `127.0.0.1` é certo.
-  if (await esperar(`http://127.0.0.1:${porta}/`, filho)) dizer(`no ar: ${url}`)
+  // `localhost` may resolve to ::1 in the check; `127.0.0.1` is certain.
+  if (await waitUntilUp(`http://127.0.0.1:${port}/`, child)) say(`up: ${url}`)
 }
 
 if (import.meta.main) {
-  const uso = process.argv[2] ?? 'dev'
-  if (!(uso in USOS_DO_DEV)) {
+  const use = process.argv[2] ?? 'dev'
+  if (!(use in DEV_USES)) {
     console.error(
-      `[dev] Não conheço "${uso}". Use: ${Object.keys(USOS_DO_DEV).join(', ')}.`,
+      `[dev] Unknown "${use}". Use: ${Object.keys(DEV_USES).join(', ')}.`,
     )
     process.exit(1)
   }
-  await subir(uso as UsoDoDev)
+  await bringUp(use as DevUse)
 }

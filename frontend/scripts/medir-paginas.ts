@@ -5,7 +5,7 @@
 //     [--paginas início,Ficha] [--guia <caminho>] [--ficha <caminho>]
 //     [--conferir]
 //
-// Sem `--site`, mede o `pnpm start` deste checkout (`scripts/portas.ts`). O
+// Sem `--site`, mede o `pnpm start` deste checkout (`scripts/ports.ts`). O
 // Guia e a Ficha padrão são os da fixture (`e2e/acervo`), que o build do e2e
 // serve; com o acervo de verdade, passe `--ficha` e meça sem o Guia.
 //
@@ -31,7 +31,7 @@ import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { createGzip } from 'node:zlib'
 import { type Browser, chromium } from '@playwright/test'
-import { portaPedida } from '../../scripts/portas.ts'
+import { requestedPort } from '../../scripts/ports.ts'
 import {
   CAMINHOS_DA_FIXTURE,
   comprimeComoONginx,
@@ -74,7 +74,7 @@ const { values: opcoes } = parseArgs({
   },
 })
 const SITE = (
-  opcoes.site ?? `http://localhost:${portaPedida('start')}`
+  opcoes.site ?? `http://localhost:${requestedPort('start')}`
 ).replace(/\/+$/, '')
 const VEZES = Number(opcoes.vezes)
 

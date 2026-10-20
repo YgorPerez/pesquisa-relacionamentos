@@ -3,12 +3,12 @@
 Para mostrar um protótipo a quem está longe da máquina (no celular, pelo T3 Code), publique a pasta num link https temporário:
 
 ```bash
-scripts/preview-remoto.sh                 # serve prototipos/ na porta 8765
-scripts/preview-remoto.sh relatorios 8766 # outra pasta, outra porta
-scripts/preview-remoto.sh parar
+scripts/remote-preview.sh                 # serve prototipos/ na porta 8765
+scripts/remote-preview.sh relatorios 8766 # outra pasta, outra porta
+scripts/remote-preview.sh stop
 ```
 
-O script imprime um link `https://<quatro-palavras>.trycloudflare.com/<arquivo>.html` para cada HTML da pasta e devolve o terminal. O servidor e o túnel continuam rodando em segundo plano até o `parar`, até a máquina reiniciar ou até a próxima chamada, que derruba os anteriores antes de subir os novos. O último link fica em `/tmp/preview-remoto/url`, e os logs ficam ao lado.
+O script imprime um link `https://<quatro-palavras>.trycloudflare.com/<arquivo>.html` para cada HTML da pasta e devolve o terminal. O servidor e o túnel continuam rodando em segundo plano até o `stop`, até a máquina reiniciar ou até a próxima chamada, que derruba os anteriores antes de subir os novos. O último link fica em `/tmp/remote-preview/url`, e os logs ficam ao lado.
 
 ## Como funciona
 

@@ -1,25 +1,25 @@
 // O app inteiro no navegador, sobre o servidor SSR do build (`pnpm build`),
 // como ele vai para produção. `pnpm e2e` constrói e sobe sozinho.
 //
-// A porta é a do e2e no checkout (`scripts/portas.ts`, ADR 0010): 4312 no
+// A porta é a do e2e no checkout (`scripts/ports.ts`, ADR 0010): 4312 no
 // principal, a do bloco num worktree, então dois worktrees rodam o e2e ao
-// mesmo tempo sem combinar nada. `E2E_PORTA` escolhe outra.
+// mesmo tempo sem combinar nada. `E2E_PORT` escolhe outra.
 // Os arquivos terminam em `.e2e.ts`, e não `.spec.ts`, porque o Vitest pega
 // `*.spec.ts` por padrão.
 
 import { availableParallelism } from 'node:os'
 import { defineConfig, devices } from '@playwright/test'
-import { entrarNaFila, pedidoDoPlaywright } from '../scripts/fila-da-maquina.ts'
-import { portaPedida } from '../scripts/portas.ts'
+import { joinQueue, playwrightRequest } from '../scripts/machine-queue.ts'
+import { requestedPort } from '../scripts/ports.ts'
 
-const porta = portaPedida('e2e')
+const porta = requestedPort('e2e')
 
 // A rodada entra na fila da máquina antes de subir o servidor, e abre os
-// Chrome que ela der (`scripts/fila-da-maquina.ts`, ADR 0013). Sozinha, a
+// Chrome que ela der (`scripts/machine-queue.ts`, ADR 0013). Sozinha, a
 // metade dos núcleos, o padrão do Playwright. Os workers leem esta config de
-// novo e herdam `FILA_DA_MAQUINA`, então não entram outra vez.
+// novo e herdam `MACHINE_QUEUE`, então não entram outra vez.
 const METADE = Math.max(1, Math.floor(availableParallelism() / 2))
-const workers = await entrarNaFila(pedidoDoPlaywright(process.argv, METADE))
+const workers = await joinQueue(playwrightRequest(process.argv, METADE))
 
 export default defineConfig({
   testDir: './e2e',

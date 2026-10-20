@@ -45,7 +45,7 @@ export type OpcoesDaStory = {
 }
 
 /** Onde cada um roda por padrão: o `pnpm start` e o `pnpm storybook` do
- * checkout (`scripts/portas.ts`). */
+ * checkout (`scripts/ports.ts`). */
 export type Padroes = { saida: string; app: string; storybook: string }
 
 export const USO = `Uso: node scripts/capturar.ts <rota> [opções]

@@ -54,5 +54,5 @@ Fonte local: `fontes/privado/ibge-2019-pns.txt` (o texto das Tabelas 1.1.1 e 1.2
 
 ## Como usamos
 
-- Dados do Grupo possível: `dados/grupo-possivel/pns-2019.csv`, gerado por `scripts/grupo-possivel/pipeline.ts`.
+- Dados do Grupo possível: `dados/grupo-possivel/pns-2019.csv`, gerado por `scripts/possible-group/pipeline.ts`.
 - [Relatório 2026-10-18 sobre os dados do Grupo possível](../relatorios/2026-10-18-dados-grupo-possivel.md).

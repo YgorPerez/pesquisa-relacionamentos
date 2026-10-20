@@ -5,13 +5,13 @@ Os caminhos são a partir da raiz do worktree. Rodaram numa worktree em 19/10/20
 ## Subir e parar
 
 ```bash
-node scripts/portas.ts                     # as portas deste worktree
+node scripts/ports.ts                     # as portas deste worktree
 pnpm build                                 # uns 30 s; leva o acervo de verdade
 node scripts/dev.ts start > /tmp/start-<ticket>.log 2>&1 &
 echo $! > /tmp/start-<ticket>.pid
 ```
 
-Espere a linha `[dev] no ar: <url>` com um comando em segundo plano que sai quando ela aparece (`until grep -q 'no ar' /tmp/start-<ticket>.log; do sleep 0.5; done`), não com um `sleep` em primeiro plano. Se a porta estiver ocupada, o `dev.ts` para e diz; escolha outra com `START_PORTA`.
+Espere a linha `[dev] up: <url>` com um comando em segundo plano que sai quando ela aparece (`until grep -q '\[dev\] up:' /tmp/start-<ticket>.log; do sleep 0.5; done`), não com um `sleep` em primeiro plano. Se a porta estiver ocupada, o `dev.ts` para e diz; escolha outra com `START_PORT`.
 
 Para parar, o PID que você guardou, e confira a porta:
 
@@ -42,8 +42,8 @@ O antes é o ramo de destino, num segundo worktree com as portas dele:
 
 ```bash
 git worktree add --detach /tmp/antes-<ticket> origin/<ramo de destino>
-cd /tmp/antes-<ticket> && node scripts/preparar-worktree.ts && pnpm build
-node scripts/portas.ts                     # a porta start do antes
+cd /tmp/antes-<ticket> && node scripts/prepare-worktree.ts && pnpm build
+node scripts/ports.ts                     # a porta start do antes
 node scripts/dev.ts start > /tmp/antes-<ticket>.log 2>&1 & echo $! > /tmp/antes-<ticket>.pid
 cd <seu worktree>/frontend
 node scripts/capturar.ts /prioridades --video --porta <start do antes> --saida /tmp/capturas-<ticket> --nome prioridades-antes
@@ -53,10 +53,10 @@ Pare o `start` do antes pelo PID e remova a worktree: `git worktree remove --for
 
 ## Anexar no PR
 
-Escreva a seção `## Tela` com os caminhos locais e anexe com `gh pr edit --attach`, da pasta das capturas. A tabela e o comando estão em `docs/agents/evidencia-de-tela.md`, "Anexar". Confira o check depois:
+Escreva a seção `## Screen` com os caminhos locais e anexe com `gh pr edit --attach`, da pasta das capturas. A tabela e o comando estão em `docs/agents/evidencia-de-tela.md`, "Anexar". Confira o check depois:
 
 ```bash
-GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/evidencia-de-tela.ts <pr>
+GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/screen-evidence.ts <pr>
 ```
 
 ## Um script seu

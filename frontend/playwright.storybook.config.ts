@@ -4,13 +4,13 @@
 // que builda e sobe o site. No molde do `playwright.storybook.config.ts` do
 // Festival dos Macacos (ADR 0037).
 //
-// A porta é a do Storybook no checkout (`scripts/portas.ts`, ADR 0010): com um
+// A porta é a do Storybook no checkout (`scripts/ports.ts`, ADR 0010): com um
 // `pnpm storybook` de pé no mesmo worktree, pare-o antes, ou escolha outra
-// em `STORYBOOK_PORTA`.
+// em `STORYBOOK_PORT`.
 import { defineConfig } from '@playwright/test'
-import { portaPedida } from '../scripts/portas.ts'
+import { requestedPort } from '../scripts/ports.ts'
 
-const porta = portaPedida('storybook')
+const porta = requestedPort('storybook')
 
 export default defineConfig({
   testDir: './.storybook',
