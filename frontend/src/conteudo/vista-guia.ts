@@ -17,6 +17,7 @@ import {
   type Busca,
 } from '@tem-estudo/conteudo/busca'
 import { dicaPublicada } from '@tem-estudo/conteudo/consultas'
+import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 
 const ESCAPAR: Record<string, string> = {
@@ -79,7 +80,7 @@ function comReferencias(markdown: string, numeros: Numeracao): string {
 export function trechoComReferencias(
   markdown: string,
   fichas: ReadonlyArray<{ readonly slug: string; readonly titulo: string }>,
-): string {
+): HtmlSeguro {
   const numeros: Numeracao = new Map(
     fichas.map((f, i) => [f.slug, { n: i + 1, titulo: f.titulo }]),
   )
@@ -92,7 +93,7 @@ function textoComFichas(
   texto: string,
   fichas: ReadonlyArray<string>,
   numeros: Numeracao,
-): string {
+): HtmlSeguro {
   const refs = fichas.map((s) => `[@${s}]`).join('')
   const [, corpo = '', ponto = ''] =
     /^([\s\S]*?)([.!?]*)$/.exec(texto.trimEnd()) ?? []
@@ -132,9 +133,11 @@ const primeiraFrase = (markdown: string): string => {
 
 /** A Pergunta com a única palavra em amarelo (`==palavra==`). */
 const perguntaHtml = (pergunta: string) =>
-  escapar(pergunta).replace(
-    /==([^=]+)==/,
-    '<span class="marca-texto">$1</span>',
+  htmlSeguro(
+    escapar(pergunta).replace(
+      /==([^=]+)==/,
+      '<span class="marca-texto">$1</span>',
+    ),
   )
 
 const IDADE_MAXIMA = 120
@@ -183,7 +186,7 @@ function ondeEQuando(paises: ReadonlyArray<string>, periodo: string) {
 
 export interface DicaNoGuia {
   readonly slug: string
-  readonly html: string
+  readonly html: HtmlSeguro
   readonly forca: Forca
   readonly inferencia: boolean
   readonly valePara: string
@@ -192,7 +195,7 @@ export interface DicaNoGuia {
 }
 
 interface AchadoVista {
-  readonly html: string
+  readonly html: HtmlSeguro
   readonly pais: string
   readonly periodo: string
   readonly valePara: string
@@ -207,7 +210,7 @@ export interface FichaCitada extends FichaResumo {
 export interface GuiaResumo {
   readonly tema: string
   readonly slug: string
-  readonly perguntaHtml: string
+  readonly perguntaHtml: HtmlSeguro
   readonly pergunta: string
   readonly confianca: Forca
   readonly primeiraFrase: string
@@ -216,24 +219,24 @@ export interface GuiaResumo {
 export interface GuiaVista extends GuiaResumo {
   readonly tema: string
   readonly temaTitulo: string
-  readonly respostaHtml: string
+  readonly respostaHtml: HtmlSeguro
   /** O `cobre` das Fichas da frase do número-chave; `null` sem número marcado. */
   readonly chave: ReadonlyArray<Cobre> | null
   readonly dicas: ReadonlyArray<DicaNoGuia>
   readonly achados: ReadonlyArray<AchadoVista>
   readonly divergencia: {
-    readonly melhorDesenhoHtml: string
+    readonly melhorDesenhoHtml: HtmlSeguro
     readonly lados: ReadonlyArray<{
       readonly titulo: string
-      readonly html: string
+      readonly html: HtmlSeguro
     }>
   } | null
-  readonly perfilHtml: string
+  readonly perfilHtml: HtmlSeguro
   readonly mitos: ReadonlyArray<{
     readonly afirmacao: string
-    readonly porQueNaoHtml: string
+    readonly porQueNaoHtml: HtmlSeguro
   }>
-  readonly limitacoesHtml: string
+  readonly limitacoesHtml: HtmlSeguro
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly relacionadas: ReadonlyArray<GuiaResumo>
   /** Título e descrição de busca e do Open Graph (#15). */
@@ -332,10 +335,12 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
 export interface TemaVista {
   readonly slug: string
   readonly titulo: string
-  readonly contextoHtml: string
+  readonly contextoHtml: HtmlSeguro
   /** Título e descrição de busca e do Open Graph (#15). */
   readonly busca: Busca
-  readonly guias: ReadonlyArray<GuiaResumo & { readonly respostaHtml: string }>
+  readonly guias: ReadonlyArray<
+    GuiaResumo & { readonly respostaHtml: HtmlSeguro }
+  >
 }
 
 export function vistaDoTema(tema: Tema, acervo: Acervo): TemaVista {

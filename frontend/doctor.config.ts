@@ -13,7 +13,8 @@ export default defineConfig({
     files: ['.output/**', 'storybook-static/**'],
     overrides: [
       {
-        // O `Html` é o único lugar do app que injeta HTML: o que o servidor
+        // O `Html` é o único lugar do app que injeta HTML, e só aceita o tipo
+        // `HtmlSeguro`, que nenhuma string vira sem passar pelo filtro: o que o servidor
         // montou com o `marked` a partir do Markdown do acervo (`estudos/`,
         // `dicas/`, os Guias). A entrada é sanitizada em
         // `src/conteudo/html-seguro.ts`, por onde passam o `html` e o

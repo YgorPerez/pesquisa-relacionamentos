@@ -3,7 +3,7 @@
 import type { Achado, Ficha } from '@tem-estudo/conteudo'
 import { buscaDaFicha, type Busca } from '@tem-estudo/conteudo/busca'
 import { Marked } from 'marked'
-import { htmlSeguro } from './html-seguro'
+import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 
 const REPO = 'https://github.com/YgorPerez/pesquisa-relacionamentos/blob/main'
 
@@ -33,10 +33,10 @@ export const htmlEmLinha = (markdown: string) =>
   htmlSeguro(marked.parseInline(markdown, { async: false }))
 
 export interface AchadoVista {
-  readonly medida: string
-  readonly valor: string
-  readonly onde: string
-  readonly trecho: string | null
+  readonly medida: HtmlSeguro
+  readonly valor: HtmlSeguro
+  readonly onde: HtmlSeguro
+  readonly trecho: HtmlSeguro | null
 }
 
 /** O que a lista de `/estudos` mostra de cada Ficha. */
@@ -49,26 +49,26 @@ export interface FichaResumo {
 }
 
 export interface FichaVista extends FichaResumo {
-  readonly referenciaHtml: string
+  readonly referenciaHtml: HtmlSeguro
   readonly link: string
   readonly verificadoEm: string | null
   readonly forcaPorque: string
   readonly desenho: Ficha['desenho']
   readonly paises: ReadonlyArray<string>
   readonly periodo: string
-  readonly amostraHtml: string
+  readonly amostraHtml: HtmlSeguro
   readonly representativa: boolean
   readonly n: number | null
-  readonly conflitoHtml: string | null
+  readonly conflitoHtml: HtmlSeguro | null
   readonly licenca: string | null
-  readonly oQueMediuHtml: string
+  readonly oQueMediuHtml: HtmlSeguro
   readonly achados: ReadonlyArray<AchadoVista>
-  readonly notasDosAchadosHtml: string | null
+  readonly notasDosAchadosHtml: HtmlSeguro | null
   readonly outrasSecoes: ReadonlyArray<{
     readonly titulo: string
-    readonly html: string
+    readonly html: HtmlSeguro
   }>
-  readonly limitacoesHtml: string
+  readonly limitacoesHtml: HtmlSeguro
   readonly indexar: boolean
   /** Título e descrição de busca (#15). */
   readonly busca: Busca

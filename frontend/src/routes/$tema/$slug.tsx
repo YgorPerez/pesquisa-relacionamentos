@@ -102,7 +102,9 @@ function PaginaDoGuia() {
       <Coluna>
         <VoltarParaGuia />
         {perfil && noGuia?.comDado === 0 && <AvisoSemDado perfil={perfil} />}
-        <Display dangerouslySetInnerHTML={{ __html: guia.perguntaHtml }} />
+        <Display>
+          <Html como="span" html={guia.perguntaHtml} />
+        </Display>
 
         <Painel
           como="section"

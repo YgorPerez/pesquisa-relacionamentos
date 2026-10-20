@@ -3,6 +3,7 @@
 // citadas e a linha grande de uma Pergunta.
 import type { Forca } from '@tem-estudo/conteudo'
 import { Link } from '@tanstack/react-router'
+import type { HtmlSeguro } from '#/conteudo/html-seguro'
 import type { FichaCitada } from '#/conteudo/vista-guia'
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
@@ -20,7 +21,7 @@ export function Html({
   className,
   slot,
 }: {
-  html: string
+  html: HtmlSeguro
   como?: 'div' | 'span' | 'p'
   className?: string
   /** O `data-slot`, por onde o teste acha o bloco. */

@@ -146,8 +146,9 @@ export function Evidencia({
                   <td
                     key={lado.titulo}
                     className="px-3 pt-3 pb-3.5 text-left align-top not-first:border-l-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
-                    dangerouslySetInnerHTML={{ __html: lado.html }}
-                  />
+                  >
+                    <Html html={lado.html} />
+                  </td>
                 ))}
               </tr>
             </tbody>

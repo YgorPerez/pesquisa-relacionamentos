@@ -110,7 +110,14 @@ const filtro = new FilterXSS({
     permitido ? filtrarAtributo(tag, nome, valor) : '',
 })
 
+/** O HTML que passou por `htmlSeguro`. A marca só existe no tipo: o `Html` de
+ * `ui/guia.tsx`, o único lugar que injeta HTML, aceita só ela, e uma string
+ * qualquer não chega lá sem passar pelo filtro. */
+export type HtmlSeguro = string & { readonly __filtrado: unique symbol }
+
 /** O HTML montado do Markdown do acervo, só com as tags e os atributos que
  * o acervo usa. Link que perdeu o `href` vira texto, para não parecer link. */
-export const htmlSeguro = (html: string): string =>
-  filtro.process(html).replace(/<a(?: class="[^"]*")?>([\s\S]*?)<\/a>/g, '$1')
+export const htmlSeguro = (html: string): HtmlSeguro =>
+  filtro
+    .process(html)
+    .replace(/<a(?: class="[^"]*")?>([\s\S]*?)<\/a>/g, '$1') as HtmlSeguro

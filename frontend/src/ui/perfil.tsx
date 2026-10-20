@@ -23,6 +23,7 @@ import {
   useState,
   type FormEvent,
 } from 'react'
+import type { HtmlSeguro } from '#/conteudo/html-seguro'
 import { gravarPerfil } from '#/estado/perfil'
 import { cn } from '@/platform/cn'
 import { Botao } from './botao'
@@ -138,7 +139,7 @@ export function ParaOSeuPerfil({
   achados,
 }: {
   chave: PerfilNoGuia['chave']
-  achados: ReadonlyArray<{ readonly html: string }>
+  achados: ReadonlyArray<{ readonly html: HtmlSeguro }>
 }) {
   if (!chave) return null
   if (chave.vale)
