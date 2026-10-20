@@ -376,7 +376,7 @@ describe("the repository's library", () => {
     ])
   })
 
-  it('carries the tips of the old table, one per file, without the ⬜ ones, and none published yet', () => {
+  it('carries the tips of the old table, one per file, without the ⬜ ones, each published once its fact sheets are checked', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
     expect(library.tips.map((d) => [d.slug, d.strength, d.inference])).toEqual([
@@ -386,8 +386,18 @@ describe("the repository's library", () => {
       ['mensagem-um-pouco-acima', 'moderate', false],
       ['sem-pressa-para-casar', 'strong', false],
     ])
-    // The fact sheets behind them are still ⬜: the tips wait for the check.
-    expect(library.tips.filter((d) => d.published)).toEqual([])
+    // Acervo PRs verify fact sheets one by one, and a tip goes up with the
+    // last of its own.
+    const checked = new Set(
+      library.factSheets
+        .filter((f) => f.status !== 'unverified')
+        .map((f) => f.slug),
+    )
+    for (const tip of library.tips)
+      expect([tip.slug, tip.published]).toEqual([
+        tip.slug,
+        tip.fact_sheets.every((slug) => checked.has(slug)),
+      ])
   })
 })
 
