@@ -121,45 +121,55 @@ export function Evidencia({
         ))}
       </ol>
 
-      {guia.divergencia && (
-        <div className="mt-md">
-          <table
-            aria-label="A evidência diverge"
-            className="w-full table-fixed border-separate border-spacing-0 rounded-mao border-2 border-tinta bg-folha text-aviso leading-normal"
-          >
-            <thead>
-              <tr>
-                {guia.divergencia.lados.map((lado) => (
-                  <th
-                    key={lado.titulo}
-                    scope="col"
-                    className="border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta px-3 pt-3 pb-3.5 text-left align-top font-title text-body leading-tight font-bold not-first:border-l-(length:--traco-etiqueta)"
-                  >
-                    {lado.titulo}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {guia.divergencia.lados.map((lado) => (
-                  <td
-                    key={lado.titulo}
-                    className="px-3 pt-3 pb-3.5 text-left align-top not-first:border-l-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
-                  >
-                    <Html html={lado.html} />
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-          <p className="mt-3 mb-0 text-aviso" data-slot="melhor-desenho">
-            <b>Qual lado tem o melhor desenho: </b>
-            <Html como="span" html={guia.divergencia.melhorDesenhoHtml} />
-          </p>
-        </div>
-      )}
+      {guia.divergencia && <Divergencia divergencia={guia.divergencia} />}
     </Secao>
+  )
+}
+
+/** Quando a evidência diverge: um lado por coluna e qual tem o melhor
+ * desenho. */
+function Divergencia({
+  divergencia,
+}: {
+  divergencia: NonNullable<Guia['divergencia']>
+}) {
+  return (
+    <div className="mt-md">
+      <table
+        aria-label="A evidência diverge"
+        className="w-full table-fixed border-separate border-spacing-0 rounded-mao border-2 border-tinta bg-folha text-aviso leading-normal"
+      >
+        <thead>
+          <tr>
+            {divergencia.lados.map((lado) => (
+              <th
+                key={lado.titulo}
+                scope="col"
+                className="border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta px-3 pt-3 pb-3.5 text-left align-top font-title text-body leading-tight font-bold not-first:border-l-(length:--traco-etiqueta)"
+              >
+                {lado.titulo}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {divergencia.lados.map((lado) => (
+              <td
+                key={lado.titulo}
+                className="px-3 pt-3 pb-3.5 text-left align-top not-first:border-l-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
+              >
+                <Html html={lado.html} />
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+      <p className="mt-3 mb-0 text-aviso" data-slot="melhor-desenho">
+        <b>Qual lado tem o melhor desenho: </b>
+        <Html como="span" html={divergencia.melhorDesenhoHtml} />
+      </p>
+    </div>
   )
 }
 
