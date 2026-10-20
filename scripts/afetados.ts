@@ -70,7 +70,7 @@ const DE_TODOS: ReadonlyArray<[RegExp, string]> = [
   ],
   [/^frontend\/src\/routes\/__root\.tsx$/, 'mudou a raiz das rotas'],
   [
-    /^frontend\/src\/ui\/(tokens|componentes|fontes)\.css$/,
+    /^frontend\/src\/ui\/(tokens|desenhos|fontes)\.css$/,
     'mudou o estilo de todas as páginas',
   ],
   [
