@@ -6,9 +6,9 @@ O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é u
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Imagem                                                         | `frontend/Dockerfile` (o `.output` do build, em `node:24-alpine`)                                                    |
 | Formato do log, vhosts, TLS e rotação                          | `frontend/nginx/log-without-query.conf`, `temestudo.conf`, `temestudo-stats.conf`, `tls.conf`, `logrotate-temestudo` |
-| Etapas e scripts da VPS (troca blue/green, volta, GoatCounter) | `frontend/scripts/deploy-plan.ts` ([ADR 0007](adr/0007-the-deploy-plan-stays-separate-from-ssh.md))                   |
-| Execução pelo SSH, com o tempo de cada etapa                   | `frontend/scripts/vps.ts`, `stopwatch.ts` ([ADR 0009](adr/0009-the-deploy-log-times-each-step.md))        |
-| Conferência de fora                                            | `frontend/scripts/check-live.ts` ([ADR 0008](adr/0008-the-deploy-checks-the-assets-from-outside.md))                        |
+| Etapas e scripts da VPS (troca blue/green, volta, GoatCounter) | `frontend/scripts/deploy-plan.ts` ([ADR 0007](adr/0007-the-deploy-plan-stays-separate-from-ssh.md))                  |
+| Execução pelo SSH, com o tempo de cada etapa                   | `frontend/scripts/vps.ts`, `stopwatch.ts` ([ADR 0009](adr/0009-the-deploy-log-times-each-step.md))                   |
+| Conferência de fora                                            | `frontend/scripts/check-live.ts` ([ADR 0008](adr/0008-the-deploy-checks-the-assets-from-outside.md))                 |
 | Preparação da VPS, uma vez                                     | `frontend/scripts/prepare-vps.sh`                                                                                    |
 | Passos do mantenedor                                           | `frontend/scripts/deploy-wizard.sh`                                                                                  |
 | Workflow                                                       | `.github/workflows/deploy.yml`                                                                                       |
