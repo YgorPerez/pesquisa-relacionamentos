@@ -1,0 +1,45 @@
+# The suppression gate (ADR 0017). Fails if the code goes over the ceiling in
+# `.github/suppression-ceiling.json`, or if a new suppression does not say
+# why. A PR that adds a suppression with a reason, or touches an auditor's
+# configuration, only goes green after a person adds the
+# `supressao-revisada` label.
+#
+# Kept out of `pr.yml` because it also runs when a label is added or
+# removed, and `pr.yml` would bring the whole e2e along on every label.
+name: Supressões
+
+'on':
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: suppressions-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  supressoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The script compares against the point where the PR left the base.
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # A `pull_request` checkout is the PR merged with the base; the target
+      # is the PR tip.
+      - name: New suppressions and the ceiling
+        env:
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          BASE: origin/${{ github.base_ref }}
+          TARGET: ${{ github.event.pull_request.head.sha }}
+        run: node .github/scripts/suppressions.ts --base "$BASE" --target "$TARGET"

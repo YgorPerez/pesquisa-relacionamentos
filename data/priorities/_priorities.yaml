@@ -1,0 +1,179 @@
+# Rascunho do arquivo de Prioridades (#33), com os números do protótipo do #9.
+# O `_` no nome deixa o arquivo fora do build: as Fichas citadas ainda são ⬜
+# e o build só aceita dado que cite Ficha ✅ ou 🟡. Quando o #39 refizer as
+# Fichas, confira cada célula contra a Ficha nova e renomeie este arquivo e o
+# `.meta.yaml` sem o `_`.
+#
+# Por característica × desfecho: `level` (3 pesa, 2 pesa pouco, 1 quase nada,
+# 0 não sabemos), `measure`, `plain_text` e `fact_sheet`. Degrau acima de 0
+# precisa de Ficha. `bias` é a distância entre o que se declara e o que se
+# escolhe: `all`, ou `man` e `woman`.
+
+# A barra da Joel 2020: o que explica a satisfação com a relação.
+explained_satisfaction:
+  fact_sheet: joel-2020-machine-learning-43-datasets
+  relationship: 45
+  partner: 5
+  unexplained: 50
+
+traits:
+  - id: aparencia
+    name: Aparência
+    attraction:
+      level: 3
+      measure: "r ≈ 0,40"
+      plain_text: Quem é mais bonito atrai mais, para homens e mulheres igualmente.
+      fact_sheet: eastwick-2014-meta-analise-preferencias
+    satisfaction:
+      level: 2
+      measure: "r = 0,10, só maridos, só no início"
+      plain_text: No casamento, só os maridos ficam um pouco mais satisfeitos, e só no começo. Para as esposas, nada.
+      fact_sheet: meltzer-2014-atratividade-casamento
+    duration:
+      level: 0
+      measure: "HR 1,29 (estudo fraco)"
+      plain_text: 'Só um estudo fraco: quem disse ter casado "pela aparência" se divorciou mais.'
+      fact_sheet: francis-tan-2015-gastos-casamento-divorcio
+    bias:
+      all: As pessoas dão menos peso à aparência quando dizem o que querem do que quando de fato se atraem.
+
+  - id: sexo
+    name: Química sexual
+    attraction:
+      level: 3
+      measure: "1º de 35 no revelado, 12º no declarado"
+      plain_text: '"Bom de cama" é o que mais pesa no que as pessoas revelam, e só o 12º no que dizem.'
+      fact_sheet: eastwick-2024-preferencias-43-paises
+    satisfaction:
+      level: 3
+      measure: entre os 5 melhores preditores
+      plain_text: A satisfação sexual está entre o que mais prevê satisfação, mas ela se constrói a dois, não vem pronta no parceiro.
+      fact_sheet: joel-2020-machine-learning-43-datasets
+    duration:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    bias:
+      all: É o item que as pessoas mais subestimam ao dizer o que querem.
+
+  - id: renda
+    name: Renda
+    attraction:
+      level: 2
+      measure: "r ≈ 0,10"
+      plain_text: Pesa pouco na atração, igual para homens e mulheres.
+      fact_sheet: eastwick-2014-meta-analise-preferencias
+    satisfaction:
+      level: 0
+      plain_text: Nenhum estudo lido mede a renda do parceiro e a satisfação.
+    duration:
+      level: 0
+      measure: patrimônio do casal
+      plain_text: O que se associa a menos divórcio é o patrimônio do casal, não a renda de um. Não diz nada sobre escolher.
+      fact_sheet: killewald-2023-riqueza-divorcio
+    bias:
+      woman: Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.
+      man: Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.
+
+  - id: calma
+    name: Estabilidade emocional
+    attraction:
+      level: 2
+      measure: mais baixo no revelado que no declarado
+      plain_text: No primeiro contato, pesa menos do que as pessoas dizem.
+      fact_sheet: eastwick-2024-preferencias-43-paises
+    satisfaction:
+      level: 2
+      measure: "personalidade toda do parceiro: 1% a 3%"
+      plain_text: É o traço do parceiro com o resultado mais consistente. Mesmo assim, a personalidade inteira do parceiro explica de 1% a 3% da satisfação.
+      fact_sheet: dyrenforth-2010-personalidade-similaridade
+    duration:
+      level: 1
+      plain_text: Para o fim de namoros, a personalidade quase não prevê.
+      fact_sheet: le-2010-preditores-termino
+
+  - id: gentileza
+    name: Gentileza
+    attraction:
+      level: 0
+      plain_text: Os estudos lidos não separam isso.
+    satisfaction:
+      level: 2
+      measure: "personalidade toda do parceiro: 1% a 3%"
+      plain_text: Parceiros mais gentis se associam a mais satisfação, num efeito pequeno.
+      fact_sheet: malouff-2010-personalidade-parceiro
+    duration:
+      level: 1
+      plain_text: Para o fim de namoros, a personalidade quase não prevê.
+      fact_sheet: le-2010-preditores-termino
+
+  - id: responsavel
+    name: Ser responsável
+    attraction:
+      level: 0
+      plain_text: Os estudos lidos não separam isso.
+    satisfaction:
+      level: 2
+      measure: "personalidade toda do parceiro: 1% a 3%"
+      plain_text: Parceiros mais responsáveis se associam a mais satisfação, num efeito pequeno.
+      fact_sheet: malouff-2010-personalidade-parceiro
+    duration:
+      level: 1
+      plain_text: Para o fim de namoros, a personalidade quase não prevê.
+      fact_sheet: le-2010-preditores-termino
+
+  - id: parecido
+    name: Ser parecido comigo
+    attraction:
+      level: 1
+      measure: "real: nulo; percebida: prevê"
+      plain_text: Ser parecido de fato não prevê atração em quem já está junto. Sentir-se parecido, sim.
+      fact_sheet: montoya-2008-similaridade-real-percebida
+    satisfaction:
+      level: 1
+      measure: "< 0,5%"
+      plain_text: Ter personalidades parecidas explica menos de 0,5% da satisfação.
+      fact_sheet: dyrenforth-2010-personalidade-similaridade
+    duration:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+
+  - id: escolaridade
+    name: Mesma escolaridade
+    attraction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    satisfaction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    duration:
+      level: 2
+      measure: "HR 0,78"
+      plain_text: Nos EUA recentes, casais com a mesma escolaridade se divorciam um pouco menos.
+      fact_sheet: schwartz-2014-homogamia-educacional
+
+  - id: religiao
+    name: Mesma religião
+    attraction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    satisfaction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    duration:
+      level: 2
+      plain_text: Uniões entre religiões diferentes se desfazem mais, sobretudo quando as religiões são distantes.
+      fact_sheet: lehrer-1993-religiao-estabilidade
+
+  - id: idade
+    name: Idade parecida
+    attraction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    satisfaction:
+      level: 0
+      plain_text: Nenhum estudo lido mede isso.
+    duration:
+      level: 0
+      measure: "HR 1,022 por ano (estudo fraco)"
+      plain_text: 'Só um estudo fraco e ambíguo. "10 anos de diferença = 39% mais divórcio" não está no artigo que costuma ser citado.'
+      fact_sheet: francis-tan-2015-gastos-casamento-divorcio

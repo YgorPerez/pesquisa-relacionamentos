@@ -1,30 +1,31 @@
-// O que o grafo estático da fallow não enxerga. Nada aqui afrouxa um limite:
-// as três análises (`dead-code`, `dupes`, `health`) rodam cruas, como no
-// Festival dos Macacos (ADR 0005).
+// What fallow's static graph does not see. Nothing here loosens a limit: the
+// three analyses (`dead-code`, `dupes`, `health`) run raw, as in the Festival
+// dos Macacos (ADR 0005).
 {
   "$schema": "./node_modules/fallow/schema.json",
   "dynamicallyLoaded": [
-    // A imagem do Open Graph se faz na mão, `node scripts/imagem-og.ts` (o
-    // comentário no topo dele). Nenhum import aponta para ele.
-    "scripts/imagem-og.ts",
-    // Os ícones e o manifesto da marca, também na mão:
-    // `node scripts/icones-da-marca.ts`.
-    "scripts/icones-da-marca.ts",
-    // A captura de tela da evidência do PR roda na mão,
-    // `node scripts/capturar.ts <rota>` (docs/agents/evidencia-de-tela.md).
-    "scripts/capturar.ts",
-    // O React Doctor acha o `doctor.config.ts` pelo nome, na raiz do projeto
-    // que ele varre. Nenhum import aponta para ele.
+    // The Open Graph image is made by hand, `node scripts/og-image.ts` (the
+    // comment at its top). No import points to it.
+    "scripts/og-image.ts",
+    // The brand icons and manifest, also by hand:
+    // `node scripts/brand-icons.ts`.
+    "scripts/brand-icons.ts",
+    // The PR's screen evidence capture runs by hand,
+    // `node scripts/capture.ts <route>` (docs/agents/screen-evidence.md).
+    "scripts/capture.ts",
+    // React Doctor finds `doctor.config.ts` by name, at the root of the
+    // project it scans. No import points to it.
     "doctor.config.ts",
-    // O `@tanstack/react-start` dos testes de tela: o projeto `telas` do
-    // `vite.config.ts` aponta para ele por alias, e nenhum import (ADR 0035).
-    "src/platform/telas/servidor-no-teste.ts",
+    // The screen tests' `@tanstack/react-start`: the `screens` project of
+    // `vite.config.ts` points to it by alias, and no import does (ADR 0035).
+    "src/platform/screens/test-server.ts",
   ],
   "duplicates": {
     "ignore": [
-      // O TanStack Router gera este arquivo a cada build, e a árvore de
-      // rotas repete a mesma forma para cada rota: um clone que ninguém pode
-      // refatorar, porque o gerador o reescreve. Só o `dupes` deixa de olhar.
+      // TanStack Router generates this file on every build, and the route
+      // tree repeats the same shape for each route: a clone nobody can
+      // refactor, because the generator rewrites it. Only `dupes` stops
+      // looking.
       "src/routeTree.gen.ts",
     ],
   },

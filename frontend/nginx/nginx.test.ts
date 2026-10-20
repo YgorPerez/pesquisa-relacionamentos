@@ -1,140 +1,146 @@
-// O Nginx do host conferido pelo formato declarado (spec #23, Testing seam 4;
-// ADR 0001): o access_log nunca leva a query, o error_log é o do site e gira
-// todo dia guardando 3, e toda resposta leva `Referrer-Policy: strict-origin`.
+// The host's Nginx checked by the declared format (spec #23, Testing seam 4;
+// ADR 0001): the access_log never carries the query, the error_log is the
+// site's and rotates daily keeping 3, and every response carries
+// `Referrer-Policy: strict-origin`.
 
 import { readFileSync } from 'node:fs'
 import { describe, expect, test } from 'vite-plus/test'
-import { CONFIGURACAO_DO_HOST, STATS } from '../scripts/vps.ts'
+import { HOST_CONFIG, STATS } from '../scripts/vps.ts'
 
-const pasta = new URL('./', import.meta.url)
-const vhost = readFileSync(new URL('temestudo.conf', pasta), 'utf8')
-const formatoDoLog = readFileSync(new URL('log-sem-query.conf', pasta), 'utf8')
-const rotacao = readFileSync(new URL('logrotate-temestudo', pasta), 'utf8')
+const folder = new URL('./', import.meta.url)
+const vhost = readFileSync(new URL('temestudo.conf', folder), 'utf8')
+const logFormat = readFileSync(
+  new URL('log-without-query.conf', folder),
+  'utf8',
+)
+const rotation = readFileSync(new URL('logrotate-temestudo', folder), 'utf8')
 
-type Diretiva = { nome: string; args: string[]; filhos?: Diretiva[] }
+type Directive = { name: string; args: string[]; children?: Directive[] }
 
-/** O bastante da gramática do Nginx para o vhost: diretivas `nome args;`,
- * blocos `nome args { … }`, comentários `#` e aspas simples ou duplas. */
-function ler(texto: string): Diretiva[] {
-  const tokens =
-    texto.match(/'[^']*'|"[^"]*"|#[^\n]*|[{};]|[^\s{};'"#]+/g) ?? []
+/** Enough of Nginx's grammar for the vhost: `name args;` directives,
+ * `name args { … }` blocks, `#` comments and single or double quotes. */
+function parse(text: string): Directive[] {
+  const tokens = text.match(/'[^']*'|"[^"]*"|#[^\n]*|[{};]|[^\s{};'"#]+/g) ?? []
   let i = 0
-  const bloco = (): Diretiva[] => {
-    const diretivas: Diretiva[] = []
-    let atual: string[] = []
+  const block = (): Directive[] => {
+    const directives: Directive[] = []
+    let current: string[] = []
     while (i < tokens.length) {
       const t = tokens[i++]
       if (t.startsWith('#')) continue
       if (t === ';') {
-        diretivas.push({ nome: atual[0], args: atual.slice(1) })
-        atual = []
+        directives.push({ name: current[0], args: current.slice(1) })
+        current = []
       } else if (t === '{') {
-        diretivas.push({
-          nome: atual[0],
-          args: atual.slice(1),
-          filhos: bloco(),
+        directives.push({
+          name: current[0],
+          args: current.slice(1),
+          children: block(),
         })
-        atual = []
-      } else if (t === '}') return diretivas
-      else atual.push(t.replace(/^(['"])(.*)\1$/s, '$2'))
+        current = []
+      } else if (t === '}') return directives
+      else current.push(t.replace(/^(['"])(.*)\1$/s, '$2'))
     }
-    return diretivas
+    return directives
   }
-  return bloco()
+  return block()
 }
 
-const topo = ler(vhost)
-const doLog = ler(formatoDoLog)
-const servidores = topo.filter((d) => d.nome === 'server')
-const de = (bloco: Diretiva[] | undefined, nome: string) =>
-  (bloco ?? []).filter((d) => d.nome === nome)
+const top = parse(vhost)
+const ofLog = parse(logFormat)
+const servers = top.filter((d) => d.name === 'server')
+const named = (block: Directive[] | undefined, name: string) =>
+  (block ?? []).filter((d) => d.name === name)
 
-/** Todo bloco que declara um `add_header` some com os de fora dele: no
- * Nginx, um `add_header` dentro de `location` apaga os do `server`. */
-function blocosComCabecalhos(bloco: Diretiva[]): Diretiva[][] {
-  return bloco.flatMap((d) =>
-    d.filhos ? [d.filhos, ...blocosComCabecalhos(d.filhos)] : [],
+/** Every block that declares an `add_header` drops the ones outside it: in
+ * Nginx, an `add_header` inside `location` erases the `server` ones. */
+function blocksWithHeaders(block: Directive[]): Directive[][] {
+  return block.flatMap((d) =>
+    d.children ? [d.children, ...blocksWithHeaders(d.children)] : [],
   )
 }
 
-// Tudo que copia a query, ou o endereço inteiro de onde o visitante veio.
-const VARIAVEIS_COM_QUERY =
+// Everything that copies the query, or the whole address the visitor came
+// from.
+const VARIABLES_WITH_QUERY =
   /\$(request|request_uri|args|query_string|is_args|arg_\w+|http_referer|request_body|uri_with_args)\b/
 
-describe('o formato do access_log', () => {
-  test('é um log_format só, que não leva a query nem o Referer', () => {
-    const formatos = de(doLog, 'log_format')
-    expect(formatos.map((f) => f.args[0])).toEqual(['temestudo_sem_query'])
-    const formato = formatos[0].args.slice(1).join(' ')
-    expect(formato).toContain('$request_method')
-    expect(formato).toContain('$status')
-    expect(formato).toContain('$request_time')
-    expect(formato).toContain('$temestudo_caminho')
-    expect(formato).not.toMatch(VARIAVEIS_COM_QUERY)
+describe('the access_log format', () => {
+  test('is a single log_format, which carries neither the query nor the Referer', () => {
+    const formats = named(ofLog, 'log_format')
+    expect(formats.map((f) => f.args[0])).toEqual(['temestudo_sem_query'])
+    const format = formats[0].args.slice(1).join(' ')
+    expect(format).toContain('$request_method')
+    expect(format).toContain('$status')
+    expect(format).toContain('$request_time')
+    expect(format).toContain('$temestudo_caminho')
+    expect(format).not.toMatch(VARIABLES_WITH_QUERY)
   })
 
-  test('o caminho do log é o pedido cortado antes do primeiro ?', () => {
-    const [mapa] = de(doLog, 'map')
-    expect(mapa.args).toEqual(['$request_uri', '$temestudo_caminho'])
-    const [regra] = (mapa.filhos ?? []).filter((d) => d.nome.startsWith('~'))
-    const regex = new RegExp(regra.nome.slice(1))
-    const captura = regra.args[0].slice(1)
-    const caminho = (uri: string) => uri.match(regex)?.groups?.[captura]
-    expect(caminho('/grupo-possivel?v=1&g=h&p=m')).toBe('/grupo-possivel')
-    expect(caminho('/?g=mulher%20trans')).toBe('/')
-    expect(caminho('/guias/onde-conhecer')).toBe('/guias/onde-conhecer')
+  test("the log's path is the request cut before the first ?", () => {
+    const [map] = named(ofLog, 'map')
+    expect(map.args).toEqual(['$request_uri', '$temestudo_caminho'])
+    const [rule] = (map.children ?? []).filter((d) => d.name.startsWith('~'))
+    const regex = new RegExp(rule.name.slice(1))
+    const capture = rule.args[0].slice(1)
+    const path = (uri: string) => uri.match(regex)?.groups?.[capture]
+    expect(path('/grupo-possivel?v=1&g=h&p=m')).toBe('/grupo-possivel')
+    expect(path('/?g=mulher%20trans')).toBe('/')
+    expect(path('/guias/onde-conhecer')).toBe('/guias/onde-conhecer')
   })
 })
 
-describe('o vhost de temestudo.cloud', () => {
-  test('não declara outro log_format: todos vêm do log-sem-query.conf', () => {
-    expect(de(topo, 'log_format')).toEqual([])
+describe('the temestudo.cloud vhost', () => {
+  test('declares no other log_format: all come from log-without-query.conf', () => {
+    expect(named(top, 'log_format')).toEqual([])
   })
 
-  test('cada server grava o access_log no formato sem query e o error_log do site', () => {
-    expect(servidores.length).toBeGreaterThanOrEqual(3)
-    for (const servidor of servidores) {
-      expect(de(servidor.filhos, 'access_log').map((d) => d.args)).toEqual([
+  test("each server writes the access_log in the no-query format and the site's error_log", () => {
+    expect(servers.length).toBeGreaterThanOrEqual(3)
+    for (const server of servers) {
+      expect(named(server.children, 'access_log').map((d) => d.args)).toEqual([
         ['/var/log/nginx/temestudo/access.log', 'temestudo_sem_query'],
       ])
-      expect(de(servidor.filhos, 'error_log').map((d) => d.args[0])).toEqual([
-        '/var/log/nginx/temestudo/error.log',
-      ])
+      expect(named(server.children, 'error_log').map((d) => d.args[0])).toEqual(
+        ['/var/log/nginx/temestudo/error.log'],
+      )
     }
   })
 
-  test('nenhum access_log, em bloco nenhum, usa outro formato', () => {
-    const todos = (bloco: Diretiva[]): Diretiva[] =>
-      bloco.flatMap((d) => [d, ...(d.filhos ? todos(d.filhos) : [])])
-    for (const d of todos(topo).filter((d) => d.nome === 'access_log')) {
+  test('no access_log, in any block, uses another format', () => {
+    const all = (block: Directive[]): Directive[] =>
+      block.flatMap((d) => [d, ...(d.children ? all(d.children) : [])])
+    for (const d of all(top).filter((d) => d.name === 'access_log')) {
       expect(d.args[1]).toBe('temestudo_sem_query')
     }
   })
 
-  test('um pedido a outro host ou ao IP cai num default_server com o mesmo log', () => {
-    const padroes = servidores.filter((s) =>
-      de(s.filhos, 'listen').some((l) => l.args.includes('default_server')),
+  test('a request to another host or to the IP falls into a default_server with the same log', () => {
+    const defaults = servers.filter((s) =>
+      named(s.children, 'listen').some((l) =>
+        l.args.includes('default_server'),
+      ),
     )
-    const portas = padroes.flatMap((s) =>
-      de(s.filhos, 'listen').map((l) => l.args[0]),
+    const ports = defaults.flatMap((s) =>
+      named(s.children, 'listen').map((l) => l.args[0]),
     )
-    expect(portas).toEqual(expect.arrayContaining(['80', '443']))
+    expect(ports).toEqual(expect.arrayContaining(['80', '443']))
   })
 
-  test('todo bloco que escreve cabeçalhos manda Referrer-Policy: strict-origin', () => {
-    const https = servidores.filter(
+  test('every block that writes headers sends Referrer-Policy: strict-origin', () => {
+    const https = servers.filter(
       (s) =>
-        de(s.filhos, 'server_name').some((n) =>
+        named(s.children, 'server_name').some((n) =>
           n.args.includes('temestudo.cloud'),
-        ) && de(s.filhos, 'listen').some((l) => l.args.includes('ssl')),
+        ) && named(s.children, 'listen').some((l) => l.args.includes('ssl')),
     )
     expect(https).toHaveLength(1)
-    const blocos = blocosComCabecalhos(https)
-    const comCabecalho = blocos.filter((b) => de(b, 'add_header').length > 0)
-    expect(comCabecalho.length).toBeGreaterThan(0)
-    expect(de(https[0].filhos, 'add_header').length).toBeGreaterThan(0)
-    for (const bloco of comCabecalho) {
-      expect(de(bloco, 'add_header').map((d) => d.args)).toContainEqual([
+    const blocks = blocksWithHeaders(https)
+    const withHeader = blocks.filter((b) => named(b, 'add_header').length > 0)
+    expect(withHeader.length).toBeGreaterThan(0)
+    expect(named(https[0].children, 'add_header').length).toBeGreaterThan(0)
+    for (const block of withHeader) {
+      expect(named(block, 'add_header').map((d) => d.args)).toContainEqual([
         'Referrer-Policy',
         'strict-origin',
         'always',
@@ -142,113 +148,110 @@ describe('o vhost de temestudo.cloud', () => {
     }
   })
 
-  test('o proxy para o contêiner sai do include que o deploy escreve', () => {
+  test('the proxy to the container comes from the include the deploy writes', () => {
     expect(vhost).toContain('include /etc/nginx/temestudo/temestudo-app.conf;')
   })
 })
 
-describe('o vhost de stats.temestudo.cloud (GoatCounter, #35)', () => {
-  const stats = ler(
-    readFileSync(new URL('temestudo-stats.conf', pasta), 'utf8'),
+describe('the stats.temestudo.cloud vhost (GoatCounter, #35)', () => {
+  const stats = parse(
+    readFileSync(new URL('temestudo-stats.conf', folder), 'utf8'),
   )
-  const blocos = stats.filter((d) => d.nome === 'server')
-  const todos = (bloco: Diretiva[]): Diretiva[] =>
-    bloco.flatMap((d) => [d, ...(d.filhos ? todos(d.filhos) : [])])
+  const blocks = stats.filter((d) => d.name === 'server')
+  const all = (block: Directive[]): Directive[] =>
+    block.flatMap((d) => [d, ...(d.children ? all(d.children) : [])])
 
-  test('só atende stats.temestudo.cloud, no 80 e no 443', () => {
+  test('only serves stats.temestudo.cloud, on 80 and 443', () => {
     expect(
-      blocos.map((s) => de(s.filhos, 'server_name').flatMap((n) => n.args)),
+      blocks.map((s) =>
+        named(s.children, 'server_name').flatMap((n) => n.args),
+      ),
     ).toEqual([['stats.temestudo.cloud'], ['stats.temestudo.cloud']])
-    expect(de(stats, 'log_format')).toEqual([])
+    expect(named(stats, 'log_format')).toEqual([])
   })
 
-  test('cada server grava no formato sem query e no error_log do site', () => {
-    for (const servidor of blocos) {
-      expect(de(servidor.filhos, 'access_log').map((d) => d.args)).toEqual([
+  test("each server writes in the no-query format and to the site's error_log", () => {
+    for (const server of blocks) {
+      expect(named(server.children, 'access_log').map((d) => d.args)).toEqual([
         ['/var/log/nginx/temestudo/access.log', 'temestudo_sem_query'],
       ])
-      expect(de(servidor.filhos, 'error_log').map((d) => d.args[0])).toEqual([
-        '/var/log/nginx/temestudo/error.log',
-      ])
+      expect(named(server.children, 'error_log').map((d) => d.args[0])).toEqual(
+        ['/var/log/nginx/temestudo/error.log'],
+      )
     }
-    for (const d of todos(stats).filter((d) => d.nome === 'access_log')) {
+    for (const d of all(stats).filter((d) => d.name === 'access_log')) {
       expect(d.args[1]).toBe('temestudo_sem_query')
     }
   })
 
-  test('o 80 serve o desafio do certbot e manda o resto para o https', () => {
-    const http = blocos.find((s) =>
-      de(s.filhos, 'listen').some((l) => l.args[0] === '80'),
+  test("80 serves certbot's challenge and sends the rest to https", () => {
+    const http = blocks.find((s) =>
+      named(s.children, 'listen').some((l) => l.args[0] === '80'),
     )
-    const locais = de(http?.filhos, 'location')
-    expect(locais.map((l) => l.args)).toContainEqual([
+    const locations = named(http?.children, 'location')
+    expect(locations.map((l) => l.args)).toContainEqual([
       '^~',
       '/.well-known/acme-challenge/',
     ])
-    const acme = locais.find((l) =>
+    const acme = locations.find((l) =>
       l.args.includes('/.well-known/acme-challenge/'),
     )
-    expect(de(acme?.filhos, 'root').map((d) => d.args)).toEqual([
+    expect(named(acme?.children, 'root').map((d) => d.args)).toEqual([
       ['/opt/temestudo/acme'],
     ])
   })
 
-  test('o 443 passa ao contêiner do GoatCounter em 127.0.0.1, com o IP de quem visita', () => {
-    const https = blocos.find((s) =>
-      de(s.filhos, 'listen').some((l) => l.args.includes('ssl')),
+  test("443 passes to the GoatCounter container on 127.0.0.1, with the visitor's IP", () => {
+    const https = blocks.find((s) =>
+      named(s.children, 'listen').some((l) => l.args.includes('ssl')),
     )
-    expect(de(https?.filhos, 'include').map((d) => d.args[0])).toContain(
+    expect(named(https?.children, 'include').map((d) => d.args[0])).toContain(
       '/etc/nginx/temestudo/tls.conf',
     )
-    const proxy = todos(https?.filhos ?? []).filter(
-      (d) => d.nome === 'proxy_pass',
+    const proxy = all(https?.children ?? []).filter(
+      (d) => d.name === 'proxy_pass',
     )
     expect(proxy.map((d) => d.args[0])).toEqual([
-      `http://127.0.0.1:${STATS.porta}`,
+      `http://127.0.0.1:${STATS.port}`,
     ])
-    const cabecalhos = todos(https?.filhos ?? []).filter(
-      (d) => d.nome === 'proxy_set_header',
+    const headers = all(https?.children ?? []).filter(
+      (d) => d.name === 'proxy_set_header',
     )
-    expect(cabecalhos.map((d) => d.args)).toContainEqual([
+    expect(headers.map((d) => d.args)).toContainEqual([
       'X-Forwarded-For',
       '$remote_addr',
     ])
-    expect(de(https?.filhos, 'add_header').map((d) => d.args)).toContainEqual([
-      'Referrer-Policy',
-      'strict-origin',
-      'always',
-    ])
+    expect(
+      named(https?.children, 'add_header').map((d) => d.args),
+    ).toContainEqual(['Referrer-Policy', 'strict-origin', 'always'])
   })
 
-  test('o deploy instala o arquivo e o liga', () => {
-    expect(CONFIGURACAO_DO_HOST).toContainEqual([
-      'temestudo-stats.conf',
-      STATS.vhost,
-    ])
+  test('the deploy installs the file and enables it', () => {
+    expect(HOST_CONFIG).toContainEqual(['temestudo-stats.conf', STATS.vhost])
   })
 })
 
-describe('a rotação dos logs do site', () => {
-  const estrofes = [...rotacao.matchAll(/^([^\s#][^{]*)\{([^}]*)\}/gm)].map(
+describe("the site's log rotation", () => {
+  const stanzas = [...rotation.matchAll(/^([^\s#][^{]*)\{([^}]*)\}/gm)].map(
     (m) => ({
-      arquivos: m[1].trim().split(/\s+/),
-      regras: m[2]
+      files: m[1].trim().split(/\s+/),
+      rules: m[2]
         .split('\n')
         .map((l) => l.trim())
         .filter((l) => l && !l.startsWith('#')),
     }),
   )
 
-  test('o error_log gira todo dia e não passa de 3 dias, contando o arquivo atual', () => {
-    const erro = estrofes.find((e) =>
-      e.arquivos.includes('/var/log/nginx/temestudo/error.log'),
+  test('the error_log rotates daily and never exceeds 3 days, counting the current file', () => {
+    const error = stanzas.find((e) =>
+      e.files.includes('/var/log/nginx/temestudo/error.log'),
     )
-    expect(erro?.regras).toContain('daily')
+    expect(error?.rules).toContain('daily')
     const rotate = Number(
-      erro?.regras.find((r) => r.startsWith('rotate '))?.split(' ')[1],
+      error?.rules.find((r) => r.startsWith('rotate '))?.split(' ')[1],
     )
-    // O `error.log` de hoje mais `rotate` arquivos girados, um por dia.
+    // Today's `error.log` plus `rotate` rotated files, one per day.
     expect(1 + rotate).toBe(3)
-    expect(erro?.regras.some((r) => r.startsWith('postrotate'))).toBe(true)
+    expect(error?.rules.some((r) => r.startsWith('postrotate'))).toBe(true)
   })
 })

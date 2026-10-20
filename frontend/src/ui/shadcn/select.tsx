@@ -1,24 +1,24 @@
 import { Select as SelectPrimitive } from '@base-ui/react/select'
 import { cn } from '@/platform/cn'
 
-type Opcao<Valor> = { readonly value: Valor; readonly label: string }
+type Option<Value> = { readonly value: Value; readonly label: string }
 
-/** A lista de escolher uma opção, com o rótulo em cima: papel com contorno de
- * mão, do tamanho de um toque, e a opção sob o dedo ou o teclado em amarelo.
- * Desligada, apaga e fica tracejada. É o `Select` do Base UI, que dá o papel
- * `combobox` ao gatilho, o `listbox` à lista, a busca pela primeira letra e as
- * setas; o rótulo dá o nome a ele. A opção de valor `null` é a que limpa a
- * escolha ("Brasil inteiro"). O que veio do `base-nova` do shadcn foi trocado
- * pelos tokens. */
-function Select<Valor>({
+/** The pick-one list, with the label on top: paper with a hand outline, one
+ * tap tall, and the option under the finger or the keyboard in yellow.
+ * Disabled, it fades and turns dashed. It is the Base UI `Select`, which
+ * gives the trigger the `combobox` role, the list the `listbox` one, the
+ * first-letter search and the arrows; the label names it. The option with
+ * value `null` clears the choice ("Brasil inteiro"). What came from shadcn's
+ * `base-nova` was swapped for the tokens. */
+function Select<Value>({
   label,
   items,
   className,
   ...props
-}: Omit<SelectPrimitive.Root.Props<Valor>, 'items' | 'multiple'> & {
-  /** O nome que aparece em cima e que o leitor de tela lê. */
+}: Omit<SelectPrimitive.Root.Props<Value>, 'items' | 'multiple'> & {
+  /** The name shown on top, which the screen reader reads. */
   label: string
-  items: readonly Opcao<Valor>[]
+  items: readonly Option<Value>[]
   className?: string
 }) {
   return (
@@ -30,7 +30,7 @@ function Select<Valor>({
         <SelectPrimitive.Trigger className="flex min-h-toque w-full max-w-88 cursor-pointer items-center justify-between gap-2 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 text-left font-body text-medio font-bold text-tinta data-disabled:cursor-not-allowed data-disabled:fio-tracejado data-disabled:text-tinta-2">
           <SelectPrimitive.Value />
           <SelectPrimitive.Icon className="flex shrink-0">
-            <Seta />
+            <Arrow />
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
       </div>
@@ -42,14 +42,14 @@ function Select<Valor>({
         >
           <SelectPrimitive.Popup className="max-h-(--available-height) min-w-(--anchor-width) overflow-y-auto rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel py-1 text-tinta">
             <SelectPrimitive.List>
-              {items.map((opcao) => (
+              {items.map((option) => (
                 <SelectPrimitive.Item
-                  key={String(opcao.value)}
-                  value={opcao.value}
+                  key={String(option.value)}
+                  value={option.value}
                   className="flex min-h-toque cursor-pointer items-center px-2.5 py-1.5 font-body text-medio font-bold data-highlighted:bg-amarelo-voce data-selected:underline"
                 >
                   <SelectPrimitive.ItemText>
-                    {opcao.label}
+                    {option.label}
                   </SelectPrimitive.ItemText>
                 </SelectPrimitive.Item>
               ))}
@@ -61,7 +61,7 @@ function Select<Valor>({
   )
 }
 
-const Seta = () => (
+const Arrow = () => (
   <svg
     width="16"
     height="16"

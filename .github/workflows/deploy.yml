@@ -1,67 +1,68 @@
-# Cada merge na main publica o site em https://temestudo.cloud (spec #23,
-# "Deploy"; `docs/deploy.md`). O job `testes-e-build` roda os testes e o build
-# do conteúdo. O `publicar` manda esse mesmo build à VPS por SSH, e o
-# `frontend/scripts/vps.ts` troca o contêiner sem tirar o site do ar e
-# garante o contêiner do GoatCounter em stats.temestudo.cloud.
+# Each merge into main publishes the site at https://temestudo.cloud (spec
+# #23, "Deploy"; `docs/deploy.md`). The `testes-e-build` job runs the tests
+# and the content build. `publicar` sends that same build to the VPS over
+# SSH, and `frontend/scripts/vps.ts` swaps the container without taking the
+# site down and ensures the GoatCounter container at stats.temestudo.cloud.
 #
-# Sem os secrets `VPS_*` o publicar é pulado com um aviso, e o workflow sai
-# verde. Eles entram pelo `frontend/scripts/wizard-deploy.sh`.
+# Without the `VPS_*` secrets, `publicar` is skipped with a warning, and the
+# workflow ends green. They come in through `frontend/scripts/deploy-wizard.sh`.
 name: Deploy
 
 'on':
   push:
     branches: [main]
-    # O que muda o site. Um commit só de documentação não publica nada.
+    # What changes the site. A docs-only commit publishes nothing.
     paths:
       - 'frontend/**'
       - 'packages/**'
-      - 'estudos/**'
-      - 'guias/**'
-      - 'dicas/**'
-      - 'dados/**'
-      - 'relatorios/**'
-      - 'fontes/**'
+      - 'studies/**'
+      - 'guides/**'
+      - 'tips/**'
+      - 'data/**'
+      - 'reports/**'
+      - 'sources/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'pnpm-workspace.yaml'
       - '.github/workflows/deploy.yml'
-  # Pela aba Actions: publica a main de agora, ou, com `voltar`, troca para
-  # uma imagem que a VPS guardou ("anterior" para a do deploy de antes).
+  # From the Actions tab: publishes the current main, or, with `voltar`,
+  # switches to an image the VPS kept ("anterior" for the one from the
+  # previous deploy).
   workflow_dispatch:
     inputs:
       voltar:
-        description: 'Voltar a uma versão: "anterior" ou o SHA. Vazio publica a main.'
+        description: 'Roll back to a version: "anterior" (the previous one) or the SHA. Empty publishes main.'
         type: string
         default: ''
 
 permissions:
   contents: read
 
-# Um deploy por vez, e o mais novo espera o anterior em vez de cortá-lo no
-# meio da troca.
+# One deploy at a time, and the newest waits for the previous one instead of
+# cutting it off mid-swap.
 concurrency:
   group: deploy
   cancel-in-progress: false
 
 jobs:
-  # Os secrets não entram num `if:`. Este job diz se os quatro existem.
+  # Secrets cannot go in an `if:`. This job says whether they exist.
   segredos:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     outputs:
-      prontos: ${{ steps.conferir.outputs.prontos }}
+      ready: ${{ steps.check.outputs.ready }}
     steps:
-      - id: conferir
+      - id: check
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
           if [ -n "$VPS_HOST" ] && [ -n "$VPS_USER" ] && [ -n "$VPS_SSH_KEY" ]; then
-            echo "prontos=true" >> "$GITHUB_OUTPUT"
+            echo "ready=true" >> "$GITHUB_OUTPUT"
           else
-            echo "prontos=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Deploy pulado::Faltam os secrets VPS_HOST, VPS_USER e VPS_SSH_KEY (VPS_PORT é opcional). Rode frontend/scripts/wizard-deploy.sh. Nada foi publicado."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Deploy skipped::Missing the VPS_HOST, VPS_USER and VPS_SSH_KEY secrets (VPS_PORT is optional). Run frontend/scripts/deploy-wizard.sh. Nothing was published."
           fi
 
   testes-e-build:
@@ -69,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
@@ -82,21 +83,21 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Tipos
+      - name: Types
         run: pnpm typecheck
 
-      - name: Testes
+      - name: Tests
         run: pnpm test
 
-      # O `pnpm e2e` monta um build sobre o conteúdo de fixture
-      # (`frontend/e2e/acervo`) e roda o Playwright sobre ele.
+      # `pnpm e2e` builds on top of the fixture content
+      # (`frontend/e2e/library`) and runs Playwright on it.
       - name: E2E
         run: pnpm e2e
 
-      - name: Guardar traces do e2e
+      - name: Upload e2e traces
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
@@ -105,28 +106,28 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      # O build que vai para a VPS, com o acervo do repositório. Ele vem
-      # depois do e2e, que deixou no `.output` o build da fixture. Conteúdo
-      # com erro derruba este passo, e nada é publicado. Ele confere o
-      # sitemap que está no ar: um caminho publicado que sumiu sem `antes`
-      # também derruba (`frontend/vite/acervo.ts`). Antes do primeiro deploy
-      # não há sitemap, e o build segue sem a conferência.
-      - name: Build do conteúdo
+      # The build that goes to the VPS, with the repository's library. It
+      # comes after e2e, which left the fixture build in `.output`. Content
+      # with an error fails this step, and nothing is published. It checks
+      # the live sitemap: a published path that disappeared without `antes`
+      # also fails it (`frontend/vite/library.ts`). Before the first deploy
+      # there is no sitemap, and the build goes on without the check.
+      - name: Build the content
         run: |
-          # O `<urlset` separa o sitemap de uma página de domínio estacionado.
-          if curl -fsSL --max-time 20 https://temestudo.cloud/sitemap.xml -o "$RUNNER_TEMP/sitemap-anterior.xml" \
-            && grep -q '<urlset' "$RUNNER_TEMP/sitemap-anterior.xml"; then
-            export SITEMAP_ANTERIOR="$RUNNER_TEMP/sitemap-anterior.xml"
+          # `<urlset` tells the sitemap apart from a parked-domain page.
+          if curl -fsSL --max-time 20 https://temestudo.cloud/sitemap.xml -o "$RUNNER_TEMP/previous-sitemap.xml" \
+            && grep -q '<urlset' "$RUNNER_TEMP/previous-sitemap.xml"; then
+            export SITEMAP_ANTERIOR="$RUNNER_TEMP/previous-sitemap.xml"
           else
-            echo "::warning::Não baixei https://temestudo.cloud/sitemap.xml; o build não confere os caminhos publicados."
+            echo "::warning::Could not download https://temestudo.cloud/sitemap.xml; the build does not check published paths."
           fi
           pnpm build
 
-      # O upload-artifact pula pastas com ponto, como o `.output`: vai num tar.
-      - name: Empacotar o build
+      # upload-artifact skips dot folders, like `.output`: it goes in a tar.
+      - name: Pack the build
         run: tar -czf build.tar.gz -C frontend .output
 
-      - name: Guardar o build
+      - name: Upload the build
         uses: actions/upload-artifact@v4
         with:
           name: build
@@ -135,7 +136,7 @@ jobs:
 
   publicar:
     needs: [segredos, testes-e-build]
-    if: needs.segredos.outputs.prontos == 'true' && inputs.voltar == ''
+    if: needs.segredos.outputs.ready == 'true' && inputs.voltar == ''
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
@@ -145,11 +146,11 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # O `scripts/vps.ts` lê as variáveis pelo `scripts/variaveis.ts`, que
-      # importa o `@t3-oss/env-core`: sem instalar, o node não o acha.
+      # `scripts/vps.ts` reads its variables through `scripts/env.ts`, which
+      # imports `@t3-oss/env-core`: without installing, node cannot find it.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
@@ -160,49 +161,49 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Baixar o build
+      - name: Download the build
         uses: actions/download-artifact@v4
         with:
           name: build
           path: frontend
 
-      - name: Abrir o build
+      - name: Unpack the build
         run: tar -xzf build.tar.gz && rm build.tar.gz
 
-      - name: Publicar na VPS
+      - name: Publish to the VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-          # O login que o primeiro deploy cria no GoatCounter. Sem a
-          # variável do repositório, vale admin@temestudo.cloud.
+          # The login the first deploy creates in GoatCounter. Without the
+          # repository variable, it is admin@temestudo.cloud.
           GOATCOUNTER_EMAIL: ${{ vars.GOATCOUNTER_EMAIL }}
-        run: node scripts/vps.ts --publicar .output "$GITHUB_SHA"
+        run: node scripts/vps.ts --publish .output "$GITHUB_SHA"
 
-      # De fora, pela internet (ADR 0008): a página chega com o
-      # Referrer-Policy, cada asset que ela cita chega com o tipo dele, e
-      # não como HTML, e o http leva ao https com a query junto.
-      - name: Conferir o site no ar
-        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"
+      # From outside, over the internet (ADR 0008): the page arrives with
+      # Referrer-Policy, each asset it cites arrives with its own type, and
+      # not as HTML, and http leads to https with the query kept.
+      - name: Verify the live site
+        run: node scripts/check-live.ts temestudo.cloud "$GITHUB_SHA"
 
-      # O GoatCounter (#35) sobe junto, mas fora dele o site segue no ar: um
-      # problema aqui vira aviso. Antes da etapa de login do wizard, ele
-      # responde, mas ainda sem site criado.
-      - name: Conferir o GoatCounter
+      # GoatCounter (#35) goes up along with it, but the site stays up
+      # without it: a problem here becomes a warning. Before the wizard's
+      # login step, it responds, but with no site created yet.
+      - name: Verify GoatCounter
         run: |
           status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://stats.temestudo.cloud/ || true)
           case "$status" in
-            2??|3??) echo "stats.temestudo.cloud responde $status." ;;
-            *) echo "::warning title=GoatCounter::https://stats.temestudo.cloud/ respondeu '${status:-nada}'. Veja docs/deploy.md, seção GoatCounter." ;;
+            2??|3??) echo "stats.temestudo.cloud responds $status." ;;
+            *) echo "::warning title=GoatCounter::https://stats.temestudo.cloud/ responded '${status:-nothing}'. See docs/deploy.md, GoatCounter section." ;;
           esac
 
   voltar:
     needs: segredos
-    if: needs.segredos.outputs.prontos == 'true' && inputs.voltar != ''
+    if: needs.segredos.outputs.ready == 'true' && inputs.voltar != ''
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
@@ -212,10 +213,10 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # O mesmo `scripts/vps.ts` do publicar, que precisa das dependências.
+      # The same `scripts/vps.ts` as `publicar`, which needs the dependencies.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
@@ -226,22 +227,22 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Voltar à versão pedida
+      - name: Roll back to the requested version
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-          VOLTAR: ${{ inputs.voltar }}
+          ROLLBACK_TO: ${{ inputs.voltar }}
         run: |
-          if [ "$VOLTAR" = anterior ]; then
-            node scripts/vps.ts --voltar
+          if [ "$ROLLBACK_TO" = anterior ]; then
+            node scripts/vps.ts --rollback
           else
-            node scripts/vps.ts --voltar "$VOLTAR"
+            node scripts/vps.ts --rollback "$ROLLBACK_TO"
           fi
 
-      - name: Conferir o site no ar
-        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"
+      - name: Verify the live site
+        run: node scripts/check-live.ts temestudo.cloud "$GITHUB_SHA"

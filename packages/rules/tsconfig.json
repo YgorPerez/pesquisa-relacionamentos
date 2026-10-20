@@ -1,0 +1,18 @@
+{
+  // Pure package, no build and no runtime dependency: whoever imports it
+  // (Vite in the app, Vitest here) transpiles the `.ts`. No `node` types and
+  // no DOM, so the same rule runs on the server and in the browser.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": []
+  },
+  "include": ["src/**/*.ts"]
+}

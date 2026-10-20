@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Decidida no mapa (#1): a mesma do Festival dos Macacos. Monorepo pnpm neste repositório, TanStack Start (React 19, Router, Query), Base UI e Storybook no front; renderização no servidor sem banco no MVP (o conteúdo entra no build); Vitest e Playwright. Roda num contêiner Docker atrás do Nginx numa VPS própria da Hostinger, só em produção, publicado a cada merge na main (#20). Os protótipos em `prototipos/` são HTML estático descartável.
+Decidida no mapa (#1): a mesma do Festival dos Macacos. Monorepo pnpm neste repositório, TanStack Start (React 19, Router, Query), Base UI e Storybook no front; renderização no servidor sem banco no MVP (o conteúdo entra no build); Vitest e Playwright. Roda num contêiner Docker atrás do Nginx numa VPS própria da Hostinger, só em produção, publicado a cada merge na main (#20). Os protótipos em `prototypes/` são HTML estático descartável.
 
 ## Users
 
@@ -50,11 +50,11 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 
 ## Evidence on Hand
 
-- `estudos/`: cerca de 30 Fichas. Pela decisão do #6, todas contam como ⬜ até serem refeitas com Fonte local e trecho conferido.
-- `relatorios/` e `dicas/`: sínteses internas, base para os Guias.
-- `fontes/`: Fontes locais de licença aberta. As outras ficam em `fontes/privado/`, fora do git.
-- Fila do acervo: issues com o label `acervo`, trabalhadas pela skill `acervo` (#37).
-- `prototipos/prioridades.prototype.html`: protótipo descartável de Prioridades vs. evidência.
+- `studies/`: cerca de 30 Fichas. Pela decisão do #6, todas contam como ⬜ até serem refeitas com Fonte local e trecho conferido.
+- `reports/` e `tips/`: sínteses internas, base para os Guias.
+- `sources/`: Fontes locais de licença aberta. As outras ficam em `sources/private/`, fora do git.
+- Fila do acervo: issues com o label `acervo`, trabalhadas pela skill `library` (#37).
+- `prototypes/prioridades.prototype.html`: protótipo descartável de Prioridades vs. evidência.
 - Não há depoimentos, usuários, métricas de uso nem imprensa. Nada disso pode ser inventado.
 
 ## Product Principles

@@ -1,0 +1,132 @@
+import { describe, expect, it } from 'vite-plus/test'
+import type { Profile } from './profile.ts'
+import { appliesToYou, type Coverage, type Verdict } from './applies-to-you.ts'
+
+const HETERO: Coverage = {
+  genders: ['man', 'woman'],
+  seeks: ['men', 'women'],
+  couple: 'different-sex',
+}
+const SAME_SEX: Coverage = {
+  genders: ['man', 'woman'],
+  seeks: ['men', 'women'],
+  couple: 'same-sex',
+}
+const UNSCOPED: Coverage = {}
+const YOUNG: Coverage = {
+  genders: ['man', 'woman'],
+  ages: { min: 18, max: 35 },
+}
+const ONLY_HUSBANDS: Coverage = { genders: ['man'], seeks: ['women'] }
+const ONLY_SEEKING_MEN: Coverage = { seeks: ['men'] }
+
+const manMen: Profile = { gender: 'homem', seeks: 'homens', age: 30 }
+const manWomen: Profile = {
+  gender: 'homem',
+  seeks: 'mulheres',
+  age: 30,
+}
+const womanMen: Profile = { gender: 'mulher', seeks: 'homens', age: 24 }
+const womanWomen: Profile = {
+  gender: 'mulher',
+  seeks: 'mulheres',
+  age: 24,
+}
+const other: Profile = { gender: 'outro', seeks: 'homens', age: 30 }
+const manBoth: Profile = { gender: 'homem', seeks: 'ambos', age: 30 }
+const womanBoth: Profile = { gender: 'mulher', seeks: 'ambos', age: 50 }
+const only40: Profile = { age: 40 }
+const onlyMan: Profile = { gender: 'homem' }
+
+const YES: Verdict = { covered: true }
+const NO: Verdict = { covered: false }
+const SIDE_MEN: Verdict = { covered: true, only: 'homens' }
+const SIDE_WOMEN: Verdict = { covered: true, only: 'mulheres' }
+
+describe('appliesToYou: profiles × coverage', () => {
+  it.each<[string, Profile, Coverage, Verdict]>([
+    // The couple's pair (#16): the lists alone would let it through.
+    ['man seeking men × straight couples only', manMen, HETERO, NO],
+    ['man seeking men × same-sex couples', manMen, SAME_SEX, YES],
+    ['man seeking women × straight couples only', manWomen, HETERO, YES],
+    ['man seeking women × same-sex couples', manWomen, SAME_SEX, NO],
+    ['woman seeking men × straight couples only', womanMen, HETERO, YES],
+    ['woman seeking women × same-sex couples', womanWomen, SAME_SEX, YES],
+    ['woman seeking women × straight couples only', womanWomen, HETERO, NO],
+    // Gender and who is sought.
+    ['woman × study of men only', womanMen, ONLY_HUSBANDS, NO],
+    [
+      'man seeking women × study of men seeking women only',
+      manWomen,
+      ONLY_HUSBANDS,
+      YES,
+    ],
+    [
+      'man seeking women × study of people seeking men',
+      manWomen,
+      ONLY_SEEKING_MEN,
+      NO,
+    ],
+    // "outro" only matches what did not split by gender.
+    ['other × unscoped study', other, UNSCOPED, YES],
+    ['other × study that split men and women', other, YOUNG, NO],
+    ['other × straight couples only', other, HETERO, NO],
+    [
+      'other × study that only split people seeking men',
+      other,
+      ONLY_SEEKING_MEN,
+      YES,
+    ],
+    // "ambos" applies if one of the sides is covered, and says which.
+    ['man seeking both × straight couples only', manBoth, HETERO, SIDE_WOMEN],
+    ['man seeking both × same-sex couples', manBoth, SAME_SEX, SIDE_MEN],
+    ['man seeking both × unscoped study', manBoth, UNSCOPED, YES],
+    [
+      'man seeking both × study of people seeking men',
+      manBoth,
+      ONLY_SEEKING_MEN,
+      SIDE_MEN,
+    ],
+    ['woman seeking both × straight couples only', womanBoth, HETERO, SIDE_MEN],
+    ['woman seeking both × study of men only', womanBoth, ONLY_HUSBANDS, NO],
+    // Age.
+    ['30 years old × study of 18 to 35', manWomen, YOUNG, YES],
+    ['50 years old × study of 18 to 35', womanBoth, YOUNG, NO],
+    [
+      '35 years old × study of 18 to 35 (the edge counts)',
+      { ...manWomen, age: 35 },
+      YOUNG,
+      YES,
+    ],
+    // Half a profile: what was not said is not checked.
+    ['age only × straight couples', only40, HETERO, YES],
+    ['age only × study of 18 to 35', only40, YOUNG, NO],
+    ['gender only × same-sex couples', onlyMan, SAME_SEX, YES],
+    ['gender only × study of men only', onlyMan, ONLY_HUSBANDS, YES],
+  ])('%s', (_, profile, coverage, expected) => {
+    expect(appliesToYou(profile, [coverage])).toEqual(expected)
+  })
+})
+
+describe('appliesToYou with more than one coverage', () => {
+  it("applies if one of the finding's coverages covers the profile", () => {
+    expect(appliesToYou(manMen, [HETERO, SAME_SEX])).toEqual(YES)
+    expect(appliesToYou(manMen, [HETERO, ONLY_HUSBANDS])).toEqual(NO)
+  })
+
+  it('with "ambos", the sides of each coverage add up', () => {
+    expect(appliesToYou(manBoth, [HETERO, SAME_SEX])).toEqual(YES)
+    expect(appliesToYou(manBoth, [HETERO, HETERO])).toEqual(SIDE_WOMEN)
+  })
+
+  it('with no coverage at all, there is no data for the profile', () => {
+    expect(appliesToYou(manMen, [])).toEqual(NO)
+  })
+})
+
+describe('appliesToYou without a profile', () => {
+  it('decides nothing: only the "Vale para:" note stays', () => {
+    expect(appliesToYou(null, [HETERO])).toBeNull()
+    expect(appliesToYou({}, [HETERO])).toBeNull()
+  })
+})

@@ -1,0 +1,60 @@
+# Fixture do e2e: os degraus do rascunho de verdade
+# (data/priorities/_priorities.yaml), com as Fichas trocadas pelas da
+# fixture, uma ✅ (silva-2020) e uma 🟡 (costa-2018).
+explained_satisfaction: { fact_sheet: silva-2020-apps-brasil, relationship: 45, partner: 5, unexplained: 50 }
+
+traits:
+  - id: aparencia
+    name: Aparência
+    attraction: { level: 3, measure: "r ≈ 0,40", plain_text: "Quem é mais bonito atrai mais.", fact_sheet: silva-2020-apps-brasil }
+    satisfaction: { level: 2, measure: "r = 0,10, só maridos", plain_text: "Só os maridos ficam um pouco mais satisfeitos, e só no começo.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    bias: { all: "As pessoas dão menos peso à aparência quando dizem o que querem do que quando se atraem." }
+  - id: sexo
+    name: Química sexual
+    attraction: { level: 3, plain_text: "É o que mais pesa no que as pessoas revelam.", fact_sheet: silva-2020-apps-brasil }
+    satisfaction: { level: 3, plain_text: "Está entre o que mais prevê satisfação.", fact_sheet: silva-2020-apps-brasil }
+    duration: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+  - id: renda
+    name: Renda
+    attraction: { level: 2, plain_text: "Pesa pouco na atração.", fact_sheet: silva-2020-apps-brasil }
+    satisfaction: { level: 0, plain_text: "Nenhum estudo lido mede a renda do parceiro e a satisfação." }
+    duration: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    bias:
+      woman: Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.
+      man: Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.
+  - id: calma
+    name: Estabilidade emocional
+    attraction: { level: 2, plain_text: "No primeiro contato, pesa menos do que se diz.", fact_sheet: costa-2018-satisfacao }
+    satisfaction: { level: 2, plain_text: "É o traço do parceiro com o resultado mais consistente.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 1, plain_text: "Para o fim de namoros, a personalidade quase não prevê.", fact_sheet: costa-2018-satisfacao }
+  - id: gentileza
+    name: Gentileza
+    attraction: { level: 0, plain_text: "Os estudos lidos não separam isso." }
+    satisfaction: { level: 2, plain_text: "Parceiros mais gentis se associam a mais satisfação.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 1, plain_text: "Para o fim de namoros, a personalidade quase não prevê.", fact_sheet: costa-2018-satisfacao }
+  - id: responsavel
+    name: Ser responsável
+    attraction: { level: 0, plain_text: "Os estudos lidos não separam isso." }
+    satisfaction: { level: 2, plain_text: "Parceiros mais responsáveis se associam a mais satisfação.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 1, plain_text: "Para o fim de namoros, a personalidade quase não prevê.", fact_sheet: costa-2018-satisfacao }
+  - id: parecido
+    name: Ser parecido comigo
+    attraction: { level: 1, plain_text: "Ser parecido de fato não prevê atração.", fact_sheet: costa-2018-satisfacao }
+    satisfaction: { level: 1, measure: "< 0,5%", plain_text: "Ter personalidades parecidas explica menos de 0,5% da satisfação.", fact_sheet: costa-2018-satisfacao }
+    duration: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+  - id: escolaridade
+    name: Mesma escolaridade
+    attraction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    satisfaction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    duration: { level: 2, measure: "HR 0,78", plain_text: "Casais com a mesma escolaridade se divorciam um pouco menos.", fact_sheet: silva-2020-apps-brasil }
+  - id: religiao
+    name: Mesma religião
+    attraction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    satisfaction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    duration: { level: 2, plain_text: "Uniões entre religiões diferentes se desfazem mais.", fact_sheet: silva-2020-apps-brasil }
+  - id: idade
+    name: Idade parecida
+    attraction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    satisfaction: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
+    duration: { level: 0, plain_text: "Só um estudo fraco e ambíguo.", fact_sheet: costa-2018-satisfacao }

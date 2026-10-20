@@ -1,42 +1,42 @@
-// As stories como teste, num Chrome de verdade: `pnpm test:stories`. No
-// molde do Festival dos Macacos, fica fora do `vite.config.ts` porque a
-// story se monta com o Vite do Storybook (`.storybook/vite.config.ts`), e
-// não com o do app (TanStack Start e nitro).
+// The stories as tests, in a real Chrome: `pnpm test:stories`. Modeled on
+// the Festival dos Macacos, it stays out of `vite.config.ts` because the
+// story is built with Storybook's Vite (`.storybook/vite.config.ts`), and not
+// with the app's (TanStack Start and nitro).
 import { playwright } from 'vite-plus/test/browser-playwright'
 import { defineConfig, mergeConfig } from 'vite-plus'
-import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
-import { portaPedida } from '../scripts/portas.ts'
-import doStorybook from './.storybook/vite.config.ts'
+import { vitestWorkers } from '../scripts/machine-queue.ts'
+import { requestedPort } from '../scripts/ports.ts'
+import storybookConfig from './.storybook/vite.config.ts'
 
-// A rodada entra na fila da máquina antes de abrir os Chrome
-// (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// The run joins the machine queue before opening the Chrome instances
+// (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
-// O servidor que o Vitest sobe para o Chrome abrir as stories, na porta do
-// checkout (`scripts/portas.ts`, ADR 0010). Sem ela, dois worktrees disputam a
-// 63315 do Vitest. `STORIES_PORTA` escolhe outra.
-const porta = portaPedida('stories')
+// The server Vitest starts for Chrome to open the stories, on the checkout's
+// port (`scripts/ports.ts`, ADR 0010). Without it, two worktrees fight over
+// Vitest's 63315. `STORIES_PORT` picks another.
+const port = requestedPort('stories')
 
 export default mergeConfig(
-  doStorybook,
+  storybookConfig,
   defineConfig({
     test: {
       name: 'stories',
       ...(workers ? { maxWorkers: workers } : {}),
-      include: ['src/platform/storybook/*.navegador.test.tsx'],
+      include: ['src/platform/storybook/*.browser.test.tsx'],
       setupFiles: ['.storybook/vitest.setup.ts'],
       testTimeout: 30_000,
       browser: {
         enabled: true,
         headless: true,
-        api: { port: porta, strictPort: true },
-        // O Chrome instalado, como o e2e (`playwright.config.ts`).
+        api: { port, strictPort: true },
+        // The installed Chrome, like the e2e (`playwright.config.ts`).
         provider: playwright({ launchOptions: { channel: 'chrome' } }),
-        // Cada story no celular e no desktop, como o e2e.
+        // Each story on mobile and on desktop, like the e2e.
         instances: [
           {
             browser: 'chromium',
-            name: 'celular',
+            name: 'mobile',
             viewport: { width: 412, height: 915 },
           },
           {

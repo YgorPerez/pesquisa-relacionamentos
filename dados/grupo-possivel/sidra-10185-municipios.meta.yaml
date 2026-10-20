@@ -1,8 +1,0 @@
-# Gerado por scripts/grupo-possivel/pipeline.ts. Não edite à mão: rode `pnpm dados:grupo-possivel`.
-ficha: ibge-2022-censo-amostra
-tabela: ["SIDRA 10185"]
-variaveis: ["140 Pessoas de 10 anos ou mais de idade", "464 Estado conjugal (viviam ou não em união)", "2 Sexo", "58 Grupo de idade (15 anos ou mais)", "86 Cor ou raça (total)"]
-baixado_em: 2026-10-19
-script: scripts/grupo-possivel/pipeline.ts
-versao: "Censo 2022, amostra, 5570 municípios"
-conferencia: "A soma dos municípios dá a UF publicada na mesma tabela, em cada sexo × grupo de idade × união."

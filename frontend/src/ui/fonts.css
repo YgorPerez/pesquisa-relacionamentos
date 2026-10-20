@@ -1,0 +1,72 @@
+/* The DESIGN.md fonts, self-hosted: the @fontsource latin woff2 files, in
+ * `src/fonts/`, with each one's OFL license beside it. Latin covers all of
+ * Portuguese. */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('../fonts/bricolage-grotesque-latin-wght-normal.woff2')
+    format('woff2');
+  font-weight: 500 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/atkinson-hyperlegible-latin-400-normal.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/atkinson-hyperlegible-latin-400-italic.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/atkinson-hyperlegible-latin-700-normal.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* The digits come from Source Sans 3, inside the Atkinson family, only 0 to
+ * 9: Atkinson's slashed zero made the numbers look like code (The Plain
+ * Digits Rule). Declared later, these faces win over the ones above for
+ * those characters. */
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/source-sans-3-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/source-sans-3-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/source-sans-3-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  unicode-range: U+0030-0039;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url('../fonts/kalam-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}

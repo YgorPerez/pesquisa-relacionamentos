@@ -1,13 +1,13 @@
-# Os selos do README: a nota da `fallow health`, o score do React Doctor e a
-# cobertura de linhas (ADR 0023). Roda depois de cada push na `main` que mexe
-# no código, mede de novo e grava o resultado em `docs/badges/*.svg`
-# (`.github/scripts/badges.ts`). O README só aponta para o SVG, então nenhum
-# número fica escrito à mão.
+# The README badges: the `fallow health` grade, the React Doctor score and
+# line coverage (ADR 0023). Runs after each push to `main` that touches code,
+# measures again and writes the result to `docs/badges/*.svg`
+# (`.github/scripts/badges.ts`). The README only points at the SVG, so no
+# number is written by hand.
 #
-# São os mesmos comandos do `pnpm check`, menos o portão: a fallow roda com
-# `--min-score 0`, que nunca falha, porque quem cobra a nota é o PR. O React
-# Doctor roda sem `--no-score`, ao contrário do `check`: o score sai da API
-# dele, e sem ela vem `null`.
+# The same commands as `pnpm check`, minus the gate: fallow runs with
+# `--min-score 0`, which never fails, because the PR is what enforces the
+# grade. React Doctor runs without `--no-score`, unlike `check`: the score
+# comes from its API, and without it the score is `null`.
 name: Badges
 
 'on':
@@ -21,8 +21,8 @@ name: Badges
       - '.github/scripts/badges.ts'
   workflow_dispatch:
 
-# O commit dos selos volta para a `main` com o token do próprio workflow, que
-# não dispara outros workflows: o deploy não roda por causa dele.
+# The badge commit goes back to `main` with the workflow's own token, which
+# does not trigger other workflows: deploy does not run because of it.
 permissions:
   contents: write
 
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -46,12 +46,12 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # A cobertura de cada pacote, que também dá à fallow o CRAP exato de
-      # cada função.
-      - name: Medir
+      # Each package's coverage, which also gives fallow the exact CRAP of
+      # each function.
+      - name: Measure
         run: |
           pnpm exec vp run -r test:coverage
           pnpm exec vp test run --coverage
@@ -59,22 +59,22 @@ jobs:
           pnpm exec fallow health --coverage coverage/coverage-final.json --min-score 0 --format json > coverage/health.json
           pnpm exec react-doctor --json --no-supply-chain -y --json-out coverage/doctor.json
 
-      - name: Escrever os selos
+      - name: Write the badges
         run: node .github/scripts/badges.ts
 
-      # Só commita se algum selo mudou. A `main` recebe push de várias
-      # sessões, daí o rebase com repetição antes de subir.
-      - name: Commitar os selos
+      # Commits only if some badge changed. `main` gets pushes from several
+      # sessions, hence the rebase with retries before pushing.
+      - name: Commit the badges
         run: |
           git add docs/badges
           if git diff --cached --quiet; then
-            echo "Selos iguais aos da main; nada a commitar."
+            echo "Badges match main; nothing to commit."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Selos: acompanham ${GITHUB_SHA::7}"
-          for tentativa in 1 2 3; do
+          git commit -m "Badges: follow ${GITHUB_SHA::7}"
+          for attempt in 1 2 3; do
             git pull --rebase origin main && git push origin HEAD:main && exit 0
             sleep 15
           done

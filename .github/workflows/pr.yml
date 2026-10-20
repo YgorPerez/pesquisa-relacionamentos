@@ -1,14 +1,15 @@
-# O portão dos pull requests, no molde do `pr.yml` do Festival dos Macacos
-# (ADR 0016). É aqui que a suíte inteira roda: os tipos, o `pnpm check`, o
-# build, o Storybook, as stories e o e2e. Na máquina, quem muda o código roda
-# só a menor prova do que mudou (`node scripts/prova-minima.ts`), e o hook de
-# push, os testes afetados; o resto fica para este workflow.
+# The pull request gate, modeled on the Festival dos Macacos `pr.yml` (ADR
+# 0016). This is where the whole suite runs: types, `pnpm check`, the build,
+# Storybook, the stories and e2e. On the machine, whoever changes code runs
+# only the minimal proof of what changed (`node scripts/minimal-proof.ts`),
+# and the push hook runs the affected tests; the rest is left to this
+# workflow.
 #
-# Três jobs em paralelo, cada um num runner: o `check`, as `stories` e o
-# `e2e`. O `suite-noturna.yml` chama este mesmo workflow toda noite, na `main`.
+# Three jobs in parallel, each on its own runner: `check`, `stories` and
+# `e2e`. `nightly-suite.yml` calls this same workflow every night, on `main`.
 #
-# Todo job tem `timeout-minutes`: sem ele, um job travado segura o PR pelas
-# seis horas padrão do GitHub.
+# Every job has `timeout-minutes`: without it, a stuck job holds the PR for
+# GitHub's default six hours.
 name: PR
 
 'on':
@@ -18,29 +19,30 @@ name: PR
 permissions:
   contents: read
 
-# Um push novo no mesmo PR cancela a rodada anterior: o e2e leva minutos, e o
-# resultado que conta é o do último commit.
+# A new push to the same PR cancels the previous run: e2e takes minutes, and
+# the result that counts is the one for the last commit.
 concurrency:
   group: pr-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
-  # Os tipos e o mesmo `pnpm check` da máquina (ADR 0002 e 0005): formato,
-  # lint e tipos (`vp check`), as pastas, os testes com o piso de cobertura,
-  # a fallow e o React Doctor.
+  # Types and the same `pnpm check` as the machine (ADR 0002 and 0005):
+  # format, lint and types (`vp check`), the folders, the tests with the
+  # coverage floor, fallow and React Doctor.
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          # A `fallow health` conta quanto cada arquivo mudou nos últimos
-          # meses. Com o clone raso de um commit só, o score daqui sairia
-          # diferente do da máquina.
+          # `fallow health` counts how much each file changed in recent
+          # months. With a single-commit shallow clone, the score here would
+          # differ from the machine's.
           fetch-depth: 0
 
-      # Sem `version`, a ação lê o `packageManager` do `package.json` da raiz.
+      # Without `version`, the action reads `packageManager` from the root
+      # `package.json`.
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
@@ -51,23 +53,23 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # O `tsc` de cada pacote, com os diagnósticos do Effect (ADR 0004).
-      - name: Tipos
+      # Each package's `tsc`, with the Effect diagnostics (ADR 0004).
+      - name: Types
         run: pnpm typecheck
 
       - name: Check
         run: pnpm check
 
-  # Cada story num Chrome de verdade, no celular e no desktop
-  # (`frontend/vitest.stories.config.ts`), com o Chrome da imagem ubuntu.
+  # Each story in a real Chrome, on phone and desktop
+  # (`frontend/vitest.stories.config.ts`), with the ubuntu image's Chrome.
   stories:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
@@ -80,35 +82,36 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build do Storybook
+      - name: Build Storybook
         run: pnpm build-storybook
 
-      - name: Testes das stories
+      - name: Story tests
         run: pnpm test:stories
 
-      # O manager do Storybook de pé: a busca sem acento (ADR 0037).
-      - name: Teste do Storybook
+      # The Storybook manager up and running: accent-insensitive search
+      # (ADR 0037).
+      - name: Storybook test
         run: pnpm test:storybook
 
-      - name: Guardar capturas das stories
+      - name: Upload story screenshots
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: stories-falhas
+          name: stories-failures
           path: frontend/.vitest/
           if-no-files-found: ignore
           retention-days: 14
 
-  # O build do site, como o deploy o faz, e o e2e. Ficam no mesmo job porque
-  # o e2e builda de novo, com o acervo de fixture, no mesmo `.output`.
+  # The site build, as deploy does it, and e2e. They share a job because e2e
+  # builds again, with the fixture library, into the same `.output`.
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
@@ -121,30 +124,31 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # O build confere o sitemap que está no ar: um caminho publicado que
-      # sumiu sem `antes` derruba o passo (`frontend/vite/acervo.ts`). Antes
-      # do primeiro deploy não há sitemap, e o build segue sem a conferência.
+      # The build checks the live sitemap: a published path that disappeared
+      # without `antes` fails the step (`frontend/vite/library.ts`). Before the
+      # first deploy there is no sitemap, and the build goes on without the
+      # check.
       - name: Build
         run: |
-          # O `<urlset` separa o sitemap de uma página de domínio estacionado.
-          if curl -fsSL --max-time 20 https://temestudo.cloud/sitemap.xml -o "$RUNNER_TEMP/sitemap-anterior.xml" \
-            && grep -q '<urlset' "$RUNNER_TEMP/sitemap-anterior.xml"; then
-            export SITEMAP_ANTERIOR="$RUNNER_TEMP/sitemap-anterior.xml"
+          # `<urlset` tells the sitemap apart from a parked-domain page.
+          if curl -fsSL --max-time 20 https://temestudo.cloud/sitemap.xml -o "$RUNNER_TEMP/previous-sitemap.xml" \
+            && grep -q '<urlset' "$RUNNER_TEMP/previous-sitemap.xml"; then
+            export SITEMAP_ANTERIOR="$RUNNER_TEMP/previous-sitemap.xml"
           else
-            echo "::warning::Não baixei https://temestudo.cloud/sitemap.xml; o build não confere os caminhos publicados."
+            echo "::warning::Could not download https://temestudo.cloud/sitemap.xml; the build does not check published paths."
           fi
           pnpm build
 
-      # O `playwright.config.ts` usa o Chrome da máquina (`channel: 'chrome'`),
-      # e a imagem ubuntu do GitHub já traz o Google Chrome.
+      # `playwright.config.ts` uses the machine's Chrome (`channel: 'chrome'`),
+      # and GitHub's ubuntu image already ships Google Chrome.
       - name: E2E
         run: pnpm e2e
 
-      # O trace e a captura de tela do que falhou, em `test-results/`.
-      - name: Guardar traces do e2e
+      # The trace and screenshot of what failed, in `test-results/`.
+      - name: Upload e2e traces
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:

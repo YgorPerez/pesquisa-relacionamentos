@@ -1,141 +1,143 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import { leituras } from '#/conteudo/leituras'
-import { Html } from '#/ui/guia'
-import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
-import { LinkDeVoltar } from '#/ui/navegacao'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Aviso, Headline, Secao } from '#/ui/secao'
+import { reads } from '#/content/reads'
+import { Html } from '#/ui/guide'
+import { QuestionRow } from '#/ui/question-row'
+import { BackLink } from '#/ui/navigation'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Notice, Headline, Section } from '#/ui/section'
 import {
-  ForcaDaEvidencia,
-  LegendaDasFichas,
-  StatusDeVerificacao,
-  MetaDaFicha,
-} from '#/ui/selos'
-import { PALAVRA_DO_DESENHO } from '#/ui/selos.textos'
+  StrengthBadge,
+  FactSheetLegend,
+  VerificationStatusBadge,
+  FactSheetMeta,
+} from '#/ui/badges'
+import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
 
 export const Route = createFileRoute('/estudos/$slug')({
-  // O `loaderData` leva só o que o `head` usa; a Ficha vai pelo `queryClient`.
+  // The `loaderData` carries only what the `head` uses; the Fact sheet goes
+  // through the `queryClient`.
   loader: async ({ context, params }) => {
-    const { busca, indexar } = await context.queryClient.query(
-      leituras.ficha(params.slug),
+    const factSheet = await context.queryClient.query(
+      reads.factSheet(params.slug),
     )
-    return { busca, indexar }
+    return { search: factSheet.search, indexable: factSheet.indexable }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: loaderData.busca.descricao },
-          // Ficha ⬜ fica fora da busca até ser conferida (#15).
-          ...(loaderData.indexar
+          { title: `${loaderData.search.title} · Tem estudo?` },
+          { name: 'description', content: loaderData.search.description },
+          // A ⬜ Fact sheet stays out of search until it is checked (#15).
+          ...(loaderData.indexable
             ? []
             : [{ name: 'robots', content: 'noindex' }]),
         ]
       : [],
   }),
-  notFoundComponent: FichaNaoExiste,
-  component: PaginaDaFicha,
+  notFoundComponent: FactSheetNotFound,
+  component: FactSheetPage,
 })
 
-const numero = new Intl.NumberFormat('pt-BR')
+const numberFormat = new Intl.NumberFormat('pt-BR')
 
-const data = (iso: string) => {
-  const [ano, mes, dia] = iso.split('-')
-  return `${dia}/${mes}/${ano}`
+const formatDate = (iso: string) => {
+  const [year, month, day] = iso.split('-')
+  return `${day}/${month}/${year}`
 }
 
-/** Uma linha dos dados da Ficha, com o fio pontilhado em cima. */
-function Dado({
-  titulo,
+/** One row of the Fact sheet's data, with the dotted rule above. */
+function DataRow({
+  title,
   children,
 }: {
-  titulo: ReactNode
+  title: ReactNode
   children: ReactNode
 }) {
   return (
     <div className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-3 first:border-t-0 first:pt-0">
       <dt className="font-label text-label leading-body text-tinta-2">
-        {titulo}
+        {title}
       </dt>
       <dd className="m-0 mt-0.5 wrap-anywhere">{children}</dd>
     </div>
   )
 }
 
-/** A Ficha do endereço, que o loader já pôs no `queryClient`: cada seção da
- * página a lê de lá, sem pedir de novo. */
-function useFicha() {
-  return useSuspenseQuery(leituras.ficha(Route.useParams().slug)).data
+/** The address's Fact sheet, which the loader already put in the
+ * `queryClient`: each section of the page reads it from there, without
+ * requesting it again. */
+function useFactSheet() {
+  return useSuspenseQuery(reads.factSheet(Route.useParams().slug)).data
 }
 
-function PaginaDaFicha() {
-  const ficha = useFicha()
-  const naoVerificada = ficha.status === 'nao-verificado'
+function FactSheetPage() {
+  const factSheet = useFactSheet()
+  const unverified = factSheet.status === 'unverified'
 
   return (
-    <Folha>
-      <Coluna>
-        <LinkDeVoltar to="/estudos">Todos os estudos</LinkDeVoltar>
+    <Sheet>
+      <Column>
+        <BackLink to="/estudos">Todos os estudos</BackLink>
 
-        {naoVerificada && (
-          <Aviso role="note">
+        {unverified && (
+          <Notice role="note">
             <strong>Ficha não verificada.</strong> Os números abaixo ainda não
             foram conferidos no texto original. Ela não sustenta nenhum Guia até
             ser refeita com a fonte aberta.
-          </Aviso>
+          </Notice>
         )}
 
-        <Display ficha>{ficha.titulo}</Display>
+        <Display small>{factSheet.title}</Display>
 
-        <MetaDaFicha grande>
-          <StatusDeVerificacao status={ficha.status} />
-          <ForcaDaEvidencia forca={ficha.forca} rotulo />
-        </MetaDaFicha>
+        <FactSheetMeta large>
+          <VerificationStatusBadge status={factSheet.status} />
+          <StrengthBadge strength={factSheet.strength} withLabel />
+        </FactSheetMeta>
 
-        <DadosDaFicha />
+        <FactSheetData />
 
-        <Secao aria-labelledby="o-que-mediu">
+        <Section aria-labelledby="o-que-mediu">
           <Headline id="o-que-mediu">O que mediu</Headline>
-          <Html className="prosa" html={ficha.oQueMediuHtml} />
-        </Secao>
+          <Html className="prosa" html={factSheet.whatItMeasuredHtml} />
+        </Section>
 
-        <Achados />
+        <Findings />
 
-        {ficha.outrasSecoes.map((secao, i) => (
-          <Secao key={secao.titulo} aria-labelledby={`secao-${i}`}>
-            <Headline id={`secao-${i}`}>{secao.titulo}</Headline>
-            <Html className="prosa" html={secao.html} />
-          </Secao>
+        {factSheet.otherSections.map((section, i) => (
+          <Section key={section.title} aria-labelledby={`secao-${i}`}>
+            <Headline id={`secao-${i}`}>{section.title}</Headline>
+            <Html className="prosa" html={section.html} />
+          </Section>
         ))}
 
-        <Secao aria-labelledby="limitacoes">
+        <Section aria-labelledby="limitacoes">
           <Headline id="limitacoes">Limitações</Headline>
-          <Html className="prosa limites" html={ficha.limitacoesHtml} />
-        </Secao>
+          <Html className="prosa limites" html={factSheet.limitationsHtml} />
+        </Section>
 
-        <QuemCita />
+        <CitedBy />
 
-        <Secao aria-labelledby="como-ler">
+        <Section aria-labelledby="como-ler">
           <Headline id="como-ler">Como ler</Headline>
-          <LegendaDasFichas />
-        </Secao>
-      </Coluna>
-    </Folha>
+          <FactSheetLegend />
+        </Section>
+      </Column>
+    </Sheet>
   )
 }
 
-/** Os dados da Ficha, um por linha: de onde veio, como foi conferida, a
- * amostra, o desenho e quem pagou. */
-function DadosDaFicha() {
-  const ficha = useFicha()
+/** The Fact sheet's data, one per row: where it came from, how it was
+ * checked, the sample, the design and who paid. */
+function FactSheetData() {
+  const factSheet = useFactSheet()
   return (
     <dl className="m-0" data-slot="ficha-dados">
-      <Dado titulo="Referência">
-        <Html como="span" html={ficha.referenciaHtml} />{' '}
+      <DataRow title="Referência">
+        <Html as="span" html={factSheet.referenceHtml} />{' '}
         <a
-          href={ficha.link}
+          href={factSheet.link}
           className="flex min-h-toque w-fit items-center font-bold text-agua-tinta decoration-agua-tinta hover:bg-agua-fonte hover:text-tinta"
           rel="noopener"
           target="_blank"
@@ -143,120 +145,126 @@ function DadosDaFicha() {
           Abrir o estudo
           <span className="sr-only"> (abre em outra aba)</span>
         </a>
-      </Dado>
-      <Dado titulo="Verificação">
-        {ficha.verificadoEm
-          ? `${ficha.status === 'ok' ? 'Lido no original' : 'Conferido em parte'} em ${data(ficha.verificadoEm)}.`
+      </DataRow>
+      <DataRow title="Verificação">
+        {factSheet.verifiedOn
+          ? `${factSheet.status === 'verified' ? 'Lido no original' : 'Conferido em parte'} em ${formatDate(factSheet.verifiedOn)}.`
           : 'Ainda não conferida na fonte.'}
-      </Dado>
-      <Dado titulo={`Por que ${ficha.forca}`}>{ficha.forcaPorque}</Dado>
-      <Dado titulo="Amostra">
-        {ficha.n !== null && <strong>{numero.format(ficha.n)}. </strong>}
-        <Html como="span" html={ficha.amostraHtml} />{' '}
-        {ficha.representativa
+      </DataRow>
+      <DataRow title={`Por que ${STRENGTH_WORD[factSheet.strength]}`}>
+        {factSheet.strengthReason}
+      </DataRow>
+      <DataRow title="Amostra">
+        {factSheet.n !== null && (
+          <strong>{numberFormat.format(factSheet.n)}. </strong>
+        )}
+        <Html as="span" html={factSheet.sampleHtml} />{' '}
+        {factSheet.representative
           ? 'Representativa da população.'
           : 'Não é representativa da população.'}
-      </Dado>
-      <Dado titulo="Desenho">{PALAVRA_DO_DESENHO[ficha.desenho]}</Dado>
-      <Dado titulo="País e período">
-        {ficha.paises.length > 0
-          ? ficha.paises.join(', ')
+      </DataRow>
+      <DataRow title="Desenho">{DESIGN_NAME[factSheet.design]}</DataRow>
+      <DataRow title="País e período">
+        {factSheet.countries.length > 0
+          ? factSheet.countries.join(', ')
           : 'País não informado'}{' '}
-        · {ficha.periodo}
-      </Dado>
-      <Dado titulo="Financiamento e conflito de interesse">
-        {ficha.conflitoHtml ? (
-          <Html como="span" html={ficha.conflitoHtml} />
+        · {factSheet.period}
+      </DataRow>
+      <DataRow title="Financiamento e conflito de interesse">
+        {factSheet.conflictHtml ? (
+          <Html as="span" html={factSheet.conflictHtml} />
         ) : (
           'Não declarado.'
         )}
-      </Dado>
-      {ficha.licenca && <Dado titulo="Licença">{ficha.licenca}</Dado>}
+      </DataRow>
+      {factSheet.license && (
+        <DataRow title="Licença">{factSheet.license}</DataRow>
+      )}
     </dl>
   )
 }
 
-/** Os Achados, cada um com o número, a medida e o Trecho do original, e as
- * notas deles embaixo. */
-function Achados() {
-  const { achados, notasDosAchadosHtml: notasHtml } = useFicha()
+/** The Findings, each with the number, the measure and the original's
+ * Excerpt, and their notes below. */
+function Findings() {
+  const { findings, findingsNotesHtml: notesHtml } = useFactSheet()
   return (
-    <Secao aria-labelledby="achados">
+    <Section aria-labelledby="achados">
       <Headline id="achados">Achados</Headline>
       <ol className="m-0 mb-md list-none p-0" data-slot="achados">
-        {achados.map((achado) => (
+        {findings.map((finding) => (
           <li
-            key={`${achado.medida}|${achado.valor}|${achado.onde}`}
+            key={`${finding.measure}|${finding.value}|${finding.locator}`}
             className="grid grid-cols-[minmax(64px,max-content)_1fr] gap-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5 estreito:grid-cols-1 estreito:gap-0.5"
           >
             <Html
               className="max-w-38 font-title text-title leading-title font-bold tracking-normal wrap-anywhere estreito:max-w-none"
-              html={achado.valor}
+              html={finding.value}
             />
             <div>
-              <Html como="span" className="block" html={achado.medida} />
-              {achado.trecho ? (
+              <Html as="span" className="block" html={finding.measure} />
+              {finding.excerpt ? (
                 <blockquote className="m-0 mt-xs border-l-2 border-agua-tinta pl-3 italic">
-                  <Html como="span" html={achado.trecho} />
+                  <Html as="span" html={finding.excerpt} />
                 </blockquote>
               ) : (
                 <p className="m-0 mt-xs text-nota text-tinta-2">
                   Trecho do original ainda não conferido.
                 </p>
               )}
-              {achado.onde && achado.onde !== '—' && (
+              {finding.locator && finding.locator !== '—' && (
                 <p className="m-0 mt-xs text-nota text-tinta-2">
-                  Onde: <Html como="span" html={achado.onde} />
+                  Onde: <Html as="span" html={finding.locator} />
                 </p>
               )}
             </div>
           </li>
         ))}
       </ol>
-      {notasHtml && <Html className="prosa" html={notasHtml} />}
-    </Secao>
+      {notesHtml && <Html className="prosa" html={notesHtml} />}
+    </Section>
   )
 }
 
-/** Os Guias e as Dicas publicadas que citam a Ficha. */
-function QuemCita() {
-  const { citadaEm } = useFicha()
+/** The Guides and the published Tips that cite the Fact sheet. */
+function CitedBy() {
+  const { citedIn } = useFactSheet()
   return (
-    <Secao aria-labelledby="citada-em">
+    <Section aria-labelledby="citada-em">
       <Headline id="citada-em">Citada em</Headline>
-      {citadaEm.guias.length === 0 && citadaEm.dicas.length === 0 ? (
+      {citedIn.guides.length === 0 && citedIn.tips.length === 0 ? (
         <p className="text-tinta-2">
           Nenhum Guia nem Dica publicada cita esta Ficha ainda.
         </p>
       ) : (
         <>
-          {citadaEm.guias.length > 0 && (
+          {citedIn.guides.length > 0 && (
             <>
               <h3 className="mx-0 mt-md mb-sm font-title text-title">Guias</h3>
               <ul className="isolate m-0 list-none p-0">
-                {citadaEm.guias.map((guia) => (
-                  <li key={guia.slug} className="not-first:mt-md">
-                    <LinhaDePergunta guia={guia} />
+                {citedIn.guides.map((guide) => (
+                  <li key={guide.slug} className="not-first:mt-md">
+                    <QuestionRow guide={guide} />
                   </li>
                 ))}
               </ul>
             </>
           )}
-          {citadaEm.dicas.length > 0 && (
+          {citedIn.tips.length > 0 && (
             <>
               <h3 className="mx-0 mt-md mb-sm font-title text-title">Dicas</h3>
               <ul className="m-0 list-none p-0">
-                {citadaEm.dicas.map((dica) => (
+                {citedIn.tips.map((tip) => (
                   <li
-                    key={dica.slug}
+                    key={tip.slug}
                     className="not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
                   >
                     <Link
                       to="/dicas/$slug"
-                      params={{ slug: dica.slug }}
+                      params={{ slug: tip.slug }}
                       className="flex min-h-toque items-center py-2 font-bold decoration-agua-tinta underline-offset-4"
                     >
-                      {dica.texto}
+                      {tip.text}
                     </Link>
                   </li>
                 ))}
@@ -265,20 +273,20 @@ function QuemCita() {
           )}
         </>
       )}
-    </Secao>
+    </Section>
   )
 }
 
-function FichaNaoExiste() {
+function FactSheetNotFound() {
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>Essa Ficha não existe</Display>
         <Lead>
           O endereço pode ter mudado.{' '}
           <Link to="/estudos">Veja todos os estudos</Link>.
         </Lead>
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }

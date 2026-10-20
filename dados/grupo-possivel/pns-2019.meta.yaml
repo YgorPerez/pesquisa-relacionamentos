@@ -1,8 +1,0 @@
-# Gerado por scripts/grupo-possivel/pipeline.ts. Não edite à mão: rode `pnpm dados:grupo-possivel`.
-ficha: ibge-2019-pns
-tabela: ["Microdados da PNS 2019, morador selecionado de 18 anos ou mais"]
-variaveis: ["V0024", "UPA_PNS", "V00291", "M001", "C006", "C008", "Y008", "P00404", "P050"]
-baixado_em: 2026-10-19
-script: scripts/grupo-possivel/pipeline.ts
-versao: "PNS_2019_20220525.zip publicado em 2022-05-25"
-conferencia: "Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada."

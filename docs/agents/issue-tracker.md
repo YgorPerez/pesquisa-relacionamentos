@@ -13,7 +13,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 ## Closing a ticket through its pull request
 
-A ticket that changes code enters through a pull request (ADR 0025, `docs/agents/integracao.md`, "O pull request" and "O merge"):
+A ticket that changes code enters through a pull request (ADR 0025, `docs/agents/integration.md`, "O pull request" and "O merge"):
 
 1. The branch `ticket/<n>-<name>` opens a PR against its spec branch (`spec/<n>-<name>`), or against `main` for a ticket outside a spec, following `.github/pull_request_template.md`, with `Closes #<n>` in the body.
 2. The PR merges only when every check on its last commit is green and no comment is left unanswered: `gh pr merge <pr> --merge`, no squash.

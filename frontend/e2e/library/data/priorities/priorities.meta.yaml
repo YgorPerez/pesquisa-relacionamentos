@@ -1,0 +1,6 @@
+# Fixture do e2e.
+fact_sheet: silva-2020-apps-brasil
+variables: [level, measure, plain_text, fact_sheet, bias]
+downloaded_on: 2026-10-19
+script: compilado à mão a partir das Fichas de cada célula
+version: "fixture"

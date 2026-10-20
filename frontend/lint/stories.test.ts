@@ -2,59 +2,59 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vite-plus/test'
-import { pecasSemStory } from './stories.ts'
+import { piecesWithoutStory } from './stories.ts'
 
-let raiz: string | undefined
+let root: string | undefined
 
-/** Um `frontend/` de mentira, com os arquivos dados. */
-function frontend(arquivos: Record<string, string>) {
-  raiz = mkdtempSync(join(tmpdir(), 'stories-'))
-  for (const [caminho, texto] of Object.entries(arquivos)) {
-    mkdirSync(dirname(join(raiz, caminho)), { recursive: true })
-    writeFileSync(join(raiz, caminho), texto)
+/** A fake `frontend/`, with the given files. */
+function frontend(files: Record<string, string>) {
+  root = mkdtempSync(join(tmpdir(), 'stories-'))
+  for (const [path, text] of Object.entries(files)) {
+    mkdirSync(dirname(join(root, path)), { recursive: true })
+    writeFileSync(join(root, path), text)
   }
-  return raiz
+  return root
 }
 
 afterEach(() => {
-  if (raiz) rmSync(raiz, { recursive: true, force: true })
-  raiz = undefined
+  if (root) rmSync(root, { recursive: true, force: true })
+  root = undefined
 })
 
-describe('pecasSemStory', () => {
-  it('a peça que nenhuma story importa falha', () => {
+describe('piecesWithoutStory', () => {
+  it('fails the piece no story imports', () => {
     expect(
-      pecasSemStory(
+      piecesWithoutStory(
         frontend({
-          'src/ui/selo.tsx': 'export const Selo = () => null',
-          'src/ui/botao.tsx': 'export const Botao = () => null',
-          'src/ui/botao.stories.tsx': "import { Botao } from './botao'",
+          'src/ui/badge.tsx': 'export const Badge = () => null',
+          'src/ui/button.tsx': 'export const Button = () => null',
+          'src/ui/button.stories.tsx': "import { Button } from './button'",
         }),
       ),
-    ).toEqual(['src/ui/selo.tsx'])
+    ).toEqual(['src/ui/badge.tsx'])
   })
 
-  it('a story pode morar em outro arquivo e importar pelos apelidos do app', () => {
+  it('the story may live in another file and import through the app aliases', () => {
     expect(
-      pecasSemStory(
+      piecesWithoutStory(
         frontend({
-          'src/ui/guia.tsx': '',
-          'src/ui/secao.tsx': '',
+          'src/ui/guide.tsx': '',
+          'src/ui/section.tsx': '',
           'src/ui/shadcn/button.tsx': '',
-          'src/ui/prateleira.stories.tsx': [
-            "import { Guia } from '#/ui/guia'",
-            "import { Secao } from '@/ui/secao.tsx'",
+          'src/ui/shelf.stories.tsx': [
+            "import { Guide } from '#/ui/guide'",
+            "import { Section } from '@/ui/section.tsx'",
           ].join('\n'),
-          'src/platform/storybook/controles.stories.tsx':
+          'src/platform/storybook/controls.stories.tsx':
             "import { Button } from '@/ui/shadcn/button'",
         }),
       ),
     ).toEqual([])
   })
 
-  it('a peça que só um teste ou outra peça importa ainda falha', () => {
+  it('a piece only a test or another piece imports still fails', () => {
     expect(
-      pecasSemStory(
+      piecesWithoutStory(
         frontend({
           'src/ui/a.tsx': "import { B } from './b'",
           'src/ui/b.tsx': '',
@@ -65,11 +65,11 @@ describe('pecasSemStory', () => {
     ).toEqual(['src/ui/b.tsx'])
   })
 
-  it('o que não é peça (o `.ts`, o `.css`, a story, o teste) não pede story', () => {
+  it('what is not a piece (the `.ts`, the `.css`, the story, the test) needs no story', () => {
     expect(
-      pecasSemStory(
+      piecesWithoutStory(
         frontend({
-          'src/ui/marca.ts': '',
+          'src/ui/brand.ts': '',
           'src/ui/tokens.css': '',
           'src/ui/x.test.tsx': '',
           'src/ui/x.stories.tsx': '',
@@ -78,9 +78,9 @@ describe('pecasSemStory', () => {
     ).toEqual([])
   })
 
-  it('o import só de tipo não conta como story', () => {
+  it('a type-only import does not count as a story', () => {
     expect(
-      pecasSemStory(
+      piecesWithoutStory(
         frontend({
           'src/ui/a.tsx': '',
           'src/ui/a.stories.tsx': "import type { A } from './a'",
@@ -89,7 +89,7 @@ describe('pecasSemStory', () => {
     ).toEqual(['src/ui/a.tsx'])
   })
 
-  it('no repositório, toda peça de `src/ui/` tem story', () => {
-    expect(pecasSemStory()).toEqual([])
+  it('in the repository, every `src/ui/` piece has a story', () => {
+    expect(piecesWithoutStory()).toEqual([])
   })
 })

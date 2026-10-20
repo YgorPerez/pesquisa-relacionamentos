@@ -1,10 +1,10 @@
 import { Toggle as TogglePrimitive } from '@base-ui/react/toggle'
 import { cn } from '@/platform/cn'
 
-/** O `chip` do DESIGN.md: papel com contorno de mão, amarelo quando
- * apertado. Indisponível (`aria-disabled`, que deixa o foco e diz por quê), o
- * contorno fica tracejado e a letra apagada. O que veio do `base-nova` do
- * shadcn foi trocado pelos tokens. */
+/** The DESIGN.md `chip`: paper with a hand outline, yellow when pressed.
+ * Unavailable (`aria-disabled`, which keeps the focus and says why), the
+ * outline turns dashed and the letters faded. What came from shadcn's
+ * `base-nova` was swapped for the tokens. */
 function Toggle({ className, ...props }: TogglePrimitive.Props) {
   return (
     <TogglePrimitive

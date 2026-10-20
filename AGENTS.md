@@ -25,23 +25,23 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 
 ## Onde olhar
 
-- Antes de subir, esperar ou parar um processo (o dev, um teste, o e2e), ou quando um comando se porta diferente do que você espera nesta máquina, leia `docs/agents/ambiente.md`. Tem o preparo do worktree, as portas dele, a fila dos testes e os comandos para parar.
-- Antes de um push, de abrir ou mesclar um PR, ou de confiar num check do GitHub, leia `docs/agents/integracao.md`. Tem os workflows que rodam em cada PR, os ramos `spec/*` e `ticket/*`, o hook de push, o teto de supressões e o merge.
-- Antes de rodar vários agentes em paralelo, leia `docs/agents/orquestrar.md`.
+- Antes de subir, esperar ou parar um processo (o dev, um teste, o e2e), ou quando um comando se porta diferente do que você espera nesta máquina, leia `docs/agents/environment.md`. Tem o preparo do worktree, as portas dele, a fila dos testes e os comandos para parar.
+- Antes de um push, de abrir ou mesclar um PR, ou de confiar num check do GitHub, leia `docs/agents/integration.md`. Tem os workflows que rodam em cada PR, os ramos `spec/*` e `ticket/*`, o hook de push, o teto de supressões e o merge.
+- Antes de rodar vários agentes em paralelo, leia `docs/agents/orchestration.md`.
 
 ## Onde um arquivo mora
 
-O app fica em `frontend/`, os pacotes puros em `packages/` (`conteudo`, que lê e valida o acervo, e `regras`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
+O app fica em `frontend/`, os pacotes puros em `packages/` (`content`, que lê e valida o acervo, e `rules`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
 
 - `routes/`: só arquivos de rota.
-- `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.textos.ts` de cada uma ao lado. O CSS à mão fica só em `ui/desenhos.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
-- `conteudo/`: as server functions que leem o acervo e montam a vista de cada página.
-- `estado/`: o que fica no navegador (`localStorage`, link recebido).
+- `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.copy.ts` de cada uma ao lado. O CSS à mão fica só em `ui/drawings.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
+- `content/`: as server functions que leem o acervo e montam a vista de cada página.
+- `state/`: o que fica no navegador (`localStorage`, link recebido).
 - `analytics/`: a contagem do GoatCounter.
-- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook, o apoio dos testes de tela em `platform/telas/`).
-- `fontes/`: os arquivos de fonte.
+- `platform/`: o que não é do domínio (o log do pedido, o redirecionamento, o Storybook, o apoio dos testes de tela em `platform/screens/`).
+- `fonts/`: os arquivos de fonte.
 
-O teste mora ao lado do que testa: o de uma tela é um `*.test.tsx` ao lado da peça dela em `ui/`, no jsdom (ADR 0035), e toda peça de `ui/` tem story (ADR 0036). `pnpm check` falha um arquivo fora do lugar (`frontend/lint/pastas.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
+O teste mora ao lado do que testa: o de uma tela é um `*.test.tsx` ao lado da peça dela em `ui/`, no jsdom (ADR 0035), e toda peça de `ui/` tem story (ADR 0036). `pnpm check` falha um arquivo fora do lugar (`frontend/lint/folders.ts`, ADR 0014). Uma pasta nova pede uma linha lá e uma aqui.
 
 ## Toda superfície
 
@@ -49,9 +49,11 @@ Antes de dar por pronto um trabalho no front, passe pelas superfícies que uma m
 
 ## Testar o app
 
-Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/testar-app/`): ela sobe o app do worktree, abre a página num Chrome sem tela e tira os prints e os vídeos de antes e depois que o PR pede (`frontend/scripts/capturar.ts`). As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
+Depois de uma mudança no front, siga a skill `test-app` (`.claude/skills/test-app/`): ela sobe o app do worktree, abre a página num Chrome sem tela e tira os prints e os vídeos de antes e depois que o PR pede (`frontend/scripts/capture.ts`). As ferramentas de preview do T3 (`mcp__t3-code__preview_*`) costumam estourar o tempo ou não achar o host: depois da primeira falha, use o headless.
 
 ## Padrões de código
+
+O código é em inglês: nomes de arquivo e pasta, identificadores, comentários, mensagens, chaves do `localStorage` e eventos do analytics. ADRs, issues, PRs e commits também. Um termo do domínio usa o nome em código do `GLOSSARY.md`. URL pública, query do link, texto da interface e prosa do conteúdo continuam em PT-BR (ADR 0039).
 
 `docs/agents/standards-ui.md` diz como o front monta a interface, no que um lint não confere. Siga ao escrever; a skill `code-review` o lê como fonte de padrões. Regra que um lint confere vai para `frontend/lint/` como plugin do Oxlint (ADR 0006).
 
@@ -59,22 +61,22 @@ Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/test
 
 Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 
-1. **Um push na `main` pode publicar o site.** O `deploy.yml` publica a cada push que muda o site, quando os secrets da VPS existem (`docs/agents/integracao.md`). Dê push na `main` só quando o usuário pedir. Trabalho de ticket vai para o ramo `ticket/*`.
-2. **O checkout principal é compartilhado.** Outras sessões trabalham nele enquanto você trabalha. Lá, nunca troque de ramo, nunca `git add -A` (adicione por caminho), nunca reformate arquivo que você não tocou e nunca rode um segundo Playwright. Trabalhe num worktree, preparado como diz `docs/agents/ambiente.md`.
+1. **Um push na `main` pode publicar o site.** O `deploy.yml` publica a cada push que muda o site, quando os secrets da VPS existem (`docs/agents/integration.md`). Dê push na `main` só quando o usuário pedir. Trabalho de ticket vai para o ramo `ticket/*`.
+2. **O checkout principal é compartilhado.** Outras sessões trabalham nele enquanto você trabalha. Lá, nunca troque de ramo, nunca `git add -A` (adicione por caminho), nunca reformate arquivo que você não tocou e nunca rode um segundo Playwright. Trabalhe num worktree, preparado como diz `docs/agents/environment.md`.
 3. **Matar por padrão.** Nunca pare um `node`, `vite` ou Chrome por nome, caminho ou padrão (`pkill`, `killall`): outras sessões rodam os seus. Pare só o PID que você guardou ao subir, ou o dono da porta do seu worktree (ADR 0011).
-4. **Segredos e Fontes privadas.** O `.env` da raiz guarda o token da Hostinger e o acesso à VPS, e o `.env.deploy` o que o wizard do deploy lembra. Nunca os leia para um log, um commit ou um comentário, e nunca troque um secret do GitHub sem perguntar. `fontes/privado/` guarda texto sem licença aberta: ele nunca entra no git, e o Trecho de uma Ficha cita só o que a Ficha precisa.
+4. **Segredos e Fontes privadas.** O `.env` da raiz guarda o token da Hostinger e o acesso à VPS, e o `.env.deploy` o que o wizard do deploy lembra. Nunca os leia para um log, um commit ou um comentário, e nunca troque um secret do GitHub sem perguntar. `sources/private/` guarda texto sem licença aberta: ele nunca entra no git, e o Trecho de uma Ficha cita só o que a Ficha precisa.
 
 ## Código do Effect
 
-O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
+O `packages/content` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sync-references.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
 
 ## Verificar
 
-- Rode a menor prova do que você mudou: `node scripts/prova-minima.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integracao.md`.
+- Rode a menor prova do que você mudou: `node scripts/minimal-proof.ts --base origin/<ramo de destino>` (ADR 0016). Ela roda os tipos dos pacotes afetados, o Vitest com `--changed`, as pastas e o `vp check` nos arquivos mudados. Mexeu numa spec do e2e, rode-a (`pnpm e2e <spec>`). A suíte inteira é do CI do PR; o hook de push roda a auditoria e os testes afetados. O que roda antes de um push está em `docs/agents/integration.md`.
 - Formate com `pnpm fmt` (o Oxfmt do Vite+) e confira com `pnpm check`. Os testes importam de `vite-plus/test`.
 - Teste o comportamento, não a fiação. Não renderize um componente em markup estático para conferir as props, e não escreva um teste que repete a implementação.
 - O teste espera pelo que confere: uma promessa, um efeito, uma condição na página. Um teste que precisa de um timer ou de um sleep para passar está errado.
-- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/teto-de-supressoes.json`, ADR 0017).
+- Uma supressão nova (`oxlint-disable`, `@ts-expect-error`, `'use no memo'`) leva o motivo no mesmo comentário, e uma pessoa a lê antes de entrar. O código tem um teto de supressões, hoje zero (`.github/suppression-ceiling.json`, ADR 0017).
 
 ## Pull requests
 
@@ -83,11 +85,11 @@ Um ticket com código entra por um PR do ramo `ticket/<n>-<nome>` para o ramo do
 - Um assunto por PR. Se a descrição precisa de "também", divida.
 - O título segue os commits: `Ticket #<n>: <o que mudou>`.
 - O corpo segue `.github/pull_request_template.md`: o problema, o que mudou, a tela e a verificação. Termina com o modelo e o harness que fizeram o trabalho, e com `Closes #<n>` de cada issue que resolve.
-- Uma mudança de tela traz, na seção `## Tela`, o print e o vídeo de cada tela que mudou, antes e depois (skill `testar-app`). O check `Evidência de tela` falha sem eles, a menos que `Nenhuma mudança de tela` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/evidencia-de-tela.md`.
+- Uma mudança de tela traz, na seção `## Screen`, o print e o vídeo de cada tela que mudou, antes e depois (skill `test-app`). O check `Evidência de tela` falha sem eles, a menos que `No screen change` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/screen-evidence.md`.
 - A verificação diz a menor prova que rodou, e cada supressão nova com o motivo.
 - Depois de cada push, acompanhe o PR até ficar verde no último commit: os checks e cada comentário que chegou depois. Conserte o que for real; responda o que você descarta, com o motivo.
 - Nunca ponha o rótulo `supressao-revisada`: é a assinatura de uma pessoa. Quando um PR precisar dele, mande ao usuário o comando pronto, com o número do PR: `GH_TOKEN=$(gh auth token --user YgorPerez) gh pr edit <pr> --add-label supressao-revisada`.
-- O merge é `gh pr merge <pr> --merge`, só com tudo verde. Num PR para um `spec/*`, o GitHub não fecha a issue: quem mescla a fecha (`docs/agents/integracao.md`, "O merge").
+- O merge é `gh pr merge <pr> --merge`, só com tudo verde. Num PR para um `spec/*`, o GitHub não fecha a issue: quem mescla a fecha (`docs/agents/integration.md`, "O merge").
 
 ## Documentação
 
@@ -100,7 +102,7 @@ A maior parte das mudanças não pede doc: os agentes leem o código.
 
 ## Acervo
 
-Issue `acervo`, Ficha nova ou refeita em `estudos/`, revisão de PR de acervo: siga a skill `acervo` (`.claude/skills/acervo/SKILL.md`; checklist do revisor em `REVISOR.md`). A conferência roda com `pnpm conferir estudos/<slug>.md`. A fila do que falta verificar ou pesquisar são as issues `acervo`; sínteses vão para `relatorios/`.
+Issue `acervo`, Ficha nova ou refeita em `studies/`, revisão de PR de acervo: siga a skill `library` (`.claude/skills/library/SKILL.md`; checklist do revisor em `REVIEWER.md`). A conferência roda com `pnpm verify studies/<slug>.md`. A fila do que falta verificar ou pesquisar são as issues `acervo`; sínteses vão para `reports/`.
 
 ## Perguntar
 
@@ -126,7 +128,7 @@ Os cinco labels canônicos (`needs-triage`, `needs-info`, `ready-for-agent`, `re
 
 ### Preview remoto
 
-Para o usuário abrir um protótipo no celular, `scripts/preview-remoto.sh` publica `prototipos/` num link https temporário. Ver `docs/agents/preview-remoto.md`.
+Para o usuário abrir um protótipo no celular, `scripts/remote-preview.sh` publica `prototypes/` num link https temporário. Ver `docs/agents/remote-preview.md`.
 
 ### Domain docs
 

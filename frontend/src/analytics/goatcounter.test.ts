@@ -1,27 +1,27 @@
 import { describe, expect, test } from 'vite-plus/test'
-import { urlDaContagem } from './goatcounter'
-import { navegadorPedeParaNaoContar } from './contagem'
+import { hitUrl } from './goatcounter'
+import { browserAsksNotToCount } from './counting'
 
 const ENDPOINT = 'https://stats.temestudo.cloud/count'
-const campos = (url: string): Record<string, string> => {
+const fields = (url: string): Record<string, string> => {
   const u = new URL(url)
   return {
-    endereco: `${u.origin}${u.pathname}`,
+    address: `${u.origin}${u.pathname}`,
     ...Object.fromEntries(u.searchParams),
   }
 }
 
-describe('urlDaContagem', () => {
-  test('a visita leva o caminho, a referência sem query e a largura da tela', () => {
-    const url = urlDaContagem(ENDPOINT, {
-      caminho: '/grupo-possivel',
-      referencia: 'https://www.google.com/search?q=quantas+mulheres',
-      largura: 412,
-      robo: 0,
+describe('hitUrl', () => {
+  test('the visit carries the path, the referrer without query and the screen width', () => {
+    const url = hitUrl(ENDPOINT, {
+      path: '/grupo-possivel',
+      referrer: 'https://www.google.com/search?q=quantas+mulheres',
+      width: 412,
+      bot: 0,
       rnd: 'abcde',
     })
-    expect(campos(url)).toEqual({
-      endereco: ENDPOINT,
+    expect(fields(url)).toEqual({
+      address: ENDPOINT,
       p: '/grupo-possivel',
       r: 'https://www.google.com/search',
       s: '412',
@@ -29,28 +29,28 @@ describe('urlDaContagem', () => {
     })
   })
 
-  test('o caminho perde a query e o fragmento, se vierem', () => {
-    const url = urlDaContagem(ENDPOINT, {
-      caminho: '/?v=1&g=h#perfil',
-      largura: 390,
-      robo: 0,
+  test('the path loses the query and the fragment, if they come', () => {
+    const url = hitUrl(ENDPOINT, {
+      path: '/?v=1&g=h#perfil',
+      width: 390,
+      bot: 0,
       rnd: 'x',
     })
-    expect(campos(url).p).toBe('/')
+    expect(fields(url).p).toBe('/')
   })
 
-  test('o evento vai com e=true, sem referência', () => {
-    const url = urlDaContagem(ENDPOINT, {
-      caminho: 'ajudou/sim/app-ou-presencial',
-      evento: true,
-      referencia: 'https://exemplo.com/',
-      largura: 1280,
-      robo: 153,
+  test('the event goes with e=true, without referrer', () => {
+    const url = hitUrl(ENDPOINT, {
+      path: 'helped/yes/app-ou-presencial',
+      event: true,
+      referrer: 'https://exemplo.com/',
+      width: 1280,
+      bot: 153,
       rnd: 'y',
     })
-    expect(campos(url)).toEqual({
-      endereco: ENDPOINT,
-      p: 'ajudou/sim/app-ou-presencial',
+    expect(fields(url)).toEqual({
+      address: ENDPOINT,
+      p: 'helped/yes/app-ou-presencial',
       e: 'true',
       s: '1280',
       b: '153',
@@ -58,19 +58,19 @@ describe('urlDaContagem', () => {
     })
   })
 
-  test('referência que não é endereço fica de fora', () => {
-    const url = urlDaContagem(ENDPOINT, {
-      caminho: '/',
-      referencia: 'lixo',
-      largura: 1,
-      robo: 0,
+  test('a referrer that is not an address stays out', () => {
+    const url = hitUrl(ENDPOINT, {
+      path: '/',
+      referrer: 'lixo',
+      width: 1,
+      bot: 0,
       rnd: 'z',
     })
-    expect(campos(url).r).toBeUndefined()
+    expect(fields(url).r).toBeUndefined()
   })
 })
 
-describe('navegadorPedeParaNaoContar', () => {
+describe('browserAsksNotToCount', () => {
   test.each([
     [{}, false],
     [{ globalPrivacyControl: true }, true],
@@ -79,7 +79,7 @@ describe('navegadorPedeParaNaoContar', () => {
     [{ doNotTrack: '0' }, false],
     [{ doNotTrack: 'unspecified' }, false],
     [{ doNotTrack: 'yes' }, true],
-  ])('%j → %s', (navegador, esperado) => {
-    expect(navegadorPedeParaNaoContar(navegador)).toBe(esperado)
+  ])('%j → %s', (browser, expected) => {
+    expect(browserAsksNotToCount(browser)).toBe(expected)
   })
 })

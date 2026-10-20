@@ -1,33 +1,33 @@
-// O manager do Storybook num Chrome: `pnpm test:storybook`. Hoje só a busca
-// sem acento (`.storybook/manager.ts`), que mexe no campo da busca do próprio
-// Storybook e só se prova com ele de pé. Fica fora do `playwright.config.ts`,
-// que builda e sobe o site. No molde do `playwright.storybook.config.ts` do
-// Festival dos Macacos (ADR 0037).
+// The Storybook manager in a Chrome: `pnpm test:storybook`. Today only the
+// accent-free search (`.storybook/manager.ts`), which touches Storybook's own
+// search field and can only be proven with it running. It stays out of
+// `playwright.config.ts`, which builds and starts the site. Modeled on the
+// Festival dos Macacos `playwright.storybook.config.ts` (ADR 0037).
 //
-// A porta é a do Storybook no checkout (`scripts/portas.ts`, ADR 0010): com um
-// `pnpm storybook` de pé no mesmo worktree, pare-o antes, ou escolha outra
-// em `STORYBOOK_PORTA`.
+// The port is the checkout's Storybook port (`scripts/ports.ts`, ADR 0010):
+// with a `pnpm storybook` running in the same worktree, stop it first, or
+// pick another in `STORYBOOK_PORT`.
 import { defineConfig } from '@playwright/test'
-import { portaPedida } from '../scripts/portas.ts'
+import { requestedPort } from '../scripts/ports.ts'
 
-const porta = portaPedida('storybook')
+const port = requestedPort('storybook')
 
 export default defineConfig({
   testDir: './.storybook',
   testMatch: '**/*.e2e.ts',
-  // Longe do `test-results/` do e2e, que cada rodada dele apaga.
+  // Away from the e2e `test-results/`, which each of its runs deletes.
   outputDir: '.storybook/test-results',
   timeout: 60_000,
   expect: { timeout: 10_000 },
   reporter: 'list',
   use: {
-    baseURL: `http://localhost:${porta}`,
-    // O Chrome instalado, como o e2e.
+    baseURL: `http://localhost:${port}`,
+    // The installed Chrome, like the e2e.
     channel: 'chrome',
   },
   webServer: {
-    command: `pnpm exec storybook dev --ci --exact-port --quiet --disable-telemetry -p ${porta}`,
-    url: `http://localhost:${porta}/index.json`,
+    command: `pnpm exec storybook dev --ci --exact-port --quiet --disable-telemetry -p ${port}`,
+    url: `http://localhost:${port}/index.json`,
     reuseExistingServer: false,
     stderr: 'pipe',
     timeout: 180_000,

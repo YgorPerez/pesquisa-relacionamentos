@@ -1,62 +1,64 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { leituras } from '#/conteudo/leituras'
-import { ConfiancaCurta, Html } from '#/ui/guia'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Headline } from '#/ui/secao'
+import { reads } from '#/content/reads'
+import { ShortConfidence, Html } from '#/ui/guide'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Headline } from '#/ui/section'
 
 export const Route = createFileRoute('/$tema/')({
-  // O `loaderData` leva só o que o `head` usa; o Tema vai pelo `queryClient`.
+  // The `loaderData` carries only what the `head` uses; the Topic goes
+  // through the `queryClient`.
   loader: async ({ context, params }) => {
-    const { busca } = await context.queryClient.query(
-      leituras.tema(params.tema),
-    )
-    return { busca }
+    const topic = await context.queryClient.query(reads.topic(params.tema))
+    return { search: topic.search }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: loaderData.busca.descricao },
+          { title: `${loaderData.search.title} · Tem estudo?` },
+          { name: 'description', content: loaderData.search.description },
         ]
       : [],
   }),
-  notFoundComponent: TemaNaoExiste,
-  component: PaginaDoTema,
+  notFoundComponent: TopicNotFound,
+  component: TopicPage,
 })
 
-function PaginaDoTema() {
-  const { data: tema } = useSuspenseQuery(leituras.tema(Route.useParams().tema))
+function TopicPage() {
+  const { data: topic } = useSuspenseQuery(reads.topic(Route.useParams().tema))
 
   return (
-    <Folha>
-      <Coluna>
-        <Display>{tema.titulo}</Display>
+    <Sheet>
+      <Column>
+        <Display>{topic.title}</Display>
         <Html
           className="prosa m-0 text-lead"
           slot="contexto"
-          html={tema.contextoHtml}
+          html={topic.contextHtml}
         />
 
         <ol className="m-0 list-none p-0" data-slot="perguntas">
-          {tema.guias.map((guia) => (
-            <li key={guia.slug} className="regua mt-secao pt-5">
+          {topic.guides.map((guide) => (
+            <li key={guide.slug} className="regua mt-secao pt-5">
               <Headline>
                 <Link
                   to="/$tema/$slug"
-                  params={{ tema: guia.tema, slug: guia.slug }}
+                  params={{ tema: guide.topic, slug: guide.slug }}
                   className="decoration-2 underline-offset-5 hover:bg-amarelo-voce"
                 >
-                  {guia.pergunta}
+                  {guide.question}
                 </Link>
               </Headline>
-              <ConfiancaCurta confianca={guia.confianca} className="mb-2.5" />
-              <Html className="prosa mt-2.5" html={guia.respostaHtml} />
+              <ShortConfidence
+                confidence={guide.confidence}
+                className="mb-2.5"
+              />
+              <Html className="prosa mt-2.5" html={guide.answerHtml} />
               <Link
                 to="/$tema/$slug"
-                params={{ tema: guia.tema, slug: guia.slug }}
+                params={{ tema: guide.topic, slug: guide.slug }}
                 className="mt-1 inline-flex min-h-toque items-center gap-2 font-label text-aviso font-bold no-underline hover:underline"
-                aria-label={`Ler o Guia: ${guia.pergunta}`}
+                aria-label={`Ler o Guia: ${guide.question}`}
               >
                 Ler o Guia
                 <svg
@@ -76,21 +78,21 @@ function PaginaDoTema() {
             </li>
           ))}
         </ol>
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }
 
-function TemaNaoExiste() {
+function TopicNotFound() {
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>Essa página não existe</Display>
         <Lead>
           O endereço pode ter mudado.{' '}
           <Link to="/">Veja os Temas na página inicial</Link>.
         </Lead>
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }
