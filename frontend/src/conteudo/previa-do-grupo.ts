@@ -4,20 +4,17 @@
 // Storybook, no Node, sobre os pacotes que monta da fixture
 // (`.storybook/previas-do-link.ts`).
 import type {
-  DadosDoLugar,
-  LugarDoPacote,
+  PlaceData,
+  PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import {
-  estimarGrupo,
-  type Estimativa,
-} from '@tem-estudo/rules/possible-group'
-import { lerLink, previaDoGrupo, type Previa } from '@tem-estudo/rules/link'
-import { REQUISITOS_PADRAO } from '@tem-estudo/rules/requirements'
+import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import { readLink, groupPreview, type Preview } from '@tem-estudo/rules/link'
+import { DEFAULT_REQUIREMENTS } from '@tem-estudo/rules/requirements'
 
 /** O que a conta lê do `virtual:grupo-possivel`. */
 export interface DadosDaPrevia {
-  readonly lugares: ReadonlyArray<LugarDoPacote>
-  readonly exemplo: Estimativa
+  readonly lugares: ReadonlyArray<PackPlace>
+  readonly exemplo: Estimate
 }
 
 /** A prévia do link do Grupo possível; `null` se a query não é de link ou os
@@ -25,29 +22,29 @@ export interface DadosDaPrevia {
 export async function montarPreviaDoGrupo(
   query: string,
   dados: DadosDaPrevia,
-  pacote: (lugar: LugarDoPacote) => Promise<DadosDoLugar | null>,
-): Promise<Previa | null> {
-  const estado = lerLink('grupo-possivel', query)
-  if (estado?.calculadora !== 'grupo-possivel') return null
-  if (!estado.perfil && !estado.requisitos)
-    return previaDoGrupo(estado, dados.exemplo)
+  pacote: (lugar: PackPlace) => Promise<PlaceData | null>,
+): Promise<Preview | null> {
+  const estado = readLink('grupo-possivel', query)
+  if (estado?.calculator !== 'grupo-possivel') return null
+  if (!estado.profile && !estado.requirements)
+    return groupPreview(estado, dados.exemplo)
 
-  const requisitos = estado.requisitos ?? REQUISITOS_PADRAO
+  const requisitos = estado.requirements ?? DEFAULT_REQUIREMENTS
   const uf = requisitos.lugar?.uf
   const brasil = await pacote('BR')
   const daUf = uf && dados.lugares.includes(uf) ? await pacote(uf) : null
   if (!brasil || (uf && !daUf)) return null
-  const conta = (r: typeof requisitos): Estimativa =>
-    estimarGrupo(
-      { perfil: estado.perfil, requisitos: r },
-      { brasil, ...(daUf && { uf: daUf }) },
+  const conta = (r: typeof requisitos): Estimate =>
+    estimateGroup(
+      { profile: estado.profile, requirements: r },
+      { brazil: brasil, ...(daUf && { uf: daUf }) },
     )
   const codigo = requisitos.lugar?.municipio
-  const municipio = codigo ? daUf?.municipios.get(codigo)?.nome : undefined
+  const municipio = codigo ? daUf?.municipalities.get(codigo)?.name : undefined
   if (codigo && !municipio) {
     // Um município que os dados de agora não têm: vale a UF inteira, como na página.
     const naUf = { ...requisitos, lugar: uf ? { uf } : null }
-    return previaDoGrupo({ ...estado, requisitos: naUf }, conta(naUf))
+    return groupPreview({ ...estado, requirements: naUf }, conta(naUf))
   }
-  return previaDoGrupo(estado, conta(requisitos), { municipio })
+  return groupPreview(estado, conta(requisitos), { municipality: municipio })
 }

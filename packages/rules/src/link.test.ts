@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  ehLink,
-  fraseDoLink,
-  lerLink,
-  previaDePrioridades,
-  previaDoGrupo,
-  queryDoLink,
-  type EstadoDoLink,
+  isLink,
+  linkSentence,
+  readLink,
+  prioritiesPreview,
+  groupPreview,
+  linkQuery,
+  type LinkState,
 } from './link.ts'
-import { REQUISITOS_PADRAO, type Requisitos } from './requirements.ts'
+import { DEFAULT_REQUIREMENTS, type Requirements } from './requirements.ts'
 
-const TUDO: Requisitos = {
+const ALL: Requirements = {
   idade: { min: 25, max: 35 },
   lugar: { uf: 'SP', municipio: '3550308' },
   companheiro: false,
@@ -23,203 +23,204 @@ const TUDO: Requisitos = {
   naoFuma: true,
 }
 
-describe('ida e volta', () => {
-  it('o Grupo possível volta igual, com o Perfil e todos os Requisitos', () => {
-    const estado: EstadoDoLink = {
-      calculadora: 'grupo-possivel',
-      perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
-      requisitos: TUDO,
+describe('round trip', () => {
+  it('the possible group comes back equal, with the profile and every requirement', () => {
+    const state: LinkState = {
+      calculator: 'grupo-possivel',
+      profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+      requirements: ALL,
     }
-    expect(lerLink('grupo-possivel', queryDoLink(estado))).toEqual(estado)
+    expect(readLink('grupo-possivel', linkQuery(state))).toEqual(state)
   })
 
-  it('sem Perfil e sem mexer nos Requisitos, o link leva só a versão', () => {
-    const estado: EstadoDoLink = {
-      calculadora: 'grupo-possivel',
-      perfil: null,
-      requisitos: null,
+  it('without a profile and without touching the requirements, the link carries only the version', () => {
+    const state: LinkState = {
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: null,
     }
-    expect(queryDoLink(estado)).toBe('v=1')
-    expect(lerLink('grupo-possivel', 'v=1')).toEqual(estado)
+    expect(linkQuery(state)).toBe('v=1')
+    expect(readLink('grupo-possivel', 'v=1')).toEqual(state)
   })
 
-  it('Requisitos no padrão não ocupam a query e voltam como "nunca mexeu"', () => {
-    const query = queryDoLink({
-      calculadora: 'grupo-possivel',
-      perfil: { idade: 40 },
-      requisitos: REQUISITOS_PADRAO,
+  it('default requirements take no room in the query and come back as "never touched"', () => {
+    const query = linkQuery({
+      calculator: 'grupo-possivel',
+      profile: { idade: 40 },
+      requirements: DEFAULT_REQUIREMENTS,
     })
     expect(query).toBe('v=1&idade=40')
-    expect(lerLink('grupo-possivel', query)).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: { idade: 40 },
-      requisitos: null,
+    expect(readLink('grupo-possivel', query)).toEqual({
+      calculator: 'grupo-possivel',
+      profile: { idade: 40 },
+      requirements: null,
     })
   })
 
-  it('Prioridades volta com o topo 3 na ordem, o desfecho e o gênero', () => {
-    const estado: EstadoDoLink = {
-      calculadora: 'prioridades',
-      genero: 'mulher',
-      prioridades: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' },
+  it('priorities come back with the top 3 in order, the outcome and the gender', () => {
+    const state: LinkState = {
+      calculator: 'prioridades',
+      gender: 'mulher',
+      priorities: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' },
     }
-    const query = queryDoLink(estado)
+    const query = linkQuery(state)
     expect(query).toBe(
       'v=1&genero=mulher&topo=renda,sexo,calma&desfecho=duracao',
     )
-    expect(lerLink('prioridades', query)).toEqual(estado)
+    expect(readLink('prioridades', query)).toEqual(state)
   })
 
-  it('Prioridades sem gênero leva só o topo 3 e o desfecho', () => {
-    const estado: EstadoDoLink = {
-      calculadora: 'prioridades',
-      genero: null,
-      prioridades: { topo3: ['humor'], desfecho: 'satisfacao' },
+  it('priorities without a gender carry only the top 3 and the outcome', () => {
+    const state: LinkState = {
+      calculator: 'prioridades',
+      gender: null,
+      priorities: { topo3: ['humor'], desfecho: 'satisfacao' },
     }
-    expect(queryDoLink(estado)).toBe('v=1&topo=humor&desfecho=satisfacao')
-    expect(lerLink('prioridades', queryDoLink(estado))).toEqual(estado)
+    expect(linkQuery(state)).toBe('v=1&topo=humor&desfecho=satisfacao')
+    expect(readLink('prioridades', linkQuery(state))).toEqual(state)
   })
 
-  it('a renda "5+" sobrevive ao escape e também chega sem ele', () => {
-    const r = { ...REQUISITOS_PADRAO, renda: '5+' as const }
-    const query = queryDoLink({
-      calculadora: 'grupo-possivel',
-      perfil: null,
-      requisitos: r,
+  it('the income "5+" survives escaping and also arrives without it', () => {
+    const r = { ...DEFAULT_REQUIREMENTS, renda: '5+' as const }
+    const query = linkQuery({
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: r,
     })
     expect(query).toBe('v=1&renda=5%2B')
-    expect(lerLink('grupo-possivel', '?v=1&renda=5+')).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: null,
-      requisitos: r,
+    expect(readLink('grupo-possivel', '?v=1&renda=5+')).toEqual({
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: r,
     })
   })
 })
 
-describe('versões antigas', () => {
-  // Links copiados da versão 1, como circulam. Se um destes quebrar, quem
-  // recebeu um link antigo abre a página errada: escreva um leitor novo.
-  it('um link da versão 1 do Grupo possível abre o mesmo estado', () => {
+describe('old versions', () => {
+  // Links copied from version 1, as they circulate. If one of these breaks,
+  // whoever got an old link opens the wrong page: write a new reader.
+  it('a version 1 possible group link opens the same state', () => {
     expect(
-      lerLink(
+      readLink(
         'grupo-possivel',
         '?v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&uf=SP&municipio=3550308&companheiro=nao' +
           '&escolaridade=superior&renda=5%2B&cor=preta,parda&religiao=umbanda-candomble,sem-religiao' +
           '&sem-filhos=sim&altura=160-200&nao-fuma=sim',
       ),
     ).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
-      requisitos: TUDO,
+      calculator: 'grupo-possivel',
+      profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+      requirements: ALL,
     })
   })
 
-  it('um link da versão 1 de Prioridades abre o topo 3 e o gênero, sem o resto do Perfil', () => {
-    // Antes do #23 o link de Prioridades levava o Perfil inteiro; a conta só usa o gênero.
+  it('a version 1 priorities link opens the top 3 and the gender, without the rest of the profile', () => {
+    // Before #23 the priorities link carried the whole profile; the count
+    // only uses the gender.
     expect(
-      lerLink(
+      readLink(
         'prioridades',
         'v=1&genero=homem&procura=ambos&idade=33&topo=gentileza,humor&desfecho=atracao',
       ),
     ).toEqual({
-      calculadora: 'prioridades',
-      genero: 'homem',
-      prioridades: { topo3: ['gentileza', 'humor'], desfecho: 'atracao' },
+      calculator: 'prioridades',
+      gender: 'homem',
+      priorities: { topo3: ['gentileza', 'humor'], desfecho: 'atracao' },
     })
   })
 })
 
-describe('query inválida', () => {
-  it('sem versão, com versão desconhecida ou que não se decodifica, não é link', () => {
-    expect(lerLink('grupo-possivel', '')).toBeNull()
-    expect(lerLink('grupo-possivel', 'genero=homem&idade=30')).toBeNull()
-    expect(lerLink('grupo-possivel', 'v=99&genero=homem')).toBeNull()
-    expect(lerLink('prioridades', 'v=1&topo=%E0%A4%A')).toBeNull()
+describe('invalid query', () => {
+  it('without a version, with an unknown version or one that does not decode, it is not a link', () => {
+    expect(readLink('grupo-possivel', '')).toBeNull()
+    expect(readLink('grupo-possivel', 'genero=homem&idade=30')).toBeNull()
+    expect(readLink('grupo-possivel', 'v=99&genero=homem')).toBeNull()
+    expect(readLink('prioridades', 'v=1&topo=%E0%A4%A')).toBeNull()
   })
 
-  it('um valor inválido cai fora e o resto do link vale', () => {
+  it('an invalid value drops out and the rest of the link holds', () => {
     expect(
-      lerLink(
+      readLink(
         'grupo-possivel',
         'v=1&genero=robo&procura=mulheres&idade=12&escolaridade=doutorado&uf=XX&cor=azul,preta',
       ),
     ).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: { procura: 'mulheres' },
-      requisitos: { ...REQUISITOS_PADRAO, cores: ['preta'] },
+      calculator: 'grupo-possivel',
+      profile: { procura: 'mulheres' },
+      requirements: { ...DEFAULT_REQUIREMENTS, cores: ['preta'] },
     })
     expect(
-      lerLink('grupo-possivel', 'v=1&idades=50-20&altura=100-300'),
+      readLink('grupo-possivel', 'v=1&idades=50-20&altura=100-300'),
     ).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: null,
-      requisitos: REQUISITOS_PADRAO,
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: DEFAULT_REQUIREMENTS,
     })
   })
 
-  it('o topo 3 fica com até três ids que existem, sem repetir; desfecho desconhecido vira satisfação', () => {
+  it('the top 3 keeps up to three existing ids, without repeats; an unknown outcome becomes satisfaction', () => {
     expect(
-      lerLink(
+      readLink(
         'prioridades',
         'v=1&topo=renda,renda,<b>,sexo,calma,humor&desfecho=amor',
         ['renda', 'sexo', 'humor'],
       ),
     ).toEqual({
-      calculadora: 'prioridades',
-      genero: null,
-      prioridades: {
+      calculator: 'prioridades',
+      gender: null,
+      priorities: {
         topo3: ['renda', 'sexo', 'humor'],
         desfecho: 'satisfacao',
       },
     })
   })
 
-  it('a chave de não ser contado nunca vai nem volta pelo link', () => {
+  it('the opt-out key never goes or comes back through the link', () => {
     const query = 'v=1&nao-contar=sim&contar=nao&genero=mulher'
-    const estado = lerLink('grupo-possivel', query)
-    expect(estado).toEqual({
-      calculadora: 'grupo-possivel',
-      perfil: { genero: 'mulher' },
-      requisitos: null,
+    const state = readLink('grupo-possivel', query)
+    expect(state).toEqual({
+      calculator: 'grupo-possivel',
+      profile: { genero: 'mulher' },
+      requirements: null,
     })
-    expect(queryDoLink(estado!)).toBe('v=1&genero=mulher')
+    expect(linkQuery(state!)).toBe('v=1&genero=mulher')
   })
 })
 
-describe('fraseDoLink', () => {
-  const NOMES = {
+describe('linkSentence', () => {
+  const NAMES = {
     renda: 'Renda',
     sexo: 'Química sexual',
     calma: 'Estabilidade emocional',
   }
 
-  it('diz o Perfil e o que se procura, como no exemplo da story 63', () => {
+  it('says the profile and what is sought, as in the story 63 example', () => {
     const r = {
-      ...REQUISITOS_PADRAO,
+      ...DEFAULT_REQUIREMENTS,
       idade: { min: 25, max: 35 },
       lugar: { uf: 'SP' as const },
       escolaridade: 'superior' as const,
     }
     expect(
-      fraseDoLink({
-        calculadora: 'grupo-possivel',
-        perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
-        requisitos: r,
+      linkSentence({
+        calculator: 'grupo-possivel',
+        profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+        requirements: r,
       }),
     ).toBe(
       'Este link mostra: homem, 30, procura mulheres de 25 a 35, ensino superior, em SP.',
     )
   })
 
-  it('cita cada Requisito fora do padrão e o município pelo nome', () => {
+  it('names each off-default requirement and the municipality by name', () => {
     expect(
-      fraseDoLink(
+      linkSentence(
         {
-          calculadora: 'grupo-possivel',
-          perfil: { genero: 'outro' },
-          requisitos: TUDO,
+          calculator: 'grupo-possivel',
+          profile: { genero: 'outro' },
+          requirements: ALL,
         },
-        { municipio: 'São Paulo' },
+        { municipality: 'São Paulo' },
       ),
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
@@ -228,99 +229,99 @@ describe('fraseDoLink', () => {
     )
   })
 
-  it('sem Perfil e sem Requisitos, diz que o link não leva nada seu', () => {
+  it('without a profile or requirements, it says the link carries nothing of yours', () => {
     expect(
-      fraseDoLink({
-        calculadora: 'grupo-possivel',
-        perfil: null,
-        requisitos: null,
+      linkSentence({
+        calculator: 'grupo-possivel',
+        profile: null,
+        requirements: null,
       }),
     ).toBe('Este link mostra só a conta do Brasil inteiro, sem nada seu.')
   })
 
-  it('em Prioridades, o gênero, o topo 3 pelos nomes e o desfecho', () => {
+  it('for priorities, the gender, the top 3 by name and the outcome', () => {
     expect(
-      fraseDoLink(
+      linkSentence(
         {
-          calculadora: 'prioridades',
-          genero: 'mulher',
-          prioridades: {
+          calculator: 'prioridades',
+          gender: 'mulher',
+          priorities: {
             topo3: ['renda', 'sexo', 'calma'],
             desfecho: 'duracao',
           },
         },
-        { nomes: NOMES },
+        { names: NAMES },
       ),
     ).toBe(
       'Este link mostra: mulher, topo 3 renda, química sexual e estabilidade emocional, em duração.',
     )
     expect(
-      fraseDoLink({
-        calculadora: 'prioridades',
-        genero: null,
-        prioridades: { topo3: [], desfecho: 'satisfacao' },
+      linkSentence({
+        calculator: 'prioridades',
+        gender: null,
+        priorities: { topo3: [], desfecho: 'satisfacao' },
       }),
     ).toBe('Este link mostra: nenhuma característica escolhida, em satisfação.')
   })
 })
 
-describe('prévia nas redes', () => {
-  const conta = {
-    alvo: 'mulheres' as const,
-    resultado: { min: 123_400, max: 178_900 },
+describe('social preview', () => {
+  const count = {
+    target: 'mulheres' as const,
+    result: { min: 123_400, max: 178_900 },
   }
-  const homem30 = {
+  const man30 = {
     genero: 'homem' as const,
     procura: 'mulheres' as const,
     idade: 30,
   }
 
-  it('o Grupo possível mostra a faixa e quem se procura, como no exemplo do spec', () => {
+  it('the possible group shows the range and who is sought, as in the spec example', () => {
     const r = {
-      ...REQUISITOS_PADRAO,
+      ...DEFAULT_REQUIREMENTS,
       idade: { min: 25, max: 35 },
       lugar: { uf: 'SP' as const },
       naoFuma: true,
     }
     expect(
-      previaDoGrupo(
-        { calculadora: 'grupo-possivel', perfil: homem30, requisitos: r },
-        conta,
+      groupPreview(
+        { calculator: 'grupo-possivel', profile: man30, requirements: r },
+        count,
       ),
     ).toEqual({
-      titulo: 'Entre 120 mil e 180 mil mulheres de 25 a 35 em SP',
-      descricao:
+      title: 'Entre 120 mil e 180 mil mulheres de 25 a 35 em SP',
+      description:
         'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019. Também pediu: não fuma. Faça a sua conta.',
     })
   })
 
-  it('nunca leva o gênero nem a idade de quem compartilhou, nem a idade tirada dela', () => {
-    const previa = previaDoGrupo(
-      { calculadora: 'grupo-possivel', perfil: homem30, requisitos: null },
-      conta,
+  it("never carries the sharer's gender or age, nor the age taken from it", () => {
+    const preview = groupPreview(
+      { calculator: 'grupo-possivel', profile: man30, requirements: null },
+      count,
     )
-    expect(previa.titulo).toBe(
+    expect(preview.title).toBe(
       'Entre 120 mil e 180 mil mulheres no Brasil, na idade procurada',
     )
-    const texto = `${previa.titulo} ${previa.descricao}`
-    expect(texto).not.toMatch(/homem|homens|30|25|35|interessa/)
+    const text = `${preview.title} ${preview.description}`
+    expect(text).not.toMatch(/homem|homens|30|25|35|interessa/)
   })
 
-  it('o município entra pelo nome', () => {
+  it('the municipality comes in by name', () => {
     const r = {
-      ...REQUISITOS_PADRAO,
+      ...DEFAULT_REQUIREMENTS,
       lugar: { uf: 'SP' as const, municipio: '3550308' },
     }
-    const previa = previaDoGrupo(
-      { calculadora: 'grupo-possivel', perfil: null, requisitos: r },
-      { alvo: 'pessoas', resultado: { min: 900, max: 1_100 } },
-      { municipio: 'São Paulo' },
+    const preview = groupPreview(
+      { calculator: 'grupo-possivel', profile: null, requirements: r },
+      { target: 'pessoas', result: { min: 900, max: 1_100 } },
+      { municipality: 'São Paulo' },
     )
-    expect(previa.titulo).toBe('Entre 900 e 1,1 mil pessoas em São Paulo (SP)')
+    expect(preview.title).toBe('Entre 900 e 1,1 mil pessoas em São Paulo (SP)')
   })
 
-  it('Prioridades mostra o topo 3 e o alerta, sem o Perfil', () => {
-    const cars = [
+  it('priorities show the top 3 and the alert, without the profile', () => {
+    const traits = [
       {
         id: 'renda',
         nome: 'Renda',
@@ -336,33 +337,33 @@ describe('prévia nas redes', () => {
         duracao: { degrau: 1 },
       },
     ] as const
-    const previa = previaDePrioridades(cars, {
+    const preview = prioritiesPreview(traits, {
       topo3: ['sexo', 'renda'],
       desfecho: 'satisfacao',
     })
-    expect(previa).toEqual({
-      titulo: 'Topo 3: química sexual e renda',
-      descricao:
+    expect(preview).toEqual({
+      title: 'Topo 3: química sexual e renda',
+      description:
         'No seu topo 3, para satisfação: para renda não há boa evidência.',
     })
     expect(
-      previaDePrioridades(cars, { topo3: ['sexo'], desfecho: 'atracao' })
-        ?.descricao,
+      prioritiesPreview(traits, { topo3: ['sexo'], desfecho: 'atracao' })
+        ?.description,
     ).toBe(
       'Para atração, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".',
     )
     expect(
-      previaDePrioridades(cars, { topo3: [], desfecho: 'atracao' }),
+      prioritiesPreview(traits, { topo3: [], desfecho: 'atracao' }),
     ).toBeNull()
   })
 })
 
-describe('ehLink', () => {
-  it('reconhece a query com versão, válida ou não, e deixa as outras', () => {
-    expect(ehLink('?v=1&genero=homem')).toBe(true)
-    expect(ehLink('v=99')).toBe(true)
-    expect(ehLink('v=1&x=%E0%A4%A')).toBe(true)
-    expect(ehLink('utm_source=zap')).toBe(false)
-    expect(ehLink('')).toBe(false)
+describe('isLink', () => {
+  it('recognizes the query with a version, valid or not, and leaves the others', () => {
+    expect(isLink('?v=1&genero=homem')).toBe(true)
+    expect(isLink('v=99')).toBe(true)
+    expect(isLink('v=1&x=%E0%A4%A')).toBe(true)
+    expect(isLink('utm_source=zap')).toBe(false)
+    expect(isLink('')).toBe(false)
   })
 })

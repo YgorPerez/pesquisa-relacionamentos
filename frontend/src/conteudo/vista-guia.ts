@@ -2,21 +2,21 @@
 // HTML no servidor, com as referências `[@slug]` numeradas pela ordem das
 // Fichas citadas e o número-chave `==…==` em rosa.
 import type {
-  Acervo,
-  Cobre,
-  Dica,
-  Ficha,
-  Forca,
-  Guia,
-  Tema,
+  Library,
+  Coverage,
+  Tip,
+  FactSheet,
+  Strength,
+  Guide,
+  Topic,
 } from '@tem-estudo/content'
 import {
-  buscaDaDica,
-  buscaDoGuia,
-  buscaDoTema,
-  type Busca,
+  tipSearch,
+  guideSearch,
+  topicSearch,
+  type SearchMeta,
 } from '@tem-estudo/content/search'
-import { dicaPublicada } from '@tem-estudo/content/queries'
+import { isTipPublished } from '@tem-estudo/content/queries'
 import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 
@@ -35,13 +35,13 @@ type Numeracao = ReadonlyMap<
   { readonly n: number; readonly titulo: string }
 >
 
-function numerar(slugs: ReadonlyArray<string>, acervo: Acervo): Numeracao {
+function numerar(slugs: ReadonlyArray<string>, acervo: Library): Numeracao {
   return new Map(
     slugs.map((slug, i) => [
       slug,
       {
         n: i + 1,
-        titulo: acervo.fichas.find((f) => f.slug === slug)?.titulo ?? slug,
+        titulo: acervo.factSheets.find((f) => f.slug === slug)?.title ?? slug,
       },
     ]),
   )
@@ -142,7 +142,7 @@ const perguntaHtml = (pergunta: string) =>
 
 const IDADE_MAXIMA = 120
 
-function umCobre(cobre: Cobre): string {
+function umCobre(cobre: Coverage): string {
   const partes: string[] = []
   if (cobre.casal === 'hetero') partes.push('casais homem-mulher')
   else if (cobre.casal === 'mesmo-sexo') partes.push('casais do mesmo sexo')
@@ -163,7 +163,7 @@ function umCobre(cobre: Cobre): string {
 }
 
 /** A nota "Vale para:" de um achado ou Dica, tirada do `cobre`. */
-function valePara(cobres: ReadonlyArray<Cobre>): string {
+function valePara(cobres: ReadonlyArray<Coverage>): string {
   const frases = [...new Set(cobres.map(umCobre))]
   // Sem frase nenhuma, o `every` também dá `true`.
   if (frases.every((f) => f === ''))
@@ -187,11 +187,11 @@ function ondeEQuando(paises: ReadonlyArray<string>, periodo: string) {
 export interface DicaNoGuia {
   readonly slug: string
   readonly html: HtmlSeguro
-  readonly forca: Forca
+  readonly forca: Strength
   readonly inferencia: boolean
   readonly valePara: string
   /** O `cobre` cru, para o navegador decidir o "vale para você" com o Perfil. */
-  readonly cobre: ReadonlyArray<Cobre>
+  readonly cobre: ReadonlyArray<Coverage>
 }
 
 interface AchadoVista {
@@ -199,7 +199,7 @@ interface AchadoVista {
   readonly pais: string
   readonly periodo: string
   readonly valePara: string
-  readonly cobre: ReadonlyArray<Cobre>
+  readonly cobre: ReadonlyArray<Coverage>
 }
 
 export interface FichaCitada extends FichaResumo {
@@ -212,7 +212,7 @@ export interface GuiaResumo {
   readonly slug: string
   readonly perguntaHtml: HtmlSeguro
   readonly pergunta: string
-  readonly confianca: Forca
+  readonly confianca: Strength
   readonly primeiraFrase: string
 }
 
@@ -221,7 +221,7 @@ export interface GuiaVista extends GuiaResumo {
   readonly temaTitulo: string
   readonly respostaHtml: HtmlSeguro
   /** O `cobre` das Fichas da frase do número-chave; `null` sem número marcado. */
-  readonly chave: ReadonlyArray<Cobre> | null
+  readonly chave: ReadonlyArray<Coverage> | null
   readonly dicas: ReadonlyArray<DicaNoGuia>
   readonly achados: ReadonlyArray<AchadoVista>
   readonly divergencia: {
@@ -240,26 +240,26 @@ export interface GuiaVista extends GuiaResumo {
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly relacionadas: ReadonlyArray<GuiaResumo>
   /** Título e descrição de busca e do Open Graph (#15). */
-  readonly busca: Busca
+  readonly busca: SearchMeta
 }
 
-export function resumoDoGuia(guia: Guia): GuiaResumo {
+export function resumoDoGuia(guia: Guide): GuiaResumo {
   return {
-    tema: guia.tema,
+    tema: guia.topic,
     slug: guia.slug,
     pergunta: semMarcas(guia.pergunta),
     perguntaHtml: perguntaHtml(guia.pergunta),
     confianca: guia.confianca,
-    primeiraFrase: primeiraFrase(guia.respostaCurta),
+    primeiraFrase: primeiraFrase(guia.shortAnswer),
   }
 }
 
-const fichaDoAcervo = (acervo: Acervo, slug: string): Ficha | undefined =>
-  acervo.fichas.find((f) => f.slug === slug)
+const fichaDoAcervo = (acervo: Library, slug: string): FactSheet | undefined =>
+  acervo.factSheets.find((f) => f.slug === slug)
 
 function fichasCitadas(
   slugs: ReadonlyArray<string>,
-  acervo: Acervo,
+  acervo: Library,
 ): FichaCitada[] {
   return slugs.flatMap((slug, i) => {
     const ficha = fichaDoAcervo(acervo, slug)
@@ -269,29 +269,29 @@ function fichasCitadas(
 
 function cobreDaChave(
   respostaCurta: string,
-  acervo: Acervo,
-): ReadonlyArray<Cobre> | null {
+  acervo: Library,
+): ReadonlyArray<Coverage> | null {
   const slugs = fichasDoNumeroChave(respostaCurta)
   return (
     slugs && slugs.flatMap((slug) => fichaDoAcervo(acervo, slug)?.cobre ?? [])
   )
 }
 
-export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
-  const numeros = numerar(guia.fichasCitadas, acervo)
-  const tema = acervo.temas.find((t) => t.slug === guia.tema)
+export function vistaDoGuia(guia: Guide, acervo: Library): GuiaVista {
+  const numeros = numerar(guia.citedFactSheets, acervo)
+  const tema = acervo.topics.find((t) => t.slug === guia.topic)
   return {
     ...resumoDoGuia(guia),
-    temaTitulo: tema?.titulo ?? guia.tema,
-    respostaHtml: html(comReferencias(guia.respostaCurta, numeros)),
-    chave: cobreDaChave(guia.respostaCurta, acervo),
+    temaTitulo: tema?.titulo ?? guia.topic,
+    respostaHtml: html(comReferencias(guia.shortAnswer, numeros)),
+    chave: cobreDaChave(guia.shortAnswer, acervo),
     dicas: guia.dicas.flatMap((slug) => {
-      const dica = acervo.dicas.find((d) => d.slug === slug)
+      const dica = acervo.tips.find((d) => d.slug === slug)
       return dica
         ? [
             {
               slug,
-              html: textoComFichas(dica.texto, dica.fichas, numeros),
+              html: textoComFichas(dica.text, dica.fichas, numeros),
               forca: dica.forca,
               inferencia: dica.inferencia,
               valePara: valePara(dica.cobre),
@@ -317,18 +317,18 @@ export function vistaDoGuia(guia: Guia, acervo: Acervo): GuiaVista {
           })),
         }
       : null,
-    perfilHtml: html(comReferencias(guia.variaConformePerfil, numeros)),
+    perfilHtml: html(comReferencias(guia.variesByProfile, numeros)),
     mitos: guia.mitos.map((m) => ({
       afirmacao: m.afirmacao,
       porQueNaoHtml: textoComFichas(m.por_que_nao, m.fichas, numeros),
     })),
-    limitacoesHtml: html(comReferencias(guia.limitacoes, numeros)),
-    fichas: fichasCitadas(guia.fichasCitadas, acervo),
+    limitacoesHtml: html(comReferencias(guia.limitations, numeros)),
+    fichas: fichasCitadas(guia.citedFactSheets, acervo),
     relacionadas: guia.relacionadas.flatMap((slug) => {
-      const outro = acervo.guias.find((g) => g.slug === slug)
+      const outro = acervo.guides.find((g) => g.slug === slug)
       return outro ? [resumoDoGuia(outro)] : []
     }),
-    busca: buscaDoGuia(guia),
+    busca: guideSearch(guia),
   }
 }
 
@@ -337,25 +337,25 @@ export interface TemaVista {
   readonly titulo: string
   readonly contextoHtml: HtmlSeguro
   /** Título e descrição de busca e do Open Graph (#15). */
-  readonly busca: Busca
+  readonly busca: SearchMeta
   readonly guias: ReadonlyArray<
     GuiaResumo & { readonly respostaHtml: HtmlSeguro }
   >
 }
 
-export function vistaDoTema(tema: Tema, acervo: Acervo): TemaVista {
+export function vistaDoTema(tema: Topic, acervo: Library): TemaVista {
   return {
     slug: tema.slug,
     titulo: tema.titulo,
-    contextoHtml: html(tema.contexto),
-    busca: buscaDoTema(tema),
+    contextoHtml: html(tema.context),
+    busca: topicSearch(tema),
     // Na página do Tema a resposta curta vai sem os números: as Fichas estão
     // no Guia, e o Tema não faz afirmação nova (#7).
-    guias: acervo.guias
-      .filter((g) => g.tema === tema.slug)
+    guias: acervo.guides
+      .filter((g) => g.topic === tema.slug)
       .map((g) => ({
         ...resumoDoGuia(g),
-        respostaHtml: html(semReferencias(g.respostaCurta)),
+        respostaHtml: html(semReferencias(g.shortAnswer)),
       })),
   }
 }
@@ -366,7 +366,7 @@ const semReferencias = (markdown: string) =>
 export interface DicaResumo {
   readonly slug: string
   readonly texto: string
-  readonly forca: Forca
+  readonly forca: Strength
   readonly inferencia: boolean
 }
 
@@ -374,25 +374,25 @@ export interface DicaVista extends DicaResumo {
   readonly valePara: string
   readonly fichas: ReadonlyArray<FichaCitada>
   readonly guias: ReadonlyArray<GuiaResumo>
-  readonly busca: Busca
+  readonly busca: SearchMeta
 }
 
-export const resumoDaDica = (dica: Dica): DicaResumo => ({
+export const resumoDaDica = (dica: Tip): DicaResumo => ({
   slug: dica.slug,
-  texto: semMarcas(dica.texto),
+  texto: semMarcas(dica.text),
   forca: dica.forca,
   inferencia: dica.inferencia,
 })
 
-export function vistaDaDica(dica: Dica, acervo: Acervo): DicaVista {
+export function vistaDaDica(dica: Tip, acervo: Library): DicaVista {
   return {
     ...resumoDaDica(dica),
     valePara: valePara(dica.cobre),
     fichas: fichasCitadas(dica.fichas, acervo),
-    guias: acervo.guias
+    guias: acervo.guides
       .filter((g) => g.dicas.includes(dica.slug))
       .map(resumoDoGuia),
-    busca: buscaDaDica(dica),
+    busca: tipSearch(dica),
   }
 }
 
@@ -403,11 +403,11 @@ export interface CitadaEm {
 
 /** Os Guias e as Dicas publicadas que citam a Ficha, para a página dela. O
  * Guia conta também quando a Ficha entra só por uma Dica dele. */
-export const citadaEm = (slug: string, acervo: Acervo): CitadaEm => ({
-  guias: acervo.guias
-    .filter((g) => g.fichasCitadas.includes(slug))
+export const citadaEm = (slug: string, acervo: Library): CitadaEm => ({
+  guias: acervo.guides
+    .filter((g) => g.citedFactSheets.includes(slug))
     .map(resumoDoGuia),
-  dicas: acervo.dicas
-    .filter((d) => dicaPublicada(d) && d.fichas.includes(slug))
+  dicas: acervo.tips
+    .filter((d) => isTipPublished(d) && d.fichas.includes(slug))
     .map(resumoDaDica),
 })

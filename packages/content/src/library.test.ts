@@ -2,50 +2,50 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  caminhoDaFicha,
-  carregarAcervo,
-  fichaIndexavel,
-  fichaPorSlug,
-  formatarProblemas,
-  montarAcervo,
-  type Acervo,
-  type Resultado,
+  factSheetPath,
+  loadLibrary,
+  isFactSheetIndexable,
+  factSheetBySlug,
+  formatProblems,
+  buildLibrary,
+  type Library,
+  type LoadResult,
 } from './index.ts'
 
-const fixture = (nome: string) =>
-  fileURLToPath(new URL(`../fixtures/${nome}`, import.meta.url))
+const fixture = (name: string) =>
+  fileURLToPath(new URL(`../fixtures/${name}`, import.meta.url))
 
-function acervoDe(resultado: Resultado): Acervo {
-  if (!resultado.ok) throw new Error(formatarProblemas(resultado.erros))
-  return resultado.acervo
+function libraryOf(result: LoadResult): Library {
+  if (!result.ok) throw new Error(formatProblems(result.errors))
+  return result.library
 }
 
-const textoDaFixture = (pasta: string, slug: string) =>
-  readFileSync(`${fixture(pasta)}/estudos/${slug}.md`, 'utf8')
+const fixtureText = (folder: string, slug: string) =>
+  readFileSync(`${fixture(folder)}/estudos/${slug}.md`, 'utf8')
 
-function errosDe(resultado: Resultado): string[] {
-  if (resultado.ok) throw new Error('o acervo devia ter falhado')
-  return resultado.erros.map((e) => e.mensagem)
+function errorsOf(result: LoadResult): string[] {
+  if (result.ok) throw new Error('the library should have failed')
+  return result.errors.map((e) => e.message)
 }
 
-describe('carregar o acervo', () => {
-  it('lê as Fichas de estudos/ pelo nome do arquivo, ignorando o _modelo', () => {
-    const acervo = acervoDe(carregarAcervo(fixture('valid')))
-    expect(acervo.fichas.map((f) => f.slug)).toEqual([
+describe('loading the library', () => {
+  it('reads the fact sheets in estudos/ by file name, skipping _modelo', () => {
+    const library = libraryOf(loadLibrary(fixture('valid')))
+    expect(library.factSheets.map((f) => f.slug)).toEqual([
       'costa-2018-satisfacao',
       'lima-2015-encontros',
       'silva-2020-apps-brasil',
     ])
   })
 
-  it('devolve a Ficha com o frontmatter, o título e o DOI tirado do link', () => {
-    const ficha = fichaPorSlug(
-      acervoDe(carregarAcervo(fixture('valid'))),
+  it('returns the fact sheet with the frontmatter, the title and the DOI taken from the link', () => {
+    const factSheet = factSheetBySlug(
+      libraryOf(loadLibrary(fixture('valid'))),
       'silva-2020-apps-brasil',
     )
-    expect(ficha).toMatchObject({
-      arquivo: 'estudos/silva-2020-apps-brasil.md',
-      titulo: 'Silva e Souza (2020): apps de namoro no Brasil',
+    expect(factSheet).toMatchObject({
+      file: 'estudos/silva-2020-apps-brasil.md',
+      title: 'Silva e Souza (2020): apps de namoro no Brasil',
       status: 'ok',
       verificado_em: '2026-10-19',
       forca: 'forte',
@@ -64,89 +64,89 @@ describe('carregar o acervo', () => {
     })
   })
 
-  it('corta o corpo em O que mediu, Achados com trecho, Limitações e Como usamos', () => {
-    const ficha = fichaPorSlug(
-      acervoDe(carregarAcervo(fixture('valid'))),
+  it('cuts the body into O que mediu, Achados with excerpts, Limitações and Como usamos', () => {
+    const factSheet = factSheetBySlug(
+      libraryOf(loadLibrary(fixture('valid'))),
       'silva-2020-apps-brasil',
     )
-    expect(ficha?.oQueMediu).toBe(
+    expect(factSheet?.whatItMeasured).toBe(
       'Quantos adultos jovens conheceram o parceiro atual por app.',
     )
-    expect(ficha?.achados).toEqual([
+    expect(factSheet?.findings).toEqual([
       {
-        medida: 'Conheceram o parceiro por app',
-        valor: '18%',
-        onde: 'Tabela 2, p. 50',
-        trecho:
+        measure: 'Conheceram o parceiro por app',
+        value: '18%',
+        locator: 'Tabela 2, p. 50',
+        excerpt:
           '"18% dos participantes conheceram o parceiro atual por aplicativo"',
-        calculo: null,
+        calculation: null,
       },
       {
-        medida: 'Entre 18 e 24 anos',
-        valor: '24%',
-        onde: 'Tabela 2, p. 50',
-        trecho: '"entre os de 18 a 24 anos, 24%"',
-        calculo: null,
+        measure: 'Entre 18 e 24 anos',
+        value: '24%',
+        locator: 'Tabela 2, p. 50',
+        excerpt: '"entre os de 18 a 24 anos, 24%"',
+        calculation: null,
       },
     ])
-    expect(ficha?.limitacoes).toBe('- Autorrelato.\n- Só capitais.')
-    expect(ficha?.comoUsamos).toBe('- Exemplo de fixture.')
+    expect(factSheet?.limitations).toBe('- Autorrelato.\n- Só capitais.')
+    expect(factSheet?.howWeUseIt).toBe('- Exemplo de fixture.')
   })
 
-  it('aceita Ficha não verificada sem trecho, sem data e com seção a mais', () => {
-    const ficha = fichaPorSlug(
-      acervoDe(carregarAcervo(fixture('valid'))),
+  it('accepts an unverified fact sheet without excerpt, without date and with an extra section', () => {
+    const factSheet = factSheetBySlug(
+      libraryOf(loadLibrary(fixture('valid'))),
       'lima-2015-encontros',
     )
-    expect(ficha?.status).toBe('nao-verificado')
-    expect(ficha?.verificado_em).toBeUndefined()
-    expect(ficha?.achados[0]?.trecho).toBeNull()
-    expect(ficha?.outrasSecoes).toEqual([
+    expect(factSheet?.status).toBe('nao-verificado')
+    expect(factSheet?.verificado_em).toBeUndefined()
+    expect(factSheet?.findings[0]?.excerpt).toBeNull()
+    expect(factSheet?.otherSections).toEqual([
       {
-        titulo: 'Brasil na amostra',
+        title: 'Brasil na amostra',
         markdown: 'Nenhum participante brasileiro.',
       },
     ])
-    expect(ficha?.comoUsamos).toBeNull()
-    expect(ficha?.doi).toBe('10.5555/lima.2015')
+    expect(factSheet?.howWeUseIt).toBeNull()
+    expect(factSheet?.doi).toBe('10.5555/lima.2015')
   })
 
-  it('uma pasta sem estudos/ dá um acervo vazio', () => {
-    expect(acervoDe(montarAcervo([])).fichas).toEqual([])
+  it('a folder without estudos/ gives an empty library', () => {
+    expect(libraryOf(buildLibrary([])).factSheets).toEqual([])
   })
 })
 
-describe('erros do build', () => {
-  it('campo inválido diz o arquivo, o campo e o valor que veio', () => {
-    const erros = errosDe(carregarAcervo(fixture('invalid-field')))
-    const arquivo = 'estudos/rocha-2021-invalida.md'
-    expect(erros).toEqual(
+describe('build errors', () => {
+  it('an invalid field names the file, the field and the value it got', () => {
+    const errors = errorsOf(loadLibrary(fixture('invalid-field')))
+    const file = 'estudos/rocha-2021-invalida.md'
+    expect(errors).toEqual(
       expect.arrayContaining([
-        `${arquivo}: status: valor fora da lista fechada (ok | parcial | nao-verificado) (veio "talvez")`,
-        `${arquivo}: link: precisa ser uma URL começando com http (veio "doi 10.1/abc")`,
-        `${arquivo}: amostra.n: precisa ser um número (veio "muitos")`,
-        `${arquivo}: amostra.representativa: precisa ser true ou false (veio "sim")`,
-        `${arquivo}: autor: campo desconhecido`,
+        `${file}: status: value outside the closed list (ok | parcial | nao-verificado) (got "talvez")`,
+        `${file}: link: must be a URL starting with http (got "doi 10.1/abc")`,
+        `${file}: amostra.n: must be a number (got "muitos")`,
+        `${file}: amostra.representativa: must be true or false (got "sim")`,
+        `${file}: autor: unknown field`,
       ]),
     )
   })
 
-  it('valor fora das listas fechadas de desenho, força e cobre falha', () => {
-    const erros = errosDe(carregarAcervo(fixture('closed-list')))
-    const arquivo = 'estudos/alves-2022-fora-da-lista.md'
-    expect(erros).toEqual(
+  it('a value outside the closed lists of design, strength and coverage fails', () => {
+    const errors = errorsOf(loadLibrary(fixture('closed-list')))
+    const file = 'estudos/alves-2022-fora-da-lista.md'
+    expect(errors).toEqual(
       expect.arrayContaining([
-        `${arquivo}: forca: valor fora da lista fechada (forte | moderada | fraca) (veio "muito-forte")`,
-        `${arquivo}: desenho: valor fora da lista fechada (longitudinal | transversal | experimento | plataforma | administrativo | meta-analise) (veio "survey")`,
-        `${arquivo}: cobre.generos.1: valor fora da lista fechada (homem | mulher) (veio "outro")`,
-        `${arquivo}: cobre.procura.0: valor fora da lista fechada (homens | mulheres) (veio "ambos")`,
-        `${arquivo}: cobre.casal: valor fora da lista fechada (hetero | mesmo-sexo) (veio "misto")`,
+        `${file}: forca: value outside the closed list (forte | moderada | fraca) (got "muito-forte")`,
+        `${file}: desenho: value outside the closed list (longitudinal | transversal | experimento | plataforma | administrativo | meta-analise) (got "survey")`,
+        `${file}: cobre.generos.1: value outside the closed list (homem | mulher) (got "outro")`,
+        `${file}: cobre.procura.0: value outside the closed list (homens | mulheres) (got "ambos")`,
+        `${file}: cobre.casal: value outside the closed list (hetero | mesmo-sexo) (got "misto")`,
       ]),
     )
   })
 
-  it('cobre.idades com min acima de max falha', () => {
-    const texto = `---
+  it('cobre.idades with min above max fails', () => {
+    const text = `---
 referencia: "X."
 link: https://exemplo.org/x
 status: nao-verificado
@@ -176,83 +176,83 @@ X.
 X.
 `
     expect(
-      errosDe(montarAcervo([{ caminho: 'estudos/x-2020.md', texto }])),
-    ).toEqual(['estudos/x-2020.md: cobre.idades: min (40) passa de max (30)'])
+      errorsOf(buildLibrary([{ path: 'estudos/x-2020.md', text }])),
+    ).toEqual(['estudos/x-2020.md: cobre.idades: min (40) is above max (30)'])
   })
 
-  it('dois Estudos com o mesmo DOI falham, mesmo escrito de outro jeito', () => {
-    expect(errosDe(carregarAcervo(fixture('duplicate-doi')))).toEqual([
-      'estudos/mendes-2019-original.md: link: o DOI 10.9999/repetido.2019 já está em estudos/mendes-2019-copia.md; um Estudo tem uma Ficha só',
+  it('two studies with the same DOI fail, even when written differently', () => {
+    expect(errorsOf(loadLibrary(fixture('duplicate-doi')))).toEqual([
+      'estudos/mendes-2019-original.md: link: the DOI 10.9999/repetido.2019 is already in estudos/mendes-2019-copia.md; a study has a single fact sheet',
     ])
   })
 
-  it('corpo sem as seções ou com a tabela antiga falha', () => {
-    const arquivo = 'estudos/nunes-2020-corpo.md'
-    expect(errosDe(carregarAcervo(fixture('incomplete-body')))).toEqual([
-      `${arquivo}: O que mediu: falta a seção "## O que mediu"`,
-      `${arquivo}: Achados: falta a seção "## Achados"`,
+  it('a body without the sections or with the old table fails', () => {
+    const file = 'estudos/nunes-2020-corpo.md'
+    expect(errorsOf(loadLibrary(fixture('incomplete-body')))).toEqual([
+      `${file}: O que mediu: missing the section "## O que mediu"`,
+      `${file}: Achados: missing the section "## Achados"`,
     ])
   })
 
-  it('a tabela de Achados precisa das colunas Medida, Valor, Onde e Trecho', () => {
-    const texto = textoDaFixture('valid', 'lima-2015-encontros').replace(
+  it('the Achados table needs the columns Medida, Valor, Onde and Trecho', () => {
+    const text = fixtureText('valid', 'lima-2015-encontros').replace(
       '| Medida | Valor | Onde | Trecho |',
       '| Medida | Valor | Onde no texto |',
     )
     expect(
-      errosDe(
-        montarAcervo([{ caminho: 'estudos/lima-2015-encontros.md', texto }]),
+      errorsOf(
+        buildLibrary([{ path: 'estudos/lima-2015-encontros.md', text }]),
       ),
     ).toEqual([
-      'estudos/lima-2015-encontros.md: Achados: a tabela precisa das colunas | Medida | Valor | Onde | Trecho | (e | Cálculo | opcional), veio | Medida | Valor | Onde no texto |',
+      'estudos/lima-2015-encontros.md: Achados: the table needs the columns | Medida | Valor | Onde | Trecho | (and an optional | Cálculo |), got | Medida | Valor | Onde no texto |',
     ])
   })
 
-  it('Ficha ok precisa de data e de trecho em cada achado', () => {
-    const arquivo = 'estudos/pires-2023-sem-trecho.md'
-    expect(errosDe(carregarAcervo(fixture('ok-without-excerpt')))).toEqual([
-      `${arquivo}: verificado_em: uma Ficha ok ou parcial precisa da data da conferência`,
-      `${arquivo}: Achados: a linha 2 ("Sem trecho") está sem Trecho; uma Ficha ok cita o original em cada achado`,
+  it('an ok fact sheet needs a date and an excerpt in every finding', () => {
+    const file = 'estudos/pires-2023-sem-trecho.md'
+    expect(errorsOf(loadLibrary(fixture('ok-without-excerpt')))).toEqual([
+      `${file}: verificado_em: an ok or partial fact sheet needs the date it was checked`,
+      `${file}: Achados: row 2 ("Sem trecho") has no Trecho; an ok fact sheet quotes the original in every finding`,
     ])
   })
 
-  it('frontmatter ausente ou quebrado falha', () => {
+  it('a missing or broken frontmatter fails', () => {
     expect(
-      errosDe(
-        montarAcervo([
-          { caminho: 'estudos/sem-2020.md', texto: '# Sem (2020): nada\n' },
+      errorsOf(
+        buildLibrary([
+          { path: 'estudos/sem-2020.md', text: '# Sem (2020): nada\n' },
           {
-            caminho: 'estudos/quebrado-2020.md',
-            texto: '---\nstatus: [ok\n---\n# Q\n',
+            path: 'estudos/quebrado-2020.md',
+            text: '---\nstatus: [ok\n---\n# Q\n',
           },
         ]),
       ),
     ).toEqual(
       expect.arrayContaining([
-        'estudos/sem-2020.md: falta o frontmatter (o bloco --- do topo)',
+        'estudos/sem-2020.md: missing the frontmatter (the --- block at the top)',
         expect.stringMatching(
-          /^estudos\/quebrado-2020\.md: o frontmatter não é YAML válido/,
+          /^estudos\/quebrado-2020\.md: the frontmatter is not valid YAML/,
         ),
       ]),
     )
   })
 
-  it('formata os erros uma linha por problema', () => {
-    const resultado = carregarAcervo(fixture('duplicate-doi'))
-    expect(resultado.ok ? '' : formatarProblemas(resultado.erros)).toBe(
-      '- estudos/mendes-2019-original.md: link: o DOI 10.9999/repetido.2019 já está em estudos/mendes-2019-copia.md; um Estudo tem uma Ficha só',
+  it('formats the errors one line per problem', () => {
+    const result = loadLibrary(fixture('duplicate-doi'))
+    expect(result.ok ? '' : formatProblems(result.errors)).toBe(
+      '- estudos/mendes-2019-original.md: link: the DOI 10.9999/repetido.2019 is already in estudos/mendes-2019-copia.md; a study has a single fact sheet',
     )
   })
 })
 
-describe('origem dos dados (.meta.yaml)', () => {
-  const ficha = (pasta: string, slug: string) => ({
-    caminho: `estudos/${slug}.md`,
-    texto: textoDaFixture(pasta, slug),
+describe('data origin (.meta.yaml)', () => {
+  const factSheet = (folder: string, slug: string) => ({
+    path: `estudos/${slug}.md`,
+    text: fixtureText(folder, slug),
   })
-  const meta = (corpo: string) => ({
-    caminho: 'dados/grupo-possivel/censo.meta.yaml',
-    texto: corpo,
+  const meta = (body: string) => ({
+    path: 'dados/grupo-possivel/censo.meta.yaml',
+    text: body,
   })
   const META_OK = `ficha: silva-2020-apps-brasil
 tabela: ["Microdados, arquivo de pessoas"]
@@ -262,11 +262,11 @@ script: scripts/grupo-possivel/pipeline.ts
 versao: "arquivo de 2026-09-14"
 `
 
-  it('lê o .meta.yaml de cada arquivo de dados em dados/', () => {
-    const acervo = acervoDe(carregarAcervo(fixture('valid')))
-    expect(acervo.dados).toEqual([
+  it('reads the .meta.yaml of each data file in dados/', () => {
+    const library = libraryOf(loadLibrary(fixture('valid')))
+    expect(library.data).toEqual([
       {
-        arquivo: 'dados/grupo-possivel/exemplo.meta.yaml',
+        file: 'dados/grupo-possivel/exemplo.meta.yaml',
         ficha: 'silva-2020-apps-brasil',
         tabela: ['SIDRA 9514'],
         baixado_em: '2026-10-19',
@@ -276,79 +276,82 @@ versao: "arquivo de 2026-09-14"
     ])
   })
 
-  it('aceita o .meta.yaml que cita uma Ficha ✅', () => {
-    const resultado = montarAcervo([
-      ficha('valid', 'silva-2020-apps-brasil'),
+  it('accepts a .meta.yaml that cites a ✅ fact sheet', () => {
+    const result = buildLibrary([
+      factSheet('valid', 'silva-2020-apps-brasil'),
       meta(META_OK),
     ])
-    expect(acervoDe(resultado).dados[0]?.variaveis).toEqual(['P0110', 'P0150'])
+    expect(libraryOf(result).data[0]?.variaveis).toEqual(['P0110', 'P0150'])
   })
 
-  it('falha quando o .meta.yaml cita uma Ficha ⬜', () => {
-    const texto = META_OK.replace(
+  it('fails when the .meta.yaml cites a ⬜ fact sheet', () => {
+    const text = META_OK.replace(
       'silva-2020-apps-brasil',
       'lima-2015-encontros',
     )
     expect(
-      errosDe(
-        montarAcervo([ficha('valid', 'lima-2015-encontros'), meta(texto)]),
+      errorsOf(
+        buildLibrary([factSheet('valid', 'lima-2015-encontros'), meta(text)]),
       ),
     ).toEqual([
-      'dados/grupo-possivel/censo.meta.yaml: ficha: lima-2015-encontros é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡',
+      'dados/grupo-possivel/censo.meta.yaml: ficha: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets',
     ])
   })
 
-  it('falha quando a Ficha citada não existe', () => {
-    expect(errosDe(montarAcervo([meta(META_OK)]))).toEqual([
-      'dados/grupo-possivel/censo.meta.yaml: ficha: não existe a Ficha estudos/silva-2020-apps-brasil.md',
+  it('fails when the cited fact sheet does not exist', () => {
+    expect(errorsOf(buildLibrary([meta(META_OK)]))).toEqual([
+      'dados/grupo-possivel/censo.meta.yaml: ficha: the fact sheet estudos/silva-2020-apps-brasil.md does not exist',
     ])
   })
 
-  it('falha com campo ausente, data errada ou sem tabela nem variáveis', () => {
-    const texto =
+  it('fails with a missing field, a wrong date or neither table nor variables', () => {
+    const text =
       'ficha: silva-2020-apps-brasil\nbaixado_em: ontem\nscript: x.ts\n'
     expect(
-      errosDe(
-        montarAcervo([ficha('valid', 'silva-2020-apps-brasil'), meta(texto)]),
+      errorsOf(
+        buildLibrary([
+          factSheet('valid', 'silva-2020-apps-brasil'),
+          meta(text),
+        ]),
       ),
     ).toEqual(
       expect.arrayContaining([
-        'dados/grupo-possivel/censo.meta.yaml: baixado_em: use a data como AAAA-MM-DD (veio "ontem")',
-        'dados/grupo-possivel/censo.meta.yaml: versao: campo obrigatório ausente',
+        'dados/grupo-possivel/censo.meta.yaml: baixado_em: write the date as YYYY-MM-DD (got "ontem")',
+        'dados/grupo-possivel/censo.meta.yaml: versao: required field missing',
       ]),
     )
-    const semTabela = META_OK.replace(/^tabela:.*\n/m, '').replace(
+    const withoutTable = META_OK.replace(/^tabela:.*\n/m, '').replace(
       /^variaveis:.*\n/m,
       '',
     )
     expect(
-      errosDe(
-        montarAcervo([
-          ficha('valid', 'silva-2020-apps-brasil'),
-          meta(semTabela),
+      errorsOf(
+        buildLibrary([
+          factSheet('valid', 'silva-2020-apps-brasil'),
+          meta(withoutTable),
         ]),
       ),
     ).toEqual([
-      'dados/grupo-possivel/censo.meta.yaml: diga a tabela ou as variáveis de onde os dados saíram',
+      'dados/grupo-possivel/censo.meta.yaml: say the table or the variables the data came from',
     ])
   })
 })
 
-describe('o acervo do repositório', () => {
-  it('carrega as Fichas: as 30 antigas não verificadas até serem refeitas (#6), as do IBGE conferidas (#36)', () => {
-    const raiz = fileURLToPath(new URL('../../..', import.meta.url))
-    const acervo = acervoDe(carregarAcervo(raiz))
-    const conferidas = acervo.fichas
+describe("the repository's library", () => {
+  it('loads the fact sheets: the 30 old ones unverified until they are redone (#6), the IBGE ones checked (#36)', () => {
+    const root = fileURLToPath(new URL('../../..', import.meta.url))
+    const library = libraryOf(loadLibrary(root))
+    const checked = library.factSheets
       .filter((f) => f.status !== 'nao-verificado')
       .map((f) => f.slug)
-    expect(conferidas).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
-    expect(acervo.fichas).toHaveLength(32)
+    expect(checked).toEqual(['ibge-2019-pns', 'ibge-2022-censo-amostra'])
+    expect(library.factSheets).toHaveLength(32)
   })
 
-  it('os dados do Grupo possível citam as Fichas do Censo e da PNS', () => {
-    const raiz = fileURLToPath(new URL('../../..', import.meta.url))
-    const acervo = acervoDe(carregarAcervo(raiz))
-    expect(acervo.dados.map((d) => [d.arquivo, d.ficha])).toEqual([
+  it('the possible group data cites the Census and PNS fact sheets', () => {
+    const root = fileURLToPath(new URL('../../..', import.meta.url))
+    const library = libraryOf(loadLibrary(root))
+    expect(library.data.map((d) => [d.file, d.ficha])).toEqual([
       ['dados/grupo-possivel/censo-2022.meta.yaml', 'ibge-2022-censo-amostra'],
       ['dados/grupo-possivel/pns-2019.meta.yaml', 'ibge-2019-pns'],
       [
@@ -366,33 +369,32 @@ describe('o acervo do repositório', () => {
     ])
   })
 
-  it('traz as Dicas da tabela antiga, uma por arquivo, sem as ⬜, e nenhuma publicada ainda', () => {
-    const raiz = fileURLToPath(new URL('../../..', import.meta.url))
-    const acervo = acervoDe(carregarAcervo(raiz))
-    expect(acervo.dicas.map((d) => [d.slug, d.forca, d.inferencia])).toEqual([
+  it('carries the tips of the old table, one per file, without the ⬜ ones, and none published yet', () => {
+    const root = fileURLToPath(new URL('../../..', import.meta.url))
+    const library = libraryOf(loadLibrary(root))
+    expect(library.tips.map((d) => [d.slug, d.forca, d.inferencia])).toEqual([
       ['apps-como-complemento', 'forte', false],
       ['convivencia-repetida', 'moderada', true],
       ['escola-e-eventos-sociais', 'moderada', false],
       ['mensagem-um-pouco-acima', 'moderada', false],
       ['sem-pressa-para-casar', 'forte', false],
     ])
-    // As Fichas que as sustentam ainda são ⬜: as Dicas esperam a conferência.
-    expect(acervo.dicas.filter((d) => d.publicada)).toEqual([])
+    // The fact sheets behind them are still ⬜: the tips wait for the check.
+    expect(library.tips.filter((d) => d.published)).toEqual([])
   })
 })
 
-describe('caminhos e índice', () => {
-  it('a Ficha fica em /estudos/<slug>', () => {
-    expect(caminhoDaFicha({ slug: 'joel-2020-machine-learning' })).toBe(
+describe('paths and index', () => {
+  it('a fact sheet lives at /estudos/<slug>', () => {
+    expect(factSheetPath({ slug: 'joel-2020-machine-learning' })).toBe(
       '/estudos/joel-2020-machine-learning',
     )
   })
 
-  it('só Ficha ✅ e 🟡 vai para a busca', () => {
-    const acervo = acervoDe(carregarAcervo(fixture('valid')))
-    expect(acervo.fichas.filter(fichaIndexavel).map((f) => f.slug)).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
-    ])
+  it('only ✅ and 🟡 fact sheets go to search engines', () => {
+    const library = libraryOf(loadLibrary(fixture('valid')))
+    expect(
+      library.factSheets.filter(isFactSheetIndexable).map((f) => f.slug),
+    ).toEqual(['costa-2018-satisfacao', 'silva-2020-apps-brasil'])
   })
 })

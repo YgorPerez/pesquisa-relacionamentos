@@ -2,15 +2,13 @@
 // características citando a Silva 2020 (✅) e a Costa 2018 (🟡), e o Guia B1
 // que hospeda a calculadora.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/content'
+import { loadLibrary } from '@tem-estudo/content'
 import { describe, expect, it } from 'vite-plus/test'
 import { vistaDasPrioridades } from './vista-prioridades'
 
-const resultado = carregarAcervo(
-  resolve(import.meta.dirname, '../../e2e/acervo'),
-)
+const resultado = loadLibrary(resolve(import.meta.dirname, '../../e2e/acervo'))
 if (!resultado.ok) throw new Error('fixture do e2e inválida')
-const { acervo } = resultado
+const { library: acervo } = resultado
 
 describe('vistaDasPrioridades', () => {
   it('traz cada célula com a Ficha resumida: nome curto, Status, Força e amostra', () => {
@@ -55,6 +53,6 @@ describe('vistaDasPrioridades', () => {
   })
 
   it('sem o arquivo de Prioridades, não há vista', () => {
-    expect(vistaDasPrioridades({ ...acervo, prioridades: null })).toBeNull()
+    expect(vistaDasPrioridades({ ...acervo, priorities: null })).toBeNull()
   })
 })

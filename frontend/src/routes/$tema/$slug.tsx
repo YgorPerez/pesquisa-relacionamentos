@@ -31,10 +31,10 @@ import { useContarFichasAbertas } from '#/analytics/contagem'
 import { Compartilhar } from '#/ui/compartilhar'
 import { useGrupoPossivel, useRequisitosSalvos } from '#/estado/grupo-possivel'
 import { CartaoDoGrupoPossivel } from '#/ui/grupo-possivel'
-import type { Perfil } from '@tem-estudo/rules/profile'
+import type { Profile } from '@tem-estudo/rules/profile'
 import {
-  REQUISITOS_PADRAO,
-  valorDoRequisito,
+  DEFAULT_REQUIREMENTS,
+  requirementValue,
 } from '@tem-estudo/rules/requirements'
 
 export const Route = createFileRoute('/$tema/$slug')({
@@ -53,11 +53,11 @@ export const Route = createFileRoute('/$tema/$slug')({
     // fixa do site, da raiz.
     return {
       meta: [
-        { title: `${busca.titulo} · Tem estudo?` },
-        { name: 'description', content: busca.descricao },
+        { title: `${busca.title} · Tem estudo?` },
+        { name: 'description', content: busca.description },
         { property: 'og:type', content: 'article' },
-        { property: 'og:title', content: busca.titulo },
-        { property: 'og:description', content: busca.descricao },
+        { property: 'og:title', content: busca.title },
+        { property: 'og:description', content: busca.description },
       ],
     }
   },
@@ -100,7 +100,7 @@ function PaginaDoGuia() {
     <Folha>
       <Coluna>
         <VoltarParaGuia />
-        {perfil && noGuia?.comDado === 0 && <AvisoSemDado perfil={perfil} />}
+        {perfil && noGuia?.withData === 0 && <AvisoSemDado perfil={perfil} />}
         <Display>
           <Html como="span" html={guia.perguntaHtml} />
         </Display>
@@ -112,15 +112,15 @@ function PaginaDoGuia() {
         <LinkDoPerfil perfil={perfil} />
 
         {guia.dicas.length > 0 && (
-          <DicasDoGuia dicas={guia.dicas} vereditos={noGuia?.dicas} />
+          <DicasDoGuia dicas={guia.dicas} vereditos={noGuia?.tips} />
         )}
 
         {guia.prioridades && <CartaoDoB1 prioridades={guia.prioridades} />}
         {guia.grupoPossivel && <CartaoDoB5 perfil={perfil} />}
 
-        <Evidencia guia={guia} vereditos={noGuia?.achados} />
+        <Evidencia guia={guia} vereditos={noGuia?.findings} />
 
-        <VariaConformeOPerfil perfil={perfil} comDado={noGuia?.comDado} />
+        <VariaConformeOPerfil perfil={perfil} comDado={noGuia?.withData} />
 
         {guia.mitos.length > 0 && <Mitos mitos={guia.mitos} />}
 
@@ -163,7 +163,7 @@ function RespostaCurta({
       </h2>
       <ConfiancaDaResposta confianca={guia.confianca} />
       <Html className="prosa text-lead" html={guia.respostaHtml} />
-      {noGuia && <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />}
+      {noGuia && <ParaOSeuPerfil chave={noGuia.key} achados={guia.achados} />}
     </Painel>
   )
 }
@@ -174,7 +174,7 @@ function VariaConformeOPerfil({
   perfil,
   comDado,
 }: {
-  perfil: Perfil | null
+  perfil: Profile | null
   comDado: number | undefined
 }) {
   const guia = useGuia()
@@ -244,19 +244,19 @@ function CartaoDoB1({ prioridades }: { prioridades: PrioridadesVista }) {
 }
 
 /** O cartão do Grupo possível, com a conta que o visitante deixou na página. */
-function CartaoDoB5({ perfil }: { perfil: Perfil | null }) {
+function CartaoDoB5({ perfil }: { perfil: Profile | null }) {
   const salvos = useRequisitosSalvos()
   const { estimativa, carregando, uf } = useGrupoPossivel(perfil, salvos)
-  const r = salvos ?? REQUISITOS_PADRAO
+  const r = salvos ?? DEFAULT_REQUIREMENTS
   const municipio = r.lugar?.municipio
-    ? uf?.municipios.get(r.lugar.municipio)?.nome
+    ? uf?.municipalities.get(r.lugar.municipio)?.name
     : undefined
   return (
     <CartaoDoGrupoPossivel
       estimativa={estimativa}
       usado={perfil !== null || salvos !== null}
-      ligados={estimativa.ligados.map((k) =>
-        valorDoRequisito(k, perfil, r, municipio),
+      ligados={estimativa.active.map((k) =>
+        requirementValue(k, perfil, r, municipio),
       )}
       carregando={carregando}
     />

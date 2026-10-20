@@ -1,23 +1,23 @@
 // Status de verificação e Força da evidência, sempre desenhados e escritos
 // (DESIGN.md: "Don't mostrar Confiança, Status ou Força só por cor").
-import type { Forca, Status } from '@tem-estudo/content'
+import type { Strength, VerificationStatus } from '@tem-estudo/content'
 import type { ReactNode } from 'react'
 import { cn } from '@/platform/cn'
 
-const PALAVRA_DO_STATUS: Record<Status, string> = {
+const PALAVRA_DO_STATUS: Record<VerificationStatus, string> = {
   ok: 'lido no original',
   parcial: 'parcial',
   'nao-verificado': 'não verificado',
 }
 
-const DEGRAUS_DA_FORCA: Record<Forca, number> = {
+const DEGRAUS_DA_FORCA: Record<Strength, number> = {
   fraca: 1,
   moderada: 2,
   forte: 3,
 }
 
 /** Caixa com visto (lido), caixa hachurada (parcial), caixa vazia (não verificado). */
-function IconeDoStatus({ status }: { status: Status }) {
+function IconeDoStatus({ status }: { status: VerificationStatus }) {
   return (
     <svg
       className="flex-none text-tinta"
@@ -49,7 +49,11 @@ function IconeDoStatus({ status }: { status: Status }) {
   )
 }
 
-export function StatusDeVerificacao({ status }: { status: Status }) {
+export function StatusDeVerificacao({
+  status,
+}: {
+  status: VerificationStatus
+}) {
   return (
     <span
       className="inline-flex items-center gap-1.5 font-label text-label"
@@ -72,7 +76,7 @@ export function Degraus({
   nivel,
   largura = 36,
 }: {
-  nivel: Forca
+  nivel: Strength
   largura?: number
 }) {
   return <DegrausCheios cheios={DEGRAUS_DA_FORCA[nivel]} largura={largura} />
@@ -109,7 +113,7 @@ export function ForcaDaEvidencia({
   forca,
   rotulo = false,
 }: {
-  forca: Forca
+  forca: Strength
   rotulo?: boolean
 }) {
   return (

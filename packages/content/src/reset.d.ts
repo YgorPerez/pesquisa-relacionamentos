@@ -1,3 +1,3 @@
-// O ts-reset (ADR 0004): `JSON.parse` e `.json()` dão `unknown`, `.filter(Boolean)`
-// tira o `undefined`, `includes` aceita qualquer valor da lista.
+// ts-reset (ADR 0004): `JSON.parse` and `.json()` give `unknown`,
+// `.filter(Boolean)` drops `undefined`, `includes` accepts any value of the list.
 import '@total-typescript/ts-reset'

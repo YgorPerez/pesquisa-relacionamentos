@@ -4,17 +4,17 @@
 // Amarelo só no que é do visitante (as escolhidas); "não sabemos" é o anel
 // vazio em tinta (The Three Inks Rule).
 import { Link } from '@tanstack/react-router'
-import type { GeneroDoPerfil } from '@tem-estudo/rules/profile'
+import type { ProfileGender } from '@tem-estudo/rules/profile'
 import {
-  DESFECHOS,
-  NOME_DO_DEGRAU,
-  NOME_DO_DESFECHO,
-  TAMANHO_DO_TOPO,
-  degrau,
-  prateleiras,
-  viesPara,
-  type Degrau,
-  type Desfecho,
+  OUTCOMES,
+  LEVEL_NAME,
+  OUTCOME_NAME,
+  TOP_SIZE,
+  level,
+  shelves,
+  biasFor,
+  type Level,
+  type Outcome,
 } from '@tem-estudo/rules/priorities'
 import type {
   BarraDaSatisfacao as Barra,
@@ -34,7 +34,7 @@ export function PesoDaEvidencia({
   degrau: n,
   largura = 36,
 }: {
-  degrau: Degrau
+  degrau: Level
   largura?: number
 }) {
   return n > 0 ? (
@@ -49,14 +49,14 @@ export function PesoDaEvidencia({
 }
 
 /** O peso em tamanho de etiqueta, sempre com a palavra. */
-export function EtiquetaDoPeso({ degrau: n }: { degrau: Degrau }) {
+export function EtiquetaDoPeso({ degrau: n }: { degrau: Level }) {
   return (
     <span
       className="inline-flex items-center gap-1.5 font-label text-label leading-body whitespace-nowrap data-[degrau=0]:font-normal data-[degrau=0]:text-tinta-2 data-[degrau=0]:italic"
       data-degrau={n}
     >
       <PesoDaEvidencia degrau={n} />
-      {NOME_DO_DEGRAU[n]}
+      {LEVEL_NAME[n]}
     </span>
   )
 }
@@ -195,11 +195,11 @@ export function BarraDaSatisfacao({
 }
 
 function estadoDaEscolha(quantas: number): string {
-  if (quantas >= TAMANHO_DO_TOPO)
+  if (quantas >= TOP_SIZE)
     return 'Pronto. Para trocar, toque numa das escolhidas e ela sai.'
   if (quantas === 0)
     return 'Nenhuma escolhida ainda. Dá para ver as prateleiras mesmo assim.'
-  const falta = TAMANHO_DO_TOPO - quantas
+  const falta = TOP_SIZE - quantas
   return falta > 1 ? `Faltam ${falta}.` : 'Falta 1.'
 }
 
@@ -214,7 +214,7 @@ export function EscolhaDoTopo3({
   topo3: ReadonlyArray<string>
   aoTocar: (id: string) => void
 }) {
-  const cheio = topo3.length >= TAMANHO_DO_TOPO
+  const cheio = topo3.length >= TOP_SIZE
   return (
     <section className="mt-lg" aria-labelledby="t-topo3">
       <h2 id="t-topo3" className={PASSO}>
@@ -257,8 +257,8 @@ export function SeletorDeDesfecho({
   desfecho,
   aoEscolher,
 }: {
-  desfecho: Desfecho
-  aoEscolher: (desfecho: Desfecho) => void
+  desfecho: Outcome
+  aoEscolher: (desfecho: Outcome) => void
 }) {
   return (
     <fieldset className="m-0 border-0 p-0">
@@ -268,11 +268,11 @@ export function SeletorDeDesfecho({
       <RadioGroup
         aria-labelledby="t-desfecho"
         value={desfecho}
-        onValueChange={(d) => aoEscolher(d as Desfecho)}
+        onValueChange={(d) => aoEscolher(d as Outcome)}
       >
-        {DESFECHOS.map((d) => (
+        {OUTCOMES.map((d) => (
           <RadioGroupItem key={d} value={d}>
-            {NOME_DO_DESFECHO[d]}
+            {OUTCOME_NAME[d]}
           </RadioGroupItem>
         ))}
       </RadioGroup>
@@ -308,21 +308,21 @@ function DetalheDaCaracteristica({
   id,
 }: {
   car: CaracteristicaVista
-  desfecho: Desfecho
-  genero: GeneroDoPerfil | undefined
+  desfecho: Outcome
+  genero: ProfileGender | undefined
   id: string
 }) {
   const celula = car[desfecho]
-  const vies = viesPara(car, genero)
+  const vies = biasFor(car, genero)
   return (
     <div
       id={id}
       className="mt-sm rounded-mao border-2 border-tinta bg-folha px-3.5 py-3 text-aviso leading-detalhe [&_p]:m-0 [&_p]:mb-1.5"
       role="region"
-      aria-label={`${car.nome}, ${NOME_DO_DESFECHO[desfecho].toLowerCase()}`}
+      aria-label={`${car.nome}, ${OUTCOME_NAME[desfecho].toLowerCase()}`}
     >
       <p className="font-title text-body leading-detalhe font-bold">
-        {car.nome} · {NOME_DO_DESFECHO[desfecho].toLowerCase()}
+        {car.nome} · {OUTCOME_NAME[desfecho].toLowerCase()}
       </p>
       <p>{celula.texto}</p>
       {celula.medida && (
@@ -355,18 +355,18 @@ export function Estante({
   genero,
 }: {
   caracteristicas: ReadonlyArray<CaracteristicaVista>
-  desfecho: Desfecho
+  desfecho: Outcome
   topo3: ReadonlyArray<string>
   aberta: string | null
   aoAbrir: (id: string | null) => void
-  genero: GeneroDoPerfil | undefined
+  genero: ProfileGender | undefined
 }) {
   const porId = new Map(caracteristicas.map((c) => [c.id, c]))
   return (
     <div className="mt-1.5">
-      {prateleiras(caracteristicas, desfecho, topo3).map((prat) => (
+      {shelves(caracteristicas, desfecho, topo3).map((prat) => (
         <Prateleira
-          key={prat.degrau}
+          key={prat.level}
           prateleira={prat}
           porId={porId}
           desfecho={desfecho}
@@ -391,29 +391,29 @@ function Prateleira({
   aoAbrir,
   genero,
 }: {
-  prateleira: ReturnType<typeof prateleiras>[number]
+  prateleira: ReturnType<typeof shelves>[number]
   porId: ReadonlyMap<string, CaracteristicaVista>
-  desfecho: Desfecho
+  desfecho: Outcome
   topo3: ReadonlyArray<string>
   aberta: string | null
   aoAbrir: (id: string | null) => void
-  genero: GeneroDoPerfil | undefined
+  genero: ProfileGender | undefined
 }) {
-  const detalhe = `detalhe-${prat.degrau}`
+  const detalhe = `detalhe-${prat.level}`
   const abertaAqui =
     aberta !== null && prat.ids.includes(aberta) ? porId.get(aberta) : undefined
   return (
     <section
       className="group/prateleira pt-6.5"
-      data-degrau={prat.degrau}
-      aria-labelledby={`prat-${prat.degrau}`}
+      data-degrau={prat.level}
+      aria-labelledby={`prat-${prat.level}`}
     >
       <h3
-        id={`prat-${prat.degrau}`}
+        id={`prat-${prat.level}`}
         className="m-0 mb-3 flex items-center gap-2.5 font-title text-nivel leading-headline font-bold tracking-title group-data-[degrau=0]/prateleira:font-semibold group-data-[degrau=0]/prateleira:text-tinta-2 group-data-[degrau=0]/prateleira:italic"
       >
-        <PesoDaEvidencia degrau={prat.degrau} largura={42} />
-        {prat.nome}
+        <PesoDaEvidencia degrau={prat.level} largura={42} />
+        {prat.name}
       </h3>
       <Livros
         ids={prat.ids}
@@ -510,7 +510,7 @@ function Topo3NoCartao({
             </span>
             <span>{car.nome}</span>
             <span className="sr-only">, em satisfação: </span>
-            <EtiquetaDoPeso degrau={degrau(car, 'satisfacao')} />
+            <EtiquetaDoPeso degrau={level(car, 'satisfacao')} />
           </li>
         ))}
       </ol>

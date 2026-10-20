@@ -3,7 +3,7 @@
 // Graph e o endereço. Cada prévia sai da mesma conta do servidor do site
 // (`previas-do-link.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ORIGEM } from '@tem-estudo/content/search'
+import { ORIGIN } from '@tem-estudo/content/search'
 import { expect, within } from 'storybook/test'
 import {
   previaDoLink,
@@ -24,13 +24,13 @@ function Cartao({ endereco, previa }: PreviaDoLink) {
       />
       <figcaption className="p-3">
         <b className="block font-title text-linha leading-tight">
-          {previa.titulo}
+          {previa.title}
         </b>
         <span className="mt-1 block text-nota leading-nota text-tinta-2">
-          {previa.descricao}
+          {previa.description}
         </span>
         <small className="mt-1.5 block text-label break-all text-tinta-2">
-          {new URL(ORIGEM).host}
+          {new URL(ORIGIN).host}
           {endereco}
         </small>
       </figcaption>

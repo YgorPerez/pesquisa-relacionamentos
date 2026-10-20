@@ -1,342 +1,340 @@
-// O acervo inteiro: lê as pastas do repositório e devolve o modelo tipado ou
-// a lista de erros do build. A leitura do disco fica em `lerArquivos`; o
-// resto (`montarAcervo`) é função pura sobre textos, e é ela que recebe as
-// regras entre arquivos (DOI repetido, referências, Confiança, `ordem` dos
-// Temas, a Ficha citada pelos dados, `antes` e o último sitemap publicado).
+// The whole library: reads the repository folders and returns the typed model
+// or the build's list of errors. Reading the disk lives in `readFiles`; the
+// rest (`buildLibrary`) is a pure function over texts, and it is the one that
+// applies the rules across files (repeated DOI, references, confidence, the
+// topics' `ordem`, the fact sheet cited by the data, `antes` and the last
+// published sitemap).
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { parse as lerYaml } from 'yaml'
-import { MetaDados } from './schema.ts'
-import { lerFicha, type Ficha } from './fact-sheet.ts'
+import { parse as parseYaml } from 'yaml'
+import { DataMeta } from './schema.ts'
+import { readFactSheet, type FactSheet } from './fact-sheet.ts'
 import {
-  lerDica,
-  lerGuia,
-  lerTema,
-  type Dica,
-  type DicaLida,
-  type Guia,
-  type GuiaLido,
-  type ItemLido,
-  type Tema,
+  readTip,
+  readGuide,
+  readTopic,
+  type Tip,
+  type ParsedTip,
+  type Guide,
+  type ParsedGuide,
+  type ParsedItem,
+  type Topic,
 } from './items.ts'
-import { ligar } from './publication.ts'
+import { link } from './publication.ts'
 import {
-  ARQUIVO_DE_PRIORIDADES,
-  META_DE_PRIORIDADES,
-  lerPrioridades,
-  type Prioridades,
+  PRIORITIES_FILE,
+  PRIORITIES_META,
+  readPriorities,
+  type Priorities,
 } from './priorities.ts'
-import { decodificar, problema, type Problema } from './problems.ts'
+import { decode, problem, type Problem } from './problems.ts'
 import {
-  avisosDeBusca,
-  conferirSitemapAnterior,
-  errosDoAntes,
+  searchWarnings,
+  checkPreviousSitemap,
+  beforeErrors,
 } from './search-rules.ts'
 
-/** Um arquivo de conteúdo, com o caminho relativo à raiz (`estudos/x.md`). */
-export interface Arquivo {
-  readonly caminho: string
-  readonly texto: string
+/** A content file, with its path relative to the root (`estudos/x.md`). */
+export interface ContentFile {
+  readonly path: string
+  readonly text: string
 }
 
-/** A origem de um arquivo de dados, lida do seu `.meta.yaml`. */
-export interface OrigemDosDados extends MetaDados {
-  /** Caminho do `.meta.yaml` a partir da raiz do repositório. */
-  readonly arquivo: string
+/** Where a data file comes from, read from its `.meta.yaml`. */
+export interface DataOrigin extends DataMeta {
+  /** Path of the `.meta.yaml` from the repository root. */
+  readonly file: string
 }
 
-export interface Acervo {
-  /** As Fichas em ordem de slug. */
-  readonly fichas: ReadonlyArray<Ficha>
-  /** Os Temas em ordem de slug. */
-  readonly temas: ReadonlyArray<Tema>
-  /** Os Guias Tema a Tema, na `ordem` de cada um. */
-  readonly guias: ReadonlyArray<Guia>
-  /** Todas as Dicas em ordem de slug, publicadas ou não (`publicada`). */
-  readonly dicas: ReadonlyArray<Dica>
-  /** Os `.meta.yaml` de `dados/`, em ordem de caminho. */
-  readonly dados: ReadonlyArray<OrigemDosDados>
-  /** O arquivo de Prioridades, ou `null` enquanto ele não existe. */
-  readonly prioridades: Prioridades | null
+export interface Library {
+  /** The fact sheets in slug order. */
+  readonly factSheets: ReadonlyArray<FactSheet>
+  /** The topics in slug order. */
+  readonly topics: ReadonlyArray<Topic>
+  /** The guides topic by topic, in each one's `ordem`. */
+  readonly guides: ReadonlyArray<Guide>
+  /** Every tip in slug order, published or not (`published`). */
+  readonly tips: ReadonlyArray<Tip>
+  /** The `.meta.yaml` files of `dados/`, in path order. */
+  readonly data: ReadonlyArray<DataOrigin>
+  /** The priorities file, or `null` while it does not exist. */
+  readonly priorities: Priorities | null
 }
 
-export type Resultado =
+export type LoadResult =
   | {
       readonly ok: true
-      readonly acervo: Acervo
-      readonly avisos: ReadonlyArray<Problema>
+      readonly library: Library
+      readonly warnings: ReadonlyArray<Problem>
     }
   | {
       readonly ok: false
-      readonly erros: ReadonlyArray<Problema>
-      readonly avisos: ReadonlyArray<Problema>
+      readonly errors: ReadonlyArray<Problem>
+      readonly warnings: ReadonlyArray<Problem>
     }
 
-/** As pastas que o pacote lê. Arquivo que começa com `_` é modelo ou
- * metadado da pasta e não vira item; o `_tema.md` de cada pasta de Guias é o
- * Tema. */
-const PASTA_FICHAS = 'estudos'
-const PASTA_DICAS = 'dicas'
-const PASTA_GUIAS = 'guias'
-const ARQUIVO_DO_TEMA = '_tema.md'
-/** Os dados das calculadoras. Só os `.meta.yaml` entram: os CSV são grandes
- * e quem os lê é a calculadora. */
-const PASTA_DADOS = 'dados'
-const SUFIXO_META = '.meta.yaml'
+/** The folders the package reads (the content contract, still in Portuguese).
+ * A file starting with `_` is a template or folder metadata and does not
+ * become an item; the `_tema.md` of each guide folder is the topic. */
+const FACT_SHEETS_FOLDER = 'estudos'
+const TIPS_FOLDER = 'dicas'
+const GUIDES_FOLDER = 'guias'
+const TOPIC_FILE = '_tema.md'
+/** The calculators' data. Only the `.meta.yaml` files come in: the CSVs are
+ * large and the calculator is the one that reads them. */
+const DATA_FOLDER = 'dados'
+const META_SUFFIX = '.meta.yaml'
 
-const ehItem = (nome: string) => nome.endsWith('.md') && !nome.startsWith('_')
+const isItem = (name: string) => name.endsWith('.md') && !name.startsWith('_')
 
-function lerPasta(
-  raiz: string,
-  pasta: string,
-  aceita: (nome: string) => boolean,
-): Arquivo[] {
-  const dir = join(raiz, pasta)
+function readFolder(
+  root: string,
+  folder: string,
+  accepts: (name: string) => boolean,
+): ContentFile[] {
+  const dir = join(root, folder)
   if (!existsSync(dir)) return []
   return readdirSync(dir)
-    .filter((nome) => aceita(nome) && statSync(join(dir, nome)).isFile())
+    .filter((name) => accepts(name) && statSync(join(dir, name)).isFile())
     .sort()
-    .map((nome) => ({
-      caminho: `${pasta}/${nome}`,
-      texto: readFileSync(join(dir, nome), 'utf8'),
+    .map((name) => ({
+      path: `${folder}/${name}`,
+      text: readFileSync(join(dir, name), 'utf8'),
     }))
 }
 
-/** Lê do disco os arquivos de conteúdo de uma raiz de repositório. */
-export function lerArquivos(raiz: string): ReadonlyArray<Arquivo> {
-  const guias = join(raiz, PASTA_GUIAS)
-  const temas = existsSync(guias)
-    ? readdirSync(guias)
-        .filter((nome) => statSync(join(guias, nome)).isDirectory())
+/** Reads from disk the content files of a repository root. */
+export function readFiles(root: string): ReadonlyArray<ContentFile> {
+  const guides = join(root, GUIDES_FOLDER)
+  const topics = existsSync(guides)
+    ? readdirSync(guides)
+        .filter((name) => statSync(join(guides, name)).isDirectory())
         .sort()
     : []
   return [
-    ...lerPasta(raiz, PASTA_FICHAS, ehItem),
-    ...lerPasta(raiz, PASTA_DICAS, ehItem),
-    ...temas.flatMap((tema) =>
-      lerPasta(
-        raiz,
-        `${PASTA_GUIAS}/${tema}`,
-        (nome) => ehItem(nome) || nome === ARQUIVO_DO_TEMA,
+    ...readFolder(root, FACT_SHEETS_FOLDER, isItem),
+    ...readFolder(root, TIPS_FOLDER, isItem),
+    ...topics.flatMap((topic) =>
+      readFolder(
+        root,
+        `${GUIDES_FOLDER}/${topic}`,
+        (name) => isItem(name) || name === TOPIC_FILE,
       ),
     ),
-    ...lerMetas(raiz),
-    ...lerSeExiste(raiz, ARQUIVO_DE_PRIORIDADES),
+    ...readMetas(root),
+    ...readIfExists(root, PRIORITIES_FILE),
   ]
 }
 
-function lerSeExiste(raiz: string, caminho: string): Arquivo[] {
-  const completo = join(raiz, caminho)
-  return existsSync(completo)
-    ? [{ caminho, texto: readFileSync(completo, 'utf8') }]
+function readIfExists(root: string, path: string): ContentFile[] {
+  const fullPath = join(root, path)
+  return existsSync(fullPath)
+    ? [{ path, text: readFileSync(fullPath, 'utf8') }]
     : []
 }
 
-function lerMetas(raiz: string): Arquivo[] {
-  const dados = join(raiz, PASTA_DADOS)
-  if (!existsSync(dados)) return []
+function readMetas(root: string): ContentFile[] {
+  const data = join(root, DATA_FOLDER)
+  if (!existsSync(data)) return []
   return (
-    readdirSync(dados, { recursive: true, encoding: 'utf8' })
+    readdirSync(data, { recursive: true, encoding: 'utf8' })
       .map((c) => c.split('\\').join('/'))
-      // Arquivo ou pasta que começa com `_` é rascunho e fica fora do build,
-      // como `dicas/_sem-ficha.md`.
+      // A file or folder starting with `_` is a draft and stays out of the
+      // build, like `dicas/_sem-ficha.md`.
       .filter(
         (c) =>
-          c.endsWith(SUFIXO_META) &&
-          !c.split('/').some((parte) => parte.startsWith('_')),
+          c.endsWith(META_SUFFIX) &&
+          !c.split('/').some((part) => part.startsWith('_')),
       )
       .sort()
       .map((c) => ({
-        caminho: `${PASTA_DADOS}/${c}`,
-        texto: readFileSync(join(dados, c), 'utf8'),
+        path: `${DATA_FOLDER}/${c}`,
+        text: readFileSync(join(data, c), 'utf8'),
       }))
   )
 }
 
-export interface Opcoes {
-  /** O `sitemap.xml` que está no ar. Com ele, o build falha se um caminho
-   * publicado sumiu sem estar no `antes` de algum arquivo. */
-  readonly sitemapAnterior?: string
+export interface LoadOptions {
+  /** The `sitemap.xml` that is live. With it, the build fails if a published
+   * path disappeared without being in some file's `antes`. */
+  readonly previousSitemap?: string
 }
 
-/** Monta o acervo a partir dos textos, sem tocar no disco. */
-export function montarAcervo(
-  arquivos: ReadonlyArray<Arquivo>,
-  opcoes: Opcoes = {},
-): Resultado {
-  const erros: Problema[] = []
-  const avisos: Problema[] = []
-  const fichas: Ficha[] = []
-  const temas: Tema[] = []
-  const metas: Arquivo[] = []
-  const guias: GuiaLido[] = []
-  const dicas: DicaLida[] = []
-  let arquivoDePrioridades: Arquivo | null = null
+/** Builds the library from the texts, without touching the disk. */
+export function buildLibrary(
+  files: ReadonlyArray<ContentFile>,
+  options: LoadOptions = {},
+): LoadResult {
+  const errors: Problem[] = []
+  const warnings: Problem[] = []
+  const factSheets: FactSheet[] = []
+  const topics: Topic[] = []
+  const metas: ContentFile[] = []
+  const guides: ParsedGuide[] = []
+  const tips: ParsedTip[] = []
+  let prioritiesFile: ContentFile | null = null
 
-  const quebrados = new Set<string>()
-  const guardar = <T>(caminho: string, lido: ItemLido<T>, onde: T[]) => {
-    if (lido.ok) onde.push(lido.item)
+  const broken = new Set<string>()
+  const keep = <T>(path: string, parsed: ParsedItem<T>, target: T[]) => {
+    if (parsed.ok) target.push(parsed.item)
     else {
-      erros.push(...lido.erros)
-      quebrados.add(caminho)
+      errors.push(...parsed.errors)
+      broken.add(path)
     }
   }
 
-  for (const { caminho, texto } of arquivos) {
-    const partes = caminho.split('/')
-    const nome = partes[partes.length - 1] ?? ''
-    if (caminho === ARQUIVO_DE_PRIORIDADES) {
-      arquivoDePrioridades = { caminho, texto }
-    } else if (partes[0] === PASTA_DADOS && nome.endsWith(SUFIXO_META)) {
-      metas.push({ caminho, texto })
+  for (const { path, text } of files) {
+    const parts = path.split('/')
+    const name = parts[parts.length - 1] ?? ''
+    if (path === PRIORITIES_FILE) {
+      prioritiesFile = { path, text }
+    } else if (parts[0] === DATA_FOLDER && name.endsWith(META_SUFFIX)) {
+      metas.push({ path, text })
     } else if (
-      partes[0] === PASTA_FICHAS &&
-      partes.length === 2 &&
-      ehItem(nome)
+      parts[0] === FACT_SHEETS_FOLDER &&
+      parts.length === 2 &&
+      isItem(name)
     ) {
-      const lida = lerFicha(caminho, texto)
-      guardar(caminho, lida.ok ? { ok: true, item: lida.ficha } : lida, fichas)
-    } else if (
-      partes[0] === PASTA_DICAS &&
-      partes.length === 2 &&
-      ehItem(nome)
-    ) {
-      guardar(caminho, lerDica(caminho, texto), dicas)
-    } else if (partes[0] === PASTA_GUIAS && partes.length === 3) {
-      if (nome === ARQUIVO_DO_TEMA)
-        guardar(caminho, lerTema(caminho, texto), temas)
-      else if (ehItem(nome)) guardar(caminho, lerGuia(caminho, texto), guias)
+      const parsed = readFactSheet(path, text)
+      keep(
+        path,
+        parsed.ok ? { ok: true, item: parsed.factSheet } : parsed,
+        factSheets,
+      )
+    } else if (parts[0] === TIPS_FOLDER && parts.length === 2 && isItem(name)) {
+      keep(path, readTip(path, text), tips)
+    } else if (parts[0] === GUIDES_FOLDER && parts.length === 3) {
+      if (name === TOPIC_FILE) keep(path, readTopic(path, text), topics)
+      else if (isItem(name)) keep(path, readGuide(path, text), guides)
     }
   }
 
-  fichas.sort((a, b) => a.slug.localeCompare(b.slug))
-  temas.sort((a, b) => a.slug.localeCompare(b.slug))
-  dicas.sort((a, b) => a.slug.localeCompare(b.slug))
-  erros.push(...doisRepetidos(fichas))
+  factSheets.sort((a, b) => a.slug.localeCompare(b.slug))
+  topics.sort((a, b) => a.slug.localeCompare(b.slug))
+  tips.sort((a, b) => a.slug.localeCompare(b.slug))
+  errors.push(...duplicateDois(factSheets))
 
-  const ligados = ligar({ fichas, temas, guias, dicas, quebrados })
-  erros.push(...ligados.erros)
+  const linked = link({ factSheets, topics, guides, tips, broken })
+  errors.push(...linked.errors)
 
-  const dados: OrigemDosDados[] = []
-  for (const meta of [...metas].sort((a, b) =>
-    a.caminho.localeCompare(b.caminho),
-  )) {
-    const lida = lerMeta(meta, fichas)
-    if (lida.ok) dados.push(lida.origem)
-    else erros.push(...lida.erros)
+  const data: DataOrigin[] = []
+  for (const meta of [...metas].sort((a, b) => a.path.localeCompare(b.path))) {
+    const parsed = readMeta(meta, factSheets)
+    if (parsed.ok) data.push(parsed.origin)
+    else errors.push(...parsed.errors)
   }
 
-  let prioridades: Prioridades | null = null
-  if (arquivoDePrioridades) {
-    const lidas = lerPrioridades(
-      arquivoDePrioridades.caminho,
-      arquivoDePrioridades.texto,
-      fichas,
-      metas.some((m) => m.caminho === META_DE_PRIORIDADES),
+  let priorities: Priorities | null = null
+  if (prioritiesFile) {
+    const parsed = readPriorities(
+      prioritiesFile.path,
+      prioritiesFile.text,
+      factSheets,
+      metas.some((m) => m.path === PRIORITIES_META),
     )
-    if (lidas.ok) prioridades = lidas.prioridades
-    else erros.push(...lidas.erros)
+    if (parsed.ok) priorities = parsed.priorities
+    else errors.push(...parsed.errors)
   }
 
-  if (erros.length > 0) return { ok: false, erros, avisos }
-  const acervo: Acervo = {
-    fichas,
-    temas: ligados.temas,
-    guias: ligados.guias,
-    dicas: ligados.dicas,
-    dados,
-    prioridades,
+  if (errors.length > 0) return { ok: false, errors, warnings }
+  const library: Library = {
+    factSheets,
+    topics: linked.topics,
+    guides: linked.guides,
+    tips: linked.tips,
+    data,
+    priorities,
   }
-  avisos.push(...avisosDeBusca(acervo))
-  erros.push(...errosDoAntes(acervo))
-  if (opcoes.sitemapAnterior !== undefined)
-    erros.push(...conferirSitemapAnterior(acervo, opcoes.sitemapAnterior))
-  return erros.length > 0
-    ? { ok: false, erros, avisos }
-    : { ok: true, acervo, avisos }
+  warnings.push(...searchWarnings(library))
+  errors.push(...beforeErrors(library))
+  if (options.previousSitemap !== undefined)
+    errors.push(...checkPreviousSitemap(library, options.previousSitemap))
+  return errors.length > 0
+    ? { ok: false, errors, warnings }
+    : { ok: true, library, warnings }
 }
 
-/** Lê e monta: o que o build e o app chamam. */
-export function carregarAcervo(raiz: string, opcoes: Opcoes = {}): Resultado {
-  return montarAcervo(lerArquivos(raiz), opcoes)
+/** Reads and builds: what the build and the app call. */
+export function loadLibrary(
+  root: string,
+  options: LoadOptions = {},
+): LoadResult {
+  return buildLibrary(readFiles(root), options)
 }
 
-type MetaLida =
-  | { readonly ok: true; readonly origem: OrigemDosDados }
-  | { readonly ok: false; readonly erros: ReadonlyArray<Problema> }
+type ParsedMeta =
+  | { readonly ok: true; readonly origin: DataOrigin }
+  | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** Um número só publica com Ficha ✅ ou 🟡, como uma afirmação (#10). */
-function lerMeta(
-  { caminho, texto }: Arquivo,
-  fichas: ReadonlyArray<Ficha>,
-): MetaLida {
-  let valor: unknown
+/** A number only publishes with a ✅ or 🟡 fact sheet, like a claim (#10). */
+function readMeta(
+  { path, text }: ContentFile,
+  factSheets: ReadonlyArray<FactSheet>,
+): ParsedMeta {
+  let value: unknown
   try {
-    valor = lerYaml(texto) ?? {}
+    value = parseYaml(text) ?? {}
   } catch (e) {
     return {
       ok: false,
-      erros: [problema(caminho, `não é YAML válido: ${(e as Error).message}`)],
+      errors: [problem(path, `is not valid YAML: ${(e as Error).message}`)],
     }
   }
-  const decodificado = decodificar(MetaDados, valor, caminho)
-  if (!decodificado.ok) return { ok: false, erros: decodificado.problemas }
-  const meta = decodificado.valor
-  const erros: Problema[] = []
+  const decoded = decode(DataMeta, value, path)
+  if (!decoded.ok) return { ok: false, errors: decoded.problems }
+  const meta = decoded.value
+  const errors: Problem[] = []
   if (!meta.tabela?.length && !meta.variaveis?.length)
-    erros.push(
-      problema(
-        caminho,
-        'diga a tabela ou as variáveis de onde os dados saíram',
-      ),
+    errors.push(
+      problem(path, 'say the table or the variables the data came from'),
     )
-  const ficha = fichaPorSlug({ fichas }, meta.ficha)
-  if (!ficha)
-    erros.push(
-      problema(
-        caminho,
-        `não existe a Ficha ${PASTA_FICHAS}/${meta.ficha}.md`,
+  const factSheet = factSheetBySlug({ factSheets }, meta.ficha)
+  if (!factSheet)
+    errors.push(
+      problem(
+        path,
+        `the fact sheet ${FACT_SHEETS_FOLDER}/${meta.ficha}.md does not exist`,
         'ficha',
       ),
     )
-  else if (ficha.status === 'nao-verificado')
-    erros.push(
-      problema(
-        caminho,
-        `${meta.ficha} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`,
+  else if (factSheet.status === 'nao-verificado')
+    errors.push(
+      problem(
+        path,
+        `${meta.ficha} is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
         'ficha',
       ),
     )
-  return erros.length > 0
-    ? { ok: false, erros }
-    : { ok: true, origem: { arquivo: caminho, ...meta } }
+  return errors.length > 0
+    ? { ok: false, errors }
+    : { ok: true, origin: { file: path, ...meta } }
 }
 
-/** Dois Estudos com o mesmo DOI viram duas Fichas do mesmo estudo. */
-function doisRepetidos(fichas: ReadonlyArray<Ficha>): Problema[] {
-  const porDoi = new Map<string, Ficha[]>()
-  for (const ficha of fichas) {
-    if (!ficha.doi) continue
-    porDoi.set(ficha.doi, [...(porDoi.get(ficha.doi) ?? []), ficha])
+/** Two studies with the same DOI would be two fact sheets of one study. */
+function duplicateDois(factSheets: ReadonlyArray<FactSheet>): Problem[] {
+  const byDoi = new Map<string, FactSheet[]>()
+  for (const factSheet of factSheets) {
+    if (!factSheet.doi) continue
+    byDoi.set(factSheet.doi, [...(byDoi.get(factSheet.doi) ?? []), factSheet])
   }
-  return [...porDoi.entries()]
-    .filter(([, mesmas]) => mesmas.length > 1)
-    .flatMap(([doi, mesmas]) =>
-      mesmas
+  return [...byDoi.entries()]
+    .filter(([, same]) => same.length > 1)
+    .flatMap(([doi, same]) =>
+      same
         .slice(1)
-        .map((ficha) =>
-          problema(
-            ficha.arquivo,
-            `o DOI ${doi} já está em ${mesmas[0]?.arquivo}; um Estudo tem uma Ficha só`,
+        .map((factSheet) =>
+          problem(
+            factSheet.file,
+            `the DOI ${doi} is already in ${same[0]?.file}; a study has a single fact sheet`,
             'link',
           ),
         ),
     )
 }
 
-export function fichaPorSlug(
-  acervo: Pick<Acervo, 'fichas'>,
+export function factSheetBySlug(
+  library: Pick<Library, 'factSheets'>,
   slug: string,
-): Ficha | undefined {
-  return acervo.fichas.find((f) => f.slug === slug)
+): FactSheet | undefined {
+  return library.factSheets.find((f) => f.slug === slug)
 }

@@ -1,105 +1,109 @@
-// O estado das calculadoras no link (ADR 0001, #14; stories 62–67). "Copiar
-// link" escreve o Perfil e a conta (Grupo possível) ou o topo 3 e o desfecho
-// (Prioridades) na query, com a versão do formato em `v`. Quem abre o link
-// recebe esse estado no lugar do salvo.
+// The calculators' state in the link (ADR 0001, #14; stories 62–67). "Copiar
+// link" writes the profile and the count (possible group) or the top 3 and
+// the outcome (priorities) in the query, with the format version in `v`.
+// Whoever opens the link gets that state instead of the stored one.
 //
-// O formato já circula em links velhos: mudar uma chave quebra quem recebeu.
-// Por isso cada versão tem o seu leitor, e uma versão nova acrescenta outro
-// sem apagar os de antes. A opção de não ser contado (#35) nunca entra aqui.
-import { lerPerfil, type GeneroDoPerfil, type Perfil } from './profile.ts'
-import { formatarFaixa } from './numbers.ts'
+// The format already circulates in old links: changing a key breaks whoever
+// received one. That is why each version has its reader, and a new version
+// adds another without deleting the old ones. The query keys and values stay
+// in Portuguese (ADR 0039). The opt-out of being counted (#35) never goes
+// here.
+import { readProfile, type ProfileGender, type Profile } from './profile.ts'
+import { formatRange } from './numbers.ts'
 import {
-  alertaDoTopo3,
-  lerPrioridades,
-  NOME_DO_DESFECHO,
-  type CaracteristicaComEvidencia,
-  type EstadoDasPrioridades,
+  top3Alert,
+  readPriorities,
+  OUTCOME_NAME,
+  type TraitWithEvidence,
+  type PrioritiesState,
 } from './priorities.ts'
 import {
-  ALTURA_MAXIMA,
-  ALTURA_MINIMA,
-  IDADE_PROCURADA_MAXIMA,
-  IDADE_PROCURADA_MINIMA,
-  lerRequisitos,
-  quemSeProcura,
-  REQUISITOS_PADRAO,
-  valorDoRequisito,
-  type Faixa,
-  type QuemSeProcura,
-  type Requisitos,
+  MAX_HEIGHT,
+  MIN_HEIGHT,
+  MAX_SOUGHT_AGE,
+  MIN_SOUGHT_AGE,
+  readRequirements,
+  whoIsSought,
+  DEFAULT_REQUIREMENTS,
+  requirementValue,
+  type Range,
+  type Sought,
+  type Requirements,
 } from './requirements.ts'
 
-export const CALCULADORAS_COM_LINK = ['grupo-possivel', 'prioridades'] as const
-export type CalculadoraComLink = (typeof CALCULADORAS_COM_LINK)[number]
+export const LINK_CALCULATORS = ['grupo-possivel', 'prioridades'] as const
+export type LinkCalculator = (typeof LINK_CALCULATORS)[number]
 
-export type EstadoDoLink =
+export type LinkState =
   | {
-      readonly calculadora: 'grupo-possivel'
-      readonly perfil: Perfil | null
-      /** `null`: quem mandou nunca mexeu nos Requisitos (ou deixou todos no padrão). */
-      readonly requisitos: Requisitos | null
+      readonly calculator: 'grupo-possivel'
+      readonly profile: Profile | null
+      /** `null`: the sender never touched the requirements (or left them all
+       * at the default). */
+      readonly requirements: Requirements | null
     }
   | {
-      readonly calculadora: 'prioridades'
-      /** Só o gênero do Perfil: a conta usa para a nota de viés, e o resto não vai. */
-      readonly genero: GeneroDoPerfil | null
-      readonly prioridades: EstadoDasPrioridades
+      readonly calculator: 'prioridades'
+      /** Only the profile's gender: the count uses it for the bias note, and
+       * the rest does not go. */
+      readonly gender: ProfileGender | null
+      readonly priorities: PrioritiesState
     }
 
-/** A versão que `queryDoLink` escreve. */
-export const VERSAO_DO_LINK = 1
+/** The version `linkQuery` writes. */
+export const LINK_VERSION = 1
 
-type Parametros = ReadonlyMap<string, string>
+type Params = ReadonlyMap<string, string>
 
-// --- query crua ----------------------------------------------------------------
-// Sem `URLSearchParams`: o pacote não tem DOM nem os tipos do node.
+// --- raw query ----------------------------------------------------------------
+// No `URLSearchParams`: the package has no DOM and no node types.
 
-/** As chaves e valores da query; `null` se ela não se decodifica. O `+` fica
- * `+` (nenhum valor tem espaço, e a renda "5+" pode chegar sem escape). */
-function decodificar(query: string): Parametros | null {
-  const parametros = new Map<string, string>()
-  for (const par of query.replace(/^\?/, '').split('&')) {
-    if (par === '') continue
-    const i = par.indexOf('=')
-    const [chave, valor] =
-      i < 0 ? [par, ''] : [par.slice(0, i), par.slice(i + 1)]
+/** The query's keys and values; `null` if it does not decode. A `+` stays `+`
+ * (no value has a space, and the income "5+" can arrive unescaped). */
+function decode(query: string): Params | null {
+  const params = new Map<string, string>()
+  for (const pair of query.replace(/^\?/, '').split('&')) {
+    if (pair === '') continue
+    const i = pair.indexOf('=')
+    const [key, value] =
+      i < 0 ? [pair, ''] : [pair.slice(0, i), pair.slice(i + 1)]
     try {
-      const nome = decodeURIComponent(chave)
-      if (!parametros.has(nome)) parametros.set(nome, decodeURIComponent(valor))
+      const name = decodeURIComponent(key)
+      if (!params.has(name)) params.set(name, decodeURIComponent(value))
     } catch {
       return null
     }
   }
-  return parametros
+  return params
 }
 
-/** Escapa cada valor, menos a vírgula das listas, que fica legível. */
-const codificar = (pares: ReadonlyArray<readonly [string, string]>): string =>
-  pares
+/** Escapes each value, except the lists' comma, which stays readable. */
+const encode = (pairs: ReadonlyArray<readonly [string, string]>): string =>
+  pairs
     .map(
-      ([chave, valor]) =>
-        `${chave}=${encodeURIComponent(valor).replace(/%2C/g, ',')}`,
+      ([key, value]) =>
+        `${key}=${encodeURIComponent(value).replace(/%2C/g, ',')}`,
     )
     .join('&')
 
-const faixaEscrita = ({ min, max }: Faixa) => `${min}-${max}`
+const writeRange = ({ min, max }: Range) => `${min}-${max}`
 
-function faixaLida(texto: string | undefined): Faixa | null {
-  const m = texto?.match(/^(\d{1,3})-(\d{1,3})$/)
+function readRange(text: string | undefined): Range | null {
+  const m = text?.match(/^(\d{1,3})-(\d{1,3})$/)
   return m ? { min: Number(m[1]), max: Number(m[2]) } : null
 }
 
-const lista = (texto: string | undefined): string[] =>
-  texto ? texto.split(',') : []
+const list = (text: string | undefined): string[] =>
+  text ? text.split(',') : []
 
-// --- versão 1 ------------------------------------------------------------------
+// --- version 1 ----------------------------------------------------------------
 // v=1&genero=homem&procura=mulheres&idade=30
-//   Grupo possível: &idades=25-35&uf=SP&municipio=3550308&companheiro=nao
+//   Possible group: &idades=25-35&uf=SP&municipio=3550308&companheiro=nao
 //     &escolaridade=superior&renda=2-5&cor=preta,parda&religiao=catolica
-//     &sem-filhos=sim&altura=160-200&nao-fuma=sim (só o que sai do padrão)
-//   Prioridades: só o gênero do Perfil, &topo=renda,sexo,calma&desfecho=satisfacao
+//     &sem-filhos=sim&altura=160-200&nao-fuma=sim (only what is off default)
+//   Priorities: only the profile's gender, &topo=renda,sexo,calma&desfecho=satisfacao
 
-const CHAVES_DOS_REQUISITOS_V1 = [
+const REQUIREMENT_KEYS_V1 = [
   'idades',
   'uf',
   'municipio',
@@ -113,299 +117,302 @@ const CHAVES_DOS_REQUISITOS_V1 = [
   'nao-fuma',
 ] as const
 
-function escreverV1(estado: EstadoDoLink): Array<readonly [string, string]> {
-  const pares: Array<readonly [string, string]> = [
-    ['v', String(VERSAO_DO_LINK)],
-  ]
-  if (estado.calculadora === 'prioridades') {
-    if (estado.genero) pares.push(['genero', estado.genero])
-    const { topo3, desfecho } = estado.prioridades
-    if (topo3.length > 0) pares.push(['topo', topo3.join(',')])
-    pares.push(['desfecho', desfecho])
-    return pares
+function writeV1(state: LinkState): Array<readonly [string, string]> {
+  const pairs: Array<readonly [string, string]> = [['v', String(LINK_VERSION)]]
+  if (state.calculator === 'prioridades') {
+    if (state.gender) pairs.push(['genero', state.gender])
+    const { topo3: top3, desfecho: outcome } = state.priorities
+    if (top3.length > 0) pairs.push(['topo', top3.join(',')])
+    pairs.push(['desfecho', outcome])
+    return pairs
   }
 
-  const p = estado.perfil
-  if (p?.genero) pares.push(['genero', p.genero])
-  if (p?.procura) pares.push(['procura', p.procura])
-  if (p?.idade !== undefined) pares.push(['idade', String(p.idade)])
-  const r = estado.requisitos
-  if (!r) return pares
-  const padrao = REQUISITOS_PADRAO
-  if (r.idade) pares.push(['idades', faixaEscrita(r.idade)])
+  const p = state.profile
+  if (p?.genero) pairs.push(['genero', p.genero])
+  if (p?.procura) pairs.push(['procura', p.procura])
+  if (p?.idade !== undefined) pairs.push(['idade', String(p.idade)])
+  const r = state.requirements
+  if (!r) return pairs
+  const defaults = DEFAULT_REQUIREMENTS
+  if (r.idade) pairs.push(['idades', writeRange(r.idade)])
   if (r.lugar) {
-    pares.push(['uf', r.lugar.uf])
-    if (r.lugar.municipio) pares.push(['municipio', r.lugar.municipio])
+    pairs.push(['uf', r.lugar.uf])
+    if (r.lugar.municipio) pairs.push(['municipio', r.lugar.municipio])
   }
-  if (r.companheiro !== padrao.companheiro)
-    pares.push(['companheiro', r.companheiro ? 'sim' : 'nao'])
-  if (r.escolaridade) pares.push(['escolaridade', r.escolaridade])
-  if (r.renda) pares.push(['renda', r.renda])
-  if (r.cores.length > 0) pares.push(['cor', r.cores.join(',')])
-  if (r.religioes.length > 0) pares.push(['religiao', r.religioes.join(',')])
-  if (r.semFilhos) pares.push(['sem-filhos', 'sim'])
-  if (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA)
-    pares.push(['altura', faixaEscrita(r.altura)])
-  if (r.naoFuma) pares.push(['nao-fuma', 'sim'])
-  return pares
+  if (r.companheiro !== defaults.companheiro)
+    pairs.push(['companheiro', r.companheiro ? 'sim' : 'nao'])
+  if (r.escolaridade) pairs.push(['escolaridade', r.escolaridade])
+  if (r.renda) pairs.push(['renda', r.renda])
+  if (r.cores.length > 0) pairs.push(['cor', r.cores.join(',')])
+  if (r.religioes.length > 0) pairs.push(['religiao', r.religioes.join(',')])
+  if (r.semFilhos) pairs.push(['sem-filhos', 'sim'])
+  if (r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT)
+    pairs.push(['altura', writeRange(r.altura)])
+  if (r.naoFuma) pairs.push(['nao-fuma', 'sim'])
+  return pairs
 }
 
-function lerV1(
-  calculadora: CalculadoraComLink,
-  q: Parametros,
+function readV1(
+  calculator: LinkCalculator,
+  q: Params,
   ids?: ReadonlyArray<string>,
-): EstadoDoLink {
-  if (calculadora === 'prioridades') {
-    // Os links de antes levavam `procura` e `idade` também: ficam de fora.
-    const genero = lerPerfil({ genero: q.get('genero') })?.genero ?? null
-    const prioridades = lerPrioridades(
-      { topo3: lista(q.get('topo')), desfecho: q.get('desfecho') },
+): LinkState {
+  if (calculator === 'prioridades') {
+    // Older links carried `procura` and `idade` too: they stay out.
+    const gender = readProfile({ genero: q.get('genero') })?.genero ?? null
+    const priorities = readPriorities(
+      { topo3: list(q.get('topo')), desfecho: q.get('desfecho') },
       ids,
     )!
-    return { calculadora, genero, prioridades }
+    return { calculator, gender, priorities }
   }
 
-  const perfil = lerPerfil({
+  const profile = readProfile({
     genero: q.get('genero'),
     procura: q.get('procura'),
     idade: q.get('idade'),
   })
 
-  if (!CHAVES_DOS_REQUISITOS_V1.some((chave) => q.has(chave)))
-    return { calculadora, perfil, requisitos: null }
+  if (!REQUIREMENT_KEYS_V1.some((key) => q.has(key)))
+    return { calculator, profile, requirements: null }
   const uf = q.get('uf')
-  const requisitos = lerRequisitos({
-    idade: faixaLida(q.get('idades')),
+  const requirements = readRequirements({
+    idade: readRange(q.get('idades')),
     lugar: uf ? { uf, municipio: q.get('municipio') } : null,
     companheiro:
-      q.get('companheiro') === 'nao' ? false : REQUISITOS_PADRAO.companheiro,
+      q.get('companheiro') === 'nao' ? false : DEFAULT_REQUIREMENTS.companheiro,
     escolaridade: q.get('escolaridade'),
     renda: q.get('renda'),
-    cores: lista(q.get('cor')),
-    religioes: lista(q.get('religiao')),
+    cores: list(q.get('cor')),
+    religioes: list(q.get('religiao')),
     semFilhos: q.get('sem-filhos') === 'sim',
-    altura: faixaLida(q.get('altura')),
+    altura: readRange(q.get('altura')),
     naoFuma: q.get('nao-fuma') === 'sim',
   })
-  return { calculadora, perfil, requisitos }
+  return { calculator, profile, requirements }
 }
 
-/** Um leitor por versão do formato. Uma versão nova entra aqui, e as velhas ficam. */
-const LEITORES: Readonly<Record<string, typeof lerV1>> = {
-  '1': lerV1,
+/** One reader per format version. A new version comes in here, and the old
+ * ones stay. */
+const READERS: Readonly<Record<string, typeof readV1>> = {
+  '1': readV1,
 }
 
-// --- a frase do que o link revela (story 63) -------------------------------------
+// --- the sentence of what the link reveals (story 63) --------------------------
 
-const GENERO_NA_FRASE: Readonly<Record<NonNullable<Perfil['genero']>, string>> =
-  {
-    homem: 'homem',
-    mulher: 'mulher',
-    outro: 'outro gênero',
-  }
+const GENDER_IN_SENTENCE: Readonly<
+  Record<NonNullable<Profile['genero']>, string>
+> = {
+  homem: 'homem',
+  mulher: 'mulher',
+  outro: 'outro gênero',
+}
 
-const PROCURA_NA_FRASE: Readonly<
-  Record<NonNullable<Perfil['procura']>, string>
+const SEEKS_IN_SENTENCE: Readonly<
+  Record<NonNullable<Profile['procura']>, string>
 > = {
   homens: 'homens',
   mulheres: 'mulheres',
   ambos: 'homens e mulheres',
 }
 
-const ESCOLARIDADE_NA_FRASE: Readonly<
-  Record<NonNullable<Requisitos['escolaridade']>, string>
+const EDUCATION_IN_SENTENCE: Readonly<
+  Record<NonNullable<Requirements['escolaridade']>, string>
 > = {
   fundamental: 'ensino fundamental',
   medio: 'ensino médio',
   superior: 'ensino superior',
 }
 
-const emLista = (itens: ReadonlyArray<string>): string =>
-  itens.length < 2
-    ? (itens[0] ?? '')
-    : `${itens.slice(0, -1).join(', ')} e ${itens.at(-1)}`
+const asList = (items: ReadonlyArray<string>): string =>
+  items.length < 2
+    ? (items[0] ?? '')
+    : `${items.slice(0, -1).join(', ')} e ${items.at(-1)}`
 
-/** "de 25 a 35", "de 40 anos ou mais"; vazio se a faixa é qualquer idade. */
-function idadesNaFrase(idade: Faixa | null): string {
-  if (
-    !idade ||
-    (idade.min <= IDADE_PROCURADA_MINIMA && idade.max >= IDADE_PROCURADA_MAXIMA)
-  )
+/** "de 25 a 35", "de 40 anos ou mais"; empty if the range is any age. */
+function agesInSentence(age: Range | null): string {
+  if (!age || (age.min <= MIN_SOUGHT_AGE && age.max >= MAX_SOUGHT_AGE))
     return ''
-  return idade.max >= IDADE_PROCURADA_MAXIMA
-    ? `de ${idade.min} anos ou mais`
-    : `de ${idade.min} a ${idade.max}`
+  return age.max >= MAX_SOUGHT_AGE
+    ? `de ${age.min} anos ou mais`
+    : `de ${age.min} a ${age.max}`
 }
 
-function perfilNaFrase(perfil: Perfil | null): string[] {
+function profileInSentence(profile: Profile | null): string[] {
   return [
-    perfil?.genero ? GENERO_NA_FRASE[perfil.genero] : '',
-    perfil?.idade !== undefined ? String(perfil.idade) : '',
+    profile?.genero ? GENDER_IN_SENTENCE[profile.genero] : '',
+    profile?.idade !== undefined ? String(profile.idade) : '',
   ].filter(Boolean)
 }
 
-export interface OpcoesDaFrase {
-  /** O nome do município do link, que só os dados do Grupo possível sabem. */
-  readonly municipio?: string
-  /** O nome de cada característica de Prioridades, pela id. */
-  readonly nomes?: Readonly<Record<string, string>>
+export interface SentenceOptions {
+  /** The name of the link's municipality, which only the possible group data
+   * knows. */
+  readonly municipality?: string
+  /** The name of each priorities trait, by id. */
+  readonly names?: Readonly<Record<string, string>>
 }
 
 /** "Este link mostra: homem, 30, procura mulheres de 25 a 35, ensino superior,
- * em SP.": tudo o que a query leva, em português, para o visitante decidir se
- * compartilha. */
-export function fraseDoLink(
-  estado: EstadoDoLink,
-  opcoes: OpcoesDaFrase = {},
+ * em SP.": everything the query carries, in Portuguese, for the visitor to
+ * decide whether to share. */
+export function linkSentence(
+  state: LinkState,
+  options: SentenceOptions = {},
 ): string {
-  if (estado.calculadora === 'prioridades') {
-    const partes = estado.genero ? [GENERO_NA_FRASE[estado.genero]] : []
-    const { topo3, desfecho } = estado.prioridades
-    const nomes = topo3.map((id) => (opcoes.nomes?.[id] ?? id).toLowerCase())
-    partes.push(
-      nomes.length
-        ? `topo 3 ${emLista(nomes)}`
+  if (state.calculator === 'prioridades') {
+    const parts = state.gender ? [GENDER_IN_SENTENCE[state.gender]] : []
+    const { topo3: top3, desfecho: outcome } = state.priorities
+    const names = top3.map((id) => (options.names?.[id] ?? id).toLowerCase())
+    parts.push(
+      names.length
+        ? `topo 3 ${asList(names)}`
         : 'nenhuma característica escolhida',
     )
-    return `Este link mostra: ${partes.join(', ')}, em ${NOME_DO_DESFECHO[desfecho].toLowerCase()}.`
+    return `Este link mostra: ${parts.join(', ')}, em ${OUTCOME_NAME[outcome].toLowerCase()}.`
   }
 
-  const { perfil } = estado
-  const partes = perfilNaFrase(perfil)
-  const r = estado.requisitos
-  const idades = idadesNaFrase(r?.idade ?? null)
-  if (perfil?.procura || idades)
-    partes.push(
+  const { profile } = state
+  const parts = profileInSentence(profile)
+  const r = state.requirements
+  const ages = agesInSentence(r?.idade ?? null)
+  if (profile?.procura || ages)
+    parts.push(
       [
         'procura',
-        perfil?.procura ? PROCURA_NA_FRASE[perfil.procura] : 'pessoas',
-        idades,
+        profile?.procura ? SEEKS_IN_SENTENCE[profile.procura] : 'pessoas',
+        ages,
       ]
         .filter(Boolean)
         .join(' '),
     )
   if (r) {
-    partes.push(...outrosRequisitos(perfil, r))
-    if (r.lugar) partes.push(lugarNaFrase(r, opcoes.municipio))
+    parts.push(...otherRequirements(profile, r))
+    if (r.lugar) parts.push(placeInSentence(r, options.municipality))
   }
-  if (partes.length === 0)
+  if (parts.length === 0)
     return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
-  return `Este link mostra: ${partes.join(', ')}.`
+  return `Este link mostra: ${parts.join(', ')}.`
 }
 
-/** Os Requisitos fora do padrão, menos a idade e o lugar, que a frase diz à parte. */
-function outrosRequisitos(perfil: Perfil | null, r: Requisitos): string[] {
-  const valor = (k: Parameters<typeof valorDoRequisito>[0]) =>
-    valorDoRequisito(k, perfil, r)
+/** The requirements off default, except age and place, which the sentence
+ * says separately. */
+function otherRequirements(profile: Profile | null, r: Requirements): string[] {
+  const value = (k: Parameters<typeof requirementValue>[0]) =>
+    requirementValue(k, profile, r)
   return [
-    r.companheiro !== REQUISITOS_PADRAO.companheiro && valor('companheiro'),
-    r.escolaridade && ESCOLARIDADE_NA_FRASE[r.escolaridade],
-    r.renda && valor('renda'),
-    r.cores.length > 0 && valor('cor'),
-    r.religioes.length > 0 && valor('religiao'),
+    r.companheiro !== DEFAULT_REQUIREMENTS.companheiro && value('companheiro'),
+    r.escolaridade && EDUCATION_IN_SENTENCE[r.escolaridade],
+    r.renda && value('renda'),
+    r.cores.length > 0 && value('cor'),
+    r.religioes.length > 0 && value('religiao'),
     r.semFilhos &&
-      quemSeProcura(perfil).filhos !== 'sem-dado' &&
-      valor('filhos'),
-    (r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA) &&
-      valor('altura'),
-    r.naoFuma && valor('fumo'),
+      whoIsSought(profile).children !== 'sem-dado' &&
+      value('filhos'),
+    (r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT) && value('altura'),
+    r.naoFuma && value('fumo'),
   ].filter((x): x is string => typeof x === 'string')
 }
 
-const lugarNaFrase = (r: Requisitos, municipio: string | undefined): string =>
+const placeInSentence = (
+  r: Requirements,
+  municipality: string | undefined,
+): string =>
   !r.lugar
     ? 'no Brasil'
-    : r.lugar.municipio && municipio
-      ? `em ${municipio} (${r.lugar.uf})`
+    : r.lugar.municipio && municipality
+      ? `em ${municipality} (${r.lugar.uf})`
       : `em ${r.lugar.uf}`
 
-// --- a prévia nas redes (story 66) -----------------------------------------------
-// O Open Graph da calculadora aberta com estado. Diz o resultado e quem se
-// procura, nunca o gênero nem a idade de quem compartilhou (ADR 0001). Nem a
-// orientação, que entrega o gênero, nem a faixa de idade tirada do Perfil
-// (a idade dele ±5), que entrega a idade.
+// --- the social preview (story 66) ----------------------------------------------
+// The Open Graph of a calculator opened with state. It says the result and
+// who is sought, never the gender or age of whoever shared (ADR 0001). Nor
+// the orientation, which gives the gender away, nor the age range taken from
+// the profile (their age ±5), which gives the age away.
 
-export interface Previa {
-  readonly titulo: string
-  readonly descricao: string
+export interface Preview {
+  readonly title: string
+  readonly description: string
 }
 
-const maiuscula = (texto: string) =>
-  texto.charAt(0).toUpperCase() + texto.slice(1)
+const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1)
 
-/** O que a prévia precisa da conta (`Estimativa` encaixa). */
-export interface ContaDaPrevia {
-  readonly alvo: QuemSeProcura['alvo']
-  readonly resultado: { readonly min: number; readonly max: number }
+/** What the preview needs from the count (`Estimate` fits). */
+export interface PreviewCount {
+  readonly target: Sought['target']
+  readonly result: { readonly min: number; readonly max: number }
 }
 
 /** "Entre 120 mil e 180 mil mulheres de 25 a 35 em SP". */
-export function previaDoGrupo(
-  estado: Extract<EstadoDoLink, { calculadora: 'grupo-possivel' }>,
-  conta: ContaDaPrevia,
-  opcoes: Pick<OpcoesDaFrase, 'municipio'> = {},
-): Previa {
-  const r = estado.requisitos ?? REQUISITOS_PADRAO
-  const escolhida = idadesNaFrase(r.idade)
-  const doPerfil = !r.idade && estado.perfil?.idade !== undefined
-  const titulo = [
-    formatarFaixa(conta.resultado.min, conta.resultado.max),
-    conta.alvo,
-    escolhida,
-    `${lugarNaFrase(r, opcoes.municipio)}${doPerfil ? ', na idade procurada' : ''}`,
+export function groupPreview(
+  state: Extract<LinkState, { calculator: 'grupo-possivel' }>,
+  count: PreviewCount,
+  options: Pick<SentenceOptions, 'municipality'> = {},
+): Preview {
+  const r = state.requirements ?? DEFAULT_REQUIREMENTS
+  const chosen = agesInSentence(r.idade)
+  const fromProfile = !r.idade && state.profile?.idade !== undefined
+  const title = [
+    formatRange(count.result.min, count.result.max),
+    count.target,
+    chosen,
+    `${placeInSentence(r, options.municipality)}${fromProfile ? ', na idade procurada' : ''}`,
   ]
     .filter(Boolean)
     .join(' ')
-  // Sem o Perfil: `filhos` depende só de quem se procura, que o título já diz.
-  const outros = outrosRequisitos({ procura: estado.perfil?.procura }, r)
-  const descricao = [
+  // Without the profile: `filhos` depends only on who is sought, which the
+  // title already says.
+  const others = otherRequirements({ procura: state.profile?.procura }, r)
+  const description = [
     'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019.',
-    outros.length > 0 && `Também pediu: ${outros.join(', ')}.`,
+    others.length > 0 && `Também pediu: ${others.join(', ')}.`,
     'Faça a sua conta.',
   ]
     .filter(Boolean)
     .join(' ')
-  return { titulo: maiuscula(titulo), descricao }
+  return { title: capitalize(title), description }
 }
 
-/** "Topo 3: química sexual e renda", com o alerta; `null` sem nada escolhido. */
-export function previaDePrioridades(
-  caracteristicas: ReadonlyArray<CaracteristicaComEvidencia>,
-  prioridades: EstadoDasPrioridades,
-): Previa | null {
-  const { topo3, desfecho } = prioridades
-  const nomes = topo3.flatMap((id) =>
-    caracteristicas.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()),
+/** "Topo 3: química sexual e renda", with the alert; `null` with nothing
+ * chosen. */
+export function prioritiesPreview(
+  traits: ReadonlyArray<TraitWithEvidence>,
+  priorities: PrioritiesState,
+): Preview | null {
+  const { topo3: top3, desfecho: outcome } = priorities
+  const names = top3.flatMap((id) =>
+    traits.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()),
   )
-  if (nomes.length === 0) return null
+  if (names.length === 0) return null
   return {
-    titulo: `Topo 3: ${emLista(nomes)}`,
-    descricao:
-      alertaDoTopo3(caracteristicas, topo3, desfecho) ??
-      `Para ${NOME_DO_DESFECHO[desfecho].toLowerCase()}, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".`,
+    title: `Topo 3: ${asList(names)}`,
+    description:
+      top3Alert(traits, top3, outcome) ??
+      `Para ${OUTCOME_NAME[outcome].toLowerCase()}, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".`,
   }
 }
 
-// --- interface -----------------------------------------------------------------
+// --- interface ----------------------------------------------------------------
 
-/** A query do link, sem o `?`: "v=1&genero=homem&…". */
-export const queryDoLink = (estado: EstadoDoLink): string =>
-  codificar(escreverV1(estado))
+/** The link's query, without the `?`: "v=1&genero=homem&…". */
+export const linkQuery = (state: LinkState): string => encode(writeV1(state))
 
-/** A query é de um link de calculadora (tem `v`), válida ou não. A página
- * limpa esta da barra; outra query (de campanha, digamos) fica. */
-export const ehLink = (query: string): boolean => /(^|[?&])v=/.test(query)
+/** The query belongs to a calculator link (it has `v`), valid or not. The
+ * page clears this one from the bar; any other query (a campaign's, say)
+ * stays. */
+export const isLink = (query: string): boolean => /(^|[?&])v=/.test(query)
 
-/** O estado que o link leva; `null` se a query não é de link, não se
- * decodifica ou tem uma versão que este código não conhece. Um valor
- * inválido sozinho cai fora e o resto vale. `ids`, quando dada, limita o
- * topo 3 às características que existem nos dados. */
-export function lerLink(
-  calculadora: CalculadoraComLink,
+/** The state the link carries; `null` if the query is not a link's, does not
+ * decode or has a version this code does not know. A single invalid value
+ * drops out and the rest holds. `ids`, when given, limits the top 3 to the
+ * traits that exist in the data. */
+export function readLink(
+  calculator: LinkCalculator,
   query: string,
   ids?: ReadonlyArray<string>,
-): EstadoDoLink | null {
-  const q = decodificar(query)
-  const ler = q && LEITORES[q.get('v') ?? '']
-  return ler ? ler(calculadora, q, ids) : null
+): LinkState | null {
+  const q = decode(query)
+  const read = q && READERS[q.get('v') ?? '']
+  return read ? read(calculator, q, ids) : null
 }

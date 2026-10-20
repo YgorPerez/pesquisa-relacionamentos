@@ -1,189 +1,189 @@
-// Busca e links estáveis (#15, #29): título e descrição de cada página,
-// sitemap, robots, os 301 do `antes` e a conferência contra o último
-// sitemap publicado. Os casos partem da fixture válida e trocam um arquivo.
+// Search and stable links (#15, #29): each page's title and description,
+// sitemap, robots, the 301s from `antes` and the check against the last
+// published sitemap. The cases start from the valid fixture and swap a file.
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  buscaDaDica,
-  buscaDaFicha,
-  buscaDoGuia,
-  buscaDoTema,
-  caminhosDoSitemap,
-  dicaPorSlug,
-  fichaPorSlug,
-  formatarProblemas,
-  guiaPorSlug,
-  lerArquivos,
-  montarAcervo,
-  redirecionamentos,
+  tipSearch,
+  factSheetSearch,
+  guideSearch,
+  topicSearch,
+  sitemapPaths,
+  tipBySlug,
+  factSheetBySlug,
+  formatProblems,
+  guideBySlug,
+  readFiles,
+  buildLibrary,
+  redirects,
   robotsTxt,
   sitemapXml,
-  temaPorSlug,
-  type Acervo,
-  type Arquivo,
-  type Resultado,
+  topicBySlug,
+  type Library,
+  type ContentFile,
+  type LoadResult,
 } from './index.ts'
 
-const VALIDO = fileURLToPath(new URL('../fixtures/valid', import.meta.url))
+const VALID = fileURLToPath(new URL('../fixtures/valid', import.meta.url))
 
-function acervoDe(resultado: Resultado): Acervo {
-  if (!resultado.ok) throw new Error(formatarProblemas(resultado.erros))
-  return resultado.acervo
+function libraryOf(result: LoadResult): Library {
+  if (!result.ok) throw new Error(formatProblems(result.errors))
+  return result.library
 }
 
-function errosDe(resultado: Resultado): string[] {
-  if (resultado.ok) throw new Error('o acervo devia ter falhado')
-  return resultado.erros.map((e) => e.mensagem)
+function errorsOf(result: LoadResult): string[] {
+  if (result.ok) throw new Error('the library should have failed')
+  return result.errors.map((e) => e.message)
 }
 
-const avisosDe = (resultado: Resultado) =>
-  resultado.avisos.map((a) => a.mensagem)
+const warningsOf = (result: LoadResult) => result.warnings.map((a) => a.message)
 
-type Troca = string | ((original: string) => string)
+type Swap = string | ((original: string) => string)
 
-/** A fixture válida com arquivos trocados ou criados. */
-function arquivosCom(trocas: Record<string, Troca> = {}): Arquivo[] {
-  const arquivos = [...lerArquivos(VALIDO)]
-  for (const [caminho, troca] of Object.entries(trocas)) {
-    const i = arquivos.findIndex((a) => a.caminho === caminho)
-    const original = i === -1 ? '' : (arquivos[i]?.texto ?? '')
-    const novo = {
-      caminho,
-      texto: typeof troca === 'string' ? troca : troca(original),
+/** The valid fixture with files swapped or created. */
+function filesWith(swaps: Record<string, Swap> = {}): ContentFile[] {
+  const files = [...readFiles(VALID)]
+  for (const [path, swap] of Object.entries(swaps)) {
+    const i = files.findIndex((a) => a.path === path)
+    const original = i === -1 ? '' : (files[i]?.text ?? '')
+    const current = {
+      path,
+      text: typeof swap === 'string' ? swap : swap(original),
     }
-    if (i === -1) arquivos.push(novo)
-    else arquivos[i] = novo
+    if (i === -1) files.push(current)
+    else files[i] = current
   }
-  return arquivos
+  return files
 }
 
-const com = (trocas: Record<string, Troca>) => montarAcervo(arquivosCom(trocas))
+const buildWith = (swaps: Record<string, Swap>) =>
+  buildLibrary(filesWith(swaps))
 
-/** Acrescenta linhas ao fim do frontmatter. */
-const noFrontmatter = (linhas: string) => (original: string) =>
-  original.replace(/\n---\n/, `\n${linhas}\n---\n`)
+/** Appends lines to the end of the frontmatter. */
+const inFrontmatter = (lines: string) => (original: string) =>
+  original.replace(/\n---\n/, `\n${lines}\n---\n`)
 
-const GUIA = 'guias/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OUTRO_GUIA = 'guias/onde-conhecer/app-ou-presencial.md'
-const TEMA = 'guias/onde-conhecer/_tema.md'
+const GUIDE = 'guias/onde-conhecer/onde-os-casais-se-conhecem.md'
+const OTHER_GUIDE = 'guias/onde-conhecer/app-ou-presencial.md'
+const TOPIC = 'guias/onde-conhecer/_tema.md'
 const SILVA = 'estudos/silva-2020-apps-brasil.md'
 
-describe('título e descrição de busca', () => {
-  const acervo = acervoDe(montarAcervo(arquivosCom()))
+describe('search title and description', () => {
+  const library = libraryOf(buildLibrary(filesWith()))
 
-  it('Guia: a Pergunta e a resposta curta, sem marcas nem referências', () => {
+  it('guide: the question and the short answer, without marks or references', () => {
     expect(
-      buscaDoGuia(guiaPorSlug(acervo, 'onde-os-casais-se-conhecem')!),
+      guideSearch(guideBySlug(library, 'onde-os-casais-se-conhecem')!),
     ).toEqual({
-      titulo: 'Onde os casais se conhecem hoje?',
-      descricao:
+      title: 'Onde os casais se conhecem hoje?',
+      description:
         'No Brasil, 18% dos adultos jovens conheceram o parceiro por app. Nos EUA, a satisfação é parecida.',
     })
   })
 
-  it('Guia: a resposta curta longa é cortada numa palavra, em até 155 caracteres', () => {
-    const longa =
+  it('guide: a long short answer is cut at a word, in up to 155 characters', () => {
+    const longText =
       'Uma frase comprida sobre onde os casais se conhecem, '.repeat(5)
-    const guia = guiaPorSlug(
-      acervoDe(
-        com({
-          [GUIA]: (t) =>
+    const guide = guideBySlug(
+      libraryOf(
+        buildWith({
+          [GUIDE]: (t) =>
             t.replace(
               /\nNo Brasil[^\n]*\n/,
-              `\n${longa}[@silva-2020-apps-brasil]\n`,
+              `\n${longText}[@silva-2020-apps-brasil]\n`,
             ),
         }),
       ),
       'onde-os-casais-se-conhecem',
     )!
-    const { descricao } = buscaDoGuia(guia)
-    expect(descricao.length).toBeLessThanOrEqual(155)
-    expect(descricao).toMatch(
+    const { description } = guideSearch(guide)
+    expect(description.length).toBeLessThanOrEqual(155)
+    expect(description).toMatch(
       /^Uma frase comprida sobre onde os casais se conhecem, Uma frase .*\S…$/,
     )
-    expect(longa.startsWith(descricao.slice(0, -1))).toBe(true)
+    expect(longText.startsWith(description.slice(0, -1))).toBe(true)
   })
 
-  it('Tema: o título e o parágrafo de contexto', () => {
-    expect(buscaDoTema(temaPorSlug(acervo, 'onde-conhecer')!)).toEqual({
-      titulo: 'Onde conhecer pessoas',
-      descricao: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+  it('topic: the title and the context paragraph', () => {
+    expect(topicSearch(topicBySlug(library, 'onde-conhecer')!)).toEqual({
+      title: 'Onde conhecer pessoas',
+      description: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
     })
   })
 
-  it('Ficha: "Autor ano: tema" e o primeiro achado', () => {
+  it('fact sheet: "Author year: topic" and the first finding', () => {
     expect(
-      buscaDaFicha(fichaPorSlug(acervo, 'silva-2020-apps-brasil')!),
+      factSheetSearch(factSheetBySlug(library, 'silva-2020-apps-brasil')!),
     ).toEqual({
-      titulo: 'Silva e Souza 2020: apps de namoro no Brasil',
-      descricao: 'Conheceram o parceiro por app: 18%.',
+      title: 'Silva e Souza 2020: apps de namoro no Brasil',
+      description: 'Conheceram o parceiro por app: 18%.',
     })
   })
 
-  it('Dica: o texto nos dois', () => {
-    expect(buscaDaDica(dicaPorSlug(acervo, 'apps-como-complemento')!)).toEqual({
-      titulo: 'Use o app como complemento, não como o único caminho.',
-      descricao: 'Use o app como complemento, não como o único caminho.',
+  it('tip: the text in both', () => {
+    expect(tipSearch(tipBySlug(library, 'apps-como-complemento')!)).toEqual({
+      title: 'Use o app como complemento, não como o único caminho.',
+      description: 'Use o app como complemento, não como o único caminho.',
     })
   })
 
-  it('o `seo` sobrescreve título e descrição', () => {
+  it('`seo` overrides title and description', () => {
     const seo =
       'seo:\n  titulo: Onde os casais se conhecem\n  descricao: Uma descrição escrita à mão.'
-    const trocado = acervoDe(
-      com({
-        [GUIA]: noFrontmatter(seo),
-        [SILVA]: noFrontmatter(seo),
-        [TEMA]: noFrontmatter(seo),
+    const swapped = libraryOf(
+      buildWith({
+        [GUIDE]: inFrontmatter(seo),
+        [SILVA]: inFrontmatter(seo),
+        [TOPIC]: inFrontmatter(seo),
       }),
     )
-    const esperado = {
-      titulo: 'Onde os casais se conhecem',
-      descricao: 'Uma descrição escrita à mão.',
+    const expected = {
+      title: 'Onde os casais se conhecem',
+      description: 'Uma descrição escrita à mão.',
     }
     expect(
-      buscaDoGuia(guiaPorSlug(trocado, 'onde-os-casais-se-conhecem')!),
-    ).toEqual(esperado)
+      guideSearch(guideBySlug(swapped, 'onde-os-casais-se-conhecem')!),
+    ).toEqual(expected)
     expect(
-      buscaDaFicha(fichaPorSlug(trocado, 'silva-2020-apps-brasil')!),
-    ).toEqual(esperado)
-    expect(buscaDoTema(temaPorSlug(trocado, 'onde-conhecer')!)).toEqual(
-      esperado,
+      factSheetSearch(factSheetBySlug(swapped, 'silva-2020-apps-brasil')!),
+    ).toEqual(expected)
+    expect(topicSearch(topicBySlug(swapped, 'onde-conhecer')!)).toEqual(
+      expected,
     )
   })
 
-  it('a fixture válida não dá aviso', () => {
-    expect(avisosDe(montarAcervo(arquivosCom()))).toEqual([])
+  it('the valid fixture gives no warning', () => {
+    expect(warningsOf(buildLibrary(filesWith()))).toEqual([])
   })
 
-  it('avisa quando o título passa de 60 caracteres, sugerindo o `seo`', () => {
-    const pergunta =
+  it('warns when the title goes over 60 characters, suggesting `seo`', () => {
+    const question =
       'Onde os casais brasileiros de todas as idades se conhecem hoje em dia?'
-    const resultado = com({
-      [GUIA]: (t) => t.replace(/^pergunta: .*$/m, `pergunta: ${pergunta}`),
+    const result = buildWith({
+      [GUIDE]: (t) => t.replace(/^pergunta: .*$/m, `pergunta: ${question}`),
     })
-    expect(resultado.ok).toBe(true)
-    expect(avisosDe(resultado)).toEqual([
-      `${GUIA}: pergunta: o título de busca tem ${pergunta.length} caracteres e o limite é 60; escreva um mais curto em seo.titulo`,
+    expect(result.ok).toBe(true)
+    expect(warningsOf(result)).toEqual([
+      `${GUIDE}: pergunta: the search title has ${question.length} characters and the limit is 60; write a shorter one in seo.titulo`,
     ])
   })
 
-  it('avisa quando a descrição do `seo` passa de 155 caracteres', () => {
-    const longa = 'a'.repeat(160)
-    const resultado = com({
-      [SILVA]: noFrontmatter(`seo:\n  descricao: ${longa}`),
+  it('warns when the `seo` description goes over 155 characters', () => {
+    const longText = 'a'.repeat(160)
+    const result = buildWith({
+      [SILVA]: inFrontmatter(`seo:\n  descricao: ${longText}`),
     })
-    expect(avisosDe(resultado)).toEqual([
-      `${SILVA}: seo.descricao: a descrição de busca tem 160 caracteres e o limite é 155`,
+    expect(warningsOf(result)).toEqual([
+      `${SILVA}: seo.descricao: the search description has 160 characters and the limit is 155`,
     ])
   })
 })
 
-describe('sitemap e robots', () => {
-  const acervo = acervoDe(montarAcervo(arquivosCom()))
+describe('sitemap and robots', () => {
+  const library = libraryOf(buildLibrary(filesWith()))
 
-  it('lista início, Temas, Guias, Dicas publicadas, as listas, as calculadoras e as Fichas ✅/🟡', () => {
-    expect(caminhosDoSitemap(acervo)).toEqual([
+  it('lists home, topics, guides, published tips, the lists, the calculators and the ✅/🟡 fact sheets', () => {
+    expect(sitemapPaths(library)).toEqual([
       '/',
       '/onde-conhecer',
       '/onde-conhecer/onde-os-casais-se-conhecem',
@@ -198,8 +198,8 @@ describe('sitemap e robots', () => {
     ])
   })
 
-  it('o XML leva cada caminho com o domínio, e a Ficha ⬜ fica de fora', () => {
-    const xml = sitemapXml(acervo)
+  it('the XML carries each path with the domain, and the ⬜ fact sheet stays out', () => {
+    const xml = sitemapXml(library)
     expect(xml).toMatch(
       /^<\?xml version="1.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www.sitemaps.org\/schemas\/sitemap\/0.9">/,
     )
@@ -211,27 +211,27 @@ describe('sitemap e robots', () => {
     expect(xml).not.toContain('encontros-presenciais')
   })
 
-  it('o robots libera tudo e aponta o sitemap', () => {
+  it('robots allows everything and points to the sitemap', () => {
     expect(robotsTxt()).toBe(
       'User-agent: *\nAllow: /\n\nSitemap: https://temestudo.cloud/sitemap.xml\n',
     )
   })
 })
 
-describe('antes: 301 do caminho antigo', () => {
-  it('Ficha, Dica e Guia apontam o slug antigo para o caminho de hoje', () => {
-    const acervo = acervoDe(
-      com({
-        [SILVA]: noFrontmatter('antes: [silva-2020-apps]'),
-        'dicas/apps-como-complemento.md': noFrontmatter(
+describe('antes: 301 from the old path', () => {
+  it("a fact sheet, tip and guide point the old slug to today's path", () => {
+    const library = libraryOf(
+      buildWith({
+        [SILVA]: inFrontmatter('antes: [silva-2020-apps]'),
+        'dicas/apps-como-complemento.md': inFrontmatter(
           'antes: [app-complemento]',
         ),
-        [GUIA]: noFrontmatter(
+        [GUIDE]: inFrontmatter(
           'antes: [onde-casais-se-conhecem, escolher-parceiro/onde-se-conhecem]',
         ),
       }),
     )
-    expect(redirecionamentos(acervo)).toEqual({
+    expect(redirects(library)).toEqual({
       '/estudos/silva-2020-apps': '/estudos/silva-2020-apps-brasil',
       '/dicas/app-complemento': '/dicas/apps-como-complemento',
       '/onde-conhecer/onde-casais-se-conhecem':
@@ -241,14 +241,14 @@ describe('antes: 301 do caminho antigo', () => {
     })
   })
 
-  it('o Tema renomeado leva junto os Guias dele, com os slugs antigos', () => {
-    const acervo = acervoDe(
-      com({
-        [TEMA]: noFrontmatter('antes: [conhecer-gente]'),
-        [OUTRO_GUIA]: noFrontmatter('antes: [app-ou-bar]'),
+  it('a renamed topic takes its guides along, with the old slugs', () => {
+    const library = libraryOf(
+      buildWith({
+        [TOPIC]: inFrontmatter('antes: [conhecer-gente]'),
+        [OTHER_GUIDE]: inFrontmatter('antes: [app-ou-bar]'),
       }),
     )
-    expect(redirecionamentos(acervo)).toEqual({
+    expect(redirects(library)).toEqual({
       '/conhecer-gente': '/onde-conhecer',
       '/conhecer-gente/onde-os-casais-se-conhecem':
         '/onde-conhecer/onde-os-casais-se-conhecem',
@@ -258,95 +258,95 @@ describe('antes: 301 do caminho antigo', () => {
     })
   })
 
-  it('sem `antes`, nenhum redirecionamento', () => {
-    expect(redirecionamentos(acervoDe(montarAcervo(arquivosCom())))).toEqual({})
+  it('without `antes`, no redirect', () => {
+    expect(redirects(libraryOf(buildLibrary(filesWith())))).toEqual({})
   })
 
-  it('falha quando o `antes` aponta um caminho que ainda existe', () => {
+  it('fails when `antes` points to a path that still exists', () => {
     expect(
-      errosDe(
-        com({
-          [OUTRO_GUIA]: noFrontmatter('antes: [onde-os-casais-se-conhecem]'),
+      errorsOf(
+        buildWith({
+          [OTHER_GUIDE]: inFrontmatter('antes: [onde-os-casais-se-conhecem]'),
         }),
       ),
     ).toContain(
-      `${OUTRO_GUIA}: antes: o caminho /onde-conhecer/onde-os-casais-se-conhecem ainda é uma página do site; o "antes" lista só caminhos que sumiram`,
+      `${OTHER_GUIDE}: antes: the path /onde-conhecer/onde-os-casais-se-conhecem is still a page of the site; "antes" only lists paths that disappeared`,
     )
   })
 
-  it('falha quando dois arquivos declaram o mesmo caminho antigo', () => {
+  it('fails when two files declare the same old path', () => {
     expect(
-      errosDe(
-        com({
-          [GUIA]: noFrontmatter('antes: [velho]'),
-          [OUTRO_GUIA]: noFrontmatter('antes: [velho]'),
+      errorsOf(
+        buildWith({
+          [GUIDE]: inFrontmatter('antes: [velho]'),
+          [OTHER_GUIDE]: inFrontmatter('antes: [velho]'),
         }),
       ),
     ).toContain(
-      `${OUTRO_GUIA}: antes: o caminho /onde-conhecer/velho já está no "antes" de ${GUIA}`,
+      `${OTHER_GUIDE}: antes: the path /onde-conhecer/velho is already in the "antes" of ${GUIDE}`,
     )
   })
 
-  it('falha quando o `antes` do Tema é uma rota do site', () => {
+  it("fails when the topic's `antes` is a site route", () => {
     expect(
-      errosDe(com({ [TEMA]: noFrontmatter('antes: [estudos]') })),
+      errorsOf(buildWith({ [TOPIC]: inFrontmatter('antes: [estudos]') })),
     ).toContain(
-      `${TEMA}: antes: o caminho /estudos ainda é uma página do site; o "antes" lista só caminhos que sumiram`,
+      `${TOPIC}: antes: the path /estudos is still a page of the site; "antes" only lists paths that disappeared`,
     )
   })
 })
 
-describe('o último sitemap publicado', () => {
-  const sitemap = (...caminhos: string[]) =>
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${caminhos
+describe('the last published sitemap', () => {
+  const sitemap = (...paths: string[]) =>
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths
       .map((c) => `  <url><loc>https://temestudo.cloud${c}</loc></url>`)
       .join('\n')}\n</urlset>\n`
 
-  it('passa quando todo caminho dele ainda é página do site, mesmo a Ficha que virou ⬜', () => {
-    const anterior = sitemap(
+  it('passes when every path in it is still a page of the site, even a fact sheet that became ⬜', () => {
+    const previous = sitemap(
       '/',
       '/onde-conhecer/app-ou-presencial',
       '/estudos/lima-2015-encontros',
       '/prioridades',
     )
-    expect(montarAcervo(arquivosCom(), { sitemapAnterior: anterior }).ok).toBe(
+    expect(buildLibrary(filesWith(), { previousSitemap: previous }).ok).toBe(
       true,
     )
   })
 
-  it('falha quando um caminho sumiu sem estar no `antes` de algum arquivo', () => {
-    const anterior = sitemap(
+  it("fails when a path disappeared without being in some file's `antes`", () => {
+    const previous = sitemap(
       '/',
       '/onde-conhecer/app-ou-bar',
       '/estudos/silva-2020',
     )
     expect(
-      errosDe(montarAcervo(arquivosCom(), { sitemapAnterior: anterior })),
+      errorsOf(buildLibrary(filesWith(), { previousSitemap: previous })),
     ).toEqual([
-      'sitemap.xml publicado: /onde-conhecer/app-ou-bar sumiu do site; declare o caminho antigo no "antes" do arquivo que o substituiu',
-      'sitemap.xml publicado: /estudos/silva-2020 sumiu do site; declare o caminho antigo no "antes" do arquivo que o substituiu',
+      'published sitemap.xml: /onde-conhecer/app-ou-bar disappeared from the site; declare the old path in the "antes" of the file that replaced it',
+      'published sitemap.xml: /estudos/silva-2020 disappeared from the site; declare the old path in the "antes" of the file that replaced it',
     ])
   })
 
-  it('passa quando o caminho que sumiu está no `antes`', () => {
-    const anterior = sitemap('/onde-conhecer/app-ou-bar', '/estudos/silva-2020')
-    const resultado = montarAcervo(
-      arquivosCom({
-        [OUTRO_GUIA]: noFrontmatter('antes: [app-ou-bar]'),
-        [SILVA]: noFrontmatter('antes: [silva-2020]'),
+  it('passes when the path that disappeared is in `antes`', () => {
+    const previous = sitemap('/onde-conhecer/app-ou-bar', '/estudos/silva-2020')
+    const result = buildLibrary(
+      filesWith({
+        [OTHER_GUIDE]: inFrontmatter('antes: [app-ou-bar]'),
+        [SILVA]: inFrontmatter('antes: [silva-2020]'),
       }),
-      { sitemapAnterior: anterior },
+      { previousSitemap: previous },
     )
-    expect(resultado.ok).toBe(true)
+    expect(result.ok).toBe(true)
   })
 
-  it('falha quando o sitemap publicado não tem nenhum <loc>', () => {
+  it('fails when the published sitemap has no <loc>', () => {
     expect(
-      errosDe(
-        montarAcervo(arquivosCom(), { sitemapAnterior: '<html>erro</html>' }),
+      errorsOf(
+        buildLibrary(filesWith(), { previousSitemap: '<html>erro</html>' }),
       ),
     ).toEqual([
-      'sitemap.xml publicado: não achei nenhum <loc>; confira o arquivo baixado',
+      'published sitemap.xml: found no <loc>; check the downloaded file',
     ])
   })
 })

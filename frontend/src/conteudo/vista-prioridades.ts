@@ -2,26 +2,26 @@
 // do Guia B1 desenham: cada célula com a Ficha já resumida (nome curto,
 // Status, Força e amostra), para o navegador não receber o acervo.
 import type {
-  Acervo,
-  CelulaDePrioridade,
-  Ficha,
-  Forca,
-  Status,
+  Library,
+  PriorityCell,
+  FactSheet,
+  Strength,
+  VerificationStatus,
 } from '@tem-estudo/content'
-import type { Degrau } from '@tem-estudo/rules/priorities'
+import type { Level } from '@tem-estudo/rules/priorities'
 import { semMarcas } from './vista-guia'
 
 export interface FichaDaPrioridade {
   readonly slug: string
   /** "Joel et al. (2020)": o título da Ficha até os dois-pontos. */
   readonly nome: string
-  readonly status: Status
-  readonly forca: Forca
+  readonly status: VerificationStatus
+  readonly forca: Strength
   readonly amostra: string
 }
 
 export interface CelulaVista {
-  readonly degrau: Degrau
+  readonly degrau: Level
   readonly medida: string | null
   readonly texto: string
   readonly ficha: FichaDaPrioridade | null
@@ -52,7 +52,7 @@ interface GuiaDaCalculadora {
   readonly tema: string
   readonly slug: string
   readonly pergunta: string
-  readonly confianca: Forca
+  readonly confianca: Strength
   readonly resposta: string
 }
 
@@ -65,33 +65,33 @@ export interface PrioridadesVista {
 const semFormatacao = (texto: string) =>
   texto.replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim()
 
-function fichaDaPrioridade(ficha: Ficha): FichaDaPrioridade {
+function fichaDaPrioridade(ficha: FactSheet): FichaDaPrioridade {
   return {
     slug: ficha.slug,
-    nome: ficha.titulo.split(':')[0]?.trim() ?? ficha.titulo,
+    nome: ficha.title.split(':')[0]?.trim() ?? ficha.title,
     status: ficha.status,
     forca: ficha.forca,
     amostra: semFormatacao(ficha.amostra.descricao),
   }
 }
 
-export function vistaDasPrioridades(acervo: Acervo): PrioridadesVista | null {
-  const { prioridades } = acervo
+export function vistaDasPrioridades(acervo: Library): PrioridadesVista | null {
+  const { priorities: prioridades } = acervo
   if (!prioridades) return null
   // O build garante que cada Ficha citada existe e é ✅ ou 🟡.
   const ficha = (slug: string): FichaDaPrioridade => {
-    const achada = acervo.fichas.find((f) => f.slug === slug)
+    const achada = acervo.factSheets.find((f) => f.slug === slug)
     if (!achada) throw new Error(`Ficha ${slug} sumiu do acervo`)
     return fichaDaPrioridade(achada)
   }
-  const celula = (c: CelulaDePrioridade): CelulaVista => ({
+  const celula = (c: PriorityCell): CelulaVista => ({
     degrau: c.degrau,
     medida: c.medida ?? null,
     texto: c.texto_simples,
     ficha: c.ficha ? ficha(c.ficha) : null,
   })
   const { satisfacao_explicada: barra } = prioridades
-  const guia = acervo.guias.find((g) => g.calculadora === 'prioridades')
+  const guia = acervo.guides.find((g) => g.calculadora === 'prioridades')
   return {
     barra: {
       relacao: barra.relacao,
@@ -109,11 +109,11 @@ export function vistaDasPrioridades(acervo: Acervo): PrioridadesVista | null {
     })),
     doGuia: guia
       ? {
-          tema: guia.tema,
+          tema: guia.topic,
           slug: guia.slug,
           pergunta: semMarcas(guia.pergunta),
           confianca: guia.confianca,
-          resposta: semMarcas(guia.respostaCurta),
+          resposta: semMarcas(guia.shortAnswer),
         }
       : null,
   }

@@ -1,7 +1,7 @@
 // As peças do Guia que se repetem em outras páginas: o HTML que o servidor
 // já montou, a Confiança da resposta curta, a lista numerada de Fichas
 // citadas e a linha grande de uma Pergunta.
-import type { Forca } from '@tem-estudo/content'
+import type { Strength } from '@tem-estudo/content'
 import { Link } from '@tanstack/react-router'
 import type { HtmlSeguro } from '#/conteudo/html-seguro'
 import type { FichaCitada } from '#/conteudo/vista-guia'
@@ -38,7 +38,7 @@ export function Html({
 }
 
 /** Três degraus de 72px ao lado de "Confiança da resposta" e do nível. */
-export function ConfiancaDaResposta({ confianca }: { confianca: Forca }) {
+export function ConfiancaDaResposta({ confianca }: { confianca: Strength }) {
   return (
     <div
       className="m-0 mb-3 flex items-center gap-sm border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta pb-3"
@@ -60,7 +60,7 @@ export function ConfiancaCurta({
   confianca,
   className,
 }: {
-  confianca: Forca
+  confianca: Strength
   className?: string
 }) {
   return (

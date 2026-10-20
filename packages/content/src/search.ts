@@ -1,34 +1,34 @@
-// O que vai para os buscadores e o que mantém os links de pé (#15): título e
-// descrição de cada página, sitemap, robots e os 301 do `antes`. Só tipos de
-// fora e as listas: o servidor do app importa daqui sem levar `node:fs` nem o
-// Effect. As regras que viram erro ou aviso do build ficam em
-// `regras-de-busca.ts`.
-import type { Acervo } from './library.ts'
+// What goes to search engines and what keeps links alive (#15): each page's
+// title and description, sitemap, robots and the 301s from `antes`. Only
+// outside types and the lists: the app server imports from here without
+// pulling `node:fs` or Effect. The rules that become build errors or warnings
+// live in `search-rules.ts`.
+import type { Library } from './library.ts'
 import {
-  caminhoDaDica,
-  caminhoDaFicha,
-  caminhoDoGuia,
-  caminhoDoTema,
-  fichaIndexavel,
+  tipPath,
+  factSheetPath,
+  guidePath,
+  topicPath,
+  isFactSheetIndexable,
 } from './paths.ts'
-import type { Ficha } from './fact-sheet.ts'
-import type { Dica, Guia, Tema } from './items.ts'
-import { CALCULADORAS, ROTAS_RESERVADAS } from './lists.ts'
+import type { FactSheet } from './fact-sheet.ts'
+import type { Tip, Guide, Topic } from './items.ts'
+import { CALCULATORS, RESERVED_ROUTES } from './lists.ts'
 
-/** O endereço do site, para o sitemap, o canonical e o Open Graph. */
-export const ORIGEM = 'https://temestudo.cloud'
+/** The site's address, for the sitemap, the canonical and Open Graph. */
+export const ORIGIN = 'https://temestudo.cloud'
 
-/** Até onde o Google mostra o título e a descrição sem cortar. */
-export const LIMITES = { titulo: 60, descricao: 155 } as const
+/** How much of the title and description Google shows without cutting. */
+export const LIMITS = { title: 60, description: 155 } as const
 
-export interface Busca {
-  readonly titulo: string
-  readonly descricao: string
+export interface SearchMeta {
+  readonly title: string
+  readonly description: string
 }
 
-/** Markdown do conteúdo em texto puro: sem referências `[@slug]`, sem
- * `==marca==`, sem link nem ênfase. */
-export function textoPuro(markdown: string): string {
+/** Content markdown as plain text: no `[@slug]` references, no `==mark==`, no
+ * links or emphasis. */
+export function plainText(markdown: string): string {
   return markdown
     .replace(/\s*\[@[a-z0-9-]+\]/g, '')
     .replace(/==([^=\n]+)==/g, '$1')
@@ -38,158 +38,158 @@ export function textoPuro(markdown: string): string {
     .trim()
 }
 
-/** Corta numa palavra, com reticências, para caber no limite. */
-export function cortar(
-  texto: string,
-  limite: number = LIMITES.descricao,
+/** Cuts at a word, with an ellipsis, to fit the limit. */
+export function truncate(
+  text: string,
+  limit: number = LIMITS.description,
 ): string {
-  return texto.length <= limite
-    ? texto
-    : `${texto.slice(0, limite - 1).replace(/\s+\S*$/, '')}…`
+  return text.length <= limit
+    ? text
+    : `${text.slice(0, limit - 1).replace(/\s+\S*$/, '')}…`
 }
 
-const comSeo = (
+const withSeo = (
   seo: { titulo?: string; descricao?: string } | undefined,
-  derivado: Busca,
-): Busca => ({
-  titulo: seo?.titulo ?? derivado.titulo,
-  descricao: seo?.descricao ?? derivado.descricao,
+  derived: SearchMeta,
+): SearchMeta => ({
+  title: seo?.titulo ?? derived.title,
+  description: seo?.descricao ?? derived.description,
 })
 
-/** Guia: a Pergunta e a resposta curta. */
-export const buscaDoGuia = (
-  guia: Pick<Guia, 'pergunta' | 'respostaCurta' | 'seo'>,
-): Busca =>
-  comSeo(guia.seo, {
-    titulo: textoPuro(guia.pergunta),
-    descricao: cortar(textoPuro(guia.respostaCurta)),
+/** Guide: the question and the short answer. */
+export const guideSearch = (
+  guide: Pick<Guide, 'pergunta' | 'shortAnswer' | 'seo'>,
+): SearchMeta =>
+  withSeo(guide.seo, {
+    title: plainText(guide.pergunta),
+    description: truncate(plainText(guide.shortAnswer)),
   })
 
-/** Tema: o título e o parágrafo de contexto. */
-export const buscaDoTema = (
-  tema: Pick<Tema, 'titulo' | 'contexto' | 'seo'>,
-): Busca =>
-  comSeo(tema.seo, {
-    titulo: textoPuro(tema.titulo),
-    descricao: cortar(textoPuro(tema.contexto)),
+/** Topic: the title and the context paragraph. */
+export const topicSearch = (
+  topic: Pick<Topic, 'titulo' | 'context' | 'seo'>,
+): SearchMeta =>
+  withSeo(topic.seo, {
+    title: plainText(topic.titulo),
+    description: truncate(plainText(topic.context)),
   })
 
-/** Ficha: "Autor ano: tema" e o primeiro achado. */
-export function buscaDaFicha(
-  ficha: Pick<Ficha, 'titulo' | 'achados' | 'referencia' | 'seo'>,
-): Busca {
-  const primeiro = ficha.achados[0]
-  return comSeo(ficha.seo, {
-    titulo: textoPuro(ficha.titulo.replace(/\s*\((\d{4}[a-z]?)\)/, ' $1')),
-    descricao: cortar(
-      textoPuro(
-        primeiro ? `${primeiro.medida}: ${primeiro.valor}.` : ficha.referencia,
+/** Fact sheet: "Author year: topic" and the first finding. */
+export function factSheetSearch(
+  factSheet: Pick<FactSheet, 'title' | 'findings' | 'referencia' | 'seo'>,
+): SearchMeta {
+  const first = factSheet.findings[0]
+  return withSeo(factSheet.seo, {
+    title: plainText(factSheet.title.replace(/\s*\((\d{4}[a-z]?)\)/, ' $1')),
+    description: truncate(
+      plainText(
+        first ? `${first.measure}: ${first.value}.` : factSheet.referencia,
       ),
     ),
   })
 }
 
-/** Dica: o texto, no título e na descrição. */
-export function buscaDaDica(dica: Pick<Dica, 'texto' | 'seo'>): Busca {
-  const texto = textoPuro(dica.texto)
-  return comSeo(dica.seo, { titulo: texto, descricao: cortar(texto) })
+/** Tip: the text, in the title and the description. */
+export function tipSearch(tip: Pick<Tip, 'text' | 'seo'>): SearchMeta {
+  const text = plainText(tip.text)
+  return withSeo(tip.seo, { title: text, description: truncate(text) })
 }
 
-/** Os caminhos que vão para o sitemap: início, Temas e Guias, as Dicas
- * publicadas, as Fichas ✅/🟡 e as calculadoras. A Ficha ⬜ fica fora. */
-export function caminhosDoSitemap(acervo: Acervo): string[] {
+/** The paths that go to the sitemap: home, topics and guides, the published
+ * tips, the ✅/🟡 fact sheets and the calculators. A ⬜ fact sheet stays out. */
+export function sitemapPaths(library: Library): string[] {
   return [
     '/',
-    ...acervo.temas.flatMap((tema) => [
-      caminhoDoTema(tema),
-      ...acervo.guias.filter((g) => g.tema === tema.slug).map(caminhoDoGuia),
+    ...library.topics.flatMap((topic) => [
+      topicPath(topic),
+      ...library.guides.filter((g) => g.topic === topic.slug).map(guidePath),
     ]),
     '/dicas',
-    ...acervo.dicas.filter((d) => d.publicada).map(caminhoDaDica),
+    ...library.tips.filter((d) => d.published).map(tipPath),
     '/estudos',
-    ...acervo.fichas.filter(fichaIndexavel).map(caminhoDaFicha),
-    ...CALCULADORAS.map((c) => `/${c}`),
+    ...library.factSheets.filter(isFactSheetIndexable).map(factSheetPath),
+    ...CALCULATORS.map((c) => `/${c}`),
   ]
 }
 
-/** Todo caminho que responde com uma página, indexada ou não: o sitemap, as
- * Fichas ⬜ e as rotas fixas do app. */
-export function caminhosDoSite(acervo: Acervo): Set<string> {
+/** Every path that answers with a page, indexed or not: the sitemap, the ⬜
+ * fact sheets and the app's fixed routes. */
+export function sitePaths(library: Library): Set<string> {
   return new Set([
-    ...caminhosDoSitemap(acervo),
-    ...acervo.fichas.map(caminhoDaFicha),
-    ...ROTAS_RESERVADAS.map((r) => `/${r}`),
+    ...sitemapPaths(library),
+    ...library.factSheets.map(factSheetPath),
+    ...RESERVED_ROUTES.map((r) => `/${r}`),
   ])
 }
 
-export function sitemapXml(acervo: Acervo): string {
-  const urls = caminhosDoSitemap(acervo).map(
-    (c) => `  <url><loc>${ORIGEM}${c}</loc></url>`,
+export function sitemapXml(library: Library): string {
+  const urls = sitemapPaths(library).map(
+    (c) => `  <url><loc>${ORIGIN}${c}</loc></url>`,
   )
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`
 }
 
-/** Tudo liberado: o que fica fora da busca leva `noindex` na página, que o
- * buscador só lê se puder abrir a página. */
+/** Everything allowed: what stays out of search carries `noindex` on the
+ * page, which the crawler only reads if it can open the page. */
 export const robotsTxt = (): string =>
-  `User-agent: *\nAllow: /\n\nSitemap: ${ORIGEM}/sitemap.xml\n`
+  `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`
 
-/** Um caminho antigo declarado no `antes` de um arquivo. */
-export interface CaminhoAntigo {
-  readonly antigo: string
-  readonly novo: string
-  readonly arquivo: string
+/** An old path declared in a file's `antes`. */
+export interface OldPath {
+  readonly old: string
+  readonly current: string
+  readonly file: string
 }
 
-/** Os caminhos antigos de cada arquivo, na ordem do acervo. O `antes` da
- * Ficha, da Dica e do Tema lista slugs; o do Guia, slugs do mesmo Tema ou
- * `tema/slug` quando o Guia mudou de Tema. O Tema renomeado leva junto os
- * Guias dele, com os slugs antigos de cada um. */
-export function caminhosAntigos(acervo: Acervo): CaminhoAntigo[] {
-  const lista: CaminhoAntigo[] = []
-  for (const ficha of acervo.fichas)
-    for (const slug of ficha.antes ?? [])
-      lista.push({
-        antigo: `/estudos/${slug}`,
-        novo: caminhoDaFicha(ficha),
-        arquivo: ficha.arquivo,
+/** Each file's old paths, in library order. The `antes` of a fact sheet, a tip
+ * and a topic lists slugs; a guide's lists slugs in the same topic or
+ * `topic/slug` when the guide changed topic. A renamed topic takes its guides
+ * along, with each one's old slugs. */
+export function oldPaths(library: Library): OldPath[] {
+  const list: OldPath[] = []
+  for (const factSheet of library.factSheets)
+    for (const slug of factSheet.antes ?? [])
+      list.push({
+        old: `/estudos/${slug}`,
+        current: factSheetPath(factSheet),
+        file: factSheet.file,
       })
-  for (const dica of acervo.dicas)
-    for (const slug of dica.antes ?? [])
-      lista.push({
-        antigo: `/dicas/${slug}`,
-        novo: caminhoDaDica(dica),
-        arquivo: dica.arquivo,
+  for (const tip of library.tips)
+    for (const slug of tip.antes ?? [])
+      list.push({
+        old: `/dicas/${slug}`,
+        current: tipPath(tip),
+        file: tip.file,
       })
-  for (const tema of acervo.temas)
-    for (const slug of tema.antes ?? [])
-      lista.push({
-        antigo: `/${slug}`,
-        novo: caminhoDoTema(tema),
-        arquivo: tema.arquivo,
+  for (const topic of library.topics)
+    for (const slug of topic.antes ?? [])
+      list.push({
+        old: `/${slug}`,
+        current: topicPath(topic),
+        file: topic.file,
       })
-  for (const guia of acervo.guias) {
-    const novo = caminhoDoGuia(guia)
-    const antes = guia.antes ?? []
-    const temas = [
-      guia.tema,
-      ...(acervo.temas.find((t) => t.slug === guia.tema)?.antes ?? []),
+  for (const guide of library.guides) {
+    const current = guidePath(guide)
+    const before = guide.antes ?? []
+    const topics = [
+      guide.topic,
+      ...(library.topics.find((t) => t.slug === guide.topic)?.antes ?? []),
     ]
-    const slugs = [guia.slug, ...antes.filter((a) => !a.includes('/'))]
+    const slugs = [guide.slug, ...before.filter((a) => !a.includes('/'))]
     for (const slug of slugs)
-      for (const tema of temas) {
-        const antigo = `/${tema}/${slug}`
-        if (antigo !== novo) lista.push({ antigo, novo, arquivo: guia.arquivo })
+      for (const topic of topics) {
+        const old = `/${topic}/${slug}`
+        if (old !== current) list.push({ old, current, file: guide.file })
       }
-    for (const caminho of antes.filter((a) => a.includes('/')))
-      lista.push({ antigo: `/${caminho}`, novo, arquivo: guia.arquivo })
+    for (const path of before.filter((a) => a.includes('/')))
+      list.push({ old: `/${path}`, current, file: guide.file })
   }
-  return lista
+  return list
 }
 
-/** Caminho antigo → caminho de hoje, para o 301. */
-export function redirecionamentos(acervo: Acervo): Record<string, string> {
-  const mapa: Record<string, string> = {}
-  for (const { antigo, novo } of caminhosAntigos(acervo)) mapa[antigo] ??= novo
-  return mapa
+/** Old path → today's path, for the 301. */
+export function redirects(library: Library): Record<string, string> {
+  const map: Record<string, string> = {}
+  for (const { old, current } of oldPaths(library)) map[old] ??= current
+  return map
 }

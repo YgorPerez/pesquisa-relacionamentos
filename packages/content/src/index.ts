@@ -1,69 +1,69 @@
-// A interface do pacote de conteúdo: carregar o acervo e derivar dele
-// caminhos e indexação. Puro, sem DOM e sem rede; só `lerArquivos` toca no
-// disco.
+// The content package's interface: load the library and derive paths and
+// indexing from it. Pure, no DOM and no network; only `readFiles` touches the
+// disk.
 export {
-  carregarAcervo,
-  fichaPorSlug,
-  lerArquivos,
-  montarAcervo,
-  type Acervo,
-  type Arquivo,
-  type Opcoes,
-  type OrigemDosDados,
-  type Resultado,
+  loadLibrary,
+  factSheetBySlug,
+  readFiles,
+  buildLibrary,
+  type Library,
+  type ContentFile,
+  type LoadOptions,
+  type DataOrigin,
+  type LoadResult,
 } from './library.ts'
 export {
-  buscaDaDica,
-  buscaDaFicha,
-  buscaDoGuia,
-  buscaDoTema,
-  caminhosDoSitemap,
-  LIMITES,
-  ORIGEM,
-  redirecionamentos,
+  tipSearch,
+  factSheetSearch,
+  guideSearch,
+  topicSearch,
+  sitemapPaths,
+  LIMITS,
+  ORIGIN,
+  redirects,
   robotsTxt,
   sitemapXml,
-  textoPuro,
-  type Busca,
+  plainText,
+  type SearchMeta,
 } from './search.ts'
 export {
-  caminhoDaDica,
-  caminhoDaFicha,
-  caminhoDoGuia,
-  caminhoDoTema,
-  fichaIndexavel,
+  tipPath,
+  factSheetPath,
+  guidePath,
+  topicPath,
+  isFactSheetIndexable,
 } from './paths.ts'
 export {
-  dicaPorSlug,
-  dicaPublicada,
-  guiaPorSlug,
-  guiasComADica,
-  guiasDoTema,
-  temaPorSlug,
+  tipBySlug,
+  isTipPublished,
+  guideBySlug,
+  guidesWithTip,
+  topicGuides,
+  topicBySlug,
 } from './queries.ts'
-export type { Cobre, Divergencia, Mito, Seo } from './schema.ts'
-export type { AchadoDoGuia, Dica, Guia, Tema } from './items.ts'
+export type { Coverage, Divergence, Myth, Seo } from './schema.ts'
+export type { GuideFinding, Tip, Guide, Topic } from './items.ts'
 export {
-  CALCULADORAS,
-  CASAIS,
-  DESENHOS,
-  FORCAS,
-  GENEROS,
-  PROCURA,
-  ROTAS_RESERVADAS,
-  STATUS,
-  type Calculadora,
-  type Desenho,
-  type Forca,
-  type Status,
+  CALCULATORS,
+  COUPLES,
+  DESIGNS,
+  STRENGTHS,
+  GENDERS,
+  SEEKS,
+  RESERVED_ROUTES,
+  VERIFICATION_STATUSES,
+  type Calculator,
+  type Design,
+  type Strength,
+  type VerificationStatus,
 } from './lists.ts'
-export type { Achado, Ficha } from './fact-sheet.ts'
+export type { Finding, FactSheet } from './fact-sheet.ts'
 export type {
-  Caracteristica,
-  CelulaDePrioridade,
-  Prioridades,
-  SatisfacaoExplicada,
+  Trait,
+  PriorityCell,
+  Priorities,
+  ExplainedSatisfaction,
 } from './priorities.ts'
-export type { Secao } from './markdown.ts'
-export { referenciasNoTexto } from './publication.ts'
-export { formatarProblemas, type Problema } from './problems.ts'
+export type { Section } from './markdown.ts'
+export { referencesInText } from './publication.ts'
+export { formatProblems, type Problem } from './problems.ts'

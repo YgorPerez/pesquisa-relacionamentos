@@ -1,133 +1,127 @@
-// As regras do build sobre busca e links (#15): avisos de título e
-// descrição longos, `antes` que não pode valer e o último sitemap publicado.
-import type { Acervo } from './library.ts'
+// The build rules about search and links (#15): warnings for long titles and
+// descriptions, `antes` entries that cannot hold, and the last published
+// sitemap.
+import type { Library } from './library.ts'
 import {
-  buscaDaDica,
-  buscaDaFicha,
-  buscaDoGuia,
-  buscaDoTema,
-  caminhosAntigos,
-  caminhosDoSite,
-  LIMITES,
-  type Busca,
+  tipSearch,
+  factSheetSearch,
+  guideSearch,
+  topicSearch,
+  oldPaths,
+  sitePaths,
+  LIMITS,
+  type SearchMeta,
 } from './search.ts'
-import { fichaIndexavel } from './paths.ts'
+import { isFactSheetIndexable } from './paths.ts'
 import type { Seo } from './schema.ts'
-import { problema, type Problema } from './problems.ts'
+import { problem, type Problem } from './problems.ts'
 
-function avisosDoItem(
-  arquivo: string,
-  busca: Busca,
+function itemWarnings(
+  file: string,
+  search: SearchMeta,
   seo: Seo | undefined,
-  campoDoTitulo: string,
-): Problema[] {
-  const avisos: Problema[] = []
-  if (busca.titulo.length > LIMITES.titulo)
-    avisos.push(
-      problema(
-        arquivo,
-        `o título de busca tem ${busca.titulo.length} caracteres e o limite é ${LIMITES.titulo}; escreva um mais curto em seo.titulo`,
-        seo?.titulo ? 'seo.titulo' : campoDoTitulo,
+  titleField: string,
+): Problem[] {
+  const warnings: Problem[] = []
+  if (search.title.length > LIMITS.title)
+    warnings.push(
+      problem(
+        file,
+        `the search title has ${search.title.length} characters and the limit is ${LIMITS.title}; write a shorter one in seo.titulo`,
+        seo?.titulo ? 'seo.titulo' : titleField,
       ),
     )
-  if (busca.descricao.length > LIMITES.descricao)
-    avisos.push(
-      problema(
-        arquivo,
-        `a descrição de busca tem ${busca.descricao.length} caracteres e o limite é ${LIMITES.descricao}`,
+  if (search.description.length > LIMITS.description)
+    warnings.push(
+      problem(
+        file,
+        `the search description has ${search.description.length} characters and the limit is ${LIMITS.description}`,
         'seo.descricao',
       ),
     )
-  return avisos
+  return warnings
 }
 
-/** Título ou descrição que o Google cortaria, só nas páginas indexadas. A
- * descrição derivada já sai cortada; só a do `seo` passa do limite. */
-export function avisosDeBusca(acervo: Acervo): Problema[] {
+/** A title or description Google would cut, only on indexed pages. The
+ * derived description already comes out cut; only the `seo` one can go over
+ * the limit. */
+export function searchWarnings(library: Library): Problem[] {
   return [
-    ...acervo.temas.flatMap((t) =>
-      avisosDoItem(t.arquivo, buscaDoTema(t), t.seo, 'titulo'),
+    ...library.topics.flatMap((t) =>
+      itemWarnings(t.file, topicSearch(t), t.seo, 'titulo'),
     ),
-    ...acervo.guias.flatMap((g) =>
-      avisosDoItem(g.arquivo, buscaDoGuia(g), g.seo, 'pergunta'),
+    ...library.guides.flatMap((g) =>
+      itemWarnings(g.file, guideSearch(g), g.seo, 'pergunta'),
     ),
-    ...acervo.dicas
-      .filter((d) => d.publicada)
-      .flatMap((d) => avisosDoItem(d.arquivo, buscaDaDica(d), d.seo, 'texto')),
-    ...acervo.fichas
-      .filter(fichaIndexavel)
-      .flatMap((f) =>
-        avisosDoItem(f.arquivo, buscaDaFicha(f), f.seo, 'título'),
-      ),
+    ...library.tips
+      .filter((d) => d.published)
+      .flatMap((d) => itemWarnings(d.file, tipSearch(d), d.seo, 'text')),
+    ...library.factSheets
+      .filter(isFactSheetIndexable)
+      .flatMap((f) => itemWarnings(f.file, factSheetSearch(f), f.seo, 'title')),
   ]
 }
 
-/** O `antes` só lista caminhos que sumiram, e cada um tem um dono só. */
-export function errosDoAntes(acervo: Acervo): Problema[] {
-  const erros: Problema[] = []
-  const site = caminhosDoSite(acervo)
-  const dono = new Map<string, string>()
-  for (const { antigo, arquivo } of caminhosAntigos(acervo)) {
-    if (site.has(antigo)) {
-      erros.push(
-        problema(
-          arquivo,
-          `o caminho ${antigo} ainda é uma página do site; o "antes" lista só caminhos que sumiram`,
+/** `antes` only lists paths that disappeared, and each has a single owner. */
+export function beforeErrors(library: Library): Problem[] {
+  const errors: Problem[] = []
+  const site = sitePaths(library)
+  const owner = new Map<string, string>()
+  for (const { old, file } of oldPaths(library)) {
+    if (site.has(old)) {
+      errors.push(
+        problem(
+          file,
+          `the path ${old} is still a page of the site; "antes" only lists paths that disappeared`,
           'antes',
         ),
       )
       continue
     }
-    const outro = dono.get(antigo)
-    if (outro === undefined) dono.set(antigo, arquivo)
-    else if (outro !== arquivo)
-      erros.push(
-        problema(
-          arquivo,
-          `o caminho ${antigo} já está no "antes" de ${outro}`,
+    const other = owner.get(old)
+    if (other === undefined) owner.set(old, file)
+    else if (other !== file)
+      errors.push(
+        problem(
+          file,
+          `the path ${old} is already in the "antes" of ${other}`,
           'antes',
         ),
       )
   }
-  return erros
+  return errors
 }
 
-const SITEMAP_PUBLICADO = 'sitemap.xml publicado'
+const PUBLISHED_SITEMAP = 'published sitemap.xml'
 
-const semBarraFinal = (caminho: string) =>
-  caminho.length > 1 ? caminho.replace(/\/+$/, '') : caminho
+const withoutTrailingSlash = (path: string) =>
+  path.length > 1 ? path.replace(/\/+$/, '') : path
 
-/** Todo caminho do último sitemap publicado continua sendo uma página ou
- * está no `antes` de algum arquivo: nenhum link quebra sem querer. */
-export function conferirSitemapAnterior(
-  acervo: Acervo,
-  xml: string,
-): Problema[] {
+/** Every path of the last published sitemap is still a page or is in some
+ * file's `antes`: no link breaks by accident. */
+export function checkPreviousSitemap(library: Library, xml: string): Problem[] {
   const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(
     (m) => m[1] ?? '',
   )
   if (locs.length === 0)
     return [
-      problema(
-        SITEMAP_PUBLICADO,
-        'não achei nenhum <loc>; confira o arquivo baixado',
-      ),
+      problem(PUBLISHED_SITEMAP, 'found no <loc>; check the downloaded file'),
     ]
-  const site = caminhosDoSite(acervo)
-  const antigos = new Set(caminhosAntigos(acervo).map((c) => c.antigo))
+  const site = sitePaths(library)
+  const old = new Set(oldPaths(library).map((c) => c.old))
   return locs
     .map((loc) => {
       try {
-        return semBarraFinal(decodeURI(new URL(loc).pathname))
+        return withoutTrailingSlash(decodeURI(new URL(loc).pathname))
       } catch {
         return loc
       }
     })
-    .filter((caminho) => !site.has(caminho) && !antigos.has(caminho))
-    .map((caminho) =>
-      problema(
-        SITEMAP_PUBLICADO,
-        `${caminho} sumiu do site; declare o caminho antigo no "antes" do arquivo que o substituiu`,
+    .filter((path) => !site.has(path) && !old.has(path))
+    .map((path) =>
+      problem(
+        PUBLISHED_SITEMAP,
+        `${path} disappeared from the site; declare the old path in the "antes" of the file that replaced it`,
       ),
     )
 }

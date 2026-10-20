@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { descreverPerfil, lerPerfil } from './profile.ts'
+import { describeProfile, readProfile } from './profile.ts'
 
-describe('lerPerfil', () => {
-  it('aceita o Perfil completo', () => {
+describe('readProfile', () => {
+  it('accepts the full profile', () => {
     expect(
-      lerPerfil({ genero: 'mulher', procura: 'ambos', idade: 24 }),
+      readProfile({ genero: 'mulher', procura: 'ambos', idade: 24 }),
     ).toEqual({
       genero: 'mulher',
       procura: 'ambos',
@@ -12,38 +12,38 @@ describe('lerPerfil', () => {
     })
   })
 
-  it('aceita a idade escrita no campo do formulário', () => {
-    expect(lerPerfil({ idade: '31' })).toEqual({ idade: 31 })
+  it('accepts the age as written in the form field', () => {
+    expect(readProfile({ idade: '31' })).toEqual({ idade: 31 })
   })
 
-  it('descarta o que está fora das listas e a idade abaixo de 18 ou quebrada', () => {
-    expect(lerPerfil({ genero: 'gato', procura: 'homens', idade: 17 })).toEqual(
-      { procura: 'homens' },
-    )
-    expect(lerPerfil({ genero: 'homem', idade: 30.5 })).toEqual({
+  it('drops what is outside the lists and an age below 18 or broken', () => {
+    expect(
+      readProfile({ genero: 'gato', procura: 'homens', idade: 17 }),
+    ).toEqual({ procura: 'homens' })
+    expect(readProfile({ genero: 'homem', idade: 30.5 })).toEqual({
       genero: 'homem',
     })
-    expect(lerPerfil({ genero: 'homem', idade: '' })).toEqual({
+    expect(readProfile({ genero: 'homem', idade: '' })).toEqual({
       genero: 'homem',
     })
   })
 
-  it('devolve null quando nada sobra', () => {
-    expect(lerPerfil({})).toBeNull()
-    expect(lerPerfil({ genero: 'x', idade: 9 })).toBeNull()
-    expect(lerPerfil('homem')).toBeNull()
-    expect(lerPerfil(null)).toBeNull()
+  it('returns null when nothing is left', () => {
+    expect(readProfile({})).toBeNull()
+    expect(readProfile({ genero: 'x', idade: 9 })).toBeNull()
+    expect(readProfile('homem')).toBeNull()
+    expect(readProfile(null)).toBeNull()
   })
 })
 
-describe('descreverPerfil', () => {
-  it('escreve o Perfil numa linha', () => {
+describe('describeProfile', () => {
+  it('writes the profile in one line', () => {
     expect(
-      descreverPerfil({ genero: 'homem', procura: 'homens', idade: 30 }),
+      describeProfile({ genero: 'homem', procura: 'homens', idade: 30 }),
     ).toBe('homem, procura homens, 30 anos')
-    expect(descreverPerfil({ genero: 'outro', procura: 'ambos' })).toBe(
+    expect(describeProfile({ genero: 'outro', procura: 'ambos' })).toBe(
       'outro gênero, procura homens e mulheres',
     )
-    expect(descreverPerfil({ idade: 45 })).toBe('45 anos')
+    expect(describeProfile({ idade: 45 })).toBe('45 anos')
   })
 })

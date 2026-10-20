@@ -1,168 +1,171 @@
-// O frontmatter da Ficha (#10, #5, #16), em Effect Schema. O validador do
-// build e o app leem o mesmo esquema; as listas fechadas vêm de `listas.ts`.
+// The fact sheet frontmatter (#10, #5, #16), in Effect Schema. The build
+// validator and the app read the same schema; the closed lists come from
+// `lists.ts`. Keys and values stay in Portuguese: they are the content
+// contract, which #70 translates.
 import { Schema } from 'effect'
 import {
-  CALCULADORAS,
-  CASAIS,
-  DESENHOS,
-  FORCAS,
-  GENEROS,
-  PROCURA,
-  STATUS,
+  CALCULATORS,
+  COUPLES,
+  DESIGNS,
+  STRENGTHS,
+  GENDERS,
+  SEEKS,
+  VERIFICATION_STATUSES,
 } from './lists.ts'
 
-const Texto = Schema.String.check(
-  Schema.isMinLength(1, { message: 'não pode ficar vazio' }),
+const Text = Schema.String.check(
+  Schema.isMinLength(1, { message: 'cannot be empty' }),
 )
 
-const Data = Schema.String.check(
+const DateText = Schema.String.check(
   Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'use a data como AAAA-MM-DD',
+    message: 'write the date as YYYY-MM-DD',
   }),
 )
 
 const Url = Schema.String.check(
   Schema.isPattern(/^https?:\/\/\S+$/, {
-    message: 'precisa ser uma URL começando com http',
+    message: 'must be a URL starting with http',
   }),
 )
 
-/** Slug de arquivo: minúsculas, sem acento, com hífen (#15). */
+/** File slug: lowercase, no accents, hyphenated (#15). */
 export const Slug = Schema.String.check(
   Schema.isPattern(/^[a-z0-9]+(-[a-z0-9]+)*$/, {
-    message: 'use minúsculas sem acento, com hífen entre as palavras',
+    message: 'use lowercase without accents, with hyphens between words',
   }),
 )
 
-const Idade = Schema.Int.check(
+const Age = Schema.Int.check(
   Schema.isBetween(
     { minimum: 0, maximum: 120 },
-    { message: 'idade entre 0 e 120' },
+    { message: 'age between 0 and 120' },
   ),
 )
 
-/** Quem a amostra cobre. Chave ausente quer dizer que o estudo não separou. */
-export const Cobre = Schema.Struct({
-  generos: Schema.optional(Schema.Array(Schema.Literals(GENEROS))),
-  procura: Schema.optional(Schema.Array(Schema.Literals(PROCURA))),
-  idades: Schema.optional(Schema.Struct({ min: Idade, max: Idade })),
-  casal: Schema.optional(Schema.Literals(CASAIS)),
+/** Who the sample covers. A missing key means the study did not split by it. */
+export const Coverage = Schema.Struct({
+  generos: Schema.optional(Schema.Array(Schema.Literals(GENDERS))),
+  procura: Schema.optional(Schema.Array(Schema.Literals(SEEKS))),
+  idades: Schema.optional(Schema.Struct({ min: Age, max: Age })),
+  casal: Schema.optional(Schema.Literals(COUPLES)),
 })
-export type Cobre = typeof Cobre.Type
+export type Coverage = typeof Coverage.Type
 
-/** Título e descrição de busca no lugar dos derivados (#15). */
+/** Search title and description in place of the derived ones (#15). */
 export const Seo = Schema.Struct({
-  titulo: Schema.optional(Texto),
-  descricao: Schema.optional(Texto),
+  titulo: Schema.optional(Text),
+  descricao: Schema.optional(Text),
 })
 export type Seo = typeof Seo.Type
 
-/** A origem de um arquivo de dados das calculadoras (`dados/**\/x.meta.yaml`, #10). */
-export const MetaDados = Schema.Struct({
+/** Where a calculator data file comes from (`dados/**\/x.meta.yaml`, #10). */
+export const DataMeta = Schema.Struct({
   ficha: Slug,
-  tabela: Schema.optional(Schema.Array(Texto)),
-  variaveis: Schema.optional(Schema.Array(Texto)),
-  baixado_em: Data,
-  script: Texto,
-  versao: Texto,
-  /** O que o pipeline conferiu contra números publicados. */
-  conferencia: Schema.optional(Texto),
+  tabela: Schema.optional(Schema.Array(Text)),
+  variaveis: Schema.optional(Schema.Array(Text)),
+  baixado_em: DateText,
+  script: Text,
+  versao: Text,
+  /** What the pipeline checked against published numbers. */
+  conferencia: Schema.optional(Text),
 })
-export type MetaDados = typeof MetaDados.Type
+export type DataMeta = typeof DataMeta.Type
 
-export const FrontmatterFicha = Schema.Struct({
-  referencia: Texto,
+export const FactSheetFrontmatter = Schema.Struct({
+  referencia: Text,
   link: Url,
-  status: Schema.Literals(STATUS),
-  verificado_em: Schema.optional(Data),
-  forca: Schema.Literals(FORCAS),
-  forca_porque: Texto,
-  paises: Schema.Array(Texto),
-  periodo: Texto,
+  status: Schema.Literals(VERIFICATION_STATUSES),
+  verificado_em: Schema.optional(DateText),
+  forca: Schema.Literals(STRENGTHS),
+  forca_porque: Text,
+  paises: Schema.Array(Text),
+  periodo: Text,
   amostra: Schema.Struct({
     n: Schema.optional(Schema.Int.check(Schema.isGreaterThan(0))),
-    descricao: Texto,
+    descricao: Text,
     representativa: Schema.Boolean,
   }),
-  desenho: Schema.Literals(DESENHOS),
-  conflito: Schema.optional(Texto),
-  licenca: Schema.optional(Texto),
-  cobre: Cobre,
+  desenho: Schema.Literals(DESIGNS),
+  conflito: Schema.optional(Text),
+  licenca: Schema.optional(Text),
+  cobre: Coverage,
   antes: Schema.optional(Schema.Array(Slug)),
   seo: Schema.optional(Seo),
 })
-export type FrontmatterFicha = typeof FrontmatterFicha.Type
+export type FactSheetFrontmatter = typeof FactSheetFrontmatter.Type
 
 const Slugs = Schema.Array(Slug)
 
-/** `guias/<tema>/_tema.md`: o corpo é o parágrafo de contexto. */
-export const FrontmatterTema = Schema.Struct({
-  titulo: Texto,
+/** `guias/<topic>/_tema.md`: the body is the context paragraph. */
+export const TopicFrontmatter = Schema.Struct({
+  titulo: Text,
   ordem: Slugs,
   antes: Schema.optional(Slugs),
   seo: Schema.optional(Seo),
 })
-export type FrontmatterTema = typeof FrontmatterTema.Type
+export type TopicFrontmatter = typeof TopicFrontmatter.Type
 
-/** `dicas/<slug>.md`: o corpo é o texto da Dica. */
-export const FrontmatterDica = Schema.Struct({
+/** `dicas/<slug>.md`: the body is the tip text. */
+export const TipFrontmatter = Schema.Struct({
   fichas: Slugs,
-  forca: Schema.Literals(FORCAS),
+  forca: Schema.Literals(STRENGTHS),
   inferencia: Schema.optional(Schema.Boolean),
-  vale_para: Schema.optional(Cobre),
+  vale_para: Schema.optional(Coverage),
   antes: Schema.optional(Slugs),
   seo: Schema.optional(Seo),
 })
-export type FrontmatterDica = typeof FrontmatterDica.Type
+export type TipFrontmatter = typeof TipFrontmatter.Type
 
-export const AchadoDoGuia = Schema.Struct({
-  texto: Texto,
+export const GuideFinding = Schema.Struct({
+  texto: Text,
   fichas: Slugs,
-  pais: Schema.optional(Texto),
-  periodo: Schema.optional(Texto),
-  vale_para: Schema.optional(Cobre),
+  pais: Schema.optional(Text),
+  periodo: Schema.optional(Text),
+  vale_para: Schema.optional(Coverage),
 })
 
-const Lado = Schema.Struct({ titulo: Texto, texto: Texto, fichas: Slugs })
+const Side = Schema.Struct({ titulo: Text, texto: Text, fichas: Slugs })
 
-/** A evidência diverge: os dois lados numa tabela e qual tem o melhor desenho (#7). */
-export const Divergencia = Schema.Struct({
-  melhor_desenho: Texto,
-  lados: Schema.Tuple([Lado, Lado]),
+/** The evidence diverges: both sides in a table and which one has the better
+ * design (#7). */
+export const Divergence = Schema.Struct({
+  melhor_desenho: Text,
+  lados: Schema.Tuple([Side, Side]),
 })
-export type Divergencia = typeof Divergencia.Type
+export type Divergence = typeof Divergence.Type
 
-export const Mito = Schema.Struct({
-  afirmacao: Texto,
-  por_que_nao: Texto,
+export const Myth = Schema.Struct({
+  afirmacao: Text,
+  por_que_nao: Text,
   fichas: Slugs,
 })
-export type Mito = typeof Mito.Type
+export type Myth = typeof Myth.Type
 
-/** `guias/<tema>/<slug>.md`: o corpo traz a resposta curta (antes do primeiro
- * `##`), "Varia conforme o Perfil?" e Limitações. */
-/** O `antes` do Guia: o slug antigo no mesmo Tema, ou `tema/slug` quando o
- * Guia veio de outro Tema. */
-const CaminhoDeGuia = Schema.String.check(
+/** A guide's `antes`: the old slug in the same topic, or `topic/slug` when the
+ * guide came from another topic. */
+const GuidePath = Schema.String.check(
   Schema.isPattern(
     /^(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?[a-z0-9]+(?:-[a-z0-9]+)*$/,
     {
       message:
-        'use o slug antigo ou tema/slug, em minúsculas sem acento, com hífen',
+        'use the old slug or topic/slug, lowercase without accents, hyphenated',
     },
   ),
 )
 
-export const FrontmatterGuia = Schema.Struct({
-  pergunta: Texto,
-  confianca: Schema.Literals(FORCAS),
-  achados: Schema.Array(AchadoDoGuia),
-  divergencia: Schema.optional(Divergencia),
+/** `guias/<topic>/<slug>.md`: the body holds the short answer (before the
+ * first `##`), "Varia conforme o Perfil?" and "Limitações". */
+export const GuideFrontmatter = Schema.Struct({
+  pergunta: Text,
+  confianca: Schema.Literals(STRENGTHS),
+  achados: Schema.Array(GuideFinding),
+  divergencia: Schema.optional(Divergence),
   dicas: Schema.optional(Slugs),
-  mitos: Schema.optional(Schema.Array(Mito)),
+  mitos: Schema.optional(Schema.Array(Myth)),
   relacionadas: Schema.optional(Slugs),
-  calculadora: Schema.optional(Schema.Literals(CALCULADORAS)),
-  antes: Schema.optional(Schema.Array(CaminhoDeGuia)),
+  calculadora: Schema.optional(Schema.Literals(CALCULATORS)),
+  antes: Schema.optional(Schema.Array(GuidePath)),
   seo: Schema.optional(Seo),
 })
-export type FrontmatterGuia = typeof FrontmatterGuia.Type
+export type GuideFrontmatter = typeof GuideFrontmatter.Type

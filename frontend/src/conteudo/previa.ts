@@ -6,43 +6,43 @@
 // navegador, a conta continua local.
 import { createServerFn } from '@tanstack/react-start'
 import {
-  abrirPacote,
-  type DadosDoLugar,
-  type LugarDoPacote,
+  openPack,
+  type PlaceData,
+  type PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import type { Previa } from '@tem-estudo/rules/link'
+import type { Preview } from '@tem-estudo/rules/link'
 import { montarPreviaDoGrupo } from './previa-do-grupo'
 
 /** O Open Graph da prévia, para o `head` da calculadora; vazio sem prévia. */
-export const metaDaPrevia = (previa: Previa | null) =>
+export const metaDaPrevia = (previa: Preview | null) =>
   previa
     ? [
-        { property: 'og:title', content: previa.titulo },
-        { property: 'og:description', content: previa.descricao },
+        { property: 'og:title', content: previa.title },
+        { property: 'og:description', content: previa.description },
       ]
     : []
 
-const abertos = new Map<string, Promise<DadosDoLugar | null>>()
+const abertos = new Map<string, Promise<PlaceData | null>>()
 
 /** O pacote do lugar: o arquivo em `public/` ao lado do servidor do build
  * (`.output/public`, ou `/app/public` na imagem) ou, no `vite dev`, o que o
  * plugin serve. Fica guardado na memória depois do primeiro pedido. */
 async function pacote(
   base: string,
-  lugar: LugarDoPacote,
-): Promise<DadosDoLugar | null> {
+  lugar: PackPlace,
+): Promise<PlaceData | null> {
   const chave = `${base}/${lugar}`
   let pedido = abertos.get(chave)
   if (!pedido) {
     pedido = lerPacote(base, lugar).then((bruto) =>
-      bruto ? abrirPacote(bruto) : null,
+      bruto ? openPack(bruto) : null,
     )
     abertos.set(chave, pedido)
   }
   return pedido
 }
 
-async function lerPacote(base: string, lugar: LugarDoPacote): Promise<unknown> {
+async function lerPacote(base: string, lugar: PackPlace): Promise<unknown> {
   const [fs, caminho, url] = await Promise.all([
     import('node:fs/promises'),
     import('node:path'),
@@ -72,7 +72,7 @@ export const buscarPreviaDoGrupo = createServerFn({ method: 'GET' })
   .validator((query: unknown) =>
     typeof query === 'string' ? query.slice(0, 2000) : '',
   )
-  .handler(async ({ data: query }): Promise<Previa | null> => {
+  .handler(async ({ data: query }): Promise<Preview | null> => {
     const { default: dados } = await import('virtual:grupo-possivel')
     return montarPreviaDoGrupo(query, dados, (lugar) =>
       pacote(dados.base, lugar),

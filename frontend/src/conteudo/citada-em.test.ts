@@ -2,15 +2,13 @@
 // aparece nos dois Guias (no segundo, pela Dica) e na Dica publicada; a Lima
 // 2015 só numa Dica ⬜, que não vai ao ar.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/content'
+import { loadLibrary } from '@tem-estudo/content'
 import { describe, expect, it } from 'vite-plus/test'
 import { citadaEm } from './vista-guia'
 
-const resultado = carregarAcervo(
-  resolve(import.meta.dirname, '../../e2e/acervo'),
-)
+const resultado = loadLibrary(resolve(import.meta.dirname, '../../e2e/acervo'))
 if (!resultado.ok) throw new Error('fixture do e2e inválida')
-const { acervo } = resultado
+const { library: acervo } = resultado
 
 describe('citadaEm', () => {
   it('lista os Guias que citam a Ficha, também pelas Dicas, na ordem do site', () => {

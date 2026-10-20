@@ -1,59 +1,62 @@
-// Os Requisitos do Grupo possível (#8, story 41): o que o visitante pede de
-// quem procura. É o estado que fica no localStorage, que o cartão do B5 (#32)
-// lê e que o link (#34) leva. Tudo aqui é serializável em JSON.
-import type { Perfil } from './profile.ts'
+// The possible group's requirements (#8, story 41): what the visitor asks of
+// whoever they seek. It is the state kept in localStorage, which the B5 card
+// (#32) reads and the link (#34) carries. Everything here serializes to JSON,
+// so the keys and values stay in Portuguese: they are what browsers already
+// stored.
+import type { Profile } from './profile.ts'
 
-/** As 27 UFs, com o código do IBGE (os dois primeiros dígitos do município). */
-export const UFS = [
-  { sigla: 'AC', codigo: '12', nome: 'Acre' },
-  { sigla: 'AL', codigo: '27', nome: 'Alagoas' },
-  { sigla: 'AP', codigo: '16', nome: 'Amapá' },
-  { sigla: 'AM', codigo: '13', nome: 'Amazonas' },
-  { sigla: 'BA', codigo: '29', nome: 'Bahia' },
-  { sigla: 'CE', codigo: '23', nome: 'Ceará' },
-  { sigla: 'DF', codigo: '53', nome: 'Distrito Federal' },
-  { sigla: 'ES', codigo: '32', nome: 'Espírito Santo' },
-  { sigla: 'GO', codigo: '52', nome: 'Goiás' },
-  { sigla: 'MA', codigo: '21', nome: 'Maranhão' },
-  { sigla: 'MT', codigo: '51', nome: 'Mato Grosso' },
-  { sigla: 'MS', codigo: '50', nome: 'Mato Grosso do Sul' },
-  { sigla: 'MG', codigo: '31', nome: 'Minas Gerais' },
-  { sigla: 'PA', codigo: '15', nome: 'Pará' },
-  { sigla: 'PB', codigo: '25', nome: 'Paraíba' },
-  { sigla: 'PR', codigo: '41', nome: 'Paraná' },
-  { sigla: 'PE', codigo: '26', nome: 'Pernambuco' },
-  { sigla: 'PI', codigo: '22', nome: 'Piauí' },
-  { sigla: 'RJ', codigo: '33', nome: 'Rio de Janeiro' },
-  { sigla: 'RN', codigo: '24', nome: 'Rio Grande do Norte' },
-  { sigla: 'RS', codigo: '43', nome: 'Rio Grande do Sul' },
-  { sigla: 'RO', codigo: '11', nome: 'Rondônia' },
-  { sigla: 'RR', codigo: '14', nome: 'Roraima' },
-  { sigla: 'SC', codigo: '42', nome: 'Santa Catarina' },
-  { sigla: 'SP', codigo: '35', nome: 'São Paulo' },
-  { sigla: 'SE', codigo: '28', nome: 'Sergipe' },
-  { sigla: 'TO', codigo: '17', nome: 'Tocantins' },
+/** The 27 states (UFs), with the IBGE code (the first two digits of a
+ * municipality's code). */
+export const STATES = [
+  { abbr: 'AC', ibgeCode: '12', name: 'Acre' },
+  { abbr: 'AL', ibgeCode: '27', name: 'Alagoas' },
+  { abbr: 'AP', ibgeCode: '16', name: 'Amapá' },
+  { abbr: 'AM', ibgeCode: '13', name: 'Amazonas' },
+  { abbr: 'BA', ibgeCode: '29', name: 'Bahia' },
+  { abbr: 'CE', ibgeCode: '23', name: 'Ceará' },
+  { abbr: 'DF', ibgeCode: '53', name: 'Distrito Federal' },
+  { abbr: 'ES', ibgeCode: '32', name: 'Espírito Santo' },
+  { abbr: 'GO', ibgeCode: '52', name: 'Goiás' },
+  { abbr: 'MA', ibgeCode: '21', name: 'Maranhão' },
+  { abbr: 'MT', ibgeCode: '51', name: 'Mato Grosso' },
+  { abbr: 'MS', ibgeCode: '50', name: 'Mato Grosso do Sul' },
+  { abbr: 'MG', ibgeCode: '31', name: 'Minas Gerais' },
+  { abbr: 'PA', ibgeCode: '15', name: 'Pará' },
+  { abbr: 'PB', ibgeCode: '25', name: 'Paraíba' },
+  { abbr: 'PR', ibgeCode: '41', name: 'Paraná' },
+  { abbr: 'PE', ibgeCode: '26', name: 'Pernambuco' },
+  { abbr: 'PI', ibgeCode: '22', name: 'Piauí' },
+  { abbr: 'RJ', ibgeCode: '33', name: 'Rio de Janeiro' },
+  { abbr: 'RN', ibgeCode: '24', name: 'Rio Grande do Norte' },
+  { abbr: 'RS', ibgeCode: '43', name: 'Rio Grande do Sul' },
+  { abbr: 'RO', ibgeCode: '11', name: 'Rondônia' },
+  { abbr: 'RR', ibgeCode: '14', name: 'Roraima' },
+  { abbr: 'SC', ibgeCode: '42', name: 'Santa Catarina' },
+  { abbr: 'SP', ibgeCode: '35', name: 'São Paulo' },
+  { abbr: 'SE', ibgeCode: '28', name: 'Sergipe' },
+  { abbr: 'TO', ibgeCode: '17', name: 'Tocantins' },
 ] as const
-export type Uf = (typeof UFS)[number]['sigla']
+export type StateCode = (typeof STATES)[number]['abbr']
 
-/** Os valores do CSV do #36, do menor ao maior quando há ordem. */
-export const ESCOLARIDADES = [
+/** The values of the #36 CSV, from lowest to highest when there is an order. */
+export const EDUCATIONS = [
   'sem-fundamental',
   'fundamental',
   'medio',
   'superior',
 ] as const
-export type Escolaridade = (typeof ESCOLARIDADES)[number]
-export const RENDAS = ['sem-renda', 'ate-1', '1-2', '2-5', '5+'] as const
-export type Renda = (typeof RENDAS)[number]
-export const CORES = [
+export type Education = (typeof EDUCATIONS)[number]
+export const INCOMES = ['sem-renda', 'ate-1', '1-2', '2-5', '5+'] as const
+export type Income = (typeof INCOMES)[number]
+export const COLORS = [
   'branca',
   'preta',
   'parda',
   'amarela',
   'indigena',
 ] as const
-export type Cor = (typeof CORES)[number]
-export const RELIGIOES = [
+export type Color = (typeof COLORS)[number]
+export const RELIGIONS = [
   'catolica',
   'evangelica',
   'espirita',
@@ -61,58 +64,59 @@ export const RELIGIOES = [
   'sem-religiao',
   'outra',
 ] as const
-export type Religiao = (typeof RELIGIOES)[number]
+export type Religion = (typeof RELIGIONS)[number]
 
-/** A escolaridade e a renda mínimas que dá para pedir (o menor degrau é "qualquer"). */
-export const ESCOLARIDADES_MINIMAS = [
+/** The minimum education and income one can ask for (the lowest step is
+ * "any"). */
+export const MIN_EDUCATIONS = [
   'fundamental',
   'medio',
   'superior',
-] as const satisfies ReadonlyArray<Escolaridade>
-export const RENDAS_MINIMAS = [
+] as const satisfies ReadonlyArray<Education>
+export const MIN_INCOMES = [
   'ate-1',
   '1-2',
   '2-5',
   '5+',
-] as const satisfies ReadonlyArray<Renda>
+] as const satisfies ReadonlyArray<Income>
 
-/** A idade procurada vai de 18 a 80, e 80 quer dizer "80 ou mais". */
-export const IDADE_PROCURADA_MINIMA = 18
-export const IDADE_PROCURADA_MAXIMA = 80
-/** A altura vai de 140 a 200 cm; nas pontas, sem limite daquele lado. */
-export const ALTURA_MINIMA = 140
-export const ALTURA_MAXIMA = 200
+/** The sought age goes from 18 to 80, and 80 means "80 or more". */
+export const MIN_SOUGHT_AGE = 18
+export const MAX_SOUGHT_AGE = 80
+/** Height goes from 140 to 200 cm; at the ends, no limit on that side. */
+export const MIN_HEIGHT = 140
+export const MAX_HEIGHT = 200
 
-export interface Faixa {
+export interface Range {
   readonly min: number
   readonly max: number
 }
 
-export interface Lugar {
-  readonly uf: Uf
-  /** Código de 7 dígitos do IBGE; sem ele, a UF inteira. */
+export interface Place {
+  readonly uf: StateCode
+  /** The 7-digit IBGE code; without it, the whole state. */
   readonly municipio?: string
 }
 
-export interface Requisitos {
-  /** `null` = a idade do Perfil ±5, até o visitante mexer. */
-  readonly idade: Faixa | null
-  /** `null` = o Brasil inteiro. */
-  readonly lugar: Lugar | null
-  /** "Não mora com companheiro(a)", ligado por padrão. */
+export interface Requirements {
+  /** `null` = the profile's age ±5, until the visitor changes it. */
+  readonly idade: Range | null
+  /** `null` = the whole of Brazil. */
+  readonly lugar: Place | null
+  /** "Não mora com companheiro(a)", on by default. */
   readonly companheiro: boolean
-  /** O mínimo; `null` = qualquer. */
-  readonly escolaridade: (typeof ESCOLARIDADES_MINIMAS)[number] | null
-  readonly renda: (typeof RENDAS_MINIMAS)[number] | null
-  /** Nenhuma marcada = qualquer uma. */
-  readonly cores: ReadonlyArray<Cor>
-  readonly religioes: ReadonlyArray<Religiao>
+  /** The minimum; `null` = any. */
+  readonly escolaridade: (typeof MIN_EDUCATIONS)[number] | null
+  readonly renda: (typeof MIN_INCOMES)[number] | null
+  /** None checked = any of them. */
+  readonly cores: ReadonlyArray<Color>
+  readonly religioes: ReadonlyArray<Religion>
   readonly semFilhos: boolean
-  readonly altura: Faixa
+  readonly altura: Range
   readonly naoFuma: boolean
 }
 
-export const REQUISITOS_PADRAO: Requisitos = {
+export const DEFAULT_REQUIREMENTS: Requirements = {
   idade: null,
   lugar: null,
   companheiro: true,
@@ -121,88 +125,86 @@ export const REQUISITOS_PADRAO: Requisitos = {
   cores: [],
   religioes: [],
   semFilhos: false,
-  altura: { min: ALTURA_MINIMA, max: ALTURA_MAXIMA },
+  altura: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   naoFuma: false,
 }
 
-/** O que o `procura` do Perfil decide na conta, num lugar só. */
-export interface QuemSeProcura {
-  /** Os códigos de sexo do Censo na conta: 0 homem, 1 mulher. */
-  readonly sexos: ReadonlyArray<0 | 1>
-  /** Quem se procura, para a frase. */
-  readonly alvo: 'homens' | 'mulheres' | 'pessoas'
-  /** "Sem filhos": o Censo só pergunta às mulheres. */
-  readonly filhos: 'vale' | 'so-mulheres' | 'sem-dado'
+/** What the profile's `procura` decides in the count, in one place. */
+export interface Sought {
+  /** The Census sex codes in the count: 0 man, 1 woman. */
+  readonly sexes: ReadonlyArray<0 | 1>
+  /** Who is sought, for the sentence. */
+  readonly target: 'homens' | 'mulheres' | 'pessoas'
+  /** "Sem filhos": the Census only asks women. */
+  readonly children: 'vale' | 'so-mulheres' | 'sem-dado'
 }
 
-const HOMENS: QuemSeProcura = { sexos: [0], alvo: 'homens', filhos: 'sem-dado' }
-const MULHERES: QuemSeProcura = { sexos: [1], alvo: 'mulheres', filhos: 'vale' }
-const PESSOAS: QuemSeProcura = {
-  sexos: [0, 1],
-  alvo: 'pessoas',
-  filhos: 'so-mulheres',
+const MEN: Sought = { sexes: [0], target: 'homens', children: 'sem-dado' }
+const WOMEN: Sought = { sexes: [1], target: 'mulheres', children: 'vale' }
+const PEOPLE: Sought = {
+  sexes: [0, 1],
+  target: 'pessoas',
+  children: 'so-mulheres',
 }
 
-/** Sem dizer quem procura, a conta junta os dois, como em `ambos`. */
-export const quemSeProcura = (perfil: Perfil | null): QuemSeProcura =>
-  perfil?.procura === 'homens'
-    ? HOMENS
-    : perfil?.procura === 'mulheres'
-      ? MULHERES
-      : PESSOAS
+/** Without saying who they seek, the count joins both, as with `ambos`. */
+export const whoIsSought = (profile: Profile | null): Sought =>
+  profile?.procura === 'homens'
+    ? MEN
+    : profile?.procura === 'mulheres'
+      ? WOMEN
+      : PEOPLE
 
-/** A idade procurada: a escolhida, ou a do Perfil ±5, ou qualquer uma. */
-export function idadeProcurada(
-  perfil: Perfil | null,
-  requisitos: Requisitos,
-): Faixa {
-  if (requisitos.idade) return requisitos.idade
-  if (perfil?.idade === undefined)
-    return { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA }
+/** The sought age: the chosen one, or the profile's ±5, or any. */
+export function soughtAge(
+  profile: Profile | null,
+  requirements: Requirements,
+): Range {
+  if (requirements.idade) return requirements.idade
+  if (profile?.idade === undefined)
+    return { min: MIN_SOUGHT_AGE, max: MAX_SOUGHT_AGE }
   return {
-    min: Math.max(
-      IDADE_PROCURADA_MINIMA,
-      Math.min(IDADE_PROCURADA_MAXIMA, perfil.idade - 5),
-    ),
-    max: Math.min(IDADE_PROCURADA_MAXIMA, perfil.idade + 5),
+    min: Math.max(MIN_SOUGHT_AGE, Math.min(MAX_SOUGHT_AGE, profile.idade - 5)),
+    max: Math.min(MAX_SOUGHT_AGE, profile.idade + 5),
   }
 }
 
-const umDe = <T extends string>(
-  lista: ReadonlyArray<T>,
-  valor: unknown,
-): T | undefined => lista.find((item) => item === valor)
+const oneOf = <T extends string>(
+  list: ReadonlyArray<T>,
+  value: unknown,
+): T | undefined => list.find((item) => item === value)
 
-const variosDe = <T extends string>(
-  lista: ReadonlyArray<T>,
-  valor: unknown,
+const manyOf = <T extends string>(
+  list: ReadonlyArray<T>,
+  value: unknown,
 ): T[] =>
-  Array.isArray(valor) ? lista.filter((item) => valor.includes(item)) : []
+  Array.isArray(value) ? list.filter((item) => value.includes(item)) : []
 
-function faixa(valor: unknown, min: number, max: number): Faixa | null {
-  if (typeof valor !== 'object' || valor === null) return null
-  const { min: a, max: b } = valor as Record<string, unknown>
+function range(value: unknown, min: number, max: number): Range | null {
+  if (typeof value !== 'object' || value === null) return null
+  const { min: a, max: b } = value as Record<string, unknown>
   if (!Number.isInteger(a) || !Number.isInteger(b)) return null
-  const de = a as number
-  const ate = b as number
-  return de >= min && ate <= max && de <= ate ? { min: de, max: ate } : null
+  const from = a as number
+  const to = b as number
+  return from >= min && to <= max && from <= to ? { min: from, max: to } : null
 }
 
-function lugar(valor: unknown): Lugar | null {
-  if (typeof valor !== 'object' || valor === null) return null
-  const bruto = valor as Record<string, unknown>
-  const uf = UFS.find((u) => u.sigla === bruto.uf)
-  if (!uf) return null
-  const municipio = bruto.municipio
-  return typeof municipio === 'string' &&
-    /^\d{7}$/.test(municipio) &&
-    municipio.startsWith(uf.codigo)
-    ? { uf: uf.sigla, municipio }
-    : { uf: uf.sigla }
+function place(value: unknown): Place | null {
+  if (typeof value !== 'object' || value === null) return null
+  const raw = value as Record<string, unknown>
+  const state = STATES.find((u) => u.abbr === raw.uf)
+  if (!state) return null
+  const municipality = raw.municipio
+  return typeof municipality === 'string' &&
+    /^\d{7}$/.test(municipality) &&
+    municipality.startsWith(state.ibgeCode)
+    ? { uf: state.abbr, municipio: municipality }
+    : { uf: state.abbr }
 }
 
-/** Os Requisitos que o visitante pode ligar e soltar (a orientação vem do Perfil). */
-export const REQUISITOS = [
+/** The requirements the visitor can turn on and release (orientation comes
+ * from the profile). */
+export const REQUIREMENTS = [
   'idade',
   'lugar',
   'companheiro',
@@ -214,17 +216,18 @@ export const REQUISITOS = [
   'altura',
   'fumo',
 ] as const
-export type RequisitoDoVisitante = (typeof REQUISITOS)[number]
+export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
-/** Os Requisitos com aquele de volta ao padrão "qualquer" (o botão "soltar"). */
-export function soltar(
-  requisitos: Requisitos,
-  requisito: RequisitoDoVisitante,
-): Requisitos {
-  const p = REQUISITOS_PADRAO
-  const solto: Record<RequisitoDoVisitante, Partial<Requisitos>> = {
+/** The requirements with that one back to the "any" default (the "soltar"
+ * button). */
+export function release(
+  requirements: Requirements,
+  requirement: VisitorRequirement,
+): Requirements {
+  const defaults = DEFAULT_REQUIREMENTS
+  const released: Record<VisitorRequirement, Partial<Requirements>> = {
     idade: {
-      idade: { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA },
+      idade: { min: MIN_SOUGHT_AGE, max: MAX_SOUGHT_AGE },
     },
     lugar: { lugar: null },
     companheiro: { companheiro: false },
@@ -233,14 +236,14 @@ export function soltar(
     cor: { cores: [] },
     religiao: { religioes: [] },
     filhos: { semFilhos: false },
-    altura: { altura: p.altura },
+    altura: { altura: defaults.altura },
     fumo: { naoFuma: false },
   }
-  return { ...requisitos, ...solto[requisito] }
+  return { ...requirements, ...released[requirement] }
 }
 
-export const TITULO_DO_REQUISITO: Readonly<
-  Record<RequisitoDoVisitante | 'orientacao', string>
+export const REQUIREMENT_TITLE: Readonly<
+  Record<VisitorRequirement | 'orientacao', string>
 > = {
   idade: 'Idade',
   lugar: 'Onde',
@@ -255,16 +258,16 @@ export const TITULO_DO_REQUISITO: Readonly<
   fumo: 'Cigarro',
 }
 
-export const ROTULO_DA_ESCOLARIDADE: Readonly<
-  Record<(typeof ESCOLARIDADES_MINIMAS)[number], string>
+export const EDUCATION_LABEL: Readonly<
+  Record<(typeof MIN_EDUCATIONS)[number], string>
 > = {
   fundamental: 'fundamental completo',
   medio: 'médio completo',
   superior: 'superior completo',
 }
 
-export const ROTULO_DA_RENDA: Readonly<
-  Record<(typeof RENDAS_MINIMAS)[number], string>
+export const INCOME_LABEL: Readonly<
+  Record<(typeof MIN_INCOMES)[number], string>
 > = {
   'ate-1': 'tem alguma renda',
   '1-2': 'mais de 1 salário mínimo',
@@ -272,7 +275,7 @@ export const ROTULO_DA_RENDA: Readonly<
   '5+': 'mais de 5 salários mínimos',
 }
 
-export const ROTULO_DA_COR: Readonly<Record<Cor, string>> = {
+export const COLOR_LABEL: Readonly<Record<Color, string>> = {
   branca: 'branca',
   preta: 'preta',
   parda: 'parda',
@@ -280,7 +283,7 @@ export const ROTULO_DA_COR: Readonly<Record<Cor, string>> = {
   indigena: 'indígena',
 }
 
-export const ROTULO_DA_RELIGIAO: Readonly<Record<Religiao, string>> = {
+export const RELIGION_LABEL: Readonly<Record<Religion, string>> = {
   catolica: 'católica',
   evangelica: 'evangélica',
   espirita: 'espírita',
@@ -289,67 +292,68 @@ export const ROTULO_DA_RELIGIAO: Readonly<Record<Religiao, string>> = {
   outra: 'outra',
 }
 
-const ou = (itens: ReadonlyArray<string>) =>
-  itens.length < 2
-    ? itens.join('')
-    : `${itens.slice(0, -1).join(', ')} ou ${itens.at(-1)}`
+const orList = (items: ReadonlyArray<string>) =>
+  items.length < 2
+    ? items.join('')
+    : `${items.slice(0, -1).join(', ')} ou ${items.at(-1)}`
 
-export const nomeDaUf = (uf: Uf): string =>
-  UFS.find((u) => u.sigla === uf)?.nome ?? uf
+export const stateName = (uf: StateCode): string =>
+  STATES.find((u) => u.abbr === uf)?.name ?? uf
 
-/** O valor de um Requisito escrito como na frase: "25 a 35 anos", "pelo menos
- * superior completo", "qualquer religião". `municipio` é o nome, quando há. */
-export function valorDoRequisito(
-  requisito: RequisitoDoVisitante | 'orientacao',
-  perfil: Perfil | null,
-  r: Requisitos,
-  municipio?: string,
+/** A requirement's value written as in the sentence: "25 a 35 anos", "pelo
+ * menos superior completo", "qualquer religião". `municipality` is the name,
+ * when there is one. */
+export function requirementValue(
+  requirement: VisitorRequirement | 'orientacao',
+  profile: Profile | null,
+  r: Requirements,
+  municipality?: string,
 ): string {
-  switch (requisito) {
+  switch (requirement) {
     case 'idade': {
-      const { min, max } = idadeProcurada(perfil, r)
-      if (min <= IDADE_PROCURADA_MINIMA && max >= IDADE_PROCURADA_MAXIMA)
+      const { min, max } = soughtAge(profile, r)
+      if (min <= MIN_SOUGHT_AGE && max >= MAX_SOUGHT_AGE)
         return 'qualquer idade'
-      return max >= IDADE_PROCURADA_MAXIMA
+      return max >= MAX_SOUGHT_AGE
         ? `${min} anos ou mais`
         : `${min} a ${max} anos`
     }
     case 'lugar':
       if (!r.lugar) return 'Brasil inteiro'
-      return r.lugar.municipio && municipio
-        ? `${municipio} (${r.lugar.uf})`
-        : nomeDaUf(r.lugar.uf)
+      return r.lugar.municipio && municipality
+        ? `${municipality} (${r.lugar.uf})`
+        : stateName(r.lugar.uf)
     case 'companheiro':
       return r.companheiro
         ? 'não mora com companheiro(a)'
         : 'mora ou não com companheiro(a)'
     case 'orientacao':
-      return perfil?.genero === 'homem' || perfil?.genero === 'mulher'
-        ? `se interessa por ${perfil.genero === 'homem' ? 'homens' : 'mulheres'}`
+      return profile?.genero === 'homem' || profile?.genero === 'mulher'
+        ? `se interessa por ${profile.genero === 'homem' ? 'homens' : 'mulheres'}`
         : 'qualquer orientação'
     case 'escolaridade':
       return r.escolaridade
-        ? `pelo menos ${ROTULO_DA_ESCOLARIDADE[r.escolaridade]}`
+        ? `pelo menos ${EDUCATION_LABEL[r.escolaridade]}`
         : 'qualquer escolaridade'
     case 'renda':
-      return r.renda ? ROTULO_DA_RENDA[r.renda] : 'qualquer renda'
+      return r.renda ? INCOME_LABEL[r.renda] : 'qualquer renda'
     case 'cor':
       return r.cores.length
-        ? `cor ${ou(r.cores.map((c) => ROTULO_DA_COR[c]))}`
+        ? `cor ${orList(r.cores.map((c) => COLOR_LABEL[c]))}`
         : 'qualquer cor ou raça'
     case 'religiao':
       return r.religioes.length
-        ? `religião ${ou(r.religioes.map((c) => ROTULO_DA_RELIGIAO[c]))}`
+        ? `religião ${orList(r.religioes.map((c) => RELIGION_LABEL[c]))}`
         : 'qualquer religião'
     case 'filhos':
-      if (quemSeProcura(perfil).filhos === 'sem-dado')
+      if (whoIsSought(profile).children === 'sem-dado')
         return 'sem dado para homens'
       return r.semFilhos ? 'sem filhos' : 'com ou sem filhos'
     case 'altura': {
       const { min, max } = r.altura
-      if (min <= ALTURA_MINIMA && max >= ALTURA_MAXIMA) return 'qualquer altura'
-      if (max >= ALTURA_MAXIMA) return `a partir de ${min} cm`
-      if (min <= ALTURA_MINIMA) return `até ${max} cm`
+      if (min <= MIN_HEIGHT && max >= MAX_HEIGHT) return 'qualquer altura'
+      if (max >= MAX_HEIGHT) return `a partir de ${min} cm`
+      if (min <= MIN_HEIGHT) return `até ${max} cm`
       return `${min} a ${max} cm`
     }
     case 'fumo':
@@ -357,26 +361,26 @@ export function valorDoRequisito(
   }
 }
 
-/** Lê os Requisitos de fonte não confiável (localStorage, link): o que não for
- * válido volta ao padrão. Nunca falha. */
-export function lerRequisitos(valor: unknown): Requisitos {
-  const bruto = (
-    typeof valor === 'object' && valor !== null ? valor : {}
+/** Reads the requirements from an untrusted source (localStorage, link): what
+ * is not valid goes back to the default. Never fails. */
+export function readRequirements(value: unknown): Requirements {
+  const raw = (
+    typeof value === 'object' && value !== null ? value : {}
   ) as Record<string, unknown>
-  const p = REQUISITOS_PADRAO
+  const defaults = DEFAULT_REQUIREMENTS
   return {
-    idade: faixa(bruto.idade, IDADE_PROCURADA_MINIMA, IDADE_PROCURADA_MAXIMA),
-    lugar: lugar(bruto.lugar),
+    idade: range(raw.idade, MIN_SOUGHT_AGE, MAX_SOUGHT_AGE),
+    lugar: place(raw.lugar),
     companheiro:
-      typeof bruto.companheiro === 'boolean'
-        ? bruto.companheiro
-        : p.companheiro,
-    escolaridade: umDe(ESCOLARIDADES_MINIMAS, bruto.escolaridade) ?? null,
-    renda: umDe(RENDAS_MINIMAS, bruto.renda) ?? null,
-    cores: variosDe(CORES, bruto.cores),
-    religioes: variosDe(RELIGIOES, bruto.religioes),
-    semFilhos: bruto.semFilhos === true,
-    altura: faixa(bruto.altura, ALTURA_MINIMA, ALTURA_MAXIMA) ?? p.altura,
-    naoFuma: bruto.naoFuma === true,
+      typeof raw.companheiro === 'boolean'
+        ? raw.companheiro
+        : defaults.companheiro,
+    escolaridade: oneOf(MIN_EDUCATIONS, raw.escolaridade) ?? null,
+    renda: oneOf(MIN_INCOMES, raw.renda) ?? null,
+    cores: manyOf(COLORS, raw.cores),
+    religioes: manyOf(RELIGIONS, raw.religioes),
+    semFilhos: raw.semFilhos === true,
+    altura: range(raw.altura, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.altura,
+    naoFuma: raw.naoFuma === true,
   }
 }

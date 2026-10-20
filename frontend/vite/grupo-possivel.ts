@@ -13,35 +13,32 @@ import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import {
-  abrirPacote,
-  lerBaseDoGrupo,
-  pacoteDoLugar,
-  type ArquivosDoGrupo,
-  type LugarDoPacote,
+  openPack,
+  readGroupBase,
+  packForPlace,
+  type GroupFiles,
+  type PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import {
-  estimarGrupo,
-  type Estimativa,
-} from '@tem-estudo/rules/possible-group'
-import { REQUISITOS_PADRAO, UFS } from '@tem-estudo/rules/requirements'
+import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import { DEFAULT_REQUIREMENTS, STATES } from '@tem-estudo/rules/requirements'
 import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:grupo-possivel'
 const RESOLVIDO = `\0${ID}`
 const CAMINHO = '/dados/grupo-possivel'
 
-const ARQUIVOS: Record<keyof ArquivosDoGrupo, string> = {
-  censo: 'censo-2022.csv',
-  idades: 'sidra-9514-idade.csv',
-  municipios: 'sidra-10185-municipios.csv',
+const ARQUIVOS: Record<keyof GroupFiles, string> = {
+  census: 'censo-2022.csv',
+  ages: 'sidra-9514-idade.csv',
+  municipalities: 'sidra-10185-municipios.csv',
   pns: 'pns-2019.csv',
 }
 
 export interface DadosMontados {
   readonly versao: string
   /** O texto JSON de cada pacote. */
-  readonly pacotes: ReadonlyMap<LugarDoPacote, string>
-  readonly exemplo: Estimativa
+  readonly pacotes: ReadonlyMap<PackPlace, string>
+  readonly exemplo: Estimate
 }
 
 /** Lê `dados/grupo-possivel/` e monta os pacotes. */
@@ -51,26 +48,26 @@ export function montarPacotes(pasta: string): DadosMontados {
       chave,
       readFileSync(resolve(pasta, nome), 'utf8'),
     ]),
-  ) as unknown as ArquivosDoGrupo
-  const base = lerBaseDoGrupo(textos)
-  const lugares: LugarDoPacote[] = [
+  ) as unknown as GroupFiles
+  const base = readGroupBase(textos)
+  const lugares: PackPlace[] = [
     'BR',
-    ...UFS.map((u) => u.sigla).filter((uf) =>
-      base.censo.some((linha) => linha.uf === uf),
+    ...STATES.map((u) => u.abbr).filter((uf) =>
+      base.census.some((linha) => linha.uf === uf),
     ),
   ]
   const pacotes = new Map(
-    lugares.map((lugar) => [lugar, JSON.stringify(pacoteDoLugar(base, lugar))]),
+    lugares.map((lugar) => [lugar, JSON.stringify(packForPlace(base, lugar))]),
   )
   const hash = createHash('sha256')
   for (const texto of pacotes.values()) hash.update(texto)
-  const brasil = abrirPacote(JSON.parse(pacotes.get('BR')!))
+  const brasil = openPack(JSON.parse(pacotes.get('BR')!))
   return {
     versao: hash.digest('hex').slice(0, 10),
     pacotes,
-    exemplo: estimarGrupo(
-      { perfil: null, requisitos: REQUISITOS_PADRAO },
-      { brasil },
+    exemplo: estimateGroup(
+      { profile: null, requirements: DEFAULT_REQUIREMENTS },
+      { brazil: brasil },
     ),
   }
 }
@@ -111,9 +108,7 @@ export function grupoPossivel({ raiz }: { raiz: string }): Plugin {
     configureServer(servidor) {
       servidor.middlewares.use(CAMINHO, (pedido, resposta, seguir) => {
         const [, versao, arquivo] = (pedido.url ?? '').split('/')
-        const lugar = arquivo?.replace(/\.json$/, '') as
-          | LugarDoPacote
-          | undefined
+        const lugar = arquivo?.replace(/\.json$/, '') as PackPlace | undefined
         const texto =
           lugar && versao === dados().versao
             ? dados().pacotes.get(lugar)

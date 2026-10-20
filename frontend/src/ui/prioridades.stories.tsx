@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { alternarNoTopo3 } from '@tem-estudo/rules/priorities'
+import { toggleInTop3 } from '@tem-estudo/rules/priorities'
 import { CartaoDePrioridades, EscolhaDoTopo3, Estante } from './prioridades'
 import { BARRA, CARACTERISTICAS } from './prioridades.exemplo'
 
@@ -12,7 +12,7 @@ function Calculadora() {
       <EscolhaDoTopo3
         caracteristicas={CARACTERISTICAS}
         topo3={topo3}
-        aoTocar={(id) => setTopo3(alternarNoTopo3(topo3, id))}
+        aoTocar={(id) => setTopo3(toggleInTop3(topo3, id))}
       />
       <Estante
         caracteristicas={CARACTERISTICAS}

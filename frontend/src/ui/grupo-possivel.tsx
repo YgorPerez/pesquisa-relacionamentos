@@ -2,20 +2,20 @@
 // topo, os controles dos Requisitos (todos sem arrastar: botões de passo,
 // campo de número, opções e caixas de marcar) e a conta com as dobras.
 import type {
-  Custo,
-  Estimativa,
-  RequisitoId,
+  Cost,
+  Estimate,
+  RequirementId,
 } from '@tem-estudo/rules/possible-group'
 import {
-  formatarFaixa,
-  formatarQuantidade,
-  formatarVezes,
+  formatRange,
+  formatAmount,
+  formatTimes,
 } from '@tem-estudo/rules/numbers'
-import type { Perfil } from '@tem-estudo/rules/profile'
+import type { Profile } from '@tem-estudo/rules/profile'
 import {
-  TITULO_DO_REQUISITO,
-  valorDoRequisito,
-  type Requisitos,
+  REQUIREMENT_TITLE,
+  requirementValue,
+  type Requirements,
 } from '@tem-estudo/rules/requirements'
 import { Link } from '@tanstack/react-router'
 import { useId, type ReactNode } from 'react'
@@ -43,9 +43,9 @@ const ETAPA =
   'flex justify-between gap-3 border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta py-1.5'
 
 /** A faixa com os números no marca-texto rosa e, se for o caso, "instável". */
-export function Faixa({ estimativa }: { estimativa: Estimativa }) {
-  const { min, max, instavel } = estimativa.resultado
-  const texto = formatarFaixa(min, max)
+export function Faixa({ estimativa }: { estimativa: Estimate }) {
+  const { min, max, unstable: instavel } = estimativa.result
+  const texto = formatRange(min, max)
   const [, antes = '', numeros = texto] =
     /^(entre |cerca de )?(.*)$/.exec(texto) ?? []
   return (
@@ -65,18 +65,18 @@ export function Faixa({ estimativa }: { estimativa: Estimativa }) {
 }
 
 /** "o que mais pesa: idade (×3,4)". */
-function MaisPesa({ estimativa }: { estimativa: Estimativa }) {
-  const primeiro = estimativa.custos[0]
+function MaisPesa({ estimativa }: { estimativa: Estimate }) {
+  const primeiro = estimativa.costs[0]
   if (!primeiro) return <>nenhum Requisito corta o grupo</>
   return (
     <>
       o que mais pesa:{' '}
       <b>
-        {TITULO_DO_REQUISITO[
-          primeiro.requisito as keyof typeof TITULO_DO_REQUISITO
+        {REQUIREMENT_TITLE[
+          primeiro.requirement as keyof typeof REQUIREMENT_TITLE
         ].toLowerCase()}
       </b>{' '}
-      ({formatarVezes(primeiro.vezes)})
+      ({formatTimes(primeiro.times)})
     </>
   )
 }
@@ -86,7 +86,7 @@ export function NumeroPreso({
   estimativa,
   carregando,
 }: {
-  estimativa: Estimativa
+  estimativa: Estimate
   carregando: boolean
 }) {
   return (
@@ -133,9 +133,9 @@ export function LinhaDoRequisito({
   children,
   nota,
 }: {
-  requisito: keyof typeof TITULO_DO_REQUISITO
+  requisito: keyof typeof REQUIREMENT_TITLE
   valor: string
-  custo: Custo | undefined
+  custo: Cost | undefined
   ligado: boolean
   children: ReactNode
   nota?: ReactNode
@@ -152,7 +152,7 @@ export function LinhaDoRequisito({
           id={`req-${requisito}-titulo`}
           className="m-0 font-title text-title leading-body font-bold"
         >
-          {TITULO_DO_REQUISITO[requisito]}
+          {REQUIREMENT_TITLE[requisito]}
         </h3>
         <span
           className={cn(
@@ -392,16 +392,16 @@ export function Dobras({
   requisitos,
   municipio,
 }: {
-  estimativa: Estimativa
-  perfil: Perfil | null
-  requisitos: Requisitos
+  estimativa: Estimate
+  perfil: Profile | null
+  requisitos: Requirements
   municipio: string | undefined
 }) {
   return (
     <>
       <CorteACorte
         estimativa={estimativa}
-        valor={(k) => valorDoRequisito(k, perfil, requisitos, municipio)}
+        valor={(k) => requirementValue(k, perfil, requisitos, municipio)}
       />
       <DeOndeVemAIncerteza estimativa={estimativa} />
     </>
@@ -410,12 +410,12 @@ export function Dobras({
 
 /** "Corte a corte": o Brasil adulto e o que sobra depois de cada Requisito. */
 function CorteACorte({
-  estimativa: { alvo, base, funil },
+  estimativa: { target: alvo, base, funnel: funil },
   valor,
 }: {
-  estimativa: Estimativa
+  estimativa: Estimate
   /** O Requisito escrito como na tela ("25 a 35 anos"). */
-  valor: (k: RequisitoId) => string
+  valor: (k: RequirementId) => string
 }) {
   return (
     <Collapsible id="gp-corte-a-corte" variante="cheia" className="mt-sm">
@@ -424,12 +424,12 @@ function CorteACorte({
         <ol className="m-0 list-none p-0" data-slot="gp-funil">
           <li className={ETAPA}>
             <span>{NOME_DO_ALVO[alvo]} de 18 anos ou mais no Brasil</span>
-            <b>{formatarQuantidade(base.central)}</b>
+            <b>{formatAmount(base.central)}</b>
           </li>
           {funil.map((etapa) => (
-            <li key={etapa.requisito} className={ETAPA}>
-              <span>{valor(etapa.requisito)}</span>
-              <b>{formatarQuantidade(etapa.central)}</b>
+            <li key={etapa.requirement} className={ETAPA}>
+              <span>{valor(etapa.requirement)}</span>
+              <b>{formatAmount(etapa.central)}</b>
             </li>
           ))}
         </ol>
@@ -442,9 +442,14 @@ function CorteACorte({
 /** "De onde vem a incerteza": o quanto a conta ingênua erraria, o erro de
  * amostra e as ressalvas que não vão no topo. */
 function DeOndeVemAIncerteza({
-  estimativa: { ingenua, ressalvas, ligados, resultado },
+  estimativa: {
+    naive: ingenua,
+    caveats: ressalvas,
+    active: ligados,
+    result: resultado,
+  },
 }: {
-  estimativa: Estimativa
+  estimativa: Estimate
 }) {
   const diferenca =
     resultado.central > 0
@@ -459,7 +464,7 @@ function DeOndeVemAIncerteza({
         {ligados.length > 1 && (
           <p className="m-0 mb-2.5 text-aviso">
             Se só multiplicássemos a porcentagem que cada Requisito deixa
-            sozinho no Brasil, daria <b>{formatarQuantidade(ingenua)}</b> (
+            sozinho no Brasil, daria <b>{formatAmount(ingenua)}</b> (
             {diferenca >= 0 ? '+' : '−'}
             {Math.abs(Math.round(diferenca * 100))}%). Os Requisitos andam
             juntos; por isso o site cruza os dados.
@@ -467,15 +472,15 @@ function DeOndeVemAIncerteza({
         )}
         <p className={DICA}>
           A faixa junta o erro de amostra do Censo (
-          {Math.round(resultado.registros).toLocaleString('pt-BR')} registros)
-          com o intervalo da PNS.
+          {Math.round(resultado.records).toLocaleString('pt-BR')} registros) com
+          o intervalo da PNS.
         </p>
         <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
           {ressalvas
-            .filter((r) => !r.forte)
+            .filter((r) => !r.strong)
             .map((r) => (
               <li key={r.id} className="not-first:mt-1.5">
-                {r.texto}
+                {r.text}
               </li>
             ))}
         </ul>
@@ -502,7 +507,7 @@ const Seta = () => (
 
 /** "370 mil adultos", "1,2 milhão de adultos": só o número vai no rosa. */
 function AdultosNoBrasil({ quantidade }: { quantidade: number }) {
-  const numero = formatarQuantidade(quantidade)
+  const numero = formatAmount(quantidade)
   return (
     <>
       <mark className="numero-chave">{numero}</mark>
@@ -518,7 +523,7 @@ function ContaNoCartao({
   ligados,
   carregando,
 }: {
-  estimativa: Estimativa
+  estimativa: Estimate
   ligados: ReadonlyArray<string>
   carregando: boolean
 }) {
@@ -526,7 +531,7 @@ function ContaNoCartao({
     <div aria-busy={carregando} className={carregando ? CARREGANDO : undefined}>
       <Faixa estimativa={estimativa} />
       <p className="m-0 mt-1 text-nota leading-normal text-tinta-2">
-        {NOME_DO_ALVO[estimativa.alvo]} que atendem a tudo o que você pediu
+        {NOME_DO_ALVO[estimativa.target]} que atendem a tudo o que você pediu
       </p>
       <p
         className="m-0 mt-2 text-nota leading-normal text-tinta-2 [&_b]:text-tinta"
@@ -580,7 +585,7 @@ export function CartaoDoGrupoPossivel({
   ligados,
   carregando,
 }: {
-  estimativa: Estimativa
+  estimativa: Estimate
   /** O visitante já disse o Perfil ou mexeu nos Requisitos. */
   usado: boolean
   /** Os Requisitos ligados, escritos como na frase ("25 a 35 anos"). */
@@ -600,7 +605,7 @@ export function CartaoDoGrupoPossivel({
             carregando={carregando}
           />
         ) : (
-          <ConviteNoCartao quantidade={estimativa.resultado.central} />
+          <ConviteNoCartao quantidade={estimativa.result.central} />
         )}
         <p>
           <Button

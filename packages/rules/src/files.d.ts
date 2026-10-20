@@ -1,5 +1,5 @@
-// Os testes leem os CSV de fixture como texto, pelo `?raw` do Vite.
+// The tests read the fixture CSVs as text, through Vite's `?raw`.
 declare module '*.csv?raw' {
-  const texto: string
-  export default texto
+  const text: string
+  export default text
 }

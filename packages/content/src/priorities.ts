@@ -1,175 +1,180 @@
-// O arquivo de Prioridades (#9, #10, #19; story 99): por característica ×
-// desfecho, o degrau de 0 a 3, a medida, o texto simples e a Ficha, além do
-// viés por gênero. A calculadora `/prioridades` e o cartão do Guia B1 leem
-// este mesmo arquivo. Cada número segue a regra das afirmações: a Ficha
-// citada tem de existir e ser ✅ ou 🟡.
+// The priorities file (#9, #10, #19; story 99): per trait × outcome, the level
+// from 0 to 3, the measure, the plain text and the fact sheet, plus the bias
+// by gender. The `/prioridades` calculator and the B1 guide card read this
+// same file. Every number follows the claims rule: the cited fact sheet must
+// exist and be ✅ or 🟡. The YAML keys are the content contract and stay in
+// Portuguese.
 import { Schema } from 'effect'
-import { parse as lerYaml } from 'yaml'
+import { parse as parseYaml } from 'yaml'
 import { Slug } from './schema.ts'
-import type { Ficha } from './fact-sheet.ts'
-import { decodificar, problema, type Problema } from './problems.ts'
+import type { FactSheet } from './fact-sheet.ts'
+import { decode, problem, type Problem } from './problems.ts'
 
-export const ARQUIVO_DE_PRIORIDADES = 'dados/prioridades/prioridades.yaml'
-export const META_DE_PRIORIDADES = 'dados/prioridades/prioridades.meta.yaml'
+export const PRIORITIES_FILE = 'dados/prioridades/prioridades.yaml'
+export const PRIORITIES_META = 'dados/prioridades/prioridades.meta.yaml'
 
-const Texto = Schema.String.check(
-  Schema.isMinLength(1, { message: 'não pode ficar vazio' }),
+const Text = Schema.String.check(
+  Schema.isMinLength(1, { message: 'cannot be empty' }),
 )
-const Porcento = Schema.Int.check(
+const Percent = Schema.Int.check(
   Schema.isBetween(
     { minimum: 0, maximum: 100 },
-    { message: 'porcentagem inteira de 0 a 100' },
+    { message: 'whole percentage from 0 to 100' },
   ),
 )
 
-/** Uma célula característica × desfecho. Sem Ficha, só o degrau 0. */
-const Celula = Schema.Struct({
+/** A trait × outcome cell. Without a fact sheet, only level 0. */
+const Cell = Schema.Struct({
   degrau: Schema.Literals([0, 1, 2, 3]),
-  medida: Schema.optional(Texto),
-  texto_simples: Texto,
+  medida: Schema.optional(Text),
+  texto_simples: Text,
   ficha: Schema.optional(Slug),
 })
-export type CelulaDePrioridade = typeof Celula.Type
+export type PriorityCell = typeof Cell.Type
 
-/** A distância entre o que se declara e o que se escolhe. */
-const Vies = Schema.Struct({
-  todos: Schema.optional(Texto),
-  homem: Schema.optional(Texto),
-  mulher: Schema.optional(Texto),
+/** The gap between what people state and what they choose. */
+const Bias = Schema.Struct({
+  todos: Schema.optional(Text),
+  homem: Schema.optional(Text),
+  mulher: Schema.optional(Text),
 })
 
-const Caracteristica = Schema.Struct({
+const Trait = Schema.Struct({
   id: Slug,
-  nome: Texto,
-  atracao: Celula,
-  satisfacao: Celula,
-  duracao: Celula,
-  vies: Schema.optional(Vies),
+  nome: Text,
+  atracao: Cell,
+  satisfacao: Cell,
+  duracao: Cell,
+  vies: Schema.optional(Bias),
 })
-export type Caracteristica = typeof Caracteristica.Type
+export type Trait = typeof Trait.Type
 
-/** A barra da Joel 2020: de onde vem a satisfação, em porcentagem. */
-const SatisfacaoExplicada = Schema.Struct({
+/** The Joel 2020 bar: where satisfaction comes from, in percent. */
+const ExplainedSatisfaction = Schema.Struct({
   ficha: Slug,
-  relacao: Porcento,
-  parceiro: Porcento,
-  sem_explicacao: Porcento,
+  relacao: Percent,
+  parceiro: Percent,
+  sem_explicacao: Percent,
 })
-export type SatisfacaoExplicada = typeof SatisfacaoExplicada.Type
+export type ExplainedSatisfaction = typeof ExplainedSatisfaction.Type
 
-const ArquivoDePrioridades = Schema.Struct({
-  satisfacao_explicada: SatisfacaoExplicada,
-  caracteristicas: Schema.Array(Caracteristica),
+const PrioritiesFileSchema = Schema.Struct({
+  satisfacao_explicada: ExplainedSatisfaction,
+  caracteristicas: Schema.Array(Trait),
 })
 
-export interface Prioridades extends Schema.Schema.Type<
-  typeof ArquivoDePrioridades
+export interface Priorities extends Schema.Schema.Type<
+  typeof PrioritiesFileSchema
 > {
-  /** Caminho do arquivo a partir da raiz do repositório. */
-  readonly arquivo: string
+  /** Path of the file from the repository root. */
+  readonly file: string
 }
 
-export type PrioridadesLidas =
-  | { readonly ok: true; readonly prioridades: Prioridades }
-  | { readonly ok: false; readonly erros: ReadonlyArray<Problema> }
+export type ParsedPriorities =
+  | { readonly ok: true; readonly priorities: Priorities }
+  | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** A regra das afirmações para uma Ficha citada pelos dados. */
-export function fichaDosDados(
-  arquivo: string,
-  campo: string,
+/** The claims rule for a fact sheet cited by the data. */
+export function dataFactSheetProblem(
+  file: string,
+  field: string,
   slug: string,
-  fichas: ReadonlyArray<Ficha>,
-): Problema | null {
-  const ficha = fichas.find((f) => f.slug === slug)
-  if (!ficha)
-    return problema(arquivo, `não existe a Ficha estudos/${slug}.md`, campo)
-  if (ficha.status === 'nao-verificado')
-    return problema(
-      arquivo,
-      `${slug} é ⬜ (não verificada); dados só citam Ficha ✅ ou 🟡`,
-      campo,
+  factSheets: ReadonlyArray<FactSheet>,
+): Problem | null {
+  const factSheet = factSheets.find((f) => f.slug === slug)
+  if (!factSheet)
+    return problem(
+      file,
+      `the fact sheet estudos/${slug}.md does not exist`,
+      field,
+    )
+  if (factSheet.status === 'nao-verificado')
+    return problem(
+      file,
+      `${slug} is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
+      field,
     )
   return null
 }
 
-const DESFECHOS = ['atracao', 'satisfacao', 'duracao'] as const
+const OUTCOMES = ['atracao', 'satisfacao', 'duracao'] as const
 
-export function lerPrioridades(
-  arquivo: string,
-  texto: string,
-  fichas: ReadonlyArray<Ficha>,
-  temMeta: boolean,
-): PrioridadesLidas {
-  if (!temMeta)
+export function readPriorities(
+  file: string,
+  text: string,
+  factSheets: ReadonlyArray<FactSheet>,
+  hasMeta: boolean,
+): ParsedPriorities {
+  if (!hasMeta)
     return {
       ok: false,
-      erros: [
-        problema(
-          arquivo,
-          'falta o prioridades.meta.yaml ao lado, com a Ficha, as variáveis, a data, o script e a versão',
+      errors: [
+        problem(
+          file,
+          'missing the prioridades.meta.yaml next to it, with the fact sheet, the variables, the date, the script and the version',
         ),
       ],
     }
-  let valor: unknown
+  let value: unknown
   try {
-    valor = lerYaml(texto) ?? {}
+    value = parseYaml(text) ?? {}
   } catch (e) {
     return {
       ok: false,
-      erros: [problema(arquivo, `não é YAML válido: ${(e as Error).message}`)],
+      errors: [problem(file, `is not valid YAML: ${(e as Error).message}`)],
     }
   }
-  const lido = decodificar(ArquivoDePrioridades, valor, arquivo)
-  if (!lido.ok) return { ok: false, erros: lido.problemas }
-  const { satisfacao_explicada: barra, caracteristicas } = lido.valor
+  const parsed = decode(PrioritiesFileSchema, value, file)
+  if (!parsed.ok) return { ok: false, errors: parsed.problems }
+  const { satisfacao_explicada: bar, caracteristicas: traits } = parsed.value
 
-  const erros: Problema[] = []
-  const soma = barra.relacao + barra.parceiro + barra.sem_explicacao
-  if (soma !== 100)
-    erros.push(
-      problema(
-        arquivo,
-        `relação, parceiro e sem explicação somam ${soma}%, e não 100%`,
+  const errors: Problem[] = []
+  const sum = bar.relacao + bar.parceiro + bar.sem_explicacao
+  if (sum !== 100)
+    errors.push(
+      problem(
+        file,
+        `relacao, parceiro and sem_explicacao add up to ${sum}%, not 100%`,
         'satisfacao_explicada',
       ),
     )
-  const daBarra = fichaDosDados(
-    arquivo,
+  const fromBar = dataFactSheetProblem(
+    file,
     'satisfacao_explicada.ficha',
-    barra.ficha,
-    fichas,
+    bar.ficha,
+    factSheets,
   )
-  if (daBarra) erros.push(daBarra)
+  if (fromBar) errors.push(fromBar)
 
-  caracteristicas.forEach((car, i) => {
-    if (caracteristicas.findIndex((outra) => outra.id === car.id) !== i)
-      erros.push(
-        problema(
-          arquivo,
-          `a característica "${car.id}" aparece mais de uma vez`,
+  traits.forEach((trait, i) => {
+    if (traits.findIndex((other) => other.id === trait.id) !== i)
+      errors.push(
+        problem(
+          file,
+          `the trait "${trait.id}" appears more than once`,
           `caracteristicas.${i}.id`,
         ),
       )
-    for (const desfecho of DESFECHOS) {
-      const celula = car[desfecho]
-      const campo = `caracteristicas.${i}.${desfecho}.ficha`
-      if (celula.ficha === undefined) {
-        if (celula.degrau > 0)
-          erros.push(
-            problema(
-              arquivo,
-              `o degrau ${celula.degrau} precisa da Ficha que o sustenta; sem Ficha, só o 0 ("não sabemos")`,
-              campo,
+    for (const outcome of OUTCOMES) {
+      const cell = trait[outcome]
+      const field = `caracteristicas.${i}.${outcome}.ficha`
+      if (cell.ficha === undefined) {
+        if (cell.degrau > 0)
+          errors.push(
+            problem(
+              file,
+              `level ${cell.degrau} needs the fact sheet that backs it; without a fact sheet, only 0 ("não sabemos")`,
+              field,
             ),
           )
         continue
       }
-      const daCelula = fichaDosDados(arquivo, campo, celula.ficha, fichas)
-      if (daCelula) erros.push(daCelula)
+      const fromCell = dataFactSheetProblem(file, field, cell.ficha, factSheets)
+      if (fromCell) errors.push(fromCell)
     }
   })
 
-  return erros.length > 0
-    ? { ok: false, erros }
-    : { ok: true, prioridades: { arquivo, ...lido.valor } }
+  return errors.length > 0
+    ? { ok: false, errors }
+    : { ok: true, priorities: { file, ...parsed.value } }
 }

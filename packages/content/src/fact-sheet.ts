@@ -1,222 +1,229 @@
-// Uma Ficha: o frontmatter decodificado mais o corpo cortado nas seções
-// que o site desenha (O que mediu, Achados, Limitações).
-import { parse as lerYaml } from 'yaml'
-import { FrontmatterFicha } from './schema.ts'
+// A fact sheet: the decoded frontmatter plus the body cut into the sections
+// the site draws (O que mediu, Achados, Limitações). The section and column
+// headings are the content contract and stay in Portuguese.
+import { parse as parseYaml } from 'yaml'
+import { FactSheetFrontmatter } from './schema.ts'
 import {
-  dividirFrontmatter,
-  lerCorpo,
-  primeiraTabela,
-  type Secao,
+  splitFrontmatter,
+  readBody,
+  firstTable,
+  type Section,
 } from './markdown.ts'
-import { decodificar, problema, type Problema } from './problems.ts'
+import { decode, problem, type Problem } from './problems.ts'
 
-/** Uma linha da tabela de Achados. */
-export interface Achado {
-  readonly medida: string
-  readonly valor: string
-  /** O localizador no original: página, tabela, seção. */
-  readonly onde: string
-  /** O trecho literal do original, ou `null` enquanto ninguém o conferiu. */
-  readonly trecho: string | null
-  /** O script que reproduz um número calculado (#6). */
-  readonly calculo: string | null
+/** A row of the Achados table. */
+export interface Finding {
+  readonly measure: string
+  readonly value: string
+  /** The locator in the original: page, table, section. */
+  readonly locator: string
+  /** The literal excerpt from the original, or `null` until someone checks it. */
+  readonly excerpt: string | null
+  /** The script that reproduces a computed number (#6). */
+  readonly calculation: string | null
 }
 
-export interface Ficha extends FrontmatterFicha {
-  /** O nome do arquivo sem `.md`, que vira o caminho `/estudos/<slug>`. */
+export interface FactSheet extends FactSheetFrontmatter {
+  /** The file name without `.md`, which becomes the path `/estudos/<slug>`. */
   readonly slug: string
-  /** Caminho do arquivo a partir da raiz do repositório. */
-  readonly arquivo: string
-  /** O `#` do corpo: "Autor (ano): tema". */
-  readonly titulo: string
-  /** O DOI tirado do `link`, em minúsculas, ou `null` se o link não é DOI. */
+  /** Path of the file from the repository root. */
+  readonly file: string
+  /** The body's `#`: "Autor (ano): tema". */
+  readonly title: string
+  /** The DOI taken from `link`, lowercased, or `null` if the link is not a DOI. */
   readonly doi: string | null
-  readonly oQueMediu: string
-  readonly achados: ReadonlyArray<Achado>
-  /** O markdown da seção Achados fora da tabela (notas antes e depois). */
-  readonly notasDosAchados: string
-  /** Seções a mais, entre Achados e Limitações, na ordem do arquivo. */
-  readonly outrasSecoes: ReadonlyArray<Secao>
-  readonly limitacoes: string
-  /** Só Relatórios e pesquisas internas; o site não mostra. */
-  readonly comoUsamos: string | null
+  readonly whatItMeasured: string
+  readonly findings: ReadonlyArray<Finding>
+  /** The markdown of the Achados section outside the table (notes before and
+   * after). */
+  readonly findingsNotes: string
+  /** Extra sections, between Achados and Limitações, in file order. */
+  readonly otherSections: ReadonlyArray<Section>
+  readonly limitations: string
+  /** Only for reports and internal research; the site does not show it. */
+  readonly howWeUseIt: string | null
 }
 
-export const SECOES = {
-  oQueMediu: 'O que mediu',
-  achados: 'Achados',
-  limitacoes: 'Limitações',
-  comoUsamos: 'Como usamos',
+export const SECTIONS = {
+  whatItMeasured: 'O que mediu',
+  findings: 'Achados',
+  limitations: 'Limitações',
+  howWeUseIt: 'Como usamos',
 } as const
 
-const COLUNAS = ['Medida', 'Valor', 'Onde', 'Trecho'] as const
-const COLUNA_CALCULO = 'Cálculo'
+const COLUMNS = ['Medida', 'Valor', 'Onde', 'Trecho'] as const
+const CALCULATION_COLUMN = 'Cálculo'
 
-export function doiDoLink(link: string): string | null {
-  const achado = /^https?:\/\/(?:dx\.)?doi\.org\/(10\.\S+)$/i.exec(link)
-  return achado?.[1] ? decodeURIComponent(achado[1]).toLowerCase() : null
+export function doiFromLink(link: string): string | null {
+  const match = /^https?:\/\/(?:dx\.)?doi\.org\/(10\.\S+)$/i.exec(link)
+  return match?.[1] ? decodeURIComponent(match[1]).toLowerCase() : null
 }
 
-export type FichaLida =
-  | { readonly ok: true; readonly ficha: Ficha }
-  | { readonly ok: false; readonly erros: ReadonlyArray<Problema> }
+export type ParsedFactSheet =
+  | { readonly ok: true; readonly factSheet: FactSheet }
+  | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** Lê o texto de um arquivo `estudos/<slug>.md`. */
-export function lerFicha(arquivo: string, texto: string): FichaLida {
-  const slug = arquivo.replace(/^.*\//, '').replace(/\.md$/, '')
-  const erros: Problema[] = []
-  const { frontmatter, corpo } = dividirFrontmatter(texto)
+/** Reads the text of an `estudos/<slug>.md` file. */
+export function readFactSheet(file: string, text: string): ParsedFactSheet {
+  const slug = file.replace(/^.*\//, '').replace(/\.md$/, '')
+  const errors: Problem[] = []
+  const { frontmatter, body } = splitFrontmatter(text)
 
-  let dados: unknown = null
+  let data: unknown = null
   if (frontmatter === null) {
-    erros.push(problema(arquivo, 'falta o frontmatter (o bloco --- do topo)'))
+    errors.push(
+      problem(file, 'missing the frontmatter (the --- block at the top)'),
+    )
   } else {
     try {
-      dados = lerYaml(frontmatter) ?? {}
+      data = parseYaml(frontmatter) ?? {}
     } catch (e) {
-      erros.push(
-        problema(
-          arquivo,
-          `o frontmatter não é YAML válido: ${(e as Error).message}`,
+      errors.push(
+        problem(
+          file,
+          `the frontmatter is not valid YAML: ${(e as Error).message}`,
         ),
       )
     }
   }
 
-  const decodificado =
-    dados === null ? null : decodificar(FrontmatterFicha, dados, arquivo)
-  if (decodificado && !decodificado.ok) erros.push(...decodificado.problemas)
+  const decoded =
+    data === null ? null : decode(FactSheetFrontmatter, data, file)
+  if (decoded && !decoded.ok) errors.push(...decoded.problems)
 
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
-    erros.push(
-      problema(
-        arquivo,
-        'o nome do arquivo precisa ser minúsculo, sem acento, com hífen',
+    errors.push(
+      problem(
+        file,
+        'the file name must be lowercase, without accents, hyphenated',
       ),
     )
 
-  const lido = lerCorpo(corpo)
-  if (!lido.titulo)
-    erros.push(
-      problema(arquivo, 'falta o título "# Autor (ano): tema" no corpo'),
+  const parsed = readBody(body)
+  if (!parsed.title)
+    errors.push(
+      problem(file, 'missing the title "# Autor (ano): tema" in the body'),
     )
 
-  const secao = (titulo: string) => lido.secoes.find((s) => s.titulo === titulo)
-  for (const titulo of [SECOES.oQueMediu, SECOES.achados, SECOES.limitacoes]) {
-    if (!secao(titulo))
-      erros.push(problema(arquivo, `falta a seção "## ${titulo}"`, titulo))
+  const section = (title: string) =>
+    parsed.sections.find((s) => s.title === title)
+  for (const title of [
+    SECTIONS.whatItMeasured,
+    SECTIONS.findings,
+    SECTIONS.limitations,
+  ]) {
+    if (!section(title))
+      errors.push(problem(file, `missing the section "## ${title}"`, title))
   }
 
-  const achados: Achado[] = []
-  let notasDosAchados = ''
-  const secaoAchados = secao(SECOES.achados)
-  if (secaoAchados) {
-    const tabela = primeiraTabela(secaoAchados.markdown)
-    const esperado = COLUNAS.join(' | ')
-    if (!tabela) {
-      erros.push(
-        problema(arquivo, `falta a tabela | ${esperado} |`, SECOES.achados),
+  const findings: Finding[] = []
+  let findingsNotes = ''
+  const findingsSection = section(SECTIONS.findings)
+  if (findingsSection) {
+    const table = firstTable(findingsSection.markdown)
+    const expected = COLUMNS.join(' | ')
+    if (!table) {
+      errors.push(
+        problem(file, `missing the table | ${expected} |`, SECTIONS.findings),
       )
     } else {
-      const cabecalho = tabela.cabecalho
-      const certo =
-        COLUNAS.every((c, i) => cabecalho[i] === c) &&
-        (cabecalho.length === COLUNAS.length ||
-          (cabecalho.length === COLUNAS.length + 1 &&
-            cabecalho[4] === COLUNA_CALCULO))
-      if (!certo) {
-        erros.push(
-          problema(
-            arquivo,
-            `a tabela precisa das colunas | ${esperado} | (e | ${COLUNA_CALCULO} | opcional), veio | ${cabecalho.join(' | ')} |`,
-            SECOES.achados,
+      const header = table.header
+      const valid =
+        COLUMNS.every((c, i) => header[i] === c) &&
+        (header.length === COLUMNS.length ||
+          (header.length === COLUMNS.length + 1 &&
+            header[4] === CALCULATION_COLUMN))
+      if (!valid) {
+        errors.push(
+          problem(
+            file,
+            `the table needs the columns | ${expected} | (and an optional | ${CALCULATION_COLUMN} |), got | ${header.join(' | ')} |`,
+            SECTIONS.findings,
           ),
         )
       } else {
-        tabela.linhas.forEach((linha, i) => {
+        table.rows.forEach((row, i) => {
           const [
-            medida = '',
-            valor = '',
-            onde = '',
-            trecho = '',
-            calculo = '',
-          ] = linha
-          if (!medida || !valor)
-            erros.push(
-              problema(
-                arquivo,
-                `a linha ${i + 1} da tabela precisa de Medida e Valor`,
-                SECOES.achados,
+            measure = '',
+            value = '',
+            locator = '',
+            excerpt = '',
+            calculation = '',
+          ] = row
+          if (!measure || !value)
+            errors.push(
+              problem(
+                file,
+                `row ${i + 1} of the table needs Medida and Valor`,
+                SECTIONS.findings,
               ),
             )
-          achados.push({
-            medida,
-            valor,
-            onde,
-            trecho: trecho || null,
-            calculo: calculo || null,
+          findings.push({
+            measure,
+            value,
+            locator,
+            excerpt: excerpt || null,
+            calculation: calculation || null,
           })
         })
       }
-      notasDosAchados = [tabela.antes, tabela.depois]
-        .filter(Boolean)
-        .join('\n\n')
+      findingsNotes = [table.before, table.after].filter(Boolean).join('\n\n')
     }
   }
 
-  if (decodificado?.ok) {
-    const fm = decodificado.valor
+  if (decoded?.ok) {
+    const fm = decoded.value
     if (fm.status !== 'nao-verificado') {
       if (!fm.verificado_em)
-        erros.push(
-          problema(
-            arquivo,
-            'uma Ficha ok ou parcial precisa da data da conferência',
+        errors.push(
+          problem(
+            file,
+            'an ok or partial fact sheet needs the date it was checked',
             'verificado_em',
           ),
         )
     }
     if (fm.status === 'ok') {
-      achados.forEach((a, i) => {
-        if (!a.trecho)
-          erros.push(
-            problema(
-              arquivo,
-              `a linha ${i + 1} ("${a.medida}") está sem Trecho; uma Ficha ok cita o original em cada achado`,
-              SECOES.achados,
+      findings.forEach((finding, i) => {
+        if (!finding.excerpt)
+          errors.push(
+            problem(
+              file,
+              `row ${i + 1} ("${finding.measure}") has no Trecho; an ok fact sheet quotes the original in every finding`,
+              SECTIONS.findings,
             ),
           )
       })
     }
-    const idades = fm.cobre.idades
-    if (idades && idades.min > idades.max)
-      erros.push(
-        problema(
-          arquivo,
-          `min (${idades.min}) passa de max (${idades.max})`,
+    const ages = fm.cobre.idades
+    if (ages && ages.min > ages.max)
+      errors.push(
+        problem(
+          file,
+          `min (${ages.min}) is above max (${ages.max})`,
           'cobre.idades',
         ),
       )
   }
 
-  if (erros.length > 0 || !decodificado?.ok || !lido.titulo)
-    return { ok: false, erros }
+  if (errors.length > 0 || !decoded?.ok || !parsed.title)
+    return { ok: false, errors }
 
-  const conhecidas: ReadonlyArray<string> = Object.values(SECOES)
+  const known: ReadonlyArray<string> = Object.values(SECTIONS)
   return {
     ok: true,
-    ficha: {
-      ...decodificado.valor,
+    factSheet: {
+      ...decoded.value,
       slug,
-      arquivo,
-      titulo: lido.titulo,
-      doi: doiDoLink(decodificado.valor.link),
-      oQueMediu: secao(SECOES.oQueMediu)?.markdown ?? '',
-      achados,
-      notasDosAchados,
-      outrasSecoes: lido.secoes.filter((s) => !conhecidas.includes(s.titulo)),
-      limitacoes: secao(SECOES.limitacoes)?.markdown ?? '',
-      comoUsamos: secao(SECOES.comoUsamos)?.markdown ?? null,
+      file,
+      title: parsed.title,
+      doi: doiFromLink(decoded.value.link),
+      whatItMeasured: section(SECTIONS.whatItMeasured)?.markdown ?? '',
+      findings,
+      findingsNotes,
+      otherSections: parsed.sections.filter((s) => !known.includes(s.title)),
+      limitations: section(SECTIONS.limitations)?.markdown ?? '',
+      howWeUseIt: section(SECTIONS.howWeUseIt)?.markdown ?? null,
     },
   }
 }

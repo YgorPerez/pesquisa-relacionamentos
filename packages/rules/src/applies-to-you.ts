@@ -1,75 +1,81 @@
-// O "vale para você" (#5, #16): se o que um estudo cobriu inclui o Perfil.
-// Nada some por causa da regra; ela só diz onde vai o selo amarelo e onde vai
-// o anel vazio com "Não há dado deste estudo para o seu Perfil.".
-import { perfilVazio, type Perfil } from './profile.ts'
+// "Vale para você" (#5, #16): whether what a study covered includes the
+// profile. Nothing disappears because of the rule; it only says where the
+// yellow badge goes and where the empty ring with "Não há dado deste estudo
+// para o seu Perfil." goes.
+import { isProfileEmpty, type Profile } from './profile.ts'
 
-type Lado = 'homens' | 'mulheres'
+type Side = 'homens' | 'mulheres'
 
-/** O que a amostra cobriu, no formato do `cobre` da Ficha e do `vale_para`
- * de achados e Dicas. Chave ausente quer dizer que o estudo não separou. */
-export interface Cobre {
+/** What the sample covered, in the shape of a fact sheet's `cobre` and of the
+ * findings' and tips' `vale_para`. A missing key means the study did not
+ * split by it. */
+export interface Coverage {
   readonly generos?: ReadonlyArray<'homem' | 'mulher'>
-  readonly procura?: ReadonlyArray<Lado>
+  readonly procura?: ReadonlyArray<Side>
   readonly idades?: { readonly min: number; readonly max: number }
   readonly casal?: 'hetero' | 'mesmo-sexo'
 }
 
-/** `null`: sem Perfil, não há o que decidir. `so`: quem procura ambos e só um
- * dos lados tem dado (o selo diz qual). */
-export type Veredito =
-  | { readonly cobre: false }
-  | { readonly cobre: true; readonly so?: Lado }
+/** `null`: without a profile, there is nothing to decide. `only`: someone
+ * seeking both, and only one side has data (the badge says which). */
+export type Verdict =
+  | { readonly covered: false }
+  | { readonly covered: true; readonly only?: Side }
 
-/** Os lados do Perfil que este `cobre` inclui; vazio se não inclui o Perfil. */
-function ladosCobertos(
-  perfil: Perfil,
-  cobre: Cobre,
-): ReadonlyArray<Lado | undefined> {
-  const { genero, procura, idade } = perfil
+/** The profile's sides this `cobre` includes; empty if it does not include
+ * the profile. */
+function coveredSides(
+  profile: Profile,
+  coverage: Coverage,
+): ReadonlyArray<Side | undefined> {
+  const { genero: gender, procura: seeks, idade: age } = profile
   if (
-    idade !== undefined &&
-    cobre.idades &&
-    (idade < cobre.idades.min || idade > cobre.idades.max)
+    age !== undefined &&
+    coverage.idades &&
+    (age < coverage.idades.min || age > coverage.idades.max)
   )
     return []
-  // "outro" só casa com o que não separou por gênero; o par do casal também separa.
-  if (genero === 'outro' && (cobre.generos || cobre.casal)) return []
+  // "outro" only matches what did not split by gender; the couple's pair
+  // splits too.
+  if (gender === 'outro' && (coverage.generos || coverage.casal)) return []
   if (
-    (genero === 'homem' || genero === 'mulher') &&
-    cobre.generos &&
-    !cobre.generos.includes(genero)
+    (gender === 'homem' || gender === 'mulher') &&
+    coverage.generos &&
+    !coverage.generos.includes(gender)
   )
     return []
 
-  const lados: ReadonlyArray<Lado | undefined> =
-    procura === undefined
+  const sides: ReadonlyArray<Side | undefined> =
+    seeks === undefined
       ? [undefined]
-      : procura === 'ambos'
+      : seeks === 'ambos'
         ? ['homens', 'mulheres']
-        : [procura]
-  return lados.filter((lado) => {
-    if (lado === undefined) return true
-    if (cobre.procura && !cobre.procura.includes(lado)) return false
-    if (cobre.casal && (genero === 'homem' || genero === 'mulher')) {
-      const mesmoSexo = (genero === 'homem') === (lado === 'homens')
-      return mesmoSexo === (cobre.casal === 'mesmo-sexo')
+        : [seeks]
+  return sides.filter((side) => {
+    if (side === undefined) return true
+    if (coverage.procura && !coverage.procura.includes(side)) return false
+    if (coverage.casal && (gender === 'homem' || gender === 'mulher')) {
+      const sameSex = (gender === 'homem') === (side === 'homens')
+      return sameSex === (coverage.casal === 'mesmo-sexo')
     }
     return true
   })
 }
 
-/** Se um achado ou Dica vale para o Perfil: basta um dos `cobre` (um por
- * Ficha citada, ou o `vale_para` do recorte) cobrir. */
-export function valeParaVoce(
-  perfil: Perfil | null,
-  cobres: ReadonlyArray<Cobre>,
-): Veredito | null {
-  if (!perfil || perfilVazio(perfil)) return null
-  const lados = new Set(cobres.flatMap((cobre) => ladosCobertos(perfil, cobre)))
-  if (lados.size === 0) return { cobre: false }
-  if (perfil.procura === 'ambos' && lados.size === 1) {
-    const [so] = lados
-    if (so) return { cobre: true, so }
+/** Whether a finding or tip applies to the profile: one of the `cobre` (one
+ * per cited fact sheet, or the scope's `vale_para`) covering it is enough. */
+export function appliesToYou(
+  profile: Profile | null,
+  coverages: ReadonlyArray<Coverage>,
+): Verdict | null {
+  if (!profile || isProfileEmpty(profile)) return null
+  const sides = new Set(
+    coverages.flatMap((coverage) => coveredSides(profile, coverage)),
+  )
+  if (sides.size === 0) return { covered: false }
+  if (profile.procura === 'ambos' && sides.size === 1) {
+    const [only] = sides
+    if (only) return { covered: true, only }
   }
-  return { cobre: true }
+  return { covered: true }
 }

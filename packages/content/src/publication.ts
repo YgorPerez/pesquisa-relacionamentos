@@ -1,350 +1,359 @@
-// O que liga os arquivos: Guias e Dicas herdam país, período e `cobre` das
-// Fichas citadas, e as regras de publicação do #7 e do #10 barram o build.
-import type { Cobre } from './schema.ts'
-import type { Ficha } from './fact-sheet.ts'
+// What links the files: guides and tips inherit country, period and `cobre`
+// from the cited fact sheets, and the publication rules of #7 and #10 stop
+// the build.
+import type { Coverage } from './schema.ts'
+import type { FactSheet } from './fact-sheet.ts'
 import {
-  SECOES_DO_GUIA,
-  type AchadoDoGuia,
-  type Dica,
-  type DicaLida,
-  type Guia,
-  type GuiaLido,
-  type Tema,
+  GUIDE_SECTIONS,
+  type GuideFinding,
+  type Tip,
+  type ParsedTip,
+  type Guide,
+  type ParsedGuide,
+  type Topic,
 } from './items.ts'
-import type { Forca } from './lists.ts'
-import { problema, type Problema } from './problems.ts'
+import type { Strength } from './lists.ts'
+import { problem, type Problem } from './problems.ts'
 
-/** Referência a uma Ficha no meio do texto: `[@slug-da-ficha]`. */
-const REFERENCIA = /\[@([a-z0-9]+(?:-[a-z0-9]+)*)\]/g
+/** A reference to a fact sheet in the middle of the text: `[@fact-sheet-slug]`. */
+const REFERENCE = /\[@([a-z0-9]+(?:-[a-z0-9]+)*)\]/g
 
-/** Os slugs citados como `[@slug]` num markdown, na ordem. */
-export function referenciasNoTexto(markdown: string): string[] {
-  return [...markdown.matchAll(REFERENCIA)].map((m) => m[1] ?? '')
+/** The slugs cited as `[@slug]` in a markdown, in order. */
+export function referencesInText(markdown: string): string[] {
+  return [...markdown.matchAll(REFERENCE)].map((m) => m[1] ?? '')
 }
 
-const unicos = <T>(lista: ReadonlyArray<T>): T[] => [...new Set(lista)]
+const unique = <T>(list: ReadonlyArray<T>): T[] => [...new Set(list)]
 
-function herdado(
-  fichas: ReadonlyArray<Ficha>,
-  proprio: { pais?: string; periodo?: string; vale_para?: Cobre },
+/** What a finding or tip inherits from its fact sheets. The keys keep the
+ * frontmatter names. */
+function inherited(
+  factSheets: ReadonlyArray<FactSheet>,
+  own: { pais?: string; periodo?: string; vale_para?: Coverage },
 ) {
   return {
-    paises: proprio.pais
-      ? [proprio.pais]
-      : unicos(fichas.flatMap((f) => f.paises)),
-    periodo: proprio.periodo ?? unicos(fichas.map((f) => f.periodo)).join('; '),
-    cobre: proprio.vale_para ? [proprio.vale_para] : fichas.map((f) => f.cobre),
-    recorte: proprio.vale_para !== undefined,
+    paises: own.pais ? [own.pais] : unique(factSheets.flatMap((f) => f.paises)),
+    periodo: own.periodo ?? unique(factSheets.map((f) => f.periodo)).join('; '),
+    cobre: own.vale_para ? [own.vale_para] : factSheets.map((f) => f.cobre),
+    scoped: own.vale_para !== undefined,
   }
 }
 
-export interface Lidos {
-  readonly fichas: ReadonlyArray<Ficha>
-  readonly temas: ReadonlyArray<Tema>
-  readonly guias: ReadonlyArray<GuiaLido>
-  readonly dicas: ReadonlyArray<DicaLida>
-  /** Os caminhos dos arquivos que existem mas não leram. Contam como
-   * existentes, para um erro num arquivo não virar "não existe" nos outros. */
-  readonly quebrados: ReadonlySet<string>
+export interface ParsedItems {
+  readonly factSheets: ReadonlyArray<FactSheet>
+  readonly topics: ReadonlyArray<Topic>
+  readonly guides: ReadonlyArray<ParsedGuide>
+  readonly tips: ReadonlyArray<ParsedTip>
+  /** The paths of the files that exist but did not parse. They count as
+   * existing, so an error in one file does not turn into "does not exist" in
+   * the others. */
+  readonly broken: ReadonlySet<string>
 }
 
-export interface Ligados {
-  readonly temas: ReadonlyArray<Tema>
-  readonly guias: ReadonlyArray<Guia>
-  readonly dicas: ReadonlyArray<Dica>
-  readonly erros: ReadonlyArray<Problema>
+export interface Linked {
+  readonly topics: ReadonlyArray<Topic>
+  readonly guides: ReadonlyArray<Guide>
+  readonly tips: ReadonlyArray<Tip>
+  readonly errors: ReadonlyArray<Problem>
 }
 
-/** As Fichas de um Guia na ordem da página: resposta curta, Dicas, achados,
- * divergência, Perfil, Mitos e Limitações. */
-function fichasNaOrdemDaPagina(
-  guia: GuiaLido,
-  dicas: ReadonlyMap<string, DicaLida>,
+/** A guide's fact sheets in page order: short answer, tips, findings,
+ * divergence, profile, myths and limitations. */
+function factSheetsInPageOrder(
+  guide: ParsedGuide,
+  tips: ReadonlyMap<string, ParsedTip>,
 ): string[] {
-  return unicos([
-    ...referenciasNoTexto(guia.respostaCurta),
-    ...guia.dicas.flatMap((slug) => dicas.get(slug)?.fichas ?? []),
-    ...guia.achados.flatMap((a) => [
-      ...referenciasNoTexto(a.texto),
+  return unique([
+    ...referencesInText(guide.shortAnswer),
+    ...guide.dicas.flatMap((slug) => tips.get(slug)?.fichas ?? []),
+    ...guide.achados.flatMap((a) => [
+      ...referencesInText(a.texto),
       ...a.fichas,
     ]),
-    ...(guia.divergencia?.lados.flatMap((l) => [
-      ...referenciasNoTexto(l.texto),
+    ...(guide.divergencia?.lados.flatMap((l) => [
+      ...referencesInText(l.texto),
       ...l.fichas,
     ]) ?? []),
-    ...referenciasNoTexto(guia.variaConformePerfil),
-    ...guia.mitos.flatMap((m) => [
-      ...referenciasNoTexto(m.por_que_nao),
+    ...referencesInText(guide.variesByProfile),
+    ...guide.mitos.flatMap((m) => [
+      ...referencesInText(m.por_que_nao),
       ...m.fichas,
     ]),
-    ...referenciasNoTexto(guia.limitacoes),
+    ...referencesInText(guide.limitations),
   ])
 }
 
-/** Onde o Guia cita Fichas diretamente (sem contar as Dicas), campo a campo. */
-interface Citacao {
-  readonly campo: string
-  readonly fichas: ReadonlyArray<string>
+/** Where the guide cites fact sheets directly (not counting the tips), field
+ * by field. */
+interface Citation {
+  readonly field: string
+  readonly factSheets: ReadonlyArray<string>
 }
 
-function citacoesDoGuia(guia: GuiaLido): Citacao[] {
+function guideCitations(guide: ParsedGuide): Citation[] {
   return [
-    { campo: 'resposta curta', fichas: referenciasNoTexto(guia.respostaCurta) },
-    ...guia.achados.flatMap((a, i) => [
-      { campo: `achados.${i}.texto`, fichas: referenciasNoTexto(a.texto) },
-      { campo: `achados.${i}.fichas`, fichas: a.fichas },
+    { field: 'short answer', factSheets: referencesInText(guide.shortAnswer) },
+    ...guide.achados.flatMap((a, i) => [
+      { field: `achados.${i}.texto`, factSheets: referencesInText(a.texto) },
+      { field: `achados.${i}.fichas`, factSheets: a.fichas },
     ]),
-    ...(guia.divergencia?.lados.flatMap((l, i) => [
+    ...(guide.divergencia?.lados.flatMap((l, i) => [
       {
-        campo: `divergencia.lados.${i}.texto`,
-        fichas: referenciasNoTexto(l.texto),
+        field: `divergencia.lados.${i}.texto`,
+        factSheets: referencesInText(l.texto),
       },
-      { campo: `divergencia.lados.${i}.fichas`, fichas: l.fichas },
+      { field: `divergencia.lados.${i}.fichas`, factSheets: l.fichas },
     ]) ?? []),
     {
-      campo: SECOES_DO_GUIA.perfil,
-      fichas: referenciasNoTexto(guia.variaConformePerfil),
+      field: GUIDE_SECTIONS.profile,
+      factSheets: referencesInText(guide.variesByProfile),
     },
-    ...guia.mitos.flatMap((m, i) => [
+    ...guide.mitos.flatMap((m, i) => [
       {
-        campo: `mitos.${i}.por_que_nao`,
-        fichas: referenciasNoTexto(m.por_que_nao),
+        field: `mitos.${i}.por_que_nao`,
+        factSheets: referencesInText(m.por_que_nao),
       },
-      { campo: `mitos.${i}.fichas`, fichas: m.fichas },
+      { field: `mitos.${i}.fichas`, factSheets: m.fichas },
     ]),
     {
-      campo: SECOES_DO_GUIA.limitacoes,
-      fichas: referenciasNoTexto(guia.limitacoes),
+      field: GUIDE_SECTIONS.limitations,
+      factSheets: referencesInText(guide.limitations),
     },
   ]
 }
 
-const NIVEL: Record<Forca, number> = { fraca: 1, moderada: 2, forte: 3 }
+const RANK: Record<Strength, number> = { fraca: 1, moderada: 2, forte: 3 }
 
-/** A Confiança nunca passa da Ficha mais forte que sustenta a resposta, e
- * fica em moderada no máximo quando todas são 🟡 (#7). As Dicas não contam:
- * cada uma traz a própria Força. */
-function tetoDaConfianca(
-  guia: GuiaLido,
-  citadas: ReadonlyArray<Ficha>,
-): Problema[] {
-  const fichas = citadas.filter((f) => f.status !== 'nao-verificado')
-  if (fichas.length === 0) return []
-  const confianca = NIVEL[guia.confianca]
-  const maisForte = fichas.reduce((a, b) =>
-    NIVEL[b.forca] > NIVEL[a.forca] ? b : a,
+/** The confidence never goes above the strongest fact sheet backing the
+ * answer, and stays at moderate at most when all of them are 🟡 (#7). Tips do
+ * not count: each one carries its own strength. */
+function confidenceCeiling(
+  guide: ParsedGuide,
+  cited: ReadonlyArray<FactSheet>,
+): Problem[] {
+  const factSheets = cited.filter((f) => f.status !== 'nao-verificado')
+  if (factSheets.length === 0) return []
+  const confidence = RANK[guide.confianca]
+  const strongest = factSheets.reduce((a, b) =>
+    RANK[b.forca] > RANK[a.forca] ? b : a,
   )
-  if (confianca > NIVEL[maisForte.forca])
+  if (confidence > RANK[strongest.forca])
     return [
-      problema(
-        guia.arquivo,
-        `a Confiança (${guia.confianca}) passa da Ficha mais forte que o Guia cita (${maisForte.forca})`,
+      problem(
+        guide.file,
+        `the confidence (${guide.confianca}) is above the strongest fact sheet the guide cites (${strongest.forca})`,
         'confianca',
       ),
     ]
-  if (confianca > NIVEL.moderada && fichas.every((f) => f.status === 'parcial'))
+  if (
+    confidence > RANK.moderada &&
+    factSheets.every((f) => f.status === 'parcial')
+  )
     return [
-      problema(
-        guia.arquivo,
-        `a Confiança (${guia.confianca}) passa de moderada, e o Guia só cita Fichas parciais (🟡)`,
+      problem(
+        guide.file,
+        `the confidence (${guide.confianca}) is above moderate, and the guide only cites partial (🟡) fact sheets`,
         'confianca',
       ),
     ]
   return []
 }
 
-/** Cada pasta de Guias tem um `_tema.md` cuja `ordem` lista os Guias da
- * pasta, cada um uma vez; o slug do Guia é único no site. */
-function temasEGuias(lidos: Lidos): Problema[] {
-  const erros: Problema[] = []
-  const temas = new Map(lidos.temas.map((t) => [t.slug, t]))
-  for (const tema of unicos(lidos.guias.map((g) => g.tema)))
-    if (!temas.has(tema) && !lidos.quebrados.has(`guias/${tema}/_tema.md`))
-      erros.push(
-        problema(
-          `guias/${tema}`,
-          'falta o _tema.md com o título e a ordem dos Guias',
+/** Each guide folder has a `_tema.md` whose `ordem` lists the folder's guides,
+ * each one once; a guide's slug is unique across the site. */
+function topicsAndGuides(items: ParsedItems): Problem[] {
+  const errors: Problem[] = []
+  const topics = new Map(items.topics.map((t) => [t.slug, t]))
+  for (const topic of unique(items.guides.map((g) => g.topic)))
+    if (!topics.has(topic) && !items.broken.has(`guias/${topic}/_tema.md`))
+      errors.push(
+        problem(
+          `guias/${topic}`,
+          'missing the _tema.md with the title and the order of the guides',
         ),
       )
 
-  for (const tema of lidos.temas) {
-    const lidosDaPasta = lidos.guias
-      .filter((g) => g.tema === tema.slug)
+  for (const topic of items.topics) {
+    const parsedInFolder = items.guides
+      .filter((g) => g.topic === topic.slug)
       .map((g) => g.slug)
-    const daPasta = [
-      ...lidosDaPasta,
-      ...[...lidos.quebrados].flatMap((c) => {
-        const achado = new RegExp(
-          `^guias/${tema.slug}/([^_/][^/]*)\\.md$`,
+    const inFolder = [
+      ...parsedInFolder,
+      ...[...items.broken].flatMap((c) => {
+        const match = new RegExp(
+          `^guias/${topic.slug}/([^_/][^/]*)\\.md$`,
         ).exec(c)
-        return achado?.[1] ? [achado[1]] : []
+        return match?.[1] ? [match[1]] : []
       }),
     ]
-    for (const slug of lidosDaPasta)
-      if (!tema.ordem.includes(slug))
-        erros.push(
-          problema(
-            tema.arquivo,
-            `o Guia "${slug}" está na pasta e falta na ordem`,
+    for (const slug of parsedInFolder)
+      if (!topic.ordem.includes(slug))
+        errors.push(
+          problem(
+            topic.file,
+            `the guide "${slug}" is in the folder and missing from the order`,
             'ordem',
           ),
         )
-    tema.ordem.forEach((slug, i) => {
-      if (tema.ordem.indexOf(slug) !== i)
-        erros.push(
-          problema(
-            tema.arquivo,
-            `o Guia "${slug}" aparece mais de uma vez`,
+    topic.ordem.forEach((slug, i) => {
+      if (topic.ordem.indexOf(slug) !== i)
+        errors.push(
+          problem(
+            topic.file,
+            `the guide "${slug}" appears more than once`,
             'ordem',
           ),
         )
-      else if (!daPasta.includes(slug))
-        erros.push(
-          problema(
-            tema.arquivo,
-            `o Guia "${slug}" não existe em guias/${tema.slug}/`,
+      else if (!inFolder.includes(slug))
+        errors.push(
+          problem(
+            topic.file,
+            `the guide "${slug}" does not exist in guias/${topic.slug}/`,
             'ordem',
           ),
         )
     })
   }
 
-  const primeiro = new Map<string, GuiaLido>()
-  for (const guia of lidos.guias) {
-    const outro = primeiro.get(guia.slug)
-    if (outro)
-      erros.push(
-        problema(
-          guia.arquivo,
-          `o slug "${guia.slug}" já é do Guia ${outro.arquivo}; o Guia é citado só pelo slug`,
+  const first = new Map<string, ParsedGuide>()
+  for (const guide of items.guides) {
+    const other = first.get(guide.slug)
+    if (other)
+      errors.push(
+        problem(
+          guide.file,
+          `the slug "${guide.slug}" already belongs to the guide ${other.file}; a guide is cited by its slug alone`,
         ),
       )
-    else primeiro.set(guia.slug, guia)
+    else first.set(guide.slug, guide)
   }
-  return erros
+  return errors
 }
 
-export function ligar(lidos: Lidos): Ligados {
-  const erros: Problema[] = []
-  const fichaPorSlug = new Map(lidos.fichas.map((f) => [f.slug, f]))
-  const dicaPorSlug = new Map(lidos.dicas.map((d) => [d.slug, d]))
-  const guiaPorSlug = new Map(lidos.guias.map((g) => [g.slug, g]))
-  const fichasDe = (slugs: ReadonlyArray<string>) =>
-    unicos(slugs).flatMap((s) => {
-      const ficha = fichaPorSlug.get(s)
-      return ficha ? [ficha] : []
+export function link(items: ParsedItems): Linked {
+  const errors: Problem[] = []
+  const factSheetBySlug = new Map(items.factSheets.map((f) => [f.slug, f]))
+  const tipBySlug = new Map(items.tips.map((d) => [d.slug, d]))
+  const guideBySlug = new Map(items.guides.map((g) => [g.slug, g]))
+  const factSheetsOf = (slugs: ReadonlyArray<string>) =>
+    unique(slugs).flatMap((s) => {
+      const factSheet = factSheetBySlug.get(s)
+      return factSheet ? [factSheet] : []
     })
 
-  const fichaQueFalta = (
-    arquivo: string,
-    campo: string,
+  const missingFactSheet = (
+    file: string,
+    field: string,
     slugs: ReadonlyArray<string>,
   ) => {
     for (const slug of slugs)
-      if (!fichaPorSlug.has(slug) && !lidos.quebrados.has(`estudos/${slug}.md`))
-        erros.push(
-          problema(arquivo, `a Ficha "${slug}" não existe em estudos/`, campo),
+      if (!factSheetBySlug.has(slug) && !items.broken.has(`estudos/${slug}.md`))
+        errors.push(
+          problem(
+            file,
+            `the fact sheet "${slug}" does not exist in estudos/`,
+            field,
+          ),
         )
   }
 
-  const naoVerificada = (slug: string) =>
-    fichaPorSlug.get(slug)?.status === 'nao-verificado'
-  const SO_VERIFICADA =
-    'que não foi verificada (⬜); um Guia só cita Ficha ✅ ou 🟡'
+  const isUnverified = (slug: string) =>
+    factSheetBySlug.get(slug)?.status === 'nao-verificado'
+  const ONLY_VERIFIED =
+    'which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets'
 
-  erros.push(...temasEGuias(lidos))
-  for (const dica of lidos.dicas)
-    fichaQueFalta(dica.arquivo, 'fichas', dica.fichas)
-  for (const guia of lidos.guias) {
-    for (const { campo, fichas } of citacoesDoGuia(guia)) {
-      fichaQueFalta(guia.arquivo, campo, fichas)
-      for (const slug of unicos(fichas).filter(naoVerificada))
-        erros.push(
-          problema(
-            guia.arquivo,
-            `cita a Ficha "${slug}", ${SO_VERIFICADA}`,
-            campo,
+  errors.push(...topicsAndGuides(items))
+  for (const tip of items.tips) missingFactSheet(tip.file, 'fichas', tip.fichas)
+  for (const guide of items.guides) {
+    for (const { field, factSheets } of guideCitations(guide)) {
+      missingFactSheet(guide.file, field, factSheets)
+      for (const slug of unique(factSheets).filter(isUnverified))
+        errors.push(
+          problem(
+            guide.file,
+            `cites the fact sheet "${slug}", ${ONLY_VERIFIED}`,
+            field,
           ),
         )
     }
-    for (const slug of guia.dicas) {
-      const dica = dicaPorSlug.get(slug)
-      if (!dica && !lidos.quebrados.has(`dicas/${slug}.md`))
-        erros.push(
-          problema(
-            guia.arquivo,
-            `a Dica "${slug}" não existe em dicas/`,
+    for (const slug of guide.dicas) {
+      const tip = tipBySlug.get(slug)
+      if (!tip && !items.broken.has(`dicas/${slug}.md`))
+        errors.push(
+          problem(
+            guide.file,
+            `the tip "${slug}" does not exist in dicas/`,
             'dicas',
           ),
         )
-      for (const ficha of dica?.fichas.filter(naoVerificada) ?? [])
-        erros.push(
-          problema(
-            guia.arquivo,
-            `a Dica "${slug}" cita a Ficha "${ficha}", ${SO_VERIFICADA}`,
+      for (const factSheet of tip?.fichas.filter(isUnverified) ?? [])
+        errors.push(
+          problem(
+            guide.file,
+            `the tip "${slug}" cites the fact sheet "${factSheet}", ${ONLY_VERIFIED}`,
             'dicas',
           ),
         )
     }
-    const citadas = citacoesDoGuia(guia).flatMap((c) => c.fichas)
-    if (citadas.length === 0)
-      erros.push(problema(guia.arquivo, 'o Guia não cita nenhuma Ficha'))
-    erros.push(...tetoDaConfianca(guia, fichasDe(citadas)))
-    for (const slug of guia.relacionadas)
+    const cited = guideCitations(guide).flatMap((c) => c.factSheets)
+    if (cited.length === 0)
+      errors.push(problem(guide.file, 'the guide cites no fact sheet'))
+    errors.push(...confidenceCeiling(guide, factSheetsOf(cited)))
+    for (const slug of guide.relacionadas)
       if (
-        !guiaPorSlug.has(slug) &&
-        ![...lidos.quebrados].some(
+        !guideBySlug.has(slug) &&
+        ![...items.broken].some(
           (c) => c.startsWith('guias/') && c.endsWith(`/${slug}.md`),
         )
       )
-        erros.push(
-          problema(
-            guia.arquivo,
-            `o Guia "${slug}" não existe em guias/`,
+        errors.push(
+          problem(
+            guide.file,
+            `the guide "${slug}" does not exist in guias/`,
             'relacionadas',
           ),
         )
   }
 
-  const dicas: Dica[] = lidos.dicas.map((lida) => {
-    const fichas = fichasDe(lida.fichas)
+  const tips: Tip[] = items.tips.map((parsed) => {
+    const factSheets = factSheetsOf(parsed.fichas)
     return {
-      slug: lida.slug,
-      arquivo: lida.arquivo,
-      texto: lida.texto,
-      fichas: lida.fichas,
-      forca: lida.forca,
-      inferencia: lida.inferencia ?? false,
-      ...herdado(fichas, lida),
-      publicada:
-        fichas.length === lida.fichas.length &&
-        fichas.every((f) => f.status !== 'nao-verificado'),
-      ...(lida.antes ? { antes: lida.antes } : {}),
-      ...(lida.seo ? { seo: lida.seo } : {}),
+      slug: parsed.slug,
+      file: parsed.file,
+      text: parsed.text,
+      fichas: parsed.fichas,
+      forca: parsed.forca,
+      inferencia: parsed.inferencia ?? false,
+      ...inherited(factSheets, parsed),
+      published:
+        factSheets.length === parsed.fichas.length &&
+        factSheets.every((f) => f.status !== 'nao-verificado'),
+      ...(parsed.antes ? { antes: parsed.antes } : {}),
+      ...(parsed.seo ? { seo: parsed.seo } : {}),
     }
   })
 
-  const ordemDosGuias = new Map(
-    lidos.temas.flatMap((t, i) =>
+  const guideOrder = new Map(
+    items.topics.flatMap((t, i) =>
       t.ordem.map((slug, j) => [`${t.slug}/${slug}`, i * 1000 + j] as const),
     ),
   )
-  const guias: Guia[] = [...lidos.guias]
+  const guides: Guide[] = [...items.guides]
     .sort(
       (a, b) =>
-        (ordemDosGuias.get(`${a.tema}/${a.slug}`) ?? Infinity) -
-          (ordemDosGuias.get(`${b.tema}/${b.slug}`) ?? Infinity) ||
-        a.arquivo.localeCompare(b.arquivo),
+        (guideOrder.get(`${a.topic}/${a.slug}`) ?? Infinity) -
+          (guideOrder.get(`${b.topic}/${b.slug}`) ?? Infinity) ||
+        a.file.localeCompare(b.file),
     )
-    .map((lido) => ({
-      ...lido,
-      achados: lido.achados.map((a): AchadoDoGuia => ({
+    .map((parsed) => ({
+      ...parsed,
+      achados: parsed.achados.map((a): GuideFinding => ({
         texto: a.texto,
         fichas: a.fichas,
-        ...herdado(fichasDe(a.fichas), a),
+        ...inherited(factSheetsOf(a.fichas), a),
       })),
-      fichasCitadas: fichasNaOrdemDaPagina(lido, dicaPorSlug),
+      citedFactSheets: factSheetsInPageOrder(parsed, tipBySlug),
     }))
 
-  return { temas: lidos.temas, guias, dicas, erros }
+  return { topics: items.topics, guides, tips, errors }
 }

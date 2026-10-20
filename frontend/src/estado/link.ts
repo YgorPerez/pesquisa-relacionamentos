@@ -7,10 +7,10 @@
 // contado (#35) não é parte de nenhuma.
 import { useRouter } from '@tanstack/react-router'
 import {
-  ehLink,
-  lerLink,
-  type CalculadoraComLink,
-  type EstadoDoLink,
+  isLink,
+  readLink,
+  type LinkCalculator,
+  type LinkState,
 } from '@tem-estudo/rules/link'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { gravarRequisitos } from './grupo-possivel'
@@ -18,24 +18,24 @@ import { gravarPerfil, perfilSalvo } from './perfil'
 import { gravarPrioridades } from './prioridades'
 
 /** Grava no aparelho, no lugar do salvo, o estado que veio no link. */
-function gravarLink(estado: EstadoDoLink) {
-  if (estado.calculadora === 'grupo-possivel') {
-    gravarPerfil(estado.perfil)
-    gravarRequisitos(estado.requisitos)
+function gravarLink(estado: LinkState) {
+  if (estado.calculator === 'grupo-possivel') {
+    gravarPerfil(estado.profile)
+    gravarRequisitos(estado.requirements)
     return
   }
   // O link das Prioridades leva só o gênero: quem se procura e a idade
   // salvos ficam.
-  if (estado.genero)
-    gravarPerfil({ ...perfilSalvo.ler(), genero: estado.genero })
-  gravarPrioridades(estado.prioridades)
+  if (estado.gender)
+    gravarPerfil({ ...perfilSalvo.ler(), genero: estado.gender })
+  gravarPrioridades(estado.priorities)
 }
 
 /** O link aplicado nesta página. Ele nasce fora do React, da barra lida
  * depois de hidratar, e por isso é um store: o efeito o marca e o
  * `useSyncExternalStore` o lê, sem um `setState` dentro do efeito. */
 function criarRecebido() {
-  let recebido: EstadoDoLink | null = null
+  let recebido: LinkState | null = null
   const ouvintes = new Set<() => void>()
   return {
     ler: () => recebido,
@@ -45,7 +45,7 @@ function criarRecebido() {
         ouvintes.delete(ouvinte)
       }
     },
-    marcar: (estado: EstadoDoLink) => {
+    marcar: (estado: LinkState) => {
       recebido = estado
       for (const ouvinte of ouvintes) ouvinte()
     },
@@ -56,9 +56,9 @@ function criarRecebido() {
  * que ele gravou (`null` sem link, ou com um link inválido), para a página
  * avisar. `ids` são as características que as Prioridades conhecem. */
 export function useLinkRecebido(
-  calculadora: CalculadoraComLink,
+  calculadora: LinkCalculator,
   ids?: ReadonlyArray<string>,
-): EstadoDoLink | null {
+): LinkState | null {
   const router = useRouter()
   const [aplicado] = useState(criarRecebido)
   const recebido = useSyncExternalStore(
@@ -72,9 +72,9 @@ export function useLinkRecebido(
     if (feito.current) return
     feito.current = true
     const { pathname, search, hash } = window.location
-    if (!ehLink(search)) return
-    const estado = lerLink(calculadora, search, ids)
-    if (estado?.calculadora === calculadora) {
+    if (!isLink(search)) return
+    const estado = readLink(calculadora, search, ids)
+    if (estado?.calculator === calculadora) {
       gravarLink(estado)
       aplicado.marcar(estado)
     }

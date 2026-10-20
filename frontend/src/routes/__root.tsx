@@ -5,7 +5,7 @@ import {
   Outlet,
   Scripts,
 } from '@tanstack/react-router'
-import { ORIGEM } from '@tem-estudo/content/search'
+import { ORIGIN } from '@tem-estudo/content/search'
 import type { ReactNode } from 'react'
 import { Topo } from '#/ui/topo'
 import { Rodape } from '#/ui/contagem'
@@ -31,7 +31,7 @@ const META_DO_SITE = [
   { property: 'og:site_name', content: 'Tem estudo?' },
   { property: 'og:locale', content: 'pt_BR' },
   { property: 'og:type', content: 'website' },
-  { property: 'og:image', content: `${ORIGEM}/og.png` },
+  { property: 'og:image', content: `${ORIGIN}/og.png` },
   { property: 'og:image:width', content: '1200' },
   { property: 'og:image:height', content: '630' },
   {
@@ -78,7 +78,7 @@ interface ContextoDoRouter {
 export const Route = createRootRouteWithContext<ContextoDoRouter>()({
   head: ({ matches }) => {
     const folha = matches[matches.length - 1]
-    const canonico = `${ORIGEM}${semBarraFinal(folha?.pathname ?? '/')}`
+    const canonico = `${ORIGIN}${semBarraFinal(folha?.pathname ?? '/')}`
     // A query guarda estado (o Perfil, a conta da calculadora): a URL com ela
     // fica fora da busca e aponta a sem query (#15).
     const comQuery = Object.keys(folha?.search ?? {}).length > 0

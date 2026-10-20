@@ -4,18 +4,18 @@ import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 // Só os subcaminhos sem `node:fs`: este arquivo também entra no bundle do
 // navegador, que fica com os stubs das funções.
-import { fichaIndexavel } from '@tem-estudo/content/paths'
-import { STATUS } from '@tem-estudo/content/lists'
+import { isFactSheetIndexable } from '@tem-estudo/content/paths'
+import { VERIFICATION_STATUSES } from '@tem-estudo/content/lists'
 import { resumo, vista, type FichaResumo, type FichaVista } from './vista'
 import { citadaEm, type CitadaEm } from './vista-guia'
 
-const ORDEM_DO_STATUS: ReadonlyArray<string> = STATUS
+const ORDEM_DO_STATUS: ReadonlyArray<string> = VERIFICATION_STATUSES
 
 /** Todas as Fichas: as conferidas primeiro, depois por nome. */
 export const listarFichas = createServerFn({ method: 'GET' }).handler(
   async (): Promise<ReadonlyArray<FichaResumo>> => {
     const { default: acervo } = await import('virtual:acervo')
-    return [...acervo.fichas]
+    return [...acervo.factSheets]
       .sort(
         (a, b) =>
           ORDEM_DO_STATUS.indexOf(a.status) -
@@ -33,10 +33,10 @@ export const buscarFicha = createServerFn({ method: 'GET' })
   .handler(
     async ({ data: slug }): Promise<FichaVista & { citadaEm: CitadaEm }> => {
       const { default: acervo } = await import('virtual:acervo')
-      const ficha = acervo.fichas.find((f) => f.slug === slug)
+      const ficha = acervo.factSheets.find((f) => f.slug === slug)
       if (!ficha) throw notFound()
       return {
-        ...vista(ficha, fichaIndexavel(ficha)),
+        ...vista(ficha, isFactSheetIndexable(ficha)),
         citadaEm: citadaEm(slug, acervo),
       }
     },

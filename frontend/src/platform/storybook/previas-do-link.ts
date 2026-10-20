@@ -7,15 +7,15 @@
 // `montarPreviaDoGrupo` (`conteudo/previa-do-grupo.ts`), a de
 // `buscarPreviaDoGrupo`, com os pacotes que o plugin serve; Prioridades, por
 // `previaDePrioridades` sobre a vista do acervo, como o loader da rota.
-import { abrirPacote } from '@tem-estudo/rules/possible-group-data'
+import { openPack } from '@tem-estudo/rules/possible-group-data'
 import {
-  lerLink,
-  previaDePrioridades,
-  queryDoLink,
-  type EstadoDoLink,
-  type Previa,
+  readLink,
+  prioritiesPreview,
+  linkQuery,
+  type LinkState,
+  type Preview,
 } from '@tem-estudo/rules/link'
-import { REQUISITOS_PADRAO } from '@tem-estudo/rules/requirements'
+import { DEFAULT_REQUIREMENTS } from '@tem-estudo/rules/requirements'
 import acervo from 'virtual:acervo'
 import grupoPossivel from 'virtual:grupo-possivel'
 import { montarPreviaDoGrupo } from '#/conteudo/previa-do-grupo'
@@ -24,33 +24,33 @@ import { vistaDasPrioridades } from '#/conteudo/vista-prioridades'
 /** Os links de exemplo, um por story. */
 const EXEMPLOS = {
   grupoSemNada: {
-    calculadora: 'grupo-possivel',
-    perfil: null,
-    requisitos: null,
+    calculator: 'grupo-possivel',
+    profile: null,
+    requirements: null,
   },
   grupoComPerfil: {
-    calculadora: 'grupo-possivel',
-    perfil: { genero: 'homem', procura: 'mulheres', idade: 30 },
-    requisitos: null,
+    calculator: 'grupo-possivel',
+    profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+    requirements: null,
   },
   grupoEmRioBranco: {
-    calculadora: 'grupo-possivel',
-    perfil: { genero: 'mulher', procura: 'homens', idade: 28 },
-    requisitos: {
-      ...REQUISITOS_PADRAO,
+    calculator: 'grupo-possivel',
+    profile: { genero: 'mulher', procura: 'homens', idade: 28 },
+    requirements: {
+      ...DEFAULT_REQUIREMENTS,
       lugar: { uf: 'AC', municipio: '1200401' },
       naoFuma: true,
     },
   },
   prioridadesComTopo3: {
-    calculadora: 'prioridades',
-    genero: null,
-    prioridades: {
+    calculator: 'prioridades',
+    gender: null,
+    priorities: {
       topo3: ['sexo', 'parecido', 'renda'],
       desfecho: 'satisfacao',
     },
   },
-} satisfies Record<string, EstadoDoLink>
+} satisfies Record<string, LinkState>
 
 export type NomeDoExemplo = keyof typeof EXEMPLOS
 
@@ -58,7 +58,7 @@ export type NomeDoExemplo = keyof typeof EXEMPLOS
 export interface PreviaDoLink {
   /** O caminho com a query do link: `/grupo-possivel?v=1&…`. */
   readonly endereco: string
-  readonly previa: Previa | null
+  readonly previa: Preview | null
 }
 
 const CAMINHO = {
@@ -68,14 +68,14 @@ const CAMINHO = {
 
 async function pacote(lugar: string) {
   const resposta = await fetch(`${grupoPossivel.base}/${lugar}.json`)
-  return resposta.ok ? abrirPacote(await resposta.json()) : null
+  return resposta.ok ? openPack(await resposta.json()) : null
 }
 
 export async function previaDoLink(nome: NomeDoExemplo): Promise<PreviaDoLink> {
-  const estado: EstadoDoLink = EXEMPLOS[nome]
-  const query = queryDoLink(estado)
-  const endereco = `${CAMINHO[estado.calculadora]}?${query}`
-  if (estado.calculadora === 'grupo-possivel')
+  const estado: LinkState = EXEMPLOS[nome]
+  const query = linkQuery(estado)
+  const endereco = `${CAMINHO[estado.calculator]}?${query}`
+  if (estado.calculator === 'grupo-possivel')
     return {
       endereco,
       previa: await montarPreviaDoGrupo(query, grupoPossivel, pacote),
@@ -83,7 +83,7 @@ export async function previaDoLink(nome: NomeDoExemplo): Promise<PreviaDoLink> {
   const vista = vistaDasPrioridades(acervo)
   const lido =
     vista &&
-    lerLink(
+    readLink(
       'prioridades',
       query,
       vista.caracteristicas.map((c) => c.id),
@@ -91,8 +91,8 @@ export async function previaDoLink(nome: NomeDoExemplo): Promise<PreviaDoLink> {
   return {
     endereco,
     previa:
-      vista && lido?.calculadora === 'prioridades'
-        ? previaDePrioridades(vista.caracteristicas, lido.prioridades)
+      vista && lido?.calculator === 'prioridades'
+        ? prioritiesPreview(vista.caracteristicas, lido.priorities)
         : null,
   }
 }

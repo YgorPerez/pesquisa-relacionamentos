@@ -1,25 +1,28 @@
-// Caminhos e indexação derivados do conteúdo (#15). O sitemap e os
-// metadados de busca entram aqui quando as outras páginas chegarem.
-import type { Ficha } from './fact-sheet.ts'
-import type { Guia } from './items.ts'
+// Paths and indexing derived from the content (#15). The URLs stay in
+// Portuguese (ADR 0039).
+import type { FactSheet } from './fact-sheet.ts'
+import type { Guide } from './items.ts'
 
-export function caminhoDaFicha(ficha: Pick<Ficha, 'slug'>): string {
-  return `/estudos/${ficha.slug}`
+export function factSheetPath(factSheet: Pick<FactSheet, 'slug'>): string {
+  return `/estudos/${factSheet.slug}`
 }
 
-export function caminhoDoTema(tema: { readonly slug: string }): string {
-  return `/${tema.slug}`
+export function topicPath(topic: { readonly slug: string }): string {
+  return `/${topic.slug}`
 }
 
-export function caminhoDoGuia(guia: Pick<Guia, 'tema' | 'slug'>): string {
-  return `/${guia.tema}/${guia.slug}`
+export function guidePath(guide: Pick<Guide, 'topic' | 'slug'>): string {
+  return `/${guide.topic}/${guide.slug}`
 }
 
-export function caminhoDaDica(dica: { readonly slug: string }): string {
-  return `/dicas/${dica.slug}`
+export function tipPath(tip: { readonly slug: string }): string {
+  return `/dicas/${tip.slug}`
 }
 
-/** Ficha ⬜ fica fora do índice e do sitemap: só ✅ e 🟡 vão para a busca. */
-export function fichaIndexavel(ficha: Pick<Ficha, 'status'>): boolean {
-  return ficha.status !== 'nao-verificado'
+/** A ⬜ fact sheet stays out of the index and the sitemap: only ✅ and 🟡 go
+ * to search engines. */
+export function isFactSheetIndexable(
+  factSheet: Pick<FactSheet, 'status'>,
+): boolean {
+  return factSheet.status !== 'nao-verificado'
 }

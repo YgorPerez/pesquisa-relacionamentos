@@ -1,32 +1,32 @@
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  alertaDoTopo3,
-  alternarNoTopo3,
-  degrau,
-  lerPrioridades,
-  prateleiras,
-  viesPara,
-  type CaracteristicaComEvidencia,
+  top3Alert,
+  toggleInTop3,
+  level,
+  readPriorities,
+  shelves,
+  biasFor,
+  type TraitWithEvidence,
 } from './priorities.ts'
 
-const celula = (n: 0 | 1 | 2 | 3) => ({ degrau: n })
+const cell = (n: 0 | 1 | 2 | 3) => ({ degrau: n })
 
-/** Quatro características com degraus de exemplo, como no arquivo de Prioridades. */
-const CARS: ReadonlyArray<CaracteristicaComEvidencia> = [
+/** Five traits with sample levels, as in the priorities file. */
+const TRAITS: ReadonlyArray<TraitWithEvidence> = [
   {
     id: 'aparencia',
     nome: 'Aparência',
-    atracao: celula(3),
-    satisfacao: celula(2),
-    duracao: celula(0),
+    atracao: cell(3),
+    satisfacao: cell(2),
+    duracao: cell(0),
     vies: { todos: 'Pesa mais na atração do que se diz.' },
   },
   {
     id: 'renda',
     nome: 'Renda',
-    atracao: celula(2),
-    satisfacao: celula(0),
-    duracao: celula(0),
+    atracao: cell(2),
+    satisfacao: cell(0),
+    duracao: cell(0),
     vies: {
       homem: 'Homens declaram menos.',
       mulher: 'Mulheres declaram mais.',
@@ -35,164 +35,163 @@ const CARS: ReadonlyArray<CaracteristicaComEvidencia> = [
   {
     id: 'parecido',
     nome: 'Ser parecido comigo',
-    atracao: celula(1),
-    satisfacao: celula(1),
-    duracao: celula(0),
+    atracao: cell(1),
+    satisfacao: cell(1),
+    duracao: cell(0),
   },
   {
     id: 'gentileza',
     nome: 'Gentileza',
-    atracao: celula(0),
-    satisfacao: celula(2),
-    duracao: celula(1),
+    atracao: cell(0),
+    satisfacao: cell(2),
+    duracao: cell(1),
   },
   {
     id: 'idade',
     nome: 'Idade parecida',
-    atracao: celula(0),
-    satisfacao: celula(0),
-    duracao: celula(1),
+    atracao: cell(0),
+    satisfacao: cell(0),
+    duracao: cell(1),
   },
 ]
 
-describe('degrau', () => {
-  it('lê o degrau da característica no desfecho', () => {
-    expect(degrau(CARS[0]!, 'atracao')).toBe(3)
-    expect(degrau(CARS[0]!, 'satisfacao')).toBe(2)
-    expect(degrau(CARS[0]!, 'duracao')).toBe(0)
+describe('level', () => {
+  it("reads the trait's level for the outcome", () => {
+    expect(level(TRAITS[0]!, 'atracao')).toBe(3)
+    expect(level(TRAITS[0]!, 'satisfacao')).toBe(2)
+    expect(level(TRAITS[0]!, 'duracao')).toBe(0)
   })
 })
 
-describe('alternarNoTopo3', () => {
-  it('tocar dá o próximo número', () => {
-    expect(alternarNoTopo3([], 'renda')).toEqual(['renda'])
-    expect(alternarNoTopo3(['renda'], 'aparencia')).toEqual([
-      'renda',
-      'aparencia',
-    ])
+describe('toggleInTop3', () => {
+  it('a tap gives the next number', () => {
+    expect(toggleInTop3([], 'renda')).toEqual(['renda'])
+    expect(toggleInTop3(['renda'], 'aparencia')).toEqual(['renda', 'aparencia'])
   })
 
-  it('tocar de novo tira e renumera as outras', () => {
-    expect(alternarNoTopo3(['renda', 'aparencia', 'idade'], 'renda')).toEqual([
+  it('tapping again removes it and renumbers the others', () => {
+    expect(toggleInTop3(['renda', 'aparencia', 'idade'], 'renda')).toEqual([
       'aparencia',
       'idade',
     ])
   })
 
-  it('com três escolhidas, tocar numa quarta não muda nada', () => {
-    expect(
-      alternarNoTopo3(['renda', 'aparencia', 'idade'], 'gentileza'),
-    ).toEqual(['renda', 'aparencia', 'idade'])
+  it('with three chosen, tapping a fourth changes nothing', () => {
+    expect(toggleInTop3(['renda', 'aparencia', 'idade'], 'gentileza')).toEqual([
+      'renda',
+      'aparencia',
+      'idade',
+    ])
   })
 })
 
-describe('prateleiras', () => {
-  it('põe cada característica na prateleira do seu degrau, de "pesa" a "não sabemos"', () => {
-    expect(prateleiras(CARS, 'satisfacao', [])).toEqual([
-      { degrau: 3, nome: 'pesa', ids: [] },
-      { degrau: 2, nome: 'pesa pouco', ids: ['aparencia', 'gentileza'] },
-      { degrau: 1, nome: 'quase nada', ids: ['parecido'] },
-      { degrau: 0, nome: 'não sabemos', ids: ['renda', 'idade'] },
+describe('shelves', () => {
+  it('puts each trait on the shelf of its level, from "pesa" to "não sabemos"', () => {
+    expect(shelves(TRAITS, 'satisfacao', [])).toEqual([
+      { level: 3, name: 'pesa', ids: [] },
+      { level: 2, name: 'pesa pouco', ids: ['aparencia', 'gentileza'] },
+      { level: 1, name: 'quase nada', ids: ['parecido'] },
+      { level: 0, name: 'não sabemos', ids: ['renda', 'idade'] },
     ])
   })
 
-  it('as escolhidas vêm primeiro na prateleira, na ordem do topo 3', () => {
-    const [, poucoPeso, , semDado] = prateleiras(CARS, 'satisfacao', [
+  it('the chosen ones come first on the shelf, in top 3 order', () => {
+    const [, littleWeight, , noData] = shelves(TRAITS, 'satisfacao', [
       'idade',
       'gentileza',
       'renda',
     ])
-    expect(poucoPeso?.ids).toEqual(['gentileza', 'aparencia'])
-    expect(semDado?.ids).toEqual(['idade', 'renda'])
+    expect(littleWeight?.ids).toEqual(['gentileza', 'aparencia'])
+    expect(noData?.ids).toEqual(['idade', 'renda'])
   })
 })
 
-describe('alertaDoTopo3', () => {
-  it('sem nada em "quase nada" ou "não sabemos", não há alerta', () => {
+describe('top3Alert', () => {
+  it('with nothing on "quase nada" or "não sabemos", there is no alert', () => {
     expect(
-      alertaDoTopo3(CARS, ['aparencia', 'gentileza'], 'satisfacao'),
+      top3Alert(TRAITS, ['aparencia', 'gentileza'], 'satisfacao'),
     ).toBeNull()
-    expect(alertaDoTopo3(CARS, [], 'satisfacao')).toBeNull()
+    expect(top3Alert(TRAITS, [], 'satisfacao')).toBeNull()
   })
 
-  it('diz em frase, sem número, o que pesa quase nada', () => {
-    expect(alertaDoTopo3(CARS, ['aparencia', 'parecido'], 'satisfacao')).toBe(
+  it('says in a sentence, without a number, what weighs almost nothing', () => {
+    expect(top3Alert(TRAITS, ['aparencia', 'parecido'], 'satisfacao')).toBe(
       'No seu topo 3, para satisfação: ser parecido comigo pesa quase nada.',
     )
   })
 
-  it('diz para o que não há boa evidência', () => {
-    expect(alertaDoTopo3(CARS, ['renda', 'aparencia'], 'satisfacao')).toBe(
+  it('says for which there is no good evidence', () => {
+    expect(top3Alert(TRAITS, ['renda', 'aparencia'], 'satisfacao')).toBe(
       'No seu topo 3, para satisfação: para renda não há boa evidência.',
     )
   })
 
-  it('junta os dois casos e põe o plural, na ordem do topo 3', () => {
+  it('joins both cases and uses the plural, in top 3 order', () => {
     expect(
-      alertaDoTopo3(CARS, ['idade', 'aparencia', 'gentileza'], 'atracao'),
+      top3Alert(TRAITS, ['idade', 'aparencia', 'gentileza'], 'atracao'),
     ).toBe(
       'No seu topo 3, para atração: para idade parecida e gentileza não há boa evidência.',
     )
     expect(
-      alertaDoTopo3(CARS, ['gentileza', 'idade', 'parecido'], 'duracao'),
+      top3Alert(TRAITS, ['gentileza', 'idade', 'parecido'], 'duracao'),
     ).toBe(
       'No seu topo 3, para duração: gentileza e idade parecida pesam quase nada; para ser parecido comigo não há boa evidência.',
     )
   })
 
-  it('ignora o que não está nos dados', () => {
-    expect(alertaDoTopo3(CARS, ['sumiu', 'aparencia'], 'satisfacao')).toBeNull()
+  it('ignores what is not in the data', () => {
+    expect(top3Alert(TRAITS, ['sumiu', 'aparencia'], 'satisfacao')).toBeNull()
   })
 })
 
-describe('viesPara', () => {
-  it('o viés que vale para todos aparece com ou sem gênero', () => {
-    expect(viesPara(CARS[0]!, undefined)).toBe(
+describe('biasFor', () => {
+  it('the bias that applies to everyone shows with or without a gender', () => {
+    expect(biasFor(TRAITS[0]!, undefined)).toBe(
       'Pesa mais na atração do que se diz.',
     )
-    expect(viesPara(CARS[0]!, 'mulher')).toBe(
+    expect(biasFor(TRAITS[0]!, 'mulher')).toBe(
       'Pesa mais na atração do que se diz.',
     )
-    expect(viesPara(CARS[0]!, 'outro')).toBe(
+    expect(biasFor(TRAITS[0]!, 'outro')).toBe(
       'Pesa mais na atração do que se diz.',
     )
   })
 
-  it('o viés por gênero segue o gênero do Perfil', () => {
-    expect(viesPara(CARS[1]!, 'homem')).toBe('Homens declaram menos.')
-    expect(viesPara(CARS[1]!, 'mulher')).toBe('Mulheres declaram mais.')
+  it("the gender bias follows the profile's gender", () => {
+    expect(biasFor(TRAITS[1]!, 'homem')).toBe('Homens declaram menos.')
+    expect(biasFor(TRAITS[1]!, 'mulher')).toBe('Mulheres declaram mais.')
   })
 
-  it('sem gênero, ou com "outro", o viés de um gênero só não aparece', () => {
-    expect(viesPara(CARS[1]!, undefined)).toBeNull()
-    expect(viesPara(CARS[1]!, 'outro')).toBeNull()
+  it('without a gender, or with "outro", a single-gender bias does not show', () => {
+    expect(biasFor(TRAITS[1]!, undefined)).toBeNull()
+    expect(biasFor(TRAITS[1]!, 'outro')).toBeNull()
   })
 
-  it('sem viés, nada', () => {
-    expect(viesPara(CARS[2]!, 'homem')).toBeNull()
+  it('without a bias, nothing', () => {
+    expect(biasFor(TRAITS[2]!, 'homem')).toBeNull()
   })
 })
 
-describe('lerPrioridades', () => {
-  it('aceita o topo 3 ordenado e o desfecho', () => {
+describe('readPriorities', () => {
+  it('accepts the ordered top 3 and the outcome', () => {
     expect(
-      lerPrioridades({ topo3: ['renda', 'aparencia'], desfecho: 'duracao' }),
+      readPriorities({ topo3: ['renda', 'aparencia'], desfecho: 'duracao' }),
     ).toEqual({
       topo3: ['renda', 'aparencia'],
       desfecho: 'duracao',
     })
   })
 
-  it('sem desfecho válido, fica em satisfação', () => {
-    expect(lerPrioridades({ topo3: ['renda'], desfecho: 'amor' })).toEqual({
+  it('without a valid outcome, it stays on satisfaction', () => {
+    expect(readPriorities({ topo3: ['renda'], desfecho: 'amor' })).toEqual({
       topo3: ['renda'],
       desfecho: 'satisfacao',
     })
   })
 
-  it('descarta repetidas, não texto, e o que passa de três', () => {
+  it('drops repeats, non-text, and what goes past three', () => {
     expect(
-      lerPrioridades({
+      readPriorities({
         topo3: ['renda', 'renda', 7, 'Não Slug', 'a', 'b', 'c'],
         desfecho: 'atracao',
       }),
@@ -202,19 +201,19 @@ describe('lerPrioridades', () => {
     })
   })
 
-  it('fica só com as ids que existem, quando a lista é dada', () => {
+  it('keeps only the ids that exist, when the list is given', () => {
     expect(
-      lerPrioridades({ topo3: ['renda', 'sumiu'] }, ['renda', 'aparencia']),
+      readPriorities({ topo3: ['renda', 'sumiu'] }, ['renda', 'aparencia']),
     ).toEqual({
       topo3: ['renda'],
       desfecho: 'satisfacao',
     })
   })
 
-  it('devolve null para o que não é um objeto', () => {
-    expect(lerPrioridades(null)).toBeNull()
-    expect(lerPrioridades('renda')).toBeNull()
-    expect(lerPrioridades({ topo3: 'renda' })).toEqual({
+  it('returns null for what is not an object', () => {
+    expect(readPriorities(null)).toBeNull()
+    expect(readPriorities('renda')).toBeNull()
+    expect(readPriorities({ topo3: 'renda' })).toEqual({
       topo3: [],
       desfecho: 'satisfacao',
     })

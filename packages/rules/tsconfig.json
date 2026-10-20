@@ -1,7 +1,7 @@
 {
-  // Pacote puro, sem build e sem dependência em runtime: quem importa (o Vite
-  // no app, o Vitest aqui) transpila o `.ts`. Sem os tipos do `node` e sem DOM,
-  // para a mesma regra rodar no servidor e no navegador.
+  // Pure package, no build and no runtime dependency: whoever imports it
+  // (Vite in the app, Vitest here) transpiles the `.ts`. No `node` types and
+  // no DOM, so the same rule runs on the server and in the browser.
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",

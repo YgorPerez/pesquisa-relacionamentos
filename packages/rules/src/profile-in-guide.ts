@@ -1,50 +1,53 @@
-// O Perfil aplicado a uma página de Guia (DESIGN.md, "Perfil: destacar sem
-// esconder"): o veredito de cada achado e Dica, quantos achados têm dado, se
-// o número-chave da resposta curta vale e, se não vale, qual achado vale.
-import { perfilVazio, type Perfil } from './profile.ts'
-import { valeParaVoce, type Cobre, type Veredito } from './applies-to-you.ts'
+// The profile applied to a guide page (DESIGN.md, "Perfil: destacar sem
+// esconder"): the verdict on each finding and tip, how many findings have
+// data, whether the short answer's key number applies and, if not, which
+// finding does.
+import { isProfileEmpty, type Profile } from './profile.ts'
+import { appliesToYou, type Coverage, type Verdict } from './applies-to-you.ts'
 
-export interface CobresDoGuia {
-  /** O `cobre` das Fichas citadas junto do número-chave (`==…==`); `null` se a
-   * resposta curta não marcou número. */
-  readonly chave: ReadonlyArray<Cobre> | null
-  /** Um item por achado, na ordem da página. */
-  readonly achados: ReadonlyArray<ReadonlyArray<Cobre>>
-  readonly dicas: ReadonlyArray<ReadonlyArray<Cobre>>
+export interface GuideCoverages {
+  /** The `cobre` of the fact sheets cited next to the key number (`==…==`);
+   * `null` if the short answer marked no number. */
+  readonly key: ReadonlyArray<Coverage> | null
+  /** One item per finding, in page order. */
+  readonly findings: ReadonlyArray<ReadonlyArray<Coverage>>
+  readonly tips: ReadonlyArray<ReadonlyArray<Coverage>>
 }
 
-export interface PerfilNoGuia {
-  readonly achados: ReadonlyArray<Veredito>
-  readonly dicas: ReadonlyArray<Veredito>
-  /** Quantos achados têm dado para o Perfil. Zero liga o aviso acima do título. */
-  readonly comDado: number
-  /** A linha "Para o seu Perfil: …". Quando o número-chave não vale, `achado`
-   * é o índice do primeiro achado que vale, ou `null` se nenhum vale. */
-  readonly chave:
-    | { readonly vale: true }
-    | { readonly vale: false; readonly achado: number | null }
+export interface ProfileInGuide {
+  readonly findings: ReadonlyArray<Verdict>
+  readonly tips: ReadonlyArray<Verdict>
+  /** How many findings have data for the profile. Zero turns on the warning
+   * above the title. */
+  readonly withData: number
+  /** The "Para o seu Perfil: …" line. When the key number does not apply,
+   * `finding` is the index of the first finding that does, or `null` if none
+   * does. */
+  readonly key:
+    | { readonly applies: true }
+    | { readonly applies: false; readonly finding: number | null }
     | null
 }
 
-export function perfilNoGuia(
-  perfil: Perfil | null,
-  guia: CobresDoGuia,
-): PerfilNoGuia | null {
-  if (perfilVazio(perfil)) return null
-  // Com Perfil, `valeParaVoce` sempre decide.
-  const veredito = (cobres: ReadonlyArray<Cobre>) =>
-    valeParaVoce(perfil, cobres) as Veredito
-  const achados = guia.achados.map(veredito)
-  const primeiro = achados.findIndex((v) => v.cobre)
+export function profileInGuide(
+  profile: Profile | null,
+  guide: GuideCoverages,
+): ProfileInGuide | null {
+  if (isProfileEmpty(profile)) return null
+  // With a profile, `appliesToYou` always decides.
+  const verdict = (coverages: ReadonlyArray<Coverage>) =>
+    appliesToYou(profile, coverages) as Verdict
+  const findings = guide.findings.map(verdict)
+  const first = findings.findIndex((v) => v.covered)
   return {
-    achados,
-    dicas: guia.dicas.map(veredito),
-    comDado: achados.filter((v) => v.cobre).length,
-    chave:
-      guia.chave === null
+    findings,
+    tips: guide.tips.map(verdict),
+    withData: findings.filter((v) => v.covered).length,
+    key:
+      guide.key === null
         ? null
-        : veredito(guia.chave).cobre
-          ? { vale: true }
-          : { vale: false, achado: primeiro === -1 ? null : primeiro },
+        : verdict(guide.key).covered
+          ? { applies: true }
+          : { applies: false, finding: first === -1 ? null : first },
   }
 }

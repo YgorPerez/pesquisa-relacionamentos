@@ -1,42 +1,47 @@
-// A estimativa do Grupo possível (#8, stories 39–52): quantas pessoas no
-// Brasil atendem ao Perfil procurado e aos Requisitos.
+// The possible group estimate (#8, stories 39–52): how many people in Brazil
+// match the sought profile and the requirements.
 //
-// - Os Requisitos do Censo (idade, união, escolaridade, renda, cor, religião,
-//   filhos) cruzam as células do microdado: só o peso das que atendem conta.
-// - A idade exata sai do grupo de 5 anos pela fração das idades simples do
-//   SIDRA 9514 no lugar.
-// - Num município, cada célula da UF é escalada pela população do município
-//   na mesma combinação de sexo × grupo × união (SIDRA 10185).
-// - Os da PNS (orientação, altura, cigarro) multiplicam a célula pela
-//   probabilidade no mesmo sexo e faixa de idade, com o intervalo dela.
-// - A faixa junta esse intervalo com o erro de amostra do Censo, ±1,96/√n.
+// - The Census requirements (age, union, education, income, color, religion,
+//   children) cross the microdata cells: only the weight of the matching ones
+//   counts.
+// - The exact age comes out of the 5-year group through the fraction of the
+//   SIDRA 9514 single ages in the place.
+// - In a municipality, each state cell is scaled by the municipality's
+//   population in the same sex × age group × union combination (SIDRA 10185).
+// - The PNS ones (orientation, height, smoking) multiply the cell by the
+//   probability in the same sex and age bracket, with its interval.
+// - The range joins that interval with the Census sampling error, ±1.96/√n.
+//
+// The requirement ids and caveat ids stay in Portuguese: the page reads them
+// as values. The caveat texts are interface text.
 import {
-  CELULAS_CONJUGAIS,
-  GRUPOS_DE_IDADE,
-  IDADES_SIMPLES,
-  indiceConjugal,
-  SEXOS,
-  type DadosDoLugar,
-  type Idades,
+  UNION_CELLS,
+  AGE_GROUPS,
+  SINGLE_AGES,
+  unionIndex,
+  SEXES,
+  type PlaceData,
+  type AgesBySex,
 } from './possible-group-data.ts'
-import type { Perfil } from './profile.ts'
+import type { Profile } from './profile.ts'
 import {
-  ALTURA_MAXIMA,
-  ALTURA_MINIMA,
-  CORES,
-  ESCOLARIDADES,
-  idadeProcurada,
-  IDADE_PROCURADA_MAXIMA,
-  IDADE_PROCURADA_MINIMA,
-  quemSeProcura,
-  RELIGIOES,
-  RENDAS,
-  type QuemSeProcura,
-  type Requisitos,
+  MAX_HEIGHT,
+  MIN_HEIGHT,
+  COLORS,
+  EDUCATIONS,
+  soughtAge,
+  MAX_SOUGHT_AGE,
+  MIN_SOUGHT_AGE,
+  whoIsSought,
+  RELIGIONS,
+  INCOMES,
+  type Sought,
+  type Requirements,
 } from './requirements.ts'
 
-/** Os Requisitos na ordem do funil. A orientação não tem controle: vem do Perfil. */
-export const ORDEM_DOS_REQUISITOS = [
+/** The requirements in funnel order. Orientation has no control: it comes
+ * from the profile. */
+export const REQUIREMENT_ORDER = [
   'idade',
   'lugar',
   'companheiro',
@@ -49,11 +54,11 @@ export const ORDEM_DOS_REQUISITOS = [
   'altura',
   'fumo',
 ] as const
-export type RequisitoId = (typeof ORDEM_DOS_REQUISITOS)[number]
+export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
-/** De onde vem cada Requisito. */
-export const FONTE_DO_REQUISITO: Readonly<
-  Record<RequisitoId, 'Censo' | 'PNS'>
+/** Where each requirement comes from. */
+export const REQUIREMENT_SOURCE: Readonly<
+  Record<RequirementId, 'Censo' | 'PNS'>
 > = {
   idade: 'Censo',
   lugar: 'Censo',
@@ -68,123 +73,129 @@ export const FONTE_DO_REQUISITO: Readonly<
   fumo: 'PNS',
 }
 
-/** Abaixo disso, o número leva "instável" (#8). */
-export const REGISTROS_PARA_ESTAVEL = 50
+/** Below this, the number carries "instável" (#8). */
+export const RECORDS_FOR_STABLE = 50
 
-export interface DadosDaConta {
-  /** O pacote do Brasil, sempre: a base e o custo de soltar o lugar saem dele. */
-  readonly brasil: DadosDoLugar
-  /** O pacote da UF escolhida, quando há lugar. */
-  readonly uf?: DadosDoLugar
+export interface CountData {
+  /** Brazil's pack, always: the base and the cost of releasing the place
+   * come from it. */
+  readonly brazil: PlaceData
+  /** The chosen state's pack, when there is a place. */
+  readonly uf?: PlaceData
 }
 
-export interface EntradaDaConta {
-  readonly perfil: Perfil | null
-  readonly requisitos: Requisitos
+export interface CountInput {
+  readonly profile: Profile | null
+  readonly requirements: Requirements
 }
 
-export interface Contagem {
-  /** Pessoas, sem arredondar. */
+export interface Count {
+  /** People, unrounded. */
   readonly min: number
   readonly central: number
   readonly max: number
-  /** Registros da amostra por trás do número (fracionado pela idade e pelo município). */
-  readonly registros: number
+  /** Sample records behind the number (split by age and municipality). */
+  readonly records: number
 }
 
-export interface Custo {
-  readonly requisito: RequisitoId
-  /** O grupo sem este Requisito, com os outros mantidos. */
-  readonly sem: number
-  readonly ganho: number
-  /** `sem / atual`; `Infinity` quando o grupo atual é zero e soltar dá alguém. */
-  readonly vezes: number
+export interface Cost {
+  readonly requirement: RequirementId
+  /** The group without this requirement, with the others kept. */
+  readonly without: number
+  readonly gain: number
+  /** `without / current`; `Infinity` when the current group is zero and
+   * releasing gives someone. */
+  readonly times: number
 }
 
-export interface Ressalva {
+export interface Caveat {
   readonly id: string
-  readonly texto: string
-  /** Aviso forte: aparece junto do número, não só em "De onde vem a incerteza". */
-  readonly forte: boolean
+  readonly text: string
+  /** A strong warning: it shows next to the number, not only in "De onde vem
+   * a incerteza". */
+  readonly strong: boolean
 }
 
-export interface Estimativa {
-  /** Quem se procura, para a frase: "mulheres", "homens" ou "pessoas". */
-  readonly alvo: QuemSeProcura['alvo']
-  /** Os Requisitos que entram na conta, na ordem do funil. */
-  readonly ligados: ReadonlyArray<RequisitoId>
-  readonly resultado: Contagem & { readonly instavel: boolean }
-  /** Adultos (18+) do gênero procurado no Brasil, antes de qualquer Requisito. */
-  readonly base: Contagem
-  /** Do que mais pesa ao que menos. Sem a orientação, que não se solta. */
-  readonly custos: ReadonlyArray<Custo>
-  /** Corte a corte, na ordem de `ORDEM_DOS_REQUISITOS`. */
-  readonly funil: ReadonlyArray<{
-    readonly requisito: RequisitoId
+export interface Estimate {
+  /** Who is sought, for the sentence: "mulheres", "homens" or "pessoas". */
+  readonly target: Sought['target']
+  /** The requirements that enter the count, in funnel order. */
+  readonly active: ReadonlyArray<RequirementId>
+  readonly result: Count & { readonly unstable: boolean }
+  /** Adults (18+) of the sought gender in Brazil, before any requirement. */
+  readonly base: Count
+  /** From the one that weighs most to the one that weighs least. Without
+   * orientation, which cannot be released. */
+  readonly costs: ReadonlyArray<Cost>
+  /** Cut by cut, in `REQUIREMENT_ORDER`. */
+  readonly funnel: ReadonlyArray<{
+    readonly requirement: RequirementId
     readonly central: number
   }>
-  /** A conta por multiplicação: a base vezes a fração que cada Requisito deixa sozinho. */
-  readonly ingenua: number
-  readonly ressalvas: ReadonlyArray<Ressalva>
-  /** "Sem filhos": vale, só para as mulheres (procura ambos) ou sem dado (procura homens). */
-  readonly filhos: QuemSeProcura['filhos']
+  /** The count by multiplication: the base times the fraction each
+   * requirement leaves on its own. */
+  readonly naive: number
+  readonly caveats: ReadonlyArray<Caveat>
+  /** "Sem filhos": applies, only to women (seeking both) or no data (seeking
+   * men). */
+  readonly children: Sought['children']
 }
 
-// --- partes da conta ---------------------------------------------------------
+// --- parts of the count -------------------------------------------------------
 
-/** Os Requisitos que mudam a conta. */
-export function requisitosLigados({
-  perfil,
-  requisitos: r,
-}: EntradaDaConta): RequisitoId[] {
-  const idade = idadeProcurada(perfil, r)
-  const ligado: Record<RequisitoId, boolean> = {
-    idade:
-      idade.min > IDADE_PROCURADA_MINIMA || idade.max < IDADE_PROCURADA_MAXIMA,
+/** The requirements that change the count. */
+export function activeRequirements({
+  profile,
+  requirements: r,
+}: CountInput): RequirementId[] {
+  const age = soughtAge(profile, r)
+  const isActive: Record<RequirementId, boolean> = {
+    idade: age.min > MIN_SOUGHT_AGE || age.max < MAX_SOUGHT_AGE,
     lugar: r.lugar !== null,
     companheiro: r.companheiro,
-    orientacao: perfil?.genero === 'homem' || perfil?.genero === 'mulher',
+    orientacao: profile?.genero === 'homem' || profile?.genero === 'mulher',
     escolaridade: r.escolaridade !== null,
     renda: r.renda !== null,
     cor: r.cores.length > 0,
     religiao: r.religioes.length > 0,
-    filhos: r.semFilhos && quemSeProcura(perfil).filhos !== 'sem-dado',
-    altura: r.altura.min > ALTURA_MINIMA || r.altura.max < ALTURA_MAXIMA,
+    filhos: r.semFilhos && whoIsSought(profile).children !== 'sem-dado',
+    altura: r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT,
     fumo: r.naoFuma,
   }
-  return ORDEM_DOS_REQUISITOS.filter((k) => ligado[k])
+  return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
 
-const primeiraIdade = (grupo: number) => 15 + 5 * grupo
-const ultimaIdade = (grupo: number) =>
-  grupo === GRUPOS_DE_IDADE.length - 1
-    ? 15 + IDADES_SIMPLES - 1
-    : primeiraIdade(grupo) + 4
+const firstAge = (ageGroup: number) => 15 + 5 * ageGroup
+const lastAge = (ageGroup: number) =>
+  ageGroup === AGE_GROUPS.length - 1
+    ? 15 + SINGLE_AGES - 1
+    : firstAge(ageGroup) + 4
 
-/** A parte do grupo de idade que cai em [min, max], pelas idades simples. max = 80 é "80 ou mais". */
-function fracaoDaIdade(
-  idades: ReadonlyArray<number>,
-  grupo: number,
+/** The part of the age group that falls in [min, max], by single ages.
+ * max = 80 is "80 or more". */
+function ageFraction(
+  ages: ReadonlyArray<number>,
+  ageGroup: number,
   min: number,
   max: number,
 ): number {
-  const a = primeiraIdade(grupo)
-  const b = ultimaIdade(grupo)
-  const de = Math.max(a, min)
-  const ate = Math.min(b, max >= IDADE_PROCURADA_MAXIMA ? Infinity : max)
-  if (ate < de) return 0
-  let dentro = 0
-  let todos = 0
-  for (let idade = a; idade <= b; idade++) {
-    const pessoas = idades[idade - 15] ?? 0
-    todos += pessoas
-    if (idade >= de && idade <= ate) dentro += pessoas
+  const a = firstAge(ageGroup)
+  const b = lastAge(ageGroup)
+  const from = Math.max(a, min)
+  const to = Math.min(b, max >= MAX_SOUGHT_AGE ? Infinity : max)
+  if (to < from) return 0
+  let inside = 0
+  let all = 0
+  for (let age = a; age <= b; age++) {
+    const people = ages[age - 15] ?? 0
+    all += people
+    if (age >= from && age <= to) inside += people
   }
-  return todos > 0 ? dentro / todos : (ate - de + 1) / (b - a + 1)
+  return all > 0 ? inside / all : (to - from + 1) / (b - a + 1)
 }
 
-/** A faixa da PNS em que cada grupo do Censo cai (o 15-19 vai para 18-24). */
-const FAIXA_DA_PNS = [
+/** The PNS bracket each Census group falls in (15-19 goes to 18-24). */
+const PNS_BRACKET = [
   '18-24',
   '18-24',
   '25-29',
@@ -201,347 +212,342 @@ const FAIXA_DA_PNS = [
   '70+',
 ] as const
 
-/** [mínimo, central, máximo]. */
-type Intervalo = readonly [number, number, number]
+/** [minimum, central, maximum]. */
+type Interval = readonly [number, number, number]
 
-function linhaDaPns(
-  dados: DadosDoLugar,
-  medida: string,
-  sexo: number,
-  grupo: number,
-  categoria: string,
-): Intervalo {
-  const linha =
-    dados.pns[`${medida}|${SEXOS[sexo]}|${FAIXA_DA_PNS[grupo]}|${categoria}`]
-  if (!linha)
+function pnsRow(
+  data: PlaceData,
+  measure: string,
+  sex: number,
+  ageGroup: number,
+  category: string,
+): Interval {
+  const row =
+    data.pns[`${measure}|${SEXES[sex]}|${PNS_BRACKET[ageGroup]}|${category}`]
+  if (!row)
     throw new Error(
-      `a PNS não tem ${medida} ${categoria} para ${SEXOS[sexo]} ${FAIXA_DA_PNS[grupo]}`,
+      `the PNS has no ${measure} ${category} for ${SEXES[sex]} ${PNS_BRACKET[ageGroup]}`,
     )
-  const [p, min, max] = linha
+  const [p, min, max] = row
   return [min, p, max]
 }
 
-/** P(a pessoa se interessa pelo gênero do visitante). Quem não soube ou não
- * quis responder é tratado como quem respondeu; o intervalo soma os das categorias. */
-function orientacao(
-  dados: DadosDoLugar,
-  genero: 'homem' | 'mulher',
-  sexo: number,
-  grupo: number,
-): { p: Intervalo; semResposta: number } {
-  const mesmo = SEXOS[sexo] === genero
-  const categorias = mesmo
+/** P(the person is interested in the visitor's gender). Whoever did not know
+ * or refused to answer is treated like those who answered; the interval sums
+ * the categories' ones. */
+function orientation(
+  data: PlaceData,
+  gender: 'homem' | 'mulher',
+  sex: number,
+  ageGroup: number,
+): { p: Interval; noAnswer: number } {
+  const sameSex = SEXES[sex] === gender
+  const categories = sameSex
     ? ['homossexual', 'bissexual']
     : ['heterossexual', 'bissexual']
-  const semResposta =
-    linhaDaPns(dados, 'orientacao', sexo, grupo, 'nao-sabe')[1] +
-    linhaDaPns(dados, 'orientacao', sexo, grupo, 'recusou')[1]
-  const soma = [0, 0, 0]
-  for (const c of categorias) {
-    const linha = linhaDaPns(dados, 'orientacao', sexo, grupo, c)
-    for (let i = 0; i < 3; i++) soma[i]! += linha[i]!
+  const noAnswer =
+    pnsRow(data, 'orientacao', sex, ageGroup, 'nao-sabe')[1] +
+    pnsRow(data, 'orientacao', sex, ageGroup, 'recusou')[1]
+  const sum = [0, 0, 0]
+  for (const c of categories) {
+    const row = pnsRow(data, 'orientacao', sex, ageGroup, c)
+    for (let i = 0; i < 3; i++) sum[i]! += row[i]!
   }
-  const r = 1 - semResposta
+  const r = 1 - noAnswer
   return {
-    p: [soma[0]! / r, soma[1]! / r, Math.min(1, soma[2]! / r)],
-    semResposta,
+    p: [sum[0]! / r, sum[1]! / r, Math.min(1, sum[2]! / r)],
+    noAnswer,
   }
 }
 
-/** P(altura em [min, max]) = F(max) − F(min − 1), com F acumulada da PNS. */
-function altura(
-  dados: DadosDoLugar,
-  sexo: number,
-  grupo: number,
+/** P(height in [min, max]) = F(max) − F(min − 1), with F the PNS cumulative. */
+function height(
+  data: PlaceData,
+  sex: number,
+  ageGroup: number,
   min: number,
   max: number,
-): Intervalo {
-  const acumulada = (cm: number): Intervalo =>
-    linhaDaPns(dados, 'altura', sexo, grupo, `ate-${cm}`)
-  const ate: Intervalo = max >= ALTURA_MAXIMA ? [1, 1, 1] : acumulada(max)
-  const abaixo: Intervalo =
-    min <= ALTURA_MINIMA ? [0, 0, 0] : acumulada(min - 1)
-  const central = Math.max(0, ate[1] - abaixo[1])
+): Interval {
+  const cumulative = (cm: number): Interval =>
+    pnsRow(data, 'altura', sex, ageGroup, `ate-${cm}`)
+  const upTo: Interval = max >= MAX_HEIGHT ? [1, 1, 1] : cumulative(max)
+  const below: Interval = min <= MIN_HEIGHT ? [0, 0, 0] : cumulative(min - 1)
+  const central = Math.max(0, upTo[1] - below[1])
   return [
-    Math.min(central, Math.max(0, ate[0] - abaixo[2])),
+    Math.min(central, Math.max(0, upTo[0] - below[2])),
     central,
-    Math.max(central, Math.min(1, ate[2] - abaixo[0])),
+    Math.max(central, Math.min(1, upTo[2] - below[0])),
   ]
 }
 
-function somaConjugal(dados: DadosDoLugar): Float64Array {
-  const soma = new Float64Array(CELULAS_CONJUGAIS)
-  for (let i = 0; i < dados.tamanho; i++)
-    soma[indiceConjugal(dados.sexo[i]!, dados.grupo[i]!, dados.uniao[i]!)]! +=
-      dados.peso[i]!
-  return soma
+function unionSum(data: PlaceData): Float64Array {
+  const sum = new Float64Array(UNION_CELLS)
+  for (let i = 0; i < data.size; i++)
+    sum[unionIndex(data.sex[i]!, data.ageGroup[i]!, data.union[i]!)]! +=
+      data.weight[i]!
+  return sum
 }
 
-interface Conta extends Contagem {
-  /** Média ponderada de quem não respondeu a orientação, quando ela entra. */
-  readonly semResposta: number
+interface Tally extends Count {
+  /** Weighted mean of who did not answer the orientation, when it enters. */
+  readonly noAnswer: number
 }
 
-function contar(
-  entrada: EntradaDaConta,
-  dados: DadosDaConta,
-  ligados: ReadonlySet<RequisitoId>,
-): Conta {
-  const { perfil, requisitos: r } = entrada
-  const doLugar = ligados.has('lugar') ? dados.uf : dados.brasil
-  if (!doLugar || (ligados.has('lugar') && doLugar.lugar !== r.lugar?.uf))
-    throw new Error(`faltam os dados de ${r.lugar?.uf} para a conta`)
+function tally(
+  input: CountInput,
+  data: CountData,
+  active: ReadonlySet<RequirementId>,
+): Tally {
+  const { profile, requirements: r } = input
+  const ofPlace = active.has('lugar') ? data.uf : data.brazil
+  if (!ofPlace || (active.has('lugar') && ofPlace.place !== r.lugar?.uf))
+    throw new Error(`missing the data for ${r.lugar?.uf} for the count`)
 
-  // Tudo o que depende só de sexo × grupo (e união, no município) sai antes do laço.
-  const idade = ligados.has('idade')
-    ? idadeProcurada(perfil, r)
-    : { min: IDADE_PROCURADA_MINIMA, max: IDADE_PROCURADA_MAXIMA }
-  const { sexos } = quemSeProcura(perfil)
-  const G = GRUPOS_DE_IDADE.length
-  const fator = new Float64Array(SEXOS.length * G)
-  const pns: Intervalo[] = []
-  const semResposta = new Float64Array(SEXOS.length * G)
-  for (const s of sexos) {
-    const idades = (doLugar.idades as Idades)[SEXOS[s]!]
+  // Everything that depends only on sex × age group (and union, in a
+  // municipality) comes out before the loop.
+  const age = active.has('idade')
+    ? soughtAge(profile, r)
+    : { min: MIN_SOUGHT_AGE, max: MAX_SOUGHT_AGE }
+  const { sexes } = whoIsSought(profile)
+  const G = AGE_GROUPS.length
+  const factor = new Float64Array(SEXES.length * G)
+  const pns: Interval[] = []
+  const noAnswer = new Float64Array(SEXES.length * G)
+  for (const s of sexes) {
+    const ages = (ofPlace.ages as AgesBySex)[SEXES[s]!]
     for (let g = 0; g < G; g++) {
       const i = s * G + g
-      fator[i] = fracaoDaIdade(
-        idades,
+      factor[i] = ageFraction(
+        ages,
         g,
-        Math.max(IDADE_PROCURADA_MINIMA, idade.min),
-        idade.max,
+        Math.max(MIN_SOUGHT_AGE, age.min),
+        age.max,
       )
       let p: [number, number, number] = [1, 1, 1]
-      const vezes = (q: Intervalo) =>
+      const times = (q: Interval) =>
         (p = [p[0] * q[0], p[1] * q[1], p[2] * q[2]])
-      if (fator[i]! > 0) {
+      if (factor[i]! > 0) {
         if (
-          ligados.has('orientacao') &&
-          (perfil?.genero === 'homem' || perfil?.genero === 'mulher')
+          active.has('orientacao') &&
+          (profile?.genero === 'homem' || profile?.genero === 'mulher')
         ) {
-          const o = orientacao(doLugar, perfil.genero, s, g)
-          vezes(o.p)
-          semResposta[i] = o.semResposta
+          const o = orientation(ofPlace, profile.genero, s, g)
+          times(o.p)
+          noAnswer[i] = o.noAnswer
         }
-        if (ligados.has('altura'))
-          vezes(altura(doLugar, s, g, r.altura.min, r.altura.max))
-        if (ligados.has('fumo')) vezes(linhaDaPns(doLugar, 'fumo', s, g, 'nao'))
+        if (active.has('altura'))
+          times(height(ofPlace, s, g, r.altura.min, r.altura.max))
+        if (active.has('fumo')) times(pnsRow(ofPlace, 'fumo', s, g, 'nao'))
       }
       pns[i] = p
     }
   }
 
-  let municipio: Float64Array | null = null
-  if (ligados.has('lugar') && r.lugar?.municipio) {
-    const m = doLugar.municipios.get(r.lugar.municipio)
+  let municipality: Float64Array | null = null
+  if (active.has('lugar') && r.lugar?.municipio) {
+    const m = ofPlace.municipalities.get(r.lugar.municipio)
     if (!m)
       throw new Error(
-        `município ${r.lugar.municipio} fora dos dados de ${r.lugar.uf}`,
+        `municipality ${r.lugar.municipio} is outside the data for ${r.lugar.uf}`,
       )
-    const daUf = somaConjugal(doLugar)
-    municipio = new Float64Array(CELULAS_CONJUGAIS)
-    for (let k = 0; k < CELULAS_CONJUGAIS; k++)
-      municipio[k] = daUf[k]! > 0 ? (m.pessoas[k] ?? 0) / daUf[k]! : 0
+    const ofState = unionSum(ofPlace)
+    municipality = new Float64Array(UNION_CELLS)
+    for (let k = 0; k < UNION_CELLS; k++)
+      municipality[k] = ofState[k]! > 0 ? (m.people[k] ?? 0) / ofState[k]! : 0
   }
 
-  const posicao = (lista: ReadonlyArray<string>, valor: string) =>
-    lista.indexOf(valor) + 1
-  const escolaridade =
-    ligados.has('escolaridade') && r.escolaridade
-      ? posicao(ESCOLARIDADES, r.escolaridade)
+  const position = (list: ReadonlyArray<string>, value: string) =>
+    list.indexOf(value) + 1
+  const education =
+    active.has('escolaridade') && r.escolaridade
+      ? position(EDUCATIONS, r.escolaridade)
       : 0
-  const renda = ligados.has('renda') && r.renda ? posicao(RENDAS, r.renda) : 0
-  const cores = ligados.has('cor')
-    ? new Set(r.cores.map((c) => posicao(CORES, c)))
+  const income = active.has('renda') && r.renda ? position(INCOMES, r.renda) : 0
+  const colors = active.has('cor')
+    ? new Set(r.cores.map((c) => position(COLORS, c)))
     : null
-  const religioes = ligados.has('religiao')
-    ? new Set(r.religioes.map((c) => posicao(RELIGIOES, c)))
+  const religions = active.has('religiao')
+    ? new Set(r.religioes.map((c) => position(RELIGIONS, c)))
     : null
-  const companheiro = ligados.has('companheiro')
-  const semFilhos = ligados.has('filhos')
-  const procuraUmSexo = sexos.length === 1 ? sexos[0] : -1
+  const partner = active.has('companheiro')
+  const noChildren = active.has('filhos')
+  const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
   let central = 0
   let max = 0
-  let registros = 0
-  let somaSemResposta = 0
-  let somaDosPesos = 0
-  const d = doLugar
-  for (let i = 0; i < d.tamanho; i++) {
-    const s = d.sexo[i]!
-    if (procuraUmSexo >= 0 && s !== procuraUmSexo) continue
-    if (companheiro && d.uniao[i] === 1) continue
-    if (d.escolaridade[i]! < escolaridade) continue
-    if (d.renda[i]! < renda) continue
-    if (cores && !cores.has(d.cor[i]!)) continue
-    if (religioes && !religioes.has(d.religiao[i]!)) continue
-    if (semFilhos && d.filhos[i] === 2) continue
-    const sg = s * G + d.grupo[i]!
-    let f = fator[sg]!
-    if (municipio) f *= municipio[indiceConjugal(s, d.grupo[i]!, d.uniao[i]!)]!
+  let records = 0
+  let noAnswerSum = 0
+  let weightSum = 0
+  const d = ofPlace
+  for (let i = 0; i < d.size; i++) {
+    const s = d.sex[i]!
+    if (singleSex >= 0 && s !== singleSex) continue
+    if (partner && d.union[i] === 1) continue
+    if (d.education[i]! < education) continue
+    if (d.income[i]! < income) continue
+    if (colors && !colors.has(d.color[i]!)) continue
+    if (religions && !religions.has(d.religion[i]!)) continue
+    if (noChildren && d.children[i] === 2) continue
+    const sg = s * G + d.ageGroup[i]!
+    let f = factor[sg]!
+    if (municipality)
+      f *= municipality[unionIndex(s, d.ageGroup[i]!, d.union[i]!)]!
     if (f === 0) continue
-    const w = d.peso[i]! * f
+    const w = d.weight[i]! * f
     const p = pns[sg]!
     min += w * p[0]
     central += w * p[1]
     max += w * p[2]
-    registros += d.registros[i]! * f
-    somaSemResposta += w * semResposta[sg]!
-    somaDosPesos += w
+    records += d.records[i]! * f
+    noAnswerSum += w * noAnswer[sg]!
+    weightSum += w
   }
-  const erro = 1.96 / Math.sqrt(Math.max(registros, 1))
+  const error = 1.96 / Math.sqrt(Math.max(records, 1))
   return {
-    min: min * Math.max(0, 1 - erro),
+    min: min * Math.max(0, 1 - error),
     central,
-    max: max * (1 + erro),
-    registros,
-    semResposta: somaDosPesos > 0 ? somaSemResposta / somaDosPesos : 0,
+    max: max * (1 + error),
+    records,
+    noAnswer: weightSum > 0 ? noAnswerSum / weightSum : 0,
   }
 }
 
-// --- ressalvas -------------------------------------------------------------
+// --- caveats -----------------------------------------------------------------
 
-const porcento = (x: number) =>
+const percent = (x: number) =>
   (x * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 })
 
-function ressalvas(
-  entrada: EntradaDaConta,
-  ligados: ReadonlyArray<RequisitoId>,
-  resultado: Conta,
-): Ressalva[] {
-  const { perfil, requisitos } = entrada
-  const tem = (k: RequisitoId) => ligados.includes(k)
-  const lista: Array<Ressalva | false> = [
-    resultado.registros < REGISTROS_PARA_ESTAVEL && {
+function caveats(
+  input: CountInput,
+  active: ReadonlyArray<RequirementId>,
+  result: Tally,
+): Caveat[] {
+  const { profile, requirements } = input
+  const has = (k: RequirementId) => active.includes(k)
+  const list: Array<Caveat | false> = [
+    result.records < RECORDS_FOR_STABLE && {
       id: 'instavel',
-      forte: true,
-      texto: `Estimativa instável: a conta se apoia em só ${Math.round(resultado.registros)} registros da amostra do Censo.`,
+      strong: true,
+      text: `Estimativa instável: a conta se apoia em só ${Math.round(result.records)} registros da amostra do Censo.`,
     },
-    perfil?.genero === 'outro' && {
+    profile?.genero === 'outro' && {
       id: 'genero-outro',
-      forte: true,
-      texto:
-        'O IBGE registra só o sexo e não pergunta identidade de gênero, então não dá para estimar quem se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
+      strong: true,
+      text: 'O IBGE registra só o sexo e não pergunta identidade de gênero, então não dá para estimar quem se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
     },
-    !perfil?.genero && {
+    !profile?.genero && {
       id: 'sem-genero',
-      forte: true,
-      texto:
-        'Sem o seu gênero no Perfil, não dá para descontar quem não se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
+      strong: true,
+      text: 'Sem o seu gênero no Perfil, não dá para descontar quem não se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
     },
-    !perfil?.procura && {
+    !profile?.procura && {
       id: 'sem-procura',
-      forte: true,
-      texto: 'Sem dizer quem você procura, a conta junta homens e mulheres.',
+      strong: true,
+      text: 'Sem dizer quem você procura, a conta junta homens e mulheres.',
     },
-    tem('filhos') &&
-      quemSeProcura(perfil).filhos === 'so-mulheres' && {
+    has('filhos') &&
+      whoIsSought(profile).children === 'so-mulheres' && {
         id: 'filhos-so-mulheres',
-        forte: true,
-        texto:
-          'O Censo só pergunta filhos às mulheres: "sem filhos" vale para elas, e os homens entram com ou sem filhos.',
+        strong: true,
+        text: 'O Censo só pergunta filhos às mulheres: "sem filhos" vale para elas, e os homens entram com ou sem filhos.',
       },
-    tem('companheiro') && {
+    has('companheiro') && {
       id: 'companheiro',
-      forte: false,
-      texto:
-        '"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.',
+      strong: false,
+      text: '"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.',
     },
-    tem('orientacao') && {
+    has('orientacao') && {
       id: 'orientacao',
-      forte: false,
-      texto: `A orientação vem da PNS 2019, uma estatística experimental do IBGE. No grupo procurado, ${porcento(resultado.semResposta)}% não souberam ou não quiseram responder; a conta os trata como quem respondeu.`,
+      strong: false,
+      text: `A orientação vem da PNS 2019, uma estatística experimental do IBGE. No grupo procurado, ${percent(result.noAnswer)}% não souberam ou não quiseram responder; a conta os trata como quem respondeu.`,
     },
-    tem('idade') && {
+    has('idade') && {
       id: 'idade',
-      forte: false,
-      texto:
-        'O microdado público traz a idade em grupos de 5 anos; a idade exata vem da proporção do SIDRA 9514.',
+      strong: false,
+      text: 'O microdado público traz a idade em grupos de 5 anos; a idade exata vem da proporção do SIDRA 9514.',
     },
-    tem('lugar') &&
-      !!requisitos.lugar?.municipio && {
+    has('lugar') &&
+      !!requirements.lugar?.municipio && {
         id: 'municipio',
-        forte: false,
-        texto:
-          'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Escolaridade, renda, cor e religião seguem as do estado.',
+        strong: false,
+        text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Escolaridade, renda, cor e religião seguem as do estado.',
       },
-    tem('renda') && {
+    has('renda') && {
       id: 'renda',
-      forte: false,
-      texto:
-        'A renda é a de julho de 2022, em salários mínimos da época (R$ 1.212).',
+      strong: false,
+      text: 'A renda é a de julho de 2022, em salários mínimos da época (R$ 1.212).',
     },
-    tem('altura') && {
+    has('altura') && {
       id: 'altura',
-      forte: false,
-      texto: 'A altura é autodeclarada na PNS 2019.',
+      strong: false,
+      text: 'A altura é autodeclarada na PNS 2019.',
     },
-    ligados.some((k) => FONTE_DO_REQUISITO[k] === 'PNS') && {
+    active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independencia',
-      forte: false,
-      texto:
-        'Os Requisitos da PNS entram supondo que, dentro do mesmo sexo e idade, não dependem dos do Censo.',
+      strong: false,
+      text: 'Os Requisitos da PNS entram supondo que, dentro do mesmo sexo e idade, não dependem dos do Censo.',
     },
     {
       id: 'fonte',
-      forte: false,
-      texto: 'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
+      strong: false,
+      text: 'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
     },
   ]
-  return lista.filter((r): r is Ressalva => r !== false)
+  return list.filter((r): r is Caveat => r !== false)
 }
 
-// --- a estimativa ----------------------------------------------------------
+// --- the estimate ------------------------------------------------------------
 
-export function estimarGrupo(
-  entrada: EntradaDaConta,
-  dados: DadosDaConta,
-): Estimativa {
-  const ligados = requisitosLigados(entrada)
-  const com = (lista: ReadonlyArray<RequisitoId>) =>
-    contar(entrada, dados, new Set(lista))
-  const atual = com(ligados)
-  const base = com([])
+export function estimateGroup(input: CountInput, data: CountData): Estimate {
+  const active = activeRequirements(input)
+  const countWith = (list: ReadonlyArray<RequirementId>) =>
+    tally(input, data, new Set(list))
+  const current = countWith(active)
+  const base = countWith([])
 
-  const funil = ligados.map((requisito, i) => ({
-    requisito,
-    central: com(ligados.slice(0, i + 1)).central,
+  const funnel = active.map((requirement, i) => ({
+    requirement,
+    central: countWith(active.slice(0, i + 1)).central,
   }))
 
-  const custos = ligados
+  const costs = active
     .filter((k) => k !== 'orientacao')
-    .map((requisito): Custo => {
-      const sem = com(ligados.filter((k) => k !== requisito)).central
-      const vezes =
-        atual.central > 0 ? sem / atual.central : sem > 0 ? Infinity : 1
-      return { requisito, sem, ganho: sem - atual.central, vezes }
+    .map((requirement): Cost => {
+      const without = countWith(active.filter((k) => k !== requirement)).central
+      const times =
+        current.central > 0
+          ? without / current.central
+          : without > 0
+            ? Infinity
+            : 1
+      return { requirement, without, gain: without - current.central, times }
     })
-    .sort((a, b) => b.vezes - a.vezes)
+    .sort((a, b) => b.times - a.times)
 
-  const ingenua =
+  const naive =
     base.central > 0
-      ? ligados.reduce(
-          (v, k) => v * (com([k]).central / base.central),
+      ? active.reduce(
+          (v, k) => v * (countWith([k]).central / base.central),
           base.central,
         )
       : 0
 
-  const { semResposta: _, ...resultado } = atual
-  const { semResposta: __, ...daBase } = base
-  const procurado = quemSeProcura(entrada.perfil)
+  const { noAnswer: _, ...result } = current
+  const { noAnswer: __, ...fromBase } = base
+  const sought = whoIsSought(input.profile)
   return {
-    alvo: procurado.alvo,
-    ligados,
-    resultado: {
-      ...resultado,
-      instavel: atual.registros < REGISTROS_PARA_ESTAVEL,
+    target: sought.target,
+    active,
+    result: {
+      ...result,
+      unstable: current.records < RECORDS_FOR_STABLE,
     },
-    base: daBase,
-    custos,
-    funil,
-    ingenua,
-    ressalvas: ressalvas(entrada, ligados, atual),
-    filhos: procurado.filhos,
+    base: fromBase,
+    costs,
+    funnel,
+    naive,
+    caveats: caveats(input, active, current),
+    children: sought.children,
   }
 }

@@ -3,19 +3,19 @@
 // prateleira a evidência põe cada uma.
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import type { GeneroDoPerfil } from '@tem-estudo/rules/profile'
+import type { ProfileGender } from '@tem-estudo/rules/profile'
 import {
-  NOME_DO_DESFECHO,
-  alertaDoTopo3,
-  alternarNoTopo3,
-  type EstadoDasPrioridades,
+  OUTCOME_NAME,
+  top3Alert,
+  toggleInTop3,
+  type PrioritiesState,
 } from '@tem-estudo/rules/priorities'
 import {
-  fraseDoLink,
-  lerLink,
-  previaDePrioridades,
-  queryDoLink,
-  type EstadoDoLink,
+  linkSentence,
+  readLink,
+  prioritiesPreview,
+  linkQuery,
+  type LinkState,
 } from '@tem-estudo/rules/link'
 import { useMemo, useState } from 'react'
 import { leituras } from '#/conteudo/leituras'
@@ -52,11 +52,11 @@ export const Route = createFileRoute('/prioridades')({
     // `queryClient`.
     const estado =
       vista && typeof window === 'undefined'
-        ? lerLink('prioridades', location.searchStr, idsDe(vista))
+        ? readLink('prioridades', location.searchStr, idsDe(vista))
         : null
     const previa =
-      estado?.calculadora === 'prioridades'
-        ? previaDePrioridades(vista!.caracteristicas, estado.prioridades)
+      estado?.calculator === 'prioridades'
+        ? prioritiesPreview(vista!.caracteristicas, estado.priorities)
         : null
     return { previa }
   },
@@ -100,7 +100,7 @@ function PaginaDePrioridades() {
 }
 
 /** Toda mudança do visitante nas Prioridades passa aqui, e conta o uso. */
-function gravarEContar(novo: EstadoDasPrioridades) {
+function gravarEContar(novo: PrioritiesState) {
   gravarPrioridades(novo)
   contarUsoDaCalculadora('prioridades')
 }
@@ -125,7 +125,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         caracteristicas={caracteristicas}
         topo3={topo3}
         aoTocar={(id) =>
-          gravarEContar({ ...estado, topo3: alternarNoTopo3(topo3, id) })
+          gravarEContar({ ...estado, topo3: toggleInTop3(topo3, id) })
         }
       />
 
@@ -141,7 +141,7 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
 
       {desfecho === 'satisfacao' && <AntesDaLista barra={vista.barra} />}
 
-      <AlertaDoTopo3 frase={alertaDoTopo3(caracteristicas, topo3, desfecho)} />
+      <AlertaDoTopo3 frase={top3Alert(caracteristicas, topo3, desfecho)} />
 
       <OndeAEvidenciaPoe
         caracteristicas={caracteristicas}
@@ -167,10 +167,10 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
 
 /** O aviso de que um link recebido trocou o topo 3 salvo (e, se ele trouxe,
  * o gênero do Perfil). Sem link, nada. */
-function AvisoDoLink({ recebido }: { recebido: EstadoDoLink | null }) {
+function AvisoDoLink({ recebido }: { recebido: LinkState | null }) {
   if (!recebido) return null
   const trocouGenero =
-    recebido.calculadora === 'prioridades' && recebido.genero !== null
+    recebido.calculator === 'prioridades' && recebido.gender !== null
   return (
     <Aviso role="status">
       {trocouGenero
@@ -216,15 +216,15 @@ function OndeAEvidenciaPoe({
   genero,
 }: {
   caracteristicas: PrioridadesVista['caracteristicas']
-  estado: EstadoDasPrioridades
-  genero: GeneroDoPerfil | undefined
+  estado: PrioritiesState
+  genero: ProfileGender | undefined
 }) {
   const [aberta, setAberta] = useState<string | null>(null)
   return (
     <section aria-labelledby="t-estante">
       <h2 id="t-estante" className="sr-only">
         Onde a evidência põe cada uma, para{' '}
-        {NOME_DO_DESFECHO[desfecho].toLowerCase()}
+        {OUTCOME_NAME[desfecho].toLowerCase()}
       </h2>
       <Estante
         caracteristicas={caracteristicas}
@@ -248,19 +248,19 @@ function CompartilharAsPrioridades({
   genero,
 }: {
   caracteristicas: PrioridadesVista['caracteristicas']
-  estado: EstadoDasPrioridades
-  genero: GeneroDoPerfil | undefined
+  estado: PrioritiesState
+  genero: ProfileGender | undefined
 }) {
-  const link: EstadoDoLink = {
-    calculadora: 'prioridades',
-    genero: genero ?? null,
-    prioridades: estado,
+  const link: LinkState = {
+    calculator: 'prioridades',
+    gender: genero ?? null,
+    priorities: estado,
   }
   const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
   return (
     <Compartilhar
-      query={queryDoLink(link)}
-      frase={fraseDoLink(link, { nomes })}
+      query={linkQuery(link)}
+      frase={linkSentence(link, { names: nomes })}
       aviso={AVISO_DA_CONTAGEM}
     />
   )

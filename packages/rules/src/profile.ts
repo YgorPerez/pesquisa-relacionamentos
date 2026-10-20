@@ -1,84 +1,89 @@
-// O Perfil do visitante (GLOSSARY): o gênero dele, quem ele procura e a idade.
-// Tudo opcional: quem não diz nada vê o Guia inteiro só com as notas "Vale
-// para:". Os módulos do link (#34) e das calculadoras (#31, #33) leem daqui.
+// The visitor's profile (GLOSSARY): their gender, who they seek and their age.
+// All optional: someone who says nothing sees the whole guide with only the
+// "Vale para:" notes. The link (#34) and calculator (#31, #33) modules read
+// from here. The keys and values are what the browser stores and the link
+// carries, so they stay in Portuguese.
 
-/** O gênero no Perfil. `outro` não existe no `cobre` das Fichas (#5). */
-export const GENEROS_DO_PERFIL = ['homem', 'mulher', 'outro'] as const
-export type GeneroDoPerfil = (typeof GENEROS_DO_PERFIL)[number]
+/** The gender in the profile. `outro` does not exist in the fact sheets'
+ * `cobre` (#5). */
+export const PROFILE_GENDERS = ['homem', 'mulher', 'outro'] as const
+export type ProfileGender = (typeof PROFILE_GENDERS)[number]
 
-/** Quem o visitante procura. `ambos` não existe no `cobre` das Fichas (#5). */
-export const PROCURA_DO_PERFIL = ['homens', 'mulheres', 'ambos'] as const
-export type ProcuraDoPerfil = (typeof PROCURA_DO_PERFIL)[number]
+/** Who the visitor seeks. `ambos` does not exist in the fact sheets' `cobre`
+ * (#5). */
+export const PROFILE_SEEKS = ['homens', 'mulheres', 'ambos'] as const
+export type ProfileSeeks = (typeof PROFILE_SEEKS)[number]
 
-/** O site é para maiores de idade; acima de 120 é erro de digitação. */
-export const IDADE_MINIMA = 18
-export const IDADE_MAXIMA = 120
+/** The site is for adults; above 120 is a typo. */
+export const MIN_AGE = 18
+export const MAX_AGE = 120
 
-export interface Perfil {
-  readonly genero?: GeneroDoPerfil
-  readonly procura?: ProcuraDoPerfil
+export interface Profile {
+  readonly genero?: ProfileGender
+  readonly procura?: ProfileSeeks
   readonly idade?: number
 }
 
-/** Sem gênero, sem quem procura e sem idade: é como não ter Perfil. */
-export const perfilVazio = (perfil: Perfil | null): boolean =>
-  !perfil ||
-  (perfil.genero === undefined &&
-    perfil.procura === undefined &&
-    perfil.idade === undefined)
+/** No gender, no one sought and no age: it is like having no profile. */
+export const isProfileEmpty = (profile: Profile | null): boolean =>
+  !profile ||
+  (profile.genero === undefined &&
+    profile.procura === undefined &&
+    profile.idade === undefined)
 
-const umDe = <T extends string>(
-  lista: ReadonlyArray<T>,
-  valor: unknown,
-): T | undefined => lista.find((item) => item === valor)
+const oneOf = <T extends string>(
+  list: ReadonlyArray<T>,
+  value: unknown,
+): T | undefined => list.find((item) => item === value)
 
-/** A idade como o Perfil aceita: inteira, de 18 a 120. Fora disso, `undefined`. */
-export function idadeValida(valor: unknown): number | undefined {
-  const numero =
-    typeof valor === 'string' && valor.trim() !== '' ? Number(valor) : valor
-  return typeof numero === 'number' &&
-    Number.isInteger(numero) &&
-    numero >= IDADE_MINIMA &&
-    numero <= IDADE_MAXIMA
-    ? numero
+/** The age as the profile accepts it: whole, from 18 to 120. Otherwise
+ * `undefined`. */
+export function validAge(value: unknown): number | undefined {
+  const num =
+    typeof value === 'string' && value.trim() !== '' ? Number(value) : value
+  return typeof num === 'number' &&
+    Number.isInteger(num) &&
+    num >= MIN_AGE &&
+    num <= MAX_AGE
+    ? num
     : undefined
 }
 
-/** Lê um Perfil de fonte não confiável (localStorage, query do link): fica só
- * o que é válido. Devolve `null` se nada sobrar. */
-export function lerPerfil(valor: unknown): Perfil | null {
-  if (typeof valor !== 'object' || valor === null) return null
-  const bruto = valor as Record<string, unknown>
-  const genero = umDe(GENEROS_DO_PERFIL, bruto.genero)
-  const procura = umDe(PROCURA_DO_PERFIL, bruto.procura)
-  const idade = idadeValida(bruto.idade)
-  const perfil: Perfil = {
-    ...(genero && { genero }),
-    ...(procura && { procura }),
-    ...(idade !== undefined && { idade }),
+/** Reads a profile from an untrusted source (localStorage, link query): only
+ * what is valid stays. Returns `null` if nothing is left. */
+export function readProfile(value: unknown): Profile | null {
+  if (typeof value !== 'object' || value === null) return null
+  const raw = value as Record<string, unknown>
+  const gender = oneOf(PROFILE_GENDERS, raw.genero)
+  const seeks = oneOf(PROFILE_SEEKS, raw.procura)
+  const age = validAge(raw.idade)
+  const profile: Profile = {
+    ...(gender && { genero: gender }),
+    ...(seeks && { procura: seeks }),
+    ...(age !== undefined && { idade: age }),
   }
-  return perfilVazio(perfil) ? null : perfil
+  return isProfileEmpty(profile) ? null : profile
 }
 
-const GENERO_POR_EXTENSO: Record<GeneroDoPerfil, string> = {
+const GENDER_IN_WORDS: Record<ProfileGender, string> = {
   homem: 'homem',
   mulher: 'mulher',
   outro: 'outro gênero',
 }
 
-const PROCURA_POR_EXTENSO: Record<ProcuraDoPerfil, string> = {
+const SEEKS_IN_WORDS: Record<ProfileSeeks, string> = {
   homens: 'procura homens',
   mulheres: 'procura mulheres',
   ambos: 'procura homens e mulheres',
 }
 
-/** "homem, procura homens, 30 anos": o Perfil em uma linha, para "Seu Perfil:
- * …" e para o aviso de que nenhum estudo cobre. */
-export function descreverPerfil(perfil: Perfil): string {
+/** "homem, procura homens, 30 anos": the profile in one line, for "Seu
+ * Perfil: …" and for the warning that no study covers it. */
+export function describeProfile(profile: Profile): string {
   return [
-    perfil.genero && GENERO_POR_EXTENSO[perfil.genero],
-    perfil.procura && PROCURA_POR_EXTENSO[perfil.procura],
-    perfil.idade !== undefined && `${perfil.idade} anos`,
+    profile.genero && GENDER_IN_WORDS[profile.genero],
+    profile.procura && SEEKS_IN_WORDS[profile.procura],
+    profile.idade !== undefined && `${profile.idade} anos`,
   ]
     .filter(Boolean)
     .join(', ')

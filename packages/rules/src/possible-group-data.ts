@@ -1,27 +1,30 @@
-// Os dados do Grupo possível (#36) no caminho até o navegador.
+// The possible group data (#36) on its way to the browser.
 //
-// O CSV do Censo tem 31 MB, mas é o Brasil inteiro em 490 mil células. O
-// build corta em um pacote por lugar: o do Brasil (as UFs somadas, ~44 mil
-// células) e um por UF, com os municípios dela. O navegador baixa o do Brasil
-// e, se o visitante escolher uma UF, o dela. Cada pacote leva junto as idades
-// simples do SIDRA 9514 e as probabilidades da PNS, que são pequenas.
+// The Census CSV is 31 MB, but it is the whole of Brazil in 490 thousand
+// cells. The build cuts it into one pack per place: Brazil's (the states
+// summed, ~44 thousand cells) and one per state, with its municipalities. The
+// browser downloads Brazil's and, if the visitor picks a state, that one too.
+// Each pack carries the SIDRA 9514 single ages and the PNS probabilities,
+// which are small.
 //
-// Lado do build: `lerBaseDoGrupo` (os CSV) → `pacoteDoLugar` (JSON).
-// Lado do navegador: `abrirPacote` (JSON → colunas tipadas para a conta).
+// Build side: `readGroupBase` (the CSVs) → `packForPlace` (JSON).
+// Browser side: `openPack` (JSON → typed columns for the count).
+//
+// The CSV columns and values are the data contract and stay in Portuguese.
 import {
-  CORES,
-  ESCOLARIDADES,
-  RELIGIOES,
-  RENDAS,
-  UFS,
-  type Uf,
+  COLORS,
+  EDUCATIONS,
+  RELIGIONS,
+  INCOMES,
+  STATES,
+  type StateCode,
 } from './requirements.ts'
 
-export const SEXOS = ['homem', 'mulher'] as const
-export type Sexo = (typeof SEXOS)[number]
+export const SEXES = ['homem', 'mulher'] as const
+export type Sex = (typeof SEXES)[number]
 
-/** Os grupos de idade do microdado, de 5 anos, a partir de 15. */
-export const GRUPOS_DE_IDADE = [
+/** The microdata's 5-year age groups, from 15. */
+export const AGE_GROUPS = [
   '15-19',
   '20-24',
   '25-29',
@@ -38,302 +41,308 @@ export const GRUPOS_DE_IDADE = [
   '80+',
 ] as const
 
-/** Idades simples do SIDRA 9514: 15 a 99 e "100+" (posição 85). */
-export const IDADES_SIMPLES = 86
+/** SIDRA 9514 single ages: 15 to 99 and "100+" (position 85). */
+export const SINGLE_AGES = 86
 
-/** Uma linha do CSV da PNS: [p, p_min, p_max], pela chave `medida|sexo|faixa|categoria`. */
+/** A row of the PNS CSV: [p, p_min, p_max], by the key
+ * `medida|sexo|faixa|categoria`. */
 export type Pns = Readonly<Record<string, readonly [number, number, number]>>
 
-export interface Municipio {
-  readonly codigo: string
-  readonly nome: string
-  readonly uf: Uf
-  /** SIDRA 10185: pessoas por sexo × grupo × união, na ordem de `indiceConjugal`. */
-  readonly pessoas: ReadonlyArray<number>
+export interface Municipality {
+  readonly code: string
+  readonly name: string
+  readonly uf: StateCode
+  /** SIDRA 10185: people by sex × age group × union, in `unionIndex` order. */
+  readonly people: ReadonlyArray<number>
 }
 
-/** A posição de sexo × grupo × união (1 = vive em união) nas tabelas por célula. */
-export const indiceConjugal = (sexo: number, grupo: number, uniao: number) =>
-  (sexo * GRUPOS_DE_IDADE.length + grupo) * 2 + uniao
-export const CELULAS_CONJUGAIS = SEXOS.length * GRUPOS_DE_IDADE.length * 2
+/** The position of sex × age group × union (1 = lives in a union) in the
+ * per-cell tables. */
+export const unionIndex = (sex: number, ageGroup: number, union: number) =>
+  (sex * AGE_GROUPS.length + ageGroup) * 2 + union
+export const UNION_CELLS = SEXES.length * AGE_GROUPS.length * 2
 
-interface LinhaDoCenso {
+interface CensusRow {
   readonly uf: string
-  /** Código da célula (ver `codificar`). */
-  readonly codigo: number
-  readonly peso: number
-  readonly registros: number
+  /** The cell's code (see `encode`). */
+  readonly code: number
+  readonly weight: number
+  readonly records: number
 }
 
-/** Pessoas por idade simples, para homens e mulheres. */
-export interface Idades {
+/** People by single age, for men and women. The keys are the `SEXES` values. */
+export interface AgesBySex {
   readonly homem: ReadonlyArray<number>
   readonly mulher: ReadonlyArray<number>
 }
 
-export interface BaseDoGrupo {
-  readonly censo: ReadonlyArray<LinhaDoCenso>
-  readonly idades: ReadonlyMap<string, Idades>
-  readonly municipios: ReadonlyArray<Municipio>
+export interface GroupBase {
+  readonly census: ReadonlyArray<CensusRow>
+  readonly ages: ReadonlyMap<string, AgesBySex>
+  readonly municipalities: ReadonlyArray<Municipality>
   readonly pns: Pns
 }
 
-// --- código da célula ------------------------------------------------------
-// Cada dimensão vira um índice; "sem dado" é 0 e o valor i da lista é i + 1.
-// Sexo, grupo e união não têm "sem dado".
-const RAIOS = [
+// --- cell code -------------------------------------------------------------
+// Each dimension becomes an index; "no data" is 0 and the list's value i is
+// i + 1. Sex, age group and union have no "no data".
+const RADICES = [
   2,
-  GRUPOS_DE_IDADE.length,
+  AGE_GROUPS.length,
   2,
-  ESCOLARIDADES.length + 1,
-  RENDAS.length + 1,
-  CORES.length + 1,
-  RELIGIOES.length + 1,
+  EDUCATIONS.length + 1,
+  INCOMES.length + 1,
+  COLORS.length + 1,
+  RELIGIONS.length + 1,
   3,
 ] as const
 
-function codificar(partes: ReadonlyArray<number>): number {
-  let codigo = 0
-  for (let i = 0; i < RAIOS.length; i++)
-    codigo = codigo * RAIOS[i]! + partes[i]!
-  return codigo
+function encode(parts: ReadonlyArray<number>): number {
+  let code = 0
+  for (let i = 0; i < RADICES.length; i++) code = code * RADICES[i]! + parts[i]!
+  return code
 }
 
-function decodificar(codigo: number, saida: number[]): void {
-  for (let i = RAIOS.length - 1; i >= 0; i--) {
-    saida[i] = codigo % RAIOS[i]!
-    codigo = Math.floor(codigo / RAIOS[i]!)
+function decode(code: number, out: number[]): void {
+  for (let i = RADICES.length - 1; i >= 0; i--) {
+    out[i] = code % RADICES[i]!
+    code = Math.floor(code / RADICES[i]!)
   }
 }
 
-// --- leitura dos CSV -------------------------------------------------------
+// --- reading the CSVs ------------------------------------------------------
 
-function linhasCsv(texto: string): { cabecalho: string[]; linhas: string[][] } {
-  const [primeira = '', ...resto] = texto
+function csvLines(text: string): { header: string[]; rows: string[][] } {
+  const [first = '', ...rest] = text
     .split(/\r?\n/)
     .filter((l) => l.trim() !== '')
   return {
-    cabecalho: primeira.split(','),
-    linhas: resto.map((l) => l.split(',')),
+    header: first.split(','),
+    rows: rest.map((l) => l.split(',')),
   }
 }
 
-function indiceOuErro(
-  lista: ReadonlyArray<string>,
-  valor: string | undefined,
-  nome: string,
+function indexOrThrow(
+  list: ReadonlyArray<string>,
+  value: string | undefined,
+  name: string,
 ): number {
-  const i = lista.indexOf(valor ?? '')
-  if (i < 0) throw new Error(`${nome} desconhecido no CSV: "${valor}"`)
+  const i = list.indexOf(value ?? '')
+  if (i < 0) throw new Error(`unknown ${name} in the CSV: "${value}"`)
   return i
 }
 
-/** "" é sem dado (0); um valor da lista é a posição + 1. */
-function indiceOpcional(
-  lista: ReadonlyArray<string>,
-  valor: string | undefined,
-  nome: string,
+/** "" is no data (0); a value from the list is its position + 1. */
+function optionalIndex(
+  list: ReadonlyArray<string>,
+  value: string | undefined,
+  name: string,
 ): number {
-  return valor === '' || valor === undefined
+  return value === '' || value === undefined
     ? 0
-    : indiceOuErro(lista, valor, nome) + 1
+    : indexOrThrow(list, value, name) + 1
 }
 
-function lerCenso(texto: string): LinhaDoCenso[] {
-  const { cabecalho, linhas } = linhasCsv(texto)
-  const col = (nome: string) => indiceOuErro(cabecalho, nome, 'coluna')
+function readCensus(text: string): CensusRow[] {
+  const { header, rows } = csvLines(text)
+  const col = (name: string) => indexOrThrow(header, name, 'column')
   const c = {
-    sexo: col('sexo'),
-    idade: col('idade'),
+    sex: col('sexo'),
+    age: col('idade'),
     uf: col('uf'),
-    uniao: col('uniao'),
-    escolaridade: col('escolaridade'),
-    renda: col('renda'),
-    cor: col('cor'),
-    religiao: col('religiao'),
-    filhos: col('filhos'),
-    peso: col('peso'),
-    n: col('n_registros'),
+    union: col('uniao'),
+    education: col('escolaridade'),
+    income: col('renda'),
+    color: col('cor'),
+    religion: col('religiao'),
+    children: col('filhos'),
+    weight: col('peso'),
+    records: col('n_registros'),
   }
-  return linhas.map((l) => ({
+  return rows.map((l) => ({
     uf: l[c.uf] ?? '',
-    codigo: codificar([
-      indiceOuErro(SEXOS, l[c.sexo], 'sexo'),
-      indiceOuErro(GRUPOS_DE_IDADE, l[c.idade], 'grupo de idade'),
-      indiceOuErro(['nao', 'sim'], l[c.uniao], 'união'),
-      indiceOpcional(ESCOLARIDADES, l[c.escolaridade], 'escolaridade'),
-      indiceOpcional(RENDAS, l[c.renda], 'renda'),
-      indiceOpcional(CORES, l[c.cor], 'cor'),
-      indiceOpcional(RELIGIOES, l[c.religiao], 'religião'),
-      indiceOpcional(['nao', 'sim'], l[c.filhos], 'filhos'),
+    code: encode([
+      indexOrThrow(SEXES, l[c.sex], 'sex'),
+      indexOrThrow(AGE_GROUPS, l[c.age], 'age group'),
+      indexOrThrow(['nao', 'sim'], l[c.union], 'union'),
+      optionalIndex(EDUCATIONS, l[c.education], 'education'),
+      optionalIndex(INCOMES, l[c.income], 'income'),
+      optionalIndex(COLORS, l[c.color], 'color'),
+      optionalIndex(RELIGIONS, l[c.religion], 'religion'),
+      optionalIndex(['nao', 'sim'], l[c.children], 'children'),
     ]),
-    peso: Number(l[c.peso]),
-    registros: Number(l[c.n]),
+    weight: Number(l[c.weight]),
+    records: Number(l[c.records]),
   }))
 }
 
-function lerIdades(texto: string): Map<string, Idades> {
-  const { linhas } = linhasCsv(texto)
-  const porLocal = new Map<string, { homem: number[]; mulher: number[] }>()
-  for (const [local = '', sexo = '', idade = '', pessoas = '0'] of linhas) {
-    const atual = porLocal.get(local) ?? {
-      homem: Array(IDADES_SIMPLES).fill(0),
-      mulher: Array(IDADES_SIMPLES).fill(0),
+function readAges(text: string): Map<string, AgesBySex> {
+  const { rows } = csvLines(text)
+  const byPlace = new Map<string, { homem: number[]; mulher: number[] }>()
+  for (const [place = '', sex = '', age = '', people = '0'] of rows) {
+    const current = byPlace.get(place) ?? {
+      homem: Array(SINGLE_AGES).fill(0),
+      mulher: Array(SINGLE_AGES).fill(0),
     }
-    porLocal.set(local, atual)
-    const posicao = idade === '100+' ? IDADES_SIMPLES - 1 : Number(idade) - 15
-    atual[SEXOS[indiceOuErro(SEXOS, sexo, 'sexo')]!][posicao] = Number(pessoas)
+    byPlace.set(place, current)
+    const position = age === '100+' ? SINGLE_AGES - 1 : Number(age) - 15
+    current[SEXES[indexOrThrow(SEXES, sex, 'sex')]!][position] = Number(people)
   }
-  return porLocal
+  return byPlace
 }
 
-function lerMunicipios(texto: string): Municipio[] {
-  const { cabecalho, linhas } = linhasCsv(texto)
-  const posicoes = cabecalho.map((nome) => {
-    const [sexo, grupo, uniao] = nome.split('_')
-    const s = SEXOS.indexOf(sexo as Sexo)
-    const g = GRUPOS_DE_IDADE.indexOf(grupo as (typeof GRUPOS_DE_IDADE)[number])
-    const u = ['nao', 'sim'].indexOf(uniao ?? '')
-    return s < 0 || g < 0 || u < 0 ? -1 : indiceConjugal(s, g, u)
+function readMunicipalities(text: string): Municipality[] {
+  const { header, rows } = csvLines(text)
+  const positions = header.map((name) => {
+    const [sex, ageGroup, union] = name.split('_')
+    const s = SEXES.indexOf(sex as Sex)
+    const g = AGE_GROUPS.indexOf(ageGroup as (typeof AGE_GROUPS)[number])
+    const u = ['nao', 'sim'].indexOf(union ?? '')
+    return s < 0 || g < 0 || u < 0 ? -1 : unionIndex(s, g, u)
   })
-  return linhas.map((l) => {
-    const pessoas = Array<number>(CELULAS_CONJUGAIS).fill(0)
-    l.forEach((valor, i) => {
-      const p = posicoes[i]!
-      if (p >= 0) pessoas[p] = Number(valor)
+  return rows.map((l) => {
+    const people = Array<number>(UNION_CELLS).fill(0)
+    l.forEach((value, i) => {
+      const p = positions[i]!
+      if (p >= 0) people[p] = Number(value)
     })
-    const uf = UFS.find((u) => u.sigla === l[2])
-    if (!uf) throw new Error(`UF desconhecida no CSV de municípios: "${l[2]}"`)
-    return { codigo: l[0] ?? '', nome: l[1] ?? '', uf: uf.sigla, pessoas }
+    const state = STATES.find((u) => u.abbr === l[2])
+    if (!state)
+      throw new Error(`unknown state in the municipalities CSV: "${l[2]}"`)
+    return { code: l[0] ?? '', name: l[1] ?? '', uf: state.abbr, people }
   })
 }
 
-function lerPns(texto: string): Pns {
-  const { linhas } = linhasCsv(texto)
+function readPns(text: string): Pns {
+  const { rows } = csvLines(text)
   return Object.fromEntries(
-    linhas.map(([medida, sexo, faixa, categoria, p, min, max]) => [
-      `${medida}|${sexo}|${faixa}|${categoria}`,
+    rows.map(([measure, sex, bracket, category, p, min, max]) => [
+      `${measure}|${sex}|${bracket}|${category}`,
       [Number(p), Number(min), Number(max)] as const,
     ]),
   )
 }
 
-/** Os arquivos de `dados/grupo-possivel/`, como texto. */
-export interface ArquivosDoGrupo {
+/** The files of `dados/grupo-possivel/`, as text. */
+export interface GroupFiles {
   /** `censo-2022.csv` */
-  readonly censo: string
+  readonly census: string
   /** `sidra-9514-idade.csv` */
-  readonly idades: string
+  readonly ages: string
   /** `sidra-10185-municipios.csv` */
-  readonly municipios: string
+  readonly municipalities: string
   /** `pns-2019.csv` */
   readonly pns: string
 }
 
-export function lerBaseDoGrupo(arquivos: ArquivosDoGrupo): BaseDoGrupo {
+export function readGroupBase(files: GroupFiles): GroupBase {
   return {
-    censo: lerCenso(arquivos.censo),
-    idades: lerIdades(arquivos.idades),
-    municipios: lerMunicipios(arquivos.municipios),
-    pns: lerPns(arquivos.pns),
+    census: readCensus(files.census),
+    ages: readAges(files.ages),
+    municipalities: readMunicipalities(files.municipalities),
+    pns: readPns(files.pns),
   }
 }
 
-// --- pacote ----------------------------------------------------------------
+// --- pack ------------------------------------------------------------------
 
-export type LugarDoPacote = 'BR' | Uf
+export type PackPlace = 'BR' | StateCode
 
-/** O que o navegador baixa para um lugar. Só números e textos, em colunas. */
-export interface Pacote {
-  readonly versao: 1
-  readonly lugar: LugarDoPacote
-  readonly celulas: ReadonlyArray<number>
-  readonly pesos: ReadonlyArray<number>
-  readonly registros: ReadonlyArray<number>
-  readonly idades: Idades
-  /** `[código, nome, ...pessoas]` de cada município da UF. */
-  readonly municipios: ReadonlyArray<ReadonlyArray<string | number>>
+/** What the browser downloads for a place. Only numbers and texts, in
+ * columns. The build writes it under a path hashed from its content, so a
+ * new format never meets an old page. */
+export interface Pack {
+  readonly version: 1
+  readonly place: PackPlace
+  readonly cells: ReadonlyArray<number>
+  readonly weights: ReadonlyArray<number>
+  readonly records: ReadonlyArray<number>
+  readonly ages: AgesBySex
+  /** `[code, name, ...people]` of each municipality in the state. */
+  readonly municipalities: ReadonlyArray<ReadonlyArray<string | number>>
   readonly pns: Pns
 }
 
-/** O pacote de um lugar: no Brasil, as células das UFs somadas. O peso vai
- * arredondado à pessoa, que é o que a conta mostra. */
-export function pacoteDoLugar(base: BaseDoGrupo, lugar: LugarDoPacote): Pacote {
-  const somas = new Map<number, { peso: number; registros: number }>()
-  for (const linha of base.censo) {
-    if (lugar !== 'BR' && linha.uf !== lugar) continue
-    const atual = somas.get(linha.codigo) ?? { peso: 0, registros: 0 }
-    atual.peso += linha.peso
-    atual.registros += linha.registros
-    somas.set(linha.codigo, atual)
+/** A place's pack: for Brazil, the states' cells summed. The weight is
+ * rounded to the person, which is what the count shows. */
+export function packForPlace(base: GroupBase, place: PackPlace): Pack {
+  const sums = new Map<number, { weight: number; records: number }>()
+  for (const row of base.census) {
+    if (place !== 'BR' && row.uf !== place) continue
+    const current = sums.get(row.code) ?? { weight: 0, records: 0 }
+    current.weight += row.weight
+    current.records += row.records
+    sums.set(row.code, current)
   }
-  const codigos = [...somas.keys()].sort((a, b) => a - b)
-  const idades = base.idades.get(lugar)
-  if (!idades) throw new Error(`sem idades simples do SIDRA 9514 para ${lugar}`)
+  const codes = [...sums.keys()].sort((a, b) => a - b)
+  const ages = base.ages.get(place)
+  if (!ages) throw new Error(`no SIDRA 9514 single ages for ${place}`)
   return {
-    versao: 1,
-    lugar,
-    celulas: codigos,
-    pesos: codigos.map((c) => Math.round(somas.get(c)!.peso)),
-    registros: codigos.map((c) => somas.get(c)!.registros),
-    idades,
-    municipios:
-      lugar === 'BR'
+    version: 1,
+    place,
+    cells: codes,
+    weights: codes.map((c) => Math.round(sums.get(c)!.weight)),
+    records: codes.map((c) => sums.get(c)!.records),
+    ages,
+    municipalities:
+      place === 'BR'
         ? []
-        : base.municipios
-            .filter((m) => m.uf === lugar)
-            .map((m) => [m.codigo, m.nome, ...m.pessoas]),
+        : base.municipalities
+            .filter((m) => m.uf === place)
+            .map((m) => [m.code, m.name, ...m.people]),
     pns: base.pns,
   }
 }
 
-/** Um lugar aberto para a conta: uma coluna tipada por dimensão. */
-export interface DadosDoLugar {
-  readonly lugar: LugarDoPacote
-  readonly tamanho: number
-  readonly sexo: Uint8Array
-  readonly grupo: Uint8Array
-  readonly uniao: Uint8Array
-  /** 0 = sem dado; i + 1 = posição i da lista (ESCOLARIDADES, RENDAS…). */
-  readonly escolaridade: Uint8Array
-  readonly renda: Uint8Array
-  readonly cor: Uint8Array
-  readonly religiao: Uint8Array
-  /** 0 = sem dado (homens), 1 = não tem, 2 = tem. */
-  readonly filhos: Uint8Array
-  readonly peso: Float64Array
-  readonly registros: Float64Array
-  readonly idades: Idades
-  readonly municipios: ReadonlyMap<string, Municipio>
+/** A place opened for the count: one typed column per dimension. */
+export interface PlaceData {
+  readonly place: PackPlace
+  readonly size: number
+  readonly sex: Uint8Array
+  readonly ageGroup: Uint8Array
+  readonly union: Uint8Array
+  /** 0 = no data; i + 1 = position i of the list (EDUCATIONS, INCOMES…). */
+  readonly education: Uint8Array
+  readonly income: Uint8Array
+  readonly color: Uint8Array
+  readonly religion: Uint8Array
+  /** 0 = no data (men), 1 = has none, 2 = has. */
+  readonly children: Uint8Array
+  readonly weight: Float64Array
+  readonly records: Float64Array
+  readonly ages: AgesBySex
+  readonly municipalities: ReadonlyMap<string, Municipality>
   readonly pns: Pns
 }
 
-/** O pacote da versão que este código lê. */
-function ehPacote(valor: unknown): valor is Pacote {
+/** A pack of the version this code reads. */
+function isPack(value: unknown): value is Pack {
   return (
-    typeof valor === 'object' &&
-    valor !== null &&
-    'versao' in valor &&
-    valor.versao === 1 &&
-    'celulas' in valor &&
-    Array.isArray(valor.celulas)
+    typeof value === 'object' &&
+    value !== null &&
+    'version' in value &&
+    value.version === 1 &&
+    'cells' in value &&
+    Array.isArray(value.cells)
   )
 }
 
-/** Abre um pacote (que veio da rede ou do disco, como JSON: confere o
- * formato antes). */
-export function abrirPacote(pacote: unknown): DadosDoLugar {
-  if (!ehPacote(pacote))
-    throw new Error('pacote do Grupo possível em formato desconhecido')
-  const n = pacote.celulas.length
-  const colunas = Array.from({ length: RAIOS.length }, () => new Uint8Array(n))
-  const partes: number[] = []
+/** Opens a pack (which came from the network or the disk, as JSON: it checks
+ * the format first). */
+export function openPack(pack: unknown): PlaceData {
+  if (!isPack(pack)) throw new Error('possible group pack in an unknown format')
+  const n = pack.cells.length
+  const columns = Array.from(
+    { length: RADICES.length },
+    () => new Uint8Array(n),
+  )
+  const parts: number[] = []
   for (let i = 0; i < n; i++) {
-    decodificar(pacote.celulas[i]!, partes)
-    for (let d = 0; d < RAIOS.length; d++) colunas[d]![i] = partes[d]!
+    decode(pack.cells[i]!, parts)
+    for (let d = 0; d < RADICES.length; d++) columns[d]![i] = parts[d]!
   }
-  const [sexo, grupo, uniao, escolaridade, renda, cor, religiao, filhos] =
-    colunas as [
+  const [sex, ageGroup, union, education, income, color, religion, children] =
+    columns as [
       Uint8Array,
       Uint8Array,
       Uint8Array,
@@ -343,34 +352,34 @@ export function abrirPacote(pacote: unknown): DadosDoLugar {
       Uint8Array,
       Uint8Array,
     ]
-  const uf = pacote.lugar === 'BR' ? undefined : pacote.lugar
+  const uf = pack.place === 'BR' ? undefined : pack.place
   return {
-    lugar: pacote.lugar,
-    tamanho: n,
-    sexo,
-    grupo,
-    uniao,
-    escolaridade,
-    renda,
-    cor,
-    religiao,
-    filhos,
-    peso: Float64Array.from(pacote.pesos),
-    registros: Float64Array.from(pacote.registros),
-    idades: pacote.idades,
-    municipios: new Map(
+    place: pack.place,
+    size: n,
+    sex,
+    ageGroup,
+    union,
+    education,
+    income,
+    color,
+    religion,
+    children,
+    weight: Float64Array.from(pack.weights),
+    records: Float64Array.from(pack.records),
+    ages: pack.ages,
+    municipalities: new Map(
       uf
-        ? pacote.municipios.map(([codigo, nome, ...pessoas]) => [
-            String(codigo),
+        ? pack.municipalities.map(([code, name, ...people]) => [
+            String(code),
             {
-              codigo: String(codigo),
-              nome: String(nome),
+              code: String(code),
+              name: String(name),
               uf,
-              pessoas: pessoas.map(Number),
+              people: people.map(Number),
             },
           ])
         : [],
     ),
-    pns: pacote.pns,
+    pns: pack.pns,
   }
 }

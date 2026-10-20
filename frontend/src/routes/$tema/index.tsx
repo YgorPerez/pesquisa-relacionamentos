@@ -16,8 +16,8 @@ export const Route = createFileRoute('/$tema/')({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: loaderData.busca.descricao },
+          { title: `${loaderData.busca.title} · Tem estudo?` },
+          { name: 'description', content: loaderData.busca.description },
         ]
       : [],
   }),

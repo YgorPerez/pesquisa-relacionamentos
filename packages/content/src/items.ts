@@ -1,263 +1,252 @@
-// Tema, Guia e Dica lidos arquivo a arquivo: o frontmatter decodificado e o
-// corpo cortado. O que depende de outros arquivos (herança das Fichas,
-// referências, Confiança, `ordem`) fica em `publicacao.ts`.
+// Topic, guide and tip read file by file: the decoded frontmatter and the cut
+// body. What depends on other files (inheritance from the fact sheets,
+// references, confidence, `ordem`) lives in `publication.ts`.
 import type { Schema } from 'effect'
-import { parse as lerYaml } from 'yaml'
+import { parse as parseYaml } from 'yaml'
 import {
-  FrontmatterDica,
-  FrontmatterGuia,
-  FrontmatterTema,
-  type Cobre,
-  type Divergencia,
-  type Mito,
+  TipFrontmatter,
+  GuideFrontmatter,
+  TopicFrontmatter,
+  type Coverage,
+  type Divergence,
+  type Myth,
 } from './schema.ts'
-import { ROTAS_RESERVADAS, type Forca } from './lists.ts'
-import { dividirFrontmatter, lerCorpo } from './markdown.ts'
-import { decodificar, problema, type Problema } from './problems.ts'
+import { RESERVED_ROUTES, type Strength } from './lists.ts'
+import { splitFrontmatter, readBody } from './markdown.ts'
+import { decode, problem, type Problem } from './problems.ts'
 
-export interface Tema extends FrontmatterTema {
-  /** O nome da pasta em `guias/`, que vira o caminho `/<tema>`. */
+export interface Topic extends TopicFrontmatter {
+  /** The folder name in `guias/`, which becomes the path `/<topic>`. */
   readonly slug: string
-  readonly arquivo: string
-  /** O parágrafo de contexto, em markdown. */
-  readonly contexto: string
+  readonly file: string
+  /** The context paragraph, in markdown. */
+  readonly context: string
 }
 
-/** Um achado do Guia com o que herdou das Fichas citadas. */
-export interface AchadoDoGuia {
+/** A guide finding with what it inherited from the cited fact sheets. The
+ * inherited keys keep the frontmatter names. */
+export interface GuideFinding {
   readonly texto: string
   readonly fichas: ReadonlyArray<string>
-  /** `pais` do achado ou os países das Fichas, sem repetir. */
+  /** The finding's `pais` or the fact sheets' countries, without repeats. */
   readonly paises: ReadonlyArray<string>
-  /** `periodo` do achado ou os períodos das Fichas, juntos. */
+  /** The finding's `periodo` or the fact sheets' periods, joined. */
   readonly periodo: string
-  /** Quem o achado cobre: `[vale_para]` se declarou um recorte, senão o
-   * `cobre` de cada Ficha citada. Vale para o Perfil que um deles cobrir. */
-  readonly cobre: ReadonlyArray<Cobre>
-  /** Se `cobre` veio de `vale_para` (um recorte) e não das Fichas. */
-  readonly recorte: boolean
+  /** Who the finding covers: `[vale_para]` if it declared a scope, otherwise
+   * the `cobre` of each cited fact sheet. It applies to the profile any of
+   * them covers. */
+  readonly cobre: ReadonlyArray<Coverage>
+  /** Whether `cobre` came from `vale_para` (a scope) and not from the fact
+   * sheets. */
+  readonly scoped: boolean
 }
 
-export interface Guia extends Omit<
-  FrontmatterGuia,
+export interface Guide extends Omit<
+  GuideFrontmatter,
   'achados' | 'dicas' | 'mitos' | 'relacionadas'
 > {
   readonly slug: string
-  /** O slug do Tema, a pasta do arquivo. */
-  readonly tema: string
-  readonly arquivo: string
-  readonly achados: ReadonlyArray<AchadoDoGuia>
+  /** The topic slug, the file's folder. */
+  readonly topic: string
+  readonly file: string
+  readonly achados: ReadonlyArray<GuideFinding>
   readonly dicas: ReadonlyArray<string>
-  readonly mitos: ReadonlyArray<Mito>
+  readonly mitos: ReadonlyArray<Myth>
   readonly relacionadas: ReadonlyArray<string>
-  /** O markdown antes do primeiro `##`. Referências como `[@slug-da-ficha]`
-   * e o número-chave como `==39% dos casais==`. */
-  readonly respostaCurta: string
-  readonly variaConformePerfil: string
-  readonly limitacoes: string
-  /** Todas as Fichas que a página cita, na ordem em que aparecem; o número
-   * de cada referência é a posição aqui mais um. */
-  readonly fichasCitadas: ReadonlyArray<string>
+  /** The markdown before the first `##`. References like `[@fact-sheet-slug]`
+   * and the key number like `==39% dos casais==`. */
+  readonly shortAnswer: string
+  readonly variesByProfile: string
+  readonly limitations: string
+  /** Every fact sheet the page cites, in the order they appear; each
+   * reference's number is its position here plus one. */
+  readonly citedFactSheets: ReadonlyArray<string>
 }
 
-export interface Dica {
+export interface Tip {
   readonly slug: string
-  readonly arquivo: string
-  readonly texto: string
+  readonly file: string
+  readonly text: string
   readonly fichas: ReadonlyArray<string>
-  readonly forca: Forca
+  readonly forca: Strength
   readonly inferencia: boolean
   readonly paises: ReadonlyArray<string>
   readonly periodo: string
-  readonly cobre: ReadonlyArray<Cobre>
-  readonly recorte: boolean
-  /** Uma Dica só vai para o site se todas as Fichas dela forem ✅ ou 🟡. */
-  readonly publicada: boolean
+  readonly cobre: ReadonlyArray<Coverage>
+  readonly scoped: boolean
+  /** A tip only goes to the site if all its fact sheets are ✅ or 🟡. */
+  readonly published: boolean
   readonly antes?: ReadonlyArray<string>
-  readonly seo?: FrontmatterDica['seo']
+  readonly seo?: TipFrontmatter['seo']
 }
 
-export const SECOES_DO_GUIA = {
-  perfil: 'Varia conforme o Perfil?',
-  limitacoes: 'Limitações',
+export const GUIDE_SECTIONS = {
+  profile: 'Varia conforme o Perfil?',
+  limitations: 'Limitações',
 } as const
 
-type Lido<T> = {
-  readonly valor: T | null
-  readonly corpo: string
-  readonly erros: Problema[]
+type Parsed<T> = {
+  readonly value: T | null
+  readonly body: string
+  readonly errors: Problem[]
 }
 
-function lerFrontmatter<S extends Schema.Decoder<unknown>>(
-  esquema: S,
-  arquivo: string,
-  texto: string,
-): Lido<S['Type']> {
-  const erros: Problema[] = []
-  const { frontmatter, corpo } = dividirFrontmatter(texto)
+function readFrontmatter<S extends Schema.Decoder<unknown>>(
+  schema: S,
+  file: string,
+  text: string,
+): Parsed<S['Type']> {
+  const errors: Problem[] = []
+  const { frontmatter, body } = splitFrontmatter(text)
   if (frontmatter === null) {
-    erros.push(problema(arquivo, 'falta o frontmatter (o bloco --- do topo)'))
-    return { valor: null, corpo, erros }
+    errors.push(
+      problem(file, 'missing the frontmatter (the --- block at the top)'),
+    )
+    return { value: null, body, errors }
   }
-  let dados: unknown
+  let data: unknown
   try {
-    dados = lerYaml(frontmatter) ?? {}
+    data = parseYaml(frontmatter) ?? {}
   } catch (e) {
-    erros.push(
-      problema(
-        arquivo,
-        `o frontmatter não é YAML válido: ${(e as Error).message}`,
+    errors.push(
+      problem(
+        file,
+        `the frontmatter is not valid YAML: ${(e as Error).message}`,
       ),
     )
-    return { valor: null, corpo, erros }
+    return { value: null, body, errors }
   }
-  const decodificado = decodificar(esquema, dados, arquivo)
-  if (!decodificado.ok)
-    return { valor: null, corpo, erros: [...decodificado.problemas] }
-  return { valor: decodificado.valor, corpo, erros }
+  const decoded = decode(schema, data, file)
+  if (!decoded.ok) return { value: null, body, errors: [...decoded.problems] }
+  return { value: decoded.value, body, errors }
 }
 
-const nomeSemMd = (arquivo: string) =>
-  arquivo.replace(/^.*\//, '').replace(/\.md$/, '')
+const nameWithoutMd = (file: string) =>
+  file.replace(/^.*\//, '').replace(/\.md$/, '')
 
-export type ItemLido<T> =
+export type ParsedItem<T> =
   | { readonly ok: true; readonly item: T }
-  | { readonly ok: false; readonly erros: ReadonlyArray<Problema> }
+  | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** `guias/<tema>/_tema.md`. */
-export function lerTema(arquivo: string, texto: string): ItemLido<Tema> {
-  const slug = arquivo.split('/')[1] ?? ''
-  const { valor, corpo, erros } = lerFrontmatter(
-    FrontmatterTema,
-    arquivo,
-    texto,
-  )
-  const contexto = corpo.trim()
-  if (valor && !contexto)
-    erros.push(problema(arquivo, 'falta o parágrafo de contexto no corpo'))
-  const reservadas: ReadonlyArray<string> = ROTAS_RESERVADAS
-  if (reservadas.includes(slug))
-    erros.push(
-      problema(
-        arquivo,
-        `o Tema não pode se chamar "${slug}", que é uma rota do site (${ROTAS_RESERVADAS.join(', ')})`,
+/** `guias/<topic>/_tema.md`. */
+export function readTopic(file: string, text: string): ParsedItem<Topic> {
+  const slug = file.split('/')[1] ?? ''
+  const { value, body, errors } = readFrontmatter(TopicFrontmatter, file, text)
+  const context = body.trim()
+  if (value && !context)
+    errors.push(problem(file, 'missing the context paragraph in the body'))
+  const reserved: ReadonlyArray<string> = RESERVED_ROUTES
+  if (reserved.includes(slug))
+    errors.push(
+      problem(
+        file,
+        `a topic cannot be called "${slug}", which is a site route (${RESERVED_ROUTES.join(', ')})`,
       ),
     )
   else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
-    erros.push(
-      problema(
-        arquivo,
-        'o nome da pasta do Tema precisa ser minúsculo, sem acento, com hífen',
+    errors.push(
+      problem(
+        file,
+        'the topic folder name must be lowercase, without accents, hyphenated',
       ),
     )
-  if (!valor || erros.length > 0) return { ok: false, erros }
-  return { ok: true, item: { ...valor, slug, arquivo, contexto } }
+  if (!value || errors.length > 0) return { ok: false, errors }
+  return { ok: true, item: { ...value, slug, file, context } }
 }
 
-/** O Guia ainda sem a herança das Fichas: `paises`, `periodo` e `cobre` dos
- * achados e `fichasCitadas` chegam em `publicacao.ts`. */
-export type GuiaLido = Omit<Guia, 'achados' | 'fichasCitadas'> & {
-  readonly achados: FrontmatterGuia['achados']
+/** The guide still without the fact sheets' inheritance: the findings'
+ * `paises`, `periodo` and `cobre`, and `citedFactSheets`, arrive in
+ * `publication.ts`. */
+export type ParsedGuide = Omit<Guide, 'achados' | 'citedFactSheets'> & {
+  readonly achados: GuideFrontmatter['achados']
 }
 
-/** `guias/<tema>/<slug>.md`. */
-export function lerGuia(arquivo: string, texto: string): ItemLido<GuiaLido> {
-  const [, tema = '', nome = ''] = arquivo.split('/')
-  const slug = nomeSemMd(nome)
-  const { valor, corpo, erros } = lerFrontmatter(
-    FrontmatterGuia,
-    arquivo,
-    texto,
-  )
-  const lido = lerCorpo(corpo)
-  if (lido.titulo)
-    erros.push(
-      problema(
-        arquivo,
-        'o Guia não leva título "#": a Pergunta vem de `pergunta`',
+/** `guias/<topic>/<slug>.md`. */
+export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
+  const [, topic = '', name = ''] = file.split('/')
+  const slug = nameWithoutMd(name)
+  const { value, body, errors } = readFrontmatter(GuideFrontmatter, file, text)
+  const parsed = readBody(body)
+  if (parsed.title)
+    errors.push(
+      problem(
+        file,
+        'a guide has no "#" title: the question comes from `pergunta`',
       ),
     )
-  if (!lido.abertura)
-    erros.push(
-      problema(arquivo, 'falta a resposta curta antes do primeiro "##"'),
-    )
-  const conhecidas: ReadonlyArray<string> = Object.values(SECOES_DO_GUIA)
-  for (const titulo of conhecidas) {
-    if (!lido.secoes.some((s) => s.titulo === titulo))
-      erros.push(problema(arquivo, `falta a seção "## ${titulo}"`, titulo))
+  if (!parsed.opening)
+    errors.push(problem(file, 'missing the short answer before the first "##"'))
+  const known: ReadonlyArray<string> = Object.values(GUIDE_SECTIONS)
+  for (const title of known) {
+    if (!parsed.sections.some((s) => s.title === title))
+      errors.push(problem(file, `missing the section "## ${title}"`, title))
   }
-  for (const secao of lido.secoes) {
-    if (!conhecidas.includes(secao.titulo))
-      erros.push(
-        problema(
-          arquivo,
-          `seção desconhecida "## ${secao.titulo}"; o corpo do Guia tem só a resposta curta, "## ${SECOES_DO_GUIA.perfil}" e "## ${SECOES_DO_GUIA.limitacoes}"`,
-          secao.titulo,
+  for (const section of parsed.sections) {
+    if (!known.includes(section.title))
+      errors.push(
+        problem(
+          file,
+          `unknown section "## ${section.title}"; a guide body has only the short answer, "## ${GUIDE_SECTIONS.profile}" and "## ${GUIDE_SECTIONS.limitations}"`,
+          section.title,
         ),
       )
   }
-  if (valor) {
-    const amarelas = valor.pergunta.match(/==[^=]+==/g) ?? []
-    if (amarelas.length > 1)
-      erros.push(
-        problema(
-          arquivo,
-          'a Pergunta leva no máximo uma palavra em amarelo (==palavra==)',
+  if (value) {
+    const highlights = value.pergunta.match(/==[^=]+==/g) ?? []
+    if (highlights.length > 1)
+      errors.push(
+        problem(
+          file,
+          'the question highlights at most one word in yellow (==word==)',
           'pergunta',
         ),
       )
   }
-  if (!valor || erros.length > 0) return { ok: false, erros }
-  const secao = (titulo: string) =>
-    lido.secoes.find((s) => s.titulo === titulo)?.markdown ?? ''
+  if (!value || errors.length > 0) return { ok: false, errors }
+  const section = (title: string) =>
+    parsed.sections.find((s) => s.title === title)?.markdown ?? ''
   return {
     ok: true,
     item: {
-      ...valor,
+      ...value,
       slug,
-      tema,
-      arquivo,
-      dicas: valor.dicas ?? [],
-      mitos: valor.mitos ?? [],
-      relacionadas: valor.relacionadas ?? [],
-      respostaCurta: lido.abertura,
-      variaConformePerfil: secao(SECOES_DO_GUIA.perfil),
-      limitacoes: secao(SECOES_DO_GUIA.limitacoes),
+      topic,
+      file,
+      dicas: value.dicas ?? [],
+      mitos: value.mitos ?? [],
+      relacionadas: value.relacionadas ?? [],
+      shortAnswer: parsed.opening,
+      variesByProfile: section(GUIDE_SECTIONS.profile),
+      limitations: section(GUIDE_SECTIONS.limitations),
     },
   }
 }
 
-export type DicaLida = FrontmatterDica & {
+export type ParsedTip = TipFrontmatter & {
   readonly slug: string
-  readonly arquivo: string
-  readonly texto: string
+  readonly file: string
+  readonly text: string
 }
 
 /** `dicas/<slug>.md`. */
-export function lerDica(arquivo: string, texto: string): ItemLido<DicaLida> {
-  const slug = nomeSemMd(arquivo)
-  const { valor, corpo, erros } = lerFrontmatter(
-    FrontmatterDica,
-    arquivo,
-    texto,
-  )
-  const textoDaDica = corpo.trim()
-  if (valor && !textoDaDica)
-    erros.push(problema(arquivo, 'falta o texto da Dica no corpo'))
-  if (valor && valor.fichas.length === 0)
-    erros.push(
-      problema(arquivo, 'uma Dica cita pelo menos uma Ficha', 'fichas'),
-    )
-  if (valor?.inferencia && valor.forca === 'forte')
-    erros.push(
-      problema(
-        arquivo,
-        `uma Inferência tem Força moderada no máximo (veio ${valor.forca})`,
+export function readTip(file: string, text: string): ParsedItem<ParsedTip> {
+  const slug = nameWithoutMd(file)
+  const { value, body, errors } = readFrontmatter(TipFrontmatter, file, text)
+  const tipText = body.trim()
+  if (value && !tipText)
+    errors.push(problem(file, 'missing the tip text in the body'))
+  if (value && value.fichas.length === 0)
+    errors.push(problem(file, 'a tip cites at least one fact sheet', 'fichas'))
+  if (value?.inferencia && value.forca === 'forte')
+    errors.push(
+      problem(
+        file,
+        `an inference has at most moderate strength (got ${value.forca})`,
         'forca',
       ),
     )
-  if (!valor || erros.length > 0) return { ok: false, erros }
-  return { ok: true, item: { ...valor, slug, arquivo, texto: textoDaDica } }
+  if (!value || errors.length > 0) return { ok: false, errors }
+  return { ok: true, item: { ...value, slug, file, text: tipText } }
 }
 
-export type { Divergencia, Mito }
+export type { Divergence, Myth }

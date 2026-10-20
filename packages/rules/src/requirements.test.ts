@@ -1,23 +1,23 @@
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  idadeProcurada,
-  lerRequisitos,
-  quemSeProcura,
-  REQUISITOS_PADRAO,
-  soltar,
-  valorDoRequisito,
-  type Requisitos,
+  soughtAge,
+  readRequirements,
+  whoIsSought,
+  DEFAULT_REQUIREMENTS,
+  release,
+  requirementValue,
+  type Requirements,
 } from './requirements.ts'
 
-describe('lerRequisitos', () => {
-  it('devolve o padrão para lixo: "não mora com companheiro(a)" ligado e o resto solto', () => {
-    expect(lerRequisitos(null)).toEqual(REQUISITOS_PADRAO)
-    expect(lerRequisitos('x')).toEqual(REQUISITOS_PADRAO)
-    expect(REQUISITOS_PADRAO.companheiro).toBe(true)
+describe('readRequirements', () => {
+  it('returns the default for junk: "não mora com companheiro(a)" on and the rest released', () => {
+    expect(readRequirements(null)).toEqual(DEFAULT_REQUIREMENTS)
+    expect(readRequirements('x')).toEqual(DEFAULT_REQUIREMENTS)
+    expect(DEFAULT_REQUIREMENTS.companheiro).toBe(true)
   })
 
-  it('aceita os Requisitos válidos e volta igual depois de passar por JSON', () => {
-    const r: Requisitos = {
+  it('accepts valid requirements and comes back equal after going through JSON', () => {
+    const r: Requirements = {
       idade: { min: 25, max: 35 },
       lugar: { uf: 'SP', municipio: '3550308' },
       companheiro: false,
@@ -29,11 +29,11 @@ describe('lerRequisitos', () => {
       altura: { min: 160, max: 200 },
       naoFuma: true,
     }
-    expect(lerRequisitos(JSON.parse(JSON.stringify(r)))).toEqual(r)
+    expect(readRequirements(JSON.parse(JSON.stringify(r)))).toEqual(r)
   })
 
-  it('descarta o que não vale e mantém o resto', () => {
-    const r = lerRequisitos({
+  it('drops what is not valid and keeps the rest', () => {
+    const r = readRequirements({
       idade: { min: 40, max: 30 },
       lugar: { uf: 'SP', municipio: '3304557' },
       escolaridade: 'doutorado',
@@ -42,18 +42,18 @@ describe('lerRequisitos', () => {
       naoFuma: 'sim',
     })
     expect(r.idade).toBeNull()
-    // O município do Rio não é de SP: fica a UF.
+    // Rio's municipality is not in SP: the state stays.
     expect(r.lugar).toEqual({ uf: 'SP' })
     expect(r.escolaridade).toBeNull()
     expect(r.cores).toEqual(['preta'])
-    expect(r.altura).toEqual(REQUISITOS_PADRAO.altura)
+    expect(r.altura).toEqual(DEFAULT_REQUIREMENTS.altura)
     expect(r.naoFuma).toBe(false)
   })
 })
 
-describe('valorDoRequisito', () => {
-  const r: Requisitos = {
-    ...REQUISITOS_PADRAO,
+describe('requirementValue', () => {
+  const r: Requirements = {
+    ...DEFAULT_REQUIREMENTS,
     idade: { min: 40, max: 80 },
     lugar: { uf: 'SP', municipio: '3550308' },
     escolaridade: 'medio',
@@ -61,27 +61,27 @@ describe('valorDoRequisito', () => {
     altura: { min: 140, max: 175 },
   }
 
-  it('escreve cada Requisito como na frase', () => {
-    expect(valorDoRequisito('idade', null, r)).toBe('40 anos ou mais')
-    expect(valorDoRequisito('lugar', null, r, 'São Paulo')).toBe(
+  it('writes each requirement as in the sentence', () => {
+    expect(requirementValue('idade', null, r)).toBe('40 anos ou mais')
+    expect(requirementValue('lugar', null, r, 'São Paulo')).toBe(
       'São Paulo (SP)',
     )
-    expect(valorDoRequisito('lugar', null, REQUISITOS_PADRAO)).toBe(
+    expect(requirementValue('lugar', null, DEFAULT_REQUIREMENTS)).toBe(
       'Brasil inteiro',
     )
-    expect(valorDoRequisito('escolaridade', null, r)).toBe(
+    expect(requirementValue('escolaridade', null, r)).toBe(
       'pelo menos médio completo',
     )
-    expect(valorDoRequisito('cor', null, r)).toBe(
+    expect(requirementValue('cor', null, r)).toBe(
       'cor preta, parda ou indígena',
     )
-    expect(valorDoRequisito('altura', null, r)).toBe('até 175 cm')
-    expect(valorDoRequisito('renda', null, r)).toBe('qualquer renda')
+    expect(requirementValue('altura', null, r)).toBe('até 175 cm')
+    expect(requirementValue('renda', null, r)).toBe('qualquer renda')
   })
 
-  it('"sem filhos" procurando homens diz que não há dado', () => {
+  it('"sem filhos" when seeking men says there is no data', () => {
     expect(
-      valorDoRequisito(
+      requirementValue(
         'filhos',
         { procura: 'homens' },
         { ...r, semFilhos: true },
@@ -90,69 +90,69 @@ describe('valorDoRequisito', () => {
   })
 })
 
-describe('soltar', () => {
-  it('volta só aquele Requisito ao "qualquer"', () => {
-    const r: Requisitos = {
-      ...REQUISITOS_PADRAO,
+describe('release', () => {
+  it('sets only that requirement back to "any"', () => {
+    const r: Requirements = {
+      ...DEFAULT_REQUIREMENTS,
       cores: ['preta'],
       naoFuma: true,
     }
-    expect(soltar(r, 'cor')).toEqual({ ...r, cores: [] })
-    expect(soltar(r, 'idade').idade).toEqual({ min: 18, max: 80 })
+    expect(release(r, 'cor')).toEqual({ ...r, cores: [] })
+    expect(release(r, 'idade').idade).toEqual({ min: 18, max: 80 })
   })
 })
 
-describe('idadeProcurada', () => {
-  it('começa na idade do Perfil ±5, dentro de 18 a 80', () => {
-    expect(idadeProcurada({ idade: 30 }, REQUISITOS_PADRAO)).toEqual({
+describe('soughtAge', () => {
+  it("starts at the profile's age ±5, within 18 to 80", () => {
+    expect(soughtAge({ idade: 30 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 25,
       max: 35,
     })
-    expect(idadeProcurada({ idade: 20 }, REQUISITOS_PADRAO)).toEqual({
+    expect(soughtAge({ idade: 20 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 18,
       max: 25,
     })
-    expect(idadeProcurada({ idade: 79 }, REQUISITOS_PADRAO)).toEqual({
+    expect(soughtAge({ idade: 79 }, DEFAULT_REQUIREMENTS)).toEqual({
       min: 74,
       max: 80,
     })
   })
 
-  it('sem idade no Perfil, qualquer idade; depois de mexer, a escolhida', () => {
-    expect(idadeProcurada(null, REQUISITOS_PADRAO)).toEqual({
+  it('without an age in the profile, any age; after a change, the chosen one', () => {
+    expect(soughtAge(null, DEFAULT_REQUIREMENTS)).toEqual({
       min: 18,
       max: 80,
     })
     expect(
-      idadeProcurada(
+      soughtAge(
         { idade: 30 },
-        { ...REQUISITOS_PADRAO, idade: { min: 40, max: 50 } },
+        { ...DEFAULT_REQUIREMENTS, idade: { min: 40, max: 50 } },
       ),
     ).toEqual({ min: 40, max: 50 })
   })
 })
 
-describe('quemSeProcura', () => {
-  it('procurando mulheres: o sexo 1 do Censo, "mulheres" e o filtro de filhos vale', () => {
-    expect(quemSeProcura({ procura: 'mulheres' })).toEqual({
-      sexos: [1],
-      alvo: 'mulheres',
-      filhos: 'vale',
+describe('whoIsSought', () => {
+  it('seeking women: Census sex 1, "mulheres" and the children filter applies', () => {
+    expect(whoIsSought({ procura: 'mulheres' })).toEqual({
+      sexes: [1],
+      target: 'mulheres',
+      children: 'vale',
     })
   })
 
-  it('procurando homens: o sexo 0, "homens" e sem dado de filhos', () => {
-    expect(quemSeProcura({ procura: 'homens' })).toEqual({
-      sexos: [0],
-      alvo: 'homens',
-      filhos: 'sem-dado',
+  it('seeking men: sex 0, "homens" and no children data', () => {
+    expect(whoIsSought({ procura: 'homens' })).toEqual({
+      sexes: [0],
+      target: 'homens',
+      children: 'sem-dado',
     })
   })
 
-  it('procurando os dois, ou sem dizer: os dois sexos, "pessoas" e filhos só para as mulheres', () => {
-    const ambos = { sexos: [0, 1], alvo: 'pessoas', filhos: 'so-mulheres' }
-    expect(quemSeProcura({ procura: 'ambos' })).toEqual(ambos)
-    expect(quemSeProcura({ genero: 'homem' })).toEqual(ambos)
-    expect(quemSeProcura(null)).toEqual(ambos)
+  it('seeking both, or not saying: both sexes, "pessoas" and children only for women', () => {
+    const both = { sexes: [0, 1], target: 'pessoas', children: 'so-mulheres' }
+    expect(whoIsSought({ procura: 'ambos' })).toEqual(both)
+    expect(whoIsSought({ genero: 'homem' })).toEqual(both)
+    expect(whoIsSought(null)).toEqual(both)
   })
 })

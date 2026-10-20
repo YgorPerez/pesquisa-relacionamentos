@@ -1,113 +1,115 @@
-// Temas, Guias e Dicas no acervo (#27): esquemas, herança das Fichas e as
-// regras de publicação do #7 e do #10. Os casos que falham partem da
-// fixture válida e trocam um arquivo só.
+// Topics, guides and tips in the library (#27): schemas, inheritance from the
+// fact sheets and the publication rules of #7 and #10. The failing cases start
+// from the valid fixture and swap a single file.
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
-  caminhoDaDica,
-  caminhoDoGuia,
-  caminhoDoTema,
-  carregarAcervo,
-  dicaPorSlug,
-  dicaPublicada,
-  formatarProblemas,
-  guiaPorSlug,
-  guiasComADica,
-  guiasDoTema,
-  temaPorSlug,
-  lerArquivos,
-  montarAcervo,
-  type Acervo,
-  type Arquivo,
-  type Resultado,
+  tipPath,
+  guidePath,
+  topicPath,
+  loadLibrary,
+  tipBySlug,
+  isTipPublished,
+  formatProblems,
+  guideBySlug,
+  guidesWithTip,
+  topicGuides,
+  topicBySlug,
+  readFiles,
+  buildLibrary,
+  type Library,
+  type ContentFile,
+  type LoadResult,
 } from './index.ts'
 
-const VALIDO = fileURLToPath(new URL('../fixtures/valid', import.meta.url))
+const VALID = fileURLToPath(new URL('../fixtures/valid', import.meta.url))
 
-function acervoDe(resultado: Resultado): Acervo {
-  if (!resultado.ok) throw new Error(formatarProblemas(resultado.erros))
-  return resultado.acervo
+function libraryOf(result: LoadResult): Library {
+  if (!result.ok) throw new Error(formatProblems(result.errors))
+  return result.library
 }
 
-function errosDe(resultado: Resultado): string[] {
-  if (resultado.ok) throw new Error('o acervo devia ter falhado')
-  return resultado.erros.map((e) => e.mensagem)
+function errorsOf(result: LoadResult): string[] {
+  if (result.ok) throw new Error('the library should have failed')
+  return result.errors.map((e) => e.message)
 }
 
-const arquivosValidos = (): Arquivo[] => [...lerArquivos(VALIDO)]
+const validFiles = (): ContentFile[] => [...readFiles(VALID)]
 
-/** A fixture válida com um arquivo trocado (ou criado). */
-function comArquivo(
-  caminho: string,
-  texto: string | ((original: string) => string),
-): Resultado {
-  const arquivos = arquivosValidos()
-  const i = arquivos.findIndex((a) => a.caminho === caminho)
-  const original = i === -1 ? '' : (arquivos[i]?.texto ?? '')
-  const novo = {
-    caminho,
-    texto: typeof texto === 'string' ? texto : texto(original),
+/** The valid fixture with one file swapped (or created). */
+function withFile(
+  path: string,
+  text: string | ((original: string) => string),
+): LoadResult {
+  const files = validFiles()
+  const i = files.findIndex((a) => a.path === path)
+  const original = i === -1 ? '' : (files[i]?.text ?? '')
+  const current = {
+    path,
+    text: typeof text === 'string' ? text : text(original),
   }
-  if (i === -1) arquivos.push(novo)
-  else arquivos[i] = novo
-  return montarAcervo(arquivos)
+  if (i === -1) files.push(current)
+  else files[i] = current
+  return buildLibrary(files)
 }
 
-/** A fixture válida com vários arquivos trocados de uma vez. */
-function com(trocas: Record<string, (original: string) => string>): Resultado {
-  return montarAcervo(
-    arquivosValidos().map((a) => {
-      const troca = trocas[a.caminho]
-      return troca ? { ...a, texto: troca(a.texto) } : a
+/** The valid fixture with several files swapped at once. */
+function withFiles(
+  swaps: Record<string, (original: string) => string>,
+): LoadResult {
+  return buildLibrary(
+    validFiles().map((a) => {
+      const swap = swaps[a.path]
+      return swap ? { ...a, text: swap(a.text) } : a
     }),
   )
 }
 
-const sem = (caminho: string): Resultado =>
-  montarAcervo(arquivosValidos().filter((a) => a.caminho !== caminho))
+const without = (path: string): LoadResult =>
+  buildLibrary(validFiles().filter((a) => a.path !== path))
 
-const GUIA = 'guias/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OUTRO_GUIA = 'guias/onde-conhecer/app-ou-presencial.md'
-const TEMA = 'guias/onde-conhecer/_tema.md'
-const DICA = 'dicas/apps-como-complemento.md'
+const GUIDE = 'guias/onde-conhecer/onde-os-casais-se-conhecem.md'
+const OTHER_GUIDE = 'guias/onde-conhecer/app-ou-presencial.md'
+const TOPIC = 'guias/onde-conhecer/_tema.md'
+const TIP = 'dicas/apps-como-complemento.md'
 
-describe('Temas e Guias', () => {
-  it('lê o Tema da pasta, com título, contexto e os Guias na ordem dele', () => {
-    const acervo = acervoDe(carregarAcervo(VALIDO))
-    expect(acervo.temas).toEqual([
+describe('topics and guides', () => {
+  it("reads the folder's topic, with title, context and its guides in order", () => {
+    const library = libraryOf(loadLibrary(VALID))
+    expect(library.topics).toEqual([
       {
         slug: 'onde-conhecer',
-        arquivo: TEMA,
+        file: TOPIC,
         titulo: 'Onde conhecer pessoas',
         ordem: ['onde-os-casais-se-conhecem', 'app-ou-presencial'],
-        contexto: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+        context: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
       },
     ])
-    expect(acervo.guias.map((g) => [g.tema, g.slug])).toEqual([
+    expect(library.guides.map((g) => [g.topic, g.slug])).toEqual([
       ['onde-conhecer', 'onde-os-casais-se-conhecem'],
       ['onde-conhecer', 'app-ou-presencial'],
     ])
   })
 
-  it('corta o corpo do Guia em resposta curta, Varia conforme o Perfil? e Limitações', () => {
-    const guia = acervoDe(carregarAcervo(VALIDO)).guias[0]
-    expect(guia).toMatchObject({
+  it('cuts the guide body into short answer, Varia conforme o Perfil? and Limitações', () => {
+    const guide = libraryOf(loadLibrary(VALID)).guides[0]
+    expect(guide).toMatchObject({
       pergunta: 'Onde os casais se ==conhecem== hoje?',
       confianca: 'moderada',
-      respostaCurta:
+      shortAnswer:
         'No Brasil, ==18% dos adultos jovens== conheceram o parceiro por app [@silva-2020-apps-brasil]. Nos EUA, a satisfação é parecida [@costa-2018-satisfacao].',
-      variaConformePerfil:
+      variesByProfile:
         'Entre 18 e 24 anos a fatia sobe [@silva-2020-apps-brasil].',
-      limitacoes: '- Só capitais.',
+      limitations: '- Só capitais.',
       dicas: ['apps-como-complemento'],
       relacionadas: ['app-ou-presencial'],
     })
   })
 
-  it('o achado herda país, período e cobre da Ficha, e vale_para troca o cobre por um recorte', () => {
-    const [herda, recorte] =
-      acervoDe(carregarAcervo(VALIDO)).guias[0]?.achados ?? []
-    expect(herda).toEqual({
+  it("a finding inherits the fact sheet's country, period and coverage, and vale_para swaps the coverage for a scope", () => {
+    const [inherits, scoped] =
+      libraryOf(loadLibrary(VALID)).guides[0]?.achados ?? []
+    expect(inherits).toEqual({
       texto: '18% dos adultos jovens conheceram o parceiro por app.',
       fichas: ['silva-2020-apps-brasil'],
       paises: ['Brasil'],
@@ -119,34 +121,36 @@ describe('Temas e Guias', () => {
           idades: { min: 18, max: 35 },
         },
       ],
-      recorte: false,
+      scoped: false,
     })
-    expect(recorte).toMatchObject({
+    expect(scoped).toMatchObject({
       paises: ['EUA'],
       periodo: '2017–2018',
       cobre: [{ casal: 'hetero', idades: { min: 25, max: 60 } }],
-      recorte: true,
+      scoped: true,
     })
   })
 
-  it('numera as Fichas citadas na ordem em que aparecem na página', () => {
-    const acervo = acervoDe(carregarAcervo(VALIDO))
-    expect(acervo.guias[0]?.fichasCitadas).toEqual([
+  it('numbers the cited fact sheets in the order they appear on the page', () => {
+    const library = libraryOf(loadLibrary(VALID))
+    expect(library.guides[0]?.citedFactSheets).toEqual([
       'silva-2020-apps-brasil',
       'costa-2018-satisfacao',
     ])
-    expect(acervo.guias[1]?.fichasCitadas).toEqual(['costa-2018-satisfacao'])
+    expect(library.guides[1]?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+    ])
   })
 })
 
-describe('Dicas', () => {
-  it('a Dica herda país, período e cobre das Fichas e diz se é inferência', () => {
-    const dica = acervoDe(carregarAcervo(VALIDO)).dicas.find(
+describe('tips', () => {
+  it("a tip inherits the fact sheets' country, period and coverage and says whether it is an inference", () => {
+    const tip = libraryOf(loadLibrary(VALID)).tips.find(
       (d) => d.slug === 'apps-como-complemento',
     )
-    expect(dica).toMatchObject({
-      arquivo: DICA,
-      texto: 'Use o app como complemento, não como o único caminho.',
+    expect(tip).toMatchObject({
+      file: TIP,
+      text: 'Use o app como complemento, não como o único caminho.',
       forca: 'moderada',
       inferencia: true,
       paises: ['Brasil', 'EUA'],
@@ -159,62 +163,62 @@ describe('Dicas', () => {
         },
         { casal: 'hetero' },
       ],
-      recorte: false,
-      publicada: true,
+      scoped: false,
+      published: true,
     })
   })
 
-  it('a Dica que se apoia numa Ficha ⬜ fica fora do site, sem derrubar o build', () => {
-    const dica = acervoDe(carregarAcervo(VALIDO)).dicas.find(
+  it('a tip resting on a ⬜ fact sheet stays off the site, without breaking the build', () => {
+    const tip = libraryOf(loadLibrary(VALID)).tips.find(
       (d) => d.slug === 'encontros-presenciais',
     )
-    expect(dica).toMatchObject({ inferencia: false, publicada: false })
+    expect(tip).toMatchObject({ inferencia: false, published: false })
   })
 })
 
-describe('caminhos e consultas', () => {
-  it('Tema em /<tema>, Guia em /<tema>/<slug> e Dica em /dicas/<slug>', () => {
-    const acervo = acervoDe(carregarAcervo(VALIDO))
-    expect(caminhoDoTema({ slug: 'onde-conhecer' })).toBe('/onde-conhecer')
-    expect(acervo.guias.map(caminhoDoGuia)).toEqual([
+describe('paths and queries', () => {
+  it('a topic at /<topic>, a guide at /<topic>/<slug> and a tip at /dicas/<slug>', () => {
+    const library = libraryOf(loadLibrary(VALID))
+    expect(topicPath({ slug: 'onde-conhecer' })).toBe('/onde-conhecer')
+    expect(library.guides.map(guidePath)).toEqual([
       '/onde-conhecer/onde-os-casais-se-conhecem',
       '/onde-conhecer/app-ou-presencial',
     ])
-    expect(caminhoDaDica({ slug: 'apps-como-complemento' })).toBe(
+    expect(tipPath({ slug: 'apps-como-complemento' })).toBe(
       '/dicas/apps-como-complemento',
     )
   })
 
-  it('acha Guia, Tema e Dica pelo slug, e os Guias em que a Dica aparece', () => {
-    const acervo = acervoDe(carregarAcervo(VALIDO))
-    expect(guiaPorSlug(acervo, 'app-ou-presencial')?.pergunta).toBe(
+  it('finds a guide, topic and tip by slug, and the guides where a tip appears', () => {
+    const library = libraryOf(loadLibrary(VALID))
+    expect(guideBySlug(library, 'app-ou-presencial')?.pergunta).toBe(
       'App ou presencial?',
     )
-    expect(temaPorSlug(acervo, 'onde-conhecer')?.titulo).toBe(
+    expect(topicBySlug(library, 'onde-conhecer')?.titulo).toBe(
       'Onde conhecer pessoas',
     )
-    expect(dicaPorSlug(acervo, 'apps-como-complemento')?.forca).toBe('moderada')
-    expect(guiasDoTema(acervo, 'onde-conhecer').map((g) => g.slug)).toEqual([
+    expect(tipBySlug(library, 'apps-como-complemento')?.forca).toBe('moderada')
+    expect(topicGuides(library, 'onde-conhecer').map((g) => g.slug)).toEqual([
       'onde-os-casais-se-conhecem',
       'app-ou-presencial',
     ])
     expect(
-      guiasComADica(acervo, 'apps-como-complemento').map((g) => g.slug),
+      guidesWithTip(library, 'apps-como-complemento').map((g) => g.slug),
     ).toEqual(['onde-os-casais-se-conhecem'])
-    expect(acervo.dicas.filter(dicaPublicada).map((d) => d.slug)).toEqual([
+    expect(library.tips.filter(isTipPublished).map((d) => d.slug)).toEqual([
       'apps-como-complemento',
     ])
   })
 })
 
-describe('regras de publicação', () => {
-  it('a fixture válida passa no build', () => {
-    expect(montarAcervo(arquivosValidos()).ok).toBe(true)
+describe('publication rules', () => {
+  it('the valid fixture passes the build', () => {
+    expect(buildLibrary(validFiles()).ok).toBe(true)
   })
 
-  it('referência a Ficha, Dica ou Guia que não existe falha', () => {
-    const erros = errosDe(
-      comArquivo(GUIA, (t) =>
+  it('a reference to a fact sheet, tip or guide that does not exist fails', () => {
+    const errors = errorsOf(
+      withFile(GUIDE, (t) =>
         t
           .replace(
             'fichas: [costa-2018-satisfacao]\n    pais',
@@ -231,29 +235,29 @@ describe('regras de publicação', () => {
           ),
       ),
     )
-    expect(erros).toEqual([
-      `${GUIA}: achados.1.fichas: a Ficha "costa-2099-sumiu" não existe em estudos/`,
-      `${GUIA}: Varia conforme o Perfil?: a Ficha "silva-2099-sumiu" não existe em estudos/`,
-      `${GUIA}: dicas: a Dica "dica-que-sumiu" não existe em dicas/`,
-      `${GUIA}: relacionadas: o Guia "guia-que-sumiu" não existe em guias/`,
+    expect(errors).toEqual([
+      `${GUIDE}: achados.1.fichas: the fact sheet "costa-2099-sumiu" does not exist in estudos/`,
+      `${GUIDE}: Varia conforme o Perfil?: the fact sheet "silva-2099-sumiu" does not exist in estudos/`,
+      `${GUIDE}: dicas: the tip "dica-que-sumiu" does not exist in dicas/`,
+      `${GUIDE}: relacionadas: the guide "guia-que-sumiu" does not exist in guias/`,
     ])
   })
 
-  it('Dica que cita Ficha inexistente falha', () => {
+  it('a tip citing a missing fact sheet fails', () => {
     expect(
-      errosDe(
-        comArquivo(DICA, (t) =>
+      errorsOf(
+        withFile(TIP, (t) =>
           t.replace('costa-2018-satisfacao', 'costa-2099-sumiu'),
         ),
       ),
     ).toEqual([
-      `${DICA}: fichas: a Ficha "costa-2099-sumiu" não existe em estudos/`,
+      `${TIP}: fichas: the fact sheet "costa-2099-sumiu" does not exist in estudos/`,
     ])
   })
 
-  it('Guia que cita Ficha ⬜, no texto ou num Mito, falha', () => {
-    const erros = errosDe(
-      comArquivo(OUTRO_GUIA, (t) =>
+  it('a guide citing a ⬜ fact sheet, in the text or in a myth, fails', () => {
+    const errors = errorsOf(
+      withFile(OTHER_GUIDE, (t) =>
         t
           .replace(
             'Depende de quem você procura [@costa-2018-satisfacao]',
@@ -265,163 +269,162 @@ describe('regras de publicação', () => {
           ),
       ),
     )
-    const motivo =
-      'cita a Ficha "lima-2015-encontros", que não foi verificada (⬜); um Guia só cita Ficha ✅ ou 🟡'
-    expect(erros).toEqual([
-      `${OUTRO_GUIA}: resposta curta: ${motivo}`,
-      `${OUTRO_GUIA}: mitos.0.fichas: ${motivo}`,
+    const reason =
+      'cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets'
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: short answer: ${reason}`,
+      `${OTHER_GUIDE}: mitos.0.fichas: ${reason}`,
     ])
   })
 
-  it('Guia que traz uma Dica apoiada em Ficha ⬜ falha', () => {
+  it('a guide carrying a tip that rests on a ⬜ fact sheet fails', () => {
     expect(
-      errosDe(
-        comArquivo(OUTRO_GUIA, (t) =>
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
           t.replace('dicas: []', 'dicas: [encontros-presenciais]'),
         ),
       ),
     ).toEqual([
-      `${OUTRO_GUIA}: dicas: a Dica "encontros-presenciais" cita a Ficha "lima-2015-encontros", que não foi verificada (⬜); um Guia só cita Ficha ✅ ou 🟡`,
+      `${OTHER_GUIDE}: dicas: the tip "encontros-presenciais" cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
     ])
   })
 
   const SILVA = 'estudos/silva-2020-apps-brasil.md'
   const COSTA = 'estudos/costa-2018-satisfacao.md'
-  const soSilva = (t: string) =>
+  const onlySilva = (t: string) =>
     t
       .replaceAll('costa-2018-satisfacao', 'silva-2020-apps-brasil')
       .replace('confianca: moderada', 'confianca: forte')
 
-  it('Confiança forte com Ficha ✅ forte passa', () => {
-    expect(comArquivo(OUTRO_GUIA, soSilva).ok).toBe(true)
+  it('strong confidence with a strong ✅ fact sheet passes', () => {
+    expect(withFile(OTHER_GUIDE, onlySilva).ok).toBe(true)
   })
 
-  it('Confiança acima da Ficha mais forte falha', () => {
-    const erros = errosDe(
-      com({
-        [OUTRO_GUIA]: soSilva,
+  it('confidence above the strongest fact sheet fails', () => {
+    const errors = errorsOf(
+      withFiles({
+        [OTHER_GUIDE]: onlySilva,
         [SILVA]: (t) => t.replace('forca: forte', 'forca: moderada'),
       }),
     )
-    expect(erros).toEqual([
-      `${OUTRO_GUIA}: confianca: a Confiança (forte) passa da Ficha mais forte que o Guia cita (moderada)`,
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: confianca: the confidence (forte) is above the strongest fact sheet the guide cites (moderada)`,
     ])
   })
 
-  it('Confiança acima de moderada com só Fichas 🟡 falha', () => {
-    const erros = errosDe(
-      com({
-        [OUTRO_GUIA]: (t) =>
+  it('confidence above moderate with only 🟡 fact sheets fails', () => {
+    const errors = errorsOf(
+      withFiles({
+        [OTHER_GUIDE]: (t) =>
           t.replace('confianca: moderada', 'confianca: forte'),
         [COSTA]: (t) => t.replace('forca: moderada', 'forca: forte'),
       }),
     )
-    expect(erros).toEqual([
-      `${OUTRO_GUIA}: confianca: a Confiança (forte) passa de moderada, e o Guia só cita Fichas parciais (🟡)`,
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: confianca: the confidence (forte) is above moderate, and the guide only cites partial (🟡) fact sheets`,
     ])
   })
 
-  it('Inferência com Força acima de moderada falha', () => {
+  it('an inference with strength above moderate fails', () => {
     expect(
-      errosDe(
-        comArquivo(DICA, (t) => t.replace('forca: moderada', 'forca: forte')),
+      errorsOf(
+        withFile(TIP, (t) => t.replace('forca: moderada', 'forca: forte')),
       ),
     ).toEqual([
-      `${DICA}: forca: uma Inferência tem Força moderada no máximo (veio forte)`,
+      `${TIP}: forca: an inference has at most moderate strength (got forte)`,
     ])
   })
 
-  it('a ordem do Tema precisa listar os Guias da pasta, cada um uma vez', () => {
-    const faltando = errosDe(
-      comArquivo(TEMA, (t) => t.replace(', app-ou-presencial]', ']')),
+  it("the topic's order must list the folder's guides, each once", () => {
+    const missing = errorsOf(
+      withFile(TOPIC, (t) => t.replace(', app-ou-presencial]', ']')),
     )
-    expect(faltando).toEqual([
-      `${TEMA}: ordem: o Guia "app-ou-presencial" está na pasta e falta na ordem`,
+    expect(missing).toEqual([
+      `${TOPIC}: ordem: the guide "app-ou-presencial" is in the folder and missing from the order`,
     ])
-    const sobrando = errosDe(
-      comArquivo(TEMA, (t) =>
+    const leftover = errorsOf(
+      withFile(TOPIC, (t) =>
         t.replace(
           ', app-ou-presencial]',
           ', app-ou-presencial, onde-os-casais-se-conhecem, sem-arquivo]',
         ),
       ),
     )
-    expect(sobrando).toEqual([
-      `${TEMA}: ordem: o Guia "onde-os-casais-se-conhecem" aparece mais de uma vez`,
-      `${TEMA}: ordem: o Guia "sem-arquivo" não existe em guias/onde-conhecer/`,
+    expect(leftover).toEqual([
+      `${TOPIC}: ordem: the guide "onde-os-casais-se-conhecem" appears more than once`,
+      `${TOPIC}: ordem: the guide "sem-arquivo" does not exist in guias/onde-conhecer/`,
     ])
   })
 
-  it('pasta de Guias sem _tema.md falha', () => {
-    expect(errosDe(sem(TEMA))).toEqual([
-      'guias/onde-conhecer: falta o _tema.md com o título e a ordem dos Guias',
+  it('a guide folder without _tema.md fails', () => {
+    expect(errorsOf(without(TOPIC))).toEqual([
+      'guias/onde-conhecer: missing the _tema.md with the title and the order of the guides',
     ])
   })
 
-  it('slug de Tema igual a uma rota do app falha', () => {
-    const arquivos = arquivosValidos().map((a) => ({
+  it('a topic slug equal to an app route fails', () => {
+    const files = validFiles().map((a) => ({
       ...a,
-      caminho: a.caminho.replace('guias/onde-conhecer/', 'guias/dicas/'),
+      path: a.path.replace('guias/onde-conhecer/', 'guias/dicas/'),
     }))
-    expect(errosDe(montarAcervo(arquivos))).toEqual([
-      'guias/dicas/_tema.md: o Tema não pode se chamar "dicas", que é uma rota do site (estudos, dicas, grupo-possivel, prioridades, privacidade, sitemap.xml, robots.txt)',
+    expect(errorsOf(buildLibrary(files))).toEqual([
+      'guias/dicas/_tema.md: a topic cannot be called "dicas", which is a site route (estudos, dicas, grupo-possivel, prioridades, privacidade, sitemap.xml, robots.txt)',
     ])
   })
 
-  it('dois Guias com o mesmo slug, em Temas diferentes, falham', () => {
-    const arquivos = [
-      ...arquivosValidos(),
+  it('two guides with the same slug, in different topics, fail', () => {
+    const files = [
+      ...validFiles(),
       {
-        caminho: 'guias/outro-tema/_tema.md',
-        texto: '---\ntitulo: Outro\nordem: [app-ou-presencial]\n---\n\nX.\n',
+        path: 'guias/outro-tema/_tema.md',
+        text: '---\ntitulo: Outro\nordem: [app-ou-presencial]\n---\n\nX.\n',
       },
       {
-        caminho: 'guias/outro-tema/app-ou-presencial.md',
-        texto:
-          arquivosValidos().find((a) => a.caminho === OUTRO_GUIA)?.texto ?? '',
+        path: 'guias/outro-tema/app-ou-presencial.md',
+        text: validFiles().find((a) => a.path === OTHER_GUIDE)?.text ?? '',
       },
     ]
-    expect(errosDe(montarAcervo(arquivos))).toEqual([
-      `guias/outro-tema/app-ou-presencial.md: o slug "app-ou-presencial" já é do Guia ${OUTRO_GUIA}; o Guia é citado só pelo slug`,
+    expect(errorsOf(buildLibrary(files))).toEqual([
+      `guias/outro-tema/app-ou-presencial.md: the slug "app-ou-presencial" already belongs to the guide ${OTHER_GUIDE}; a guide is cited by its slug alone`,
     ])
   })
 
-  it('vale_para fora das listas fechadas falha', () => {
+  it('vale_para outside the closed lists fails', () => {
     expect(
-      errosDe(
-        comArquivo(GUIA, (t) =>
+      errorsOf(
+        withFile(GUIDE, (t) =>
           t.replace('vale_para: { casal: hetero', 'vale_para: { casal: misto'),
         ),
       ),
     ).toEqual([
-      `${GUIA}: achados.1.vale_para.casal: valor fora da lista fechada (hetero | mesmo-sexo) (veio "misto")`,
+      `${GUIDE}: achados.1.vale_para.casal: value outside the closed list (hetero | mesmo-sexo) (got "misto")`,
     ])
   })
 
-  it('a Pergunta leva no máximo uma palavra em amarelo', () => {
+  it('the question highlights at most one word in yellow', () => {
     expect(
-      errosDe(
-        comArquivo(GUIA, (t) =>
+      errorsOf(
+        withFile(GUIDE, (t) =>
           t.replace('Onde os casais', '==Onde== os casais'),
         ),
       ),
     ).toEqual([
-      `${GUIA}: pergunta: a Pergunta leva no máximo uma palavra em amarelo (==palavra==)`,
+      `${GUIDE}: pergunta: the question highlights at most one word in yellow (==word==)`,
     ])
   })
 
-  it('o corpo do Guia precisa da resposta curta e das duas seções, e nada mais', () => {
-    const erros = errosDe(
-      comArquivo(OUTRO_GUIA, (t) =>
+  it('the guide body needs the short answer and the two sections, and nothing else', () => {
+    const errors = errorsOf(
+      withFile(OTHER_GUIDE, (t) =>
         t
           .replace(/\nDepende[^\n]*\n/, '\n')
           .replace('## Limitações', '## Outra coisa'),
       ),
     )
-    expect(erros).toEqual([
-      `${OUTRO_GUIA}: falta a resposta curta antes do primeiro "##"`,
-      `${OUTRO_GUIA}: Limitações: falta a seção "## Limitações"`,
-      `${OUTRO_GUIA}: Outra coisa: seção desconhecida "## Outra coisa"; o corpo do Guia tem só a resposta curta, "## Varia conforme o Perfil?" e "## Limitações"`,
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: missing the short answer before the first "##"`,
+      `${OTHER_GUIDE}: Limitações: missing the section "## Limitações"`,
+      `${OTHER_GUIDE}: Outra coisa: unknown section "## Outra coisa"; a guide body has only the short answer, "## Varia conforme o Perfil?" and "## Limitações"`,
     ])
   })
 })
