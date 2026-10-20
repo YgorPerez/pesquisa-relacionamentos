@@ -2,8 +2,8 @@
 import {
   perfilNoGuia,
   type PerfilNoGuia,
-} from '@tem-estudo/regras/perfil-no-guia'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+} from '@tem-estudo/rules/profile-in-guide'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import { useMemo } from 'react'
 import type { GuiaVista } from '#/conteudo/vista-guia'
 import { usePerfil } from './perfil'

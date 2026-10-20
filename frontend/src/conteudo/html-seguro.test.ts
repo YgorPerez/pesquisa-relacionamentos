@@ -3,8 +3,8 @@
 // fontes de fora. Estes testes passam Markdown malicioso por `html` e
 // `htmlEmLinha` e conferem que só sai o que o acervo de fato usa.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/conteudo'
-import { guiaPorSlug } from '@tem-estudo/conteudo/consultas'
+import { carregarAcervo } from '@tem-estudo/content'
+import { guiaPorSlug } from '@tem-estudo/content/queries'
 import { describe, expect, it } from 'vite-plus/test'
 import { html, htmlEmLinha } from './vista'
 import { vistaDoGuia } from './vista-guia'

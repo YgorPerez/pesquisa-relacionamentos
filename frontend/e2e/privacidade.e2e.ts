@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { queryDoLink } from '@tem-estudo/regras/link'
+import { queryDoLink } from '@tem-estudo/rules/link'
 
 // ADR 0001: a query do link leva o Perfil, e não pode vazar para um Estudo
 // externo pelo Referer. A query sai do codec de verdade, para o teste não

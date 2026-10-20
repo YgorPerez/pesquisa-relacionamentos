@@ -4,7 +4,7 @@
 // Amarelo só no que é do visitante (as escolhidas); "não sabemos" é o anel
 // vazio em tinta (The Three Inks Rule).
 import { Link } from '@tanstack/react-router'
-import type { GeneroDoPerfil } from '@tem-estudo/regras/perfil'
+import type { GeneroDoPerfil } from '@tem-estudo/rules/profile'
 import {
   DESFECHOS,
   NOME_DO_DEGRAU,
@@ -15,7 +15,7 @@ import {
   viesPara,
   type Degrau,
   type Desfecho,
-} from '@tem-estudo/regras/prioridades'
+} from '@tem-estudo/rules/priorities'
 import type {
   BarraDaSatisfacao as Barra,
   CaracteristicaVista,

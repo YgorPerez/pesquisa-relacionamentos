@@ -7,8 +7,8 @@ import type {
   Ficha,
   Forca,
   Status,
-} from '@tem-estudo/conteudo'
-import type { Degrau } from '@tem-estudo/regras/prioridades'
+} from '@tem-estudo/content'
+import type { Degrau } from '@tem-estudo/rules/priorities'
 import { semMarcas } from './vista-guia'
 
 export interface FichaDaPrioridade {

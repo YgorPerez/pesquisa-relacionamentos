@@ -9,8 +9,8 @@ import {
   abrirPacote,
   type DadosDoLugar,
   type LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
-import type { Previa } from '@tem-estudo/regras/link'
+} from '@tem-estudo/rules/possible-group-data'
+import type { Previa } from '@tem-estudo/rules/link'
 import { montarPreviaDoGrupo } from './previa-do-grupo'
 
 /** O Open Graph da prévia, para o `head` da calculadora; vazio sem prévia. */

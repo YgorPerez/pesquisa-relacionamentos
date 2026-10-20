@@ -3,7 +3,7 @@
 // máquina. Eles levam o caminho sem query, a referência, a largura da tela e,
 // nos eventos, o nome do evento. Nada do Perfil, nem se ele foi preenchido.
 import { expect, test, type Page } from '@playwright/test'
-import { queryDoLink } from '@tem-estudo/regras/link'
+import { queryDoLink } from '@tem-estudo/rules/link'
 import { tocar } from './toque'
 
 const GUIA = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'

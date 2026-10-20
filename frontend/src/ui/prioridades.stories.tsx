@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { alternarNoTopo3 } from '@tem-estudo/regras/prioridades'
+import { alternarNoTopo3 } from '@tem-estudo/rules/priorities'
 import { CartaoDePrioridades, EscolhaDoTopo3, Estante } from './prioridades'
 import { BARRA, CARACTERISTICAS } from './prioridades.exemplo'
 

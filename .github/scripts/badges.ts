@@ -145,7 +145,7 @@ export function selos({
 
 /** Os pacotes cuja cobertura entra no selo: o app, os pacotes puros e os
  * scripts da raiz. */
-const PACOTES = ['frontend', 'packages/conteudo', 'packages/regras', '.']
+const PACOTES = ['frontend', 'packages/content', 'packages/rules', '.']
 
 if (import.meta.main) {
   const ler = (arquivo: string) => JSON.parse(readFileSync(arquivo, 'utf8'))

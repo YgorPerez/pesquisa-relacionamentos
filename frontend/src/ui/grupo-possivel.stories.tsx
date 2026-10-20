@@ -4,17 +4,17 @@
 // conta de uma mulher de 28 anos que procura homens, com superior completo e
 // sem fumo.
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { abrirPacote } from '@tem-estudo/regras/grupo-possivel-dados'
+import { abrirPacote } from '@tem-estudo/rules/possible-group-data'
 import {
   estimarGrupo,
   type Estimativa,
-} from '@tem-estudo/regras/grupo-possivel'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+} from '@tem-estudo/rules/possible-group'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import {
   REQUISITOS_PADRAO,
   ROTULO_DA_ESCOLARIDADE,
   type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import grupoPossivel from 'virtual:grupo-possivel'

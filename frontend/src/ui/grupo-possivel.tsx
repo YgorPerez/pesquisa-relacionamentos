@@ -5,18 +5,18 @@ import type {
   Custo,
   Estimativa,
   RequisitoId,
-} from '@tem-estudo/regras/grupo-possivel'
+} from '@tem-estudo/rules/possible-group'
 import {
   formatarFaixa,
   formatarQuantidade,
   formatarVezes,
-} from '@tem-estudo/regras/numeros'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+} from '@tem-estudo/rules/numbers'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import {
   TITULO_DO_REQUISITO,
   valorDoRequisito,
   type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import { Link } from '@tanstack/react-router'
 import { useId, type ReactNode } from 'react'
 import { NumberField } from '@base-ui/react/number-field'

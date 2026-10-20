@@ -4,8 +4,8 @@ import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 // Só os subcaminhos sem `node:fs`: este arquivo também entra no bundle do
 // navegador, que fica com os stubs das funções.
-import { fichaIndexavel } from '@tem-estudo/conteudo/caminhos'
-import { STATUS } from '@tem-estudo/conteudo/listas'
+import { fichaIndexavel } from '@tem-estudo/content/paths'
+import { STATUS } from '@tem-estudo/content/lists'
 import { resumo, vista, type FichaResumo, type FichaVista } from './vista'
 import { citadaEm, type CitadaEm } from './vista-guia'
 

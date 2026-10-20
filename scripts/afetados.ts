@@ -109,7 +109,7 @@ export type Plano = {
 
 const TODAS_AS_SPECS = Object.keys(TERMOS_DAS_SPECS).sort()
 const TERMOS = new Set(Object.values(TERMOS_DAS_SPECS).flat())
-const PASTAS = ['frontend', 'packages/conteudo', 'packages/regras', '.']
+const PASTAS = ['frontend', 'packages/content', 'packages/rules', '.']
 
 /** Os termos de um arquivo do app: cada pasta e o nome, sem as extensões. */
 function termosDoArquivo(caminho: string) {
@@ -144,7 +144,7 @@ export function planoDoDiff(arquivos: readonly string[]): Plano {
       }
     // Antes do texto: uma Ficha é `.md`, e o build a lê.
     if (ACERVO.test(arquivo)) {
-      pacotes.add('packages/conteudo')
+      pacotes.add('packages/content')
       build = true
       continue
     }

@@ -1,7 +1,7 @@
 // A Ficha do pacote de conteúdo no formato que as páginas desenham: o
 // markdown já virou HTML no servidor, e o navegador recebe só o que mostra.
-import type { Achado, Ficha } from '@tem-estudo/conteudo'
-import { buscaDaFicha, type Busca } from '@tem-estudo/conteudo/busca'
+import type { Achado, Ficha } from '@tem-estudo/content'
+import { buscaDaFicha, type Busca } from '@tem-estudo/content/search'
 import { Marked } from 'marked'
 import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 

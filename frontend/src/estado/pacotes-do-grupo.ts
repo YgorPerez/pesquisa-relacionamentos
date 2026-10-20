@@ -7,7 +7,7 @@ import {
   abrirPacote,
   type DadosDoLugar,
   type LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
+} from '@tem-estudo/rules/possible-group-data'
 import { useSyncExternalStore } from 'react'
 import grupoPossivel from 'virtual:grupo-possivel'
 

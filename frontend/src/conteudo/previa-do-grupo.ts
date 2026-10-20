@@ -6,13 +6,13 @@
 import type {
   DadosDoLugar,
   LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
+} from '@tem-estudo/rules/possible-group-data'
 import {
   estimarGrupo,
   type Estimativa,
-} from '@tem-estudo/regras/grupo-possivel'
-import { lerLink, previaDoGrupo, type Previa } from '@tem-estudo/regras/link'
-import { REQUISITOS_PADRAO } from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/possible-group'
+import { lerLink, previaDoGrupo, type Previa } from '@tem-estudo/rules/link'
+import { REQUISITOS_PADRAO } from '@tem-estudo/rules/requirements'
 
 /** O que a conta lê do `virtual:grupo-possivel`. */
 export interface DadosDaPrevia {

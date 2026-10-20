@@ -18,12 +18,12 @@ import {
   pacoteDoLugar,
   type ArquivosDoGrupo,
   type LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
+} from '@tem-estudo/rules/possible-group-data'
 import {
   estimarGrupo,
   type Estimativa,
-} from '@tem-estudo/regras/grupo-possivel'
-import { REQUISITOS_PADRAO, UFS } from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/possible-group'
+import { REQUISITOS_PADRAO, UFS } from '@tem-estudo/rules/requirements'
 import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:grupo-possivel'

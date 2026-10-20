@@ -12,9 +12,9 @@ import {
   lerPerfil,
   PROCURA_DO_PERFIL,
   type Perfil,
-} from '@tem-estudo/regras/perfil'
-import type { PerfilNoGuia } from '@tem-estudo/regras/perfil-no-guia'
-import type { Veredito } from '@tem-estudo/regras/vale-para-voce'
+} from '@tem-estudo/rules/profile'
+import type { PerfilNoGuia } from '@tem-estudo/rules/profile-in-guide'
+import type { Veredito } from '@tem-estudo/rules/applies-to-you'
 import {
   useEffect,
   useEffectEvent,

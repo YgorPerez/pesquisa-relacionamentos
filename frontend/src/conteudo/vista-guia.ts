@@ -9,14 +9,14 @@ import type {
   Forca,
   Guia,
   Tema,
-} from '@tem-estudo/conteudo'
+} from '@tem-estudo/content'
 import {
   buscaDaDica,
   buscaDoGuia,
   buscaDoTema,
   type Busca,
-} from '@tem-estudo/conteudo/busca'
-import { dicaPublicada } from '@tem-estudo/conteudo/consultas'
+} from '@tem-estudo/content/search'
+import { dicaPublicada } from '@tem-estudo/content/queries'
 import { htmlSeguro, type HtmlSeguro } from './html-seguro'
 import { html, htmlEmLinha, resumo, type FichaResumo } from './vista'
 

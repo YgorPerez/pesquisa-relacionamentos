@@ -3,20 +3,20 @@
 // prateleira a evidência põe cada uma.
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import type { GeneroDoPerfil } from '@tem-estudo/regras/perfil'
+import type { GeneroDoPerfil } from '@tem-estudo/rules/profile'
 import {
   NOME_DO_DESFECHO,
   alertaDoTopo3,
   alternarNoTopo3,
   type EstadoDasPrioridades,
-} from '@tem-estudo/regras/prioridades'
+} from '@tem-estudo/rules/priorities'
 import {
   fraseDoLink,
   lerLink,
   previaDePrioridades,
   queryDoLink,
   type EstadoDoLink,
-} from '@tem-estudo/regras/link'
+} from '@tem-estudo/rules/link'
 import { useMemo, useState } from 'react'
 import { leituras } from '#/conteudo/leituras'
 import { metaDaPrevia } from '#/conteudo/previa'

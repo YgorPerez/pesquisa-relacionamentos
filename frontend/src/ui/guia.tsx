@@ -1,7 +1,7 @@
 // As peças do Guia que se repetem em outras páginas: o HTML que o servidor
 // já montou, a Confiança da resposta curta, a lista numerada de Fichas
 // citadas e a linha grande de uma Pergunta.
-import type { Forca } from '@tem-estudo/conteudo'
+import type { Forca } from '@tem-estudo/content'
 import { Link } from '@tanstack/react-router'
 import type { HtmlSeguro } from '#/conteudo/html-seguro'
 import type { FichaCitada } from '#/conteudo/vista-guia'

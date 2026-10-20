@@ -11,7 +11,7 @@ import {
   lerLink,
   type CalculadoraComLink,
   type EstadoDoLink,
-} from '@tem-estudo/regras/link'
+} from '@tem-estudo/rules/link'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { gravarRequisitos } from './grupo-possivel'
 import { gravarPerfil, perfilSalvo } from './perfil'

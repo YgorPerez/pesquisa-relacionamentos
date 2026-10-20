@@ -3,7 +3,7 @@
 import {
   TITULO_DO_REQUISITO,
   type RequisitoDoVisitante,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import { screen, waitFor, within } from '@testing-library/react'
 import { expect } from 'vite-plus/test'
 

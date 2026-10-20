@@ -2,7 +2,7 @@
 // aparece nos dois Guias (no segundo, pela Dica) e na Dica publicada; a Lima
 // 2015 só numa Dica ⬜, que não vai ao ar.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/conteudo'
+import { carregarAcervo } from '@tem-estudo/content'
 import { describe, expect, it } from 'vite-plus/test'
 import { citadaEm } from './vista-guia'
 

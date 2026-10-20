@@ -13,7 +13,7 @@
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { lerFicha } from '../packages/conteudo/src/ficha.ts'
+import { lerFicha } from '../packages/content/src/fact-sheet.ts'
 
 export interface Falha {
   /** A linha da tabela de Achados, a partir de 1; `null` quando a falha é da Ficha inteira. */

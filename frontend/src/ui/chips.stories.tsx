@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { alternarNoTopo3 } from '@tem-estudo/regras/prioridades'
+import { alternarNoTopo3 } from '@tem-estudo/rules/priorities'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import { EscolhaDoTopo3 } from './prioridades'

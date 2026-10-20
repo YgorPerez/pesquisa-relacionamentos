@@ -7,15 +7,15 @@
 // `montarPreviaDoGrupo` (`conteudo/previa-do-grupo.ts`), a de
 // `buscarPreviaDoGrupo`, com os pacotes que o plugin serve; Prioridades, por
 // `previaDePrioridades` sobre a vista do acervo, como o loader da rota.
-import { abrirPacote } from '@tem-estudo/regras/grupo-possivel-dados'
+import { abrirPacote } from '@tem-estudo/rules/possible-group-data'
 import {
   lerLink,
   previaDePrioridades,
   queryDoLink,
   type EstadoDoLink,
   type Previa,
-} from '@tem-estudo/regras/link'
-import { REQUISITOS_PADRAO } from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/link'
+import { REQUISITOS_PADRAO } from '@tem-estudo/rules/requirements'
 import acervo from 'virtual:acervo'
 import grupoPossivel from 'virtual:grupo-possivel'
 import { montarPreviaDoGrupo } from '#/conteudo/previa-do-grupo'

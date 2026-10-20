@@ -7,7 +7,7 @@ import {
   dicaPublicada,
   guiaPorSlug,
   temaPorSlug,
-} from '@tem-estudo/conteudo/consultas'
+} from '@tem-estudo/content/queries'
 import {
   resumoDaDica,
   resumoDoGuia,

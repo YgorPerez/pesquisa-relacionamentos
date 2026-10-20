@@ -1,7 +1,7 @@
 // O Grupo possível no navegador: os Requisitos salvos e a conta.
 //
 // Os Requisitos ficam em `localStorage['tem-estudo:grupo-possivel']`, no
-// formato `Requisitos` de `@tem-estudo/regras/requisitos` (JSON puro, lido
+// formato `Requisitos` de `@tem-estudo/rules/requirements` (JSON puro, lido
 // por `lerRequisitos`). `null` quer dizer que o visitante nunca mexeu: o
 // cartão do B5 (#32) mostra o número do Brasil, e o link (#34) leva só o
 // Perfil. A conta roda aqui, sobre os pacotes por lugar que o build grava
@@ -10,17 +10,17 @@
 import type {
   DadosDoLugar,
   LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
+} from '@tem-estudo/rules/possible-group-data'
 import {
   estimarGrupo,
   type Estimativa,
-} from '@tem-estudo/regras/grupo-possivel'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+} from '@tem-estudo/rules/possible-group'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import {
   lerRequisitos,
   REQUISITOS_PADRAO,
   type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import { useEffect, useMemo, useState } from 'react'
 import grupoPossivel from 'virtual:grupo-possivel'
 import { armazenado, useArmazenado } from './armazenado'

@@ -3,7 +3,7 @@
 // Graph e o endereço. Cada prévia sai da mesma conta do servidor do site
 // (`previas-do-link.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ORIGEM } from '@tem-estudo/conteudo/busca'
+import { ORIGEM } from '@tem-estudo/content/search'
 import { expect, within } from 'storybook/test'
 import {
   previaDoLink,

@@ -2,7 +2,7 @@
 // características citando a Silva 2020 (✅) e a Costa 2018 (🟡), e o Guia B1
 // que hospeda a calculadora.
 import { resolve } from 'node:path'
-import { carregarAcervo } from '@tem-estudo/conteudo'
+import { carregarAcervo } from '@tem-estudo/content'
 import { describe, expect, it } from 'vite-plus/test'
 import { vistaDasPrioridades } from './vista-prioridades'
 

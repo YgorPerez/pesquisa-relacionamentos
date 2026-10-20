@@ -5,7 +5,7 @@ import {
   DESFECHO_INICIAL,
   lerPrioridades,
   type EstadoDasPrioridades,
-} from '@tem-estudo/regras/prioridades'
+} from '@tem-estudo/rules/priorities'
 import { armazenado, useArmazenado } from './armazenado'
 
 const prioridadesSalvas = armazenado<EstadoDasPrioridades>(

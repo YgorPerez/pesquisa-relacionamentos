@@ -1,6 +1,6 @@
 // O Perfil do visitante, salvo no navegador e lido por qualquer página: o
 // Guia, a página da Dica e os cartões e páginas das calculadoras.
-import { lerPerfil, type Perfil } from '@tem-estudo/regras/perfil'
+import { lerPerfil, type Perfil } from '@tem-estudo/rules/profile'
 import { armazenado, useArmazenado } from './armazenado'
 
 export const perfilSalvo = armazenado<Perfil>('perfil', lerPerfil)

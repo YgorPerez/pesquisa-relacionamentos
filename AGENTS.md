@@ -68,7 +68,7 @@ Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 
 ## Código do Effect
 
-O `packages/conteudo` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
+O `packages/content` valida com o Schema do Effect v4, cuja API difere da que você lembra. Antes de escrever código Effect, leia `.repos/effect-smol/LLMS.md` e o fonte do módulo em `.repos/effect-smol/packages/effect/src/`. Se `.repos/` falta ou está noutra versão, rode `node scripts/sincronizar-referencias.ts`. Leia; nunca importe nem edite de lá (ADR 0012).
 
 ## Verificar
 

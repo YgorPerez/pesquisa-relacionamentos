@@ -19,8 +19,8 @@ import {
   formatarProblemas,
   lerArquivos,
   type Acervo,
-} from '@tem-estudo/conteudo'
-import { robotsTxt, sitemapXml } from '@tem-estudo/conteudo/busca'
+} from '@tem-estudo/content'
+import { robotsTxt, sitemapXml } from '@tem-estudo/content/search'
 import type { Plugin } from 'vite-plus'
 
 const ID = 'virtual:acervo'

@@ -31,11 +31,11 @@ import { useContarFichasAbertas } from '#/analytics/contagem'
 import { Compartilhar } from '#/ui/compartilhar'
 import { useGrupoPossivel, useRequisitosSalvos } from '#/estado/grupo-possivel'
 import { CartaoDoGrupoPossivel } from '#/ui/grupo-possivel'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import {
   REQUISITOS_PADRAO,
   valorDoRequisito,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 
 export const Route = createFileRoute('/$tema/$slug')({
   // O `loaderData` leva só o que o `head` e a etiqueta do Tema no topo

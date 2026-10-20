@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import type { Estimativa } from '@tem-estudo/regras/grupo-possivel'
-import { formatarQuantidade } from '@tem-estudo/regras/numeros'
-import type { Perfil } from '@tem-estudo/regras/perfil'
+import type { Estimativa } from '@tem-estudo/rules/possible-group'
+import { formatarQuantidade } from '@tem-estudo/rules/numbers'
+import type { Perfil } from '@tem-estudo/rules/profile'
 import {
   ALTURA_MAXIMA,
   ALTURA_MINIMA,
@@ -25,13 +25,13 @@ import {
   valorDoRequisito,
   type RequisitoDoVisitante,
   type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import {
   ehLink,
   fraseDoLink,
   queryDoLink,
   type EstadoDoLink,
-} from '@tem-estudo/regras/link'
+} from '@tem-estudo/rules/link'
 import { useId, useRef, type ReactNode } from 'react'
 import type { GuiaDaCalculadora } from '#/conteudo/guias'
 import { leituras } from '#/conteudo/leituras'

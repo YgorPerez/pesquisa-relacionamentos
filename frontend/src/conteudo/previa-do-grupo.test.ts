@@ -1,9 +1,9 @@
 // A prévia do link do Grupo possível sobre os dados de fixture: o "Brasil"
 // da fixture é só o Acre (`e2e/acervo/dados`).
 import { resolve } from 'node:path'
-import { abrirPacote } from '@tem-estudo/regras/grupo-possivel-dados'
-import { queryDoLink } from '@tem-estudo/regras/link'
-import { REQUISITOS_PADRAO } from '@tem-estudo/regras/requisitos'
+import { abrirPacote } from '@tem-estudo/rules/possible-group-data'
+import { queryDoLink } from '@tem-estudo/rules/link'
+import { REQUISITOS_PADRAO } from '@tem-estudo/rules/requirements'
 import { describe, expect, it } from 'vite-plus/test'
 import { montarPacotes } from '../../vite/grupo-possivel.ts'
 import { montarPreviaDoGrupo } from './previa-do-grupo'

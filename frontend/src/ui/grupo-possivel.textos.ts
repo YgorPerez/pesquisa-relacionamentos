@@ -1,8 +1,8 @@
 // Os textos do Grupo possível que a página e as peças dividem. Fora do
 // `grupo-possivel.tsx`, que só exporta componentes: assim o Fast Refresh
 // guarda o estado da tela quando ele muda.
-import type { Custo, Estimativa } from '@tem-estudo/regras/grupo-possivel'
-import { formatarGanho, formatarVezes } from '@tem-estudo/regras/numeros'
+import type { Custo, Estimativa } from '@tem-estudo/rules/possible-group'
+import { formatarGanho, formatarVezes } from '@tem-estudo/rules/numbers'
 
 /** Quem atende, para a frase: "mulheres", "homens" ou "pessoas". */
 export const NOME_DO_ALVO: Record<Estimativa['alvo'], string> = {

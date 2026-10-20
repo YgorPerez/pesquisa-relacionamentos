@@ -5,7 +5,7 @@ import {
   Outlet,
   Scripts,
 } from '@tanstack/react-router'
-import { ORIGEM } from '@tem-estudo/conteudo/busca'
+import { ORIGEM } from '@tem-estudo/content/search'
 import type { ReactNode } from 'react'
 import { Topo } from '#/ui/topo'
 import { Rodape } from '#/ui/contagem'

@@ -1,7 +1,7 @@
 // As seções do Guia que só ele tem: a seta que manda às Fichas, as Dicas, o
 // que a evidência diz (com a divergência) e os Mitos riscados. A página
 // (`routes/$tema/$slug.tsx`) as monta na ordem do #7.
-import type { Veredito } from '@tem-estudo/regras/vale-para-voce'
+import type { Veredito } from '@tem-estudo/rules/applies-to-you'
 import { Link } from '@tanstack/react-router'
 import type { GuiaVista } from '#/conteudo/vista-guia'
 import { Html } from './guia'

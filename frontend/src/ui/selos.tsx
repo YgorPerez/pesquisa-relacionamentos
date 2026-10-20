@@ -1,6 +1,6 @@
 // Status de verificação e Força da evidência, sempre desenhados e escritos
 // (DESIGN.md: "Don't mostrar Confiança, Status ou Força só por cor").
-import type { Forca, Status } from '@tem-estudo/conteudo'
+import type { Forca, Status } from '@tem-estudo/content'
 import type { ReactNode } from 'react'
 import { cn } from '@/platform/cn'
 

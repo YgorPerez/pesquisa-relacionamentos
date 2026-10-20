@@ -34,7 +34,7 @@ O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https
 
 **Nomes de arquivo:** `estudos/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `relatorios/<AAAA-MM-DD>-<tema>.md`. Fonte local: `fontes/<slug-da-ficha>.<pdf|html|txt>` ou `fontes/privado/<slug-da-ficha>.<pdf|html|txt>`.
 
-Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/conteudo`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
+Para uma ficha nova, copie [`estudos/_modelo.md`](estudos/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/content`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
 
 ## Índice de estudos
 

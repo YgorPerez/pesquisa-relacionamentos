@@ -4,13 +4,13 @@ import { resolve } from 'node:path'
 import {
   abrirPacote,
   type LugarDoPacote,
-} from '@tem-estudo/regras/grupo-possivel-dados'
-import { estimarGrupo } from '@tem-estudo/regras/grupo-possivel'
-import { formatarQuantidade } from '@tem-estudo/regras/numeros'
+} from '@tem-estudo/rules/possible-group-data'
+import { estimarGrupo } from '@tem-estudo/rules/possible-group'
+import { formatarQuantidade } from '@tem-estudo/rules/numbers'
 import {
   REQUISITOS_PADRAO,
   type Requisitos,
-} from '@tem-estudo/regras/requisitos'
+} from '@tem-estudo/rules/requirements'
 import { describe, expect, it } from 'vite-plus/test'
 import { montarPacotes } from './grupo-possivel.ts'
 
