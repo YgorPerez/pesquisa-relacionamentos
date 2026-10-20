@@ -2,7 +2,7 @@
 
 O revisor é outra sessão, nunca a que escreveu o PR. Ele faz o merge sozinho do que passa em tudo abaixo, pede mudança no que falha e entrega ao humano só a dúvida ética. Um item que você não conseguiu conferir conta como falha.
 
-1. **Pegar o PR.** `gh pr checkout <pr>` e `gh pr view <pr> --comments`. O PR fecha uma issue `acervo` e mexe só em `studies/`, `reports/`, `sources/` e `scripts/calculations/`. Um PR que toca Guia ou Dica volta ao autor.
+1. **Pegar o PR.** `gh pr checkout <pr>` e `gh pr view <pr> --comments`. O PR fecha uma issue `acervo` e mexe só em `studies/`, `reports/`, `sources/`, `scripts/calculations/` e no índice gerado do `README.md`. Um PR que toca Guia ou Dica volta ao autor.
 
 2. **Fonte local.** A Fonte de cada Ficha nova ou refeita está em `sources/<slug>.*` ou em `sources/private/<slug>.*`. A privada vem do repo privado: `git -C sources/private pull` (sem a pasta, `node scripts/prepare-worktree.ts` a clona). Se ela não está lá, peça ao autor o push; o check `Fichas` já reclama. Em `sources/`, confirme na página do editor que a licença é aberta e que o campo `license` a registra; sem licença aberta, o arquivo vai para `sources/private/`.
 
