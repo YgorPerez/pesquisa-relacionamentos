@@ -3,11 +3,12 @@
 // prateleira a evidência põe cada uma.
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import type { GeneroDoPerfil } from '@tem-estudo/regras/perfil'
 import {
   NOME_DO_DESFECHO,
   alertaDoTopo3,
   alternarNoTopo3,
-  type Desfecho,
+  type EstadoDasPrioridades,
 } from '@tem-estudo/regras/prioridades'
 import {
   fraseDoLink,
@@ -98,32 +99,19 @@ function PaginaDePrioridades() {
   )
 }
 
+/** Toda mudança do visitante nas Prioridades passa aqui, e conta o uso. */
+function gravarEContar(novo: EstadoDasPrioridades) {
+  gravarPrioridades(novo)
+  contarUsoDaCalculadora('prioridades')
+}
+
 function Calculadora({ vista }: { vista: PrioridadesVista }) {
   const { caracteristicas } = vista
   const ids = useMemo(() => idsDe(vista), [vista])
   const recebido = useLinkRecebido('prioridades', ids)
-  const trocou = recebido !== null
-  const trocouGenero =
-    recebido?.calculadora === 'prioridades' && recebido.genero !== null
   const estado = usePrioridades(ids)
-  const perfil = usePerfil()
-  const genero = perfil?.genero
-  const [aberta, setAberta] = useState<string | null>(null)
+  const genero = usePerfil()?.genero
   const { topo3, desfecho } = estado
-  const link: EstadoDoLink = {
-    calculadora: 'prioridades',
-    genero: genero ?? null,
-    prioridades: estado,
-  }
-  const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
-
-  const mexer = (novo: typeof estado) => {
-    gravarPrioridades(novo)
-    contarUsoDaCalculadora('prioridades')
-  }
-  const tocar = (id: string) =>
-    mexer({ ...estado, topo3: alternarNoTopo3(topo3, id) })
-  const escolherDesfecho = (d: Desfecho) => mexer({ ...estado, desfecho: d })
 
   return (
     <>
@@ -131,104 +119,174 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         Das dez, quais são as três que mais importam para você num parceiro?
         Toque nelas na ordem.
       </Lead>
-      {trocou && (
-        <Aviso role="status">
-          {trocouGenero
-            ? 'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.'
-            : 'Este link trocou o seu topo 3 salvo pelo de quem mandou.'}
-        </Aviso>
-      )}
+      <AvisoDoLink recebido={recebido} />
 
       <EscolhaDoTopo3
         caracteristicas={caracteristicas}
         topo3={topo3}
-        aoTocar={tocar}
+        aoTocar={(id) =>
+          gravarEContar({ ...estado, topo3: alternarNoTopo3(topo3, id) })
+        }
       />
 
       <div
         className="sticky top-0 z-5 -mx-md mt-lg mb-0 border-b-2 border-tinta bg-papel px-md py-2.5 folha:-mx-16 folha:px-16"
         data-slot="desfecho-preso"
       >
-        <SeletorDeDesfecho desfecho={desfecho} aoEscolher={escolherDesfecho} />
+        <SeletorDeDesfecho
+          desfecho={desfecho}
+          aoEscolher={(d) => gravarEContar({ ...estado, desfecho: d })}
+        />
       </div>
 
-      {desfecho === 'satisfacao' && (
-        <Collapsible id="antes-da-lista" defaultOpen className="mt-md">
-          <CollapsibleTrigger>
-            <svg
-              className="flex-none transition-transform duration-250 ease-sai group-data-panel-open:rotate-90 motion-reduce:transition-none"
-              width="14"
-              height="16"
-              viewBox="0 0 14 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 2.5l6.5 5.6L4 13.6" />
-            </svg>
-            Antes: o parceiro explica pouco da satisfação
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <BarraDaSatisfacao barra={vista.barra} />
-          </CollapsibleContent>
-        </Collapsible>
-      )}
+      {desfecho === 'satisfacao' && <AntesDaLista barra={vista.barra} />}
 
       <AlertaDoTopo3 frase={alertaDoTopo3(caracteristicas, topo3, desfecho)} />
 
-      <section aria-labelledby="t-estante">
-        <h2 id="t-estante" className="sr-only">
-          Onde a evidência põe cada uma, para{' '}
-          {NOME_DO_DESFECHO[desfecho].toLowerCase()}
-        </h2>
-        <Estante
-          caracteristicas={caracteristicas}
-          desfecho={desfecho}
-          topo3={topo3}
-          aberta={aberta}
-          aoAbrir={setAberta}
-          genero={genero}
-        />
-        <p className="mx-0 mt-sm mb-lg text-nota text-tinta-2">
-          Toque numa característica para ver o estudo.
-        </p>
-      </section>
+      <OndeAEvidenciaPoe
+        caracteristicas={caracteristicas}
+        estado={estado}
+        genero={genero}
+      />
 
       <Aviso role="note">
         Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da
         Austrália, e um cobre 43 países. Quase todos são de casais homem-mulher.
       </Aviso>
 
-      <Compartilhar
-        query={queryDoLink(link)}
-        frase={fraseDoLink(link, { nomes })}
-        aviso={AVISO_DA_CONTAGEM}
+      <CompartilharAsPrioridades
+        caracteristicas={caracteristicas}
+        estado={estado}
+        genero={genero}
       />
 
-      {vista.doGuia && (
-        <Secao aria-labelledby="t-do-guia">
-          <Headline id="t-do-guia">Do Guia</Headline>
-          <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
-            <p className="font-title text-title leading-body font-bold tracking-normal text-tinta">
-              {vista.doGuia.pergunta}
-            </p>
-            <ConfiancaDaResposta confianca={vista.doGuia.confianca} />
-            <p className="text-lead">{vista.doGuia.resposta}</p>
-            <p>
-              <Link
-                to="/$tema/$slug"
-                params={{ tema: vista.doGuia.tema, slug: vista.doGuia.slug }}
-                className="inline-flex min-h-toque items-center font-bold"
-              >
-                Ler o Guia inteiro
-              </Link>
-            </p>
-          </Painel>
-        </Secao>
-      )}
+      {vista.doGuia && <DoGuia guia={vista.doGuia} />}
     </>
+  )
+}
+
+/** O aviso de que um link recebido trocou o topo 3 salvo (e, se ele trouxe,
+ * o gênero do Perfil). Sem link, nada. */
+function AvisoDoLink({ recebido }: { recebido: EstadoDoLink | null }) {
+  if (!recebido) return null
+  const trocouGenero =
+    recebido.calculadora === 'prioridades' && recebido.genero !== null
+  return (
+    <Aviso role="status">
+      {trocouGenero
+        ? 'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.'
+        : 'Este link trocou o seu topo 3 salvo pelo de quem mandou.'}
+    </Aviso>
+  )
+}
+
+/** "Antes: o parceiro explica pouco da satisfação", aberto, com a barra. */
+function AntesDaLista({ barra }: { barra: PrioridadesVista['barra'] }) {
+  return (
+    <Collapsible id="antes-da-lista" defaultOpen className="mt-md">
+      <CollapsibleTrigger>
+        <svg
+          className="flex-none transition-transform duration-250 ease-sai group-data-panel-open:rotate-90 motion-reduce:transition-none"
+          width="14"
+          height="16"
+          viewBox="0 0 14 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 2.5l6.5 5.6L4 13.6" />
+        </svg>
+        Antes: o parceiro explica pouco da satisfação
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <BarraDaSatisfacao barra={barra} />
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+/** A estante: em que prateleira a evidência põe cada característica, para o
+ * desfecho escolhido. Uma característica por vez fica aberta. */
+function OndeAEvidenciaPoe({
+  caracteristicas,
+  estado: { topo3, desfecho },
+  genero,
+}: {
+  caracteristicas: PrioridadesVista['caracteristicas']
+  estado: EstadoDasPrioridades
+  genero: GeneroDoPerfil | undefined
+}) {
+  const [aberta, setAberta] = useState<string | null>(null)
+  return (
+    <section aria-labelledby="t-estante">
+      <h2 id="t-estante" className="sr-only">
+        Onde a evidência põe cada uma, para{' '}
+        {NOME_DO_DESFECHO[desfecho].toLowerCase()}
+      </h2>
+      <Estante
+        caracteristicas={caracteristicas}
+        desfecho={desfecho}
+        topo3={topo3}
+        aberta={aberta}
+        aoAbrir={setAberta}
+        genero={genero}
+      />
+      <p className="mx-0 mt-sm mb-lg text-nota text-tinta-2">
+        Toque numa característica para ver o estudo.
+      </p>
+    </section>
+  )
+}
+
+/** O "Copiar link" das Prioridades: o topo 3, o desfecho e o gênero. */
+function CompartilharAsPrioridades({
+  caracteristicas,
+  estado,
+  genero,
+}: {
+  caracteristicas: PrioridadesVista['caracteristicas']
+  estado: EstadoDasPrioridades
+  genero: GeneroDoPerfil | undefined
+}) {
+  const link: EstadoDoLink = {
+    calculadora: 'prioridades',
+    genero: genero ?? null,
+    prioridades: estado,
+  }
+  const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
+  return (
+    <Compartilhar
+      query={queryDoLink(link)}
+      frase={fraseDoLink(link, { nomes })}
+      aviso={AVISO_DA_CONTAGEM}
+    />
+  )
+}
+
+/** O bloco "Do Guia": a Pergunta que hospeda a calculadora e a resposta curta. */
+function DoGuia({ guia }: { guia: NonNullable<PrioridadesVista['doGuia']> }) {
+  return (
+    <Secao aria-labelledby="t-do-guia">
+      <Headline id="t-do-guia">Do Guia</Headline>
+      <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
+        <p className="font-title text-title leading-body font-bold tracking-normal text-tinta">
+          {guia.pergunta}
+        </p>
+        <ConfiancaDaResposta confianca={guia.confianca} />
+        <p className="text-lead">{guia.resposta}</p>
+        <p>
+          <Link
+            to="/$tema/$slug"
+            params={{ tema: guia.tema, slug: guia.slug }}
+            className="inline-flex min-h-toque items-center font-bold"
+          >
+            Ler o Guia inteiro
+          </Link>
+        </p>
+      </Painel>
+    </Secao>
   )
 }
