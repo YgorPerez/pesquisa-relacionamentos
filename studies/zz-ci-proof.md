@@ -25,7 +25,7 @@ Onde os casais se conheceram.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Conheceram por app | 18,5% | Results, p. 104 | "18.5 percent met their partner through a newspaper ad" |
+| Conheceram por app | 18,5% | Results, p. 104 | "18.5 percent met their partner through a dating app" |
 | Entre 18 e 24 anos | 24% | Results, p. 104 | "Among those aged 18 to 24 the share rose to 24%" |
 | Satisfação, app × amigos | r = 0,04 | Results, p. 104 | "relationship satisfaction did not differ between groups (r = .04)" |
 
