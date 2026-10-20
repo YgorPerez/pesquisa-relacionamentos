@@ -75,12 +75,8 @@ export function montarPacotes(pasta: string): DadosMontados {
   }
 }
 
-export function grupoPossivel(): Plugin {
-  const raiz = resolve(
-    import.meta.dirname,
-    '..',
-    process.env.CONTEUDO_RAIZ ?? '..',
-  )
+/** `raiz` é a do acervo, já validada (`vite/ambiente.ts`). */
+export function grupoPossivel({ raiz }: { raiz: string }): Plugin {
   const pasta = resolve(raiz, 'dados', 'grupo-possivel')
   let montados: DadosMontados | undefined
   const dados = () => (montados ??= montarPacotes(pasta))

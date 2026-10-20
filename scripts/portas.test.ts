@@ -2,7 +2,12 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it } from 'vite-plus/test'
-import { blocoDoWorktree, portaDoCheckout, USOS } from './portas.ts'
+import {
+  blocoDoWorktree,
+  portaDoCheckout,
+  portaPedida,
+  USOS,
+} from './portas.ts'
 
 const PASTA = mkdtempSync(join(tmpdir(), 'portas-'))
 afterAll(() => rmSync(PASTA, { recursive: true, force: true }))
@@ -60,6 +65,23 @@ describe('portaDoCheckout', () => {
   it('a barra do Windows e a caixa da letra do disco não mudam o bloco', () => {
     expect(blocoDoWorktree('C:\\repo\\wt\\')).toBe(
       blocoDoWorktree('c:/repo/wt'),
+    )
+  })
+})
+
+describe('portaPedida', () => {
+  it('sem a variável do uso, a do checkout', () => {
+    const raiz = checkout('wt-pedida', 'worktree')
+    expect(portaPedida('e2e', {}, raiz)).toBe(portaDoCheckout('e2e', raiz))
+  })
+
+  it('com ela, a dela', () => {
+    expect(portaPedida('stories', { STORIES_PORTA: '5004' })).toBe(5004)
+  })
+
+  it('uma porta que não é porta para tudo, dizendo qual variável', () => {
+    expect(() => portaPedida('e2e', { E2E_PORTA: 'abc' })).toThrow(
+      'E2E_PORTA="abc": esperado uma porta, de 1 a 65535',
     )
   })
 })

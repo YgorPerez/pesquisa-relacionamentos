@@ -6,8 +6,8 @@
 //
 // Quem lê: `scripts/dev.ts` (dev, start e Storybook), o
 // `frontend/playwright.config.ts` (e2e) e o `frontend/vitest.stories.config.ts`
-// (o servidor do Vitest no navegador). Uma porta dada no ambiente vale mais
-// que a derivada; isto só decide o padrão. O CI roda num checkout normal, e
+// (o servidor do Vitest no navegador), todos por `portaPedida`. Uma porta dada
+// no ambiente vale mais que a derivada, e uma que não é porta para tudo. O CI roda num checkout normal, e
 // fica nas do principal. A imagem do Docker não passa por aqui.
 //
 //   node scripts/portas.ts        imprime as portas deste checkout
@@ -17,6 +17,7 @@
 import { createHash } from 'node:crypto'
 import { statSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { lerVariaveis, porta } from './variaveis.ts'
 
 /** As portas do checkout principal. O `vite dev` na 4310, o servidor do build
  * (`pnpm start`) na 4311, o do e2e na 4312, o Storybook na 6310 e o Vitest
@@ -83,6 +84,28 @@ export function portaDoCheckout(uso: Uso, raiz = RAIZ) {
     blocoDoWorktree(raiz) * LARGURA_DO_BLOCO +
     USOS.indexOf(uso)
   )
+}
+
+/** A variável que escolhe a porta de cada uso. */
+export const VARIAVEL_DA_PORTA = {
+  dev: 'DEV_PORTA',
+  start: 'START_PORTA',
+  e2e: 'E2E_PORTA',
+  storybook: 'STORYBOOK_PORTA',
+  stories: 'STORIES_PORTA',
+} as const satisfies Record<Uso, string>
+
+/** A porta de `uso`: a da variável dele em `ambiente`, validada (`./variaveis.ts`),
+ * ou a do checkout em `raiz`. */
+export function portaPedida(
+  uso: Uso,
+  ambiente: Record<string, string | undefined> = process.env,
+  raiz = RAIZ,
+) {
+  const nome = VARIAVEL_DA_PORTA[uso]
+  return lerVariaveis({ [nome]: porta(portaDoCheckout(uso, raiz)) }, ambiente)[
+    nome
+  ]!
 }
 
 if (import.meta.main) {

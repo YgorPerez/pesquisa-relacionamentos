@@ -3,9 +3,10 @@ import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
-import { defineConfig, type PluginOption } from 'vite-plus'
+import { defineConfig, loadEnv, type PluginOption } from 'vite-plus'
 import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
 import { acervo } from './vite/acervo.ts'
+import { lerAmbienteDoBuild } from './vite/ambiente.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
@@ -15,28 +16,36 @@ const workers = await workersDoVitest()
 // O Vitest só precisa do React: o Start e o nitro montam o servidor, que
 // teste de unidade nenhum usa. O app inteiro é testado pelo Playwright,
 // sobre o build (`playwright.config.ts`).
-const plugins: PluginOption[] = process.env.VITEST
-  ? [viteReact()]
-  : [
-      acervo(),
-      grupoPossivel(),
-      // As classes do Tailwind (`styles.css`, `ui/tokens.css`), antes do
-      // Start, como no Festival.
-      tailwindcss(),
-      tanstackStart(),
-      nitro(),
-      viteReact(),
-      // O React Compiler memoiza cada componente e hook no build. O plugin 6
-      // do React não traz mais o Babel, e o compilador ainda é um plugin do
-      // Babel: roda pelo `@rolldown/plugin-babel`, só no bundle do navegador
-      // (o preset pula o SSR). Uma tela que o compilador quebrar sai dele com
-      // `'use no memo'` no topo (ADR 0003).
-      babel({ presets: [reactCompilerPreset()] }),
-    ]
+const doApp = (mode: string): PluginOption[] => {
+  // As variáveis do build, validadas antes de qualquer plugin
+  // (`vite/ambiente.ts`, ADR 0032). O `loadEnv` junta o `.env` deste pacote
+  // ao ambiente do shell, que vale mais; o prefixo vazio traz também as sem
+  // `VITE_`.
+  const ambiente = lerAmbienteDoBuild(loadEnv(mode, import.meta.dirname, ''))
+  return [
+    acervo({
+      raiz: ambiente.raizDoConteudo,
+      anterior: ambiente.sitemapAnterior,
+    }),
+    grupoPossivel({ raiz: ambiente.raizDoConteudo }),
+    // As classes do Tailwind (`styles.css`, `ui/tokens.css`), antes do
+    // Start, como no Festival.
+    tailwindcss(),
+    tanstackStart(),
+    nitro(),
+    viteReact(),
+    // O React Compiler memoiza cada componente e hook no build. O plugin 6
+    // do React não traz mais o Babel, e o compilador ainda é um plugin do
+    // Babel: roda pelo `@rolldown/plugin-babel`, só no bundle do navegador
+    // (o preset pula o SSR). Uma tela que o compilador quebrar sai dele com
+    // `'use no memo'` no topo (ADR 0003).
+    babel({ presets: [reactCompilerPreset()] }),
+  ]
+}
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   resolve: { tsconfigPaths: true },
-  plugins,
+  plugins: process.env.VITEST ? [viteReact()] : doApp(mode),
   test: {
     ...(workers ? { maxWorkers: workers } : {}),
     include: [
@@ -58,4 +67,4 @@ export default defineConfig({
       thresholds: { statements: 12, branches: 7, functions: 9, lines: 12 },
     },
   },
-})
+}))

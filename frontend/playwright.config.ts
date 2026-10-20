@@ -10,9 +10,9 @@
 import { availableParallelism } from 'node:os'
 import { defineConfig, devices } from '@playwright/test'
 import { entrarNaFila, pedidoDoPlaywright } from '../scripts/fila-da-maquina.ts'
-import { portaDoCheckout } from '../scripts/portas.ts'
+import { portaPedida } from '../scripts/portas.ts'
 
-const porta = Number(process.env.E2E_PORTA ?? portaDoCheckout('e2e'))
+const porta = portaPedida('e2e')
 
 // A rodada entra na fila da máquina antes de subir o servidor, e abre os
 // Chrome que ela der (`scripts/fila-da-maquina.ts`, ADR 0013). Sozinha, a

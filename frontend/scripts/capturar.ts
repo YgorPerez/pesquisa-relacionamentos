@@ -20,7 +20,7 @@ import { mkdir, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { type Browser, chromium, type Page } from '@playwright/test'
-import { portaDoCheckout } from '../../scripts/portas.ts'
+import { portaPedida } from '../../scripts/portas.ts'
 import {
   idsDoIndice,
   idsParecidos,
@@ -292,8 +292,8 @@ if (import.meta.main) {
   }
   const opcoes = lerArgumentos(argv, {
     saida: join(tmpdir(), 'capturas'),
-    app: `http://localhost:${process.env.START_PORTA ?? portaDoCheckout('start')}`,
-    storybook: `http://localhost:${process.env.STORYBOOK_PORTA ?? portaDoCheckout('storybook')}`,
+    app: `http://localhost:${portaPedida('start')}`,
+    storybook: `http://localhost:${portaPedida('storybook')}`,
   })
   if ('erro' in opcoes) {
     console.error(`${opcoes.erro}\n\n${USO}`)

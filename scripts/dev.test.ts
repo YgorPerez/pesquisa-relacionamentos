@@ -54,7 +54,7 @@ describe('comandoDoUso', () => {
 
   it('uma porta que não é número para tudo, dizendo qual variável', () => {
     expect(() => comandoDoUso('dev', { DEV_PORTA: 'abc' }, principal)).toThrow(
-      'DEV_PORTA não é uma porta: abc.',
+      'DEV_PORTA="abc": esperado uma porta, de 1 a 65535',
     )
   })
 })

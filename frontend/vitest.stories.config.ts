@@ -5,7 +5,7 @@
 import { playwright } from 'vite-plus/test/browser-playwright'
 import { defineConfig, mergeConfig } from 'vite-plus'
 import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
-import { portaDoCheckout } from '../scripts/portas.ts'
+import { portaPedida } from '../scripts/portas.ts'
 import doStorybook from './.storybook/vite.config.ts'
 
 // A rodada entra na fila da máquina antes de abrir os Chrome
@@ -15,7 +15,7 @@ const workers = await workersDoVitest()
 // O servidor que o Vitest sobe para o Chrome abrir as stories, na porta do
 // checkout (`scripts/portas.ts`, ADR 0010). Sem ela, dois worktrees disputam a
 // 63315 do Vitest. `STORIES_PORTA` escolhe outra.
-const porta = Number(process.env.STORIES_PORTA ?? portaDoCheckout('stories'))
+const porta = portaPedida('stories')
 
 export default mergeConfig(
   doStorybook,

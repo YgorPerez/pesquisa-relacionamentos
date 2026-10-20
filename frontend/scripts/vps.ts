@@ -21,6 +21,7 @@ import { spawnSync } from 'node:child_process'
 import { copyFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
+import { emailOpcional, lerVariaveis } from '../../scripts/variaveis.ts'
 import { arquivoDaChave } from './chave-ssh.ts'
 import { cronometro } from './cronometro.ts'
 import {
@@ -231,7 +232,9 @@ if (import.meta.main) {
     publicar({
       saida: resolve(a),
       sha: b,
-      email: process.env.GOATCOUNTER_EMAIL || undefined,
+      // Validado antes da primeira etapa (ADR 0032).
+      email: lerVariaveis({ GOATCOUNTER_EMAIL: emailOpcional }, process.env)
+        .GOATCOUNTER_EMAIL,
       vps: pelaSsh(destino),
       dizer,
     })

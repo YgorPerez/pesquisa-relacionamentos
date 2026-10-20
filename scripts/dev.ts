@@ -24,21 +24,18 @@ import { connect } from 'node:net'
 import { join } from 'node:path'
 import { createInterface } from 'node:readline'
 import { matar, subirComGrupo } from './matar-arvore.ts'
-import { ehWorktree, portaDoCheckout, RAIZ } from './portas.ts'
+import { ehWorktree, portaPedida, RAIZ, VARIAVEL_DA_PORTA } from './portas.ts'
 
 const USOS_DO_DEV = {
   dev: {
-    variavel: 'DEV_PORTA',
     comando: (porta: number) => `pnpm exec vp dev --port ${porta} --strictPort`,
     env: (): Record<string, string> => ({}),
   },
   start: {
-    variavel: 'START_PORTA',
     comando: () => 'node .output/server/index.mjs',
     env: (porta: number) => ({ PORT: String(porta) }),
   },
   storybook: {
-    variavel: 'STORYBOOK_PORTA',
     comando: (porta: number) =>
       `pnpm exec storybook dev --port ${porta} --no-open --exact-port`,
     env: (): Record<string, string> => ({}),
@@ -54,14 +51,8 @@ export function comandoDoUso(
   ambiente: Record<string, string | undefined>,
   raiz = RAIZ,
 ) {
-  const { variavel, comando, env } = USOS_DO_DEV[uso]
-  const valor = ambiente[variavel]
-  let porta = portaDoCheckout(uso, raiz)
-  if (valor) {
-    porta = Number(valor)
-    if (!Number.isInteger(porta) || porta < 1 || porta > 65_535)
-      throw new Error(`${variavel} não é uma porta: ${valor}.`)
-  }
+  const { comando, env } = USOS_DO_DEV[uso]
+  const porta = portaPedida(uso, ambiente, raiz)
   return { porta, comando: comando(porta), env: env(porta) }
 }
 
@@ -104,7 +95,7 @@ async function subir(uso: UsoDoDev) {
     process.exit(1)
   }
   if (await portaOcupada(porta)) {
-    const { variavel } = USOS_DO_DEV[uso]
+    const variavel = VARIAVEL_DA_PORTA[uso]
     console.error(
       `[dev] A porta ${porta} já está em uso. Pare o que você subiu nela, ou ` +
         `escolha outra com ${variavel}. Não pare o processo de outra sessão.`,

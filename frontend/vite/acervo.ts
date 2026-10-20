@@ -10,8 +10,9 @@
 // `CONTEUDO_RAIZ` troca a raiz do repositório: o e2e constrói sobre a pasta
 // de fixture `e2e/acervo`. `SITEMAP_ANTERIOR` é o caminho do `sitemap.xml`
 // que está no ar, que o CI e o deploy baixam de temestudo.com antes do build:
-// com ele, o build falha se um caminho publicado sumiu sem `antes`.
-import { existsSync, readFileSync } from 'node:fs'
+// com ele, o build falha se um caminho publicado sumiu sem `antes`. As duas
+// chegam aqui validadas por `vite/ambiente.ts`.
+import { readFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
 import {
   carregarAcervo,
@@ -25,21 +26,20 @@ import type { Plugin } from 'vite-plus'
 const ID = 'virtual:acervo'
 const RESOLVIDO = `\0${ID}`
 
-export function acervo(): Plugin {
-  const raiz = resolve(
-    import.meta.dirname,
-    '..',
-    process.env.CONTEUDO_RAIZ ?? '..',
-  )
-  const anterior = process.env.SITEMAP_ANTERIOR
+/** `raiz` e `anterior` vêm já validados (`vite/ambiente.ts`). */
+export function acervo({
+  raiz,
+  anterior,
+}: {
+  raiz: string
+  anterior: string | undefined
+}): Plugin {
   let montado: Acervo | null = null
 
   const carregar = (
     avisar: (mensagem: string) => void,
     falhar: (mensagem: string) => never,
   ): Acervo => {
-    if (anterior && !existsSync(anterior))
-      falhar(`SITEMAP_ANTERIOR aponta ${anterior}, que não existe`)
     const resultado = carregarAcervo(
       raiz,
       anterior ? { sitemapAnterior: readFileSync(anterior, 'utf8') } : {},
