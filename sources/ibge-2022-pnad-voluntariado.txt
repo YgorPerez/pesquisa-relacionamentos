@@ -1,0 +1,510 @@
+# IBGE (2022): PNAD Contínua, Outras formas de trabalho, trechos citados na Ficha
+
+Texto extraído do informativo oficial do IBGE e respostas da API de agregados do SIDRA (dados abertos do Executivo federal), só com o que a Ficha `studies/ibge-2022-pnad-voluntariado.md` cita. PDF: saída de `pdftotext -enc UTF-8` de cada página citada. SIDRA: a resposta da API, sem mudança. Baixado em 2026-10-20.
+
+## Informativo: PNAD Contínua, Outras formas de trabalho 2022 (Rio de Janeiro: IBGE, 2023)
+
+URL: https://biblioteca.ibge.gov.br/visualizacao/livros/liv102020_informativo.pdf
+
+### Página 1 do PDF
+
+Pesquisa Nacional por Amostra de Domicílios Contínua
+
+PNAD
+
+Outras formas de trabalho 2022
+
+A Pesquisa Nacional por Amostra de Domicílios Contínua - PNAD
+Contínua1 investiga, na quinta visita ao domicílio, o tema Outras
+formas de trabalho, que abarca os afazeres domésticos no domicílio
+ou em domicílio de parente; o cuidado de pessoas (crianças, idosos,
+enfermos ou pessoas com necessidades especiais) no domicílio ou
+de parentes não moradores; a produção para o próprio consumo;
+e o trabalho voluntário. Conforme orientação da 19ª Conferencia
+Internacional de Estadísticos del Trabajo - CIET, realizada pela Organização Internacional do Trabalho - OIT (International Labour
+Organization - ILO) em 20132, essas atividades não entram no cômputo da ocupação da pesquisa, por isso são chamadas de outras
+formas de trabalho, uma vez que também são consideradas trabalho, ainda que não precificado ou tratado como parte do Produto
+Interno Bruto - PIB do País.
+Devido à pandemia da COVID-19, esse tema não foi investigado
+nos anos de 2020 e 2021, retornando a campo em 2022. Dessa forma, no presente informativo, as comparações são realizadas entre
+os anos de 2019 e 2022. Cabe destacar que os resultados estimados
+incorporam a reponderação da PNAD Contínua ocorrida em 2021,
+que considera os totais populacionais por sexo e grupos etários, segundo projeções populacionais baseadas em dados do Censo Demográfico 20103.
+
+contínua
+
+ISBN 978-85-240-4574-5
+© IBGE, 2023
+
+Taxa de realização de afazeres domésticos (1)
+Total
+Homem
+Mulher
+
+85,4 %
+79,2 %
+91,3 %
+
+(1) No próprio domicílio ou em domicílio de parente.
+
+Taxa de realização de cuidados de pessoas (2)
+Total
+Homem
+Mulher
+
+29,3 %
+23,3 %
+34,9 %
+
+(2) Cuidado de moradores ou de parentes não moradores.
+
+Taxa de realização de produção para
+o próprio consumo
+Total
+Homem
+Mulher
+
+6,8 %
+7,6 %
+6,1 %
+
+1
+
+Por decisão editorial, a partir de 2017 a publicação passou a ser divulgada em duas partes:
+a primeira corresponde a este informativo, que destaca os principais resultados da pesquisa,
+e a segunda é constituída por Notas técnicas, entre outros elementos textuais, apresentando
+considerações de natureza metodológica sobre a pesquisa. As tabelas de resultados, as notas
+técnicas e demais informações sobre a pesquisa encontram-se disponíveis no portal do IBGE
+na Internet, na página da PNAD Contínua, no endereço: <https://www.ibge.gov.br/estatisticas/
+sociais/populacao/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.
+html?=&t=o-que-e>.
+
+2
+
+Para mais informações sobre a 19ª CIET, consultar o endereço: https://www.ilo.org/wcmsp5/
+groups/public/---dgreports/---stat/documents/publication/wcms_234125.pdf..
+
+Taxa de realização de trabalho voluntário
+Total
+Homem
+Mulher
+
+4,2 %
+3,5 %
+4,9 %
+
+3
+
+Para detalhes sobre o processo de reponderação da pesquisa ocorrido em 2021, consultar:
+IBGE. [Pesquisa Nacional por Amostra de Domicílios Contínua]. Sobre a divulgação da reponderação da PNAD Contínua em 2021. Rio de Janeiro, 20 out. 2021. 5 p. Nota técnica 03/2021.
+Disponível em: https://www.ibge.gov.br/estatisticas/sociais/populacao/17270-pnad-continua.
+html?=&t=notas-tecnicas. Acesso em: jun. 2023.
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de Domicílios,
+Pesquisa Nacional por Amostra de Domicílios Contínua 2022.
+Nota: Pessoas de 14 anos ou mais de idade.
+
+
+### Página 11 do PDF
+
+PNAD contínua
+Pessoas que realizaram atividade de produção
+para o próprio consumo, por tipo de produção,
+segundo as Grandes Regiões (%)
+84,6
+
+Média de horas efetivamente trabalhadas na
+produção para o próprio consumo, por tipo de
+produção, segundo as Grandes Regiões
+(horas semanais)
+
+81,2
+74,9
+
+74,5
+
+63,9
+
+16,0
+14,2
+
+14,1
+
+13,8
+
+12,7
+10,7
+9,7
+20,9
+15,7
+
+19,6
+14,3
+8,8 6,8
+
+Norte
+
+7,3
+
+5,5
+
+Nordeste
+
+8,1
+
+Sudeste
+
+Cultivo, pesca,
+caça e criação
+de animais
+
+16,8
+12,1
+9,2
+
+Sul
+
+18,6
+
+9,4
+
+8,4
+
+10,1
+
+5,7
+
+4,4
+
+3,8
+
+10,7
+
+10,8
+9,8
+
+9,9
+
+9,5
+
+8,5
+4,8
+
+3,8
+
+5,4
+
+Centro-Oeste
+
+Produção de carvão,
+corte ou coleta
+de lenha, palha ou
+outro material
+
+Norte
+
+Nordeste
+
+Sudeste
+
+Sul
+
+Centro-Oeste
+
+Construção de
+prédio, cômodo,
+poço ou outras
+obras de construção
+
+Fabricação de
+calçados, roupas,
+móveis, cerâmicas,
+alimentos ou
+outros produtos
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de Domicílios, Pesquisa Nacional por Amostra de Domicílios Contínua 2022.
+Nota: Pessoas de 14 anos ou mais de idade.
+
+Trabalho voluntário
+O trabalho voluntário, na PNAD Contínua, é definido como aquele
+não compulsório, realizado por pelo menos uma hora na semana de
+referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros,
+isto é, pessoas não moradoras do domicílio e não parentes. Sua captação é feita com base no local onde o trabalho é exercido ou para
+quem é realizado, como segue: em congregação religiosa, sindicato,
+condomínio, partido político, escola, hospital ou asilo; em associação
+de moradores, associação esportiva, Organização Não Governamental - ONG, grupo de apoio ou outra organização; para moradores de
+uma comunidade ou localidade (limpando, dando aulas, participando de mutirão, organizando festas ou outros eventos); em conservação do meio ambiente ou proteção de animais; para pessoas que não
+eram parentes e não moravam nesse domicílio, realizando tarefas domésticas ou de cuidados de crianças, idosos ou enfermos ou pessoas
+com necessidades especiais; e para pessoas que não eram parentes e
+não moravam nesse domicílio, realizando serviços profissionais (de
+eletricista, pedreiro, advogado, contador, professor, entre outros).
+Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade
+realizaram trabalho voluntário na semana de referência da pesquisa,
+o que corresponde a uma taxa de realização de 4,2%. A Região Nordeste apresentou a menor taxa de realização de trabalho voluntário (3,3%), enquanto a Região Sul, a maior (4,6%). Entre 2019 e 2022,
+houve aumento da realização dessa atividade em todas as Grandes
+Regiões, sobretudo na Centro-Oeste (0,6 p.p.).
+A realização de trabalho voluntário foi maior entre as mulheres
+(4,9%) e entre as pessoas brancas (4,4%) em 2022, cabendo observar
+que a sua taxa de realização aumenta conforme cresce a idade e o nível
+de instrução. Assim, as pessoas de 50 anos ou mais de idade registraram
+Outras formas de trabalho 2022
+
+a maior taxa (4,8%), bem como aquelas com superior completo (6,9%).
+Em termos de situação na ocupação, as pessoas ocupadas (4,7%) tenderam a realizar mais trabalho voluntário que as não ocupadas (3,6%).
+Em 2022, 86,4% das pessoas que realizaram trabalho voluntário o
+fizeram por meio de empresa, organização ou instituição, proporção
+4,2 p.p. menor, portanto, que a estimada em 2019, o que mostra um
+relevante aumento dessa atividade individual. Além disso, 76,6% o
+fizeram por meio de congregação religiosa, sindicato, condomínio,
+
+Taxa de realização de trabalho voluntário (%)
+
+Norte
+
+4,4
+4,5
+
+Nordeste
+
+Centro-Oeste
+
+Sudeste
+
+3,8
+4,4
+
+4,4
+4,5
+
+2,9
+3,3
+
+Brasil
+
+Sul
+
+4,0
+4,2
+
+4,5
+4,6
+
+2019
+2022
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de Domicílios,
+Pesquisa Nacional por Amostra de Domicílios Contínua 2019/2022.
+Nota: Taxa de realização de trabalho voluntário é a proporção de pessoas de 14 anos ou mais
+de idade que realizaram trabalho voluntário, no total de pessoas de 14 anos ou mais de idade.
+
+11
+
+
+### Página 12 do PDF
+
+PNAD contínua
+partido político, escola, hospital ou asilo, e 12,6% o realizaram por
+meio de associação de moradores, associação esportiva, ONG, grupo
+de apoio ou outra organização. Cabe lembrar que a pessoa pode realizar o trabalho voluntário em mais de uma localidade.
+Taxa de realização de trabalho voluntário,
+segundo características selecionadas (%)
+Sexo
+Homem
+
+3,5
+
+Mulher
+
+4,9
+
+Distribuição das pessoas que realizaram trabalho
+voluntário, por frequência do trabalho (%)
+
+Grupos de idade
+14 a 24 anos
+
+Quanto à frequência do trabalho voluntário realizado, 42,3% o
+fizeram quatro ou mais vezes por mês. Contudo, entre 2019 e 2022,
+essa foi a única frequência que se reduziu (-3,7 p.p.), aumentando
+mais a ocorrência de trabalho voluntário uma vez por mês (1,9 p.p.).
+Apesar do aumento da proporção de pessoas que realizaram trabalho voluntário entre 2019 e 2022, o tempo dedicado a essa atividade
+ficou estável em 6,6 horas semanais, em média. A Região Nordeste
+apresentou o maior tempo despendido nessa atividade (6,9 horas), e
+a Região Sul, o menor (6,1 horas). Enquanto na Região Centro-Oeste
+observou-se a maior redução do tempo gasto nas atividades de trabalho voluntário no período (menos 1,0 hora, em média), apenas na
+Região Sudeste ocorreu elevação (mais 0,4 hora). 
+
+2,5
+
+25 a 49 anos
+
+4,5
+
+50 anos ou mais
+
+4,8
+
+21,3
+
+Cor ou raça
+Branca
+
+4,4
+
+Preta
+
+4,3
+
+Parda
+
+18,1
+
+Uma vez por mês
+
+Duas ou três
+vezes por mês
+
+Quatro ou mais
+vezes por mês
+
+Eventualmente/sem
+frequência definida
+
+Nota: Pessoas de 14 anos ou mais de idade.
+
+Média de horas efetivamente trabalhadas
+no trabalho voluntário (horas semanais)
+
+Nível de instrução
+2,7
+
+Fundamental completo e
+médio incompleto
+
+Norte
+
+3,3
+
+Médio completo e
+superior incompleto
+
+4,7
+
+Superior completo
+
+7,3
+6,7
+
+Nordeste
+
+Centro-Oeste
+
+Sudeste
+
+7,3
+6,3
+
+6,3
+6,7
+
+6,9
+6,9
+
+6,9
+
+Situação na ocupação
+Ocupada
+Não ocupada
+
+4,7
+3,6
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de
+Domicílios, Pesquisa Nacional por Amostra de Domicílios Contínua 2022.
+Nota: Taxa de realização de trabalho voluntário é a proporção de pessoas de 14 anos ou mais
+de idade que realizaram trabalho voluntário, no total de pessoas de 14 anos ou mais de idade.
+
+Expediente
+Elaboração do texto
+Diretoria de Pesquisas,
+Coordenação de Pesquisas
+por Amostra de Domicílios
+Normalização textual
+Centro de Documentação e
+Disseminação de Informações,
+Gerência de Sistematização de
+Conteúdos Informacionais
+
+12
+
+42,3
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de
+Domicílios, Pesquisa Nacional por Amostra de Domicílios Contínua 2022.
+
+3,9
+
+Sem instrução e
+fundamental incompleto
+
+18,3
+
+Projeto gráfico
+Centro de Documentação e
+Disseminação de Informações,
+Gerência de Editoração
+Imagens fotográficas
+Pixabay
+Impressão
+Centro de Documentação e
+Disseminação de Informações,
+Gráfica Digital
+
+Brasil
+
+Sul
+
+6,6
+6,6
+
+6,3
+6,1
+
+2019
+2022
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Pesquisas por Amostra de Domicílios,
+Pesquisa Nacional por Amostra de Domicílios Contínua 2019/2022.
+Nota: Pessoas de 14 anos ou mais de idade.
+
+www.ibge.gov.br 0800 721 8181
+
+Saiba mais sobre a
+pesquisa.
+
+Pesquisa Nacional por Amostra de Domicílios Contínua
+
+
+## SIDRA 7080: Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário, por sexo (2022)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/7080/periodos/2022/variaveis/10236%7C10238?localidades=N1%5Ball%5D&classificacao=2%5Ball%5D
+
+[{"id":"10236","variavel":"Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário","unidade":"Mil pessoas","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"7280"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2890"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4390"}}]}]},{"id":"10238","variavel":"Distribuição percentual das pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário","unidade":"%","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"100.0"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"39.7"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"60.3"}}]}]}]
+
+## SIDRA 7081: Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário, por sexo e grupo de idade (2022, mil pessoas)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/7081/periodos/2022/variaveis/10236?localidades=N1%5Ball%5D&classificacao=2%5Ball%5D%7C58%5Ball%5D
+
+[{"id":"10236","variavel":"Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário","unidade":"Mil pessoas","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"7280"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"876"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"3694"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2709"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2890"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"372"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"1507"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"1012"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4390"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"504"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2188"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"1698"}}]}]}]
+
+## SIDRA 7085: Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário, por sexo e forma de inserção na atividade voluntária (2022)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/7085/periodos/2022/variaveis/10236%7C10238?localidades=N1%5Ball%5D&classificacao=2%5Ball%5D%7C857%5Ball%5D
+
+[{"id":"10236","variavel":"Pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário","unidade":"Mil pessoas","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"7280"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"989"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"6291"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2890"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"426"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2463"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4390"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"562"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"3828"}}]}]},{"id":"10238","variavel":"Distribuição percentual das pessoas de 14 anos ou mais de idade que realizaram trabalho voluntário","unidade":"%","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"100.0"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"13.6"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"86.4"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"100.0"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"14.8"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"85.2"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47678":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"100.0"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47679":"Individualmente"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"12.8"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"857","nome":"Forma de inserção na atividade voluntária","categoria":{"47680":"Empresa, organização ou instituição"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"87.2"}}]}]}]
+
+## SIDRA 7096: Taxa de realização de trabalho voluntário, por sexo e grupo de idade (2022, %)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/7096/periodos/2022/variaveis/10244?localidades=N1%5Ball%5D&classificacao=2%5Ball%5D%7C58%5Ball%5D
+
+[{"id":"10244","variavel":"Taxa de realização de trabalho voluntário","unidade":"%","resultados":[{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4.2"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2.5"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4.5"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"6794":"Total"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4.8"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"3.5"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2.1"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"3.8"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"4":"Homens"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"3.9"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"95253":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"4.9"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"47567":"14 a 24 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"2.9"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"100053":"25 a 49 anos"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"5.3"}}]},{"classificacoes":[{"id":"2","nome":"Sexo","categoria":{"5":"Mulheres"}},{"id":"58","nome":"Grupo de idade","categoria":{"5502":"50 anos ou mais"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2022":"5.5"}}]}]}]
