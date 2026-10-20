@@ -226,31 +226,33 @@ function Opcoes<T extends string>({
   )
 }
 
-/** A caixa em "Varia conforme o Perfil?": o formulário (opcional, nada é
- * obrigatório) ou o resumo com "mudar", e a contagem de achados com dado. */
-export function CaixaDoPerfil({
-  perfil,
-  comDado,
-  totalDeAchados,
-  rotuloDoBotao = 'Ver o que vale para mim',
-}: {
-  perfil: Perfil | null
-  comDado: number | null
-  totalDeAchados: number
-  /** O texto do botão que salva; a calculadora usa o dela. */
-  rotuloDoBotao?: string
-}) {
-  const id = useId()
+/** O que a pessoa marcou e digitou no formulário, antes de salvar. */
+interface Rascunho {
+  genero?: string
+  procura?: string
+  idade: string
+}
+
+/** O link "Seu Perfil: … · mudar" lá em cima abre o formulário aqui. O
+ * evento lê o `aoPedir` de agora (com o Perfil de agora), sem refazer a
+ * escuta a cada mudança. */
+function useAoPedirParaMudar(aoPedir: () => void) {
+  const pedir = useEffectEvent(aoPedir)
+  useEffect(() => {
+    const ouvir = () => pedir()
+    window.addEventListener(MUDAR, ouvir)
+    return () => window.removeEventListener(MUDAR, ouvir)
+  }, [])
+}
+
+/** A edição do Perfil na caixa: o rascunho, o erro, abrir para mudar, salvar
+ * e apagar, e para onde o foco vai em cada passo. */
+function useEdicaoDoPerfil(perfil: Perfil | null) {
   const [editando, setEditando] = useState(false)
-  const [rascunho, setRascunho] = useState<{
-    genero?: string
-    procura?: string
-    idade: string
-  }>({ idade: '' })
+  const [rascunho, setRascunho] = useState<Rascunho>({ idade: '' })
   const [erro, setErro] = useState<string | null>(null)
   const caixa = useRef<HTMLDivElement>(null)
   const resumo = useRef<HTMLParagraphElement>(null)
-  const formAberto = !perfil || editando
 
   const abrir = (atual: Perfil | null) => {
     setRascunho({
@@ -262,14 +264,7 @@ export function CaixaDoPerfil({
     setEditando(true)
   }
 
-  // O link "Seu Perfil: … · mudar" lá em cima abre o formulário aqui.
-  // O evento lê o Perfil de agora, sem refazer a escuta a cada mudança.
-  const aoPedir = useEffectEvent(() => abrir(perfil))
-  useEffect(() => {
-    const ouvir = () => aoPedir()
-    window.addEventListener(MUDAR, ouvir)
-    return () => window.removeEventListener(MUDAR, ouvir)
-  }, [])
+  useAoPedirParaMudar(() => abrir(perfil))
 
   // Ao abrir para mudar, o foco vai para a opção marcada, ou para a primeira.
   useEffect(() => {
@@ -299,67 +294,43 @@ export function CaixaDoPerfil({
     setRascunho({ idade: '' })
   }
 
+  return {
+    editando,
+    caixa,
+    resumo,
+    abrir,
+    formulario: { rascunho, setRascunho, erro, salvar, apagar },
+  }
+}
+
+/** A caixa em "Varia conforme o Perfil?": o formulário (opcional, nada é
+ * obrigatório) ou o resumo com "mudar", e a contagem de achados com dado. */
+export function CaixaDoPerfil({
+  perfil,
+  comDado,
+  totalDeAchados,
+  rotuloDoBotao = 'Ver o que vale para mim',
+}: {
+  perfil: Perfil | null
+  comDado: number | null
+  totalDeAchados: number
+  /** O texto do botão que salva; a calculadora usa o dela. */
+  rotuloDoBotao?: string
+}) {
+  const { editando, caixa, resumo, abrir, formulario } =
+    useEdicaoDoPerfil(perfil)
+  const formAberto = !perfil || editando
   return (
     <div
       className="reticula mt-md rounded-mao-2 border-2 border-tinta bg-folha p-4"
       ref={caixa}
     >
       {formAberto ? (
-        <form onSubmit={salvar} aria-label="Seu Perfil">
-          <Opcoes
-            legenda="Você é"
-            valores={GENEROS_DO_PERFIL}
-            rotulos={ROTULO_DO_GENERO}
-            marcado={rascunho.genero as Perfil['genero']}
-            aoMarcar={(genero) => setRascunho((r) => ({ ...r, genero }))}
-          />
-          <Opcoes
-            legenda="Você procura"
-            valores={PROCURA_DO_PERFIL}
-            rotulos={ROTULO_DA_PROCURA}
-            marcado={rascunho.procura as Perfil['procura']}
-            aoMarcar={(procura) => setRascunho((r) => ({ ...r, procura }))}
-          />
-          <div className={CAMPO}>
-            <label htmlFor={`${id}-idade`} className={ROTULO}>
-              Sua idade
-            </label>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <Input
-                id={`${id}-idade`}
-                type="number"
-                inputMode="numeric"
-                min={IDADE_MINIMA}
-                max={IDADE_MAXIMA}
-                step={1}
-                value={rascunho.idade}
-                onChange={(e) =>
-                  setRascunho((r) => ({ ...r, idade: e.target.value }))
-                }
-                aria-describedby={`${id}-idade-dica`}
-              />
-              <span id={`${id}-idade-dica`} className={NOTA}>
-                a partir de {IDADE_MINIMA}
-              </span>
-            </div>
-          </div>
-          {erro && (
-            <p className="m-0 mb-sm font-bold" role="alert">
-              {erro}
-            </p>
-          )}
-          <div className="flex flex-wrap gap-2.5">
-            <Botao type="submit">{rotuloDoBotao}</Botao>
-            {perfil && (
-              <Botao variante="leve" onClick={apagar}>
-                Apagar o Perfil
-              </Botao>
-            )}
-          </div>
-          <p className={cn('m-0 mt-sm', NOTA)}>
-            Fica só neste navegador. Nada some da página.
-          </p>
-        </form>
+        <FormularioDoPerfil
+          {...formulario}
+          comPerfil={perfil !== null}
+          rotuloDoBotao={rotuloDoBotao}
+        />
       ) : (
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           <p ref={resumo} tabIndex={-1} className="m-0">
@@ -382,6 +353,94 @@ export function CaixaDoPerfil({
           {contagem(comDado, totalDeAchados)}
         </p>
       )}
+    </div>
+  )
+}
+
+/** O formulário do Perfil: gênero, quem procura e idade, o botão que salva e,
+ * com Perfil salvo, o que o apaga. */
+function FormularioDoPerfil({
+  rascunho,
+  setRascunho,
+  erro,
+  salvar,
+  apagar,
+  comPerfil,
+  rotuloDoBotao,
+}: ReturnType<typeof useEdicaoDoPerfil>['formulario'] & {
+  comPerfil: boolean
+  rotuloDoBotao: string
+}) {
+  return (
+    <form onSubmit={salvar} aria-label="Seu Perfil">
+      <Opcoes
+        legenda="Você é"
+        valores={GENEROS_DO_PERFIL}
+        rotulos={ROTULO_DO_GENERO}
+        marcado={rascunho.genero as Perfil['genero']}
+        aoMarcar={(genero) => setRascunho((r) => ({ ...r, genero }))}
+      />
+      <Opcoes
+        legenda="Você procura"
+        valores={PROCURA_DO_PERFIL}
+        rotulos={ROTULO_DA_PROCURA}
+        marcado={rascunho.procura as Perfil['procura']}
+        aoMarcar={(procura) => setRascunho((r) => ({ ...r, procura }))}
+      />
+      <CampoDaIdade
+        valor={rascunho.idade}
+        aoMudar={(idade) => setRascunho((r) => ({ ...r, idade }))}
+      />
+      {erro && (
+        <p className="m-0 mb-sm font-bold" role="alert">
+          {erro}
+        </p>
+      )}
+      <div className="flex flex-wrap gap-2.5">
+        <Botao type="submit">{rotuloDoBotao}</Botao>
+        {comPerfil && (
+          <Botao variante="leve" onClick={apagar}>
+            Apagar o Perfil
+          </Botao>
+        )}
+      </div>
+      <p className={cn('m-0 mt-sm', NOTA)}>
+        Fica só neste navegador. Nada some da página.
+      </p>
+    </form>
+  )
+}
+
+/** "Sua idade": o campo de número, com o mínimo escrito ao lado. */
+function CampoDaIdade({
+  valor,
+  aoMudar,
+}: {
+  valor: string
+  aoMudar: (idade: string) => void
+}) {
+  const id = useId()
+  return (
+    <div className={CAMPO}>
+      <label htmlFor={`${id}-idade`} className={ROTULO}>
+        Sua idade
+      </label>
+      <div className="flex flex-wrap items-center gap-2.5">
+        <Input
+          id={`${id}-idade`}
+          type="number"
+          inputMode="numeric"
+          min={IDADE_MINIMA}
+          max={IDADE_MAXIMA}
+          step={1}
+          value={valor}
+          onChange={(e) => aoMudar(e.target.value)}
+          aria-describedby={`${id}-idade-dica`}
+        />
+        <span id={`${id}-idade-dica`} className={NOTA}>
+          a partir de {IDADE_MINIMA}
+        </span>
+      </div>
     </div>
   )
 }
