@@ -2,7 +2,7 @@
 // dados de fixture: o "Brasil" da fixture é só o Acre (`e2e/acervo/dados`).
 // O número preso no topo ao rolar, o toque, o teclado e o tamanho dos
 // controles ficam no e2e (`e2e/grupo-possivel.e2e.ts`), que tem layout.
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
 import { abrirTela } from '#/platform/telas/abrir-tela'
@@ -137,11 +137,23 @@ it('o Estado se escolhe pelo teclado e volta ao Brasil inteiro', async () => {
     { genero: 'homem', procura: 'mulheres', idade: '30' },
     BOTAO,
   )
+  // Salvo o Perfil, o foco vai para o resumo dele no quadro seguinte: o
+  // teclado só começa depois, ou o resumo toma o foco do Estado no meio.
+  const resumo = await within(
+    screen.getByRole('region', { name: 'Seu Perfil' }),
+  ).findByText(/Seu Perfil:/)
+  await waitFor(() => expect(resumo).toHaveFocus())
   const estado = requisito('lugar').getByRole('combobox', { name: 'Estado' })
   expect(estado).toHaveTextContent('Brasil inteiro')
   estado.focus()
   await usuario.keyboard('{Enter}')
   expect(await screen.findByRole('listbox')).toBeVisible()
+  // A lista abre e só depois põe o foco na opção marcada: a seta anda dali.
+  await waitFor(() =>
+    expect(
+      screen.getByRole('option', { name: 'Brasil inteiro' }),
+    ).toHaveFocus(),
+  )
   await usuario.keyboard('{ArrowDown}{Enter}')
   await waitFor(() => expect(estado).toHaveTextContent('Acre'))
   expect(requisito('lugar').valor()).toBe('Acre')
