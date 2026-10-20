@@ -44,7 +44,7 @@ O questionário da amostra do Censo 2022, por pessoa: sexo, idade, UF, estado co
 
 A soma dos pesos do microdado público dá exatamente a população de cada UF na tabela 9514 (no Brasil, 203.080.756), como a Nota 03/2026 promete. O pipeline (`scripts/possible-group/pipeline.ts`) confere isso e as 1.568 células do estado conjugal da tabela 10185 a cada rodada.
 
-Fonte local: `fontes/privado/ibge-2022-censo-amostra.txt` (o texto das duas notas metodológicas, do dicionário e das duas respostas do SIDRA) e os PDFs em `fontes/privado/ibge-2022-censo-amostra/`, fora do git. Os microdados ficam no cache do pipeline, fora do repositório.
+Fonte local: `sources/ibge-2022-censo-amostra.txt`, com o texto das páginas citadas das duas notas metodológicas e do dicionário e as duas respostas do SIDRA, cada um sob a URL de onde saiu. Os microdados ficam no cache do pipeline, fora do repositório.
 
 ## Limitações
 
