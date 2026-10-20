@@ -45,6 +45,7 @@ describe('as regras do lint', () => {
       'estado',
       'html',
       'modulos',
+      'telas',
       'tema',
     ])
     expect(conferirRegras(lint, locais)).toEqual([])

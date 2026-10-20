@@ -110,6 +110,8 @@ export default defineConfig({
       './frontend/lint/cor-do-tema.ts',
       './frontend/lint/sem-title-nativo.ts',
       './frontend/lint/sem-import-js.ts',
+      // A espera dos testes de tela é a da Testing Library (#55).
+      './frontend/lint/sem-vi-waitfor-nas-telas.ts',
       // O design system: as classes do Tailwind contra o tema de
       // `frontend/src/ui/tokens.css` e os componentes de `src/ui/shadcn/`,
       // achados pelo `frontend/components.json` (ADR 0028).
@@ -144,7 +146,13 @@ export default defineConfig({
       {
         // O app: o localStorage só pelo `armazenado()`, que é o dono dele.
         files: ['frontend/src/**'],
-        excludeFiles: ['frontend/src/estado/armazenado.ts'],
+        // O teste de tela (e o apoio dele) lê e limpa o aparelho para
+        // conferir o que a tela salvou, como o e2e (ADR 0035).
+        excludeFiles: [
+          'frontend/src/estado/armazenado.ts',
+          'frontend/src/**/*.test.tsx',
+          'frontend/src/platform/telas/**',
+        ],
         rules: { 'estado/localstorage-pelo-armazenado': 'error' },
       },
       {
@@ -183,9 +191,15 @@ export default defineConfig({
         },
       },
       {
+        // Os testes de tela (ADR 0035): o `vi.waitFor` desiste em 1 s, e a
+        // tela que compila a rota no teste passa disso.
+        files: ['frontend/src/**/*.test.tsx'],
+        rules: { 'telas/sem-vi-waitfor-nas-telas': 'error' },
+      },
+      {
         // O `<h1>` é o `Display`, dono dele.
         files: ['frontend/src/**'],
-        excludeFiles: ['frontend/src/ui/pagina.tsx'],
+        excludeFiles: ['frontend/src/ui/folha.tsx'],
         rules: { 'coesao/h1-do-dono': 'error' },
       },
       {
