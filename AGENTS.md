@@ -34,7 +34,7 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 O app fica em `frontend/`, os pacotes puros em `packages/` (`conteudo`, que lê e valida o acervo, e `regras`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
 
 - `routes/`: só arquivos de rota.
-- `ui/`: as peças da tela, com o `.css` e o `.textos.ts` de cada uma ao lado.
+- `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.textos.ts` de cada uma ao lado. O CSS à mão fica só em `ui/desenhos.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).
 - `conteudo/`: as server functions que leem o acervo e montam a vista de cada página.
 - `estado/`: o que fica no navegador (`localStorage`, link recebido).
 - `analytics/`: a contagem do GoatCounter.
