@@ -16,11 +16,10 @@ const SEM_DADO = 'Não há dado deste estudo para o seu Perfil.'
 const BOTAO = 'Ver o que vale para mim'
 
 /** Cada achado de "O que a evidência diz", na ordem. */
-const achados = () => [
-  ...screen
-    .getByRole('region', { name: 'O que a evidência diz' })
-    .querySelectorAll<HTMLElement>('ol[data-slot="achados-guia"] > li'),
-]
+const achados = () =>
+  within(
+    screen.getByRole('region', { name: 'O que a evidência diz' }),
+  ).getAllByRole('listitem')
 const selo = (achado: HTMLElement | undefined) =>
   achado?.querySelector('[data-slot="selo-voce"]')?.textContent ?? null
 const variaConforme = () =>

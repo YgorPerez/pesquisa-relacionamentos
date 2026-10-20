@@ -1,6 +1,10 @@
 // O que os testes de tela do Grupo possível leem: o número preso no topo e a
-// linha de cada Requisito, achados pelos `data-slot` e ids da página.
-import { waitFor, within } from '@testing-library/react'
+// linha de cada Requisito, achada pelo papel e pelo título dela.
+import {
+  TITULO_DO_REQUISITO,
+  type RequisitoDoVisitante,
+} from '@tem-estudo/regras/requisitos'
+import { screen, waitFor, within } from '@testing-library/react'
 import { expect } from 'vite-plus/test'
 
 /** A faixa do número preso no topo ("entre … e …"). */
@@ -8,10 +12,9 @@ export const faixa = () =>
   document.querySelector('[data-slot="gp-preso"] [data-slot="gp-faixa"]')
     ?.textContent ?? null
 
-/** A linha de um Requisito (`#req-<id>`). */
-export function requisito(id: string) {
-  const linha = document.querySelector<HTMLElement>(`#req-${id}`)
-  if (!linha) throw new Error(`sem a linha do Requisito ${id}`)
+/** A linha de um Requisito: o grupo com o título dele ("Onde", "Idade"). */
+export function requisito(id: RequisitoDoVisitante | 'orientacao') {
+  const linha = screen.getByRole('group', { name: TITULO_DO_REQUISITO[id] })
   return Object.assign(within(linha), {
     /** O que a linha diz do Requisito ("23 a 34 anos"). */
     valor: () => linha.querySelector('[data-slot="gp-req-valor"]')?.textContent,

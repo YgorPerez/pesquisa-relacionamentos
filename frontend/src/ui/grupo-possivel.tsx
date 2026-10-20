@@ -139,11 +139,16 @@ export function LinhaDoRequisito({
 }) {
   return (
     <div
+      role="group"
+      aria-labelledby={`req-${requisito}-titulo`}
       className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta pt-md pb-sm first:border-t-0 first:pt-1"
       id={`req-${requisito}`}
     >
       <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-        <h3 className="m-0 font-title text-title leading-body font-bold">
+        <h3
+          id={`req-${requisito}-titulo`}
+          className="m-0 font-title text-title leading-body font-bold"
+        >
           {TITULO_DO_REQUISITO[requisito]}
         </h3>
         <span

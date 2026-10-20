@@ -26,6 +26,29 @@ const tocadoEm = (alvo: Locator, dx: number, dy: number) =>
     [dx, dy] as const,
   )
 
+/** Se a última letra do texto antes do alvo, no mesmo parágrafo, está na
+ * mesma linha que ele: o número da referência não quebra longe da palavra. */
+const naLinhaDaPalavra = (alvo: Locator) =>
+  alvo.evaluate((el) => {
+    const bloco = el.closest('p, li') ?? el.parentElement
+    if (!bloco) return false
+    const passo = document.createTreeWalker(bloco, NodeFilter.SHOW_TEXT)
+    let antes: Text | null = null
+    while (passo.nextNode()) {
+      const texto = passo.currentNode as Text
+      if (el.contains(texto)) break
+      if (texto.data.trim()) antes = texto
+    }
+    if (!antes) return false
+    const fim = antes.data.trimEnd().length
+    const letra = document.createRange()
+    letra.setStart(antes, fim - 1)
+    letra.setEnd(antes, fim)
+    const a = letra.getBoundingClientRect()
+    const b = el.getBoundingClientRect()
+    return a.bottom > b.top && a.top < b.bottom
+  })
+
 test.describe('referência que circula a Ficha', () => {
   test('o número fica no anel, grudado à palavra, com área de toque de 44px', async ({
     page,
@@ -33,8 +56,7 @@ test.describe('referência que circula a Ficha', () => {
     await page.goto(GUIA)
     const ref = refDaResposta(page)
     await ref.scrollIntoViewIfNeeded()
-    await expect(ref.locator('xpath=..')).toHaveClass('nw')
-    await expect(ref.locator('xpath=..')).toHaveText('app1.')
+    expect(await naLinhaDaPalavra(ref)).toBe(true)
     for (const [dx, dy] of [
       [0, -21],
       [0, 21],
