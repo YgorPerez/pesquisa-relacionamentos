@@ -1,0 +1,1103 @@
+# IBGE (2015): PNAD, Práticas de Esporte e Atividade Física, trechos citados na Ficha
+
+Texto extraído da publicação oficial do IBGE (dados abertos do Executivo federal), só com as páginas que a Ficha `studies/ibge-2015-pnad-esporte.md` cita. Saída de `pdftotext -layout -enc UTF-8` de cada página, sem mudança. Baixado em 2026-10-20.
+
+## Pesquisa Nacional por Amostra de Domicílios: Práticas de Esporte e Atividade Física 2015 (Rio de Janeiro: IBGE, 2017)
+
+URL: https://biblioteca.ibge.gov.br/visualizacao/livros/liv100364.pdf
+
+### Página 19 do PDF
+
+Notas técnicas
+
+
+
+                       • As estatísticas do período de 1992 a 2003 apresentadas para o Brasil foram
+                         obtidas considerando as informações de todas as áreas pesquisadas, represen-
+                         tando, portanto, a totalidade do País, com exceção somente das áreas rurais
+                         de Rondônia, Acre, Amazonas, Roraima, Pará e Amapá; e
+                       • A partir de 2004, os resultados apresentados agregam as informações das áreas
+                         urbana e rural para todas as Unidades da Federação, Grandes Regiões e Brasil.
+
+
+
+                 Plano amostral
+                 A PNAD é realizada por meio de uma amostra probabilística de domicílios obtida em
+                 três estágios de seleção: unidades primárias - municípios; unidades secundárias - se-
+                 tores censitários; e unidades terciárias - unidades domiciliares (domicílios particulares
+                 e unidades de habitação em domicílios coletivos). Na seleção das unidades primária
+                 e secundária (municípios e setores censitários) da PNAD da segunda década deste
+                 século, foram adotadas a divisão territorial e a malha setorial vigentes na data de
+                 referência do Censo Demográfico 2010.
+                        A investigação do tema suplementar Práticas de Esporte e Atividade Física,
+                 de âmbito nacional, foi realizada por meio de questionário específico, que permite
+                 uma análise da população que pratica esporte ou alguma atividade física no la-
+                 zer, as modalidades praticadas, bem como sua frequência, entre outros aspectos.
+                 Uma característica importante dessa investigação é a necessidade de entrevistar a
+                 própria pessoa selecionada para a pesquisa, em contraposição à forma usual de
+                 investigação da PNAD, em que as informações são fornecidas por outras pessoas
+                 moradoras do domicílio.
+                       A população-alvo desse tema é constituída pelas pessoas de 15 anos ou mais
+                 de idade moradoras de domicílios pertencentes à área de abrangência geográfica da
+                 pesquisa. A principal finalidade do plano amostral dessa investigação foi permitir a
+                 obtenção de estimativas da proporção de pessoas de 15 anos ou mais de idade em
+                 várias categorias relacionadas com alguns indicadores de interesse.
+
+
+
+                 Processo de seleção da amostra
+                 No primeiro estágio, as unidades (municípios) foram classificadas em duas categorias:
+                 autorrepresentativas (probabilidade 1 de pertencer à amostra) e não autorrepresen-
+                 tativas. Os municípios pertencentes à segunda categoria passaram por um processo
+                 de estratificação e, em cada estrato, foram selecionados com reposição e com pro-
+                 babilidade proporcional à população residente obtida no Censo Demográfico 2010.
+                      No segundo estágio, as unidades (setores censitários) foram selecionadas, em
+                 cada município da amostra, também com probabilidade proporcional e com reposição,
+                 sendo utilizado o número de unidades domiciliares existentes por ocasião do Censo
+                 Demográfico 2010 como medida de tamanho.
+                       No terceiro estágio, foram selecionados, com equiprobabilidade, em cada setor
+                 censitário da amostra, os domicílios particulares e as unidades de habitação em do-
+                 micílios coletivos para investigação das características dos moradores e da habitação,
+                 compondo a amostra de domicílios da PNAD.
+
+### Página 22 do PDF
+
+_                                                                                           Pesquisa Nacional por Amostra de Domicílios
+                                                                                               Práticas de Esporte e Atividade Física 2015
+
+
+
+     Tabela 2 - Número de unidades domiciliares, por tipo de entrevista, taxas de resposta
+          e pessoas na amostra da PNAD e do Suplemento de Práticas de Esporte e
+              Atividade Física, por Grandes Regiões e situação no domicílio - 2015
+
+         Número de unidades                                                                               Situação
+                                                                   Grandes Regiões
+       domiciliares, por tipo de                                                                         do domicílio
+                                        Brasil
+     entrevista, taxas de resposta                                                           Centro-
+        e pessoas na amostra                       Norte    Nordeste Sudeste      Sul                   Urbano    Rural
+                                                                                              Oeste
+
+                                                            PNAD
+
+        Unidades domiciliares           151 189    21 442     43 434     45 546   24 532       16 235 128 554      22635
+
+        Total (%)                          100,0    100,0      100,0      100,0    100,0        100,0     100,0    100,0
+     Unidade ocupada                        82,7     84,1       80,8       83,6      82,7        83,8      84,4     73,5
+    Realizada                               78,0     78,5       75,1       79,8      79,7        77,6      79,1     71,8
+    Fechada                                  2,7      3,3          3,7      1,9       1,4         3,7       3,0      1,1
+    Recusa                                   1,7      1,8          1,7      1,8       1,4         2,2       2,0      0,2
+    Outra                                    0,2      0,5          0,3      0,2       0,2         0,3       0,2      0,4
+     Unidade vaga                           14,5     12,0       16,2       14,7      14,1        13,1      13,0     23,2
+     Unidade inexistente                     2,8      3,9          3,0      1,7       3,2         3,1       2,7      3,3
+      Taxas de resposta                     94,3     93,4       93,0       95,4      96,4        92,6      93,8     97,7
+      Pessoas na amostra                356 904    57 193    102 659 105 367      54 510       37 175 304 564     52 340
+                                     Suplemento de Prática de Esporte e Atividade Física
+
+        Unidades domiciliares            94 814    14 577     27 558     27 495   14 824       10 360    80 462    14352
+
+        Total (%)                          100,0    100,0      100,0      100,0    100,0        100,0     100,0    100,0
+     Unidade ocupada                        82,8     84,1       80,9       83,6      82,6        83,8      84,4     73,3
+    Realizada                               75,0     74,4       73,1       77,0      76,7        73,5      76,3     68,2
+    Fechada                                  7,7      9,7          7,8      6,6       5,9        10,3       8,2      5,1
+    Recusa                                  14,5     12,2       16,1       14,7      14,3        13,1      12,9     23,4
+    Outra                                    2,8      3,7          3,0      1,7       3,2         3,1       2,6      3,4
+     Unidade vaga                           90,7     88,4       90,4       92,1      92,9        87,7      90,3     93,1
+     Unidade inexistente                 71 142    10 841     20 150     21 172   11 366        7 613    61 358    9 784
+
+    Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+    Domicílios 2015.
+
+
+
+
+    Processo de expansão da amostra
+    A expansão da amostra utiliza estimadores de razão cuja variável independente é a
+    projeção da população residente de cada Unidade da Federação, segundo o tipo de
+    área (região metropolitana e não metropolitana de divulgação da pesquisa). Essas
+    projeções consideram a evolução populacional ocorrida entre os Censos Demográ-
+    ficos sob hipóteses de crescimento associadas a taxas de fecundidade, mortalidade
+    e migração.
+          Até 2003, utilizou-se a projeção da população residente urbana como variável
+    independente para a expansão da amostra das seis Unidades da Federação (Rondônia,
+    Acre, Amazonas, Roraima, Pará e Amapá) onde a pesquisa não cobria a área rural.
+    A partir de 2004, a pesquisa passou a cobrir tanto as áreas urbanas como as rurais
+    dessas seis Unidades da Federação. Considerando essa situação especial, unicamente
+    para Rondônia, Acre, Amazonas, Roraima, Pará e Amapá, adotou-se a projeção da
+    população residente, segundo a situação do domicílio (urbana e rural), como variável
+    independente para expansão da amostra. Como frisado anteriormente, a partir de
+    2011, a expansão da amostra dessas seis Unidades da Federação seguiu o mesmo
+    procedimento adotado para as demais.
+
+### Página 23 do PDF
+
+Notas técnicas
+
+
+
+                        Na definição dos pesos de expansão referentes ao tema suplementar Práticas
+                 de Esporte e Atividade Física, também foi considerada a seleção dos domicílios da
+                 amostra da PNAD 2015, conforme descrito no tópico Processo de seleção da amostra,
+                 bem como a seleção de uma única pessoa moradora de 15 anos ou mais de idade.
+                 Adicionalmente, esses pesos foram ajustados para que as estimativas da população,
+                 por sexo e grupos etários2, correspondessem às estimativas, por sexo e grupos etá-
+                 rios, obtidas para a amostra inteira da PNAD, em cada área geográfica considerada.
+                 A Tabela 3 apresenta o total de pessoas da amostra referente ao tema suplementar
+                 Práticas de Esporte e Atividade Física e suas respectivas estimativas ponderadas,
+                 segundo algumas características socioeconômicas.
+
+
+
+                     Tabela 3 - Pessoas na amostra do Suplemento de Práticas de Esporte e Atividade Física
+                        e suas respectivas estimativas ponderadas para a população, segundo algumas
+                                         características socioeconômicas - Brasil - 2015
+
+                                                                                                      Estimativas ponderadas
+                          Características socioeconômicas           Pessoas na amostra
+                                                                                            Total (1 000 pessoas)       Percentual (%)
+
+                          Total (1) (2) (3)                                        71 142                 161 792                   100,0
+
+
+                   Sexo
+                 Homens                                                            32 843                  77 386                    47,8
+                 Mulheres                                                          38 299                  84 406                    52,2
+
+                    Grupos de idade
+                 15 a 24 anos                                                      11 682                  33 070                    20,4
+                 25 a 44 anos                                                      28 579                  61 851                    38,2
+                 45 a 64 anos                                                      20 821                  46 661                    28,8
+                 65 anos ou mais                                                   10 060                  20 211                    12,5
+
+                   Situação do domicílio
+                 Urbano                                                            61 358                 138 365                    85,5
+                 Rural                                                              9 784                  23 427                    14,5
+
+                    Grupos de anos de estudo
+                 Sem instrução e menos de 1 ano                                     6 877                  14 435                     8,9
+                 1 a 3 anos                                                         5 869                  12 760                     7,9
+                 4 a 7 anos                                                        14 710                  34 052                    21,0
+                 8 a 10 anos                                                       12 471                  30 247                    18,7
+                 11 anos ou mais                                                   30 994                  69 822                    43,2
+
+                   Cor ou raça
+                 Branca                                                            30 209                  74 144                    45,8
+                 Preta ou parda                                                    40 320                  86 176                    53,3
+
+                   Classes de rendimento mensal domiciliar per capita (4)
+                 Sem rendimento a 1/4 do salário mínimo (5)                         5 239                  11 786                     7,3
+                 Mais de 1/4 a 1/2 salário mínimo                                  10 908                  24 749                    15,3
+                 Mais de 1/2 a 1 salário mínimo                                    21 545                  49 117                    30,4
+                 Mais de 1 a 2 salários mínimos                                    18 859                  43 775                    27,1
+                 Acima de 2 salários mínimos                                       13 084                  27 868                    17,2
+                 Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+                 Domicílios 2015.
+                 (1) Inclusive as pessoas com outra declaração ou sem declaração de cor ou raça. (2) Inclusive as pessoas com anos de
+                 estudo indeterminados. (3) Inclusive as pessoas sem declaração de rendimento mensal domiciliar per capita . (4)
+                 Exclusive as pessoas cuja condição na unidade domiciliar era pensionista, empregado doméstico ou parente do
+                 empregado doméstico. (5) Inclusive as pessoas moradoras em unidades domiciliares cujos componentes recebiam
+                 somente em benefícios.
+
+
+
+
+                 2   Os grupos etários utilizados foram: 15 a 24 anos, 25 a 44 anos, 45 a 64 anos, e 65 anos ou mais.
+
+### Página 24 do PDF
+
+_                                                               Pesquisa Nacional por Amostra de Domicílios
+                                                                   Práticas de Esporte e Atividade Física 2015
+
+
+
+    Precisão das estimativas
+    Com o objetivo de fornecer mais subsídios para a interpretação dos resultados da
+    PNAD relativamente ao tema suplementar Práticas de Esporte e Atividade Física, são
+    apresentadas, a seguir, algumas considerações que possibilitam avaliar o grau de
+    confiabilidade das estimativas constantes neste volume.
+          Em pesquisas de múltiplos propósitos e de grande abrangência em termos de
+    extensão territorial, como é o caso da PNAD e do tema suplementar Práticas de Espor-
+    te e Atividade Física, torna-se praticamente impossível isolar os erros, provenientes
+    das diversas fontes, que influenciam os resultados finais. Tais erros podem advir de
+    flutuações aleatórias (erros de amostragem) ou ter origem não probabilística (erros
+    alheios à amostragem), sendo que estes últimos podem ser introduzidos em qualquer
+    uma das fases de realização da pesquisa.
+          Os erros alheios à amostragem não são influenciados pelo desenho da amostra e
+    a sua mensuração, quando possível, exige análises mais complexas e de custo elevado,
+    com maior demora na obtenção de resultados do que para os erros de amostragem.
+          Tendo em vista o processo de expansão adotado para a PNAD e para o tema
+    suplementar Práticas de Esporte e Atividade Física, cumpre destacar que o grau de
+    precisão está fortemente ligado ao das hipóteses feitas para as taxas de fecundidade,
+    mortalidade e migração. O cálculo do erro de amostragem deveria, portanto, levar
+    em conta duas fontes de variação:
+          • O erro de amostragem proveniente da seleção das unidades para a amostra; e
+          • O erro proveniente do modelo matemático empregado para projetar a popu-
+            lação.
+          Os resultados apresentados referem-se, apenas, aos erros de amostragem.
+
+
+
+    Estimativas dos erros amostrais
+    A utilização do plano de amostragem da PNAD para estimar populações pequenas
+    em números absolutos ou concentradas geograficamente pode gerar estimativas com
+    erros de amostragem elevados.
+          Nesse sentido, visando facilitar a avaliação da precisão das estimativas divul-
+    gadas, foram calculados os erros de amostragem expressos pelos coeficientes de
+    variação, para todas as variáveis (células) constantes do plano tabular. Assim, para
+    cada tabela de resultados disponibilizada no portal do IBGE na Internet, segue outra
+    com os correspondentes coeficientes de variação estimados.
+
+
+
+    Tamanho da amostra
+    Na PNAD 2015, foram pesquisadas 356 904 pessoas e 151 189 unidades domiciliares
+    distribuídas por todas as Unidades da Federação. Para o tema suplementar Práticas
+    de Esporte e Atividade Física, foram investigadas 71 142 pessoas de 15 anos ou mais
+    de idade.
+
+### Página 25 do PDF
+
+Análise dos resultados
+
+
+       O     Suplemento de Práticas de Esporte e Atividade Física da Pesquisa
+             Nacional por Amostra de Domicílios - PNAD 2015 investigou as
+       pessoas moradoras de 15 anos ou mais de idade, em seu tempo livre,
+       no período de referência de 365 dias (de 27 de setembro de 2014 a
+       26 de setembro de 2015), com o objetivo de mensurar aquelas que
+       praticaram algum esporte ou atividade física no período considerado,
+       bem como a sua percepção quanto a isso. Na pesquisa, cabe ressaltar,
+       não foi estabelecida uma diferenciação entre esporte e atividade físi-
+       ca, ficando a cargo da pessoa investigada a classificação da atividade
+       por ela realizada. Para tal, questionou-se, por meio de uma pergunta
+       direta, se a pessoa moradora havia praticado esporte, e, em caso afir-
+       mativo, a respectiva modalidade. Independentemente dessa resposta,
+       a pessoa também respondeu se praticou alguma atividade física que
+       não considerava como atividade de esporte, informando, em caso
+       positivo, também a modalidade. Dessa forma, algumas práticas foram
+       classificadas como esporte por alguns moradores e como atividade
+       física por outros.
+              A pesquisa permitiu identificar o tipo de esporte ou atividade
+       física realizado; sua motivação; o local onde era praticado; a frequên-
+       cia; a duração; e a participação em competições, entre outros aspectos
+       relacionados. Para as pessoas que informaram não realizar qualquer
+       esporte, perguntou-se o motivo de não o fazerem, bem como se o
+       haviam praticado anteriormente, caso em que buscou-se conhecer a
+       modalidade do esporte então praticado; a idade em que deixaram de
+       praticá-lo; e a causa de sua interrupção.
+            Complementarmente, a pesquisa investigou também a avaliação
+       da população sobre a opção do poder público investir no desenvol-
+       vimento de atividades físicas e esportivas ou em outra área (saúde,
+       educação etc.) na vizinhança de seu domicílio.
+
+### Página 26 do PDF
+
+_                                                                                             Pesquisa Nacional por Amostra de Domicílios
+                                                                                                 Práticas de Esporte e Atividade Física 2015
+
+
+
+
+    Panorama geral das práticas de esporte e atividade
+    física
+    Em 2015, o País tinha 161,8 milhões de pessoas de 15 anos ou mais de idade, das
+    quais 61,3 milhões (37,9%) praticaram algum esporte ou atividade física no período
+    de referência. As Regiões Sul e Centro-Oeste apresentaram proporções maiores que
+    a média nacional (40,8% e 41,1%, respectivamente), enquanto as Regiões Nordeste
+    (36,3%), Norte (36,6%) e Sudeste (37,5%) registraram proporções inferiores, conforme
+    pode ser observado no Gráfico 1.
+          Na população de 15 anos ou mais de idade, a distribuição por sexo mostrou
+    que 52,2% eram mulheres e 47,8%, homens. Ao analisar o total de praticantes de
+    esporte ou atividade física, observou-se que 46,1% eram mulheres e 53,9%, homens.
+    Havia, portanto, maior participação efetiva dos homens na realização de algum es-
+    porte ou atividade física, pois 42,7% deles praticaram tais atividades, enquanto entre
+    as mulheres essa proporção foi de 33,4%. Todas as Grandes Regiões apresentaram
+    percentuais maiores de mulheres na população de 15 anos ou mais de idade, no
+    entanto, no que diz respeito à prática de esporte ou atividade física, os percentuais
+    de homens praticantes foram sempre maiores do que os de mulheres, conforme
+    pode ser visto no Gráfico 1.
+
+
+
+
+        Gráfico 1 - Percentual de pessoas que praticaram algum esporte ou atividade física,
+         no período de referência de 365 dias, na população de 15 anos ou mais de idade,
+                            por sexo, segundo as Grandes Regiões - 2015
+              %
+      100,0
+
+
+      90,0
+
+
+      80,0
+
+
+      70,0
+
+
+      60,0
+
+
+      50,0                                                                      45,0 45,2
+                                                             44,2
+                                                      42,7
+                                          40,8 41,1                 40,9 42,3
+                  37,9 36,6
+      40,0                    36,3 37,5                                                                               36,9 37,3
+                                                                                            33,4          32,2 33,1
+                                                                                                   29,0
+      30,0
+
+
+      20,0
+
+
+      10,0
+
+
+       0,0
+                               Total                                Homens                                Mulheres
+
+
+
+         Brasil                 Norte             Nordeste                Sudeste              Sul                Centro-Oeste
+
+    Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+    Domicílios 2015.
+
+### Página 29 do PDF
+
+Análise dos resultados
+
+
+
+
+                    Gráfico 4 - Percentual de pessoas de 15 anos ou mais de idade que praticaram algum
+                               esporte ou atividade física, no período de referência de 365 dias,
+                            por classes de rendimento mensal domiciliar per capita - Brasil - 2015
+                          %
+                   70,0
+                                                                                                                         65,2
+
+                   60,0
+                                                                                                        55,1
+
+
+                   50,0                                                                 47,8
+
+
+
+                   40,0                                                 37,8
+
+                                                        32,8
+                                     31,1
+                   30,0
+
+
+
+                   20,0
+
+
+
+                   10,0
+
+
+
+                    0,0
+                              Sem rendimento       De 1/2 a menos   De 1 a menos    De 2 a menos    De 3 a menos    Com 5 salários
+                               a menos de 1/2       de 1 salário    de 2 salários   de 3 salários   de 5 salários     mínimos
+                              salário mínimo (1)       mínimo         mínimos         mínimos         mínimos          ou mais
+
+
+
+              Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+              Domicílios 2015.
+              (1) Inclusive as pessoas que recebiam somente em benefícios.
+
+
+
+
+              Prática de esporte3
+              No Brasil, 38,8 milhões de pessoas de 15 anos ou mais de idade praticaram algum
+              esporte, independentemente de terem ou não praticado atividade física, no período
+              de referência, o que representou 24,0% da população investigada. As Regiões Sul
+              (25,8%), Norte (26,5%) e Centro-Oeste (27,8%) alcançaram proporções maiores que a
+              média nacional, enquanto a Nordeste registrou a menor proporção regional (22,1%).
+              Esses resultados estão apresentados no Gráfico 5.
+                     Dos praticantes de esporte, 24,5 milhões eram homens (63,2%), e 14,3 milhões,
+              mulheres (36,8%). Esses números mostram comportamento semelhante ao descrito
+              para quem praticou esporte ou atividade física, contudo as diferenças entre os percen-
+              tuais, neste caso, são maiores entre os sexos. Em quase todas as Grandes Regiões,
+              mais de 60% dos praticantes eram homens, excetuando-se apenas a Centro-Oeste,
+              onde a distribuição registrou 59,2% de homens e 40,8% de mulheres.
+
+
+
+
+              3   Para conhecer o conjunto de atividades esportivas consideradas na pesquisa, consultar o Anexo 1 desta publicação.
+
+### Página 33 do PDF
+
+Análise dos resultados
+
+
+
+                    Em segundo lugar, destacou-se a caminhada como modalidade mais citada (9,5
+              milhões de pessoas), alcançando, no Brasil, 24,6% da população praticante de algum
+              esporte. O menor percentual foi observado na Região Norte (21,2%), e o maior, na
+              Região Centro-Oeste (29,2%), conforme mostra a Tabela 4. A maior diferença entre
+              as taxas de práticas de futebol e caminhada ocorreu na Região Norte (34,7 pontos
+              percentuais), e a menor, na Região Centro-Oeste (3,7 pontos percentuais).
+                    Ainda conforme a Tabela 4, o fitness4, realizado por 3,5 milhões de pessoas,
+              alcançou 9,0% dos praticantes de algum esporte no País e figurou em terceiro lugar
+              em todas as Grandes Regiões – Sudeste e Centro-Oeste apresentaram os maiores
+              percentuais (10,5% e 11,3%, respectivamente), enquanto Norte e Nordeste, as menores
+              taxas (5,4% e 7,7%, respectivamente).
+
+
+
+                 Tabela 4 - Distribuição das pessoas de 15 anos ou mais de idade que praticaram algum
+                    esporte, no período de referência de 365 dias, por Grandes Regiões, segundo o
+                                             principal esporte praticado - 2015
+
+                                                                  Distribuição das pessoas de 15 anos ou mais de idade que
+                                                             praticaram algum esporte, no período de referência de 365 dias (%)
+
+                     Principal esporte praticado                                                  Grandes Regiões
+                                                          Brasil                                                                 Centro-
+                                                                         Norte         Nordeste      Sudeste        Sul
+                                                                                                                                  Oeste
+
+                                Total                         100,0         100,0          100,0          100,0       100,0          100,0
+               Futebol                                         39,3          55,9           48,8           33,3           35,1        32,9
+               Caminhada                                       24,6          21,2           25,4           24,8           22,0        29,2
+               Voleibol, basquetebol e handebol                    2,9           3,9         2,3            2,5            3,6         4,2
+               Fitness                                             9,0           5,4         7,7           10,5            8,2        11,3
+               Ciclismo                                            3,2           1,9         2,3            3,5            4,3         3,6
+               Lutas e artes marciais                              3,1           2,6         2,7            3,6            2,7         2,8
+               Ginástica rítmica e artística                       3,2           1,5         1,3            4,4            4,3         2,6
+               Outros esportes (1)                             14,7              7,6         9,5           17,5           19,8        13,3
+
+               Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+               Domicílios 2015.
+               (1) Inclusive natação, musculação, atletismo, esporte de aventura, aquático, paradesporto, com pequenas bolas e
+               raquetes, skate e patins, dança e ballet , com motor, com animais, com tabuleiros e cartas.
+
+
+
+
+                    O futebol foi praticado prevalentemente por homens, correspondendo a 94,5%
+              dos praticantes dessa modalidade, como observado na Tabela 5. No universo de 38,8
+              milhões de pessoas que praticaram algum esporte, os homens que citaram o futebol
+              correspondiam a 37,2%, ou 14,4 milhões de pessoas. Para os homens, vale destacar
+              sua participação decrescente nas seguintes modalidades: ciclismo (75,2%); lutas e
+              artes marciais (70,0%); e atletismo (64,5%). Por outro lado, os quatro esportes predomi-
+              nantemente praticados pelas mulheres, em ordem decrescente, foram: dança e ballet
+              (85,0%); Ginástica rítmica e artística (80,5%); caminhada (65,5%); e fitness (64,4%).
+
+
+
+              4 Foram considerados esportes fitness: hidroginástica, spinning, bicicleta ergométrica, esteira ergométrica, yoga, aeróbica,
+
+              cardio fitness, pilates, step, alongamento, exercícios físicos, ginástica localizada, treinamento funcional e ginástica de
+              academia.
+
+### Página 34 do PDF
+
+_                                                                                       Pesquisa Nacional por Amostra de Domicílios
+                                                                                           Práticas de Esporte e Atividade Física 2015
+
+
+
+      Tabela 5 - Distribuição das pessoas de 15 anos ou mais de idade que praticaram algum
+                 esporte, no período de referência de 365 dias, por sexo, segundo o
+                              principal esporte praticado - Brasil - 2015
+
+                                                      Distribuição das pessoas de 15 anos ou mais de idade que
+                                                 praticaram algum esporte, no período de referência de 365 dias (%)
+          Principal esporte praticado
+                                                                                             Sexo
+                                                       Total
+                                                                               Homens                   Mulheres
+
+                      Total                                     100,0                      63,2                       36,8
+    Futebol                                                     100,0                      94,5                        5,5
+    Caminhada                                                   100,0                      34,5                       65,5
+    Voleibol, basquetebol e handebol                            100,0                      43,0                       57,0
+    Fitness                                                     100,0                      35,6                       64,4
+    Natação e saltos                                            100,0                      46,3                       53,7
+    Culturismo                                                  100,0                      48,7                       51,3
+    Atletismo                                                   100,0                      64,5                       35,5
+    Ciclismo                                                    100,0                      75,2                       24,8
+    Lutas e artes marciais                                      100,0                      70,0                       30,0
+    Ginástica rítmica e artística                               100,0                      19,5                       80,5
+    Dança e ballet                                              100,0                      15,0                       85,0
+    Outros esportes (1)                                         100,0                      59,8                       40,2
+
+    Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+    Domicílios 2015.
+    (1) Inclusive esporte de aventura, aquático, paradesporto, com pequenas bolas e raquetes,skate e patins, com motor,
+    com animais, com tabuleiros e cartas.
+
+
+
+
+           Na Tabela 6, verifica-se que, quanto mais jovem a população, maior a represen-
+    tatividade do futebol na prática de esporte. No grupo de 15 a 17 anos, a modalidade
+    representou 64,5%, e, no grupo de 18 a 24 anos, 57,6%. As frequências declinam a partir
+    dessa faixa etária, sendo registradas 41,4%, no grupo de 25 a 39 anos; 24,1%, de 40 a
+    59 anos; e, por fim, 4,9% entre as pessoas de 60 anos ou mais idade. Comportamento
+    oposto foi observado relativamente à caminhada, que, para os mais jovens, repre-
+    sentou 4,7% da prática de esporte, subindo até 59,6% para a população mais idosa.
+
+
+
+      Tabela 6 - Distribuição das pessoas de 15 anos ou mais de idade que praticaram algum
+          esporte, no período de referência de 365 dias, por grupos de idade, segundo o
+                              principal esporte praticado - Brasil - 2015
+
+                                                      Distribuição das pessoas de 15 anos ou mais de idade que
+                                                 praticaram algum esporte, no período de referência de 365 dias (%)
+          Principal esporte praticado                                            Grupos de idade
+                                               Total                                                            60 anos ou
+                                                          15 a 17 anos 18 a 24 anos 25 a 39 anos 40 a 59 anos
+                                                                                                                   mais
+
+                      Total                       100,0         100,0        100,0        100,0        100,0          100,0
+    Futebol                                        39,3          64,5         57,6         41,4         24,1            4,9
+    Caminhada                                      24,6           4,7          7,2         18,6         41,6           59,6
+    Voleibol, basquetebol e handebol                2,9           8,8          3,9          2,1          1,1            0,8
+    Fitness                                         9,0           3,8          9,9         11,4          8,4            7,3
+    Ciclismo                                        3,2           1,9          2,3          3,5          4,5            2,9
+    Lutas e artes marciais                          3,1           5,0          4,0          3,9          1,4            0,6
+    Ginástica rítmica e artística                   3,2           1,1          2,7          2,6          4,0            6,6
+    Outros esportes (1)                            14,7          10,2         12,5         16,5         15,0           17,3
+
+    Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+    Domicílios 2015.
+    (1) Inclusive natação, musculação, atletismo, esporte de aventura, aquático, paradesporto, com pequenas bolas e
+    raquetes, skate e patins, dança e ballet , com motor, com animais, com tabuleiros e cartas.
+
+### Página 41 do PDF
+
+Análise dos resultados
+
+
+
+                     A pesquisa objetivou, ainda, identificar as causas da ausência de prática espor-
+              tiva, destacando-se a falta de tempo em primeiro lugar, respondida por 38,2%. Em
+              segundo lugar, alegou-se o fato de não gostarem ou não quererem (35%), vindo a
+              seguir problema de saúde ou idade como o principal motivo (19,0%). Não terem com-
+              panhia para praticar o esporte (1,7%), problema financeiro (1,9%) e falta de instalação
+              esportiva acessível ou nas proximidades (2,7%) foram motivos menos citados, demos-
+              trando que a ausência de prática esportiva estaria menos associada à infraestrutura
+              disponível e renda, porém mais relacionada a escolhas pessoais e tempo disponível.
+              Este motivo, por sinal, foi o considerado mais agravante para a população da Região
+              Sudeste, como observado na Tabela 10.
+
+
+                        Tabela 10 - Distribuição das pessoas de 15 anos ou mais de idade que não
+                      praticaram esporte, no período de referência de 365 dias, por Grandes Regiões,
+                                 segundo o motivo de não terem praticado esporte - 2015
+
+                                                                 Distribuição das pessoas de 15 anos ou mais de idade que não
+                                                                  praticaram esporte, no periodo de referência de 365 dias (%)
+
+                    Motivo de não terem praticado esporte                                   Grandes Regiões
+                                                                Brasil
+                                                                                                                          Centro-
+                                                                           Norte      Nordeste    Sudeste     Sul
+                                                                                                                           Oeste
+
+                                     Total                         100,0      100,0      100,0       100,0      100,0        100,0
+
+
+               Falta de tempo                                       38,2       33,7       33,6        41,5       38,5         40,2
+
+
+               Problema de saúde ou idade                           19,0       17,8       19,5        18,1       22,5         17,1
+
+
+               Problema financeiro                                   1,9        1,5         1,6        2,2          1,7        1,7
+               Falta de instalação esportiva acessível ou nas
+               proximidades                                          2,7        3,6         3,2        2,3          2,3        2,4
+
+
+               Não terem companhia para praticar o esporte           1,7        1,9         1,7        1,6          2,1        1,7
+
+
+               Não gostarem ou não quererem                         35,0       40,1       39,0        32,8       31,2         35,6
+
+
+               Outro motivo                                          1,5        1,4         1,4        1,5          1,6        1,3
+
+               Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+               Domicílios 2015.
+
+
+
+
+                    Na Tabela 11, pode-se ver que os motivos apontados para a ausência de prática
+              esportiva divergem, conforme a faixa etária. A falta de tempo foi bastante citada pela
+              população adulta de 18 a 59 anos de idade (42,5% no grupo de 18 a 24 anos; 51,6%, de
+              25 a 39 anos; e 42,4%, de 40 a 59 anos), mas somente 15,0% das pessoas de 60 anos
+              ou mais de idade a mencionaram. Problema de saúde ou idade, conforme esperado,
+              foi pouco citado no grupo de 15 a 17 anos (4,6%), entretanto 51,4% das pessoas de
+              60 anos ou mais de idade o consideraram como motivo principal para não praticarem
+              esporte. Não gostarem ou não quererem foi o principal motivo alegado pelos jovens
+              de 15 a 17 anos (57,3%).
+
+### Página 43 do PDF
+
+Análise dos resultados
+
+
+
+              de 60 anos ou mais de idade (11,5%); em compensação, o tempo disponível foi um
+              problema considerável para as pessoas de 18 a 24 anos (63,6%) e de 25 a 39 anos
+              (58,6%). Problema de saúde ou idade foi bem menos mencionado nos grupos de 15 a
+              17 anos (7,9%) e 18 a 24 anos (9,2%), entretanto 68,1% dos idosos consideraram este
+              o motivo principal. O fato de não gostarem ou não quererem foi motivo relevante
+              entre os mais jovens (24,3% para as pessoas com menos de 15 anos de idade antes
+              do período de referência), porém pouco citado pela população de 60 anos ou mais
+              de idade, com 9,5% das respostas.
+                    O contingente da população de 15 anos ou mais de idade que nunca prati-
+              cou esporte correspondeu a 91,3 milhões de pessoas (56,5%): entre as mulheres, a
+              proporção alcançou mais de ⅔ delas (67,9%); e entre os homens, menos da metade
+              (44,0%). A maior taxa de não praticantes de esporte foi observada na Região Nordeste
+              (57,7%), sendo a maior também entre as mulheres (71,1%). Destaca-se, ainda, que
+              70,7% das pessoas de 60 anos ou mais de idade e 77,6% das pessoas sem instrução
+              nunca praticaram esporte.
+
+
+
+              Prática de atividade física5
+              No Brasil, 28,1 milhões de pessoas de 15 anos ou mais de idade praticaram alguma
+              atividade física no período de referência, o que representou 17,4% da população
+              investigada. Desse total, 15,7 milhões eram mulheres e 12,5 milhões, homens. Cabe
+              lembrar que, na prática de esporte, 24,5 milhões eram homens (quase o dobro dos
+              praticantes de atividade física) e 14,3 milhões eram mulheres (contingente um pouco
+              menor que o das praticantes de atividade física). A taxa de prática de atividade física
+              entre as mulheres foi 18,5% e entre os homens, 16,1%. A Região Sul apresentou
+              a maior taxa (19,1%), seguida pelas Regiões Sudeste (18,1%), Nordeste (16,9%),
+              Centro-Oeste (16,8%) e Norte (12,7%).
+                     Ao avaliar os resultados da prática de atividade física por Unidades da Federação,
+              observa-se que quatro delas apresentaram percentuais iguais ou superiores a 25%:
+              Rio Grande do Norte (25,0%); Paraíba (25,1%); Rio Grande do Sul (25,3%); e Distrito
+              Federal (28,5%). Por outro lado, apenas 9,0% da população do Mato Grosso realizou
+              esse tipo de atividade, sendo esta a menor taxa do País, como demonstrado no Grá-
+              fico 13. Amapá e Tocantins foram as únicas Unidades da Federação que apresentaram
+              prática de atividade física maior para os homens (50,2 e 51,2%, respectivamente). No
+              Maranhão, quase ⅔ dos praticantes eram do sexo feminino (64,8%).
+                    Na distribuição por faixa etária, os grupos de 18 a 24 anos e 25 a 39 anos apre-
+              sentaram os maiores percentuais de pessoas praticantes de atividade física ( 18,9%
+              e 18,2%, respectivamente). Seguindo comportamento semelhante ao verificado na
+              prática de esporte, no Brasil, o percentual de pessoas praticantes foi crescente, con-
+              forme a escolaridade: 8,9% das pessoas sem instrução, 15,1% das que tinham ensino
+              fundamental completo, 19,8% das que tinham ensino médio completo, e 28,7% da-
+              quelas com superior completo praticaram alguma atividade física.
+
+
+
+
+              5   Para conhecer o conjunto de atividades físicas consideradas na pesquisa, consultar o Anexo 1 desta publicação.
+
+### Página 44 do PDF
+
+_                                                                                     Pesquisa Nacional por Amostra de Domicílios
+                                                                                         Práticas de Esporte e Atividade Física 2015
+
+
+
+
+              Gráfico 13 - Percentual de pessoas que praticaram alguma atividade física,
+           no período de referência de 365 dias, na população de 15 anos ou mais de idade,
+                                  por Unidades da Federação - 2015
+            Distrito Federal                                                                                   28,5
+         Rio Grande do Sul                                                                              25,3
+                     Paraíba                                                                           25,1
+       Rio Grande do Norte                                                                             25,0
+                       Piauí                                                                 21,7
+                  São Paulo                                                           19,1
+                    Roraima                                                          19,0
+                    Sergipe                                                         18,6
+                  Maranhão                                                          18,6
+              Minas Gerais                                                         18,2
+             Espírito Santo                                                    17,2
+                      Bahia                                                    17,0
+        Mato Grosso do Sul                                                   16,3
+                     Paraná                                                 16,2
+                      Goiás                                               15,6
+                        Acre                                              15,5
+             Rio de Janeiro                                              15,1
+                     Amapá                                              14,8
+                      Ceará                                          13,8
+             Santa Catarina                                         13,6
+                   Rondônia                                         13,6
+                  Tocantins                                      12,8
+               Pernambuco                                      12,1
+                 Amazonas                                      11,9
+                        Pará                                   11,9
+                    Alagoas                                   11,6
+              Mato Grosso                              9,0                                                     %      %
+
+                           0,0           5,0          10,0          15,0            20,0            25,0        30,0
+
+    Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+    Domicílios 2015.
+
+
+
+
+          Também de forma análoga ao verificado na prática de esporte, em termos ab-
+    solutos, os praticantes de atividade física se concentravam nas classes de rendimento
+    menos elevadas, refletindo a distribuição da população brasileira relativamente a esse
+    aspecto. Contudo, ao analisar o percentual de pessoas que praticavam atividade física
+    em cada classe de rendimento, observa-se maior proporção de praticantes nas classes
+    mais elevadas. Entre as pessoas sem rendimento a menos de ½ salário mínimo, 11,8%
+    praticaram atividade física, sendo a menor taxa registrada na Região Norte (9,3%).
+    Essa proporção aumentava gradualmente até atingir 36,0% da população com 5 ou
+    mais salários mínimos, sendo a maior taxa verificada na Região Nordeste (43,9%).
+
+
+
+    Principal atividade física praticada
+    Dos 28,1 milhões de praticantes de atividade física, 13,8 milhões realizaram caminhada
+    (49,1%), figurando, em segundo lugar, fitness ou academia (16,8%), seguido de cultu-
+    rismo e musculação (7,2%). Em todas as Grandes Regiões, a caminhada foi a modali-
+    dade mais frequente, destacando-se especialmente a Região Nordeste, com a maior
+    parte dos praticantes realizando tal atividade (54,6%), conforme mostra a Tabela 12.
+          Na Tabela 13, observa-se que a caminhada era praticada principalmente por
+    mulheres (63,6%), assim como o fitness ou academia (66,4%). Em contrapartida, as
+    principais atividades físicas com maior participação dos homens eram: futebol (94,4%);
+    corrida (79,2%); andar de bicicleta (69,1%); e culturismo e musculação (57,3%).
+
+### Página 45 do PDF
+
+Análise dos resultados
+
+
+
+                     Tabela 12 - Distribuição das pessoas de 15 anos ou mais de idade que praticaram
+                    alguma atividade física, no período de referência de 365 dias, por Grandes Regiões,
+                                    segundo a principal atividade física praticada - 2015
+
+                                                           Distribuição das pessoas de 15 anos ou mais de idade que praticaram
+                                                                alguma atividade física, no período de referência de 365 dias
+
+               Principal atividade física praticada                                                   Grandes Regiões
+                                                        Brasil                                                                         Centro-
+                                                                           Norte           Nordeste      Sudeste          Sul
+                                                                                                                                        Oeste
+
+                              Total                         100,0              100,0           100,0          100,0         100,0          100,0
+               Caminhada                                     49,1               46,7            54,5           46,3             48,3        49,8
+               Andar de bicicleta                                6,1               3,8            4,9           6,6              6,7         7,2
+               Culturismo e musculação                           7,2               6,1            8,1           7,3              4,8         9,1
+               Corrida                                           4,2               5,6            3,2           4,9              3,4         4,6
+               Fitness ou academia                           16,8               14,5            15,9           17,7             16,8        16,3
+               Futebol                                           5,2            13,0              4,8           4,5              5,8         3,9
+               Outras atividades físicas (1)                 11,4               10,3              8,5          12,6             14,3         9,2
+
+               Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+               Domicílios 2015.
+               (1) Inclusive atividades físicas de natação, dança e ballet, lutas e artes marciais, skate e patins, voleibol, na água sem
+               motor, aventura, handebol e basquetebol.
+
+
+
+                Tabela 13 - Distribuição das pessoas de 15 anos ou mais de idade que praticaram alguma
+                  atividade física, no período de referência de 365 dias, por sexo, segundo a principal
+                                          atividade física praticada - Brasil - 2015
+
+                                                             Distribuição das pessoas de 15 anos ou mais de idade que praticaram
+                                                               alguma atividade física, no período de referência de 365 dias (%)
+                Principal atividade física praticada
+                                                                                                                   Sexo
+                                                                       Total
+                                                                                                   Homens                       Mulheres
+
+                               Total                                               100,0                        44,3                         55,7
+              Caminhada                                                            100,0                        36,4                         63,6
+              Andar de bicicleta                                                   100,0                        69,1                         30,9
+              Culturismo e musculação                                              100,0                        57,3                         42,7
+              Corrida                                                              100,0                        79,2                         20,8
+              Fitness ou academia                                                  100,0                        33,6                         66,4
+              Futebol                                                              100,0                        94,6                             5,4
+              Outras atividades físicas (1)                                        100,0                        36,8                         63,2
+
+              Fonte: IBGE, Diretoria de Pesquisas, Coordenação de Trabalho e Rendimento, Pesquisa Nacional por Amostra de
+              Domicílios 2015.
+              (1) Inclusive atividades físicas de natação, dança e ballet, lutas e artes marciais, skate e patins, voleibol, na água sem
+              motor, aventura, handebol e basquetebol.
+
+
+
+                     As duas principais atividades físicas praticadas no Brasil – caminhada e fitness
+              ou academia – também se destacaram como principais em todos os grupos de idade:
+              entre as pessoas de 15 a 17 anos de idade, a caminhada era realizada por 22,4% e atin-
+              gia 66,5% no grupo de 60 anos ou mais de idade; o fitness ou academia, por sua vez,
+              era praticado por 16,6% das pessoas de 15 a 17 anos, subia para 25,3% entre aquelas
+              de 18 a 24 anos de idade, entretanto o percentual diminuía à medida que avançava
+              a faixa etária, até atingir 10,0% no grupo de 60 anos ou mais de idade. A modalidade
+              culturismo e musculação também alcançou sua maior taxa entre as pessoas de 18 a
+              24 anos de idade (14,7%).
+
+### Página 56 do PDF
+
+_                                                                                  Pesquisa Nacional por Amostra de Domicílios
+                                                                                      Práticas de Esporte e Atividade Física 2015
+
+
+
+                Anexo 1 - Relação de códigos dos esportes e das atividades físicas
+                                                                                                    (continuação)
+                                              Categoria de esporte
+
+       Relação de códigos                                          Especificação
+
+              70                                                   Atletismo
+    7001                     Corrida de pista
+    7002                     Maratona
+    7003                     Marcha
+    7004                     Salto
+    7005                     Arremesso
+    7006                     Lançamento
+    7007                     Corrida de rua
+    7008                     Outro
+              80                                                     Ciclismo
+    8001                     Ciclismo de rua e estrada
+    8002                     Bicicross
+    8003                     Mountain bike
+    8004                     BMX
+    8005                     Ciclismo de turismo
+    8006                     Outro
+              90                                               Lutas/Artes marciais
+    9001                     Aikido
+    9002                     Judô
+    9003                     Tae kwon do
+    9004                     Karate
+    9005                     Sumô
+    9006                     Tai chi chuan
+    9007                     Boxe
+    9008                     Greco-romana
+    9009                     Kung fu
+    9010                     Jiu-jítsu
+    9011                     MMA
+    9012                     Kickboxing
+    9013                     Full contact
+    9014                     Muay thai
+    9015                     Capoeira
+    9016                     Outra
+              100                                                    Ginástica
+    10001                    Rítmica
+    10002                    Artística
+    10003                    De trampolim
+    10004                    Outra
+              110                                              Esporte de aventura
+    11001                    Trilha
+    11002                    Montanhismo
+    11003                    Alpinismo (escalada)
+    11004                    Slackline
+    11005                    Escalada livre (Free climbing )
+    11006                    Arvorismo
+    11007                    Cachoeirismo
+    11008                    Rapel
+    11009                    Tirolesa
+    11010                    Bungee jumping
+    11011                    Paraquedismo
+    11012                    Parapente
+    11013                    Voo livre
+    11014                    Asa delta
+    11015                    Outro
+
+### Página 58 do PDF
+
+_                                                                                   Pesquisa Nacional por Amostra de Domicílios
+                                                                                       Práticas de Esporte e Atividade Física 2015
+
+
+
+                Anexo 1 - Relação de códigos dos esportes e das atividades físicas
+                                                                                                     (continuação)
+                                              Categoria de esporte
+
+       Relação de códigos                                         Especificação
+
+              180                                                 Dança/Ballet
+    18001                    Clássico
+    18002                    Contemporâneo
+    18003                    Moderno
+    18004                    Salão
+    18005                    Esportivo
+    18006                    Outro
+              190                    Com uso de motor (realizado no espaço aéreo, terrestre ou aquático)
+    19001                    Automobilismo
+    19002                    Motociclismo
+    19003                    Enduro karting
+    19004                    Motocross
+    19005                    Rally
+    19006                    Motonáutica
+    19007                    Outro
+              200                                       Esporte com cartas e tabuleiros
+    20001                    Jogo de cartas
+    20002                    Dado
+    20003                    Xadrez
+    20004                    Damas
+    20005                    Outro
+              210                                             Esporte com animais
+    21001                    Hipismo
+    21002                    Equitação
+    21003                    Corrida com cavalos
+    21004                    Rodeio
+    21005                    Adestramento
+    21006                    Polo
+    21007                    Outro
+              220                                                Outro esporte
+    22001                    Individual
+    22002                    Coletivo
+
+                                          Categoria de atividade física
+
+       Relação de códigos                                         Especificação
+
+              10                                                   Caminhada
+    1001                     Caminhada
+    1002                     Outra
+              20                                               Andar de bicicleta
+    2001                     Andar de bicicleta
+    2002                     Outro
+              30                                            Culturismo/Musculação
+    3001                     Musculação
+    3002                     Fisiculturismo
+    3003                     Halterofilismo
+    3004                     Levantamento de peso
+    3005                     Outro
+              40                                                     Corrida
+    4001                     Corrida
+    4002                     Outra
+
+### Página 59 do PDF
+
+Anexos
+
+
+
+                 Anexo 1 - Relação de códigos dos esportes e das atividades físicas
+                                                                                      (continuação)
+                                           Categoria de atividade física
+
+                50                                              Fitness/ Academia
+         5001                 Hidroginástica
+         5002                 Spinning
+         5003                 Bicicleta ergométrica
+         5004                 Esteira ergométrica
+         5005                 Yoga
+         5006                 Aeróbica
+         5007                 Cardio fitness
+         5008                 Pilates
+         5009                 Step
+         5010                 Alongamento
+         5011                 Exercícios físicos
+         5012                 Ginástica localizada
+         5013                 Treinamento funcional
+         5014                 Ginástica de academia
+         5015                 Outro
+                60                                                   Natação
+         6001                 Natação
+         6002                 Outra
+                70                                                 Dança/Ballet
+         7001                 Clássico
+         7002                 Contemporâneo
+         7003                 Moderno
+         7004                 Salão
+         7005                 Esportivo
+         7006                 Outro
+                80                                             Lutas/Artes marciais
+         8001                 Aikido
+         8002                 Judô
+         8003                 Tae kwon do
+         8004                 Karatê
+         8005                 Sumô
+         8006                 Tai chi chuan
+         8007                 Boxe
+         8008                 Greco-romana
+         8009                 Kung fu
+         8010                 Jiu-jítsu
+         8011                 MMA
+         8012                 Kickboxing
+         8013                 Full contact
+         8014                 Muay thai
+         8015                 Capoeira
+         8016                 Outra
+                90                                                 Skate /Patins
+
+         9001                 Skate
+         9002                 Skate board
+         9003                 Patins
+         9004                 Patinação
+         9005                 Outro
+
+### Página 70 do PDF
+
+_                                                        Pesquisa Nacional por Amostra de Domicílios
+                                                            Práticas de Esporte e Atividade Física 2015
+
+
+
+    ca. Abrange a semana de referência da pesquisa e os 358 dias que a
+    antecedem. Para a pesquisa realizada em 2015, foi o período de 27 de
+    setembro de 2014 a 26 de setembro de 2015.
+
+    pessoa desocupada Pessoa sem trabalho na semana de referência,
+    mas que toma alguma providência efetiva de procura de trabalho
+    nesse período.
+
+    pessoa economicamente ativa Pessoa classificada como ocupada ou
+    desocupada na semana de referência da pesquisa.
+
+    pessoa em idade ativa Pessoa de 15 anos ou mais de idade.
+
+    pessoa não economicamente ativa Pessoa que não é classificada como
+    ocupada nem como desocupada na semana de referência da pesquisa.
+
+    pessoa não ocupada Pessoa que não é classificada como ocupada na
+    semana de referência da pesquisa.
+
+    pessoa ocupada Pessoa que tem trabalho durante toda ou parte da
+    semana de referência da pesquisa, inclusive a pessoa que não exerce
+    o trabalho remunerado que tem nessa semana por motivo de férias,
+    licença, falta, greve, etc.
+
+    população residente Pessoas que têm a unidade domiciliar (domicílio
+    particular ou unidade de habitação em domicílio coletivo) como local
+    de residência habitual e, na data da entrevista, estão presentes ou
+    ausentes, temporariamente, por período não superior a 12 meses em
+    relação àquela data.
+
+    prática de atividade física Exercício praticado pela pessoa, em seu
+    tempo livre, e por ela classificado como atividade física, de acordo
+    com o seu próprio entendimento. Não envolve, portanto, atividades
+    relacionadas ao exercício profissional.
+
+    prática de esporte Exercício praticado pela pessoa, em seu tempo
+    livre, e por ela classificado como esporte, de acordo com o seu pró-
+    prio entendimento. Não envolve, portanto, atividades relacionadas ao
+    exercício profissional.
+
+    principal atividade física praticada Caminhada; andar de bicicleta; cul-
+    turismo e musculação; corrida; fitness ou academia; futebol; ou outras
+    atividades físicas, como, por exemplo, natação, dança e ballet, lutas e
+    artes marciais, skate e patins, voleibol, atividades físicas na água sem
+    motor (remo, surf, caiaque etc.), aventura, handebol e basquetebol,
+    entre outras não definidas.
+
+    principal esporte praticado Futebol; caminhada; voleibol, basquetebol
+    e handebol; fitness; natação e saltos; culturismo; atletismo; ciclismo;
+    lutas e artes marciais; ginástica rítmica e artística; dança e ballet; ou
+    outros esportes, como, por exemplo, esporte de aventura, aquático,
+    paradesporto, com pequenas bolas e raquetes, skate e patins, com mo-
+    tor, com animais, com tabuleiros e cartas, entre outros não definidos.
+
