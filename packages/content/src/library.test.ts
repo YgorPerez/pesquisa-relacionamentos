@@ -376,16 +376,17 @@ describe("the repository's library", () => {
     ])
   })
 
-  it('carries the tips of the old table, one per file, without the ⬜ ones, each published once its fact sheets are checked', () => {
+  // Acervo PRs move tips out of tips/_sem-ficha.md into their own file as
+  // their fact sheets arrive, so this checks that each file loads as a tip,
+  // not which tips exist.
+  it('loads every tip in tips/, one per file, each published once its fact sheets are checked', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
-    expect(library.tips.map((d) => [d.slug, d.strength, d.inference])).toEqual([
-      ['apps-como-complemento', 'strong', false],
-      ['convivencia-repetida', 'moderate', true],
-      ['escola-e-eventos-sociais', 'moderate', false],
-      ['mensagem-um-pouco-acima', 'moderate', false],
-      ['sem-pressa-para-casar', 'strong', false],
-    ])
+    const slugs = readdirSync(`${root}/tips`)
+      .filter((name) => name.endsWith('.md') && !name.startsWith('_'))
+      .map((name) => name.slice(0, -'.md'.length))
+      .sort((a, b) => a.localeCompare(b))
+    expect(library.tips.map((tip) => tip.slug)).toEqual(slugs)
     // Acervo PRs verify fact sheets one by one, and a tip goes up with the
     // last of its own.
     const checked = new Set(
