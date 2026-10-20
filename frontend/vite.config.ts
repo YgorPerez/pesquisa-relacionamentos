@@ -8,6 +8,7 @@ import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
 import { acervo } from './vite/acervo.ts'
 import { lerAmbienteDoBuild } from './vite/ambiente.ts'
 import { grupoPossivel } from './vite/grupo-possivel.ts'
+import { manifestoSemPreload } from './vite/manifesto-sem-preload.ts'
 
 // A rodada entra na fila da máquina antes de começar e leva os workers que
 // ela der (`scripts/fila-da-maquina.ts`, ADR 0013).
@@ -32,6 +33,8 @@ const doApp = (mode: string): PluginOption[] => {
     // Start, como no Festival.
     tailwindcss(),
     tanstackStart(),
+    // Sem os `modulepreload` de cada chunk no `<head>` (ADR 0034).
+    manifestoSemPreload(),
     nitro(),
     viteReact(),
     // O React Compiler memoiza cada componente e hook no build. O plugin 6

@@ -9,6 +9,7 @@
     "dev": "node ../scripts/dev.ts",
     "build": "vp build",
     "start": "node ../scripts/dev.ts start",
+    "medir": "node scripts/medir-paginas.ts",
     "typecheck": "tsc --noEmit",
     "cn:tabelas": "cn build --full --quiet --css src/styles.css -o src/platform/cn-tabelas.js",
     "test": "vp test run",
