@@ -53,6 +53,8 @@ Depois de uma mudança no front, siga a skill `testar-app` (`.claude/skills/test
 
 ## Padrões de código
 
+O código é em inglês: nomes de arquivo e pasta, identificadores, comentários e mensagens. Um termo do domínio usa o nome em código do `GLOSSARY.md`. URL pública, query do link, chave do `localStorage`, evento do analytics, texto da interface e prosa continuam em PT-BR (ADR 0039).
+
 `docs/agents/standards-ui.md` diz como o front monta a interface, no que um lint não confere. Siga ao escrever; a skill `code-review` o lê como fonte de padrões. Regra que um lint confere vai para `frontend/lint/` como plugin do Oxlint (ADR 0006).
 
 ## Quatro jeitos de se machucar
