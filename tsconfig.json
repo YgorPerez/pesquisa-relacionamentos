@@ -1,0 +1,19 @@
+{
+  // The repository's own scripts and the root Vite+ config. Without this
+  // file the type check put them in an inferred project made of whatever
+  // files it was given: the full `vp check` got Node's types through
+  // `vite.config.ts` (vite-plus references them), and `vp check <file>` from
+  // the minimal proof did not. The app and each package keep their own.
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"]
+  },
+  "include": ["*.ts", "scripts/**/*.ts", ".github/scripts/**/*.ts"],
+  "exclude": ["scripts/fixtures/**"]
+}
