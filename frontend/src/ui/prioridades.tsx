@@ -364,67 +364,157 @@ export function Estante({
   const porId = new Map(caracteristicas.map((c) => [c.id, c]))
   return (
     <div className="mt-1.5">
-      {prateleiras(caracteristicas, desfecho, topo3).map((prat) => {
-        const detalhe = `detalhe-${prat.degrau}`
-        const abertaAqui =
-          aberta !== null && prat.ids.includes(aberta)
-            ? porId.get(aberta)
-            : undefined
+      {prateleiras(caracteristicas, desfecho, topo3).map((prat) => (
+        <Prateleira
+          key={prat.degrau}
+          prateleira={prat}
+          porId={porId}
+          desfecho={desfecho}
+          topo3={topo3}
+          aberta={aberta}
+          aoAbrir={aoAbrir}
+          genero={genero}
+        />
+      ))}
+    </div>
+  )
+}
+
+/** Uma prateleira: o peso e o nome, os livros dela e, se um deles está
+ * aberto, o detalhe embaixo. */
+function Prateleira({
+  prateleira: prat,
+  porId,
+  desfecho,
+  topo3,
+  aberta,
+  aoAbrir,
+  genero,
+}: {
+  prateleira: ReturnType<typeof prateleiras>[number]
+  porId: ReadonlyMap<string, CaracteristicaVista>
+  desfecho: Desfecho
+  topo3: ReadonlyArray<string>
+  aberta: string | null
+  aoAbrir: (id: string | null) => void
+  genero: GeneroDoPerfil | undefined
+}) {
+  const detalhe = `detalhe-${prat.degrau}`
+  const abertaAqui =
+    aberta !== null && prat.ids.includes(aberta) ? porId.get(aberta) : undefined
+  return (
+    <section
+      className="group/prateleira pt-6.5"
+      data-degrau={prat.degrau}
+      aria-labelledby={`prat-${prat.degrau}`}
+    >
+      <h3
+        id={`prat-${prat.degrau}`}
+        className="m-0 mb-3 flex items-center gap-2.5 font-title text-nivel leading-headline font-bold tracking-title group-data-[degrau=0]/prateleira:font-semibold group-data-[degrau=0]/prateleira:text-tinta-2 group-data-[degrau=0]/prateleira:italic"
+      >
+        <PesoDaEvidencia degrau={prat.degrau} largura={42} />
+        {prat.nome}
+      </h3>
+      <Livros
+        ids={prat.ids}
+        porId={porId}
+        topo3={topo3}
+        aberta={aberta}
+        aoAbrir={aoAbrir}
+        detalhe={detalhe}
+      />
+      <div
+        className="reticula mt-1.5 h-2.75 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha group-data-[degrau=0]/prateleira:fio-tracejado group-data-[degrau=0]/prateleira:after:hidden"
+        aria-hidden="true"
+      />
+      {abertaAqui && (
+        <DetalheDaCaracteristica
+          car={abertaAqui}
+          desfecho={desfecho}
+          genero={genero}
+          id={detalhe}
+        />
+      )}
+    </section>
+  )
+}
+
+/** Os livros de uma prateleira, ou "nenhuma". O do topo 3 vem numerado; tocar
+ * abre o detalhe, e tocar no aberto o fecha. */
+function Livros({
+  ids,
+  porId,
+  topo3,
+  aberta,
+  aoAbrir,
+  detalhe,
+}: {
+  ids: ReadonlyArray<string>
+  porId: ReadonlyMap<string, CaracteristicaVista>
+  topo3: ReadonlyArray<string>
+  aberta: string | null
+  aoAbrir: (id: string | null) => void
+  /** O id do detalhe que o livro aberto controla. */
+  detalhe: string
+}) {
+  if (ids.length === 0)
+    return (
+      <p className="m-0 px-1 py-2 text-nota text-tinta-2 italic">nenhuma</p>
+    )
+  return (
+    <ul className="m-0 flex list-none flex-wrap items-end gap-2 px-1 py-0">
+      {ids.map((id) => {
+        const i = topo3.indexOf(id)
         return (
-          <section
-            key={prat.degrau}
-            className="group/prateleira pt-6.5"
-            data-degrau={prat.degrau}
-            aria-labelledby={`prat-${prat.degrau}`}
-          >
-            <h3
-              id={`prat-${prat.degrau}`}
-              className="m-0 mb-3 flex items-center gap-2.5 font-title text-nivel leading-headline font-bold tracking-title group-data-[degrau=0]/prateleira:font-semibold group-data-[degrau=0]/prateleira:text-tinta-2 group-data-[degrau=0]/prateleira:italic"
+          <li key={id}>
+            <ButtonPrimitive
+              className={LIVRO}
+              data-escolhida={i >= 0 || undefined}
+              aria-expanded={aberta === id}
+              aria-controls={aberta === id ? detalhe : undefined}
+              onClick={() => aoAbrir(aberta === id ? null : id)}
             >
-              <PesoDaEvidencia degrau={prat.degrau} largura={42} />
-              {prat.nome}
-            </h3>
-            {prat.ids.length > 0 ? (
-              <ul className="m-0 flex list-none flex-wrap items-end gap-2 px-1 py-0">
-                {prat.ids.map((id) => {
-                  const i = topo3.indexOf(id)
-                  return (
-                    <li key={id}>
-                      <ButtonPrimitive
-                        className={LIVRO}
-                        data-escolhida={i >= 0 || undefined}
-                        aria-expanded={aberta === id}
-                        aria-controls={aberta === id ? detalhe : undefined}
-                        onClick={() => aoAbrir(aberta === id ? null : id)}
-                      >
-                        {i >= 0 && <Posicao i={i} />}
-                        {porId.get(id)?.nome}
-                      </ButtonPrimitive>
-                    </li>
-                  )
-                })}
-              </ul>
-            ) : (
-              <p className="m-0 px-1 py-2 text-nota text-tinta-2 italic">
-                nenhuma
-              </p>
-            )}
-            <div
-              className="reticula mt-1.5 h-2.75 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha group-data-[degrau=0]/prateleira:fio-tracejado group-data-[degrau=0]/prateleira:after:hidden"
-              aria-hidden="true"
-            />
-            {abertaAqui && (
-              <DetalheDaCaracteristica
-                car={abertaAqui}
-                desfecho={desfecho}
-                genero={genero}
-                id={detalhe}
-              />
-            )}
-          </section>
+              {i >= 0 && <Posicao i={i} />}
+              {porId.get(id)?.nome}
+            </ButtonPrimitive>
+          </li>
         )
       })}
-    </div>
+    </ul>
+  )
+}
+
+/** O topo 3 no cartão, na ordem escolhida, com o peso de cada um em
+ * satisfação. */
+function Topo3NoCartao({
+  escolhidas,
+  parceiro,
+}: {
+  escolhidas: ReadonlyArray<CaracteristicaVista>
+  /** A fatia da satisfação que o parceiro explica, em %. */
+  parceiro: number
+}) {
+  return (
+    <>
+      <p className="font-label text-label leading-body text-tinta-2">
+        Seu topo 3 cabe na fatia de {parceiro}%:
+      </p>
+      <ol className="m-0 mt-2.5 list-none p-0" data-slot="topo3-no-cartao">
+        {escolhidas.map((car, i) => (
+          <li
+            key={car.id}
+            className="grid grid-cols-[34px_1fr_auto] items-center gap-2.5 border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-2 font-bold first:border-t-0"
+          >
+            <span className={cn(POSICAO, 'bg-amarelo-voce')} aria-hidden="true">
+              {i + 1}
+            </span>
+            <span>{car.nome}</span>
+            <span className="sr-only">, em satisfação: </span>
+            <EtiquetaDoPeso degrau={degrau(car, 'satisfacao')} />
+          </li>
+        ))}
+      </ol>
+    </>
   )
 }
 
@@ -450,32 +540,7 @@ export function CartaoDePrioridades({
       <Painel className="[&>p]:m-0 [&>p]:mt-xs">
         <BarraDaSatisfacao barra={barra} curta />
         {escolhidas.length > 0 && (
-          <>
-            <p className="font-label text-label leading-body text-tinta-2">
-              Seu topo 3 cabe na fatia de {barra.parceiro}%:
-            </p>
-            <ol
-              className="m-0 mt-2.5 list-none p-0"
-              data-slot="topo3-no-cartao"
-            >
-              {escolhidas.map((car, i) => (
-                <li
-                  key={car.id}
-                  className="grid grid-cols-[34px_1fr_auto] items-center gap-2.5 border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-2 font-bold first:border-t-0"
-                >
-                  <span
-                    className={cn(POSICAO, 'bg-amarelo-voce')}
-                    aria-hidden="true"
-                  >
-                    {i + 1}
-                  </span>
-                  <span>{car.nome}</span>
-                  <span className="sr-only">, em satisfação: </span>
-                  <EtiquetaDoPeso degrau={degrau(car, 'satisfacao')} />
-                </li>
-              ))}
-            </ol>
-          </>
+          <Topo3NoCartao escolhidas={escolhidas} parceiro={barra.parceiro} />
         )}
         <p>
           <Button
