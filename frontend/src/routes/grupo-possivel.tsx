@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Estimativa } from '@tem-estudo/regras/grupo-possivel'
 import { formatarQuantidade } from '@tem-estudo/regras/numeros'
+import type { Perfil } from '@tem-estudo/regras/perfil'
 import {
   ALTURA_MAXIMA,
   ALTURA_MINIMA,
@@ -43,6 +44,7 @@ import {
   LUGARES_COM_DADOS,
   useGrupoPossivel,
   useRequisitosSalvos,
+  type ContaNoNavegador,
 } from '#/estado/grupo-possivel'
 import { usePerfil } from '#/estado/perfil'
 import { contarUsoDaCalculadora } from '#/analytics/contagem'
@@ -98,6 +100,15 @@ export const Route = createFileRoute('/grupo-possivel')({
 
 const qualquer = 'qualquer'
 
+/** Toda mudança do visitante nos Requisitos passa aqui, e conta o uso. */
+function gravarEContar(novos: Requisitos) {
+  gravarRequisitos(novos)
+  contarUsoDaCalculadora('grupo-possivel')
+}
+
+/** O valor de um Requisito escrito como na tela ("25 a 35 anos"). */
+type ValorDoRequisito = (k: RequisitoDoVisitante | 'orientacao') => string
+
 function PaginaDoGrupoPossivel() {
   const { data: guia } = useSuspenseQuery(
     leituras.guiaDaCalculadora('grupo-possivel'),
@@ -105,57 +116,200 @@ function PaginaDoGrupoPossivel() {
   const trocou = useLinkRecebido('grupo-possivel') !== null
   const perfil = usePerfil()
   const salvos = useRequisitosSalvos()
-  const { estimativa, carregando, falhou, tentar, uf } = useGrupoPossivel(
-    perfil,
-    salvos,
-  )
+  const conta = useGrupoPossivel(perfil, salvos)
   const r = salvos ?? REQUISITOS_PADRAO
-  /** Toda mudança do visitante nos Requisitos passa aqui, e conta o uso. */
-  const gravarEContar = (novos: Requisitos) => {
-    gravarRequisitos(novos)
-    contarUsoDaCalculadora('grupo-possivel')
-  }
-  const mudar = (mudanca: Partial<Requisitos>) =>
-    gravarEContar({ ...r, ...mudanca })
-  const idade = idadeProcurada(perfil, r)
   const municipio = r.lugar?.municipio
-    ? uf?.municipios.get(r.lugar.municipio)?.nome
+    ? conta.uf?.municipios.get(r.lugar.municipio)?.nome
     : undefined
-  const valor = (k: RequisitoDoVisitante | 'orientacao') =>
+  const valor: ValorDoRequisito = (k) =>
     valorDoRequisito(k, perfil, r, municipio)
-  const custo = (k: RequisitoDoVisitante) =>
-    estimativa.custos.find((c) => c.requisito === k)
-  const ligado = (k: RequisitoDoVisitante) => estimativa.ligados.includes(k)
-  const { filhos } = estimativa
-  const idMotivoFilhos = useId()
-  const maisPesa = useRef<HTMLHeadingElement>(null)
-  const lugarNome = valor('lugar')
   const link: EstadoDoLink = {
     calculadora: 'grupo-possivel',
     perfil,
     requisitos: salvos,
   }
 
-  const linha = (
-    k: RequisitoDoVisitante,
-    controle: ReactNode,
-    nota?: ReactNode,
-  ) => (
-    <LinhaDoRequisito
-      key={k}
-      requisito={k}
-      valor={valor(k)}
-      custo={custo(k)}
-      ligado={ligado(k)}
-      nota={nota}
-    >
-      {controle}
-    </LinhaDoRequisito>
-  )
+  return (
+    <Folha>
+      <Coluna>
+        <TopoDaConta conta={conta} trocou={trocou} />
+        <SeuPerfil perfil={perfil} valor={valor} />
+        <SeusRequisitos
+          perfil={perfil}
+          requisitos={r}
+          conta={conta}
+          valor={valor}
+        />
+        <AConta
+          conta={conta}
+          perfil={perfil}
+          requisitos={r}
+          municipio={municipio}
+          valor={valor}
+        />
 
-  const controles: Record<RequisitoDoVisitante, ReactNode> = {
-    idade: linha(
-      'idade',
+        <Compartilhar
+          query={queryDoLink(link)}
+          frase={fraseDoLink(link, { municipio })}
+          aviso={AVISO_DA_CONTAGEM}
+        />
+
+        {guia && <DoGuia guia={guia} />}
+      </Coluna>
+    </Folha>
+  )
+}
+
+/** O título, o número preso no topo, o convite e os avisos da conta.
+ * `trocou`: um link recebido trocou o Perfil e os Requisitos salvos. */
+function TopoDaConta({
+  conta,
+  trocou,
+}: {
+  conta: ContaNoNavegador
+  trocou: boolean
+}) {
+  return (
+    <>
+      <Display>
+        Quantas pessoas atendem ao que você{' '}
+        <span className="marca-texto">procura</span>?
+      </Display>
+
+      <NumeroPreso
+        estimativa={conta.estimativa}
+        carregando={conta.carregando}
+      />
+
+      <p className="mx-0 mt-5.5 mb-md">
+        Diga quem você procura e ligue os seus Requisitos. O número de cima muda
+        junto, com dados do Censo 2022 e da PNS 2019.
+      </p>
+      <AvisosDaConta
+        trocou={trocou}
+        falhou={conta.falhou}
+        tentar={conta.tentar}
+        ressalvas={conta.estimativa.ressalvas}
+      />
+    </>
+  )
+}
+
+/** O bloco "Seu Perfil": de quem a conta parte. */
+function SeuPerfil({
+  perfil,
+  valor,
+}: {
+  perfil: Perfil | null
+  valor: ValorDoRequisito
+}) {
+  return (
+    <Secao aria-labelledby="t-perfil">
+      <Headline id="t-perfil">Seu Perfil</Headline>
+      <p className={DICA}>
+        A conta parte de quem você é e de quem você procura.
+      </p>
+      <CaixaDoPerfil
+        perfil={perfil}
+        comDado={null}
+        totalDeAchados={0}
+        rotuloDoBotao="Usar na conta"
+      />
+      {(perfil?.genero === 'homem' || perfil?.genero === 'mulher') && (
+        <p className={DICA}>
+          A orientação entra pelo seu Perfil: a conta só conta quem{' '}
+          {valor('orientacao')}, pela PNS 2019.
+        </p>
+      )}
+    </Secao>
+  )
+}
+
+/** O bloco "Seus Requisitos": uma linha por Requisito, na ordem de
+ * `REQUISITOS`, com o controle dele e o quanto ele corta. */
+function SeusRequisitos({
+  perfil,
+  requisitos,
+  conta,
+  valor,
+}: {
+  perfil: Perfil | null
+  requisitos: Requisitos
+  conta: ContaNoNavegador
+  valor: ValorDoRequisito
+}) {
+  const { estimativa } = conta
+  const idMotivoFilhos = useId()
+  const props: PropsDoControle = {
+    perfil,
+    requisitos,
+    mudar: (mudanca) => gravarEContar({ ...requisitos, ...mudanca }),
+    municipios: conta.uf?.municipios,
+    filhos: estimativa.filhos,
+    idMotivoFilhos,
+  }
+  return (
+    <Secao aria-labelledby="t-requisitos">
+      <Headline id="t-requisitos">Seus Requisitos</Headline>
+      <div className={conta.carregando ? CARREGANDO : undefined}>
+        {REQUISITOS.map((k) => {
+          const Controle = CONTROLE[k]
+          return (
+            <LinhaDoRequisito
+              key={k}
+              requisito={k}
+              valor={valor(k)}
+              custo={estimativa.custos.find((c) => c.requisito === k)}
+              ligado={estimativa.ligados.includes(k)}
+              nota={
+                k === 'filhos' ? (
+                  <MotivoDosFilhos
+                    filhos={estimativa.filhos}
+                    id={idMotivoFilhos}
+                  />
+                ) : undefined
+              }
+            >
+              <Controle {...props} />
+            </LinhaDoRequisito>
+          )
+        })}
+      </div>
+    </Secao>
+  )
+}
+
+/** O que o controle de um Requisito lê e como ele muda os Requisitos. */
+interface PropsDoControle {
+  perfil: Perfil | null
+  requisitos: Requisitos
+  mudar: (mudanca: Partial<Requisitos>) => void
+  /** Os municípios da UF escolhida, quando já chegaram. */
+  municipios: ReadonlyMap<string, { nome: string }> | undefined
+  filhos: Estimativa['filhos']
+  /** O id do motivo de o filtro de filhos não valer, que a caixa cita. */
+  idMotivoFilhos: string
+}
+
+/** A lista de marcados com `valor` marcado ou desmarcado, na ordem de `todos`. */
+function alternar<T extends string>(
+  todos: ReadonlyArray<T>,
+  marcados: ReadonlyArray<T>,
+  valor: T,
+  marcado: boolean,
+): T[] {
+  const antes = new Set(marcados)
+  return todos.filter((c) => (c === valor ? marcado : antes.has(c)))
+}
+
+/** O controle de cada Requisito, que vai dentro da linha dele. */
+const CONTROLE: Record<
+  RequisitoDoVisitante,
+  (props: PropsDoControle) => ReactNode
+> = {
+  idade: ({ perfil, requisitos, mudar }) => {
+    const idade = idadeProcurada(perfil, requisitos)
+    return (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Passos
           rotulo="Idade de"
@@ -179,219 +333,165 @@ function PaginaDoGrupoPossivel() {
             mudar({ idade: { min: Math.min(max, idade.min), max } })
           }
         />
-      </div>,
-    ),
-    lugar: linha(
-      'lugar',
-      <Lugar requisitos={r} municipios={uf?.municipios} mudar={mudar} />,
-    ),
-    companheiro: linha(
-      'companheiro',
-      <Marcar
-        rotulo="Só quem não mora com companheiro(a)"
-        marcado={r.companheiro}
-        aoMudar={(companheiro) => mudar({ companheiro })}
-      />,
-    ),
-    escolaridade: linha(
-      'escolaridade',
-      <Opcoes
-        legenda="Escolaridade mínima"
-        tipo="radio"
-        valores={[qualquer, ...ESCOLARIDADES_MINIMAS]}
-        rotulos={{ qualquer, ...ROTULO_DA_ESCOLARIDADE }}
-        marcados={[r.escolaridade ?? qualquer]}
-        aoMudar={(v) => mudar({ escolaridade: v === qualquer ? null : v })}
-      />,
-    ),
-    renda: linha(
-      'renda',
-      <Opcoes
-        legenda="Renda mínima"
-        tipo="radio"
-        valores={[qualquer, ...RENDAS_MINIMAS]}
-        rotulos={{ qualquer, ...ROTULO_DA_RENDA }}
-        marcados={[r.renda ?? qualquer]}
-        aoMudar={(v) => mudar({ renda: v === qualquer ? null : v })}
-        dica="Em salários mínimos de julho de 2022 (R$ 1.212)."
-      />,
-    ),
-    cor: linha(
-      'cor',
-      <Opcoes
-        legenda="Cor ou raça"
-        tipo="checkbox"
-        valores={CORES}
-        rotulos={ROTULO_DA_COR}
-        marcados={r.cores}
-        aoMudar={(v, marcado) =>
-          mudar({
-            cores: CORES.filter((c) =>
-              c === v ? marcado : r.cores.includes(c),
-            ),
-          })
+      </div>
+    )
+  },
+  lugar: ({ requisitos, municipios, mudar }) => (
+    <Lugar requisitos={requisitos} municipios={municipios} mudar={mudar} />
+  ),
+  companheiro: ({ requisitos, mudar }) => (
+    <Marcar
+      rotulo="Só quem não mora com companheiro(a)"
+      marcado={requisitos.companheiro}
+      aoMudar={(companheiro) => mudar({ companheiro })}
+    />
+  ),
+  escolaridade: ({ requisitos, mudar }) => (
+    <Opcoes
+      legenda="Escolaridade mínima"
+      tipo="radio"
+      valores={[qualquer, ...ESCOLARIDADES_MINIMAS]}
+      rotulos={{ qualquer, ...ROTULO_DA_ESCOLARIDADE }}
+      marcados={[requisitos.escolaridade ?? qualquer]}
+      aoMudar={(v) => mudar({ escolaridade: v === qualquer ? null : v })}
+    />
+  ),
+  renda: ({ requisitos, mudar }) => (
+    <Opcoes
+      legenda="Renda mínima"
+      tipo="radio"
+      valores={[qualquer, ...RENDAS_MINIMAS]}
+      rotulos={{ qualquer, ...ROTULO_DA_RENDA }}
+      marcados={[requisitos.renda ?? qualquer]}
+      aoMudar={(v) => mudar({ renda: v === qualquer ? null : v })}
+      dica="Em salários mínimos de julho de 2022 (R$ 1.212)."
+    />
+  ),
+  cor: ({ requisitos, mudar }) => (
+    <Opcoes
+      legenda="Cor ou raça"
+      tipo="checkbox"
+      valores={CORES}
+      rotulos={ROTULO_DA_COR}
+      marcados={requisitos.cores}
+      aoMudar={(v, marcado) =>
+        mudar({ cores: alternar(CORES, requisitos.cores, v, marcado) })
+      }
+      dica="Nenhuma marcada é qualquer uma."
+    />
+  ),
+  religiao: ({ requisitos, mudar }) => (
+    <Opcoes
+      legenda="Religião"
+      tipo="checkbox"
+      valores={RELIGIOES}
+      rotulos={ROTULO_DA_RELIGIAO}
+      marcados={requisitos.religioes}
+      aoMudar={(v, marcado) =>
+        mudar({
+          religioes: alternar(RELIGIOES, requisitos.religioes, v, marcado),
+        })
+      }
+      dica="Nenhuma marcada é qualquer uma."
+    />
+  ),
+  filhos: ({ requisitos, filhos, idMotivoFilhos, mudar }) => (
+    <Marcar
+      rotulo="Só quem não tem filhos"
+      marcado={requisitos.semFilhos && filhos !== 'sem-dado'}
+      desabilitado={filhos === 'sem-dado'}
+      descricao={filhos === 'vale' ? undefined : idMotivoFilhos}
+      aoMudar={(semFilhos) => mudar({ semFilhos })}
+    />
+  ),
+  altura: ({ requisitos: { altura }, mudar }) => (
+    <div className="flex flex-wrap gap-x-5.5 gap-y-3">
+      <Passos
+        rotulo="Altura de"
+        valor={altura.min}
+        min={ALTURA_MINIMA}
+        max={ALTURA_MAXIMA}
+        passo={5}
+        unidade={(v) => (v <= ALTURA_MINIMA ? 'cm ou menos' : 'cm')}
+        aoMudar={(min) =>
+          mudar({ altura: { min, max: Math.max(min, altura.max) } })
         }
-        dica="Nenhuma marcada é qualquer uma."
-      />,
-    ),
-    religiao: linha(
-      'religiao',
-      <Opcoes
-        legenda="Religião"
-        tipo="checkbox"
-        valores={RELIGIOES}
-        rotulos={ROTULO_DA_RELIGIAO}
-        marcados={r.religioes}
-        aoMudar={(v, marcado) =>
-          mudar({
-            religioes: RELIGIOES.filter((c) =>
-              c === v ? marcado : r.religioes.includes(c),
-            ),
-          })
+      />
+      <Passos
+        rotulo="até"
+        valor={altura.max}
+        min={ALTURA_MINIMA}
+        max={ALTURA_MAXIMA}
+        passo={5}
+        unidade={(v) => (v >= ALTURA_MAXIMA ? 'cm ou mais' : 'cm')}
+        aoMudar={(max) =>
+          mudar({ altura: { min: Math.min(max, altura.min), max } })
         }
-        dica="Nenhuma marcada é qualquer uma."
-      />,
-    ),
-    filhos: linha(
-      'filhos',
-      <Marcar
-        rotulo="Só quem não tem filhos"
-        marcado={r.semFilhos && filhos !== 'sem-dado'}
-        desabilitado={filhos === 'sem-dado'}
-        descricao={filhos === 'vale' ? undefined : idMotivoFilhos}
-        aoMudar={(semFilhos) => mudar({ semFilhos })}
-      />,
-      <MotivoDosFilhos filhos={filhos} id={idMotivoFilhos} />,
-    ),
-    altura: linha(
-      'altura',
-      <div className="flex flex-wrap gap-x-5.5 gap-y-3">
-        <Passos
-          rotulo="Altura de"
-          valor={r.altura.min}
-          min={ALTURA_MINIMA}
-          max={ALTURA_MAXIMA}
-          passo={5}
-          unidade={(v) => (v <= ALTURA_MINIMA ? 'cm ou menos' : 'cm')}
-          aoMudar={(min) =>
-            mudar({ altura: { min, max: Math.max(min, r.altura.max) } })
-          }
-        />
-        <Passos
-          rotulo="até"
-          valor={r.altura.max}
-          min={ALTURA_MINIMA}
-          max={ALTURA_MAXIMA}
-          passo={5}
-          unidade={(v) => (v >= ALTURA_MAXIMA ? 'cm ou mais' : 'cm')}
-          aoMudar={(max) =>
-            mudar({ altura: { min: Math.min(max, r.altura.min), max } })
-          }
-        />
-      </div>,
-    ),
-    fumo: linha(
-      'fumo',
-      <Marcar
-        rotulo="Só quem não fuma"
-        marcado={r.naoFuma}
-        aoMudar={(naoFuma) => mudar({ naoFuma })}
-      />,
-    ),
-  }
+      />
+    </div>
+  ),
+  fumo: ({ requisitos, mudar }) => (
+    <Marcar
+      rotulo="Só quem não fuma"
+      marcado={requisitos.naoFuma}
+      aoMudar={(naoFuma) => mudar({ naoFuma })}
+    />
+  ),
+}
 
+/** O bloco "A conta": a faixa, o que mais pesa, com o botão de soltar cada
+ * Requisito, e as dobras do corte a corte e da incerteza. */
+function AConta({
+  conta: { estimativa, carregando },
+  perfil,
+  requisitos,
+  municipio,
+  valor,
+}: {
+  conta: ContaNoNavegador
+  perfil: Perfil | null
+  requisitos: Requisitos
+  municipio: string | undefined
+  valor: ValorDoRequisito
+}) {
+  const maisPesa = useRef<HTMLHeadingElement>(null)
+  const lugarNome = valor('lugar')
+  // O botão some com a linha que ele soltou; o foco vai para o título da lista.
   const soltarERever = (k: RequisitoDoVisitante) => {
-    gravarEContar(soltar(r, k))
+    gravarEContar(soltar(requisitos, k))
     maisPesa.current?.focus()
   }
-
   return (
-    <Folha>
-      <Coluna>
-        <Display>
-          Quantas pessoas atendem ao que você{' '}
-          <span className="marca-texto">procura</span>?
-        </Display>
-
-        <NumeroPreso estimativa={estimativa} carregando={carregando} />
-
-        <p className="mx-0 mt-5.5 mb-md">
-          Diga quem você procura e ligue os seus Requisitos. O número de cima
-          muda junto, com dados do Censo 2022 e da PNS 2019.
+    <Secao id="a-conta" aria-labelledby="t-conta">
+      <Headline id="t-conta">A conta</Headline>
+      <div className={carregando ? CARREGANDO : undefined}>
+        <Faixa estimativa={estimativa} />
+        <p className="m-0 mt-1.5">
+          {NOME_DO_ALVO[estimativa.alvo]} em{' '}
+          {lugarNome === 'Brasil inteiro' ? 'todo o Brasil' : lugarNome} atendem
+          a tudo o que você pediu. Estimativa central:{' '}
+          {formatarQuantidade(estimativa.resultado.central)}.
         </p>
-        <AvisosDaConta
-          trocou={trocou}
-          falhou={falhou}
-          tentar={tentar}
-          ressalvas={estimativa.ressalvas}
+        <h3
+          className="m-0 mt-md mb-2 font-label text-label text-tinta-2"
+          ref={maisPesa}
+          tabIndex={-1}
+        >
+          O que mais pesa
+        </h3>
+        <CustosDaConta
+          custos={estimativa.custos}
+          valor={valor}
+          aoSoltar={soltarERever}
         />
-
-        <Secao aria-labelledby="t-perfil">
-          <Headline id="t-perfil">Seu Perfil</Headline>
-          <p className={DICA}>
-            A conta parte de quem você é e de quem você procura.
-          </p>
-          <CaixaDoPerfil
-            perfil={perfil}
-            comDado={null}
-            totalDeAchados={0}
-            rotuloDoBotao="Usar na conta"
-          />
-          {(perfil?.genero === 'homem' || perfil?.genero === 'mulher') && (
-            <p className={DICA}>
-              A orientação entra pelo seu Perfil: a conta só conta quem{' '}
-              {valor('orientacao')}, pela PNS 2019.
-            </p>
-          )}
-        </Secao>
-
-        <Secao aria-labelledby="t-requisitos">
-          <Headline id="t-requisitos">Seus Requisitos</Headline>
-          <div className={carregando ? CARREGANDO : undefined}>
-            {REQUISITOS.map((k) => controles[k])}
-          </div>
-        </Secao>
-
-        <Secao id="a-conta" aria-labelledby="t-conta">
-          <Headline id="t-conta">A conta</Headline>
-          <div className={carregando ? CARREGANDO : undefined}>
-            <Faixa estimativa={estimativa} />
-            <p className="m-0 mt-1.5">
-              {NOME_DO_ALVO[estimativa.alvo]} em{' '}
-              {lugarNome === 'Brasil inteiro' ? 'todo o Brasil' : lugarNome}{' '}
-              atendem a tudo o que você pediu. Estimativa central:{' '}
-              {formatarQuantidade(estimativa.resultado.central)}.
-            </p>
-            <h3
-              className="m-0 mt-md mb-2 font-label text-label text-tinta-2"
-              ref={maisPesa}
-              tabIndex={-1}
-            >
-              O que mais pesa
-            </h3>
-            <CustosDaConta
-              custos={estimativa.custos}
-              valor={valor}
-              aoSoltar={soltarERever}
-            />
-            <Dobras
-              estimativa={estimativa}
-              perfil={perfil}
-              requisitos={r}
-              municipio={municipio}
-            />
-          </div>
-        </Secao>
-
-        <Compartilhar
-          query={queryDoLink(link)}
-          frase={fraseDoLink(link, { municipio })}
-          aviso={AVISO_DA_CONTAGEM}
+        <Dobras
+          estimativa={estimativa}
+          perfil={perfil}
+          requisitos={requisitos}
+          municipio={municipio}
         />
-
-        {guia && <DoGuia guia={guia} />}
-      </Coluna>
-    </Folha>
+      </div>
+    </Secao>
   )
 }
 
