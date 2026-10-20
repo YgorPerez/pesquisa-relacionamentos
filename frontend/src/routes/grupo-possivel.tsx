@@ -59,7 +59,7 @@ import {
 import { NOME_DO_ALVO, textoDoCusto } from '#/ui/grupo-possivel.textos'
 import { ConfiancaDaResposta } from '#/ui/guia'
 import { CaixaDoPerfil } from '#/ui/perfil'
-import { cn } from '@/platform/cn'
+import { Select } from '@/ui/shadcn/select'
 import {
   Aviso,
   Coluna,
@@ -535,7 +535,7 @@ function DoGuia({ guia }: { guia: GuiaDaCalculadora }) {
   )
 }
 
-/** UF e, dentro dela, município: duas listas nativas, que no celular abrem o seletor do sistema. */
+/** UF e, dentro dela, município, cada um numa lista do `Select`. */
 function Lugar({
   requisitos,
   municipios,
@@ -545,66 +545,46 @@ function Lugar({
   municipios: ReadonlyMap<string, { nome: string }> | undefined
   mudar: (mudanca: Partial<Requisitos>) => void
 }) {
-  const id = useId()
   const uf = requisitos.lugar?.uf
-  const lista = municipios
-    ? [...municipios].sort(([, a], [, b]) =>
-        a.nome.localeCompare(b.nome, 'pt-BR'),
-      )
-    : []
+  const ufs = [
+    { value: null, label: 'Brasil inteiro' },
+    ...UFS.filter((u) => LUGARES_COM_DADOS.includes(u.sigla)).map((u) => ({
+      value: u.sigla,
+      label: u.nome,
+    })),
+  ]
+  const lista = [
+    {
+      value: null,
+      label: municipios ? 'Todo o estado' : 'Carregando os municípios…',
+    },
+    ...(municipios
+      ? [...municipios]
+          .sort(([, a], [, b]) => a.nome.localeCompare(b.nome, 'pt-BR'))
+          .map(([codigo, m]) => ({ value: codigo, label: m.nome }))
+      : []),
+  ]
   return (
-    <div className="grid gap-x-0 gap-y-1">
-      <label htmlFor={`${id}-uf`} className="mb-1.5 block text-nota font-bold">
-        Estado
-      </label>
-      <select
-        id={`${id}-uf`}
-        className="min-h-toque w-full max-w-88 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 font-body text-medio font-bold text-tinta"
-        value={uf ?? ''}
-        onChange={(e) => {
-          const escolhida = UFS.find((u) => u.sigla === e.target.value)
+    <div className="grid gap-2.5">
+      <Select
+        label="Estado"
+        items={ufs}
+        value={uf ?? null}
+        onValueChange={(sigla) => {
+          const escolhida = UFS.find((u) => u.sigla === sigla)
           mudar({ lugar: escolhida ? { uf: escolhida.sigla } : null })
         }}
-      >
-        <option value="">Brasil inteiro</option>
-        {UFS.filter((u) => LUGARES_COM_DADOS.includes(u.sigla)).map((u) => (
-          <option key={u.sigla} value={u.sigla}>
-            {u.nome}
-          </option>
-        ))}
-      </select>
+      />
       {uf && (
-        <>
-          <label
-            htmlFor={`${id}-municipio`}
-            className={cn('mb-1.5 block text-nota font-bold', 'mt-2.5')}
-          >
-            Município
-          </label>
-          <select
-            id={`${id}-municipio`}
-            className="min-h-toque w-full max-w-88 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-papel px-2.5 py-1.5 font-body text-medio font-bold text-tinta"
-            value={requisitos.lugar?.municipio ?? ''}
-            disabled={!municipios}
-            onChange={(e) =>
-              mudar({
-                lugar: {
-                  uf,
-                  ...(e.target.value && { municipio: e.target.value }),
-                },
-              })
-            }
-          >
-            <option value="">
-              {municipios ? 'Todo o estado' : 'Carregando os municípios…'}
-            </option>
-            {lista.map(([codigo, m]) => (
-              <option key={codigo} value={codigo}>
-                {m.nome}
-              </option>
-            ))}
-          </select>
-        </>
+        <Select
+          label="Município"
+          items={lista}
+          value={requisitos.lugar?.municipio ?? null}
+          disabled={!municipios}
+          onValueChange={(municipio) =>
+            mudar({ lugar: { uf, ...(municipio && { municipio }) } })
+          }
+        />
       )}
     </div>
   )

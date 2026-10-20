@@ -13,6 +13,7 @@ import {
 } from '@/ui/shadcn/collapsible'
 import { Input } from '@/ui/shadcn/input'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
+import { Select } from '@/ui/shadcn/select'
 import { Switch } from '@/ui/shadcn/switch'
 import { Toggle } from '@/ui/shadcn/toggle'
 
@@ -121,5 +122,39 @@ export const Recolhivel: Story = {
     await expect(
       tela.getByText('Cada Requisito vem de uma pesquisa com a sua margem.'),
     ).toBeVisible()
+  },
+}
+
+const ESTADOS = [
+  { value: null, label: 'Brasil inteiro' },
+  { value: 'AC', label: 'Acre' },
+  { value: 'AL', label: 'Alagoas' },
+  { value: 'SP', label: 'São Paulo' },
+]
+
+export const Lista: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      <Select label="Estado" items={ESTADOS} defaultValue={null} />
+      <Select
+        label="Município"
+        items={[{ value: null, label: 'Carregando os municípios…' }]}
+        defaultValue={null}
+        disabled
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const tela = within(canvasElement)
+    const estado = tela.getByRole('combobox', { name: 'Estado' })
+    await userEvent.click(estado)
+    // A lista abre num portal, fora do canvas.
+    await userEvent.click(
+      await within(document.body).findByRole('option', { name: 'Alagoas' }),
+    )
+    await expect(estado).toHaveTextContent('Alagoas')
+    await expect(
+      tela.getByRole('combobox', { name: 'Município' }),
+    ).toBeDisabled()
   },
 }

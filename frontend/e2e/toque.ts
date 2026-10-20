@@ -9,3 +9,14 @@ export async function tocar(alvo: Locator, opcoes?: Opcoes): Promise<void> {
   if (test.info().project.use.hasTouch) await alvo.tap(opcoes)
   else await alvo.click(opcoes)
 }
+
+/** Abre a lista do `Select` de nome `rotulo` dentro de `area` e toca na
+ * opção `opcao`. A lista abre num portal, fora de `area`. */
+export async function escolher(
+  area: Locator,
+  rotulo: string,
+  opcao: string,
+): Promise<void> {
+  await tocar(area.getByRole('combobox', { name: rotulo }))
+  await tocar(area.page().getByRole('option', { name: opcao, exact: true }))
+}

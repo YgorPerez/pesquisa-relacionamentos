@@ -2,7 +2,7 @@
 // linhas do Acre tiradas dos dados de verdade (o "Brasil" da fixture é só o
 // Acre). O Guia `app-ou-presencial` da fixture hospeda a calculadora.
 import { expect, test, type Page } from '@playwright/test'
-import { tocar } from './toque'
+import { escolher, tocar } from './toque'
 
 const PAGINA = '/grupo-possivel'
 const faixa = (page: Page) =>
@@ -199,8 +199,8 @@ test.describe('Grupo possível', () => {
     await page.goto(PAGINA)
     await dizerPerfil(page, 'homem', 'mulheres', '30')
     const lugar = requisito(page, 'lugar')
-    await lugar.getByLabel('Estado').selectOption('AC')
-    await lugar.getByLabel('Município').selectOption({ label: 'Rio Branco' })
+    await escolher(lugar, 'Estado', 'Acre')
+    await escolher(lugar, 'Município', 'Rio Branco')
     await expect(lugar.locator('[data-slot="gp-req-valor"]')).toHaveText(
       'Rio Branco (AC)',
     )
@@ -218,7 +218,9 @@ test.describe('Grupo possível', () => {
 
     const antes = await faixa(page).textContent()
     await page.reload()
-    await expect(lugar.getByLabel('Município')).toHaveValue('1200401')
+    await expect(lugar.getByRole('combobox', { name: 'Município' })).toHaveText(
+      'Rio Branco',
+    )
     await expect(faixa(page)).toHaveText(antes ?? '')
   })
 
@@ -260,7 +262,7 @@ test.describe('Grupo possível', () => {
   test('os controles têm pelo menos 44px', async ({ page }) => {
     await page.goto(PAGINA)
     const controles = page.locator(
-      '#req-idade button, #req-idade input:not([aria-hidden="true"]), [id^="req-"] [data-slot="radio-group-item"], [id^="req-"] [data-slot="checkbox"], [id^="req-"] select, [data-slot="gp-preso"] a',
+      '#req-idade button, #req-idade input:not([aria-hidden="true"]), [id^="req-"] [data-slot="radio-group-item"], [id^="req-"] [data-slot="checkbox"], [id^="req-"] [role="combobox"], [data-slot="gp-preso"] a',
     )
     expect(await controles.count()).toBeGreaterThan(20)
     for (const c of await controles.all())

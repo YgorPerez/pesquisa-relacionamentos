@@ -107,10 +107,16 @@ it('UF e município ficam salvos no aparelho e voltam ao abrir de novo', async (
     { genero: 'homem', procura: 'mulheres', idade: '30' },
     BOTAO,
   )
-  await usuario.selectOptions(requisito('lugar').getByLabelText('Estado'), 'AC')
-  const municipio = requisito('lugar').getByLabelText('Município')
+  await usuario.click(
+    requisito('lugar').getByRole('combobox', { name: 'Estado' }),
+  )
+  await usuario.click(await screen.findByRole('option', { name: 'Acre' }))
+  const municipio = requisito('lugar').getByRole('combobox', {
+    name: 'Município',
+  })
   await waitFor(() => expect(municipio).toBeEnabled())
-  await usuario.selectOptions(municipio, 'Rio Branco')
+  await usuario.click(municipio)
+  await usuario.click(await screen.findByRole('option', { name: 'Rio Branco' }))
   expect(requisito('lugar').valor()).toBe('Rio Branco (AC)')
   expect(
     JSON.parse(localStorage.getItem('tem-estudo:grupo-possivel') ?? 'null'),
@@ -118,5 +124,33 @@ it('UF e município ficam salvos no aparelho e voltam ao abrir de novo', async (
 
   unmount()
   abrirTela(PAGINA)
-  expect(await screen.findByLabelText('Município')).toHaveValue('1200401')
+  expect(
+    await screen.findByRole('combobox', { name: 'Município' }),
+  ).toHaveTextContent('Rio Branco')
+})
+
+it('o Estado se escolhe pelo teclado e volta ao Brasil inteiro', async () => {
+  const usuario = userEvent.setup()
+  abrirTela(PAGINA)
+  await dizerPerfil(
+    usuario,
+    { genero: 'homem', procura: 'mulheres', idade: '30' },
+    BOTAO,
+  )
+  const estado = requisito('lugar').getByRole('combobox', { name: 'Estado' })
+  expect(estado).toHaveTextContent('Brasil inteiro')
+  estado.focus()
+  await usuario.keyboard('{Enter}')
+  expect(await screen.findByRole('listbox')).toBeVisible()
+  await usuario.keyboard('{ArrowDown}{Enter}')
+  await waitFor(() => expect(estado).toHaveTextContent('Acre'))
+  expect(requisito('lugar').valor()).toBe('Acre')
+  await usuario.click(estado)
+  await usuario.click(
+    await screen.findByRole('option', { name: 'Brasil inteiro' }),
+  )
+  expect(estado).toHaveTextContent('Brasil inteiro')
+  expect(
+    requisito('lugar').queryByRole('combobox', { name: 'Município' }),
+  ).toBeNull()
 })

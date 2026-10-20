@@ -11,7 +11,7 @@ import {
   type BrowserContext,
   type Page,
 } from '@playwright/test'
-import { tocar } from './toque'
+import { escolher, tocar } from './toque'
 
 const SITE = 'https://temestudo.com'
 const faixa = (page: Page) =>
@@ -89,8 +89,8 @@ test.describe('link do Grupo possível', () => {
       .getByRole('radio', { name: 'superior completo' })
       .check()
     const lugar = page.locator('#req-lugar')
-    await lugar.getByLabel('Estado').selectOption('AC')
-    await lugar.getByLabel('Município').selectOption({ label: 'Rio Branco' })
+    await escolher(lugar, 'Estado', 'Acre')
+    await escolher(lugar, 'Município', 'Rio Branco')
     await expect(compartilhar(page)).toContainText(
       'Este link mostra: homem, 30, procura mulheres, ensino superior, em Rio Branco (AC).',
     )

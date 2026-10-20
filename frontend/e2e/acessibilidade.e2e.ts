@@ -132,6 +132,19 @@ test('o "Ajudou?" com os motivos do não passa no axe', async ({ page }) => {
   expect(await violacoes(page)).toEqual([])
 })
 
+test('o Grupo possível com a lista de Estados aberta passa no axe', async ({
+  page,
+}) => {
+  await page.addInitScript(
+    (p) => localStorage.setItem('tem-estudo:perfil', JSON.stringify(p)),
+    PERFIL,
+  )
+  await page.goto('/grupo-possivel', { waitUntil: 'networkidle' })
+  await page.getByRole('combobox', { name: 'Estado' }).click()
+  await expect(page.getByRole('option', { name: 'Acre' })).toBeVisible()
+  expect(await violacoes(page)).toEqual([])
+})
+
 test('Prioridades com o topo 3 e uma característica aberta passa no axe', async ({
   page,
 }) => {
