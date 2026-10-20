@@ -88,7 +88,7 @@ Um ticket com código entra por um PR do ramo `ticket/<n>-<nome>` para o ramo do
 - Uma mudança de tela traz, na seção `## Screen`, o print e o vídeo de cada tela que mudou, antes e depois (skill `test-app`). O check `Evidência de tela` falha sem eles, a menos que `No screen change` esteja marcado. Anexe com `gh pr edit --attach`; nunca commite as capturas. Ver `docs/agents/screen-evidence.md`.
 - A verificação diz a menor prova que rodou, e cada supressão nova com o motivo.
 - Depois de cada push, acompanhe o PR até ficar verde no último commit: os checks e cada comentário que chegou depois. Conserte o que for real; responda o que você descarta, com o motivo.
-- Nunca ponha o rótulo `supressao-revisada`: é a assinatura de uma pessoa.
+- Nunca ponha o rótulo `supressao-revisada`: é a assinatura de uma pessoa. Quando um PR precisar dele, mande ao usuário o comando pronto, com o número do PR: `GH_TOKEN=$(gh auth token --user YgorPerez) gh pr edit <pr> --add-label supressao-revisada`.
 - O merge é `gh pr merge <pr> --merge`, só com tudo verde. Num PR para um `spec/*`, o GitHub não fecha a issue: quem mescla a fecha (`docs/agents/integration.md`, "O merge").
 
 ## Documentação
