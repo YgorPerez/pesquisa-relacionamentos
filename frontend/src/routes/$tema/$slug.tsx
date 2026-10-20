@@ -82,9 +82,15 @@ const Marcador = () => (
   </svg>
 )
 
-function PaginaDoGuia() {
+/** O Guia do endereço, que o loader já pôs no `queryClient`: cada seção da
+ * página o lê de lá, sem pedir de novo. */
+function useGuia() {
   const { tema, slug } = Route.useParams()
-  const { data: guia } = useSuspenseQuery(leituras.guia(tema, slug))
+  return useSuspenseQuery(leituras.guia(tema, slug)).data
+}
+
+function PaginaDoGuia() {
+  const guia = useGuia()
   const { circulada, voltarAoTexto } = useReferencias(guia.slug)
   usePontoNoHistorico()
   useContarFichasAbertas(guia.slug)
@@ -99,20 +105,7 @@ function PaginaDoGuia() {
           <Html como="span" html={guia.perguntaHtml} />
         </Display>
 
-        <Painel
-          como="section"
-          className="mb-2 [&>p]:m-0 [&>p]:mt-xs"
-          aria-labelledby="t-resposta"
-        >
-          <h2 id="t-resposta" className="sr-only">
-            Resposta curta
-          </h2>
-          <ConfiancaDaResposta confianca={guia.confianca} />
-          <Html className="prosa text-lead" html={guia.respostaHtml} />
-          {noGuia && (
-            <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />
-          )}
-        </Painel>
+        <RespostaCurta noGuia={noGuia} />
 
         <SetaDasFontes />
 
@@ -127,15 +120,7 @@ function PaginaDoGuia() {
 
         <Evidencia guia={guia} vereditos={noGuia?.achados} />
 
-        <Secao id="perfil" aria-labelledby="t-perfil">
-          <Headline id="t-perfil">Varia conforme o Perfil?</Headline>
-          <Html className="prosa" html={guia.perfilHtml} />
-          <CaixaDoPerfil
-            perfil={perfil}
-            comDado={noGuia?.comDado ?? null}
-            totalDeAchados={guia.achados.length}
-          />
-        </Secao>
+        <VariaConformeOPerfil perfil={perfil} comDado={noGuia?.comDado} />
 
         {guia.mitos.length > 0 && <Mitos mitos={guia.mitos} />}
 
@@ -144,33 +129,11 @@ function PaginaDoGuia() {
           <Html className="prosa limites" html={guia.limitacoesHtml} />
         </Secao>
 
-        <Secao id="fichas" aria-labelledby="t-fichas">
-          <Headline id="t-fichas">Fichas citadas</Headline>
-          <p className="-mt-1 mr-0 mb-3.5 ml-6 flex max-w-88 items-end gap-1 text-nota leading-folgada text-agua-tinta italic">
-            <Marcador />
-            cada número do texto leva à Ficha com o mesmo número aqui
-          </p>
-          <FichasCitadas
-            fichas={guia.fichas}
-            circulada={circulada}
-            voltarAoTexto={voltarAoTexto}
-          />
-        </Secao>
+        <FichasDoGuia circulada={circulada} voltarAoTexto={voltarAoTexto} />
 
         <Ajudou key={guia.slug} guia={guia.slug} />
 
-        {guia.relacionadas.length > 0 && (
-          <Secao aria-labelledby="t-relacionadas">
-            <Headline id="t-relacionadas">Perguntas relacionadas</Headline>
-            <ul className="isolate m-0 list-none p-0">
-              {guia.relacionadas.map((outro) => (
-                <li key={outro.slug} className="not-first:mt-md">
-                  <LinhaDePergunta guia={outro} de={guia.pergunta} />
-                </li>
-              ))}
-            </ul>
-          </Secao>
-        )}
+        {guia.relacionadas.length > 0 && <PerguntasRelacionadas />}
 
         <Compartilhar
           semTitulo
@@ -178,6 +141,93 @@ function PaginaDoGuia() {
         />
       </Coluna>
     </Folha>
+  )
+}
+
+/** A resposta curta, com a Confiança e, com Perfil, a linha "Para o seu
+ * Perfil". */
+function RespostaCurta({
+  noGuia,
+}: {
+  noGuia: ReturnType<typeof usePerfilNoGuia>['noGuia']
+}) {
+  const guia = useGuia()
+  return (
+    <Painel
+      como="section"
+      className="mb-2 [&>p]:m-0 [&>p]:mt-xs"
+      aria-labelledby="t-resposta"
+    >
+      <h2 id="t-resposta" className="sr-only">
+        Resposta curta
+      </h2>
+      <ConfiancaDaResposta confianca={guia.confianca} />
+      <Html className="prosa text-lead" html={guia.respostaHtml} />
+      {noGuia && <ParaOSeuPerfil chave={noGuia.chave} achados={guia.achados} />}
+    </Painel>
+  )
+}
+
+/** "Varia conforme o Perfil?": o texto do Guia e a caixa do Perfil, com
+ * quantos achados têm dado para ele (`comDado`, só com Perfil). */
+function VariaConformeOPerfil({
+  perfil,
+  comDado,
+}: {
+  perfil: Perfil | null
+  comDado: number | undefined
+}) {
+  const guia = useGuia()
+  return (
+    <Secao id="perfil" aria-labelledby="t-perfil">
+      <Headline id="t-perfil">Varia conforme o Perfil?</Headline>
+      <Html className="prosa" html={guia.perfilHtml} />
+      <CaixaDoPerfil
+        perfil={perfil}
+        comDado={comDado ?? null}
+        totalDeAchados={guia.achados.length}
+      />
+    </Secao>
+  )
+}
+
+/** "Fichas citadas": a lista numerada, com a ida e a volta entre o número
+ * no texto e a Ficha. */
+function FichasDoGuia({
+  circulada,
+  voltarAoTexto,
+}: Pick<ReturnType<typeof useReferencias>, 'circulada' | 'voltarAoTexto'>) {
+  const guia = useGuia()
+  return (
+    <Secao id="fichas" aria-labelledby="t-fichas">
+      <Headline id="t-fichas">Fichas citadas</Headline>
+      <p className="-mt-1 mr-0 mb-3.5 ml-6 flex max-w-88 items-end gap-1 text-nota leading-folgada text-agua-tinta italic">
+        <Marcador />
+        cada número do texto leva à Ficha com o mesmo número aqui
+      </p>
+      <FichasCitadas
+        fichas={guia.fichas}
+        circulada={circulada}
+        voltarAoTexto={voltarAoTexto}
+      />
+    </Secao>
+  )
+}
+
+/** As outras Perguntas do Tema, cada uma na linha dela. */
+function PerguntasRelacionadas() {
+  const guia = useGuia()
+  return (
+    <Secao aria-labelledby="t-relacionadas">
+      <Headline id="t-relacionadas">Perguntas relacionadas</Headline>
+      <ul className="isolate m-0 list-none p-0">
+        {guia.relacionadas.map((outro) => (
+          <li key={outro.slug} className="not-first:mt-md">
+            <LinhaDePergunta guia={outro} de={guia.pergunta} />
+          </li>
+        ))}
+      </ul>
+    </Secao>
   )
 }
 
