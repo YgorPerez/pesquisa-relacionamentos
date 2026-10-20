@@ -8,7 +8,7 @@ O defeito que mais volta é a mudança que funciona no caminho que você testou 
 - **O link compartilhado.** O estado das calculadoras viaja inteiro na query (ADR 0001, `@tem-estudo/rules/link`). Um campo novo nos Requisitos ou nas Prioridades entra no link, numa versão que o leitor das antigas ainda abre, e na prévia (`conteudo/previa.ts`).
 - **O que fica no aparelho.** O `localStorage` passa só pelo `armazenado()` (`estado/armazenado.ts`), que valida o que lê e ouve as outras abas. Um valor velho, de antes da mudança, tem de abrir sem quebrar.
 - **A contagem.** Um evento novo respeita o opt-out (GPC, DNT, a chave de `/privacidade`) e não leva query nem nada do Perfil (`analytics/contagem.ts`).
-- **O acervo real e a fixture.** O e2e builda com `e2e/acervo`, e o site, com o acervo do repositório, onde quase toda Ficha ainda é ⬜. Confira as duas: a página com dado e a que aparece quando falta Ficha publicada.
+- **O acervo real e a fixture.** O e2e builda com `e2e/library`, e o site, com o acervo do repositório, onde quase toda Ficha ainda é ⬜. Confira as duas: a página com dado e a que aparece quando falta Ficha publicada.
 - **Busca.** Uma rota nova entra no sitemap, ou fica fora de propósito. Um caminho que muda leva `antes`, ou o build falha contra o sitemap no ar (`packages/content/src/search-rules.ts`).
 - **O caminho de volta.** Se você acrescentou um jeito de entrar, acrescente o de sair e o de ver: o Perfil se apaga, a Prioridade sai do topo 3, a contagem se religa. Uma porta que só abre é um defeito.
 - **Docs.** `DESIGN.md`, `PRODUCT.md`, `GLOSSARY.md` e `docs/adr/` descrevem o site. Confira se a mudança deixou algum deles errado.

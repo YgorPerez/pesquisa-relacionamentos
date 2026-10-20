@@ -1,0 +1,253 @@
+// The Guide's navigation (#16, #28): the reference that circles the Fact
+// sheet and the "voltar ao texto", the "Voltar para <Pergunta>" for whoever
+// came from another Guide, and the reading point (scroll and open sections)
+// kept in the history.
+import { Link, useRouter, useRouterState } from '@tanstack/react-router'
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react'
+import { Button } from '@/ui/shadcn/button'
+import { loopPath } from './loop'
+
+declare module '@tanstack/react-router' {
+  interface HistoryState {
+    /** The Question of the Guide the navigation came from. */
+    from?: string
+    /** Where the reader was when they left this history entry. */
+    readingPoint?: { scroll: number; open: ReadonlyArray<string> }
+  }
+}
+
+const ANCHOR_PREFIX = '#ficha-'
+
+export interface CircledFactSheet {
+  readonly slug: string
+  /** Changes on each tap, so the loop is drawn again. */
+  readonly tapCount: number
+}
+
+/** Links the page's reference numbers to the cited Fact sheets. Tapping a
+ * number circles the Fact sheet; `backToText` takes the reader back to the
+ * number. The `#ficha-<slug>` link still works without JavaScript. */
+export function useReferences(page: string) {
+  const [circled, setCircled] = useState<CircledFactSheet | null>(null)
+  const origin = useRef<HTMLElement | null>(null)
+  // Another page starts with no circled Fact sheet. Swapped during render,
+  // and not in an effect, so the new page does not paint once with the old
+  // one's loop. The old `origin` need not go: only a new tap shows the
+  // "voltar ao texto", and the tap records its own.
+  const [seenPage, setSeenPage] = useState(page)
+  if (seenPage !== page) {
+    setSeenPage(page)
+    setCircled(null)
+  }
+
+  useEffect(() => {
+    const onTap = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0) return
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        return
+      const ref = (event.target as Element | null)?.closest?.('main a.ref')
+      const href = ref?.getAttribute('href')
+      if (!(ref instanceof HTMLElement) || !href?.startsWith(ANCHOR_PREFIX))
+        return
+      event.preventDefault()
+      origin.current = ref
+      const slug = href.slice(ANCHOR_PREFIX.length)
+      setCircled((before) => ({ slug, tapCount: (before?.tapCount ?? 0) + 1 }))
+    }
+    document.addEventListener('click', onTap)
+    return () => document.removeEventListener('click', onTap)
+  }, [])
+
+  const backToText = useCallback(() => {
+    setCircled(null)
+    const ref = origin.current
+    if (!ref?.isConnected) return
+    ref.scrollIntoView({ block: 'center', behavior: scrollBehavior() })
+    ref.focus({ preventScroll: true })
+  }, [])
+
+  return { circled, backToText }
+}
+
+const scrollBehavior = (): ScrollBehavior =>
+  matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+
+/** The loop and the short arrow around the Fact sheet. Mounted inside the
+ * Fact sheet's `li`: it measures its real size, redraws the loop, scrolls to
+ * it and focuses it. */
+export function FactSheetLoop() {
+  const svg = useRef<SVGSVGElement>(null)
+
+  useLayoutEffect(() => {
+    const drawing = svg.current
+    const factSheet = drawing?.parentElement
+    if (!drawing || !factSheet) return
+    const width = factSheet.offsetWidth + 20
+    const height = factSheet.offsetHeight + 20
+    drawing.setAttribute('viewBox', `0 0 ${width} ${height}`)
+    drawing.querySelector('path')?.setAttribute('d', loopPath(width, height))
+    factSheet.scrollIntoView({ block: 'center', behavior: scrollBehavior() })
+    factSheet.focus({ preventScroll: true })
+  }, [])
+
+  return (
+    <>
+      <svg ref={svg} className="laco" aria-hidden="true">
+        <path pathLength={1} />
+      </svg>
+      <svg
+        className="seta-laco"
+        width="34"
+        height="34"
+        viewBox="0 0 34 34"
+        aria-hidden="true"
+      >
+        <path pathLength={1} d="M3 3c4 12 10 20 22 26M25 29l-9 1M25 29l-2-9" />
+      </svg>
+    </>
+  )
+}
+
+function saveReadingPoint() {
+  const open = [...document.querySelectorAll('main details[open][id]')].map(
+    (d) => d.id,
+  )
+  window.history.replaceState(
+    { ...window.history.state, readingPoint: { scroll: scrollY, open } },
+    '',
+  )
+}
+
+/** Keeps the scroll and the open sections in the history entry before
+ * leaving the page, and restores them when the reader comes back to it. */
+export function useReadingPointInHistory() {
+  // The entry already loaded and drawn, not the one loading.
+  const entry = useRouterState({
+    select: (s) => s.resolvedLocation?.state.__TSR_key,
+  })
+
+  useEffect(() => {
+    const onLeave = (event: MouseEvent) => {
+      if (
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return
+      const link = (event.target as Element | null)?.closest?.('a[href]')
+      if (!(link instanceof HTMLAnchorElement) || link.target === '_blank')
+        return
+      const target = new URL(link.href)
+      if (
+        target.origin !== location.origin ||
+        target.pathname === location.pathname
+      )
+        return
+      saveReadingPoint()
+    }
+    // In the capture phase: before the router pushes the new page.
+    document.addEventListener('click', onLeave, true)
+    return () => document.removeEventListener('click', onLeave, true)
+  }, [])
+
+  useLayoutEffect(() => {
+    // Only the entry the router already drew: the bar may be on one that is
+    // still loading.
+    if (window.history.state?.__TSR_key !== entry) return
+    const point = window.history.state?.readingPoint as
+      | { scroll: number; open: string[] }
+      | undefined
+    if (!point) return
+    for (const id of point.open) {
+      const section = document.getElementById(id)
+      if (section instanceof HTMLDetailsElement) section.open = true
+    }
+    // After the router's restoration, which measures the page with the
+    // sections closed.
+    const frame = requestAnimationFrame(() =>
+      window.scrollTo({ top: point.scroll, behavior: 'instant' }),
+    )
+    return () => cancelAnimationFrame(frame)
+  }, [entry])
+}
+
+const BackArrow = () => (
+  <svg
+    width="22"
+    height="14"
+    viewBox="0 0 22 14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
+  </svg>
+)
+
+/** "Todos os estudos", "Todas as Dicas": back to the list. */
+export function BackLink({
+  to,
+  children,
+}: {
+  to: '/estudos' | '/dicas'
+  children: ReactNode
+}) {
+  return (
+    <Button
+      variant="back"
+      nativeButton={false}
+      render={<Link to={to} />}
+      data-slot="voltar"
+    >
+      <BackArrow />
+      {children}
+    </Button>
+  )
+}
+
+/** Being in the browser does not change after hydration: no one to
+ * notify. */
+const noSubscribers = () => () => {}
+
+/** "Voltar para <Pergunta>", when the page came from another Guide. Does the
+ * same as the browser's back. */
+export function BackToGuide() {
+  const router = useRouter()
+  const from = useRouterState({ select: (s) => s.location.state.from })
+  // The server does not know the history: the button only shows after
+  // hydration. Hydration reads the server's `false`, and the next render the
+  // `true`.
+  const inBrowser = useSyncExternalStore(
+    noSubscribers,
+    () => true,
+    () => false,
+  )
+  if (!inBrowser || !from) return null
+
+  return (
+    <Button
+      variant="back"
+      data-slot="voltar"
+      onClick={() => {
+        saveReadingPoint()
+        router.history.back()
+      }}
+    >
+      <BackArrow />
+      Voltar para {from}
+    </Button>
+  )
+}

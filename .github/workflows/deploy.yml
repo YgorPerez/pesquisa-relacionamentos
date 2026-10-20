@@ -5,7 +5,7 @@
 # site down and ensures the GoatCounter container at stats.temestudo.cloud.
 #
 # Without the `VPS_*` secrets, `publicar` is skipped with a warning, and the
-# workflow ends green. They come in through `frontend/scripts/wizard-deploy.sh`.
+# workflow ends green. They come in through `frontend/scripts/deploy-wizard.sh`.
 name: Deploy
 
 'on':
@@ -62,7 +62,7 @@ jobs:
             echo "ready=true" >> "$GITHUB_OUTPUT"
           else
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Deploy skipped::Missing the VPS_HOST, VPS_USER and VPS_SSH_KEY secrets (VPS_PORT is optional). Run frontend/scripts/wizard-deploy.sh. Nothing was published."
+            echo "::warning title=Deploy skipped::Missing the VPS_HOST, VPS_USER and VPS_SSH_KEY secrets (VPS_PORT is optional). Run frontend/scripts/deploy-wizard.sh. Nothing was published."
           fi
 
   testes-e-build:
@@ -93,7 +93,7 @@ jobs:
         run: pnpm test
 
       # `pnpm e2e` builds on top of the fixture content
-      # (`frontend/e2e/acervo`) and runs Playwright on it.
+      # (`frontend/e2e/library`) and runs Playwright on it.
       - name: E2E
         run: pnpm e2e
 
@@ -110,7 +110,7 @@ jobs:
       # comes after e2e, which left the fixture build in `.output`. Content
       # with an error fails this step, and nothing is published. It checks
       # the live sitemap: a published path that disappeared without `antes`
-      # also fails it (`frontend/vite/acervo.ts`). Before the first deploy
+      # also fails it (`frontend/vite/library.ts`). Before the first deploy
       # there is no sitemap, and the build goes on without the check.
       - name: Build the content
         run: |
@@ -182,13 +182,13 @@ jobs:
           # The login the first deploy creates in GoatCounter. Without the
           # repository variable, it is admin@temestudo.cloud.
           GOATCOUNTER_EMAIL: ${{ vars.GOATCOUNTER_EMAIL }}
-        run: node scripts/vps.ts --publicar .output "$GITHUB_SHA"
+        run: node scripts/vps.ts --publish .output "$GITHUB_SHA"
 
       # From outside, over the internet (ADR 0008): the page arrives with
       # Referrer-Policy, each asset it cites arrives with its own type, and
       # not as HTML, and http leads to https with the query kept.
       - name: Verify the live site
-        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"
+        run: node scripts/check-live.ts temestudo.cloud "$GITHUB_SHA"
 
       # GoatCounter (#35) goes up along with it, but the site stays up
       # without it: a problem here becomes a warning. Before the wizard's
@@ -239,10 +239,10 @@ jobs:
           ROLLBACK_TO: ${{ inputs.voltar }}
         run: |
           if [ "$ROLLBACK_TO" = anterior ]; then
-            node scripts/vps.ts --voltar
+            node scripts/vps.ts --rollback
           else
-            node scripts/vps.ts --voltar "$ROLLBACK_TO"
+            node scripts/vps.ts --rollback "$ROLLBACK_TO"
           fi
 
       - name: Verify the live site
-        run: node scripts/conferir-no-ar.ts temestudo.cloud "$GITHUB_SHA"
+        run: node scripts/check-live.ts temestudo.cloud "$GITHUB_SHA"

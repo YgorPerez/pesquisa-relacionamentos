@@ -6,72 +6,75 @@ import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv, type PluginOption } from 'vite-plus'
 import { vitestWorkers } from '../scripts/machine-queue.ts'
-import { acervo } from './vite/acervo.ts'
-import { lerAmbienteDoBuild } from './vite/ambiente.ts'
-import { grupoPossivel } from './vite/grupo-possivel.ts'
-import { manifestoSemPreload } from './vite/manifesto-sem-preload.ts'
+import { library } from './vite/library.ts'
+import { readBuildEnvironment } from './vite/environment.ts'
+import { possibleGroup } from './vite/possible-group.ts'
+import { manifestWithoutPreload } from './vite/manifest-without-preload.ts'
 
-// A rodada entra na fila da máquina antes de começar e leva os workers que
-// ela der (`scripts/machine-queue.ts`, ADR 0013).
+// The run joins the machine queue before starting and takes the workers it
+// is given (`scripts/machine-queue.ts`, ADR 0013).
 const workers = await vitestWorkers()
 
-/** O conteúdo de fixture do e2e, que os testes de tela leem. */
-const FIXTURE = fileURLToPath(new URL('e2e/acervo', import.meta.url))
+/** The e2e fixture content, which the screen tests read. */
+const FIXTURE = fileURLToPath(new URL('e2e/library', import.meta.url))
 
-// O Vitest só precisa do React: o Start e o nitro montam o servidor, que
-// nenhum teste do Vitest usa. Os testes de tela montam o router no jsdom
-// (ADR 0035), e o app inteiro, com o servidor, é testado pelo Playwright
-// sobre o build (`playwright.config.ts`).
-const doApp = (mode: string): PluginOption[] => {
-  // As variáveis do build, validadas antes de qualquer plugin
-  // (`vite/ambiente.ts`, ADR 0032). O `loadEnv` junta o `.env` deste pacote
-  // ao ambiente do shell, que vale mais; o prefixo vazio traz também as sem
+// Vitest only needs React: Start and nitro build the server, which no Vitest
+// test uses. The screen tests build the router in jsdom (ADR 0035), and the
+// whole app, with the server, is tested by Playwright over the build
+// (`playwright.config.ts`).
+const appPlugins = (mode: string): PluginOption[] => {
+  // The build variables, validated before any plugin (`vite/environment.ts`,
+  // ADR 0032). `loadEnv` merges this package's `.env` into the shell
+  // environment, which wins; the empty prefix also brings the ones without
   // `VITE_`.
-  const ambiente = lerAmbienteDoBuild(loadEnv(mode, import.meta.dirname, ''))
+  const environment = readBuildEnvironment(
+    loadEnv(mode, import.meta.dirname, ''),
+  )
   return [
-    // O bundle recebe o valor já validado, e não o texto cru do ambiente.
+    // The bundle gets the already validated value, and not the raw
+    // environment text.
     {
-      name: 'contar-em-localhost',
+      name: 'count-on-localhost',
       config: () => ({
         define: {
-          'import.meta.env.VITE_CONTAR_EM_LOCALHOST': JSON.stringify(
-            ambiente.contarEmLocalhost ? '1' : '0',
+          'import.meta.env.VITE_COUNT_ON_LOCALHOST': JSON.stringify(
+            environment.countOnLocalhost ? '1' : '0',
           ),
         },
       }),
     },
-    acervo({
-      raiz: ambiente.raizDoConteudo,
-      anterior: ambiente.sitemapAnterior,
+    library({
+      root: environment.contentRoot,
+      previousSitemap: environment.previousSitemap,
     }),
-    grupoPossivel({ raiz: ambiente.raizDoConteudo }),
-    // As classes do Tailwind (`styles.css`, `ui/tokens.css`), antes do
-    // Start, como no Festival.
+    possibleGroup({ root: environment.contentRoot }),
+    // The Tailwind classes (`styles.css`, `ui/tokens.css`), before Start, as
+    // in the Festival.
     tailwindcss(),
     tanstackStart(),
-    // Sem os `modulepreload` de cada chunk no `<head>` (ADR 0034).
-    manifestoSemPreload(),
+    // Without the `modulepreload` of each chunk in the `<head>` (ADR 0034).
+    manifestWithoutPreload(),
     nitro(),
     viteReact(),
-    // O React Compiler memoiza cada componente e hook no build. O plugin 6
-    // do React não traz mais o Babel, e o compilador ainda é um plugin do
-    // Babel: roda pelo `@rolldown/plugin-babel`, só no bundle do navegador
-    // (o preset pula o SSR). Uma tela que o compilador quebrar sai dele com
-    // `'use no memo'` no topo (ADR 0003).
+    // The React Compiler memoizes every component and hook in the build.
+    // React's plugin 6 no longer brings Babel, and the compiler is still a
+    // Babel plugin: it runs through `@rolldown/plugin-babel`, only in the
+    // browser bundle (the preset skips SSR). A screen the compiler breaks
+    // leaves it with `'use no memo'` at the top (ADR 0003).
     babel({ presets: [reactCompilerPreset()] }),
   ]
 }
 
 export default defineConfig(({ mode }) => ({
   resolve: { tsconfigPaths: true },
-  plugins: process.env.VITEST ? [viteReact()] : doApp(mode),
+  plugins: process.env.VITEST ? [viteReact()] : appPlugins(mode),
   test: {
     ...(workers ? { maxWorkers: workers } : {}),
     projects: [
       {
         extends: true,
         test: {
-          name: 'logica',
+          name: 'logic',
           include: [
             'src/**/*.test.ts',
             'nginx/**/*.test.ts',
@@ -83,47 +86,44 @@ export default defineConfig(({ mode }) => ({
         },
       },
       {
-        // As telas no jsdom, com a Testing Library (ADR 0035): o router de
-        // verdade, sobre o acervo e os dados de fixture do e2e
-        // (`e2e/acervo`). As server functions rodam no próprio teste
-        // (`src/platform/telas/servidor-no-teste.ts`), e os pacotes do Grupo
-        // possível chegam pelo MSW (`src/platform/telas/rede.ts`).
+        // The screens in jsdom, with Testing Library (ADR 0035): the real
+        // router, over the e2e fixture library and data (`e2e/library`). The
+        // server functions run inside the test itself
+        // (`src/platform/screens/test-server.ts`), and the Possible group
+        // packs arrive through MSW (`src/platform/screens/network.ts`).
         extends: true,
         plugins: [
-          acervo({ raiz: FIXTURE, anterior: undefined }),
-          grupoPossivel({ raiz: FIXTURE }),
+          library({ root: FIXTURE, previousSitemap: undefined }),
+          possibleGroup({ root: FIXTURE }),
         ],
         resolve: {
           alias: [
             {
               find: /^@tanstack\/react-start$/,
               replacement: fileURLToPath(
-                new URL(
-                  'src/platform/telas/servidor-no-teste.ts',
-                  import.meta.url,
-                ),
+                new URL('src/platform/screens/test-server.ts', import.meta.url),
               ),
             },
           ],
         },
         test: {
-          name: 'telas',
+          name: 'screens',
           include: ['src/**/*.test.tsx'],
-          // As stories rodam num Chrome (`vitest.stories.config.ts`).
-          exclude: ['src/**/*.navegador.test.tsx'],
+          // The stories run in a Chrome (`vitest.stories.config.ts`).
+          exclude: ['src/**/*.browser.test.tsx'],
           environment: 'jsdom',
-          setupFiles: ['./src/platform/telas/telas.ts'],
-          // Em localhost, a contagem não sai (`analytics/contagem.ts`).
+          setupFiles: ['./src/platform/screens/setup.ts'],
+          // On localhost, the count does not go out (`analytics/counting.ts`).
           environmentOptions: { jsdom: { url: 'http://localhost/' } },
-          // A primeira tela de um arquivo compila as rotas dentro do teste.
+          // A file's first screen compiles the routes inside the test.
           testTimeout: 30_000,
         },
       },
     ],
-    // A cobertura serve à `fallow health` (o formato `json`) e tem um piso
-    // (ADR 0005): o valor medido, arredondado para baixo, que sobe com ela e
-    // nunca desce. Conta a lógica e os testes de tela (`telas`); o e2e e as
-    // stories ficam de fora.
+    // The coverage serves `fallow health` (the `json` format) and has a floor
+    // (ADR 0005): the measured value, rounded down, which rises with it and
+    // never falls. It counts the logic and the screen tests (`screens`); the
+    // e2e and the stories stay out.
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'json'],

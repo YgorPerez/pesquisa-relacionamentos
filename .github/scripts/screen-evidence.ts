@@ -115,11 +115,11 @@ export function evaluate(html: string, files: readonly string[]): Verdict {
   const missing: string[] = []
   if (images < 2)
     missing.push(
-      `Missing screenshots: at least 2, before and after, and there are ${images}. Take them with \`node frontend/scripts/capturar.ts <route>\` on each side.`,
+      `Missing screenshots: at least 2, before and after, and there are ${images}. Take them with \`node frontend/scripts/capture.ts <route>\` on each side.`,
     )
   if (videos < 2)
     missing.push(
-      `Missing videos: at least 2, before and after, and there are ${videos}. Record them with \`node frontend/scripts/capturar.ts <route> --video\` on each side.`,
+      `Missing videos: at least 2, before and after, and there are ${videos}. Record them with \`node frontend/scripts/capture.ts <route> --video\` on each side.`,
     )
   if (missing.length === 0) return { passes: true, lines }
   return {

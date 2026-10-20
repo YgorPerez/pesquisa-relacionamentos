@@ -1,36 +1,32 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { leituras } from '#/conteudo/leituras'
-import { ConfiancaDaResposta, FichasCitadas, Html } from '#/ui/guia'
-import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
+import { reads } from '#/content/reads'
+import { AnswerConfidence, CitedFactSheets, Html } from '#/ui/guide'
+import { QuestionRow } from '#/ui/question-row'
 import {
-  usePontoNoHistorico,
-  useReferencias,
-  VoltarParaGuia,
-} from '#/ui/navegacao'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Headline, Painel, Secao } from '#/ui/secao'
+  useReadingPointInHistory,
+  useReferences,
+  BackToGuide,
+  type CircledFactSheet,
+} from '#/ui/navigation'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Headline, Panel, Section } from '#/ui/section'
 import {
-  AvisoSemDado,
-  CaixaDoPerfil,
-  LinkDoPerfil,
-  ParaOSeuPerfil,
-} from '#/ui/perfil'
-import { usePerfilNoGuia } from '#/estado/perfil-no-guia'
-import { usePrioridades } from '#/estado/prioridades'
-import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
-import { CartaoDePrioridades } from '#/ui/prioridades'
-import {
-  DicasDoGuia,
-  Evidencia,
-  Mitos,
-  SetaDasFontes,
-} from '#/ui/secoes-do-guia'
-import { Ajudou } from '#/ui/contagem'
-import { useContarFichasAbertas } from '#/analytics/contagem'
-import { Compartilhar } from '#/ui/compartilhar'
-import { useGrupoPossivel, useRequisitosSalvos } from '#/estado/grupo-possivel'
-import { CartaoDoGrupoPossivel } from '#/ui/grupo-possivel'
+  NoDataNotice,
+  ProfileBox,
+  ProfileLink,
+  ForYourProfile,
+} from '#/ui/profile'
+import { useProfileInGuide } from '#/state/profile-in-guide'
+import { usePriorities } from '#/state/priorities'
+import type { PrioritiesView } from '#/content/priorities-view'
+import { PrioritiesCard } from '#/ui/priorities'
+import { GuideTips, Evidence, Myths, SourcesArrow } from '#/ui/guide-sections'
+import { WasItHelpful } from '#/ui/counting'
+import { useCountOpenedFactSheets } from '#/analytics/counting'
+import { Share } from '#/ui/share'
+import { usePossibleGroup, useSavedRequirements } from '#/state/possible-group'
+import { PossibleGroupCard } from '#/ui/possible-group'
 import type { Profile } from '@tem-estudo/rules/profile'
 import {
   DEFAULT_REQUIREMENTS,
@@ -38,34 +34,38 @@ import {
 } from '@tem-estudo/rules/requirements'
 
 export const Route = createFileRoute('/$tema/$slug')({
-  // O `loaderData` leva só o que o `head` e a etiqueta do Tema no topo
-  // (`ui/topo.tsx`) usam; o Guia vai pelo `queryClient`.
+  // The `loaderData` carries only what the `head` and the Topic tag in the
+  // header (`ui/header.tsx`) use; the Guide goes through the `queryClient`.
   loader: async ({ context, params }) => {
-    const { busca, tema, temaTitulo } = await context.queryClient.query(
-      leituras.guia(params.tema, params.slug),
+    const guide = await context.queryClient.query(
+      reads.guide(params.tema, params.slug),
     )
-    return { busca, tema, temaTitulo }
+    return {
+      search: guide.search,
+      topic: guide.topic,
+      topicTitle: guide.topicTitle,
+    }
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] }
-    const { busca } = loaderData
-    // A prévia do link repete o título e a descrição de busca; a imagem é a
-    // fixa do site, da raiz.
+    const { search } = loaderData
+    // The link preview repeats the search title and description; the image
+    // is the site's fixed one, from the root.
     return {
       meta: [
-        { title: `${busca.title} · Tem estudo?` },
-        { name: 'description', content: busca.description },
+        { title: `${search.title} · Tem estudo?` },
+        { name: 'description', content: search.description },
         { property: 'og:type', content: 'article' },
-        { property: 'og:title', content: busca.title },
-        { property: 'og:description', content: busca.description },
+        { property: 'og:title', content: search.title },
+        { property: 'og:description', content: search.description },
       ],
     }
   },
-  notFoundComponent: GuiaNaoExiste,
-  component: PaginaDoGuia,
+  notFoundComponent: GuideNotFound,
+  component: GuidePage,
 })
 
-const Marcador = () => (
+const Marker = () => (
   <svg
     className="flex-none"
     width="30"
@@ -82,197 +82,205 @@ const Marcador = () => (
   </svg>
 )
 
-/** O Guia do endereço, que o loader já pôs no `queryClient`: cada seção da
- * página o lê de lá, sem pedir de novo. */
-function useGuia() {
+/** The address's Guide, which the loader already put in the `queryClient`:
+ * each section of the page reads it from there, without requesting it
+ * again. */
+function useGuide() {
   const { tema, slug } = Route.useParams()
-  return useSuspenseQuery(leituras.guia(tema, slug)).data
+  return useSuspenseQuery(reads.guide(tema, slug)).data
 }
 
-function PaginaDoGuia() {
-  const guia = useGuia()
-  const { circulada, voltarAoTexto } = useReferencias(guia.slug)
-  usePontoNoHistorico()
-  useContarFichasAbertas(guia.slug)
-  const { perfil, noGuia } = usePerfilNoGuia(guia)
+function GuidePage() {
+  const guide = useGuide()
+  const { circled, backToText } = useReferences(guide.slug)
+  useReadingPointInHistory()
+  useCountOpenedFactSheets(guide.slug)
+  const { profile, inGuide } = useProfileInGuide(guide)
 
   return (
-    <Folha>
-      <Coluna>
-        <VoltarParaGuia />
-        {perfil && noGuia?.withData === 0 && <AvisoSemDado perfil={perfil} />}
+    <Sheet>
+      <Column>
+        <BackToGuide />
+        {profile && inGuide?.withData === 0 && (
+          <NoDataNotice profile={profile} />
+        )}
         <Display>
-          <Html como="span" html={guia.perguntaHtml} />
+          <Html as="span" html={guide.questionHtml} />
         </Display>
 
-        <RespostaCurta noGuia={noGuia} />
+        <ShortAnswer inGuide={inGuide} />
 
-        <SetaDasFontes />
+        <SourcesArrow />
 
-        <LinkDoPerfil perfil={perfil} />
+        <ProfileLink profile={profile} />
 
-        {guia.dicas.length > 0 && (
-          <DicasDoGuia dicas={guia.dicas} vereditos={noGuia?.tips} />
+        {guide.tips.length > 0 && (
+          <GuideTips tips={guide.tips} verdicts={inGuide?.tips} />
         )}
 
-        {guia.prioridades && <CartaoDoB1 prioridades={guia.prioridades} />}
-        {guia.grupoPossivel && <CartaoDoB5 perfil={perfil} />}
+        {guide.priorities && <B1Card priorities={guide.priorities} />}
+        {guide.possibleGroup && <B5Card profile={profile} />}
 
-        <Evidencia guia={guia} vereditos={noGuia?.findings} />
+        <Evidence guide={guide} verdicts={inGuide?.findings} />
 
-        <VariaConformeOPerfil perfil={perfil} comDado={noGuia?.withData} />
+        <VariesByProfile profile={profile} withData={inGuide?.withData} />
 
-        {guia.mitos.length > 0 && <Mitos mitos={guia.mitos} />}
+        {guide.myths.length > 0 && <Myths myths={guide.myths} />}
 
-        <Secao aria-labelledby="t-limitacoes">
+        <Section aria-labelledby="t-limitacoes">
           <Headline id="t-limitacoes">Limitações e o que não se sabe</Headline>
-          <Html className="prosa limites" html={guia.limitacoesHtml} />
-        </Secao>
+          <Html className="prosa limites" html={guide.limitationsHtml} />
+        </Section>
 
-        <FichasDoGuia circulada={circulada} voltarAoTexto={voltarAoTexto} />
+        <GuideFactSheets circled={circled} backToText={backToText} />
 
-        <Ajudou key={guia.slug} guia={guia.slug} />
+        <WasItHelpful key={guide.slug} guide={guide.slug} />
 
-        {guia.relacionadas.length > 0 && <PerguntasRelacionadas />}
+        {guide.related.length > 0 && <RelatedQuestions />}
 
-        <Compartilhar
-          semTitulo
-          frase="O link leva só o endereço do Guia, sem o seu Perfil."
+        <Share
+          untitled
+          sentence="O link leva só o endereço do Guia, sem o seu Perfil."
         />
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }
 
-/** A resposta curta, com a Confiança e, com Perfil, a linha "Para o seu
- * Perfil". */
-function RespostaCurta({
-  noGuia,
+/** The short answer, with the Confidence and, with a Profile, the "Para o
+ * seu Perfil" line. */
+function ShortAnswer({
+  inGuide,
 }: {
-  noGuia: ReturnType<typeof usePerfilNoGuia>['noGuia']
+  inGuide: ReturnType<typeof useProfileInGuide>['inGuide']
 }) {
-  const guia = useGuia()
+  const guide = useGuide()
   return (
-    <Painel
-      como="section"
+    <Panel
+      as="section"
       className="mb-2 [&>p]:m-0 [&>p]:mt-xs"
       aria-labelledby="t-resposta"
     >
       <h2 id="t-resposta" className="sr-only">
         Resposta curta
       </h2>
-      <ConfiancaDaResposta confianca={guia.confianca} />
-      <Html className="prosa text-lead" html={guia.respostaHtml} />
-      {noGuia && <ParaOSeuPerfil chave={noGuia.key} achados={guia.achados} />}
-    </Painel>
+      <AnswerConfidence confidence={guide.confidence} />
+      <Html className="prosa text-lead" html={guide.answerHtml} />
+      {inGuide && (
+        <ForYourProfile keyNumber={inGuide.key} findings={guide.findings} />
+      )}
+    </Panel>
   )
 }
 
-/** "Varia conforme o Perfil?": o texto do Guia e a caixa do Perfil, com
- * quantos achados têm dado para ele (`comDado`, só com Perfil). */
-function VariaConformeOPerfil({
-  perfil,
-  comDado,
+/** "Varia conforme o Perfil?": the Guide's text and the Profile box, with
+ * how many findings have data for it (`withData`, only with a Profile). */
+function VariesByProfile({
+  profile,
+  withData,
 }: {
-  perfil: Profile | null
-  comDado: number | undefined
+  profile: Profile | null
+  withData: number | undefined
 }) {
-  const guia = useGuia()
+  const guide = useGuide()
   return (
-    <Secao id="perfil" aria-labelledby="t-perfil">
+    <Section id="perfil" aria-labelledby="t-perfil">
       <Headline id="t-perfil">Varia conforme o Perfil?</Headline>
-      <Html className="prosa" html={guia.perfilHtml} />
-      <CaixaDoPerfil
-        perfil={perfil}
-        comDado={comDado ?? null}
-        totalDeAchados={guia.achados.length}
+      <Html className="prosa" html={guide.profileHtml} />
+      <ProfileBox
+        profile={profile}
+        withData={withData ?? null}
+        findingTotal={guide.findings.length}
       />
-    </Secao>
+    </Section>
   )
 }
 
-/** "Fichas citadas": a lista numerada, com a ida e a volta entre o número
- * no texto e a Ficha. */
-function FichasDoGuia({
-  circulada,
-  voltarAoTexto,
-}: Pick<ReturnType<typeof useReferencias>, 'circulada' | 'voltarAoTexto'>) {
-  const guia = useGuia()
+/** "Fichas citadas": the numbered list, with the way there and back between
+ * the number in the text and the Fact sheet. */
+function GuideFactSheets({
+  circled,
+  backToText,
+}: {
+  circled: CircledFactSheet | null
+  backToText: () => void
+}) {
+  const guide = useGuide()
   return (
-    <Secao id="fichas" aria-labelledby="t-fichas">
+    <Section id="fichas" aria-labelledby="t-fichas">
       <Headline id="t-fichas">Fichas citadas</Headline>
       <p className="-mt-1 mr-0 mb-3.5 ml-6 flex max-w-88 items-end gap-1 text-nota leading-folgada text-agua-tinta italic">
-        <Marcador />
+        <Marker />
         cada número do texto leva à Ficha com o mesmo número aqui
       </p>
-      <FichasCitadas
-        fichas={guia.fichas}
-        circulada={circulada}
-        voltarAoTexto={voltarAoTexto}
+      <CitedFactSheets
+        factSheets={guide.factSheets}
+        circled={circled}
+        backToText={backToText}
       />
-    </Secao>
+    </Section>
   )
 }
 
-/** As outras Perguntas do Tema, cada uma na linha dela. */
-function PerguntasRelacionadas() {
-  const guia = useGuia()
+/** The Topic's other Questions, each on its own row. */
+function RelatedQuestions() {
+  const guide = useGuide()
   return (
-    <Secao aria-labelledby="t-relacionadas">
+    <Section aria-labelledby="t-relacionadas">
       <Headline id="t-relacionadas">Perguntas relacionadas</Headline>
       <ul className="isolate m-0 list-none p-0">
-        {guia.relacionadas.map((outro) => (
-          <li key={outro.slug} className="not-first:mt-md">
-            <LinhaDePergunta guia={outro} de={guia.pergunta} />
+        {guide.related.map((other) => (
+          <li key={other.slug} className="not-first:mt-md">
+            <QuestionRow guide={other} from={guide.question} />
           </li>
         ))}
       </ul>
-    </Secao>
+    </Section>
   )
 }
 
-/** O cartão de Prioridades, com o topo 3 que o visitante deixou na página. */
-function CartaoDoB1({ prioridades }: { prioridades: PrioridadesVista }) {
-  const { topo3 } = usePrioridades(prioridades.caracteristicas.map((c) => c.id))
+/** The Priorities card, with the top 3 the visitor left on the page. */
+function B1Card({ priorities }: { priorities: PrioritiesView }) {
+  const { top3 } = usePriorities(priorities.traits.map((c) => c.id))
   return (
-    <CartaoDePrioridades
-      barra={prioridades.barra}
-      caracteristicas={prioridades.caracteristicas}
-      topo3={topo3}
+    <PrioritiesCard
+      split={priorities.bar}
+      traits={priorities.traits}
+      top3={top3}
     />
   )
 }
 
-/** O cartão do Grupo possível, com a conta que o visitante deixou na página. */
-function CartaoDoB5({ perfil }: { perfil: Profile | null }) {
-  const salvos = useRequisitosSalvos()
-  const { estimativa, carregando, uf } = useGrupoPossivel(perfil, salvos)
-  const r = salvos ?? DEFAULT_REQUIREMENTS
-  const municipio = r.lugar?.municipio
-    ? uf?.municipalities.get(r.lugar.municipio)?.name
+/** The Possible group card, with the count the visitor left on the page. */
+function B5Card({ profile }: { profile: Profile | null }) {
+  const saved = useSavedRequirements()
+  const { estimate, loading, stateData } = usePossibleGroup(profile, saved)
+  const r = saved ?? DEFAULT_REQUIREMENTS
+  const municipality = r.place?.municipality
+    ? stateData?.municipalities.get(r.place.municipality)?.name
     : undefined
   return (
-    <CartaoDoGrupoPossivel
-      estimativa={estimativa}
-      usado={perfil !== null || salvos !== null}
-      ligados={estimativa.active.map((k) =>
-        requirementValue(k, perfil, r, municipio),
+    <PossibleGroupCard
+      estimate={estimate}
+      used={profile !== null || saved !== null}
+      active={estimate.active.map((k) =>
+        requirementValue(k, profile, r, municipality),
       )}
-      carregando={carregando}
+      loading={loading}
     />
   )
 }
 
-function GuiaNaoExiste() {
+function GuideNotFound() {
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>Esse Guia não existe</Display>
         <Lead>
           O endereço pode ter mudado.{' '}
           <Link to="/">Veja os Temas na página inicial</Link>.
         </Lead>
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }

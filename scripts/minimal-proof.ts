@@ -10,7 +10,7 @@
 // 1. the types (`typecheck`, with the Effect diagnostics) of each package the
 //    diff touches and of the app, which imports the packages;
 // 2. Vitest with `--changed <base>` in each affected folder (`affected.ts`);
-// 3. the app's folders (`frontend/lint/pastas.ts`) and each component's story
+// 3. the app's folders (`frontend/lint/folders.ts`) and each component's story
 //    (`frontend/lint/stories.ts`), if the app changed;
 // 4. `vp check` on the changed files: format, lint and types.
 //
@@ -96,7 +96,7 @@ export function proofPlan({
       {
         name: 'folders',
         folder: '.',
-        command: ['node', 'frontend/lint/pastas.ts'],
+        command: ['node', 'frontend/lint/folders.ts'],
       },
       // Each component in `src/ui/` has a story (ADR 0036).
       {

@@ -19,14 +19,14 @@ const pack = (place: 'BR' | 'AC' | 'AP') =>
   openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
 const data = (uf?: 'AC' | 'AP'): CountData => ({
   brazil: pack('BR'),
-  ...(uf && { uf: pack(uf) }),
+  ...(uf && { state: pack(uf) }),
 })
 
 const count = (profile: Profile | null, change: Partial<Requirements>) => {
   const requirements = { ...DEFAULT_REQUIREMENTS, ...change }
   return estimateGroup(
     { profile, requirements },
-    data(requirements.lugar?.uf as 'AC' | undefined),
+    data(requirements.place?.state as 'AC' | undefined),
   )
 }
 
@@ -35,8 +35,8 @@ describe('estimateGroup: Census requirements', () => {
     // Women aged 25 to 29 in Acre who do not live with a partner: 1,000 +
     // 3,000, in 400 records. Error = 1.96/√400 = 9.8%.
     const r = count(
-      { procura: 'mulheres' },
-      { idade: { min: 25, max: 29 }, lugar: { uf: 'AC' } },
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' } },
     )
     expect(r.result.central).toBeCloseTo(4000)
     expect(r.result.records).toBeCloseTo(400)
@@ -49,8 +49,8 @@ describe('estimateGroup: Census requirements', () => {
     // In Acre, ages 25 to 28 are 400 of the 1,000 women aged 25 to 29 (age 29
     // weighs 600).
     const r = count(
-      { procura: 'mulheres' },
-      { idade: { min: 25, max: 28 }, lugar: { uf: 'AC' } },
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 28 }, place: { state: 'AC' } },
     )
     expect(r.result.central).toBeCloseTo(1600)
     expect(r.result.records).toBeCloseTo(160)
@@ -59,44 +59,45 @@ describe('estimateGroup: Census requirements', () => {
   it('the base is the adults of the sought gender in Brazil, from 18', () => {
     // 4,000 + 2,000 + 400 + 700 and, from the 15 to 19 group, only ages 18
     // and 19 (2 of 5): 200.
-    const r = count({ procura: 'mulheres' }, { companheiro: false })
+    const r = count({ seeks: 'mulheres' }, { noLiveInPartner: false })
     expect(r.active).toEqual([])
     expect(r.base.central).toBeCloseTo(7300)
     expect(r.result.central).toBeCloseTo(7300)
   })
 
   it('education and income are minimums; color and religion, any of the checked ones', () => {
-    const ac = { idade: { min: 25, max: 34 }, lugar: { uf: 'AC' } } as const
-    const women = { procura: 'mulheres' } as const
+    const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+    const women = { seeks: 'mulheres' } as const
     expect(
-      count(women, { ...ac, escolaridade: 'superior' }).result.central,
+      count(women, { ...ac, education: 'superior' }).result.central,
     ).toBeCloseTo(1400)
     expect(
-      count(women, { ...ac, escolaridade: 'medio', renda: '2-5' }).result
-        .central,
+      count(women, { ...ac, education: 'medio', income: '2-5' }).result.central,
     ).toBeCloseTo(1400)
-    expect(count(women, { ...ac, renda: '5+' }).result.central).toBeCloseTo(400)
+    expect(count(women, { ...ac, income: '5+' }).result.central).toBeCloseTo(
+      400,
+    )
     expect(
-      count(women, { ...ac, cores: ['parda', 'preta'] }).result.central,
+      count(women, { ...ac, colors: ['parda', 'preta'] }).result.central,
     ).toBeCloseTo(3400)
     // Whoever did not state a religion (the 15 to 19 group) is out when a
     // religion is checked.
     expect(
       count(women, {
-        lugar: { uf: 'AC' },
-        religioes: ['catolica', 'evangelica'],
+        place: { state: 'AC' },
+        religions: ['catolica', 'evangelica'],
       }).result.central,
     ).toBeCloseTo(4000)
   })
 
   it('a result below 50 records is unstable and says so in a strong caveat', () => {
     const r = count(
-      { procura: 'homens' },
-      { idade: { min: 25, max: 29 }, lugar: { uf: 'AP' } },
+      { seeks: 'homens' },
+      { age: { min: 25, max: 29 }, place: { state: 'AP' } },
     )
     expect(r.result.records).toBeCloseTo(3)
     expect(r.result.unstable).toBe(true)
-    expect(r.caveats.find((x) => x.id === 'instavel')).toMatchObject({
+    expect(r.caveats.find((x) => x.id === 'unstable')).toMatchObject({
       strong: true,
     })
   })
@@ -104,75 +105,77 @@ describe('estimateGroup: Census requirements', () => {
 
 describe('estimateGroup: "sem filhos"', () => {
   const ac = {
-    idade: { min: 25, max: 29 },
-    lugar: { uf: 'AC' },
-    semFilhos: true,
+    age: { min: 25, max: 29 },
+    place: { state: 'AC' },
+    noChildren: true,
   } as const
 
   it('seeking women, removes those who have children', () => {
-    const r = count({ procura: 'mulheres' }, ac)
-    expect(r.children).toBe('vale')
+    const r = count({ seeks: 'mulheres' }, ac)
+    expect(r.children).toBe('applies')
     expect(r.result.central).toBeCloseTo(1000)
   })
 
   it('seeking men, it does not apply: the Census does not ask them about children', () => {
-    const r = count({ procura: 'homens' }, ac)
-    expect(r.children).toBe('sem-dado')
-    expect(r.active).not.toContain('filhos')
+    const r = count({ seeks: 'homens' }, ac)
+    expect(r.children).toBe('no-data')
+    expect(r.active).not.toContain('children')
     expect(r.result.central).toBeCloseTo(1500)
   })
 
   it('seeking both, it applies only to women, with a strong warning', () => {
-    const r = count({ procura: 'ambos' }, ac)
-    expect(r.children).toBe('so-mulheres')
+    const r = count({ seeks: 'ambos' }, ac)
+    expect(r.children).toBe('women-only')
     expect(r.result.central).toBeCloseTo(1000 + 1500)
-    expect(r.caveats.find((x) => x.id === 'filhos-so-mulheres')).toMatchObject({
-      strong: true,
-    })
+    expect(r.caveats.find((x) => x.id === 'children-women-only')).toMatchObject(
+      {
+        strong: true,
+      },
+    )
   })
 })
 
 describe('estimateGroup: PNS requirements', () => {
-  const ac = { idade: { min: 25, max: 29 }, lugar: { uf: 'AC' } } as const
+  const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
 
   it('orientation comes from the profile: straight + bi of the sought sex, not counting who did not answer', () => {
     // 90% + 2%, over the 96% who answered; the interval sums both
     // categories' ones.
-    const r = count({ genero: 'homem', procura: 'mulheres' }, ac)
-    expect(r.active).toContain('orientacao')
+    const r = count({ gender: 'homem', seeks: 'mulheres' }, ac)
+    expect(r.active).toContain('orientation')
     expect(r.result.central).toBeCloseTo((4000 * 0.92) / 0.96)
     expect(r.result.min).toBeCloseTo(((4000 * 0.89) / 0.96) * (1 - error))
     expect(r.result.max).toBeCloseTo(((4000 * 0.95) / 0.96) * (1 + error))
-    expect(r.caveats.find((x) => x.id === 'orientacao')?.text).toContain(
+    expect(r.caveats.find((x) => x.id === 'orientation')?.text).toContain(
       '4% não souberam',
     )
   })
 
   it('seeking the same gender, counts gay + bi', () => {
-    const r = count({ genero: 'mulher', procura: 'mulheres' }, ac)
+    const r = count({ gender: 'mulher', seeks: 'mulheres' }, ac)
     expect(r.result.central).toBeCloseTo((4000 * 0.05) / 0.96)
   })
 
   it('gender "outro" does not discount orientation and carries the strong ceiling warning', () => {
-    const r = count({ genero: 'outro', procura: 'mulheres' }, ac)
-    expect(r.active).not.toContain('orientacao')
+    const r = count({ gender: 'outro', seeks: 'mulheres' }, ac)
+    expect(r.active).not.toContain('orientation')
     expect(r.result.central).toBeCloseTo(4000)
-    const warning = r.caveats.find((x) => x.id === 'genero-outro')
+    const warning = r.caveats.find((x) => x.id === 'other-gender')
     expect(warning?.strong).toBe(true)
     expect(warning?.text).toContain('identidade de gênero')
     expect(warning?.text).toContain('teto')
   })
 
   it('without a gender in the profile, it does not discount either and warns', () => {
-    const r = count({ procura: 'mulheres' }, ac)
-    expect(r.caveats.find((x) => x.id === 'sem-genero')).toMatchObject({
+    const r = count({ seeks: 'mulheres' }, ac)
+    expect(r.caveats.find((x) => x.id === 'no-gender')).toMatchObject({
       strong: true,
     })
   })
 
   it('"não fuma" multiplies by the probability and opens the range by its interval', () => {
-    const r = count({ procura: 'mulheres' }, { ...ac, naoFuma: true })
+    const r = count({ seeks: 'mulheres' }, { ...ac, nonSmoker: true })
     expect(r.result.central).toBeCloseTo(3200)
     expect(r.result.min).toBeCloseTo(4000 * 0.78 * (1 - error))
     expect(r.result.max).toBeCloseTo(4000 * 0.82 * (1 + error))
@@ -181,8 +184,8 @@ describe('estimateGroup: PNS requirements', () => {
   it('height in a range is F(max) − F(min − 1) of the cumulative', () => {
     // In the fixture, F(cm) = (cm − 140)/60: F(170) − F(159) = 11/60.
     const r = count(
-      { procura: 'mulheres' },
-      { ...ac, altura: { min: 160, max: 170 } },
+      { seeks: 'mulheres' },
+      { ...ac, height: { min: 160, max: 170 } },
     )
     expect(r.result.central).toBeCloseTo((4000 * 11) / 60, 0)
   })
@@ -193,25 +196,25 @@ describe('estimateGroup: municipality', () => {
     // Rio Branco has 2,000 of Acre's 4,000 women aged 25 to 29 not in a
     // union: the number matches what SIDRA publishes for the city.
     const r = count(
-      { procura: 'mulheres' },
+      { seeks: 'mulheres' },
       {
-        idade: { min: 25, max: 29 },
-        lugar: { uf: 'AC', municipio: '1200401' },
+        age: { min: 25, max: 29 },
+        place: { state: 'AC', municipality: '1200401' },
       },
     )
     expect(r.result.central).toBeCloseTo(2000)
     expect(r.result.records).toBeCloseTo(200)
-    expect(r.caveats.map((x) => x.id)).toContain('municipio')
+    expect(r.caveats.map((x) => x.id)).toContain('municipality')
   })
 
   it('with people living in a union, each side has its own scale', () => {
     // 2,000 not in a union (×0.5) + 500 of the 2,000 in a union (×0.25).
     const r = count(
-      { procura: 'mulheres' },
+      { seeks: 'mulheres' },
       {
-        idade: { min: 25, max: 29 },
-        lugar: { uf: 'AC', municipio: '1200401' },
-        companheiro: false,
+        age: { min: 25, max: 29 },
+        place: { state: 'AC', municipality: '1200401' },
+        noLiveInPartner: false,
       },
     )
     expect(r.result.central).toBeCloseTo(2500)
@@ -220,11 +223,11 @@ describe('estimateGroup: municipality', () => {
 
 describe('estimateGroup: what weighs most, funnel and naive count', () => {
   const requested = {
-    idade: { min: 25, max: 29 },
-    lugar: { uf: 'AC' },
-    escolaridade: 'superior',
+    age: { min: 25, max: 29 },
+    place: { state: 'AC' },
+    education: 'superior',
   } as const
-  const r = count({ procura: 'mulheres' }, requested)
+  const r = count({ seeks: 'mulheres' }, requested)
 
   it('the cost of releasing each one keeps the others, from the one that weighs most to the least', () => {
     // Current: 1,000. Without education, 4,000; without "não mora com
@@ -238,10 +241,10 @@ describe('estimateGroup: what weighs most, funnel and naive count', () => {
         Number(c.times.toFixed(2)),
       ]),
     ).toEqual([
-      ['escolaridade', 4000, 4],
-      ['companheiro', 3000, 3],
-      ['lugar', 1700, 1.7],
-      ['idade', 1400, 1.4],
+      ['education', 4000, 4],
+      ['partner', 3000, 3],
+      ['place', 1700, 1.7],
+      ['age', 1400, 1.4],
     ])
     expect(r.costs[0]?.gain).toBeCloseTo(3000)
   })
@@ -252,19 +255,19 @@ describe('estimateGroup: what weighs most, funnel and naive count', () => {
         { ...DEFAULT_REQUIREMENTS, ...requested },
         cost.requirement as VisitorRequirement,
       )
-      expect(
-        count({ procura: 'mulheres' }, released).result.central,
-      ).toBeCloseTo(cost.without)
+      expect(count({ seeks: 'mulheres' }, released).result.central).toBeCloseTo(
+        cost.without,
+      )
     }
   })
 
   it('the funnel cuts in the fixed order and ends at the result', () => {
     expect(r.funnel.map((e) => [e.requirement, Math.round(e.central)])).toEqual(
       [
-        ['idade', 6700],
-        ['lugar', 6000],
-        ['companheiro', 4000],
-        ['escolaridade', 1000],
+        ['age', 6700],
+        ['place', 6000],
+        ['partner', 4000],
+        ['education', 1000],
       ],
     )
   })

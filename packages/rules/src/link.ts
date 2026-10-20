@@ -26,6 +26,7 @@ import {
   whoIsSought,
   DEFAULT_REQUIREMENTS,
   requirementValue,
+  TARGET_NAME,
   type Range,
   type Sought,
   type Requirements,
@@ -121,34 +122,34 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   const pairs: Array<readonly [string, string]> = [['v', String(LINK_VERSION)]]
   if (state.calculator === 'prioridades') {
     if (state.gender) pairs.push(['genero', state.gender])
-    const { topo3: top3, desfecho: outcome } = state.priorities
+    const { top3, outcome } = state.priorities
     if (top3.length > 0) pairs.push(['topo', top3.join(',')])
     pairs.push(['desfecho', outcome])
     return pairs
   }
 
   const p = state.profile
-  if (p?.genero) pairs.push(['genero', p.genero])
-  if (p?.procura) pairs.push(['procura', p.procura])
-  if (p?.idade !== undefined) pairs.push(['idade', String(p.idade)])
+  if (p?.gender) pairs.push(['genero', p.gender])
+  if (p?.seeks) pairs.push(['procura', p.seeks])
+  if (p?.age !== undefined) pairs.push(['idade', String(p.age)])
   const r = state.requirements
   if (!r) return pairs
   const defaults = DEFAULT_REQUIREMENTS
-  if (r.idade) pairs.push(['idades', writeRange(r.idade)])
-  if (r.lugar) {
-    pairs.push(['uf', r.lugar.uf])
-    if (r.lugar.municipio) pairs.push(['municipio', r.lugar.municipio])
+  if (r.age) pairs.push(['idades', writeRange(r.age)])
+  if (r.place) {
+    pairs.push(['uf', r.place.state])
+    if (r.place.municipality) pairs.push(['municipio', r.place.municipality])
   }
-  if (r.companheiro !== defaults.companheiro)
-    pairs.push(['companheiro', r.companheiro ? 'sim' : 'nao'])
-  if (r.escolaridade) pairs.push(['escolaridade', r.escolaridade])
-  if (r.renda) pairs.push(['renda', r.renda])
-  if (r.cores.length > 0) pairs.push(['cor', r.cores.join(',')])
-  if (r.religioes.length > 0) pairs.push(['religiao', r.religioes.join(',')])
-  if (r.semFilhos) pairs.push(['sem-filhos', 'sim'])
-  if (r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT)
-    pairs.push(['altura', writeRange(r.altura)])
-  if (r.naoFuma) pairs.push(['nao-fuma', 'sim'])
+  if (r.noLiveInPartner !== defaults.noLiveInPartner)
+    pairs.push(['companheiro', r.noLiveInPartner ? 'sim' : 'nao'])
+  if (r.education) pairs.push(['escolaridade', r.education])
+  if (r.income) pairs.push(['renda', r.income])
+  if (r.colors.length > 0) pairs.push(['cor', r.colors.join(',')])
+  if (r.religions.length > 0) pairs.push(['religiao', r.religions.join(',')])
+  if (r.noChildren) pairs.push(['sem-filhos', 'sim'])
+  if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
+    pairs.push(['altura', writeRange(r.height)])
+  if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
   return pairs
 }
 
@@ -159,35 +160,37 @@ function readV1(
 ): LinkState {
   if (calculator === 'prioridades') {
     // Older links carried `procura` and `idade` too: they stay out.
-    const gender = readProfile({ genero: q.get('genero') })?.genero ?? null
+    const gender = readProfile({ gender: q.get('genero') })?.gender ?? null
     const priorities = readPriorities(
-      { topo3: list(q.get('topo')), desfecho: q.get('desfecho') },
+      { top3: list(q.get('topo')), outcome: q.get('desfecho') },
       ids,
     )!
     return { calculator, gender, priorities }
   }
 
   const profile = readProfile({
-    genero: q.get('genero'),
-    procura: q.get('procura'),
-    idade: q.get('idade'),
+    gender: q.get('genero'),
+    seeks: q.get('procura'),
+    age: q.get('idade'),
   })
 
   if (!REQUIREMENT_KEYS_V1.some((key) => q.has(key)))
     return { calculator, profile, requirements: null }
-  const uf = q.get('uf')
+  const state = q.get('uf')
   const requirements = readRequirements({
-    idade: readRange(q.get('idades')),
-    lugar: uf ? { uf, municipio: q.get('municipio') } : null,
-    companheiro:
-      q.get('companheiro') === 'nao' ? false : DEFAULT_REQUIREMENTS.companheiro,
-    escolaridade: q.get('escolaridade'),
-    renda: q.get('renda'),
-    cores: list(q.get('cor')),
-    religioes: list(q.get('religiao')),
-    semFilhos: q.get('sem-filhos') === 'sim',
-    altura: readRange(q.get('altura')),
-    naoFuma: q.get('nao-fuma') === 'sim',
+    age: readRange(q.get('idades')),
+    place: state ? { state, municipality: q.get('municipio') } : null,
+    noLiveInPartner:
+      q.get('companheiro') === 'nao'
+        ? false
+        : DEFAULT_REQUIREMENTS.noLiveInPartner,
+    education: q.get('escolaridade'),
+    income: q.get('renda'),
+    colors: list(q.get('cor')),
+    religions: list(q.get('religiao')),
+    noChildren: q.get('sem-filhos') === 'sim',
+    height: readRange(q.get('altura')),
+    nonSmoker: q.get('nao-fuma') === 'sim',
   })
   return { calculator, profile, requirements }
 }
@@ -201,7 +204,7 @@ const READERS: Readonly<Record<string, typeof readV1>> = {
 // --- the sentence of what the link reveals (story 63) --------------------------
 
 const GENDER_IN_SENTENCE: Readonly<
-  Record<NonNullable<Profile['genero']>, string>
+  Record<NonNullable<Profile['gender']>, string>
 > = {
   homem: 'homem',
   mulher: 'mulher',
@@ -209,7 +212,7 @@ const GENDER_IN_SENTENCE: Readonly<
 }
 
 const SEEKS_IN_SENTENCE: Readonly<
-  Record<NonNullable<Profile['procura']>, string>
+  Record<NonNullable<Profile['seeks']>, string>
 > = {
   homens: 'homens',
   mulheres: 'mulheres',
@@ -217,7 +220,7 @@ const SEEKS_IN_SENTENCE: Readonly<
 }
 
 const EDUCATION_IN_SENTENCE: Readonly<
-  Record<NonNullable<Requirements['escolaridade']>, string>
+  Record<NonNullable<Requirements['education']>, string>
 > = {
   fundamental: 'ensino fundamental',
   medio: 'ensino médio',
@@ -240,8 +243,8 @@ function agesInSentence(age: Range | null): string {
 
 function profileInSentence(profile: Profile | null): string[] {
   return [
-    profile?.genero ? GENDER_IN_SENTENCE[profile.genero] : '',
-    profile?.idade !== undefined ? String(profile.idade) : '',
+    profile?.gender ? GENDER_IN_SENTENCE[profile.gender] : '',
+    profile?.age !== undefined ? String(profile.age) : '',
   ].filter(Boolean)
 }
 
@@ -262,7 +265,7 @@ export function linkSentence(
 ): string {
   if (state.calculator === 'prioridades') {
     const parts = state.gender ? [GENDER_IN_SENTENCE[state.gender]] : []
-    const { topo3: top3, desfecho: outcome } = state.priorities
+    const { top3, outcome } = state.priorities
     const names = top3.map((id) => (options.names?.[id] ?? id).toLowerCase())
     parts.push(
       names.length
@@ -275,12 +278,12 @@ export function linkSentence(
   const { profile } = state
   const parts = profileInSentence(profile)
   const r = state.requirements
-  const ages = agesInSentence(r?.idade ?? null)
-  if (profile?.procura || ages)
+  const ages = agesInSentence(r?.age ?? null)
+  if (profile?.seeks || ages)
     parts.push(
       [
         'procura',
-        profile?.procura ? SEEKS_IN_SENTENCE[profile.procura] : 'pessoas',
+        profile?.seeks ? SEEKS_IN_SENTENCE[profile.seeks] : 'pessoas',
         ages,
       ]
         .filter(Boolean)
@@ -288,7 +291,7 @@ export function linkSentence(
     )
   if (r) {
     parts.push(...otherRequirements(profile, r))
-    if (r.lugar) parts.push(placeInSentence(r, options.municipality))
+    if (r.place) parts.push(placeInSentence(r, options.municipality))
   }
   if (parts.length === 0)
     return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
@@ -301,16 +304,17 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
   const value = (k: Parameters<typeof requirementValue>[0]) =>
     requirementValue(k, profile, r)
   return [
-    r.companheiro !== DEFAULT_REQUIREMENTS.companheiro && value('companheiro'),
-    r.escolaridade && EDUCATION_IN_SENTENCE[r.escolaridade],
-    r.renda && value('renda'),
-    r.cores.length > 0 && value('cor'),
-    r.religioes.length > 0 && value('religiao'),
-    r.semFilhos &&
-      whoIsSought(profile).children !== 'sem-dado' &&
-      value('filhos'),
-    (r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT) && value('altura'),
-    r.naoFuma && value('fumo'),
+    r.noLiveInPartner !== DEFAULT_REQUIREMENTS.noLiveInPartner &&
+      value('partner'),
+    r.education && EDUCATION_IN_SENTENCE[r.education],
+    r.income && value('income'),
+    r.colors.length > 0 && value('color'),
+    r.religions.length > 0 && value('religion'),
+    r.noChildren &&
+      whoIsSought(profile).children !== 'no-data' &&
+      value('children'),
+    (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
+    r.nonSmoker && value('smoking'),
   ].filter((x): x is string => typeof x === 'string')
 }
 
@@ -318,11 +322,11 @@ const placeInSentence = (
   r: Requirements,
   municipality: string | undefined,
 ): string =>
-  !r.lugar
+  !r.place
     ? 'no Brasil'
-    : r.lugar.municipio && municipality
-      ? `em ${municipality} (${r.lugar.uf})`
-      : `em ${r.lugar.uf}`
+    : r.place.municipality && municipality
+      ? `em ${municipality} (${r.place.state})`
+      : `em ${r.place.state}`
 
 // --- the social preview (story 66) ----------------------------------------------
 // The Open Graph of a calculator opened with state. It says the result and
@@ -351,11 +355,11 @@ export function groupPreview(
   options: Pick<SentenceOptions, 'municipality'> = {},
 ): Preview {
   const r = state.requirements ?? DEFAULT_REQUIREMENTS
-  const chosen = agesInSentence(r.idade)
-  const fromProfile = !r.idade && state.profile?.idade !== undefined
+  const chosen = agesInSentence(r.age)
+  const fromProfile = !r.age && state.profile?.age !== undefined
   const title = [
     formatRange(count.result.min, count.result.max),
-    count.target,
+    TARGET_NAME[count.target],
     chosen,
     `${placeInSentence(r, options.municipality)}${fromProfile ? ', na idade procurada' : ''}`,
   ]
@@ -363,7 +367,7 @@ export function groupPreview(
     .join(' ')
   // Without the profile: `filhos` depends only on who is sought, which the
   // title already says.
-  const others = otherRequirements({ procura: state.profile?.procura }, r)
+  const others = otherRequirements({ seeks: state.profile?.seeks }, r)
   const description = [
     'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019.',
     others.length > 0 && `Também pediu: ${others.join(', ')}.`,
@@ -380,7 +384,7 @@ export function prioritiesPreview(
   traits: ReadonlyArray<TraitWithEvidence>,
   priorities: PrioritiesState,
 ): Preview | null {
-  const { topo3: top3, desfecho: outcome } = priorities
+  const { top3, outcome } = priorities
   const names = top3.flatMap((id) =>
     traits.filter((c) => c.id === id).map((c) => c.nome.toLowerCase()),
   )

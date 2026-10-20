@@ -20,23 +20,23 @@ const YOUNG: Coverage = {
 const ONLY_HUSBANDS: Coverage = { generos: ['homem'], procura: ['mulheres'] }
 const ONLY_SEEKING_MEN: Coverage = { procura: ['homens'] }
 
-const manMen: Profile = { genero: 'homem', procura: 'homens', idade: 30 }
+const manMen: Profile = { gender: 'homem', seeks: 'homens', age: 30 }
 const manWomen: Profile = {
-  genero: 'homem',
-  procura: 'mulheres',
-  idade: 30,
+  gender: 'homem',
+  seeks: 'mulheres',
+  age: 30,
 }
-const womanMen: Profile = { genero: 'mulher', procura: 'homens', idade: 24 }
+const womanMen: Profile = { gender: 'mulher', seeks: 'homens', age: 24 }
 const womanWomen: Profile = {
-  genero: 'mulher',
-  procura: 'mulheres',
-  idade: 24,
+  gender: 'mulher',
+  seeks: 'mulheres',
+  age: 24,
 }
-const other: Profile = { genero: 'outro', procura: 'homens', idade: 30 }
-const manBoth: Profile = { genero: 'homem', procura: 'ambos', idade: 30 }
-const womanBoth: Profile = { genero: 'mulher', procura: 'ambos', idade: 50 }
-const only40: Profile = { idade: 40 }
-const onlyMan: Profile = { genero: 'homem' }
+const other: Profile = { gender: 'outro', seeks: 'homens', age: 30 }
+const manBoth: Profile = { gender: 'homem', seeks: 'ambos', age: 30 }
+const womanBoth: Profile = { gender: 'mulher', seeks: 'ambos', age: 50 }
+const only40: Profile = { age: 40 }
+const onlyMan: Profile = { gender: 'homem' }
 
 const YES: Verdict = { covered: true }
 const NO: Verdict = { covered: false }
@@ -94,7 +94,7 @@ describe('appliesToYou: profiles × coverage', () => {
     ['50 years old × study of 18 to 35', womanBoth, YOUNG, NO],
     [
       '35 years old × study of 18 to 35 (the edge counts)',
-      { ...manWomen, idade: 35 },
+      { ...manWomen, age: 35 },
       YOUNG,
       YES,
     ],

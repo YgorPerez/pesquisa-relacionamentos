@@ -1,10 +1,10 @@
-# Os logs do site no Nginx do host (`temestudo.conf`). O deploy instala este
-# arquivo em `/etc/logrotate.d/temestudo`.
+# The site's logs in the host's Nginx (`temestudo.conf`). The deploy installs
+# this file at `/etc/logrotate.d/temestudo`.
 #
-# O error_log copia a linha do pedido, com a query, quando algo falha
-# (ADR 0001): gira todo dia e não passa de 3 dias, o arquivo de hoje mais
-# 2 girados. O `delaycompress` fica de fora para o dia de ontem já sair
-# comprimido.
+# The error_log copies the request line, with the query, when something fails
+# (ADR 0001): it rotates daily and never exceeds 3 days, today's file plus 2
+# rotated. `delaycompress` is left out so that yesterday already comes out
+# compressed.
 /var/log/nginx/temestudo/error.log {
 	daily
 	rotate 2
@@ -18,8 +18,8 @@
 	endscript
 }
 
-# O access_log não tem query nem Referer. Guarda 14 dias, como o padrão do
-# Ubuntu.
+# The access_log has neither query nor Referer. It keeps 14 days, like
+# Ubuntu's default.
 /var/log/nginx/temestudo/access.log {
 	daily
 	rotate 14

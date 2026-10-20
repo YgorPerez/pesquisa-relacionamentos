@@ -4,7 +4,7 @@ O `vi.waitFor` do Vitest desiste em 1 s. Num teste de tela, a primeira tela de u
 
 ## Decisão
 
-O `waitFor` e o `findBy*` da Testing Library desistem em 10 s (`src/platform/telas/telas.ts`, ADR 0035). A regra `telas/sem-vi-waitfor-nas-telas` (`frontend/lint/sem-vi-waitfor-nas-telas.ts`, um `jsPlugin` do Oxlint como os da ADR 0006) falha o `vi.waitFor` nos `*.test.tsx`. Os `*.test.ts` de lógica continuam livres.
+O `waitFor` e o `findBy*` da Testing Library desistem em 10 s (`src/platform/screens/setup.ts`, ADR 0035). A regra `screens/no-vi-waitfor-in-screens` (`frontend/lint/no-vi-waitfor-in-screens.ts`, um `jsPlugin` do Oxlint como os da ADR 0006) falha o `vi.waitFor` nos `*.test.tsx`. Os `*.test.ts` de lógica continuam livres.
 
 ## Consequências
 

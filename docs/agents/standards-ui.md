@@ -17,7 +17,7 @@ Os controles são primitivos do Base UI vestidos em `frontend/src/ui/shadcn/` (A
 ## 2. Os tokens do DESIGN.md, não um valor solto
 
 - Uma cor, um raio, um espaço, uma fonte ou um tamanho de letra é uma classe do tema de `ui/tokens.css` (`bg-papel`, `rounded-mao`, `p-md`, `font-label`, `text-nota`). O `text-label` e os outros seis tipos do DESIGN.md já trazem entrelinha e peso: aponte o tipo usado só pelo tamanho sem a entrelinha e o peso que a peça quer.
-- Um valor novo ganha nome no YAML do `DESIGN.md` e em `tokens.css` na mesma mudança, e o `pnpm cn:tabelas` roda junto.
+- Um valor novo ganha nome no YAML do `DESIGN.md` e em `tokens.css` na mesma mudança, e o `pnpm cn:tables` roda junto.
 - Aponte um `style={{ ... }}` novo com um valor fixo. Um valor calculado em tempo de execução (a largura de uma fatia da barra) pode.
 
 ## 3. As classes no componente, o CSS à mão só no que o Tailwind não cobre

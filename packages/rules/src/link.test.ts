@@ -11,23 +11,23 @@ import {
 import { DEFAULT_REQUIREMENTS, type Requirements } from './requirements.ts'
 
 const ALL: Requirements = {
-  idade: { min: 25, max: 35 },
-  lugar: { uf: 'SP', municipio: '3550308' },
-  companheiro: false,
-  escolaridade: 'superior',
-  renda: '5+',
-  cores: ['preta', 'parda'],
-  religioes: ['umbanda-candomble', 'sem-religiao'],
-  semFilhos: true,
-  altura: { min: 160, max: 200 },
-  naoFuma: true,
+  age: { min: 25, max: 35 },
+  place: { state: 'SP', municipality: '3550308' },
+  noLiveInPartner: false,
+  education: 'superior',
+  income: '5+',
+  colors: ['preta', 'parda'],
+  religions: ['umbanda-candomble', 'sem-religiao'],
+  noChildren: true,
+  height: { min: 160, max: 200 },
+  nonSmoker: true,
 }
 
 describe('round trip', () => {
   it('the possible group comes back equal, with the profile and every requirement', () => {
     const state: LinkState = {
       calculator: 'grupo-possivel',
-      profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+      profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
       requirements: ALL,
     }
     expect(readLink('grupo-possivel', linkQuery(state))).toEqual(state)
@@ -46,13 +46,13 @@ describe('round trip', () => {
   it('default requirements take no room in the query and come back as "never touched"', () => {
     const query = linkQuery({
       calculator: 'grupo-possivel',
-      profile: { idade: 40 },
+      profile: { age: 40 },
       requirements: DEFAULT_REQUIREMENTS,
     })
     expect(query).toBe('v=1&idade=40')
     expect(readLink('grupo-possivel', query)).toEqual({
       calculator: 'grupo-possivel',
-      profile: { idade: 40 },
+      profile: { age: 40 },
       requirements: null,
     })
   })
@@ -61,7 +61,7 @@ describe('round trip', () => {
     const state: LinkState = {
       calculator: 'prioridades',
       gender: 'mulher',
-      priorities: { topo3: ['renda', 'sexo', 'calma'], desfecho: 'duracao' },
+      priorities: { top3: ['renda', 'sexo', 'calma'], outcome: 'duracao' },
     }
     const query = linkQuery(state)
     expect(query).toBe(
@@ -74,14 +74,14 @@ describe('round trip', () => {
     const state: LinkState = {
       calculator: 'prioridades',
       gender: null,
-      priorities: { topo3: ['humor'], desfecho: 'satisfacao' },
+      priorities: { top3: ['humor'], outcome: 'satisfacao' },
     }
     expect(linkQuery(state)).toBe('v=1&topo=humor&desfecho=satisfacao')
     expect(readLink('prioridades', linkQuery(state))).toEqual(state)
   })
 
   it('the income "5+" survives escaping and also arrives without it', () => {
-    const r = { ...DEFAULT_REQUIREMENTS, renda: '5+' as const }
+    const r = { ...DEFAULT_REQUIREMENTS, income: '5+' as const }
     const query = linkQuery({
       calculator: 'grupo-possivel',
       profile: null,
@@ -109,7 +109,7 @@ describe('old versions', () => {
       ),
     ).toEqual({
       calculator: 'grupo-possivel',
-      profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+      profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
       requirements: ALL,
     })
   })
@@ -125,7 +125,7 @@ describe('old versions', () => {
     ).toEqual({
       calculator: 'prioridades',
       gender: 'homem',
-      priorities: { topo3: ['gentileza', 'humor'], desfecho: 'atracao' },
+      priorities: { top3: ['gentileza', 'humor'], outcome: 'atracao' },
     })
   })
 })
@@ -146,8 +146,8 @@ describe('invalid query', () => {
       ),
     ).toEqual({
       calculator: 'grupo-possivel',
-      profile: { procura: 'mulheres' },
-      requirements: { ...DEFAULT_REQUIREMENTS, cores: ['preta'] },
+      profile: { seeks: 'mulheres' },
+      requirements: { ...DEFAULT_REQUIREMENTS, colors: ['preta'] },
     })
     expect(
       readLink('grupo-possivel', 'v=1&idades=50-20&altura=100-300'),
@@ -169,8 +169,8 @@ describe('invalid query', () => {
       calculator: 'prioridades',
       gender: null,
       priorities: {
-        topo3: ['renda', 'sexo', 'humor'],
-        desfecho: 'satisfacao',
+        top3: ['renda', 'sexo', 'humor'],
+        outcome: 'satisfacao',
       },
     })
   })
@@ -180,7 +180,7 @@ describe('invalid query', () => {
     const state = readLink('grupo-possivel', query)
     expect(state).toEqual({
       calculator: 'grupo-possivel',
-      profile: { genero: 'mulher' },
+      profile: { gender: 'mulher' },
       requirements: null,
     })
     expect(linkQuery(state!)).toBe('v=1&genero=mulher')
@@ -197,14 +197,14 @@ describe('linkSentence', () => {
   it('says the profile and what is sought, as in the story 63 example', () => {
     const r = {
       ...DEFAULT_REQUIREMENTS,
-      idade: { min: 25, max: 35 },
-      lugar: { uf: 'SP' as const },
-      escolaridade: 'superior' as const,
+      age: { min: 25, max: 35 },
+      place: { state: 'SP' as const },
+      education: 'superior' as const,
     }
     expect(
       linkSentence({
         calculator: 'grupo-possivel',
-        profile: { genero: 'homem', procura: 'mulheres', idade: 30 },
+        profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
         requirements: r,
       }),
     ).toBe(
@@ -217,7 +217,7 @@ describe('linkSentence', () => {
       linkSentence(
         {
           calculator: 'grupo-possivel',
-          profile: { genero: 'outro' },
+          profile: { gender: 'outro' },
           requirements: ALL,
         },
         { municipality: 'São Paulo' },
@@ -246,8 +246,8 @@ describe('linkSentence', () => {
           calculator: 'prioridades',
           gender: 'mulher',
           priorities: {
-            topo3: ['renda', 'sexo', 'calma'],
-            desfecho: 'duracao',
+            top3: ['renda', 'sexo', 'calma'],
+            outcome: 'duracao',
           },
         },
         { names: NAMES },
@@ -259,7 +259,7 @@ describe('linkSentence', () => {
       linkSentence({
         calculator: 'prioridades',
         gender: null,
-        priorities: { topo3: [], desfecho: 'satisfacao' },
+        priorities: { top3: [], outcome: 'satisfacao' },
       }),
     ).toBe('Este link mostra: nenhuma característica escolhida, em satisfação.')
   })
@@ -267,21 +267,21 @@ describe('linkSentence', () => {
 
 describe('social preview', () => {
   const count = {
-    target: 'mulheres' as const,
+    target: 'women' as const,
     result: { min: 123_400, max: 178_900 },
   }
   const man30 = {
-    genero: 'homem' as const,
-    procura: 'mulheres' as const,
-    idade: 30,
+    gender: 'homem' as const,
+    seeks: 'mulheres' as const,
+    age: 30,
   }
 
   it('the possible group shows the range and who is sought, as in the spec example', () => {
     const r = {
       ...DEFAULT_REQUIREMENTS,
-      idade: { min: 25, max: 35 },
-      lugar: { uf: 'SP' as const },
-      naoFuma: true,
+      age: { min: 25, max: 35 },
+      place: { state: 'SP' as const },
+      nonSmoker: true,
     }
     expect(
       groupPreview(
@@ -310,11 +310,11 @@ describe('social preview', () => {
   it('the municipality comes in by name', () => {
     const r = {
       ...DEFAULT_REQUIREMENTS,
-      lugar: { uf: 'SP' as const, municipio: '3550308' },
+      place: { state: 'SP' as const, municipality: '3550308' },
     }
     const preview = groupPreview(
       { calculator: 'grupo-possivel', profile: null, requirements: r },
-      { target: 'pessoas', result: { min: 900, max: 1_100 } },
+      { target: 'people', result: { min: 900, max: 1_100 } },
       { municipality: 'São Paulo' },
     )
     expect(preview.title).toBe('Entre 900 e 1,1 mil pessoas em São Paulo (SP)')
@@ -338,8 +338,8 @@ describe('social preview', () => {
       },
     ] as const
     const preview = prioritiesPreview(traits, {
-      topo3: ['sexo', 'renda'],
-      desfecho: 'satisfacao',
+      top3: ['sexo', 'renda'],
+      outcome: 'satisfacao',
     })
     expect(preview).toEqual({
       title: 'Topo 3: química sexual e renda',
@@ -347,13 +347,13 @@ describe('social preview', () => {
         'No seu topo 3, para satisfação: para renda não há boa evidência.',
     })
     expect(
-      prioritiesPreview(traits, { topo3: ['sexo'], desfecho: 'atracao' })
+      prioritiesPreview(traits, { top3: ['sexo'], outcome: 'atracao' })
         ?.description,
     ).toBe(
       'Para atração, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".',
     )
     expect(
-      prioritiesPreview(traits, { topo3: [], desfecho: 'atracao' }),
+      prioritiesPreview(traits, { top3: [], outcome: 'atracao' }),
     ).toBeNull()
   })
 })

@@ -1,25 +1,26 @@
-// O app inteiro no navegador, sobre o servidor SSR do build (`pnpm build`),
-// como ele vai para produção. `pnpm e2e` constrói e sobe sozinho.
+// The whole app in the browser, over the build's SSR server (`pnpm build`),
+// as it goes to production. `pnpm e2e` builds and starts it on its own.
 //
-// A porta é a do e2e no checkout (`scripts/ports.ts`, ADR 0010): 4312 no
-// principal, a do bloco num worktree, então dois worktrees rodam o e2e ao
-// mesmo tempo sem combinar nada. `E2E_PORT` escolhe outra.
-// Os arquivos terminam em `.e2e.ts`, e não `.spec.ts`, porque o Vitest pega
-// `*.spec.ts` por padrão.
+// The port is the checkout's e2e port (`scripts/ports.ts`, ADR 0010): 4312
+// in the main checkout, the block's one in a worktree, so two worktrees run
+// the e2e at the same time without agreeing on anything. `E2E_PORT` picks
+// another.
+// The files end in `.e2e.ts`, and not `.spec.ts`, because Vitest picks up
+// `*.spec.ts` by default.
 
 import { availableParallelism } from 'node:os'
 import { defineConfig, devices } from '@playwright/test'
 import { joinQueue, playwrightRequest } from '../scripts/machine-queue.ts'
 import { requestedPort } from '../scripts/ports.ts'
 
-const porta = requestedPort('e2e')
+const port = requestedPort('e2e')
 
-// A rodada entra na fila da máquina antes de subir o servidor, e abre os
-// Chrome que ela der (`scripts/machine-queue.ts`, ADR 0013). Sozinha, a
-// metade dos núcleos, o padrão do Playwright. Os workers leem esta config de
-// novo e herdam `MACHINE_QUEUE`, então não entram outra vez.
-const METADE = Math.max(1, Math.floor(availableParallelism() / 2))
-const workers = await joinQueue(playwrightRequest(process.argv, METADE))
+// The run joins the machine queue before starting the server, and opens the
+// Chrome instances it is given (`scripts/machine-queue.ts`, ADR 0013).
+// Alone, half the cores, Playwright's default. The workers read this config
+// again and inherit `MACHINE_QUEUE`, so they do not join again.
+const HALF = Math.max(1, Math.floor(availableParallelism() / 2))
+const workers = await joinQueue(playwrightRequest(process.argv, HALF))
 
 export default defineConfig({
   testDir: './e2e',
@@ -29,32 +30,32 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
   use: {
-    baseURL: `http://localhost:${porta}`,
-    // O Chrome instalado na máquina, sem baixar navegador. A imagem ubuntu do
-    // GitHub Actions já traz o Google Chrome.
+    baseURL: `http://localhost:${port}`,
+    // The Chrome installed on the machine, without downloading a browser. The
+    // GitHub Actions ubuntu image already has Google Chrome.
     channel: 'chrome',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
   projects: [
-    // Celular primeiro: o Pixel 7 tem 412px de largura e toque.
-    { name: 'celular', use: { ...devices['Pixel 7'], channel: 'chrome' } },
-    // A suíte inteira também no desktop, onde a coluna vira folha sobre a
-    // retícula. Um teste que só faz sentido num dos dois diz isso nele, com
-    // `test.skip(!isMobile, …)` ou o contrário.
+    // Mobile first: the Pixel 7 is 412px wide and has touch.
+    { name: 'mobile', use: { ...devices['Pixel 7'], channel: 'chrome' } },
+    // The whole suite on desktop too, where the column becomes a sheet over
+    // the halftone. A test that only makes sense on one of them says so,
+    // with `test.skip(!isMobile, …)` or the opposite.
     {
       name: 'desktop',
       use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],
-  // O build do e2e lê o conteúdo de fixture (`e2e/acervo`), com uma Ficha de
-  // cada Status, e não o acervo do repositório. Rode `pnpm build` de novo
-  // antes de `pnpm start` com o conteúdo de verdade. O `VITE_CONTAR_EM_LOCALHOST`
-  // liga a contagem em localhost, onde o `analytics.e2e.ts` intercepta os
-  // envios ao GoatCounter.
+  // The e2e build reads the fixture content (`e2e/library`), with one Fact
+  // sheet of each Status, and not the repository's library. Run `pnpm build`
+  // again before `pnpm start` with the real content.
+  // `VITE_COUNT_ON_LOCALHOST` turns counting on in localhost, where
+  // `analytics.e2e.ts` intercepts the sends to GoatCounter.
   webServer: {
-    command: `CONTEUDO_RAIZ=e2e/acervo VITE_CONTAR_EM_LOCALHOST=1 pnpm build && PORT=${porta} node .output/server/index.mjs`,
-    url: `http://localhost:${porta}/`,
+    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && PORT=${port} node .output/server/index.mjs`,
+    url: `http://localhost:${port}/`,
     reuseExistingServer: false,
     stdout: 'ignore',
     stderr: 'pipe',

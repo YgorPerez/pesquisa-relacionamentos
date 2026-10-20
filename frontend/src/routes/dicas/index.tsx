@@ -1,13 +1,13 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { leituras } from '#/conteudo/leituras'
-import { ForcaDaEvidencia, MetaDaFicha } from '#/ui/selos'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Aviso, Headline, Secao } from '#/ui/secao'
+import { reads } from '#/content/reads'
+import { StrengthBadge, FactSheetMeta } from '#/ui/badges'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Notice, Headline, Section } from '#/ui/section'
 
 export const Route = createFileRoute('/dicas/')({
   loader: async ({ context }) => {
-    await context.queryClient.query(leituras.dicas())
+    await context.queryClient.query(reads.tips())
   },
   head: () => ({
     meta: [
@@ -19,15 +19,15 @@ export const Route = createFileRoute('/dicas/')({
       },
     ],
   }),
-  component: Dicas,
+  component: TipsPage,
 })
 
-function Dicas() {
-  const { data: dicas } = useSuspenseQuery(leituras.dicas())
+function TipsPage() {
+  const { data: tips } = useSuspenseQuery(reads.tips())
 
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>
           O que <span className="marca-texto">fazer</span> com a evidência
         </Display>
@@ -37,43 +37,43 @@ function Dicas() {
           inferência nossa.
         </Lead>
 
-        <Secao aria-labelledby="lista-dicas">
+        <Section aria-labelledby="lista-dicas">
           <Headline id="lista-dicas">
-            {dicas.length === 1 ? '1 Dica' : `${dicas.length} Dicas`}
+            {tips.length === 1 ? '1 Dica' : `${tips.length} Dicas`}
           </Headline>
-          {dicas.length === 0 ? (
-            <Aviso>
+          {tips.length === 0 ? (
+            <Notice>
               Nenhuma Dica no ar ainda. Elas entram quando os estudos que as
               sustentam forem conferidos na fonte.
-            </Aviso>
+            </Notice>
           ) : (
             <ol className="m-0 list-none p-0" data-slot="dicas">
-              {dicas.map((dica) => (
+              {tips.map((tip) => (
                 <li
-                  key={dica.slug}
+                  key={tip.slug}
                   className="py-sm not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
                 >
                   <Link
                     to="/dicas/$slug"
-                    params={{ slug: dica.slug }}
+                    params={{ slug: tip.slug }}
                     className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
                   >
-                    {dica.texto}
+                    {tip.text}
                   </Link>
-                  <MetaDaFicha>
-                    <ForcaDaEvidencia forca={dica.forca} />
-                    {dica.inferencia && (
+                  <FactSheetMeta>
+                    <StrengthBadge strength={tip.strength} />
+                    {tip.inference && (
                       <span className="text-tinta-2 italic">
                         Inferência nossa
                       </span>
                     )}
-                  </MetaDaFicha>
+                  </FactSheetMeta>
                 </li>
               ))}
             </ol>
           )}
-        </Secao>
-      </Coluna>
-    </Folha>
+        </Section>
+      </Column>
+    </Sheet>
   )
 }

@@ -61,7 +61,7 @@ describe('readDiff', () => {
   it('splits the new ones with and without a reason, with the line of each', () => {
     const read = readDiff(
       diff(
-        'frontend/src/ui/perfil.tsx',
+        'frontend/src/ui/profile.tsx',
         '+const a = 1',
         `+// ${OX}-next-line no-alert -- the alert is the screen`,
         `+// ${TS}`,
@@ -69,7 +69,7 @@ describe('readDiff', () => {
     )
     expect(read.withReason).toEqual([
       expect.objectContaining({
-        file: 'frontend/src/ui/perfil.tsx',
+        file: 'frontend/src/ui/profile.tsx',
         line: 11,
         name: 'oxlint-disable',
       }),

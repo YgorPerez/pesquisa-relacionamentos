@@ -1,89 +1,90 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { leituras } from '#/conteudo/leituras'
-import { LinhaDaCalculadora } from '#/ui/linha-da-pergunta'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
+import { reads } from '#/content/reads'
+import { CalculatorRow } from '#/ui/question-row'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Notice, Headline, Panel, Section } from '#/ui/section'
 
 export const Route = createFileRoute('/')({
-  // Só espera a leitura: os dados vão ao navegador pelo `queryClient`, e não
-  // pelo `loaderData`, que os mandaria duas vezes no HTML.
+  // It only waits for the read: the data goes to the browser through the
+  // `queryClient`, and not through `loaderData`, which would send it twice in
+  // the HTML.
   loader: async ({ context }) => {
-    await context.queryClient.query(leituras.temas())
+    await context.queryClient.query(reads.topics())
   },
-  component: Inicio,
+  component: Home,
 })
 
-/** As duas calculadoras. As páginas delas chegam nos tickets #32 e #33. */
-const CALCULADORAS = [
+/** The two calculators. Their pages arrive in tickets #32 and #33. */
+const CALCULATORS = [
   {
-    para: '/grupo-possivel',
-    nome: 'Grupo possível',
-    resumo: 'Quantas pessoas no Brasil atendem ao que você procura.',
+    to: '/grupo-possivel',
+    name: 'Grupo possível',
+    summary: 'Quantas pessoas no Brasil atendem ao que você procura.',
   },
   {
-    para: '/prioridades',
-    nome: 'Prioridades vs. evidência',
-    resumo:
+    to: '/prioridades',
+    name: 'Prioridades vs. evidência',
+    summary:
       'Toque no que mais importa para você e veja quanto a evidência põe em cada um.',
   },
 ] as const
 
-/** "Os Temas": cada Tema com as Perguntas dele ou, sem Guia publicado, o
- * caminho para os estudos. */
-function OsTemas() {
-  const { data: temas } = useSuspenseQuery(leituras.temas())
+/** "Os Temas": each Topic with its Questions or, with no Guide published,
+ * the way to the studies. */
+function Topics() {
+  const { data: topics } = useSuspenseQuery(reads.topics())
   return (
-    <Secao aria-labelledby="temas">
+    <Section aria-labelledby="temas">
       <Headline id="temas">Os Temas</Headline>
-      {temas.length === 0 ? (
-        <Aviso>
+      {topics.length === 0 ? (
+        <Notice>
           Os Guias entram no ar quando os estudos que os sustentam forem
           conferidos na fonte. Enquanto isso,{' '}
           <Link to="/estudos">veja os estudos do acervo</Link>.
-        </Aviso>
+        </Notice>
       ) : (
-        temas.map((tema) => (
-          <Painel
-            como="article"
-            key={tema.slug}
+        topics.map((topic) => (
+          <Panel
+            as="article"
+            key={topic.slug}
             className="not-first-of-type:mt-lg"
           >
             <h3 className="m-0 font-title text-title">
               <Link
                 to="/$tema"
-                params={{ tema: tema.slug }}
+                params={{ tema: topic.slug }}
                 className="inline-flex min-h-toque items-center decoration-2"
               >
-                {tema.titulo}
+                {topic.title}
               </Link>
             </h3>
             <ol className="mt-1 mb-0 pl-marcador">
-              {tema.guias.map((guia) => (
-                <li key={guia.slug} className="not-first:mt-0.5">
+              {topic.guides.map((guide) => (
+                <li key={guide.slug} className="not-first:mt-0.5">
                   <Link
                     to="/$tema/$slug"
-                    params={{ tema: guia.tema, slug: guia.slug }}
+                    params={{ tema: guide.topic, slug: guide.slug }}
                     className="inline-flex min-h-toque items-center"
                   >
-                    {guia.pergunta}
+                    {guide.question}
                   </Link>
                 </li>
               ))}
             </ol>
-          </Painel>
+          </Panel>
         ))
       )}
-    </Secao>
+    </Section>
   )
 }
 
-/** A página inicial: a frase do site, os Temas com as Perguntas e os atalhos
- * para as calculadoras. */
-function Inicio() {
+/** The home page: the site's sentence, the Topics with their Questions and
+ * the shortcuts to the calculators. */
+function Home() {
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>
           Dúvida de relacionamento, com a{' '}
           <span className="marca-texto">fonte</span> junto
@@ -94,22 +95,18 @@ function Inicio() {
           pesquisa ainda não sabe.
         </Lead>
 
-        <OsTemas />
+        <Topics />
 
-        <Secao aria-labelledby="calculadoras">
+        <Section aria-labelledby="calculadoras">
           <Headline id="calculadoras">Faça a conta</Headline>
           <ul className="isolate m-0 list-none p-0">
-            {CALCULADORAS.map((c) => (
-              <li key={c.para} className="not-first:mt-md">
-                <LinhaDaCalculadora
-                  href={c.para}
-                  titulo={c.nome}
-                  resumo={c.resumo}
-                />
+            {CALCULATORS.map((c) => (
+              <li key={c.to} className="not-first:mt-md">
+                <CalculatorRow href={c.to} title={c.name} summary={c.summary} />
               </li>
             ))}
           </ul>
-        </Secao>
+        </Section>
 
         <footer className="mt-rodape text-nota text-tinta-2">
           <p>
@@ -117,7 +114,7 @@ function Inicio() {
             <Link to="/dicas">Todas as Dicas</Link>
           </p>
         </footer>
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }

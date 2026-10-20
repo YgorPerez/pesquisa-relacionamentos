@@ -33,17 +33,17 @@ ${screen}
 <h2 dir="auto">Verification</h2>
 <p dir="auto">${video(7)}</p>`
 
-const SCREEN = ['frontend/src/ui/perfil.tsx']
+const SCREEN = ['frontend/src/ui/profile.tsx']
 
 describe('changesScreen', () => {
   it('what shows up on screen is screen', () => {
     for (const path of [
-      'frontend/src/ui/perfil.tsx',
-      'frontend/src/ui/perfil.css',
-      'frontend/src/ui/selos.textos.ts',
+      'frontend/src/ui/profile.tsx',
+      'frontend/src/ui/profile.css',
+      'frontend/src/ui/badges.copy.ts',
       'frontend/src/routes/estudos/$slug.tsx',
-      'frontend/src/conteudo/vista-guia.ts',
-      'frontend/src/estado/perfil.ts',
+      'frontend/src/content/guide-view.ts',
+      'frontend/src/state/profile.ts',
       'frontend/src/styles.css',
       'frontend/public/og.png',
     ])
@@ -55,16 +55,16 @@ describe('changesScreen', () => {
 
   it('tests, stories, server, analytics and the rest of the repository are not', () => {
     for (const path of [
-      'frontend/src/ui/laco.test.ts',
-      'frontend/src/ui/perfil.stories.tsx',
-      'frontend/src/platform/storybook/com-router.tsx',
-      'frontend/src/platform/registro-do-pedido.ts',
+      'frontend/src/ui/loop.test.ts',
+      'frontend/src/ui/profile.stories.tsx',
+      'frontend/src/platform/storybook/with-router.tsx',
+      'frontend/src/platform/request-log.ts',
       'frontend/src/analytics/goatcounter.ts',
       'frontend/src/routeTree.gen.ts',
       'frontend/src/server.ts',
-      'frontend/src/conteudo/virtual-acervo.d.ts',
-      'frontend/e2e/perfil.e2e.ts',
-      'frontend/scripts/capturar.ts',
+      'frontend/src/content/virtual-library.d.ts',
+      'frontend/e2e/profile.e2e.ts',
+      'frontend/scripts/capture.ts',
       'packages/rules/src/possible-group.ts',
       'estudos/algum-estudo.md',
     ])

@@ -1,11 +1,11 @@
-# O servidor SSR do TanStack Start, no molde do Festival dos Macacos. A imagem
-# só leva o `.output/` do build, e o contexto do `docker build` é ele: o nitro
-# já empacota em `.output/server/node_modules` o que o servidor importa, e não
-# há `pnpm install` aqui dentro. O app não tem pacote nativo, então a imagem é
-# alpine.
+# The TanStack Start SSR server, modeled on the Festival dos Macacos. The image
+# only carries the build's `.output/`, and the `docker build` context is it:
+# nitro already bundles into `.output/server/node_modules` what the server
+# imports, and there is no `pnpm install` in here. The app has no native
+# package, so the image is alpine.
 #
-# Quem monta a imagem é o deploy, na própria VPS (`scripts/vps.ts`), com o SHA
-# do commit no nome. Para montar e rodar aqui:
+# The deploy builds the image, on the VPS itself (`scripts/vps.ts`), with the
+# commit SHA in the name. To build and run it here:
 #
 #   pnpm build
 #   docker build -f Dockerfile -t temestudo-app .output
@@ -19,18 +19,18 @@ ENV NODE_ENV=production \
 
 WORKDIR /app
 
-# `--link`: a camada não depende das de baixo, e um deploy que só troca o
-# código não baixa a imagem do Node de novo.
+# `--link`: the layer does not depend on the ones below, and a deploy that only
+# changes the code does not download the Node image again.
 COPY --link server ./server
 COPY --link public ./public
 COPY --link nitro.json ./
 
 USER node
 
-# Documenta o padrão. O `-p` do `docker run` escolhe a porta de fora, a do
-# par que o Nginx não está usando (`scripts/vps.ts`).
+# Documents the default. `docker run`'s `-p` picks the outside port, the one of
+# the pair Nginx is not using (`scripts/vps.ts`).
 EXPOSE 3000
 
-# Cada pedido sai no stdout como `GET /caminho 200 12ms`, sem a query
-# (`src/platform/registro-do-pedido.ts`), e é isso que o `docker logs` mostra.
+# Each request goes to stdout as `GET /path 200 12ms`, without the query
+# (`src/platform/request-log.ts`), and that is what `docker logs` shows.
 CMD ["node", "server/index.mjs"]

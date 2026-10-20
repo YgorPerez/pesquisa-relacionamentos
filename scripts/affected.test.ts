@@ -17,31 +17,31 @@ describe('SPEC_TERMS', () => {
 
 describe('planForDiff', () => {
   it("a screen's component runs the frontend and the specs of its term", () => {
-    const plan = planForDiff(['frontend/src/ui/perfil.tsx'])
+    const plan = planForDiff(['frontend/src/ui/profile.tsx'])
     expect(plan.full).toBeNull()
     expect(plan.packages).toEqual(['frontend'])
     expect(plan.stories).toBe(true)
     expect(plan.build).toBe(true)
     expect(plan.specs).toEqual([
-      'acessibilidade.e2e.ts',
-      'inicio.e2e.ts',
-      'perfil.e2e.ts',
+      'accessibility.e2e.ts',
+      'home.e2e.ts',
+      'profile.e2e.ts',
     ])
   })
 
   it('the route and the state reach their term through the alias', () => {
     expect(planForDiff(['frontend/src/routes/$tema/$slug.tsx']).specs).toEqual(
       expect.arrayContaining([
-        'guia.e2e.ts',
-        'busca.e2e.ts',
-        'navegacao.e2e.ts',
+        'guide.e2e.ts',
+        'search.e2e.ts',
+        'navigation.e2e.ts',
       ]),
     )
-    expect(
-      planForDiff(['frontend/src/estado/pacotes-do-grupo.ts']).specs,
-    ).toContain('grupo-possivel.e2e.ts')
+    expect(planForDiff(['frontend/src/state/group-packs.ts']).specs).toContain(
+      'possible-group.e2e.ts',
+    )
     // A story imports the state the screen reads.
-    expect(planForDiff(['frontend/src/estado/perfil.ts']).stories).toBe(true)
+    expect(planForDiff(['frontend/src/state/profile.ts']).stories).toBe(true)
   })
 
   it('a changed spec runs itself, without the stories', () => {
@@ -51,10 +51,10 @@ describe('planForDiff', () => {
   })
 
   it('an app file without a term runs the whole e2e and says why', () => {
-    const plan = planForDiff(['frontend/src/ui/botao.tsx'])
+    const plan = planForDiff(['frontend/src/ui/button.tsx'])
     expect(plan.full).toBeNull()
     expect(plan.specs).toEqual(Object.keys(SPEC_TERMS).sort())
-    expect(plan.reasons.join()).toContain('botao')
+    expect(plan.reasons.join()).toContain('button')
   })
 
   it('what changes outside the graph runs everything', () => {
@@ -65,11 +65,11 @@ describe('planForDiff', () => {
       'frontend/src/routes/__root.tsx',
       'frontend/src/styles.css',
       'frontend/src/ui/tokens.css',
-      'frontend/src/ui/desenhos.css',
-      'frontend/src/ui/fontes.css',
-      'frontend/src/platform/redirecionamento.ts',
+      'frontend/src/ui/drawings.css',
+      'frontend/src/ui/fonts.css',
+      'frontend/src/platform/redirects.ts',
       'packages/rules/src/possible-group.ts',
-      'frontend/e2e/acervo/estudos/x.md',
+      'frontend/e2e/library/estudos/x.md',
       'scripts/machine-queue.ts',
       '.github/workflows/pr.yml',
     ])

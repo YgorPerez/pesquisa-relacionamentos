@@ -34,7 +34,7 @@ describe('measure', () => {
       numstat(
         [10, 0, 'scripts/affected.ts'],
         [600, 0, 'scripts/affected.test.ts'],
-        [200, 0, 'frontend/e2e/perfil.e2e.ts'],
+        [200, 0, 'frontend/e2e/profile.e2e.ts'],
       ),
     )
     expect(mixed.lines).toBe(10)

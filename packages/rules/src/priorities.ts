@@ -3,8 +3,8 @@
 // per outcome. There is no score or compatibility number: only the shelf each
 // one falls on and a sentence when the top 3 falls on "quase nada" or "não
 // sabemos". The state is the ordered top 3 and the outcome; it is stored in
-// the browser and carried by the link, so its keys and values stay in
-// Portuguese.
+// the browser and carried by the link. The outcome values are the link's and
+// the priorities file's, so they stay in Portuguese.
 import type { ProfileGender } from './profile.ts'
 
 export const OUTCOMES = ['atracao', 'satisfacao', 'duracao'] as const
@@ -51,8 +51,8 @@ export interface TraitWithEvidence {
 
 export interface PrioritiesState {
   /** The chosen ids, in order: the first is the one that matters most. */
-  readonly topo3: ReadonlyArray<string>
-  readonly desfecho: Outcome
+  readonly top3: ReadonlyArray<string>
+  readonly outcome: Outcome
 }
 
 export const level = (trait: TraitWithEvidence, outcome: Outcome): Level =>
@@ -150,7 +150,7 @@ export function readPriorities(
   if (typeof value !== 'object' || value === null || Array.isArray(value))
     return null
   const raw = value as Record<string, unknown>
-  const list = Array.isArray(raw.topo3) ? raw.topo3 : []
+  const list = Array.isArray(raw.top3) ? raw.top3 : []
   const top3: string[] = []
   for (const id of list) {
     if (top3.length >= TOP_SIZE) break
@@ -158,6 +158,6 @@ export function readPriorities(
     if (ids && !ids.includes(id)) continue
     top3.push(id)
   }
-  const outcome = OUTCOMES.find((d) => d === raw.desfecho) ?? INITIAL_OUTCOME
-  return { topo3: top3, desfecho: outcome }
+  const outcome = OUTCOMES.find((d) => d === raw.outcome) ?? INITIAL_OUTCOME
+  return { top3, outcome }
 }

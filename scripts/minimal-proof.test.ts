@@ -8,7 +8,7 @@ const names = (steps: ReturnType<typeof plan>) =>
 
 describe('proofPlan', () => {
   it("an app component: the frontend's types and tests, the folders and the file's check", () => {
-    const steps = plan(['frontend/src/ui/perfil.tsx'])
+    const steps = plan(['frontend/src/ui/profile.tsx'])
     expect(names(steps)).toEqual([
       'types:frontend',
       'vitest:frontend',
@@ -36,7 +36,7 @@ describe('proofPlan', () => {
       'vp',
       'check',
       '--no-error-on-unmatched-pattern',
-      'frontend/src/ui/perfil.tsx',
+      'frontend/src/ui/profile.tsx',
     ])
   })
 

@@ -108,7 +108,7 @@ export function suiteQueues({
       {
         name: 'folders',
         dir: '.',
-        command: 'node frontend/lint/pastas.ts',
+        command: 'node frontend/lint/folders.ts',
         skip: noApp,
       },
       // Each piece in `src/ui/` with a story (ADR 0036).

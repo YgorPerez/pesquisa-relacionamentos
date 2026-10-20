@@ -1,27 +1,28 @@
-/* A base do site no sistema do DESIGN.md: papel frio, tinta, uma coluna,
- * celular primeiro. Os componentes se vestem com as classes do Tailwind, e o
- * tema são os tokens do DESIGN.md (`ui/tokens.css`). O que o Tailwind não
- * cobre mora em `ui/desenhos.css`, com o porquê de cada um.
+/* The site's base in the DESIGN.md system: cool paper, ink, one column,
+ * mobile first. The components dress in Tailwind classes, and the theme is
+ * the DESIGN.md tokens (`ui/tokens.css`). What Tailwind does not cover lives
+ * in `ui/drawings.css`, with the why of each.
  *
- * Sem o preflight do Tailwind: ele zera as margens, as listas e os títulos
- * do navegador, e a base do site sempre foi a do navegador com os retoques
- * de baixo. Com ele, o visual mudava (ADR 0026). */
+ * Without Tailwind's preflight: it zeroes the browser's margins, lists and
+ * headings, and the site's base was always the browser's with the touches
+ * below. With it, the look changed (ADR 0026). */
 
-/* A ordem das camadas, como no `tailwindcss/index.css`: a utilidade ganha
- * da base e dos desenhos. */
+/* The layer order, as in `tailwindcss/index.css`: the utility wins over the
+ * base and the drawings. */
 @layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'shadcn/tailwind.css';
-@import './ui/fontes.css';
+@import './ui/fonts.css';
 @import './ui/tokens.css';
-@import './ui/desenhos.css';
+@import './ui/drawings.css';
 
-/* O `hover:` do Tailwind só vale onde há mouse (`@media (hover: hover)`). O
- * do site vale também no toque, como sempre valeu. */
+/* Tailwind's `hover:` only applies where there is a mouse
+ * (`@media (hover: hover)`). The site's also applies on touch, as it always
+ * did. */
 @custom-variant hover (&:hover);
 
-/* O celular estreito, onde o achado põe o número em cima do texto. */
+/* The narrow phone, where the finding puts the number above the text. */
 @custom-variant estreito (@media (max-width: 420px));
 
 @layer base {
@@ -69,7 +70,7 @@
     color: inherit;
   }
 
-  /* No desktop a coluna vira uma folha com contorno sobre a retícula fina. */
+  /* On desktop the column becomes an outlined sheet over the fine halftone. */
   @media (min-width: 900px) {
     body {
       background: var(--reticula-fundo), var(--color-papel);
@@ -77,10 +78,10 @@
   }
 }
 
-/* O foco de todo controle: contorno de 3px em tinta e o anel amarelo por
- * fora. Depois das utilidades, na mesma camada: ganha de uma classe do
- * mesmo peso (o `rounded-mao` do botão vira o canto de 4px no foco, como
- * sempre foi), e perde para quem pede o foco com mais força
+/* Every control's focus: a 3px ink outline and the yellow ring outside.
+ * After the utilities, in the same layer: it wins over a class of the same
+ * weight (the button's `rounded-mao` becomes the 4px corner on focus, as it
+ * always was), and loses to whoever asks for the focus more strongly
  * (`focus:outline-none`). */
 @layer utilities {
   :focus-visible {

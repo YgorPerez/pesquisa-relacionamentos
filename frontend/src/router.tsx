@@ -1,13 +1,14 @@
 import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
-import { criarQueryClient } from '#/conteudo/leituras'
+import { createQueryClient } from '#/content/reads'
 import { routeTree } from './routeTree.gen'
 
-// O servidor cria um router por pedido, e cada um tem o seu `queryClient`.
-// A integração manda ao navegador, junto do HTML, o que os loaders leram, e
-// põe o `QueryClientProvider` em volta do app (ADR 0031).
+// The server creates one router per request, each with its own
+// `queryClient`. The integration sends the browser, along with the HTML, what
+// the loaders read, and puts the `QueryClientProvider` around the app
+// (ADR 0031).
 export function getRouter() {
-  const queryClient = criarQueryClient()
+  const queryClient = createQueryClient()
   const router = createRouter({
     routeTree,
     context: { queryClient },

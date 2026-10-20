@@ -28,7 +28,7 @@ function coveredSides(
   profile: Profile,
   coverage: Coverage,
 ): ReadonlyArray<Side | undefined> {
-  const { genero: gender, procura: seeks, idade: age } = profile
+  const { gender, seeks, age } = profile
   if (
     age !== undefined &&
     coverage.idades &&
@@ -73,7 +73,7 @@ export function appliesToYou(
     coverages.flatMap((coverage) => coveredSides(profile, coverage)),
   )
   if (sides.size === 0) return { covered: false }
-  if (profile.procura === 'ambos' && sides.size === 1) {
+  if (profile.seeks === 'ambos' && sides.size === 1) {
     const [only] = sides
     if (only) return { covered: true, only }
   }

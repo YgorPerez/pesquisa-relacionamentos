@@ -1,6 +1,6 @@
 # A meta de desempenho das páginas no celular
 
-Cada uma das cinco páginas (início, Guia, Ficha, Grupo possível, Prioridades) tem uma meta em `frontend/scripts/medir-paginas-meta.ts`, e `pnpm --filter frontend medir` mede contra ela. A meta é a mediana de cinco aberturas num Chrome limpo, com a tela, a rede e a CPU do Lighthouse mobile (4G lento: 562,5 ms por pedido, 1,6 Mbps, CPU 4× mais lenta):
+Cada uma das cinco páginas (início, Guia, Ficha, Grupo possível, Prioridades) tem uma meta em `frontend/scripts/measure-pages-meta.ts`, e `pnpm --filter frontend measure` mede contra ela. A meta é a mediana de cinco aberturas num Chrome limpo, com a tela, a rede e a CPU do Lighthouse mobile (4G lento: 562,5 ms por pedido, 1,6 Mbps, CPU 4× mais lenta):
 
 - LCP ≤ 2,5 s e INP ≤ 200 ms, o "bom" do Core Web Vitals. O INP sai de um toque logo depois do `load`, quando a página ainda pode estar hidratando.
 - CSS ≤ 15 KB e JS por página, com o gzip: início 200 KB, Guia 260, Ficha 210, Grupo possível 250, Prioridades 240. É o medido no #59 com uns 15% de folga, para que um chunk que engorda a página reprove a medida. Quem sobe um teto diz por quê no PR.

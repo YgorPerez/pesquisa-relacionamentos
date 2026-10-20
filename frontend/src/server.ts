@@ -1,13 +1,13 @@
 import handler, { createServerEntry } from '@tanstack/react-start/server-entry'
 import { redirects } from '@tem-estudo/content/search'
-import acervo from 'virtual:acervo'
-import { comRedirecionamentos } from '#/platform/redirecionamento'
-import { comRegistro } from '#/platform/registro-do-pedido'
+import library from 'virtual:library'
+import { withRedirects } from '#/platform/redirects'
+import { withRequestLog } from '#/platform/request-log'
 
-// O servidor do TanStack Start, com cada pedido registrado sem a query e
-// toda resposta com `Referrer-Policy: strict-origin` (ADR 0001,
-// `platform/registro-do-pedido.ts`). Antes do app, os 301 da barra final e
-// do `antes` (`platform/redirecionamento.ts`).
+// The TanStack Start server, with each request logged without the query and
+// every response with `Referrer-Policy: strict-origin` (ADR 0001,
+// `platform/request-log.ts`). Before the app, the 301s for the trailing
+// slash and for `antes` (`platform/redirects.ts`).
 export default createServerEntry({
-  fetch: comRegistro(comRedirecionamentos(redirects(acervo), handler.fetch)),
+  fetch: withRequestLog(withRedirects(redirects(library), handler.fetch)),
 })

@@ -24,7 +24,7 @@ describe('profileInGuide', () => {
 
   it('counts the findings with data and says the key number applies', () => {
     const r = profileInGuide(
-      { genero: 'homem', procura: 'homens', idade: 30 },
+      { gender: 'homem', seeks: 'homens', age: 30 },
       GUIDE,
     )
     expect(r?.findings).toEqual([{ covered: true }, { covered: false }])
@@ -35,7 +35,7 @@ describe('profileInGuide', () => {
 
   it('when the key number does not apply, it points to the first finding that does', () => {
     const r = profileInGuide(
-      { genero: 'mulher', procura: 'homens', idade: 50 },
+      { gender: 'mulher', seeks: 'homens', age: 50 },
       GUIDE,
     )
     expect(r?.findings).toEqual([{ covered: false }, { covered: true }])
@@ -44,7 +44,7 @@ describe('profileInGuide', () => {
 
   it('when nothing covers, the key points to no finding and withData is zero', () => {
     const r = profileInGuide(
-      { genero: 'outro', procura: 'homens', idade: 30 },
+      { gender: 'outro', seeks: 'homens', age: 30 },
       GUIDE,
     )
     expect(r?.withData).toBe(0)
@@ -53,7 +53,7 @@ describe('profileInGuide', () => {
 
   it('without a marked key number, the line speaks only of the findings', () => {
     const r = profileInGuide(
-      { genero: 'homem', procura: 'mulheres', idade: 30 },
+      { gender: 'homem', seeks: 'mulheres', age: 30 },
       { ...GUIDE, key: null },
     )
     expect(r?.key).toBeNull()

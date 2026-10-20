@@ -122,7 +122,7 @@ describe('verifyPush', () => {
   it("the branch's second push tests only what came after the first", () => {
     const { clone, commit } = repositories()
     const first = commit('scripts/a.ts')
-    const second = commit('frontend/src/ui/perfil.tsx')
+    const second = commit('frontend/src/ui/profile.tsx')
     const { run, runs } = fakeRun()
 
     verifyPush({

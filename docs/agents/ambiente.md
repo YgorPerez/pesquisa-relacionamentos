@@ -14,7 +14,7 @@ Cada worktree tem as suas dependências e as suas portas ([ADR 0010](../adr/0010
 - As portas do worktree: `node scripts/ports.ts`. No principal são 4310 (dev), 4311 (start), 4312 (e2e), 6310 (Storybook) e 6311 (Vitest das stories). Num worktree, um bloco entre 40100 e 48099.
 - `pnpm dev`, `pnpm start` e `pnpm storybook` sobem na porta do worktree e escrevem `[dev] up: <url>` quando respondem. `pnpm e2e`, `pnpm test:stories` e `pnpm test:storybook` (que sobe o Storybook na porta dele) também usam a do worktree.
 - Troque a porta só quando um script disser que ela está ocupada: `DEV_PORT`, `START_PORT`, `STORYBOOK_PORT`, `E2E_PORT` ou `STORIES_PORT`.
-- O e2e builda com o acervo de fixture (`CONTEUDO_RAIZ=e2e/acervo`). Depois dele, rode `pnpm build` de novo antes de `pnpm start` com o conteúdo de verdade.
+- O e2e builda com o acervo de fixture (`CONTENT_ROOT=e2e/library`). Depois dele, rode `pnpm build` de novo antes de `pnpm start` com o conteúdo de verdade.
 
 ## Esperar
 
@@ -31,7 +31,7 @@ Pare só um PID que você guardou ao subir, ou o dono da porta do seu worktree. 
 | O `dev.ts` que você subiu | `kill <pid do dev.ts>`        | `taskkill /T /F /PID <pid do dev.ts>`     |
 | Quem ocupa a sua porta    | `ss -ltnp 'sport = :<porta>'` | `Get-NetTCPConnection -LocalPort <porta>` |
 
-No `SIGTERM`, o `scripts/dev.ts` para a árvore inteira do filho (o grupo de processos e cada descendente, pelo `matar` de `scripts/kill-tree.ts`), então no Linux um `kill` simples do PID dele basta.
+No `SIGTERM`, o `scripts/dev.ts` para a árvore inteira do filho (o grupo de processos e cada descendente, pelo `killTree` de `scripts/kill-tree.ts`), então no Linux um `kill` simples do PID dele basta.
 
 Em segundo plano, suba com `node scripts/dev.ts` (ou `node scripts/dev.ts start`, `node scripts/dev.ts storybook`) e guarde o `$!` logo depois. Com `pnpm dev`, o `$!` é o do pnpm, que não repassa o `SIGTERM`: o `kill` dele deixa o dev de pé na porta.
 

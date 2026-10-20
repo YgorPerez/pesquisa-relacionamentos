@@ -12,8 +12,7 @@
 //   probability in the same sex and age bracket, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
 //
-// The requirement ids and caveat ids stay in Portuguese: the page reads them
-// as values. The caveat texts are interface text.
+// The caveat texts are interface text, in Portuguese.
 import {
   UNION_CELLS,
   AGE_GROUPS,
@@ -42,17 +41,17 @@ import {
 /** The requirements in funnel order. Orientation has no control: it comes
  * from the profile. */
 export const REQUIREMENT_ORDER = [
-  'idade',
-  'lugar',
-  'companheiro',
-  'orientacao',
-  'escolaridade',
-  'renda',
-  'cor',
-  'religiao',
-  'filhos',
-  'altura',
-  'fumo',
+  'age',
+  'place',
+  'partner',
+  'orientation',
+  'education',
+  'income',
+  'color',
+  'religion',
+  'children',
+  'height',
+  'smoking',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -60,17 +59,17 @@ export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 export const REQUIREMENT_SOURCE: Readonly<
   Record<RequirementId, 'Censo' | 'PNS'>
 > = {
-  idade: 'Censo',
-  lugar: 'Censo',
-  companheiro: 'Censo',
-  orientacao: 'PNS',
-  escolaridade: 'Censo',
-  renda: 'Censo',
-  cor: 'Censo',
-  religiao: 'Censo',
-  filhos: 'Censo',
-  altura: 'PNS',
-  fumo: 'PNS',
+  age: 'Censo',
+  place: 'Censo',
+  partner: 'Censo',
+  orientation: 'PNS',
+  education: 'Censo',
+  income: 'Censo',
+  color: 'Censo',
+  religion: 'Censo',
+  children: 'Censo',
+  height: 'PNS',
+  smoking: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). */
@@ -81,7 +80,7 @@ export interface CountData {
    * come from it. */
   readonly brazil: PlaceData
   /** The chosen state's pack, when there is a place. */
-  readonly uf?: PlaceData
+  readonly state?: PlaceData
 }
 
 export interface CountInput {
@@ -117,7 +116,7 @@ export interface Caveat {
 }
 
 export interface Estimate {
-  /** Who is sought, for the sentence: "mulheres", "homens" or "pessoas". */
+  /** Who is sought, for the sentence (`TARGET_NAME`). */
   readonly target: Sought['target']
   /** The requirements that enter the count, in funnel order. */
   readonly active: ReadonlyArray<RequirementId>
@@ -150,17 +149,17 @@ export function activeRequirements({
 }: CountInput): RequirementId[] {
   const age = soughtAge(profile, r)
   const isActive: Record<RequirementId, boolean> = {
-    idade: age.min > MIN_SOUGHT_AGE || age.max < MAX_SOUGHT_AGE,
-    lugar: r.lugar !== null,
-    companheiro: r.companheiro,
-    orientacao: profile?.genero === 'homem' || profile?.genero === 'mulher',
-    escolaridade: r.escolaridade !== null,
-    renda: r.renda !== null,
-    cor: r.cores.length > 0,
-    religiao: r.religioes.length > 0,
-    filhos: r.semFilhos && whoIsSought(profile).children !== 'sem-dado',
-    altura: r.altura.min > MIN_HEIGHT || r.altura.max < MAX_HEIGHT,
-    fumo: r.naoFuma,
+    age: age.min > MIN_SOUGHT_AGE || age.max < MAX_SOUGHT_AGE,
+    place: r.place !== null,
+    partner: r.noLiveInPartner,
+    orientation: profile?.gender === 'homem' || profile?.gender === 'mulher',
+    education: r.education !== null,
+    income: r.income !== null,
+    color: r.colors.length > 0,
+    religion: r.religions.length > 0,
+    children: r.noChildren && whoIsSought(profile).children !== 'no-data',
+    height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
+    smoking: r.nonSmoker,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -299,13 +298,13 @@ function tally(
   active: ReadonlySet<RequirementId>,
 ): Tally {
   const { profile, requirements: r } = input
-  const ofPlace = active.has('lugar') ? data.uf : data.brazil
-  if (!ofPlace || (active.has('lugar') && ofPlace.place !== r.lugar?.uf))
-    throw new Error(`missing the data for ${r.lugar?.uf} for the count`)
+  const ofPlace = active.has('place') ? data.state : data.brazil
+  if (!ofPlace || (active.has('place') && ofPlace.place !== r.place?.state))
+    throw new Error(`missing the data for ${r.place?.state} for the count`)
 
   // Everything that depends only on sex × age group (and union, in a
   // municipality) comes out before the loop.
-  const age = active.has('idade')
+  const age = active.has('age')
     ? soughtAge(profile, r)
     : { min: MIN_SOUGHT_AGE, max: MAX_SOUGHT_AGE }
   const { sexes } = whoIsSought(profile)
@@ -328,27 +327,27 @@ function tally(
         (p = [p[0] * q[0], p[1] * q[1], p[2] * q[2]])
       if (factor[i]! > 0) {
         if (
-          active.has('orientacao') &&
-          (profile?.genero === 'homem' || profile?.genero === 'mulher')
+          active.has('orientation') &&
+          (profile?.gender === 'homem' || profile?.gender === 'mulher')
         ) {
-          const o = orientation(ofPlace, profile.genero, s, g)
+          const o = orientation(ofPlace, profile.gender, s, g)
           times(o.p)
           noAnswer[i] = o.noAnswer
         }
-        if (active.has('altura'))
-          times(height(ofPlace, s, g, r.altura.min, r.altura.max))
-        if (active.has('fumo')) times(pnsRow(ofPlace, 'fumo', s, g, 'nao'))
+        if (active.has('height'))
+          times(height(ofPlace, s, g, r.height.min, r.height.max))
+        if (active.has('smoking')) times(pnsRow(ofPlace, 'fumo', s, g, 'nao'))
       }
       pns[i] = p
     }
   }
 
   let municipality: Float64Array | null = null
-  if (active.has('lugar') && r.lugar?.municipio) {
-    const m = ofPlace.municipalities.get(r.lugar.municipio)
+  if (active.has('place') && r.place?.municipality) {
+    const m = ofPlace.municipalities.get(r.place.municipality)
     if (!m)
       throw new Error(
-        `municipality ${r.lugar.municipio} is outside the data for ${r.lugar.uf}`,
+        `municipality ${r.place.municipality} is outside the data for ${r.place.state}`,
       )
     const ofState = unionSum(ofPlace)
     municipality = new Float64Array(UNION_CELLS)
@@ -359,18 +358,19 @@ function tally(
   const position = (list: ReadonlyArray<string>, value: string) =>
     list.indexOf(value) + 1
   const education =
-    active.has('escolaridade') && r.escolaridade
-      ? position(EDUCATIONS, r.escolaridade)
+    active.has('education') && r.education
+      ? position(EDUCATIONS, r.education)
       : 0
-  const income = active.has('renda') && r.renda ? position(INCOMES, r.renda) : 0
-  const colors = active.has('cor')
-    ? new Set(r.cores.map((c) => position(COLORS, c)))
+  const income =
+    active.has('income') && r.income ? position(INCOMES, r.income) : 0
+  const colors = active.has('color')
+    ? new Set(r.colors.map((c) => position(COLORS, c)))
     : null
-  const religions = active.has('religiao')
-    ? new Set(r.religioes.map((c) => position(RELIGIONS, c)))
+  const religions = active.has('religion')
+    ? new Set(r.religions.map((c) => position(RELIGIONS, c)))
     : null
-  const partner = active.has('companheiro')
-  const noChildren = active.has('filhos')
+  const partner = active.has('partner')
+  const noChildren = active.has('children')
   const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
@@ -427,69 +427,69 @@ function caveats(
   const has = (k: RequirementId) => active.includes(k)
   const list: Array<Caveat | false> = [
     result.records < RECORDS_FOR_STABLE && {
-      id: 'instavel',
+      id: 'unstable',
       strong: true,
       text: `Estimativa instável: a conta se apoia em só ${Math.round(result.records)} registros da amostra do Censo.`,
     },
-    profile?.genero === 'outro' && {
-      id: 'genero-outro',
+    profile?.gender === 'outro' && {
+      id: 'other-gender',
       strong: true,
       text: 'O IBGE registra só o sexo e não pergunta identidade de gênero, então não dá para estimar quem se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
     },
-    !profile?.genero && {
-      id: 'sem-genero',
+    !profile?.gender && {
+      id: 'no-gender',
       strong: true,
       text: 'Sem o seu gênero no Perfil, não dá para descontar quem não se interessa por você. O número conta todas as pessoas do gênero procurado: é um teto.',
     },
-    !profile?.procura && {
-      id: 'sem-procura',
+    !profile?.seeks && {
+      id: 'no-seeks',
       strong: true,
       text: 'Sem dizer quem você procura, a conta junta homens e mulheres.',
     },
-    has('filhos') &&
-      whoIsSought(profile).children === 'so-mulheres' && {
-        id: 'filhos-so-mulheres',
+    has('children') &&
+      whoIsSought(profile).children === 'women-only' && {
+        id: 'children-women-only',
         strong: true,
         text: 'O Censo só pergunta filhos às mulheres: "sem filhos" vale para elas, e os homens entram com ou sem filhos.',
       },
-    has('companheiro') && {
-      id: 'companheiro',
+    has('partner') && {
+      id: 'partner',
       strong: false,
       text: '"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.',
     },
-    has('orientacao') && {
-      id: 'orientacao',
+    has('orientation') && {
+      id: 'orientation',
       strong: false,
       text: `A orientação vem da PNS 2019, uma estatística experimental do IBGE. No grupo procurado, ${percent(result.noAnswer)}% não souberam ou não quiseram responder; a conta os trata como quem respondeu.`,
     },
-    has('idade') && {
-      id: 'idade',
+    has('age') && {
+      id: 'age',
       strong: false,
       text: 'O microdado público traz a idade em grupos de 5 anos; a idade exata vem da proporção do SIDRA 9514.',
     },
-    has('lugar') &&
-      !!requirements.lugar?.municipio && {
-        id: 'municipio',
+    has('place') &&
+      !!requirements.place?.municipality && {
+        id: 'municipality',
         strong: false,
         text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Escolaridade, renda, cor e religião seguem as do estado.',
       },
-    has('renda') && {
-      id: 'renda',
+    has('income') && {
+      id: 'income',
       strong: false,
       text: 'A renda é a de julho de 2022, em salários mínimos da época (R$ 1.212).',
     },
-    has('altura') && {
-      id: 'altura',
+    has('height') && {
+      id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
-      id: 'independencia',
+      id: 'independence',
       strong: false,
       text: 'Os Requisitos da PNS entram supondo que, dentro do mesmo sexo e idade, não dependem dos do Censo.',
     },
     {
-      id: 'fonte',
+      id: 'source',
       strong: false,
       text: 'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
     },
@@ -512,7 +512,7 @@ export function estimateGroup(input: CountInput, data: CountData): Estimate {
   }))
 
   const costs = active
-    .filter((k) => k !== 'orientacao')
+    .filter((k) => k !== 'orientation')
     .map((requirement): Cost => {
       const without = countWith(active.filter((k) => k !== requirement)).central
       const times =

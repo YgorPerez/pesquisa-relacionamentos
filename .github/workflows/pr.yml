@@ -128,7 +128,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # The build checks the live sitemap: a published path that disappeared
-      # without `antes` fails the step (`frontend/vite/acervo.ts`). Before the
+      # without `antes` fails the step (`frontend/vite/library.ts`). Before the
       # first deploy there is no sitemap, and the build goes on without the
       # check.
       - name: Build

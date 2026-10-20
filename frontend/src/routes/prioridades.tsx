@@ -1,6 +1,6 @@
-// /prioridades (variante A da segunda rodada do #19): o visitante toca nas três
-// características que mais importam, escolhe o desfecho e vê em que
-// prateleira a evidência põe cada uma.
+// /prioridades (variant A of the second round of #19): the visitor taps the
+// three traits that matter most, picks the outcome and sees on which shelf
+// the evidence puts each one.
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ProfileGender } from '@tem-estudo/rules/profile'
@@ -18,25 +18,25 @@ import {
   type LinkState,
 } from '@tem-estudo/rules/link'
 import { useMemo, useState } from 'react'
-import { leituras } from '#/conteudo/leituras'
-import { metaDaPrevia } from '#/conteudo/previa'
-import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
-import { useLinkRecebido } from '#/estado/link'
-import { usePerfil } from '#/estado/perfil'
-import { Compartilhar } from '#/ui/compartilhar'
-import { AVISO_DA_CONTAGEM } from '#/ui/compartilhar.textos'
-import { gravarPrioridades, usePrioridades } from '#/estado/prioridades'
-import { contarUsoDaCalculadora } from '#/analytics/contagem'
-import { ConfiancaDaResposta } from '#/ui/guia'
+import { reads } from '#/content/reads'
+import { previewMeta } from '#/content/preview'
+import type { PrioritiesView } from '#/content/priorities-view'
+import { useReceivedLink } from '#/state/link'
+import { useProfile } from '#/state/profile'
+import { Share } from '#/ui/share'
+import { COUNTING_NOTICE } from '#/ui/share.copy'
+import { savePriorities, usePriorities } from '#/state/priorities'
+import { countCalculatorUse } from '#/analytics/counting'
+import { AnswerConfidence } from '#/ui/guide'
 import {
-  AlertaDoTopo3,
-  BarraDaSatisfacao,
-  EscolhaDoTopo3,
-  Estante,
-  SeletorDeDesfecho,
-} from '#/ui/prioridades'
-import { Coluna, Display, Folha, Lead } from '#/ui/folha'
-import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
+  Top3Warning,
+  SatisfactionBar,
+  Top3Picker,
+  Bookcase,
+  OutcomePicker,
+} from '#/ui/priorities'
+import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Notice, Headline, Panel, Section } from '#/ui/section'
 import {
   Collapsible,
   CollapsibleContent,
@@ -45,20 +45,20 @@ import {
 
 export const Route = createFileRoute('/prioridades')({
   loader: async ({ context, location }) => {
-    const vista = await context.queryClient.query(leituras.prioridades())
-    // A prévia do link, para o robô da rede social: o topo 3 e o alerta,
-    // sem o Perfil. Só no servidor; no navegador ela não serve a ninguém.
-    // Ela fica no `loaderData`, que só o `head` lê; a vista vai pelo
-    // `queryClient`.
-    const estado =
-      vista && typeof window === 'undefined'
-        ? readLink('prioridades', location.searchStr, idsDe(vista))
+    const view = await context.queryClient.query(reads.priorities())
+    // The link preview, for the social network's bot: the top 3 and the
+    // alert, without the Profile. Only on the server; in the browser it
+    // serves no one. It stays in `loaderData`, which only `head` reads; the
+    // view goes through the `queryClient`.
+    const state =
+      view && typeof window === 'undefined'
+        ? readLink('prioridades', location.searchStr, idsOf(view))
         : null
-    const previa =
-      estado?.calculator === 'prioridades'
-        ? prioritiesPreview(vista!.caracteristicas, estado.priorities)
+    const preview =
+      state?.calculator === 'prioridades'
+        ? prioritiesPreview(view!.traits, state.priorities)
         : null
-    return { previa }
+    return { preview }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -68,50 +68,50 @@ export const Route = createFileRoute('/prioridades')({
         content:
           'Toque nas três características que mais importam para você num parceiro e veja quanto a evidência põe em cada uma.',
       },
-      ...metaDaPrevia(loaderData?.previa ?? null),
+      ...previewMeta(loaderData?.preview ?? null),
     ],
   }),
-  component: PaginaDePrioridades,
+  component: PrioritiesPage,
 })
 
-const idsDe = (vista: PrioridadesVista) =>
-  vista.caracteristicas.map((c) => c.id)
+const idsOf = (view: PrioritiesView) => view.traits.map((c) => c.id)
 
-function PaginaDePrioridades() {
-  const { data: vista } = useSuspenseQuery(leituras.prioridades())
+function PrioritiesPage() {
+  const { data: view } = useSuspenseQuery(reads.priorities())
   return (
-    <Folha>
-      <Coluna>
+    <Sheet>
+      <Column>
         <Display>
           O que você <span className="marca-texto">valoriza</span> pesa mesmo?
         </Display>
-        {vista ? (
-          <Calculadora vista={vista} />
+        {view ? (
+          <Calculator view={view} />
         ) : (
-          <Aviso>
+          <Notice>
             Esta conta entra no ar quando os estudos que ela usa forem
             conferidos na fonte. Enquanto isso,{' '}
             <Link to="/estudos">veja os estudos do acervo</Link>.
-          </Aviso>
+          </Notice>
         )}
-      </Coluna>
-    </Folha>
+      </Column>
+    </Sheet>
   )
 }
 
-/** Toda mudança do visitante nas Prioridades passa aqui, e conta o uso. */
-function gravarEContar(novo: PrioritiesState) {
-  gravarPrioridades(novo)
-  contarUsoDaCalculadora('prioridades')
+/** Every change the visitor makes to Priorities goes through here, and
+ * counts the use. */
+function saveAndCount(next: PrioritiesState) {
+  savePriorities(next)
+  countCalculatorUse('prioridades')
 }
 
-function Calculadora({ vista }: { vista: PrioridadesVista }) {
-  const { caracteristicas } = vista
-  const ids = useMemo(() => idsDe(vista), [vista])
-  const recebido = useLinkRecebido('prioridades', ids)
-  const estado = usePrioridades(ids)
-  const genero = usePerfil()?.genero
-  const { topo3, desfecho } = estado
+function Calculator({ view }: { view: PrioritiesView }) {
+  const { traits } = view
+  const ids = useMemo(() => idsOf(view), [view])
+  const received = useReceivedLink('prioridades', ids)
+  const state = usePriorities(ids)
+  const gender = useProfile()?.gender
+  const { top3, outcome } = state
 
   return (
     <>
@@ -119,13 +119,13 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         Das dez, quais são as três que mais importam para você num parceiro?
         Toque nelas na ordem.
       </Lead>
-      <AvisoDoLink recebido={recebido} />
+      <LinkNotice received={received} />
 
-      <EscolhaDoTopo3
-        caracteristicas={caracteristicas}
-        topo3={topo3}
-        aoTocar={(id) =>
-          gravarEContar({ ...estado, topo3: toggleInTop3(topo3, id) })
+      <Top3Picker
+        traits={traits}
+        top3={top3}
+        onToggle={(id) =>
+          saveAndCount({ ...state, top3: toggleInTop3(top3, id) })
         }
       />
 
@@ -133,55 +133,47 @@ function Calculadora({ vista }: { vista: PrioridadesVista }) {
         className="sticky top-0 z-5 -mx-md mt-lg mb-0 border-b-2 border-tinta bg-papel px-md py-2.5 folha:-mx-16 folha:px-16"
         data-slot="desfecho-preso"
       >
-        <SeletorDeDesfecho
-          desfecho={desfecho}
-          aoEscolher={(d) => gravarEContar({ ...estado, desfecho: d })}
+        <OutcomePicker
+          outcome={outcome}
+          onChoose={(d) => saveAndCount({ ...state, outcome: d })}
         />
       </div>
 
-      {desfecho === 'satisfacao' && <AntesDaLista barra={vista.barra} />}
+      {outcome === 'satisfacao' && <BeforeTheList split={view.bar} />}
 
-      <AlertaDoTopo3 frase={top3Alert(caracteristicas, topo3, desfecho)} />
+      <Top3Warning sentence={top3Alert(traits, top3, outcome)} />
 
-      <OndeAEvidenciaPoe
-        caracteristicas={caracteristicas}
-        estado={estado}
-        genero={genero}
-      />
+      <WhereTheEvidencePuts traits={traits} state={state} gender={gender} />
 
-      <Aviso role="note">
+      <Notice role="note">
         Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da
         Austrália, e um cobre 43 países. Quase todos são de casais homem-mulher.
-      </Aviso>
+      </Notice>
 
-      <CompartilharAsPrioridades
-        caracteristicas={caracteristicas}
-        estado={estado}
-        genero={genero}
-      />
+      <SharePriorities traits={traits} state={state} gender={gender} />
 
-      {vista.doGuia && <DoGuia guia={vista.doGuia} />}
+      {view.fromGuide && <FromGuide guide={view.fromGuide} />}
     </>
   )
 }
 
-/** O aviso de que um link recebido trocou o topo 3 salvo (e, se ele trouxe,
- * o gênero do Perfil). Sem link, nada. */
-function AvisoDoLink({ recebido }: { recebido: LinkState | null }) {
-  if (!recebido) return null
-  const trocouGenero =
-    recebido.calculator === 'prioridades' && recebido.gender !== null
+/** The notice that a received link replaced the saved top 3 (and, if it
+ * brought one, the Profile's gender). Without a link, nothing. */
+function LinkNotice({ received }: { received: LinkState | null }) {
+  if (!received) return null
+  const changedGender =
+    received.calculator === 'prioridades' && received.gender !== null
   return (
-    <Aviso role="status">
-      {trocouGenero
+    <Notice role="status">
+      {changedGender
         ? 'Este link trocou o seu topo 3 e o gênero do seu Perfil pelos de quem mandou.'
         : 'Este link trocou o seu topo 3 salvo pelo de quem mandou.'}
-    </Aviso>
+    </Notice>
   )
 }
 
-/** "Antes: o parceiro explica pouco da satisfação", aberto, com a barra. */
-function AntesDaLista({ barra }: { barra: PrioridadesVista['barra'] }) {
+/** "Antes: o parceiro explica pouco da satisfação", open, with the bar. */
+function BeforeTheList({ split }: { split: PrioritiesView['bar'] }) {
   return (
     <Collapsible id="antes-da-lista" defaultOpen className="mt-md">
       <CollapsibleTrigger>
@@ -202,37 +194,37 @@ function AntesDaLista({ barra }: { barra: PrioridadesVista['barra'] }) {
         Antes: o parceiro explica pouco da satisfação
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <BarraDaSatisfacao barra={barra} />
+        <SatisfactionBar split={split} />
       </CollapsibleContent>
     </Collapsible>
   )
 }
 
-/** A estante: em que prateleira a evidência põe cada característica, para o
- * desfecho escolhido. Uma característica por vez fica aberta. */
-function OndeAEvidenciaPoe({
-  caracteristicas,
-  estado: { topo3, desfecho },
-  genero,
+/** The bookcase: on which shelf the evidence puts each trait, for the chosen
+ * outcome. One trait at a time is open. */
+function WhereTheEvidencePuts({
+  traits,
+  state: { top3, outcome },
+  gender,
 }: {
-  caracteristicas: PrioridadesVista['caracteristicas']
-  estado: PrioritiesState
-  genero: ProfileGender | undefined
+  traits: PrioritiesView['traits']
+  state: PrioritiesState
+  gender: ProfileGender | undefined
 }) {
-  const [aberta, setAberta] = useState<string | null>(null)
+  const [open, setOpen] = useState<string | null>(null)
   return (
     <section aria-labelledby="t-estante">
       <h2 id="t-estante" className="sr-only">
         Onde a evidência põe cada uma, para{' '}
-        {OUTCOME_NAME[desfecho].toLowerCase()}
+        {OUTCOME_NAME[outcome].toLowerCase()}
       </h2>
-      <Estante
-        caracteristicas={caracteristicas}
-        desfecho={desfecho}
-        topo3={topo3}
-        aberta={aberta}
-        aoAbrir={setAberta}
-        genero={genero}
+      <Bookcase
+        traits={traits}
+        outcome={outcome}
+        top3={top3}
+        open={open}
+        onOpen={setOpen}
+        gender={gender}
       />
       <p className="mx-0 mt-sm mb-lg text-nota text-tinta-2">
         Toque numa característica para ver o estudo.
@@ -241,52 +233,57 @@ function OndeAEvidenciaPoe({
   )
 }
 
-/** O "Copiar link" das Prioridades: o topo 3, o desfecho e o gênero. */
-function CompartilharAsPrioridades({
-  caracteristicas,
-  estado,
-  genero,
+/** The Priorities "Copiar link": the top 3, the outcome and the gender. */
+function SharePriorities({
+  traits,
+  state,
+  gender,
 }: {
-  caracteristicas: PrioridadesVista['caracteristicas']
-  estado: PrioritiesState
-  genero: ProfileGender | undefined
+  traits: PrioritiesView['traits']
+  state: PrioritiesState
+  gender: ProfileGender | undefined
 }) {
   const link: LinkState = {
     calculator: 'prioridades',
-    gender: genero ?? null,
-    priorities: estado,
+    gender: gender ?? null,
+    priorities: state,
   }
-  const nomes = Object.fromEntries(caracteristicas.map((c) => [c.id, c.nome]))
+  const names = Object.fromEntries(traits.map((c) => [c.id, c.nome]))
   return (
-    <Compartilhar
+    <Share
       query={linkQuery(link)}
-      frase={linkSentence(link, { names: nomes })}
-      aviso={AVISO_DA_CONTAGEM}
+      sentence={linkSentence(link, { names })}
+      notice={COUNTING_NOTICE}
     />
   )
 }
 
-/** O bloco "Do Guia": a Pergunta que hospeda a calculadora e a resposta curta. */
-function DoGuia({ guia }: { guia: NonNullable<PrioridadesVista['doGuia']> }) {
+/** The "Do Guia" block: the Question that hosts the calculator and the short
+ * answer. */
+function FromGuide({
+  guide,
+}: {
+  guide: NonNullable<PrioritiesView['fromGuide']>
+}) {
   return (
-    <Secao aria-labelledby="t-do-guia">
+    <Section aria-labelledby="t-do-guia">
       <Headline id="t-do-guia">Do Guia</Headline>
-      <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
+      <Panel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mt-0 [&>p:first-child]:mb-sm">
         <p className="font-title text-title leading-body font-bold tracking-normal text-tinta">
-          {guia.pergunta}
+          {guide.question}
         </p>
-        <ConfiancaDaResposta confianca={guia.confianca} />
-        <p className="text-lead">{guia.resposta}</p>
+        <AnswerConfidence confidence={guide.confidence} />
+        <p className="text-lead">{guide.answer}</p>
         <p>
           <Link
             to="/$tema/$slug"
-            params={{ tema: guia.tema, slug: guia.slug }}
+            params={{ tema: guide.topic, slug: guide.slug }}
             className="inline-flex min-h-toque items-center font-bold"
           >
             Ler o Guia inteiro
           </Link>
         </p>
-      </Painel>
-    </Secao>
+      </Panel>
+    </Section>
   )
 }

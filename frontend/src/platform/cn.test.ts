@@ -1,7 +1,7 @@
-// O `cn` só junta o que reconhece. Um nome do tema que ele não conhece cai no
-// grupo errado (`text-label` lido como cor apagaria o `text-tinta` ao lado) ou
-// em grupo nenhum (dois tamanhos ficariam, e a ordem do CSS decidiria). No
-// molde do `cn.test.ts` do Festival dos Macacos.
+// `cn` only joins what it recognizes. A theme name it does not know falls in
+// the wrong group (`text-label` read as a color would erase the `text-tinta`
+// next to it) or in no group (two sizes would stay, and the CSS order would
+// decide). Modeled on the Festival dos Macacos `cn.test.ts`.
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -9,68 +9,66 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { build } from 'cn/build'
 import { describe, expect, it, onTestFinished } from 'vite-plus/test'
 import { cn } from './cn'
-import tabelas from './cn-tabelas'
+import tables from './cn-tables'
 
-/** Os nomes que o `@theme` de `ui/tokens.css` declara numa escala:
- * `--text-label` → `label`. As subchaves (`--text-label--line-height`) e o
- * `initial` não contam. */
-function daEscala(escala: string): string[] {
+/** The names the `@theme` of `ui/tokens.css` declares in a scale:
+ * `--text-label` → `label`. The subkeys (`--text-label--line-height`) and
+ * `initial` do not count. */
+function fromScale(scale: string): string[] {
   const css = readFileSync(new URL('../ui/tokens.css', import.meta.url), 'utf8')
-  const nomes = css.matchAll(
-    new RegExp(`^\\s*--${escala}-([a-z0-9-]+?):`, 'gm'),
-  )
-  return [...new Set([...nomes].map((m) => m[1]!))].filter(
-    (nome) => !nome.includes('--'),
+  const names = css.matchAll(new RegExp(`^\\s*--${scale}-([a-z0-9-]+?):`, 'gm'))
+  return [...new Set([...names].map((m) => m[1]!))].filter(
+    (name) => !name.includes('--'),
   )
 }
 
-describe('o cn conhece as escalas do tema', () => {
-  it.each(daEscala('text'))('text-%s é tamanho, e não cor', (nome) => {
-    expect(cn('text-nota', `text-${nome}`)).toBe(`text-${nome}`)
-    expect(cn('text-tinta', `text-${nome}`)).toBe(`text-tinta text-${nome}`)
+describe('cn knows the theme scales', () => {
+  it.each(fromScale('text'))('text-%s is a size, not a color', (name) => {
+    expect(cn('text-nota', `text-${name}`)).toBe(`text-${name}`)
+    expect(cn('text-tinta', `text-${name}`)).toBe(`text-tinta text-${name}`)
   })
 
-  it.each(daEscala('color'))('text-%s é cor, e não tamanho', (nome) => {
-    expect(cn('text-tinta-2', `text-${nome}`)).toBe(`text-${nome}`)
-    expect(cn('text-label', `text-${nome}`)).toBe(`text-label text-${nome}`)
-    expect(cn('bg-papel', `bg-${nome}`)).toBe(`bg-${nome}`)
+  it.each(fromScale('color'))('text-%s is a color, not a size', (name) => {
+    expect(cn('text-tinta-2', `text-${name}`)).toBe(`text-${name}`)
+    expect(cn('text-label', `text-${name}`)).toBe(`text-label text-${name}`)
+    expect(cn('bg-papel', `bg-${name}`)).toBe(`bg-${name}`)
   })
 
-  it.each(daEscala('leading'))('leading-%s é entrelinha', (nome) => {
-    expect(cn('leading-none', `leading-${nome}`)).toBe(`leading-${nome}`)
+  it.each(fromScale('leading'))('leading-%s is line height', (name) => {
+    expect(cn('leading-none', `leading-${name}`)).toBe(`leading-${name}`)
   })
 
-  it.each(daEscala('tracking'))('tracking-%s é espaçamento', (nome) => {
-    expect(cn('tracking-title', `tracking-${nome}`)).toBe(`tracking-${nome}`)
+  it.each(fromScale('tracking'))('tracking-%s is letter spacing', (name) => {
+    expect(cn('tracking-title', `tracking-${name}`)).toBe(`tracking-${name}`)
   })
 
-  it.each(daEscala('radius'))('rounded-%s é raio', (nome) => {
-    expect(cn('rounded-none', `rounded-${nome}`)).toBe(`rounded-${nome}`)
+  it.each(fromScale('radius'))('rounded-%s is a radius', (name) => {
+    expect(cn('rounded-none', `rounded-${name}`)).toBe(`rounded-${name}`)
   })
 
-  it.each(daEscala('spacing'))('p-%s é espaço', (nome) => {
-    expect(cn('p-2', `p-${nome}`)).toBe(`p-${nome}`)
+  it.each(fromScale('spacing'))('p-%s is spacing', (name) => {
+    expect(cn('p-2', `p-${name}`)).toBe(`p-${name}`)
   })
 
-  it.each(daEscala('font'))('font-%s é família, e não peso', (nome) => {
-    expect(cn('font-body', `font-${nome}`)).toBe(`font-${nome}`)
-    expect(cn('font-bold', `font-${nome}`)).toBe(`font-bold font-${nome}`)
+  it.each(fromScale('font'))('font-%s is a family, not a weight', (name) => {
+    expect(cn('font-body', `font-${name}`)).toBe(`font-${name}`)
+    expect(cn('font-bold', `font-${name}`)).toBe(`font-bold font-${name}`)
   })
 })
 
-// As tabelas ficam no repositório, prontas, para o navegador não ter de
-// compilá-las. Quem muda uma escala do `@theme` roda `pnpm cn:tabelas`.
-it('as tabelas são as que o styles.css de hoje gera', async () => {
-  const pasta = mkdtempSync(join(tmpdir(), 'cn-tabelas-'))
-  onTestFinished(() => rmSync(pasta, { recursive: true, force: true }))
-  const saida = join(pasta, 'cn-tabelas.js')
+// The tables live in the repository, ready, so the browser does not have to
+// compile them. Whoever changes a `@theme` scale runs `pnpm cn:tables`.
+it("the tables are the ones today's styles.css generates", async () => {
+  const folder = mkdtempSync(join(tmpdir(), 'cn-tables-'))
+  onTestFinished(() => rmSync(folder, { recursive: true, force: true }))
+  const output = join(folder, 'cn-tables.js')
   await build({
     cwd: fileURLToPath(new URL('../..', import.meta.url)),
     css: 'src/styles.css',
     full: true,
-    out: saida,
+    out: output,
   })
 
-  const geradas = await import(/* @vite-ignore */ pathToFileURL(saida).href)
-  expect(geradas.default).toEqual(tabelas)
+  const generated = await import(/* @vite-ignore */ pathToFileURL(output).href)
+  expect(generated.default).toEqual(tables)
 })

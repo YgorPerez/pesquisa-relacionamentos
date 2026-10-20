@@ -18,34 +18,34 @@ Marcar `- [x] No screen change` na seção passa o check, para a mudança num ar
 
 ## Tirar
 
-A skill `testar-app` sobe o antes e o depois e tira as capturas. O comando é `frontend/scripts/capturar.ts`, que tira o print e, com `--video`, grava do carregamento ao último `--tocar`, no celular (390×844) e no desktop (1280×800). Por padrão ele abre o `pnpm start` do checkout:
+A skill `testar-app` sobe o antes e o depois e tira as capturas. O comando é `frontend/scripts/capture.ts`, que tira o print e, com `--video`, grava do carregamento ao último `--tap`, no celular (390×844) e no desktop (1280×800). Por padrão ele abre o `pnpm start` do checkout:
 
 ```bash
 cd frontend
-node scripts/capturar.ts /prioridades --video --tocar 'text=Renda' --nome prioridades-depois
+node scripts/capture.ts /prioridades --video --tap 'text=Renda' --name prioridades-depois
 ```
 
 Com o `ffmpeg` no PATH (a máquina tem) o vídeo sai em `.mp4`; sem ele, no `.webm` do Playwright. O GitHub toca os dois.
 
-O antes é a mesma captura num segundo worktree no ramo de destino, com o `pnpm start` dele (`--porta <start dele>`). Dê nomes que se ordenam juntos, como `prioridades-antes-celular.png` e `prioridades-depois-celular.png`.
+O antes é a mesma captura num segundo worktree no ramo de destino, com o `pnpm start` dele (`--port <start dele>`). Dê nomes que se ordenam juntos, como `prioridades-antes-mobile.png` e `prioridades-depois-mobile.png`.
 
-Para ver a animação de uma story quadro a quadro, `--story <id> --em 0,500,1000` fotografa a story do Storybook que está de pé em cada instante, com o relógio da página parado e andando junto com as animações do CSS.
+Para ver a animação de uma story quadro a quadro, `--story <id> --at 0,500,1000` fotografa a story do Storybook que está de pé em cada instante, com o relógio da página parado e andando junto com as animações do CSS.
 
 ## Anexar
 
 O `gh` sobe anexos com `--attach` no `gh pr create`, `gh pr edit` e `gh pr comment`. Escreva a tabela com os caminhos locais e rode da pasta de onde eles são relativos:
 
 ```markdown
-|                      | Antes                                     | Depois                                      |
-| -------------------- | ----------------------------------------- | ------------------------------------------- |
-| Prioridades, celular | ![antes](./prioridades-antes-celular.png) | ![depois](./prioridades-depois-celular.png) |
-| Vídeo, celular       | [antes](./prioridades-antes-celular.mp4)  | [depois](./prioridades-depois-celular.mp4)  |
+|                      | Antes                                    | Depois                                     |
+| -------------------- | ---------------------------------------- | ------------------------------------------ |
+| Prioridades, celular | ![antes](./prioridades-antes-mobile.png) | ![depois](./prioridades-depois-mobile.png) |
+| Vídeo, celular       | [antes](./prioridades-antes-mobile.mp4)  | [depois](./prioridades-depois-mobile.mp4)  |
 ```
 
 ```bash
 GH_TOKEN=$(gh auth token --user YgorPerez) gh pr edit <n> --body-file corpo.md \
-  --attach ./prioridades-antes-celular.png --attach ./prioridades-depois-celular.png \
-  --attach ./prioridades-antes-celular.mp4 --attach ./prioridades-depois-celular.mp4
+  --attach ./prioridades-antes-mobile.png --attach ./prioridades-depois-mobile.png \
+  --attach ./prioridades-antes-mobile.mp4 --attach ./prioridades-depois-mobile.mp4
 ```
 
 O `gh` troca cada `./caminho` que a descrição cita pela URL do anexo, e põe no fim o arquivo que ela não cita. Escreva o vídeo como link, `[antes](./x.mp4)`: um `./x.mp4` solto numa célula fica como texto, e o arquivo vai para o fim da descrição, fora da seção. Nunca commite as capturas.

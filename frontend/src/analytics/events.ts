@@ -1,0 +1,44 @@
+// The usage-count events (#21, #35), all here. The name is what the
+// GoatCounter dashboard shows, and changing one breaks the series already
+// there (the move to English, ADR 0039, broke it once). None carries the
+// Profile: the pieces are the Guide, the Fact sheet, the reason and the
+// calculator, never anything about who visits. The slugs are the URLs', in
+// Portuguese.
+
+/** The four closed reasons for the "no" of "Ajudou?" (#21). */
+export const NO_REASONS = [
+  'did-not-answer',
+  'do-not-trust',
+  'hard-to-understand',
+  'does-not-apply',
+] as const
+export type NoReason = (typeof NO_REASONS)[number]
+
+/** The calculator, by its route (`/grupo-possivel`, `/prioridades`). */
+export type CountedCalculator = 'grupo-possivel' | 'prioridades'
+
+const CALCULATOR_EVENT: Readonly<Record<CountedCalculator, string>> = {
+  'grupo-possivel': 'possible-group',
+  prioridades: 'priorities',
+}
+
+export type AnalyticsEvent =
+  | `helped/yes/${string}`
+  | `helped/no/${NoReason}/${string}`
+  | `fact-sheet/${string}/${string}`
+  | `calculator/${string}`
+
+export const EVENTS = {
+  /** "Ajudou?" at the end of the Guide: yes. */
+  helpedYes: (guide: string): AnalyticsEvent => `helped/yes/${guide}`,
+  /** "Ajudou?": no, with the reason. */
+  helpedNo: (reason: NoReason, guide: string): AnalyticsEvent =>
+    `helped/no/${reason}/${guide}`,
+  /** A Fact sheet opened from the Guide, by its title or by a link in the
+   * text. */
+  factSheetOpened: (guide: string, factSheet: string): AnalyticsEvent =>
+    `fact-sheet/${guide}/${factSheet}`,
+  /** The calculator was used; counts once per visit. */
+  calculator: (calculator: CountedCalculator): AnalyticsEvent =>
+    `calculator/${CALCULATOR_EVENT[calculator]}`,
+} as const

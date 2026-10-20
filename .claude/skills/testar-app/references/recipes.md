@@ -22,19 +22,19 @@ ss -ltnp 'sport = :<porta start>'
 
 ## Capturar
 
-`frontend/scripts/capturar.ts` tira o print no celular (390×844) e no desktop (1280×800), e com `--video` grava do carregamento ao último toque. Por padrão abre o `start` deste worktree:
+`frontend/scripts/capture.ts` tira o print no celular (390×844) e no desktop (1280×800), e com `--video` grava do carregamento ao último toque. Por padrão abre o `start` deste worktree:
 
 ```bash
 cd frontend
-node scripts/capturar.ts /prioridades --video --saida /tmp/capturas-<ticket> --nome prioridades-depois
-node scripts/capturar.ts /onde-conhecer-pessoas/app-ou-bar --tocar 'text=Mulher' --video --nome guia-depois
-node scripts/capturar.ts --help
+node scripts/capture.ts /prioridades --video --out /tmp/capturas-<ticket> --name prioridades-depois
+node scripts/capture.ts /onde-conhecer-pessoas/app-ou-bar --tap 'text=Mulher' --video --name guia-depois
+node scripts/capture.ts --help
 ```
 
-- `--tocar <seletor>` toca num seletor do Playwright antes da captura; repete na ordem dada.
-- `--so celular` ou `--so desktop` tira só uma das telas; `--inteira` pega a página inteira.
+- `--tap <seletor>` toca num seletor do Playwright antes da captura; repete na ordem dada.
+- `--only mobile` ou `--only desktop` tira só uma das telas; `--full` pega a página inteira.
 - O vídeo sai em `.mp4` com o `ffmpeg` do PATH (a máquina tem), e em `.webm` sem ele.
-- `--story <id> --em 0,500,1000` fotografa uma story do `pnpm storybook` deste worktree em instantes da animação. Um id errado lista os parecidos.
+- `--story <id> --at 0,500,1000` fotografa uma story do `pnpm storybook` deste worktree em instantes da animação. Um id errado lista os parecidos.
 
 ## O antes
 
@@ -46,7 +46,7 @@ cd /tmp/antes-<ticket> && node scripts/prepare-worktree.ts && pnpm build
 node scripts/ports.ts                     # a porta start do antes
 node scripts/dev.ts start > /tmp/antes-<ticket>.log 2>&1 & echo $! > /tmp/antes-<ticket>.pid
 cd <seu worktree>/frontend
-node scripts/capturar.ts /prioridades --video --porta <start do antes> --saida /tmp/capturas-<ticket> --nome prioridades-antes
+node scripts/capture.ts /prioridades --video --port <start do antes> --out /tmp/capturas-<ticket> --name prioridades-antes
 ```
 
 Pare o `start` do antes pelo PID e remova a worktree: `git worktree remove --force /tmp/antes-<ticket>`.
@@ -61,7 +61,7 @@ GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/screen-evidence.
 
 ## Um script seu
 
-Para o que o `capturar.ts` não faz (encher o Perfil, ler o `localStorage`, desligar o JS), um script do Playwright em `/tmp`, rodado de `frontend/` para o `@playwright/test` resolver:
+Para o que o `capture.ts` não faz (encher o Perfil, ler o `localStorage`, desligar o JS), um script do Playwright em `/tmp`, rodado de `frontend/` para o `@playwright/test` resolver:
 
 ```ts
 import { chromium, devices } from '@playwright/test'

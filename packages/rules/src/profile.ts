@@ -1,8 +1,8 @@
 // The visitor's profile (GLOSSARY): their gender, who they seek and their age.
 // All optional: someone who says nothing sees the whole guide with only the
 // "Vale para:" notes. The link (#34) and calculator (#31, #33) modules read
-// from here. The keys and values are what the browser stores and the link
-// carries, so they stay in Portuguese.
+// from here. The values are what the link carries, so they stay in
+// Portuguese (ADR 0039); the keys are the stored JSON's.
 
 /** The gender in the profile. `outro` does not exist in the fact sheets'
  * `cobre` (#5). */
@@ -19,17 +19,17 @@ export const MIN_AGE = 18
 export const MAX_AGE = 120
 
 export interface Profile {
-  readonly genero?: ProfileGender
-  readonly procura?: ProfileSeeks
-  readonly idade?: number
+  readonly gender?: ProfileGender
+  readonly seeks?: ProfileSeeks
+  readonly age?: number
 }
 
 /** No gender, no one sought and no age: it is like having no profile. */
 export const isProfileEmpty = (profile: Profile | null): boolean =>
   !profile ||
-  (profile.genero === undefined &&
-    profile.procura === undefined &&
-    profile.idade === undefined)
+  (profile.gender === undefined &&
+    profile.seeks === undefined &&
+    profile.age === undefined)
 
 const oneOf = <T extends string>(
   list: ReadonlyArray<T>,
@@ -54,13 +54,13 @@ export function validAge(value: unknown): number | undefined {
 export function readProfile(value: unknown): Profile | null {
   if (typeof value !== 'object' || value === null) return null
   const raw = value as Record<string, unknown>
-  const gender = oneOf(PROFILE_GENDERS, raw.genero)
-  const seeks = oneOf(PROFILE_SEEKS, raw.procura)
-  const age = validAge(raw.idade)
+  const gender = oneOf(PROFILE_GENDERS, raw.gender)
+  const seeks = oneOf(PROFILE_SEEKS, raw.seeks)
+  const age = validAge(raw.age)
   const profile: Profile = {
-    ...(gender && { genero: gender }),
-    ...(seeks && { procura: seeks }),
-    ...(age !== undefined && { idade: age }),
+    ...(gender && { gender }),
+    ...(seeks && { seeks }),
+    ...(age !== undefined && { age }),
   }
   return isProfileEmpty(profile) ? null : profile
 }
@@ -81,9 +81,9 @@ const SEEKS_IN_WORDS: Record<ProfileSeeks, string> = {
  * Perfil: …" and for the warning that no study covers it. */
 export function describeProfile(profile: Profile): string {
   return [
-    profile.genero && GENDER_IN_WORDS[profile.genero],
-    profile.procura && SEEKS_IN_WORDS[profile.procura],
-    profile.idade !== undefined && `${profile.idade} anos`,
+    profile.gender && GENDER_IN_WORDS[profile.gender],
+    profile.seeks && SEEKS_IN_WORDS[profile.seeks],
+    profile.age !== undefined && `${profile.age} anos`,
   ]
     .filter(Boolean)
     .join(', ')

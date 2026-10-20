@@ -1,6 +1,6 @@
 // The repository's environment variables, read and validated with T3 Env
 // (ADR 0032, modeled on Festival dos Macacos' `env.server.ts`). Readers:
-// `./ports.ts` (the port of each use), `frontend/vite/ambiente.ts` (the build
+// `./ports.ts` (the port of each use), `frontend/vite/environment.ts` (the build
 // ones: the library, the sitemap and counting on localhost) and
 // `frontend/scripts/vps.ts` (the VPS and the GoatCounter login).
 //
@@ -81,7 +81,7 @@ export const optionalEmail = variable<string | undefined>(
   (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? value : undefined),
 )
 
-/** An on/off switch, `1` or `0`, like `VITE_CONTAR_EM_LOCALHOST`. */
+/** An on/off switch, `1` or `0`, like `VITE_COUNT_ON_LOCALHOST`. */
 export const flag = (fallback: boolean) =>
   variable('1 or 0', fallback, (value) =>
     value === '1' ? true : value === '0' ? false : undefined,

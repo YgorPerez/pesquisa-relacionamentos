@@ -23,7 +23,7 @@ describe('suiteQueues', () => {
 
   it("the diff's suite runs Vitest only in the affected folders and only the term's specs", () => {
     const queues = suiteQueues({
-      plan: planForDiff(['frontend/src/ui/perfil.tsx']),
+      plan: planForDiff(['frontend/src/ui/profile.tsx']),
       base: BASE,
     })
     expect(names(queues)).toEqual([
@@ -38,7 +38,7 @@ describe('suiteQueues', () => {
       command: `pnpm exec vp test run --changed ${BASE} --passWithNoTests`,
     })
     expect(step('e2e')?.command).toBe(
-      'pnpm e2e acessibilidade.e2e.ts inicio.e2e.ts perfil.e2e.ts',
+      'pnpm e2e accessibility.e2e.ts home.e2e.ts profile.e2e.ts',
     )
     // Without the whole coverage, fallow runs only what does not depend on it.
     expect(step('fallow')?.command).toBe(
@@ -76,8 +76,8 @@ describe('suiteQueues', () => {
       tests?.retry?.command({ dir: '/repo/frontend', file: 'src/a.test.ts' }),
     ).toBe("pnpm exec vp test run 'src/a.test.ts'")
     const e2e = queues.flat().find((s) => s.name === 'e2e')
-    expect(e2e?.retry?.command({ dir: null, file: 'e2e/perfil.e2e.ts' })).toBe(
-      "pnpm exec playwright test 'e2e/perfil.e2e.ts' --retries=0",
+    expect(e2e?.retry?.command({ dir: null, file: 'e2e/profile.e2e.ts' })).toBe(
+      "pnpm exec playwright test 'e2e/profile.e2e.ts' --retries=0",
     )
   })
 })

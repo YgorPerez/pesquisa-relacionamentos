@@ -30,7 +30,7 @@ Um PR que muda tela precisa de pelo menos dois prints e dois vídeos na seção 
 ## Duas armadilhas
 
 - O `pnpm start` serve o último build. Uma mudança sem `pnpm build` depois dela mostra a página velha.
-- `waitForLoadState('networkidle')` às vezes não assenta com a contagem do GoatCounter ligada. Espere as fontes e as imagens, como o `capturar.ts` faz.
+- `waitForLoadState('networkidle')` às vezes não assenta com a contagem do GoatCounter ligada. Espere as fontes e as imagens, como o `capture.ts` faz.
 
 ## O que conferir
 

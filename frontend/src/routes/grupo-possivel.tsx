@@ -22,6 +22,7 @@ import {
   release,
   REQUIREMENT_TITLE,
   STATES,
+  TARGET_NAME,
   requirementValue,
   type VisitorRequirement,
   type Requirements,
@@ -33,56 +34,57 @@ import {
   type LinkState,
 } from '@tem-estudo/rules/link'
 import { useId, useRef, type ReactNode } from 'react'
-import type { GuiaDaCalculadora } from '#/conteudo/guias'
-import { leituras } from '#/conteudo/leituras'
-import { buscarPreviaDoGrupo, metaDaPrevia } from '#/conteudo/previa'
-import { useLinkRecebido } from '#/estado/link'
-import { Compartilhar } from '#/ui/compartilhar'
-import { AVISO_DA_CONTAGEM } from '#/ui/compartilhar.textos'
+import type { CalculatorGuide } from '#/content/guides'
+import { reads } from '#/content/reads'
+import { fetchGroupPreview, previewMeta } from '#/content/preview'
+import { useReceivedLink } from '#/state/link'
+import { Share } from '#/ui/share'
+import { COUNTING_NOTICE } from '#/ui/share.copy'
 import {
-  gravarRequisitos,
-  LUGARES_COM_DADOS,
-  useGrupoPossivel,
-  useRequisitosSalvos,
-  type ContaNoNavegador,
-} from '#/estado/grupo-possivel'
-import { usePerfil } from '#/estado/perfil'
-import { contarUsoDaCalculadora } from '#/analytics/contagem'
-import { Botao } from '#/ui/botao'
+  saveRequirements,
+  PLACES_WITH_DATA,
+  usePossibleGroup,
+  useSavedRequirements,
+  type BrowserCount,
+} from '#/state/possible-group'
+import { useProfile } from '#/state/profile'
+import { countCalculatorUse } from '#/analytics/counting'
+import { SiteButton } from '#/ui/button'
 import {
-  Dobras,
-  Faixa,
-  LinhaDoRequisito,
-  Marcar,
-  NumeroPreso,
-  Opcoes,
-  Passos,
-} from '#/ui/grupo-possivel'
-import { NOME_DO_ALVO, textoDoCusto } from '#/ui/grupo-possivel.textos'
-import { ConfiancaDaResposta } from '#/ui/guia'
-import { CaixaDoPerfil } from '#/ui/perfil'
+  Folds,
+  EstimateRange,
+  RequirementRow,
+  CheckChip,
+  PinnedNumber,
+  Options,
+  Stepper,
+} from '#/ui/possible-group'
+import { costText } from '#/ui/possible-group.copy'
+import { AnswerConfidence } from '#/ui/guide'
+import { ProfileBox } from '#/ui/profile'
 import { Select } from '@/ui/shadcn/select'
-import { Coluna, Display, Folha } from '#/ui/folha'
-import { Aviso, Headline, Painel, Secao } from '#/ui/secao'
+import { Column, Display, Sheet } from '#/ui/sheet'
+import { Notice, Headline, Panel, Section } from '#/ui/section'
 
-/** A nota miúda embaixo de um controle. */
-const DICA = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'
+/** The small note under a control. */
+const HINT = 'm-0 mt-2 text-label leading-nota font-normal text-tinta-2'
 
-/** Enquanto os dados chegam, o número antigo fica, apagado. */
-const CARREGANDO =
+/** While the data arrives, the old number stays, faded. */
+const LOADING =
   'opacity-55 motion-safe:transition-opacity motion-safe:delay-150 motion-safe:duration-200 motion-safe:ease-sai'
 
 export const Route = createFileRoute('/grupo-possivel')({
   loader: async ({ context, location }) => {
-    // A prévia do link só no servidor, para o robô da rede social; no
-    // navegador, nada do estado sai do aparelho. Ela fica no `loaderData`,
-    // porque só o `head` a usa; o Guia vai pelo `queryClient`.
-    const comLink = typeof window === 'undefined' && isLink(location.searchStr)
-    const [, previa] = await Promise.all([
-      context.queryClient.query(leituras.guiaDaCalculadora('grupo-possivel')),
-      comLink ? buscarPreviaDoGrupo({ data: location.searchStr }) : null,
+    // The link preview only on the server, for the social network's bot; in
+    // the browser, nothing of the state leaves the device. It stays in
+    // `loaderData`, because only `head` uses it; the Guide goes through the
+    // `queryClient`.
+    const withLink = typeof window === 'undefined' && isLink(location.searchStr)
+    const [, preview] = await Promise.all([
+      context.queryClient.query(reads.calculatorGuide('grupo-possivel')),
+      withLink ? fetchGroupPreview({ data: location.searchStr }) : null,
     ])
-    return { previa }
+    return { preview }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -92,82 +94,85 @@ export const Route = createFileRoute('/grupo-possivel')({
         content:
           'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022 e a PNS 2019.',
       },
-      ...metaDaPrevia(loaderData?.previa ?? null),
+      ...previewMeta(loaderData?.preview ?? null),
     ],
   }),
-  component: PaginaDoGrupoPossivel,
+  component: PossibleGroupPage,
 })
 
-const qualquer = 'qualquer'
+/** The "any" option's value and label. */
+const ANY = 'qualquer'
 
-/** Toda mudança do visitante nos Requisitos passa aqui, e conta o uso. */
-function gravarEContar(novos: Requirements) {
-  gravarRequisitos(novos)
-  contarUsoDaCalculadora('grupo-possivel')
+/** Every change the visitor makes to the Requirements goes through here, and
+ * counts the use. */
+function saveAndCount(next: Requirements) {
+  saveRequirements(next)
+  countCalculatorUse('grupo-possivel')
 }
 
-/** O valor de um Requisito escrito como na tela ("25 a 35 anos"). */
-type ValorDoRequisito = (k: VisitorRequirement | 'orientacao') => string
+/** A Requirement's value written as on the screen ("25 a 35 anos"). */
+type RequirementValue = (k: VisitorRequirement | 'orientation') => string
 
-function PaginaDoGrupoPossivel() {
-  const { data: guia } = useSuspenseQuery(
-    leituras.guiaDaCalculadora('grupo-possivel'),
+function PossibleGroupPage() {
+  const { data: guide } = useSuspenseQuery(
+    reads.calculatorGuide('grupo-possivel'),
   )
-  const trocou = useLinkRecebido('grupo-possivel') !== null
-  const perfil = usePerfil()
-  const salvos = useRequisitosSalvos()
-  const conta = useGrupoPossivel(perfil, salvos)
-  const r = salvos ?? DEFAULT_REQUIREMENTS
-  const municipio = r.lugar?.municipio
-    ? conta.uf?.municipalities.get(r.lugar.municipio)?.name
+  const replaced = useReceivedLink('grupo-possivel') !== null
+  const profile = useProfile()
+  const saved = useSavedRequirements()
+  const count = usePossibleGroup(profile, saved)
+  const r = saved ?? DEFAULT_REQUIREMENTS
+  const municipality = r.place?.municipality
+    ? count.stateData?.municipalities.get(r.place.municipality)?.name
     : undefined
-  const valor: ValorDoRequisito = (k) =>
-    requirementValue(k, perfil, r, municipio)
+  const value: RequirementValue = (k) =>
+    requirementValue(k, profile, r, municipality)
   const link: LinkState = {
     calculator: 'grupo-possivel',
-    profile: perfil,
-    requirements: salvos,
+    profile,
+    requirements: saved,
   }
 
   return (
-    <Folha>
-      <Coluna>
-        <TopoDaConta conta={conta} trocou={trocou} />
-        <SeuPerfil perfil={perfil} valor={valor} />
-        <SeusRequisitos
-          perfil={perfil}
-          requisitos={r}
-          conta={conta}
-          valor={valor}
+    <Sheet>
+      <Column>
+        <CountTop count={count} replaced={replaced} />
+        <YourProfile profile={profile} value={value} />
+        <YourRequirements
+          profile={profile}
+          requirements={r}
+          count={count}
+          value={value}
         />
-        <AConta
-          conta={conta}
-          perfil={perfil}
-          requisitos={r}
-          municipio={municipio}
-          valor={valor}
+        <TheCount
+          count={count}
+          profile={profile}
+          requirements={r}
+          municipality={municipality}
+          value={value}
         />
 
-        <Compartilhar
+        <Share
           query={linkQuery(link)}
-          frase={linkSentence(link, { municipality: municipio })}
-          aviso={AVISO_DA_CONTAGEM}
+          sentence={linkSentence(link, { municipality })}
+          notice={COUNTING_NOTICE}
         />
 
-        {guia && <DoGuia guia={guia} />}
-      </Coluna>
-    </Folha>
+        {guide && <FromTheGuide guide={guide} />}
+      </Column>
+    </Sheet>
   )
 }
 
-/** O título, o número preso no topo, o convite e os avisos da conta.
- * `trocou`: um link recebido trocou o Perfil e os Requisitos salvos. */
-function TopoDaConta({
-  conta,
-  trocou,
+/** The title, the number pinned at the top, the invitation and the count's
+ * notices. `replaced`: a received link replaced the saved Profile and
+ * Requirements. */
+function CountTop({
+  count,
+  replaced,
 }: {
-  conta: ContaNoNavegador
-  trocou: boolean
+  count: BrowserCount
+  replaced: boolean
 }) {
   return (
     <>
@@ -176,405 +181,406 @@ function TopoDaConta({
         <span className="marca-texto">procura</span>?
       </Display>
 
-      <NumeroPreso
-        estimativa={conta.estimativa}
-        carregando={conta.carregando}
-      />
+      <PinnedNumber estimate={count.estimate} loading={count.loading} />
 
       <p className="mx-0 mt-5.5 mb-md">
         Diga quem você procura e ligue os seus Requisitos. O número de cima muda
         junto, com dados do Censo 2022 e da PNS 2019.
       </p>
-      <AvisosDaConta
-        trocou={trocou}
-        falhou={conta.falhou}
-        tentar={conta.tentar}
-        ressalvas={conta.estimativa.caveats}
+      <CountNotices
+        replaced={replaced}
+        failed={count.failed}
+        retry={count.retry}
+        caveats={count.estimate.caveats}
       />
     </>
   )
 }
 
-/** O bloco "Seu Perfil": de quem a conta parte. */
-function SeuPerfil({
-  perfil,
-  valor,
+/** The "Seu Perfil" block: who the count starts from. */
+function YourProfile({
+  profile,
+  value,
 }: {
-  perfil: Profile | null
-  valor: ValorDoRequisito
+  profile: Profile | null
+  value: RequirementValue
 }) {
   return (
-    <Secao aria-labelledby="t-perfil">
+    <Section aria-labelledby="t-perfil">
       <Headline id="t-perfil">Seu Perfil</Headline>
-      <p className={DICA}>
+      <p className={HINT}>
         A conta parte de quem você é e de quem você procura.
       </p>
-      <CaixaDoPerfil
-        perfil={perfil}
-        comDado={null}
-        totalDeAchados={0}
-        rotuloDoBotao="Usar na conta"
+      <ProfileBox
+        profile={profile}
+        withData={null}
+        findingTotal={0}
+        buttonLabel="Usar na conta"
       />
-      {(perfil?.genero === 'homem' || perfil?.genero === 'mulher') && (
-        <p className={DICA}>
+      {(profile?.gender === 'homem' || profile?.gender === 'mulher') && (
+        <p className={HINT}>
           A orientação entra pelo seu Perfil: a conta só conta quem{' '}
-          {valor('orientacao')}, pela PNS 2019.
+          {value('orientation')}, pela PNS 2019.
         </p>
       )}
-    </Secao>
+    </Section>
   )
 }
 
-/** O bloco "Seus Requisitos": uma linha por Requisito, na ordem de
- * `REQUISITOS`, com o controle dele e o quanto ele corta. */
-function SeusRequisitos({
-  perfil,
-  requisitos,
-  conta,
-  valor,
+/** The "Seus Requisitos" block: one row per Requirement, in `REQUIREMENTS`
+ * order, with its control and how much it cuts. */
+function YourRequirements({
+  profile,
+  requirements,
+  count,
+  value,
 }: {
-  perfil: Profile | null
-  requisitos: Requirements
-  conta: ContaNoNavegador
-  valor: ValorDoRequisito
+  profile: Profile | null
+  requirements: Requirements
+  count: BrowserCount
+  value: RequirementValue
 }) {
-  const { estimativa } = conta
-  const idMotivoFilhos = useId()
-  const props: PropsDoControle = {
-    perfil,
-    requisitos,
-    mudar: (mudanca) => gravarEContar({ ...requisitos, ...mudanca }),
-    municipios: conta.uf?.municipalities,
-    filhos: estimativa.children,
-    idMotivoFilhos,
+  const { estimate } = count
+  const childrenReasonId = useId()
+  const props: ControlProps = {
+    profile,
+    requirements,
+    change: (change) => saveAndCount({ ...requirements, ...change }),
+    municipalities: count.stateData?.municipalities,
+    childrenData: estimate.children,
+    childrenReasonId,
   }
   return (
-    <Secao aria-labelledby="t-requisitos">
+    <Section aria-labelledby="t-requisitos">
       <Headline id="t-requisitos">Seus Requisitos</Headline>
-      <div className={conta.carregando ? CARREGANDO : undefined}>
+      <div className={count.loading ? LOADING : undefined}>
         {REQUIREMENTS.map((k) => {
-          const Controle = CONTROLE[k]
+          const Control = CONTROL[k]
           return (
-            <LinhaDoRequisito
+            <RequirementRow
               key={k}
-              requisito={k}
-              valor={valor(k)}
-              custo={estimativa.costs.find((c) => c.requirement === k)}
-              ligado={estimativa.active.includes(k)}
-              nota={
-                k === 'filhos' ? (
-                  <MotivoDosFilhos
-                    filhos={estimativa.children}
-                    id={idMotivoFilhos}
+              requirement={k}
+              value={value(k)}
+              cost={estimate.costs.find((c) => c.requirement === k)}
+              active={estimate.active.includes(k)}
+              note={
+                k === 'children' ? (
+                  <ChildrenReason
+                    childrenData={estimate.children}
+                    id={childrenReasonId}
                   />
                 ) : undefined
               }
             >
-              <Controle {...props} />
-            </LinhaDoRequisito>
+              <Control {...props} />
+            </RequirementRow>
           )
         })}
       </div>
-    </Secao>
+    </Section>
   )
 }
 
-/** O que o controle de um Requisito lê e como ele muda os Requisitos. */
-interface PropsDoControle {
-  perfil: Profile | null
-  requisitos: Requirements
-  mudar: (mudanca: Partial<Requirements>) => void
-  /** Os municípios da UF escolhida, quando já chegaram. */
-  municipios: ReadonlyMap<string, { name: string }> | undefined
-  filhos: Estimate['children']
-  /** O id do motivo de o filtro de filhos não valer, que a caixa cita. */
-  idMotivoFilhos: string
+/** What a Requirement's control reads and how it changes the Requirements. */
+interface ControlProps {
+  profile: Profile | null
+  requirements: Requirements
+  change: (change: Partial<Requirements>) => void
+  /** The chosen state's municipalities, once they arrived. */
+  municipalities: ReadonlyMap<string, { name: string }> | undefined
+  childrenData: Estimate['children']
+  /** The id of the reason the children filter does not apply, which the
+   * checkbox cites. */
+  childrenReasonId: string
 }
 
-/** A lista de marcados com `valor` marcado ou desmarcado, na ordem de `todos`. */
-function alternar<T extends string>(
-  todos: ReadonlyArray<T>,
-  marcados: ReadonlyArray<T>,
-  valor: T,
-  marcado: boolean,
+/** The checked list with `value` checked or unchecked, in `all`'s order. */
+function toggle<T extends string>(
+  all: ReadonlyArray<T>,
+  checked: ReadonlyArray<T>,
+  value: T,
+  isChecked: boolean,
 ): T[] {
-  const antes = new Set(marcados)
-  return todos.filter((c) => (c === valor ? marcado : antes.has(c)))
+  const before = new Set(checked)
+  return all.filter((c) => (c === value ? isChecked : before.has(c)))
 }
 
-/** O controle de cada Requisito, que vai dentro da linha dele. */
-const CONTROLE: Record<
-  VisitorRequirement,
-  (props: PropsDoControle) => ReactNode
-> = {
-  idade: ({ perfil, requisitos, mudar }) => {
-    const idade = soughtAge(perfil, requisitos)
-    return (
+/** Each Requirement's control, which goes inside its row. */
+const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
+  {
+    age: ({ profile, requirements, change }) => {
+      const age = soughtAge(profile, requirements)
+      return (
+        <div className="flex flex-wrap gap-x-5.5 gap-y-3">
+          <Stepper
+            label="Idade de"
+            value={age.min}
+            min={MIN_SOUGHT_AGE}
+            max={MAX_SOUGHT_AGE}
+            unit={() => 'anos'}
+            onChange={(min) =>
+              change({ age: { min, max: Math.max(min, age.max) } })
+            }
+          />
+          <Stepper
+            label="até"
+            value={age.max}
+            min={MIN_SOUGHT_AGE}
+            max={MAX_SOUGHT_AGE}
+            unit={(v) => (v >= MAX_SOUGHT_AGE ? 'anos ou mais' : 'anos')}
+            onChange={(max) =>
+              change({ age: { min: Math.min(max, age.min), max } })
+            }
+          />
+        </div>
+      )
+    },
+    place: ({ requirements, municipalities, change }) => (
+      <Place
+        requirements={requirements}
+        municipalities={municipalities}
+        change={change}
+      />
+    ),
+    partner: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não mora com companheiro(a)"
+        checked={requirements.noLiveInPartner}
+        onChange={(noLiveInPartner) => change({ noLiveInPartner })}
+      />
+    ),
+    education: ({ requirements, change }) => (
+      <Options
+        legend="Escolaridade mínima"
+        type="radio"
+        values={[ANY, ...MIN_EDUCATIONS]}
+        labels={{ [ANY]: ANY, ...EDUCATION_LABEL }}
+        checked={[requirements.education ?? ANY]}
+        onChange={(v) => change({ education: v === ANY ? null : v })}
+      />
+    ),
+    income: ({ requirements, change }) => (
+      <Options
+        legend="Renda mínima"
+        type="radio"
+        values={[ANY, ...MIN_INCOMES]}
+        labels={{ [ANY]: ANY, ...INCOME_LABEL }}
+        checked={[requirements.income ?? ANY]}
+        onChange={(v) => change({ income: v === ANY ? null : v })}
+        hint="Em salários mínimos de julho de 2022 (R$ 1.212)."
+      />
+    ),
+    color: ({ requirements, change }) => (
+      <Options
+        legend="Cor ou raça"
+        type="checkbox"
+        values={COLORS}
+        labels={COLOR_LABEL}
+        checked={requirements.colors}
+        onChange={(v, isChecked) =>
+          change({ colors: toggle(COLORS, requirements.colors, v, isChecked) })
+        }
+        hint="Nenhuma marcada é qualquer uma."
+      />
+    ),
+    religion: ({ requirements, change }) => (
+      <Options
+        legend="Religião"
+        type="checkbox"
+        values={RELIGIONS}
+        labels={RELIGION_LABEL}
+        checked={requirements.religions}
+        onChange={(v, isChecked) =>
+          change({
+            religions: toggle(RELIGIONS, requirements.religions, v, isChecked),
+          })
+        }
+        hint="Nenhuma marcada é qualquer uma."
+      />
+    ),
+    children: ({ requirements, childrenData, childrenReasonId, change }) => (
+      <CheckChip
+        label="Só quem não tem filhos"
+        checked={requirements.noChildren && childrenData !== 'no-data'}
+        disabled={childrenData === 'no-data'}
+        description={childrenData === 'applies' ? undefined : childrenReasonId}
+        onChange={(noChildren) => change({ noChildren })}
+      />
+    ),
+    height: ({ requirements: { height }, change }) => (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
-        <Passos
-          rotulo="Idade de"
-          valor={idade.min}
-          min={MIN_SOUGHT_AGE}
-          max={MAX_SOUGHT_AGE}
-          unidade={() => 'anos'}
-          aoMudar={(min) =>
-            mudar({ idade: { min, max: Math.max(min, idade.max) } })
+        <Stepper
+          label="Altura de"
+          value={height.min}
+          min={MIN_HEIGHT}
+          max={MAX_HEIGHT}
+          step={5}
+          unit={(v) => (v <= MIN_HEIGHT ? 'cm ou menos' : 'cm')}
+          onChange={(min) =>
+            change({ height: { min, max: Math.max(min, height.max) } })
           }
         />
-        <Passos
-          rotulo="até"
-          valor={idade.max}
-          min={MIN_SOUGHT_AGE}
-          max={MAX_SOUGHT_AGE}
-          unidade={(v) => (v >= MAX_SOUGHT_AGE ? 'anos ou mais' : 'anos')}
-          aoMudar={(max) =>
-            mudar({ idade: { min: Math.min(max, idade.min), max } })
+        <Stepper
+          label="até"
+          value={height.max}
+          min={MIN_HEIGHT}
+          max={MAX_HEIGHT}
+          step={5}
+          unit={(v) => (v >= MAX_HEIGHT ? 'cm ou mais' : 'cm')}
+          onChange={(max) =>
+            change({ height: { min: Math.min(max, height.min), max } })
           }
         />
       </div>
-    )
-  },
-  lugar: ({ requisitos, municipios, mudar }) => (
-    <Lugar requisitos={requisitos} municipios={municipios} mudar={mudar} />
-  ),
-  companheiro: ({ requisitos, mudar }) => (
-    <Marcar
-      rotulo="Só quem não mora com companheiro(a)"
-      marcado={requisitos.companheiro}
-      aoMudar={(companheiro) => mudar({ companheiro })}
-    />
-  ),
-  escolaridade: ({ requisitos, mudar }) => (
-    <Opcoes
-      legenda="Escolaridade mínima"
-      tipo="radio"
-      valores={[qualquer, ...MIN_EDUCATIONS]}
-      rotulos={{ qualquer, ...EDUCATION_LABEL }}
-      marcados={[requisitos.escolaridade ?? qualquer]}
-      aoMudar={(v) => mudar({ escolaridade: v === qualquer ? null : v })}
-    />
-  ),
-  renda: ({ requisitos, mudar }) => (
-    <Opcoes
-      legenda="Renda mínima"
-      tipo="radio"
-      valores={[qualquer, ...MIN_INCOMES]}
-      rotulos={{ qualquer, ...INCOME_LABEL }}
-      marcados={[requisitos.renda ?? qualquer]}
-      aoMudar={(v) => mudar({ renda: v === qualquer ? null : v })}
-      dica="Em salários mínimos de julho de 2022 (R$ 1.212)."
-    />
-  ),
-  cor: ({ requisitos, mudar }) => (
-    <Opcoes
-      legenda="Cor ou raça"
-      tipo="checkbox"
-      valores={COLORS}
-      rotulos={COLOR_LABEL}
-      marcados={requisitos.cores}
-      aoMudar={(v, marcado) =>
-        mudar({ cores: alternar(COLORS, requisitos.cores, v, marcado) })
-      }
-      dica="Nenhuma marcada é qualquer uma."
-    />
-  ),
-  religiao: ({ requisitos, mudar }) => (
-    <Opcoes
-      legenda="Religião"
-      tipo="checkbox"
-      valores={RELIGIONS}
-      rotulos={RELIGION_LABEL}
-      marcados={requisitos.religioes}
-      aoMudar={(v, marcado) =>
-        mudar({
-          religioes: alternar(RELIGIONS, requisitos.religioes, v, marcado),
-        })
-      }
-      dica="Nenhuma marcada é qualquer uma."
-    />
-  ),
-  filhos: ({ requisitos, filhos, idMotivoFilhos, mudar }) => (
-    <Marcar
-      rotulo="Só quem não tem filhos"
-      marcado={requisitos.semFilhos && filhos !== 'sem-dado'}
-      desabilitado={filhos === 'sem-dado'}
-      descricao={filhos === 'vale' ? undefined : idMotivoFilhos}
-      aoMudar={(semFilhos) => mudar({ semFilhos })}
-    />
-  ),
-  altura: ({ requisitos: { altura }, mudar }) => (
-    <div className="flex flex-wrap gap-x-5.5 gap-y-3">
-      <Passos
-        rotulo="Altura de"
-        valor={altura.min}
-        min={MIN_HEIGHT}
-        max={MAX_HEIGHT}
-        passo={5}
-        unidade={(v) => (v <= MIN_HEIGHT ? 'cm ou menos' : 'cm')}
-        aoMudar={(min) =>
-          mudar({ altura: { min, max: Math.max(min, altura.max) } })
-        }
+    ),
+    smoking: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não fuma"
+        checked={requirements.nonSmoker}
+        onChange={(nonSmoker) => change({ nonSmoker })}
       />
-      <Passos
-        rotulo="até"
-        valor={altura.max}
-        min={MIN_HEIGHT}
-        max={MAX_HEIGHT}
-        passo={5}
-        unidade={(v) => (v >= MAX_HEIGHT ? 'cm ou mais' : 'cm')}
-        aoMudar={(max) =>
-          mudar({ altura: { min: Math.min(max, altura.min), max } })
-        }
-      />
-    </div>
-  ),
-  fumo: ({ requisitos, mudar }) => (
-    <Marcar
-      rotulo="Só quem não fuma"
-      marcado={requisitos.naoFuma}
-      aoMudar={(naoFuma) => mudar({ naoFuma })}
-    />
-  ),
-}
+    ),
+  }
 
-/** O bloco "A conta": a faixa, o que mais pesa, com o botão de soltar cada
- * Requisito, e as dobras do corte a corte e da incerteza. */
-function AConta({
-  conta: { estimativa, carregando },
-  perfil,
-  requisitos,
-  municipio,
-  valor,
+/** The "A conta" block: the range, what weighs most, with the button to
+ * release each Requirement, and the cut-by-cut and uncertainty folds. */
+function TheCount({
+  count: { estimate, loading },
+  profile,
+  requirements,
+  municipality,
+  value,
 }: {
-  conta: ContaNoNavegador
-  perfil: Profile | null
-  requisitos: Requirements
-  municipio: string | undefined
-  valor: ValorDoRequisito
+  count: BrowserCount
+  profile: Profile | null
+  requirements: Requirements
+  municipality: string | undefined
+  value: RequirementValue
 }) {
-  const maisPesa = useRef<HTMLHeadingElement>(null)
-  const lugarNome = valor('lugar')
-  // O botão some com a linha que ele soltou; o foco vai para o título da lista.
-  const soltarERever = (k: VisitorRequirement) => {
-    gravarEContar(release(requisitos, k))
-    maisPesa.current?.focus()
+  const weighsMost = useRef<HTMLHeadingElement>(null)
+  const placeName = value('place')
+  // The button goes away with the row it released; focus goes to the list's
+  // title.
+  const releaseAndReview = (k: VisitorRequirement) => {
+    saveAndCount(release(requirements, k))
+    weighsMost.current?.focus()
   }
   return (
-    <Secao id="a-conta" aria-labelledby="t-conta">
+    <Section id="a-conta" aria-labelledby="t-conta">
       <Headline id="t-conta">A conta</Headline>
-      <div className={carregando ? CARREGANDO : undefined}>
-        <Faixa estimativa={estimativa} />
+      <div className={loading ? LOADING : undefined}>
+        <EstimateRange estimate={estimate} />
         <p className="m-0 mt-1.5">
-          {NOME_DO_ALVO[estimativa.target]} em{' '}
-          {lugarNome === 'Brasil inteiro' ? 'todo o Brasil' : lugarNome} atendem
+          {TARGET_NAME[estimate.target]} em{' '}
+          {placeName === 'Brasil inteiro' ? 'todo o Brasil' : placeName} atendem
           a tudo o que você pediu. Estimativa central:{' '}
-          {formatAmount(estimativa.result.central)}.
+          {formatAmount(estimate.result.central)}.
         </p>
         <h3
           className="m-0 mt-md mb-2 font-label text-label text-tinta-2"
-          ref={maisPesa}
+          ref={weighsMost}
           tabIndex={-1}
         >
           O que mais pesa
         </h3>
-        <CustosDaConta
-          custos={estimativa.costs}
-          valor={valor}
-          aoSoltar={soltarERever}
+        <CountCosts
+          costs={estimate.costs}
+          value={value}
+          onRelease={releaseAndReview}
         />
-        <Dobras
-          estimativa={estimativa}
-          perfil={perfil}
-          requisitos={requisitos}
-          municipio={municipio}
+        <Folds
+          estimate={estimate}
+          profile={profile}
+          requirements={requirements}
+          municipality={municipality}
         />
       </div>
-    </Secao>
+    </Section>
   )
 }
 
-/** O aviso do link recebido, o de dados que não chegaram e as ressalvas
- * fortes da conta, no topo da página. */
-function AvisosDaConta({
-  trocou,
-  falhou,
-  tentar,
-  ressalvas,
+/** The received link's notice, the one for data that did not arrive and the
+ * count's strong caveats, at the top of the page. */
+function CountNotices({
+  replaced,
+  failed,
+  retry,
+  caveats,
 }: {
-  trocou: boolean
-  falhou: boolean
-  tentar: () => void
-  ressalvas: Estimate['caveats']
+  replaced: boolean
+  failed: boolean
+  retry: () => void
+  caveats: Estimate['caveats']
 }) {
   return (
     <>
-      {trocou && (
-        <Aviso role="status">
+      {replaced && (
+        <Notice role="status">
           Este link trocou o seu Perfil e os seus Requisitos salvos pelos de
           quem mandou.
-        </Aviso>
+        </Notice>
       )}
-      {falhou && (
-        <Aviso role="alert">
+      {failed && (
+        <Notice role="alert">
           Não deu para baixar os dados da conta.{' '}
-          <Botao variante="leve" onClick={tentar}>
+          <SiteButton variant="light" onClick={retry}>
             Tentar de novo
-          </Botao>
-        </Aviso>
+          </SiteButton>
+        </Notice>
       )}
-      {ressalvas
+      {caveats
         .filter((x) => x.strong)
-        .map((aviso) => (
-          <Aviso key={aviso.id} className="font-bold" role="note">
-            {aviso.text}
-          </Aviso>
+        .map((caveat) => (
+          <Notice key={caveat.id} className="font-bold" role="note">
+            {caveat.text}
+          </Notice>
         ))}
     </>
   )
 }
 
-/** Por que o filtro de filhos não vale, ou vale só para as mulheres. */
-function MotivoDosFilhos({
-  filhos,
+/** Why the children filter does not apply, or applies only to women. */
+function ChildrenReason({
+  childrenData,
   id,
 }: {
-  filhos: Estimate['children']
+  childrenData: Estimate['children']
   id: string
 }) {
-  if (filhos === 'vale') return null
+  if (childrenData === 'applies') return null
   return (
     <p
       className="m-0 mt-2 text-label leading-nota font-bold text-tinta"
       id={id}
     >
-      {filhos === 'sem-dado'
+      {childrenData === 'no-data'
         ? 'O Censo só pergunta filhos às mulheres. Procurando homens, não dá para filtrar.'
         : 'O Censo só pergunta filhos às mulheres: procurando homens e mulheres, o filtro vale só para elas.'}
     </p>
   )
 }
 
-/** "O que mais pesa": cada Requisito ligado, do que mais encolhe o grupo ao
- * que menos, com o botão de soltá-lo. */
-function CustosDaConta({
-  custos,
-  valor,
-  aoSoltar,
+/** "O que mais pesa": each active Requirement, from the one that shrinks the
+ * group most to the least, with the button to release it. */
+function CountCosts({
+  costs,
+  value,
+  onRelease,
 }: {
-  custos: Estimate['costs']
-  valor: (k: VisitorRequirement) => string
-  aoSoltar: (k: VisitorRequirement) => void
+  costs: Estimate['costs']
+  value: (k: VisitorRequirement) => string
+  onRelease: (k: VisitorRequirement) => void
 }) {
-  if (custos.length === 0)
+  if (costs.length === 0)
     return (
-      <p className={DICA}>
+      <p className={HINT}>
         Nenhum Requisito ligado ainda. Cada um que você ligar aparece aqui, do
         que mais encolhe o grupo ao que menos.
       </p>
     )
   return (
     <ul className="m-0 list-none p-0">
-      {custos.map((c) => {
+      {costs.map((c) => {
         const k = c.requirement as VisitorRequirement
         return (
           <li
@@ -584,18 +590,18 @@ function CustosDaConta({
             <span className="font-bold">
               {REQUIREMENT_TITLE[k]}
               <small className="block text-label leading-body font-normal text-tinta-2">
-                {valor(k)}
+                {value(k)}
               </small>
             </span>
-            <span className="col-1 text-nota">{textoDoCusto(c)}</span>
-            <Botao
-              variante="leve"
+            <span className="col-1 text-nota">{costText(c)}</span>
+            <SiteButton
+              variant="light"
               className="col-2 row-span-2 row-start-1"
-              onClick={() => aoSoltar(k)}
+              onClick={() => onRelease(k)}
               aria-label={`Soltar ${REQUIREMENT_TITLE[k].toLowerCase()}`}
             >
               soltar
-            </Botao>
+            </SiteButton>
           </li>
         )
       })}
@@ -603,77 +609,78 @@ function CustosDaConta({
   )
 }
 
-/** O bloco "Do Guia": a Pergunta que hospeda a calculadora e a resposta curta. */
-function DoGuia({ guia }: { guia: GuiaDaCalculadora }) {
+/** The "Do Guia" block: the Question that hosts the calculator and the short
+ * answer. */
+function FromTheGuide({ guide }: { guide: CalculatorGuide }) {
   return (
-    <Secao aria-labelledby="t-do-guia">
+    <Section aria-labelledby="t-do-guia">
       <Headline id="t-do-guia">Do Guia</Headline>
-      <Painel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mb-2.5">
+      <Panel className="[&>p]:m-0 [&>p]:mt-xs [&>p:first-child]:mb-2.5">
         <p className="font-title text-linha leading-label font-bold text-tinta">
-          {guia.pergunta}
+          {guide.question}
         </p>
-        <ConfiancaDaResposta confianca={guia.confianca} />
-        <p className="text-lead">{guia.resposta}</p>
+        <AnswerConfidence confidence={guide.confidence} />
+        <p className="text-lead">{guide.answer}</p>
         <Link
           to="/$tema/$slug"
-          params={{ tema: guia.tema, slug: guia.slug }}
+          params={{ tema: guide.topic, slug: guide.slug }}
           className="mt-1.5 inline-flex min-h-toque items-center font-bold"
         >
           Ler o Guia inteiro
         </Link>
-      </Painel>
-    </Secao>
+      </Panel>
+    </Section>
   )
 }
 
-/** UF e, dentro dela, município, cada um numa lista do `Select`. */
-function Lugar({
-  requisitos,
-  municipios,
-  mudar,
+/** State and, inside it, municipality, each in a `Select` list. */
+function Place({
+  requirements,
+  municipalities,
+  change,
 }: {
-  requisitos: Requirements
-  municipios: ReadonlyMap<string, { name: string }> | undefined
-  mudar: (mudanca: Partial<Requirements>) => void
+  requirements: Requirements
+  municipalities: ReadonlyMap<string, { name: string }> | undefined
+  change: (change: Partial<Requirements>) => void
 }) {
-  const uf = requisitos.lugar?.uf
-  const ufs = [
+  const state = requirements.place?.state
+  const states = [
     { value: null, label: 'Brasil inteiro' },
-    ...STATES.filter((u) => LUGARES_COM_DADOS.includes(u.abbr)).map((u) => ({
+    ...STATES.filter((u) => PLACES_WITH_DATA.includes(u.abbr)).map((u) => ({
       value: u.abbr,
       label: u.name,
     })),
   ]
-  const lista = [
+  const list = [
     {
       value: null,
-      label: municipios ? 'Todo o estado' : 'Carregando os municípios…',
+      label: municipalities ? 'Todo o estado' : 'Carregando os municípios…',
     },
-    ...(municipios
-      ? [...municipios]
+    ...(municipalities
+      ? [...municipalities]
           .sort(([, a], [, b]) => a.name.localeCompare(b.name, 'pt-BR'))
-          .map(([codigo, m]) => ({ value: codigo, label: m.name }))
+          .map(([code, m]) => ({ value: code, label: m.name }))
       : []),
   ]
   return (
     <div className="grid gap-2.5">
       <Select
         label="Estado"
-        items={ufs}
-        value={uf ?? null}
-        onValueChange={(sigla) => {
-          const escolhida = STATES.find((u) => u.abbr === sigla)
-          mudar({ lugar: escolhida ? { uf: escolhida.abbr } : null })
+        items={states}
+        value={state ?? null}
+        onValueChange={(abbr) => {
+          const chosen = STATES.find((u) => u.abbr === abbr)
+          change({ place: chosen ? { state: chosen.abbr } : null })
         }}
       />
-      {uf && (
+      {state && (
         <Select
           label="Município"
-          items={lista}
-          value={requisitos.lugar?.municipio ?? null}
-          disabled={!municipios}
-          onValueChange={(municipio) =>
-            mudar({ lugar: { uf, ...(municipio && { municipio }) } })
+          items={list}
+          value={requirements.place?.municipality ?? null}
+          disabled={!municipalities}
+          onValueChange={(municipality) =>
+            change({ place: { state, ...(municipality && { municipality }) } })
           }
         />
       )}
