@@ -1,15 +1,22 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { buscarTema } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { ConfiancaCurta, Html } from '#/ui/guia'
 import { Coluna, Display, Folha, Headline, Lead } from '#/ui/pagina'
 
 export const Route = createFileRoute('/$tema/')({
-  loader: ({ params }) => buscarTema({ data: params.tema }),
-  head: ({ loaderData: tema }) => ({
-    meta: tema
+  // O `loaderData` leva só o que o `head` usa; o Tema vai pelo `queryClient`.
+  loader: async ({ context, params }) => {
+    const { busca } = await context.queryClient.query(
+      leituras.tema(params.tema),
+    )
+    return { busca }
+  },
+  head: ({ loaderData }) => ({
+    meta: loaderData
       ? [
-          { title: `${tema.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: tema.busca.descricao },
+          { title: `${loaderData.busca.titulo} · Tem estudo?` },
+          { name: 'description', content: loaderData.busca.descricao },
         ]
       : [],
   }),
@@ -18,7 +25,7 @@ export const Route = createFileRoute('/$tema/')({
 })
 
 function PaginaDoTema() {
-  const tema = Route.useLoaderData()
+  const { data: tema } = useSuspenseQuery(leituras.tema(Route.useParams().tema))
 
   return (
     <Folha>

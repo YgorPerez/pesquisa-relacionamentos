@@ -1,6 +1,7 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import { buscarFicha } from '#/conteudo/fichas'
+import { leituras } from '#/conteudo/leituras'
 import { Html } from '#/ui/guia'
 import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { LinkDeVoltar } from '#/ui/navegacao'
@@ -22,14 +23,22 @@ import {
 import { PALAVRA_DO_DESENHO } from '#/ui/selos.textos'
 
 export const Route = createFileRoute('/estudos/$slug')({
-  loader: ({ params }) => buscarFicha({ data: params.slug }),
-  head: ({ loaderData: ficha }) => ({
-    meta: ficha
+  // O `loaderData` leva só o que o `head` usa; a Ficha vai pelo `queryClient`.
+  loader: async ({ context, params }) => {
+    const { busca, indexar } = await context.queryClient.query(
+      leituras.ficha(params.slug),
+    )
+    return { busca, indexar }
+  },
+  head: ({ loaderData }) => ({
+    meta: loaderData
       ? [
-          { title: `${ficha.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: ficha.busca.descricao },
+          { title: `${loaderData.busca.titulo} · Tem estudo?` },
+          { name: 'description', content: loaderData.busca.descricao },
           // Ficha ⬜ fica fora da busca até ser conferida (#15).
-          ...(ficha.indexar ? [] : [{ name: 'robots', content: 'noindex' }]),
+          ...(loaderData.indexar
+            ? []
+            : [{ name: 'robots', content: 'noindex' }]),
         ]
       : [],
   }),
@@ -63,7 +72,9 @@ function Dado({
 }
 
 function PaginaDaFicha() {
-  const ficha = Route.useLoaderData()
+  const { data: ficha } = useSuspenseQuery(
+    leituras.ficha(Route.useParams().slug),
+  )
   const naoVerificada = ficha.status === 'nao-verificado'
 
   return (

@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { buscarDica } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { FichasCitadas } from '#/ui/guia'
 import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import { ForcaDaEvidencia } from '#/ui/selos'
@@ -15,12 +16,18 @@ import {
 } from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/$slug')({
-  loader: ({ params }) => buscarDica({ data: params.slug }),
-  head: ({ loaderData: dica }) => ({
-    meta: dica
+  // O `loaderData` leva só o que o `head` usa; a Dica vai pelo `queryClient`.
+  loader: async ({ context, params }) => {
+    const { busca } = await context.queryClient.query(
+      leituras.dica(params.slug),
+    )
+    return { busca }
+  },
+  head: ({ loaderData }) => ({
+    meta: loaderData
       ? [
-          { title: `${dica.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: dica.busca.descricao },
+          { title: `${loaderData.busca.titulo} · Tem estudo?` },
+          { name: 'description', content: loaderData.busca.descricao },
         ]
       : [],
   }),
@@ -29,7 +36,7 @@ export const Route = createFileRoute('/dicas/$slug')({
 })
 
 function PaginaDaDica() {
-  const dica = Route.useLoaderData()
+  const { data: dica } = useSuspenseQuery(leituras.dica(Route.useParams().slug))
 
   return (
     <Folha>

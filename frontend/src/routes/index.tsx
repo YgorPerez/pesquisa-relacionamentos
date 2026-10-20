@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { listarTemas } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { LinhaDaCalculadora } from '#/ui/linha-da-pergunta'
 import {
   Aviso,
@@ -13,7 +14,11 @@ import {
 } from '#/ui/pagina'
 
 export const Route = createFileRoute('/')({
-  loader: () => listarTemas(),
+  // Só espera a leitura: os dados vão ao navegador pelo `queryClient`, e não
+  // pelo `loaderData`, que os mandaria duas vezes no HTML.
+  loader: async ({ context }) => {
+    await context.queryClient.query(leituras.temas())
+  },
   component: Inicio,
 })
 
@@ -35,7 +40,7 @@ const CALCULADORAS = [
 /** A página inicial: a frase do site, os Temas com as Perguntas e os atalhos
  * para as calculadoras. */
 function Inicio() {
-  const temas = Route.useLoaderData()
+  const { data: temas } = useSuspenseQuery(leituras.temas())
 
   return (
     <Folha>

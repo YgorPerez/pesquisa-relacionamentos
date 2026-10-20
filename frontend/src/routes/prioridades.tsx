@@ -1,6 +1,7 @@
 // /prioridades (variante A da segunda rodada do #19): o visitante toca nas três
 // características que mais importam, escolhe o desfecho e vê em que
 // prateleira a evidência põe cada uma.
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   NOME_DO_DESFECHO,
@@ -16,7 +17,7 @@ import {
   type EstadoDoLink,
 } from '@tem-estudo/regras/link'
 import { useMemo, useState } from 'react'
-import { buscarPrioridades } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { metaDaPrevia } from '#/conteudo/previa'
 import type { PrioridadesVista } from '#/conteudo/vista-prioridades'
 import { useLinkRecebido } from '#/estado/link'
@@ -49,10 +50,12 @@ import {
 } from '@/ui/shadcn/collapsible'
 
 export const Route = createFileRoute('/prioridades')({
-  loader: async ({ location }) => {
-    const vista = await buscarPrioridades()
+  loader: async ({ context, location }) => {
+    const vista = await context.queryClient.query(leituras.prioridades())
     // A prévia do link, para o robô da rede social: o topo 3 e o alerta,
     // sem o Perfil. Só no servidor; no navegador ela não serve a ninguém.
+    // Ela fica no `loaderData`, que só o `head` lê; a vista vai pelo
+    // `queryClient`.
     const estado =
       vista && typeof window === 'undefined'
         ? lerLink('prioridades', location.searchStr, idsDe(vista))
@@ -61,7 +64,7 @@ export const Route = createFileRoute('/prioridades')({
       estado?.calculadora === 'prioridades'
         ? previaDePrioridades(vista!.caracteristicas, estado.prioridades)
         : null
-    return { vista, previa }
+    return { previa }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -81,7 +84,7 @@ const idsDe = (vista: PrioridadesVista) =>
   vista.caracteristicas.map((c) => c.id)
 
 function PaginaDePrioridades() {
-  const { vista } = Route.useLoaderData()
+  const { data: vista } = useSuspenseQuery(leituras.prioridades())
   return (
     <Folha>
       <Coluna>

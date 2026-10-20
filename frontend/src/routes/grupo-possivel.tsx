@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Estimativa } from '@tem-estudo/regras/grupo-possivel'
 import { formatarQuantidade } from '@tem-estudo/regras/numeros'
@@ -31,7 +32,8 @@ import {
   type EstadoDoLink,
 } from '@tem-estudo/regras/link'
 import { useId, useRef, type ReactNode } from 'react'
-import { buscarGuiaDaCalculadora } from '#/conteudo/guias'
+import type { GuiaDaCalculadora } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { buscarPreviaDoGrupo, metaDaPrevia } from '#/conteudo/previa'
 import { useLinkRecebido } from '#/estado/link'
 import { AVISO_DA_CONTAGEM, Compartilhar } from '#/ui/compartilhar'
@@ -75,15 +77,16 @@ const CARREGANDO =
   'opacity-55 motion-safe:transition-opacity motion-safe:delay-150 motion-safe:duration-200 motion-safe:ease-sai'
 
 export const Route = createFileRoute('/grupo-possivel')({
-  loader: async ({ location }) => {
+  loader: async ({ context, location }) => {
     // A prévia do link só no servidor, para o robô da rede social; no
-    // navegador, nada do estado sai do aparelho.
+    // navegador, nada do estado sai do aparelho. Ela fica no `loaderData`,
+    // porque só o `head` a usa; o Guia vai pelo `queryClient`.
     const comLink = typeof window === 'undefined' && ehLink(location.searchStr)
-    const [guia, previa] = await Promise.all([
-      buscarGuiaDaCalculadora({ data: 'grupo-possivel' }),
+    const [, previa] = await Promise.all([
+      context.queryClient.query(leituras.guiaDaCalculadora('grupo-possivel')),
       comLink ? buscarPreviaDoGrupo({ data: location.searchStr }) : null,
     ])
-    return { guia, previa }
+    return { previa }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -102,7 +105,9 @@ export const Route = createFileRoute('/grupo-possivel')({
 const qualquer = 'qualquer'
 
 function PaginaDoGrupoPossivel() {
-  const { guia } = Route.useLoaderData()
+  const { data: guia } = useSuspenseQuery(
+    leituras.guiaDaCalculadora('grupo-possivel'),
+  )
   const trocou = useLinkRecebido('grupo-possivel') !== null
   const perfil = usePerfil()
   const salvos = useRequisitosSalvos()
@@ -507,11 +512,7 @@ function CustosDaConta({
 }
 
 /** O bloco "Do Guia": a Pergunta que hospeda a calculadora e a resposta curta. */
-function DoGuia({
-  guia,
-}: {
-  guia: NonNullable<ReturnType<typeof Route.useLoaderData>['guia']>
-}) {
+function DoGuia({ guia }: { guia: GuiaDaCalculadora }) {
   return (
     <Secao aria-labelledby="t-do-guia">
       <Headline id="t-do-guia">Do Guia</Headline>

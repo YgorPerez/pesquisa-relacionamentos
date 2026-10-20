@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { buscarGuia } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { ConfiancaDaResposta, FichasCitadas, Html } from '#/ui/guia'
 import { LinhaDePergunta } from '#/ui/linha-da-pergunta'
 import {
@@ -44,21 +45,29 @@ import {
 } from '@tem-estudo/regras/requisitos'
 
 export const Route = createFileRoute('/$tema/$slug')({
-  loader: ({ params }) =>
-    buscarGuia({ data: { tema: params.tema, slug: params.slug } }),
-  head: ({ loaderData: guia }) => ({
+  // O `loaderData` leva só o que o `head` e a etiqueta do Tema no topo
+  // (`ui/topo.tsx`) usam; o Guia vai pelo `queryClient`.
+  loader: async ({ context, params }) => {
+    const { busca, tema, temaTitulo } = await context.queryClient.query(
+      leituras.guia(params.tema, params.slug),
+    )
+    return { busca, tema, temaTitulo }
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) return { meta: [] }
+    const { busca } = loaderData
     // A prévia do link repete o título e a descrição de busca; a imagem é a
     // fixa do site, da raiz.
-    meta: guia
-      ? [
-          { title: `${guia.busca.titulo} · Tem estudo?` },
-          { name: 'description', content: guia.busca.descricao },
-          { property: 'og:type', content: 'article' },
-          { property: 'og:title', content: guia.busca.titulo },
-          { property: 'og:description', content: guia.busca.descricao },
-        ]
-      : [],
-  }),
+    return {
+      meta: [
+        { title: `${busca.titulo} · Tem estudo?` },
+        { name: 'description', content: busca.descricao },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:title', content: busca.titulo },
+        { property: 'og:description', content: busca.descricao },
+      ],
+    }
+  },
   notFoundComponent: GuiaNaoExiste,
   component: PaginaDoGuia,
 })
@@ -81,7 +90,8 @@ const Marcador = () => (
 )
 
 function PaginaDoGuia() {
-  const guia = Route.useLoaderData()
+  const { tema, slug } = Route.useParams()
+  const { data: guia } = useSuspenseQuery(leituras.guia(tema, slug))
   const { circulada, voltarAoTexto } = useReferencias(guia.slug)
   usePontoNoHistorico()
   useContarFichasAbertas(guia.slug)

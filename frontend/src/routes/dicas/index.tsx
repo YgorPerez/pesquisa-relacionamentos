@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { listarDicas } from '#/conteudo/guias'
+import { leituras } from '#/conteudo/leituras'
 import { ForcaDaEvidencia, MetaDaFicha } from '#/ui/selos'
 import {
   Aviso,
@@ -12,7 +13,9 @@ import {
 } from '#/ui/pagina'
 
 export const Route = createFileRoute('/dicas/')({
-  loader: () => listarDicas(),
+  loader: async ({ context }) => {
+    await context.queryClient.query(leituras.dicas())
+  },
   head: () => ({
     meta: [
       { title: 'Dicas · Tem estudo?' },
@@ -27,7 +30,7 @@ export const Route = createFileRoute('/dicas/')({
 })
 
 function Dicas() {
-  const dicas = Route.useLoaderData()
+  const { data: dicas } = useSuspenseQuery(leituras.dicas())
 
   return (
     <Folha>

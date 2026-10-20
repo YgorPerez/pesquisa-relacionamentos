@@ -1,5 +1,6 @@
+import type { QueryClient } from '@tanstack/react-query'
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
@@ -68,7 +69,13 @@ const LINKS_DO_SITE = [
 const semBarraFinal = (caminho: string) =>
   caminho.length > 1 ? caminho.replace(/\/+$/, '') : '/'
 
-export const Route = createRootRoute({
+/** O que todo loader recebe: o `queryClient` das leituras
+ * (`conteudo/leituras.ts`). */
+interface ContextoDoRouter {
+  readonly queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<ContextoDoRouter>()({
   head: ({ matches }) => {
     const folha = matches[matches.length - 1]
     const canonico = `${ORIGEM}${semBarraFinal(folha?.pathname ?? '/')}`

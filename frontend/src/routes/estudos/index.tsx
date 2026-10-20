@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { listarFichas } from '#/conteudo/fichas'
+import { leituras } from '#/conteudo/leituras'
 import {
   ForcaDaEvidencia,
   LegendaDasFichas,
@@ -17,7 +18,9 @@ import {
 } from '#/ui/pagina'
 
 export const Route = createFileRoute('/estudos/')({
-  loader: () => listarFichas(),
+  loader: async ({ context }) => {
+    await context.queryClient.query(leituras.fichas())
+  },
   head: () => ({
     meta: [
       { title: 'Estudos · Tem estudo?' },
@@ -35,7 +38,7 @@ const contar = (n: number, um: string, varios: string) =>
   `${n} ${n === 1 ? um : varios}`
 
 function Estudos() {
-  const fichas = Route.useLoaderData()
+  const { data: fichas } = useSuspenseQuery(leituras.fichas())
   const conferidas = fichas.filter((f) => f.status !== 'nao-verificado').length
 
   return (

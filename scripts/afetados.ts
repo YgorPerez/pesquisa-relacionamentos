@@ -26,6 +26,7 @@ export const TERMOS_DAS_SPECS: Readonly<Record<string, readonly string[]>> = {
   'grupo-possivel.e2e.ts': ['grupo-possivel'],
   'guia.e2e.ts': ['guia', 'dicas', 'inicio'],
   'inicio.e2e.ts': ['inicio'],
+  'leituras.e2e.ts': ['leituras'],
   'link.e2e.ts': ['link', 'compartilhar', 'grupo-possivel', 'prioridades'],
   'navegacao.e2e.ts': ['navegacao', 'topo', 'guia'],
   'perfil.e2e.ts': ['perfil', 'guia'],

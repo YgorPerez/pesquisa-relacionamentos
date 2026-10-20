@@ -85,7 +85,7 @@ export const buscarGuia = createServerFn({ method: 'GET' })
     },
   )
 
-interface GuiaDaCalculadora {
+export interface GuiaDaCalculadora {
   readonly tema: string
   readonly slug: string
   readonly pergunta: string
