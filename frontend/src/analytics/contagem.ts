@@ -15,7 +15,8 @@ const ENDPOINT = 'https://stats.temestudo.com/count'
 
 /** O build do e2e conta também em localhost, onde os envios são
  * interceptados. Fora dele, o `vite dev` e o `pnpm start` locais não contam.
- * Chega aqui `1`, `0` ou nada: o build recusa outro valor (`vite/ambiente.ts`). */
+ * Chega aqui `1` ou `0`, já validado pelo build (`vite/ambiente.ts`); nos
+ * testes de unidade, que não passam pelo build, nada. */
 const CONTA_EM_LOCALHOST = import.meta.env.VITE_CONTAR_EM_LOCALHOST === '1'
 
 interface SinaisDoNavegador {

@@ -9,6 +9,7 @@ import {
   ligada,
   pasta,
   porta,
+  usuario,
 } from './variaveis.ts'
 
 const PASTA = mkdtempSync(join(tmpdir(), 'variaveis-'))
@@ -87,6 +88,17 @@ describe('lerVariaveis', () => {
     expect(() =>
       lerVariaveis(esquema, { GOATCOUNTER_EMAIL: 'eu@site' }),
     ).toThrow('GOATCOUNTER_EMAIL="eu@site": esperado um e-mail')
+  })
+
+  it('o usuário da VPS é um nome de sistema', () => {
+    const esquema = { VPS_USER: usuario('root') }
+    expect(lerVariaveis(esquema, {})).toEqual({ VPS_USER: 'root' })
+    expect(lerVariaveis(esquema, { VPS_USER: 'deploy' })).toEqual({
+      VPS_USER: 'deploy',
+    })
+    expect(() => lerVariaveis(esquema, { VPS_USER: 'root;ls' })).toThrow(
+      'VPS_USER="root;ls": esperado um usuário (minúsculas, números, _ e -)',
+    )
   })
 
   it('junta numa mensagem só todas as que vieram erradas', () => {

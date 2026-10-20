@@ -21,7 +21,12 @@ import { spawnSync } from 'node:child_process'
 import { copyFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
-import { emailOpcional, lerVariaveis } from '../../scripts/variaveis.ts'
+import {
+  emailOpcional,
+  lerVariaveis,
+  porta as umaPorta,
+  usuario as umUsuario,
+} from '../../scripts/variaveis.ts'
 import { arquivoDaChave } from './chave-ssh.ts'
 import { cronometro } from './cronometro.ts'
 import {
@@ -201,20 +206,19 @@ export function voltar({
 
 /** A VPS das variáveis `VPS_*` do ambiente, ou nenhuma sem o `VPS_HOST`. */
 function daLinhaDeComando(): Destino | undefined {
-  const {
-    VPS_HOST: host,
-    VPS_PORT: porta = '22',
-    VPS_USER: usuario = 'root',
-    VPS_SSH_KEY: chave,
-  } = process.env
-  return host
-    ? {
-        host,
-        porta: porta || '22',
-        usuario: usuario || 'root',
-        chave: arquivoDaChave(chave),
-      }
-    : undefined
+  const { VPS_HOST: host, VPS_SSH_KEY: chave } = process.env
+  if (!host) return undefined
+  // Validadas antes da primeira etapa (ADR 0032).
+  const lidas = lerVariaveis(
+    { VPS_PORT: umaPorta(22), VPS_USER: umUsuario('root') },
+    process.env,
+  )
+  return {
+    host,
+    porta: String(lidas.VPS_PORT),
+    usuario: lidas.VPS_USER,
+    chave: arquivoDaChave(chave),
+  }
 }
 
 if (import.meta.main) {

@@ -28,6 +28,17 @@ const doApp = (mode: string): PluginOption[] => {
   // `VITE_`.
   const ambiente = lerAmbienteDoBuild(loadEnv(mode, import.meta.dirname, ''))
   return [
+    // O bundle recebe o valor já validado, e não o texto cru do ambiente.
+    {
+      name: 'contar-em-localhost',
+      config: () => ({
+        define: {
+          'import.meta.env.VITE_CONTAR_EM_LOCALHOST': JSON.stringify(
+            ambiente.contarEmLocalhost ? '1' : '0',
+          ),
+        },
+      }),
+    },
     acervo({
       raiz: ambiente.raizDoConteudo,
       anterior: ambiente.sitemapAnterior,

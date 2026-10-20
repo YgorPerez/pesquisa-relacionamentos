@@ -2,8 +2,9 @@
 // carrega (ADR 0032): uma errada para o `vp dev` e o `vp build` antes de
 // qualquer plugin, com o nome dela e o que se esperava.
 //
-// `VITE_CONTAR_EM_LOCALHOST` vai também para o bundle, onde
-// `analytics/contagem.ts` a lê como texto: validá-la aqui vale para os dois.
+// `VITE_CONTAR_EM_LOCALHOST` vai também para o bundle: o `vite.config.ts`
+// troca o texto cru pelo valor lido aqui, `1` ou `0`, que
+// `analytics/contagem.ts` lê.
 import { resolve } from 'node:path'
 import {
   arquivoOpcional,
