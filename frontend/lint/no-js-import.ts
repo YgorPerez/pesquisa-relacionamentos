@@ -4,7 +4,7 @@
 // `no-js-import`: a relative import names the file that exists, `./loop.ts`,
 // and not `./loop.js`. The `.js` that points to a `.ts` only resolves through
 // Vite or `tsc`; `node` alone, which runs the repo's scripts by stripping the
-// types (`node scripts/conferir-ficha.ts`), does not find it. It catches
+// types (`node scripts/verify-fact-sheet.ts`), does not find it. It catches
 // `import` and `export ... from`, `import()` and the `import('...')` type;
 // it does not look at packages.
 

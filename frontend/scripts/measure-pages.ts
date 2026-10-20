@@ -6,7 +6,7 @@
 //     [--check]
 //
 // Without `--site`, measures this checkout's `pnpm start`
-// (`scripts/portas.ts`). The default Guide and Fact sheet are the fixture's
+// (`scripts/ports.ts`). The default Guide and Fact sheet are the fixture's
 // (`e2e/library`), which the e2e build serves; with the real library, pass
 // `--fact-sheet` and measure without the Guide.
 //
@@ -33,7 +33,7 @@ import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { createGzip } from 'node:zlib'
 import { type Browser, chromium } from '@playwright/test'
-import { portaPedida } from '../../scripts/portas.ts'
+import { requestedPort } from '../../scripts/ports.ts'
 import {
   FIXTURE_PATHS,
   compressesLikeNginx,
@@ -76,7 +76,7 @@ const { values: options } = parseArgs({
   },
 })
 const SITE = (
-  options.site ?? `http://localhost:${portaPedida('start')}`
+  options.site ?? `http://localhost:${requestedPort('start')}`
 ).replace(/\/+$/, '')
 const RUNS = Number(options.runs)
 

@@ -11,4 +11,4 @@ Como no Festival dos Macacos (ADR-0047 dele, `docs/adr/0047-every-screen-opens-i
 ## Consequências
 
 - Uma peça que só quebra no celular ou só no desktop quebra uma das duas instâncias.
-- O `test:storybook` sobe o Storybook na porta do worktree (`scripts/portas.ts`); com um `pnpm storybook` de pé no mesmo worktree, pare-o antes.
+- O `test:storybook` sobe o Storybook na porta do worktree (`scripts/ports.ts`); com um `pnpm storybook` de pé no mesmo worktree, pare-o antes.

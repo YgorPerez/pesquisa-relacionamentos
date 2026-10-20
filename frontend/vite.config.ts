@@ -5,15 +5,15 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv, type PluginOption } from 'vite-plus'
-import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
+import { vitestWorkers } from '../scripts/machine-queue.ts'
 import { library } from './vite/library.ts'
 import { readBuildEnvironment } from './vite/environment.ts'
 import { possibleGroup } from './vite/possible-group.ts'
 import { manifestWithoutPreload } from './vite/manifest-without-preload.ts'
 
 // The run joins the machine queue before starting and takes the workers it
-// is given (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// is given (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
 /** The e2e fixture content, which the screen tests read. */
 const FIXTURE = fileURLToPath(new URL('e2e/library', import.meta.url))

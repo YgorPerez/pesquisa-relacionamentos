@@ -4,18 +4,18 @@
 // with the app's (TanStack Start and nitro).
 import { playwright } from 'vite-plus/test/browser-playwright'
 import { defineConfig, mergeConfig } from 'vite-plus'
-import { workersDoVitest } from '../scripts/fila-da-maquina.ts'
-import { portaPedida } from '../scripts/portas.ts'
+import { vitestWorkers } from '../scripts/machine-queue.ts'
+import { requestedPort } from '../scripts/ports.ts'
 import storybookConfig from './.storybook/vite.config.ts'
 
 // The run joins the machine queue before opening the Chrome instances
-// (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
 // The server Vitest starts for Chrome to open the stories, on the checkout's
-// port (`scripts/portas.ts`, ADR 0010). Without it, two worktrees fight over
-// Vitest's 63315. `STORIES_PORTA` picks another.
-const port = portaPedida('stories')
+// port (`scripts/ports.ts`, ADR 0010). Without it, two worktrees fight over
+// Vitest's 63315. `STORIES_PORT` picks another.
+const port = requestedPort('stories')
 
 export default mergeConfig(
   storybookConfig,

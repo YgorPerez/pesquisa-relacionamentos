@@ -6,12 +6,7 @@
 // swaps the raw text for the value read here, `1` or `0`, which
 // `analytics/counting.ts` reads.
 import { resolve } from 'node:path'
-import {
-  arquivoOpcional,
-  lerVariaveis,
-  ligada,
-  pasta,
-} from '../../scripts/variaveis.ts'
+import { flag, folder, optionalFile, readEnv } from '../../scripts/env.ts'
 
 const FRONTEND = resolve(import.meta.dirname, '..')
 
@@ -31,11 +26,11 @@ export function readBuildEnvironment(
   source: Record<string, string | undefined>,
   cwd = process.cwd(),
 ): BuildEnvironment {
-  const read = lerVariaveis(
+  const read = readEnv(
     {
-      CONTENT_ROOT: pasta(FRONTEND, '..'),
-      SITEMAP_ANTERIOR: arquivoOpcional(cwd),
-      VITE_COUNT_ON_LOCALHOST: ligada(false),
+      CONTENT_ROOT: folder(FRONTEND, '..'),
+      SITEMAP_ANTERIOR: optionalFile(cwd),
+      VITE_COUNT_ON_LOCALHOST: flag(false),
     },
     source,
   )

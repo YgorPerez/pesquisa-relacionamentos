@@ -7,5 +7,5 @@ Diferente do Festival, toda leitura é `staleTime: 'static'`. O acervo entra no 
 ## Consequências
 
 - O loader devolve só o que o `head` e o topo leem (`busca`, `tema`, `temaTitulo`, a prévia do link). A vista inteira vai pelo `queryClient`; devolvida também pelo loader, iria duas vezes no HTML.
-- Leitura nova: uma entrada em `leituras`, o loader pede, a tela lê. `e2e/leituras.e2e.ts` falha se uma página pedir server function ao hidratar.
+- Leitura nova: uma entrada em `leituras`, o loader pede, a tela lê. `e2e/reads.e2e.ts` falha se uma página pedir server function ao hidratar.
 - Estado de fora do React continua por `useSyncExternalStore` (`estado/`), não por query: o React Compiler quebra a leitura direta (ADR 0003).

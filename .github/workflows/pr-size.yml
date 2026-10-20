@@ -1,0 +1,46 @@
+# The PR size becomes a label, from `tamanho:PP` to `tamanho:XG`
+# (`.github/scripts/pr-size.ts`, ADR 0024). It only labels, never fails: a
+# large PR is sometimes the right one, and the reviewer decides that.
+#
+# Kept out of `pr.yml` because it needs to write to the PR, and `pr.yml` only
+# reads.
+name: Tamanho do PR
+
+'on':
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  # Add and remove the PR label, and create the label the first time.
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: pr-size-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  tamanho:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The script compares against the point where the PR left the base.
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Size label
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+          BASE: origin/${{ github.base_ref }}
+        run: node .github/scripts/pr-size.ts "$BASE"

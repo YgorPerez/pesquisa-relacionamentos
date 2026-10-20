@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite-plus'
-import { workersDoVitest } from '../../scripts/fila-da-maquina.ts'
+import { vitestWorkers } from '../../scripts/machine-queue.ts'
 
 // The run joins the machine queue before starting and takes the workers it
-// gets (`scripts/fila-da-maquina.ts`, ADR 0013).
-const workers = await workersDoVitest()
+// gets (`scripts/machine-queue.ts`, ADR 0013).
+const workers = await vitestWorkers()
 
 export default defineConfig({
   test: {

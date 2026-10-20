@@ -1,0 +1,51 @@
+# The whole suite every night on `main` (ADR 0022), from Festival dos
+# Macacos. A PR runs the whole suite only on its diff against the base; two
+# PRs merged on the same day can break together what neither broke alone.
+# The night catches that. The jobs are those of `pr.yml`, called from here,
+# and the last one opens, comments on or closes the "Suíte noturna vermelha"
+# issue (`scripts/nightly-suite.ts`).
+#
+# 07:00 UTC is 04:00 in Brasília. The schedule only runs the file that is on
+# `main`.
+name: Suíte noturna
+
+'on':
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  suite:
+    uses: ./.github/workflows/pr.yml
+
+  avisar:
+    needs: suite
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # The tail of the log of each failed job, so the issue says what it was.
+      - name: Open, comment on or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          gh run view "$GITHUB_RUN_ID" --log-failed 2>/dev/null | tail -200 > "$RUNNER_TEMP/failures.log" || true
+          node scripts/nightly-suite.ts --sha "${GITHUB_SHA::7}" --jobs "$NEEDS" \
+            --url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --log "$RUNNER_TEMP/failures.log"

@@ -55,7 +55,7 @@ describe('readBuildEnvironment', () => {
 
   it('a root that does not exist stops the build before reading the library', () => {
     expect(() => readBuildEnvironment({ CONTENT_ROOT: 'e2e/libary' })).toThrow(
-      'CONTENT_ROOT="e2e/libary": esperado uma pasta que existe',
+      'CONTENT_ROOT="e2e/libary": expected an existing folder',
     )
   })
 
@@ -63,13 +63,13 @@ describe('readBuildEnvironment', () => {
     expect(() =>
       readBuildEnvironment({ SITEMAP_ANTERIOR: '/tmp/does-not-exist.xml' }),
     ).toThrow(
-      'SITEMAP_ANTERIOR="/tmp/does-not-exist.xml": esperado um arquivo que existe',
+      'SITEMAP_ANTERIOR="/tmp/does-not-exist.xml": expected an existing file',
     )
   })
 
   it('counting on localhost only accepts 1 or 0', () => {
     expect(() =>
       readBuildEnvironment({ VITE_COUNT_ON_LOCALHOST: 'true' }),
-    ).toThrow('VITE_COUNT_ON_LOCALHOST="true": esperado 1 ou 0')
+    ).toThrow('VITE_COUNT_ON_LOCALHOST="true": expected 1 or 0')
   })
 })

@@ -2,59 +2,57 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it } from 'vite-plus/test'
-import { comandoDoUso } from './dev.ts'
-import { portaDoCheckout } from './portas.ts'
+import { commandForUse } from './dev.ts'
+import { checkoutPort } from './ports.ts'
 
-const PASTA = mkdtempSync(join(tmpdir(), 'dev-'))
-afterAll(() => rmSync(PASTA, { recursive: true, force: true }))
+const FOLDER = mkdtempSync(join(tmpdir(), 'dev-'))
+afterAll(() => rmSync(FOLDER, { recursive: true, force: true }))
 
-const principal = join(PASTA, 'principal')
-mkdirSync(join(principal, '.git'), { recursive: true })
-const worktree = join(PASTA, 'worktree')
+const main = join(FOLDER, 'main')
+mkdirSync(join(main, '.git'), { recursive: true })
+const worktree = join(FOLDER, 'worktree')
 mkdirSync(worktree)
 writeFileSync(join(worktree, '.git'), 'gitdir: /x\n')
 
-describe('comandoDoUso', () => {
-  it('o dev do principal é o `vp dev` na 4310, que recusa a porta ocupada', () => {
-    expect(comandoDoUso('dev', {}, principal)).toEqual({
-      porta: 4310,
-      comando: 'pnpm exec vp dev --port 4310 --strictPort',
+describe('commandForUse', () => {
+  it("the main checkout's dev is `vp dev` on 4310, which refuses a busy port", () => {
+    expect(commandForUse('dev', {}, main)).toEqual({
+      port: 4310,
+      command: 'pnpm exec vp dev --port 4310 --strictPort',
       env: {},
     })
   })
 
-  it('num worktree, cada uso na porta do bloco dele', () => {
-    const start = portaDoCheckout('start', worktree)
-    expect(comandoDoUso('start', {}, worktree)).toEqual({
-      porta: start,
-      comando: 'node .output/server/index.mjs',
+  it("in a worktree, each use on its block's port", () => {
+    const start = checkoutPort('start', worktree)
+    expect(commandForUse('start', {}, worktree)).toEqual({
+      port: start,
+      command: 'node .output/server/index.mjs',
       env: { PORT: String(start) },
     })
-    const storybook = portaDoCheckout('storybook', worktree)
-    expect(comandoDoUso('storybook', {}, worktree).comando).toBe(
+    const storybook = checkoutPort('storybook', worktree)
+    expect(commandForUse('storybook', {}, worktree).command).toBe(
       `pnpm exec storybook dev --port ${storybook} --no-open --exact-port`,
     )
   })
 
-  it('a porta do ambiente vale mais que a do bloco', () => {
-    expect(comandoDoUso('dev', { DEV_PORTA: '5000' }, worktree).porta).toBe(
-      5000,
-    )
+  it("the environment's port beats the block's", () => {
+    expect(commandForUse('dev', { DEV_PORT: '5000' }, worktree).port).toBe(5000)
     expect(
-      comandoDoUso('storybook', { STORYBOOK_PORTA: '5001' }, worktree).porta,
+      commandForUse('storybook', { STORYBOOK_PORT: '5001' }, worktree).port,
     ).toBe(5001)
     expect(
-      comandoDoUso('start', { START_PORTA: '5002' }, worktree).env,
+      commandForUse('start', { START_PORT: '5002' }, worktree).env,
     ).toEqual({ PORT: '5002' })
   })
 
-  it('o PORT genérico do shell não muda nada: outra ferramenta pode tê-lo posto', () => {
-    expect(comandoDoUso('start', { PORT: '3000' }, principal).porta).toBe(4311)
+  it("the shell's generic PORT changes nothing: another tool may have set it", () => {
+    expect(commandForUse('start', { PORT: '3000' }, main).port).toBe(4311)
   })
 
-  it('uma porta que não é número para tudo, dizendo qual variável', () => {
-    expect(() => comandoDoUso('dev', { DEV_PORTA: 'abc' }, principal)).toThrow(
-      'DEV_PORTA="abc": esperado uma porta, de 1 a 65535',
+  it('a port that is not a number stops everything, naming the variable', () => {
+    expect(() => commandForUse('dev', { DEV_PORT: 'abc' }, main)).toThrow(
+      'DEV_PORT="abc": expected a port, from 1 to 65535',
     )
   })
 })

@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/aviso-de-patch.ts\" 2>/dev/null || true",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/patch-warning.ts\" 2>/dev/null || true",
             "timeout": 10
           }
         ]

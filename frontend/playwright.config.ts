@@ -1,26 +1,26 @@
 // The whole app in the browser, over the build's SSR server (`pnpm build`),
 // as it goes to production. `pnpm e2e` builds and starts it on its own.
 //
-// The port is the checkout's e2e port (`scripts/portas.ts`, ADR 0010): 4312
+// The port is the checkout's e2e port (`scripts/ports.ts`, ADR 0010): 4312
 // in the main checkout, the block's one in a worktree, so two worktrees run
-// the e2e at the same time without agreeing on anything. `E2E_PORTA` picks
+// the e2e at the same time without agreeing on anything. `E2E_PORT` picks
 // another.
 // The files end in `.e2e.ts`, and not `.spec.ts`, because Vitest picks up
 // `*.spec.ts` by default.
 
 import { availableParallelism } from 'node:os'
 import { defineConfig, devices } from '@playwright/test'
-import { entrarNaFila, pedidoDoPlaywright } from '../scripts/fila-da-maquina.ts'
-import { portaPedida } from '../scripts/portas.ts'
+import { joinQueue, playwrightRequest } from '../scripts/machine-queue.ts'
+import { requestedPort } from '../scripts/ports.ts'
 
-const port = portaPedida('e2e')
+const port = requestedPort('e2e')
 
 // The run joins the machine queue before starting the server, and opens the
-// Chrome instances it is given (`scripts/fila-da-maquina.ts`, ADR 0013).
+// Chrome instances it is given (`scripts/machine-queue.ts`, ADR 0013).
 // Alone, half the cores, Playwright's default. The workers read this config
-// again and inherit `FILA_DA_MAQUINA`, so they do not join again.
+// again and inherit `MACHINE_QUEUE`, so they do not join again.
 const HALF = Math.max(1, Math.floor(availableParallelism() / 2))
-const workers = await entrarNaFila(pedidoDoPlaywright(process.argv, HALF))
+const workers = await joinQueue(playwrightRequest(process.argv, HALF))
 
 export default defineConfig({
   testDir: './e2e',

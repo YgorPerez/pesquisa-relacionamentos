@@ -2,7 +2,7 @@
 
 O Festival teve o site no ar apontando para um bundle apagado: o HTML citava `assets/index-*.js` e o servidor respondia a página de erro, em HTML, com status 200. Desde então o deploy de lá confere de fora (`conferir-no-ar.ts`) que o bundle chega como JavaScript.
 
-Aqui o último passo do `publicar` e do `voltar` no `deploy.yml` roda `node scripts/conferir-no-ar.ts temestudo.cloud <sha>`. Pela internet, ele confere:
+Aqui o último passo do `publicar` e do `voltar` no `deploy.yml` roda `node scripts/check-live.ts temestudo.cloud <sha>`. Pela internet, ele confere:
 
 - que `https://temestudo.cloud/?conferencia=<sha>` responde 200 com `Referrer-Policy: strict-origin`;
 - que cada `/assets/*.js` e `/assets/*.css` citado na página responde 200 com o tipo dele (`javascript`, `text/css`), e não com HTML;

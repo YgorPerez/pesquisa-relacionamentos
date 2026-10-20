@@ -45,7 +45,7 @@ export type StoryOptions = {
 }
 
 /** Where each one runs by default: the checkout's `pnpm start` and
- * `pnpm storybook` (`scripts/portas.ts`). */
+ * `pnpm storybook` (`scripts/ports.ts`). */
 export type Defaults = { out: string; app: string; storybook: string }
 
 export const USAGE = `Usage: node scripts/capture.ts <route> [options]

@@ -40,9 +40,9 @@ O questionário da amostra do Censo 2022, por pessoa: sexo, idade, UF, estado co
 | Sexo | Biológico, atribuído ao nascer | Dicionário de Variáveis, P0150 (p. 22 do PDF) | "Sexo biológico do morador (atribuído ao nascer)." | |
 | População residente, Brasil | 203.080.756 | SIDRA 9514 pela API de agregados: variável 93, Brasil, sexo, idade e forma de declaração totais | "2022":"203080756" | |
 | Mulheres de 25 a 29 anos em SP que não viviam em união, no SIDRA | 747.507 | SIDRA 10185 pela API de agregados: variável 140, São Paulo (N3 35), Não viviam em união, Mulheres, 25 a 29 anos, cor ou raça total | "2022":"747507" | |
-| A mesma célula, somando os pesos do microdado público | 746.284 | `dados/grupo-possivel/censo-2022.csv`, gerado do arquivo de pessoas | "P0110 – Peso Amostral (acesso público)" | `scripts/calculos/ibge-2022-censo-amostra.ts` |
+| A mesma célula, somando os pesos do microdado público | 746.284 | `dados/grupo-possivel/censo-2022.csv`, gerado do arquivo de pessoas | "P0110 – Peso Amostral (acesso público)" | `scripts/calculations/ibge-2022-censo-amostra.ts` |
 
-A soma dos pesos do microdado público dá exatamente a população de cada UF na tabela 9514 (no Brasil, 203.080.756), como a Nota 03/2026 promete. O pipeline (`scripts/grupo-possivel/pipeline.ts`) confere isso e as 1.568 células do estado conjugal da tabela 10185 a cada rodada.
+A soma dos pesos do microdado público dá exatamente a população de cada UF na tabela 9514 (no Brasil, 203.080.756), como a Nota 03/2026 promete. O pipeline (`scripts/possible-group/pipeline.ts`) confere isso e as 1.568 células do estado conjugal da tabela 10185 a cada rodada.
 
 Fonte local: `fontes/privado/ibge-2022-censo-amostra.txt` (o texto das duas notas metodológicas, do dicionário e das duas respostas do SIDRA) e os PDFs em `fontes/privado/ibge-2022-censo-amostra/`, fora do git. Os microdados ficam no cache do pipeline, fora do repositório.
 
@@ -57,5 +57,5 @@ Fonte local: `fontes/privado/ibge-2022-censo-amostra.txt` (o texto das duas nota
 
 ## Como usamos
 
-- Dados do Grupo possível: `dados/grupo-possivel/censo-2022.csv` e as tabelas do SIDRA 9514 ao lado, gerados por `scripts/grupo-possivel/pipeline.ts`.
+- Dados do Grupo possível: `dados/grupo-possivel/censo-2022.csv` e as tabelas do SIDRA 9514 ao lado, gerados por `scripts/possible-group/pipeline.ts`.
 - [Relatório 2026-10-18 sobre os dados do Grupo possível](../relatorios/2026-10-18-dados-grupo-possivel.md).

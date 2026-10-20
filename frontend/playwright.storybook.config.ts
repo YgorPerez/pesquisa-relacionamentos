@@ -4,13 +4,13 @@
 // `playwright.config.ts`, which builds and starts the site. Modeled on the
 // Festival dos Macacos `playwright.storybook.config.ts` (ADR 0037).
 //
-// The port is the checkout's Storybook port (`scripts/portas.ts`, ADR 0010):
+// The port is the checkout's Storybook port (`scripts/ports.ts`, ADR 0010):
 // with a `pnpm storybook` running in the same worktree, stop it first, or
-// pick another in `STORYBOOK_PORTA`.
+// pick another in `STORYBOOK_PORT`.
 import { defineConfig } from '@playwright/test'
-import { portaPedida } from '../scripts/portas.ts'
+import { requestedPort } from '../scripts/ports.ts'
 
-const port = portaPedida('storybook')
+const port = requestedPort('storybook')
 
 export default defineConfig({
   testDir: './.storybook',

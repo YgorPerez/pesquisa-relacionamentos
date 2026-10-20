@@ -23,11 +23,11 @@ import { copyFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import {
-  emailOpcional,
-  lerVariaveis,
-  porta as aPort,
-  usuario as aUser,
-} from '../../scripts/variaveis.ts'
+  optionalEmail,
+  readEnv,
+  port as aPort,
+  user as aUser,
+} from '../../scripts/env.ts'
 import { keyFile } from './ssh-key.ts'
 import { stopwatch } from './stopwatch.ts'
 import {
@@ -210,7 +210,7 @@ function fromCommandLine(): Target | undefined {
   const { VPS_HOST: host, VPS_SSH_KEY: key } = process.env
   if (!host) return undefined
   // Validated before the first step (ADR 0032).
-  const read = lerVariaveis(
+  const read = readEnv(
     { VPS_PORT: aPort(22), VPS_USER: aUser('root') },
     process.env,
   )
@@ -238,7 +238,7 @@ if (import.meta.main) {
       output: resolve(a),
       sha: b,
       // Validated before the first step (ADR 0032).
-      email: lerVariaveis({ GOATCOUNTER_EMAIL: emailOpcional }, process.env)
+      email: readEnv({ GOATCOUNTER_EMAIL: optionalEmail }, process.env)
         .GOATCOUNTER_EMAIL,
       vps: overSsh(target),
       say,

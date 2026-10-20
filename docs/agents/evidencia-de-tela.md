@@ -1,20 +1,20 @@
 # Mostrar a tela no pull request
 
-Nenhum check compara telas, então quem revisa só vê uma tela que mudou se o PR a mostrar ([ADR 0018](../adr/0018-o-pr-que-muda-tela-mostra-o-antes-e-o-depois.md)). Um PR que muda tela traz, na seção `## Tela` da descrição, um print e um vídeo de cada tela que mudou, antes e depois. O print mostra o layout; o vídeo mostra o que um print não mostra: uma entrada, uma transição, um toque e o que ele abre.
+Nenhum check compara telas, então quem revisa só vê uma tela que mudou se o PR a mostrar ([ADR 0018](../adr/0018-o-pr-que-muda-tela-mostra-o-antes-e-o-depois.md)). Um PR que muda tela traz, na seção `## Screen` da descrição, um print e um vídeo de cada tela que mudou, antes e depois. O print mostra o layout; o vídeo mostra o que um print não mostra: uma entrada, uma transição, um toque e o que ele abre.
 
 ## O que o check conta
 
-`.github/scripts/evidencia-de-tela.ts` roda no `evidencia-de-tela.yml` em todo PR, rascunho inclusive, e de novo quando a descrição muda: pôr os anexos deixa o check verde sem push. Na mão:
+`.github/scripts/screen-evidence.ts` roda no `screen-evidence.yml` em todo PR, rascunho inclusive, e de novo quando a descrição muda: pôr os anexos deixa o check verde sem push. Na mão:
 
 ```bash
-GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/evidencia-de-tela.ts <pr>
+GH_TOKEN=$(gh auth token --user YgorPerez) node .github/scripts/screen-evidence.ts <pr>
 ```
 
 Arquivo de tela é todo arquivo em `frontend/src/` ou `frontend/public/`, menos testes, stories, `.d.ts`, `.md`, `platform/`, `analytics/`, `server.ts`, `*.server.ts` e o `routeTree.gen.ts`. O acervo (`estudos/`, `dicas/`) não conta: a Ficha tem a revisão dela.
 
-Quando um deles muda, a seção `## Tela` precisa de pelo menos duas imagens diferentes e dois vídeos diferentes. O script lê a descrição como o GitHub a mostra (`body_html`), porque o markdown não diz o que é um anexo: o mesmo `https://github.com/user-attachments/assets/<uuid>` vira um player se é vídeo e um link se é imagem. Uma imagem conta quando vira `<img>`, um vídeo quando vira `<video>`, e o mesmo arquivo duas vezes conta uma.
+Quando um deles muda, a seção `## Screen` precisa de pelo menos duas imagens diferentes e dois vídeos diferentes. O script lê a descrição como o GitHub a mostra (`body_html`), porque o markdown não diz o que é um anexo: o mesmo `https://github.com/user-attachments/assets/<uuid>` vira um player se é vídeo e um link se é imagem. Uma imagem conta quando vira `<img>`, um vídeo quando vira `<video>`, e o mesmo arquivo duas vezes conta uma.
 
-Marcar `- [x] Nenhuma mudança de tela` na seção passa o check, para a mudança num arquivo de tela que deixa toda tela igual: um refactor, um tipo, uma leitura. Diga na descrição por que nada muda.
+Marcar `- [x] No screen change` na seção passa o check, para a mudança num arquivo de tela que deixa toda tela igual: um refactor, um tipo, uma leitura. Diga na descrição por que nada muda.
 
 ## Tirar
 

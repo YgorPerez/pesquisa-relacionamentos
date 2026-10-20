@@ -10,7 +10,7 @@
 // as .mp4, which plays in every browser, Safari included.
 //
 // The default app is this checkout's `pnpm start`, and the Storybook its
-// `pnpm storybook` (`scripts/portas.ts`).
+// `pnpm storybook` (`scripts/ports.ts`).
 //
 // With `--story <id> --at 0,500,1000`, photographs a Storybook story at
 // moments of the animation, instead of a route (`captureStory`).
@@ -20,7 +20,7 @@ import { mkdir, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { type Browser, chromium, type Page } from '@playwright/test'
-import { portaPedida } from '../../scripts/portas.ts'
+import { requestedPort } from '../../scripts/ports.ts'
 import {
   indexIds,
   similarIds,
@@ -301,8 +301,8 @@ if (import.meta.main) {
   }
   const options = readArguments(argv, {
     out: join(tmpdir(), 'captures'),
-    app: `http://localhost:${portaPedida('start')}`,
-    storybook: `http://localhost:${portaPedida('storybook')}`,
+    app: `http://localhost:${requestedPort('start')}`,
+    storybook: `http://localhost:${requestedPort('storybook')}`,
   })
   if ('error' in options) {
     console.error(`${options.error}\n\n${USAGE}`)
