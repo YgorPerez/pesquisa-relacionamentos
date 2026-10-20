@@ -11,7 +11,7 @@ import {
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vite-plus/test'
-import { behindMain, link, mainPathFor } from './prepare-worktree.ts'
+import { behindMain, link } from './prepare-worktree.ts'
 
 const FOLDER = mkdtempSync(join(tmpdir(), 'prepare-worktree-'))
 afterAll(() => rmSync(FOLDER, { recursive: true, force: true }))
@@ -196,31 +196,5 @@ describe('link', () => {
       )
       expect(readFileSync(join(worktree, RELATIVE), 'utf8')).toBe('mine')
     })
-  })
-})
-
-describe('mainPathFor', () => {
-  let n = 0
-  const main = (...folders: string[]) => {
-    const root = join(FOLDER, `paths-${++n}`)
-    for (const folder of folders)
-      mkdirSync(join(root, folder), { recursive: true })
-    return root
-  }
-
-  it("links the private folder from the main checkout's sources/private", () => {
-    expect(
-      mainPathFor(main('sources/private', 'fontes/privado'), 'sources/private'),
-    ).toBe('sources/private')
-  })
-
-  it('falls back to fontes/privado while the main checkout has only the old one', () => {
-    expect(mainPathFor(main('fontes/privado'), 'sources/private')).toBe(
-      'fontes/privado',
-    )
-  })
-
-  it('keeps the path of everything else', () => {
-    expect(mainPathFor(main(), 'frontend/.env')).toBe('frontend/.env')
   })
 })

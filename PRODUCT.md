@@ -52,7 +52,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 
 - `studies/`: cerca de 30 Fichas. Pela decisão do #6, todas contam como ⬜ até serem refeitas com Fonte local e trecho conferido.
 - `reports/` e `tips/`: sínteses internas, base para os Guias.
-- `sources/`: Fontes locais de licença aberta. As outras ficam em `sources/private/`, fora do git.
+- `sources/`: Fontes locais de licença aberta. As outras ficam num repo privado, clonado em `sources/private/`, fora do git deste.
 - Fila do acervo: issues com o label `acervo`, trabalhadas pela skill `library` (#37).
 - `prototypes/prioridades.prototype.html`: protótipo descartável de Prioridades vs. evidência.
 - Não há depoimentos, usuários, métricas de uso nem imprensa. Nada disso pode ser inventado.

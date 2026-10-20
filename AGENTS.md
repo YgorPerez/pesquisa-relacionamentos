@@ -64,7 +64,7 @@ Adaptado do `AGENTS.md` do Festival dos Macacos, onde os quatro já aconteceram.
 1. **Um push na `main` pode publicar o site.** O `deploy.yml` publica a cada push que muda o site, quando os secrets da VPS existem (`docs/agents/integration.md`). Dê push na `main` só quando o usuário pedir. Trabalho de ticket vai para o ramo `ticket/*`.
 2. **O checkout principal é compartilhado.** Outras sessões trabalham nele enquanto você trabalha. Lá, nunca troque de ramo, nunca `git add -A` (adicione por caminho), nunca reformate arquivo que você não tocou e nunca rode um segundo Playwright. Trabalhe num worktree, preparado como diz `docs/agents/environment.md`.
 3. **Matar por padrão.** Nunca pare um `node`, `vite` ou Chrome por nome, caminho ou padrão (`pkill`, `killall`): outras sessões rodam os seus. Pare só o PID que você guardou ao subir, ou o dono da porta do seu worktree (ADR 0011).
-4. **Segredos e Fontes privadas.** O `.env` da raiz guarda o token da Hostinger e o acesso à VPS, e o `.env.deploy` o que o wizard do deploy lembra. Nunca os leia para um log, um commit ou um comentário, e nunca troque um secret do GitHub sem perguntar. `sources/private/` guarda texto sem licença aberta: ele nunca entra no git, e o Trecho de uma Ficha cita só o que a Ficha precisa.
+4. **Segredos e Fontes privadas.** O `.env` da raiz guarda o token da Hostinger e o acesso à VPS, e o `.env.deploy` o que o wizard do deploy lembra. Nunca os leia para um log, um commit ou um comentário, e nunca troque um secret do GitHub sem perguntar. `sources/private/` guarda texto sem licença aberta e é um clone do repo privado das Fontes (ADR 0040): ele nunca entra no git deste repo, e o Trecho de uma Ficha cita só o que a Ficha precisa.
 
 ## Código do Effect
 
