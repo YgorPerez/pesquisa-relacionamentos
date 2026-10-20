@@ -57,6 +57,16 @@ export function Compartilhar({
           {aviso}
         </p>
       )}
+      <ResultadoDaCopia copia={copia} />
+    </Secao>
+  )
+}
+
+/** O que deu a cópia, dito ao leitor de tela; se falhou, o link num campo
+ * para copiar à mão. */
+function ResultadoDaCopia({ copia }: { copia: Copia }) {
+  return (
+    <>
       <p
         role="status"
         className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2 empty:m-0"
@@ -78,6 +88,6 @@ export function Compartilhar({
           autoFocus
         />
       )}
-    </Secao>
+    </>
   )
 }
