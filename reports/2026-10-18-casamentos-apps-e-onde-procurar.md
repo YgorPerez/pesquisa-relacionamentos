@@ -9,9 +9,9 @@
 1. **"A maioria dos casamentos começa em app": a frase é exagerada.** O dado mais citado é do estudo de Stanford (HCMST). Ele mostra que **39% dos casais heterossexuais americanos que se conheceram em 2017** se conheceram online. Online virou a forma **mais comum** (pluralidade), mas **não a maioria**. Esse número vale para **casais** (incluindo namoro), não só casamentos, e só para os **EUA** ([Rosenfeld, Thomas & Hausen 2019, PNAS](https://doi.org/10.1073/pnas.1908630116)). Números acima de 50% para 2020–2022 circulam em sites e no Reddit, mas vêm de amostras minúsculas e não foram publicados em artigo revisado (detalhes abaixo).
 2. **Considerando todos os casais existentes hoje, e não só os recém-formados, a fatia é bem menor.** Nos EUA, **10% dos adultos com parceiro** conheceram o parceiro em site ou app. Entre os menores de 30 anos, são **20%** ([Pew 2023](https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/)). Num estudo com 50 países, **16%** conheceram o parceiro online e **21%** nas relações iniciadas depois de 2010 ([Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309)).
 3. **Qualidade e duração: não há evidência forte de que relações de app sejam piores ou melhores.** Os resultados variam conforme o estudo:
-   - **EUA, HCMST (dados longitudinais, sem conflito de interesse):** a forma como o casal se conheceu **não prevê término**. Casais que se conheceram online **casam mais rápido** ([Rosenfeld 2017](https://doi.org/10.15195/v4.a20)).
+   - **EUA, HCMST (dados longitudinais, sem conflito de interesse):** a forma como o casal se conheceu **não prevê término**. Só quem se conheceu por **site de namoro** casa mais rápido; online em geral fica no limite da significância ([Rosenfeld 2017](https://doi.org/10.15195/v4.a20)).
    - **EUA, Cacioppo 2013 (financiado pela eHarmony):** casamentos iniciados online tiveram um pouco menos de separação (**~6,0% vs. 7,7%**) e satisfação levemente maior (**5,64 vs. 5,48**) ([PNAS](https://doi.org/10.1073/pnas.1222447110)).
-   - **50 países, 2025:** quem se conheceu online relata satisfação e compromisso **um pouco menores**, com efeito pequeno a moderado ([Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309)).
+   - **50 países, 2025:** quem se conheceu online relata satisfação e compromisso **um pouco menores**. O artigo publica d de 0,35 a 0,51, mas as médias dele e os dados públicos apontam um efeito pequeno ([Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309)).
    - **Suíça:** casais formados por app **não diferem** em satisfação dos que se conheceram fora da internet. Entre os que não moram juntos, quem conheceu por app está menos satisfeito do que quem conheceu por site ([Potarca 2020, PLOS ONE](https://doi.org/10.1371/journal.pone.0243733); [ficha](../studies/potarca-2020-suica-apps.md)).
 4. **Brasil:** não encontrei pesquisa representativa sobre *onde* os casais brasileiros se conhecem. Os dados disponíveis são estes:
    - **23%** dos brasileiros com smartphone já tiveram algum encontro por app, e **29%** na faixa de 16–29 anos ([Mobile Time/Opinion Box 2025](https://www.mobiletime.com.br/noticias/22/04/2025/apps-de-relacionamento/)).
@@ -27,14 +27,14 @@
 
 ### 1.1 O dado original: Stanford/HCMST (EUA)
 
-O artigo [Rosenfeld, Thomas & Hausen (2019), *PNAS* 116(36):17753-17758](https://doi.org/10.1073/pnas.1908630116) ([PDF do autor](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf)) usou a pesquisa *How Couples Meet and Stay Together* (HCMST) de 2009 e 2017, com amostra representativa de adultos americanos. As conclusões principais são estas:
+O artigo [Rosenfeld, Thomas & Hausen (2019), *PNAS* 116(36):17753-17758](https://doi.org/10.1073/pnas.1908630116) ([texto completo no PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC6731751/)) usou a pesquisa *How Couples Meet and Stay Together* (HCMST) de 2009 e 2017, com amostra representativa de adultos americanos. As conclusões principais são estas:
 
 - O abstract diz que, para casais heterossexuais nos EUA, "meeting online has become **the most popular way** couples meet, eclipsing meeting through friends for the first time **around 2013**".
 - A palavra é **"most popular"** (pluralidade), e não "maioria".
 - "Casal" inclui casados, casais que moram juntos sem casar e namoros sem coabitação. Segundo os autores, os resultados não mudam quando se olha só para casados.
 
 **Tabela 1: como casais heterossexuais americanos se conheceram (ano em que se conheceram)**
-Fonte: Tabela 1 de [Rosenfeld et al. 2019](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf), HCMST 2009+2017, N=5.421. As categorias **não são exclusivas** e a soma passa de 100%.
+Fonte: Tabela 1 de [Rosenfeld et al. 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6731751/), HCMST 2009+2017, N=5.421. As categorias **não são exclusivas** e a soma passa de 100%.
 
 | Como se conheceram | 1995 | 2017 |
 |---|---|---|
@@ -48,10 +48,10 @@ Fonte: Tabela 1 de [Rosenfeld et al. 2019](https://web.stanford.edu/~mrosenfe/Ro
 | Vizinhos | 8% | 3% |
 | Igreja | 7% | 4% |
 
-\* Os autores explicam que a alta de "bar/restaurante" depois de 2010 se deve **inteiramente** a casais que se conheceram online e marcaram o primeiro encontro num bar. Sem eles, bar/restaurante estava **em queda** ([PDF, p. 4](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf)).
+\* Os autores explicam que a alta de "bar/restaurante" depois de 2010 se deve **inteiramente** a casais que se conheceram online e marcaram o primeiro encontro num bar. Sem eles, bar/restaurante estava **em queda** ([PNAS, Results](https://pmc.ncbi.nlm.nih.gov/articles/PMC6731751/)).
 
-O mesmo artigo traz mais dois números:
-- Entre casais **do mesmo sexo** que se conheceram em 2017, **~65%** se conheceram online.
+O mesmo artigo traz mais dois pontos:
+- Sobre casais **do mesmo sexo**, a versão publicada na PNAS diz só que eles adotaram cedo a internet, sem número. O "~65% online em 2017" que circula vem do rascunho do autor e saiu na versão final.
 - Nos EUA, o uso de app no celular entre quem namora pela internet subiu de **30% (2013) para 54% (2015)**, segundo dados da Pew citados no artigo.
 
 ### 1.2 E os números de "53%", "60%" para 2020–2022?
@@ -73,8 +73,8 @@ O 39% da HCMST mede **casais recém-formados** num certo ano (fluxo). As pesquis
 | [Pew Research 2023](https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/) (jul/2022, n=6.034, EUA) | Todos os adultos com parceiro | **10%** |
 | idem | Adultos com parceiro **< 30 anos** | **20%** |
 | idem | Adultos LGB com parceiro | 24% |
-| [Kowal et al. 2025, *Telematics and Informatics*](https://doi.org/10.1016/j.tele.2025.102309) (50 países, n=6.646 com parceiro) | Todos | **16%** (de 8% em Gana a 33% na Polônia) |
-| idem | Relações iniciadas após 2010 | **21%** |
+| [Kowal et al. 2025, *Telematics and Informatics*](https://doi.org/10.1016/j.tele.2025.102309) (50 países, n=6.646 com parceiro) | Todos | **16%** (de 7% em Gana a 33% na Polônia) |
+| idem | Relações iniciadas em 2010 ou depois | **21%** (de 8% em Gana a 48% na Polônia) |
 | [Cacioppo et al. 2013, PNAS](https://doi.org/10.1073/pnas.1222447110) (EUA, n=19.131) | Pessoas que **casaram** entre 2005 e 2012 | **"mais de um terço"** (~35%). Desse grupo, ~45% em sites de namoro ([release](https://www.sciencedaily.com/releases/2013/06/130603163751.htm)) |
 
 **Conclusão da seção 1:**
@@ -90,10 +90,10 @@ O 39% da HCMST mede **casais recém-formados** num certo ano (fluxo). As pesquis
 
 | Estudo | País/dados | Resultado | Qualidade da evidência |
 |---|---|---|---|
-| [Rosenfeld 2017, *Sociological Science* 4:490-510](https://doi.org/10.15195/v4.a20) | EUA, HCMST 2009–2015, **longitudinal** (acompanhou casais por 6 anos) | Conhecer-se online **não prevê término**. Online, sobretudo por site de namoro, prevê **transição mais rápida para o casamento**. O autor afirma que **não mede efeito causal**. | **Boa**: amostra representativa, acompanhamento ao longo do tempo, financiamento público (NSF) |
-| [Rosenfeld et al. 2019](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf) (nota 6 e 7) | EUA, HCMST 2017 retrospectivo | Como o casal se conheceu **não tem efeito significativo** sobre o risco de término, controlando pela década. "A única diferença que encontramos [...] é a velocidade de transição para o casamento." | Boa |
+| [Rosenfeld 2017, *Sociological Science* 4:490-510](https://doi.org/10.15195/v4.a20) | EUA, HCMST 2009–2015, **longitudinal** (acompanhou casais por 6 anos) | Conhecer-se online **não prevê término**. Só quem se conheceu por **site de namoro** casa mais rápido (razão de chances 3,19). Online em geral fica em 1,86, com p = 0,057, logo acima do corte de 0,05. O autor afirma que **não mede efeito causal**. | **Boa**: amostra representativa, acompanhamento ao longo do tempo, financiamento público (NSF) |
+| [Rosenfeld et al. 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6731751/) (notas de rodapé) | EUA, HCMST 2009 e 2017, retrospectivo | Como o casal se conheceu **não tem efeito significativo** sobre o risco de término, controlando pela década. A única diferença ligada a como se conheceram: quem se conheceu online casa mais rápido. | Boa |
 | [Cacioppo et al. 2013, PNAS](https://doi.org/10.1073/pnas.1222447110) | EUA, 19.131 casados de 2005 a 2012 | Online: **5,96%** separados/divorciados vs. **7,67%** offline; satisfação **5,64 vs. 5,48**. As diferenças persistiram após controles demográficos ([release da UChicago/ScienceDaily](https://www.sciencedaily.com/releases/2013/06/130603163751.htm)) | **Média, com conflito de interesse.** Pesquisa **encomendada pela eHarmony**; Cacioppo era **consultor científico pago** da eHarmony e o coautor Gonzaga é ex-diretor do eHarmony Labs. Os autores dizem ter adotado supervisão estatística independente. Efeitos **pequenos**, e os casamentos tinham no máximo ~7 anos. |
-| [Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309) | 50 países, painéis online (Syno International) | Quem se conheceu online relata **menor satisfação** (d=0,43), **intimidade** (d=0,35), **paixão** (d=0,37) e **compromisso** (d=0,51). O padrão se repete em quase todos os países. | **Média.** Os autores chamam a amostra de "nacionalmente representativa", mas ela foi recrutada por **painel online com cotas**, e eles mesmos reconhecem viés de seleção. O desenho é transversal (sem causalidade) e trata online/offline de forma binária (app = rede social). |
+| [Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309) | 50 países, painéis online (Syno International) | Quem se conheceu online relata **menor satisfação** (d=0,43), **intimidade** (d=0,35), **paixão** (d=0,37) e **compromisso** (d=0,51), segundo o artigo. Esses d não batem com o resto dele: as médias marginais de satisfação são 4,28 offline e 4,20 online, numa escala de 1 a 5, e nos dados públicos a diferença bruta, em desvios-padrão, fica entre 0,09 e 0,12. A diferença é significativa, mas pequena. | **Média.** Os autores chamam a amostra de "nacionalmente representativa", mas ela foi recrutada por **painel online com cotas**, e eles mesmos reconhecem viés de seleção. O desenho é transversal (sem causalidade) e trata online/offline de forma binária (app = rede social). |
 | [Potarca 2020, PLOS ONE](https://doi.org/10.1371/journal.pone.0243733) ([ficha](../studies/potarca-2020-suica-apps.md)) | Suíça, pesquisa oficial (Family and Generations Survey 2018), 3.245 pessoas com relação iniciada nos últimos 10 anos | Casais de **app** (4,1% da amostra): **sem diferença** de satisfação com a relação ou com a vida. Entre os que não moram juntos, quem conheceu por app está **menos satisfeito** do que quem conheceu por site (p = 0,018, análise suplementar); intenção maior de morar junto; mulheres com intenção maior de ter filhos; mais mistura educacional; vivem mais longe uns dos outros | **Boa** como dado oficial, mas o subgrupo de app é **pequeno** (104 pessoas) e o desenho é transversal |
 
 ### 2.2 E os locais offline (bar, igreja, faculdade...)?
@@ -155,7 +155,7 @@ O 39% da HCMST mede **casais recém-formados** num certo ano (fluxo). As pesquis
 
 - Entre quem já teve encontro por app, **43%** citam o **Tinder** como o app mais usado. Não houve diferença significativa por gênero.
 - A pesquisa mede **ter tido um encontro**, e não namoro ou casamento.
-- [Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309) cobre 50 países, inclusive da América do Sul, mas **não consegui confirmar se o Brasil está na amostra**. A lista de países aparece só num mapa.
+- O Brasil está nos dados públicos de [Kowal et al. 2025](https://doi.org/10.1016/j.tele.2025.102309), que o artigo mostra só num mapa: 23 de 119 brasileiros com parceiro o conheceram online. A satisfação média é quase igual, 4,48 online e 4,50 offline (média simples, sem os controles do artigo). Com 23 casos online, isso não basta para dizer que o padrão geral não vale aqui.
 
 ### 3.2 Casamento e divórcio no Brasil (IBGE, Estatísticas do Registro Civil 2024)
 
@@ -167,8 +167,8 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 | Média anual 2015–2019 | 1.076.280. Ou seja, casa-se menos que antes da pandemia |
 | Idade média ao casar, solteiros de sexos diferentes, 2024 | **Homens 31,5**; **mulheres 29,3** |
 | Mesma idade em 2014 | Homens 29,8; mulheres 27,1 |
-| Mesma idade em 2004 | Homens ~27,8; mulheres ~24,9 (lidos do gráfico) |
-| Divórcios em 2024 | **428.301** (−2,8% vs. 2023, quando foram 440.827) |
+| Mesma idade em 2004 | Homens 27,8; mulheres 24,9 (rótulos do gráfico da apresentação) |
+| Divórcios em 2024 | **428.301** (−2,8% vs. 2023, quando foram 440.827). O IBGE avisa que os divórcios de 2024 podem estar subenumerados, por dificuldade de coleta nas varas e nos tabelionatos; parte da queda pode ser dado que faltou |
 | Tempo médio entre casamento e divórcio | **13,8 anos** (2024) |
 | Divórcios de casamentos com **menos de 10 anos** | **47,5%** em 2024 (43,6% em 2014) |
 | Idade média ao divorciar | Homens 44,5; mulheres 41,6 |
@@ -178,7 +178,7 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 ### 3.3 Proporção de homens e mulheres nos apps no Brasil
 
 - O Match Group (dono do Tinder) **não divulga** a divisão por gênero dos usuários por país.
-- A única estimativa para o Brasil que encontrei é da Start.io, uma rede de anúncios que **infere** o gênero a partir de sinais do aparelho e não faz pesquisa com usuários. Ela estima **~71% homens / ~29% mulheres** entre usuários de Tinder no Brasil e ~76% de homens em SP e no RJ ([Start.io](https://www.start.io/audience/dating-users-tinder-in-brazil)).
+- A única estimativa para o Brasil que encontrei é da Start.io, uma rede de anúncios que **infere** o gênero a partir de sinais do aparelho e não faz pesquisa com usuários. Na página atualizada em julho de 2026, ela estima **83,1% homens / 16,9% mulheres** entre usuários de Tinder no Brasil, e as páginas de SP e do Rio mostram proporção parecida ([Start.io](https://www.start.io/audience/dating-users-tinder-in-brazil)). Os números mudam a cada atualização: a versão lida antes dizia ~71% / ~29%.
 - **É uma estimativa comercial fraca. Use só como indício de que a proporção é desequilibrada.**
 
 ---
@@ -191,7 +191,7 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 | **64% dos homens** se sentiram inseguros pela falta de mensagens (40% das mulheres). 54% das mulheres se sentiram sobrecarregadas (25% dos homens). | [Pew 2023](https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/) | EUA, 2022 |
 | Mais homens que mulheres já usaram apps (**34% vs. 27%**). 53% dos menores de 30 já usaram. | [Pew 2023](https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/) | EUA |
 | **56%** das mulheres usuárias com menos de 50 anos receberam imagens ou mensagens sexuais não solicitadas. 43% continuaram sendo contatadas depois de dizer que não tinham interesse. | [Pew 2023, relatório completo](https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/) | Ajuda a entender por que as mulheres são mais seletivas e cautelosas |
-| No Tinder, perfis **masculinos** de teste deram match com **0,6%** de quem curtiram; perfis **femininos**, com **10,5%**. 86% dos matches dos perfis masculinos vieram de outros homens. Só 7% dos matches masculinos mandaram mensagem (21% dos femininos). | [Tyson et al. 2016, ASONAM / arXiv](https://arxiv.org/abs/1607.01952) | **Evidência fraca:** só 14 perfis falsos com fotos de banco de imagens, em Londres, em 2016. Serve para ilustrar a assimetria, não como taxa real |
+| No Tinder, perfis **masculinos** de teste deram match com **0,6%** de quem curtiram; perfis **femininos**, com **10,5%**. 86% dos matches dos perfis masculinos vieram de outros homens. Só 7% dos matches masculinos mandaram mensagem (21% dos femininos), e esses 7% incluem os matches vindos de outros homens. | [Tyson et al. 2016, ASONAM / arXiv](https://arxiv.org/abs/1607.01952) | **Evidência fraca:** só 14 perfis, 12 em Londres e 2 em Nova York; dois eram voluntários reais e os outros, perfis criados pelos autores com uma foto de banco de imagens, sem foto ou com a foto de conta desativada. O artigo não diz quando coletou os dados. Serve para ilustrar a assimetria, não como taxa real |
 | Homens e mulheres mandam mensagem para pessoas em média **~25% "mais desejáveis"** que eles mesmos, e a chance de resposta **cai fortemente** quanto maior essa diferença | [Bruch & Newman 2018, *Science Advances*](https://doi.org/10.1126/sciadv.aap9815) | 4 cidades dos EUA, dados de um site de namoro gratuito, 2014 |
 | Entre usuários de 18–29 anos na Suíça, casais de app tinham **menos parceiros da mesma idade** e mais pares com o homem mais velho | [Potarca 2020](https://doi.org/10.1371/journal.pone.0243733) ([ficha](../studies/potarca-2020-suica-apps.md)) | Sugere que, nos apps, homens jovens competem com homens mais velhos pelas mesmas mulheres |
 
@@ -206,7 +206,7 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 - **Conflito de interesse:** Cacioppo 2013 foi financiado pela eHarmony. Pesquisas de empresas de app (Tinder, Match "Singles in America", Happn) não foram usadas como evidência principal aqui.
 - **Os dados de 2020–2022 com mais de 50% online** não estão publicados em periódico e vêm de subamostras pequenas.
 - **Proporção de gênero no Brasil:** só há estimativa comercial, inferida e não verificada.
-- O ranking por local em Cacioppo foi **verificado no PDF original** (Tabela 2), mas só mede satisfação de quem continuava casado; separação não variou por local. **Não verifiquei** se o Brasil está no estudo de 50 países.
+- O ranking por local em Cacioppo foi **verificado no PDF original** (Tabela 2), mas só mede satisfação de quem continuava casado; separação não variou por local. O Brasil está no estudo de 50 países, com 119 pessoas com parceiro.
 
 ### O que está bem estabelecido e o que é fraco ou contestado
 
@@ -214,9 +214,9 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 |---|---|
 | Nos EUA, online é o canal mais comum para casais novos desde ~2013 (39% em 2017) | "Mais de 50% / maioria" dos casais hoje |
 | Isso é pluralidade, não maioria. No estoque de casais, a fatia é bem menor (10% EUA; 16% em 50 países) | Relações online seriam *melhores* (Cacioppo, financiado pela eHarmony) |
-| Como o casal se conheceu tem efeito pequeno ou nulo sobre o término (HCMST, longitudinal) | Relações online seriam *piores* (Kowal 2025: efeitos pequenos a moderados, painel online, transversal) |
+| Como o casal se conheceu tem efeito pequeno ou nulo sobre o término (HCMST, longitudinal) | Relações online seriam *piores* (Kowal 2025: o artigo publica d de 0,35 a 0,51, mas as médias e os dados públicos indicam efeito pequeno; painel online, transversal) |
 | Casais que se conhecem online tendem a casar mais rápido (EUA) | Ranking de "melhores lugares" offline (igreja > bar etc.) |
-| Nos apps, homens recebem muito menos mensagens e matches que mulheres (Pew, várias pesquisas) | Proporção exata de homens e mulheres no Tinder Brasil |
+| Nos apps, homens dizem receber muito menos mensagens que mulheres (Pew, autorrelato, duas pesquisas) | Proporção exata de homens e mulheres no Tinder Brasil |
 | No Brasil, as pessoas casam cada vez mais tarde (H 31,5 / M 29,3) e quase metade dos divórcios encerra casamentos de menos de 10 anos (IBGE) | Qualquer número sobre "% de casais brasileiros que se conheceram em app" |
 
 ---
@@ -228,8 +228,8 @@ Estas são inferências a partir dos dados acima, não conclusões diretas de um
 1. **Não há um "canal mágico" para encontrar uma boa esposa.** Como o casal se conheceu tem efeito pequeno ou nulo na duração. O que pesa mais é **com quem** você fica (compatibilidade, valores, momento de vida), não **onde**.
 2. **Para alguém da sua idade, o offline ainda é a maior parte do jogo.** Nos EUA, 80% dos menores de 30 com parceiro **não** o conheceram online ([Pew 2023](https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/)). No Brasil, 29% dos jovens de 16–29 já tiveram *algum encontro* por app, o que fica bem longe de "a maioria se casa via app".
 3. **Os apps são um mercado desfavorável para homens jovens.**
-   - Há mais homens que mulheres: ~71% de homens no Tinder Brasil, segundo estimativa fraca.
-   - Os homens recebem bem menos matches e mensagens ([Pew](https://www.pewresearch.org/internet/2020/02/06/users-of-online-dating-platforms-experience-both-positive-and-negative-aspects-of-courtship-on-the-web/); [Tyson et al.](https://arxiv.org/abs/1607.01952)).
+   - Há mais homens que mulheres: 83,1% de homens no Tinder Brasil, segundo estimativa fraca.
+   - Os homens dizem receber bem menos mensagens ([Pew](https://www.pewresearch.org/internet/2020/02/06/users-of-online-dating-platforms-experience-both-positive-and-negative-aspects-of-courtship-on-the-web/), autorrelato), e num teste pequeno os perfis masculinos tiveram bem menos matches ([Tyson et al.](https://arxiv.org/abs/1607.01952), evidência fraca).
    - Aos 21 anos, você também compete com homens mais velhos pelas mulheres da sua faixa ([Potarca 2020](https://doi.org/10.1371/journal.pone.0243733)).
    - Use apps se quiser, mas como **complemento**. Não espere que funcionem para todos do mesmo jeito.
 4. **Os canais offline que mais rendem para quem tem 20 e poucos anos são ambientes recorrentes com pessoas da mesma idade:**
@@ -250,7 +250,7 @@ Estas são inferências a partir dos dados acima, não conclusões diretas de um
 
 ### Fontes principais (primárias)
 
-- Rosenfeld, Thomas & Hausen (2019). *Disintermediating your friends*. PNAS 116(36). https://doi.org/10.1073/pnas.1908630116 · [PDF](https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf)
+- Rosenfeld, Thomas & Hausen (2019). *Disintermediating your friends*. PNAS 116(36). https://doi.org/10.1073/pnas.1908630116 · [texto completo no PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC6731751/)
 - Rosenfeld (2017). *Marriage, Choice, and Couplehood in the Age of the Internet*. Sociological Science 4:490-510. https://doi.org/10.15195/v4.a20
 - Cacioppo et al. (2013). *Marital satisfaction and break-ups differ across on-line and off-line meeting venues*. PNAS 110(25). https://doi.org/10.1073/pnas.1222447110
 - Potarca (2020). *The demography of swiping right*. PLOS ONE. https://doi.org/10.1371/journal.pone.0243733

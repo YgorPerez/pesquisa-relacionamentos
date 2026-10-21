@@ -46,7 +46,7 @@ O recorte brasileiro abaixo é cálculo próprio, sem ponderação e sem teste e
 | Satisfação (1–5) | 4,48 | 4,50 |
 | Compromisso (1–5) | 4,56 | 4,61 |
 
-- Nas relações iniciadas depois de 2010, 21 de 69 (30%) começaram online.
+- Nas relações iniciadas em 2010 ou depois, a regra do próprio artigo, 21 de 73 (29%) começaram online.
 - O Brasil é o 15º de 50 países na fatia online (média geral de 16%).
 - O desenho do estudo tem limites que valem também para o recorte brasileiro: painel online com cotas (Syno International) e pergunta binária ("Online" vs. "de forma tradicional"), que não separa app de rede social.
 
@@ -54,8 +54,8 @@ O recorte brasileiro abaixo é cálculo próprio, sem ponderação e sem teste e
 
 | Fonte | O que diz | Status |
 |---|---|---|
-| [Opinion Box 2017](../studies/opinionbox-2017-relacionamentos-brasil.md) | 23% dos internautas com parceiro o conheceram online (17% sites e redes sociais; 6% apps). n = 1.735, painel online | ✅ · fraca |
-| [Mobile Time/Opinion Box 2025](../studies/mobiletime-2025-apps-relacionamento-brasil.md) | 23% dos brasileiros com smartphone já tiveram encontro por app (29% entre 16–29 anos). Mede encontros, não casais | ✅ · moderada |
+| [Opinion Box 2017](../studies/opinionbox-2017-relacionamentos-brasil.md) | 23% dos internautas com parceiro o conheceram online (17% sites e redes sociais; 6% apps). n = 1.735, painel online | 🟡 · fraca |
+| [Mobile Time/Opinion Box 2025](../studies/mobiletime-2025-apps-relacionamento-brasil.md) | 23% dos brasileiros com smartphone já tiveram encontro por app (29% entre 16–29 anos). Mede encontros, não casais | 🟡 · fraca |
 | Casamentos.com.br, via [Agência Brasil, 12/06/2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia) | "Quase 20%" de 3,4 mil casais de 26–40 anos com planos de casar se conheceram pela internet e redes sociais. Dos encontros online, 36% em app, cerca de 33% no Facebook, 15% no Instagram e 7% em grupos de WhatsApp | ⬜ o relatório original foi procurado e não existe publicado ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)). Toda a cobertura copia a mesma matéria, sem data de campo, texto da pergunta nem forma de recrutamento; só a data da matéria é conhecida. Amostra de usuários de um portal de casamentos |
 
 ### 1.3 Pesquisas de opinião nacionais (Datafolha, Ipsos, outras)
@@ -117,9 +117,9 @@ A API devolve título, programa e ano, sem resumo. As dissertações e teses do 
 |---|---|---|---|---|---|
 | EUA | [Rosenfeld 2019](../studies/rosenfeld-2019-disintermediating-friends.md) | 2017 | 39% (casais hétero) | Online | ✅ |
 | França | [Bergström 2016](../studies/bergstrom-2016-epic-franca.md), Épic, amostra aleatória | encontros de 2005–2013 | < 9% (só sites); 5% das primeiras uniões, 10% das seguintes | Trabalho, festas entre amigos, lugares públicos | ✅ |
-| Grã-Bretanha | [Lampard 2020](../studies/lampard-2020-natsal-reino-unido.md), NATSAL-3 | co-residência 2008–2012 | 10,9% (7,3% sites/apps + 3,6% outro online) | Amigos/família (25,8%) | ✅ |
+| Grã-Bretanha | [Lampard 2020](../studies/lampard-2020-natsal-reino-unido.md), NATSAL-3 | co-residência 2008–2012 | 10,9% (7,3% sites de encontro + 3,6% outro online, que pode incluir apps) | Amigos/família (25,8%) | ✅ |
 | França | Ined, fiche ERFI-2 nº 22 (2026) | casais que passaram a morar juntos em 2020–2024 | 24% (segundo resultado de busca; Países Baixos 27%, Dinamarca 29%, Croácia 14%) | Encontros em festas e por amigos em queda | ⬜ site do Ined fora do ar (DNS) em 2026-10-18 |
-| 50 países | [Kowal 2025](../studies/kowal-2025-50-paises.md) | estoque em 2024 | 16% (21% após 2010) | — | ✅ |
+| 50 países | [Kowal 2025](../studies/kowal-2025-50-paises.md) | estoque em 2024 | 16% (21% nas relações de 2010 em diante) | — | ✅ |
 | Suíça | [Potarca 2020](../studies/potarca-2020-suica-apps.md) | relações dos últimos 10 anos, 2018 | 4,1% por app | — | ✅ |
 
 **Lições de método** (de [Bergström 2016](../studies/bergstrom-2016-epic-franca.md)):
@@ -136,7 +136,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 | [Rosenfeld 2017](../studies/rosenfeld-2017-marriage-choice-couplehood.md) | EUA | longitudinal, representativo | Como se conheceram não prevê término | ✅ forte |
 | [Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md) | Alemanha | longitudinal (pairfam, n = 3.561) | Homens de casais online casam mais; mulheres com ensino superior casam mais se o casal for online | ✅ moderada |
 | [Potarca 2020](../studies/potarca-2020-suica-apps.md) | Suíça | transversal, pesquisa oficial | Casais de app sem diferença de satisfação | ✅ moderada |
-| [Kowal 2025](../studies/kowal-2025-50-paises.md) | 50 países | transversal, painel | Online: satisfação e amor um pouco menores (d de 0,35 a 0,51). No Brasil, sem diferença bruta (n pequeno) | ✅ moderada |
+| [Kowal 2025](../studies/kowal-2025-50-paises.md) | 50 países | transversal, painel | Online: satisfação e amor um pouco menores. O artigo publica d de 0,35 a 0,51, mas as médias dele e os dados públicos indicam efeito pequeno (diferença bruta de 0,09 a 0,12 desvio-padrão). No Brasil, sem diferença bruta (n pequeno) | ✅ moderada |
 | [Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md) | EUA | transversal, n = 923 casados | Online: satisfação e estabilidade um pouco menores, explicadas em parte por estigma e menor aprovação da rede | ⬜ |
 | Hu, Zhu & Zhang 2024, *Cyberpsychology, Behavior, and Social Networking* 27(9) | EUA | dados do Pew 2019 (n = 4.860) | Segundo cobertura, casais online só têm menor "sucesso" se não falam da relação nas redes sociais | ⬜ não conferido; sem Ficha |
 | [Cacioppo 2013](../studies/cacioppo-2013-satisfacao-por-local.md) | EUA | transversal, eHarmony | Online: um pouco mais satisfeitos e menos separações | ✅ moderada (conflito de interesse) |
