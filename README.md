@@ -72,10 +72,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
 - [Eastwick & Finkel 2008](studies/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem desejo real (speed dating) · ⬜ · moderada
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
-- [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento, diferença de idade e divórcio · ⬜ · fraca
+- [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
-- [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ⬜ · moderada
+- [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ⬜ · forte
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ⬜ · moderada
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ⬜ · moderada
@@ -84,7 +84,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ⬜ · forte
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ⬜ · forte
-- [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ⬜ · forte
+- [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ⬜ · fraca
 
