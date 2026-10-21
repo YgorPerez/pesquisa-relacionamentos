@@ -32,11 +32,13 @@ const Cell = Schema.Struct({
 })
 export type PriorityCell = typeof Cell.Type
 
-/** The gap between what people state and what they choose. */
+/** The gap between what people state and what they choose, with the fact
+ * sheet that measures it: a bias is a claim too. */
 const Bias = Schema.Struct({
   all: Schema.optional(Text),
   man: Schema.optional(Text),
   woman: Schema.optional(Text),
+  fact_sheet: Slug,
 })
 
 const Trait = Schema.Struct({
@@ -200,6 +202,15 @@ export function readPriorities(
         factSheets,
       )
       if (fromCell) errors.push(fromCell)
+    }
+    if (trait.bias) {
+      const fromBias = dataFactSheetProblem(
+        file,
+        `traits.${i}.bias.fact_sheet`,
+        trait.bias.fact_sheet,
+        factSheets,
+      )
+      if (fromBias) errors.push(fromBias)
     }
   })
 

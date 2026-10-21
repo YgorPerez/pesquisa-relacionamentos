@@ -5,7 +5,7 @@
 # Por característica × desfecho: `level` (3 pesa, 2 pesa pouco, 1 quase nada,
 # 0 não sabemos), `measure`, `plain_text` e `fact_sheet`. Degrau acima de 0
 # precisa de Ficha. `bias` é a distância entre o que se declara e o que se
-# escolhe: `all`, ou `man` e `woman`.
+# escolhe: `all`, ou `man` e `woman`, e sempre a `fact_sheet` que a mede.
 
 # A barra da Joel 2020: o que explica a satisfação com a relação na linha de
 # base. As variáveis da relação do próprio ator explicam 45%, e o modelo com
@@ -40,6 +40,7 @@ traits:
       fact_sheet: francis-tan-2015-gastos-casamento-divorcio
     bias:
       all: As pessoas dão menos peso à aparência quando dizem o que querem do que quando de fato se atraem.
+      fact_sheet: eastwick-2024-preferencias-43-paises
 
   - id: sexo
     name: Química sexual
@@ -48,16 +49,20 @@ traits:
       measure: "1º de 35 no revelado, 12º no declarado"
       plain_text: '"Bom de cama" é o que mais pesa no que as pessoas revelam, e só o 12º no que dizem.'
       fact_sheet: eastwick-2024-preferencias-43-paises
+    # Joel 2020 mede a satisfação sexual que a própria pessoa relata, uma
+    # variável da relação (a fatia dos 45%), não um traço do parceiro. Como
+    # traço do parceiro, fica em "não sabemos", e a célula diz onde ela conta.
     satisfaction:
-      level: 3
-      measure: entre os 5 melhores preditores
-      plain_text: A satisfação sexual está entre o que mais prevê satisfação, mas ela se constrói a dois, não vem pronta no parceiro.
+      level: 0
+      measure: entre os 5 melhores preditores, mas na fatia da relação
+      plain_text: Como traço do parceiro, nenhum estudo lido mede isso. O estudo citado mede outra coisa, a sua própria satisfação sexual na relação, uma das cinco que mais preveem a satisfação. Ela conta na fatia da relação, não na do parceiro.
       fact_sheet: joel-2020-machine-learning-43-datasets
     duration:
       level: 0
       plain_text: Nenhum estudo lido mede isso.
     bias:
       all: 'Ao dizer o que querem, as pessoas põem "bom de cama" em 12º de 35. No que de fato pesa, ele vem em 1º.'
+      fact_sheet: eastwick-2024-preferencias-43-paises
 
   - id: renda
     name: Renda
@@ -75,8 +80,9 @@ traits:
       plain_text: O que se associa a menos divórcio é o patrimônio do casal, não a renda de um. Não diz nada sobre escolher.
       fact_sheet: killewald-2023-riqueza-divorcio
     bias:
-      woman: Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.
-      man: Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.
+      woman: Ao dizer o que querem, mulheres põem a renda uns 4 lugares acima, entre 35 atributos, de onde ela de fato pesa na avaliação do parceiro.
+      man: Ao dizer o que querem, homens põem a renda uns 4 lugares abaixo, entre 35 atributos, de onde ela de fato pesa na avaliação do parceiro.
+      fact_sheet: eastwick-2024-preferencias-43-paises
 
   - id: calma
     name: Estabilidade emocional
