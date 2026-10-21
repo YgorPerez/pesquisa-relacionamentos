@@ -130,7 +130,7 @@ test.describe('/prioridades', () => {
     await open(page)
     await tap(chip(page, 'Aparência'))
     const joel = page.getByRole('img', {
-      name: /45% explicado pela relação, 5% pelo parceiro, 50% sem explicação/,
+      name: /45% explicado pela relação, quase nada a mais pelo parceiro \(0% a 1,9%\), 55% sem explicação/,
     })
     await expect(joel).toBeVisible()
     await tap(page.getByText('Antes: o parceiro explica pouco da satisfação'))
@@ -209,12 +209,12 @@ test.describe('/prioridades', () => {
     await expect(income).not.toContainText('Homens tendem')
   })
 
-  test('says no study is Brazilian and brings the B1 Guide block', async ({
+  test('says only one study includes Brazil and brings the B1 Guide block', async ({
     page,
   }) => {
     await open(page)
     await expect(page.getByRole('note')).toContainText(
-      'Nenhum destes estudos é brasileiro',
+      'Só um destes estudos inclui o Brasil',
     )
     await expect(page.getByRole('note')).toContainText('casais homem-mulher')
     const fromGuide = page.getByRole('region', { name: 'Do Guia' })
@@ -299,7 +299,9 @@ test.describe('B1 Guide card', () => {
     const card = page.getByRole('region', {
       name: 'Onde ficam as suas prioridades?',
     })
-    await expect(card).toContainText('Seu topo 3 cabe na fatia de 5%:')
+    await expect(card).toContainText(
+      'Seu topo 3 cabe na fatia do parceiro, que soma quase nada (0% a 1,9%):',
+    )
     await expect(card.locator('[data-slot="topo3-no-cartao"] li')).toHaveText([
       /Química sexual.*pesa$/,
       /Ser parecido comigo.*quase nada$/,

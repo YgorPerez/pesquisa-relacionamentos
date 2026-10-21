@@ -38,8 +38,10 @@ version: "1"
 const PRIORITIES = `explained_satisfaction:
   fact_sheet: silva-2020-apps-brasil
   relationship: 45
-  partner: 5
-  unexplained: 50
+  unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 traits:
   - id: aparencia
     name: Aparência
@@ -79,8 +81,11 @@ describe('priorities file', () => {
     expect(priorities?.explained_satisfaction).toEqual({
       fact_sheet: 'silva-2020-apps-brasil',
       relationship: 45,
-      partner: 5,
-      unexplained: 50,
+      unexplained: 55,
+      partner_added: {
+        baseline: { min: 0, max: 1.9 },
+        follow_up: { min: 0.9, max: 3.5 },
+      },
     })
     expect(
       priorities?.traits.map((c) => [
@@ -162,17 +167,27 @@ describe('priorities file', () => {
   it('fails with a level outside 0 to 3, a repeated id and a bar that does not add up to 100', () => {
     const text = PRIORITIES.replace('level: 3, measure', 'level: 4, measure')
       .replace('id: renda', 'id: aparencia')
-      .replace('partner: 5', 'partner: 6')
+      .replace('unexplained: 55', 'unexplained: 56')
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
       `${FILE}: traits.0.attraction.level: value outside the closed list (0 | 1 | 2 | 3) (got 4)`,
     ])
     const validLevels = PRIORITIES.replace(
       'id: renda',
       'id: aparencia',
-    ).replace('partner: 5', 'partner: 6')
+    ).replace('unexplained: 55', 'unexplained: 56')
     expect(errors(buildLibrary(filesWith(validLevels)))).toEqual([
-      `${FILE}: explained_satisfaction: relationship, partner and unexplained add up to 101%, not 100%`,
+      `${FILE}: explained_satisfaction: relationship and unexplained add up to 101%, not 100%`,
       `${FILE}: traits.1.id: the trait "aparencia" appears more than once`,
+    ])
+  })
+
+  it('fails when a range of what the partner adds starts above where it ends', () => {
+    const text = PRIORITIES.replace(
+      'baseline: { min: 0, max: 1.9 }',
+      'baseline: { min: 2, max: 1.9 }',
+    )
+    expect(errors(buildLibrary(filesWith(text)))).toEqual([
+      `${FILE}: explained_satisfaction.partner_added.baseline: min 2% is above max 1.9%`,
     ])
   })
 

@@ -146,8 +146,9 @@ function Calculator({ view }: { view: PrioritiesView }) {
       <WhereTheEvidencePuts traits={traits} state={state} gender={gender} />
 
       <Notice role="note">
-        Nenhum destes estudos é brasileiro: vêm dos EUA, da Europa e da
-        Austrália, e um cobre 43 países. Quase todos são de casais homem-mulher.
+        Só um destes estudos inclui o Brasil, entre os 43 países que cobre; os
+        outros vêm sobretudo dos EUA e da Europa. Quase todos são de casais
+        homem-mulher.
       </Notice>
 
       <SharePriorities traits={traits} state={state} gender={gender} />

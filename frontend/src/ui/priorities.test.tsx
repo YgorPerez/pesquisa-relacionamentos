@@ -86,6 +86,20 @@ it('the chosen ones land numbered on their shelf, and the alert says it in a sen
   )
 })
 
+it("Joel's bar says the partner adds almost nothing, with the measured range", async () => {
+  await open()
+  expect(
+    screen.getByRole('img', {
+      name: 'Satisfação: 45% explicado pela relação, quase nada a mais pelo parceiro (0% a 1,9%), 55% sem explicação',
+    }),
+  ).toBeVisible()
+  expect(
+    screen.getByText(
+      /^tudo o que se sabe do parceiro soma de 0% a 1,9% \(de 0,9% a 3,5% no fim dos estudos\)/,
+    ),
+  ).toBeVisible()
+})
+
 it("the outcome changes the shelves, and Joel's bar only shows in satisfaction", async () => {
   const { user } = await open()
   await user.click(chip('Aparência'))

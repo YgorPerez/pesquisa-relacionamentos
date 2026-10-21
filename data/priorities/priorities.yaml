@@ -9,13 +9,16 @@
 
 # A barra da Joel 2020: o que explica a satisfação com a relação na linha de
 # base. As variáveis da relação do próprio ator explicam 45%, e o modelo com
-# tudo (44%) não passa disso: as diferenças individuais do parceiro não
-# acrescentam nada além delas. Sobram cerca de 55% sem explicação.
+# tudo (44%) não passa disso. Sobram cerca de 55% sem explicação. O parceiro
+# e as diferenças individuais acrescentam, além da relação do ator, de 0% a
+# 1,9% na linha de base e de 0,9% a 3,5% no seguimento (Fig. 4).
 explained_satisfaction:
   fact_sheet: joel-2020-machine-learning-43-datasets
   relationship: 45
-  partner: 0
   unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 
 traits:
   - id: aparencia
@@ -83,10 +86,8 @@ traits:
       plain_text: Ao avaliar o parceiro atual, ou quem mais desejam, as pessoas dão menos peso à calma do que dizem dar.
       fact_sheet: eastwick-2024-preferencias-43-paises
     satisfaction:
-      level: 1
-      measure: "tudo do parceiro, somado: 0% a 1,9% a mais"
-      plain_text: O estudo lido não separa este traço. A personalidade e tudo o mais que se mede do parceiro, somados, acrescentam de 0% a 1,9% à satisfação além de como a pessoa vive a relação.
-      fact_sheet: joel-2020-machine-learning-43-datasets
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
       level: 0
       plain_text: O estudo que mede isso ainda não teve o texto completo lido.
@@ -97,10 +98,8 @@ traits:
       level: 0
       plain_text: Os estudos lidos não separam isso.
     satisfaction:
-      level: 1
-      measure: "tudo do parceiro, somado: 0% a 1,9% a mais"
-      plain_text: O estudo lido não separa este traço. A personalidade e tudo o mais que se mede do parceiro, somados, acrescentam de 0% a 1,9% à satisfação além de como a pessoa vive a relação.
-      fact_sheet: joel-2020-machine-learning-43-datasets
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
       level: 0
       plain_text: O estudo que mede isso ainda não teve o texto completo lido.
@@ -111,10 +110,8 @@ traits:
       level: 0
       plain_text: Os estudos lidos não separam isso.
     satisfaction:
-      level: 1
-      measure: "tudo do parceiro, somado: 0% a 1,9% a mais"
-      plain_text: O estudo lido não separa este traço. A personalidade e tudo o mais que se mede do parceiro, somados, acrescentam de 0% a 1,9% à satisfação além de como a pessoa vive a relação.
-      fact_sheet: joel-2020-machine-learning-43-datasets
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
       level: 0
       plain_text: O estudo que mede isso ainda não teve o texto completo lido.
