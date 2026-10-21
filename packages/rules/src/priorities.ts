@@ -41,6 +41,20 @@ export const LEVEL_NAME: Record<Level, string> = {
 
 export const TOP_SIZE = 3
 
+/** The word for a share of explained variance, read from the top of its
+ * measured range, so the page never says "quase nada" over a range that is
+ * not. The cut points are Cohen's (1988) small, medium and large R²: 2%, 13%
+ * and 26%. */
+export function shareWord(range: {
+  readonly min: number
+  readonly max: number
+}): string {
+  if (range.max < 2) return 'quase nada'
+  if (range.max < 13) return 'pouco'
+  if (range.max < 26) return 'uma parte'
+  return 'muito'
+}
+
 /** The minimum the rule reads from a trait; the content package's one fits.
  * The keys are the priorities file's. */
 export interface TraitWithEvidence {
