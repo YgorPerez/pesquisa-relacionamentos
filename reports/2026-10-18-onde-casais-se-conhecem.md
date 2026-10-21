@@ -25,7 +25,7 @@ ticket: 4
 4. **Qualidade e duração continuam sem consenso.** Os estudos pós-2020 apontam em direções diferentes:
    - **50 países:** satisfação um pouco menor para quem se conheceu online ([Kowal 2025](../studies/kowal-2025-50-paises.md)).
    - **EUA:** casamentos online um pouco menos satisfeitos e estáveis ([Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md), ⬜).
-   - **Alemanha:** casais online casam tanto ou mais ([Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md), 🟡).
+   - **Alemanha:** casais online casam tanto ou mais ([Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md), ✅).
    - **Suíça:** casais de app não diferem em satisfação ([Potarca 2020](../studies/potarca-2020-suica-apps.md)).
    - **EUA, HCMST:** como o casal se conheceu não prevê término ([Rosenfeld 2017](../studies/rosenfeld-2017-marriage-choice-couplehood.md)).
    - **Meta-análise:** não encontrei nenhuma sobre online vs. offline e qualidade da relação.
@@ -134,7 +134,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 | Estudo | País | Desenho | Resultado | Status |
 |---|---|---|---|---|
 | [Rosenfeld 2017](../studies/rosenfeld-2017-marriage-choice-couplehood.md) | EUA | longitudinal, representativo | Como se conheceram não prevê término | ✅ forte |
-| [Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md) | Alemanha | longitudinal (pairfam, n = 3.561) | Homens de casais online casam mais; mulheres com ensino superior casam mais se o casal for online | 🟡 moderada |
+| [Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md) | Alemanha | longitudinal (pairfam, n = 3.561) | Homens de casais online casam mais; mulheres com ensino superior casam mais se o casal for online | ✅ moderada |
 | [Potarca 2020](../studies/potarca-2020-suica-apps.md) | Suíça | transversal, pesquisa oficial | Casais de app sem diferença de satisfação | ✅ moderada |
 | [Kowal 2025](../studies/kowal-2025-50-paises.md) | 50 países | transversal, painel | Online: satisfação e amor um pouco menores (d de 0,35 a 0,51). No Brasil, sem diferença bruta (n pequeno) | ✅ moderada |
 | [Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md) | EUA | transversal, n = 923 casados | Online: satisfação e estabilidade um pouco menores, explicadas em parte por estigma e menor aprovação da rede | ⬜ |
@@ -150,7 +150,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 ## 5. O que fica em aberto
 
 - Conferir no site do Ined (fora do ar em 2026-10-18) a fiche ERFI-2 nº 22 com os 24% de 2020–2024 e criar Ficha.
-- Ler o texto completo de Sharabi & Dorrance-Hall 2024 e de Potarca 2021.
+- Ler o texto completo de Sharabi & Dorrance-Hall 2024. ~~Potarca 2021~~ lido em 2026-10-21.
 - ~~Procurar o relatório original da Casamentos.com.br.~~ Procurado em 2026-10-20 e não encontrado: só há a matéria da Agência Brasil de 12/06/2021 e cópias dela ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)).
 - ~~Buscar diretamente no SciELO e no Catálogo de Teses da CAPES.~~ Feito em 2026-10-20 (seção 1.4), junto com Datafolha, Ipsos e IBGE (seção 1.3): não há pesquisa representativa sobre onde os casais brasileiros se conhecem ([#48](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/48)). Uma pesquisa assim teria de ser encomendada ou incluída num levantamento nacional.
 
@@ -160,7 +160,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 - Rosenfeld, página pessoal (https://web.stanford.edu/~mrosenfe/) e gráfico `Rosenfeld_how_hetero_couples_met_through2021v4.JPG`; manuscritos de Rosenfeld & Hausen 2023 e de Rosenfeld 2025.
 - Bergström 2016, Population & Sociétés 530 (PDF).
 - Lampard 2020, manuscrito aceito no WRAP (https://wrap.warwick.ac.uk/131685/).
-- Potarca 2021, resumo no PubMed (34410350).
+- Potarca 2021, resumo no PubMed (34410350) e, em 2026-10-21, o PDF da Duke University Press (https://doi.org/10.1215/00703370-9420350).
 - Haack & Falcke 2017, PDF na Revista Colombiana de Psicología.
 - Opinion Box 2017, post original.
 - Agência Brasil, 12/06/2021 (Casamentos.com.br).
