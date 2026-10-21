@@ -53,4 +53,4 @@ Apoia só em parte. Num experimento, o humor de um homem o tornou mais desejáve
 
 ## Como usamos
 
-Base da Dica "Senso de humor ajuda" em `tips/_sem-ficha.md`, ao lado de [Bressler, Martin & Balshine (2006)](bressler-2006-humor-producao-apreciacao.md).
+Base da Dica [`humor`](../tips/humor.md), ao lado de [Bressler, Martin & Balshine (2006)](bressler-2006-humor-producao-apreciacao.md).

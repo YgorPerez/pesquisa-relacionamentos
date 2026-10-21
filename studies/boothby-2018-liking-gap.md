@@ -48,4 +48,4 @@ Desconhecidos conversaram (de 5 minutos a 45 minutos) e depois cada um disse qua
 
 ## Como usamos
 
-- Dica "Você provavelmente acha que a conversa foi pior do que foi (*liking gap*)" (`tips/_sem-ficha.md`, Tema "Conversa e conexão"), junto com [Epley & Schroeder (2014)](epley-2014-conversar-com-estranhos.md).
+- Dica [`conversa-melhor-do-que-parece`](../tips/conversa-melhor-do-que-parece.md), junto com [Epley & Schroeder (2014)](epley-2014-conversar-com-estranhos.md).

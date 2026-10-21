@@ -50,4 +50,4 @@ O PDF sai do `pdftotext` com o sinal de igual como "5" e sem o sinal de menos: "
 
 ## Como usamos
 
-- Dica "Mostre interesse específico pela pessoa, não por todo mundo" (`tips/_sem-ficha.md`, Tema "Conversa e conexão").
+- Dica [`interesse-especifico`](../tips/interesse-especifico.md), marcada como inferência: o estudo mede o desejo sentido, e a Dica fala do que se mostra.
