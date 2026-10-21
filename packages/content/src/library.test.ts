@@ -358,7 +358,10 @@ describe("the repository's library", () => {
   it('the possible group data cites the Census and PNS fact sheets', () => {
     const root = fileURLToPath(new URL('../../..', import.meta.url))
     const library = libraryOf(loadLibrary(root))
-    expect(library.data.map((d) => [d.file, d.fact_sheet])).toEqual([
+    const possibleGroup = library.data.filter((d) =>
+      d.file.startsWith('data/possible-group/'),
+    )
+    expect(possibleGroup.map((d) => [d.file, d.fact_sheet])).toEqual([
       ['data/possible-group/censo-2022.meta.yaml', 'ibge-2022-censo-amostra'],
       ['data/possible-group/pns-2019.meta.yaml', 'ibge-2019-pns'],
       [
