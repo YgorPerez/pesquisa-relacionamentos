@@ -49,7 +49,7 @@ A autora acompanhou casais do painel pairfam desde o começo da relação até o
 | Solteiros que procuram parceiro na internet (outra amostra: solteiros que querem um parceiro, da onda III em diante) | Menos chance de começar uma relação, em todos os grupos, com a queda menor entre as mulheres com ensino superior | p. 1998, Supplementary Analyses | "reveal that the use of the internet led to a negative shift in the partnering chances" |
 | Solteiras com ensino superior que procuram online | A maior chance de achar parceiro entre quem procura online | p. 1999, Supplementary Analyses | "Within the group of singles using online dating, high-educated women experienced the highest chance of finding a mate." |
 | Dados do parceiro sobre trabalho da mãe | Só 44,3% dos parceiros responderam | p. 1987, Measures | "only 44.3% provided data on attitudes toward maternal employment" |
-| Resposta do pairfam | 30% a 45% a cada onda | p. 1985, Data | "Response rates for pairfam were approximately 30% to 45% at each wave" |
+| Resposta do pairfam | 30% a 45% a cada onda | p. 1985, Data | "30% to 45% at each wave" |
 
 "Significativo" quer dizer p < 0,05, o asterisco da Tabela 2. O subrisco (*subhazard ratio*) compara a taxa de casamento ao longo do tempo, contando morar junto e terminar como desfechos concorrentes. Nos modelos com interação, o efeito de conhecer online vale para quem tem ensino superior, a categoria de referência; para quem não tem, multiplica-se pela interação.
 
