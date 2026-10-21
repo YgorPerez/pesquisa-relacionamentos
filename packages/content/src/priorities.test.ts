@@ -184,59 +184,14 @@ describe('priorities file', () => {
   })
 })
 
-describe("the repository's priorities draft", () => {
+describe("the repository's priorities file", () => {
   const root = fileURLToPath(new URL('../../..', import.meta.url))
 
-  it('stays out of the build while the fact sheets it cites are ⬜ (#39)', () => {
-    const paths = readFiles(root).map((a) => a.path)
-    expect(paths.filter((c) => c.startsWith('data/priorities/'))).toEqual([])
-  })
-
-  it('only fails for citing ⬜ fact sheets: with the fact sheets checked, it publishes', () => {
-    const draft = (name: string): ContentFile => ({
-      path: `data/priorities/${name}`,
-      text: readFileSync(`${root}/data/priorities/_${name}`, 'utf8'),
-    })
-    const result = buildLibrary([
-      ...readFiles(root),
-      draft('priorities.yaml'),
-      draft('priorities.meta.yaml'),
-    ])
-    const problems = result.ok ? [] : result.errors.map((e) => e.message)
-    expect(problems.length).toBeGreaterThan(0)
-    expect(problems.filter((m) => !m.includes('is ⬜ (unverified)'))).toEqual(
-      [],
-    )
-
-    // With the cited fact sheets marked as checked, the same draft passes.
-    const checked = readFiles(root).map((a) =>
-      a.path.startsWith('studies/')
-        ? {
-            ...a,
-            text: a.text.replace(
-              /^status: unverified$/m,
-              'status: partial\nverified_on: 2026-10-19',
-            ),
-          }
-        : a,
-    )
-    const published = buildLibrary([
-      ...checked,
-      draft('priorities.yaml'),
-      draft('priorities.meta.yaml'),
-    ])
-    if (!published.ok) throw new Error(formatProblems(published.errors))
-    expect(published.library.priorities?.traits.map((c) => c.id)).toEqual([
-      'aparencia',
-      'sexo',
-      'renda',
-      'calma',
-      'gentileza',
-      'responsavel',
-      'parecido',
-      'escolaridade',
-      'religiao',
-      'idade',
-    ])
+  it('is published with the real library, every cell citing a ✅ or 🟡 fact sheet (#129)', () => {
+    const files = readFiles(root)
+    expect(files.map((a) => a.path)).toContain(FILE)
+    const result = buildLibrary(files)
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(result.library.priorities?.file).toBe(FILE)
   })
 })
