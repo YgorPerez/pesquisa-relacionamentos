@@ -134,7 +134,7 @@ O 39% da HCMST mede **casais recém-formados** num certo ano (fluxo). As pesquis
 - **Época:** os estudos de 2013 e 2017 são quase todos da era dos *sites* (eHarmony, Match), anterior aos apps de swipe (Tinder é de 2012). Os dados de 2025 (Kowal) são mais recentes e menos favoráveis ao online. Isso pode refletir a mudança para apps, mas o estudo não separa app de rede social.
 
 **Resumo da seção 2:**
-- **Bem estabelecido:** nos EUA, como o casal se conheceu tem efeito **pequeno ou nulo** sobre a duração. Casais que se conhecem online tendem a casar mais rápido.
+- **Bem estabelecido:** nos EUA, como o casal se conheceu tem efeito **pequeno ou nulo** sobre a duração. Quem se conheceu por site de namoro casa mais rápido; para o online em geral, a diferença fica no limite da significância (p = 0,057).
 - **Contestado:** se relações online têm qualidade um pouco maior (Cacioppo, com conflito de interesse) ou um pouco menor (Kowal 2025). Os efeitos são pequenos nos dois sentidos.
 
 ---
@@ -215,7 +215,7 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 | Nos EUA, online é o canal mais comum para casais novos desde ~2013 (39% em 2017) | "Mais de 50% / maioria" dos casais hoje |
 | Isso é pluralidade, não maioria. No estoque de casais, a fatia é bem menor (10% EUA; 16% em 50 países) | Relações online seriam *melhores* (Cacioppo, financiado pela eHarmony) |
 | Como o casal se conheceu tem efeito pequeno ou nulo sobre o término (HCMST, longitudinal) | Relações online seriam *piores* (Kowal 2025: o artigo publica d de 0,35 a 0,51, mas as médias e os dados públicos indicam efeito pequeno; painel online, transversal) |
-| Casais que se conhecem online tendem a casar mais rápido (EUA) | Ranking de "melhores lugares" offline (igreja > bar etc.) |
+| Quem se conheceu por site de namoro casa mais rápido (EUA, HCMST; online em geral: p = 0,057) | Ranking de "melhores lugares" offline (igreja > bar etc.) |
 | Nos apps, homens dizem receber muito menos mensagens que mulheres (Pew, autorrelato, duas pesquisas) | Proporção exata de homens e mulheres no Tinder Brasil |
 | No Brasil, as pessoas casam cada vez mais tarde (H 31,5 / M 29,3) e quase metade dos divórcios encerra casamentos de menos de 10 anos (IBGE) | Qualquer número sobre "% de casais brasileiros que se conheceram em app" |
 
