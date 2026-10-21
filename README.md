@@ -82,8 +82,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ⬜ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
-- [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ⬜ · forte
-- [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ⬜ · forte
+- [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
+- [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ⬜ · forte
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ⬜ · fraca
