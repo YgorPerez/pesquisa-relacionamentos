@@ -1,6 +1,6 @@
 ---
-fact_sheets: [pew-2023-2020-online-dating, tyson-2016-tinder, startio-tinder-brasil-genero]
+fact_sheets: [pew-2023-2020-online-dating]
 strength: strong
 ---
 
-Use o app como complemento, não como o caminho principal. Nos apps, homens recebem bem menos mensagens e matches do que mulheres.
+Use o app como complemento, não como o caminho principal. Numa pesquisa nos EUA, 57% dos homens que usaram site ou app de namoro nos últimos cinco anos disseram ter recebido mensagens de menos, contra 24% das mulheres. É o que cada um conta, não uma contagem das mensagens.
