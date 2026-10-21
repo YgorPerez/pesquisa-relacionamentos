@@ -7,7 +7,7 @@ import { decimal } from '@tem-estudo/rules/numbers'
 import { shareWord } from '@tem-estudo/rules/priorities'
 
 /** "0% a 1,9%". */
-export const percentRange = ({ min, max }: PercentRange) =>
+const percentRange = ({ min, max }: PercentRange) =>
   `${decimal(min)}% a ${decimal(max)}%`
 
 /** The whole Joel 2020 bar in one sentence, for the screen reader. */
