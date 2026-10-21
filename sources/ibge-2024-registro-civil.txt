@@ -1,0 +1,1296 @@
+# IBGE (2024): Estatísticas do Registro Civil, trechos citados na Ficha
+
+Texto extraído de documentos oficiais do IBGE (dados abertos do Executivo federal), só com o que a Ficha `studies/ibge-2024-registro-civil.md` cita. PDF: saída de `pdftotext -enc UTF-8` de cada página citada. SIDRA: a resposta da API de agregados, sem mudança. Baixado em 2026-10-21.
+
+## Informativo: Estatísticas do Registro Civil 2024 (Rio de Janeiro: IBGE, v. 51, 2025)
+
+URL: https://biblioteca.ibge.gov.br/visualizacao/periodicos/135/rc_2024_v51_informativo.pdf
+
+### Página 1 do PDF
+
+Estatísticas do Registro Civil 2024
+ISSN 0101-2207
+© IBGE, 2025
+
+O Instituto Brasileiro de Geografia e Estatística - IBGE divulga, neste
+informativo, as Estatísticas do Registro Civil1 referentes ao ano de
+2024. Essas estatísticas são publicadas desde 1974, fornecendo um
+elenco de informações relativas aos fatos vitais. Os dados de divórcios ocorridos no País foram incorporados ao conjunto de temas a
+partir de 1984, e os de casamentos entre pessoas do mesmo sexo,
+a partir de 2013.
+Os resultados ora apresentados referem-se aos registros de
+nascidos vivos, casamentos e óbitos informados pelos Cartórios
+de Registro Civil de Pessoas Naturais; aos divórcios judiciais concedidos pelas Varas de Família, Foros ou Varas Cíveis; e aos divórcios extrajudiciais, que, por força da Lei n. 11.441, de 04.01.2007,
+passaram a ser realizados pelos Tabelionatos de Notas, desde que
+não envolvessem filhos menores ou incapazes. Recentemente, de
+acordo com § 2º do Art. 34 da Resolução n. 571, de 26.08.2024, do
+Conselho Nacional de Justiça - CNJ, havendo filhos comuns do casal menores ou incapazes, passou a ser permitida a lavratura da escritura pública de divórcio, desde que devidamente comprovada a
+Nascimentos
+
+prévia resolução judicial de todas as questões referentes à guarda,
+à visitação e aos alimentos deles, o que deverá ficar consignado no
+corpo da escritura.
+As estatísticas derivadas dessas informações constituem um
+importante instrumento de acompanhamento da evolução populacional no País, proporcionando, além de estudos demográficos,
+subsídios para a implementação e a avaliação de políticas públicas.
+Os registros de casamentos oficiais, por sua vez, contribuem para
+uma melhor compreensão das mudanças ocorridas na sociedade
+brasileira no que se refere aos arranjos conjugais oficiais.
+O uso das Estatísticas do Registro Civil vem se ampliando, sobretudo nos períodos intercensitários, quando as estatísticas vitais
+são imprescindíveis para o acompanhamento da evolução demográfica. A crescente melhora observada na cobertura dos registros
+vitais reflete, principalmente, o esforço nacional empreendido para
+ampliar o acesso da população à documentação básica desde o seu
+nascimento, assim como o aperfeiçoamento dos mecanismos de
+apuração e crítica dos dados coletados.
+
+Casamentos
+
+ocorridos no ano e
+registrados (1)
+
+Óbitos
+
+registrados
+
+Sendo
+
+2024
+
+12 187
+
+948 925
+2024
+
+2 376 901
+
+entre pessoas
+do mesmo sexo
+
+0,9 %
+
+8,8%
+
+em relação a 2023
+
+em relação a 2023
+
+ocorridos no ano e registrados (2)
+Aumento de
+
+4,6 %
+
+em relação a 2023
+
+2023
+
+1 429 575
+2024
+
+Brasil
+
+
+
+em relação
+a 2023
+
+
+
+5,8%
+
+Acre
+
+Divórcios
+
+Maior
+queda
+
+concedidos em
+1a instância ou
+por escrituras
+extrajudiciais
+
+8,7%
+
+(1) Inclusive os registros sem especificação da
+Unidade da Federação de residência da mãe,
+residência ignorada ou no estrangeiro.
+
+1
+
+2023
+
+440 827
+2024
+
+428 301
+2,8%
+em relação a 2023
+
+1 495 386
+(2) Inclusive os óbitos sem declaração da idade
+ou do sexo da pessoa falecida e os registros sem
+especificação da Unidade da Federação de
+residência da pessoa falecida, residência
+ignorada ou no estrangeiro.
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação
+de População e Indicadores Sociais, Estatísticas do
+Registro Civil 2023-2024.
+
+Por decisão editorial, a partir da edição lançada em 2017, a publicação passou a ser divulgada em duas partes: a primeira corresponde a este informativo, que destaca os principais resultados do
+estudo/pesquisa, e a segunda é constituída por Notas técnicas, entre outros elementos textuais, apresentando considerações de natureza metodológica sobre o estudo/pesquisa. Outras informações
+sobre as Estatísticas do Registro Civil encontram-se disponíveis no portal do IBGE na Internet no endereço: https://www.ibge.gov.br/estatisticas/sociais/populacao/9110-estatisticas-do-registro-civil.
+html?=&t=o-que-e.
+
+
+### Página 4 do PDF
+
+REGISTRO CIVIL
+saúde sem internação, o que evidencia a existência de deslocamento em busca de atendimento hospitalar na ocasião do parto. Essa situação é mais comum entre as mães residentes em municipalidades
+de pequeno porte populacional, especialmente naquelas com população até 50 000 habitantes. Nas Capitais Estaduais e no Distrito
+
+Federal, a ocorrência de nascimento em hospital ou em unidade de
+saúde sem internação localizados em Município diferente daquele
+de residência da mãe foi menor e abaixo da média nacional (34,3%).
+O maior percentual foi observado em Vitória (11,8%), seguido de
+Belo Horizonte (11,0%) e Porto Velho (7,0%).
+
+Nascimentos por prazo de realização do registro em cartório, nascimentos cujo município de residência
+da mãe foi o mesmo do registro de nascimento e nascimentos em hospital (1) em município diferente
+daquele de residência da mãe, segundo a Grande Região de residência da mãe (2) (%)
+98,9
+88,5
+
+96,0
+87,4
+
+98,4
+90,1
+
+94,5
+
+87,9
+
+99,6
+
+96,5
+
+99,8
+93,1
+
+87,3
+
+85,1
+
+79,9
+
+74,9
+
+43,2
+30,6
+
+27,4
+
+23,6
+
+Registros realizados em 15 dias
+ou menos após o nascimento
+
+Norte
+
+Nordeste
+
+Registros realizados em 90 dias
+ou menos após o nascimento
+
+86,3
+
+39,3
+
+34,3
+
+Brasil
+
+99,4
+
+Centro-Oeste
+
+Sul
+
+Sudeste
+
+Registros cujo município de
+residência da mãe foi o mesmo
+do registro de nascimento
+
+Registros com ocorrência de
+nascimento em hospital (1)
+em município diferente daquele
+de residência da mãe
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2024.
+(1) Inclusive os registros em estabelecimentos de saúde sem internação. (2) Exclusive os registros com residência da mãe ignorada ou no estrangeiro.
+
+Casamentos 
+Em 2024, 948 925 registros de casamentos civis6 foram realizados
+em Cartórios de Registro Civil de Pessoas Naturais, o que representa
+um aumento de 0,9% em relação ao ano anterior. Desse total, 12 187
+ocorreram entre pessoas do mesmo sexo.
+As Grandes Regiões assinalaram aumento no número de casamentos civis registrados em cartórios, com exceção da Região Nordeste, que apresentou decréscimo de 1,4% em relação a 2023. Na
+Região Centro-Oeste, verificou-se o maior aumento (2,6%), vindo, a
+seguir, a Região Sul (2,3%).
+Em 2013, o Conselho Nacional de Justiça - CNJ aprovou a Resolução n. 175, de 14.05.2013, impedindo que cartórios de todo o País
+se recusassem a converter uniões estáveis entre pessoas do mesmo
+sexo em casamentos ou a celebrá-los. Em relação ao número de registros de casamentos civis entre cônjuges do mesmo sexo, foi observado aumento de 8,8% entre 2023 (11 198) e 2024 (12 187), cabendo
+destacar que, em 2024, os ocorridos entre mulheres representaram
+64,6% dos casamentos civis entre pessoas do mesmo sexo. Em 2024,
+verificou-se o maior número de registros de casamentos entre pessoas do mesmo sexo desde 2013, quando a série foi iniciada: entre
+mulheres, o aumento em relação a 2023 foi 12,1%, enquanto entre
+homens, 3,3% no mesmo período.
+6
+
+Casamentos civis registrados,
+segundo as Grandes Regiões
+
+Norte
+
+77 637
+78 797
+
+216 173
+213 183
+
+Nordeste
+
+431 153
+435 867
+
+Sudeste
+
+Sul
+
+Centro-Oeste
+
+129 070
+132 064
+86 766
+89 014
+
+2023
+
+2024
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais,
+Estatísticas do Registro Civil 2023-2024.
+
+As uniões consensuais ou uniões estáveis não fazem parte do âmbito da pesquisa Estatísticas do Registro Civil.
+
+4
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+
+### Página 5 do PDF
+
+REGISTRO CIVIL
+A partir de 2016, o número de casamentos civis apresentou uma
+tendência de queda. A pandemia de COVID-19 foi declarada pela
+OMS em 2020, e notou-se uma redução ainda mais acentuada nesse
+ano, quando comparado ao anterior. Entre 2020 e 2021, as cerimônias
+matrimoniais voltaram a acontecer, mas não alcançaram, contudo, o
+total observado em 2019. Entre 2021 e 2022, o volume de casamentos
+também cresceu, mas ainda continuou abaixo da média observada
+no período de 2015 a 2019, anterior à pandemia (1 076 280). Em 2023,
+esse volume foi inferior ao de 2022, com 29 242 casamentos a menos.
+Em 2024, ocorreram 8 126 casamentos civis a mais que em 2023, mas,
+mesmo com esse aumento, o número de casamentos registrados em
+2024 não alcançou a média observada no período de 2015 a 2019.
+
+Casamentos registrados entre cônjuges
+do mesmo sexo
+7 876
+5 562
+
+1926
+
+2 440
+
+7 023
+
+5 349
+5 602
+
+3 864
+
+2 986 2 943 3 387
+3 958
+
+4 390
+
+3 707
+3 600
+
+2 628 2 411 2 500
+1775 2 414
+
+4 311
+4 175
+
+2 569
+
+2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024
+
+Homem/Homem
+
+Mulher/Mulher
+
+Casamentos civis registrados
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais,
+Estatísticas do Registro Civil 2013-2024.
+
+1 200 000
+
+O número de casamentos civis entre pessoas do mesmo sexo,
+registrados em 2024, foi superior ao obtido no ano anterior nas
+Regiões Centro-Oeste, Nordeste, Sudeste e Sul, com acréscimos de
+28,2%, 16,4%, 6,1% e 4,2%, respectivamente. Por outro lado, houve
+redução no percentual observado na Região Norte (-4,2%).
+
+1 000 000
+
+600 000
+400 000
+200 000
+
+2024
+
+2023
+
+2022
+
+2021
+
+2020
+
+2019
+
+2018
+
+2017
+
+2016
+
+2015
+
+2013
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais,
+Estatísticas do Registro Civil 2013-2024.
+
+1 866
+2 172
+
+Nordeste
+
+Ao analisar, mensalmente, os anos de 2022, 2023 e 2024, nota-se que
+os maiores volumes de casamentos civis ocorreram a partir do mês de
+setembro. Em 2023, apenas nos meses de outubro, novembro e dezembro os números foram superiores aos observados, respectivamente, nos
+mesmos meses do ano anterior. Em 2024, em todos os meses, o total foi
+maior que o do mesmo mês de 2023, com exceção de março, setembro
+e dezembro. Nos três anos em questão, o mês de dezembro permaneceu
+como o de maior número de registros de casamentos. Quanto à data
+de ocorrência dos casamentos civis, nos anos de 2022 e 2023, o mês de
+dezembro também foi o mês com o maior número de celebrações de
+casamentos realizadas no País. Em 2024, porém, as cerimônias de casamentos ocorreram em maior quantidade durante o mês de novembro.
+
+6 456
+6 847
+
+Sudeste
+
+1 553
+1 619
+869
+1 114
+
+Centro-Oeste
+
+2014
+
+0
+
+454
+435
+
+Sul
+
+940 799
+
+800 000
+
+Casamentos registrados entre cônjuges do
+mesmo sexo, segundo as Grandes Regiões
+Norte
+
+948 925
+
+1 052 477
+
+2023
+
+2024
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais,
+Estatísticas do Registro Civil 2023-2024.
+
+96 908
+
+101 712
+108 537
+103 516
+
+Setembro
+
+Outubro
+
+Novembro
+
+Dezembro
+
+92 085
+89 955
+
+76 287
+
+Agosto
+
+93 714
+86 424
+
+Julho
+2023
+
+77 138
+73 796
+
+83 894
+
+75 224
+78 572
+
+74 223
+
+Junho
+2022
+
+85 821
+86 424
+88 755
+
+Maio
+
+75 167
+72 504
+
+79 719
+
+79 113
+78 086
+
+73 595
+
+Abril
+
+82 800
+
+Março
+
+65 370
+73 492
+
+Fevereiro
+
+73 910
+73 787
+68 035
+
+63 351
+
+Janeiro
+
+56 104
+57 901
+
+70 541
+65 795
+68 717
+
+Casamentos civis registrados, segundo o mês de registro
+
+2024
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2022-2024.
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+5
+
+
+### Página 6 do PDF
+
+REGISTRO CIVIL
+A taxa de nupcialidade legal7 fornece
+uma dimensão do número de registros de
+casamentos em relação à população de 15
+anos ou mais de idade. No Brasil, para cada
+1 000 habitantes dessa faixa etária, 5,6 pessoas, em média, uniram-se por meio do casamento civil em 2024.
+As Regiões Nordeste e Sul registraram
+as menores taxas (4,7 e 5,2 casamentos por
+1 000 habitantes, respectivamente), enquanto as Regiões Sudeste e Centro-Oeste, as
+maiores (6,0 e 6,6 casamentos por 1 000 habitantes, nessa ordem). As comparações entre as taxas indicam o grau de complexidade
+que envolve a análise da nupcialidade.
+É possível observar que Grandes Regiões
+com características distintas em relação às
+dimensões culturais, sociais e econômicas
+apresentaram taxas de nupcialidade semelhantes. O mesmo ocorreu entre as Unidades da Federação: Rondônia (8,9 casamentos por 1 000 habitantes), Distrito Federal
+(8,4 casamentos por 1 000 habitantes), assim
+como Acre e Tocantins (7,0 casamentos por
+1 000 habitantes) evidenciaram as maiores
+taxas de nupcialidade, enquanto as menores
+foram observadas no Piauí (3,2 casamentos
+por 1 000 habitantes), Sergipe (3,7 casamentos por 1 000 habitantes) e Rio Grande do
+Sul (4,0 casamentos por 1 000 habitantes).
+Nos casamentos civis entre pessoas solteiras de sexos distintos, de 15 anos ou mais
+de idade, a diferença entre a idade média de
+ambas ao contrair a união foi de aproximadamente 2 anos, sendo que os homens se
+casaram, em média, aos 31,5 anos, e as mulheres, aos 29,3 anos de idade. Esse comportamento é homogêneo entre as Grandes Regiões, com a idade média variando de 31,0 a
+33,0 anos, entre os homens, e de 28,8 a 30,3
+anos, entre as mulheres.
+No que diz respeito aos casamentos civis entre pessoas solteiras do mesmo sexo, a
+idade média ao contrair a união foi de 34,7
+anos, entre os homens, e de 32,5 anos, entre
+as mulheres. Quanto às diferenças regionais,
+as idades variaram de 33,3 a 35,1 anos, entre
+os homens, e de 31,4 a 33,5, entre as mulheres.
+
+Taxa de nupcialidade legal, segundo as Grandes Regiões (‰)
+
+4,7
+
+Nordeste
+
+5,2
+
+Sul
+
+5,6
+
+5,6
+
+Brasil
+
+Norte
+
+6,6
+
+6,0
+
+Sudeste
+
+Centro-Oeste
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2024.
+Notas: 1. A população utilizada para o cálculo da taxa de nupcialidade legal é proveniente das Projeções da População do
+Brasil e das Unidades da Federação, Revisão 2024, divulgadas pelo IBGE.
+2. Pessoas com 15 anos ou mais de idade.
+
+Taxa de nupcialidade legal, segundo as Unidades da Federação (‰)
+Rondônia
+Distrito Federal
+Tocantins
+Acre
+Espírito Santo
+Mato Grosso
+Mato Grosso do Sul
+São Paulo
+Paraná
+Minas Gerais
+Goiás
+Paraíba
+Brasil
+Santa Catarina
+Alagoas
+Roraima
+Pernambuco
+Pará
+Rio de Janeiro
+Ceará
+Amapá
+Bahia
+Amazonas
+Rio Grande do Norte
+Maranhão
+Rio Grande do Sul
+Sergipe
+Piauí
+
+8,9
+8,4
+7,0
+7,0
+6,9
+6,8
+6,7
+6,4
+6,2
+5,9
+5,7
+5,6
+5,6
+5,5
+5,5
+5,5
+5,2
+5,0
+5,0
+4,8
+4,7
+4,7
+4,6
+4,6
+4,2
+4,0
+3,7
+3,2
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2024.
+Nota: Pessoas com 15 anos ou mais de idade.
+
+Idade média dos cônjuges solteiros ao casar, segundo o arranjo conjugal
+Homem casado
+com homem
+Homem casado
+com mulher
+
+34,7
+31,5
+
+Mulher casada
+com mulher
+Mulher casada
+com homem
+
+32,5
+29,3
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2024.
+Nota: Exclusive a população de menos de 15 anos de idade e sem declaração de idade.
+
+7
+
+A partir de 2023, a taxa de nupcialidade legal foi calculada utilizando-se como denominador a população de 15 anos ou mais de idade proveniente das Projeções da População do Brasil e das Unidades da Federação, Revisão 2024, do IBGE. Em 2022, utilizou-se como denominador a população dessa mesma faixa etária obtida do Censo Demográfico 2022. Nos anos anteriores, foram utilizadas
+as Projeções da População do Brasil e das Unidades da Federação, Revisão 2018. Comparações com anos anteriores a 2023, portanto, devem considerar essas mudanças metodológicas nas análises
+relativas às taxas de nupcialidade legal.
+
+6
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+
+### Página 7 do PDF
+
+REGISTRO CIVIL
+As idades dos cônjuges nos casamentos entre pessoas de sexos
+distintos, independentemente do estado civil prévio, aumentaram
+ao longo dos últimos anos, tanto para homens quanto para mulheres. Em 2004, 8,5% das mulheres que se casaram tinham 40 anos
+ou mais de idade. Em 2024, 25,3% dos registros de casamentos civis
+entre pessoas de sexos diferentes ocorreram com mulheres nessa
+mesma faixa etária. Esse fenômeno também foi observado entre
+os homens: houve um aumento de 18,1 pontos percentuais na
+participação de registros de casamentos em que eles apresentavam idades mais avançadas (40 anos ou mais) entre 2004 (13,2%)
+e 2024 (31,3%).
+
+A ampliação da idade ao se casar pode estar relacionada ao
+adiamento da decisão pelo casamento civil e ao aumento do número de recasamentos, uma vez que a extensão da expectativa de
+vida também contribui para esse cenário. Ao comparar as últimas
+décadas, observa-se que a participação de registros de casamentos em que pelo menos um dos cônjuges era divorciado ou viúvo8
+variou de 13,5%, em 2004, a 23,4%, em 2014, alcançando, em 2024,
+31,1% de todos os registros de casamentos civis entre pessoas de
+sexos diferentes no País. Em 2024, considerando-se pelo menos um
+dos cônjuges divorciado ou viúvo, a idade média do homem ao se
+casar era 45,3 anos, enquanto a da mulher, 41,5 anos.
+
+Distribuição dos casamentos civis registrados entre pessoas de sexos diferentes
+Segundo o estado civil dos cônjuges (%)
+
+Segundo a faixa etária dos cônjuges (%)
+
+86,8
+
+91,5
+79,0
+
+86,4
+
+85,1
+
+76,4
+
+74,7
+
+68,7
+
+31,3
+
+15 a 39 anos 40 anos ou mais
+Homens
+
+31,1
+
+25,3
+
+21,0
+13,2
+
+68,6
+
+8,5
+
+23,4
+
+14,9
+
+13,5
+
+15 a 39 anos 40 anos ou mais
+Mulheres
+2004
+
+Ambos os cônjuges
+solteiros
+2014
+
+Pelo menos um dos cônjuges
+divorciado ou viúvo
+
+2024
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2004/2024.
+Nota: Os registros de casamentos civis em que pelo menos um dos cônjuges não declarou o estado civil nos anos de 2004, 2014 e 2024 corresponderam a aproximadamente 0,1%, 0,2% e 0,3%,
+respectivamente.
+
+Divórcios 
+Em 2024, a pesquisa Estatísticas do Registro Civil apurou9 428 301
+divórcios entre pessoas de sexos diferentes concedidos em primeira instância ou realizados por escrituras extrajudiciais, o que representa uma redução de 2,8% em relação ao total contabilizado em
+2023 (440 827). Em termos regionais, observa-se que, enquanto a
+Região Norte apresentou aumento de 9,1% no número de divórcios,
+entre 2023 e 2024, as Regiões Sul (-1,4%), Sudeste (-2,5%), Nordeste
+(-3,1%) e Centro-Oeste (-11,8%) evidenciaram diminuição no perío-
+
+8
+
+do analisado. Os divórcios judiciais concedidos em primeira instância corresponderam a 81,8% dos divórcios, no Brasil, em 2024. Nesse
+mesmo ano, a cada 100 casamentos entre pessoas de sexos diferentes que foram registrados, ocorreram cerca de 45,7 divórcios no País.
+A taxa geral de divórcios10 , isto é, o número de divórcios para cada
+1 000 pessoas de 20 anos ou mais de idade foi de aproximadamente 2,7‰ em 2024. Nesse ano, a Região Sudeste apresentou a maior
+taxa (3,3‰), e a Região Norte (1,9‰), a menor.
+
+Registros de casamentos em que pelo menos um dos cônjuges era divorciado ou viúvo, exclusive aqueles em que pelo menos um dos cônjuges não declarou o estado civil.
+
+9
+
+O IBGE vem encontrando dificuldades para a realização da coleta dos dados de divórcios nos Tabelionatos, Varas de Família, Fóruns e Centros Judiciários de Solução de Conflitos e Cidadania - CEJUSCs.
+Os Colégios Notariais e as Corregedorias das Unidades da Federação são frequentemente acionados pelo Instituto para apoiarem e permitirem o devido fornecimento das informações sobre os divórcios
+sentenciados e lavrados no Brasil. Para informações mais detalhadas sobre a possível subenumeração de divórcios, tendo em vista as adversidades encontradas durante a coleta referente ao ano de 2024,
+consultar nota técnica sobre o tema, disponível no endereço: https://www.ibge.gov.br/estatisticas/sociais/populacao/9110-estatisticas-do-registro-civil.html?=&t=notas-tecnicas.
+10
+A taxa geral de divórcios é obtida pela divisão do número de divórcios pelo número de habitantes, multiplicando-se o resultado por 1 000 (‰). Nesta pesquisa, foram considerados os divórcios
+das pessoas de 20 anos ou mais de idade concedidos em primeira instância ou realizados por escrituras extrajudiciais, exclusive a população de menos de 20 anos de idade ou sem declaração de idade.
+A partir de 2023, a taxa geral de divórcios foi calculada utilizando-se como denominador a população dessa faixa etária proveniente das Projeções da População do Brasil e das Unidades da Federação, Revisão 2024, do IBGE. Em 2022, utilizou-se como denominador a população dessa mesma faixa etária obtida do Censo Demográfico 2022. Nos anos anteriores, foram utilizadas as Projeções da
+População do Brasil e das Unidades da Federação, Revisão 2018. Comparações com anos anteriores a 2023, portanto, devem considerar essas mudanças metodológicas nas análises relativas à taxa
+geral de divórcios.
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+7
+
+
+### Página 8 do PDF
+
+REGISTRO CIVIL
+desde que ambos estejam aptos a exercer o poder familiar. Isso porque, de acordo com a referida legislação, o tempo de convívio deve
+ser equilibrado entre o pai e a mãe, salvo se um deles declarar que
+não deseja a guarda do menor. A pesquisa Estatísticas do Registro
+Civil, desde a promulgação da Lei do Divórcio, capta a informação
+sobre a guarda dos filhos menores por um ou ambos os pais.
+
+Taxa geral de divórcios, segundo as
+Grandes Regiões (‰)
+Norte
+
+Nordeste
+
+Sul
+
+Brasil
+
+Centro-Oeste
+
+Sudeste
+
+1,9
+
+Em 2014, a proporção de guarda compartilhada entre os pais
+com filhos menores era de 7,5%. Essa modalidade passou a representar 44,6% em 2024, quando, pela primeira vez, a guarda de filhos
+menores deixou de ser atribuída predominantemente à mulher
+(42,6%). Tal comportamento evidencia o crescimento dessa modalidade de guarda como consequência da lei supracitada.
+
+2,2
+
+2,3
+
+2,7
+
+3,1
+
+3,3
+
+Taxa geral de divórcios, segundo
+as Unidades da Federação (‰)
+Rondônia
+
+4,9
+
+Distrito Federal
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores
+Sociais, Estatísticas do Registro Civil 2024.
+Notas: 1. A população utilizada para o cálculo da taxa geral de divórcios foi obtida pelas Projeções
+da População do Brasil e das Unidades da Federação, Revisão 2024, divulgadas pelo IBGE.
+2. Pessoas com 20 anos ou mais de idade.
+
+3,8
+
+Mato Grosso do Sul
+
+3,7
+
+São Paulo
+
+3,5
+
+Goiás
+
+3,5
+
+Minas Gerais
+
+Em 2024, o Estado de Rondônia (4,9‰) e o Distrito Federal
+(3,8‰) apresentaram as maiores taxas de divórcio, enquanto as menores foram observadas no Amapá (0,9‰) e em Roraima (0,2‰).
+Em média, os homens se divorciaram em idades mais avançadas
+que as mulheres. Em 2024, na data do divórcio, os homens tinham,
+em média, 44,5 anos, enquanto as mulheres, 41,6 anos de idade.
+No Brasil, em 2010, o tempo médio entre a data do casamento
+e a data da sentença ou escritura do divórcio era de aproximadamente 16,0 anos. Em 2024, houve uma diminuição no tempo de
+duração dos casamentos para 13,8 anos. Nas Grandes Regiões, esse
+tempo médio variou de 15,0 a 17,1 anos, em 2010, para 12,6 a 15,0
+anos, em 2024.
+Na avaliação dos divórcios judiciais concedidos em primeira
+instância, por tipo de arranjo familiar, a maior proporção das dissoluções ocorreu entre as famílias constituídas somente com filhos
+menores de idade, atingindo 45,8% em 2024. Em seguida, observou-se que 30,4% dos divórcios ocorreram entre casais sem filhos.
+Nota-se aumento significativo do percentual de divórcios judiciais entre casais com filhos menores de idade em cuja sentença
+consta a guarda compartilhada deles. A Lei do Divórcio11 (Lei n.
+6.515, de 26.12.1977) prevê a guarda compartilhada de filhos menores de idade em caso de divórcio, contudo somente com a Lei
+n. 13.058, de 22.12.2014, essa modalidade passou a ser priorizada,
+ainda que não haja acordo entre os pais quanto à guarda dos filhos,
+
+3,2
+
+Rio de Janeiro
+
+3,0
+
+Tocantins
+
+2,9
+
+Acre
+
+2,9
+
+Alagoas
+
+2,8
+
+Santa Catarina
+
+2,7
+
+Brasil
+
+2,7
+
+Paraná
+
+2,7
+
+Bahia
+
+2,5
+
+Pernambuco
+
+2,3
+
+Maranhão
+
+2,1
+
+Espírito Santo
+
+2,1
+
+Paraíba
+
+2,1
+
+Ceará
+
+2,0
+
+Amazonas
+
+1,9
+
+Rio Grande do Norte
+
+1,8
+
+Rio Grande do Sul
+
+1,7
+
+Sergipe
+
+1,6
+
+Mato Grosso
+
+1,3
+
+Piauí
+
+1,2
+
+Pará
+
+1,2
+
+Amapá
+Roraima
+
+0,9
+0,2
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas
+do Registro Civil 2024.
+Notas: 1. A população utilizada para o cálculo da taxa geral de divórcios foi obtida pelas Projeções
+da População do Brasil e das Unidades da Federação, Revisão 2024, divulgadas pelo IBGE.
+2. Pessoas com 20 anos ou mais de idade.
+
+11
+A Lei do Divórcio estabeleceu legalmente a separação de fato, tornando comum que os filhos ficassem com a mãe, e ao pai incumbindo o sustento. Desde então, ao longo dos anos, a instituição da
+guarda dos filhos menores tem passado por diversas alterações.
+
+8
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+
+### Página 9 do PDF
+
+REGISTRO CIVIL
+Proporção de divórcios judiciais
+Segundo o arranjo familiar (%)
+
+Por responsável pela guarda dos filhos menores (%)
+85,1
+
+48,1
+43,1
+
+27,6 26,5
+
+79,2
+74,4
+
+45,8
+
+69,4
+
+65,4
+
+62,4
+
+57,3
+
+54,2
+
+50,3
+
+30,4
+20,9
+
+17,5 16,0
+8,4 7,9
+6,7
+
+7,5
+5,5
+
+Sem filhos
+
+Somente com filhos Somente com filhos Com filhos menores
+maiores de idade
+menores de idade e maiores de idade
+
+2004
+
+2014
+
+2024
+
+Nota: Em 2004 e 2014, não havia divórcios coletados sem informação sobre a existência
+ou não de filhos; em 2024, o percentual foi de aproximadamente 1,0%.
+
+12,9
+
+16,9
+
+20,9
+
+4,9
+
+4,8
+
+24,4
+
+26,8
+
+4,3
+
+4,1
+
+31,3
+
+4,1
+
+34,5
+
+3,6
+
+45,5
+
+44,6
+
+42,3
+
+42,6
+
+3,3
+
+2,8
+
+37,8
+
+3,3
+
+5,2
+
+2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024
+Homem
+
+Mulher
+
+Ambos os cônjuges
+
+Nota: Em 2014, havia 1,0% dos divórcios coletados sem informação sobre a
+guarda de filhos menores de idade; em 2024, o percentual foi de 9,2%.
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2004/2024.
+
+Óbitos­ 
+No ano de referência de 2024, foram efetuados 1 516 38112 registros
+de óbitos em cartórios no Brasil. Desse total, 1 495 38613 são relativos a óbitos ocorridos em 2024 e registrados até o primeiro trimestre de 202514 . Os demais registros correspondem a 1,4% (20 995) e
+ocorreram em anos anteriores, ou o ano do óbito foi ignorado. Em
+2024, houve um aumento de 4,6% nos óbitos ocorridos no ano, o
+que significa, em números absolutos, um acréscimo de 65 811 registros em relação a 2023 .
+Considerando a natureza do óbito, em 2024, 90,9% das mortes foram classificadas como por causas naturais; 6,9%, por causas externas;
+e, em 2,2% delas, não foi possível obter a natureza. Como esperado, no
+aumento de 65 811 óbitos em relação ao ano anterior, estão incluídas
+63 583 mortes registradas como por causas naturais (96,6%).
+Na comparação entre os mesmos meses de 2023 e 2024, com
+exceção de novembro, observa-se um aumento do número de
+óbitos entre os dois anos analisados, em todos os meses, com uma
+média mensal, em 2024, de 124 616 mortes, sendo o mês de maio
+o de maior volume de ocorrências (134 602), enquanto fevereiro o
+menor (112 252).
+Em março, houve a maior variação relativa no número de
+registros de óbitos (10,7%), correspondendo a um acréscimo de
+
+12
+
+12 583 mortes em relação ao mesmo mês do ano anterior, seguido pelos meses de fevereiro e abril, ambos com percentual
+de 9,6%, representando, respectivamente, elevações de 9 788 e
+11 334 óbitos.
+O crescimento no número de óbitos ocorridos no período entre 2023 e 2024 foi verificado em todas as Grandes Regiões e em
+26 Unidades da Federação. As maiores elevações foram observadas nas Regiões Sul (7,4%); Centro-Oeste (6,2%); Sudeste (4,0%); e
+Nordeste (3,8%). A Região Norte, por sua vez, registrou o menor
+aumento relativo, com acréscimo de 3,2%. As cinco Unidades da
+Federação que apresentaram as maiores variações percentuais no
+número de óbitos, entre os anos analisados, foram Distrito Federal (11,6%); Rio Grande do Sul (7,6%); Santa Catarina e Goiás (ambas com 7,5%); e Paraná (7,0%).
+Quanto ao local de ocorrência dos óbitos, em 2024, cerca de
+74% aconteceram em hospital, percentual menor que o observado em 2021 (76,6%) e mais próximo do padrão verificado no
+período pré-pandemia de COVID-19. O falecimento em domicílio
+correspondeu a 19,7% das mortes, e, em via pública, a 3,2%. Não
+houve declaração do local de ocorrência do óbito ou o local declarado foi outro em 3,2% dos casos.
+
+Inclusive os óbitos sem especificação da Unidade da Federação de residência da pessoa falecida, residência ignorada ou no estrangeiro (5 923).
+
+13
+
+Inclusive os óbitos sem declaração da idade ou do sexo da pessoa falecida (4 044) e os registros sem especificação da Unidade da Federação de residência da pessoa falecida, residência ignorada
+ou no estrangeiro (4 699).
+
+14
+
+A Lei n. 6.015, de 31.12.1973, fixou o prazo de até três meses para que o assento do óbito seja lavrado depois, na impossibilidade de ser feito o registro dentro de 24 horas do falecimento, pela
+distância ou qualquer outro motivo relevante. O IBGE adota como critério considerar que os registros de óbitos de um determinado ano devem incluir os registros realizados até o terceiro mês do
+ano subsequente ao ano de ocorrência do falecimento.
+
+Estat. Reg. civ., Rio de Janeiro, v. 51, p. 1-12, 2024
+
+9
+
+
+## Apresentação: Pesquisa Estatísticas do Registro Civil 2024 (10/12/2025)
+
+URL: https://agenciadenoticias.ibge.gov.br/media/com_mediaibge/arquivos/031ad256f70356ed66b25e4ff01767cc.pdf
+
+### Página 21 do PDF
+
+Casamentos civis - Brasil - 2024
+
+936 738
+sexos diferentes
+948 925
+12 187
+mesmo sexo
+
+Aumento de 8 126 casamentos em relação à 2023 (0,9%)
+22
+
+
+### Página 28 do PDF
+
+Idade média ao casar dos cônjuges solteiros de sexos
+diferentes - Brasil - 2004/2024
+Homens
+
+Mulheres
+31.5
+
+29.8
+
+29.3
+
+27.8
+
+27.1
+
+Idade média ao casar
+
+24.9
+
+2004
+
+2014
+
+2024
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2004/2024
+Nota: Exclusive casamentos entre cônjuges de menos de 15 anos ou sem declaração de idade.
+
+29
+
+
+### Página 36 do PDF
+
+Distribuição percentual dos divórcios segundo o período entre a
+data do casamento e o divórcio - Brasil - 2014/2024
+
+100.0
+
+90.0
+
+2014
+
+80.0
+
+2024
+
+70.0
+
+%
+
+60.0
+50.0
+
+43.6
+
+47.5
+
+40.0
+
+24.6
+
+30.0
+
+26.9
+
+31.8
+
+25.6
+
+20.0
+10.0
+0.0
+
+Menos de 10 anos
+
+10 a 19 anos
+
+20 anos ou mais
+
+Fonte: IBGE, Diretoria de Pesquisas, Coordenação de População e Indicadores Sociais, Estatísticas do Registro Civil 2014/2024
+Nota: Exclusive os divórcios sem informação sobre a data do casamento (<1,0%)
+
+37
+
+
+## SIDRA 4406: Casamentos, por mês do registro, estado civil e grupos de idade dos cônjuges (2023 e 2024)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/4406/periodos/2023%7C2024/variaveis?localidades=N1%5Ball%5D
+
+[{"id":"4993","variavel":"Número de casamentos","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"236","nome":"Mês do registro","categoria":{"0":"Total"}},{"id":"664","nome":"Estado civil do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"665","nome":"Estado civil do segundo cônjuge","categoria":{"0":"Total"}},{"id":"666","nome":"Grupo de idade do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"667","nome":"Grupo de idade do segundo cônjuge","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2023":"940799","2024":"948925"}}]}]},{"id":"221","variavel":"Número de casamentos entre cônjuges masculino e feminino","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"236","nome":"Mês do registro","categoria":{"0":"Total"}},{"id":"664","nome":"Estado civil do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"665","nome":"Estado civil do segundo cônjuge","categoria":{"0":"Total"}},{"id":"666","nome":"Grupo de idade do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"667","nome":"Grupo de idade do segundo cônjuge","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2023":"929601","2024":"936738"}}]}]},{"id":"4373","variavel":"Número de casamentos entre cônjuges masculinos","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"236","nome":"Mês do registro","categoria":{"0":"Total"}},{"id":"664","nome":"Estado civil do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"665","nome":"Estado civil do segundo cônjuge","categoria":{"0":"Total"}},{"id":"666","nome":"Grupo de idade do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"667","nome":"Grupo de idade do segundo cônjuge","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2023":"4175","2024":"4311"}}]}]},{"id":"4374","variavel":"Número de casamentos entre cônjuges femininos","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"236","nome":"Mês do registro","categoria":{"0":"Total"}},{"id":"664","nome":"Estado civil do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"665","nome":"Estado civil do segundo cônjuge","categoria":{"0":"Total"}},{"id":"666","nome":"Grupo de idade do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"667","nome":"Grupo de idade do segundo cônjuge","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2023":"7023","2024":"7876"}}]}]}]
+
+## SIDRA 4406 (2015 a 2019): Número de casamentos
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/4406/periodos/2015%7C2016%7C2017%7C2018%7C2019/variaveis/4993?localidades=N1%5Ball%5D
+
+[{"id":"4993","variavel":"Número de casamentos","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"236","nome":"Mês do registro","categoria":{"0":"Total"}},{"id":"664","nome":"Estado civil do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"665","nome":"Estado civil do segundo cônjuge","categoria":{"0":"Total"}},{"id":"666","nome":"Grupo de idade do primeiro cônjuge","categoria":{"0":"Total"}},{"id":"667","nome":"Grupo de idade do segundo cônjuge","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2015":"1137348","2016":"1095535","2017":"1070376","2018":"1053467","2019":"1024676"}}]}]}]
+
+## SIDRA 1695: Divórcios concedidos em 1ª instância ou por escritura (2023 e 2024)
+
+URL: https://servicodados.ibge.gov.br/api/v3/agregados/1695/periodos/2023%7C2024/variaveis/393?localidades=N1%5Ball%5D
+
+[{"id":"393","variavel":"Número de divórcios concedidos em 1ª instância ou por escritura","unidade":"Unidades","resultados":[{"classificacoes":[{"id":"269","nome":"Regime de bens do casamento","categoria":{"0":"Total"}},{"id":"274","nome":"Grupos de idade do marido na data da sentença","categoria":{"0":"Total"}},{"id":"275","nome":"Grupos de idade da mulher na data da sentença","categoria":{"0":"Total"}},{"id":"345","nome":"Tempo transcorrido entre a data do casamento e a data da sentença ou da escritura","categoria":{"0":"Total"}}],"series":[{"localidade":{"id":"1","nivel":{"id":"N1","nome":"Brasil"},"nome":"Brasil"},"serie":{"2023":"440827","2024":"428301"}}]}]}]

@@ -53,7 +53,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2022](studies/ibge-2022-censo-amostra.md): Censo Demográfico, microdados da amostra · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-censo-unioes.md): uniões consensuais no Censo · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
-- [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ⬜ · forte
+- [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ⬜ · moderada
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): apps de relacionamento no Brasil · ⬜ · moderada
 - [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · ⬜ · fraca
