@@ -137,7 +137,7 @@ Legenda de "Cruzável": **Sim** quando está na mesma base, por pessoa, junto co
 ## "Solteiro" de fato vs estado civil legal
 
 - O Censo 2022 **não pergunta estado civil legal**. Ele mede se a pessoa **vive com cônjuge ou companheiro no domicílio** e, nesse caso, a natureza da união ([dicionário, P0280/P0290](https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/Documentacao/Layout%20e%20dicion%C3%A1rio/Dicion%C3%A1rio%20de%20Vari%C3%A1veis%20-%20Microdados%20CD2022.pdf)). Isso é melhor que o estado civil legal para o Grupo possível, porque capta as uniões consensuais.
-- A diferença é grande entre jovens ([SIDRA 10187](https://sidra.ibge.gov.br/tabela/10187), Brasil, 2022). Esses 75,6% são legalmente "solteiros" mas não estão disponíveis:
+- A diferença é grande entre jovens ([SIDRA 10187](https://sidra.ibge.gov.br/tabela/10187), Brasil, 2022; [ficha](../studies/ibge-2022-censo-unioes.md)). Esses 75,6% são legalmente "solteiros" mas não estão disponíveis:
 
   | Grupo (pessoas que viviam em união) | Em união consensual |
   |---|---|
