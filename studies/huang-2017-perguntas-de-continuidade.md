@@ -51,4 +51,4 @@ O PDF do editor sai do `pdftotext` com o sinal de igual como "⫽" e o beta como
 
 ## Como usamos
 
-- Dica "Faça perguntas, sobretudo de continuidade" (`tips/_sem-ficha.md`, Tema "Conversa e conexão").
+- Dica [`perguntas-de-continuidade`](../tips/perguntas-de-continuidade.md), com o efeito pequeno e o chat entre desconhecidos dito no texto.

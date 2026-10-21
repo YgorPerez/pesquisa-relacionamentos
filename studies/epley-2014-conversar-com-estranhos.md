@@ -49,4 +49,4 @@ O PDF sai do `pdftotext` com o sinal de igual como "⫽" e o "menor que" como "�
 
 ## Como usamos
 
-- Dica "Você provavelmente acha que a conversa foi pior do que foi (*liking gap*)" (`tips/_sem-ficha.md`, Tema "Conversa e conexão"), junto com [Boothby et al. (2018)](boothby-2018-liking-gap.md).
+- Dica [`conversa-melhor-do-que-parece`](../tips/conversa-melhor-do-que-parece.md), na frase própria sobre puxar conversa com um desconhecido, junto com [Boothby et al. (2018)](boothby-2018-liking-gap.md).

@@ -54,4 +54,4 @@ O estudo mede preferências declaradas e escolhas entre pessoas imaginárias, n�
 
 ## Como usamos
 
-Base da Dica "Senso de humor ajuda" em `tips/_sem-ficha.md`, ao lado de [Bressler & Balshine (2006)](bressler-2006-humor-desejabilidade.md).
+Base da Dica [`humor`](../tips/humor.md), ao lado de [Bressler & Balshine (2006)](bressler-2006-humor-desejabilidade.md).

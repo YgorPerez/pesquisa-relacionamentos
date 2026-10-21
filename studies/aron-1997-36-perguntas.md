@@ -50,4 +50,4 @@ O PDF é uma digitalização com OCR; os Trechos copiam o texto extraído como e
 
 ## Como usamos
 
-- Dica "Aprofunde a conversa de forma recíproca e gradual" (`tips/_sem-ficha.md`, Tema "Conversa e conexão").
+- Dica [`aprofundar-a-conversa`](../tips/aprofundar-a-conversa.md).
