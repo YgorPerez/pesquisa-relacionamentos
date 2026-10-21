@@ -54,7 +54,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2022](studies/ibge-2022-censo-unioes.md): uniões consensuais no Censo · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ⬜ · forte
-- [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ⬜ · moderada
+- [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): apps de relacionamento no Brasil · ⬜ · moderada
 - [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · ⬜ · fraca
 - [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · ⬜ · fraca
@@ -66,7 +66,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
-- [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ⬜ · moderada
+- [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
@@ -79,14 +79,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ⬜ · forte
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ⬜ · moderada
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ⬜ · moderada
-- [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ⬜ · forte
+- [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ⬜ · forte
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ⬜ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ⬜ · forte
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
-- [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ⬜ · fraca
+- [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
