@@ -1,7 +1,13 @@
-# Fixture do e2e: os degraus do rascunho de verdade
-# (data/priorities/_priorities.yaml), com as Fichas trocadas pelas da
-# fixture, uma ✅ (silva-2020) e uma 🟡 (costa-2018).
-explained_satisfaction: { fact_sheet: silva-2020-apps-brasil, relationship: 45, partner: 5, unexplained: 50 }
+# Fixture do e2e: os degraus do primeiro rascunho de
+# data/priorities/priorities.yaml, com as Fichas trocadas pelas da fixture,
+# uma ✅ (silva-2020) e uma 🟡 (costa-2018).
+explained_satisfaction:
+  fact_sheet: silva-2020-apps-brasil
+  relationship: 45
+  unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 
 traits:
   - id: aparencia

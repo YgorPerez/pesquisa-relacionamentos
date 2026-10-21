@@ -1,20 +1,24 @@
-# Rascunho do arquivo de Prioridades (#33), com os números do protótipo do #9.
-# O `_` no nome deixa o arquivo fora do build: as Fichas citadas ainda são ⬜
-# e o build só aceita dado que cite Ficha ✅ ou 🟡. Quando o #39 refizer as
-# Fichas, confira cada célula contra a Ficha nova e renomeie este arquivo e o
-# `.meta.yaml` sem o `_`.
+# As Prioridades (#33), conferidas célula a célula contra as Fichas refeitas
+# no #39 (#129). O build só aceita dado que cite Ficha ✅ ou 🟡: uma célula
+# cuja Ficha volte a ⬜ cai para 0 ("não sabemos") ou troca de Ficha.
 #
 # Por característica × desfecho: `level` (3 pesa, 2 pesa pouco, 1 quase nada,
 # 0 não sabemos), `measure`, `plain_text` e `fact_sheet`. Degrau acima de 0
 # precisa de Ficha. `bias` é a distância entre o que se declara e o que se
 # escolhe: `all`, ou `man` e `woman`.
 
-# A barra da Joel 2020: o que explica a satisfação com a relação.
+# A barra da Joel 2020: o que explica a satisfação com a relação na linha de
+# base. As variáveis da relação do próprio ator explicam 45%, e o modelo com
+# tudo (44%) não passa disso. Sobram cerca de 55% sem explicação. O parceiro
+# e as diferenças individuais acrescentam, além da relação do ator, de 0% a
+# 1,9% na linha de base e de 0,9% a 3,5% no seguimento (Fig. 4).
 explained_satisfaction:
   fact_sheet: joel-2020-machine-learning-43-datasets
   relationship: 45
-  partner: 5
-  unexplained: 50
+  unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 
 traits:
   - id: aparencia
@@ -26,8 +30,8 @@ traits:
       fact_sheet: eastwick-2014-meta-analise-preferencias
     satisfaction:
       level: 2
-      measure: "r = 0,10, só maridos, só no início"
-      plain_text: No casamento, só os maridos ficam um pouco mais satisfeitos, e só no começo. Para as esposas, nada.
+      measure: "r = 0,10, só maridos"
+      plain_text: Maridos de esposas mais bonitas começam o casamento um pouco mais satisfeitos, e a diferença dura os quatro anos do estudo. Para as esposas, a aparência do marido não muda nada.
       fact_sheet: meltzer-2014-atratividade-casamento
     duration:
       level: 0
@@ -53,7 +57,7 @@ traits:
       level: 0
       plain_text: Nenhum estudo lido mede isso.
     bias:
-      all: É o item que as pessoas mais subestimam ao dizer o que querem.
+      all: 'Ao dizer o que querem, as pessoas põem "bom de cama" em 12º de 35. No que de fato pesa, ele vem em 1º.'
 
   - id: renda
     name: Renda
@@ -79,17 +83,14 @@ traits:
     attraction:
       level: 2
       measure: mais baixo no revelado que no declarado
-      plain_text: No primeiro contato, pesa menos do que as pessoas dizem.
+      plain_text: Ao avaliar o parceiro atual, ou quem mais desejam, as pessoas dão menos peso à calma do que dizem dar.
       fact_sheet: eastwick-2024-preferencias-43-paises
     satisfaction:
-      level: 2
-      measure: "personalidade toda do parceiro: 1% a 3%"
-      plain_text: É o traço do parceiro com o resultado mais consistente. Mesmo assim, a personalidade inteira do parceiro explica de 1% a 3% da satisfação.
-      fact_sheet: dyrenforth-2010-personalidade-similaridade
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
-      level: 1
-      plain_text: Para o fim de namoros, a personalidade quase não prevê.
-      fact_sheet: le-2010-preditores-termino
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
 
   - id: gentileza
     name: Gentileza
@@ -97,14 +98,11 @@ traits:
       level: 0
       plain_text: Os estudos lidos não separam isso.
     satisfaction:
-      level: 2
-      measure: "personalidade toda do parceiro: 1% a 3%"
-      plain_text: Parceiros mais gentis se associam a mais satisfação, num efeito pequeno.
-      fact_sheet: malouff-2010-personalidade-parceiro
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
-      level: 1
-      plain_text: Para o fim de namoros, a personalidade quase não prevê.
-      fact_sheet: le-2010-preditores-termino
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
 
   - id: responsavel
     name: Ser responsável
@@ -112,27 +110,22 @@ traits:
       level: 0
       plain_text: Os estudos lidos não separam isso.
     satisfaction:
-      level: 2
-      measure: "personalidade toda do parceiro: 1% a 3%"
-      plain_text: Parceiros mais responsáveis se associam a mais satisfação, num efeito pequeno.
-      fact_sheet: malouff-2010-personalidade-parceiro
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
-      level: 1
-      plain_text: Para o fim de namoros, a personalidade quase não prevê.
-      fact_sheet: le-2010-preditores-termino
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
 
   - id: parecido
     name: Ser parecido comigo
     attraction:
       level: 1
-      measure: "real: nulo; percebida: prevê"
-      plain_text: Ser parecido de fato não prevê atração em quem já está junto. Sentir-se parecido, sim.
-      fact_sheet: montoya-2008-similaridade-real-percebida
+      measure: "nenhum efeito em 9 regressões"
+      plain_text: Num speed dating com universitários, as pessoas não se interessaram mais por quem era parecido com elas em aparência, renda ou simpatia.
+      fact_sheet: eastwick-2008-preferencias-speed-dating
     satisfaction:
-      level: 1
-      measure: "< 0,5%"
-      plain_text: Ter personalidades parecidas explica menos de 0,5% da satisfação.
-      fact_sheet: dyrenforth-2010-personalidade-similaridade
+      level: 0
+      plain_text: O estudo que mede isso ainda não teve o texto completo lido.
     duration:
       level: 0
       plain_text: Nenhum estudo lido mede isso.
@@ -148,7 +141,7 @@ traits:
     duration:
       level: 2
       measure: "HR 0,78"
-      plain_text: Nos EUA recentes, casais com a mesma escolaridade se divorciam um pouco menos.
+      plain_text: Nos casamentos dos EUA de 2000 a 2004, casais com a mesma escolaridade se separaram um pouco menos que aqueles em que o marido estudou mais.
       fact_sheet: schwartz-2014-homogamia-educacional
 
   - id: religiao
@@ -161,7 +154,8 @@ traits:
       plain_text: Nenhum estudo lido mede isso.
     duration:
       level: 2
-      plain_text: Uniões entre religiões diferentes se desfazem mais, sobretudo quando as religiões são distantes.
+      measure: "fim até o 5º ano: 24% a 42% contra 13% a 27%"
+      plain_text: 'Nos EUA, casamentos entre religiões diferentes acabaram mais até o 5º ano: de 24% a 42%, contra 13% a 27% nos de mesma religião (sem contar quem não tem religião). Quanto mais distantes as religiões, maior a diferença.'
       fact_sheet: lehrer-1993-religiao-estabilidade
 
   - id: idade

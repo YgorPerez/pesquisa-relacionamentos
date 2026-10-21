@@ -65,8 +65,11 @@ export const TRAITS: ReadonlyArray<TraitView> = [
 
 export const SPLIT: SatisfactionSplit = {
   relationship: 45,
-  partner: 5,
-  unexplained: 50,
+  unexplained: 55,
+  partnerAdded: {
+    baseline: { min: 0, max: 1.9 },
+    followUp: { min: 0.9, max: 3.5 },
+  },
   factSheet: {
     ...FACT_SHEET,
     name: 'Joel et al. (2020)',

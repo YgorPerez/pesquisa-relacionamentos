@@ -136,9 +136,18 @@ const SWATCH =
   'inline-block size-4 rounded-amostra border-(length:--traco-controle) border-tinta'
 const LEGEND = 'inline-flex items-center gap-2'
 
+type PercentRange = Split['partnerAdded']['baseline']
+
+const percent = (x: number) =>
+  `${x.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`
+/** "0% a 1,9%". */
+const percentRange = ({ min, max }: PercentRange) =>
+  `${percent(min)} a ${percent(max)}`
+
 /** The Joel 2020 bar: what explains satisfaction with the relationship. The
- * short one goes on the B1 card; the long one opens with the sentence and
- * says the list fits in the 5%. */
+ * partner is a sliver, not a share: beyond the relationship it adds a range
+ * that starts at zero. The short bar goes on the B1 card; the long one opens
+ * with the sentence and says the list fits in the sliver. */
 export function SatisfactionBar({
   split,
   short = false,
@@ -146,6 +155,7 @@ export function SatisfactionBar({
   split: Split
   short?: boolean
 }) {
+  const { baseline, followUp } = split.partnerAdded
   return (
     <div>
       {!short && (
@@ -158,16 +168,13 @@ export function SatisfactionBar({
       <div
         className="flex h-8.5 overflow-hidden rounded-mao-2 border-2 border-tinta"
         role="img"
-        aria-label={`Satisfação: ${split.relationship}% explicado pela relação, ${split.partner}% pelo parceiro, ${split.unexplained}% sem explicação`}
+        aria-label={`Satisfação: ${split.relationship}% explicado pela relação, quase nada a mais pelo parceiro (${percentRange(baseline)}), ${split.unexplained}% sem explicação`}
       >
         <span
           className="bg-tinta"
           style={{ width: `${split.relationship}%` }}
         />
-        <span
-          className="box-border min-w-2.5 border-x-2 border-tinta bg-folha"
-          style={{ width: `${split.partner}%` }}
-        />
+        <span className="box-border w-2.5 shrink-0 border-x-2 border-tinta bg-folha" />
         <span
           className="fundo-reticula"
           style={{ width: `${split.unexplained}%` }}
@@ -183,10 +190,11 @@ export function SatisfactionBar({
         </dd>
         <dt className={LEGEND}>
           <i className={cn(SWATCH, 'bg-folha')} />
-          <b>{split.partner}%</b>
+          <b>quase nada</b>
         </dt>
         <dd className="m-0">
-          tudo o que se sabe do parceiro
+          tudo o que se sabe do parceiro soma de {percentRange(baseline)} (de{' '}
+          {percentRange(followUp)} no fim dos estudos)
           {short ? '' : ': a lista abaixo inteira cabe aqui'}
         </dd>
         <dt className={LEGEND}>
@@ -497,13 +505,14 @@ function CardTop3({
   partner,
 }: {
   chosen: ReadonlyArray<TraitView>
-  /** The slice of satisfaction the partner explains, in %. */
-  partner: number
+  /** What the partner adds to satisfaction at the start of the studies. */
+  partner: PercentRange
 }) {
   return (
     <>
       <p className="font-label text-label leading-body text-tinta-2">
-        Seu topo 3 cabe na fatia de {partner}%:
+        Seu topo 3 cabe na fatia do parceiro, que soma quase nada (
+        {percentRange(partner)}):
       </p>
       <ol className="m-0 mt-2.5 list-none p-0" data-slot="topo3-no-cartao">
         {chosen.map((trait, i) => (
@@ -547,7 +556,7 @@ export function PrioritiesCard({
       <Panel className="[&>p]:m-0 [&>p]:mt-xs">
         <SatisfactionBar split={split} short />
         {chosen.length > 0 && (
-          <CardTop3 chosen={chosen} partner={split.partner} />
+          <CardTop3 chosen={chosen} partner={split.partnerAdded.baseline} />
         )}
         <p>
           <Button

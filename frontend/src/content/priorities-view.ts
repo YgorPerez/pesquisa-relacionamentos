@@ -4,6 +4,7 @@
 import type {
   Library,
   PriorityCell,
+  PercentRange,
   FactSheet,
   Strength,
   VerificationStatus,
@@ -44,8 +45,12 @@ export interface TraitView {
 
 export interface SatisfactionSplit {
   readonly relationship: number
-  readonly partner: number
   readonly unexplained: number
+  /** What the partner adds beyond the relationship, as measured ranges. */
+  readonly partnerAdded: {
+    readonly baseline: PercentRange
+    readonly followUp: PercentRange
+  }
   readonly factSheet: PriorityFactSheet
 }
 
@@ -98,8 +103,11 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
   return {
     bar: {
       relationship: bar.relationship,
-      partner: bar.partner,
       unexplained: bar.unexplained,
+      partnerAdded: {
+        baseline: bar.partner_added.baseline,
+        followUp: bar.partner_added.follow_up,
+      },
       factSheet: factSheet(bar.fact_sheet),
     },
     traits: priorities.traits.map((c) => ({
