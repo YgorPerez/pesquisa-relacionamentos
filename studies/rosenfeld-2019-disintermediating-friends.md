@@ -38,18 +38,18 @@ As duas ondas da HCMST perguntaram, em texto livre, como a pessoa e o parceiro s
 | Por vizinhos, de 1995 a 2017 | 8% → 3% (z = −4,54) | Tabela 1 | "Through or as neighbors 8 3 −4.54 ***" |
 | Na faculdade, de 1995 a 2017 (a única queda não significativa) | 9% → 4% (z = −1,17) | Tabela 1 | "In college 9 4 −1.17" |
 | O que os números da Tabela 1 são | Pontos da curva suavizada, não contagem do ano | Tabela 1, nota | "The 1995 and 2017 columns are point values for smoothed observed probabilities." |
-| Quando online passou amigos | Por volta de 2013 | Results | "We identify 2013 as the approximate year when meeting online surpassed meeting through friends for heterosexual couples in the United States." |
-| A alta de bar e restaurante | Vem toda de casais que se conheceram online e marcaram o primeiro encontro num bar | Results | "is due entirely to couples who met online and subsequently had a first in-person meeting at a bar or restaurant" |
-| Papel dos apps de celular | Pelo menos metade da alta de online de 2010 a 2017 | Results | "meeting through phone apps was responsible for at least half of the growth in meeting online from 2010 to 2017" |
+| Quando online passou amigos | Por volta de 2013 | Results, §4 | "We identify 2013 as the approximate year when meeting online surpassed meeting through friends for heterosexual couples in the United States." |
+| A alta de bar e restaurante | Vem toda de casais que se conheceram online e marcaram o primeiro encontro num bar | Results, §6 | "is due entirely to couples who met online and subsequently had a first in-person meeting at a bar or restaurant" |
+| Papel dos apps de celular | Pelo menos metade da alta de online de 2010 a 2017 | Results, §3 | "meeting through phone apps was responsible for at least half of the growth in meeting online from 2010 to 2017" |
 | Casais online que eram desconhecidos, 2009 vs. 2017 | 81% vs. 89,5% | Tabela 2 | "Previously strangers 81% 89.5%" |
 | Casais online apresentados por alguém, 2009 vs. 2017 | 11,2% vs. 3,7% | Tabela 2 | "Mediated by friend 11.2% 3.7%" |
 | Casais online na Tabela 2, 2009 e 2017 | 179 e 323 | Tabela 2 | "N 179 323" |
 | Como se conheceram e término | Sem efeito significativo, com a década do encontro controlada | Nota de rodapé # | "how couples met had no significant effect on the hazard of breakup once decade of meeting was controlled for" |
 | A única diferença ligada a como se conheceram | Quem se conheceu online casa mais rápido | Nota de rodapé ∥ | "Heterosexual couples who met online transition to marriage faster" |
-| Respostas sobre como se conheceram, HCMST 2009 | 2.495 | Data and Methods | "There were 2,495 answers from subjects with heterosexual partners" |
-| Respostas sobre como se conheceram, HCMST 2017 (sem repetir ninguém de 2009) | 2.997 | Data and Methods | "an additional 2,997 from HCMST 2017, with no duplication of respondents between the two surveys" |
-| Concordância entre codificadores | κ de 0,98 (online) a 0,83 (bar, restaurante ou lugar público) | Data and Methods | "ranged from a high of 0.98 for meeting online, to 0.89 for meeting through friends, to a low of 0.83 for meeting in a bar, restaurant, or public place" |
-| Taxa de resposta cumulativa | 13% em 2009 e 11% em 2017 | Data and Methods | "the cumulative response rate is 13% for HCMST 2009 and 11% for HCMST 2017" |
+| Respostas sobre como se conheceram, HCMST 2009 | 2.495 | Data and Methods, §1 | "There were 2,495 answers from subjects with heterosexual partners" |
+| Respostas sobre como se conheceram, HCMST 2017 (sem repetir ninguém de 2009) | 2.997 | Data and Methods, §1 | "an additional 2,997 from HCMST 2017, with no duplication of respondents between the two surveys" |
+| Concordância entre codificadores | κ de 0,98 (online) a 0,83 (bar, restaurante ou lugar público) | Data and Methods, §3 | "ranged from a high of 0.98 for meeting online, to 0.89 for meeting through friends, to a low of 0.83 for meeting in a bar, restaurant, or public place" |
+| Taxa de resposta cumulativa | 13% em 2009 e 11% em 2017 | Data and Methods, §5 | "the cumulative response rate is 13% for HCMST 2009 and 11% for HCMST 2017" |
 
 - Online virou a forma **mais comum**, não a maioria: 39% em 2017.
 - A versão publicada **não traz** o número de casais do mesmo sexo. A versão de rascunho do autor (PDF de 15/07/2019 no site dele) dizia cerca de 65% em 2017; esse trecho saiu na versão da PNAS, que diz só que esses casais adotaram cedo a internet. O apêndice do autor, atualizado em 2020, mostra a curva dos casais do mesmo sexo (Figura S6, N = 760) sem dar o número.

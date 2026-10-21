@@ -26,8 +26,13 @@ authors published.
 import csv
 import statistics
 import sys
+from pathlib import Path
 
-SOURCE = "sources/private/kowal-2025-50-paises-data.csv"
+# From the repository root, wherever the script is run from.
+ROOT = Path(__file__).resolve().parents[2]
+SOURCE = ROOT / "sources/private/kowal-2025-50-paises-data.csv"
+USAGE = "usage: total | gap | country <name> | since2010 <name> | rank <name>"
+COUNTRY_MODES = ("country", "since2010", "rank")
 SCALES = ["Relationship_satisfaction", "Intimacy", "Passion", "Commitment"]
 
 
@@ -60,7 +65,9 @@ def by_country(data):
     return countries
 
 
-def main(mode, country=None):
+def main(mode=None, country=None, *extra):
+    if extra or mode not in ("total", "gap", *COUNTRY_MODES) or (mode in COUNTRY_MODES) != (country is not None):
+        sys.exit(USAGE)
     data = rows()
     if mode == "total":
         on = [r for r in data if online(r)]
@@ -77,6 +84,8 @@ def main(mode, country=None):
             print(f"{scale}: gap {gap:.2f}, standardized {gap / sd:.2f}")
         return
     countries = by_country(data)
+    if country not in countries:
+        sys.exit(f"no respondents from {country!r}; the countries are: {', '.join(sorted(countries))}")
     if mode == "rank":
         ranked = sorted(
             countries, key=lambda c: share([r for r in countries[c] if online(r)], countries[c]), reverse=True

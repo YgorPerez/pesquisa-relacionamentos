@@ -14,9 +14,11 @@ import {
   level,
   shelves,
   biasFor,
+  shareWord,
   type Level,
   type Outcome,
 } from '@tem-estudo/rules/priorities'
+import type { PercentRange } from '@tem-estudo/content'
 import type {
   SatisfactionSplit as Split,
   TraitView,
@@ -29,6 +31,7 @@ import { FilledSteps, StrengthBadge, VerificationStatusBadge } from './badges'
 import { Button } from '@/ui/shadcn/button'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { Toggle } from '@/ui/shadcn/toggle'
+import { barLabel, cardTop3Lead, partnerLegend } from './priorities.copy'
 
 /** The three steps filled by weight, or the empty ring of "não sabemos". */
 export function EvidenceWeight({
@@ -136,14 +139,6 @@ const SWATCH =
   'inline-block size-4 rounded-amostra border-(length:--traco-controle) border-tinta'
 const LEGEND = 'inline-flex items-center gap-2'
 
-type PercentRange = Split['partnerAdded']['baseline']
-
-const percent = (x: number) =>
-  `${x.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`
-/** "0% a 1,9%". */
-const percentRange = ({ min, max }: PercentRange) =>
-  `${percent(min)} a ${percent(max)}`
-
 /** The Joel 2020 bar: what explains satisfaction with the relationship. The
  * partner is a sliver, not a share: beyond the relationship it adds a range
  * that starts at zero. The short bar goes on the B1 card; the long one opens
@@ -168,7 +163,7 @@ export function SatisfactionBar({
       <div
         className="flex h-8.5 overflow-hidden rounded-mao-2 border-2 border-tinta"
         role="img"
-        aria-label={`Satisfação: ${split.relationship}% explicado pela relação, quase nada a mais pelo parceiro (${percentRange(baseline)}), ${split.unexplained}% sem explicação`}
+        aria-label={barLabel(split)}
       >
         <span
           className="bg-tinta"
@@ -190,11 +185,10 @@ export function SatisfactionBar({
         </dd>
         <dt className={LEGEND}>
           <i className={cn(SWATCH, 'bg-folha')} />
-          <b>quase nada</b>
+          <b>{shareWord(baseline)}</b>
         </dt>
         <dd className="m-0">
-          tudo o que se sabe do parceiro soma de {percentRange(baseline)} (de{' '}
-          {percentRange(followUp)} no fim dos estudos)
+          {partnerLegend(baseline, followUp)}
           {short ? '' : ': a lista abaixo inteira cabe aqui'}
         </dd>
         <dt className={LEGEND}>
@@ -330,6 +324,11 @@ function TraitDetail({
 }) {
   const cell = trait[OUTCOME_KEY[outcome]]
   const bias = biasFor(trait, gender)
+  // The bias names its own Fact sheet when it is not the cell's.
+  const biasSource =
+    bias && trait.bias?.factSheet.slug !== cell.factSheet?.slug
+      ? trait.bias?.factSheet
+      : undefined
   return (
     <div
       id={id}
@@ -349,6 +348,7 @@ function TraitDetail({
         </>
       )}
       {bias && <p className="text-tinta-2 italic">{bias}</p>}
+      {biasSource && <CellSource factSheet={biasSource} />}
     </div>
   )
 }
@@ -502,17 +502,16 @@ function Books({
  * satisfaction. */
 function CardTop3({
   chosen,
-  partner,
+  partnerAtBaseline,
 }: {
   chosen: ReadonlyArray<TraitView>
   /** What the partner adds to satisfaction at the start of the studies. */
-  partner: PercentRange
+  partnerAtBaseline: PercentRange
 }) {
   return (
     <>
       <p className="font-label text-label leading-body text-tinta-2">
-        Seu topo 3 cabe na fatia do parceiro, que soma quase nada (
-        {percentRange(partner)}):
+        {cardTop3Lead(partnerAtBaseline)}
       </p>
       <ol className="m-0 mt-2.5 list-none p-0" data-slot="topo3-no-cartao">
         {chosen.map((trait, i) => (
@@ -556,7 +555,10 @@ export function PrioritiesCard({
       <Panel className="[&>p]:m-0 [&>p]:mt-xs">
         <SatisfactionBar split={split} short />
         {chosen.length > 0 && (
-          <CardTop3 chosen={chosen} partner={split.partnerAdded.baseline} />
+          <CardTop3
+            chosen={chosen}
+            partnerAtBaseline={split.partnerAdded.baseline}
+          />
         )}
         <p>
           <Button

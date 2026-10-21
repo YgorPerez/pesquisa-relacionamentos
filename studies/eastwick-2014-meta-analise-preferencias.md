@@ -30,11 +30,11 @@ A primeira seção do artigo é uma meta-análise: quanto a atratividade física
 |---|---|---|---|
 | Amostras para atratividade física | k = 97, de 79 artigos; N = 29.414 | Meta-Analysis, Method (p. 629) | "For physical attractiveness, 79 articles produced k ⫽ 97 samples consisting of N ⫽ 29,414 (14,237 men and 15,177 women)." |
 | Amostras para perspectiva de renda | k = 56, de 48 artigos; N = 50.113 | Meta-Analysis, Method (p. 629) | "For earning prospects, 48 articles produced k ⫽ 56 samples consisting of N ⫽ 50,113" |
-| Atratividade física → avaliação romântica | r ≈ 0,40 (moderado a forte), para os dois sexos | Resumo | "physical attractiveness predicted romantic evaluations with a moderate-to-strong effect size (r ⫽ ⬃.40) for both sexes" |
-| Perspectiva de renda → avaliação romântica | r ≈ 0,10 (pequeno), para os dois sexos | Resumo | "earning prospects predicted romantic evaluations with a small effect size (r ⫽ ⬃.10) for both sexes" |
+| Atratividade física → avaliação romântica | r ≈ 0,40 (moderado a forte), para os dois sexos | Resumo (p. 623) | "physical attractiveness predicted romantic evaluations with a moderate-to-strong effect size (r ⫽ ⬃.40) for both sexes" |
+| Perspectiva de renda → avaliação romântica | r ≈ 0,10 (pequeno), para os dois sexos | Resumo (p. 623) | "earning prospects predicted romantic evaluations with a small effect size (r ⫽ ⬃.10) for both sexes" |
 | Por sexo de quem avalia | atratividade: r = 0,43 (homens) e 0,40 (mulheres); renda: r = 0,09 e 0,12 | Meta-Analysis, Discussion (p. 633) | "for men (r ⫽ .43) and women (r ⫽ .40), and earning prospects tended to inspire positive romantic evaluations about equally for men (r ⫽ .09) and women (r ⫽ .12)" |
-| Diferença entre sexos nas correlações | r de diferença = 0,03, nunca significativa | Resumo | "Sex differences in the correlations were small (rdifference ⫽ .03) and uniformly nonsignificant." |
-| Em perfis e alvos hipotéticos | homens e mulheres diferem de forma confiável | Resumo | "Men and women reliably differ in the extent to which these qualities affect their romantic evaluations of hypothetical targets." |
+| Diferença entre sexos nas correlações | r de diferença = 0,03, nunca significativa | Resumo (p. 623) | "Sex differences in the correlations were small (rdifference ⫽ .03) and uniformly nonsignificant." |
+| Em perfis e alvos hipotéticos | homens e mulheres diferem de forma confiável | Resumo (p. 623) | "Men and women reliably differ in the extent to which these qualities affect their romantic evaluations of hypothetical targets." |
 | Atratividade, homens, por tipo de medida | r = 0,53 (relato do participante), 0,11 (relato do parceiro), 0,32 (medida objetiva) | Tabela 1 (p. 631) | "Participant report Partner report Objective Averaged within study k 75 31 32 97 r ⴱⴱⴱ .53 .11ⴱⴱⴱ .32ⴱⴱⴱ" |
 | Atratividade, mulheres, pelas mesmas três medidas | r = 0,50, 0,09 e 0,26 | Tabela 1 (p. 631) | "Women r ⴱⴱⴱ .50 .09ⴱⴱⴱ .26ⴱⴱⴱ .40ⴱⴱⴱ" |
 | Renda, homens, pelas mesmas três medidas | r = 0,27, 0,03 e 0,03 | Tabela 1 (p. 631) | "k 26 13 34 56 r ⴱⴱⴱ .27 .03 .03ⴱ .09ⴱⴱⴱ" |

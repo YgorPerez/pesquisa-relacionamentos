@@ -23,8 +23,8 @@ export const OnePage: Story = {
         </Display>
         <Lead>Diga quem você procura e veja quantas pessoas sobram.</Lead>
         <Notice role="note">
-          Nenhum destes estudos é brasileiro. A evidência vem dos EUA e da
-          Europa.
+          Só um destes estudos inclui o Brasil, entre os 43 países que cobre; os
+          outros vêm sobretudo dos EUA e da Europa.
         </Notice>
         <Section aria-labelledby="t-exemplo">
           <Headline id="t-exemplo">Do Guia</Headline>

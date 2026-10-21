@@ -48,13 +48,13 @@ traits:
     attraction: { level: 3, measure: "r ≈ 0,40", plain_text: Quem é mais bonito atrai mais., fact_sheet: silva-2020-apps-brasil }
     satisfaction: { level: 2, plain_text: "Só um pouco, e só no começo.", fact_sheet: costa-2018-satisfacao }
     duration: { level: 0, plain_text: Nenhum estudo lido mede isso. }
-    bias: { all: As pessoas dão menos peso à aparência quando dizem o que querem. }
+    bias: { all: As pessoas dão menos peso à aparência quando dizem o que querem., fact_sheet: silva-2020-apps-brasil }
   - id: renda
     name: Renda
     attraction: { level: 2, plain_text: Pesa pouco na atração., fact_sheet: silva-2020-apps-brasil }
     satisfaction: { level: 0, plain_text: Nenhum estudo lido mede isso. }
     duration: { level: 1, plain_text: Quase nada., fact_sheet: costa-2018-satisfacao }
-    bias: { man: Homens dão menos peso., woman: Mulheres dão mais peso. }
+    bias: { man: Homens dão menos peso., woman: Mulheres dão mais peso., fact_sheet: costa-2018-satisfacao }
 `
 
 const filesWith = (text: string, ...others: ContentFile[]): ContentFile[] => [
@@ -107,6 +107,7 @@ describe('priorities file', () => {
     expect(priorities?.traits[1]?.bias).toEqual({
       man: 'Homens dão menos peso.',
       woman: 'Mulheres dão mais peso.',
+      fact_sheet: 'costa-2018-satisfacao',
     })
   })
 
@@ -188,6 +189,23 @@ describe('priorities file', () => {
     )
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
       `${FILE}: explained_satisfaction.partner_added.baseline: min 2% is above max 1.9%`,
+    ])
+  })
+
+  it('fails when a bias does not name its fact sheet, or cites a ⬜ one', () => {
+    const text = PRIORITIES.replace(
+      'quando dizem o que querem., fact_sheet: silva-2020-apps-brasil }',
+      'quando dizem o que querem. }',
+    )
+    expect(errors(buildLibrary(filesWith(text)))).toEqual([
+      `${FILE}: traits.0.bias.fact_sheet: required field missing`,
+    ])
+    const unverified = PRIORITIES.replace(
+      'Mulheres dão mais peso., fact_sheet: costa-2018-satisfacao }',
+      'Mulheres dão mais peso., fact_sheet: lima-2015-encontros }',
+    )
+    expect(errors(buildLibrary(filesWith(unverified)))).toEqual([
+      `${FILE}: traits.1.bias.fact_sheet: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
     ])
   })
 

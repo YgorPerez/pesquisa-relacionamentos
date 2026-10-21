@@ -30,9 +30,9 @@ Quantos brasileiros com smartphone já saíram com alguém que conheceram em app
 | Já saiu com alguém conhecido em app, 16–29 anos | 29% | 1º parágrafo | "29% dos jovens brasileiros entre 16 e 29 anos de idade que têm smartphone já saíram com alguém que conheceram através de apps de relacionamento" |
 | Idem, 30–49 anos e 50 anos ou mais; total | 25%; 14%; média de 23% | 2º parágrafo | "O percentual é menor no grupo entre 30 e 49 anos (25%) e na faixa com 50 anos ou mais (14%). Na média, 23% dos brasileiros com smartphone já se encontraram com gente por meio desse tipo de app." |
 | Diferença por gênero, renda ou região | Nenhuma significativa | 3º parágrafo | "A pesquisa não encontrou variação significativa por gênero, renda familiar mensal ou região do Brasil." |
-| App mais usado, entre quem já teve encontro por app | Tinder 43%; Badoo 5%; Bumble 3%; Grindr 3% | Seção "Tinder lidera entre apps de relacionamento" | "43% dos brasileiros que já se encontraram com alguém por meio desse tipo de aplicativo citaram o Tinder como aquele que mais usam. Depois vieram Badoo (5%), Bumble (3%) e Grindr (3%)." |
-| Não lembram o nome do app que mais usam | 28% | Seção "Tinder lidera entre apps de relacionamento" | "E 28% dos entrevistados disseram que não lembravam o nome do app de relacionamento que mais usam." |
-| Metodologia | 2.019 entrevistados, de 12 a 27 de março de 2025; margem de erro de 2,2 p.p. | Último parágrafo | "A pesquisa foi feita entre 12 e 27 de março de 2025 com 2.019 brasileiros que acessam a Internet e possuem smartphone. A margem de erro é de 2,2 pontos percentuais." |
+| App mais usado, entre quem já teve encontro por app | Tinder 43%; Badoo 5%; Bumble 3%; Grindr 3% | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "43% dos brasileiros que já se encontraram com alguém por meio desse tipo de aplicativo citaram o Tinder como aquele que mais usam. Depois vieram Badoo (5%), Bumble (3%) e Grindr (3%)." |
+| Não lembram o nome do app que mais usam | 28% | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "E 28% dos entrevistados disseram que não lembravam o nome do app de relacionamento que mais usam." |
+| Metodologia | 2.019 entrevistados, de 12 a 27 de março de 2025; margem de erro de 2,2 p.p. | 5º parágrafo | "A pesquisa foi feita entre 12 e 27 de março de 2025 com 2.019 brasileiros que acessam a Internet e possuem smartphone. A margem de erro é de 2,2 pontos percentuais." |
 
 ## Limitações
 
