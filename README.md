@@ -47,22 +47,22 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Com dados do Brasil
 
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
-- [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ⬜ · fraca
+- [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns.md): Pesquisa Nacional de Saúde · ✅ · moderada
 - [IBGE 2022](studies/ibge-2022-censo-amostra.md): Censo Demográfico, microdados da amostra · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-censo-unioes.md): uniões consensuais no Censo · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
-- [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ⬜ · forte
+- [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
-- [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): apps de relacionamento no Brasil · ⬜ · moderada
-- [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · ⬜ · fraca
-- [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · ⬜ · fraca
+- [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
+- [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · 🟡 · fraca
+- [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · 🟡 · fraca
 
 ### Outros países
 
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
-- [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ⬜ · forte
+- [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
@@ -76,14 +76,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ⬜ · moderada
-- [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ⬜ · forte
-- [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ⬜ · moderada
-- [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ⬜ · moderada
+- [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
+- [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
+- [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
-- [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ⬜ · forte
-- [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ⬜ · forte
+- [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
+- [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ⬜ · forte
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
