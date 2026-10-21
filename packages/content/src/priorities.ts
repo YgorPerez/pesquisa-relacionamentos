@@ -49,7 +49,7 @@ const Trait = Schema.Struct({
 })
 export type Trait = typeof Trait.Type
 
-const PercentOfVariance = Schema.Number.check(
+const PercentOfVariance = Schema.Finite.check(
   Schema.isBetween(
     { minimum: 0, maximum: 100 },
     { message: 'percentage from 0 to 100' },
