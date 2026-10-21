@@ -6,6 +6,7 @@ import {
   readPriorities,
   shelves,
   biasFor,
+  shareWord,
   type TraitWithEvidence,
 } from './priorities.ts'
 
@@ -103,6 +104,16 @@ describe('shelves', () => {
     ])
     expect(littleWeight?.ids).toEqual(['gentileza', 'aparencia'])
     expect(noData?.ids).toEqual(['idade', 'renda'])
+  })
+})
+
+describe('shareWord', () => {
+  it('names a range of explained variance by its top, so the word follows the data', () => {
+    expect(shareWord({ min: 0, max: 1.9 })).toBe('quase nada')
+    expect(shareWord({ min: 1, max: 2 })).toBe('pouco')
+    expect(shareWord({ min: 5, max: 8 })).toBe('pouco')
+    expect(shareWord({ min: 10, max: 20 })).toBe('uma parte')
+    expect(shareWord({ min: 20, max: 30 })).toBe('muito')
   })
 })
 

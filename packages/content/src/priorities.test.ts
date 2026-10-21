@@ -38,21 +38,23 @@ version: "1"
 const PRIORITIES = `explained_satisfaction:
   fact_sheet: silva-2020-apps-brasil
   relationship: 45
-  partner: 5
-  unexplained: 50
+  unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 traits:
   - id: aparencia
     name: Aparência
     attraction: { level: 3, measure: "r ≈ 0,40", plain_text: Quem é mais bonito atrai mais., fact_sheet: silva-2020-apps-brasil }
     satisfaction: { level: 2, plain_text: "Só um pouco, e só no começo.", fact_sheet: costa-2018-satisfacao }
     duration: { level: 0, plain_text: Nenhum estudo lido mede isso. }
-    bias: { all: As pessoas dão menos peso à aparência quando dizem o que querem. }
+    bias: { all: As pessoas dão menos peso à aparência quando dizem o que querem., fact_sheet: silva-2020-apps-brasil }
   - id: renda
     name: Renda
     attraction: { level: 2, plain_text: Pesa pouco na atração., fact_sheet: silva-2020-apps-brasil }
     satisfaction: { level: 0, plain_text: Nenhum estudo lido mede isso. }
     duration: { level: 1, plain_text: Quase nada., fact_sheet: costa-2018-satisfacao }
-    bias: { man: Homens dão menos peso., woman: Mulheres dão mais peso. }
+    bias: { man: Homens dão menos peso., woman: Mulheres dão mais peso., fact_sheet: costa-2018-satisfacao }
 `
 
 const filesWith = (text: string, ...others: ContentFile[]): ContentFile[] => [
@@ -79,8 +81,11 @@ describe('priorities file', () => {
     expect(priorities?.explained_satisfaction).toEqual({
       fact_sheet: 'silva-2020-apps-brasil',
       relationship: 45,
-      partner: 5,
-      unexplained: 50,
+      unexplained: 55,
+      partner_added: {
+        baseline: { min: 0, max: 1.9 },
+        follow_up: { min: 0.9, max: 3.5 },
+      },
     })
     expect(
       priorities?.traits.map((c) => [
@@ -102,6 +107,7 @@ describe('priorities file', () => {
     expect(priorities?.traits[1]?.bias).toEqual({
       man: 'Homens dão menos peso.',
       woman: 'Mulheres dão mais peso.',
+      fact_sheet: 'costa-2018-satisfacao',
     })
   })
 
@@ -162,17 +168,44 @@ describe('priorities file', () => {
   it('fails with a level outside 0 to 3, a repeated id and a bar that does not add up to 100', () => {
     const text = PRIORITIES.replace('level: 3, measure', 'level: 4, measure')
       .replace('id: renda', 'id: aparencia')
-      .replace('partner: 5', 'partner: 6')
+      .replace('unexplained: 55', 'unexplained: 56')
     expect(errors(buildLibrary(filesWith(text)))).toEqual([
       `${FILE}: traits.0.attraction.level: value outside the closed list (0 | 1 | 2 | 3) (got 4)`,
     ])
     const validLevels = PRIORITIES.replace(
       'id: renda',
       'id: aparencia',
-    ).replace('partner: 5', 'partner: 6')
+    ).replace('unexplained: 55', 'unexplained: 56')
     expect(errors(buildLibrary(filesWith(validLevels)))).toEqual([
-      `${FILE}: explained_satisfaction: relationship, partner and unexplained add up to 101%, not 100%`,
+      `${FILE}: explained_satisfaction: relationship and unexplained add up to 101%, not 100%`,
       `${FILE}: traits.1.id: the trait "aparencia" appears more than once`,
+    ])
+  })
+
+  it('fails when a range of what the partner adds starts above where it ends', () => {
+    const text = PRIORITIES.replace(
+      'baseline: { min: 0, max: 1.9 }',
+      'baseline: { min: 2, max: 1.9 }',
+    )
+    expect(errors(buildLibrary(filesWith(text)))).toEqual([
+      `${FILE}: explained_satisfaction.partner_added.baseline: min 2% is above max 1.9%`,
+    ])
+  })
+
+  it('fails when a bias does not name its fact sheet, or cites a ⬜ one', () => {
+    const text = PRIORITIES.replace(
+      'quando dizem o que querem., fact_sheet: silva-2020-apps-brasil }',
+      'quando dizem o que querem. }',
+    )
+    expect(errors(buildLibrary(filesWith(text)))).toEqual([
+      `${FILE}: traits.0.bias.fact_sheet: required field missing`,
+    ])
+    const unverified = PRIORITIES.replace(
+      'Mulheres dão mais peso., fact_sheet: costa-2018-satisfacao }',
+      'Mulheres dão mais peso., fact_sheet: lima-2015-encontros }',
+    )
+    expect(errors(buildLibrary(filesWith(unverified)))).toEqual([
+      `${FILE}: traits.1.bias.fact_sheet: lima-2015-encontros is ⬜ (unverified); data only cites ✅ or 🟡 fact sheets`,
     ])
   })
 
@@ -184,59 +217,14 @@ describe('priorities file', () => {
   })
 })
 
-describe("the repository's priorities draft", () => {
+describe("the repository's priorities file", () => {
   const root = fileURLToPath(new URL('../../..', import.meta.url))
 
-  it('stays out of the build while the fact sheets it cites are ⬜ (#39)', () => {
-    const paths = readFiles(root).map((a) => a.path)
-    expect(paths.filter((c) => c.startsWith('data/priorities/'))).toEqual([])
-  })
-
-  it('only fails for citing ⬜ fact sheets: with the fact sheets checked, it publishes', () => {
-    const draft = (name: string): ContentFile => ({
-      path: `data/priorities/${name}`,
-      text: readFileSync(`${root}/data/priorities/_${name}`, 'utf8'),
-    })
-    const result = buildLibrary([
-      ...readFiles(root),
-      draft('priorities.yaml'),
-      draft('priorities.meta.yaml'),
-    ])
-    const problems = result.ok ? [] : result.errors.map((e) => e.message)
-    expect(problems.length).toBeGreaterThan(0)
-    expect(problems.filter((m) => !m.includes('is ⬜ (unverified)'))).toEqual(
-      [],
-    )
-
-    // With the cited fact sheets marked as checked, the same draft passes.
-    const checked = readFiles(root).map((a) =>
-      a.path.startsWith('studies/')
-        ? {
-            ...a,
-            text: a.text.replace(
-              /^status: unverified$/m,
-              'status: partial\nverified_on: 2026-10-19',
-            ),
-          }
-        : a,
-    )
-    const published = buildLibrary([
-      ...checked,
-      draft('priorities.yaml'),
-      draft('priorities.meta.yaml'),
-    ])
-    if (!published.ok) throw new Error(formatProblems(published.errors))
-    expect(published.library.priorities?.traits.map((c) => c.id)).toEqual([
-      'aparencia',
-      'sexo',
-      'renda',
-      'calma',
-      'gentileza',
-      'responsavel',
-      'parecido',
-      'escolaridade',
-      'religiao',
-      'idade',
-    ])
+  it('is published with the real library, every cell citing a ✅ or 🟡 fact sheet (#129)', () => {
+    const files = readFiles(root)
+    expect(files.map((a) => a.path)).toContain(FILE)
+    const result = buildLibrary(files)
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(result.library.priorities?.file).toBe(FILE)
   })
 })

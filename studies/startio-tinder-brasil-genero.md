@@ -1,17 +1,17 @@
 ---
-# Antes da migração: 🟡 parcial (página comercial; metodologia não publicada)
-reference: "Start.io. *Dating Users – Tinder in Brazil* (página de audiência)."
+reference: "Start.io. *Dating Users – Tinder in Brazil* (página de audiência da rede de anúncios; atualizada em julho de 2026, lida em 2026-10-21)."
 link: https://www.start.io/audience/dating-users-tinder-in-brazil
-status: unverified
+status: partial
+verified_on: 2026-10-21
 strength: weak
-strength_reason: "Estimativa comercial, com gênero inferido de sinais do aparelho e metodologia não publicada."
+strength_reason: "Estimativa comercial de uma rede de anúncios, com idade e gênero inferidos de sinais do aparelho, metodologia não publicada e números que mudam a cada atualização da página."
 countries: [Brasil]
-period: "data não informada"
+period: "página atualizada em julho de 2026; período dos dados não informado"
 sample:
-  description: "Usuários da rede de anúncios da Start.io. O gênero é inferido a partir de sinais do aparelho, sem pesquisa com usuários."
+  description: "Aparelhos da rede de anúncios da Start.io que ela classifica como de usuários do Tinder no Brasil (\"audience size\" de 5.356.451). Idade e gênero são inferidos de apps instalados e outros sinais do aparelho, sem pesquisa com usuários."
   representative: false
 design: platform
-conflict: "Empresa que vende segmentação de anúncios."
+conflict: "Empresa que vende segmentação de anúncios; a página é a vitrine desse produto."
 covers:
   genders: [man, woman]
 ---
@@ -20,19 +20,22 @@ covers:
 
 ## O que mediu
 
-A proporção estimada de homens e mulheres entre usuários do Tinder no Brasil, com o gênero inferido a partir de sinais do aparelho na rede de anúncios da Start.io.
+A Start.io, uma rede de anúncios em apps de celular, publica para cada segmento que vende o tamanho da audiência e a distribuição estimada de idade e gênero. Para os usuários do Tinder no Brasil, a página diz que as estimativas vêm de apps instalados e de outros sinais do aparelho. Não há pesquisa com usuários nem metodologia publicada; a página inteira é a fonte, por isso a Ficha é parcial.
 
 ## Achados
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Usuários do Tinder no Brasil, por gênero | ~71% homens / ~29% mulheres | página de audiência | |
-| Homens entre usuários em São Paulo e no Rio de Janeiro | ~76% | página de audiência | |
+| Usuários do Tinder no Brasil, por gênero | 83,1% homens; 16,9% mulheres | Página de audiência, 2º gráfico ("Gender") | "Male (83.1%) Female (16.9%)" |
+| Tamanho estimado da audiência | 5.356.451 aparelhos | Página de audiência, quadro "Geolocation stat", 4ª linha | "Audience size 5,356,451" |
+| Usuários de 18 a 24 anos | 39,8% | Página de audiência, "overview", 2ª frase | "Based on mobile apps and various device data signals, of the Tinder users in Brazil, 39.8% are in the 18-24 age group." |
+| Data da atualização | julho de 2026 | Página de audiência, rodapé dos 4 gráficos | "Updated: 07-2026" |
 
 ## Limitações
 
-- Estimativa comercial inferida; o Match Group não divulga gênero por país.
-- Use só como indício de que a proporção é desequilibrada, nunca como número exato.
+- Estimativa comercial inferida, sem método publicado; o Match Group não divulga gênero por país. A audiência é só a dos aparelhos que a rede de anúncios alcança.
+- Os números mudam com as atualizações da página. Esta Ficha dizia antes ~71% de homens e ~29% de mulheres no Brasil e ~76% de homens em São Paulo e no Rio; a página lida em 2026-10-21 (atualizada em julho de 2026) diz 83,1% e 16,9%. Não há cópia antiga arquivada para conferir os números anteriores. As páginas de [São Paulo](https://www.start.io/audience/dating-users-tinder-in-sao-paulo) e do [Rio de Janeiro](https://www.start.io/audience/dating-users-tinder-in-rio-de-janeiro), lidas no mesmo dia e sem Fonte local aqui, mostram proporção parecida com a do Brasil.
+- Use só como indício de que há bem mais homens que mulheres no Tinder brasileiro, nunca como número exato.
 
 ## Como usamos
 

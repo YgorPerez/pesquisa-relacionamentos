@@ -1,7 +1,14 @@
-# Fixture do e2e: os degraus do rascunho de verdade
-# (data/priorities/_priorities.yaml), com as Fichas trocadas pelas da
-# fixture, uma ✅ (silva-2020) e uma 🟡 (costa-2018).
-explained_satisfaction: { fact_sheet: silva-2020-apps-brasil, relationship: 45, partner: 5, unexplained: 50 }
+# Fixture do e2e: o formato de data/priorities/priorities.yaml, com degraus
+# fixos que os testes leem, e não os do arquivo real. Em satisfação, cada
+# prateleira tem ao menos uma característica. As Fichas são as da fixture,
+# uma ✅ (silva-2020) e uma 🟡 (costa-2018).
+explained_satisfaction:
+  fact_sheet: silva-2020-apps-brasil
+  relationship: 45
+  unexplained: 55
+  partner_added:
+    baseline: { min: 0, max: 1.9 }
+    follow_up: { min: 0.9, max: 3.5 }
 
 traits:
   - id: aparencia
@@ -9,7 +16,7 @@ traits:
     attraction: { level: 3, measure: "r ≈ 0,40", plain_text: "Quem é mais bonito atrai mais.", fact_sheet: silva-2020-apps-brasil }
     satisfaction: { level: 2, measure: "r = 0,10, só maridos", plain_text: "Só os maridos ficam um pouco mais satisfeitos, e só no começo.", fact_sheet: costa-2018-satisfacao }
     duration: { level: 0, plain_text: "Nenhum estudo lido mede isso." }
-    bias: { all: "As pessoas dão menos peso à aparência quando dizem o que querem do que quando se atraem." }
+    bias: { all: "As pessoas dão menos peso à aparência quando dizem o que querem do que quando se atraem.", fact_sheet: silva-2020-apps-brasil }
   - id: sexo
     name: Química sexual
     attraction: { level: 3, plain_text: "É o que mais pesa no que as pessoas revelam.", fact_sheet: silva-2020-apps-brasil }
@@ -23,6 +30,7 @@ traits:
     bias:
       woman: Mulheres tendem a dar mais peso à renda quando dizem o que querem do que quando escolhem.
       man: Homens tendem a dar menos peso à renda quando dizem o que querem do que quando escolhem.
+      fact_sheet: costa-2018-satisfacao
   - id: calma
     name: Estabilidade emocional
     attraction: { level: 2, plain_text: "No primeiro contato, pesa menos do que se diz.", fact_sheet: costa-2018-satisfacao }

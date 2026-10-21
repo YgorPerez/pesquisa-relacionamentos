@@ -7,8 +7,12 @@ import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
+import { barLabel, partnerLegend } from './priorities.copy'
 
 const PAGE = '/prioridades'
+/** The fixture's partner ranges, at the start and at the end of the studies. */
+const BASELINE = { min: 0, max: 1.9 }
+const FOLLOW_UP = { min: 0.9, max: 3.5 }
 
 const chips = () => within(screen.getByRole('region', { name: 'Seu topo 3' }))
 const chip = (name: string) =>
@@ -86,6 +90,25 @@ it('the chosen ones land numbered on their shelf, and the alert says it in a sen
   )
 })
 
+it("Joel's bar says the partner adds almost nothing, with the measured range", async () => {
+  await open()
+  expect(
+    screen.getByRole('img', {
+      name: barLabel({
+        relationship: 45,
+        unexplained: 55,
+        partnerAdded: { baseline: BASELINE },
+      }),
+    }),
+  ).toBeVisible()
+  expect(screen.getByText('quase nada', { selector: 'b' })).toBeVisible()
+  expect(
+    screen.getByText((text) =>
+      text.startsWith(partnerLegend(BASELINE, FOLLOW_UP)),
+    ),
+  ).toBeVisible()
+})
+
 it("the outcome changes the shelves, and Joel's bar only shows in satisfaction", async () => {
   const { user } = await open()
   await user.click(chip('Aparência'))
@@ -138,6 +161,10 @@ it("tapping a trait opens the detail, with the bias for the Profile's gender", a
   const income = screen.getByRole('region', { name: 'Renda, satisfação' })
   expect(income).toHaveTextContent('Mulheres tendem a dar mais peso à renda')
   expect(income).not.toHaveTextContent('Homens tendem')
+  // The income cell cites no Fact sheet; the bias names its own.
+  expect(
+    within(income).getByRole('link', { name: 'Costa (2018)' }),
+  ).toHaveAttribute('href', '/estudos/costa-2018-satisfacao')
 })
 
 it('the top 3 and the outcome come back when opening again', async () => {

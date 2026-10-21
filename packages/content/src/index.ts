@@ -64,6 +64,7 @@ export type {
   PriorityCell,
   Priorities,
   ExplainedSatisfaction,
+  PercentRange,
 } from './priorities.ts'
 export type { Section } from './markdown.ts'
 export { referencesInText } from './publication.ts'

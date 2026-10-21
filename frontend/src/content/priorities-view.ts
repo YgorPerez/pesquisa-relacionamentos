@@ -4,6 +4,8 @@
 import type {
   Library,
   PriorityCell,
+  Trait,
+  PercentRange,
   FactSheet,
   Strength,
   VerificationStatus,
@@ -39,13 +41,19 @@ export interface TraitView {
     readonly all?: string
     readonly man?: string
     readonly woman?: string
+    /** The Fact sheet that measures the bias, often not the cell's. */
+    readonly factSheet: PriorityFactSheet
   }
 }
 
 export interface SatisfactionSplit {
   readonly relationship: number
-  readonly partner: number
   readonly unexplained: number
+  /** What the partner adds beyond the relationship, as measured ranges. */
+  readonly partnerAdded: {
+    readonly baseline: PercentRange
+    readonly followUp: PercentRange
+  }
   readonly factSheet: PriorityFactSheet
 }
 
@@ -93,13 +101,20 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
     text: c.plain_text,
     factSheet: c.fact_sheet ? factSheet(c.fact_sheet) : null,
   })
+  const bias = ({ fact_sheet, ...text }: NonNullable<Trait['bias']>) => ({
+    ...text,
+    factSheet: factSheet(fact_sheet),
+  })
   const { explained_satisfaction: bar } = priorities
   const guide = library.guides.find((g) => g.calculator === 'priorities')
   return {
     bar: {
       relationship: bar.relationship,
-      partner: bar.partner,
       unexplained: bar.unexplained,
+      partnerAdded: {
+        baseline: bar.partner_added.baseline,
+        followUp: bar.partner_added.follow_up,
+      },
       factSheet: factSheet(bar.fact_sheet),
     },
     traits: priorities.traits.map((c) => ({
@@ -108,7 +123,7 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
       attraction: cell(c.attraction),
       satisfaction: cell(c.satisfaction),
       duration: cell(c.duration),
-      ...(c.bias ? { bias: c.bias } : {}),
+      ...(c.bias ? { bias: bias(c.bias) } : {}),
     })),
     fromGuide: guide
       ? {

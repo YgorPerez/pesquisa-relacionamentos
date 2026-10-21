@@ -17,7 +17,8 @@ export function round2(x: number, mode: Mode = 'nearest'): number {
   return ROUND[mode](x / step) * step
 }
 
-const decimal = (x: number) =>
+/** "1,9", "45": up to one decimal place, with the Brazilian comma. */
+export const decimal = (x: number) =>
   x.toLocaleString('pt-BR', { maximumFractionDigits: 1 })
 
 function write(v: number): string {

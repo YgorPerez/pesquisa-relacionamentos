@@ -1,9 +1,18 @@
 // Priorities vs. evidence (#33), over the fixture content
-// (`e2e/library/data/priorities`): the real draft's levels, with the
+// (`e2e/library/data/priorities`): fixed levels the tests read, with the
 // fixture's Fact sheets. In satisfaction: "pesa" has sexual chemistry; "quase
 // nada", being alike; "não sabemos", income, education, religion and age.
 import { expect, test, type Page } from '@playwright/test'
+import { barLabel, cardTop3Lead } from '../src/ui/priorities.copy'
 import { tap } from './touch'
+
+/** The fixture's Joel 2020 bar. */
+const BASELINE = { min: 0, max: 1.9 }
+const BAR = {
+  relationship: 45,
+  unexplained: 55,
+  partnerAdded: { baseline: BASELINE },
+}
 
 const GUIDE_B1 = '/escolher-parceiro/que-caracteristicas-preveem'
 
@@ -124,14 +133,27 @@ test.describe('/prioridades', () => {
     ).not.toMatch(/\d/)
   })
 
+  test("Joel's bar fits the relationship, the partner and the unexplained inside its frame", async ({
+    page,
+  }) => {
+    await open(page)
+    const bar = page.getByRole('img', { name: /^Satisfação: / })
+    await expect(bar).toBeVisible()
+    // Wider content than the frame means the end of the unexplained part is
+    // clipped by the rounded border.
+    const { content, frame } = await bar.evaluate((el) => ({
+      content: el.scrollWidth,
+      frame: el.clientWidth,
+    }))
+    expect(content).toBe(frame)
+  })
+
   test("the outcome changes the shelves; Joel's bar only shows in satisfaction, collapsible", async ({
     page,
   }) => {
     await open(page)
     await tap(chip(page, 'Aparência'))
-    const joel = page.getByRole('img', {
-      name: /45% explicado pela relação, 5% pelo parceiro, 50% sem explicação/,
-    })
+    const joel = page.getByRole('img', { name: barLabel(BAR), exact: true })
     await expect(joel).toBeVisible()
     await tap(page.getByText('Antes: o parceiro explica pouco da satisfação'))
     await expect(joel).toBeHidden()
@@ -209,12 +231,12 @@ test.describe('/prioridades', () => {
     await expect(income).not.toContainText('Homens tendem')
   })
 
-  test('says no study is Brazilian and brings the B1 Guide block', async ({
+  test('says only one study includes Brazil and brings the B1 Guide block', async ({
     page,
   }) => {
     await open(page)
     await expect(page.getByRole('note')).toContainText(
-      'Nenhum destes estudos é brasileiro',
+      'Só um destes estudos inclui o Brasil',
     )
     await expect(page.getByRole('note')).toContainText('casais homem-mulher')
     const fromGuide = page.getByRole('region', { name: 'Do Guia' })
@@ -299,7 +321,7 @@ test.describe('B1 Guide card', () => {
     const card = page.getByRole('region', {
       name: 'Onde ficam as suas prioridades?',
     })
-    await expect(card).toContainText('Seu topo 3 cabe na fatia de 5%:')
+    await expect(card).toContainText(cardTop3Lead(BASELINE))
     await expect(card.locator('[data-slot="topo3-no-cartao"] li')).toHaveText([
       /Química sexual.*pesa$/,
       /Ser parecido comigo.*quase nada$/,

@@ -32,11 +32,13 @@ const Cell = Schema.Struct({
 })
 export type PriorityCell = typeof Cell.Type
 
-/** The gap between what people state and what they choose. */
+/** The gap between what people state and what they choose, with the fact
+ * sheet that measures it: a bias is a claim too. */
 const Bias = Schema.Struct({
   all: Schema.optional(Text),
   man: Schema.optional(Text),
   woman: Schema.optional(Text),
+  fact_sheet: Slug,
 })
 
 const Trait = Schema.Struct({
@@ -49,12 +51,25 @@ const Trait = Schema.Struct({
 })
 export type Trait = typeof Trait.Type
 
-/** The Joel 2020 bar: where satisfaction comes from, in percent. */
+const PercentOfVariance = Schema.Finite.check(
+  Schema.isBetween(
+    { minimum: 0, maximum: 100 },
+    { message: 'percentage from 0 to 100' },
+  ),
+)
+/** A measured range, in percent, as the fact sheet gives it. */
+const Range = Schema.Struct({ min: PercentOfVariance, max: PercentOfVariance })
+export type PercentRange = typeof Range.Type
+
+/** The Joel 2020 bar: where satisfaction comes from, in percent. The
+ * relationship and the unexplained share split the whole; what the partner
+ * adds beyond the relationship is a measured range, at the start of the
+ * studies and at their end, not a slice of its own. */
 const ExplainedSatisfaction = Schema.Struct({
   fact_sheet: Slug,
   relationship: Percent,
-  partner: Percent,
   unexplained: Percent,
+  partner_added: Schema.Struct({ baseline: Range, follow_up: Range }),
 })
 export type ExplainedSatisfaction = typeof ExplainedSatisfaction.Type
 
@@ -129,15 +144,26 @@ export function readPriorities(
   const { explained_satisfaction: bar, traits } = parsed.value
 
   const errors: Problem[] = []
-  const sum = bar.relationship + bar.partner + bar.unexplained
+  const sum = bar.relationship + bar.unexplained
   if (sum !== 100)
     errors.push(
       problem(
         file,
-        `relationship, partner and unexplained add up to ${sum}%, not 100%`,
+        `relationship and unexplained add up to ${sum}%, not 100%`,
         'explained_satisfaction',
       ),
     )
+  for (const moment of ['baseline', 'follow_up'] as const) {
+    const { min, max } = bar.partner_added[moment]
+    if (min > max)
+      errors.push(
+        problem(
+          file,
+          `min ${min}% is above max ${max}%`,
+          `explained_satisfaction.partner_added.${moment}`,
+        ),
+      )
+  }
   const fromBar = dataFactSheetProblem(
     file,
     'explained_satisfaction.fact_sheet',
@@ -176,6 +202,15 @@ export function readPriorities(
         factSheets,
       )
       if (fromCell) errors.push(fromCell)
+    }
+    if (trait.bias) {
+      const fromBias = dataFactSheetProblem(
+        file,
+        `traits.${i}.bias.fact_sheet`,
+        trait.bias.fact_sheet,
+        factSheets,
+      )
+      if (fromBias) errors.push(fromBias)
     }
   })
 
