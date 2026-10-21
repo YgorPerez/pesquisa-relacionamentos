@@ -47,7 +47,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Com dados do Brasil
 
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
-- [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ⬜ · fraca
+- [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns.md): Pesquisa Nacional de Saúde · ✅ · moderada
 - [IBGE 2022](studies/ibge-2022-censo-amostra.md): Censo Demográfico, microdados da amostra · ✅ · forte
@@ -55,9 +55,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ⬜ · moderada
-- [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): apps de relacionamento no Brasil · ⬜ · moderada
-- [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · ⬜ · fraca
-- [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · ⬜ · fraca
+- [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
+- [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · 🟡 · fraca
+- [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · 🟡 · fraca
 
 ### Outros países
 
