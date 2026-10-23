@@ -1,5 +1,7 @@
 # Matt Pocock's skills are vendored for Codex
 
+Superseded by ADR 0041 on 2026-10-23.
+
 Claude Code installs the skills from [`mattpocock/skills`](https://github.com/mattpocock/skills) as a plugin (`.claude/settings.json`). Codex and the other harnesses do not read Claude Code plugins, and a Codex agent was working here without `tdd`, `code-review` or `grilling`. Festival dos Macacos solved this with a copy in `.agents/skills/` and `skills-lock.json`, managed by the [`skills`](https://skills.sh) CLI.
 
 ## Decision

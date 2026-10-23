@@ -135,6 +135,6 @@ Para o usuário abrir um protótipo no celular, `scripts/remote-preview.sh` publ
 
 Single-context: `GLOSSARY.md` e `docs/adr/` na raiz. Ver `docs/agents/domain.md`.
 
-### Skills vendorizadas
+### Skills do mattpocock
 
-O Claude Code instala as skills do [`mattpocock/skills`](https://github.com/mattpocock/skills) como plugin (`.claude/settings.json`). Para o Codex e outros harnesses, `.agents/skills/` guarda 27 delas na mesma versão, com o hash de cada uma em `skills-lock.json` (ADR 0015). Não as edite à mão: `npx skills update` sobrescreve. Antes de acrescentar ou atualizar uma, leia `.agents/skills/NOTICE.md`; o que é deste repositório vai para `docs/agents/`.
+O Claude Code instala as skills do [`mattpocock/skills`](https://github.com/mattpocock/skills) como plugin (`.claude/settings.json`). O repositório não guarda mais uma cópia delas (ADR 0041): cada harness usa as skills instaladas na máquina do usuário.
