@@ -17,10 +17,10 @@ findings:
   - text: Prever quem ficaria mais ou menos satisfeito com o tempo não deu certo, porque nenhuma análise explicou mais de 5% da mudança. Os casais foram acompanhados por 14 meses em média.
     fact_sheets: [joel-2020-machine-learning-43-datasets]
     period: publicado em 2020
-  - text: Entre os traços de personalidade, a amabilidade (ser gentil) entrou como preditor útil em 54% das bases, e a conscienciosidade (ser responsável) em 43%. Isso conta quantas vezes o traço ajudou a prever, não quanto ele pesa.
+  - text: Entre os traços de personalidade, a amabilidade (ser gentil) ajudou a prever em 54% das vezes em que foi testada, e a conscienciosidade (ser responsável) em 43%. A conta junta o traço da própria pessoa e o do parceiro, e diz quantas vezes o traço ajudou, não quanto ele pesa.
     fact_sheets: [joel-2020-machine-learning-43-datasets]
     period: publicado em 2020
-  - text: O ideal de parceiro de cada um, a lista do que a pessoa espera de alguém, entrou como preditor útil em só 10% das bases.
+  - text: O ideal de parceiro de cada um, a lista do que a pessoa espera de alguém, ajudou a prever em só 10% das vezes em que foi testado.
     fact_sheets: [joel-2020-machine-learning-43-datasets]
     period: publicado em 2020
 tips: [como-a-relacao-funciona, sinais-de-alerta-na-briga]
@@ -34,7 +34,7 @@ calculator: priorities
 seo: { title: 'Que características do parceiro preveem uma boa relação?' }
 ---
 
-Quem o parceiro é explica pouco, e como a relação funciona explica muito. Em 43 estudos com 11 mil casais, a forma como cada um via a própria relação explicou ==45% da satisfação==, e as características do parceiro, 5% [@joel-2020-machine-learning-43-datasets]. O que mais pesou foi construído a dois: sentir o compromisso do outro, apreciação, satisfação sexual e pouco conflito. Nenhum desses estudos é brasileiro.
+Quem o parceiro é explica pouco, e como a relação funciona explica muito. Em 43 estudos com 11 mil casais, a forma como cada um via a própria relação explicou ==45% das diferenças de satisfação== no começo dos estudos, e as características do parceiro, 5% [@joel-2020-machine-learning-43-datasets]. O que mais pesou foi sentir o compromisso do outro, apreciação, satisfação sexual e pouco conflito. Nenhum desses estudos é brasileiro.
 
 ## Varia conforme o Perfil?
 
@@ -47,4 +47,4 @@ Mais da metade dos casais veio de um programa americano que recrutou de propósi
 - Quase tudo é o que cada um respondeu sobre si e sobre a relação, no mesmo questionário. Isso tende a inflar a ligação entre como a pessoa vê a relação e quanto ela diz estar satisfeita.
 - Compromisso percebido e apreciação não são coisas que se vejam antes de a relação começar. O estudo diz o que prevê a satisfação dentro de uma relação, não como escolher alguém.
 - Os estudos são todos de países ocidentais: EUA, Canadá, Suíça, Nova Zelândia, Holanda e Israel. Não há dado brasileiro.
-- Ainda não dá para dizer quanto pesam a estabilidade emocional, a gentileza e a responsabilidade do parceiro. Os dois estudos que medem isso, e a meta-análise sobre o que prevê o fim de um namoro, só foram lidos pelo resumo. Até a leitura completa, este Guia não as cita.
+- Ainda não dá para dizer quanto pesam a estabilidade emocional, a gentileza e a responsabilidade do parceiro. Os dois estudos que medem isso, e a meta-análise sobre o que prevê o fim de um namoro, só foram lidos pelo resumo. Até a leitura completa, este Guia não cita esses estudos.
