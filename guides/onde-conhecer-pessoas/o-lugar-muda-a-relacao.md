@@ -10,11 +10,11 @@ findings:
     fact_sheets: [rosenfeld-2017-marriage-choice-couplehood]
   - text: Num painel que acompanhou casais de 18 a 48 anos, os casais que começaram online casaram mais. Valeu para os homens de qualquer escolaridade e, com mais força, para as mulheres com ensino superior. A diferença diminuiu quando a autora levou em conta se o casal pensava parecido sobre casamento.
     fact_sheets: [potarca-2021-alemanha-pairfam]
-  - text: Numa pesquisa oficial, quem conheceu o parceiro por app estava tão satisfeito com a relação quanto quem o conheceu fora da internet. Eram só 104 casais de app.
+  - text: Numa pesquisa oficial, não houve diferença clara de satisfação com a relação entre quem conheceu o parceiro por app e quem o conheceu fora da internet. Eram só 104 casais de app.
     fact_sheets: [potarca-2020-suica-apps]
   - text: Em 50 países, quem conheceu o parceiro online deu nota um pouco menor à relação, 4,20 contra 4,28 numa escala de 1 a 5. O artigo publica um efeito maior, mas as médias dele e os dados públicos mostram uma diferença pequena.
     fact_sheets: [kowal-2025-50-paises]
-  - text: No recorte brasileiro desse estudo, a satisfação de quem se conheceu online e de quem se conheceu fora dela ficou quase igual, 4,48 contra 4,50. É uma conta nossa, sem os controles do artigo e com só 23 pessoas no grupo online.
+  - text: No recorte brasileiro desse estudo, a satisfação de quem se conheceu online e de quem se conheceu fora da internet ficou quase igual, 4,48 contra 4,50. É uma conta nossa, sem os controles do artigo e com só 23 pessoas no grupo online.
     fact_sheets: [kowal-2025-50-paises]
     country: Brasil
     period: '2024'
@@ -44,7 +44,7 @@ myths:
 related: [onde-os-casais-se-conhecem, app-ou-presencial]
 ---
 
-Pouco ou nada, pelo que se mediu até hoje. Nos EUA, casais que se conheceram online terminaram no mesmo ritmo dos outros, ==7,0% contra 7,3% ao ano== [@rosenfeld-2017-marriage-choice-couplehood], e na Alemanha casaram tanto ou mais [@potarca-2021-alemanha-pairfam]. Um estudo de 50 países achou satisfação um pouco menor online [@kowal-2025-50-paises]: a evidência diverge, e os estudos que acompanham casais por anos têm o desenho melhor. Não há estudo brasileiro sobre isso.
+Pouco ou nada, pelo que se mediu até hoje. Nos EUA, casais que se conheceram online terminaram no mesmo ritmo dos outros, ==7,0% contra 7,3% ao ano== [@rosenfeld-2017-marriage-choice-couplehood], e na Alemanha casaram tanto ou mais [@potarca-2021-alemanha-pairfam]. Um estudo de 50 países achou satisfação um pouco menor online [@kowal-2025-50-paises]: a evidência diverge. Para término e casamento, os estudos que acompanham casais por anos têm o desenho melhor; na satisfação, as diferenças achadas são pequenas. Não há estudo brasileiro sobre isso.
 
 ## Varia conforme o Perfil?
 
@@ -59,6 +59,6 @@ Varia um pouco com o gênero, a escolaridade e a idade.
 
 - Nenhum estudo sorteou onde cada casal ia se conhecer, então nenhum mostra causa. Quem usa site ou app difere de quem não usa, e os autores dizem que isso pode explicar as diferenças [@rosenfeld-2017-marriage-choice-couplehood] [@kowal-2025-50-paises].
 - O acompanhamento mais longo dos EUA parou em casais que se conheceram até 2009, antes do Tinder [@rosenfeld-2017-marriage-choice-couplehood].
-- Estudos de um momento só, como o de 50 países, a Suíça e a eHarmony, veem apenas os casais que ainda estavam juntos [@potarca-2020-suica-apps] [@cacioppo-2013-satisfacao-por-local].
+- Estudos de um momento só, como o de 50 países, a Suíça e a eHarmony, veem, na satisfação, só os casais que continuavam juntos [@kowal-2025-50-paises] [@potarca-2020-suica-apps] [@cacioppo-2013-satisfacao-por-local].
 - Quase todos juntam app, site e rede social num "online" só. Dos estudos deste Guia, só o da Suíça separa o app do site [@potarca-2020-suica-apps].
 - No Brasil, o registro civil não pergunta como o casal se conheceu, então não dá para comparar divórcios de quem se conheceu online e fora da internet [@ibge-2024-registro-civil].

@@ -20,7 +20,7 @@ findings:
     period: '2024'
   - text: Num painel online de internautas, 23% de quem estava num relacionamento conheceu o parceiro pela internet. Foram 17% em sites e redes sociais e 6% em apps de paquera.
     fact_sheets: [opinionbox-2017-relacionamentos-brasil]
-  - text: Na única amostra nacional brasileira com uma pergunta sobre o tema, 19% das pessoas de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido se encontrar com essa pessoa. A pesquisa não perguntou onde o casal atual se conheceu.
+  - text: Na única amostra nacional brasileira que achamos com uma pergunta sobre o tema, 19% das pessoas de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido se encontrar com essa pessoa. A pesquisa não perguntou onde o casal atual se conheceu.
     fact_sheets: [datafolha-2009-sexualidade-brasileiros]
 myths:
   - claim: A maioria dos casais hoje se conhece por app.
@@ -32,20 +32,20 @@ myths:
 related: [app-ou-presencial, o-lugar-muda-a-relacao]
 ---
 
-Nos EUA, conhecer-se online virou o jeito mais comum de um casal começar: foram ==39% dos casais héteros formados em 2017== [@rosenfeld-2019-disintermediating-friends]. É o mais comum, não a maioria. Na França e no Reino Unido, amostras sorteadas com dados até 2013 acharam perto de um casal em cada dez [@bergstrom-2016-epic-franca] [@lampard-2020-natsal-reino-unido]. No Brasil, ninguém fez uma pesquisa representativa sobre onde os casais se conhecem; os painéis online dão cerca de um em cada cinco [@opinionbox-2017-relacionamentos-brasil] [@kowal-2025-50-paises].
+Nos EUA, conhecer-se online virou o jeito mais comum de um casal começar: foram ==39% dos casais héteros formados em 2017== [@rosenfeld-2019-disintermediating-friends]. É o mais comum, não a maioria. Na França e no Reino Unido, amostras sorteadas com dados até 2013 acharam perto de um casal em cada dez [@bergstrom-2016-epic-franca] [@lampard-2020-natsal-reino-unido]. No Brasil, não achamos nenhuma pesquisa representativa sobre onde os casais se conhecem; os painéis online dão cerca de um em cada cinco [@opinionbox-2017-relacionamentos-brasil] [@kowal-2025-50-paises].
 
 ## Varia conforme o Perfil?
 
 Varia com a idade e com quem você procura.
 
 - **Idade.** Nos EUA, entre os adultos com parceiro com menos de 30 anos, a fatia que conheceu o parceiro em site ou app dobra: 20% contra 10% de todas as idades [@pew-2023-2020-online-dating]. No Reino Unido, quem passou a morar junto mais velho tinha mais chance de ter conhecido o parceiro online, e quem ainda estudava em tempo integral, bem menos [@lampard-2020-natsal-reino-unido].
-- **Casais do mesmo sexo.** O online pesa mais. Na França, uma pessoa em cada três que conheceu o parceiro do mesmo sexo entre 2005 e 2013 o conheceu num site [@bergstrom-2016-epic-franca]. Nos EUA, 24% dos adultos lésbicas, gays e bissexuais com parceiro o conheceram em site ou app, contra 9% dos héteros [@pew-2023-2020-online-dating]. O número de 39% vale só para casais héteros: a versão publicada do estudo não dá o dos casais do mesmo sexo [@rosenfeld-2019-disintermediating-friends].
+- **Lésbicas, gays e bissexuais.** O online pesa mais. Na França, uma pessoa em cada três que conheceu o parceiro do mesmo sexo entre 2005 e 2013 o conheceu num site [@bergstrom-2016-epic-franca]. Nos EUA, 24% dos adultos lésbicas, gays e bissexuais com parceiro o conheceram em site ou app, contra 9% dos héteros [@pew-2023-2020-online-dating]. O número de 39% vale só para casais héteros: a versão publicada do estudo não dá o dos casais do mesmo sexo [@rosenfeld-2019-disintermediating-friends].
 - **Gênero.** No estudo de 50 países, ter conhecido o parceiro online não variou com o gênero [@kowal-2025-50-paises].
 
 ## Limitações
 
 - Os números de casais recém-formados com amostra sorteada param em 2017 nos EUA e em 2013 na Europa [@rosenfeld-2019-disintermediating-friends] [@bergstrom-2016-epic-franca] [@lampard-2020-natsal-reino-unido]. Depois disso, há painéis online e a contagem de todos os casais que existem.
-- "Online" quase nunca separa app, site de namoro e rede social. Dos estudos deste Guia, só o painel brasileiro de 2017 separou os apps, com 6% [@opinionbox-2017-relacionamentos-brasil].
+- "Online" quase nunca separa app, site de namoro e rede social. Dos estudos deste Guia, só o painel brasileiro de 2017 dá a fatia dos apps (6%) [@opinionbox-2017-relacionamentos-brasil].
 - Painel online com cotas tende a dar o dobro do uso de sites que uma amostra sorteada: na França, 34% contra 16% a 18% [@bergstrom-2016-epic-franca]. Os números brasileiros vêm de painéis assim e devem estar inflados [@opinionbox-2017-relacionamentos-brasil].
 - Os 39% e os 10% medem coisas diferentes. Os 39% são casais que se formaram num ano; os 10% contam todos os casais que existem, inclusive os que se conheceram antes da internet [@pew-2023-2020-online-dating].
 - Quem conta como conheceu o parceiro faz isso anos depois, de memória [@rosenfeld-2019-disintermediating-friends].

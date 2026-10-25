@@ -13,11 +13,11 @@ findings:
     applies_to: { couple: same-sex }
   - text: A idade ao casar subiu de 2004 para cá. Em 2004, homens e mulheres solteiros se casavam em média aos 27,8 e aos 24,9 anos; em 2014, aos 29,8 e aos 27,1.
     fact_sheets: [ibge-2024-registro-civil]
-  - text: Morar junto vem antes do papel. A idade média à primeira união, com ou sem casamento, foi de 26,3 anos para os homens e de 23,6 para as mulheres em 2022.
+  - text: A primeira união, com ou sem casamento, sai mais cedo. A idade média a ela foi de 26,3 anos para os homens e de 23,6 para as mulheres em 2022.
     fact_sheets: [ibge-2022-censo-unioes]
   - text: Entre as pessoas de 20 a 24 anos que viviam com alguém, 75,6% estavam em união sem casamento. De 25 a 29 anos, 62,2%.
     fact_sheets: [ibge-2022-censo-unioes]
-  - text: Casar com 40 anos ou mais ficou bem mais comum. Das mulheres que se casaram com homens em 2024, 25,3% tinham 40 anos ou mais; em 2004 eram 8,5%. Entre os homens, a fatia foi de 13,2% para 31,3%.
+  - text: Casar com 40 anos ou mais ficou bem mais comum. Das mulheres que se casaram com homens em 2024, contando quem casava de novo, 25,3% tinham 40 anos ou mais; em 2004 eram 8,5%. Entre os homens, a fatia foi de 13,2% para 31,3%.
     fact_sheets: [ibge-2024-registro-civil]
   - text: Em 31,1% dos casamentos de 2024, pelo menos um dos dois já tinha sido casado antes e estava divorciado ou viúvo. Em 2004 eram 13,5%.
     fact_sheets: [ibge-2024-registro-civil]
@@ -26,7 +26,7 @@ findings:
 related: [onde-os-casais-se-conhecem, app-ou-presencial]
 ---
 
-No Brasil, quem se casa no civil pela primeira vez tem em média ==31,5 anos, se for homem, e 29,3, se for mulher== [@ibge-2024-registro-civil]. Morar junto vem antes: a primeira união, com ou sem papel, sai em média aos 26,3 anos para eles e aos 23,6 para elas [@ibge-2022-censo-unioes]. A idade ao casar subiu de 2004 para cá, e um quarto das mulheres que se casaram com homens em 2024 tinha 40 anos ou mais [@ibge-2024-registro-civil].
+No Brasil, quem se casa no civil pela primeira vez tem em média ==31,5 anos, se for homem, e 29,3, se for mulher== [@ibge-2024-registro-civil]. A primeira união, com ou sem papel, sai mais cedo: em média aos 26,3 anos para eles e aos 23,6 para elas [@ibge-2022-censo-unioes]. A idade ao casar subiu de 2004 para cá, e um quarto das mulheres que se casaram com homens em 2024, contando quem casava de novo, tinha 40 anos ou mais [@ibge-2024-registro-civil].
 
 ## Varia conforme o Perfil?
 

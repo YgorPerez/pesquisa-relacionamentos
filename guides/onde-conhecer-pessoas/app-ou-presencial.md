@@ -28,19 +28,19 @@ myths:
 related: [onde-os-casais-se-conhecem, o-lugar-muda-a-relacao]
 ---
 
-Nenhum estudo mediu a chance de cada caminho dar em namoro, então a resposta depende de quem você é. Nos EUA, ==20% dos adultos com parceiro com menos de 30 anos== o conheceram em site ou app [@pew-2023-2020-online-dating]; os outros 80%, fora deles. Para homens, o app tende a ser mais difícil: eles dizem receber poucas mensagens [@pew-2023-2020-online-dating], e no Tinder brasileiro uma estimativa fraca aponta muito mais homens que mulheres [@startio-tinder-brasil-genero]. Não há dado brasileiro sobre onde os casais se formam.
+Nenhum estudo mediu a chance de cada caminho dar em namoro. Nos EUA, ==20% dos adultos com parceiro com menos de 30 anos== o conheceram em site ou app [@pew-2023-2020-online-dating]; os outros 80%, fora deles. Lá, os homens que usam app contam que recebem mensagens de menos, e as mulheres, de mais [@pew-2023-2020-online-dating]; no Tinder brasileiro, uma estimativa fraca aponta muito mais homens que mulheres [@startio-tinder-brasil-genero]. Não há pesquisa representativa brasileira sobre onde os casais se formam.
 
 ## Varia conforme o Perfil?
 
 Varia bastante com o gênero, com quem você procura e com a idade.
 
-- **Homens e mulheres.** Nos EUA, os homens contam que recebem mensagens de menos, e as mulheres, de mais [@pew-2023-2020-online-dating]. Para as mulheres, o app também traz mais assédio: 56% das usuárias com menos de 50 anos receberam conteúdo sexual que não pediram [@pew-2023-2020-online-dating].
+- **Homens e mulheres.** Nos EUA, os homens contam que recebem mensagens de menos, e as mulheres, de mais. Mesmo assim, mais homens que mulheres dizem ter tido uma experiência boa: 57% contra 48% [@pew-2023-2020-online-dating]. Para as mulheres, há também o assédio: 56% das usuárias com menos de 50 anos receberam conteúdo sexual que não pediram [@pew-2023-2020-online-dating].
 - **Lésbicas, gays e bissexuais.** O app pesa mais. Nos EUA, 51% dos adultos LGB já usaram site ou app de namoro, contra 28% dos héteros, e 24% dos LGB com parceiro o conheceram assim, contra 9% dos héteros [@pew-2023-2020-online-dating].
-- **Idade.** Nos EUA, quem tem menos de 30 anos conheceu o parceiro online duas vezes mais que a média [@pew-2023-2020-online-dating]. No Reino Unido, quem estudava em tempo integral tinha bem menos chance de ter conhecido o parceiro online [@lampard-2020-natsal-reino-unido].
+- **Idade.** Nos EUA, quem tem menos de 30 anos conheceu o parceiro em site ou app duas vezes mais que a média [@pew-2023-2020-online-dating]. No Reino Unido, quem estudava em tempo integral tinha bem menos chance de ter conhecido o parceiro online [@lampard-2020-natsal-reino-unido].
 
 ## Limitações
 
 - Nenhum estudo compara a chance de achar alguém por hora gasta no app e por hora gasta numa atividade presencial. O que existe conta onde os casais que deram certo se conheceram, e o que os usuários dizem do app.
 - As pesquisas dos EUA são o que cada um conta, não uma contagem das mensagens [@pew-2023-2020-online-dating].
 - O teste do Tinder usou 14 perfis, em Londres e Nova York, com dados de 2016 ou antes [@tyson-2016-tinder].
-- No Brasil só há um painel sobre encontros por app, sem pergunta sobre namoro [@mobiletime-2025-apps-relacionamento-brasil], e uma estimativa comercial do gênero dos usuários do Tinder [@startio-tinder-brasil-genero].
+- Sobre apps no Brasil, este Guia só tem um painel sobre encontros por app, sem pergunta sobre namoro [@mobiletime-2025-apps-relacionamento-brasil], e uma estimativa comercial do gênero dos usuários do Tinder [@startio-tinder-brasil-genero].
