@@ -12,7 +12,7 @@ O `git push`/`fetch` deste repo já está fixado na conta YgorPerez (credential 
 
 ### Wayfinding
 
-- **Mapa:** issue com o label `wayfinder:map` ("Mapa: MVP do site de evidências sobre relacionamentos").
+- **Mapa:** issue aberta com o label `wayfinder:map`, hoje o #136 ("Map: the full library on the site (after the MVP)"). O do MVP, #1, está fechado.
 - **Tickets:** sub-issues do mapa (`gh issue create --parent <mapa>`), com o label `wayfinder:<research|prototype|grilling|task>`.
 - **Bloqueio:** dependências nativas do GitHub: `gh api --method POST repos/YgorPerez/pesquisa-relacionamentos/issues/<filho>/dependencies/blocked_by -F issue_id=<database id do bloqueador>` (database id: `gh api repos/YgorPerez/pesquisa-relacionamentos/issues/<n> --jq .id`).
 - **Fronteira:** `gh api repos/YgorPerez/pesquisa-relacionamentos/issues/<mapa>/sub_issues --jq '.[] | select(.state=="open" and .issue_dependencies_summary.blocked_by==0 and (.assignees|length)==0) | "#\(.number) \(.title)"'`
