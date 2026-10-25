@@ -17,7 +17,7 @@ findings:
     fact_sheets: [francis-tan-2015-gastos-casamento-divorcio]
 myths:
   - claim: 10 anos de diferença de idade = 39% mais divórcio.
-    why_not: O artigo de 2015 sobre casamento e divórcio nos EUA nunca diz 39%. Os 39% esticam para 10 anos um risco 3,4% maior por ano de diferença, que vem só dos casados desde 2008, uma parte de um questionário online fraco. E o artigo não diz se contou a diferença com sinal ou em valor absoluto.
+    why_not: O artigo de 2015 sobre casamento e divórcio nos EUA nunca diz 39%. O número bate com um risco 3,4% maior por ano de diferença acumulado por 10 anos (1,034 elevado a 10 dá cerca de 1,40), e os "18% com 5 anos" saem da mesma conta. Esse 3,4% vem só dos casados desde 2008, uma parte de um questionário online fraco; na amostra inteira, foram 2,2% por ano. E o artigo não diz se contou a diferença com sinal ou em valor absoluto.
     fact_sheets: [francis-tan-2015-gastos-casamento-divorcio]
 related:
   [

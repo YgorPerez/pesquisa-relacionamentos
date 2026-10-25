@@ -2,7 +2,13 @@
 question: Meus Requisitos são ==exigentes== demais?
 confidence: moderate
 findings:
-  - text: Um exemplo. No estado de São Paulo, 747.507 mulheres de 25 a 29 anos não moravam com companheiro(a) em 2022.
+  - text: No Brasil, 3.309.733 mulheres de 25 a 29 anos não moravam com companheiro(a) em 2022, 42,4% das mulheres dessa idade.
+    fact_sheets: [ibge-2022-censo-amostra]
+    applies_to: { seeks: [women] }
+  - text: No Brasil, 3.939.138 homens de 25 a 29 anos não moravam com companheiro(a) em 2022, 51,9% dos homens dessa idade.
+    fact_sheets: [ibge-2022-censo-amostra]
+    applies_to: { seeks: [men] }
+  - text: Num estado só, o grupo encolhe. No estado de São Paulo, 747.507 mulheres de 25 a 29 anos não moravam com companheiro(a) em 2022.
     fact_sheets: [ibge-2022-censo-amostra]
     applies_to: { seeks: [women] }
   - text: Entre os brasileiros de 25 a 29 anos, cerca de um terço vivia em união sem casamento (31,6% dos homens e 34,3% das mulheres). No papel são solteiros, mas moram com alguém.
@@ -31,7 +37,7 @@ related:
 calculator: possible-group
 ---
 
-Nenhum estudo do acervo diz quantos Requisitos é demais, mas dá para ver quanto cada um custa. Pelo Censo 2022, no estado de São Paulo havia ==cerca de 750 mil mulheres== de 25 a 29 anos que não moravam com companheiro(a) [@ibge-2022-censo-amostra], e cada Requisito a mais corta esse grupo. Do outro lado, bater com a própria lista pesou pouco em quem as pessoas gostam [@eastwick-2024-preferencias-43-paises].
+Nenhum estudo do acervo diz quantos Requisitos é demais, mas dá para ver quanto cada um custa. Pelo Censo 2022, no Brasil havia ==3,9 milhões de homens e 3,3 milhões de mulheres== de 25 a 29 anos que não moravam com companheiro(a) [@ibge-2022-censo-amostra], e cada Requisito a mais corta esse grupo. Do outro lado, bater com a própria lista pesou pouco em quem as pessoas gostam [@eastwick-2024-preferencias-43-paises].
 
 ## Varia conforme o Perfil?
 

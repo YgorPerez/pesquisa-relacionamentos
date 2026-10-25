@@ -2,7 +2,7 @@
 reference: "Eastwick PW, Sparks J, Finkel EJ, Meza EM, Adamkovič M, et al. (mais de 100 coautores; Psychological Science Accelerator). *A worldwide test of the predictive validity of ideal partner preference matching*. Journal of Personality and Social Psychology 128(1):123–146, 2025 (publicado online em 2024). A Fonte local é o manuscrito aceito de 3/7/2024, com paginação própria e o material suplementar no fim. Texto completo aberto: https://storre.stir.ac.uk/bitstream/1893/36463/1/PreferenceMatching_FinalSubmission.pdf"
 link: https://doi.org/10.1037/pspp0000524
 status: verified
-verified_on: 2026-10-21
+verified_on: 2026-10-25
 strength: strong
 strength_reason: "Registered report com N = 10.358 de 60 amostras em 43 países e 22 idiomas, forte para a pergunta \"o encaixe com o ideal prevê a avaliação do parceiro?\"; mas é transversal e os traços do parceiro são os que o próprio participante percebe, o que infla as associações."
 countries: [Argentina, Austrália, Bósnia e Herzegovina, Brasil, Canadá, Chile, China, Colômbia, Croácia, República Tcheca, República Dominicana, Equador, El Salvador, Inglaterra, Escócia, Finlândia, França, Alemanha, Gana, Grécia, Guatemala, Hong Kong, Hungria, Índia, Indonésia, Japão, Líbano, Malásia, México, Nigéria, Macedônia do Norte, Polônia, Portugal, Rússia, Sérvia, Eslovênia, Coreia do Sul, Espanha, Tailândia, Filipinas, Turquia, Emirados Árabes Unidos, EUA]
@@ -25,11 +25,14 @@ Se as pessoas avaliam melhor quem se encaixa nos *seus* ideais. Cada participant
 
 ## Achados
 
-| Medida | Valor | Onde | Trecho |
-|---|---|---|---|
+| Medida | Valor | Onde | Trecho | Cálculo |
+|---|---|---|---|---|
 | Amostra | N = 10.358, de 60 amostras em 43 países | Method, Participants (p. 15) | "Our final sample consisted of N = 10,358 participants (after planned exclusions; see "Data Processing" for details) from 60 samples and 43 different countries" |
 | Gênero | 66,0% mulheres; 32,8% homens | Method, Participants (p. 15) | "N = 6,833 (66.0%) were women, N = 3,394 (32.8%) were men" |
 | Idade média | 28,5 anos | Method, Participants (p. 15) | "Participants were M = 28.5 years old (SD = 11.7" |
+| Amostra brasileira da Universidade Federal de Sergipe, em português | 69 pessoas | Tabela S3 (material suplementar), coluna N, entre Mexico (72) e Indonesia (107) | "72 69 107" |
+| Amostra brasileira da University of Kansas, em português | 55 pessoas | Tabela S3 (material suplementar), coluna N, entre Nigeria (45) e China (202) | "45 55 202" |
+| As duas amostras brasileiras somadas, e a parte delas no N final | 124 pessoas, 1,2% do N | Tabela S3 (material suplementar) | "72 69 107" | `scripts/calculations/eastwick-2024-preferencias-43-paises.ts` |
 | Coleta | fevereiro a novembro de 2023 | Method, Procedure (p. 16) | "Data collection began on February 1, 2023 (after the stage 1 registered report was approved) and closed on November 10, 2023." |
 | Em relação | 5.544, com 6,3 anos de relação em média | Method, Data Processing (p. 21) | "which yielded N = 5,544 participants in the "partnered" category (with an average relationship length of M = 6.3 years" |
 | Solteiros | 4.152 | Method, Data Processing (p. 21) | "and N = 4,152 participants in the "single" category" |
@@ -65,6 +68,7 @@ Se as pessoas avaliam melhor quem se encaixa nos *seus* ideais. Cada participant
 - Para os solteiros, o alvo é a pessoa com quem mais querem ter uma relação, não um parceiro: a avaliação mede desejo, não uma relação vivida.
 - Os 35 atributos não esgotam o que se pode querer. A maioria dos participantes tem pelo menos ensino médio e escolhe o parceiro com liberdade.
 - 66% da amostra são mulheres, e 22 das 60 amostras são só de estudantes.
+- O Brasil entra com duas amostras, 124 pessoas, cerca de 1% do N. O artigo não dá resultado por país, e o efeito quase não variou entre as 60 amostras; dizer "Brasil incluído" não quer dizer que haja um resultado brasileiro.
 - A Tabela S3 põe a amostra da University of Presov, respondida em eslovaco, na "Slovenia". Prešov fica na Eslováquia; a lista de países desta Ficha segue a tabela.
 - Manuscrito aceito: os números podem ter pequenas diferenças da versão publicada.
 

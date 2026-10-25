@@ -34,7 +34,7 @@ Só em parte. Num estudo em 43 países, Brasil incluído, bater traço a traço 
 
 No que dizem querer, homens dão mais peso à aparência e mulheres, à renda [@eastwick-2008-preferencias-speed-dating]. No que de fato pesa, essa diferença não aparece [@eastwick-2024-preferencias-43-paises].
 
-O Brasil está entre os 43 países do estudo, e o efeito quase não variou entre elas [@eastwick-2024-preferencias-43-paises]. O speed dating foi com universitários americanos de 19,6 anos em média, em encontros entre homens e mulheres [@eastwick-2008-preferencias-speed-dating]. A meta-análise com pessoas imaginadas e reais juntou só relatos de quem avaliava alguém do outro sexo [@eastwick-2014-meta-analise-preferencias]. Para quem procura alguém do mesmo sexo, nenhum dos três traz resultado separado.
+O Brasil entrou no estudo dos 43 países com duas amostras, 124 pessoas, cerca de 1% do total. O estudo não dá resultado por país, mas o efeito quase não variou entre as 60 amostras [@eastwick-2024-preferencias-43-paises]. O speed dating foi com universitários americanos de 19,6 anos em média, em encontros entre homens e mulheres [@eastwick-2008-preferencias-speed-dating]. A meta-análise com pessoas imaginadas e reais juntou só relatos de quem avaliava alguém do outro sexo [@eastwick-2014-meta-analise-preferencias]. Para quem procura alguém do mesmo sexo, nenhum dos três traz resultado separado.
 
 ## Limitações
 
