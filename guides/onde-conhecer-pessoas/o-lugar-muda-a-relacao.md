@@ -41,7 +41,7 @@ myths:
     why_not: Na Alemanha, casais que se conheceram online casaram tanto ou mais que os outros. Nos EUA, com dados de 2017, como o casal se conheceu não mudou o risco de término.
     fact_sheets:
       [potarca-2021-alemanha-pairfam, rosenfeld-2019-disintermediating-friends]
-related: [onde-os-casais-se-conhecem, app-ou-presencial]
+related: [onde-os-casais-se-conhecem, app-ou-presencial, o-que-preve-o-divorcio]
 ---
 
 Pouco ou nada, pelo que se mediu até hoje. Nos EUA, casais que se conheceram online terminaram no mesmo ritmo dos outros, ==7,0% contra 7,3% ao ano== [@rosenfeld-2017-marriage-choice-couplehood], e na Alemanha casaram tanto ou mais [@potarca-2021-alemanha-pairfam]. Um estudo de 50 países achou satisfação um pouco menor online [@kowal-2025-50-paises]: a evidência diverge. Para término e casamento, os estudos que acompanham casais por anos têm o desenho melhor; na satisfação, as diferenças achadas são pequenas. Não há estudo brasileiro sobre isso.
