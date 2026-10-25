@@ -67,6 +67,7 @@ findings:
     applies_to: { genders: [man] }
 related:
   [
+    vale-a-pena-sexo-casual,
     quantos-parceiros-antes-de-casar,
     com-que-idade-se-casa,
     como-se-proteger-de-ist,
