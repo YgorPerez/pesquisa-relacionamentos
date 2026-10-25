@@ -65,6 +65,15 @@ findings:
   - text: Entre casados americanos, 71% dos homens com uma pessoa só na vida diziam ter um casamento muito feliz, contra 65% dos que tiveram duas ou mais. A análise saiu num blog, sem revisão por pares.
     fact_sheets: [wolfinger-2018-parceiros-felicidade-conjugal]
     applies_to: { genders: [man] }
+myths:
+  - claim: Cada parceiro sexual gasta a ocitocina, e quem teve muitos perde a capacidade de criar vínculo.
+    why_not: Nenhum estudo em humanos mediu isso. A ideia vem de experimentos com ratos-do-campo, e os autores da revisão de referência escrevem que não há dado sólido de que o mecanismo seja o mesmo em pessoas. Nos próprios ratos-do-campo, machos que já tinham passado por nove parceiras seguidas ainda formaram vínculo com a décima. Em jovens seguidos por três anos, ter mais parceiros nos três meses antes de um questionário não mudou o apego no ano seguinte.
+    fact_sheets:
+      [
+        young-2004-neurobiologia-vinculo,
+        kenkel-2019-varios-pares-ratos-do-campo,
+        tucker-2022-apego-parceiros-sexuais,
+      ]
 related:
   [
     vale-a-pena-sexo-casual,
