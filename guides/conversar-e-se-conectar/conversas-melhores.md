@@ -36,7 +36,7 @@ Perguntar mais tem apoio em experimento nos EUA, e as perguntas que retomam o qu
 
 ## Varia conforme o Perfil?
 
-Os três estudos tinham homens e mulheres. As Fichas não registram resultado separado por gênero, nem por idade ou por quem você procura. Nas duplas que se revezavam em perguntas, cerca de 70% dos participantes eram mulheres, e as duplas eram mistas ou só de mulheres [@aron-1997-36-perguntas].
+Os três estudos tinham homens e mulheres. Nas duplas que se revezavam em perguntas, cerca de 70% dos participantes eram mulheres, e as duplas eram mistas ou só de mulheres. Ali, a proximidade que homens e mulheres das duplas mistas sentiram não diferiu, e as duplas mistas não diferiram das só de mulheres. Duplas só de homens apareceram em estudos preliminares e num estudo extra, e os autores contam que ficaram parecidas com as só de mulheres [@aron-1997-36-perguntas]. No speed dating, perguntar se associou a segundos encontros do mesmo jeito para homens e para mulheres; nos chats, o resultado não sai separado por gênero [@huang-2017-perguntas-de-continuidade]. A Ficha do trem não registra resultado por gênero [@epley-2014-conversar-com-estranhos]. Nenhum dos três separa por idade ou por quem você procura.
 
 Nenhum dos experimentos era um encontro romântico; o único dado romântico é o speed dating correlacional (ver Limitações). Nos chats, o objetivo era só "se conhecer" [@huang-2017-perguntas-de-continuidade]; no trem, conversa de trajeto [@epley-2014-conversar-com-estranhos].
 

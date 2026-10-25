@@ -36,6 +36,7 @@ Em chats de 15 minutos entre desconhecidos que deviam "se conhecer", os autores 
 | Parte das perguntas que eram de continuidade (Estudos 1 e 2A) | 40,51% | Classification Results (p. 438–439) | "Follow-up questions were the most common, comprising 40.51% of all questions" |
 | Tipo de pergunta que previu o gosto do parceiro | só a de continuidade | Classification Results (p. 439) | "We also find that follow-up questions alone predicted increased partner liking." |
 | Speed dating: amostra | cento e dez pessoas em três eventos | Estudo 3, Method (p. 440) | "One hundred ten men and women were gathered in three different speed-dating sessions." |
+| Speed dating: a relação entre perguntar e conseguir segundo encontro muda com o gênero? | não; foi parecida para homens e mulheres | Estudo 3, Results (p. 441) | "we found no interaction between gender and question-asking. That is, question-asking was similarly related to date success for both men and women." |
 | Speed dating: taxa de perguntas de continuidade e segundo encontro | 8% a mais de perguntas de continuidade ≈ um encontro a mais a cada 20 | Estudo 3, Discussion (p. 441) | "The regression estimates imply that an 8% difference in follow-up question rates in this sample is associated, on average, with success on one additional date over an evening of 20 speed dates." |
 
 O PDF do editor sai do `pdftotext` com o sinal de igual como "⫽" e o beta como "␤"; os Trechos copiam o texto extraído como ele sai.
@@ -46,6 +47,7 @@ O PDF do editor sai do `pdftotext` com o sinal de igual como "⫽" e o beta como
 - A única evidência num encontro romântico é o speed dating, que é correlacional: "Of course, one cannot interpret this relationship causally." Ao controlar o quanto cada pessoa já era desejada, o peso das perguntas cai (p. 441).
 - O efeito de continuidade não foi sorteado: os autores sortearam só o número de perguntas e classificaram o tipo depois.
 - Os autores supõem que o efeito tenha limite: "it may be the case that one can ask too many questions, annoying the conversation partner while not revealing sufficient information about oneself." Ninguém testou os extremos.
+- O resultado por gênero vem só do speed dating (Estudo 3), que é correlacional. O texto não traz o efeito do sorteio separado por gênero nos Estudos 1 e 2A.
 - Amostras americanas de laboratório e do MTurk, sem idade relatada no texto lido.
 - Francesca Gino, uma das autoras, teve outros artigos retratados por suspeita de fraude a partir de 2023. Não achei correção nem retratação deste (busca em 2026-10-20), e os dados estão abertos no OSF.
 

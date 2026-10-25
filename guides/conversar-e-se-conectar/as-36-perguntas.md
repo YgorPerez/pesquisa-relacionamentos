@@ -29,7 +29,7 @@ Aproximam por um tempo, mas nada no estudo mostra que fazem alguém se apaixonar
 
 ## Varia conforme o Perfil?
 
-Cerca de 70% dos participantes eram mulheres, em duplas mistas ou só de mulheres, [@aron-1997-36-perguntas]. A Ficha não registra resultado separado por gênero nem por quem você procura. Todos eram universitários.
+Cerca de 70% dos participantes eram mulheres, em duplas mistas ou só de mulheres. Nas duplas mistas, a proximidade que homens e mulheres sentiram não diferiu, e as duplas mistas não diferiram das só de mulheres. Os autores também testaram duplas só de homens, em estudos preliminares e num estudo extra, e contam que ficaram parecidas com as só de mulheres, sem dar os números [@aron-1997-36-perguntas]. Ninguém separou o resultado por quem você procura, e nenhuma dupla era de encontro romântico. Todos eram universitários.
 
 ## Limitações
 
