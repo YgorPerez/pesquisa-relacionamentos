@@ -23,7 +23,8 @@ findings:
     fact_sheets: [ibge-2024-registro-civil]
   - text: Casa-se menos que antes da pandemia. Foram 948.925 casamentos civis em 2024, contra uma média de 1.076.280 por ano de 2015 a 2019.
     fact_sheets: [ibge-2024-registro-civil]
-related: [onde-os-casais-se-conhecem, app-ou-presencial, mais-parceiros-faz-mal]
+related:
+  [onde-os-casais-se-conhecem, casar-cedo-e-divorcio, mais-parceiros-faz-mal]
 ---
 
 No Brasil, quem se casa no civil pela primeira vez tem em média ==31,5 anos, se for homem, e 29,3, se for mulher== [@ibge-2024-registro-civil]. A primeira união, com ou sem papel, sai mais cedo: em média aos 26,3 anos para eles e aos 23,6 para elas [@ibge-2022-censo-unioes]. A idade ao casar subiu de 2004 para cá, e um quarto das mulheres que se casaram com homens em 2024, contando quem casava de novo, tinha 40 anos ou mais [@ibge-2024-registro-civil].
