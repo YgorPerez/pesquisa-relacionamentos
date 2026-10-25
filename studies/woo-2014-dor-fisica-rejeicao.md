@@ -9,7 +9,7 @@ countries: [EUA]
 period: "Não informado no texto lido"
 sample:
   n: 60
-  description: "Estudo 1: 60 adultos destros e saudáveis (31 mulheres, idade média de 20,8 anos) recrutados em Manhattan por cartazes, Facebook e Craigslist, todos com um término romântico indesejado nos últimos 6 meses e se sentindo muito rejeitados; pagos com US$ 175. Estudo 2: 91 adultos (48 mulheres) da Universidade do Colorado em Boulder, só com ressonância em repouso."
+  description: "Estudo 1: 60 adultos destros e saudáveis (31 mulheres, idade média de 20,8 anos) recrutados em Manhattan por cartazes, Facebook e Craigslist, todos com um término romântico indesejado nos últimos 6 meses e se sentindo muito rejeitados; pagos com US$ 175. Estudo 2: 91 adultos (48 mulheres), só com ressonância em repouso, num estudo aprovado pelo comitê de ética da Universidade do Colorado em Boulder; o texto não diz onde foram recrutados."
   representative: false
 design: experiment
 conflict: "Financiado pelo NIMH, pelo NIDA e pelo NIBIB (NIH, EUA), com bolsas Fulbright e da Swiss National Science Foundation. Os autores declaram não ter conflito financeiro."

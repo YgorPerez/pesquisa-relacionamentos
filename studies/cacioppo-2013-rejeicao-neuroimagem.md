@@ -16,7 +16,6 @@ design: meta-analysis
 conflict: "Financiado pela Universidade de Chicago, pela Swiss National Science Foundation, pelo programa de pesquisa médica do Departamento do Exército dos EUA e pelo NIH. Os autores declaram não ter conflito financeiro."
 covers:
   genders: [man, woman]
-  ages: { min: 18, max: 99 }
 ---
 
 # Cacioppo et al. (2013): a rejeição usa o circuito da dor física?

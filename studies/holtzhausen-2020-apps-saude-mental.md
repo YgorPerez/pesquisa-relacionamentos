@@ -16,7 +16,6 @@ design: cross-sectional
 conflict: "O artigo diz que não houve financiamento e que os autores não têm conflito de interesse."
 covers:
   genders: [man, woman]
-  ages: { min: 18, max: 99 }
 ---
 
 # Holtzhausen et al. (2020): apps de deslizar e saúde mental na Austrália
@@ -39,7 +38,7 @@ Um questionário online comparou quem usou um app de deslizar (Tinder, Bumble e 
 | Uso por mais de um ano vs. nunca usou (sem ajuste) | Chance 3,55 vezes de sofrimento | Results, Univariate logistic regression | "three and half times the odds of being psychologically distressed than non-users (OR: 3.55, 95% CI 1.74–7.25, p = 0.001)" |
 | Impacto percebido na autoestima, usuários e ex-usuários | 40,4% positivo, 28,7% negativo | Resumo | "More participants reported a positive impact on self-esteem as a result of SBDA use (40.4%; 93/230), than a negative impact (28.7%;66/230)." |
 | Usuários e ex-usuários que tiveram relação séria com alguém do app | 39,1% | Resumo | "Almost 40%(39.1%; 90/230) had previously entered into a serious relationship with someone they had met on a SBDA." |
-| Gênero e uso | Homens e mulheres usam igual | Results, Demographics and user status | "There was no significant difference in user status based on gender or employment status." |
+| Gênero e uso | Sem diferença significativa entre homens e mulheres | Results, Demographics and user status | "There was no significant difference in user status based on gender or employment status." |
 | Interação entre gênero e uso | Não significativa | Results, Repeated measures analysis | "The following interaction effects were found not to be significant" |
 
 A razão de chance (OR) compara as chances de ter o problema: 2,51 quer dizer que, entre usuários, a chance de passar do ponto de corte de sofrimento foi 2,5 vezes a dos não usuários, depois de ajustar idade, gênero e orientação sexual. As razões de frequência e de tempo de uso não têm esse ajuste.

@@ -43,7 +43,7 @@ Os autores juntaram os estudos que comparam quem usa apps de namoro de deslizar 
 | Sensibilidade à rejeição e medo de avaliação | g = 0,28 (5 estudos) | Results, Cluster-level analysis | "The interpersonal sensitivity cluster (k = 5) had a pooled effect of g = 0.28" |
 | Heterogeneidade do sofrimento emocional | I² = 85,5% | Results, Cluster-level analysis | "Heterogeneity was substantial (I² = 85.5%, τ² = 0.033)" |
 | Quem é mais vulnerável na aparência e no corpo | Mulheres e homens de minoria sexual | Resumo | "Women and men who belong to a sexual minority exhibited elevated appearance- and body-related vulnerability." |
-| Idade e proporção de mulheres nos estudos | Não mudaram o tamanho do efeito | Results, Moderator analysis | "No other moderator effects reached significance, including in the multilevel model" |
+| Idade e proporção de mulheres nos estudos (testadas só nos grupos com 10 estudos ou mais e no modelo multinível) | Não mudaram o tamanho do efeito | Results, Moderator analysis | "No other moderator effects reached significance, including in the multilevel model" |
 | Estudos mais recentes | Efeito maior no sofrimento emocional (β = 0,25) | Results, Moderator analysis | "publication year was a positive moderator in the emotional distress cluster (β = 0.25" |
 | Viés de publicação no uso compulsivo | Assimetria; g ajustado de 0,44 para 0,48 | Results, Publication bias | "slightly higher adjusted effect size (from g = 0.44 to g = 0.48)" |
 
