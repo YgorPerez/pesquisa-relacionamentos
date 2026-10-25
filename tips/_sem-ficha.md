@@ -10,10 +10,3 @@ As Dicas com Ficha já estão uma por arquivo nesta pasta.
 |---|---|---|
 | Gentileza e inteligência estão entre as características mais valorizadas por ambos os sexos | Buss 1989 (37 culturas) | Forte |
 | Aparência pesa no primeiro contato; cuidados pessoais, roupa e exercício estão no seu controle | Walster et al. 1966; estudos de speed-dating | Forte (atratividade); fraca para truques específicos |
-
-## Escolher alguém
-
-| Dica | Base | Força dita antes |
-|---|---|---|
-| Não filtre demais por lista de requisitos: preferências declaradas preveem mal a atração real | Eastwick & Finkel 2008 | Boa |
-| A qualidade da relação depende mais de como ela funciona (compromisso percebido, apreço, conflito) do que de traços individuais | Joel et al. 2020, *PNAS* (43 estudos, ~11 mil casais) | Forte |
