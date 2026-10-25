@@ -56,6 +56,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
+- [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
 - [Ministério da Saúde 2022](studies/ministerio-saude-2022-pcdt-ist.md): PCDT de Infecções Sexualmente Transmissíveis · ✅ · moderada
 - [Ministério da Saúde 2025](studies/ministerio-saude-2025-sifilis.md): Boletim Epidemiológico de Sífilis · ✅ · moderada
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
@@ -66,6 +67,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
+- [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
@@ -84,16 +86,23 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
+- [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
+- [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
+- [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
+- [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
+- [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
+- [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
+- [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
