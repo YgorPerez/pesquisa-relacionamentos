@@ -263,7 +263,9 @@ Desenhos são SVG de traço único com ponta arredondada, 1,8 a 2,4px: setas cur
 
 ### Navegação
 
-Barra do topo: nome em Bricolage 700 de 21px à esquerda; à direita, a etiqueta do Tema, reta, em folha com contorno de 1,5px em tinta. Links do texto com sublinhado de 1,5px afastado 4px. O link do Perfil usa sublinhado tracejado de 2px. Sem Perfil, diz "Diga seu Perfil e veja o que vale para você", com "opcional" em tinta clara; com Perfil, vira "Seu Perfil: … · mudar".
+Barra do topo: nome em Bricolage 700 de 21px à esquerda, sempre numa linha; à direita, a etiqueta do Tema, reta, em folha com contorno de 1,5px em tinta. Um Tema de nome longo quebra a etiqueta em duas linhas, nunca o nome do site. Links do texto com sublinhado de 1,5px afastado 4px. O link do Perfil usa sublinhado tracejado de 2px. Sem Perfil, diz "Diga seu Perfil e veja o que vale para você", com "opcional" em tinta clara; com Perfil, vira "Seu Perfil: … · mudar".
+
+Índice dos Temas, na página inicial: um painel só, com uma dobra por Tema na ordem do `position` de cada `_topic.md`, separadas pela divisória pontilhada de 1,5px. Fechada, a dobra mostra a seta pequena que gira, o nome do Tema em title e "N Perguntas" em tinta clara; aberta, as Perguntas numeradas e "Abrir o Tema" com a seta desenhada. A dobra é o `<details>` do navegador: abre sem JS e volta aberta quando o leitor sai de um Guia pelo voltar. Fechados, os seis Temas cabem numa tela de celular; uma lista com todas as Perguntas não caberia.
 
 ### Três degraus: Confiança e Força
 

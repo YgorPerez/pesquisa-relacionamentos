@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
 import { ShortConfidence, Html } from '#/ui/guide'
+import { ForwardArrow } from '#/ui/navigation'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Headline } from '#/ui/section'
 
@@ -61,19 +62,7 @@ function TopicPage() {
                 aria-label={`Ler o Guia: ${guide.question}`}
               >
                 Ler o Guia
-                <svg
-                  width="22"
-                  height="14"
-                  viewBox="0 0 22 14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M2 7.4C8 6.6 14 7.2 19.4 7M15 2.4l4.6 4.7-4.8 4.5" />
-                </svg>
+                <ForwardArrow />
               </Link>
             </li>
           ))}

@@ -1,5 +1,6 @@
 ---
 title: Onde conhecer pessoas
+position: 1
 order:
   [
     onde-os-casais-se-conhecem,

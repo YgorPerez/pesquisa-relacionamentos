@@ -248,8 +248,9 @@ test.describe('home page', () => {
     await page.goto('/')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     const topics = page.getByRole('region', { name: 'Os Temas' })
+    await topics.getByText('Onde conhecer pessoas').click()
     await expect(
-      topics.getByRole('link', { name: 'Onde conhecer pessoas' }),
+      topics.getByRole('link', { name: 'Abrir o Tema: Onde conhecer pessoas' }),
     ).toHaveAttribute('href', '/onde-conhecer-pessoas')
     await expect(
       topics.getByRole('link', { name: 'Onde os casais se conhecem hoje?' }),
@@ -262,6 +263,42 @@ test.describe('home page', () => {
       calculators.getByRole('link', { name: /Prioridades/ }),
     ).toHaveAttribute('href', '/prioridades')
     await noSideScroll(page)
+  })
+
+  test('back from a Guide, the Topic that was open is open again', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    const topics = page.getByRole('region', { name: 'Os Temas' })
+    await topics.getByText('Onde conhecer pessoas').click()
+    await topics
+      .getByRole('link', { name: 'Onde os casais se conhecem hoje?' })
+      .click()
+    await expect(page).toHaveURL(GUIDE)
+    await page.goBack()
+    await expect(
+      topics.getByRole('link', { name: 'Onde os casais se conhecem hoje?' }),
+    ).toBeVisible()
+  })
+})
+
+test.describe('home page without JavaScript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('a Topic opens and its Question leads to the Guide', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    const topics = page.getByRole('region', { name: 'Os Temas' })
+    await topics.getByText('Escolher parceiro').click()
+    await topics
+      .getByRole('link', {
+        name: 'Que características do parceiro preveem uma boa relação?',
+      })
+      .click()
+    await expect(page).toHaveURL(
+      '/escolher-parceiro/que-caracteristicas-preveem',
+    )
   })
 })
 

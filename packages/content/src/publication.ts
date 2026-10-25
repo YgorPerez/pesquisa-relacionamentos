@@ -162,7 +162,8 @@ function confidenceCeiling(
 }
 
 /** Each guide folder has a `_topic.md` whose `order` lists the folder's guides,
- * each one once; a guide's slug is unique across the site. */
+ * each one once, and whose `position` no other topic has; a guide's slug is
+ * unique across the site. */
 function topicsAndGuides(items: ParsedItems): Problem[] {
   const errors: Problem[] = []
   const topics = new Map(items.topics.map((t) => [t.slug, t]))
@@ -174,6 +175,20 @@ function topicsAndGuides(items: ParsedItems): Problem[] {
           'missing the _topic.md with the title and the order of the guides',
         ),
       )
+
+  const byPosition = new Map<number, string>()
+  for (const topic of items.topics) {
+    const other = byPosition.get(topic.position)
+    if (other)
+      errors.push(
+        problem(
+          topic.file,
+          `the position ${topic.position} already belongs to the topic "${other}"; each topic has its own place on the home page`,
+          'position',
+        ),
+      )
+    else byPosition.set(topic.position, topic.slug)
+  }
 
   for (const topic of items.topics) {
     const parsedInFolder = items.guides

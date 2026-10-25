@@ -1,5 +1,6 @@
 ---
 title: Sexo e histórico antes de assumir
+position: 4
 order: [mais-parceiros-faz-mal, como-se-proteger-de-ist]
 ---
 

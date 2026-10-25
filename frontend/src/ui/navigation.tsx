@@ -197,6 +197,24 @@ const BackArrow = () => (
   </svg>
 )
 
+/** The hand-drawn arrow of a link that goes on: "Ler o Guia", "Abrir o
+ * Tema". */
+export const ForwardArrow = () => (
+  <svg
+    width="22"
+    height="14"
+    viewBox="0 0 22 14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M2 7.4C8 6.6 14 7.2 19.4 7M15 2.4l4.6 4.7-4.8 4.5" />
+  </svg>
+)
+
 /** "Todos os estudos", "Todas as Dicas": back to the list. */
 export function BackLink({
   to,
