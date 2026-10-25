@@ -38,7 +38,7 @@ findings:
         ages: { min: 18, max: 30 },
         couple: different-sex,
       }
-  - text: A queda veio junto com menos satisfação com as opções e menos confiança no próprio sucesso para namorar. Essa explicação é uma associação medida durante a tarefa, não um efeito sorteado.
+  - text: No terceiro estudo, a queda veio junto com menos satisfação com as opções e menos confiança no próprio sucesso para namorar. Essa explicação é uma associação medida durante a tarefa, não um efeito sorteado.
     fact_sheets: [pronk-2020-mentalidade-rejeicao]
     period: publicado em 2020
     applies_to:
@@ -64,7 +64,7 @@ Pode atrapalhar a escolha, pelo que se viu em laboratório. Ao longo de uma sequ
 Os estudos de fotos foram só com solteiros héteros de 18 a 30 anos, nos EUA e na Holanda [@pronk-2020-mentalidade-rejeicao].
 
 - **Homens e mulheres.** Os homens aceitaram mais perfis que as mulheres nos três estudos, de 19% a 34% mais. A queda ao longo da sequência não se repetiu igual entre os gêneros: nos homens foi mais fraca, igual ou ausente, conforme o estudo [@pronk-2020-mentalidade-rejeicao].
-- **Só mulheres.** O experimento dos matches foi só com universitárias de Viena. Os autores dizem que o resultado não vale para homens, que recebem bem menos matches [@thomas-2024-matches-solidao].
+- **Só mulheres.** O experimento dos matches foi só com universitárias de Viena. Os autores dizem que não dá para generalizar o resultado para homens, que recebem bem menos matches [@thomas-2024-matches-solidao].
 - **Quem procura alguém do mesmo sexo.** Nenhum dos estudos deste Guia traz resultado separado.
 
 ## Limitações
