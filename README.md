@@ -82,6 +82,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
+- [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
@@ -96,8 +97,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
+- [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
+- [Rhoades et al. 2011](studies/rhoades-2011-termino-saude-mental.md): o término de um namoro e a saúde mental · ✅ · moderada
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
@@ -105,14 +108,20 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
+- [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
+- [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
+- [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
+- [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
+- [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ⬜ · forte
