@@ -52,7 +52,7 @@ A média de 20,3 parcerias dos homens no Datafolha vem de resposta espontânea, 
 |---|---|---|
 | EUA, NSFG 2015–2019, 25 a 49 anos: mediana de 4,3 parceiros do sexo oposto na vida para mulheres e 6,3 para homens; 15 ou mais, 12,9% das mulheres e 28,3% dos homens | [NCHS 2021](../studies/nchs-2021-nsfg-parceiros-na-vida.md) | forte |
 | Grã-Bretanha, Natsal-3 (2010–12), 16 a 74 anos: mediana de 6 parceiras para homens e 4 parceiros para mulheres; dez ou mais, 33,9% dos homens e 19,9% das mulheres | [Mercer et al. 2013](../studies/mercer-2013-natsal-tendencias.md) | forte |
-| Grã-Bretanha, 16 a 44 anos, entre 1990–91, 1999–2001 e 2010–12: mediana dos homens 4, 6 e 6; das mulheres 2, 4 e 4. Do Natsal-2 para o Natsal-3, só as mulheres subiram | [Mercer et al. 2013](../studies/mercer-2013-natsal-tendencias.md) | forte |
+| Grã-Bretanha, 16 a 44 anos, entre 1990–91, 1999–2001 e 2010–12: mediana dos homens 4, 6 e 6; das mulheres 2, 4 e 4. Do Natsal-2 para o Natsal-3, a mediana das duas ficou igual, mas só nas mulheres o número de parceiros subiu de forma estatisticamente segura (razão de chances ajustada pela idade 1,18, de 1,08 a 1,28; homens 0,92, sem significância; média das mulheres de 6,5 para 7,7) | [Mercer et al. 2013](../studies/mercer-2013-natsal-tendencias.md) | forte |
 | Grã-Bretanha: a mediana subiu de uma coorte de nascimento para a seguinte, mas pouco entre os mais jovens; 43,4% das mulheres de 65 a 74 anos tiveram um só parceiro na vida, contra 16,4% das de 16 a 24 | [Mercer et al. 2013](../studies/mercer-2013-natsal-tendencias.md) | forte |
 | EUA, noivas: com um só parceiro antes, de 43% (anos 1970) para 21% (anos 2000), com pouca mudança depois | [Wolfinger 2016](../studies/wolfinger-2016-parceiros-pre-maritais-coortes.md) | fraca |
 

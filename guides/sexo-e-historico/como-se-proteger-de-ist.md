@@ -29,7 +29,7 @@ findings:
     fact_sheets: [ministerio-saude-2025-sifilis]
     period: '2024'
 tips: [prevencao-combinada, vacinas-hepatite-hpv]
-related: [mais-parceiros-faz-mal]
+related: [mais-parceiros-faz-mal, quantos-parceiros-antes-de-casar]
 ---
 
 Combinando medidas, porque nenhuma basta sozinha. O protocolo do Ministério da Saúde lista camisinha, vacinas contra hepatite A, hepatite B e HPV, testagem regular, e PrEP e PEP quando indicadas [@ministerio-saude-2022-pcdt-ist]. Para quem tem até 30 anos e vida sexual ativa, o protocolo põe ==teste de HIV e sífilis uma vez por ano== [@ministerio-saude-2022-pcdt-ist]. De 20 a 29 anos fica a maior taxa de sífilis notificada no Brasil: 286,1 casos por 100 mil habitantes em 2024 [@ministerio-saude-2025-sifilis].
