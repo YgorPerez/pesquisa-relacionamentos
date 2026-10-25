@@ -119,7 +119,7 @@ O Guia deve linkar o Guia do MVP "app ou presencial" (A3) em vez de repetir quan
 
 ## 9. O que falta
 
-- **Estudos sem texto completo acessível** (a issue `acervo` do PR lista o que tentamos):
+- **Estudos sem texto completo acessível** (a issue `acervo` #149 lista o que tentamos):
   - Sharabi et al. 2026, a outra meta-análise de apps e saúde mental (Computers in Human Behavior 177:108879, fechada).
   - Sharabi et al. 2024, "Burnt out and still single", painel de 12 semanas sobre esgotamento com apps (New Media & Society, fechado).
   - Thomas et al. 2023, "99+ matches but a spark ain't one", painel sobre swipe excessivo e medo de ficar solteiro (Telematics and Informatics, CC BY, mas o site bloqueou o download).
