@@ -94,6 +94,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
+- [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
@@ -124,6 +125,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
+- [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
@@ -141,6 +143,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ⬜ · forte
+- [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 
 <!-- /study-index -->
 
