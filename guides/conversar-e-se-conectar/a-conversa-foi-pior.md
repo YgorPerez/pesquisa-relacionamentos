@@ -1,8 +1,8 @@
 ---
-question: A conversa foi ==pior== do que eu acho?
+question: A conversa foi ==tão ruim== quanto eu acho?
 confidence: moderate
 findings:
-  - text: Depois de conversar, cada pessoa disse quanto gostou do outro e quanto acha que o outro gostou dela. Gostaram 5,82, numa escala de 1 a 7, e acharam que o outro tinha gostado 5,17.
+  - text: Num dos estudos, depois de conversar, cada pessoa disse quanto gostou do outro e quanto acha que o outro gostou dela. Gostaram 5,82, numa escala de 1 a 7, e acharam que o outro tinha gostado 5,17.
     fact_sheets: [boothby-2018-liking-gap]
     country: EUA
     period: publicado em 2018
@@ -33,7 +33,7 @@ tips: [conversa-melhor-do-que-parece]
 related: [conversas-melhores, as-36-perguntas]
 ---
 
-Provavelmente não. Em cinco estudos nos EUA e no Reino Unido, depois de conversar com alguém novo, as pessoas acharam que o outro tinha gostado delas ==menos do que gostou de fato== [@boothby-2018-liking-gap]. Os dois lados da conversa responderam, e o erro apareceu na média: a outra pessoa também tende a achar que você gostou menos dela do que gostou. Não há estudo brasileiro.
+Provavelmente não. Em cinco estudos nos EUA e no Reino Unido, depois de conversar com alguém novo, as pessoas acharam que o outro tinha gostado delas ==menos do que gostou de fato== [@boothby-2018-liking-gap]. Os dois lados da conversa responderam, e o erro apareceu na média: a outra pessoa também tende a achar que você gostou menos dela do que gostou. Nenhuma das conversas era um encontro romântico, e não há estudo brasileiro no acervo.
 
 ## Varia conforme o Perfil?
 

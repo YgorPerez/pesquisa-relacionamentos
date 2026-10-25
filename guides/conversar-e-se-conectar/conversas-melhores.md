@@ -32,13 +32,13 @@ tips:
 related: [as-36-perguntas, a-conversa-foi-pior, app-ou-presencial]
 ---
 
-Duas coisas têm apoio em experimentos nos EUA: perguntar, sobretudo em cima do que a pessoa acabou de dizer [@huang-2017-perguntas-de-continuidade], e ir se abrindo aos poucos, cada um na sua vez [@aron-1997-36-perguntas]. E puxar conversa costuma ser ==melhor do que a gente imagina==, para quem puxa e para quem é abordado [@epley-2014-conversar-com-estranhos]. Eram conversas entre desconhecidos, sem paquera, e nenhum estudo do acervo é brasileiro.
+Perguntar mais tem apoio em experimento nos EUA, e as perguntas que retomam o que a pessoa disse foram as que mais se associaram a gostar de quem perguntou [@huang-2017-perguntas-de-continuidade]. Ir se abrindo aos poucos, com perguntas cada vez mais pessoais, aproximou desconhecidos [@aron-1997-36-perguntas]. E puxar conversa costuma ser ==melhor do que a gente imagina==, e quem é abordado gosta tanto quanto quem puxou [@epley-2014-conversar-com-estranhos]. Nenhum dos experimentos era um encontro romântico, e nenhum destes estudos é brasileiro.
 
 ## Varia conforme o Perfil?
 
-Os três estudos tinham homens e mulheres, mas nenhum traz resultado separado por gênero, por idade ou por quem você procura. Nas duplas que se revezavam em perguntas, cerca de 70% dos participantes eram mulheres, e as duplas eram mistas ou só de mulheres [@aron-1997-36-perguntas]. Não há dado para duplas só de homens.
+Os três estudos tinham homens e mulheres. As Fichas não registram resultado separado por gênero, nem por idade ou por quem você procura. Nas duplas que se revezavam em perguntas, cerca de 70% dos participantes eram mulheres, e as duplas eram mistas ou só de mulheres [@aron-1997-36-perguntas].
 
-Nenhuma das conversas era um encontro romântico. Nos chats, o objetivo era só "se conhecer" [@huang-2017-perguntas-de-continuidade]; no trem, conversa de trajeto [@epley-2014-conversar-com-estranhos].
+Nenhum dos experimentos era um encontro romântico; o único dado romântico é o speed dating correlacional (ver Limitações). Nos chats, o objetivo era só "se conhecer" [@huang-2017-perguntas-de-continuidade]; no trem, conversa de trajeto [@epley-2014-conversar-com-estranhos].
 
 ## Limitações
 
