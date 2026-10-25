@@ -58,3 +58,4 @@ Os autores ordenaram os usuários de um site de namoro por "desejabilidade", cal
 ## Como usamos
 
 - [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seções 4 e 6.
+- [Relatório 2026-10-25](../reports/2026-10-25-vale-a-pena-apps-de-namoro.md), seção 4.1.
