@@ -12,6 +12,7 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react'
+import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
 import { loopPath } from './loop'
 
@@ -194,6 +195,47 @@ const BackArrow = () => (
     aria-hidden="true"
   >
     <path d="M20 7.4C14 6.6 8 7.2 2.6 7M7 2.4 2.4 7.1 7.2 11.6" />
+  </svg>
+)
+
+/** The little arrow of the DESIGN.md fold, which turns when the fold opens.
+ * `className` says what opens it: `group-data-panel-open:rotate-90` in a
+ * Base UI `Collapsible`, `group-open:rotate-90` in a `<details>`. */
+export const FoldArrow = ({ className }: { className: string }) => (
+  <svg
+    className={cn(
+      'flex-none transition-transform duration-250 ease-sai motion-reduce:transition-none',
+      className,
+    )}
+    width="14"
+    height="16"
+    viewBox="0 0 14 16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4 2.5l6.5 5.6L4 13.6" />
+  </svg>
+)
+
+/** The hand-drawn arrow of a link that goes on: "Ler o Guia", "Abrir o
+ * Tema". */
+export const ForwardArrow = () => (
+  <svg
+    width="22"
+    height="14"
+    viewBox="0 0 22 14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M2 7.4C8 6.6 14 7.2 19.4 7M15 2.4l4.6 4.7-4.8 4.5" />
   </svg>
 )
 

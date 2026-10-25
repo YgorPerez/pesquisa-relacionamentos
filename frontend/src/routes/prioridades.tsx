@@ -35,6 +35,7 @@ import {
   Bookcase,
   OutcomePicker,
 } from '#/ui/priorities'
+import { FoldArrow } from '#/ui/navigation'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Notice, Headline, Panel, Section } from '#/ui/section'
 import {
@@ -178,20 +179,7 @@ function BeforeTheList({ split }: { split: PrioritiesView['bar'] }) {
   return (
     <Collapsible id="antes-da-lista" defaultOpen className="mt-md">
       <CollapsibleTrigger>
-        <svg
-          className="flex-none transition-transform duration-250 ease-sai group-data-panel-open:rotate-90 motion-reduce:transition-none"
-          width="14"
-          height="16"
-          viewBox="0 0 14 16"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M4 2.5l6.5 5.6L4 13.6" />
-        </svg>
+        <FoldArrow className="group-data-panel-open:rotate-90" />
         Antes: o parceiro explica pouco da satisfação
       </CollapsibleTrigger>
       <CollapsibleContent>

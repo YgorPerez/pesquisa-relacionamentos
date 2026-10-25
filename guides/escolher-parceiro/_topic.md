@@ -1,5 +1,6 @@
 ---
 title: Escolher parceiro
+position: 30
 order:
   [
     que-caracteristicas-preveem,

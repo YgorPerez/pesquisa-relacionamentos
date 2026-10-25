@@ -1,9 +1,11 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
+import { useReadingPointInHistory } from '#/ui/navigation'
 import { CalculatorRow } from '#/ui/question-row'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
-import { Notice, Headline, Panel, Section } from '#/ui/section'
+import { Notice, Headline, Section } from '#/ui/section'
+import { TopicIndex } from '#/ui/topic-index'
 
 export const Route = createFileRoute('/')({
   // It only waits for the read: the data goes to the browser through the
@@ -30,8 +32,8 @@ const CALCULATORS = [
   },
 ] as const
 
-/** "Os Temas": each Topic with its Questions or, with no Guide published,
- * the way to the studies. */
+/** "Os Temas": the index of the Topics, in the content's order, or, with no
+ * Guide published, the way to the studies. */
 function Topics() {
   const { data: topics } = useSuspenseQuery(reads.topics())
   return (
@@ -44,36 +46,7 @@ function Topics() {
           <Link to="/estudos">veja os estudos do acervo</Link>.
         </Notice>
       ) : (
-        topics.map((topic) => (
-          <Panel
-            as="article"
-            key={topic.slug}
-            className="not-first-of-type:mt-lg"
-          >
-            <h3 className="m-0 font-title text-title">
-              <Link
-                to="/$tema"
-                params={{ tema: topic.slug }}
-                className="inline-flex min-h-toque items-center decoration-2"
-              >
-                {topic.title}
-              </Link>
-            </h3>
-            <ol className="mt-1 mb-0 pl-marcador">
-              {topic.guides.map((guide) => (
-                <li key={guide.slug} className="not-first:mt-0.5">
-                  <Link
-                    to="/$tema/$slug"
-                    params={{ tema: guide.topic, slug: guide.slug }}
-                    className="inline-flex min-h-toque items-center"
-                  >
-                    {guide.question}
-                  </Link>
-                </li>
-              ))}
-            </ol>
-          </Panel>
-        ))
+        <TopicIndex topics={topics} />
       )}
     </Section>
   )
@@ -82,6 +55,9 @@ function Topics() {
 /** The home page: the site's sentence, the Topics with their Questions and
  * the shortcuts to the calculators. */
 function Home() {
+  // Back from a Guide, the Topic that was open opens again, at the same
+  // scroll.
+  useReadingPointInHistory()
   return (
     <Sheet>
       <Column>
@@ -90,9 +66,9 @@ function Home() {
           <span className="marca-texto">fonte</span> junto
         </Display>
         <Lead>
-          Respostas curtas sobre onde conhecer pessoas e como escolher parceiro.
-          Cada afirmação leva ao estudo de onde saiu, e a gente avisa quando a
-          pesquisa ainda não sabe.
+          Respostas curtas para o que se pergunta de um relacionamento, de onde
+          conhecer alguém a como manter a relação. Cada afirmação leva ao estudo
+          de onde saiu, e a gente avisa quando a pesquisa ainda não sabe.
         </Lead>
 
         <Topics />

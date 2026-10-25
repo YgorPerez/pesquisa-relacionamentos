@@ -49,7 +49,7 @@ export interface DataOrigin extends DataMeta {
 export interface Library {
   /** The fact sheets in slug order. */
   readonly factSheets: ReadonlyArray<FactSheet>
-  /** The topics in slug order. */
+  /** The topics in `position` order (#143). */
   readonly topics: ReadonlyArray<Topic>
   /** The guides topic by topic, in each one's `order`. */
   readonly guides: ReadonlyArray<Guide>
@@ -210,7 +210,7 @@ export function buildLibrary(
   }
 
   factSheets.sort((a, b) => a.slug.localeCompare(b.slug))
-  topics.sort((a, b) => a.slug.localeCompare(b.slug))
+  topics.sort((a, b) => a.position - b.position || a.slug.localeCompare(b.slug))
   tips.sort((a, b) => a.slug.localeCompare(b.slug))
   errors.push(...duplicateDois(factSheets))
 

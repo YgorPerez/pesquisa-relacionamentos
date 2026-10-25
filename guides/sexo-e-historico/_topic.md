@@ -1,5 +1,6 @@
 ---
 title: Sexo e histórico antes de assumir
+position: 40
 order:
   [
     mais-parceiros-faz-mal,
