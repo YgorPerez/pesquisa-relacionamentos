@@ -70,4 +70,4 @@ As porcentagens da Tabela 4 são a queda na taxa anual de casar (razão de risco
 ## Como usamos
 
 - [Relatório 2026-10-24: sexo casual antes de assumir](../reports/2026-10-24-sexo-casual-antes-de-assumir.md), seção 2: se passar alguns anos com vários parceiros atrasa ou reduz a chance de casar.
-- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): distribuição de parceiros das mulheres americanas e a chance de casar até os 40 conforme o número.
+- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): proporção de americanas casadas até os 40 anos conforme o número de parceiros.

@@ -49,4 +49,4 @@ Fonte local: `sources/nchs-2021-nsfg-parceiros-na-vida.html`, a cópia do Intern
 
 ## Como usamos
 
-- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): referência representativa dos EUA de quantos parceiros as pessoas têm na vida, para comparar com o Brasil e com a média de 8,78 parceiros antes de casar de Rhoades & Stanley.
+- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): referência representativa dos EUA de quantos parceiros as pessoas têm na vida, ao lado das medianas do Natsal e das faixas das PCAP brasileiras.

@@ -2,8 +2,10 @@
 // sexual partners in their lifetime.
 //
 // The report's 43.9% has as its base the people who answered "yes" to "more
-// than one partner in your lifetime?" (question 2 of the self-completed part
-// leads to question 3). The report gives 69.2% for "more than one partner"
+// than one partner in your lifetime?": Tables 7.1 and 7.4 count 3,265 people
+// with more than ten partners, 43% of the 7,544 with more than one and 30% of
+// the 11,051 sexually active. (The 2013 questionnaire prints no skip from
+// question 2 to 3; the 2008 one, with the same questions, does.) The report gives 69.2% for "more than one partner"
 // among the sexually active, so the share of all sexually active people with
 // more than ten partners is 43.9% x 69.2%.
 //
