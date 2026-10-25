@@ -13,6 +13,11 @@ findings:
   - text: Quem tem até 30 anos e vida sexual ativa entra no rastreamento anual de HIV e sífilis.
     fact_sheets: [ministerio-saude-2022-pcdt-ist]
     applies_to: { ages: { min: 18, max: 30 } }
+  - text: Para gays e outros homens que fazem sexo com homens, o protocolo põe o teste de HIV e sífilis a cada seis meses, em qualquer idade.
+    fact_sheets: [ministerio-saude-2022-pcdt-ist]
+    applies_to: { genders: [man], seeks: [men] }
+  - text: O teste de HIV e sífilis a cada seis meses vale também para profissionais do sexo, travestis e transexuais, quem faz uso abusivo de álcool e outras drogas, e quem faz sexo anal receptivo (passivo) sem camisinha. Quem se encaixa em mais de um grupo segue o que for mais representativo do seu caso.
+    fact_sheets: [ministerio-saude-2022-pcdt-ist]
   - text: Em 2024, o Brasil notificou 256.830 casos de sífilis adquirida, 120,8 por 100 mil habitantes. Em 2021, eram 82,8 por 100 mil.
     fact_sheets: [ministerio-saude-2025-sifilis]
     period: '2021 e 2024'
@@ -33,7 +38,7 @@ Combinando medidas, porque nenhuma basta sozinha. O protocolo do Ministério da 
 
 - **Idade.** O teste anual de HIV e sífilis vale para quem tem até 30 anos e vida sexual ativa [@ministerio-saude-2022-pcdt-ist]. A sífilis notificada é mais alta de 20 a 29 anos e depois de 30 a 39 [@ministerio-saude-2025-sifilis].
 - **Homens e mulheres.** A maior parte dos casos de sífilis é de homens: 61,3% em 2024 [@ministerio-saude-2025-sifilis].
-- **Outras práticas e grupos.** No protocolo, a frequência do teste de clamídia e gonorreia depende do grupo e da prática sexual da pessoa [@ministerio-saude-2022-pcdt-ist]. Essas frequências não entram aqui. As Fichas do acervo não trazem os números de IST por orientação sexual.
+- **Homens que fazem sexo com homens, outros grupos e práticas.** Para gays e outros homens que fazem sexo com homens, o protocolo põe o teste de HIV e sífilis a cada seis meses, não uma vez por ano. Vale o mesmo para profissionais do sexo, travestis e transexuais, uso abusivo de álcool e outras drogas, e sexo anal receptivo sem camisinha [@ministerio-saude-2022-pcdt-ist]. A frequência do teste de clamídia e gonorreia também depende do grupo e da prática, e essas frequências não entram aqui. As Fichas do acervo não trazem os números de IST por orientação sexual.
 
 ## Limitações
 
