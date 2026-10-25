@@ -2,7 +2,7 @@
 reference: "Brasil. Ministério da Saúde, Secretaria de Vigilância em Saúde, Departamento de Vigilância, Prevenção e Controle das DST, Aids e Hepatites Virais. *Pesquisa de Conhecimentos, Atitudes e Práticas na População Brasileira – PCAP 2013*. Brasília: Ministério da Saúde, 2016 (Série G. Estatística e Informação em Saúde). PDF lido: cópia do Internet Archive de 25/01/2021, https://web.archive.org/web/20210125121702/http://www.aids.gov.br/pt-br/pub/2016/pesquisa-de-conhecimentos-atitudes-e-praticas-na-populacao-brasileira-pcap-2013"
 link: http://www.aids.gov.br/pt-br/pub/2016/pesquisa-de-conhecimentos-atitudes-e-praticas-na-populacao-brasileira-pcap-2013
 status: verified
-verified_on: 2026-10-24
+verified_on: 2026-10-25
 strength: moderate
 strength_reason: "Amostra nacional de 12.000 pessoas de 15 a 64 anos, por conglomerados com cotas de sexo, idade e situação conjugal, com o módulo sexual autopreenchido em tablet; mas a contagem de parceiros vem em faixas, o relatório muda a base da proporção de mais de dez parceiros em relação a 2008 sem dizer, e o PDF é escaneado."
 countries: [Brasil]
@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-A terceira PCAP repete as perguntas de 2004 e 2008 sobre práticas sexuais, no trecho do questionário que a própria pessoa responde no tablet, com entrevistador do mesmo sexo. Pergunta se a pessoa já teve mais de um parceiro sexual na vida e se teve mais de dez; no último ano, pergunta por parceiros fixos, casuais e conhecidos pela internet. O relatório traz as proporções por sexo, idade, estado conjugal, região, escolaridade, cor, classe e acesso à internet.
+A terceira PCAP repete as perguntas de 2004 e 2008 sobre práticas sexuais, no trecho do questionário que a própria pessoa responde no tablet, com entrevistador do mesmo sexo. Pergunta se a pessoa já teve mais de um parceiro sexual na vida e se teve mais de dez; no último ano, pergunta por parceiros fixos, casuais e conhecidos pela internet, e pelo uso de camisinha na última transa e em todas as transas, com parceiro fixo e com parceiro casual. O relatório traz as proporções por sexo, idade, estado conjugal, região, escolaridade, cor, classe e acesso à internet.
 
 ## Achados
 
@@ -41,8 +41,17 @@ A terceira PCAP repete as perguntas de 2004 e 2008 sobre práticas sexuais, no t
 | Sexo no último ano com alguém conhecido pela internet: total | 4,7% | p. 97 do PDF | "4,7% com pessoas que conheceram pela internet" | |
 | Idem: homens; mulheres | 7,0%; 2,2% | p. 97 do PDF | "7,0% dos homens e 2,2% das mulheres tiveram relação sexual com pessoas que conheceram pela internet" | |
 | Idem: jovens de 15 a 24 anos | 9,1% | p. 98 do PDF | "e 9,1% informaram ter se relacionado com pessoas que conheceram pela internet" | |
+| Sexo com parceiro casual no último ano, entre quem fez sexo no período; com parceiro fixo | 24,5%; 81,1% | p. 97 do PDF | "81,1% tiveram relação sexual com parcerias fixas, 24,5% com parcerias casuais" | |
+| Idem, parceiro casual: jovens de 15 a 24 anos | Cerca de 41% | p. 98 do PDF | "Aproximadamente 41% referiram relação com parceiros casuais nos 12 meses" | |
+| Idem, parceiro casual: quem não vive com companheiro | 51,1% | p. 98 do PDF, Tabela 7.4 | "com parcerias casuais (51,1%)" | |
+| Camisinha na última transa, entre quem fez sexo no último ano; na última transa com parceiro casual | 39,1%; 66,7% | p. 99 do PDF, Tabela 7.11 | "39,1% usaram preservativo na última relação, independentemente do tipo de parceria, e 66,7% usaram preservativo em relações com parceria casual" | |
+| Camisinha em todas as transas do ano: com qualquer parceiro; com parceiro fixo; com parceiro casual | 23,5%; 19,9%; 54,9% | p. 99 do PDF, Tabela 7.11 | "aconteceu em 23,5% com qualquer parceria, 19,9% com parceria fixa e 54,9% com parceria casual" | |
+| Camisinha em todas as transas do ano com parceiro fixo: quem não vive com companheiro; quem vive | 38,3%; 12,7% | p. 99 do PDF, Tabela 7.15 | "38,3% das pessoas que relataram não viver com companheiro(a) usaram preservativo em todas as relações sexuais com parcerias fixas, proporção que caiu para 12,7%" | |
+| Camisinha por sexo | Maior entre os homens em todos os indicadores do último ano (o texto não dá os números) | p. 99 do PDF, Tabela 7.13 | "é maior entre os homens, independentemente do tipo de parceria e da regularidade do uso do insumo" | |
 
 **A base do 43,9% não é a de 2008.** Na PCAP 2008, os 25,3% com mais de dez parceiros estão calculados sobre todos os sexualmente ativos (7.085 pessoas, a mesma base de "mais de um parceiro"; ver [PCAP 2008](ministerio-saude-2011-pcap-2008.md)). Em 2013, as contagens das Tabelas 7.1 e 7.4 mostram 3.265 pessoas com mais de dez parceiros, 7.544 com mais de um e 11.051 sexualmente ativas: 3.265 é 43% de 7.544 e 30% de 11.051. Ou seja, o 43,9% é a proporção entre quem teve mais de um parceiro. O questionário de 2013 não imprime o pulo da questão 2 para a 3; o de 2008, com as mesmas perguntas, imprime, e as contagens de 2013 batem com ele. Sobre todos os sexualmente ativos, a proporção fica perto de 30%, e não de 44%. O relatório não avisa da mudança. A conta é nossa e vem do texto; as células das tabelas, lidas no OCR, perderam a vírgula e não entram na conferência.
+
+O 66,7% é o uso na última transa com parceiro casual: o texto o põe logo depois do uso "na última relação", e a Tabela 7.11 chama a linha de "Na última relação sexual com parceria casual". As porcentagens de camisinha com parceiro casual valem só para quem teve parceiro casual no ano. O texto não dá os números de camisinha por sexo, idade ou estado conjugal com parceiro casual, e as células das Tabelas 7.11 a 7.15 perderam vírgulas ou saíram ilegíveis no OCR.
 
 A linha da zona urbana no texto do relatório ("mais de dez parcerias sexuais na vida (70,1%)") não bate com o total e parece erro de digitação; a Ficha não a usa.
 
@@ -56,7 +65,10 @@ Fonte local: `sources/private/ministerio-saude-2016-pcap-2013.pdf`. O PDF origin
 - Seleção do morador por cotas de sexo, idade e situação conjugal; a amostra foi calibrada pelo Censo de 2010, mas o relatório não informa taxa de resposta.
 - O texto vem de OCR: as tabelas perderam vírgulas, e a Ficha usa só o texto corrido.
 - "Conheceu pela internet" é sobre parceiros sexuais do último ano, não sobre o cônjuge.
+- O uso de camisinha é autorrelatado e sujeito a desejabilidade social. "Parceria casual" é o que a pessoa entende por isso; o relatório não traz a definição.
+- Com parceiro casual, o texto dá só os totais; a quebra por sexo e idade fica nas tabelas que o OCR não leu.
 
 ## Como usamos
 
 - [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): a contagem brasileira mais recente de parceiros na vida, a falta de diferença entre quem vive e quem não vive com companheiro, e o alerta sobre a base do 43,9%.
+- [Relatório 2026-10-25: sexo casual vale a pena?](../reports/2026-10-25-sexo-casual-vale-a-pena.md): quantos tiveram parceiro casual no ano e quantos usaram camisinha com ele, na última transa e em todas, o dado oficial mais recente que separa parceiro casual.
