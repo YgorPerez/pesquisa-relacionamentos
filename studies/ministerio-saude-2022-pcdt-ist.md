@@ -37,8 +37,10 @@ covers: {}
 | Eficácia do preservativo | Reduz o risco de HIV e outras IST, além de evitar gravidez | p. 23 (p. 25 do PDF), seção 2.1.3 | "como um método eficaz para a redução do risco de transmissão do HIV e de outras IST, além de evitar gravidez" |
 | Principais fatores de risco | Sexo sem preservativo e idade mais baixa | p. 27 (p. 29 do PDF), seção 2.4 | "Os dois principais fatores de risco para IST são práticas sexuais sem uso de preservativos e idade mais baixa" |
 | Testagem anual para jovens | Rastreamento anual de quem tem até 30 anos e vida sexual ativa | p. 27 (p. 29 do PDF), seção 2.4 e Quadro 5 | "foram incluídas no rastreamento anual as pessoas de até 30 anos de idade com vida sexualmente ativa" |
+| Quem pertence a mais de um subgrupo | Vale a frequência do subgrupo mais representativo | p. 27 (p. 29 do PDF), seção 2.4 | "Caso a pessoa de 30 anos ou mais pertença a algum outro subgrupo populacional, deve-se optar pelo que for mais representativo." |
+| Testagem semestral de HIV e sífilis | Gays e HSH, profissionais do sexo, travestis e transexuais, pessoas com uso abusivo de álcool e outras drogas, e pessoas com prática sexual anal receptiva (passiva) sem preservativo | p. 28 (p. 30 do PDF), Quadro 5 (conclusão) | "Gays e HSH Profissionais do sexo Semestral" |
 
-No Quadro 5, a linha "Adolescentes e jovens (≤30 anos)" põe HIV e sífilis como anuais; clamídia e gonococo seguem a frequência de outro subgrupo ou prática sexual da pessoa.
+No Quadro 5, a linha "Adolescentes e jovens (≤30 anos)" põe HIV e sífilis como anuais; clamídia e gonococo seguem a frequência de outro subgrupo ou prática sexual da pessoa. Na conclusão do quadro (p. 28), uma célula "Semestral" cobre as colunas de HIV e de sífilis para as linhas "Gays e HSH", "Profissionais do sexo", "Travestis/transexuais" e "Pessoas que fazem uso abusivo de álcool e outras drogas", e outra cobre as mesmas colunas na linha "Pessoas com prática sexual anal receptiva (passiva) sem uso de preservativos". A extração de texto do PDF desfaz a tabela, por isso o Trecho fica com o começo da célula; o resto se confere na página. HSH quer dizer homens que fazem sexo com homens.
 
 ## Limitações
 
