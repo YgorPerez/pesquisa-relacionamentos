@@ -80,7 +80,7 @@ O silêncio de um app se parece com o Cyberball: ser ignorado sem explicação. 
 | Inseguros pela falta de mensagens, usuários do último ano: 64% dos homens, 40% das mulheres | [Pew](../studies/pew-2023-2020-online-dating.md) | forte |
 | Sobrecarregados pelo número de mensagens: 54% das mulheres, 25% dos homens | [Pew](../studies/pew-2023-2020-online-dating.md) | forte |
 | Homens aceitam mais perfis que mulheres (34% mais no Estudo 1 de Pronk) | [Pronk 2020](../studies/pronk-2020-mentalidade-rejeicao.md) | moderada |
-| Mulheres e homens de minoria sexual: mais vulnerabilidade na aparência e no corpo | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
+| Mulheres em geral e homens gays e bissexuais: mais vulnerabilidade na aparência e no corpo | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
 | A proporção de mulheres nos estudos não mudou o efeito do app na saúde mental | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
 | Na Austrália, homens e mulheres usavam apps na mesma proporção, e a associação com saúde mental não mudou por gênero | [Holtzhausen 2020](../studies/holtzhausen-2020-apps-saude-mental.md) | fraca |
 

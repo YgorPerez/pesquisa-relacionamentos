@@ -28,6 +28,7 @@ A ideia de que a rejeição "dói" literalmente veio de estudos pequenos de ress
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
+| De onde veio a ideia da rejeição na matriz da dor | Estudos de ressonância antigos e pequenos com o Cyberball | Resumo | "Early neuroimaging studies using Cyberball suggested that social rejection activated the pain matrix, as identified in studies of physical pain. However, these early studies were characterized by small sample sizes." |
 | Participantes, Cyberball | 244 | Resumo | "Our statistical multi-level kernel density analysis (MKDA) of Cyberball neuroimaging studies with 244 participants fails to support the claim that social rejection operates on the same pain matrix as nociceptive stimuli" |
 | Participantes, término romântico | 64 | Discussion | "By including 244 participants in the first meta-analysis and 64 participants in the second" |
 | Regiões ativadas na rejeição por desconhecidos | Ínsula anterior, cingulado anterior esquerdo, córtex orbitofrontal inferior esquerdo; sem o dACC | Results | "Surprisingly, the dACC subdivision, which has been identified as a core region in both theoretical analyses and narrative reviews of this literature9,11, did not emerge in this analysis." |
