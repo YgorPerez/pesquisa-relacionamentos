@@ -20,11 +20,12 @@ test.describe('sitemap and robots', () => {
     ].map((m) => m[1])
     expect(locs).toEqual([
       `${SITE}/`,
-      `${SITE}/escolher-parceiro`,
-      `${SITE}/escolher-parceiro/que-caracteristicas-preveem`,
+      // The Topics in their `position` order.
       `${SITE}/onde-conhecer-pessoas`,
       `${SITE}/onde-conhecer-pessoas/onde-os-casais-se-conhecem`,
       `${SITE}${GUIDE}`,
+      `${SITE}/escolher-parceiro`,
+      `${SITE}/escolher-parceiro/que-caracteristicas-preveem`,
       `${SITE}/dicas`,
       `${SITE}/dicas/apps-como-complemento`,
       `${SITE}/estudos`,
