@@ -67,9 +67,8 @@ function Home() {
         </Display>
         <Lead>
           Respostas curtas para o que se pergunta de um relacionamento, de onde
-          conhecer alguém a como conversar, escolher e lidar com os apps. Cada
-          afirmação leva ao estudo de onde saiu, e a gente avisa quando a
-          pesquisa ainda não sabe.
+          conhecer alguém a como manter a relação. Cada afirmação leva ao estudo
+          de onde saiu, e a gente avisa quando a pesquisa ainda não sabe.
         </Lead>
 
         <Topics />
