@@ -2,7 +2,7 @@
 reference: "IBGE. *Censo Demográfico 2022: microdados da amostra, acesso público*, com o Dicionário de Variáveis e as Notas metodológicas 03/2026 (controle de confidencialidade) e 05/2026 (microdados da amostra). Rio de Janeiro: IBGE, 2026."
 link: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Microdados_e_Areas_de_Ponderacao/
 status: verified
-verified_on: 2026-10-19
+verified_on: 2026-10-25
 strength: strong
 strength_reason: "Questionário da amostra do Censo, aplicado 7,8 milhões de vezes; o arquivo público perde o município e a idade exata."
 countries: [Brasil]
@@ -41,10 +41,16 @@ O questionário da amostra do Censo 2022, por pessoa: sexo, idade, UF, estado co
 | População residente, Brasil | 203.080.756 | SIDRA 9514 pela API de agregados: variável 93, Brasil, sexo, idade e forma de declaração totais | "2022":"203080756" | |
 | Mulheres de 25 a 29 anos em SP que não viviam em união, no SIDRA | 747.507 | SIDRA 10185 pela API de agregados: variável 140, São Paulo (N3 35), Não viviam em união, Mulheres, 25 a 29 anos, cor ou raça total | "2022":"747507" | |
 | A mesma célula, somando os pesos do microdado público | 746.284 | `dados/grupo-possivel/censo-2022.csv`, gerado do arquivo de pessoas | "P0110 – Peso Amostral (acesso público)" | `scripts/calculations/ibge-2022-censo-amostra.ts` |
+| Homens de 25 a 29 anos no Brasil, no SIDRA | 7.593.659 | SIDRA 10185 pela API de agregados: variável 140, Brasil, estado conjugal Total, Homens, 25 a 29 anos, cor ou raça total | "2022":"7593659" | |
+| Homens de 25 a 29 anos no Brasil que não viviam em união, no SIDRA | 3.939.138 | SIDRA 10185, a mesma consulta: Não viviam em união, Homens | "2022":"3939138" | |
+| Mulheres de 25 a 29 anos no Brasil, no SIDRA | 7.804.840 | SIDRA 10185, a mesma consulta: estado conjugal Total, Mulheres | "2022":"7804840" | |
+| Mulheres de 25 a 29 anos no Brasil que não viviam em união, no SIDRA | 3.309.733 | SIDRA 10185, a mesma consulta: Não viviam em união, Mulheres | "2022":"3309733" | |
+| Parte dos homens de 25 a 29 anos no Brasil que não vivia em união | 51,9% | SIDRA 10185, a mesma consulta: Não viviam em união sobre o Total, Homens | "2022":"3939138" | `scripts/calculations/ibge-2022-censo-amostra-brasil.ts men` |
+| Parte das mulheres de 25 a 29 anos no Brasil que não vivia em união | 42,4% | SIDRA 10185, a mesma consulta: Não viviam em união sobre o Total, Mulheres | "2022":"3309733" | `scripts/calculations/ibge-2022-censo-amostra-brasil.ts women` |
 
 A soma dos pesos do microdado público dá exatamente a população de cada UF na tabela 9514 (no Brasil, 203.080.756), como a Nota 03/2026 promete. O pipeline (`scripts/possible-group/pipeline.ts`) confere isso e as 1.568 células do estado conjugal da tabela 10185 a cada rodada.
 
-Fonte local: `sources/ibge-2022-censo-amostra.txt`, com o texto das páginas citadas das duas notas metodológicas e do dicionário e as duas respostas do SIDRA, cada um sob a URL de onde saiu. Os microdados ficam no cache do pipeline, fora do repositório.
+Fonte local: `sources/ibge-2022-censo-amostra.txt`, com o texto das páginas citadas das duas notas metodológicas e do dicionário e as três respostas do SIDRA, cada um sob a URL de onde saiu. Os microdados ficam no cache do pipeline, fora do repositório.
 
 ## Limitações
 

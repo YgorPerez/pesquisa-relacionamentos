@@ -2,7 +2,7 @@
 reference: "Bruch EE, Newman MEJ. *Aspirational pursuit of mates in online dating markets*. Science Advances 4(8):eaap9815, 2018. Texto completo aberto: https://pmc.ncbi.nlm.nih.gov/articles/PMC6082652/ (preprint com o suplemento: https://arxiv.org/abs/1808.04840)"
 link: https://doi.org/10.1126/sciadv.aap9815
 status: verified
-verified_on: 2026-10-21
+verified_on: 2026-10-25
 strength: moderate
 strength_reason: "Todas as mensagens de cerca de 187 mil usuários heterossexuais ativos de um site de namoro gratuito, comportamento real e não autorrelato, mas de um site só, em quatro cidades grandes dos EUA, num único mês de 2014, com a desejabilidade medida pelas próprias mensagens."
 countries: [EUA]
@@ -16,6 +16,7 @@ conflict: "Financiado em parte pelo NIH (K01-HD-079554, para Bruch) e pela NSF (
 license: "CC BY-NC 4.0 (como diz a página do artigo)"
 covers:
   genders: [man, woman]
+  couple: different-sex
 ---
 
 # Bruch & Newman (2018): busca "aspiracional" em sites de namoro
