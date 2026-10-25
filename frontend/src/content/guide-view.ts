@@ -301,6 +301,36 @@ function keyCoverage(
   )
 }
 
+function guideTips(
+  guide: Guide,
+  library: Library,
+  numbers: Numbering,
+): ReadonlyArray<GuideTip> {
+  return guide.tips.flatMap((slug): GuideTip[] => {
+    const tip = library.tips.find((d) => d.slug === slug)
+    return tip
+      ? [
+          {
+            slug,
+            html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
+            strength: tip.strength,
+            inference: tip.inference,
+            appliesTo: appliesTo(tip.covers),
+            coverage: tip.covers,
+          },
+        ]
+      : []
+  })
+}
+
+function ownSections(guide: Guide, numbers: Numbering): GuideView['sections'] {
+  return guide.sections.map((s, i) => ({
+    id: `t-secao-${i + 1}`,
+    title: s.title,
+    html: html(withReferences(s.markdown, numbers)),
+  }))
+}
+
 export function guideView(guide: Guide, library: Library): GuideView {
   const numbers = numberFactSheets(guide.citedFactSheets, library)
   const topic = library.topics.find((t) => t.slug === guide.topic)
@@ -309,21 +339,7 @@ export function guideView(guide: Guide, library: Library): GuideView {
     topicTitle: topic?.title ?? guide.topic,
     answerHtml: html(withReferences(guide.shortAnswer, numbers)),
     keyCoverage: keyCoverage(guide.shortAnswer, library),
-    tips: guide.tips.flatMap((slug): GuideTip[] => {
-      const tip = library.tips.find((d) => d.slug === slug)
-      return tip
-        ? [
-            {
-              slug,
-              html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
-              strength: tip.strength,
-              inference: tip.inference,
-              appliesTo: appliesTo(tip.covers),
-              coverage: tip.covers,
-            },
-          ]
-        : []
-    }),
+    tips: guideTips(guide, library, numbers),
     findings: guide.findings.map((a): GuideFindingView => {
       const { country, period } = whereAndWhen(a.countries, a.period)
       return {
@@ -345,11 +361,7 @@ export function guideView(guide: Guide, library: Library): GuideView {
           })),
         }
       : null,
-    sections: guide.sections.map((s, i) => ({
-      id: `t-secao-${i + 1}`,
-      title: s.title,
-      html: html(withReferences(s.markdown, numbers)),
-    })),
+    sections: ownSections(guide, numbers),
     profileHtml: html(withReferences(guide.variesByProfile, numbers)),
     myths: guide.myths.map((m) => ({
       claim: m.claim,
