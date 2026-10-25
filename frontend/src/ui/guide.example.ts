@@ -13,5 +13,12 @@ export const GUIDE = (() => {
   return guideView(found, library)
 })()
 
+/** The fixture's Guide with a section of its own ("Então, vale a pena?"). */
+export const GUIDE_WITH_SECTIONS = (() => {
+  const found = guideBySlug(library, 'app-ou-presencial')
+  if (!found) throw new Error('the fixture has no app-ou-presencial Guide')
+  return guideView(found, library)
+})()
+
 /** The HTML of a Guide paragraph, as the server builds it from markdown. */
 export const excerpt = excerptWithReferences

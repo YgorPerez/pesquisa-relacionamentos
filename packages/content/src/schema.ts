@@ -160,7 +160,8 @@ const GuidePath = Schema.String.check(
 )
 
 /** `guides/<topic>/<slug>.md`: the body holds the short answer (before the
- * first `##`), "Varia conforme o Perfil?" and "Limitações". */
+ * first `##`), the Guide's own sections if any, "Varia conforme o Perfil?"
+ * and "Limitações". */
 export const GuideFrontmatter = Schema.Struct({
   question: Text,
   confidence: Schema.Literals(STRENGTHS),

@@ -1,6 +1,6 @@
 // The sections only the Guide has: the arrow that points to the Fact sheets,
-// the Tips, what the evidence says (with the divergence) and the struck-out
-// Myths. The page (`routes/$tema/$slug.tsx`) assembles them in #7's order.
+// the Tips, what the evidence says (with the divergence), the Guide's own
+// sections and the struck-out Myths. The page (`routes/$tema/$slug.tsx`) assembles them in #7's order.
 import type { Verdict } from '@tem-estudo/rules/applies-to-you'
 import { Link } from '@tanstack/react-router'
 import type { GuideView } from '#/content/guide-view'
@@ -165,6 +165,21 @@ function Divergence({
         <Html as="span" html={divergence.bestDesignHtml} />
       </p>
     </div>
+  )
+}
+
+/** The Guide's own sections ("Efeitos psicológicos", "Então, vale a
+ * pena?"), each with the title the Guide gives it, in file order. */
+export function OwnSections({ sections }: { sections: GuideView['sections'] }) {
+  return (
+    <>
+      {sections.map((section) => (
+        <Section key={section.id} aria-labelledby={section.id}>
+          <Headline id={section.id}>{section.title}</Headline>
+          <Html className="prosa" html={section.html} />
+        </Section>
+      ))}
+    </>
   )
 }
 
