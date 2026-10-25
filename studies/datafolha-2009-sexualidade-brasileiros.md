@@ -67,3 +67,4 @@ Fonte local: `sources/private/datafolha-2009-sexualidade-brasileiros.txt`, com a
 ## Como usamos
 
 - [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): única amostra nacional brasileira achada com algum número sobre conhecer pessoas pela internet, usada para mostrar que o Brasil não tem a pergunta "onde vocês se conheceram".
+- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): média de parcerias na vida por sexo e a recusa alta dos homens, ao lado das PCAP de 2008 e 2013.

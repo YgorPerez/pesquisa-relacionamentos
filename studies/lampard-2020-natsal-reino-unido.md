@@ -52,8 +52,14 @@ Nas linhas da Tabela 1, os números seguem a ordem das linhas da tabela: escola,
 | Quanto o modelo explica | pseudo-R² de Cox e Snell = 0,084 | Tabela 2, notas | "Pseudo-r2 (Cox and Snell) = 0.084." |
 | Homogamia de idade de quem se conheceu online | maior que na maioria dos outros lugares | Homogamy and meeting places (p. 29) | "Table 4 demonstrates that meeting online is associated with greater age homogamy than most other meeting places" |
 | Homogamia de classe de quem se conheceu online | não se distingue | Homogamy and meeting places (p. 30) | "Table 4 provides least evidence that meeting online is distinctive in class homogamy terms" |
+| Como o histórico de uniões entra no modelo | Em duas categorias: a diferença entre a primeira e a segunda união co-residente era desprezível | Data and measures (p. 15) | "for number of co-residential partnerships, the difference between first and second partnerships was negligible" |
+| Site de encontro contra offline (regressão multinomial ajustada): terceira união co-residente ou mais | Razão de chances 1,41, sem significância | Suplemento, Tabela S3, coluna OR(DW) | "3+ partnerships 1.41" |
+| Idem: primeira relação sexual aos 18 anos ou mais | Razão de chances 2,05, significativa | Suplemento, Tabela S3, coluna OR(DW) | "First sex at age 18+ 2.05" |
+| Mudança no tempo do efeito do número de uniões anteriores | Sinais de que diminuiu (não mostrado no artigo) | Nota 7 | "Some evidence exists (not presented here) of declining effects for number of past relationships" |
 
 O autor resume a comparação de homogamia assim: o online não produz tanta homogamia quanto os lugares de composição homogênea (os de estudo e os locais, na leitura dele), nem mais heterogamia que os lugares de composição mista. Ele propõe ver o online como um novo tipo de lugar "público".
+
+"3+ partnerships" quer dizer que a união atual é a terceira em que a pessoa mora junto com alguém, ou mais; não é número de parceiros sexuais. Na Tabela 2 (regressão logística, online contra offline), essa variável tem razão de chances de 1,51 com p = 0,057 (1,96 sem ajuste), e 11,4% desses casais se conheceram online. Na Tabela S4 do suplemento, 8,2% de quem estava na terceira união ou mais conheceu o parceiro por site de encontro, contra 4,2% dos outros. Na Tabela S3, o 2.05 da primeira relação aos 18 anos ou mais vem com três asteriscos (p < 0,001), e o 1.41 sem nenhum. Os números da Tabela 2 e da Tabela S4 estão em colunas que o `pdftotext` separa da linha e não passam pela conferência automática; foram lidos no PDF.
 
 ## Limitações
 
@@ -68,3 +74,4 @@ O autor resume a comparação de homogamia assim: o online não produz tanta hom
 ## Como usamos
 
 - [Relatório 2026-10-18: onde casais se conhecem](../reports/2026-10-18-onde-casais-se-conhecem.md): na Grã-Bretanha, amigos/família seguiam como principal canal; o online cresceu às custas de bares e lugares públicos.
+- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): o único cruzamento achado entre histórico de relações e onde o casal se conheceu; quem estava na terceira união co-residente ou mais conheceu o parceiro online um pouco mais, sem significância no modelo ajustado.

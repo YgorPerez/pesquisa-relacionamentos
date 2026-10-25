@@ -69,3 +69,4 @@ As duas ondas da HCMST perguntaram, em texto livre, como a pessoa e o parceiro s
 ## Como usamos
 
 - [Relatório 2026-10-18](../reports/2026-10-18-casamentos-apps-e-onde-procurar.md), seção 1: refuta "a maioria se casa por app".
+- [Relatório 2026-10-24: parceiros antes de casar](../reports/2026-10-24-parceiros-antes-de-casar.md): onde os casais americanos se conheceram; o artigo não cruza o local com o número de parceiros.
