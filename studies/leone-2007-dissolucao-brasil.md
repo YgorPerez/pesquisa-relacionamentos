@@ -4,14 +4,14 @@ link: https://doi.org/10.4054/DemRes.2007.17.7
 status: verified
 verified_on: 2026-10-24
 strength: moderate
-strength_reason: "Amostra nacional representativa de mulheres brasileiras (DHS 1996) com modelo de risco que controla heterogeneidade não observada; mas só mulheres, dados de 1991 a 1996, e a reconstrução das uniões exclui quase metade das mulheres com mais de uma união."
+strength_reason: "Sai de uma pesquisa nacional representativa de mulheres brasileiras (DHS 1996), com modelo de risco que controla a heterogeneidade não observada; mas a amostra analisada deixa de ser representativa porque a reconstrução das uniões exclui quase metade das mulheres com mais de uma união, e só há mulheres e dados de 1991 a 1996, numa entrevista só com calendário retrospectivo."
 countries: [Brasil]
 period: "1991–1996 (calendário de cinco anos antes da entrevista da DHS de 1996)"
 sample:
   n: 7517
   description: "7.517 mulheres de 15 a 49 anos da Pesquisa Nacional sobre Demografia e Saúde (DHS) de 1996, que entrevistou uma amostra representativa de mais de 12.000 mulheres. Entram as que já tinham feito sexo e não estavam esterilizadas, de 8.663 elegíveis; as demais saíram porque a duração da união não podia ser reconstruída. União inclui casamento e união consensual."
   representative: false
-design: longitudinal
+design: cross-sectional
 conflict: "Bolsa do Economic and Social Research Council do Reino Unido (R00429834523) à primeira autora. O artigo não declara outros vínculos."
 covers:
   genders: [woman]
@@ -38,7 +38,7 @@ Com o calendário mês a mês da DHS brasileira de 1996, que registra uniões, g
 | Residência urbana (log do risco) | 0,718; 0,844; 0,844 | Tabela 3 | "Urban 0.718 (0.126) 0.844 (0.149) 0.844" |
 | Escolaridade e cidade | as duas associadas a mais dissolução | Seção 5 | "education and urban residence are both positively associated with the risk of dissolution" |
 | Primeira relação sexual antes dos 18 anos | risco maior de dissolução | Seção 5 | "Women that had their first sexual intercourse before the age of 18 show a higher risk of union dissolution." |
-| Grávida e com filhos: coeficientes (log do risco), na ordem em que o texto extraído traz a tabela | grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069 | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
+| Grávida e com filhos: coeficientes (log do risco) nos três modelos (efeitos fixos, efeito aleatório, conjunto); o Trecho intercala as duas linhas | grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069 | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
 | Gravidez | risco maior de separar durante a gestação | Seção 5 | "During pregnancy there is a higher risk of union dissolution." |
 | Filhos | risco maior de dissolução para quem tem filhos, ao contrário de estudos anteriores | Seção 5 | "Despite previous findings, our model shows a higher risk of dissolution for couples that have children." |
 | Primeiro filho fora do casamento | sem efeito significativo | Seção 5 | "whether the first birth took place 'out of wedlock' has no significant impact on the risk of future union dissolution" |
@@ -54,7 +54,7 @@ Com o calendário mês a mês da DHS brasileira de 1996, que registra uniões, g
 - Os coeficientes estão na escala do logaritmo do risco. O artigo não os converte em razões de risco, e esta Ficha também não.
 - Escolaridade, religião, raça e residência são medidas na data da entrevista, não no início da união. As autoras avisam que a residência pode ter mudado.
 - O texto chama de "Table 4" o modelo de dissolução que está na Tabela 3, e de "Table 3" a Tabela 2.
-- O texto extraído do PDF intercala as colunas da linha de gravidez e filhos; a ordem acima segue a tabela (efeitos fixos, efeito aleatório, conjunto).
+- O texto extraído do PDF intercala as colunas da linha de gravidez e da de filhos; o Valor da linha correspondente desfaz a intercalação e segue a ordem das colunas da tabela (efeitos fixos, efeito aleatório, conjunto).
 - É associação: a mesma propensão não observada que eleva o risco de separar eleva o de engravidar, e o desenho não diz qual vem primeiro.
 
 ## Como usamos

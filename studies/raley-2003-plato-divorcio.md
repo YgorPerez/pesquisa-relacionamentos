@@ -44,7 +44,8 @@ Duas coisas. Primeiro, com os históricos conjugais da CPS de 1990, a proporçã
 | ... 24–30 anos, sem controles | 0,41 | Tabela 3 | "24-30 0.41 10.15" |
 | Sem diploma do ensino médio, contra faculdade, sem controles | 2,52 | Tabela 3 | "No Diploma 2.52 8.77" |
 | Tendência: o divórcio parou de subir | sem tendência no risco, diferenças grandes e significativas | Resultados, p. 252 | "there was no trend in the likelihood of divorce, but that all of the differentials in the risk of divorce are large and statistically significant" |
-| Tendência por escolaridade | o divórcio caiu entre quem tem faculdade e subiu entre quem não terminou o ensino médio | Conclusão, p. 256 | "the educational disparity in divorce has increased, as women with a college degree have experienced a decline in the risk of divorce" |
+| Tendência por escolaridade: faculdade | o divórcio caiu entre quem tem faculdade e a diferença por escolaridade cresceu | Conclusão, p. 256 | "the educational disparity in divorce has increased, as women with a college degree have experienced a decline in the risk of divorce" |
+| Tendência por escolaridade: sem ensino médio | o divórcio subiu entre quem não terminou o ensino médio | Resultados, p. 253 | "not having completed high school indicates divorce rates increased among those with the least education" |
 | Uniões de mulheres negras (casamento ou coabitação) terminando em 5 anos | de 40% para 55% | Resultados, p. 252 | "from 40 percent for the 1980-86 cohort to 55 percent for 1987-94 cohort" |
 
 ## Limitações

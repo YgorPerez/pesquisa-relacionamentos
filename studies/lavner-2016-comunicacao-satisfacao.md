@@ -40,7 +40,7 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 | Satisfação prevendo negatividade | significativa em 5 de 12 | Resultados, Negativity, p. 9 | "Satisfaction was a significant predictor of negativity at 5 of the 12 lags" |
 | ... mediana do β padronizado | 0,09 | Resultados, Negativity, p. 9 | "across all lags = .09). Effects were found at the first two lags" |
 | Negatividade prevendo satisfação | significativa em 4 de 12 | Resultados, Negativity, p. 9 | "Negativity was a significant predictor of satisfaction at 4 of the 12 lags" |
-| ... mediana do β padronizado, só nas duas primeiras defasagens | 0,06 | Resultados, Negativity, p. 9 | "across all lags = .06), with effects found at the first two lags" |
+| ... mediana do β padronizado em todas as defasagens; efeitos só nas duas primeiras | 0,06 | Resultados, Negativity, p. 9 | "across all lags = .06), with effects found at the first two lags" |
 | Eficácia prevendo satisfação, em 12 defasagens | uma vez só | Resultados, Effectiveness, p. 9 | "Effectiveness was a significant predictor of satisfaction only once" |
 | Da primeira à quarta onda (cerca de dois anos e meio): satisfação prevendo comunicação | 6 de 12 efeitos | Resultados, Wave 1 to Wave 4, p. 9 | "Initial satisfaction reliably predicted subsequent communication in 6 of 12 possible effects" |
 | ... mediana do β padronizado | 0,10 | Resultados, Wave 1 to Wave 4, p. 9 | "= .10), with significant results found for all three communication behaviors" |

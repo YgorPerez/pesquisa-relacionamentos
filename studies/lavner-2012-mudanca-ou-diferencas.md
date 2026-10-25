@@ -15,7 +15,6 @@ design: longitudinal
 conflict: "Bolsa de pós-graduação da National Science Foundation ao primeiro autor; Research Development Award da Universidade da Flórida, bolsa MH59712 do NIMH e prêmio do Fetzer Institute a Benjamin Karney. O artigo não declara outros vínculos."
 covers:
   genders: [man, woman]
-  ages: { min: 18, max: 35 }
   couple: different-sex
 ---
 

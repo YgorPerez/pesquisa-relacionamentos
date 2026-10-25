@@ -55,4 +55,4 @@ Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar re
 
 ## Como usamos
 
-- [Relatório 2026-10-24: preditores de término e divórcio](../reports/2026-10-24-preditores-termino-divorcio.md): ser direto sobre um problema grave não fez mal; a hostilidade indireta fez mal sempre.
+- [Relatório 2026-10-24: preditores de término e divórcio](../reports/2026-10-24-preditores-termino-divorcio.md): com problemas graves, ser direto veio com satisfação mais estável; a hostilidade indireta veio com satisfação mais baixa e estável em qualquer caso (associação, não causa).

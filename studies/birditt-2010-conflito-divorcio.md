@@ -15,7 +15,6 @@ design: longitudinal
 conflict: "Bolsa do NIA (K99AG029879) à primeira autora e do NICHD (HD40778) à terceira. O artigo não declara outros vínculos."
 covers:
   genders: [man, woman]
-  ages: { min: 18, max: 35 }
   couple: different-sex
 ---
 
@@ -50,7 +49,7 @@ No primeiro ano de casamento (1986), cada cônjuge descreveu a última discordâ
 
 - O comportamento no conflito é o que cada cônjuge disse que fez numa discordância, não o que um observador viu. Os autores lembram que é percepção, sujeita a memória e a como a pessoa quer se ver.
 - Os modelos de Cox da Tabela 3 usam 207 casais, não os 373; o texto não explica de onde vem esse número.
-- As razões de risco são por ponto numa escala de 1 a 4, então "4,28" compara extremos que poucos casais ocupam. Sozinho, o número exagera o tamanho do efeito para quem está no meio da escala.
+- As razões de risco são por um ponto na média da escala de 1 a 4. O comportamento destrutivo do marido violou a suposição de riscos proporcionais, e os autores o corrigiram com uma interação com os anos até o divórcio (0,14 no modelo 1, Tabela 3). Por isso o 4,28 não é um efeito constante ao longo dos 16 anos.
 - O retraimento são dois itens soltos, de uma frase cada, porque não formavam escala.
 - Casais de 1986 de um condado de Michigan, só heterossexuais, em primeiro casamento e da mesma raça. Os autores avisam que recém-casados de hoje casam mais tarde e dividem mais as decisões.
 - O efeito "construtivo da esposa aumenta o divórcio" só faz sentido junto com as interações: o comportamento construtivo ajuda quando os dois o usam e não protege quando o outro sai da conversa.
