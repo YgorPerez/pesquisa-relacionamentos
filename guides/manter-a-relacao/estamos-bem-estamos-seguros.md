@@ -10,7 +10,7 @@ findings:
     period: publicado em 2012
   - text: Entre 136 casais de Los Angeles em que os dois relataram satisfação alta e estável nos quatro primeiros anos, 15% se divorciaram em dez anos. Nos casais menos satisfeitos do mesmo estudo, foram de 40% a 60%.
     fact_sheets: [lavner-2012-recem-casados-satisfeitos]
-  - text: Entre esses casais satisfeitos, a satisfação e o compromisso não separaram quem se divorciou de quem ficou. O que separou foi a comunicação negativa numa conversa gravada no começo do casamento; os comportamentos positivos não diferiram.
+  - text: Entre esses casais satisfeitos, a satisfação e o compromisso não separaram quem se divorciou de quem ficou. Entre o que se mediu, separaram a comunicação negativa numa conversa gravada no começo do casamento e a história familiar do marido (abaixo); os comportamentos positivos não diferiram.
     fact_sheets: [lavner-2012-recem-casados-satisfeitos]
   - text: Entre os satisfeitos que se divorciaram, 35% dos maridos tinham pais divorciados, contra 14% dos que continuaram casados.
     fact_sheets: [lavner-2012-recem-casados-satisfeitos]
@@ -23,7 +23,7 @@ related:
 seo: { title: 'Se o casal está bem agora, está seguro?' }
 ---
 
-Estar bem conta, mas não garante. Entre recém-casados americanos, quem seguiu satisfeito nos quatro primeiros anos se separou bem menos, ==11% a 12% contra 33% a 46%== no grupo insatisfeito [@lavner-2012-mudanca-ou-diferencas]. Mesmo assim, 15% dos casais satisfeitos se divorciaram em dez anos, e o que os distinguiu foi uma forma de conversar mais negativa já no começo [@lavner-2012-recem-casados-satisfeitos]. Os estudos são pequenos, a evidência é fraca, e nenhum é brasileiro.
+Estar bem conta, mas não garante. Entre recém-casados americanos, quem seguiu satisfeito nos quatro primeiros anos se separou bem menos, ==11% a 12% contra 33% a 46%== no grupo insatisfeito [@lavner-2012-mudanca-ou-diferencas]. Mesmo assim, 15% dos casais satisfeitos se divorciaram em dez anos, e, entre o que se mediu, os distinguiram uma forma de conversar mais negativa já no começo e o marido ter pais divorciados [@lavner-2012-recem-casados-satisfeitos]. Os estudos são pequenos, a evidência é fraca, e nenhum é brasileiro.
 
 ## Varia conforme o Perfil?
 
@@ -36,5 +36,5 @@ Os dois estudos de recém-casados olharam casais homem-mulher em primeiro casame
 - O estudo dos casais satisfeitos tem só 21 divórcios e faz muitas comparações sem correção, então alguma diferença pode ser acaso [@lavner-2012-recem-casados-satisfeitos].
 - A satisfação entre o quarto e o décimo ano não foi medida. Não se sabe se esses casais continuaram satisfeitos até perto do divórcio [@lavner-2012-recem-casados-satisfeitos].
 - As taxas de separação por grupo são descritivas, sem levar outros fatores em conta, numa amostra de baixo risco de uma cidade universitária da Flórida [@lavner-2012-mudanca-ou-diferencas].
-- A conversa foi observada uma vez, nos primeiros seis meses. Nenhum estudo testou se mudar a forma de conversar muda o desfecho [@lavner-2012-recem-casados-satisfeitos].
+- A conversa foi observada uma vez, nos primeiros seis meses. Nenhum estudo do acervo testou se mudar a forma de conversar muda o desfecho [@lavner-2012-recem-casados-satisfeitos].
 - Os 43 estudos medem satisfação, não separação [@joel-2020-machine-learning-43-datasets].

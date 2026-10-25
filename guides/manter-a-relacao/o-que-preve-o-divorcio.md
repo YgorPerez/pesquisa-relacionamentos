@@ -2,11 +2,11 @@
 question: O que ==prevê== o fim de um casamento?
 confidence: strong
 findings:
-  - text: Cerca de metade dos primeiros casamentos termina em separação ou divórcio.
+  - text: Pelas taxas de separação de 1986 a 1989, cerca de metade dos primeiros casamentos termina ou deve terminar em separação ou divórcio.
     fact_sheets: [raley-2003-plato-divorcio]
-  - text: Em 30 anos, 60% dos primeiros casamentos de mulheres sem ensino médio completo terminam, contra 36% dos de quem tem faculdade.
+  - text: Pelas taxas de separação de 1986 a 1989, 60% dos primeiros casamentos de mulheres sem ensino médio completo terminam ou devem terminar em 30 anos, contra 36% dos de quem tem faculdade.
     fact_sheets: [raley-2003-plato-divorcio]
-  - text: Mais de 60% dos casamentos feitos antes dos 20 anos terminam, contra cerca de 40% dos feitos depois dos 22.
+  - text: Pelas mesmas taxas, mais de 60% dos casamentos feitos antes dos 20 anos terminam ou devem terminar, contra cerca de 40% dos feitos depois dos 22.
     fact_sheets: [raley-2003-plato-divorcio]
   - text: Ter um filho antes de casar veio com o dobro do risco de separação, mesmo levando em conta idade, estudo e outros fatores. Em 5 anos, 31% a 32% desses casamentos terminaram, contra 15% a 18% dos casamentos sem filho antes.
     fact_sheets: [raley-2003-plato-divorcio]
@@ -14,7 +14,7 @@ findings:
     fact_sheets: [raley-2003-plato-divorcio]
   - text: Quem já tinha filho de uma união anterior, ou casou com um homem que já tinha sido casado, se separou um pouco mais.
     fact_sheets: [lehrer-2013-idade-casamento]
-  - text: Em 373 casais recém-casados de Michigan, gritar, insultar, trazer coisas antigas e querer a última palavra nas discordâncias do primeiro ano vieram com mais divórcio em 16 anos, além do que explicavam renda e escolaridade.
+  - text: Em casais recém-casados de Michigan (373 no estudo, 207 nos modelos de divórcio), gritar, insultar, trazer coisas antigas e querer a última palavra nas discordâncias do primeiro ano vieram com mais divórcio em 16 anos, além do que explicavam renda e escolaridade.
     fact_sheets: [birditt-2010-conflito-divorcio]
   - text: Em 251 casais da Flórida, os que acabaram insatisfeitos já começaram o casamento com mais problemas, agressão verbal e estresse. A piora ao longo de quatro anos pesou pouco.
     fact_sheets: [lavner-2012-mudanca-ou-diferencas]
@@ -26,20 +26,17 @@ findings:
   - text: Em 2024, o tempo médio entre o casamento e o divórcio foi de 13,8 anos, contra 16,0 em 2010. Quase metade dos divórcios (47,5%) foi de casamentos com menos de 10 anos.
     fact_sheets: [ibge-2024-registro-civil]
     period: '2010 a 2024'
-  - text: Houve 45,7 divórcios para cada 100 casamentos de pessoas de sexos diferentes em 2024. A conta compara os divórcios e os casamentos do mesmo ano, que são casais diferentes, e não diz que parte dos casamentos acaba.
+    applies_to: { genders: [man, woman], couple: different-sex }
+  - text: Houve 45,7 divórcios para cada 100 casamentos de pessoas de sexos diferentes em 2024. A conta compara os divórcios e os casamentos do mesmo ano, que são casais diferentes, e não diz que parte dos casamentos acaba. O IBGE avisa que os divórcios de 2024 podem estar subcontados.
     fact_sheets: [ibge-2024-registro-civil]
     period: '2024'
+    applies_to: { genders: [man, woman], couple: different-sex }
 related:
-  [
-    casar-cedo-e-divorcio,
-    brigas-sinal-de-alerta,
-    precisamos-ser-parecidos,
-    aparencia-e-dinheiro-importam,
-  ]
+  [casar-cedo-e-divorcio, brigas-sinal-de-alerta, precisamos-ser-parecidos]
 seo: { title: 'O que prevê o fim de um casamento?' }
 ---
 
-Os fatores mais bem medidos são os do ponto de partida. Nos EUA, quem casou ==antes dos 20, tinha menos estudo ou já tinha filho== se separou mais [@raley-2003-plato-divorcio], e já dentro do casamento a briga destrutiva veio com mais divórcio [@birditt-2010-conflito-divorcio]. Nada disso mostra causa: quem casa cedo ou briga assim pode já ser diferente antes. No Brasil, o único estudo é com mulheres, de 1996, e nele a segunda união foi o que mais pesou [@leone-2007-dissolucao-brasil].
+Os fatores mais bem medidos são os do ponto de partida. Nos EUA, quem casou ==antes dos 20, tinha menos estudo ou já tinha filho== se separou mais [@raley-2003-plato-divorcio], e já dentro do casamento a briga destrutiva veio com mais divórcio [@birditt-2010-conflito-divorcio]. Nada disso mostra causa: quem casa cedo ou briga assim pode já ser diferente antes. No Brasil, o único estudo do acervo é com mulheres, de 1996: nele a segunda união foi o que mais pesou, e mais estudo veio com mais separação, ao contrário dos EUA [@leone-2007-dissolucao-brasil].
 
 ## Varia conforme o Perfil?
 
@@ -51,8 +48,8 @@ Para casais do mesmo sexo, não há dado: os estudos de separação olharam só 
 
 ## Limitações
 
-- Os autores avisam que casar cedo, ter filho antes ou morar junto antes podem marcar pessoas que já tinham mais risco, e os dados não separam uma coisa da outra [@raley-2003-plato-divorcio].
-- Os números americanos de idade, estudo e filhos são de casamentos de 1980 a 1995. Não dizem quanto cada fator pesa hoje [@raley-2003-plato-divorcio].
+- Casar cedo, ter filho antes ou morar junto antes podem marcar pessoas que já tinham mais risco, e os dados não separam uma coisa da outra [@raley-2003-plato-divorcio].
+- Os números americanos de idade e estudo são projeções de tábua de vida: supõem que as taxas de separação de 1986 a 1989 valem para a vida inteira do casamento. Os de filho e de morar junto vêm de casamentos de 1980 a 1994. Nenhum diz quanto cada fator pesa hoje [@raley-2003-plato-divorcio].
 - O estudo brasileiro é de 1991 a 1996 e deixou de fora quase metade das mulheres com mais de uma união, porque não dava para reconstruir as datas [@leone-2007-dissolucao-brasil].
 - O tempo médio até o divórcio do IBGE é medido entre os casamentos que acabaram naquele ano. Não é a duração de um casamento típico, e os divórcios de 2024 podem estar subcontados [@ibge-2024-registro-civil].
 - Os motivos contados pelos divorciados vêm de 52 pessoas, e três autores ganham dinheiro com o curso que elas fizeram [@scott-2013-motivos-divorcio].

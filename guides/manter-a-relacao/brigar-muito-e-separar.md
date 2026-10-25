@@ -11,7 +11,7 @@ findings:
     period: publicado em 2010
   - text: Em 431 casais filmados em casa, os mais satisfeitos se comunicavam melhor no mesmo momento, com mais carinho, menos hostilidade e mais soluções.
     fact_sheets: [lavner-2016-comunicacao-satisfacao]
-  - text: Ao longo de dois anos e meio, a satisfação do começo previu como o casal conversaria depois. A forma de conversar no começo não previu a satisfação depois. Os autores dizem que os dois efeitos são fracos e de tamanho parecido.
+  - text: Ao longo de dois anos e meio, a satisfação do começo previu como o casal conversaria depois, e a forma de conversar no começo não previu a satisfação depois. Nas medições a cada 9 meses, os dois sentidos tiveram o mesmo tamanho em 85% das comparações, e os autores dizem que os dois efeitos são fracos.
     fact_sheets: [lavner-2016-comunicacao-satisfacao]
   - text: Em 251 casais da Flórida, o que separou quem acabou insatisfeito foi o nível de problemas, agressão verbal e estresse já no começo do casamento, mais do que uma piora ao longo de quatro anos.
     fact_sheets: [lavner-2012-mudanca-ou-diferencas]
@@ -24,7 +24,7 @@ related:
 seo: { title: 'Brigar muito quer dizer que o casal vai se separar?' }
 ---
 
-Os estudos do acervo não respondem isso direto, porque mediram ==o jeito de brigar, não quantas vezes==. O que veio com mais divórcio foi a briga destrutiva, com grito, insulto e o passado de volta [@birditt-2010-conflito-divorcio]. E a briga ruim não é só causa: num estudo que filmou 431 casais, a satisfação previu a forma de conversar meses depois tanto quanto a conversa previu a satisfação [@lavner-2016-comunicacao-satisfacao]. Nenhum desses estudos é brasileiro.
+Os estudos do acervo não respondem isso direto, porque mediram ==o jeito de brigar, não quantas vezes==. O que veio com mais divórcio foi a briga destrutiva, com grito, insulto e o passado de volta [@birditt-2010-conflito-divorcio]. E a briga ruim pode ser também sintoma: num estudo que filmou 431 casais, a satisfação previu a forma de conversar meses depois tanto quanto a conversa previu a satisfação [@lavner-2016-comunicacao-satisfacao]. Nenhum desses estudos é brasileiro.
 
 ## Varia conforme o Perfil?
 

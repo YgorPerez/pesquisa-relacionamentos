@@ -2,13 +2,13 @@
 question: Quais ==brigas== são sinal de alerta numa relação?
 confidence: moderate
 findings:
-  - text: Em 373 casais recém-casados de Michigan, quem disse que, numa discordância do primeiro ano, gritava, insultava, trazia coisas antigas ou queria a última palavra se divorciou mais nos 16 anos seguintes. Valeu para maridos e esposas.
+  - text: Em casais recém-casados de Michigan (373 no estudo, 207 nos modelos de divórcio), quem disse que, numa discordância do primeiro ano, gritava, insultava, trazia coisas antigas ou queria a última palavra se divorciou mais nos 16 anos seguintes. Valeu para maridos e esposas.
     fact_sheets: [birditt-2010-conflito-divorcio]
   - text: Esse jeito de brigar se associou ao divórcio mesmo depois de levar em conta raça, renda, escolaridade e a família de origem.
     fact_sheets: [birditt-2010-conflito-divorcio]
   - text: Quando os dois discutiam com calma, ouviam e tentavam entender o outro, o divórcio foi menos frequente. Quando um fazia isso e o outro saía da conversa, foi mais frequente.
     fact_sheets: [birditt-2010-conflito-divorcio]
-  - text: Em 79 casais de Indiana filmados discutindo um desacordo, crítica, defensividade, desprezo e "se fechar" (parar de responder e se retirar da conversa) separaram os nove casais que se divorciaram nos primeiros anos. Nos divórcios mais tardios, pesou a falta de carinho, não esses quatro.
+  - text: Em 79 casais de Indiana filmados discutindo um desacordo, crítica, defensividade, desprezo e "se fechar" (parar de responder e se retirar da conversa) separaram os nove casais que se divorciaram nos primeiros anos, com 83,5% de acerto medido nos mesmos casais. Nos divórcios mais tardios, pesou a falta de carinho, não esses quatro.
     fact_sheets: [gottman-2000-timing-divorce]
   - text: Entre 136 casais de Los Angeles satisfeitos nos quatro primeiros anos de casamento, os 21 que se divorciaram em dez anos tinham mostrado mais comunicação negativa numa conversa gravada no começo do casamento. Os comportamentos positivos não diferiram.
     fact_sheets: [lavner-2012-recem-casados-satisfeitos]
@@ -23,14 +23,14 @@ findings:
 tips: [sinais-de-alerta-na-briga]
 myths:
   - claim: Dá para prever com 93% de acerto se um casal vai se divorciar.
-    why_not: O número vem de um estudo com 79 casais, e a equação foi montada e avaliada nos mesmos casais, sem um grupo novo para testar. Quando outros pesquisadores repetiram esse método com dados de uma pesquisa nacional dos EUA, o acerto entre os casais apontados como futuros divorciados caiu de 65% para 29% na metade dos dados que a equação não tinha visto.
+    why_not: O número aparece no resumo de um estudo com 79 casais, não nos resultados, onde as taxas vão de 75% a 95%. Cada equação foi montada e avaliada nos mesmos casais, sem um grupo novo para testar. Quando outros pesquisadores testaram esse método numa amostra nova, o acerto caiu muito.
     fact_sheets: [gottman-2000-timing-divorce]
 related:
   [brigar-muito-e-separar, estamos-bem-estamos-seguros, o-que-preve-o-divorcio]
 seo: { title: 'Quais brigas de casal são sinal de alerta?' }
 ---
 
-O sinal mais consistente é a ==briga destrutiva==: gritar, insultar, trazer o passado, querer a última palavra. Em casais americanos acompanhados por 16 anos, quem brigava assim no primeiro ano de casamento se divorciou mais, e o mesmo valeu para o padrão em que um tenta conversar e o outro sai [@birditt-2010-conflito-divorcio]. São associações, e a briga ruim também aparece como sintoma de um casal que já vai mal [@lavner-2016-comunicacao-satisfacao]. Não há estudo brasileiro sobre isso.
+O sinal mais consistente é a ==briga destrutiva==: gritar, insultar, trazer o passado, querer a última palavra. Em casais americanos acompanhados por 16 anos, quem brigava assim no primeiro ano de casamento se divorciou mais, e o mesmo valeu para o padrão em que um tenta conversar e o outro sai [@birditt-2010-conflito-divorcio]. São associações, e a briga ruim também aparece como sintoma de um casal que já vai mal [@lavner-2016-comunicacao-satisfacao]. Nenhum estudo do acervo sobre isso é brasileiro.
 
 ## Varia conforme o Perfil?
 
@@ -43,7 +43,7 @@ Varia um pouco entre maridos e esposas.
 
 ## Limitações
 
-- Nenhum estudo testou se mudar o jeito de brigar muda o desfecho. Todos mostram associação, e quem briga de um jeito pode já ser diferente antes [@birditt-2010-conflito-divorcio].
+- Nenhum estudo do acervo testou se mudar o jeito de brigar muda o desfecho. Todos mostram associação, e quem briga de um jeito pode já ser diferente antes [@birditt-2010-conflito-divorcio].
 - No estudo de 16 anos, cada cônjuge contou como foi a última discordância. É o que a pessoa lembra e diz de si, não o que alguém viu. Os casais casaram em 1986 [@birditt-2010-conflito-divorcio].
 - O estudo dos quatro sinais tem 79 casais e só nove divórcios precoces, e o acerto foi medido nos mesmos casais [@gottman-2000-timing-divorce].
 - Não é licença para atacar. O estudo que achou satisfação mais estável com cobrança direta tratou de problemas graves, mediu satisfação e não divórcio, e os autores dizem que o resultado é correlacional [@mcnulty-2010-negativos-positivos].

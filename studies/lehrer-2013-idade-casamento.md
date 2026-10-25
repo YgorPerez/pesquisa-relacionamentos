@@ -24,7 +24,7 @@ covers:
 
 ## O que mediu
 
-Se a idade da mulher no primeiro casamento muda o risco de separação, e se esse risco volta a subir depois dos 30 (a curva em U que Becker, Landes e Michael propuseram em 1977, por "escolha pior" quando o relógio biológico aperta). Com o histórico de casamento das entrevistadas do NSFG 2006–2010, modelos de Cox estimaram o risco de separação por faixa de idade ao casar. O painel I controla só a família de origem (não intacta, criada sem religião); o painel II acrescenta escolaridade, filho de união anterior, coabitação antes do casamento, marido já casado antes, diferença de raça e de idade. O painel III repete o modelo só com quem casou aos 27 ou depois.
+Se a idade da mulher no primeiro casamento muda o risco de separação, e se esse risco volta a subir depois dos 30 (a curva em U que Becker, Landes e Michael acharam em 1977 com dados dos anos 1960 e atribuíram a uma "escolha pior" quando o relógio biológico aperta). Com o histórico de casamento das entrevistadas do NSFG 2006–2010, modelos de Cox estimaram o risco de separação por faixa de idade ao casar. O painel I controla só a família de origem (não intacta, criada sem religião); o painel II acrescenta escolaridade, filho de união anterior, coabitação antes do casamento, marido já casado antes, diferença de raça e de idade. O painel III repete o modelo só com quem casou aos 27 ou depois.
 
 ## Achados
 
@@ -36,7 +36,9 @@ Se a idade da mulher no primeiro casamento muda o risco de separação, e se ess
 | Casar aos 33 ou mais (sem diferença significativa da faixa anterior) | sobe a 0,11 | Resultados, p. 530 | "The probability rises slightly to .11 for ages 33 and older" |
 | Razão de risco, casar com 20 anos ou menos vs. 21–23 (painel I) | 1,47 | Tabela 2 | "1.47 0.31 Panel II" |
 | Razão de risco, casar aos 30–32 vs. 21–23 (painel I) | 0,38 | Tabela 2 | "0.38 0.09 -0.96(0.20)" |
-| A curva em U | não aparece; o risco cai até o começo da casa dos trinta e se estabiliza | Discussão, p. 533 | "the Ushape postulated by Becker, Landes, and Michael (1977) is not there" |
+| A curva em U nos dados dos anos 1960 | Becker, Landes e Michael (1977) acharam indícios dela | Introdução, p. 523 | "Using data from the 1960s, Becker, Landes, and Michael (1977) found evidence of a U-shaped relationship between age at first marriage and the probability of divorce" |
+| A curva em U nos ciclos do NSFG (1995, 2002–2003 e 2006–2010) | não aparece em nenhum | Resultados, seção 3.2, p. 531 | "the absence of a U-shape in all cycles indicates that the unions they form tend to be solid" |
+| A curva em U, 2006–2010 | não aparece; o risco cai até o começo da casa dos trinta e se estabiliza | Discussão, p. 533 | "the Ushape postulated by Becker, Landes, and Michael (1977) is not there" |
 | Diferença entre casar aos 24–26 e aos 30–32 | 6 pontos percentuais na probabilidade de separação até o quinto ano | Discussão, p. 533 | "the difference in the estimated fifth-year dissolution probabilities for marriages contracted at ages 24–26 versus 30–32 is also sizeable: 6 percentage points" |
 | Quem casa tarde faz escolhas "fora do padrão" | marido já casado, diferença de idade; mesmo assim, uniões sólidas | Resumo | "women who delay marriage disproportionately make unconventional matches, which are generally associated with high marital instability. We also found, however, that their unions are very solid." |
 | Probabilidade de separação até o quinto ano com marido já casado antes, casal típico da amostra toda (painel II) | 0,24 contra 0,20 | Resultados, p. 532 | "the fifth-year dissolution probability is .24 if the husband had been married before, compared to .20 if he had not" |

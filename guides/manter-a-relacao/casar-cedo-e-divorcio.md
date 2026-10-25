@@ -2,7 +2,7 @@
 question: Casar ==cedo== aumenta a chance de divórcio?
 confidence: strong
 findings:
-  - text: Mais de 60% dos casamentos feitos antes dos 20 anos terminam (cerca de dois terços dos feitos antes dos 18), contra cerca de 40% dos feitos depois dos 22.
+  - text: Pelas taxas de separação de 1986 a 1989, mais de 60% dos casamentos feitos antes dos 20 anos terminam ou devem terminar (cerca de dois terços dos feitos antes dos 18), contra cerca de 40% dos feitos depois dos 22.
     fact_sheets: [raley-2003-plato-divorcio]
   - text: A chance de se separar até o quinto ano de casamento foi de 31% para quem casou antes dos 20 e caiu até 9% para quem casou entre 30 e 32 anos.
     fact_sheets: [lehrer-2013-idade-casamento]
@@ -19,15 +19,16 @@ findings:
   - text: No Brasil, quem se casou no civil pela primeira vez em 2024 tinha em média 31,5 anos, se homem, e 29,3, se mulher. Nenhum estudo do acervo liga essa idade à separação no Brasil.
     fact_sheets: [ibge-2024-registro-civil]
     period: '2024'
+    applies_to: { genders: [man, woman], couple: different-sex }
 myths:
   - claim: Casar tarde também é arriscado, porque depois dos 30 o risco de divórcio volta a subir.
-    why_not: Numa pesquisa nacional dos EUA com dados de 2006 a 2010, o risco caiu até o começo dos 30 e depois parou de cair. A pequena alta entre quem casou com 33 anos ou mais não teve diferença estatística da faixa anterior, e os autores escrevem que a curva em U proposta em 1977 não aparece.
+    why_not: Essa curva em U apareceu em dados americanos dos anos 1960. Nas pesquisas nacionais dos EUA de 1995, 2002 e 2006 a 2010, ela não aparece. Nos dados de 2006 a 2010, o risco caiu até o começo dos 30 e parou de cair, e a pequena alta entre quem casou com 33 anos ou mais não teve diferença estatística da faixa anterior. Essa amostra tem só mulheres brancas não hispânicas, e só 159 casaram com 33 anos ou mais.
     fact_sheets: [lehrer-2013-idade-casamento]
 related: [o-que-preve-o-divorcio, com-que-idade-se-casa, brigas-sinal-de-alerta]
 seo: { title: 'Casar cedo aumenta a chance de divórcio?' }
 ---
 
-Quem casa cedo se separa mais. Nos EUA, ==mais de 60% dos casamentos feitos antes dos 20== terminam, contra cerca de 40% dos feitos depois dos 22 [@raley-2003-plato-divorcio]. O risco cai até o começo dos 30 e depois para de cair, sem voltar a subir para quem casa mais tarde [@lehrer-2013-idade-casamento]. Os estudos não separam a idade do que vem junto com ela, e não há dado brasileiro que ligue a idade ao casar à separação.
+Quem casa cedo se separa mais. Nos EUA, ==mais de 60% dos casamentos feitos antes dos 20== terminam ou devem terminar, contra cerca de 40% dos feitos depois dos 22 [@raley-2003-plato-divorcio]. O risco cai até o começo dos 30 e depois para de cair, sem alta clara para quem casa mais tarde, mas com poucos casos nessa faixa [@lehrer-2013-idade-casamento]. Os estudos não separam a idade do que vem junto com ela, e nenhum estudo do acervo liga a idade ao casar à separação no Brasil.
 
 ## Varia conforme o Perfil?
 
@@ -40,5 +41,5 @@ Para casais do mesmo sexo, não há dado: todos esses estudos olharam casais hom
 - Os autores lembram que há fatores da família de origem e dos cônjuges que não foram medidos. É associação, não prova de que a idade em si faz diferença [@lehrer-2013-idade-casamento].
 - Casar cedo pode marcar pessoas que já tinham mais risco, e o desenho não separa isso [@raley-2003-plato-divorcio].
 - Só 159 mulheres casaram com 33 anos ou mais, e quem casou depois dos 40 foi acompanhada por poucos anos, porque a pesquisa só entrevista até os 44 [@lehrer-2013-idade-casamento].
-- Os números das tábuas de vida são de casamentos dos EUA de 1980 a 1995 [@raley-2003-plato-divorcio].
-- O único estudo brasileiro sobre fim de uniões achou risco maior entre as mulheres muito jovens e as mais velhas, e menor por volta dos 25 anos. Ele mede a idade da mulher durante a união, não a idade ao casar, com dados de 1991 a 1996 [@leone-2007-dissolucao-brasil].
+- Os números das tábuas de vida são projeções: supõem que as taxas de separação dos EUA de 1986 a 1989 valem para a vida inteira do casamento [@raley-2003-plato-divorcio].
+- O único estudo brasileiro do acervo sobre fim de uniões achou risco maior entre as mulheres muito jovens e as mais velhas, e menor por volta dos 25 anos. Ele mede a idade da mulher durante a união, não a idade ao casar, com dados de 1991 a 1996 [@leone-2007-dissolucao-brasil].
