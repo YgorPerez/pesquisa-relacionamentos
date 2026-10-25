@@ -66,7 +66,11 @@ findings:
     fact_sheets: [wolfinger-2018-parceiros-felicidade-conjugal]
     applies_to: { genders: [man] }
 related:
-  [com-que-idade-se-casa, que-caracteristicas-preveem, como-se-proteger-de-ist]
+  [
+    quantos-parceiros-antes-de-casar,
+    com-que-idade-se-casa,
+    como-se-proteger-de-ist,
+  ]
 ---
 
 Depende do desfecho, e ==nenhum estudo é experimento==. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida teve bem-estar pior no fim do ano [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano [@wolfinger-2023-parceiros-sexuais-casamento], e mais parceiros antes do casamento, com mais divórcio, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Tudo vem dos EUA; no Brasil, nenhum estudo do acervo mediu isso.
