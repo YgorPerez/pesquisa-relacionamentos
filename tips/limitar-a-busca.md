@@ -2,6 +2,7 @@
 fact_sheets: [pronk-2020-mentalidade-rejeicao]
 strength: moderate
 inference: true
+seo: { title: 'Recusando perfil atrás de perfil? Pare a sessão' }
 applies_to:
   { genders: [man, woman], ages: { min: 18, max: 30 }, couple: different-sex }
 ---
