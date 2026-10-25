@@ -243,6 +243,13 @@ export interface GuideView extends GuideSummary {
       readonly html: SafeHtml
     }>
   } | null
+  /** The Guide's own sections, between the evidence and "Varia conforme o
+   * Perfil?"; `id` names the headline. */
+  readonly sections: ReadonlyArray<{
+    readonly id: string
+    readonly title: string
+    readonly html: SafeHtml
+  }>
   readonly profileHtml: SafeHtml
   readonly myths: ReadonlyArray<{
     readonly claim: string
@@ -338,6 +345,11 @@ export function guideView(guide: Guide, library: Library): GuideView {
           })),
         }
       : null,
+    sections: guide.sections.map((s, i) => ({
+      id: `t-secao-${i + 1}`,
+      title: s.title,
+      html: html(withReferences(s.markdown, numbers)),
+    })),
     profileHtml: html(withReferences(guide.variesByProfile, numbers)),
     myths: guide.myths.map((m) => ({
       claim: m.claim,

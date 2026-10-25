@@ -56,6 +56,9 @@ export interface Guide extends Omit<
   /** The markdown before the first `##`. References like `[@fact-sheet-slug]`
    * and the key number like `==39% dos casais==`. */
   readonly shortAnswer: string
+  /** The Guide's own sections ("Efeitos psicológicos", "Então, vale a
+   * pena?"), in file order: any `##` before "Varia conforme o Perfil?". */
+  readonly sections: ReadonlyArray<GuideSection>
   readonly variesByProfile: string
   readonly limitations: string
   /** Every fact sheet the page cites, in the order they appear; each
@@ -78,6 +81,11 @@ export interface Tip {
   readonly published: boolean
   readonly previous?: ReadonlyArray<string>
   readonly seo?: TipFrontmatter['seo']
+}
+
+export interface GuideSection {
+  readonly title: string
+  readonly markdown: string
 }
 
 export const GUIDE_SECTIONS = {
@@ -181,12 +189,28 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
     if (!parsed.sections.some((s) => s.title === title))
       errors.push(problem(file, `missing the section "## ${title}"`, title))
   }
-  for (const section of parsed.sections) {
-    if (!known.includes(section.title))
+  // The Guide's own sections come before "Varia conforme o Perfil?"; past it,
+  // a `##` other than "Limitações" is most likely a typo.
+  const profileAt = parsed.sections.findIndex(
+    (s) => s.title === GUIDE_SECTIONS.profile,
+  )
+  parsed.sections.forEach((section, i) => {
+    if (!known.includes(section.title) && profileAt !== -1 && i > profileAt)
       errors.push(
         problem(
           file,
-          `unknown section "## ${section.title}"; a guide body has only the short answer, "## ${GUIDE_SECTIONS.profile}" and "## ${GUIDE_SECTIONS.limitations}"`,
+          `unknown section "## ${section.title}"; the Guide's own sections come before "## ${GUIDE_SECTIONS.profile}", and after it only "## ${GUIDE_SECTIONS.limitations}"`,
+          section.title,
+        ),
+      )
+  })
+  const own = parsed.sections.filter((s) => !known.includes(s.title))
+  for (const section of own) {
+    if (!section.markdown)
+      errors.push(
+        problem(
+          file,
+          `the section "## ${section.title}" is empty`,
           section.title,
         ),
       )
@@ -216,6 +240,7 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
       myths: value.myths ?? [],
       related: value.related ?? [],
       shortAnswer: parsed.opening,
+      sections: own,
       variesByProfile: section(GUIDE_SECTIONS.profile),
       limitations: section(GUIDE_SECTIONS.limitations),
     },

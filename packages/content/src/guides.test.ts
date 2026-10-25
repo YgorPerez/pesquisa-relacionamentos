@@ -438,7 +438,57 @@ describe('publication rules', () => {
     ])
   })
 
-  it('the guide body needs the short answer and the two sections, and nothing else', () => {
+  it("a section before Varia conforme o Perfil? is the Guide's own, and its references join the page order", () => {
+    const guide = guideBySlug(
+      libraryOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace(
+            '## Varia conforme o Perfil?',
+            '## Então, vale a pena?\n\nVale como um canal entre outros [@silva-2020-apps-brasil].\n\n## Varia conforme o Perfil?',
+          ),
+        ),
+      ),
+      'app-ou-presencial',
+    )
+    expect(guide?.sections).toEqual([
+      {
+        title: 'Então, vale a pena?',
+        markdown: 'Vale como um canal entre outros [@silva-2020-apps-brasil].',
+      },
+    ])
+    expect(guide?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+      'silva-2020-apps-brasil',
+    ])
+  })
+
+  it("the Guide's own section cites fact sheets that exist and is not empty", () => {
+    const errors = errorsOf(
+      withFile(OTHER_GUIDE, (t) =>
+        t.replace(
+          '## Varia conforme o Perfil?',
+          '## Então, vale a pena?\n\nDepende [@silva-2099-sumiu].\n\n## Efeitos psicológicos\n\n## Varia conforme o Perfil?',
+        ),
+      ),
+    )
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: Efeitos psicológicos: the section "## Efeitos psicológicos" is empty`,
+    ])
+    expect(
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace(
+            '## Varia conforme o Perfil?',
+            '## Então, vale a pena?\n\nDepende [@silva-2099-sumiu].\n\n## Varia conforme o Perfil?',
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${OTHER_GUIDE}: Então, vale a pena?: the fact sheet "silva-2099-sumiu" does not exist in studies/`,
+    ])
+  })
+
+  it('the guide body needs the short answer and the two sections, and nothing else after Varia conforme o Perfil?', () => {
     const errors = errorsOf(
       withFile(OTHER_GUIDE, (t) =>
         t
@@ -449,7 +499,7 @@ describe('publication rules', () => {
     expect(errors).toEqual([
       `${OTHER_GUIDE}: missing the short answer before the first "##"`,
       `${OTHER_GUIDE}: Limitações: missing the section "## Limitações"`,
-      `${OTHER_GUIDE}: Outra coisa: unknown section "## Outra coisa"; a guide body has only the short answer, "## Varia conforme o Perfil?" and "## Limitações"`,
+      `${OTHER_GUIDE}: Outra coisa: unknown section "## Outra coisa"; the Guide's own sections come before "## Varia conforme o Perfil?", and after it only "## Limitações"`,
     ])
   })
 })

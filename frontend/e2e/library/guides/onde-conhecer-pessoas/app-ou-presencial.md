@@ -12,6 +12,10 @@ previous: [app-ou-bar, escolher-parceiro/onde-procurar]
 
 Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].
 
+## Então, vale a pena?
+
+Vale como um caminho entre outros, porque a satisfação quase não muda [@costa-2018-satisfacao].
+
 ## Varia conforme o Perfil?
 
 Nenhum estudo separou por idade.

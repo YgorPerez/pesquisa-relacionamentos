@@ -21,7 +21,13 @@ import { useProfileInGuide } from '#/state/profile-in-guide'
 import { usePriorities } from '#/state/priorities'
 import type { PrioritiesView } from '#/content/priorities-view'
 import { PrioritiesCard } from '#/ui/priorities'
-import { GuideTips, Evidence, Myths, SourcesArrow } from '#/ui/guide-sections'
+import {
+  GuideTips,
+  Evidence,
+  Myths,
+  OwnSections,
+  SourcesArrow,
+} from '#/ui/guide-sections'
 import { WasItHelpful } from '#/ui/counting'
 import { useCountOpenedFactSheets } from '#/analytics/counting'
 import { Share } from '#/ui/share'
@@ -122,6 +128,8 @@ function GuidePage() {
         {guide.possibleGroup && <B5Card profile={profile} />}
 
         <Evidence guide={guide} verdicts={inGuide?.findings} />
+
+        <OwnSections sections={guide.sections} />
 
         <VariesByProfile profile={profile} withData={inGuide?.withData} />
 

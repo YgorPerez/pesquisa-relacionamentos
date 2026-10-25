@@ -60,7 +60,7 @@ export interface Linked {
 }
 
 /** A guide's fact sheets in page order: short answer, tips, findings,
- * divergence, profile, myths and limitations. */
+ * divergence, the Guide's own sections, profile, myths and limitations. */
 function factSheetsInPageOrder(
   guide: ParsedGuide,
   tips: ReadonlyMap<string, ParsedTip>,
@@ -76,6 +76,7 @@ function factSheetsInPageOrder(
       ...referencesInText(l.text),
       ...l.fact_sheets,
     ]) ?? []),
+    ...guide.sections.flatMap((s) => referencesInText(s.markdown)),
     ...referencesInText(guide.variesByProfile),
     ...guide.myths.flatMap((m) => [
       ...referencesInText(m.why_not),
@@ -106,6 +107,10 @@ function guideCitations(guide: ParsedGuide): Citation[] {
       },
       { field: `divergence.sides.${i}.fact_sheets`, factSheets: l.fact_sheets },
     ]) ?? []),
+    ...guide.sections.map((s) => ({
+      field: s.title,
+      factSheets: referencesInText(s.markdown),
+    })),
     {
       field: GUIDE_SECTIONS.profile,
       factSheets: referencesInText(guide.variesByProfile),
