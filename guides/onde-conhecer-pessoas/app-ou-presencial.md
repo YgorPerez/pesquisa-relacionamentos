@@ -25,7 +25,7 @@ myths:
   - claim: Quem é jovem hoje só conhece alguém por app.
     why_not: Nos EUA, 80% dos adultos com parceiro com menos de 30 anos o conheceram fora dos sites e apps de namoro.
     fact_sheets: [pew-2023-2020-online-dating]
-related: [onde-os-casais-se-conhecem, o-lugar-muda-a-relacao]
+related: [onde-os-casais-se-conhecem, o-lugar-muda-a-relacao, silencio-do-app]
 ---
 
 Nenhum estudo mediu a chance de cada caminho dar em namoro. Nos EUA, ==20% dos adultos com parceiro com menos de 30 anos== o conheceram em site ou app [@pew-2023-2020-online-dating]; os outros 80%, fora deles. Lá, os homens que usam app contam que recebem mensagens de menos, e as mulheres, de mais [@pew-2023-2020-online-dating]; no Tinder brasileiro, uma estimativa fraca aponta muito mais homens que mulheres [@startio-tinder-brasil-genero]. Não há pesquisa representativa brasileira sobre onde os casais se formam.

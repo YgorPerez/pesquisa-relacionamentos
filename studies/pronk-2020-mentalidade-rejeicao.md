@@ -40,6 +40,7 @@ Em três estudos, solteiros heterossexuais avaliaram uma sequência de fotos num
 | Mecanismo (Estudo 3) | Menos satisfação com as fotos e menos confiança no próprio sucesso | Study 3, Discussion | "decrease in satisfaction with the pictures and a decrease in perceptions of their own dating success, which in turn accounted for the increasing tendency to reject potential partners" |
 | Quem rejeita mais fica mais satisfeito com quem aceitou? | Não: fica menos satisfeito | Additional Analyses Across All Studies | "people who were more rejecting were more likely to be less satisfied with the smaller number of partner options they did accept" |
 | O que explica a queda | O número de rejeições já feitas, não só o de perfis vistos | Additional Analyses Across All Studies | "Results indicated that it was the cumulative rejection of profiles that increased the likelihood of rejecting a following partner" |
+| O que os autores sugerem | Limitar a busca, ou ao menos o número de rejeições (sugestão, não testada) | General Discussion | "people may benefit from restricting their search (or at least the amount of rejections during this search)" |
 
 ## Limitações
 
