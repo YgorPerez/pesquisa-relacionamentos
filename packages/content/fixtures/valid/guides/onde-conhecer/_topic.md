@@ -1,6 +1,6 @@
 ---
 title: Onde conhecer pessoas
-position: 1
+position: 10
 order: [onde-os-casais-se-conhecem, app-ou-presencial]
 ---
 

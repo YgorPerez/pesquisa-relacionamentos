@@ -81,7 +81,7 @@ describe('topics and guides', () => {
         slug: 'onde-conhecer',
         file: TOPIC,
         title: 'Onde conhecer pessoas',
-        position: 1,
+        position: 10,
         order: ['onde-os-casais-se-conhecem', 'app-ou-presencial'],
         context: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
       },
@@ -367,14 +367,14 @@ describe('publication rules', () => {
       },
     ]
     // "conversar" comes first in slug order, and after by its position.
-    expect(libraryOf(buildLibrary(other(3))).topics.map((t) => t.slug)).toEqual(
-      ['onde-conhecer', 'conversar'],
-    )
-    expect(errorsOf(buildLibrary(other(1)))).toEqual([
-      'guides/onde-conhecer/_topic.md: position: the position 1 already belongs to the topic "conversar"; each topic has its own place on the home page',
+    expect(
+      libraryOf(buildLibrary(other(15))).topics.map((t) => t.slug),
+    ).toEqual(['onde-conhecer', 'conversar'])
+    expect(errorsOf(buildLibrary(other(10)))).toEqual([
+      'guides/onde-conhecer/_topic.md: position: the position 10 already belongs to the topic "conversar"; each topic has its own place on the home page',
     ])
     expect(
-      errorsOf(withFile(TOPIC, (t) => t.replace('position: 1', ''))),
+      errorsOf(withFile(TOPIC, (t) => t.replace('position: 10', ''))),
     ).toEqual([expect.stringContaining(`${TOPIC}: position`)])
   })
 
@@ -399,7 +399,7 @@ describe('publication rules', () => {
       ...validFiles(),
       {
         path: 'guides/outro-tema/_topic.md',
-        text: '---\ntitle: Outro\nposition: 2\norder: [app-ou-presencial]\n---\n\nX.\n',
+        text: '---\ntitle: Outro\nposition: 20\norder: [app-ou-presencial]\n---\n\nX.\n',
       },
       {
         path: 'guides/outro-tema/app-ou-presencial.md',

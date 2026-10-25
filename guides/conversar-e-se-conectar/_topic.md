@@ -1,6 +1,6 @@
 ---
 title: Conversar e se conectar
-position: 2
+position: 20
 order: [conversas-melhores, as-36-perguntas, a-conversa-foi-pior]
 ---
 

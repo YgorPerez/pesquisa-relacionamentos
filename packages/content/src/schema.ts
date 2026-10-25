@@ -99,8 +99,9 @@ const Slugs = Schema.Array(Slug)
 /** `guides/<topic>/_topic.md`: the body is the context paragraph. */
 export const TopicFrontmatter = Schema.Struct({
   title: Text,
-  /** Where the topic goes on the home page, smallest first (#143). Each
-   * topic keeps its own number, so a new topic touches only its own file. */
+  /** Where the topic goes on the home page, smallest first (#143). The
+   * topics are spaced by ten (10, 20, … 60): a new topic picks a free number
+   * between two others and touches only its own file. */
   position: Schema.Int.check(
     Schema.isGreaterThan(0, { message: 'a whole number from 1 up' }),
   ),

@@ -1,7 +1,7 @@
 // The navigation: the top bar, the DESIGN.md back links and the loop that
 // circles the tapped Fact sheet (`navigation.tsx`, `header.tsx`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { FactSheetLoop, BackLink, BackToGuide } from './navigation'
+import { FactSheetLoop, BackLink, BackToGuide, FoldArrow } from './navigation'
 import { Header } from './header'
 
 const meta = {
@@ -28,6 +28,23 @@ export const BackToTheGuide: Story = {
     history: { from: 'Onde os casais se conhecem hoje?' },
   },
   render: () => <BackToGuide />,
+}
+
+/** The fold's little arrow, closed and open (`<details>`, as on the home). */
+export const FoldArrows: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      {[false, true].map((open) => (
+        <details key={String(open)} open={open} className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-2.5 font-bold [&::-webkit-details-marker]:hidden">
+            <FoldArrow className="group-open:rotate-90" />
+            {open ? 'Aberta' : 'Fechada'}
+          </summary>
+          <p>O que a dobra guarda.</p>
+        </details>
+      ))}
+    </div>
+  ),
 }
 
 /** The Fact sheet circled after a tap on a reference number. */

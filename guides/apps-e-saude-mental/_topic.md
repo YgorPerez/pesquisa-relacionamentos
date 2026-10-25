@@ -1,6 +1,6 @@
 ---
 title: Apps, rejeição e saúde mental
-position: 6
+position: 60
 order:
   [apps-fazem-mal, ver-perfis-demais, silencio-do-app, lidar-com-a-rejeicao]
 ---
