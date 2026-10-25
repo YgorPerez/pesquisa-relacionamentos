@@ -1,5 +1,5 @@
 ---
-reference: "Smith J, Wolfinger NH. *Re-Examining the Link Between Premarital Sex and Divorce*. Journal of Family Issues 45(3):674–696, 2024. Texto lido: o manuscrito aceito dos autores no PubMed Central (NIHMS1910902), https://pmc.ncbi.nlm.nih.gov/articles/PMC10989935/"
+reference: "Smith J, Wolfinger NH. *Re-Examining the Link Between Premarital Sex and Divorce*. Journal of Family Issues 45(3):674–696, 2024. Texto lido: o manuscrito aceito dos autores no PubMed Central (NIHMS1910902), https://pmc.ncbi.nlm.nih.gov/articles/PMC10989935/, conferido em 2026-10-25 contra o PDF da revista arquivado no Internet Archive, https://web.archive.org/web/20250221104139/https://journals.sagepub.com/doi/pdf/10.1177/0192513X231155673"
 link: https://doi.org/10.1177/0192513X231155673
 status: verified
 verified_on: 2026-10-24
@@ -55,4 +55,4 @@ As razões de chance vêm dos modelos de tempo discreto e se leem como razão de
 - Para 6% da amostra completa não dava para saber se houve parceiro antes do casamento, e o valor foi imputado.
 - O texto diz que as razões de chance da Tabela 3 vão de 2,50 a 2,52, mas a própria tabela traz 2,61, 2,54 e 2,52; a Ficha usa a tabela.
 - Os autores medem divórcio, não satisfação nem qualidade do casamento.
-- A Ficha usa o manuscrito aceito no PubMed Central; a versão diagramada da revista não foi lida.
+- A Ficha usa o manuscrito aceito no PubMed Central. Na versão da revista (Journal of Family Issues 45(3):674–696), conferida em 25/10/2026, os cortes (0, 1 a 8 e 9 ou mais), as razões de chance das Tabelas 3 e 4 e as porcentagens são os mesmos; o resumo da revista e o do PubMed falam em "nine or more" e "one to eight". O resumo com "six or more" e "one to two", que aparece no OpenAlex, é o da versão submetida ao SocArXiv em novembro de 2021 (https://osf.io/ke5fj), que dividia os parceiros em 0, 1–2, 3–5 e 6 ou mais e tinha outras razões de chance (2,29 a 2,43 para 6 ou mais). Os autores mudaram os cortes depois da submissão; a Ficha e o Guia usam os números publicados.
