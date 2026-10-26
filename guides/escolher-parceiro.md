@@ -238,15 +238,15 @@ findings:
     fact_sheets: [joel-2014-rejeicao-real-hipotetica]
     period: publicado em 2014
   - id: ideal-baixa-com-o-parceiro
-    text: Na Alemanha, 763 solteiros foram acompanhados por cinco meses, e 258 começaram a namorar. Quem ficou com alguém abaixo do ideal baixou o ideal, fechando em média 39% da distância. Quem ficou com alguém acima quase não mexeu no ideal (1%).
+    text: 763 solteiros que falavam alemão foram acompanhados por cinco meses, e 258 começaram a namorar. Quem ficou com alguém abaixo do ideal baixou o ideal, fechando em média 39% da distância. Quem ficou com alguém acima quase não mexeu no ideal (1%).
     fact_sheets: [gerlach-2019-preferencias-proximo-parceiro]
     period: publicado em 2019
   - id: ideal-rigido
-    text: Em dois estudos com universitários americanos que namoravam, um parceiro longe do ideal pesou mais na satisfação de quem tinha um ideal pouco flexível. O efeito apareceu em dois dos três traços em cada estudo (num deles, só no limite da significância), e não nos mesmos, e continuou depois de descontar o quanto o ideal era alto.
+    text: Em dois estudos com universitários americanos que namoravam, um parceiro longe do ideal pesou mais na satisfação de quem tinha um ideal pouco flexível. O efeito apareceu em dois dos três traços em cada estudo (num deles, só no limite da significância), e não nos mesmos. No primeiro estudo, o efeito continuou depois de descontar o quanto o ideal era alto.
     fact_sheets: [campbell-2001-ideal-flexivel]
     period: publicado em 2001
   - id: perfeccionismo-com-o-parceiro
-    text: Em 58 casais britânicos, quem exigia perfeição do parceiro estava menos satisfeito e menos comprometido com a relação, e o parceiro se sentia mais cobrado. Uma replicação pré-registrada não achou o efeito quando descontou a cobrança que a própria pessoa sentia.
+    text: Em 58 casais em que um dos dois estudava na University of Kent, na Inglaterra, quem exigia perfeição do parceiro estava menos satisfeito e menos comprometido com a relação, e o parceiro se sentia mais cobrado. Uma replicação pré-registrada não achou o efeito quando descontou a cobrança que a própria pessoa sentia.
     fact_sheets: [stoeber-2012-perfeccionismo-parceiro]
     period: publicado em 2012
   - id: medo-de-ficar-solteiro
