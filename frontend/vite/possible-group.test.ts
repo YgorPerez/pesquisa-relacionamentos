@@ -46,7 +46,9 @@ describe('the Possible group packs', () => {
     )
     expect(largest).toBeLessThan(4_000_000)
   })
+})
 
+describe('the detail packs (parents, work, home)', () => {
   it('with a detail Requirement on, the detail packs give the same counts as when every pack carried the detail', () => {
     // Pinned from the single full pack of before the split (3be6cf7).
     const detail = (place: PackPlace) =>
@@ -100,7 +102,9 @@ describe('the Possible group packs', () => {
       'work:56815',
     ])
   })
+})
 
+describe('the Possible group counts over the packs', () => {
   it('SP, women aged 25 to 29 not living in a union: the CSV gives 746,284 (SIDRA 747,507)', () => {
     const r = women25to29({ state: 'SP' })
     expect(Math.abs(r.result.central - 746_284)).toBeLessThan(50)

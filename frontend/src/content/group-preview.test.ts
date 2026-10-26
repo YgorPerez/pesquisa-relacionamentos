@@ -66,6 +66,17 @@ describe('buildGroupPreview', () => {
     expect((await preview(query))?.title).toMatch(/ em AC, /)
   })
 
+  it("without Brazil's pack, there is no preview", async () => {
+    const query = linkQuery({
+      calculator: 'grupo-possivel',
+      profile: PROFILE,
+      requirements: null,
+    })
+    expect(await preview(query, async () => null)).toBeNull()
+  })
+})
+
+describe('buildGroupPreview with a detail Requirement (parents, work, home)', () => {
   it('a link with "tem casa própria" counts over the detail packs and says it', async () => {
     const query = linkQuery({
       calculator: 'grupo-possivel',
@@ -79,14 +90,5 @@ describe('buildGroupPreview', () => {
     const result = await preview(query)
     expect(result?.title).toMatch(/^Entre .+ e .+ homens em AC/)
     expect(result?.description).toContain('tem casa própria')
-  })
-
-  it("without Brazil's pack, there is no preview", async () => {
-    const query = linkQuery({
-      calculator: 'grupo-possivel',
-      profile: PROFILE,
-      requirements: null,
-    })
-    expect(await preview(query, async () => null)).toBeNull()
   })
 })
