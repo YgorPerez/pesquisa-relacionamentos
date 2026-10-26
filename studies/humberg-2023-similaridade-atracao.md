@@ -4,8 +4,8 @@ link: https://doi.org/10.5964/ps.7551
 license: "CC BY 4.0 (Creative Commons Attribution 4.0 International License, como diz a primeira página do artigo)"
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Encontros reais e análise diádica que separa semelhança dos traços de cada pessoa, com verificações de robustez, mas uma única amostra de 397 jovens heterossexuais, em sua maioria estudantes, sem representatividade."
+strength: weak
+strength_reason: "Amostra não representativa de 397 jovens heterossexuais, em sua maioria estudantes; a análise diádica e as verificações de robustez não eliminam essa limitação de generalização."
 countries: [Alemanha]
 period: "abril a dezembro de 2015"
 sample:
