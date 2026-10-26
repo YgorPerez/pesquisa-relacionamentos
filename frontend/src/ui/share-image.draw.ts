@@ -10,7 +10,7 @@ import { BRAND_COLORS } from './brand'
 /** The two formats: the square post and the 9:16 story. */
 export type ImageFormat = 'square' | 'story'
 
-export const IMAGE_SIZE: Readonly<
+const IMAGE_SIZE: Readonly<
   Record<ImageFormat, { readonly width: number; readonly height: number }>
 > = {
   square: { width: 1080, height: 1080 },
