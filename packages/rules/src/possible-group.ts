@@ -15,6 +15,8 @@
 // - The PNAD one (office occupation, #294) multiplies each cell by the
 //   probability in its sex, age group and education, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
+// - Apart, the independence range (#301) gives the least and the most the
+//   PNS block and the Census Requirements could overlap.
 //
 // The caveat texts are interface text, in Portuguese.
 import {
@@ -167,6 +169,10 @@ export interface Estimate {
   /** The count by multiplication: the base times the fraction each
    * requirement leaves on its own. */
   readonly naive: number
+  /** The independence range (#301): the least and the most the group could
+   * be if the PNS block overlapped the Census Requirements in any other way.
+   * `null` when the count assumes no independence. */
+  readonly independence: Range | null
   readonly caveats: ReadonlyArray<Caveat>
   /** "Sem filhos": applies, only to women (seeking both) or no data (seeking
    * men). */
@@ -443,6 +449,68 @@ function unionSum(data: PlaceData): Float64Array {
 interface Tally extends Count {
   /** Weighted mean of who did not answer the orientation, when it enters. */
   readonly noAnswer: number
+  readonly independence: Range | null
+}
+
+export interface Range {
+  readonly min: number
+  readonly max: number
+}
+
+/** The Fréchet–Hoeffding bounds of two groups of `a` and `b` people among
+ * `n`: they overlap in at least max(0, a + b − n) and at most min(a, b). */
+const overlap = (a: number, b: number, n: number) =>
+  [Math.max(0, a + b - n), Math.min(a, b)] as const
+
+/**
+ * The independence range (#301): how many the group could have if the shares
+ * from other surveys overlapped the Census Requirements in any way, instead
+ * of independently. It takes the central shares: it measures the assumption,
+ * not the sampling error, which stays in `min` and `max`.
+ *
+ * Each share is bounded on its own key, where the survey measured it. The
+ * PNAD office share (#294) goes by sex × age group × education: in each
+ * education, of N_e people in the share's universe (everyone, or the
+ * employed with "trabalha"), A_e pass the Census Requirements and Q_e = q_e
+ * × N_e work in an office; the pair overlaps in [L_e, U_e] = `overlap(A_e,
+ * Q_e, N_e)`. The PNS block goes by sex and age: with L and U the sums over
+ * the educations, N everyone and P = p × N, the group is in [max(0, L + P −
+ * N), min(U, P)]. The age groups add up.
+ *
+ * `null` when there is no assumption to measure: no share from another
+ * survey, or the Census cuts no one inside its keys.
+ */
+function independenceRange(
+  everyone: Float64Array,
+  officeUniverse: Float64Array,
+  censusOnly: Float64Array,
+  pns: ReadonlyArray<PnsBlock | null>,
+  officeByCell: ReadonlyArray<Interval> | null,
+  central: number,
+): Range | null {
+  const E = EDUCATIONS.length + 1
+  let min = 0
+  let max = 0
+  for (let sg = 0; sg < everyone.length / E; sg++) {
+    let n = 0
+    let low = 0
+    let high = 0
+    for (let cell = sg * E; cell < (sg + 1) * E; cell++) {
+      const q = officeByCell?.[cell]?.[1] ?? 1
+      const [l, u] = overlap(
+        censusOnly[cell]!,
+        q * officeUniverse[cell]!,
+        officeUniverse[cell]!,
+      )
+      n += everyone[cell]!
+      low += l
+      high += u
+    }
+    const p = (pns[sg]?.p[1] ?? 1) * n
+    min += Math.max(0, low + p - n)
+    max += Math.min(high, p)
+  }
+  return max - min > 1e-9 * Math.max(1, central) ? { min, max } : null
 }
 
 function tally(
@@ -566,10 +634,30 @@ function tally(
   let records = 0
   let noAnswerSum = 0
   let weightSum = 0
+  // Everyone of the sex × age group in the place, and those the Census
+  // Requirements leave, for the independence range.
+  // By sex × age group × education, the key of the office share.
+  const everyone = new Float64Array(SEXES.length * G * E)
+  const censusOnly = new Float64Array(SEXES.length * G * E)
+  // The office share's universe in each cell: everyone, or the employed when
+  // "trabalha" made the share come from `ocupados`.
+  const officeOfEmployed = active.has('work')
+  const officeUniverse = officeOfEmployed
+    ? new Float64Array(SEXES.length * G * E)
+    : everyone
   const d = ofPlace
   for (let i = 0; i < d.size; i++) {
     const s = d.sex[i]!
     if (singleSex >= 0 && s !== singleSex) continue
+    const sg = s * G + d.ageGroup[i]!
+    let f = factor[sg]!
+    if (municipality)
+      f *= municipality[unionIndex(s, d.ageGroup[i]!, d.union[i]!)]!
+    if (f === 0) continue
+    const w = d.weight[i]! * f
+    const cell = sg * E + d.education[i]!
+    everyone[cell]! += w
+    if (officeOfEmployed && d.work[i]! >= 1) officeUniverse[cell]! += w
     if (partner && d.union[i] === 1) continue
     if (d.education[i]! < education) continue
     if (d.income[i]! < income) continue
@@ -579,15 +667,10 @@ function tally(
     if (notWithParents && d.parents[i] !== 1) continue
     if (d.work[i]! < work) continue
     if (ownsHome && d.home[i] !== 2) continue
-    const sg = s * G + d.ageGroup[i]!
-    let f = factor[sg]!
-    if (municipality)
-      f *= municipality[unionIndex(s, d.ageGroup[i]!, d.union[i]!)]!
-    if (f === 0) continue
-    const w = d.weight[i]! * f
+    censusOnly[cell]! += w
     const block = pns[sg]
     const p = block ? block.p : NO_CUT
-    const o = officeByCell?.[sg * E + d.education[i]!] ?? NO_CUT
+    const o = officeByCell?.[cell] ?? NO_CUT
     min += w * p[0] * o[0]
     central += w * p[1] * o[1]
     max += w * p[2] * o[2]
@@ -598,6 +681,14 @@ function tally(
   }
   const error = Z95 / Math.sqrt(Math.max(records, 1))
   return {
+    independence: independenceRange(
+      everyone,
+      officeUniverse,
+      censusOnly,
+      pns,
+      officeByCell,
+      central,
+    ),
     min: min * Math.max(0, 1 - error),
     central,
     max: max * (1 + error),
@@ -732,7 +823,9 @@ function caveats(
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',
       strong: false,
-      text: 'Os Requisitos da PNS são cruzados entre si na mesma pessoa. O bloco deles entra supondo que, dentro do mesmo sexo e idade, não depende dos Requisitos do Censo.',
+      // What the PNS block assumes about the Census is the independence
+      // range's paragraph, next to the ranges (#301).
+      text: 'Os Requisitos da PNS são cruzados entre si, na mesma pessoa.',
     },
     {
       id: 'source',
@@ -779,8 +872,8 @@ export function estimateGroup(input: CountInput, data: CountData): Estimate {
         )
       : 0
 
-  const { noAnswer: _, ...result } = current
-  const { noAnswer: __, ...fromBase } = base
+  const { noAnswer: _, independence, ...result } = current
+  const { noAnswer: __, independence: ___, ...fromBase } = base
   const sought = whoIsSought(input.profile)
   return {
     target: sought.target,
@@ -793,6 +886,7 @@ export function estimateGroup(input: CountInput, data: CountData): Estimate {
     costs,
     funnel,
     naive,
+    independence,
     caveats: caveats(input, active, current),
     children: sought.children,
   }
