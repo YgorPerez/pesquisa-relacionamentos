@@ -94,6 +94,7 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       // them off.
       drinking: [],
       exercises: false,
+      goodTeeth: false,
     })
     expect(local.items.has('tem-estudo:grupo-possivel')).toBe(false)
   })

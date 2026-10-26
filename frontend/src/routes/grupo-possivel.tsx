@@ -459,6 +459,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(exercises) => change({ exercises })}
       />
     ),
+    teeth: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem avalia a saúde bucal como boa"
+        checked={requirements.goodTeeth}
+        onChange={(goodTeeth) => change({ goodTeeth })}
+      />
+    ),
   }
 
 /** The "A conta" block: the range, what weighs most, with the button to

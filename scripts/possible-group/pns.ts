@@ -69,6 +69,7 @@ const POSITIONS = {
   P03702: [677, 2],
   P036: [679, 2],
   P050: [711, 1],
+  U005: [1208, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
 } as const
@@ -181,6 +182,20 @@ export const PNS_VARIABLES = [
         ? 'sim'
         : 'nao'
     },
+    ordered: false,
+  },
+  {
+    // U005, self-rated oral health: very good or good, against fair, poor
+    // or very poor.
+    column: 'saude_bucal',
+    fields: ['U005'],
+    read: code('U005', {
+      '1': 'boa',
+      '2': 'boa',
+      '3': 'nao',
+      '4': 'nao',
+      '5': 'nao',
+    }),
     ordered: false,
   },
 ] as const satisfies ReadonlyArray<PnsVariable>

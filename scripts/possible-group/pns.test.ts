@@ -20,6 +20,7 @@ const adult = (
     fumo: 'nao',
     bebida: 'nunca',
     exercicio: 'sim',
+    saude_bucal: 'boa',
     ...values,
   },
 })
@@ -104,6 +105,7 @@ describe('readPnsRecord', () => {
         fumo: 'nao',
         bebida: null,
         exercicio: null,
+        saude_bucal: null,
       },
     })
   })
@@ -177,6 +179,17 @@ describe('readPnsRecord: lifestyle answers', () => {
     assert.equal(exercise('01'), 'nao')
     assert.equal(exercise('03'), 'sim')
   })
+
+  it('oral health: very good or good, against fair, poor or very poor', () => {
+    // U005 at 1208, from 1 (very good) to 5 (very poor), 9 unknown.
+    const teeth = (u005: string) =>
+      answering({ U005: [1208, u005] }).saude_bucal
+    assert.equal(teeth('1'), 'boa')
+    assert.equal(teeth('2'), 'boa')
+    assert.equal(teeth('3'), 'nao')
+    assert.equal(teeth('5'), 'nao')
+    assert.equal(teeth('9'), null)
+  })
 })
 
 describe('pnsToCsv', () => {
@@ -184,8 +197,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nunca,sim,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nunca,sim,boa,3,1,1.000\n',
     )
   })
 })

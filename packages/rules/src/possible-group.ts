@@ -58,6 +58,7 @@ export const REQUIREMENT_ORDER = [
   'smoking',
   'drinking',
   'exercise',
+  'teeth',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -78,6 +79,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   smoking: 'PNS',
   drinking: 'PNS',
   exercise: 'PNS',
+  teeth: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -180,6 +182,7 @@ export function activeRequirements({
     smoking: r.nonSmoker,
     drinking: r.drinking.length > 0,
     exercise: r.exercises,
+    teeth: r.goodTeeth,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -271,6 +274,7 @@ const PNS_FILTERS: {
     test: (value) => drinking.some((d) => d === value),
   }),
   exercise: () => ({ variable: 'exercicio', test: (value) => value === 'sim' }),
+  teeth: () => ({ variable: 'saude_bucal', test: (value) => value === 'boa' }),
 }
 
 export interface PnsBlock {
@@ -597,6 +601,11 @@ function caveats(
       id: 'exercise',
       strong: false,
       text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS; como faz o IBGE, um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) vale dois.',
+    },
+    has('teeth') && {
+      id: 'teeth',
+      strong: false,
+      text: 'A saúde bucal é a autoavaliação da PNS 2019 ("boa" ou "muito boa"), não um exame de dentista.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',
