@@ -38,20 +38,6 @@ describe("the server's 301s", () => {
     )
   })
 
-  test("a Question's old page goes to its section, the query before the fragment", async () => {
-    const { fetch, arrived } = setup()
-    const response = await fetch(
-      new Request(
-        'https://temestudo.cloud/onde-conhecer-pessoas/app-ou-presencial/?g=mulher',
-      ),
-    )
-    expect(response.status).toBe(301)
-    expect(response.headers.get('location')).toBe(
-      '/onde-conhecer-pessoas?g=mulher#app-ou-presencial',
-    )
-    expect(arrived).toEqual([])
-  })
-
   test("an old path with a trailing slash goes straight to today's", async () => {
     const { fetch } = setup()
     const response = await fetch(
@@ -80,5 +66,21 @@ describe("the server's 301s", () => {
       expect((await fetch(new Request(url))).status).toBe(200)
     }
     expect(arrived).toEqual(['/', '/estudos'])
+  })
+})
+
+describe("a Question's old page (ADR 0042)", () => {
+  test("a Question's old page goes to its section, the query before the fragment", async () => {
+    const { fetch, arrived } = setup()
+    const response = await fetch(
+      new Request(
+        'https://temestudo.cloud/onde-conhecer-pessoas/app-ou-presencial/?g=mulher',
+      ),
+    )
+    expect(response.status).toBe(301)
+    expect(response.headers.get('location')).toBe(
+      '/onde-conhecer-pessoas?g=mulher#app-ou-presencial',
+    )
+    expect(arrived).toEqual([])
   })
 })

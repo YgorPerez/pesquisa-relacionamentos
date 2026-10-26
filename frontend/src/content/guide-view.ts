@@ -357,14 +357,68 @@ function guideTip(
     : null
 }
 
-/** The finding a Tip or Myth follows, or `null` for a loose one. */
-const findingOf = <T>(
+/** The finding each Tip or Myth follows, by its index; a loose one is not
+ * in the map. */
+function findingIndex<T>(
   guide: Guide,
   pick: (finding: Guide['findings'][number]) => ReadonlyArray<T>,
-  item: T,
-): number | null => {
-  const i = guide.findings.findIndex((f) => pick(f).includes(item))
-  return i === -1 ? null : i
+): ReadonlyMap<T, number> {
+  const map = new Map<T, number>()
+  guide.findings.forEach((finding, i) => {
+    for (const item of pick(finding)) if (!map.has(item)) map.set(item, i)
+  })
+  return map
+}
+
+function findingView(
+  finding: Guide['findings'][number],
+  numbers: Numbering,
+): FindingView {
+  const { country, period } = whereAndWhen(finding.countries, finding.period)
+  return {
+    html: textWithFactSheets(finding.text, finding.fact_sheets, numbers),
+    country,
+    period,
+    appliesTo: appliesTo(finding.covers),
+    coverage: finding.covers,
+  }
+}
+
+function divergenceView(
+  divergence: Guide['divergence'],
+  numbers: Numbering,
+): QuestionView['divergence'] {
+  if (!divergence) return null
+  return {
+    bestDesignHtml: inlineHtml(
+      withReferences(divergence.better_design, numbers),
+    ),
+    sides: divergence.sides.map((l) => ({
+      title: l.title,
+      html: textWithFactSheets(l.text, l.fact_sheets, numbers),
+    })),
+  }
+}
+
+/** Every Tip and Myth of the Question, each with the finding it follows. */
+function tipsAndMyths(
+  guide: Guide,
+  library: Library,
+  numbers: Numbering,
+): Pick<QuestionView, 'tips' | 'myths'> {
+  const tipAt = findingIndex(guide, (f) => f.tips)
+  const mythAt = findingIndex(guide, (f) => f.myths)
+  return {
+    tips: guideTips(guide).flatMap((slug) => {
+      const tip = guideTip(slug, library, numbers)
+      return tip ? [{ ...tip, finding: tipAt.get(slug) ?? null }] : []
+    }),
+    myths: guideMyths(guide).map((m) => ({
+      claim: m.claim,
+      whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
+      finding: mythAt.get(m) ?? null,
+    })),
+  }
 }
 
 function questionView(
@@ -372,51 +426,21 @@ function questionView(
   library: Library,
   numbers: Numbering,
 ): QuestionView {
+  const markdown = (text: string) => html(withReferences(text, numbers))
   return {
     ...questionSummary(guide),
-    answerHtml: html(withReferences(guide.shortAnswer, numbers)),
+    ...tipsAndMyths(guide, library, numbers),
+    answerHtml: markdown(guide.shortAnswer),
     keyCoverage: keyCoverage(guide.shortAnswer, library),
-    tips: guideTips(guide).flatMap((slug) => {
-      const tip = guideTip(slug, library, numbers)
-      return tip
-        ? [{ ...tip, finding: findingOf(guide, (f) => f.tips, slug) }]
-        : []
-    }),
-    findings: guide.findings.map((a): FindingView => {
-      const { country, period } = whereAndWhen(a.countries, a.period)
-      return {
-        html: textWithFactSheets(a.text, a.fact_sheets, numbers),
-        country,
-        period,
-        appliesTo: appliesTo(a.covers),
-        coverage: a.covers,
-      }
-    }),
-    divergence: guide.divergence
-      ? {
-          bestDesignHtml: inlineHtml(
-            withReferences(guide.divergence.better_design, numbers),
-          ),
-          sides: guide.divergence.sides.map((l) => ({
-            title: l.title,
-            html: textWithFactSheets(l.text, l.fact_sheets, numbers),
-          })),
-        }
-      : null,
+    findings: guide.findings.map((f) => findingView(f, numbers)),
+    divergence: divergenceView(guide.divergence, numbers),
     sections: guide.sections.map((s, i) => ({
       id: `${guide.slug}-secao-${i + 1}`,
       title: s.title,
-      html: html(withReferences(s.markdown, numbers)),
+      html: markdown(s.markdown),
     })),
-    inBrazilHtml: guide.inBrazil
-      ? html(withReferences(guide.inBrazil, numbers))
-      : null,
-    profileHtml: html(withReferences(guide.variesByProfile, numbers)),
-    myths: guideMyths(guide).map((m) => ({
-      claim: m.claim,
-      whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
-      finding: findingOf(guide, (f) => f.myths, m),
-    })),
+    inBrazilHtml: guide.inBrazil ? markdown(guide.inBrazil) : null,
+    profileHtml: markdown(guide.variesByProfile),
     calculator: guide.calculator ?? null,
   }
 }
@@ -424,58 +448,77 @@ function questionView(
 /** A `### [@slug]` heading of the Limitations: the group of one Study. */
 const STUDY_HEADING = /^\[@([a-z0-9]+(?:-[a-z0-9]+)*)\]$/
 
-/** The Topic's Limitations cut at their `###` headings, then each Question's
- * own, under the Question. */
+/** The Topic's Limitations cut at their `###` headings: the text before the
+ * first one has no title. */
+function splitAtHeadings(
+  markdown: string,
+): Array<{ title: string | null; markdown: string }> {
+  const parts: Array<{ title: string | null; lines: string[] }> = [
+    { title: null, lines: [] },
+  ]
+  for (const line of markdown.split('\n')) {
+    const heading = /^###\s+(.+?)\s*$/.exec(line)
+    if (heading) parts.push({ title: heading[1] ?? null, lines: [] })
+    else parts[parts.length - 1]?.lines.push(line)
+  }
+  return parts
+    .map((p) => ({ title: p.title, markdown: p.lines.join('\n').trim() }))
+    .filter((p) => p.markdown || p.title !== null)
+}
+
+/** One group of the Topic's Limitations: a `### [@slug]` names the Study. */
+function studyGroup(
+  part: { title: string | null; markdown: string },
+  numbers: Numbering,
+): LimitationGroup {
+  const study = part.title ? STUDY_HEADING.exec(part.title)?.[1] : undefined
+  const factSheet = study ? numbers.get(study) : undefined
+  return {
+    title: factSheet ? factSheet.title : part.title,
+    factSheet:
+      study && factSheet ? { n: factSheet.n, anchor: anchor(study) } : null,
+    html: html(withReferences(part.markdown, numbers)),
+  }
+}
+
+/** The Topic's Limitations by Study, then each Question's own, under the
+ * Question. */
 function limitationGroups(
   topic: Topic,
   guides: ReadonlyArray<Guide>,
   numbers: Numbering,
 ): LimitationGroup[] {
-  const groups: LimitationGroup[] = []
-  let title: string | null = null
-  let lines: string[] = []
-  const flush = () => {
-    const markdown = lines.join('\n').trim()
-    if (markdown || title !== null) {
-      const study = title ? STUDY_HEADING.exec(title)?.[1] : undefined
-      const factSheet = study ? numbers.get(study) : undefined
-      groups.push({
-        title: factSheet ? factSheet.title : title,
-        factSheet:
-          study && factSheet ? { n: factSheet.n, anchor: anchor(study) } : null,
-        html: html(withReferences(markdown, numbers)),
-      })
-    }
-    lines = []
-  }
-  for (const line of topic.limitations.split('\n')) {
-    const heading = /^###\s+(.+?)\s*$/.exec(line)
-    if (heading) {
-      flush()
-      title = heading[1] ?? null
-    } else lines.push(line)
-  }
-  flush()
-  for (const guide of guides)
-    if (guide.limitations)
-      groups.push({
-        title: withoutMarks(guide.question),
-        factSheet: null,
-        html: html(withReferences(guide.limitations, numbers)),
-      })
-  return groups
+  return [
+    ...splitAtHeadings(topic.limitations).map((p) => studyGroup(p, numbers)),
+    ...guides.flatMap((guide) =>
+      guide.limitations
+        ? [
+            {
+              title: withoutMarks(guide.question),
+              factSheet: null,
+              html: html(withReferences(guide.limitations, numbers)),
+            },
+          ]
+        : [],
+    ),
+  ]
+}
+
+/** The related Questions that belong to other Topics. */
+function elsewhere(
+  guides: ReadonlyArray<Guide>,
+  library: Library,
+): QuestionSummary[] {
+  const here = new Set(guides.map((g) => g.slug))
+  return [...new Set(guides.flatMap((g) => g.related))].flatMap((slug) => {
+    const other = library.guides.find((g) => g.slug === slug)
+    return other && !here.has(other.slug) ? [questionSummary(other)] : []
+  })
 }
 
 export function guideView(topic: Topic, library: Library): GuideView {
   const numbers = numberFactSheets(topic.citedFactSheets, library)
   const guides = library.guides.filter((g) => g.topic === topic.slug)
-  const here = new Set(guides.map((g) => g.slug))
-  const elsewhere = [...new Set(guides.flatMap((g) => g.related))].flatMap(
-    (slug) => {
-      const other = library.guides.find((g) => g.slug === slug)
-      return other && !here.has(other.slug) ? [questionSummary(other)] : []
-    },
-  )
   return {
     topic: topic.slug,
     title: topic.title,
@@ -493,7 +536,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
     }),
     limitations: limitationGroups(topic, guides, numbers),
     factSheets: citedFactSheets(topic.citedFactSheets, library),
-    elsewhere,
+    elsewhere: elsewhere(guides, library),
     search: topicSearch(topic),
   }
 }

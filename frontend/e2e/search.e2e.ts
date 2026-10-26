@@ -153,7 +153,9 @@ test.describe('301', () => {
     expect(today.status()).toBe(301)
     expect(today.headers().location).toBe(SECTION)
   })
+})
 
+test.describe("301 of a Question's old page", () => {
   test("the browser reaches the Question's section", async ({ page }) => {
     await page.goto('/onde-conhecer-pessoas/app-ou-bar/')
     await expect(page).toHaveURL(SECTION)

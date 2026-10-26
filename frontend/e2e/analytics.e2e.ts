@@ -187,23 +187,6 @@ test.describe('usage count', () => {
     ])
   })
 
-  test("a Fact sheet opened inside a Question counts by the Question's slug, as on its old page", async ({
-    page,
-  }) => {
-    const { hits } = recordHits(page)
-    await open(page, '/escolher-parceiro')
-    await page
-      .getByRole('region', { name: 'E no Brasil?' })
-      .getByRole('link', { name: 'a Ficha do estudo brasileiro' })
-      .click()
-    await expect(page).toHaveURL('/estudos/silva-2020-apps-brasil')
-    await expect
-      .poll(() => hits.map((e) => e.p))
-      .toContain(
-        'fact-sheet/que-caracteristicas-preveem/silva-2020-apps-brasil',
-      )
-  })
-
   for (const [name, signal] of [
     ['GPC', 'globalPrivacyControl'],
     ['Do Not Track', 'doNotTrack'],
@@ -309,4 +292,23 @@ test('the privacy page says what stays on the device, in the link, in the log an
   await expect(
     page.getByRole('contentinfo').getByRole('link', { name: 'Privacidade' }),
   ).toHaveAttribute('href', '/privacidade')
+})
+
+test.describe('usage count inside the Guide', () => {
+  test("a Fact sheet opened inside a Question counts by the Question's slug, as on its old page", async ({
+    page,
+  }) => {
+    const { hits } = recordHits(page)
+    await open(page, '/escolher-parceiro')
+    await page
+      .getByRole('region', { name: 'E no Brasil?' })
+      .getByRole('link', { name: 'a Ficha do estudo brasileiro' })
+      .click()
+    await expect(page).toHaveURL('/estudos/silva-2020-apps-brasil')
+    await expect
+      .poll(() => hits.map((e) => e.p))
+      .toContain(
+        'fact-sheet/que-caracteristicas-preveem/silva-2020-apps-brasil',
+      )
+  })
 })

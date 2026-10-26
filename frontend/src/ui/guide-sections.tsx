@@ -173,24 +173,10 @@ export function Evidence({
             key={finding.html}
             className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5"
           >
-            <div className="grid grid-cols-[minmax(58px,max-content)_1fr] gap-sm [&_[data-slot=vale]]:mt-xs [&_p]:m-0">
-              <span
-                className="h-max max-w-30 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha px-1.5 pt-1.75 pb-1.5 text-center font-title text-medio leading-cerrada font-bold wrap-anywhere"
-                data-slot="onde"
-              >
-                {finding.country}
-                <small className="mt-0.75 block font-label text-miudo leading-curta font-bold text-tinta-2">
-                  {finding.period}
-                </small>
-              </span>
-              <div>
-                <Html as="p" html={finding.html} />
-                <AppliesToNote
-                  text={finding.appliesTo}
-                  verdict={verdicts?.findings?.[i] ?? null}
-                />
-              </div>
-            </div>
+            <Finding
+              finding={finding}
+              verdict={verdicts?.findings?.[i] ?? null}
+            />
             <NextToTheFinding
               question={question}
               finding={i}
@@ -202,6 +188,33 @@ export function Evidence({
 
       {question.divergence && <Divergence divergence={question.divergence} />}
     </Subsection>
+  )
+}
+
+/** A finding: the box with country and year, the text and "Vale para". */
+function Finding({
+  finding,
+  verdict,
+}: {
+  finding: QuestionView['findings'][number]
+  verdict: Verdict | null
+}) {
+  return (
+    <div className="grid grid-cols-[minmax(58px,max-content)_1fr] gap-sm [&_[data-slot=vale]]:mt-xs [&_p]:m-0">
+      <span
+        className="h-max max-w-30 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha px-1.5 pt-1.75 pb-1.5 text-center font-title text-medio leading-cerrada font-bold wrap-anywhere"
+        data-slot="onde"
+      >
+        {finding.country}
+        <small className="mt-0.75 block font-label text-miudo leading-curta font-bold text-tinta-2">
+          {finding.period}
+        </small>
+      </span>
+      <div>
+        <Html as="p" html={finding.html} />
+        <AppliesToNote text={finding.appliesTo} verdict={verdict} />
+      </div>
+    </div>
   )
 }
 
@@ -351,26 +364,38 @@ export function Limitations({ groups }: { groups: GuideView['limitations'] }) {
           className="not-first:mt-md"
           data-slot="limitacoes-grupo"
         >
-          {group.title && (
-            <Subhead>
-              {group.title}
-              {group.factSheet && (
-                <>
-                  {' '}
-                  <a
-                    className="ref"
-                    href={`#${group.factSheet.anchor}`}
-                    aria-label={`Ficha ${group.factSheet.n}: ${group.title}`}
-                  >
-                    {group.factSheet.n}
-                  </a>
-                </>
-              )}
-            </Subhead>
-          )}
+          {group.title && <GroupTitle group={group} title={group.title} />}
           <Html className="prosa limites" html={group.html} />
         </div>
       ))}
     </Section>
+  )
+}
+
+/** A Limitations group's title: the Study, with the number that leads to its
+ * Fact sheet, or the Question. */
+function GroupTitle({
+  group,
+  title,
+}: {
+  group: GuideView['limitations'][number]
+  title: string
+}) {
+  return (
+    <Subhead>
+      {title}
+      {group.factSheet && (
+        <>
+          {' '}
+          <a
+            className="ref"
+            href={`#${group.factSheet.anchor}`}
+            aria-label={`Ficha ${group.factSheet.n}: ${title}`}
+          >
+            {group.factSheet.n}
+          </a>
+        </>
+      )}
+    </Subhead>
   )
 }

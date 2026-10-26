@@ -7,7 +7,6 @@ import {
   requirementValue,
 } from '@tem-estudo/rules/requirements'
 import { reads } from '#/content/reads'
-import type { QuestionView } from '#/content/guide-view'
 import type { PrioritiesView } from '#/content/priorities-view'
 import { useCountOpenedFactSheets } from '#/analytics/counting'
 import { useProfile } from '#/state/profile'
@@ -98,9 +97,10 @@ function useGuide() {
   return useSuspenseQuery(reads.guide(Route.useParams().tema)).data
 }
 
+type QuestionView = ReturnType<typeof useGuide>['questions'][number]
+
 function GuidePage() {
   const guide = useGuide()
-  const profile = useProfile()
   const { circled, backToText } = useReferences(guide.topic)
   useReadingPointInHistory()
   useCountOpenedFactSheets(guide.topic)
@@ -117,37 +117,17 @@ function GuidePage() {
           html={guide.openingHtml}
         />
         <SourcesArrow />
-
-        <Section id="perfil" aria-labelledby="t-perfil">
-          <Headline id="t-perfil">Seu Perfil</Headline>
-          <p className="m-0 text-nota leading-nota text-tinta-2">
-            Opcional. Em cada Pergunta, o Guia marca o que vale para você e o
-            que vem de outras amostras, sem esconder nada.
-          </p>
-          <ProfileBox profile={profile} withData={null} findingTotal={0} />
-        </Section>
+        <YourProfile />
 
         {guide.questions.map((question) => (
           <QuestionSection key={question.slug} question={question} />
         ))}
 
-        {guide.takeaways.length > 0 && (
-          <Takeaways
-            tips={guide.takeaways}
-            verdicts={
-              profile
-                ? guide.takeaways.map((t) => appliesToYou(profile, t.coverage))
-                : undefined
-            }
-          />
-        )}
-
+        <GuideTakeaways />
         {guide.limitations.length > 0 && (
           <Limitations groups={guide.limitations} />
         )}
-
         <GuideFactSheets circled={circled} backToText={backToText} />
-
         {guide.elsewhere.length > 0 && <OtherTopics />}
 
         <Share
@@ -159,13 +139,46 @@ function GuidePage() {
   )
 }
 
+/** The page's one Profile box, before the first Question. */
+function YourProfile() {
+  const profile = useProfile()
+  return (
+    <Section id="perfil" aria-labelledby="t-perfil">
+      <Headline id="t-perfil">Seu Perfil</Headline>
+      <p className="m-0 text-nota leading-nota text-tinta-2">
+        Opcional. Em cada Pergunta, o Guia marca o que vale para você e o que
+        vem de outras amostras, sem esconder nada.
+      </p>
+      <ProfileBox profile={profile} withData={null} findingTotal={0} />
+    </Section>
+  )
+}
+
+/** "O que levar", with the "vale para você" of each Tip for the Profile. */
+function GuideTakeaways() {
+  const { takeaways } = useGuide()
+  const profile = useProfile()
+  if (takeaways.length === 0) return null
+  return (
+    <Takeaways
+      tips={takeaways}
+      verdicts={
+        profile
+          ? takeaways.map((t) => appliesToYou(profile, t.coverage))
+          : undefined
+      }
+    />
+  )
+}
+
+type InGuide = ReturnType<typeof useProfileInGuide>
+
 /** One Question of the Guide: the short answer with its Confidence, the
  * narrative, "E no Brasil?", what varies by Profile, the Myths, the
  * calculator card and "Ajudou?". */
 function QuestionSection({ question }: { question: QuestionView }) {
   const { profile, inGuide } = useProfileInGuide(question)
-  const looseTips = question.tips.some((t) => t.finding === null)
-  const looseMyths = question.myths.some((m) => m.finding === null)
+  const verdicts = inGuide ?? undefined
   return (
     <Section
       id={question.slug}
@@ -173,6 +186,37 @@ function QuestionSection({ question }: { question: QuestionView }) {
       className="scroll-mt-md"
       data-question={question.slug}
     >
+      <ShortAnswer question={question} profile={profile} inGuide={inGuide} />
+      <OwnSections sections={question.sections} />
+      <Evidence question={question} verdicts={verdicts} />
+      {question.tips.some((t) => t.finding === null) && (
+        <GuideTips question={question} verdicts={verdicts} />
+      )}
+      <InBrazil question={question} />
+      <VariesByProfile
+        question={question}
+        profile={profile}
+        inGuide={inGuide}
+      />
+      {question.myths.some((m) => m.finding === null) && (
+        <Myths question={question} />
+      )}
+      {question.calculator === 'priorities' && <B1Card />}
+      {question.calculator === 'possible-group' && <B5Card profile={profile} />}
+      <WasItHelpful question={question.slug} />
+    </Section>
+  )
+}
+
+/** The Question, the notice when no study split the Profile, and the short
+ * answer with its Confidence and the "Para o seu Perfil" line. */
+function ShortAnswer({
+  question,
+  profile,
+  inGuide,
+}: { question: QuestionView } & InGuide) {
+  return (
+    <>
       <Headline id={`${question.slug}-pergunta`}>
         <Html as="span" html={question.questionHtml} />
       </Headline>
@@ -187,44 +231,41 @@ function QuestionSection({ question }: { question: QuestionView }) {
           />
         )}
       </Panel>
+    </>
+  )
+}
 
-      <OwnSections sections={question.sections} />
+/** "E no Brasil?", once the Question has one. */
+function InBrazil({ question }: { question: QuestionView }) {
+  if (!question.inBrazilHtml) return null
+  return (
+    <Subsection aria-labelledby={`${question.slug}-brasil`}>
+      <Subhead id={`${question.slug}-brasil`}>E no Brasil?</Subhead>
+      <Html className="prosa" html={question.inBrazilHtml} />
+    </Subsection>
+  )
+}
 
-      <Evidence question={question} verdicts={inGuide ?? undefined} />
-
-      {looseTips && (
-        <GuideTips question={question} verdicts={inGuide ?? undefined} />
+/** "Varia conforme o Perfil?": the text, how many findings have data for the
+ * Profile and the link to the Profile box. */
+function VariesByProfile({
+  question,
+  profile,
+  inGuide,
+}: { question: QuestionView } & InGuide) {
+  return (
+    <Subsection aria-labelledby={`${question.slug}-perfil`}>
+      <Subhead id={`${question.slug}-perfil`}>Varia conforme o Perfil?</Subhead>
+      <Html className="prosa" html={question.profileHtml} />
+      {inGuide && (
+        <ProfileCount
+          withData={inGuide.withData}
+          findingTotal={question.findings.length}
+          className="mt-sm"
+        />
       )}
-
-      {question.inBrazilHtml && (
-        <Subsection aria-labelledby={`${question.slug}-brasil`}>
-          <Subhead id={`${question.slug}-brasil`}>E no Brasil?</Subhead>
-          <Html className="prosa" html={question.inBrazilHtml} />
-        </Subsection>
-      )}
-
-      <Subsection aria-labelledby={`${question.slug}-perfil`}>
-        <Subhead id={`${question.slug}-perfil`}>
-          Varia conforme o Perfil?
-        </Subhead>
-        <Html className="prosa" html={question.profileHtml} />
-        {inGuide && (
-          <ProfileCount
-            withData={inGuide.withData}
-            findingTotal={question.findings.length}
-            className="mt-sm"
-          />
-        )}
-        <ProfileLink profile={profile} />
-      </Subsection>
-
-      {looseMyths && <Myths question={question} />}
-
-      {question.calculator === 'priorities' && <B1Card />}
-      {question.calculator === 'possible-group' && <B5Card profile={profile} />}
-
-      <WasItHelpful question={question.slug} />
-    </Section>
+      <ProfileLink profile={profile} />
+    </Subsection>
   )
 }
 

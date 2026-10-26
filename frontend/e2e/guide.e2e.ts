@@ -73,7 +73,9 @@ test.describe('Guide page', () => {
       question(page, SECOND).getByRole('heading', { level: 2 }).first(),
     ).toBeInViewport()
   })
+})
 
+test.describe("a Question's section", () => {
   test('the short answer shows the Confidence in three steps, with the word, and the key number with the Fact sheet', async ({
     page,
   }) => {
@@ -179,7 +181,9 @@ test.describe('Guide page', () => {
       'Uma amostra só, dos EUA.',
     ])
   })
+})
 
+test.describe("the Guide's frame", () => {
   test('the Fact sheets come in one list for the page, numbered, with Status and Strength written, and lead to the Fact sheet', async ({
     page,
   }) => {
@@ -212,7 +216,7 @@ test.describe('Guide page', () => {
     await expect(page).toHaveURL('/estudos/costa-2018-satisfacao')
   })
 
-  test('the whole frame: E no Brasil?, a Myth next to its finding, O que levar, Limitations by Study and the Questions of other Topics', async ({
+  test('the whole frame, in order, with E no Brasil? and a Myth next to its finding', async ({
     page,
   }) => {
     await page.goto(OTHER_GUIDE)
@@ -240,6 +244,12 @@ test.describe('Guide page', () => {
         name: 'O que circula por aí e não se sustenta',
       }),
     ).toHaveCount(0)
+  })
+
+  test('O que levar, the Limitations by Study and the Questions of other Topics', async ({
+    page,
+  }) => {
+    await page.goto(OTHER_GUIDE)
     await expect(
       page
         .getByRole('region', { name: 'O que levar' })
@@ -270,7 +280,9 @@ test.describe('Guide page', () => {
       'Onde conhecer pessoas',
     )
   })
+})
 
+test.describe("the Guide's addresses", () => {
   test('the search description is the opening', async ({ request }) => {
     const html = await (await request.get(GUIDE)).text()
     expect(html).toContain(
