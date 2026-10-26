@@ -4,7 +4,7 @@ position: 30
 questions:
   - slug: o-que-digo-querer-me-atrai
     question: O que eu digo querer é o que me ==atrai==?
-    answer: Só em parte, porque bater traço a traço com a lista pessoal teve efeito muito pequeno num estudo em 43 países, Brasil incluído [@eastwick-2024-preferencias-43-paises]. Ter os traços que quase todo mundo valoriza pesou ==cerca de três vezes mais== que bater com a lista pessoal inteira [@eastwick-2024-preferencias-43-paises]. As pessoas também dizem dar menos peso à aparência e ao sexo do que de fato dão [@eastwick-2024-preferencias-43-paises].
+    answer: Só em parte, porque bater traço a traço com a lista pessoal teve efeito muito pequeno num estudo em 43 países, Brasil incluído [@eastwick-2024-preferencias-43-paises]. Ter os traços que quase todo mundo valoriza pesou ==cerca de três vezes mais== que bater com a lista pessoal inteira [@eastwick-2024-preferencias-43-paises]. As pessoas também dizem dar menos peso à aparência e ao sexo do que de fato dão [@eastwick-2024-preferencias-43-paises]. Em dois speed datings, as respostas dadas antes, parceiro ideal incluído, quase não previram o interesse por um par específico, o que não quer dizer que toda preferência deixe de importar [@joel-2017-atracao-speed-dating].
     confidence: strong
     findings:
       [
@@ -16,6 +16,7 @@ questions:
         homens-subestimam-aparencia,
         mulheres-subestimam-aparencia,
         perfis-contra-pessoas-reais,
+        desejo-por-um-par,
       ]
   - slug: aparencia-e-dinheiro-importam
     question: Aparência e dinheiro ==importam==?
@@ -34,11 +35,12 @@ questions:
       ]
   - slug: precisamos-ser-parecidos
     question: Precisamos ser ==parecidos==?
-    answer: Para atrair, ser parecido não pesou, mas no casamento a mesma escolaridade e a mesma religião andaram junto com menos separação nos EUA. Num speed dating, as pessoas não se interessaram mais por quem era parecido com elas [@eastwick-2008-preferencias-speed-dating]. Já no casamento, nos EUA, casais com a mesma escolaridade tiveram ==risco de separação 22% menor== que o dos casais em que o marido estudou mais [@schwartz-2014-homogamia-educacional], e casais de religiões diferentes se separaram mais [@lehrer-1993-religiao-estabilidade]. Sobre diferença de idade há só um estudo fraco, e não há dado brasileiro para nenhuma dessas perguntas.
+    answer: Para atrair, ser parecido não pesou, mas no casamento a mesma escolaridade e a mesma religião andaram junto com menos separação nos EUA. Num speed dating, as pessoas não se interessaram mais por quem era parecido com elas [@eastwick-2008-preferencias-speed-dating], e em outro a personalidade parecida não se associou à atração [@humberg-2023-similaridade-atracao]. Já no casamento, nos EUA, casais com a mesma escolaridade tiveram ==risco de separação 22% menor== que o dos casais em que o marido estudou mais [@schwartz-2014-homogamia-educacional], e casais de religiões diferentes se separaram mais [@lehrer-1993-religiao-estabilidade]. Sobre diferença de idade há só um estudo fraco, e não há dado brasileiro para nenhuma dessas perguntas.
     confidence: moderate
     findings:
       [
         speed-dating-sem-semelhanca,
+        personalidade-parecida,
         mesma-escolaridade,
         esposa-estudou-mais,
         religioes-diferentes,
@@ -107,6 +109,10 @@ findings:
   - id: perfis-contra-pessoas-reais
     text: Diante de perfis e pessoas imaginadas, homens e mulheres pesam aparência e renda de jeitos diferentes. Diante de pessoas que conheceram de verdade, a diferença entre os sexos quase some.
     fact_sheets: [eastwick-2014-meta-analise-preferencias]
+  - id: desejo-por-um-par
+    text: Em dois speed datings com universitários, as respostas dadas antes sobre personalidade, valores e parceiro ideal previram parte de quanto cada um desejava os outros em geral e de quanto era desejado em geral. O interesse por um par específico, descontadas essas duas tendências, ficou quase sem previsão, menos de 0,1% no melhor caso. O estudo não mostra que toda preferência deixa de importar.
+    fact_sheets: [joel-2017-atracao-speed-dating]
+    period: 2005 e 2007
   - id: aparencia-e-renda-com-pessoas-reais
     text: Com pessoas que se conheceram de verdade, a aparência teve uma associação de moderada a forte com o interesse romântico, e a renda, uma associação pequena. Foi igual para homens e mulheres.
     fact_sheets: [eastwick-2014-meta-analise-preferencias]
@@ -139,6 +145,11 @@ findings:
     text: Num speed dating com universitários, as pessoas não se interessaram mais por quem era parecido com elas em aparência, renda ou simpatia. Nenhuma das 9 análises achou essa preferência.
     fact_sheets: [eastwick-2008-preferencias-speed-dating]
     period: publicado em 2008
+  - id: personalidade-parecida
+    text: Em 940 encontros rápidos entre 397 jovens solteiros na Alemanha, nem a semelhança real nos Cinco Grandes traços de personalidade nem a que cada um percebeu no outro se associou à atração logo depois do encontro. Não achar a associação não prova que ela é zero.
+    fact_sheets: [humberg-2023-similaridade-atracao]
+    country: Alemanha
+    period: '2015'
   - id: mesma-escolaridade
     text: Nos casamentos de 2000 a 2004, casais com a mesma escolaridade tiveram risco de separação 22% menor que o dos casais em que o marido estudou mais. Nos casamentos dos anos 1950, essa diferença não existia.
     fact_sheets: [schwartz-2014-homogamia-educacional]
@@ -424,6 +435,10 @@ A lista também erra por desconhecer o próprio dono. No ranking do que as pesso
 
 Vale saber o que "de fato pesa" quer dizer aqui. É quanto um traço anda junto com gostar da pessoa agora, e os traços são os que o próprio participante enxerga nela [@eastwick-2024-preferencias-43-paises]. Quem gosta de alguém tende a vê-lo melhor, o que infla a conta. O estudo não mede se a relação dura nem se vai bem, e os solteiros avaliaram alguém que desejavam, não alguém com quem viviam.
 
+Outro estudo tentou o caminho inverso: prever, antes de as pessoas se conhecerem, quem ia se interessar por quem. Em dois speed datings com universitários, de 2005 e de 2007, cada um respondeu antes a um questionário sobre personalidade, valores, características próprias e o parceiro ideal, e depois de cada encontro de quatro minutos disse quanto tinha gostado do par [@joel-2017-atracao-speed-dating]. A primeira amostra é a mesma do speed dating do começo do Capítulo [@joel-2017-atracao-speed-dating]. Com as respostas do questionário, os modelos previram parte de quanto cada pessoa desejava os outros em geral (de 5% a 18% das diferenças) e de quanto ela era desejada em geral (de 18% a 27%) [@joel-2017-atracao-speed-dating]. O que sobrava, o interesse de uma pessoa por um par específico, ficou quase sem previsão: treinados numa amostra e testados na outra, os modelos explicaram menos de 0,1% dele no melhor caso [@joel-2017-atracao-speed-dating].
+
+Isso não quer dizer que nenhuma preferência importe. O estudo testou as respostas todas juntas, numa conversa curta, e não mostra que cada preferência deixa de contar em qualquer situação [@joel-2017-atracao-speed-dating]. Os próprios autores dizem que medidas que ainda não se conhecem, ou amostras maiores, poderiam prever o que estes modelos não previram [@joel-2017-atracao-speed-dating].
+
 {{brazil}} O Brasil entrou no estudo com duas amostras, 124 pessoas, 1,2% do total [@eastwick-2024-preferencias-43-paises]. O artigo não dá resultado por país, então não há um número brasileiro. O que há é que o efeito quase não variou entre as 60 amostras dos 43 países. Esperar o mesmo padrão aqui é inferência nossa, e ninguém a testou com uma amostra brasileira grande.
 
 {{question:o-que-digo-querer-me-atrai}}
@@ -452,7 +467,11 @@ Não achamos estudo brasileiro sobre aparência ou renda do parceiro, nem na atr
 
 ## Ser parecido conta pouco para atrair e mais para ficar junto
 
-Para atrair, ser parecido não apareceu. No speed dating dos EUA, as pessoas não se interessaram mais por quem era parecido com elas em aparência, renda ou simpatia; nenhuma das 9 análises achou essa preferência [@eastwick-2008-preferencias-speed-dating]. A exceção já apareceu no primeiro Capítulo: em religiosidade, bater com o que a pessoa quer pesou mais que a média [@eastwick-2024-preferencias-43-paises].
+Para atrair, ser parecido não apareceu. No speed dating dos EUA, as pessoas não se interessaram mais por quem era parecido com elas em aparência, renda ou simpatia; nenhuma das 9 análises achou essa preferência [@eastwick-2008-preferencias-speed-dating].
+
+A personalidade deu no mesmo. Na Alemanha, em 2015, 397 solteiros de 18 a 28 anos, quase todos estudantes, tiveram 940 encontros de 3 minutos e, depois de cada um, disseram quanto o par os atraía [@humberg-2023-similaridade-atracao]. Nem a semelhança real nos Cinco Grandes traços de personalidade nem a semelhança que cada um percebeu no outro se associou à atração, em nenhum dos cinco traços e em nenhuma das verificações dos autores [@humberg-2023-similaridade-atracao]. A única coisa que apareceu foi que perceber o par como mais extrovertido andou junto com sentir mais atração, fosse ele parecido ou não com quem avaliava [@humberg-2023-similaridade-atracao]. Não achar a associação não prova que ela seja zero [@humberg-2023-similaridade-atracao]. E o estudo mediu a atração logo depois de uma conversa curta, sem testar semelhança de valores, religião ou interesses, nem se uma relação começa ou dura [@humberg-2023-similaridade-atracao].
+
+A exceção já apareceu no primeiro Capítulo: em religiosidade, bater com o que a pessoa quer pesou mais que a média [@eastwick-2024-preferencias-43-paises].
 
 Para ficar casado, a semelhança em escolaridade passou a contar. Nos EUA, duas pesquisas nacionais acompanharam casamentos formados de 1950 a 2004 [@schwartz-2014-homogamia-educacional]. Nos casamentos de 2000 a 2004, os casais com a mesma escolaridade tiveram risco de separação 0,78 vez o dos casais em que o marido estudou mais, ou seja, 22% menor. Nos anos 1950, essa diferença não existia. O que mudou de verdade foi a esposa estudar mais: nos casamentos de 1950 a 1954, esses casais se separavam 1,51 vez mais; nos de 2000 a 2004, a desvantagem sumiu. É uma virada grande, porque, entre os casais de escolaridade diferente que casaram de 2005 a 2009, em mais de 60% a esposa estudou mais.
 

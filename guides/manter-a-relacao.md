@@ -4,7 +4,7 @@ position: 50
 questions:
   - slug: o-que-preve-o-divorcio
     question: O que ==prevê== o fim de um casamento?
-    answer: 'Os fatores medidos nas maiores amostras são os do ponto de partida. Nos EUA, quem casou ==antes dos 20, tinha menos estudo ou já tinha filho== se separou mais [@raley-2003-plato-divorcio], e já dentro do casamento a briga destrutiva veio com mais divórcio [@birditt-2010-conflito-divorcio]. Nada disso mostra causa: quem casa cedo ou briga assim pode já ser diferente antes. No Brasil, o único estudo do acervo é com mulheres, de 1996: nele, estar na segunda união veio com mais separação, e mais estudo veio com mais separação, ao contrário dos EUA [@leone-2007-dissolucao-brasil].'
+    answer: 'Os fatores medidos nas maiores amostras são os do ponto de partida. Nos EUA, quem casou ==antes dos 20, tinha menos estudo ou já tinha filho== se separou mais [@raley-2003-plato-divorcio], e já dentro do casamento a briga destrutiva veio com mais divórcio [@birditt-2010-conflito-divorcio]. Morar junto antes de casar veio com mais separação nos casamentos até 1994 [@raley-2003-plato-divorcio], mas nos estudos mais novos a ligação ora some, ora continua [@manning-2012-coabitacao-divorcio] [@rosenfeld-2019-coabitacao-dissolucao], e, num estudo, ela perde a significância quando se conta a idade em que o casal foi morar junto, embora tenha continuado num dos testes [@kuperberg-2014-idade-coabitacao]. Nada disso mostra causa: quem casa cedo, mora junto antes ou briga assim pode já ser diferente antes. No Brasil, o único estudo do acervo é com mulheres, de 1996: nele, estar na segunda união veio com mais separação, e mais estudo veio com mais separação, ao contrário dos EUA [@leone-2007-dissolucao-brasil].'
     confidence: strong
     findings:
       [
@@ -12,7 +12,14 @@ questions:
         escolaridade-eua,
         idade-ao-casar-eua,
         filho-antes,
+        vinte-anos-eua,
         morar-junto-antes,
+        morar-junto-casamentos-recentes,
+        morar-junto-ja-noiva,
+        morar-junto-idade,
+        morar-junto-ano-a-ano,
+        morar-junto-depois-do-noivado,
+        morar-junto-sugeriu-divorcio,
         uniao-anterior,
         briga-destrutiva,
         motivos-dos-divorciados,
@@ -97,6 +104,32 @@ findings:
   - id: morar-junto-antes
     text: Morar junto antes de casar veio com risco de separação 38% maior, levando em conta os outros fatores, nos casamentos de 1980 a 1994.
     fact_sheets: [raley-2003-plato-divorcio]
+  - id: vinte-anos-eua
+    text: Com entrevistas de 2006 a 2010, a chance estimada de um primeiro casamento americano durar 20 anos sem separação ou divórcio foi de 52% para as mulheres e 56% para os homens. Como a pesquisa só ouviu gente de até 44 anos, a estimativa pende para quem casou jovem.
+    fact_sheets: [copen-2012-primeiros-casamentos]
+    period: 2006 a 2010
+  - id: morar-junto-casamentos-recentes
+    text: Nos primeiros casamentos feitos nos EUA de 1996 em diante, ter morado junto com o cônjuge antes não teve associação estatisticamente significativa com a separação, em mulheres e em homens.
+    fact_sheets: [manning-2012-coabitacao-divorcio]
+    period: casamentos de 1996 a 2008
+  - id: morar-junto-ja-noiva
+    text: Nesses casamentos, as mulheres que foram morar junto já noivas ou com planos definidos de casar se separaram menos que as que não moraram junto antes. Entre os homens, essa diferença não apareceu.
+    fact_sheets: [manning-2012-coabitacao-divorcio]
+    period: casamentos de 1996 a 2008
+  - id: morar-junto-idade
+    text: Em primeiros casamentos de americanas de 1985 a 2009, morar junto antes veio com risco de separação 1,37 vez o de quem casou direto, levando em conta a idade ao casar. Levando em conta a idade em que o casal foi morar junto, o risco ficou em 1,09 vez, sem significância estatística.
+    fact_sheets: [kuperberg-2014-idade-coabitacao]
+    applies_to: { genders: [woman], couple: different-sex }
+  - id: morar-junto-ano-a-ano
+    text: Em 24.888 americanas entrevistadas de 1988 a 2015, quem morou junto com o futuro marido teve, somando todas as durações do casamento, chance de separação em cada ano 1,31 vez a de quem não morou, com controles. No ano do casamento, quem morou junto se separou menos; depois, mais.
+    fact_sheets: [rosenfeld-2019-coabitacao-dissolucao]
+    applies_to: { genders: [woman], couple: different-sex }
+  - id: morar-junto-depois-do-noivado
+    text: Em primeiros casamentos de Oklahoma e estados vizinhos, quem só foi morar junto depois de noivar teve chance de divórcio em cada ano 0,55 vez a de quem foi morar junto sem estar noivo, com controles. Quem esperou até casar ficou em 0,70, uma diferença só marginal.
+    fact_sheets: [stanley-2010-coabitacao-noivado]
+  - id: morar-junto-sugeriu-divorcio
+    text: Entre 1.050 americanos casados havia até dez anos, 18,7% dos que foram morar junto antes do noivado disseram que eles ou o cônjuge já tinham sugerido o divórcio a sério, contra 10,2% dos que só foram morar junto ao casar. O estudo não viu se esses casamentos acabaram.
+    fact_sheets: [rhoades-2009-coabitacao-noivado]
   - id: uniao-anterior
     text: Quem já tinha filho de uma união anterior, ou casou com um homem que já tinha sido casado, se separou um pouco mais.
     fact_sheets: [lehrer-2013-idade-casamento]
@@ -263,6 +296,35 @@ visuals:
         fact_sheet: raley-2003-plato-divorcio
     highlight: Com filho antes, casou de 1987 a 1994
     note: mulheres; associação, não causa
+  - id: morar-junto-estudo-a-estudo
+    kind: study-table
+    title: Morar junto antes de casar e a separação, estudo a estudo, nos EUA
+    rows:
+      - fact_sheet: raley-2003-plato-divorcio
+        measure: Risco de separação de quem morou junto antes, em casamentos de 1980 a 1994, com controles
+        value: 1.38
+        unit: vez
+      - fact_sheet: manning-2012-coabitacao-divorcio
+        measure: O mesmo, em mulheres casadas de 1996 em diante (sem significância estatística)
+        value: 0.83
+        unit: vez
+      - fact_sheet: kuperberg-2014-idade-coabitacao
+        measure: O mesmo, levando em conta a idade ao ir morar junto, e não a idade ao casar (sem significância estatística; com a idade ao casar, 1,37 vez, significativo)
+        value: 1.09
+        unit: vez
+      - fact_sheet: rosenfeld-2019-coabitacao-dissolucao
+        measure: Chance de separação em cada ano de quem morou junto com o futuro marido, somando todas as durações do casamento
+        value: 1.31
+        unit: vez
+      - fact_sheet: stanley-2010-coabitacao-noivado
+        measure: Chance de divórcio em cada ano de quem só foi morar junto depois de noivar, contra quem foi sem estar noivo
+        value: 0.55
+        unit: vez
+      - fact_sheet: rhoades-2009-coabitacao-noivado
+        measure: Casados que foram morar junto antes do noivado e dizem que o divórcio já foi sugerido a sério (só ao casar, 10,2%)
+        value: 18.7
+        unit: '%'
+    note: 1 vez é o mesmo risco do grupo comparado, quem não morou junto antes ou, na linha do noivado, quem foi morar junto sem estar noivo; nenhum desses estudos mostra causa
   - id: tempo-ate-o-divorcio
     kind: timeline
     title: Tempo médio entre o casamento e o divórcio, no Brasil
@@ -445,7 +507,7 @@ Quem está numa relação e pensa no futuro dela costuma se perguntar se ela vai
 
 ## O começo já diz muito
 
-Pelas taxas de separação dos EUA do fim dos anos 1980, cerca de metade dos primeiros casamentos termina ou deve terminar em separação ou divórcio [@raley-2003-plato-divorcio]. Mas as duas metades não saem por sorteio. {{you:escolaridade-eua}} A escolaridade da mulher, por exemplo, separa bem os grupos: em 30 anos, 60% dos casamentos de quem não terminou o ensino médio acabam, contra 36% dos de quem tem faculdade [@raley-2003-plato-divorcio]. Depois de 1980, o divórcio caiu entre as mulheres com faculdade e subiu entre as sem ensino médio completo, e a distância aumentou [@raley-2003-plato-divorcio].
+Pelas taxas de separação dos EUA do fim dos anos 1980, cerca de metade dos primeiros casamentos termina ou deve terminar em separação ou divórcio [@raley-2003-plato-divorcio]. Uma estimativa mais nova chega perto disso: com entrevistas de 2006 a 2010, a chance de um primeiro casamento americano durar 20 anos sem separação ou divórcio foi de 52% para as mulheres e 56% para os homens [@copen-2012-primeiros-casamentos]. A pesquisa só ouviu gente de até 44 anos, então quem chegou a 20 anos de casamento nela casou até os 24, e a estimativa pende para quem casou jovem [@copen-2012-primeiros-casamentos]. Mas as duas metades não saem por sorteio. {{you:escolaridade-eua}} A escolaridade da mulher, por exemplo, separa bem os grupos: em 30 anos, 60% dos casamentos de quem não terminou o ensino médio acabam, contra 36% dos de quem tem faculdade [@raley-2003-plato-divorcio]. Depois de 1980, o divórcio caiu entre as mulheres com faculdade e subiu entre as sem ensino médio completo, e a distância aumentou [@raley-2003-plato-divorcio].
 
 {{visual:separacao-por-escolaridade}}
 
@@ -454,6 +516,18 @@ Outras marcas do ponto de partida pesam do mesmo jeito. Ter um filho antes de ca
 {{visual:filho-antes-de-casar}}
 
 Nada disso é uma alavanca. Casar cedo, ter filho antes ou morar junto antes podem marcar pessoas que já tinham mais risco por outros motivos, e os dados não separam uma coisa da outra [@raley-2003-plato-divorcio]. Quem lê "morar junto antes aumenta o divórcio" e decide não morar junto está tirando do estudo uma conclusão que ele não tira. Esses números também são de mulheres, de casamentos feitos até 1994.
+
+Morar junto antes tem estudos mais novos, e eles complicam os 38%. Nos primeiros casamentos americanos feitos de 1996 em diante, ter morado junto com o cônjuge antes não teve associação estatisticamente significativa com a separação, nem em mulheres nem em homens [@manning-2012-coabitacao-divorcio]. As mulheres que foram morar junto já noivas ou com planos definidos de casar se separaram menos que as que não moraram junto antes; entre os homens, essa diferença não apareceu [@manning-2012-coabitacao-divorcio]. Esses casamentos foram observados por poucos anos, os planos de casar foram lembrados depois, na entrevista, e o resultado não autoriza uma regra de noivar antes de ir morar junto [@manning-2012-coabitacao-divorcio].
+
+Outro estudo, com 24.888 americanas entrevistadas de 1988 a 2015, não viu a ligação sumir nos casamentos mais recentes [@rosenfeld-2019-coabitacao-dissolucao]. Somando todas as durações do casamento, quem morou junto com o futuro marido teve chance de separação em cada ano 1,31 vez a de quem não morou, com controles. O risco muda com o tempo: no ano do casamento, quem já morava junto se separou menos, e depois, mais [@rosenfeld-2019-coabitacao-dissolucao]. Os autores sugerem que morar junto dá experiência prática ao casal, mas é hipótese deles: o estudo não separa quem escolhe morar junto do efeito de morar junto [@rosenfeld-2019-coabitacao-dissolucao].
+
+Parte da diferença é de idade. Quem morou junto antes começou a dividir a casa mais cedo, aos 22,4 anos em média, contra 23,1 de quem casou direto [@kuperberg-2014-idade-coabitacao]. Em primeiros casamentos de americanas, de 1985 a 2009, levando em conta a idade ao casar, morar junto antes veio com risco de separação 1,37 vez o de quem casou direto. Levando em conta a idade em que o casal foi morar junto, ficou em 1,09 vez, sem significância estatística [@kuperberg-2014-idade-coabitacao]. Isso não prova que morar junto seja inofensivo: num dos testes, com outro recorte de casamentos, a associação continuou [@kuperberg-2014-idade-coabitacao].
+
+Dois estudos da mesma equipe olharam o noivado [@stanley-2010-coabitacao-noivado] [@rhoades-2009-coabitacao-noivado]. Em primeiros casamentos de Oklahoma e estados vizinhos, quem só foi morar junto depois de noivar teve chance de divórcio em cada ano 0,55 vez a de quem foi morar junto sem estar noivo, com controles [@stanley-2010-coabitacao-noivado]. Quem esperou até casar ficou em 0,70, uma diferença só marginal, e esperar o noivado ou esperar o casamento não fez diferença significativa [@stanley-2010-coabitacao-noivado]. A amostra não é representativa, a maioria eram mulheres, e o histórico foi contado numa entrevista só [@stanley-2010-coabitacao-noivado]. Os grupos podem ser diferentes desde antes de morar junto, e o estudo não mostra que esperar o noivado evite divórcio [@stanley-2010-coabitacao-noivado]. No outro, com 1.050 americanos casados havia até dez anos, quem foi morar junto antes do noivado relatou menos satisfação, dedicação e confiança que quem foi depois de noivar, e mais comunicação negativa que quem esperou até casar. As diferenças eram pequenas [@rhoades-2009-coabitacao-noivado]. Desse grupo, 18,7% disseram que eles ou o cônjuge já tinham sugerido o divórcio a sério, contra 10,2% de quem só foi morar junto ao casar e 12,3% de quem foi depois de noivar; esse último grupo não diferiu do primeiro de forma significativa [@rhoades-2009-coabitacao-noivado]. É uma sugestão de divórcio, não um divórcio que aconteceu, e quem já tinha se separado não estava na amostra [@rhoades-2009-coabitacao-noivado].
+
+{{visual:morar-junto-estudo-a-estudo}}
+
+Esses estudos medem épocas, recortes e coisas diferentes, e nenhum sorteou quem ia morar junto. Pela nossa leitura deles, morar junto antes não tem um efeito claro e único sobre a separação, e a idade e o noivado mudam o número.
 
 Três fatores de partida têm resposta em outros Guias. Ter religiões diferentes veio com mais separação. Entre brancos não hispânicos dos EUA casados de 1960 em diante, e sem contar quem não tem religião, a chance de o casamento acabar até o quinto ano foi de 0,13 a 0,27 nos casais da mesma religião e de 0,24 a 0,42 nos de religiões diferentes [@lehrer-1993-religiao-estabilidade]. Nos casamentos de 2000 a 2004, casais com a mesma escolaridade passaram a se separar menos que aqueles em que o marido tem mais estudo [@schwartz-2014-homogamia-educacional]. A Pergunta [Precisamos ser parecidos?](/escolher-parceiro#precisamos-ser-parecidos) trata desses dois. E ter tido outros parceiros sexuais antes do casamento veio com chance de divórcio 2,52 vezes maior, com controles [@smith-2024-sexo-pre-marital-divorcio], o que a Pergunta [Transar com mais pessoas antes de assumir uma relação faz mal?](/sexo-e-historico#mais-parceiros-faz-mal) discute com os outros estudos.
 
