@@ -53,6 +53,7 @@ Rhoades é o dado mais confiável aqui porque compara a pessoa com ela mesma, o 
 | Usuários vs. não usuários, efeito geral em 27 estudos: g = 0,28; sem os outliers, 0,21 | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
 | Por desfecho: uso compulsivo 0,44; corpo e alimentação 0,32; aparência e autoestima 0,28; sensibilidade à rejeição 0,28; depressão e ansiedade 0,25; satisfação com a vida 0,10, não significativo | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
 | Os autores não sabem se o app piora a saúde mental ou se quem está pior usa mais; quase todos os estudos são transversais | [Cela 2026](../studies/cela-2026-meta-analise-apps.md) | moderada |
+| Associações adversas com uso de apps em 86,4% dos 22 estudos sobre imagem corporal e 48,3% dos 29 sobre saúde mental e bem-estar; são percentuais de estudos, não de pessoas, sem estimativa conjunta de efeito ou prova de causa | [Bowman 2025](../studies/bowman-2025-apps-saude.md) | fraca |
 | Usuários atuais: chance 2,51 vezes de sofrimento psicológico e 1,91 de depressão, com ajuste de idade, gênero e orientação; ansiedade e autoestima sem associação | [Holtzhausen 2020](../studies/holtzhausen-2020-apps-saude-mental.md) | fraca |
 | Mais usuários e ex-usuários disseram que o app melhorou a autoestima (40,4%) do que piorou (28,7%) | [Holtzhausen 2020](../studies/holtzhausen-2020-apps-saude-mental.md) | fraca |
 | Usuários do último ano nos EUA: 45% saíram mais frustrados que esperançosos (28%) | [Pew](../studies/pew-2023-2020-online-dating.md) | forte |
@@ -123,10 +124,11 @@ O Guia deve linkar o Guia do MVP "app ou presencial" (A3) em vez de repetir quan
   - Sharabi et al. 2026, a outra meta-análise de apps e saúde mental (Computers in Human Behavior 177:108879, fechada).
   - Sharabi et al. 2024, "Burnt out and still single", painel de 12 semanas sobre esgotamento com apps (New Media & Society, fechado).
   - Thomas et al. 2023, "99+ matches but a spark ain't one", painel sobre swipe excessivo e medo de ficar solteiro (Telematics and Informatics, CC BY, mas o site bloqueou o download).
-  - Bowman et al. 2024, revisão sistemática sobre apps, imagem corporal e bem-estar (Computers in Human Behavior, CC BY, mesmo bloqueio).
   - Eisenberger et al. 2003, o estudo original de "rejeição dói" (Science, fechado).
   - Fisher et al. 2010, neuroimagem de quem foi rejeitado no amor (Journal of Neurophysiology, fechado).
 - Um estudo longitudinal com homens heterossexuais que meça matches recebidos e saúde mental ao longo do tempo.
 - Qualquer teste de fator de proteção (limite de uso, motivo de uso, pausas) com desenho que permita falar em causa.
 - Dados brasileiros. Uma busca no OpenAlex por "aplicativos de relacionamento saúde mental" achou poucos títulos, entre eles um trabalho de 2024 sobre homens gays, que não lemos; nenhum parecia ter amostra grande ou desenho longitudinal.
 - Ruminação depois da rejeição como causa de depressão, com texto aberto.
+
+Atualização de 26/10/2026: o texto completo de Bowman foi conferido na [Ficha de 2025](../studies/bowman-2025-apps-saude.md) e entrou na seção 3. A seção de resultados traz 48,3% (14 de 29 estudos) para saúde mental e bem-estar; o resumo traz 48,6%, em desacordo com essa contagem.
