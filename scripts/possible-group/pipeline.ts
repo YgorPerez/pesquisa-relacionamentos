@@ -6,12 +6,13 @@
 // 3. Aggregates the Census and reads the PNS.
 // 4. Cross-checks both against the published numbers. If anything does not
 //    match, exits with an error before writing any file.
-// 5. Writes to `data/possible-group/` the Census CSV, the PNS probabilities
+// 5. Writes to `data/possible-group/` the Census CSV, the PNS cells
 //    and the SIDRA tables for exact age and municipality (population from
 //    9514, marital status from 10185), each with its `.meta.yaml`.
 //
 // `--municipalities-only` rebuilds only marital status by municipality,
-// without downloading the microdata.
+// without downloading the microdata. `--pns-only` rebuilds only the PNS
+// cells, without the Census.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { download, FTP, RAW_DIR, zipEntries, zipLines } from './raw.ts'
@@ -28,7 +29,13 @@ import {
   STATE_TOLERANCE,
   type MaritalCell,
 } from './cross-check.ts'
-import { estimatePns, pnsToCsv, readPnsRecord, type PnsRecord } from './pns.ts'
+import {
+  PNS_FIELDS,
+  pnsCells,
+  pnsToCsv,
+  readPnsRecord,
+  type PnsRecord,
+} from './pns.ts'
 import {
   crossCheckMunicipalities,
   municipalitiesToCsv,
@@ -363,6 +370,52 @@ function write(name: string, content: string, meta: Meta) {
   console.log(`wrote data/possible-group/${name}.csv`)
 }
 
+// --- PNS -----------------------------------------------------------------
+
+async function readPns(pnsZip: string): Promise<PnsRecord[]> {
+  console.log('reading the PNS')
+  const records: PnsRecord[] = []
+  for await (const line of zipLines(pnsZip, 'PNS_2019.txt')) {
+    const record = readPnsRecord(line)
+    if (record) records.push(record)
+  }
+  return records
+}
+
+async function writePns(records: ReadonlyArray<PnsRecord>, pnsZip: string) {
+  const cells = pnsCells(records)
+  write('pns-2019', pnsToCsv(cells), {
+    fact_sheet: PNS_FACT_SHEET,
+    table: [
+      'Microdados da PNS 2019, morador selecionado de 18 anos ou mais, agrupado por sexo, faixa de idade e respostas',
+    ],
+    variables: [...PNS_FIELDS],
+    downloaded_on: fileDate(pnsZip),
+    version: `PNS_2019_20220525.zip publicado em ${await publishedOn(PNS_URL)}`,
+    cross_check:
+      'Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada.',
+  })
+  console.log(`${cells.length} PNS cells from ${records.length} records`)
+}
+
+/** `--pns-only`: rebuilds only the PNS cells, without the Census. */
+async function pnsOnly() {
+  const pnsZip = await download(
+    PNS_URL,
+    join(RAW_DIR, 'pns', 'PNS_2019_20220525.zip'),
+  )
+  const records = await readPns(pnsZip)
+  const failures = crossCheckPns(records)
+  if (failures.length > 0) {
+    console.error(
+      `The cross-check against what IBGE published failed; nothing was written.\n${failures.join('\n')}`,
+    )
+    process.exit(1)
+  }
+  mkdirSync(OUTPUT, { recursive: true })
+  await writePns(records, pnsZip)
+}
+
 // --- main ----------------------------------------------------------------
 
 async function main() {
@@ -402,12 +455,7 @@ async function main() {
   }
   const aggregate = await aggregatePeople(allPeople())
 
-  console.log('reading the PNS')
-  const records: PnsRecord[] = []
-  for await (const line of zipLines(pnsZip, 'PNS_2019.txt')) {
-    const record = readPnsRecord(line)
-    if (record) records.push(record)
-  }
+  const records = await readPns(pnsZip)
 
   const check = crossCheck(aggregate, { population, marital })
   const failures = [
@@ -427,10 +475,7 @@ async function main() {
   )
 
   mkdirSync(OUTPUT, { recursive: true })
-  const [censusVersion, pnsVersion] = await Promise.all([
-    publishedOn(CENSUS_URL),
-    publishedOn(PNS_URL),
-  ])
+  const censusVersion = await publishedOn(CENSUS_URL)
 
   write('censo-2022', cellsToCsv(aggregate.cells), {
     fact_sheet: CENSUS_FACT_SHEET,
@@ -455,25 +500,7 @@ async function main() {
       `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
       `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
   })
-  write('pns-2019', pnsToCsv(estimatePns(records)), {
-    fact_sheet: PNS_FACT_SHEET,
-    table: ['Microdados da PNS 2019, morador selecionado de 18 anos ou mais'],
-    variables: [
-      'V0024',
-      'UPA_PNS',
-      'V00291',
-      'M001',
-      'C006',
-      'C008',
-      'Y008',
-      'P00404',
-      'P050',
-    ],
-    downloaded_on: fileDate(pnsZip),
-    version: `PNS_2019_20220525.zip publicado em ${pnsVersion}`,
-    cross_check:
-      'Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada.',
-  })
+  await writePns(records, pnsZip)
   write('sidra-9514-idade', ageCsv, {
     fact_sheet: CENSUS_FACT_SHEET,
     table: ['SIDRA 9514'],
@@ -505,4 +532,6 @@ async function main() {
 
 await (process.argv.includes('--municipalities-only')
   ? municipalitiesOnly()
-  : main())
+  : process.argv.includes('--pns-only')
+    ? pnsOnly()
+    : main())

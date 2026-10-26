@@ -4,8 +4,8 @@
 // cells. The build cuts it into one pack per place: Brazil's (the states
 // summed, ~44 thousand cells) and one per state, with its municipalities. The
 // browser downloads Brazil's and, if the visitor picks a state, that one too.
-// Each pack carries the SIDRA 9514 single ages and the PNS probabilities,
-// which are small.
+// Each pack carries the SIDRA 9514 single ages; Brazil's also carries the PNS
+// cells, which are national and small (a few thousand).
 //
 // Build side: `readGroupBase` (the CSVs) → `packForPlace` (JSON).
 // Browser side: `openPack` (JSON → typed columns for the count).
@@ -44,9 +44,56 @@ export const AGE_GROUPS = [
 /** SIDRA 9514 single ages: 15 to 99 and "100+" (position 85). */
 export const SINGLE_AGES = 86
 
-/** A row of the PNS CSV: [p, p_min, p_max], by the key
- * `medida|sexo|faixa|categoria`. */
-export type Pns = Readonly<Record<string, readonly [number, number, number]>>
+/** The PNS 2019 age brackets. Each Census group falls into exactly one. */
+export const PNS_BRACKETS = [
+  '18-24',
+  '25-29',
+  '30-34',
+  '35-39',
+  '40-49',
+  '50-59',
+  '60-69',
+  '70+',
+] as const
+
+/** Columns of the PNS CSV that are not a variable. */
+const PNS_FIXED_COLUMNS = [
+  'sexo',
+  'idade',
+  'peso',
+  'n_registros',
+  'efeito_plano',
+] as const
+
+/**
+ * The PNS 2019 cells: adults grouped by sex, age bracket and the answer to
+ * each PNS variable (orientation, height, smoking…), with their weight and
+ * records. Keeping the persons' answers together, instead of one probability
+ * per question, is what lets the count cross the PNS Requirements on the
+ * same person (#287). Columns, one position per cell.
+ */
+export interface Pns {
+  readonly sex: ReadonlyArray<number>
+  /** Position in `PNS_BRACKETS`. */
+  readonly bracket: ReadonlyArray<number>
+  /** One per CSV variable column, by its name (`orientacao`, `altura`…). The
+   * code is 0 for no answer and i + 1 for `levels[i]`. */
+  readonly variables: Readonly<
+    Record<
+      string,
+      {
+        readonly levels: ReadonlyArray<string>
+        readonly codes: ReadonlyArray<number>
+      }
+    >
+  >
+  readonly weight: ReadonlyArray<number>
+  readonly records: ReadonlyArray<number>
+  /** The design effect of the sex × bracket, in `sex * PNS_BRACKETS.length +
+   * bracket` order: how much the PNS sample design widens the variance
+   * relative to a simple random sample of the same records. */
+  readonly designEffect: ReadonlyArray<number>
+}
 
 export interface Municipality {
   readonly code: string
@@ -213,14 +260,42 @@ function readMunicipalities(text: string): Municipality[] {
   })
 }
 
+/** Every column that is not in `PNS_FIXED_COLUMNS` is a variable: a new PNS
+ * Requirement only adds a column to the CSV. "" is no answer. */
 function readPns(text: string): Pns {
-  const { rows } = csvLines(text)
-  return Object.fromEntries(
-    rows.map(([measure, sex, bracket, category, p, min, max]) => [
-      `${measure}|${sex}|${bracket}|${category}`,
-      [Number(p), Number(min), Number(max)] as const,
-    ]),
+  const { header, rows } = csvLines(text)
+  const col = (name: string) => indexOrThrow(header, name, 'column')
+  const names = header.filter(
+    (h) => !(PNS_FIXED_COLUMNS as ReadonlyArray<string>).includes(h),
   )
+  const variables = Object.fromEntries(
+    names.map((name) => {
+      const c = col(name)
+      const levels = [
+        ...new Set(rows.map((l) => l[c] ?? '').filter((v) => v !== '')),
+      ].sort()
+      const codes = rows.map((l) => optionalIndex(levels, l[c], name))
+      return [name, { levels, codes }]
+    }),
+  )
+  const sex = col('sexo')
+  const bracket = col('idade')
+  const effect = col('efeito_plano')
+  const designEffect = Array<number>(SEXES.length * PNS_BRACKETS.length).fill(1)
+  const positions = rows.map((l) => {
+    const s = indexOrThrow(SEXES, l[sex], 'sex')
+    const b = indexOrThrow(PNS_BRACKETS, l[bracket], 'PNS bracket')
+    designEffect[s * PNS_BRACKETS.length + b] = Number(l[effect])
+    return [s, b] as const
+  })
+  return {
+    sex: positions.map(([s]) => s),
+    bracket: positions.map(([, b]) => b),
+    variables,
+    weight: rows.map((l) => Number(l[col('peso')])),
+    records: rows.map((l) => Number(l[col('n_registros')])),
+    designEffect,
+  }
 }
 
 /** The files of `data/possible-group/`, as text. */
@@ -252,7 +327,7 @@ export type PackPlace = 'BR' | StateCode
  * columns. The build writes it under a path hashed from its content, so a
  * new format never meets an old page. */
 export interface Pack {
-  readonly version: 1
+  readonly version: 2
   readonly place: PackPlace
   readonly cells: ReadonlyArray<number>
   readonly weights: ReadonlyArray<number>
@@ -260,7 +335,9 @@ export interface Pack {
   readonly ages: AgesBySex
   /** `[code, name, ...people]` of each municipality in the state. */
   readonly municipalities: ReadonlyArray<ReadonlyArray<string | number>>
-  readonly pns: Pns
+  /** The PNS is national: only Brazil's pack, which the page always
+   * downloads, carries it. */
+  readonly pns: Pns | null
 }
 
 /** A place's pack: for Brazil, the states' cells summed. The weight is
@@ -278,7 +355,7 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
   const ages = base.ages.get(place)
   if (!ages) throw new Error(`no SIDRA 9514 single ages for ${place}`)
   return {
-    version: 1,
+    version: 2,
     place,
     cells: codes,
     weights: codes.map((c) => Math.round(sums.get(c)!.weight)),
@@ -290,7 +367,7 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
         : base.municipalities
             .filter((m) => m.uf === place)
             .map((m) => [m.code, m.name, ...m.people]),
-    pns: base.pns,
+    pns: place === 'BR' ? base.pns : null,
   }
 }
 
@@ -312,7 +389,8 @@ export interface PlaceData {
   readonly records: Float64Array
   readonly ages: AgesBySex
   readonly municipalities: ReadonlyMap<string, Municipality>
-  readonly pns: Pns
+  /** Only in Brazil's. */
+  readonly pns: Pns | null
 }
 
 /** A pack of the version this code reads. */
@@ -321,7 +399,7 @@ function isPack(value: unknown): value is Pack {
     typeof value === 'object' &&
     value !== null &&
     'version' in value &&
-    value.version === 1 &&
+    value.version === 2 &&
     'cells' in value &&
     Array.isArray(value.cells)
   )
