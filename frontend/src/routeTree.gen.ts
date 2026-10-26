@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as GrupoPossivelRouteImport } from './routes/grupo-possivel'
 import { Route as PrioridadesRouteImport } from './routes/prioridades'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
@@ -24,6 +25,11 @@ import { Route as EstudosSlugRouteImport } from './routes/estudos/$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscaRoute = BuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GrupoPossivelRoute = GrupoPossivelRouteImport.update({
@@ -79,6 +85,7 @@ const EstudosSlugRoute = EstudosSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -106,6 +114,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/busca': typeof BuscaRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/busca'
     | '/grupo-possivel'
     | '/prioridades'
     | '/privacidade'
@@ -134,6 +144,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/busca'
     | '/grupo-possivel'
     | '/prioridades'
     | '/privacidade'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/busca'
     | '/grupo-possivel'
     | '/prioridades'
     | '/privacidade'
@@ -161,6 +173,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuscaRoute: typeof BuscaRoute
   GrupoPossivelRoute: typeof GrupoPossivelRoute
   PrioridadesRoute: typeof PrioridadesRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -180,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/busca': {
+      id: '/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof BuscaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/grupo-possivel': {
@@ -257,6 +277,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuscaRoute: BuscaRoute,
   GrupoPossivelRoute: GrupoPossivelRoute,
   PrioridadesRoute: PrioridadesRoute,
   PrivacidadeRoute: PrivacidadeRoute,

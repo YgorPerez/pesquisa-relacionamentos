@@ -211,7 +211,7 @@ Todas auto-hospedadas. A Source Sans 3 entra dentro da família da Atkinson por 
 
 Uma coluna, celular primeiro. A página tem até 46rem com respiro lateral de 18px; o texto fica em até min(38rem, 66ch). Cada seção abre com uma régua desenhada à mão de 1,6px no topo, 20px acima do título, e fica a 44px da anterior. Achados em lista com coluna de 58px para país e ano e divisória pontilhada de 1,5px. Rodapé a 56px.
 
-A partir de 900px, o fundo ganha retícula fina (6px) e a coluna principal vira folha com contorno de 2px, sem borda no topo, padding de 12px 64px 56px. O cabeçalho é uma barra de papel com linha inferior de 2px; nome e etiqueta têm 44px de altura de toque.
+A partir de 900px, o fundo ganha retícula fina (6px) e a coluna principal vira folha com contorno de 2px, sem borda no topo, padding de 12px 64px 56px. O cabeçalho é uma barra de papel com linha inferior de 2px; nome, etiqueta e a lupa da busca, no canto direito, têm 44px de altura de toque.
 
 Rolagem suave com scroll-padding de 16px, desligada em prefers-reduced-motion.
 

@@ -49,6 +49,7 @@ export type NoticeKind = (typeof NOTICE_KINDS)[number]
 /** The app's fixed paths, which no topic can use as its slug (#15). They are
  * public URLs, so they stay in Portuguese. */
 export const RESERVED_ROUTES = [
+  'busca',
   'estudos',
   'dicas',
   'grupo-possivel',

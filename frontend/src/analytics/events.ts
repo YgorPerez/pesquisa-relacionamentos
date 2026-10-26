@@ -2,7 +2,8 @@
 // GoatCounter dashboard shows, and changing one breaks the series already
 // there (the move to English, ADR 0039, broke it once). None carries the
 // Profile: the pieces are the Guide, the Fact sheet, the reason, the
-// calculator and the Neighbor site, never anything about who visits. The slugs are the URLs', in
+// calculator and the Neighbor site, never anything about who visits nor
+// what they searched. The slugs are the URLs', in
 // Portuguese.
 
 /** The four closed reasons for the "no" of "Ajudou?" (#21). */
@@ -29,6 +30,7 @@ export type AnalyticsEvent =
   | `calculator/${string}`
   | `continue-reading/${string}`
   | `neighbor-site/${string}`
+  | 'search/no-result'
 
 // Since #194 (2026-10-26) the Guide has one "Ajudou?" and its key is the
 // Topic's slug (`helped/yes/onde-conhecer-pessoas`); the per-Question series
@@ -54,4 +56,7 @@ export const EVENTS = {
   /** A Reading opened, on `/sites-vizinhos` or at the end of a Guide: the
    * Neighbor site's id only (#179). */
   neighborSite: (site: string): AnalyticsEvent => `neighbor-site/${site}`,
+  /** A search on `/busca` found nothing (#275). Never the term: what a
+   * reader types may say something about their sex life (#18). */
+  searchWithoutResult: (): AnalyticsEvent => 'search/no-result',
 } as const

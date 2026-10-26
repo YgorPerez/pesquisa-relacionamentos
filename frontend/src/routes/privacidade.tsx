@@ -123,9 +123,10 @@ function InTheCount() {
         de qual Guia e se uma calculadora foi usada, uma vez por visita e sem os
         valores. Quando você toca num Guia em “Continuar lendo”, conta qual Guia
         foi, mas não onde você tinha parado. Quando você abre a página de um
-        site vizinho, conta só qual site foi. Nunca recebe o seu gênero, quem
-        você procura, a sua idade nem se você preencheu o Perfil. Região,
-        navegador e sistema ficam desligados.
+        site vizinho, conta só qual site foi. Quando uma busca não acha nada,
+        conta que isso aconteceu, nunca o que você buscou. Nunca recebe o seu
+        gênero, quem você procura, a sua idade nem se você preencheu o Perfil.
+        Região, navegador e sistema ficam desligados.
       </p>
       <p>
         O GoatCounter não liga as páginas de uma mesma visita: cada página
