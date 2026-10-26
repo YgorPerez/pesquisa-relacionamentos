@@ -155,16 +155,30 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
       /^A faixa junta o erro de amostra do Censo \(.+ registros\) com os intervalos da PNS e da PNAD\.$/,
     ),
   ).toBeVisible()
+})
 
-  // A Requirement whose title is one word reads as what it asks.
+it('the independence range names a one-word Requirement by what it asks', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await user.click(
+    await screen.findByRole('button', { name: 'De onde vem a incerteza' }),
+  )
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  await newCount(null)
   await user.click(
     requirement('parents').getByRole('checkbox', {
       name: 'Só quem não mora com os pais',
     }),
   )
   await waitFor(() =>
-    expect(independence()).toMatch(
-      /; morar com companheiro\(a\), escolaridade e morar com os pais vêm do Censo\./,
+    expect(
+      document.querySelector('[data-slot="gp-independencia"]')?.textContent,
+    ).toMatch(
+      /; morar com companheiro\(a\) e morar com os pais vêm do Censo\./,
     ),
   )
 })
