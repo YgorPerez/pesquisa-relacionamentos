@@ -12,9 +12,7 @@ const firstQuestion = (page: Page) =>
   page.getByRole('region', { name: FIRST, exact: true })
 
 const answerRef = (page: Page) =>
-  firstQuestion(page)
-    .locator('[data-slot="resposta"]')
-    .getByRole('link', { name: /^Ficha 1:/ })
+  firstQuestion(page).getByRole('link', { name: /^Ficha 1:/ })
 
 /** Whether the element receiving a tap at `dx`, `dy` px from the target's
  * center is the target. */
@@ -144,10 +142,9 @@ test.describe('reference that circles the Fact sheet', () => {
     await page.goto(GUIDE)
     // Fact sheet 1 is cited in the short answer and again in the Myth: it
     // leaves from the Myth.
-    const myth = firstQuestion(page).getByRole('region', {
-      name: 'O que circula por aí e não se sustenta',
-    })
-    const ref = myth.getByRole('link', { name: /^Ficha 1:/ })
+    const ref = page
+      .locator('[data-slot="mito"]')
+      .getByRole('link', { name: /^Ficha 1:/ })
     await tap(ref)
     const factSheet = page.locator('#ficha-silva-2020-apps-brasil')
     await expect(factSheet).toBeInViewport()
@@ -195,7 +192,7 @@ test.describe('navigation between Guides', () => {
     await tap(elsewhere(page))
     await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
     await expect(
-      firstQuestion(page).getByRole('heading', { level: 2 }),
+      firstQuestion(page).getByRole('heading', { level: 3 }),
     ).toBeInViewport()
     const back = page.getByRole('button', {
       name: 'Voltar para Escolher parceiro',

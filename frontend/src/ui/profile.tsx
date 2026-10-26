@@ -1,7 +1,7 @@
 // The Profile on the page (DESIGN.md, "Perfil: destacar sem esconder"): the
-// link below the short answer, the box with the form, the "vale para você"
-// badge, the empty ring of "não há dado", the "Para o seu Perfil" line and
-// the notice above the title. Nothing here hides content: it only marks.
+// box with the form, the "vale para você" badge, the empty ring of "não há
+// dado" and the "Para o seu Perfil" line below an answer. Nothing here hides
+// content: it only marks.
 // Yellow only for what applies to you; "não há dado" is an empty ring in ink,
 // with no pink (The Three Inks Rule).
 import {
@@ -15,65 +15,14 @@ import {
 } from '@tem-estudo/rules/profile'
 import type { ProfileInGuide } from '@tem-estudo/rules/profile-in-guide'
 import type { Verdict } from '@tem-estudo/rules/applies-to-you'
-import {
-  useEffect,
-  useEffectEvent,
-  useId,
-  useRef,
-  useState,
-  type FormEvent,
-} from 'react'
+import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import type { SafeHtml } from '#/content/safe-html'
 import { saveProfile } from '#/state/profile'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
 import { Html } from './guide'
-import { Notice } from './section'
 import { Input } from '@/ui/shadcn/input'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
-
-/** The link that leads to the box asks to open the form already filled in. */
-const CHANGE = 'tem-estudo:change-profile'
-
-const SMALL = 'text-etiqueta font-normal text-tinta-2'
-
-/** Below the short answer. Without a Profile it invites; with one, it
- * summarizes and offers to change it. The underline is dashed. */
-export function ProfileLink({ profile }: { profile: Profile | null }) {
-  return (
-    <a
-      className="m-0 mb-xs inline-block min-h-toque px-0 pt-3 pb-1 font-label text-aviso leading-label font-bold underline decoration-dashed decoration-2 underline-offset-5"
-      href="#perfil"
-      onClick={() => profile && window.dispatchEvent(new Event(CHANGE))}
-    >
-      {profile ? (
-        <>
-          Seu Perfil: {describeProfile(profile)}{' '}
-          <small className={SMALL}>· mudar</small>
-        </>
-      ) : (
-        <>
-          {/* A single text, with the space: the dashed underline follows the
-              text, and split in two it restarted at the space. */}
-          {'Diga seu Perfil e veja o que vale para você '}
-          <small className={SMALL}>· opcional</small>
-        </>
-      )}
-    </a>
-  )
-}
-
-/** Above a Question's short answer, only when none of its findings has data
- * for the Profile. */
-export function NoDataNotice({ profile }: { profile: Profile }) {
-  return (
-    <Notice className="m-0 mb-sm" role="note" data-slot="aviso-perfil">
-      Nenhum estudo desta Pergunta separou pessoas com o seu Perfil (
-      <b>{describeProfile(profile)}</b>). O que segue vem de outras amostras:
-      vale como pista, não como resposta para você.
-    </Notice>
-  )
-}
 
 /** The yellow badge. For someone seeking both, it says which side has
  * data. */
@@ -169,18 +118,6 @@ export function ForYourProfile({
   )
 }
 
-function findingCount(withData: number, total: number): string {
-  if (total === 1)
-    return withData
-      ? 'O único achado tem dado para o seu Perfil.'
-      : 'O único achado não tem dado para o seu Perfil.'
-  if (withData === 0)
-    return `Nenhum dos ${total} achados tem dado para o seu Perfil.`
-  if (withData === total)
-    return `Os ${total} achados têm dado para o seu Perfil.`
-  return `${withData} de ${total} achados ${withData === 1 ? 'tem' : 'têm'} dado para o seu Perfil.`
-}
-
 const GENDER_LABEL = {
   homem: 'homem',
   mulher: 'mulher',
@@ -237,21 +174,9 @@ interface Draft {
   age: string
 }
 
-/** The "Seu Perfil: … · mudar" link up top opens the form here. The event
- * reads the current `onRequest` (with the current Profile), without
- * re-subscribing on every change. */
-function useOnRequestToChange(onRequest: () => void) {
-  const request = useEffectEvent(onRequest)
-  useEffect(() => {
-    const listen = () => request()
-    window.addEventListener(CHANGE, listen)
-    return () => window.removeEventListener(CHANGE, listen)
-  }, [])
-}
-
 /** Editing the Profile in the box: the draft, the error, opening to change,
  * saving and deleting, and where focus goes at each step. */
-function useProfileEditing(profile: Profile | null) {
+function useProfileEditing() {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<Draft>({ age: '' })
   const [error, setError] = useState<string | null>(null)
@@ -267,8 +192,6 @@ function useProfileEditing(profile: Profile | null) {
     setError(null)
     setEditing(true)
   }
-
-  useOnRequestToChange(() => open(profile))
 
   // When opening to change, focus goes to the checked option, or the first.
   useEffect(() => {
@@ -307,22 +230,18 @@ function useProfileEditing(profile: Profile | null) {
   }
 }
 
-/** The box in "Varia conforme o Perfil?": the form (optional, nothing is
- * required) or the summary with "mudar", and the count of findings with
- * data. */
+/** The Profile box, near the top of the Guide and on the Possible group
+ * page: the form (optional, nothing is required) or the summary with
+ * "mudar". */
 export function ProfileBox({
   profile,
-  withData,
-  findingTotal,
   buttonLabel = 'Ver o que vale para mim',
 }: {
   profile: Profile | null
-  withData: number | null
-  findingTotal: number
   /** The text of the button that saves; the calculator uses its own. */
   buttonLabel?: string
 }) {
-  const { editing, box, summary, open, form } = useProfileEditing(profile)
+  const { editing, box, summary, open, form } = useProfileEditing()
   const formOpen = !profile || editing
   return (
     <div
@@ -348,36 +267,7 @@ export function ProfileBox({
           </SiteButton>
         </div>
       )}
-      {profile && withData !== null && (
-        <ProfileCount
-          withData={withData}
-          findingTotal={findingTotal}
-          className="mt-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta pt-2.5"
-        />
-      )}
     </div>
-  )
-}
-
-/** How many findings have data for the Profile: in the Profile box, and in a
- * Question's "Varia conforme o Perfil?". */
-export function ProfileCount({
-  withData,
-  findingTotal,
-  className,
-}: {
-  withData: number
-  findingTotal: number
-  className?: string
-}) {
-  return (
-    <p
-      className={cn('m-0 text-aviso font-bold', className)}
-      aria-live="polite"
-      data-slot="perfil-contagem"
-    >
-      {findingCount(withData, findingTotal)}
-    </p>
   )
 }
 

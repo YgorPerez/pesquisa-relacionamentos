@@ -12,12 +12,12 @@ import { readFactSheet, type FactSheet } from './fact-sheet.ts'
 import {
   readTip,
   readGuide,
-  readTopic,
   type Tip,
   type ParsedTip,
-  type Guide,
-  type ParsedGuide,
   type ParsedItem,
+  type ParsedQuestion,
+  type ParsedTopic,
+  type Question,
   type Topic,
 } from './items.ts'
 import { link } from './publication.ts'
@@ -50,10 +50,11 @@ export interface DataOrigin extends DataMeta {
 export interface Library {
   /** The fact sheets in slug order. */
   readonly factSheets: ReadonlyArray<FactSheet>
-  /** The topics in `position` order (#143). */
+  /** The topics, each with its Guide, in `position` order (#143). */
   readonly topics: ReadonlyArray<Topic>
-  /** The guides topic by topic, in each one's `order`. */
-  readonly guides: ReadonlyArray<Guide>
+  /** The Questions topic by topic, in the order of each Guide's
+   * `questions`. */
+  readonly questions: ReadonlyArray<Question>
   /** Every tip in slug order, published or not (`published`). */
   readonly tips: ReadonlyArray<Tip>
   /** The `.meta.yaml` files of `data/`, in path order. */
@@ -75,12 +76,11 @@ export type LoadResult =
     }
 
 /** The folders the package reads (the content contract). A file starting
- * with `_` is a template or folder metadata and does not become an item; the
- * `_topic.md` of each guide folder is the topic. */
+ * with `_` is a template or folder metadata and does not become an item.
+ * Each Guide is one file, `guides/<topic>.md` (ADR 0042). */
 const FACT_SHEETS_FOLDER = 'studies'
 const TIPS_FOLDER = 'tips'
 const GUIDES_FOLDER = 'guides'
-const TOPIC_FILE = '_topic.md'
 /** The calculators' data. Only the `.meta.yaml` files come in: the CSVs are
  * large and the calculator is the one that reads them. */
 const DATA_FOLDER = 'data'
@@ -106,25 +106,29 @@ function readFolder(
 
 /** Reads from disk the content files of a repository root. */
 export function readFiles(root: string): ReadonlyArray<ContentFile> {
-  const guides = join(root, GUIDES_FOLDER)
-  const topics = existsSync(guides)
-    ? readdirSync(guides)
-        .filter((name) => statSync(join(guides, name)).isDirectory())
-        .sort()
-    : []
   return [
     ...readFolder(root, FACT_SHEETS_FOLDER, isItem),
     ...readFolder(root, TIPS_FOLDER, isItem),
-    ...topics.flatMap((topic) =>
-      readFolder(
-        root,
-        `${GUIDES_FOLDER}/${topic}`,
-        (name) => isItem(name) || name === TOPIC_FILE,
-      ),
-    ),
+    ...readFolder(root, GUIDES_FOLDER, isItem),
+    // A folder left in `guides/` comes in so the build says the format
+    // changed, instead of dropping its Questions without a word.
+    ...leftoverFolders(root),
     ...readMetas(root),
     ...readIfExists(root, PRIORITIES_FILE),
   ]
+}
+
+function leftoverFolders(root: string): ContentFile[] {
+  const guides = join(root, GUIDES_FOLDER)
+  if (!existsSync(guides)) return []
+  return readdirSync(guides)
+    .filter((name) => statSync(join(guides, name)).isDirectory())
+    .sort()
+    .flatMap((folder) =>
+      readFolder(root, `${GUIDES_FOLDER}/${folder}`, (name) =>
+        name.endsWith('.md'),
+      ),
+    )
 }
 
 function readIfExists(root: string, path: string): ContentFile[] {
@@ -169,9 +173,9 @@ export function buildLibrary(
   const errors: Problem[] = []
   const warnings: Problem[] = []
   const factSheets: FactSheet[] = []
-  const topics: Topic[] = []
+  const topics: ParsedTopic[] = []
+  const questions: ParsedQuestion[] = []
   const metas: ContentFile[] = []
-  const guides: ParsedGuide[] = []
   const tips: ParsedTip[] = []
   let prioritiesFile: ContentFile | null = null
 
@@ -204,9 +208,26 @@ export function buildLibrary(
       )
     } else if (parts[0] === TIPS_FOLDER && parts.length === 2 && isItem(name)) {
       keep(path, readTip(path, text), tips)
-    } else if (parts[0] === GUIDES_FOLDER && parts.length === 3) {
-      if (name === TOPIC_FILE) keep(path, readTopic(path, text), topics)
-      else if (isItem(name)) keep(path, readGuide(path, text), guides)
+    } else if (
+      parts[0] === GUIDES_FOLDER &&
+      parts.length === 2 &&
+      isItem(name)
+    ) {
+      const parsed = readGuide(path, text)
+      if (parsed.ok) {
+        topics.push(parsed.item.topic)
+        questions.push(...parsed.item.questions)
+      } else {
+        errors.push(...parsed.errors)
+        broken.add(path)
+      }
+    } else if (parts[0] === GUIDES_FOLDER && parts.length > 2) {
+      errors.push(
+        problem(
+          path,
+          'a Guide is one file, guides/<topic>.md; the folders of Question files are gone (ADR 0042)',
+        ),
+      )
     }
   }
 
@@ -215,9 +236,9 @@ export function buildLibrary(
   tips.sort((a, b) => a.slug.localeCompare(b.slug))
   errors.push(...duplicateDois(factSheets))
 
-  const linked = link({ factSheets, topics, guides, tips, broken })
+  const linked = link({ factSheets, topics, questions, tips, broken })
   errors.push(...linked.errors)
-  errors.push(...visualProblems(linked.guides, factSheets))
+  errors.push(...visualProblems(linked.topics, factSheets))
 
   const data: DataOrigin[] = []
   for (const meta of [...metas].sort((a, b) => a.path.localeCompare(b.path))) {
@@ -242,7 +263,7 @@ export function buildLibrary(
   const library: Library = {
     factSheets,
     topics: linked.topics,
-    guides: linked.guides,
+    questions: linked.questions,
     tips: linked.tips,
     data,
     priorities,

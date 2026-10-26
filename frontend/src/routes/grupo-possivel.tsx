@@ -211,12 +211,7 @@ function YourProfile({
       <p className={HINT}>
         A conta parte de quem você é e de quem você procura.
       </p>
-      <ProfileBox
-        profile={profile}
-        withData={null}
-        findingTotal={0}
-        buttonLabel="Usar na conta"
-      />
+      <ProfileBox profile={profile} buttonLabel="Usar na conta" />
       {(profile?.gender === 'homem' || profile?.gender === 'mulher') && (
         <p className={HINT}>
           A orientação entra pelo seu Perfil: a conta só conta quem{' '}

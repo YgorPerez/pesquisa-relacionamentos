@@ -74,9 +74,11 @@ describe('the library goes through the filter unchanged', () => {
   if (!topic) throw new Error('no Topic onde-conhecer-pessoas')
   const guide = guideView(topic, library)
   const question = (slug: string) => {
-    const found = guide.questions.find((q) => q.slug === slug)
-    if (!found) throw new Error(`no Question ${slug}`)
-    return found
+    for (const chapter of guide.chapters)
+      for (const block of chapter.blocks)
+        if (block.kind === 'question' && block.question.slug === slug)
+          return block.question
+    throw new Error(`no Question ${slug}`)
   }
 
   it('the key number and the numbered reference, glued to the word', () => {
@@ -86,8 +88,27 @@ describe('the library goes through the filter unchanged', () => {
   })
 
   it('the collapsible `<details>`, with the `id` that keeps the fold open', () => {
-    expect(guide.limitations.map((g) => g.html).join('')).toContain(
-      '<details id="detalhe-capitais"><summary>Quais capitais</summary><p>São Paulo, Recife e Porto Alegre.</p>\n</details>',
+    const other = topicBySlug(library, 'escolher-parceiro')
+    if (!other) throw new Error('no Topic escolher-parceiro')
+    const chapters = guideView(other, library).chapters
+    expect(
+      chapters
+        .flatMap((c) => c.blocks)
+        .map((b) => (b.kind === 'text' ? b.html : ''))
+        .join(''),
+    ).toContain(
+      '<details id="detalhe-amostra"><summary>Quem respondeu</summary><p>Casais de várias cidades dos EUA.</p>\n</details>',
+    )
+  })
+
+  it('the marks inside a sentence: "no Brasil", and the "vale para você" hidden until the Profile', () => {
+    const [first] = guide.chapters
+    const text = first?.blocks.find((b) => b.kind === 'text')
+    expect(text?.kind === 'text' && text.html).toContain(
+      '<span class="marca-brasil">no Brasil</span> Entre adultos jovens',
+    )
+    expect(text?.kind === 'text' && text.html).toContain(
+      '<span class="selo-voce-texto" data-voce="app-entre-os-mais-novos" hidden>vale para você</span> Entre 18 e 24 anos',
     )
   })
 })

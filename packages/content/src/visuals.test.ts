@@ -1,4 +1,4 @@
-// The Visuals (#182): the format in a Question's frontmatter, its place in
+// The Visuals (#182): the format in a Guide's frontmatter, its place in
 // the body and the build's checks against the Fact sheets. Each failing case
 // starts from the valid fixture with one Visual that passes and changes one
 // thing.
@@ -9,29 +9,54 @@ import { readFactSheet } from './fact-sheet.ts'
 import {
   buildLibrary,
   formatProblems,
-  guideBySlug,
+  topicBySlug,
   readFiles,
   type LoadResult,
 } from './index.ts'
 import { compute, factSheetText, numbersInText } from './visuals.ts'
 
 const VALID = fileURLToPath(new URL('../fixtures/valid', import.meta.url))
-const GUIDE = 'guides/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OTHER_GUIDE = 'guides/onde-conhecer/app-ou-presencial.md'
+const GUIDE = 'guides/onde-conhecer.md'
+const OTHER_GUIDE = 'guides/outro-tema.md'
 
-/** The valid Question with a `visuals:` block (YAML, indented under the
- * key) and the body lines after "Varia conforme o Perfil?". */
+/** A second Guide that cites only Costa (2018). */
+const ONLY_COSTA = `---
+title: Outro
+position: 20
+questions:
+  - slug: outra-pergunta
+    question: Outra?
+    answer: Pouco [@costa-2018-satisfacao].
+    confidence: moderate
+    findings: [um]
+findings:
+  - id: um
+    text: Um achado.
+    fact_sheets: [costa-2018-satisfacao]
+---
+
+Abertura.
+
+## Um capítulo
+
+Texto.
+
+{{question:outra-pergunta}}
+`
+
+/** The valid Guide with a `visuals:` block (YAML, indented under the key)
+ * and the body lines in its first Chapter. */
 function withVisuals(yaml: string, body: string, path = GUIDE): LoadResult {
-  const files = [...readFiles(VALID)].map((file) =>
+  const files = [
+    ...readFiles(VALID),
+    { path: OTHER_GUIDE, text: ONLY_COSTA },
+  ].map((file) =>
     file.path === path
       ? {
           ...file,
           text: file.text
             .replace(/\n---\n/, `\nvisuals:\n${yaml}\n---\n`)
-            .replace(
-              /(## Varia conforme o Perfil\?\n\n[^\n]+\n)/,
-              `$1\n${body}\n`,
-            ),
+            .replace(/(\n## [^\n]+\n\n[^\n]+\n)/, `$1\n${body}\n`),
         }
       : file,
   )
@@ -63,11 +88,11 @@ const BARS = `  - id: app-por-idade
 const PLACED = '{{visual:app-por-idade}}'
 
 describe('a Visual that passes', () => {
-  it('comes into the Question with its data, the own calculation included', () => {
+  it('comes into the Guide with its data, the own calculation included', () => {
     const result = withVisuals(BARS, PLACED)
     if (!result.ok) throw new Error(formatProblems(result.errors))
-    const guide = guideBySlug(result.library, 'onde-os-casais-se-conhecem')
-    expect(guide?.visuals?.[0]).toMatchObject({
+    const guide = topicBySlug(result.library, 'onde-conhecer')
+    expect(guide?.visuals[0]).toMatchObject({
       id: 'app-por-idade',
       kind: 'bars',
       bars: [{ value: 18 }, { value: 24 }, { value: 82 }],
@@ -128,11 +153,10 @@ describe('the build rejects', () => {
     )
   })
 
-  it('a Fact sheet the Question does not cite', () => {
-    // `app-ou-presencial` cites only Costa (2018).
+  it('a Fact sheet the Guide does not cite', () => {
     const result = withVisuals(BARS, PLACED, OTHER_GUIDE)
     expect(errorsOf(result)).toContainEqual(
-      `${OTHER_GUIDE}: visuals.0.bars.0.fact_sheet: the Question does not cite the fact sheet "silva-2020-apps-brasil"; the text the Visual illustrates cites it with [@silva-2020-apps-brasil], so it has a number in the page's list`,
+      `${OTHER_GUIDE}: visuals.0.bars.0.fact_sheet: the Guide does not cite the fact sheet "silva-2020-apps-brasil"; the text the Visual illustrates cites it with [@silva-2020-apps-brasil], so it has a number in the page's list`,
     )
   })
 
@@ -443,12 +467,12 @@ ${events}${extra}`
             ...file,
             text: file.text
               .replace(/\n---\n/, `\nvisuals:\n${BARS}\n---\n`)
-              .replace('\nNo Brasil,', `\n${PLACED}\n\nNo Brasil,`),
+              .replace('answer: No Brasil,', `answer: No Brasil, ${PLACED}`),
           }
         : file,
     )
     expect(errorsOf(buildLibrary(files))).toContainEqual(
-      `${GUIDE}: a Visual does not go in the short answer, which the search and the Topic page also show as text`,
+      `${GUIDE}: questions.0.answer: "${PLACED}": the answer stays plain text, which "Em resumo" and the search also show`,
     )
   })
 })

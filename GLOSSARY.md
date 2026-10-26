@@ -14,8 +14,9 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 
 ## Site
 
-- **Guia** [guide]**:** o texto público de um Tema. Responde às Perguntas dele em ordem, numa narrativa que liga uma resposta à outra e explica o porquê, o que fazer, onde os Estudos discordam e o que vale no Brasil. Cada afirmação aponta para Fichas. Cada Tema tem um Guia.
-- **Pergunta** [question]**:** uma dúvida do usuário, por exemplo "onde conhecer alguém da minha idade?". É uma seção do Guia, que abre com a resposta curta e a Confiança dela.
+- **Guia** [guide]**:** o texto público de um Tema: uma narrativa corrida, dividida em Capítulos, que responde às Perguntas do Tema e explica o porquê, o que fazer, onde os Estudos discordam e o que vale no Brasil. Cada afirmação aponta para Fichas. Cada Tema tem um Guia.
+- **Capítulo** [chapter]**:** um passo do raciocínio de um Guia, como "o online virou o caminho mais comum". Um Capítulo pode responder a nenhuma, uma ou várias Perguntas.
+- **Pergunta** [question]**:** uma dúvida do usuário, por exemplo "onde conhecer alguém da minha idade?". O Guia a responde no ponto da narrativa em que ela cabe, com a resposta curta e a Confiança dela em destaque; o resumo no topo do Guia junta todas.
 - **Tema** [topic]**:** um assunto com página própria, como "Onde conhecer pessoas" ou "Escolher parceiro". Reúne Perguntas, e o Guia dele as responde.
 - **Confiança** [confidence]**:** o rótulo da resposta curta de uma Pergunta (forte, moderada ou fraca). O curador escolhe, mas nunca acima da Ficha mais forte que sustenta a resposta, e no máximo moderada se a resposta só se apoia em Fichas 🟡. Não confundir com Força da evidência, que é de uma Ficha.
 - **Dica** [tip]**:** uma recomendação prática ligada às Fichas que a sustentam e à Força da evidência delas. A mesma Dica pode aparecer em mais de um Guia.

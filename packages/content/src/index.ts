@@ -36,14 +36,12 @@ export {
 export {
   tipBySlug,
   isTipPublished,
-  guideBySlug,
-  guidesWithTip,
-  guideTips,
-  guideMyths,
-  topicGuides,
+  questionBySlug,
+  questionsWithTip,
+  topicQuestions,
   topicBySlug,
 } from './queries.ts'
-export type { Coverage, Divergence, Myth, Seo } from './schema.ts'
+export type { Coverage, Myth, Seo } from './schema.ts'
 export type {
   Visual,
   BarsVisual,
@@ -53,7 +51,16 @@ export type {
   Calculation,
   Evidence,
 } from './visuals.ts'
-export type { GuideFinding, Tip, Guide, Topic } from './items.ts'
+export type {
+  Chapter,
+  ChapterPart,
+  GuideFinding,
+  Question,
+  Tip,
+  Topic,
+} from './items.ts'
+export { UNKNOWNS_TITLE } from './items.ts'
+export { BRAZIL_MARK, YOU_MARK } from './marks.ts'
 export {
   CALCULATORS,
   COUPLES,

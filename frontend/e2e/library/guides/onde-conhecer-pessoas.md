@@ -1,13 +1,35 @@
 ---
-question: App ou presencial, onde tenho mais ==chance==?
-confidence: moderate
+title: Onde conhecer pessoas
+position: 10
+questions:
+  - slug: onde-os-casais-se-conhecem
+    question: Onde os casais se ==conhecem== hoje?
+    answer: No Brasil, ==18% dos adultos jovens== conheceram o parceiro por app [@silva-2020-apps-brasil]. Os estudos divergem sobre o lugar mudar a relação, e o de melhor desenho diz que o app junta muitos casais [@costa-2018-satisfacao].
+    confidence: moderate
+    findings: [app-no-brasil, satisfacao-online]
+  - slug: app-ou-presencial
+    question: App ou presencial, onde tenho mais ==chance==?
+    answer: Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].
+    confidence: moderate
+    findings: [satisfacao-online]
+    calculator: possible-group
+    previous: [app-ou-bar, escolher-parceiro/onde-procurar]
 findings:
-  - text: A satisfação quase não muda entre quem se conheceu online e pessoalmente.
+  - id: app-no-brasil
+    text: Entre adultos jovens no Brasil, 18% conheceram o parceiro por app.
+    fact_sheets: [silva-2020-apps-brasil]
+  - id: app-entre-os-mais-novos
+    text: Entre 18 e 24 anos, a fatia sobe para 24%.
+    fact_sheets: [silva-2020-apps-brasil]
+    applies_to: { ages: { min: 18, max: 24 } }
+  - id: satisfacao-online
+    text: Nos EUA, a satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica a 0,1 ponto de distância.
     fact_sheets: [costa-2018-satisfacao]
-tips: [apps-como-complemento]
-related: [onde-os-casais-se-conhecem]
-calculator: possible-group
-previous: [app-ou-bar, escolher-parceiro/onde-procurar]
+myths:
+  - id: metade-por-app
+    claim: Mais da metade dos casais se conhece por app.
+    why_not: No Brasil, foi menos de um em cada cinco.
+    fact_sheets: [silva-2020-apps-brasil]
 visuals:
   - id: app-por-idade
     kind: bars
@@ -80,26 +102,36 @@ visuals:
         evidence: inference
         text: Se o lugar quase não muda a satisfação, o app não deixa a relação pior.
         fact_sheets: [silva-2020-apps-brasil, costa-2018-satisfacao]
+takeaways: [apps-como-complemento]
+related: [que-caracteristicas-preveem]
 ---
 
-Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].
+Onde os casais se conhecem hoje e se o lugar muda a relação. Conteúdo de fixture para o teste de ponta a ponta.
 
-## Então, vale a pena?
+## O app virou um caminho comum
 
-Vale como um caminho entre outros, porque a satisfação quase não muda [@costa-2018-satisfacao].
-
-## Varia conforme o Perfil?
-
-Nenhum estudo separou por idade.
+{{brazil}} Entre adultos jovens, 18% conheceram o parceiro por app [@silva-2020-apps-brasil]. {{you:app-entre-os-mais-novos}} Entre 18 e 24 anos, a fatia sobe para 24% [@silva-2020-apps-brasil].
 
 {{visual:app-por-idade}}
 
+{{question:onde-os-casais-se-conhecem}}
+
+{{myth:metade-por-app}}
+
 {{visual:dois-retratos}}
+
+## O lugar quase não muda a relação
+
+A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto [@costa-2018-satisfacao].
 
 {{visual:estudos-lado-a-lado}}
 
+{{question:app-ou-presencial}}
+
+{{tip:apps-como-complemento}}
+
 {{visual:app-e-satisfacao}}
 
-## Limitações
+## O que não se sabe
 
-- Uma amostra só, dos EUA.
+Nenhum estudo separou app de rede social, e o estudo brasileiro só ouviu capitais.

@@ -89,8 +89,8 @@ export function tipSearch(tip: Pick<Tip, 'text' | 'seo'>): SearchMeta {
 
 /** The paths that go to the sitemap: home, the topics (each one's page is
  * its Guide), the published tips, the ✅/🟡 fact sheets and the calculators.
- * A ⬜ fact sheet stays out, and so does a Question, which is a section of
- * its topic's page (ADR 0042). */
+ * A ⬜ fact sheet stays out, and so does a Question, which is answered
+ * inside its topic's page (ADR 0042). */
 export function sitemapPaths(library: Library): string[] {
   return [
     '/',
@@ -133,11 +133,11 @@ export interface OldPath {
 }
 
 /** Each file's old paths, in library order. The `previous` of a fact sheet, a tip
- * and a topic lists slugs; a guide's lists slugs in the same topic or
- * `topic/slug` when the guide changed topic. A renamed topic takes its guides
- * along, with each one's old slugs. A Question's own page, `/<topic>/<slug>`,
- * is itself an old path since ADR 0042: it leads to the Question's section,
- * `/<topic>#<slug>`. */
+ * and a topic lists slugs; a Question's lists slugs in the same topic or
+ * `topic/slug` when the Question changed topic. A renamed topic takes its
+ * Questions along, with each one's old slugs. A Question's own page,
+ * `/<topic>/<slug>`, is itself an old path since ADR 0042: it leads to the
+ * Question's answer in the Guide, `/<topic>#<slug>`. */
 export function oldPaths(library: Library): OldPath[] {
   const list: OldPath[] = []
   for (const factSheet of library.factSheets)
@@ -161,27 +161,28 @@ export function oldPaths(library: Library): OldPath[] {
         current: topicPath(topic),
         file: topic.file,
       })
-  for (const guide of library.guides) {
-    const current = questionPath(guide)
-    const before = guide.previous ?? []
+  for (const question of library.questions) {
+    const current = questionPath(question)
+    const before = question.previous ?? []
     const topics = [
-      guide.topic,
-      ...(library.topics.find((t) => t.slug === guide.topic)?.previous ?? []),
+      question.topic,
+      ...(library.topics.find((t) => t.slug === question.topic)?.previous ??
+        []),
     ]
-    const slugs = [guide.slug, ...before.filter((a) => !a.includes('/'))]
+    const slugs = [question.slug, ...before.filter((a) => !a.includes('/'))]
     for (const slug of slugs)
       for (const topic of topics) {
         const old = `/${topic}/${slug}`
-        if (old !== current) list.push({ old, current, file: guide.file })
+        if (old !== current) list.push({ old, current, file: question.file })
       }
     for (const path of before.filter((a) => a.includes('/')))
-      list.push({ old: `/${path}`, current, file: guide.file })
+      list.push({ old: `/${path}`, current, file: question.file })
   }
   return list
 }
 
 /** Old path → today's path, for the 301. Today's path may end in a
- * `#fragment`, the Question's section. */
+ * `#fragment`, the Question's answer in the Guide. */
 export function redirects(library: Library): Record<string, string> {
   const map: Record<string, string> = {}
   for (const { old, current } of oldPaths(library)) map[old] ??= current

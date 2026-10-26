@@ -1,6 +1,7 @@
-// Topics, guides and tips in the library (#27): schemas, inheritance from the
-// fact sheets and the publication rules of #7 and #10. The failing cases start
-// from the valid fixture and swap a single file.
+// Guides, Questions and tips in the library (#27, ADR 0042): the one-file
+// Guide with its Chapters, inheritance from the fact sheets and the
+// publication rules of #7 and #10. The failing cases start from the valid
+// fixture and swap a single file.
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
@@ -11,11 +12,9 @@ import {
   tipBySlug,
   isTipPublished,
   formatProblems,
-  guideBySlug,
-  guidesWithTip,
-  guideTips,
-  guideMyths,
-  topicGuides,
+  questionBySlug,
+  questionsWithTip,
+  topicQuestions,
   topicBySlug,
   readFiles,
   buildLibrary,
@@ -38,6 +37,9 @@ function errorsOf(result: LoadResult): string[] {
 
 const validFiles = (): ContentFile[] => [...readFiles(VALID)]
 
+const GUIDE = 'guides/onde-conhecer.md'
+const TIP = 'tips/apps-como-complemento.md'
+
 /** The valid fixture with one file swapped (or created). */
 function withFile(
   path: string,
@@ -55,6 +57,8 @@ function withFile(
   return buildLibrary(files)
 }
 
+const withGuide = (swap: (original: string) => string) => withFile(GUIDE, swap)
+
 /** The valid fixture with several files swapped at once. */
 function withFiles(
   swaps: Record<string, (original: string) => string>,
@@ -67,55 +71,90 @@ function withFiles(
   )
 }
 
-const without = (path: string): LoadResult =>
-  buildLibrary(validFiles().filter((a) => a.path !== path))
+/** Another Guide, minimal: one Chapter answering one Question. */
+const otherGuide = (
+  slug: string,
+  position: number,
+  question = 'outra-pergunta',
+) => `---
+title: Outro
+position: ${position}
+questions:
+  - slug: ${question}
+    question: Outra?
+    answer: Sim [@silva-2020-apps-brasil].
+    confidence: moderate
+    findings: [um]
+findings:
+  - id: um
+    text: Um achado.
+    fact_sheets: [silva-2020-apps-brasil]
+---
 
-const GUIDE = 'guides/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OTHER_GUIDE = 'guides/onde-conhecer/app-ou-presencial.md'
-const TOPIC = 'guides/onde-conhecer/_topic.md'
-const TIP = 'tips/apps-como-complemento.md'
+Abertura de ${slug}.
 
-describe('topics and guides', () => {
-  it("reads the folder's topic, with title, opening and its guides in order", () => {
+## Um capítulo
+
+{{question:${question}}}
+`
+
+describe('the Guide file', () => {
+  it('reads the Topic, its opening, its Chapters in body order and its Questions', () => {
     const library = libraryOf(loadLibrary(VALID))
-    expect(library.topics).toEqual([
+    expect(library.topics).toHaveLength(1)
+    const topic = library.topics[0]
+    expect(topic).toMatchObject({
+      slug: 'onde-conhecer',
+      file: GUIDE,
+      title: 'Onde conhecer pessoas',
+      position: 10,
+      opening: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+      questions: ['onde-os-casais-se-conhecem', 'app-ou-presencial'],
+      unknowns: 'Só capitais, e uma amostra só nos EUA.',
+    })
+    expect(topic?.chapters).toEqual([
       {
-        slug: 'onde-conhecer',
-        file: TOPIC,
-        title: 'Onde conhecer pessoas',
-        position: 10,
-        order: ['onde-os-casais-se-conhecem', 'app-ou-presencial'],
-        opening: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
-        takeaways: [],
-        limitations: '',
-        citedFactSheets: ['silva-2020-apps-brasil', 'costa-2018-satisfacao'],
+        id: 'o-app-virou-um-caminho-comum',
+        title: 'O app virou um caminho comum',
+        parts: [
+          {
+            kind: 'text',
+            markdown:
+              '{{brazil}} Entre 18 e 24 anos a fatia sobe [@silva-2020-apps-brasil].',
+          },
+          { kind: 'question', slug: 'onde-os-casais-se-conhecem' },
+          { kind: 'myth', id: 'metade-por-app' },
+        ],
+      },
+      {
+        id: 'o-lugar-quase-nao-importa',
+        title: 'O lugar quase não importa',
+        parts: [
+          {
+            kind: 'text',
+            markdown:
+              '{{you:satisfacao-parecida}} A diferença de satisfação é pequena [@costa-2018-satisfacao].',
+          },
+          { kind: 'question', slug: 'app-ou-presencial' },
+          { kind: 'tip', slug: 'apps-como-complemento' },
+        ],
       },
     ])
-    expect(library.guides.map((g) => [g.topic, g.slug])).toEqual([
-      ['onde-conhecer', 'onde-os-casais-se-conhecem'],
-      ['onde-conhecer', 'app-ou-presencial'],
+    expect(library.questions.map((q) => [q.slug, q.topic, q.chapter])).toEqual([
+      [
+        'onde-os-casais-se-conhecem',
+        'onde-conhecer',
+        'o-app-virou-um-caminho-comum',
+      ],
+      ['app-ou-presencial', 'onde-conhecer', 'o-lugar-quase-nao-importa'],
     ])
-  })
-
-  it('cuts the guide body into short answer, Varia conforme o Perfil? and Limitações', () => {
-    const guide = libraryOf(loadLibrary(VALID)).guides[0]
-    expect(guide).toMatchObject({
-      question: 'Onde os casais se ==conhecem== hoje?',
-      confidence: 'moderate',
-      shortAnswer:
-        'No Brasil, ==18% dos adultos jovens== conheceram o parceiro por app [@silva-2020-apps-brasil]. Nos EUA, a satisfação é parecida [@costa-2018-satisfacao].',
-      variesByProfile:
-        'Entre 18 e 24 anos a fatia sobe [@silva-2020-apps-brasil].',
-      limitations: '- Só capitais.',
-      tips: ['apps-como-complemento'],
-      related: ['app-ou-presencial'],
-    })
   })
 
   it("a finding inherits the fact sheet's country, period and coverage, and applies_to swaps the coverage for a scope", () => {
     const [inherits, scoped] =
-      libraryOf(loadLibrary(VALID)).guides[0]?.findings ?? []
+      libraryOf(loadLibrary(VALID)).topics[0]?.findings ?? []
     expect(inherits).toEqual({
+      id: 'app-no-brasil',
       text: '18% dos adultos jovens conheceram o parceiro por app.',
       fact_sheets: ['silva-2020-apps-brasil'],
       countries: ['Brasil'],
@@ -128,8 +167,6 @@ describe('topics and guides', () => {
         },
       ],
       scoped: false,
-      tips: [],
-      myths: [],
     })
     expect(scoped).toMatchObject({
       countries: ['EUA'],
@@ -137,17 +174,51 @@ describe('topics and guides', () => {
       covers: [{ couple: 'different-sex', ages: { min: 25, max: 60 } }],
       scoped: true,
     })
+    // A Question gets the findings it names, in that order.
+    expect(
+      libraryOf(loadLibrary(VALID)).questions[1]?.findings.map((f) => f.id),
+    ).toEqual(['satisfacao-parecida'])
   })
 
-  it('numbers the cited fact sheets in the order they appear on the page', () => {
-    const library = libraryOf(loadLibrary(VALID))
-    expect(library.guides[0]?.citedFactSheets).toEqual([
+  it('numbers the cited fact sheets in page order: opening, each Chapter with what it places, O que levar, O que não se sabe', () => {
+    const library = libraryOf(
+      withGuide((t) =>
+        t
+          .replace(
+            '{{brazil}} Entre 18',
+            'Primeiro [@costa-2018-satisfacao]. {{brazil}} Entre 18',
+          )
+          .replace('Só capitais', 'Só capitais [@silva-2020-apps-brasil]'),
+      ),
+    )
+    expect(library.topics[0]?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
       'silva-2020-apps-brasil',
-      'costa-2018-satisfacao',
     ])
-    expect(library.guides[1]?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
+  })
+
+  it("a Question cites its answer, its findings and its Chapter's fact sheets, which the Fact sheet's page uses", () => {
+    const library = libraryOf(loadLibrary(VALID))
+    expect(library.questions.map((q) => q.citedFactSheets)).toEqual([
+      ['silva-2020-apps-brasil', 'costa-2018-satisfacao'],
+      // The Tip of its Chapter also cites Silva.
+      ['costa-2018-satisfacao', 'silva-2020-apps-brasil'],
     ])
+  })
+
+  it('a heading may give its own anchor, for a title that would repeat a Question slug', () => {
+    const library = libraryOf(
+      withGuide((t) =>
+        t.replace(
+          '## O lugar quase não importa',
+          '## App ou presencial {#capitulo-app}',
+        ),
+      ),
+    )
+    expect(library.topics[0]?.chapters[1]).toMatchObject({
+      id: 'capitulo-app',
+      title: 'App ou presencial',
+    })
   })
 })
 
@@ -185,10 +256,10 @@ describe('tips', () => {
 })
 
 describe('paths and queries', () => {
-  it('a topic at /<topic>, a question at its section /<topic>#<slug> and a tip at /dicas/<slug>', () => {
+  it('a topic at /<topic>, a question at its answer /<topic>#<slug> and a tip at /dicas/<slug>', () => {
     const library = libraryOf(loadLibrary(VALID))
     expect(topicPath({ slug: 'onde-conhecer' })).toBe('/onde-conhecer')
-    expect(library.guides.map(questionPath)).toEqual([
+    expect(library.questions.map(questionPath)).toEqual([
       '/onde-conhecer#onde-os-casais-se-conhecem',
       '/onde-conhecer#app-ou-presencial',
     ])
@@ -197,27 +268,21 @@ describe('paths and queries', () => {
     )
   })
 
-  it('finds a guide, topic and tip by slug, and the guides where a tip appears', () => {
+  it('finds a Question, topic and tip by slug, and the Questions of the Chapter that places a tip', () => {
     const library = libraryOf(loadLibrary(VALID))
-    expect(guideBySlug(library, 'app-ou-presencial')?.question).toBe(
+    expect(questionBySlug(library, 'app-ou-presencial')?.question).toBe(
       'App ou presencial?',
     )
     expect(topicBySlug(library, 'onde-conhecer')?.title).toBe(
       'Onde conhecer pessoas',
     )
-    expect(tipBySlug(library, 'apps-como-complemento')?.strength).toBe(
-      'moderate',
-    )
-    expect(topicGuides(library, 'onde-conhecer').map((g) => g.slug)).toEqual([
-      'onde-os-casais-se-conhecem',
-      'app-ou-presencial',
-    ])
+    expect(topicQuestions(library, 'onde-conhecer')).toHaveLength(2)
+    const tip = tipBySlug(library, 'apps-como-complemento')
+    expect(tip && isTipPublished(tip)).toBe(true)
     expect(
-      guidesWithTip(library, 'apps-como-complemento').map((g) => g.slug),
-    ).toEqual(['onde-os-casais-se-conhecem'])
-    expect(library.tips.filter(isTipPublished).map((d) => d.slug)).toEqual([
-      'apps-como-complemento',
-    ])
+      questionsWithTip(library, 'apps-como-complemento').map((q) => q.slug),
+    ).toEqual(['app-ou-presencial'])
+    expect(questionsWithTip(library, 'encontros-presenciais')).toEqual([])
   })
 })
 
@@ -226,16 +291,16 @@ describe('publication rules', () => {
     expect(buildLibrary(validFiles()).ok).toBe(true)
   })
 
-  it('a reference to a fact sheet, tip or guide that does not exist fails', () => {
+  it('a reference to a fact sheet, tip or Question that does not exist fails', () => {
     const errors = errorsOf(
-      withFile(GUIDE, (t) =>
+      withGuide((t) =>
         t
           .replace(
             'fact_sheets: [costa-2018-satisfacao]\n    country',
             'fact_sheets: [costa-2099-sumiu]\n    country',
           )
-          .replace('tips: [apps-como-complemento]', 'tips: [dica-que-sumiu]')
-          .replace('related: [app-ou-presencial]', 'related: [guia-que-sumiu]')
+          .replace('{{tip:apps-como-complemento}}', '{{tip:dica-que-sumiu}}')
+          .replace('myths:', 'related: [pergunta-que-sumiu]\nmyths:')
           .replace(
             'a fatia sobe [@silva-2020-apps-brasil]',
             'a fatia sobe [@silva-2099-sumiu]',
@@ -243,10 +308,10 @@ describe('publication rules', () => {
       ),
     )
     expect(errors).toEqual([
+      `${GUIDE}: O lugar quase não importa: the tip "dica-que-sumiu" does not exist in tips/`,
+      `${GUIDE}: O app virou um caminho comum: the fact sheet "silva-2099-sumiu" does not exist in studies/`,
       `${GUIDE}: findings.1.fact_sheets: the fact sheet "costa-2099-sumiu" does not exist in studies/`,
-      `${GUIDE}: Varia conforme o Perfil?: the fact sheet "silva-2099-sumiu" does not exist in studies/`,
-      `${GUIDE}: tips: the tip "dica-que-sumiu" does not exist in tips/`,
-      `${GUIDE}: related: the guide "guia-que-sumiu" does not exist in guides/`,
+      `${GUIDE}: related: the Question "pergunta-que-sumiu" does not exist in guides/`,
     ])
   })
 
@@ -262,73 +327,105 @@ describe('publication rules', () => {
     ])
   })
 
-  it('a guide citing a ⬜ fact sheet, in the text or in a myth, fails', () => {
+  it('a Guide citing a ⬜ fact sheet, in an answer, a Chapter or a Myth, fails', () => {
     const errors = errorsOf(
-      withFile(OTHER_GUIDE, (t) =>
+      withGuide((t) =>
         t
           .replace(
             'Depende de quem você procura [@costa-2018-satisfacao]',
             'Depende [@lima-2015-encontros]',
           )
           .replace(
-            'myths: []',
-            'myths: [{ claim: "X.", why_not: "Y.", fact_sheets: [lima-2015-encontros] }]',
+            'é pequena [@costa-2018-satisfacao]',
+            'é pequena [@lima-2015-encontros]',
+          )
+          .replace(
+            'fact_sheets: [silva-2020-apps-brasil]\n---',
+            'fact_sheets: [lima-2015-encontros]\n---',
           ),
       ),
     )
     const reason =
       'cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets'
     expect(errors).toEqual([
-      `${OTHER_GUIDE}: short answer: ${reason}`,
-      `${OTHER_GUIDE}: myths.0.fact_sheets: ${reason}`,
+      `${GUIDE}: O lugar quase não importa: ${reason}`,
+      `${GUIDE}: questions.1.answer: ${reason}`,
+      `${GUIDE}: myths.0.fact_sheets: ${reason}`,
     ])
   })
 
-  it('a guide carrying a tip that rests on a ⬜ fact sheet fails', () => {
+  it('a Guide placing a tip that rests on a ⬜ fact sheet fails', () => {
     expect(
       errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace('tips: []', 'tips: [encontros-presenciais]'),
+        withGuide((t) =>
+          t.replace(
+            '{{tip:apps-como-complemento}}',
+            '{{tip:encontros-presenciais}}',
+          ),
         ),
       ),
     ).toEqual([
-      `${OTHER_GUIDE}: tips: the tip "encontros-presenciais" cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
+      `${GUIDE}: O lugar quase não importa: the tip "encontros-presenciais" cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
     ])
   })
 
   const SILVA = 'studies/silva-2020-apps-brasil.md'
   const COSTA = 'studies/costa-2018-satisfacao.md'
-  const onlySilva = (t: string) =>
-    t
-      .replaceAll('costa-2018-satisfacao', 'silva-2020-apps-brasil')
-      .replace('confidence: moderate', 'confidence: strong')
+  /** The second Question rests on the Silva finding, with strong
+   * confidence. */
+  const onSilva = (t: string) =>
+    t.replace(
+      'confidence: moderate\n    findings: [satisfacao-parecida]',
+      'confidence: strong\n    findings: [app-no-brasil]',
+    )
 
-  it('strong confidence with a strong ✅ fact sheet passes', () => {
-    expect(withFile(OTHER_GUIDE, onlySilva).ok).toBe(true)
+  it('strong confidence with a strong ✅ fact sheet in its findings passes', () => {
+    expect(withGuide(onSilva).ok).toBe(true)
+  })
+
+  it('the ceiling counts only the findings the Question names, not what its answer or Chapter cite', () => {
+    // The answer cites Costa (🟡 moderate) and the Chapter's Tip cites Silva,
+    // but the ceiling only looks at the named Silva finding: still strong.
+    expect(withGuide(onSilva).ok).toBe(true)
+    expect(
+      errorsOf(
+        withGuide((t) =>
+          t.replace(
+            'confidence: moderate\n    findings: [satisfacao-parecida]',
+            'confidence: strong\n    findings: [satisfacao-parecida]',
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: questions.1.confidence: the confidence (strong) is above the strongest fact sheet of the findings the answer rests on (moderate)`,
+    ])
   })
 
   it('confidence above the strongest fact sheet fails', () => {
     const errors = errorsOf(
       withFiles({
-        [OTHER_GUIDE]: onlySilva,
+        [GUIDE]: onSilva,
         [SILVA]: (t) => t.replace('strength: strong', 'strength: moderate'),
       }),
     )
     expect(errors).toEqual([
-      `${OTHER_GUIDE}: confidence: the confidence (strong) is above the strongest fact sheet the guide cites (moderate)`,
+      `${GUIDE}: questions.1.confidence: the confidence (strong) is above the strongest fact sheet of the findings the answer rests on (moderate)`,
     ])
   })
 
   it('confidence above moderate with only 🟡 fact sheets fails', () => {
     const errors = errorsOf(
       withFiles({
-        [OTHER_GUIDE]: (t) =>
-          t.replace('confidence: moderate', 'confidence: strong'),
+        [GUIDE]: (t) =>
+          t.replace(
+            'confidence: moderate\n    findings: [satisfacao-parecida]',
+            'confidence: strong\n    findings: [satisfacao-parecida]',
+          ),
         [COSTA]: (t) => t.replace('strength: moderate', 'strength: strong'),
       }),
     )
     expect(errors).toEqual([
-      `${OTHER_GUIDE}: confidence: the confidence (strong) is above moderate, and the guide only cites partial (🟡) fact sheets`,
+      `${GUIDE}: questions.1.confidence: the confidence (strong) is above moderate, and the answer's findings only cite partial (🟡) fact sheets`,
     ])
   })
 
@@ -344,84 +441,60 @@ describe('publication rules', () => {
     ])
   })
 
-  it("the topic's order must list the folder's guides, each once", () => {
-    const missing = errorsOf(
-      withFile(TOPIC, (t) => t.replace(', app-ou-presencial]', ']')),
-    )
-    expect(missing).toEqual([
-      `${TOPIC}: order: the guide "app-ou-presencial" is in the folder and missing from the order`,
-    ])
-    const leftover = errorsOf(
-      withFile(TOPIC, (t) =>
-        t.replace(
-          ', app-ou-presencial]',
-          ', app-ou-presencial, onde-os-casais-se-conhecem, sem-arquivo]',
-        ),
-      ),
-    )
-    expect(leftover).toEqual([
-      `${TOPIC}: order: the guide "onde-os-casais-se-conhecem" appears more than once`,
-      `${TOPIC}: order: the guide "sem-arquivo" does not exist in guides/onde-conhecer/`,
-    ])
-  })
-
   it('the topics follow their position, and two topics cannot share one', () => {
     const other = (position: number): ContentFile[] => [
       ...validFiles(),
-      {
-        path: 'guides/conversar/_topic.md',
-        text: `---\ntitle: Conversar\nposition: ${position}\norder: []\n---\n\nX.\n`,
-      },
+      { path: 'guides/conversar.md', text: otherGuide('conversar', position) },
     ]
     // "conversar" comes first in slug order, and after by its position.
     expect(
       libraryOf(buildLibrary(other(15))).topics.map((t) => t.slug),
     ).toEqual(['onde-conhecer', 'conversar'])
     expect(errorsOf(buildLibrary(other(10)))).toEqual([
-      'guides/onde-conhecer/_topic.md: position: the position 10 already belongs to the topic "conversar"; each topic has its own place on the home page',
+      `${GUIDE}: position: the position 10 already belongs to the topic "conversar"; each topic has its own place on the home page`,
     ])
-    expect(
-      errorsOf(withFile(TOPIC, (t) => t.replace('position: 10', ''))),
-    ).toEqual([expect.stringContaining(`${TOPIC}: position`)])
   })
 
-  it('a guide folder without _topic.md fails', () => {
-    expect(errorsOf(without(TOPIC))).toEqual([
-      'guides/onde-conhecer: missing the _topic.md with the title and the order of the guides',
+  it('a folder of Question files left in guides/ fails, so no Question disappears without a word', () => {
+    expect(
+      errorsOf(
+        buildLibrary([
+          ...validFiles(),
+          { path: 'guides/onde-conhecer/velha.md', text: '---\n---\n' },
+        ]),
+      ),
+    ).toEqual([
+      'guides/onde-conhecer/velha.md: a Guide is one file, guides/<topic>.md; the folders of Question files are gone (ADR 0042)',
     ])
   })
 
   it('a topic slug equal to an app route fails', () => {
     const files = validFiles().map((a) => ({
       ...a,
-      path: a.path.replace('guides/onde-conhecer/', 'guides/dicas/'),
+      path: a.path.replace(GUIDE, 'guides/dicas.md'),
     }))
     expect(errorsOf(buildLibrary(files))).toEqual([
-      'guides/dicas/_topic.md: a topic cannot be called "dicas", which is a site route (estudos, dicas, grupo-possivel, prioridades, privacidade, sitemap.xml, robots.txt)',
+      'guides/dicas.md: a topic cannot be called "dicas", which is a site route (estudos, dicas, grupo-possivel, prioridades, privacidade, sitemap.xml, robots.txt)',
     ])
   })
 
-  it('two guides with the same slug, in different topics, fail', () => {
+  it('two Questions with the same slug, in different Guides, fail', () => {
     const files = [
       ...validFiles(),
       {
-        path: 'guides/outro-tema/_topic.md',
-        text: '---\ntitle: Outro\nposition: 20\norder: [app-ou-presencial]\n---\n\nX.\n',
-      },
-      {
-        path: 'guides/outro-tema/app-ou-presencial.md',
-        text: validFiles().find((a) => a.path === OTHER_GUIDE)?.text ?? '',
+        path: 'guides/outro-tema.md',
+        text: otherGuide('outro-tema', 20, 'app-ou-presencial'),
       },
     ]
     expect(errorsOf(buildLibrary(files))).toEqual([
-      `guides/outro-tema/app-ou-presencial.md: the slug "app-ou-presencial" already belongs to the guide ${OTHER_GUIDE}; a guide is cited by its slug alone`,
+      `guides/outro-tema.md: questions: the Question "app-ou-presencial" already belongs to ${GUIDE}; a Question is cited by its slug alone`,
     ])
   })
 
   it('applies_to outside the closed lists fails', () => {
     expect(
       errorsOf(
-        withFile(GUIDE, (t) =>
+        withGuide((t) =>
           t.replace(
             'applies_to: { couple: different-sex',
             'applies_to: { couple: misto',
@@ -436,300 +509,128 @@ describe('publication rules', () => {
   it('the question highlights at most one word in yellow', () => {
     expect(
       errorsOf(
-        withFile(GUIDE, (t) =>
-          t.replace('Onde os casais', '==Onde== os casais'),
-        ),
+        withGuide((t) => t.replace('Onde os casais', '==Onde== os casais')),
       ),
     ).toEqual([
-      `${GUIDE}: question: the question highlights at most one word in yellow (==word==)`,
-    ])
-  })
-
-  it("a section before Varia conforme o Perfil? is the Guide's own, and its references join the page order", () => {
-    const guide = guideBySlug(
-      libraryOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace(
-            '## Varia conforme o Perfil?',
-            '## Então, vale a pena?\n\nVale como um canal entre outros [@silva-2020-apps-brasil].\n\n## Varia conforme o Perfil?',
-          ),
-        ),
-      ),
-      'app-ou-presencial',
-    )
-    expect(guide?.sections).toEqual([
-      {
-        title: 'Então, vale a pena?',
-        markdown: 'Vale como um canal entre outros [@silva-2020-apps-brasil].',
-      },
-    ])
-    expect(guide?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
-    ])
-  })
-
-  it("the Guide's own section cites fact sheets that exist and is not empty", () => {
-    const errors = errorsOf(
-      withFile(OTHER_GUIDE, (t) =>
-        t.replace(
-          '## Varia conforme o Perfil?',
-          '## Então, vale a pena?\n\nDepende [@silva-2099-sumiu].\n\n## Efeitos psicológicos\n\n## Varia conforme o Perfil?',
-        ),
-      ),
-    )
-    expect(errors).toEqual([
-      `${OTHER_GUIDE}: Efeitos psicológicos: the section "## Efeitos psicológicos" is empty`,
-    ])
-    expect(
-      errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace(
-            '## Varia conforme o Perfil?',
-            '## Então, vale a pena?\n\nDepende [@silva-2099-sumiu].\n\n## Varia conforme o Perfil?',
-          ),
-        ),
-      ),
-    ).toEqual([
-      `${OTHER_GUIDE}: Então, vale a pena?: the fact sheet "silva-2099-sumiu" does not exist in studies/`,
-    ])
-  })
-
-  it('the guide body needs the short answer and Varia conforme o Perfil?, and nothing else after it but Limitações', () => {
-    const errors = errorsOf(
-      withFile(OTHER_GUIDE, (t) =>
-        t
-          .replace(/\nDepende[^\n]*\n/, '\n')
-          .replace('## Limitações', '## Outra coisa'),
-      ),
-    )
-    expect(errors).toEqual([
-      `${OTHER_GUIDE}: missing the short answer before the first "##"`,
-      `${OTHER_GUIDE}: Outra coisa: unknown section "## Outra coisa"; the Guide's own sections come before "## Varia conforme o Perfil?", and after it only "## Limitações"`,
-    ])
-    expect(
-      errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace('## Varia conforme o Perfil?', '## Varia?'),
-        ),
-      ),
-    ).toEqual([
-      `${OTHER_GUIDE}: Varia conforme o Perfil?: missing the section "## Varia conforme o Perfil?"`,
+      `${GUIDE}: questions.0.question: the question highlights at most one word in yellow (==word==)`,
     ])
   })
 })
 
-describe('the Guide of a Topic (ADR 0042)', () => {
-  const IN_BRAZIL =
-    '## E no Brasil?\n\nSó um estudo, de capitais [@silva-2020-apps-brasil].\n\n## Varia conforme o Perfil?'
-
-  it('"E no Brasil?" is read apart, and its references join the checks and the page order', () => {
-    const guide = guideBySlug(
-      libraryOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace('## Varia conforme o Perfil?', IN_BRAZIL),
-        ),
-      ),
-      'app-ou-presencial',
-    )
-    expect(guide?.inBrazil).toBe(
-      'Só um estudo, de capitais [@silva-2020-apps-brasil].',
-    )
-    expect(guide?.sections).toEqual([])
-    expect(guide?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
-    ])
+describe('the Chapters and what they place (ADR 0042)', () => {
+  it('each Question is answered once, in a Chapter, and each answer rests on declared findings', () => {
     expect(
       errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace(
-            '## Varia conforme o Perfil?',
-            IN_BRAZIL.replace('silva-2020', 'silva-2099'),
-          ),
-        ),
-      ),
-    ).toEqual([
-      `${OTHER_GUIDE}: E no Brasil?: the fact sheet "silva-2099-apps-brasil" does not exist in studies/`,
-    ])
-  })
-
-  it('"E no Brasil?" may be missing until the rewrite, but not empty', () => {
-    expect(libraryOf(loadLibrary(VALID)).guides[1]?.inBrazil).toBe('')
-    expect(
-      errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace(
-            '## Varia conforme o Perfil?',
-            '## E no Brasil?\n\n## Varia conforme o Perfil?',
-          ),
-        ),
-      ),
-    ).toEqual([
-      `${OTHER_GUIDE}: E no Brasil?: the section "## E no Brasil?" is empty; say the Brazilian data, or that none was found and what transfers`,
-    ])
-  })
-
-  it("a finding's tips and myths go right after it, in the page order and in the tip's guides", () => {
-    const library = libraryOf(
-      withFile(OTHER_GUIDE, (t) =>
-        t.replace(
-          '    fact_sheets: [costa-2018-satisfacao]\n',
-          '    fact_sheets: [costa-2018-satisfacao]\n    tips: [apps-como-complemento]\n    myths: [{ claim: "X.", why_not: "Y [@silva-2020-apps-brasil].", fact_sheets: [] }]\n',
-        ),
-      ),
-    )
-    const guide = guideBySlug(library, 'app-ou-presencial')
-    expect(guide?.findings[0]).toMatchObject({
-      tips: ['apps-como-complemento'],
-      myths: [{ claim: 'X.' }],
-    })
-    expect(guide && guideTips(guide)).toEqual(['apps-como-complemento'])
-    expect(guide && guideMyths(guide).map((m) => m.claim)).toEqual(['X.'])
-    // costa from the short answer and the finding, silva from the tip.
-    expect(guide?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
-    ])
-    expect(
-      guidesWithTip(library, 'apps-como-complemento').map((g) => g.slug),
-    ).toEqual(['onde-os-casais-se-conhecem', 'app-ou-presencial'])
-    expect(
-      errorsOf(
-        withFile(OTHER_GUIDE, (t) =>
-          t.replace(
-            '    fact_sheets: [costa-2018-satisfacao]\n',
-            '    fact_sheets: [costa-2018-satisfacao]\n    tips: [encontros-presenciais, sumiu]\n',
-          ),
-        ),
-      ),
-    ).toEqual([
-      `${OTHER_GUIDE}: findings.0.tips: the tip "encontros-presenciais" cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
-      `${OTHER_GUIDE}: findings.0.tips: the tip "sumiu" does not exist in tips/`,
-    ])
-  })
-
-  const TOPIC_WITH_FRAME = (t: string) =>
-    t.replace(
-      'order: [onde-os-casais-se-conhecem, app-ou-presencial]',
-      'order: [onde-os-casais-se-conhecem, app-ou-presencial]\ntakeaways: [apps-como-complemento]',
-    ) + '\n## Limitações\n\n### [@lima-2015-encontros]\n\n- Amostra pequena.\n'
-
-  it('the _topic.md holds the opening, "O que levar" and the Limitations, which cite only ✅ or 🟡', () => {
-    expect(errorsOf(withFile(TOPIC, TOPIC_WITH_FRAME))).toEqual([
-      `${TOPIC}: Limitações: cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
-    ])
-    const topic = libraryOf(
-      withFile(TOPIC, (t) =>
-        TOPIC_WITH_FRAME(t).replace(
-          'lima-2015-encontros',
-          'costa-2018-satisfacao',
-        ),
-      ),
-    ).topics[0]
-    expect(topic).toMatchObject({
-      takeaways: ['apps-como-complemento'],
-      limitations: '### [@costa-2018-satisfacao]\n\n- Amostra pequena.',
-    })
-    expect(
-      errorsOf(
-        withFile(TOPIC, (t) =>
+        withGuide((t) =>
           t
-            .replace('position: 10', 'position: 10\ntakeaways: [sumiu]')
-            .concat('\n## Outra\n\nX.\n'),
-        ),
-      ),
-    ).toEqual([
-      `${TOPIC}: Outra: unknown section "## Outra"; a _topic.md only has "## Limitações"`,
-    ])
-    expect(
-      errorsOf(
-        withFile(TOPIC, (t) =>
-          t.replace('position: 10', 'position: 10\ntakeaways: [sumiu]'),
-        ),
-      ),
-    ).toEqual([`${TOPIC}: takeaways: the tip "sumiu" does not exist in tips/`])
-    expect(
-      errorsOf(
-        withFile(
-          TOPIC,
-          (t) => `${t}\n## Limitações\n\n### Sobre o app\n\n- X.\n`,
-        ),
-      ),
-    ).toEqual([
-      `${TOPIC}: Limitações: the Limitations are grouped by Study: write "### [@fact-sheet-slug]", not "### Sobre o app"`,
-    ])
-  })
-
-  it("numbers the Guide's fact sheets in page order: opening, each Question, O que levar, then the Limitations", () => {
-    const library = libraryOf(
-      withFiles({
-        [TOPIC]: (t) =>
-          t
+            .replace('{{question:app-ou-presencial}}', '')
             .replace(
-              'order: [onde-os-casais-se-conhecem, app-ou-presencial]',
-              'order: [app-ou-presencial, onde-os-casais-se-conhecem]',
+              '{{myth:metade-por-app}}',
+              '{{question:onde-os-casais-se-conhecem}}\n\n{{myth:metade-por-app}}',
             )
-            .concat(
-              '\n## Limitações\n\n- Pouco dado [@silva-2020-apps-brasil].\n',
-            ),
-      }),
-    )
-    // app-ou-presencial comes first now and cites only costa; silva comes in
-    // with the second Question.
-    expect(library.topics[0]?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
-    ])
-    const withOpening = libraryOf(
-      withFile(TOPIC, (t) =>
-        t.replace(
-          'Onde os casais se conhecem',
-          'Onde os casais se conhecem [@costa-2018-satisfacao]',
+            .replace('findings: [satisfacao-parecida]', 'findings: [sumiu]'),
         ),
       ),
-    )
-    expect(withOpening.topics[0]?.citedFactSheets).toEqual([
-      'costa-2018-satisfacao',
-      'silva-2020-apps-brasil',
+    ).toEqual([
+      `${GUIDE}: questions.1.findings: the finding "sumiu" is not declared in \`findings\``,
+      `${GUIDE}: the body answers the Question "onde-os-casais-se-conhecem" 2 times`,
+      `${GUIDE}: questions: the Question "app-ou-presencial" is not answered in the body; put {{question:app-ou-presencial}} on a line of its own in the Chapter where it fits`,
     ])
   })
 
-  it('the confidence ceiling counts what backs the answer, not the Limitations', () => {
-    const errors = errorsOf(
-      withFiles({
-        [OTHER_GUIDE]: (t) =>
+  it('an answer with no finding, a Myth not placed, or a mark naming nothing fails', () => {
+    expect(
+      errorsOf(
+        withGuide((t) =>
           t
-            .replace('confidence: moderate', 'confidence: strong')
+            .replace('findings: [satisfacao-parecida]', 'findings: []')
+            .replace('{{myth:metade-por-app}}', '{{myth:sumiu}}')
+            .replace('{{you:satisfacao-parecida}}', '{{you:sumiu}}'),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: questions.1.findings: the answer rests on at least one finding: name it in \`findings\``,
+      `${GUIDE}: myths: the Myth "metade-por-app" is declared and not placed; put {{myth:metade-por-app}} on a line of its own in a Chapter`,
+      `${GUIDE}: the body places the Myth "sumiu", which \`myths\` does not declare`,
+      `${GUIDE}: {{you:sumiu}} names a finding that \`findings\` does not declare`,
+    ])
+  })
+
+  it('the answer stays plain text, a block goes only in a Chapter, and an unknown mark fails', () => {
+    expect(
+      errorsOf(
+        withGuide((t) =>
+          t
             .replace(
-              '- Uma amostra só.',
-              '- Uma amostra só [@silva-2020-apps-brasil].',
-            ),
-      }),
-    )
-    expect(errors).toEqual([
-      `${OTHER_GUIDE}: confidence: the confidence (strong) is above the strongest fact sheet the guide cites (moderate)`,
+              'A diferença é pequena.',
+              'A diferença é pequena {{brazil}}.',
+            )
+            .replace(
+              'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+              'Onde os casais se conhecem.\n\n{{tip:apps-como-complemento}}',
+            )
+            .replace('{{brazil}} Entre', '{{brasil}} Entre'),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: O app virou um caminho comum: unknown mark "{{brasil}}"; the body knows {{question:…}}, {{tip:…}}, {{myth:…}}, {{visual:…}}, {{brazil}} and {{you:<finding>}}`,
+      `${GUIDE}: opening: "{{tip:apps-como-complemento}}" places a block, which only goes inside a Chapter`,
+      `${GUIDE}: questions.1.answer: "{{brazil}}": the answer stays plain text, which "Em resumo" and the search also show`,
+    ])
+  })
+
+  it('"O que não se sabe" is the last section and not empty; a Guide has a Chapter and an opening', () => {
+    expect(
+      errorsOf(
+        withGuide((t) =>
+          t.replace(
+            '## O que não se sabe\n\nSó capitais, e uma amostra só nos EUA.',
+            '## O que não se sabe\n\n## Depois\n\nTexto.',
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: O que não se sabe: "## O que não se sabe" is the last section of the Guide`,
+      `${GUIDE}: O que não se sabe: the section "## O que não se sabe" is empty`,
+    ])
+    expect(
+      errorsOf(
+        withGuide((t) => t.slice(0, t.indexOf('\n---\n') + 5) + '\nSó isso.\n'),
+      ),
+    ).toEqual([
+      `${GUIDE}: a Guide has at least one Chapter ("## …")`,
+      expect.stringContaining('is not answered in the body'),
+      expect.stringContaining('is not answered in the body'),
+      expect.stringContaining('is declared and not placed'),
+    ])
+  })
+
+  it("a Chapter's anchor cannot repeat another, a Question slug or one of the page's own", () => {
+    expect(
+      errorsOf(
+        withGuide((t) =>
+          t
+            .replace('## O lugar quase não importa', '## Em resumo')
+            .replace('## O app virou um caminho comum', '## App ou presencial'),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: the Chapter anchor #app-ou-presencial is also a Question's slug; change the title`,
+      `${GUIDE}: the Chapter anchor #em-resumo is one of the page's own (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, fichas, ajudou, outros-temas); change the title`,
     ])
   })
 
   it("a question slug cannot take one of the page's own anchors", () => {
-    const files = validFiles().map((a) =>
-      a.path === OTHER_GUIDE
-        ? { ...a, path: 'guides/onde-conhecer/fichas.md' }
-        : a.path === TOPIC
-          ? { ...a, text: a.text.replace('app-ou-presencial]', 'fichas]') }
-          : a.path === GUIDE
-            ? {
-                ...a,
-                text: a.text.replace(
-                  'related: [app-ou-presencial]',
-                  'related: []',
-                ),
-              }
-            : a,
-    )
-    expect(errorsOf(buildLibrary(files))).toEqual([
-      'guides/onde-conhecer/fichas.md: a question cannot be called "fichas": the Guide\'s page already uses #fichas (indice, perfil, o-que-levar, limitacoes, fichas, outros-temas)',
+    expect(
+      errorsOf(
+        withGuide((t) =>
+          t
+            .replace('slug: app-ou-presencial', 'slug: fichas')
+            .replace('{{question:app-ou-presencial}}', '{{question:fichas}}'),
+        ),
+      ),
+    ).toEqual([
+      `${GUIDE}: questions.1.slug: a question cannot be called "fichas": the Guide's page already uses #fichas (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, fichas, ajudou, outros-temas)`,
     ])
   })
 })

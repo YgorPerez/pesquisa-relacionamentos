@@ -97,26 +97,6 @@ export type FactSheetFrontmatter = typeof FactSheetFrontmatter.Type
 
 const Slugs = Schema.Array(Slug)
 
-/** `guides/<topic>/_topic.md`: the frame of the Topic's Guide (ADR 0042).
- * The body holds the opening (before the first `##`) and, optionally,
- * "## Limitações", grouped by Study under `### [@fact-sheet-slug]`. */
-export const TopicFrontmatter = Schema.Struct({
-  title: Text,
-  /** Where the topic goes on the home page, smallest first (#143). The
-   * topics are spaced by ten (10, 20, … 60): a new topic picks a free number
-   * between two others and touches only its own file. */
-  position: Schema.Int.check(
-    Schema.isGreaterThan(0, { message: 'a whole number from 1 up' }),
-  ),
-  /** The Questions, in the order the Guide answers them. */
-  order: Slugs,
-  /** The "O que levar" block: the strongest Tips of the Guide. */
-  takeaways: Schema.optional(Slugs),
-  previous: Schema.optional(Slugs),
-  seo: Schema.optional(Seo),
-})
-export type TopicFrontmatter = typeof TopicFrontmatter.Type
-
 /** `tips/<slug>.md`: the body is the tip text. */
 export const TipFrontmatter = Schema.Struct({
   fact_sheets: Slugs,
@@ -128,38 +108,32 @@ export const TipFrontmatter = Schema.Struct({
 })
 export type TipFrontmatter = typeof TipFrontmatter.Type
 
+/** A Myth, placed in the Guide's body by a line `{{myth:<id>}}`. */
 export const Myth = Schema.Struct({
+  id: Slug,
   claim: Text,
   why_not: Text,
   fact_sheets: Slugs,
 })
 export type Myth = typeof Myth.Type
 
-/** A finding of a Question. Its `tips` and `myths` show right after it on
- * the page, next to the finding they belong to (ADR 0042). */
+/** A finding of the Guide: what a Question's answer rests on, which the
+ * build checks (the Confidence ceiling, the Fact sheets that exist and were
+ * verified). The page does not list the findings (#194); a sentence of the
+ * body marks with `{{you:<id>}}` that a finding's sample may be the
+ * reader's. */
 export const GuideFinding = Schema.Struct({
+  id: Slug,
   text: Text,
   fact_sheets: Slugs,
   country: Schema.optional(Text),
   period: Schema.optional(Text),
   applies_to: Schema.optional(Coverage),
-  tips: Schema.optional(Slugs),
-  myths: Schema.optional(Schema.Array(Myth)),
 })
 
-const Side = Schema.Struct({ title: Text, text: Text, fact_sheets: Slugs })
-
-/** The evidence diverges: both sides in a table and which one has the better
- * design (#7). */
-export const Divergence = Schema.Struct({
-  better_design: Text,
-  sides: Schema.Tuple([Side, Side]),
-})
-export type Divergence = typeof Divergence.Type
-
-/** A guide's `previous`: the old slug in the same topic, or `topic/slug` when the
- * guide came from another topic. */
-const GuidePath = Schema.String.check(
+/** A Question's `previous`: the old slug in the same topic, or `topic/slug`
+ * when the Question came from another topic. */
+const QuestionPath = Schema.String.check(
   Schema.isPattern(
     /^(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?[a-z0-9]+(?:-[a-z0-9]+)*$/,
     {
@@ -169,24 +143,46 @@ const GuidePath = Schema.String.check(
   ),
 )
 
-/** `guides/<topic>/<slug>.md`, one Question of the Topic's Guide (ADR 0042;
- * the code still calls the file a guide). The body holds the short answer
- * (before the first `##`), the narrative's own sections if any, "E no
- * Brasil?", "Varia conforme o Perfil?" and, until the rewrite moves them to
- * `_topic.md`, "Limitações". */
-export const GuideFrontmatter = Schema.Struct({
+/** A Question of the Guide, answered where it fits in the narrative: the
+ * body places it with a line `{{question:<slug>}}` (ADR 0042). */
+export const QuestionFrontmatter = Schema.Struct({
+  slug: Slug,
   question: Text,
+  /** The short answer, in markdown, with `[@fact-sheet]` references and the
+   * key number as `==…==`. */
+  answer: Text,
   confidence: Schema.Literals(STRENGTHS),
-  findings: Schema.Array(GuideFinding),
-  divergence: Schema.optional(Divergence),
-  tips: Schema.optional(Slugs),
-  myths: Schema.optional(Schema.Array(Myth)),
-  related: Schema.optional(Slugs),
+  /** The ids of the findings the answer rests on: the Confidence ceiling is
+   * checked against their Fact sheets. */
+  findings: Slugs,
   calculator: Schema.optional(Schema.Literals(CALCULATORS)),
-  previous: Schema.optional(Schema.Array(GuidePath)),
-  seo: Schema.optional(Seo),
-  /** The Question's Visuals (#182), each placed in the body by a line
+  previous: Schema.optional(Schema.Array(QuestionPath)),
+})
+export type QuestionFrontmatter = typeof QuestionFrontmatter.Type
+
+/** `guides/<topic>.md`: a Topic and its Guide (ADR 0042). The body holds the
+ * opening (before the first `##`), one `##` per Chapter and, last, "## O que
+ * não se sabe". */
+export const GuideFrontmatter = Schema.Struct({
+  title: Text,
+  /** Where the topic goes on the home page, smallest first (#143). The
+   * topics are spaced by ten (10, 20, … 60): a new topic picks a free number
+   * between two others and touches only its own file. */
+  position: Schema.Int.check(
+    Schema.isGreaterThan(0, { message: 'a whole number from 1 up' }),
+  ),
+  /** The Questions, in the order "Em resumo" lists them. */
+  questions: Schema.Array(QuestionFrontmatter),
+  findings: Schema.Array(GuideFinding),
+  myths: Schema.optional(Schema.Array(Myth)),
+  /** The Visuals (#182), each placed in the body by a line
    * `{{visual:<id>}}`; `visuals.ts` has the format and the checks. */
   visuals: Schema.optional(Schema.Array(Visual)),
+  /** The "O que levar" block: the strongest Tips of the Guide. */
+  takeaways: Schema.optional(Slugs),
+  /** Questions of other Topics, for the end of the page. */
+  related: Schema.optional(Slugs),
+  previous: Schema.optional(Slugs),
+  seo: Schema.optional(Seo),
 })
 export type GuideFrontmatter = typeof GuideFrontmatter.Type

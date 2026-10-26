@@ -40,15 +40,15 @@ export const listTopics = createServerFn({ method: 'GET' }).handler(
     return library.topics.map((topic): HomeTopic => ({
       slug: topic.slug,
       title: topic.title,
-      questions: library.guides
-        .filter((g) => g.topic === topic.slug)
+      questions: library.questions
+        .filter((q) => q.topic === topic.slug)
         .map(questionSummary),
     }))
   },
 )
 
 /** The Topic's page, its Guide (ADR 0042), with the data of the calculator
- * cards its Questions host. */
+ * cards that follow its answers. */
 export const getGuide = createServerFn({ method: 'GET' })
   .validator((slug: unknown) => text(slug, 'topic'))
   .handler(
@@ -63,7 +63,9 @@ export const getGuide = createServerFn({ method: 'GET' })
         ...guide,
         // The B1 card reads the same file as the `/prioridades` page. The B5
         // card does the count in the browser, with the build's data.
-        priorities: guide.questions.some((q) => q.calculator === 'priorities')
+        priorities: library.questions.some(
+          (q) => q.topic === slug && q.calculator === 'priorities',
+        )
           ? buildPrioritiesView(library)
           : null,
       }
@@ -87,15 +89,15 @@ export const getCalculatorGuide = createServerFn({ method: 'GET' })
   .validator((name: unknown) => text(name, 'calculator'))
   .handler(async ({ data: name }): Promise<CalculatorGuide | null> => {
     const { default: library } = await import('virtual:library')
-    const guide = library.guides.find((g) => g.calculator === name)
-    if (!guide) return null
-    const summary = questionSummary(guide)
+    const question = library.questions.find((q) => q.calculator === name)
+    if (!question) return null
+    const summary = questionSummary(question)
     return {
-      topic: guide.topic,
-      slug: guide.slug,
+      topic: question.topic,
+      slug: question.slug,
       question: summary.question,
-      confidence: guide.confidence,
-      answer: withoutMarks(guide.shortAnswer),
+      confidence: question.confidence,
+      answer: withoutMarks(question.answer),
     }
   })
 
