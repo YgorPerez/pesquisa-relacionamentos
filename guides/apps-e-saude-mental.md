@@ -221,7 +221,7 @@ findings:
 myths:
   - id: app-causa-depressao
     claim: App de namoro causa depressão.
-    why_not: O que existe é uma associação pequena, medida quase sempre num momento só. Os autores da meta-análise de 27 estudos dizem que não dá para saber se o app piora a saúde mental ou se quem já está pior usa mais o app.
+    why_not: 'Não há prova disso: o que existe é uma associação pequena, medida quase sempre num momento só. Os autores da meta-análise de 27 estudos dizem que não dá para saber se o app piora a saúde mental ou se quem já está pior usa mais o app.'
     fact_sheets: [cela-2026-meta-analise-apps]
 visuals:
   - id: diferenca-por-medida

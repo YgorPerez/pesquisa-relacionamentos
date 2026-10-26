@@ -217,11 +217,11 @@ findings:
 myths:
   - id: curva-em-u
     claim: Casar tarde também é arriscado, porque depois dos 30 o risco de divórcio volta a subir.
-    why_not: Essa curva em U apareceu em dados americanos dos anos 1960. Nas pesquisas nacionais dos EUA de 1995, 2002 a 2003 e 2006 a 2010, ela não aparece. Nos dados de 2006 a 2010, o risco caiu até o começo dos 30 e parou de cair, e a pequena alta entre quem casou com 33 anos ou mais não teve diferença estatística da faixa anterior. Essa amostra tem só mulheres brancas não hispânicas, e só 159 casaram com 33 anos ou mais.
+    why_not: 'Não nos dados recentes: essa curva em U apareceu em dados americanos dos anos 1960 e não aparece nas pesquisas nacionais dos EUA de 1995, 2002 a 2003 e 2006 a 2010. Nos dados de 2006 a 2010, o risco caiu até o começo dos 30 e parou de cair, e a pequena alta entre quem casou com 33 anos ou mais não teve diferença estatística da faixa anterior. Essa amostra tem só mulheres brancas não hispânicas, e só 159 casaram com 33 anos ou mais.'
     fact_sheets: [lehrer-2013-idade-casamento]
   - id: prever-com-93
     claim: Dá para prever com 93% de acerto se um casal vai se divorciar.
-    why_not: O número aparece no resumo de um estudo com 79 casais, não nos resultados, onde as taxas vão de 75% a 95%. Cada equação foi montada e avaliada nos mesmos casais, sem um grupo novo para testar. Quando outros pesquisadores testaram esse método numa amostra nova, o acerto caiu muito.
+    why_not: 'Exagero: o 93% está só no resumo de um estudo com 79 casais, e cada equação foi montada e avaliada nos mesmos casais, sem um grupo novo para testar. Os resultados não trazem esse número; as taxas lá vão de 75% a 95%. Quando outros pesquisadores testaram esse método numa amostra nova, o acerto caiu muito.'
     fact_sheets: [gottman-2000-timing-divorce]
 visuals:
   - id: separacao-por-escolaridade

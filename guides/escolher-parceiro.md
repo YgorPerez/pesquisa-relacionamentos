@@ -213,17 +213,17 @@ findings:
     fact_sheets: [bruch-2018-aspirational-pursuit]
     applies_to: { genders: [man, woman], couple: different-sex }
 myths:
-  - id: aparencia-e-dinheiro-importam-mito-2
+  - id: homens-aparencia-mulheres-dinheiro
     claim: Homens escolhem pela aparência, e mulheres, pelo dinheiro.
-    why_not: É o que cada um diz ao descrever o parceiro ideal ou ao avaliar perfis. Com pessoas que conheceram de verdade, aparência e renda pesaram quase igual para os dois, numa meta-análise com quase 100 amostras e num speed dating.
+    why_not: 'Só no papel: com pessoas que conheceram de verdade, aparência e renda pesaram quase igual para os dois, numa meta-análise com quase 100 amostras e num speed dating. A diferença aparece quando cada um descreve o parceiro ideal ou avalia perfis.'
     fact_sheets:
       [
         eastwick-2014-meta-analise-preferencias,
         eastwick-2008-preferencias-speed-dating,
       ]
-  - id: precisamos-ser-parecidos-mito-1
+  - id: dez-anos-de-diferenca-39-por-cento
     claim: 10 anos de diferença de idade = 39% mais divórcio.
-    why_not: O artigo de 2015 sobre casamento e divórcio nos EUA nunca diz 39%. O número bate com um risco 3,4% maior por ano de diferença acumulado por 10 anos (1,034 elevado a 10 dá cerca de 1,40), e os "18% com 5 anos" saem da mesma conta. Esse 3,4% vem só dos casados desde 2008, uma parte de um questionário online fraco; na amostra inteira, foram 2,2% por ano. E o artigo não diz se contou a diferença com sinal ou em valor absoluto.
+    why_not: 'Não: o artigo de 2015 sobre casamento e divórcio nos EUA nunca diz 39%. O número bate com um risco 3,4% maior por ano de diferença, acumulado por 10 anos (1,034 elevado a 10 dá cerca de 1,40); os "18% com 5 anos" saem da mesma conta. Esse 3,4% vem só dos casados desde 2008, num questionário online fraco; na amostra inteira, foram 2,2% por ano, e o artigo não diz se contou a diferença com sinal ou em valor absoluto.'
     fact_sheets: [francis-tan-2015-gastos-casamento-divorcio]
 visuals:
   - id: o-que-pesa-na-atracao
@@ -436,7 +436,7 @@ Para aparência e renda, há uma meta-análise. Ela juntou 97 amostras, com 29.4
 
 A diferença entre os sexos aparece no papel. No speed dating, ao dizer o que queriam, os homens deram mais peso à aparência e as mulheres, à renda [@eastwick-2008-preferencias-speed-dating]. Diante de perfis e de pessoas imaginadas, homens e mulheres também pesam os dois de jeitos diferentes; diante de pessoas reais, a diferença quase some [@eastwick-2014-meta-analise-preferencias]. No estudo dos 43 países, ao dizer o que querem, as mulheres põem a renda uns 4 lugares acima de onde ela de fato pesa, e os homens, uns 4 abaixo. No que de fato pesa, a diferença entre os sexos não aparece [@eastwick-2024-preferencias-43-paises].
 
-{{myth:aparencia-e-dinheiro-importam-mito-2}}
+{{myth:homens-aparencia-mulheres-dinheiro}}
 
 Os dois números mudam conforme quem mede. A renda que a pessoa acha que o outro tem anda junto com o interesse (r = 0,27 entre os homens e 0,28 entre as mulheres); a renda medida de fato, quase nada, de 0,03 a 0,05 [@eastwick-2014-meta-analise-preferencias]. Com a aparência acontece algo parecido. Quando avaliadores de fora dão a nota, ela pesa antes de existir uma relação (r = 0,37) e quase nada em quem já namora ou é casado (r = 0,08).
 
@@ -468,7 +468,7 @@ O dado tem quase 40 anos, vem só de brancos não hispânicos dos EUA e não med
 
 Sobre diferença de idade, só achamos um estudo, e fraco. Num questionário online com americanos casados, cada ano de diferença entre os cônjuges se associou a um risco de divórcio 2,2% maior, e o artigo não diz se contou a diferença com sinal ou em valor absoluto [@francis-tan-2015-gastos-casamento-divorcio]. O número que circula na internet sai de outra conta.
 
-{{myth:precisamos-ser-parecidos-mito-1}}
+{{myth:dez-anos-de-diferenca-39-por-cento}}
 
 {{brazil}} Não achamos estudo brasileiro sobre escolaridade, religião ou idade do casal e o fim da união. O mais perto é um estudo com mulheres de 15 a 49 anos, de 1991 a 1996: cada ano a mais de estudo da mulher e morar na cidade se associaram a um risco maior de a união acabar [@leone-2007-dissolucao-brasil]. Ele mede a escolaridade dela, não se o casal estudou o mesmo tanto, então não diz se a semelhança protege aqui. E todos os estudos de casamento deste Capítulo olharam só casais homem-mulher.
 

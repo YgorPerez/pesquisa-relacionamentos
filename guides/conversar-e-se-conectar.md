@@ -131,7 +131,7 @@ findings:
 myths:
   - id: perguntas-fazem-apaixonar
     claim: As 36 perguntas fazem qualquer pessoa se apaixonar.
-    why_not: O estudo mediu a proximidade que cada um sentiu logo depois de 45 minutos, não paixão nem namoro. Os autores dizem que buscavam uma sensação passageira e que é improvável o procedimento gerar compromisso. O artigo conta, como anedota, que uma dupla da versão anterior do procedimento se casou; é um caso só.
+    why_not: 'Não: o estudo mediu a proximidade que cada um sentiu logo depois de 45 minutos, não paixão nem namoro. Os autores dizem que buscavam uma sensação passageira e que é improvável o procedimento gerar compromisso. O artigo conta, como anedota, que uma dupla da versão anterior do procedimento se casou; é um caso só.'
     fact_sheets: [aron-1997-36-perguntas]
 visuals:
   - id: evitar-desconhecidos

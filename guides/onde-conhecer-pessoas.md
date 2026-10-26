@@ -282,23 +282,19 @@ findings:
 myths:
   - id: maioria-por-app
     claim: A maioria dos casais hoje se conhece por app.
-    why_not: O número mais citado é dos EUA, de 2017, e dá 39% dos casais héteros novos. É o jeito mais comum, não a maioria, e o "online" dele junta site, app, rede social, jogo e chat.
+    why_not: 'Não: o número mais citado, dos EUA em 2017, dá 39% dos casais héteros novos. É o jeito mais comum, não a maioria, e o "online" dele junta site, app, rede social, jogo e chat.'
     fact_sheets: [rosenfeld-2019-disintermediating-friends]
   - id: metade-a-dois-tercos-online
     claim: Entre 53% e 66% dos casais se conheceram online em 2020 e 2022.
-    why_not: A pesquisa de Stanford publicada em revista vai até 2017 e dá 39%. Os números de 53% a 66% não saíram dela.
+    why_not: 'Não é o que a pesquisa mostra: a de Stanford, publicada em revista, vai até 2017 e dá 39%. Os números de 53% a 66% não saíram dela.'
     fact_sheets: [rosenfeld-2019-disintermediating-friends]
   - id: app-acabou-com-o-namoro
     claim: O app acabou com o namoro.
-    why_not: Entre os americanos que usaram site ou app, 39% namoraram sério ou casaram com alguém de lá. E só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro, então os outros caminhos continuam funcionando.
+    why_not: 'Não: muita gente namora sério com quem conheceu no app, e os outros caminhos continuam funcionando. Entre os americanos que usaram site ou app, 39% namoraram sério ou casaram com alguém de lá. E só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro.'
     fact_sheets: [pew-2023-2020-online-dating]
-  - id: app-causa-depressao
-    claim: App de namoro causa depressão.
-    why_not: O que existe é uma associação pequena, medida quase sempre num momento só. Os autores da meta-análise de 27 estudos dizem que não dá para saber se o app piora a saúde mental ou se quem já está pior usa mais o app.
-    fact_sheets: [cela-2026-meta-analise-apps]
   - id: relacao-de-app-dura-menos
     claim: Relação que começa em app dura menos.
-    why_not: Nos EUA, os casais que se conheceram online terminaram no mesmo ritmo dos outros, 7,0% contra 7,3% ao ano. Esses dados são de antes do Tinder; com dados de 2017, como o casal se conheceu também não mudou o risco de término.
+    why_not: 'Não: nos EUA, os casais que se conheceram online terminaram no mesmo ritmo dos outros, 7,0% contra 7,3% ao ano. Esses dados são de antes do Tinder; com dados de 2017, como o casal se conheceu também não mudou o risco de término.'
     fact_sheets:
       [
         rosenfeld-2017-marriage-choice-couplehood,
@@ -747,9 +743,7 @@ O custo mais comum é o assédio. Entre os americanos que já usaram, 38% recebe
 
 O golpe vem depois. Entre os usuários, 52% acham que já cruzaram com um golpista [@pew-2023-2020-online-dating]. {{you:homens-golpistas}} Entre os homens com menos de 50 anos, a fatia chega a 63%, contra 44% das mulheres [@pew-2023-2020-online-dating]. Nas queixas de golpe romântico à FTC em 2022, quem perdeu dinheiro tinha sido abordado mais em rede social (40%) do que em site ou app (19%) [@ftc-2023-golpe-romantico].
 
-O custo psicológico médio é pequeno. Numa meta-análise de 27 estudos, quem usa app estava um pouco pior de saúde mental do que quem não usa, e a diferença foi maior no uso compulsivo e na preocupação com o corpo [@cela-2026-meta-analise-apps]. Quase todos os estudos olharam um momento só, então ninguém sabe se o app piora a pessoa ou se quem já está pior usa mais o app. Em laboratório, a vontade de aceitar alguém caiu 27% em média do primeiro ao último perfil de uma sequência [@pronk-2020-mentalidade-rejeicao]. A Pergunta [Usar apps de namoro faz mal à saúde mental?](/apps-e-saude-mental#apps-fazem-mal) trata disso com mais estudos.
-
-{{myth:app-causa-depressao}}
+O custo psicológico médio é pequeno. Numa meta-análise de 27 estudos, quem usa app estava um pouco pior de saúde mental do que quem não usa, e a diferença foi maior no uso compulsivo e na preocupação com o corpo [@cela-2026-meta-analise-apps]. Quase todos os estudos olharam um momento só, então ninguém sabe se o app piora a pessoa ou se quem já está pior usa mais o app. Em laboratório, a vontade de aceitar alguém caiu 27% em média do primeiro ao último perfil de uma sequência [@pronk-2020-mentalidade-rejeicao]. A Pergunta [Usar apps de namoro faz mal à saúde mental?](/apps-e-saude-mental#apps-fazem-mal) trata disso com mais estudos e desmonta a ideia de que o app causa depressão.
 
 {{tip:limitar-a-busca}}
 
