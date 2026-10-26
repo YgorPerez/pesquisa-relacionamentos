@@ -29,6 +29,9 @@ const CALCULATOR_PATHS: Record<Calculator, string> = {
   priorities: '/prioridades',
 }
 
+/** The page of the Neighbor sites' Readings (#179). */
+export const NEIGHBOR_SITES_PATH = '/sites-vizinhos'
+
 /** The calculator's page. */
 export function calculatorPath(calculator: Calculator): string {
   return CALCULATOR_PATHS[calculator]

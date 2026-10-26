@@ -304,6 +304,10 @@ O Guia é um texto corrido, não uma pilha de seções iguais (ADR 0042).
 - **A resposta no texto:** onde o raciocínio chega a uma Pergunta, uma nota sobre folha com contorno pontilhado de 1,5px em tinta e raio mao-2, sem retícula: é uma anotação do texto, não um painel. Traz a Pergunta em title (sem a palavra amarela, que é só do título da página), os degraus da Confiança e a resposta curta em corpo, com o número-chave em rosa. Um link antigo da Pergunta cai nela.
 - **"no Brasil":** uma etiqueta em folha com contorno de 1,5px em tinta, 14px em negrito, raio mao-2, antes da frase com dado brasileiro. Tinta e papel, sem cor: "Brasil" não é um dos três papéis das tintas.
 
+### Leituras de Sites vizinhos
+
+Em `/sites-vizinhos`, um grupo por Tema, e no fim de cada Guia, depois de "O que não se sabe", o bloco "Para ler além daqui" (some quando o Tema não tem Leitura). Cada Leitura, entre divisórias pontilhadas de 1,5px: o nome do site em label (e "em inglês" em tinta clara, quando for), o título em title com sublinhado e a seta curta de saída, a linha para o leitor em corpo e, embaixo, cada aviso com a etiqueta em folha ("vende algo", "defende uma causa") e a frase em nota, tinta clara. Tudo em tinta e papel: a Leitura não é Fonte, então nada de verde-água, e não leva nota, degraus nem selo. O hover do título é amarelo, como os outros links de navegação. Abre em outra aba.
+
 ### Mito
 
 Painel que abre com a etiqueta "Mito" (rosa com contorno de 1,5px em tinta, 14px em negrito, raio mao-2) e, ao lado, "circula por aí, mas não se sustenta" em nota, tinta clara. O leitor de tela ouve os dois antes da frase, porque o risco (`<s>`) não é anunciado. Depois, a frase que circula em Bricolage 600, atravessada por uma faixa rosa de cerca de 30% da altura no meio da linha, e o porquê embaixo em corpo normal com referência. A faixa é um risco, mantido de propósito: diz "isto não se sustenta". Não é marca-texto, por isso não segue a regra da letra inteira.

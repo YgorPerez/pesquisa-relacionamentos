@@ -122,7 +122,8 @@ function InTheCount() {
         Ela conta também a resposta do “Ajudou?”, qual Ficha foi aberta a partir
         de qual Guia e se uma calculadora foi usada, uma vez por visita e sem os
         valores. Quando você toca num Guia em “Continuar lendo”, conta qual Guia
-        foi, mas não onde você tinha parado. Nunca recebe o seu gênero, quem
+        foi, mas não onde você tinha parado. Quando você abre a página de um
+        site vizinho, conta só qual site foi. Nunca recebe o seu gênero, quem
         você procura, a sua idade nem se você preencheu o Perfil. Região,
         navegador e sistema ficam desligados.
       </p>

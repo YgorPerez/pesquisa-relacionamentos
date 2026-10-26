@@ -2,6 +2,7 @@
 // server functions import from here without pulling `node:fs` or Effect.
 import type { Library } from './library.ts'
 import type { Question, Tip, Topic } from './items.ts'
+import type { Reading } from './neighbor-sites.ts'
 
 export const questionBySlug = (
   library: Library,
@@ -43,3 +44,19 @@ export function questionsWithTip(
 /** Only a tip whose fact sheets are all ✅ or 🟡 goes to the site. */
 export const isTipPublished = (tip: Pick<Tip, 'published'>): boolean =>
   tip.published
+
+/** The Topic's Readings, Portuguese first, each language in file order. A
+ * Reading of several Topics is in each one's list. */
+export function topicReadings(
+  library: Pick<Library, 'readings' | 'neighborSites'>,
+  topic: string,
+): ReadonlyArray<Reading> {
+  const portuguese = new Set(
+    library.neighborSites.filter((s) => s.language === 'pt').map((s) => s.id),
+  )
+  const ofTopic = library.readings.filter((r) => r.topics.includes(topic))
+  return [
+    ...ofTopic.filter((r) => portuguese.has(r.site)),
+    ...ofTopic.filter((r) => !portuguese.has(r.site)),
+  ]
+}

@@ -35,6 +35,16 @@ export const COUPLES = ['different-sex', 'same-sex'] as const
 export const CALCULATORS = ['possible-group', 'priorities'] as const
 export type Calculator = (typeof CALCULATORS)[number]
 
+/** The language a Neighbor site writes in: Portuguese goes first in each
+ * Topic's Readings (#179). */
+export const READING_LANGUAGES = ['pt', 'en'] as const
+export type ReadingLanguage = (typeof READING_LANGUAGES)[number]
+
+/** The notices a Neighbor site or a Reading carries, in the order shown:
+ * what it sells, then the cause it declares. */
+export const NOTICE_KINDS = ['commercial', 'cause'] as const
+export type NoticeKind = (typeof NOTICE_KINDS)[number]
+
 /** The app's fixed paths, which no topic can use as its slug (#15). They are
  * public URLs, so they stay in Portuguese. */
 export const RESERVED_ROUTES = [
@@ -43,6 +53,7 @@ export const RESERVED_ROUTES = [
   'grupo-possivel',
   'prioridades',
   'privacidade',
+  'sites-vizinhos',
   'sitemap.xml',
   'robots.txt',
 ] as const

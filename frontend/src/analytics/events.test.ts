@@ -21,5 +21,6 @@ describe('EVENTS', () => {
     expect(EVENTS.continueReading('onde-conhecer-pessoas')).toBe(
       'continue-reading/onde-conhecer-pessoas',
     )
+    expect(EVENTS.neighborSite('pew')).toBe('neighbor-site/pew')
   })
 })

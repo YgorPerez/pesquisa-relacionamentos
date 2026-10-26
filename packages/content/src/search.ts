@@ -11,6 +11,7 @@ import {
   questionPath,
   topicPath,
   isFactSheetIndexable,
+  NEIGHBOR_SITES_PATH,
 } from './paths.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import type { Tip, Topic } from './items.ts'
@@ -88,7 +89,8 @@ export function tipSearch(tip: Pick<Tip, 'text' | 'seo'>): SearchMeta {
 }
 
 /** The paths that go to the sitemap: home, the topics (each one's page is
- * its Guide), the published tips, the ✅/🟡 fact sheets and the calculators.
+ * its Guide), the published tips, the ✅/🟡 fact sheets, the calculators and
+ * the Neighbor sites' page.
  * A ⬜ fact sheet stays out, and so does a Question, which is answered
  * inside its topic's page (ADR 0042). */
 export function sitemapPaths(library: Library): string[] {
@@ -100,6 +102,7 @@ export function sitemapPaths(library: Library): string[] {
     '/estudos',
     ...library.factSheets.filter(isFactSheetIndexable).map(factSheetPath),
     ...CALCULATORS.map(calculatorPath),
+    NEIGHBOR_SITES_PATH,
   ]
 }
 

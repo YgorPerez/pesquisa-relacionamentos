@@ -33,6 +33,7 @@ import { PrioritiesCard } from '#/ui/priorities'
 import { PossibleGroupCard } from '#/ui/possible-group'
 import { QuestionRow } from '#/ui/question-row'
 import { ReadingProgress } from '#/ui/reading-progress'
+import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
 import { Share } from '#/ui/share'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
@@ -40,8 +41,8 @@ import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 // The Topic's page is its Guide (ADR 0042): the title and the Chapters,
 // "Em resumo", the Profile, the opening and the Chapters (each Question
 // answered where it fits, anchored by its slug), "O que levar", "O que não
-// se sabe", one list of Fact sheets, one "Ajudou?" and the Questions of other
-// Topics. The reading bar sits on top of all that (#195).
+// se sabe", "Para ler além daqui" (when the Topic has Readings, #179), one
+// list of Fact sheets, one "Ajudou?" and the Questions of other Topics. The reading bar sits on top of all that (#195).
 export const Route = createFileRoute('/$tema/')({
   // The `loaderData` carries only what the `head` uses; the Guide goes
   // through the `queryClient`.
@@ -126,6 +127,9 @@ function GuidePage() {
         />
         <GuideTakeaways />
         {guide.unknownsHtml && <Unknowns html={guide.unknownsHtml} />}
+        {guide.readings.length > 0 && (
+          <FurtherReading readings={guide.readings} />
+        )}
         <GuideFactSheets circled={circled} backToText={backToText} />
         <WasItHelpful guide={guide.topic} />
         {guide.elsewhere.length > 0 && <OtherTopics />}

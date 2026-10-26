@@ -1,0 +1,104 @@
+# Sites vizinhos e Leituras (#178, #179; GLOSSARY.md). Uma Leitura só entra
+# se a própria página linka ou referencia os estudos de que fala. Um aviso do
+# site (`notices`) vale para todas as Leituras dele; uma Leitura pode ter os
+# seus. Cada aviso é uma frase para o leitor: `commercial` diz o que se vende,
+# `cause` a causa declarada. `home` não aparece no site.
+# Conferido em 2026-10-26, abrindo cada página.
+
+sites:
+  - id: the-conversation-brasil
+    name: The Conversation Brasil
+    home: https://theconversation.com/br
+    language: pt
+  - id: pew
+    name: Pew Research Center
+    home: https://www.pewresearch.org/
+    language: en
+  - id: greater-good
+    name: Greater Good (UC Berkeley)
+    home: https://greatergood.berkeley.edu/
+    language: en
+  - id: psychology-today
+    name: Psychology Today
+    home: https://www.psychologytoday.com/
+    language: en
+  - id: hbs-working-knowledge
+    name: HBS Working Knowledge
+    home: https://www.library.hbs.edu/working-knowledge
+    language: en
+  - id: our-world-in-data
+    name: Our World in Data
+    home: https://ourworldindata.org/
+    language: en
+  - id: ifs
+    name: Institute for Family Studies
+    home: https://ifstudies.org/
+    language: en
+    notices:
+      cause: O Institute for Family Studies defende o casamento.
+
+readings:
+  - site: pew
+    title: Key findings about online dating in the U.S.
+    url: https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/
+    description: Pesquisa com 6.034 adultos dos EUA, em 2022, sobre quem usa app de namoro, o que acha dele e quantos já toparam com golpe.
+    topics: [onde-conhecer-pessoas, apps-e-saude-mental]
+  - site: the-conversation-brasil
+    title: Como os apps de namoro afetam os relacionamentos e a economia do desejo
+    url: https://theconversation.com/como-os-apps-de-namoro-afetam-os-relacionamentos-e-a-economia-do-desejo-285046
+    description: Um professor da PUC-Rio junta estudos sobre o que os apps mudaram no namoro e conclui que ter mais opções não deixou as pessoas claramente mais satisfeitas.
+    topics: [onde-conhecer-pessoas, apps-e-saude-mental, sexo-e-historico]
+  - site: greater-good
+    title: How to Actually Enjoy the Dating Process
+    url: https://greatergood.berkeley.edu/article/item/how_to_actually_enjoy_the_dating_process
+    description: Uma coach propõe encarar os encontros como aprendizado, apoiada em estudos sobre namoro online e sobre tratar pretendentes como produto.
+    topics: [onde-conhecer-pessoas, conversar-e-se-conectar]
+    notices:
+      commercial: A autora vende uma masterclass de namoro.
+  - site: psychology-today
+    title: Massive New Study on Predictors of Relationship Satisfaction
+    url: https://www.psychologytoday.com/us/blog/sliding-vs-deciding/202008/massive-new-study-on-predictors-of-relationship-satisfaction
+    description: Scott Stanley resume o estudo de Joel e colegas com 11.196 casais, em que o jeito da relação previu a satisfação muito melhor que os traços de cada um.
+    topics: [escolher-parceiro, manter-a-relacao]
+  - site: greater-good
+    title: Can Artificial Intelligence Predict the Right Partner for You?
+    url: https://greatergood.berkeley.edu/article/item/can_artificial_intelligence_predict_the_right_partner_for_you
+    description: Uma pesquisadora explica por que a semelhança atrai antes de duas pessoas se conhecerem e pesa pouco depois de uma conversa.
+    topics: [escolher-parceiro]
+  - site: hbs-working-knowledge
+    title: Asking Questions Can Get You a Better Job or a Second Date
+    url: https://www.library.hbs.edu/working-knowledge/asking-questions-can-get-you-a-better-job-or-a-second-date
+    description: Três estudos de Harvard, um com encontros rápidos, em que quem fez mais perguntas, sobretudo de continuidade, agradou mais e ganhou mais segundos encontros.
+    topics: [conversar-e-se-conectar]
+  - site: the-conversation-brasil
+    title: "'Phubbing': por que ignorar seu parceiro ou parceira usando o celular enfurece algumas pessoas e leva a retaliações"
+    url: https://theconversation.com/phubbing-por-que-ignorar-seu-parceiro-ou-parceira-usando-o-celular-enfurece-algumas-pessoas-e-leva-a-retaliacoes-264672
+    description: "Duas psicólogas contam o que três estudos acharam sobre ignorar o parceiro pelo celular: menos satisfação e, às vezes, revide."
+    topics: [conversar-e-se-conectar, manter-a-relacao]
+  - site: psychology-today
+    title: The Risks for Couples Moving in Together
+    url: https://www.psychologytoday.com/us/blog/sliding-vs-deciding/201807/the-risks-couples-moving-in-together
+    description: Stanley e Rhoades reúnem pesquisas sobre ir morar junto antes de decidir casar e o que isso tem a ver com a qualidade do casamento e o divórcio.
+    topics: [manter-a-relacao]
+    notices:
+      cause: Saiu antes no blog do Institute for Family Studies, que defende o casamento.
+  - site: the-conversation-brasil
+    title: Como um casal se separa? Anatomia matemática de uma queda
+    url: https://theconversation.com/como-um-casal-se-separa-anatomia-matematica-de-uma-queda-228177
+    description: Dois pesquisadores espanhóis explicam o modelo matemático que publicaram sobre por que a satisfação do casal cai com o tempo quando falta esforço.
+    topics: [manter-a-relacao]
+  - site: our-world-in-data
+    title: Marriages and Divorces
+    url: https://ourworldindata.org/marriages-and-divorces
+    description: Gráficos de casamento, divórcio e morar junto em vários países desde meados do século 20, com a fonte de cada número.
+    topics: [manter-a-relacao]
+  - site: ifs
+    title: Counterintuitive Trends in the Link Between Premarital Sex and Marital Stability
+    url: https://ifstudies.org/blog/counterintuitive-trends-in-the-link-between-premarital-sex-and-marital-stability
+    description: Com dados do governo dos EUA, Wolfinger compara a chance de divórcio em cinco anos pelo número de parceiros que a mulher teve antes de casar.
+    topics: [sexo-e-historico]
+  - site: ifs
+    title: Testing Common Theories on the Relationship Between Premarital Sex and Marital Stability
+    url: https://ifstudies.org/blog/testing-common-theories-on-the-relationship-between-premarital-sex-and-marital-stability
+    description: Smith e Wolfinger testam as explicações comuns para a ligação entre sexo antes do casamento e divórcio, e nenhuma dá conta dela.
+    topics: [sexo-e-historico]

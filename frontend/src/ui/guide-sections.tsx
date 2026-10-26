@@ -4,7 +4,6 @@
 // the reasoning reaches it, Tips and struck-out Myths), "O que levar" and
 // "O que não se sabe". The page (`routes/$tema/index.tsx`) assembles them.
 import { appliesToYou, type Verdict } from '@tem-estudo/rules/applies-to-you'
-import { Link } from '@tanstack/react-router'
 import { useEffect, useRef, type ReactNode } from 'react'
 import type {
   ChapterView,
@@ -17,7 +16,7 @@ import { useProfile } from '#/state/profile'
 import { useProfileInGuide } from '#/state/profile-in-guide'
 import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
-import { Headline, Panel, Section, Tag } from './section'
+import { Headline, Panel, Section, SmallLink, Tag } from './section'
 import { AppliesToNote, ForYourProfile } from './profile'
 import { StrengthBadge } from './badges'
 import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
@@ -176,13 +175,9 @@ function TipCard({
       <Html as="p" html={tip.html} />
       <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1">
         <StrengthBadge strength={tip.strength} withLabel />
-        <Link
-          to="/dicas/$slug"
-          params={{ slug: tip.slug }}
-          className="inline-flex min-h-toque items-center text-label leading-body font-bold"
-        >
+        <SmallLink to="/dicas/$slug" params={{ slug: tip.slug }}>
           sobre esta Dica
-        </Link>
+        </SmallLink>
       </div>
       {tip.inference && (
         <p className="mt-1 mb-0 text-nota text-tinta-2 italic">

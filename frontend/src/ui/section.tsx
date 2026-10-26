@@ -1,6 +1,7 @@
 // The pieces inside the page (DESIGN.md, Layout and Components): the section
 // with the hand-drawn rule and its title, the panel with the halftone and
 // the dashed notice.
+import { createLink, type LinkComponent } from '@tanstack/react-router'
 import type { ComponentProps, HTMLAttributes } from 'react'
 import { cn } from '@/platform/cn'
 
@@ -63,6 +64,27 @@ export function Panel({
     />
   )
 }
+
+/** The label-sized link under a block, 44px tall: "sobre esta Dica", "Ler o
+ * Guia", "Leituras de todos os Temas". */
+function SmallAnchor({ className, ...props }: ComponentProps<'a'>) {
+  return (
+    <a
+      className={cn(
+        'inline-flex min-h-toque items-center text-label leading-body font-bold',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+const SmallRouterLink = createLink(SmallAnchor)
+
+/** The router's `Link` with that look. */
+export const SmallLink: LinkComponent<typeof SmallAnchor> = (props) => (
+  <SmallRouterLink {...props} />
+)
 
 /** The dashed notice: the unverified Fact sheet, what is not live yet.
  * Right after a back link, it gets room above. */

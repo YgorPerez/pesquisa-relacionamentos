@@ -23,7 +23,7 @@ const DateText = Schema.String.check(
   }),
 )
 
-const Url = Schema.String.check(
+export const Url = Schema.String.check(
   Schema.isPattern(/^https?:\/\/\S+$/, {
     message: 'must be a URL starting with http',
   }),

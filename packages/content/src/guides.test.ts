@@ -479,7 +479,7 @@ describe('publication rules', () => {
       path: a.path.replace(GUIDE, 'guides/dicas.md'),
     }))
     expect(errorsOf(buildLibrary(files))).toEqual([
-      'guides/dicas.md: a topic cannot be called "dicas", which is a site route (estudos, dicas, grupo-possivel, prioridades, privacidade, sitemap.xml, robots.txt)',
+      'guides/dicas.md: a topic cannot be called "dicas", which is a site route (estudos, dicas, grupo-possivel, prioridades, privacidade, sites-vizinhos, sitemap.xml, robots.txt)',
     ])
   })
 
@@ -621,7 +621,7 @@ describe('the Chapters and what they place (ADR 0042)', () => {
       ),
     ).toEqual([
       `${GUIDE}: the Chapter anchor #app-ou-presencial is also a Question's slug; change the title`,
-      `${GUIDE}: the Chapter anchor #em-resumo is one of the page's own (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, fichas, ajudou, outros-temas); change the title`,
+      `${GUIDE}: the Chapter anchor #em-resumo is one of the page's own (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, para-ler-alem-daqui, fichas, ajudou, outros-temas); change the title`,
     ])
   })
 
@@ -635,7 +635,7 @@ describe('the Chapters and what they place (ADR 0042)', () => {
         ),
       ),
     ).toEqual([
-      `${GUIDE}: questions.1.slug: a question cannot be called "fichas": the Guide's page already uses #fichas (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, fichas, ajudou, outros-temas)`,
+      `${GUIDE}: questions.1.slug: a question cannot be called "fichas": the Guide's page already uses #fichas (capitulos, em-resumo, perfil, o-que-levar, o-que-nao-se-sabe, para-ler-alem-daqui, fichas, ajudou, outros-temas)`,
     ])
   })
 })

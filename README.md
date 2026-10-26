@@ -8,13 +8,14 @@ A regra é simples: **cada afirmação aponta para a fonte primária que a suste
 
 ## Estrutura
 
-| Pasta/arquivo                      | O que tem                                                                                                                                                                |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [`studies/`](studies/)             | Uma ficha por estudo ou fonte: o que mediu, números principais, limitações e status de verificação                                                                       |
-| [`reports/`](reports/)             | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo                                                                   |
-| [`tips/`](tips/)                   | Conclusões práticas, cada uma ligada aos estudos que a sustentam                                                                                                         |
-| [`sources/`](sources/)             | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `sources/private/`, clone de um repo privado e fora do git deste |
-| [`docs/deploy.md`](docs/deploy.md) | Como o site vai ao ar em temestudo.cloud e como voltar à versão anterior                                                                                                 |
+| Pasta/arquivo                                          | O que tem                                                                                                                                                                |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`studies/`](studies/)                                 | Uma ficha por estudo ou fonte: o que mediu, números principais, limitações e status de verificação                                                                       |
+| [`reports/`](reports/)                                 | Sínteses que cruzam vários estudos para responder a uma pergunta, com o `ticket:` que as pediu no topo                                                                   |
+| [`tips/`](tips/)                                       | Conclusões práticas, cada uma ligada aos estudos que a sustentam                                                                                                         |
+| [`data/neighbor-sites.yaml`](data/neighbor-sites.yaml) | Sites vizinhos e Leituras de `/sites-vizinhos` e do fim de cada Guia, com os avisos de quem vende algo ou defende uma causa                                              |
+| [`sources/`](sources/)                                 | Fontes locais de licença aberta ou domínio público, com a licença registrada na Ficha. O resto vai para `sources/private/`, clone de um repo privado e fora do git deste |
+| [`docs/deploy.md`](docs/deploy.md)                     | Como o site vai ao ar em temestudo.cloud e como voltar à versão anterior                                                                                                 |
 
 O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https://github.com/YgorPerez/pesquisa-relacionamentos/issues?q=is%3Aissue+is%3Aopen+label%3Aacervo). O passo a passo para trabalhar uma delas está na skill [`library`](.claude/skills/library/SKILL.md).
 

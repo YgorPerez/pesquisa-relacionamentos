@@ -33,6 +33,7 @@ test.describe('sitemap and robots', () => {
       `${SITE}/estudos/silva-2020-apps-brasil`,
       `${SITE}/grupo-possivel`,
       `${SITE}/prioridades`,
+      `${SITE}/sites-vizinhos`,
     ])
   })
 

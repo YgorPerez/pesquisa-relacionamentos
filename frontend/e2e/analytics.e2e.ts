@@ -299,4 +299,27 @@ test.describe('usage count inside the Guide', () => {
       .poll(() => hits.map((e) => e.p))
       .toContain('fact-sheet/escolher-parceiro/silva-2020-apps-brasil')
   })
+
+  test('a Reading opened at the end of the Guide counts its Neighbor site, and nothing else', async ({
+    page,
+  }) => {
+    const { hits } = recordHits(page)
+    await page
+      .context()
+      .route('https://revista-daqui.example/**', (route) =>
+        route.fulfill({ status: 200, contentType: 'text/html', body: '' }),
+      )
+    await open(page, GUIDE)
+    const [popup] = await Promise.all([
+      page.waitForEvent('popup'),
+      page
+        .getByRole('region', { name: 'Para ler além daqui' })
+        .getByRole('link', { name: /Onde os brasileiros se conhecem/ })
+        .click(),
+    ])
+    await popup.close()
+    await expect
+      .poll(() => hits.filter((e) => e.e === 'true').map((e) => e.p))
+      .toEqual(['neighbor-site/revista-daqui'])
+  })
 })

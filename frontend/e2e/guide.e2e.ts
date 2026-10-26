@@ -47,6 +47,8 @@ test.describe('Guide page', () => {
       'Faça a conta',
       'O que levar',
       'O que não se sabe',
+      // The Topic's Readings of Neighbor sites (#179).
+      'Para ler além daqui',
       'Fichas citadas',
       'Ajudou?',
       'Perguntas de outros Temas',
