@@ -65,6 +65,10 @@ export const RELIGIONS = [
   'outra',
 ] as const
 export type Religion = (typeof RELIGIONS)[number]
+/** How often one drinks (PNS P027 and P02801): never, under once a week,
+ * once a week or more. */
+export const DRINKINGS = ['nunca', 'raramente', 'semanal'] as const
+export type Drinking = (typeof DRINKINGS)[number]
 
 /** "Trabalha" (employed) and its variant "tem negócio próprio" (employer or
  * self-employed). */
@@ -126,6 +130,14 @@ export interface Requirements {
   readonly ownsHome: boolean
   readonly height: Range
   readonly nonSmoker: boolean
+  /** None checked = any (#291). */
+  readonly drinking: ReadonlyArray<Drinking>
+  /** 150 minutes of exercise a week or more (#292). */
+  readonly exercises: boolean
+  /** Rates their oral health good or very good (#293). */
+  readonly goodTeeth: boolean
+  /** Does not use an e-cigarette today (#297). */
+  readonly nonVaper: boolean
   /** Works in an office occupation: VD4011 groups 1 to 4 of the PNAD
    * Contínua (#294). */
   readonly office: boolean
@@ -145,6 +157,10 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   ownsHome: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
+  drinking: [],
+  exercises: false,
+  goodTeeth: false,
+  nonVaper: false,
   office: false,
 }
 
@@ -250,6 +266,10 @@ export const REQUIREMENTS = [
   'home',
   'height',
   'smoking',
+  'drinking',
+  'exercise',
+  'teeth',
+  'vape',
   'office',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
@@ -277,6 +297,10 @@ export function release(
     home: { ownsHome: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
+    drinking: { drinking: [] },
+    exercise: { exercises: false },
+    teeth: { goodTeeth: false },
+    vape: { nonVaper: false },
     office: { office: false },
   }
   return { ...requirements, ...released[requirement] }
@@ -299,6 +323,10 @@ export const REQUIREMENT_TITLE: Readonly<
   home: 'Casa',
   height: 'Altura',
   smoking: 'Cigarro',
+  drinking: 'Bebida',
+  exercise: 'Exercício',
+  teeth: 'Saúde bucal',
+  vape: 'Cigarro eletrônico',
   office: 'Ocupação',
 }
 
@@ -339,6 +367,12 @@ export const RELIGION_LABEL: Readonly<Record<Religion, string>> = {
   'umbanda-candomble': 'umbanda ou candomblé',
   'sem-religiao': 'sem religião',
   outra: 'outra',
+}
+
+export const DRINKING_LABEL: Readonly<Record<Drinking, string>> = {
+  nunca: 'nunca',
+  raramente: 'menos de 1 vez por semana',
+  semanal: 'toda semana',
 }
 
 const orList = (items: ReadonlyArray<string>) =>
@@ -415,6 +449,20 @@ export function requirementValue(
     }
     case 'smoking':
       return r.nonSmoker ? 'não fuma' : 'fuma ou não'
+    case 'drinking':
+      return r.drinking.length
+        ? `bebe ${orList(r.drinking.map((d) => DRINKING_LABEL[d]))}`
+        : 'bebe ou não'
+    case 'exercise':
+      return r.exercises
+        ? 'faz 150 min de exercício por semana'
+        : 'faz exercício ou não'
+    case 'teeth':
+      return r.goodTeeth ? 'saúde bucal boa' : 'qualquer saúde bucal'
+    case 'vape':
+      return r.nonVaper
+        ? 'não usa cigarro eletrônico'
+        : 'usa cigarro eletrônico ou não'
     case 'office':
       return r.office ? 'trabalha em escritório' : 'qualquer ocupação'
   }
@@ -444,6 +492,10 @@ export function readRequirements(value: unknown): Requirements {
     ownsHome: raw.ownsHome === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
+    drinking: manyOf(DRINKINGS, raw.drinking),
+    exercises: raw.exercises === true,
+    goodTeeth: raw.goodTeeth === true,
+    nonVaper: raw.nonVaper === true,
     office: raw.office === true,
   }
 }

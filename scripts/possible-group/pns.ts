@@ -61,7 +61,16 @@ const POSITIONS = {
   C008: [117, 3],
   M001: [527, 1],
   P00404: [617, 3],
+  P027: [662, 1],
+  P02801: [663, 1],
+  P034: [673, 1],
+  P035: [674, 1],
+  P03701: [675, 2],
+  P03702: [677, 2],
+  P036: [679, 2],
   P050: [711, 1],
+  P06701: [796, 1],
+  U005: [1208, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
 } as const
@@ -86,6 +95,10 @@ const ORIENTATIONS = [
   'nao-sabe',
   'recusou',
 ] as const
+
+/** P036, the vigorous ones: running, treadmill running, aerobics, football,
+ * basketball and tennis. */
+const VIGOROUS = new Set(['03', '04', '06', '12', '13', '15'])
 
 interface PnsVariable {
   readonly column: string
@@ -128,6 +141,70 @@ export const PNS_VARIABLES = [
     column: 'fumo',
     fields: ['P050'],
     read: code('P050', { '1': 'diario', '2': 'ocasional', '3': 'nao' }),
+    ordered: false,
+  },
+  {
+    // P027: never, under once a month, once a month or more. Only the last
+    // are asked P02801, the days a week (0 = under once a week). The doses
+    // (P029) and binge (P03201) stay out: the Requirement asks how often.
+    column: 'bebida',
+    fields: ['P027', 'P02801'],
+    read: (line) => {
+      const often = field(line, 'P027')
+      if (often === '1') return 'nunca'
+      if (often === '2') return 'raramente'
+      if (often !== '3') return null
+      const days = field(line, 'P02801')
+      if (days === '0') return 'raramente'
+      return /^[1-7]$/.test(days) ? 'semanal' : null
+    },
+    ordered: false,
+  },
+  {
+    // 150 minutes a week or more, the WHO recommendation: P035 days a week
+    // times the usual duration (P03701 hours, P03702 minutes). Who did not
+    // exercise in the last 3 months (P034 = 2) or does it under once a week
+    // (P035 = 0) is not asked the rest. As in IBGE's leisure-time indicator,
+    // a minute of a vigorous main activity (P036) counts as two.
+    column: 'exercicio',
+    fields: ['P034', 'P035', 'P03701', 'P03702', 'P036'],
+    read: (line) => {
+      const exercised = field(line, 'P034')
+      if (exercised === '2') return 'nao'
+      if (exercised !== '1') return null
+      const days = field(line, 'P035')
+      if (days === '0') return 'nao'
+      const hours = Number(field(line, 'P03701'))
+      const minutes = Number(field(line, 'P03702'))
+      if (!/^[1-7]$/.test(days) || !(hours <= 24) || !(minutes <= 59))
+        return null
+      const intensity = VIGOROUS.has(field(line, 'P036')) ? 2 : 1
+      return Number(days) * (hours * 60 + minutes) * intensity >= 150
+        ? 'sim'
+        : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // U005, self-rated oral health: very good or good, against fair, poor
+    // or very poor.
+    column: 'saude_bucal',
+    fields: ['U005'],
+    read: code('U005', {
+      '1': 'boa',
+      '2': 'boa',
+      '3': 'nao',
+      '4': 'nao',
+      '5': 'nao',
+    }),
+    ordered: false,
+  },
+  {
+    // P06701, e-cigarette or heated tobacco: daily or less than daily
+    // against used it in the past or never.
+    column: 'cigarro_eletronico',
+    fields: ['P06701'],
+    read: code('P06701', { '1': 'usa', '2': 'usa', '3': 'nao', '4': 'nao' }),
     ordered: false,
   },
 ] as const satisfies ReadonlyArray<PnsVariable>

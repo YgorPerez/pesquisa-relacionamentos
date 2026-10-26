@@ -8,9 +8,10 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking) are crossed with each other
-//   on the PNS microdata: their joint share in the same sex and age bracket
-//   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
+// - The PNS ones (orientation, height, smoking, drinking…) are crossed with
+//   each other on the PNS microdata: their joint share in the same sex and
+//   age bracket (the PNS block, `pnsBlocks`) multiplies the cell, with its
+//   interval.
 // - The PNAD one (office occupation, #294) multiplies each cell by the
 //   probability in its sex, age group and education, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
@@ -63,6 +64,10 @@ export const REQUIREMENT_ORDER = [
   'home',
   'height',
   'smoking',
+  'drinking',
+  'exercise',
+  'teeth',
+  'vape',
   'office',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
@@ -86,6 +91,10 @@ export const REQUIREMENT_SOURCE: Readonly<
   home: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
+  drinking: 'PNS',
+  exercise: 'PNS',
+  teeth: 'PNS',
+  vape: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -193,6 +202,10 @@ export function activeRequirements({
     home: r.ownsHome,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    drinking: r.drinking.length > 0,
+    exercise: r.exercises,
+    teeth: r.goodTeeth,
+    vape: r.nonVaper,
     office: r.office,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
@@ -294,6 +307,16 @@ const PNS_FILTERS: {
     }
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
+  drinking: ({ requirements: { drinking } }) => ({
+    variable: 'bebida',
+    test: (value) => drinking.some((d) => d === value),
+  }),
+  exercise: () => ({ variable: 'exercicio', test: (value) => value === 'sim' }),
+  teeth: () => ({ variable: 'saude_bucal', test: (value) => value === 'boa' }),
+  vape: () => ({
+    variable: 'cigarro_eletronico',
+    test: (value) => value === 'nao',
+  }),
 }
 
 export interface PnsBlock {
@@ -771,6 +794,26 @@ function caveats(
       id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
+    },
+    has('drinking') && {
+      id: 'drinking',
+      strong: false,
+      text: 'A frequência com que bebe é autodeclarada na PNS 2019, e o consumo de álcool costuma ser subdeclarado: quem bebe toda semana aparece menos do que é.',
+    },
+    has('exercise') && {
+      id: 'exercise',
+      strong: false,
+      text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS; como faz o IBGE, um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) vale dois.',
+    },
+    has('teeth') && {
+      id: 'teeth',
+      strong: false,
+      text: 'A saúde bucal é a autoavaliação da PNS 2019 ("boa" ou "muito boa"), não um exame de dentista.',
+    },
+    has('vape') && {
+      id: 'vape',
+      strong: false,
+      text: 'O cigarro eletrônico vem da PNS 2019, quando menos de 1% dos adultos o usava. O uso cresceu depois, então o número tende a sair alto. Quem usava era tão pouco na amostra (poucas dezenas de registros por sexo e idade) que a parte descontada é imprecisa.',
     },
     has('office') && {
       id: 'office',
