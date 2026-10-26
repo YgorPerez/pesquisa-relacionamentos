@@ -35,6 +35,7 @@ const FILES: Record<keyof GroupFiles, string> = {
   ages: 'sidra-9514-idade.csv',
   municipalities: 'sidra-10185-municipios.csv',
   pns: 'pns-2019.csv',
+  pnad: 'pnad-2022.csv',
 }
 
 export interface BuiltData {

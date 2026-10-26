@@ -10,6 +10,8 @@
 //   population in the same sex × age group × union combination (SIDRA 10185).
 // - The PNS ones (orientation, height, smoking) multiply the cell by the
 //   probability in the same sex and age bracket, with its interval.
+// - The PNAD one (office occupation, #294) multiplies each cell by the
+//   probability in its sex, age group and education, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
 //
 // The caveat texts are interface text, in Portuguese.
@@ -55,13 +57,15 @@ export const REQUIREMENT_ORDER = [
   'home',
   'height',
   'smoking',
+  'office',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
 /** Where each requirement comes from. */
 export const REQUIREMENT_SOURCE: Readonly<
-  Record<RequirementId, 'Censo' | 'PNS'>
+  Record<RequirementId, 'Censo' | 'PNS' | 'PNAD'>
 > = {
+  office: 'PNAD',
   age: 'Censo',
   place: 'Censo',
   partner: 'Censo',
@@ -169,6 +173,7 @@ export function activeRequirements({
     home: r.ownsHome,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    office: r.office,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -222,6 +227,7 @@ const PNS_BRACKET = [
 
 /** [minimum, central, maximum]. */
 type Interval = readonly [number, number, number]
+const NO_CUT: Interval = [1, 1, 1]
 
 function pnsRow(
   data: PlaceData,
@@ -288,6 +294,29 @@ function height(
   ]
 }
 
+/** P(office occupation) in the cell's sex, Census age group and education
+ * (`EDUCATIONS` position + 1, 0 = no data). A cell without education, or
+ * with one the file left out for having few records, takes the row of every
+ * education together. The universe is everyone (`todos`); the file also has
+ * the employed only (`ocupados`), for when the count already asks for a job. */
+function office(
+  data: PlaceData,
+  sex: number,
+  ageGroup: number,
+  education: number,
+): Interval {
+  const key = (e: string) => `todos|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
+  const row =
+    (education > 0 ? data.pnad[key(EDUCATIONS[education - 1]!)] : undefined) ??
+    data.pnad[key('')]
+  if (!row)
+    throw new Error(
+      `the PNAD has no office occupation for ${SEXES[sex]} ${AGE_GROUPS[ageGroup]}`,
+    )
+  const [p, min, max] = row
+  return [min, p, max]
+}
+
 function unionSum(data: PlaceData): Float64Array {
   const sum = new Float64Array(UNION_CELLS)
   for (let i = 0; i < data.size; i++)
@@ -351,6 +380,19 @@ function tally(
     }
   }
 
+  // Office occupation also depends on the cell's education: one interval
+  // per sex × age group × education.
+  const E = EDUCATIONS.length + 1
+  let officeByCell: Interval[] | null = null
+  if (active.has('office')) {
+    officeByCell = []
+    for (const s of sexes)
+      for (let g = 0; g < G; g++)
+        if (factor[s * G + g]! > 0)
+          for (let e = 0; e < E; e++)
+            officeByCell[(s * G + g) * E + e] = office(ofPlace, s, g, e)
+  }
+
   let municipality: Float64Array | null = null
   if (active.has('place') && r.place?.municipality) {
     const m = ofPlace.municipalities.get(r.place.municipality)
@@ -412,9 +454,10 @@ function tally(
     if (f === 0) continue
     const w = d.weight[i]! * f
     const p = pns[sg]!
-    min += w * p[0]
-    central += w * p[1]
-    max += w * p[2]
+    const o = officeByCell?.[sg * E + d.education[i]!] ?? NO_CUT
+    min += w * p[0] * o[0]
+    central += w * p[1] * o[1]
+    max += w * p[2] * o[2]
     records += d.records[i]! * f
     noAnswerSum += w * noAnswer[sg]!
     weightSum += w
@@ -516,6 +559,11 @@ function caveats(
       id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
+    },
+    has('office') && {
+      id: 'office',
+      strong: false,
+      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

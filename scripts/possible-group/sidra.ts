@@ -17,21 +17,24 @@ export function sidraUrl(
   variable: number,
   places: string,
   classifications: ReadonlyArray<string>,
+  period = '2022',
 ): string {
-  return `${API}/${table}/periodos/2022/variaveis/${variable}?localidades=${places}&classificacao=${classifications.join('|')}`
+  return `${API}/${table}/periodos/${period}/variaveis/${variable}?localidades=${places}&classificacao=${classifications.join('|')}`
 }
 
-/** Runs one query and returns one value per place × category combination. */
+/** Runs one query and returns one value per place × category combination.
+ * `period` is the year, or year and quarter (`202203`) in a quarterly table. */
 export async function fetchSidra(
   table: number,
   variable: number,
   places: string,
   classifications: ReadonlyArray<string>,
+  period = '2022',
 ): Promise<SidraValue[]> {
-  const url = sidraUrl(table, variable, places, classifications)
+  const url = sidraUrl(table, variable, places, classifications, period)
   for (let attempt = 1; ; attempt++) {
     const response = await fetch(url)
-    if (response.ok) return readSidraResponse(await response.json())
+    if (response.ok) return readSidraResponse(await response.json(), period)
     if (attempt >= 4)
       throw new Error(`SIDRA ${table} answered ${response.status}: ${url}`)
     await new Promise((r) => setTimeout(r, 2000 * attempt))
@@ -51,7 +54,10 @@ interface SidraResponse {
 }
 
 /** "-" is zero in SIDRA; "X" (confidential) and "..." (not available) stop the pipeline. */
-export function readSidraResponse(json: unknown): SidraValue[] {
+export function readSidraResponse(
+  json: unknown,
+  period = '2022',
+): SidraValue[] {
   const [variable] = json as ReadonlyArray<SidraResponse>
   if (!variable) throw new Error('SIDRA response without a variable')
   const values: SidraValue[] = []
@@ -60,7 +66,7 @@ export function readSidraResponse(json: unknown): SidraValue[] {
       (c) => Object.keys(c.categoria)[0] ?? '',
     )
     for (const s of result.series) {
-      const text = s.serie['2022'] ?? ''
+      const text = s.serie[period] ?? ''
       const value = text === '-' ? 0 : Number(text)
       if (!Number.isFinite(value) || text === '')
         throw new Error(

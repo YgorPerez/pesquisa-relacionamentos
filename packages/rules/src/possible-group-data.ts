@@ -48,6 +48,11 @@ export const SINGLE_AGES = 86
  * `medida|sexo|faixa|categoria`. */
 export type Pns = Readonly<Record<string, readonly [number, number, number]>>
 
+/** A row of the PNAD CSV (office occupation, #294): [p, p_min, p_max], by
+ * the key `universo|sexo|idade|escolaridade`, with the Census age group and
+ * `escolaridade` empty for every education together. */
+export type Pnad = Readonly<Record<string, readonly [number, number, number]>>
+
 export interface Municipality {
   readonly code: string
   readonly name: string
@@ -81,6 +86,7 @@ export interface GroupBase {
   readonly ages: ReadonlyMap<string, AgesBySex>
   readonly municipalities: ReadonlyArray<Municipality>
   readonly pns: Pns
+  readonly pnad: Pnad
 }
 
 // --- cell code -------------------------------------------------------------
@@ -236,6 +242,16 @@ function readPns(text: string): Pns {
   )
 }
 
+function readPnad(text: string): Pnad {
+  const { rows } = csvLines(text)
+  return Object.fromEntries(
+    rows.map(([universe, sex, ageGroup, education, p, min, max]) => [
+      `${universe}|${sex}|${ageGroup}|${education}`,
+      [Number(p), Number(min), Number(max)] as const,
+    ]),
+  )
+}
+
 /** The files of `data/possible-group/`, as text. */
 export interface GroupFiles {
   /** `censo-2022.csv.gz`, already gunzipped */
@@ -246,6 +262,8 @@ export interface GroupFiles {
   readonly municipalities: string
   /** `pns-2019.csv` */
   readonly pns: string
+  /** `pnad-2022.csv` */
+  readonly pnad: string
 }
 
 export function readGroupBase(files: GroupFiles): GroupBase {
@@ -254,6 +272,7 @@ export function readGroupBase(files: GroupFiles): GroupBase {
     ages: readAges(files.ages),
     municipalities: readMunicipalities(files.municipalities),
     pns: readPns(files.pns),
+    pnad: readPnad(files.pnad),
   }
 }
 
@@ -277,6 +296,7 @@ export interface Pack {
   /** `[code, name, ...people]` of each municipality in the state. */
   readonly municipalities: ReadonlyArray<ReadonlyArray<string | number>>
   readonly pns: Pns
+  readonly pnad: Pnad
 }
 
 /** A place's pack: for Brazil, the states' cells summed. The weight is
@@ -307,6 +327,7 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
             .filter((m) => m.uf === place)
             .map((m) => [m.code, m.name, ...m.people]),
     pns: base.pns,
+    pnad: base.pnad,
   }
 }
 
@@ -321,6 +342,7 @@ export type PlaceData = { readonly [K in Dimension]: Uint8Array } & {
   readonly ages: AgesBySex
   readonly municipalities: ReadonlyMap<string, Municipality>
   readonly pns: Pns
+  readonly pnad: Pnad
 }
 
 /** A pack of the version this code reads. */
@@ -370,5 +392,6 @@ export function openPack(pack: unknown): PlaceData {
         : [],
     ),
     pns: pack.pns,
+    pnad: pack.pnad,
   }
 }
