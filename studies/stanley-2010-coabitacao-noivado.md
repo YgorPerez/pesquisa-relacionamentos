@@ -3,8 +3,8 @@ reference: "Stanley SM, Rhoades GK, Amato PR, Markman HJ, Johnson CA. *The Timin
 link: https://doi.org/10.1111/j.1741-3737.2010.00738.x
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Pesquisa telefônica com sorteio de números e controles estatísticos, mas de uma única região dos EUA, com histórico retrospectivo e sem separar seleção de causalidade."
+strength: weak
+strength_reason: "Amostra não representativa, concentrada em Oklahoma e com maioria feminina, apesar do sorteio de números de telefone e dos controles estatísticos; histórico retrospectivo sem separar seleção de causalidade."
 countries: [EUA]
 period: "Casamentos iniciados em 1990 ou depois; entrevista em 2001"
 sample:
