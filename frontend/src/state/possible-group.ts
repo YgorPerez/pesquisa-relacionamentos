@@ -11,7 +11,11 @@ import type {
   PlaceData,
   PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import {
+  estimateGroup,
+  needsDetail,
+  type Estimate,
+} from '@tem-estudo/rules/possible-group'
 import type { Profile } from '@tem-estudo/rules/profile'
 import {
   readRequirements,
@@ -100,8 +104,11 @@ export function useSharedEstimate(
 ): Estimate | null {
   const requirements = shared ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
-  const brazil = usePack('BR').data
-  const stateData = usePack(state).data
+  // The sensitive Requirements are all PNS: leaving them out never changes
+  // whether the count needs the detail packs.
+  const detail = needsDetail({ profile, requirements })
+  const brazil = usePack('BR', detail).data
+  const stateData = usePack(state, detail).data
   return useMemo(() => {
     if (!needed || !brazil || (state && !stateData)) return null
     try {
@@ -123,15 +130,18 @@ export function usePossibleGroup(
   const requirements = saved ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
   const needed: PackPlace[] = state ? ['BR', state] : ['BR']
-  const brazilPack = usePack('BR')
-  const statePack = usePack(state)
+  // Parents, work and home come only in the detail packs, downloaded when
+  // one of those Requirements is on.
+  const detail = needsDetail({ profile, requirements })
+  const brazilPack = usePack('BR', detail)
+  const statePack = usePack(state, detail)
 
   // Whoever never said anything sees the count done at build time, without
   // downloading anything.
   const isExample = profile === null && saved === null
 
   useEffect(() => {
-    if (!isExample) for (const place of needed) requestPack(place)
+    if (!isExample) for (const place of needed) requestPack(place, detail)
   })
 
   const brazil = brazilPack.data
@@ -163,7 +173,7 @@ export function usePossibleGroup(
     estimate,
     loading: !isExample && !computed,
     failed: brazilPack.failed || statePack.failed,
-    retry: () => needed.forEach((place) => requestPack(place, true)),
+    retry: () => needed.forEach((place) => requestPack(place, detail, true)),
     stateData,
   }
 }

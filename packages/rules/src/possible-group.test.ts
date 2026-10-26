@@ -5,7 +5,7 @@ import municipalities from '../fixtures/possible-group/sidra-10185-municipios.cs
 import pns from '../fixtures/possible-group/pns-2019.csv?raw'
 import pnad from '../fixtures/possible-group/pnad-2022.csv?raw'
 import { openPack, readGroupBase, packForPlace } from './possible-group-data.ts'
-import { estimateGroup, type CountData } from './possible-group.ts'
+import { estimateGroup, needsDetail, type CountData } from './possible-group.ts'
 import type { Profile } from './profile.ts'
 import {
   DEFAULT_REQUIREMENTS,
@@ -16,20 +16,62 @@ import {
 
 // The real path: CSV → JSON pack (what the browser downloads) → count.
 const base = readGroupBase({ census, ages, municipalities, pns, pnad })
-const pack = (place: 'BR' | 'AC' | 'AP') =>
-  openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
-const data = (uf?: 'AC' | 'AP'): CountData => ({
-  brazil: pack('BR'),
-  ...(uf && { state: pack(uf) }),
+const pack = (place: 'BR' | 'AC' | 'AP', detail = false) =>
+  openPack(JSON.parse(JSON.stringify(packForPlace(base, place, { detail }))))
+const data = (uf?: 'AC' | 'AP', detail = false): CountData => ({
+  brazil: pack('BR', detail),
+  ...(uf && { state: pack(uf, detail) }),
 })
 
+/** The count over the packs the browser would download for it: the detail
+ * ones when a Requirement needs them. */
 const count = (profile: Profile | null, change: Partial<Requirements>) => {
   const requirements = { ...DEFAULT_REQUIREMENTS, ...change }
+  const input = { profile, requirements }
   return estimateGroup(
-    { profile, requirements },
-    data(requirements.place?.state as 'AC' | undefined),
+    input,
+    data(requirements.place?.state as 'AC' | undefined, needsDetail(input)),
   )
 }
+
+describe('the default pack and the detail pack', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+
+  it('only "não mora com os pais", "trabalha" and "tem casa própria" need the detail pack', () => {
+    const needs = (change: Partial<Requirements>) =>
+      needsDetail({
+        profile: null,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...change },
+      })
+    expect(needs({})).toBe(false)
+    expect(needs({ ...ac, education: 'superior', nonSmoker: true })).toBe(false)
+    expect(needs({ notWithParents: true })).toBe(true)
+    expect(needs({ work: 'negocio' })).toBe(true)
+    expect(needs({ ownsHome: true })).toBe(true)
+  })
+
+  it('without those, both packs give the same count', () => {
+    const input = {
+      profile: { seeks: 'mulheres' } as const,
+      requirements: { ...DEFAULT_REQUIREMENTS, ...ac, education: 'medio' },
+    } as const
+    expect(estimateGroup(input, data('AC')).result).toEqual(
+      estimateGroup(input, data('AC', true)).result,
+    )
+  })
+
+  it('the default pack refuses to count a Requirement it summed out', () => {
+    expect(() =>
+      estimateGroup(
+        {
+          profile: null,
+          requirements: { ...DEFAULT_REQUIREMENTS, ownsHome: true },
+        },
+        data(),
+      ),
+    ).toThrow(/detail pack/)
+  })
+})
 
 describe('estimateGroup: Census requirements', () => {
   it('sums the weight of the matching cells and opens the range by the sampling error', () => {
@@ -101,6 +143,71 @@ describe('estimateGroup: Census requirements', () => {
     expect(r.caveats.find((x) => x.id === 'unstable')).toMatchObject({
       strong: true,
     })
+  })
+})
+
+describe('estimateGroup: "não mora com os pais"', () => {
+  const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+
+  it('removes whoever lives with the mother, the father or a step-parent, crossed with the other Census requirements', () => {
+    // Women 25 to 29 in Acre without a partner: 1,000 + 3,000, and the 3,000
+    // live with a parent.
+    const r = count({ seeks: 'mulheres' }, { ...ac, notWithParents: true })
+    expect(r.active).toContain('parents')
+    expect(r.result.central).toBeCloseTo(1000)
+    expect(r.caveats.map((c) => c.id)).toContain('parents')
+  })
+
+  it('is off by default and released by "soltar"', () => {
+    const on = { ...DEFAULT_REQUIREMENTS, notWithParents: true }
+    expect(DEFAULT_REQUIREMENTS.notWithParents).toBe(false)
+    expect(release(on, 'parents').notWithParents).toBe(false)
+  })
+})
+
+describe('estimateGroup: "trabalha" and "tem negócio próprio"', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+  const women = { seeks: 'mulheres' } as const
+
+  it('"trabalha" keeps whoever was employed, in their own business or not', () => {
+    // Without a partner: 1,000 employed, 3,000 not, 400 with a business.
+    const r = count(women, { ...ac, work: 'trabalha' })
+    expect(r.active).toContain('work')
+    expect(r.result.central).toBeCloseTo(1400)
+    expect(r.caveats.map((c) => c.id)).toContain('work')
+  })
+
+  it('"tem negócio próprio" keeps only employers and the self-employed', () => {
+    expect(count(women, { ...ac, work: 'negocio' }).result.central).toBeCloseTo(
+      400,
+    )
+  })
+
+  it('is any by default and released by "soltar"', () => {
+    expect(DEFAULT_REQUIREMENTS.work).toBeNull()
+    expect(
+      release({ ...DEFAULT_REQUIREMENTS, work: 'negocio' }, 'work').work,
+    ).toBeNull()
+  })
+})
+
+describe('estimateGroup: "tem casa própria"', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+
+  it('keeps only whoever heads an owned household or is the spouse, crossed with the other Census requirements', () => {
+    // Without a partner: 1,000 own, 3,000 do not, and the 400 live in a
+    // collective household (no data), so they are out.
+    const r = count({ seeks: 'mulheres' }, { ...ac, ownsHome: true })
+    expect(r.active).toContain('home')
+    expect(r.result.central).toBeCloseTo(1000)
+    expect(r.caveats.map((c) => c.id)).toContain('home')
+  })
+
+  it('is off by default and released by "soltar"', () => {
+    expect(DEFAULT_REQUIREMENTS.ownsHome).toBe(false)
+    expect(
+      release({ ...DEFAULT_REQUIREMENTS, ownsHome: true }, 'home').ownsHome,
+    ).toBe(false)
   })
 })
 
@@ -395,6 +502,25 @@ describe('estimateGroup: office occupation (PNAD)', () => {
       { age: { min: 25, max: 34 }, place: { state: 'AC' }, office: true },
     )
     expect(r.result.central).toBeCloseTo(1300 + 200)
+  })
+
+  it('with "trabalha" on, takes the chance among the employed, so the job is not counted twice', () => {
+    // Women 25 to 29 in Acre not in a union who work: the 1,000 college
+    // ones. Among the employed the file has only the all-educations row,
+    // 0.4; among everyone, college would give 0.7.
+    const r = count(
+      { seeks: 'mulheres' },
+      {
+        age: { min: 25, max: 29 },
+        place: { state: 'AC' },
+        office: true,
+        work: 'trabalha',
+      },
+    )
+    expect(r.result.central).toBeCloseTo(400)
+    expect(r.caveats.find((x) => x.id === 'office')?.text).toContain(
+      'entre quem trabalha',
+    )
   })
 
   it('says which occupations count and that it assumes the rest does not change them', () => {
