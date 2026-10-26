@@ -574,6 +574,32 @@ function CountCosts({
       </p>
     )
   return (
+    <>
+      {/* As the Pool Report does (https://datingpoolreport.com/methodology,
+       * #300): the "+…" of each row is measured with the others on, so two
+       * rows together are not their sum. One Requirement has nothing to sum. */}
+      {costs.length > 1 && (
+        <p className="m-0 mb-2 text-label leading-nota font-normal text-tinta-2">
+          Cada linha solta só aquele Requisito e deixa os outros ligados. Os
+          efeitos não se somam, então soltar dois não dá a soma das duas linhas.
+        </p>
+      )}
+      <CostRows costs={costs} value={value} onRelease={onRelease} />
+    </>
+  )
+}
+
+/** The rows of "O que mais pesa", each with its "soltar" button. */
+function CostRows({
+  costs,
+  value,
+  onRelease,
+}: {
+  costs: Estimate['costs']
+  value: (k: VisitorRequirement) => string
+  onRelease: (k: VisitorRequirement) => void
+}) {
+  return (
     <ul className="m-0 list-none p-0">
       {costs.map((c) => {
         const k = c.requirement as VisitorRequirement
