@@ -63,6 +63,11 @@ const POSITIONS = {
   P00404: [617, 3],
   P027: [662, 1],
   P02801: [663, 1],
+  P034: [673, 1],
+  P035: [674, 1],
+  P03701: [675, 2],
+  P03702: [677, 2],
+  P036: [679, 2],
   P050: [711, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
@@ -88,6 +93,10 @@ const ORIENTATIONS = [
   'nao-sabe',
   'recusou',
 ] as const
+
+/** P036, the vigorous ones: running, treadmill running, aerobics, football,
+ * basketball and tennis. */
+const VIGOROUS = new Set(['03', '04', '06', '12', '13', '15'])
 
 interface PnsVariable {
   readonly column: string
@@ -146,6 +155,31 @@ export const PNS_VARIABLES = [
       const days = field(line, 'P02801')
       if (days === '0') return 'raramente'
       return /^[1-7]$/.test(days) ? 'semanal' : null
+    },
+    ordered: false,
+  },
+  {
+    // 150 minutes a week or more, the WHO recommendation: P035 days a week
+    // times the usual duration (P03701 hours, P03702 minutes). Who did not
+    // exercise in the last 3 months (P034 = 2) or does it under once a week
+    // (P035 = 0) is not asked the rest. As in IBGE's leisure-time indicator,
+    // a minute of a vigorous main activity (P036) counts as two.
+    column: 'exercicio',
+    fields: ['P034', 'P035', 'P03701', 'P03702', 'P036'],
+    read: (line) => {
+      const exercised = field(line, 'P034')
+      if (exercised === '2') return 'nao'
+      if (exercised !== '1') return null
+      const days = field(line, 'P035')
+      if (days === '0') return 'nao'
+      const hours = Number(field(line, 'P03701'))
+      const minutes = Number(field(line, 'P03702'))
+      if (!/^[1-7]$/.test(days) || !(hours <= 24) || !(minutes <= 59))
+        return null
+      const intensity = VIGOROUS.has(field(line, 'P036')) ? 2 : 1
+      return Number(days) * (hours * 60 + minutes) * intensity >= 150
+        ? 'sim'
+        : 'nao'
     },
     ordered: false,
   },

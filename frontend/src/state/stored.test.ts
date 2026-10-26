@@ -93,6 +93,7 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       // The PNS lifestyle Requirements came after the move: an old save has
       // them off.
       drinking: [],
+      exercises: false,
     })
     expect(local.items.has('tem-estudo:grupo-possivel')).toBe(false)
   })

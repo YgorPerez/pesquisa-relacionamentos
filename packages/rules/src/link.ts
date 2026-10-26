@@ -117,6 +117,7 @@ const REQUIREMENT_KEYS_V1 = [
   'altura',
   'nao-fuma',
   'bebida',
+  'exercicio',
 ] as const
 
 function writeV1(state: LinkState): Array<readonly [string, string]> {
@@ -152,6 +153,7 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
   if (r.drinking.length > 0) pairs.push(['bebida', r.drinking.join(',')])
+  if (r.exercises) pairs.push(['exercicio', 'sim'])
   return pairs
 }
 
@@ -194,6 +196,7 @@ function readV1(
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
     drinking: list(q.get('bebida')),
+    exercises: q.get('exercicio') === 'sim',
   })
   return { calculator, profile, requirements }
 }
@@ -319,6 +322,7 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
     r.drinking.length > 0 && value('drinking'),
+    r.exercises && value('exercise'),
   ].filter((x): x is string => typeof x === 'string')
 }
 

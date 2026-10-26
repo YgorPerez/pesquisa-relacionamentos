@@ -452,6 +452,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         hint="Nenhuma marcada é qualquer uma."
       />
     ),
+    exercise: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem faz 150 min de exercício por semana"
+        checked={requirements.exercises}
+        onChange={(exercises) => change({ exercises })}
+      />
+    ),
   }
 
 /** The "A conta" block: the range, what weighs most, with the button to

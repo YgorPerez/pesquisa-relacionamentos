@@ -120,6 +120,8 @@ export interface Requirements {
   readonly nonSmoker: boolean
   /** None checked = any (#291). */
   readonly drinking: ReadonlyArray<Drinking>
+  /** 150 minutes of exercise a week or more (#292). */
+  readonly exercises: boolean
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -134,6 +136,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
   drinking: [],
+  exercises: false,
 }
 
 /** Who is sought, as the count says it. */
@@ -236,6 +239,7 @@ export const REQUIREMENTS = [
   'height',
   'smoking',
   'drinking',
+  'exercise',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -260,6 +264,7 @@ export function release(
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
     drinking: { drinking: [] },
+    exercise: { exercises: false },
   }
   return { ...requirements, ...released[requirement] }
 }
@@ -279,6 +284,7 @@ export const REQUIREMENT_TITLE: Readonly<
   height: 'Altura',
   smoking: 'Cigarro',
   drinking: 'Bebida',
+  exercise: 'Exercício',
 }
 
 export const EDUCATION_LABEL: Readonly<
@@ -391,6 +397,10 @@ export function requirementValue(
       return r.drinking.length
         ? `bebe ${orList(r.drinking.map((d) => DRINKING_LABEL[d]))}`
         : 'bebe ou não'
+    case 'exercise':
+      return r.exercises
+        ? 'faz 150 min de exercício por semana'
+        : 'faz exercício ou não'
   }
 }
 
@@ -416,5 +426,6 @@ export function readRequirements(value: unknown): Requirements {
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
     drinking: manyOf(DRINKINGS, raw.drinking),
+    exercises: raw.exercises === true,
   }
 }

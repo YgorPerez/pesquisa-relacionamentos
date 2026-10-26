@@ -8,8 +8,8 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking, drinking…) are crossed with each other
-//   on the PNS microdata: their joint share in the same sex and age bracket
+// - The PNS ones (orientation, height, smoking, drinking…) are crossed with
+//   each other on the PNS microdata: their joint share in the same sex and age bracket
 //   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
 //
@@ -57,6 +57,7 @@ export const REQUIREMENT_ORDER = [
   'height',
   'smoking',
   'drinking',
+  'exercise',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -76,6 +77,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   height: 'PNS',
   smoking: 'PNS',
   drinking: 'PNS',
+  exercise: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -177,6 +179,7 @@ export function activeRequirements({
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
     drinking: r.drinking.length > 0,
+    exercise: r.exercises,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -267,6 +270,7 @@ const PNS_FILTERS: {
     variable: 'bebida',
     test: (value) => drinking.some((d) => d === value),
   }),
+  exercise: () => ({ variable: 'exercicio', test: (value) => value === 'sim' }),
 }
 
 export interface PnsBlock {
@@ -587,7 +591,12 @@ function caveats(
     has('drinking') && {
       id: 'drinking',
       strong: false,
-      text: 'A bebida é autodeclarada na PNS 2019, e pesquisas assim costumam ter consumo de álcool subdeclarado: quem bebe toda semana tende a aparecer menos do que é.',
+      text: 'A frequência com que bebe é autodeclarada na PNS 2019, e o consumo de álcool costuma ser subdeclarado: quem bebe toda semana aparece menos do que é.',
+    },
+    has('exercise') && {
+      id: 'exercise',
+      strong: false,
+      text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS; como faz o IBGE, um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) vale dois.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

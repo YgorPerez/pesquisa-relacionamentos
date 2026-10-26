@@ -141,7 +141,8 @@ describe('estimateGroup: PNS requirements', () => {
   // straight smokers of 170 cm (200, 20), bi non-smoker (20, 2), gay smoker
   // (40, 4), "não sabe" non-smoker (30, 3) and "recusou" with no height or
   // smoking (10, 1). Drinking, in the same order: never, weekly, under once a
-  // week, under once a week, weekly, never, empty. Design effect 2. The interval literals are the Wilson
+  // week, under once a week, weekly, never, empty. Exercise (150 min a week):
+  // yes, no, yes, no, yes, yes, empty. Design effect 2. The interval literals are the Wilson
   // interval on records / 2, worked out by hand.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
@@ -233,6 +234,21 @@ describe('estimateGroup: PNS requirements', () => {
       { ...ac, drinking: ['nunca', 'raramente'], nonSmoker: true },
     )
     expect(crossed.result.central).toBeCloseTo((4000 * 550) / 990)
+  })
+
+  it('"faz exercício" counts who reaches 150 minutes a week, crossed with the other PNS Requirements', () => {
+    // 500 + 200 + 40 + 30 = 770 of 990. Never drinks too: 500 + 30 = 530.
+    const r = count({ seeks: 'mulheres' }, { ...ac, exercises: true })
+    expect(r.active).toContain('exercise')
+    expect(r.result.central).toBeCloseTo((4000 * 770) / 990)
+    expect(r.caveats.find((x) => x.id === 'exercise')?.text).toContain(
+      '150 minutos',
+    )
+    const crossed = count(
+      { seeks: 'mulheres' },
+      { ...ac, exercises: true, drinking: ['nunca'] },
+    )
+    expect(crossed.result.central).toBeCloseTo((4000 * 530) / 990)
   })
 
   it('a PNS block below 50 records is unstable and says so, even with a large Census cell', () => {
