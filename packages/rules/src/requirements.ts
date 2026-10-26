@@ -114,6 +114,15 @@ export interface Requirements {
   readonly noChildren: boolean
   readonly height: Range
   readonly nonSmoker: boolean
+  // The sensitive ones (`SENSITIVE_REQUIREMENTS`): health, sex life and
+  // religion, LGPD art. 5º, II.
+  /** BMI under 30, from the PNS self-reported weight and height. */
+  readonly notObese: boolean
+  /** PHQ-9 under 10, over the last 2 weeks. */
+  readonly noDepressionSymptoms: boolean
+  readonly bisexual: boolean
+  /** Goes to religious services once a week or more. */
+  readonly weeklyWorship: boolean
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -127,6 +136,65 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   noChildren: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
+  notObese: false,
+  noDepressionSymptoms: false,
+  bisexual: false,
+  weeklyWorship: false,
+}
+
+/**
+ * The Requirements that reveal sensitive data (LGPD art. 5º, II: health, sex
+ * life, religious conviction), each with its field. They stay in this
+ * device's localStorage like the others, but go in the shared link only after
+ * the visitor's specific, highlighted consent (art. 11, I;
+ * `reports/2026-10-18-lgpd-estado-link.md`), and never to the analytics.
+ */
+export const SENSITIVE_REQUIREMENTS = [
+  { id: 'obesity', field: 'notObese', label: 'IMC abaixo de 30' },
+  {
+    id: 'depression',
+    field: 'noDepressionSymptoms',
+    label: 'sem sintomas de depressão',
+  },
+  { id: 'bisexual', field: 'bisexual', label: 'bissexual' },
+  {
+    id: 'worship',
+    field: 'weeklyWorship',
+    label: 'vai à religião toda semana',
+  },
+] as const satisfies ReadonlyArray<{
+  id: string
+  field: keyof Requirements
+  label: string
+}>
+export type SensitiveRequirement = (typeof SENSITIVE_REQUIREMENTS)[number]['id']
+
+/** The sensitive Requirements that are on, in `SENSITIVE_REQUIREMENTS`
+ * order. */
+export const sensitiveOn = (r: Requirements): SensitiveRequirement[] =>
+  SENSITIVE_REQUIREMENTS.filter((s) => r[s.field]).map((s) => s.id)
+
+/** The Requirements with every sensitive one off. */
+export function withoutSensitive(r: Requirements): Requirements {
+  if (sensitiveOn(r).length === 0) return r
+  return {
+    ...r,
+    ...Object.fromEntries(SENSITIVE_REQUIREMENTS.map((s) => [s.field, false])),
+  }
+}
+
+/** How a sensitive Requirement reads in a sentence ("IMC abaixo de 30"). */
+export const sensitiveLabel = (id: SensitiveRequirement): string =>
+  SENSITIVE_REQUIREMENTS.find((s) => s.id === id)!.label
+
+/** "IMC abaixo de 30, bissexual e vai à religião toda semana". */
+export function sensitiveList(
+  ids: ReadonlyArray<SensitiveRequirement>,
+): string {
+  const labels = ids.map(sensitiveLabel)
+  return labels.length < 2
+    ? labels.join('')
+    : `${labels.slice(0, -1).join(', ')} e ${labels.at(-1)}`
 }
 
 /** Who is sought, as the count says it. */
@@ -395,5 +463,9 @@ export function readRequirements(value: unknown): Requirements {
     noChildren: raw.noChildren === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
+    notObese: raw.notObese === true,
+    noDepressionSymptoms: raw.noDepressionSymptoms === true,
+    bisexual: raw.bisexual === true,
+    weeklyWorship: raw.weeklyWorship === true,
   }
 }

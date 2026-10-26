@@ -27,6 +27,12 @@ import {
   DEFAULT_REQUIREMENTS,
   requirementValue,
   TARGET_NAME,
+  SENSITIVE_REQUIREMENTS,
+  sensitiveLabel,
+  sensitiveList,
+  sensitiveOn,
+  withoutSensitive,
+  type SensitiveRequirement,
   type Range,
   type Sought,
   type Requirements,
@@ -102,7 +108,19 @@ const list = (text: string | undefined): string[] =>
 //   Possible group: &idades=25-35&uf=SP&municipio=3550308&companheiro=nao
 //     &escolaridade=superior&renda=2-5&cor=preta,parda&religiao=catolica
 //     &sem-filhos=sim&altura=160-200&nao-fuma=sim (only what is off default)
+//     &nao-obeso=sim&sem-depressao=sim&bissexual=sim&culto=sim (the
+//     sensitive ones, only with consent: `sharedLink`)
 //   Priorities: only the profile's gender, &topo=renda,sexo,calma&desfecho=satisfacao
+
+/** Each sensitive Requirement's field and its query key. */
+const SENSITIVE_KEYS = [
+  ['notObese', 'nao-obeso'],
+  ['noDepressionSymptoms', 'sem-depressao'],
+  ['bisexual', 'bissexual'],
+  ['weeklyWorship', 'culto'],
+] as const satisfies ReadonlyArray<
+  readonly [(typeof SENSITIVE_REQUIREMENTS)[number]['field'], string]
+>
 
 const REQUIREMENT_KEYS_V1 = [
   'idades',
@@ -116,7 +134,8 @@ const REQUIREMENT_KEYS_V1 = [
   'sem-filhos',
   'altura',
   'nao-fuma',
-] as const
+  ...SENSITIVE_KEYS.map(([, key]) => key),
+]
 
 function writeV1(state: LinkState): Array<readonly [string, string]> {
   const pairs: Array<readonly [string, string]> = [['v', String(LINK_VERSION)]]
@@ -150,6 +169,8 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
+  for (const [field, key] of SENSITIVE_KEYS)
+    if (r[field]) pairs.push([key, 'sim'])
   return pairs
 }
 
@@ -191,6 +212,9 @@ function readV1(
     noChildren: q.get('sem-filhos') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
+    ...Object.fromEntries(
+      SENSITIVE_KEYS.map(([field, key]) => [field, q.get(key) === 'sim']),
+    ),
   })
   return { calculator, profile, requirements }
 }
@@ -254,6 +278,9 @@ export interface SentenceOptions {
   readonly municipality?: string
   /** The name of each priorities trait, by id. */
   readonly names?: Readonly<Record<string, string>>
+  /** The sensitive Requirements on but left out of the link (`sharedLink`),
+   * which the sentence names after what the link shows. */
+  readonly leftOut?: ReadonlyArray<SensitiveRequirement>
 }
 
 /** "Este link mostra: homem, 30, procura mulheres de 25 a 35, ensino superior,
@@ -293,9 +320,24 @@ export function linkSentence(
     parts.push(...otherRequirements(profile, r))
     if (r.place) parts.push(placeInSentence(r, options.municipality))
   }
-  if (parts.length === 0)
-    return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
-  return `Este link mostra: ${parts.join(', ')}.`
+  const shows =
+    parts.length === 0
+      ? 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
+      : `Este link mostra: ${parts.join(', ')}.`
+  return [shows, leftOutInSentence(options.leftOut ?? [])]
+    .filter(Boolean)
+    .join(' ')
+}
+
+/** "Ficaram de fora 2 Requisitos sensíveis: IMC abaixo de 30 e bissexual." */
+function leftOutInSentence(
+  leftOut: ReadonlyArray<SensitiveRequirement>,
+): string {
+  if (leftOut.length === 0) return ''
+  const names = sensitiveList(leftOut)
+  return leftOut.length === 1
+    ? `Ficou de fora 1 Requisito sensível: ${names}.`
+    : `Ficaram de fora ${leftOut.length} Requisitos sensíveis: ${names}.`
 }
 
 /** The requirements off default, except age and place, which the sentence
@@ -315,6 +357,7 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
       value('children'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
+    ...sensitiveOn(r).map(sensitiveLabel),
   ].filter((x): x is string => typeof x === 'string')
 }
 
@@ -398,6 +441,28 @@ export function prioritiesPreview(
 }
 
 // --- interface ----------------------------------------------------------------
+
+type GroupLinkState = Extract<LinkState, { calculator: 'grupo-possivel' }>
+
+/**
+ * The state "Copiar link" may carry. The sensitive Requirements (LGPD art.
+ * 5º, II) go only with `consent`, which the visitor gives in a highlighted
+ * box when sharing (art. 11, I); without it they come off, and `leftOut`
+ * names them for the sentence. Everything that reads the query (the preview,
+ * the share image) then shows only what went.
+ */
+export function sharedLink(
+  state: GroupLinkState,
+  consent: boolean,
+): { state: GroupLinkState; leftOut: SensitiveRequirement[] } {
+  const r = state.requirements
+  const on = r ? sensitiveOn(r) : []
+  if (!r || consent || on.length === 0) return { state, leftOut: [] }
+  return {
+    state: { ...state, requirements: withoutSensitive(r) },
+    leftOut: on,
+  }
+}
 
 /** The link's query, without the `?`: "v=1&genero=homem&…". */
 export const linkQuery = (state: LinkState): string => encode(writeV1(state))

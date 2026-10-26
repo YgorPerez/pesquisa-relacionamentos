@@ -24,6 +24,7 @@ import {
   STATES,
   TARGET_NAME,
   requirementValue,
+  sensitiveOn,
   type VisitorRequirement,
   type Requirements,
 } from '@tem-estudo/rules/requirements'
@@ -31,15 +32,16 @@ import {
   isLink,
   linkSentence,
   linkQuery,
-  type LinkState,
+  sharedLink,
 } from '@tem-estudo/rules/link'
-import { useId, useRef, type ReactNode } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import type { CalculatorGuide } from '#/content/guides'
 import { reads } from '#/content/reads'
 import { fetchGroupPreview, previewMeta } from '#/content/preview'
 import { useReceivedLink } from '#/state/link'
 import { Share } from '#/ui/share'
 import { COUNTING_NOTICE } from '#/ui/share.copy'
+import { SensitiveConsent } from '#/ui/share-consent'
 import {
   saveRequirements,
   PLACES_WITH_DATA,
@@ -127,11 +129,15 @@ function PossibleGroupPage() {
     : undefined
   const value: RequirementValue = (k) =>
     requirementValue(k, profile, r, municipality)
-  const link: LinkState = {
-    calculator: 'grupo-possivel',
-    profile,
-    requirements: saved,
-  }
+  const sensitive = sensitiveOn(r)
+  // The consent covers the sensitive Requirements on when it was given: a new
+  // one turned on afterwards asks again.
+  const [consentFor, setConsentFor] = useState<string | null>(null)
+  const consent = sensitive.length > 0 && consentFor === sensitive.join(',')
+  const shared = sharedLink(
+    { calculator: 'grupo-possivel', profile, requirements: saved },
+    consent,
+  )
 
   return (
     <Sheet>
@@ -153,9 +159,23 @@ function PossibleGroupPage() {
         />
 
         <Share
-          query={linkQuery(link)}
-          sentence={linkSentence(link, { municipality })}
+          query={linkQuery(shared.state)}
+          sentence={linkSentence(shared.state, {
+            municipality,
+            leftOut: shared.leftOut,
+          })}
           notice={COUNTING_NOTICE}
+          consent={
+            sensitive.length > 0 && (
+              <SensitiveConsent
+                sensitive={sensitive}
+                checked={consent}
+                onChange={(yes) =>
+                  setConsentFor(yes ? sensitive.join(',') : null)
+                }
+              />
+            )
+          }
         />
 
         {guide && <FromTheGuide guide={guide} />}
