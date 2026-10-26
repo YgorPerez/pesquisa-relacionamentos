@@ -2,7 +2,7 @@
 // link reveals and the notice that the site counts usage without keeping the
 // gender. The calculator passes the state's query; the Guide passes nothing,
 // and the link goes out without a query.
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { SiteButton } from './button'
 import { Headline, Section } from './section'
 import { Input } from '@/ui/shadcn/input'
@@ -17,7 +17,10 @@ export function Share({
   sentence,
   notice,
   untitled = false,
+  children,
 }: {
+  /** What else goes out with the link: the Possible group's image. */
+  children?: ReactNode
   /** Without the "Compartilhar" title: the Guide has the #7 section order,
    * and this is not one of them. */
   untitled?: boolean
@@ -60,6 +63,7 @@ export function Share({
         </p>
       )}
       <CopyOutcome copy={copy} />
+      {children}
     </Section>
   )
 }
