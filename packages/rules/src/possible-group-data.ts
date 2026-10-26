@@ -3,9 +3,11 @@
 // The Census CSV is 119 MB, but it is the whole of Brazil in 1.6 million
 // cells. The build cuts it into packs per place: Brazil's (the states
 // summed) and one per state, with its municipalities. Each place has a
-// default pack, with parents, work and home summed out (Brazil: 44 thousand
-// cells, 0.24 MB gzipped), and a detail pack with them (238 thousand cells,
-// 1.1 MB gzipped), downloaded only when one of those Requirements is on. The
+// default pack, with the Census parents, work and home and the PNS BMI,
+// depression symptoms and religious attendance summed out (Brazil: 44
+// thousand cells, 0.24 MB gzipped), and a detail pack with them (238
+// thousand cells, 1.1 MB gzipped), downloaded only when one of those
+// Requirements is on. The
 // browser downloads Brazil's and, if the visitor picks a state, that one too.
 // Each pack carries the SIDRA 9514 single ages; Brazil's also carries the PNS
 // cells, which are national and small (a few thousand).
@@ -526,8 +528,9 @@ const unpackPns = (pns: PackedPns): Pns => ({
 export interface Pack {
   readonly version: typeof PACK_VERSION
   readonly place: PackPlace
-  /** The cells carry the detail dimensions (parents, work, home); without
-   * them they are summed out. */
+  /** The cells carry the Census detail dimensions (parents, work, home) and
+   * the PNS the detail columns (`DETAIL_PNS_COLUMNS`); without `detail`
+   * both are summed out. */
   readonly detail: boolean
   readonly cells: ReadonlyArray<number>
   readonly weights: ReadonlyArray<number>

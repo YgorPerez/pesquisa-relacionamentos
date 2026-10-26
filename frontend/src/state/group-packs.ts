@@ -1,7 +1,8 @@
 // The Possible group packs by place, which the build writes
 // (`vite/possible-group.ts`) and the browser downloads. Each place has a
-// default pack and a detail one (with parents, work and home), which only
-// the counts that read those download. One request per pack, kept: going
+// default pack and a detail one (with parents, work, home, BMI, depression
+// symptoms and religious attendance), which only the counts that read those
+// download (`needsDetail`). One request per pack, kept: going
 // back to a state already downloaded does not request it again, and two
 // cards that ask for the same pack share the request. The count
 // (`possible-group.ts`) only reads from here.

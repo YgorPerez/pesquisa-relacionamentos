@@ -135,8 +135,9 @@ export function usePossibleGroup(
   const requirements = saved ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
   const needed: PackPlace[] = state ? ['BR', state] : ['BR']
-  // Parents, work and home come only in the detail packs, downloaded when
-  // one of those Requirements is on.
+  // Parents, work, home, BMI, depression symptoms and religious attendance
+  // come only in the detail packs, downloaded when one of those
+  // Requirements is on.
   const detail = needsDetail({ profile, requirements })
   const brazilPack = usePack('BR', detail)
   const statePack = usePack(state, detail)
