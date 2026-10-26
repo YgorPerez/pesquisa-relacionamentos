@@ -3,8 +3,8 @@ reference: "Spielmann SS, MacDonald G, Maxwell JA, Joel S, Peragine D, Muise A, 
 link: https://doi.org/10.1037/a0034628
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Sete estudos com amostras diferentes (universitários de Toronto, Craigslist, Mechanical Turk, um speed dating real) e um acompanhamento semanal de 1.242 pessoas, e a direção se repete; mas as amostras são de conveniência, os efeitos são pequenos e vários ficam no limite de p = 0,05, e o medo de ficar solteiro é medido, não sorteado."
+strength: weak
+strength_reason: "Sete estudos com amostras diferentes (universitários de Toronto, Craigslist, Mechanical Turk, um speed dating real) e a direção se repete, mas todas as amostras são de conveniência, a escala foi criada no próprio artigo, sem pré-registro, e os achados de comportamento são pequenos e frágeis: a interação do Estudo 3 (p = 0,07), a réplica do Estudo 6 (p = 0,06) e o speed dating com o apego ansioso controlado (p = 0,095) ficam acima de 0,05, e o medo de ficar solteiro é medido, não sorteado."
 countries: [Canadá, EUA]
 period: "não informado no texto lido"
 sample:
