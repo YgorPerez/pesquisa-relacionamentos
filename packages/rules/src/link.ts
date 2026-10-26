@@ -118,14 +118,7 @@ const list = (text: string | undefined): string[] =>
 //   Priorities: only the profile's gender, &topo=renda,sexo,calma&desfecho=satisfacao
 
 /** Each sensitive Requirement's field and its query key. */
-const SENSITIVE_KEYS = [
-  ['notObese', 'nao-obeso'],
-  ['noDepressionSymptoms', 'sem-depressao'],
-  ['bisexual', 'bissexual'],
-  ['weeklyWorship', 'culto'],
-] as const satisfies ReadonlyArray<
-  readonly [(typeof SENSITIVE_REQUIREMENTS)[number]['field'], string]
->
+const SENSITIVE_KEYS = SENSITIVE_REQUIREMENTS.map((s) => [s.field, s.key] as const)
 
 const REQUIREMENT_KEYS_V1 = [
   'idades',

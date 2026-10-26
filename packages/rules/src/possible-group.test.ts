@@ -84,6 +84,51 @@ describe('the default pack and the detail pack', () => {
     )
   })
 
+  // One change that turns each Requirement on. A new Requirement has to come
+  // in here, so the next test covers it.
+  const ON: Readonly<Record<VisitorRequirement, Partial<Requirements>>> = {
+    age: { age: { min: 25, max: 34 } },
+    place: { place: { state: 'AC' } },
+    partner: { noLiveInPartner: true },
+    education: { education: 'superior' },
+    income: { income: '2-5' },
+    color: { colors: ['branca'] },
+    religion: { religions: ['catolica'] },
+    children: { noChildren: true },
+    parents: { notWithParents: true },
+    work: { work: 'trabalha' },
+    home: { ownsHome: true },
+    height: { height: { min: 160, max: 170 } },
+    smoking: { nonSmoker: true },
+    drinking: { drinking: ['nunca'] },
+    exercise: { exercises: true },
+    teeth: { goodTeeth: true },
+    vape: { nonVaper: true },
+    office: { office: true },
+    obesity: { notObese: true },
+    depression: { noDepressionSymptoms: true },
+    bisexual: { bisexual: true },
+    worship: { weeklyWorship: true },
+  }
+
+  it.each(Object.entries(ON))(
+    'with only %s on, a count that does not ask for the detail pack gets the same number from the default one',
+    (_, change) => {
+      // The Census detail dimensions, the PNS detail columns and the
+      // Requirements that ask for them are three lists kept by hand: a
+      // Requirement that reads a summed-out column without asking for the
+      // detail pack counts wrong on the default one.
+      const input = {
+        profile: { gender: 'homem', seeks: 'mulheres' } as const,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...ac, ...change },
+      }
+      if (needsDetail(input)) return
+      expect(estimateGroup(input, data('AC')).result).toEqual(
+        estimateGroup(input, data('AC', true)).result,
+      )
+    },
+  )
+
   it('without those, both packs give the same count', () => {
     const input = {
       profile: { seeks: 'mulheres' } as const,

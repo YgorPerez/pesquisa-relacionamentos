@@ -186,21 +186,31 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
  * `reports/2026-10-18-lgpd-estado-link.md`), and never to the analytics.
  */
 export const SENSITIVE_REQUIREMENTS = [
-  { id: 'obesity', field: 'notObese', label: 'IMC abaixo de 30' },
+  {
+    id: 'obesity',
+    field: 'notObese',
+    key: 'nao-obeso',
+    label: 'IMC abaixo de 30',
+  },
   {
     id: 'depression',
     field: 'noDepressionSymptoms',
+    key: 'sem-depressao',
     label: 'sem sintomas de depressão',
   },
-  { id: 'bisexual', field: 'bisexual', label: 'bissexual' },
+  { id: 'bisexual', field: 'bisexual', key: 'bissexual', label: 'bissexual' },
   {
     id: 'worship',
     field: 'weeklyWorship',
+    key: 'culto',
     label: 'vai à religião toda semana',
   },
 ] as const satisfies ReadonlyArray<{
   id: string
   field: keyof Requirements
+  /** The link's query key (`link.ts`), which already circulates: never
+   * rename it. */
+  key: string
   label: string
 }>
 export type SensitiveRequirement = (typeof SENSITIVE_REQUIREMENTS)[number]['id']
