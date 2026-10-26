@@ -9,6 +9,7 @@ import {
   newCount,
   openPossibleGroup,
   range,
+  requirement,
 } from '#/platform/screens/possible-group'
 import { enterProfile } from '#/platform/screens/profile'
 
@@ -113,4 +114,36 @@ it('without a canvas, it says the image did not come out', async () => {
   await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
 
   expect(await screen.findByText('Não deu para gerar a imagem.')).toBeVisible()
+})
+
+it('a sensitive Requirement without consent stays out of the image, and so does its cut in the number', async () => {
+  const share = vi.fn<(data: ShareData) => Promise<void>>(async () => {})
+  Object.assign(navigator, { canShare: () => true, share })
+  const user = await countForAMan()
+  const first = range()
+  const withoutIt = first!.replace(/^(cerca de|entre) /, '')
+  await user.click(
+    requirement('bisexual').getByRole('checkbox', {
+      name: 'Só quem se declara bissexual',
+    }),
+  )
+  const withIt = (await newCount(first))!.replace(/^(cerca de|entre) /, '')
+  const imageText = async () => {
+    drawn = []
+    share.mockClear()
+    await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
+    await waitFor(() => expect(share).toHaveBeenCalledOnce())
+    return drawn.join(' ')
+  }
+
+  const before = await imageText()
+  expect(before).not.toMatch(/bissexual/)
+  expect(before).toContain(withoutIt.split(' e ')[0])
+
+  await user.click(
+    screen.getByRole('checkbox', { name: 'Incluir no link: bissexual' }),
+  )
+  const after = await imageText()
+  expect(after).toMatch(/bissexual/)
+  expect(after).toContain(withIt.split(' e ')[0])
 })

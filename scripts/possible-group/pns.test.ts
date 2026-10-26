@@ -22,6 +22,9 @@ const adult = (
     exercicio: 'sim',
     saude_bucal: 'boa',
     cigarro_eletronico: 'nao',
+    obesidade: 'nao',
+    depressao: 'nao',
+    culto: 'menos',
     ...values,
   },
 })
@@ -80,7 +83,11 @@ function line(fields: Record<string, [start: number, value: string]>) {
 }
 
 describe('readPnsRecord', () => {
-  const person = (height: string, smoking = '3') =>
+  const person = (
+    height: string,
+    smoking = '3',
+    extra: Record<string, [number, string]> = {},
+  ) =>
     line({
       V0024: [3, '1110011'],
       UPA_PNS: [10, '110000016'],
@@ -91,6 +98,7 @@ describe('readPnsRecord', () => {
       P050: [711, smoking],
       Y008: [1304, '1'],
       V00291: [1426, '00000123.45678'],
+      ...extra,
     })
 
   it('reads the selected adult with the answers as the CSV writes them', () => {
@@ -108,6 +116,9 @@ describe('readPnsRecord', () => {
         exercicio: null,
         saude_bucal: null,
         cigarro_eletronico: null,
+        obesidade: null,
+        depressao: null,
+        culto: null,
       },
     })
   })
@@ -117,6 +128,42 @@ describe('readPnsRecord', () => {
     assert.equal(readPnsRecord(person('213'))?.values.altura, '201')
     assert.equal(readPnsRecord(person('   ', ' '))?.values.altura, null)
     assert.equal(readPnsRecord(person('   ', ' '))?.values.fumo, null)
+  })
+
+  it('reads obesity as a BMI of 30 or more, from the self-reported weight and the height before the 140 to 200 cut', () => {
+    const bmi = (kg: string, cm: string) =>
+      readPnsRecord(person(cm, '3', { P00104: [607, kg] }))?.values.obesidade
+    // 90 kg at 1.70 m is 31.1; 86.6 kg is 29.97.
+    assert.equal(bmi('090.0', '170'), 'sim')
+    assert.equal(bmi('086.6', '170'), 'nao')
+    // 70 kg at 1.35 m is 38.4, though the height column keeps "below 140".
+    assert.equal(bmi('070.0', '135'), 'sim')
+    assert.equal(bmi('     ', '170'), null)
+    assert.equal(bmi('090.0', '999'), null)
+  })
+
+  it('scores the PHQ-9 from N010 to N018 and marks depression symptoms from 10 points on', () => {
+    // Each answer 1 to 4 ("nenhum dia" to "quase todos os dias") is 0 to 3.
+    const phq9 = (answers: string) =>
+      readPnsRecord(person('165', '3', { N010: [564, answers] }))?.values
+        .depressao
+    assert.equal(phq9('111111111'), 'nao')
+    assert.equal(phq9('222222211'), 'nao') // 7 points
+    assert.equal(phq9('222222222'), 'nao') // 9 points
+    assert.equal(phq9('322222222'), 'sim') // 10 points
+    assert.equal(phq9('444444444'), 'sim')
+    assert.equal(phq9('111191111'), null) // "ignorado"
+    assert.equal(phq9('         '), null)
+  })
+
+  it('reads religious attendance as weekly (once a week or more) or less', () => {
+    const attends = (answer: string) =>
+      readPnsRecord(person('165', '3', { M01901: [556, answer] }))?.values.culto
+    assert.equal(attends('1'), 'semanal')
+    assert.equal(attends('2'), 'semanal')
+    assert.equal(attends('3'), 'menos')
+    assert.equal(attends('6'), 'menos')
+    assert.equal(attends(' '), null)
   })
 })
 
@@ -210,8 +257,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,cigarro_eletronico,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nunca,sim,boa,nao,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,cigarro_eletronico,obesidade,depressao,culto,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nunca,sim,boa,nao,nao,nao,menos,3,1,1.000\n',
     )
   })
 })

@@ -50,6 +50,40 @@ describe('the default pack and the detail pack', () => {
     expect(needs({ ownsHome: true })).toBe(true)
   })
 
+  it('BMI, depression symptoms and religious attendance come only in the detail pack, which keeps the default Brazil pack small', () => {
+    const needs = (change: Partial<Requirements>) =>
+      needsDetail({
+        profile: null,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...change },
+      })
+    expect(needs({ notObese: true })).toBe(true)
+    expect(needs({ noDepressionSymptoms: true })).toBe(true)
+    expect(needs({ weeklyWorship: true })).toBe(true)
+    // Bisexual reads the orientation, which every pack has.
+    expect(needs({ bisexual: true })).toBe(false)
+    const plain = pack('BR').pns!
+    const full = pack('BR', true).pns!
+    expect(Object.keys(plain.variables)).not.toContain('obesidade')
+    expect(Object.keys(plain.variables)).not.toContain('depressao')
+    expect(Object.keys(plain.variables)).not.toContain('culto')
+    expect(Object.keys(full.variables)).toContain('obesidade')
+    const sum = (xs: ReadonlyArray<number>) => xs.reduce((s, x) => s + x, 0)
+    expect(sum(plain.weight)).toBe(sum(full.weight))
+    expect(sum(plain.records)).toBe(sum(full.records))
+    const input = {
+      profile: { gender: 'homem', seeks: 'mulheres' } as const,
+      requirements: {
+        ...DEFAULT_REQUIREMENTS,
+        ...ac,
+        nonSmoker: true,
+        bisexual: true,
+      },
+    } as const
+    expect(estimateGroup(input, data('AC')).result).toEqual(
+      estimateGroup(input, data('AC', true)).result,
+    )
+  })
+
   it('without those, both packs give the same count', () => {
     const input = {
       profile: { seeks: 'mulheres' } as const,
@@ -253,9 +287,81 @@ describe('estimateGroup: PNS requirements', () => {
   // yes, no, yes, no, yes, yes, empty. Oral health: good, good, not, good,
   // not, good, empty. E-cigarette: no, no, uses, no, uses, no, empty. Design
   // effect 2. The interval literals are the Wilson
-  // interval on records / 2, worked out by hand.
+  // interval on records / 2, worked out by hand. Only the straight
+  // non-smokers of 180 cm have a BMI of 30 or more; "recusou" has no BMI.
+  // Only the straight smokers have depression symptoms; "não sabe" and
+  // "recusou" have no PHQ-9. Weekly religion: straight of 160 and 170 cm and
+  // gay.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
+
+  it('"vai à religião toda semana" counts weekly attendance and, with a religion checked, says it assumes the same attendance in every religion', () => {
+    // Weekly: straight of 160 cm and 170 cm and gay, 740 of 990.
+    const r = count({ seeks: 'mulheres' }, { ...ac, weeklyWorship: true })
+    expect(r.active).toContain('worship')
+    expect(r.result.central).toBeCloseTo((4000 * 740) / 990)
+    const caveat = r.caveats.find((x) => x.id === 'worship')
+    expect(caveat?.text).toContain('não pergunta qual é a religião')
+    expect(caveat?.text).not.toContain('mesma em todas')
+    const withReligion = count(
+      { seeks: 'mulheres' },
+      { ...ac, weeklyWorship: true, religions: ['evangelica'] },
+    )
+    expect(withReligion.active).toEqual(
+      expect.arrayContaining(['religion', 'worship']),
+    )
+    expect(
+      withReligion.caveats.find((x) => x.id === 'worship')?.text,
+    ).toContain('mesma em todas as religiões')
+  })
+
+  it('"bissexual" counts who said bisexual among who answered, on top of the orientation from the Profile', () => {
+    // 20 of the 960 who answered; with the orientation (straight or bi),
+    // still the same 20.
+    const alone = count({ seeks: 'mulheres' }, { ...ac, bisexual: true })
+    expect(alone.active).toContain('bisexual')
+    expect(alone.result.central).toBeCloseTo((4000 * 20) / 960)
+    const withProfile = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { ...ac, bisexual: true },
+    )
+    expect(withProfile.result.central).toBeCloseTo((4000 * 20) / 960)
+    expect(withProfile.result.pnsRecords).toBe(2)
+    expect(withProfile.result.unstable).toBe(true)
+    expect(
+      withProfile.caveats.find((x) => x.id === 'bisexual')?.text,
+    ).toContain('estatística experimental')
+  })
+
+  it('"sem sintomas de depressão" counts who scored under 10 on the PHQ-9, and says it is the last 2 weeks', () => {
+    // 760 of the 960 with a PHQ-9.
+    const r = count(
+      { seeks: 'mulheres' },
+      { ...ac, noDepressionSymptoms: true },
+    )
+    expect(r.active).toContain('depression')
+    expect(r.result.central).toBeCloseTo((4000 * 760) / 960)
+    const caveat = r.caveats.find((x) => x.id === 'depression')
+    expect(caveat?.strong).toBe(false)
+    expect(caveat?.text).toContain('2 últimas semanas')
+    expect(caveat?.text).toContain('não é diagnóstico')
+  })
+
+  it('"IMC abaixo de 30" counts who answered with a BMI under 30, crossed with the other PNS Requirements', () => {
+    // 790 of the 990 with a BMI.
+    const r = count({ seeks: 'mulheres' }, { ...ac, notObese: true })
+    expect(r.active).toContain('obesity')
+    expect(r.result.central).toBeCloseTo((4000 * 790) / 990)
+    // Non-smoker too: 160 cm, bi and "não sabe", 550 of the 990.
+    const both = count(
+      { seeks: 'mulheres' },
+      { ...ac, notObese: true, nonSmoker: true },
+    )
+    expect(both.result.central).toBeCloseTo((4000 * 550) / 990)
+    expect(r.caveats.find((x) => x.id === 'obesity')?.text).toContain(
+      'autodeclarados',
+    )
+  })
 
   it('orientation comes from the profile: straight + bi of the sought sex, not counting who did not answer', () => {
     // 920 of the 960 who answered, on 96 records.

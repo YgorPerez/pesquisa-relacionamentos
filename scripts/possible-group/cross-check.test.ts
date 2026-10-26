@@ -90,6 +90,9 @@ describe('crossCheckPns', () => {
       exercicio: null,
       saude_bucal: null,
       cigarro_eletronico: null,
+      obesidade: null,
+      depressao: null,
+      culto: null,
     },
   })
   // 4 of 5 heterosexual (80%) and 1 homosexual (20%).

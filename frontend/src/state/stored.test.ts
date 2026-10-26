@@ -101,6 +101,11 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       goodTeeth: false,
       nonVaper: false,
       office: false,
+      // Born after the move to English: never under the old key.
+      notObese: false,
+      noDepressionSymptoms: false,
+      bisexual: false,
+      weeklyWorship: false,
     })
     expect(local.items.has('tem-estudo:grupo-possivel')).toBe(false)
   })

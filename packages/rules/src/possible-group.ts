@@ -8,7 +8,7 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking, drinking…) are crossed with
+// - The PNS ones (orientation, height, smoking, drinking, BMI…) are crossed with
 //   each other on the PNS microdata: their joint share in the same sex and
 //   age bracket (the PNS block, `pnsBlocks`) multiplies the cell, with its
 //   interval.
@@ -69,6 +69,10 @@ export const REQUIREMENT_ORDER = [
   'teeth',
   'vape',
   'office',
+  'obesity',
+  'depression',
+  'bisexual',
+  'worship',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -95,6 +99,10 @@ export const REQUIREMENT_SOURCE: Readonly<
   exercise: 'PNS',
   teeth: 'PNS',
   vape: 'PNS',
+  obesity: 'PNS',
+  depression: 'PNS',
+  bisexual: 'PNS',
+  worship: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -207,20 +215,28 @@ export function activeRequirements({
     teeth: r.goodTeeth,
     vape: r.nonVaper,
     office: r.office,
+    obesity: r.notObese,
+    depression: r.noDepressionSymptoms,
+    bisexual: r.bisexual,
+    worship: r.weeklyWorship,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
 
-/** The Requirements that read the detail dimensions, which only the detail
- * packs carry (`packForPlace`). */
+/** The Requirements that read what only the detail packs carry
+ * (`packForPlace`): the Census detail dimensions and the PNS columns in
+ * `DETAIL_PNS_COLUMNS`. */
 const DETAIL_REQUIREMENTS: ReadonlySet<RequirementId> = new Set<RequirementId>([
   'parents',
   'work',
   'home',
+  'obesity',
+  'depression',
+  'worship',
 ])
 
-/** The count needs the detail packs: a Requirement reads parents, work or
- * home. */
+/** The count needs the detail packs: a Requirement reads parents, work,
+ * home, BMI, depression symptoms or religious attendance. */
 export const needsDetail = (input: CountInput): boolean =>
   activeRequirements(input).some((k) => DETAIL_REQUIREMENTS.has(k))
 
@@ -316,6 +332,23 @@ const PNS_FILTERS: {
   vape: () => ({
     variable: 'cigarro_eletronico',
     test: (value) => value === 'nao',
+  }),
+  obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
+  depression: () => ({
+    variable: 'depressao',
+    test: (value) => value === 'nao',
+  }),
+  // Like the orientation, whoever did not know or refused is out.
+  bisexual: () => ({
+    variable: 'orientacao',
+    test: (value) =>
+      value === 'nao-sabe' || value === 'recusou'
+        ? null
+        : value === 'bissexual',
+  }),
+  worship: () => ({
+    variable: 'culto',
+    test: (value) => value === 'semanal',
   }),
 }
 
@@ -814,6 +847,29 @@ function caveats(
       id: 'vape',
       strong: false,
       text: 'O cigarro eletrônico vem da PNS 2019, quando menos de 1% dos adultos o usava. O uso cresceu depois, então o número tende a sair alto. Quem usava era tão pouco na amostra (poucas dezenas de registros por sexo e idade) que a parte descontada é imprecisa.',
+    },
+    has('obesity') && {
+      id: 'obesity',
+      strong: false,
+      text: 'O IMC sai do peso e da altura autodeclarados na PNS 2019. Quem informa o próprio peso costuma dizer menos do que pesa, então a pesquisa acha menos gente com IMC de 30 ou mais, e o grupo sai maior do que é.',
+    },
+    has('depression') && {
+      id: 'depression',
+      strong: false,
+      text: 'Os sintomas de depressão vêm do PHQ-9 da PNS 2019: nove perguntas sobre as 2 últimas semanas. Ele mostra como a pessoa estava naquele período, não um traço dela, e não é diagnóstico.',
+    },
+    has('bisexual') && {
+      id: 'bisexual',
+      strong: false,
+      text: 'A orientação vem da PNS 2019, uma estatística experimental do IBGE. Pouca gente se declara bissexual na amostra, então a conta se apoia em poucos registros e o número oscila muito.',
+    },
+    has('worship') && {
+      id: 'worship',
+      strong: false,
+      // #299: it may combine with the Census religion, with this caveat.
+      text: has('religion')
+        ? 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião. Com uma religião marcada, a conta supõe que a parcela que vai toda semana é a mesma em todas as religiões, o que a PNS não deixa conferir.'
+        : 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião: conta quem vai a cultos ou atividades da própria religião, ou de outra, pelo menos uma vez por semana.',
     },
     has('office') && {
       id: 'office',

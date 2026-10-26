@@ -90,6 +90,38 @@ export interface BrowserCount {
   readonly stateData: PlaceData | undefined
 }
 
+/**
+ * The count of what the shared link carries, when it differs from the one on
+ * the screen (`needed`): the sensitive Requirements left out for lack of
+ * consent. The share image says this number, not the screen's. `null` when
+ * not needed or while the data has not arrived; the packs are the ones the
+ * screen's count already asked for.
+ */
+export function useSharedEstimate(
+  profile: Profile | null,
+  shared: Requirements | null,
+  needed: boolean,
+): Estimate | null {
+  const requirements = shared ?? DEFAULT_REQUIREMENTS
+  const state = requirements.place?.state
+  // The sensitive Requirements are all PNS: leaving them out never changes
+  // whether the count needs the detail packs.
+  const detail = needsDetail({ profile, requirements })
+  const brazil = usePack('BR', detail).data
+  const stateData = usePack(state, detail).data
+  return useMemo(() => {
+    if (!needed || !brazil || (state && !stateData)) return null
+    try {
+      return estimateGroup(
+        { profile, requirements },
+        { brazil, ...(stateData && { state: stateData }) },
+      )
+    } catch {
+      return null
+    }
+  }, [needed, profile, requirements, brazil, state, stateData])
+}
+
 /** The count for the Profile and the Requirements, redone on each change. */
 export function usePossibleGroup(
   profile: Profile | null,

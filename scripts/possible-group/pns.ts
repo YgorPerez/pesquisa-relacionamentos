@@ -60,6 +60,17 @@ const POSITIONS = {
   C006: [108, 1],
   C008: [117, 3],
   M001: [527, 1],
+  M01901: [556, 1],
+  N010: [564, 1],
+  N011: [565, 1],
+  N012: [566, 1],
+  N013: [567, 1],
+  N014: [568, 1],
+  N015: [569, 1],
+  N016: [570, 1],
+  N017: [571, 1],
+  N018: [572, 1],
+  P00104: [607, 5],
   P00404: [617, 3],
   P027: [662, 1],
   P02801: [663, 1],
@@ -99,6 +110,19 @@ const ORIENTATIONS = [
 /** P036, the vigorous ones: running, treadmill running, aerobics, football,
  * basketball and tennis. */
 const VIGOROUS = new Set(['03', '04', '06', '12', '13', '15'])
+
+/** The nine PHQ-9 items, in the PNS order. */
+const PHQ9 = [
+  'N010',
+  'N011',
+  'N012',
+  'N013',
+  'N014',
+  'N015',
+  'N016',
+  'N017',
+  'N018',
+] as const satisfies ReadonlyArray<Field>
 
 interface PnsVariable {
   readonly column: string
@@ -207,17 +231,65 @@ export const PNS_VARIABLES = [
     read: code('P06701', { '1': 'usa', '2': 'usa', '3': 'nao', '4': 'nao' }),
     ordered: false,
   },
+  {
+    // BMI 30 or more (#295), from the final weight in kg ("070.5") and the
+    // height in cm, both self-reported. Only the yes/no goes, so the cells
+    // stay few.
+    column: 'obesidade',
+    fields: ['P00104', 'P00404'],
+    read: (line) => {
+      const kg = Number(field(line, 'P00104'))
+      const cm = Number(field(line, 'P00404'))
+      if (!(kg > 0 && cm > 0 && cm < 999)) return null
+      return kg / (cm / 100) ** 2 >= 30 ? 'sim' : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // Depression symptoms by the PHQ-9 (#296): N010 to N018 over the last 2
+    // weeks, each answer 1 to 4 worth 0 to 3, and 10 points or more is
+    // "sim". A 9 ("ignorado") or a blank leaves the person out.
+    column: 'depressao',
+    fields: PHQ9,
+    read: (line) => {
+      let score = 0
+      for (const item of PHQ9) {
+        const answer = Number(field(line, item))
+        if (!(answer >= 1 && answer <= 4)) return null
+        score += answer - 1
+      }
+      return score >= 10 ? 'sim' : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // Religious attendance in the last 12 months (#299): more than once or
+    // once a week is "semanal". The PNS does not ask which religion.
+    column: 'culto',
+    fields: ['M01901'],
+    read: code('M01901', {
+      '1': 'semanal',
+      '2': 'semanal',
+      '3': 'menos',
+      '4': 'menos',
+      '5': 'menos',
+      '6': 'menos',
+    }),
+    ordered: false,
+  },
 ] as const satisfies ReadonlyArray<PnsVariable>
 
 /** The dictionary variables the CSV comes from, for the `.meta.yaml`. */
 export const PNS_FIELDS: ReadonlyArray<Field> = [
-  'V0024',
-  'UPA_PNS',
-  'V00291',
-  'M001',
-  'C006',
-  'C008',
-  ...PNS_VARIABLES.flatMap((v) => v.fields),
+  ...new Set<Field>([
+    'V0024',
+    'UPA_PNS',
+    'V00291',
+    'M001',
+    'C006',
+    'C008',
+    ...PNS_VARIABLES.flatMap((v) => v.fields),
+  ]),
 ]
 
 const ageGroupOf = (age: number) =>

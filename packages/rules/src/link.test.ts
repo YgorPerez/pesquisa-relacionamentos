@@ -7,11 +7,13 @@ import {
   groupPreview,
   groupImage,
   linkQuery,
+  sharedLink,
   type LinkState,
 } from './link.ts'
 import { DEFAULT_REQUIREMENTS, type Requirements } from './requirements.ts'
 
 const ALL: Requirements = {
+  ...DEFAULT_REQUIREMENTS,
   age: { min: 25, max: 35 },
   place: { state: 'SP', municipality: '3550308' },
   noLiveInPartner: false,
@@ -39,6 +41,10 @@ const BEFORE_LIFESTYLE: Partial<Requirements> = {
   exercises: false,
   goodTeeth: false,
   nonVaper: false,
+  notObese: false,
+  noDepressionSymptoms: false,
+  bisexual: false,
+  weeklyWorship: false,
 }
 
 describe('round trip', () => {
@@ -436,5 +442,75 @@ describe('share image', () => {
 
   it('is null for a query that is not a link', () => {
     expect(groupImage('utm_source=zap', count)).toBeNull()
+  })
+})
+
+describe('sensitive Requirements (LGPD art. 11)', () => {
+  const profile = { gender: 'homem', seeks: 'mulheres', age: 30 } as const
+  const sensitive: Requirements = {
+    ...DEFAULT_REQUIREMENTS,
+    age: { min: 25, max: 35 },
+    notObese: true,
+    noDepressionSymptoms: true,
+    bisexual: true,
+    weeklyWorship: true,
+  }
+  const state: LinkState = {
+    calculator: 'grupo-possivel',
+    profile,
+    requirements: sensitive,
+  }
+
+  it('without consent, the link leaves them out and the sentence says which stayed out', () => {
+    const shared = sharedLink(state, false)
+    const query = linkQuery(shared.state)
+    expect(query).toBe(
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35',
+    )
+    expect(readLink('grupo-possivel', query)).toEqual({
+      ...state,
+      requirements: { ...DEFAULT_REQUIREMENTS, age: { min: 25, max: 35 } },
+    })
+    expect(shared.leftOut).toEqual([
+      'obesity',
+      'depression',
+      'bisexual',
+      'worship',
+    ])
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra: homem, 30, procura mulheres de 25 a 35. ' +
+        'Ficaram de fora 4 Requisitos sensíveis: IMC abaixo de 30, sem sintomas de depressão, bissexual e vai à religião toda semana.',
+    )
+  })
+
+  it('with consent, they go in the link, come back and enter the sentence', () => {
+    const shared = sharedLink(state, true)
+    const query = linkQuery(shared.state)
+    expect(query).toBe(
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&nao-obeso=sim&sem-depressao=sim&bissexual=sim&culto=sim',
+    )
+    expect(shared.leftOut).toEqual([])
+    expect(readLink('grupo-possivel', query)).toEqual(state)
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra: homem, 30, procura mulheres de 25 a 35, IMC abaixo de 30, sem sintomas de depressão, bissexual, vai à religião toda semana.',
+    )
+  })
+
+  it('with none of them on, there is nothing to leave out', () => {
+    const plain: LinkState = { ...state, requirements: ALL }
+    expect(sharedLink(plain, false)).toEqual({ state: plain, leftOut: [] })
+  })
+
+  it('a single one left out is said in the singular', () => {
+    const one: LinkState = {
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: { ...DEFAULT_REQUIREMENTS, bisexual: true },
+    }
+    const shared = sharedLink(one, false)
+    expect(linkQuery(shared.state)).toBe('v=1')
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra só a conta do Brasil inteiro, sem nada seu. Ficou de fora 1 Requisito sensível: bissexual.',
+    )
   })
 })

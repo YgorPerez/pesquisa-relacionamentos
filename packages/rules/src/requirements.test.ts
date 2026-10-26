@@ -36,6 +36,10 @@ describe('readRequirements', () => {
       goodTeeth: true,
       nonVaper: true,
       office: true,
+      notObese: true,
+      noDepressionSymptoms: true,
+      bisexual: true,
+      weeklyWorship: true,
     }
     expect(readRequirements(JSON.parse(JSON.stringify(r)))).toEqual(r)
   })
@@ -86,6 +90,31 @@ describe('requirementValue', () => {
     expect(requirementValue('height', null, r)).toBe('até 175 cm')
     expect(requirementValue('income', null, r)).toBe('qualquer renda')
   })
+
+  it.each([
+    ['obesity', { notObese: true }, 'IMC abaixo de 30', 'qualquer IMC'],
+    [
+      'depression',
+      { noDepressionSymptoms: true },
+      'sem sintomas de depressão',
+      'com ou sem sintomas',
+    ],
+    ['bisexual', { bisexual: true }, 'bissexual', 'bissexual ou não'],
+    [
+      'worship',
+      { weeklyWorship: true },
+      'vai à religião toda semana',
+      'vai ou não à religião',
+    ],
+  ] as const)(
+    'the sensitive "%s" reads as its label when on and as "any" when off',
+    (id, on, label, any) => {
+      expect(
+        requirementValue(id, null, { ...DEFAULT_REQUIREMENTS, ...on }),
+      ).toBe(label)
+      expect(requirementValue(id, null, DEFAULT_REQUIREMENTS)).toBe(any)
+    },
+  )
 
   it('"sem filhos" when seeking men says there is no data', () => {
     expect(
