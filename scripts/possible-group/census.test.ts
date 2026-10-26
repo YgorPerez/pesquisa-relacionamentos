@@ -4,10 +4,10 @@
 // hundred-odd change nothing).
 import assert from 'node:assert/strict'
 import { describe, it } from 'vite-plus/test'
-import { aggregatePeople, cellsToCsv } from './census.ts'
+import { aggregatePeople, cellsToCsv, readHouseholds } from './census.ts'
 
 const HEADER =
-  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110;P0300;P0310;P0950;P0990'
+  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110;P0300;P0310;P0950;P0990;P0100;P0170'
 
 // Woman in SP, 20–24, parda, not living with a partner (never has), no
 // children, evangelical, college degree, R$ 3,000 (between 2 and 5 minimum
@@ -34,6 +34,7 @@ describe('aggregatePeople', () => {
         filhos: 'nao',
         pais: 'nao',
         trabalho: 'nao',
+        casa: '',
         peso: 14.75,
         n_registros: 2,
       },
@@ -143,6 +144,52 @@ describe('aggregatePeople', () => {
     )
   })
 
+  it("owns a home when the household is the residents' own and the person heads it or is the head's spouse", async () => {
+    // `Domicilios_<UF>_publico.csv`: D0100 links to the person's P0100;
+    // D0190 1 owned and paid, 2 owned and paying, 3 rented, blank in a
+    // collective household.
+    const households = await readHouseholds([
+      'D0010;D0020;D0100;D0110;D0190',
+      '1;35;100;3.1;1',
+      '1;35;200;3.1;2',
+      '1;35;300;3.1;3',
+      '1;35;400;3.1;',
+    ])
+    // P0170 01 head, 02 and 03 spouse, 04 child, 20 alone in a collective
+    // household.
+    const person = (control: string, condition: string, weight: string) =>
+      `${WOMAN_SP};;;${control};${condition}`.replace('10.5', weight)
+    const { cells, withoutHousehold } = await aggregatePeople(
+      [
+        HEADER,
+        person('100', '01', '1'),
+        person('200', '03', '2'),
+        person('100', '04', '4'),
+        person('300', '01', '8'),
+        person('400', '20', '16'),
+      ],
+      households,
+    )
+    assert.deepEqual(
+      cells.map((c) => [c.casa, c.peso]),
+      [
+        ['', 16],
+        ['nao', 12],
+        ['sim', 3],
+      ],
+    )
+    assert.equal(withoutHousehold, 0)
+  })
+
+  it('counts the people whose household is missing from the households file', async () => {
+    const { cells, withoutHousehold } = await aggregatePeople(
+      [HEADER, `${WOMAN_SP};;;999;01`],
+      new Map(),
+    )
+    assert.equal(cells[0]?.casa, '')
+    assert.equal(withoutHousehold, 1)
+  })
+
   it('keeps people aged 15 or more and counts the discarded ones', async () => {
     const child = '1;35;3;1;03;1;3;;1;2;0;2;2'
     const suppressedSex = '1;35;7;9;99;1;3;;1;2;0;2;2'
@@ -193,9 +240,9 @@ describe('cellsToCsv', () => {
     assert.equal(
       cellsToCsv(cells),
       [
-        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,pais,trabalho,peso,n_registros',
-        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,nao,nao,6.20,1',
-        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,nao,nao,10.50,1',
+        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,pais,trabalho,casa,peso,n_registros',
+        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,nao,nao,,6.20,1',
+        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,nao,nao,,10.50,1',
         '',
       ].join('\n'),
     )

@@ -6,7 +6,7 @@
 // 3. Aggregates the Census and reads the PNS.
 // 4. Cross-checks both against the published numbers. If anything does not
 //    match, exits with an error before writing any file.
-// 5. Writes to `data/possible-group/` the Census CSV, the PNS probabilities
+// 5. Writes to `data/possible-group/` the Census CSV (gzipped), the PNS probabilities
 //    and the SIDRA tables for exact age and municipality (population from
 //    9514, marital status from 10185), each with its `.meta.yaml`.
 //
@@ -14,11 +14,13 @@
 // without downloading the microdata.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import { gzipSync } from 'node:zlib'
 import { download, FTP, RAW_DIR, zipEntries, zipLines } from './raw.ts'
 import {
   AGE_GROUPS,
   aggregatePeople,
   cellsToCsv,
+  readHouseholds,
   STATE_CODES,
 } from './census.ts'
 import {
@@ -357,10 +359,21 @@ function metaToYaml(meta: Meta): string {
   )
 }
 
-function write(name: string, content: string, meta: Meta) {
-  writeFileSync(join(OUTPUT, `${name}.csv`), content)
+/** `gzip` writes `<name>.csv.gz`: the Census CSV is over 100 MB as text,
+ * GitHub's limit for one file. */
+function write(
+  name: string,
+  content: string,
+  meta: Meta,
+  { gzip = false } = {},
+) {
+  const file = gzip ? `${name}.csv.gz` : `${name}.csv`
+  writeFileSync(
+    join(OUTPUT, file),
+    gzip ? gzipSync(content, { level: 9 }) : content,
+  )
   writeFileSync(join(OUTPUT, `${name}.meta.yaml`), metaToYaml(meta))
-  console.log(`wrote data/possible-group/${name}.csv`)
+  console.log(`wrote data/possible-group/${file}`)
 }
 
 // --- main ----------------------------------------------------------------
@@ -397,10 +410,25 @@ async function main() {
     .sort()
   if (files.length !== 27)
     throw new Error(`expected 27 people files in the zip, got ${files.length}`)
+  // Each state's households (D0190, for "casa própria") are read just before
+  // its people, so only one state's households are in memory at a time.
+  let households = new Map<string, string>()
   async function* allPeople() {
-    for (const file of files) yield* zipLines(censusZip, file)
+    for (const file of files) {
+      const state = /^Pessoas_(\d\d)_/.exec(file)![1]
+      households = await readHouseholds(
+        zipLines(censusZip, `Domicilios_${state}_publico.csv`),
+      )
+      yield* zipLines(censusZip, file)
+    }
   }
-  const aggregate = await aggregatePeople(allPeople())
+  const aggregate = await aggregatePeople(allPeople(), {
+    get: (control) => households.get(control),
+  })
+  if (aggregate.withoutHousehold > 0)
+    throw new Error(
+      `${aggregate.withoutHousehold} people records have no household in the households file`,
+    )
 
   console.log('reading the PNS')
   const records: PnsRecord[] = []
@@ -432,33 +460,45 @@ async function main() {
     publishedOn(PNS_URL),
   ])
 
-  write('censo-2022', cellsToCsv(aggregate.cells), {
-    fact_sheet: CENSUS_FACT_SHEET,
-    table: ['Microdados da amostra, acesso público, arquivo de pessoas'],
-    variables: [
-      'P0020',
-      'P0110',
-      'P0150',
-      'P0180',
-      'P0210',
-      'P0280',
-      'P0300',
-      'P0310',
-      'P0340',
-      'P0410',
-      'P0760',
-      'P0950',
-      'P0990',
-      'P1110',
-    ],
-    downloaded_on: fileDate(censusZip),
-    version: `Todas_as_UFs.zip publicado em ${censusVersion}`,
-    cross_check:
-      `Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: ` +
-      `maior diferença de ${pct(check.maxDifferenceBrazil)}% no Brasil (tolerância ${pct(BRAZIL_TOLERANCE)}%) ` +
-      `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
-      `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
-  })
+  write(
+    'censo-2022',
+    cellsToCsv(aggregate.cells),
+    {
+      fact_sheet: CENSUS_FACT_SHEET,
+      table: [
+        'Microdados da amostra, acesso público, arquivo de pessoas',
+        'Microdados da amostra, acesso público, arquivo de domicílios',
+      ],
+      variables: [
+        'D0100',
+        'D0190',
+        'P0020',
+        'P0100',
+        'P0110',
+        'P0150',
+        'P0170',
+        'P0180',
+        'P0210',
+        'P0280',
+        'P0300',
+        'P0310',
+        'P0340',
+        'P0410',
+        'P0760',
+        'P0950',
+        'P0990',
+        'P1110',
+      ],
+      downloaded_on: fileDate(censusZip),
+      version: `Todas_as_UFs.zip publicado em ${censusVersion}`,
+      cross_check:
+        `Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: ` +
+        `maior diferença de ${pct(check.maxDifferenceBrazil)}% no Brasil (tolerância ${pct(BRAZIL_TOLERANCE)}%) ` +
+        `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
+        `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
+    },
+    { gzip: true },
+  )
   write('pns-2019', pnsToCsv(estimatePns(records)), {
     fact_sheet: PNS_FACT_SHEET,
     table: ['Microdados da PNS 2019, morador selecionado de 18 anos ou mais'],

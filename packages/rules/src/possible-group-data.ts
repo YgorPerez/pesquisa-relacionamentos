@@ -1,8 +1,8 @@
 // The possible group data (#36) on its way to the browser.
 //
-// The Census CSV is 31 MB, but it is the whole of Brazil in 490 thousand
+// The Census CSV is 119 MB, but it is the whole of Brazil in 1.6 million
 // cells. The build cuts it into one pack per place: Brazil's (the states
-// summed, ~44 thousand cells) and one per state, with its municipalities. The
+// summed, ~240 thousand cells, 3.3 MB or 1.1 MB gzipped) and one per state, with its municipalities. The
 // browser downloads Brazil's and, if the visitor picks a state, that one too.
 // Each pack carries the SIDRA 9514 single ages and the PNS probabilities,
 // which are small.
@@ -115,6 +115,8 @@ const DIMENSIONS = [
     values: ['nao', 'sim', 'negocio'],
     optional: false,
   },
+  /** 0 = no data (collective household), 1 = does not own, 2 = owns. */
+  { key: 'home', column: 'casa', values: NO_YES, optional: true },
 ] as const
 type Dimension = (typeof DIMENSIONS)[number]['key']
 
@@ -236,7 +238,7 @@ function readPns(text: string): Pns {
 
 /** The files of `data/possible-group/`, as text. */
 export interface GroupFiles {
-  /** `censo-2022.csv` */
+  /** `censo-2022.csv.gz`, already gunzipped */
   readonly census: string
   /** `sidra-9514-idade.csv` */
   readonly ages: string

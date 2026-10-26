@@ -3,11 +3,12 @@
 // that the possible group pipeline generated (`pnpm data:possible-group`);
 // SIDRA 10185 publishes 747,507 for the same cell.
 import { readFileSync } from 'node:fs'
+import { gunzipSync } from 'node:zlib'
 
-const [header = '', ...lines] = readFileSync(
-  'data/possible-group/censo-2022.csv',
-  'utf8',
+const [header = '', ...lines] = gunzipSync(
+  readFileSync('data/possible-group/censo-2022.csv.gz'),
 )
+  .toString('utf8')
   .trim()
   .split('\n')
 const column = Object.fromEntries(header.split(',').map((name, i) => [name, i]))

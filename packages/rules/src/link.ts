@@ -116,6 +116,7 @@ const REQUIREMENT_KEYS_V1 = [
   'sem-filhos',
   'sem-pais',
   'trabalho',
+  'casa-propria',
   'altura',
   'nao-fuma',
 ] as const
@@ -151,6 +152,7 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.noChildren) pairs.push(['sem-filhos', 'sim'])
   if (r.notWithParents) pairs.push(['sem-pais', 'sim'])
   if (r.work) pairs.push(['trabalho', r.work])
+  if (r.ownsHome) pairs.push(['casa-propria', 'sim'])
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
@@ -195,6 +197,7 @@ function readV1(
     noChildren: q.get('sem-filhos') === 'sim',
     notWithParents: q.get('sem-pais') === 'sim',
     work: q.get('trabalho'),
+    ownsHome: q.get('casa-propria') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
   })
@@ -321,6 +324,7 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
       value('children'),
     r.notWithParents && value('parents'),
     r.work && value('work'),
+    r.ownsHome && value('home'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
   ].filter((x): x is string => typeof x === 'string')

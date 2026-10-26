@@ -122,6 +122,8 @@ export interface Requirements {
   readonly notWithParents: boolean
   /** `null` = works or not. */
   readonly work: Work | null
+  /** "Tem casa própria": heads an owned household or is the head's spouse. */
+  readonly ownsHome: boolean
   readonly height: Range
   readonly nonSmoker: boolean
 }
@@ -137,6 +139,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   noChildren: false,
   notWithParents: false,
   work: null,
+  ownsHome: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
 }
@@ -240,6 +243,7 @@ export const REQUIREMENTS = [
   'children',
   'parents',
   'work',
+  'home',
   'height',
   'smoking',
 ] as const
@@ -265,6 +269,7 @@ export function release(
     children: { noChildren: false },
     parents: { notWithParents: false },
     work: { work: null },
+    home: { ownsHome: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
   }
@@ -285,6 +290,7 @@ export const REQUIREMENT_TITLE: Readonly<
   children: 'Filhos',
   parents: 'Pais',
   work: 'Trabalho',
+  home: 'Casa',
   height: 'Altura',
   smoking: 'Cigarro',
 }
@@ -391,6 +397,8 @@ export function requirementValue(
         : 'mora ou não com os pais'
     case 'work':
       return r.work ? WORK_LABEL[r.work] : 'trabalha ou não'
+    case 'home':
+      return r.ownsHome ? 'tem casa própria' : 'com ou sem casa própria'
     case 'height': {
       const { min, max } = r.height
       if (min <= MIN_HEIGHT && max >= MAX_HEIGHT) return 'qualquer altura'
@@ -424,6 +432,7 @@ export function readRequirements(value: unknown): Requirements {
     noChildren: raw.noChildren === true,
     notWithParents: raw.notWithParents === true,
     work: oneOf(WORKS, raw.work) ?? null,
+    ownsHome: raw.ownsHome === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
   }

@@ -104,6 +104,7 @@ export const COLUMNS = [
   'filhos',
   'pais',
   'trabalho',
+  'casa',
 ] as const
 export type Column = (typeof COLUMNS)[number]
 
@@ -127,6 +128,8 @@ export interface Aggregate {
     readonly under15: Discard
     readonly sexOrAgeSuppressed: Discard
   }
+  /** Records (aged 15 or more) whose household the households file lacks. */
+  readonly withoutHousehold: number
 }
 
 const READ = [
@@ -144,6 +147,8 @@ const READ = [
   'P0310',
   'P0950',
   'P0990',
+  'P0100',
+  'P0170',
 ] as const
 
 /** P1110, income from all sources, in minimum-wage bands. */
@@ -179,12 +184,61 @@ function work(employed: string, position: string): string {
   return position === '07' || position === '08' ? 'negocio' : 'sim'
 }
 
+/** P0170 01 is the household head; 02 and 03 the head's spouse. */
+const HEAD_OR_SPOUSE = new Set(['01', '02', '03'])
+
+/** The household's D0190 (1 owned and paid, 2 owned and still paying, 3 to 7
+ * rented, lent or other; blank in a collective household) and the person's
+ * P0170. The home is "of some resident", so it counts as the person's only
+ * when they head the household or are the head's spouse: whoever lives in
+ * the parents' own house is "nao". */
+function ownsHome(tenure: string | undefined, condition: string): string {
+  if (!tenure) return ''
+  return (tenure === '1' || tenure === '2') && HEAD_OR_SPOUSE.has(condition)
+    ? 'sim'
+    : 'nao'
+}
+
+/**
+ * Reads the lines of one or more households files
+ * (`Domicilios_<UF>_publico.csv`, each with its header) into D0190 by the
+ * household's control number (D0100, the person's P0100).
+ */
+export async function readHouseholds(
+  lines: Iterable<string> | AsyncIterable<string>,
+): Promise<Map<string, string>> {
+  const tenure = new Map<string, string>()
+  let control = -1
+  let condition = -1
+  for await (const line of lines) {
+    if (line === '') continue
+    const fields = line.split(';')
+    if (/^[A-Z]/.test(line)) {
+      const names = fields.map((name) => name.trim())
+      control = names.indexOf('D0100')
+      condition = names.indexOf('D0190')
+      if (control < 0 || condition < 0)
+        throw new Error(
+          'D0100 or D0190 missing from the households file header',
+        )
+      continue
+    }
+    if (control < 0)
+      throw new Error('the households file must start with its header')
+    tenure.set(fields[control] ?? '', fields[condition] ?? '')
+  }
+  return tenure
+}
+
 /**
  * Aggregates the lines of one or more people files. Each file starts with
- * its header; the lines may come from a stream (`readline`).
+ * its header; the lines may come from a stream (`readline`). `households`
+ * gives each household's D0190 by its control number (`readHouseholds`); the
+ * pipeline swaps it state by state, so it only needs `get`.
  */
 export async function aggregatePeople(
   lines: Iterable<string> | AsyncIterable<string>,
+  households: Pick<ReadonlyMap<string, string>, 'get'> = new Map(),
 ): Promise<Aggregate> {
   const byKey = new Map<
     string,
@@ -193,6 +247,7 @@ export async function aggregatePeople(
   const totalWeight: Record<string, number> = {}
   const under15 = { records: 0, weight: 0 }
   const suppressed = { records: 0, weight: 0 }
+  let withoutHousehold = 0
   let index: Record<(typeof READ)[number], number> | null = null
 
   for await (const line of lines) {
@@ -234,6 +289,8 @@ export async function aggregatePeople(
       continue
     }
 
+    const tenure = households.get(field('P0100'))
+    if (tenure === undefined) withoutHousehold++
     const values = [
       sex,
       age,
@@ -246,6 +303,7 @@ export async function aggregatePeople(
       children(sex, field('P0340')),
       livesWithParents(field('P0300'), field('P0310')),
       work(field('P0950'), field('P0990')),
+      ownsHome(tenure, field('P0170')),
     ]
     const key = values.join('|')
     const cell = byKey.get(key)
@@ -269,6 +327,7 @@ export async function aggregatePeople(
     cells,
     totalWeight,
     discarded: { under15, sexOrAgeSuppressed: suppressed },
+    withoutHousehold,
   }
 }
 

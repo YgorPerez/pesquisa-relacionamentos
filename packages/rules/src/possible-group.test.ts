@@ -148,6 +148,26 @@ describe('estimateGroup: "trabalha" and "tem negócio próprio"', () => {
   })
 })
 
+describe('estimateGroup: "tem casa própria"', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+
+  it('keeps only whoever heads an owned household or is the spouse, crossed with the other Census requirements', () => {
+    // Without a partner: 1,000 own, 3,000 do not, and the 400 live in a
+    // collective household (no data), so they are out.
+    const r = count({ seeks: 'mulheres' }, { ...ac, ownsHome: true })
+    expect(r.active).toContain('home')
+    expect(r.result.central).toBeCloseTo(1000)
+    expect(r.caveats.map((c) => c.id)).toContain('home')
+  })
+
+  it('is off by default and released by "soltar"', () => {
+    expect(DEFAULT_REQUIREMENTS.ownsHome).toBe(false)
+    expect(
+      release({ ...DEFAULT_REQUIREMENTS, ownsHome: true }, 'home').ownsHome,
+    ).toBe(false)
+  })
+})
+
 describe('estimateGroup: "sem filhos"', () => {
   const ac = {
     age: { min: 25, max: 29 },

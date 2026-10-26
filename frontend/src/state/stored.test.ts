@@ -88,6 +88,10 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       colors: ['preta', 'parda'],
       religions: ['catolica'],
       noChildren: true,
+      // The Requirements that came after the move open at their defaults.
+      notWithParents: false,
+      work: null,
+      ownsHome: false,
       height: { min: 160, max: 190 },
       nonSmoker: true,
     })

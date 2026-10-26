@@ -28,6 +28,7 @@ describe('readRequirements', () => {
       noChildren: true,
       notWithParents: true,
       work: 'trabalha',
+      ownsHome: true,
       height: { min: 160, max: 200 },
       nonSmoker: true,
     }

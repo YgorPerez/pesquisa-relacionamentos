@@ -52,6 +52,7 @@ export const REQUIREMENT_ORDER = [
   'children',
   'parents',
   'work',
+  'home',
   'height',
   'smoking',
 ] as const
@@ -72,6 +73,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   children: 'Censo',
   parents: 'Censo',
   work: 'Censo',
+  home: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
 }
@@ -164,6 +166,7 @@ export function activeRequirements({
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     parents: r.notWithParents,
     work: r.work !== null,
+    home: r.ownsHome,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
   }
@@ -380,6 +383,7 @@ function tally(
   const notWithParents = active.has('parents')
   // The `work` column: 1 employed, 2 in their own business.
   const work = !active.has('work') ? 0 : r.work === 'negocio' ? 2 : 1
+  const ownsHome = active.has('home')
   const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
@@ -400,6 +404,7 @@ function tally(
     if (noChildren && d.children[i] === 2) continue
     if (notWithParents && d.parents[i] !== 1) continue
     if (d.work[i]! < work) continue
+    if (ownsHome && d.home[i] !== 2) continue
     const sg = s * G + d.ageGroup[i]!
     let f = factor[sg]!
     if (municipality)
@@ -480,6 +485,11 @@ function caveats(
         requirements.work === 'negocio'
           ? '"Tem negócio próprio" junta empregadores e quem trabalha por conta própria, na última semana de julho de 2022. O Censo não diz se é em tempo integral.'
           : '"Trabalha" é quem tinha trabalho na última semana de julho de 2022, com ou sem carteira e em negócio próprio ou não. O Censo não diz se é em tempo integral.',
+    },
+    has('home') && {
+      id: 'home',
+      strong: false,
+      text: 'O Censo pergunta se a casa é de algum morador, não de quem. A conta só dá a casa como da pessoa quando ela é a responsável pelo domicílio ou o cônjuge: quem mora na casa própria dos pais não entra.',
     },
     has('orientation') && {
       id: 'orientation',

@@ -1,4 +1,5 @@
-// The Possible group data in the browser (#31). The Census CSV is 31 MB:
+// The Possible group data in the browser (#31). The Census CSV is 119 MB
+// (kept gzipped in the repository, under GitHub's 100 MB per file):
 // instead of it, the build writes one JSON pack per place (Brazil and each
 // state, the latter with its municipalities), and the page downloads only
 // what the count needs. The count runs in the browser, so the Requirements
@@ -13,6 +14,7 @@
 import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { gunzipSync } from 'node:zlib'
 import {
   openPack,
   readGroupBase,
@@ -29,7 +31,7 @@ const RESOLVED = `\0${ID}`
 const PATH = '/dados/grupo-possivel'
 
 const FILES: Record<keyof GroupFiles, string> = {
-  census: 'censo-2022.csv',
+  census: 'censo-2022.csv.gz',
   ages: 'sidra-9514-idade.csv',
   municipalities: 'sidra-10185-municipios.csv',
   pns: 'pns-2019.csv',
@@ -44,11 +46,12 @@ export interface BuiltData {
 
 /** Reads `data/possible-group/` and builds the packs. */
 export function buildPacks(folder: string): BuiltData {
+  const read = (name: string) => {
+    const file = readFileSync(resolve(folder, name))
+    return (name.endsWith('.gz') ? gunzipSync(file) : file).toString('utf8')
+  }
   const texts = Object.fromEntries(
-    Object.entries(FILES).map(([key, name]) => [
-      key,
-      readFileSync(resolve(folder, name), 'utf8'),
-    ]),
+    Object.entries(FILES).map(([key, name]) => [key, read(name)]),
   ) as unknown as GroupFiles
   const base = readGroupBase(texts)
   const places: PackPlace[] = [

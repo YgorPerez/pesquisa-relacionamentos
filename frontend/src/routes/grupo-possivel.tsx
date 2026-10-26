@@ -422,6 +422,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         hint="Na última semana de julho de 2022. Negócio próprio é ser empregador ou trabalhar por conta própria."
       />
     ),
+    home: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem tem casa própria"
+        checked={requirements.ownsHome}
+        onChange={(ownsHome) => change({ ownsHome })}
+      />
+    ),
     height: ({ requirements: { height }, change }) => (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Stepper
