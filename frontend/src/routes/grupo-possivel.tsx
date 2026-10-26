@@ -19,6 +19,8 @@ import {
   EDUCATION_LABEL,
   RELIGION_LABEL,
   INCOME_LABEL,
+  WORKS,
+  WORK_LABEL,
   release,
   REQUIREMENT_TITLE,
   STATES,
@@ -407,6 +409,31 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         disabled={childrenData === 'no-data'}
         description={childrenData === 'applies' ? undefined : childrenReasonId}
         onChange={(noChildren) => change({ noChildren })}
+      />
+    ),
+    parents: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não mora com os pais"
+        checked={requirements.notWithParents}
+        onChange={(notWithParents) => change({ notWithParents })}
+      />
+    ),
+    work: ({ requirements, change }) => (
+      <Options
+        legend="Situação de trabalho"
+        type="radio"
+        values={[ANY, ...WORKS]}
+        labels={{ [ANY]: ANY, ...WORK_LABEL }}
+        checked={[requirements.work ?? ANY]}
+        onChange={(v) => change({ work: v === ANY ? null : v })}
+        hint="Na última semana de julho de 2022. Negócio próprio é ser empregador ou trabalhar por conta própria."
+      />
+    ),
+    home: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem tem casa própria"
+        checked={requirements.ownsHome}
+        onChange={(ownsHome) => change({ ownsHome })}
       />
     ),
     height: ({ requirements: { height }, change }) => (

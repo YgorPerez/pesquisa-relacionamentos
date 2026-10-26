@@ -40,7 +40,7 @@ O questionário da amostra do Censo 2022, por pessoa: sexo, idade, UF, estado co
 | Sexo | Biológico, atribuído ao nascer | Dicionário de Variáveis, P0150 (p. 22 do PDF) | "Sexo biológico do morador (atribuído ao nascer)." | |
 | População residente, Brasil | 203.080.756 | SIDRA 9514 pela API de agregados: variável 93, Brasil, sexo, idade e forma de declaração totais | "2022":"203080756" | |
 | Mulheres de 25 a 29 anos em SP que não viviam em união, no SIDRA | 747.507 | SIDRA 10185 pela API de agregados: variável 140, São Paulo (N3 35), Não viviam em união, Mulheres, 25 a 29 anos, cor ou raça total | "2022":"747507" | |
-| A mesma célula, somando os pesos do microdado público | 746.284 | `dados/grupo-possivel/censo-2022.csv`, gerado do arquivo de pessoas | "P0110 – Peso Amostral (acesso público)" | `scripts/calculations/ibge-2022-censo-amostra.ts` |
+| A mesma célula, somando os pesos do microdado público | 746.284 | `data/possible-group/censo-2022.csv.gz`, gerado do arquivo de pessoas | "P0110 – Peso Amostral (acesso público)" | `scripts/calculations/ibge-2022-censo-amostra.ts` |
 | Homens de 25 a 29 anos no Brasil, no SIDRA | 7.593.659 | SIDRA 10185 pela API de agregados: variável 140, Brasil, estado conjugal Total, Homens, 25 a 29 anos, cor ou raça total | "2022":"7593659" | |
 | Homens de 25 a 29 anos no Brasil que não viviam em união, no SIDRA | 3.939.138 | SIDRA 10185, a mesma consulta: Não viviam em união, Homens | "2022":"3939138" | |
 | Mulheres de 25 a 29 anos no Brasil, no SIDRA | 7.804.840 | SIDRA 10185, a mesma consulta: estado conjugal Total, Mulheres | "2022":"7804840" | |
@@ -63,5 +63,5 @@ Fonte local: `sources/ibge-2022-censo-amostra.txt`, com o texto das páginas cit
 
 ## Como usamos
 
-- Dados do Grupo possível: `dados/grupo-possivel/censo-2022.csv` e as tabelas do SIDRA 9514 ao lado, gerados por `scripts/possible-group/pipeline.ts`.
+- Dados do Grupo possível: `data/possible-group/censo-2022.csv.gz` e as tabelas do SIDRA 9514 ao lado, gerados por `scripts/possible-group/pipeline.ts`.
 - [Relatório 2026-10-18 sobre os dados do Grupo possível](../reports/2026-10-18-dados-grupo-possivel.md).
