@@ -4,7 +4,7 @@ O revisor é outra sessão, nunca a que escreveu o PR. Ele faz o merge sozinho d
 
 1. **Pegar o PR.** `gh pr checkout <pr>` e `gh pr view <pr> --comments`. O PR fecha uma issue `acervo` e mexe só em `studies/`, `reports/`, `sources/`, `scripts/calculations/` e no índice gerado do `README.md`. Um PR que toca Guia ou Dica volta ao autor.
 
-2. **Fonte local.** A Fonte de cada Ficha nova ou refeita está em `sources/<slug>.*` ou em `sources/private/<slug>.*`. A privada vem do repo privado: `git -C sources/private pull` (sem a pasta, `node scripts/prepare-worktree.ts` a clona). Se ela não está lá, peça ao autor o push; o check `Fichas` já reclama. Em `sources/`, confirme na página do editor que a licença é aberta e que o campo `license` a registra; sem licença aberta, o arquivo vai para `sources/private/`.
+2. **Fonte local.** A Fonte de cada Ficha nova ou refeita está em `sources/<slug>.*` ou em `sources/private/<slug>.*`. A privada vem do repo privado: `git -C sources/private pull` (sem a pasta, `node scripts/prepare-worktree.ts` a clona). Se ela não está lá, peça ao autor o push; o check `Fichas` já reclama. Em `sources/`, confirme na página do editor que a licença é aberta e que o campo `license` a registra; sem licença aberta, o arquivo vai para `sources/private/`. A Fonte veio da editora, de um autor, do repositório da instituição ou de um servidor de preprints; a cópia republicada por um terceiro barra o merge, mesmo de um site que o `pnpm build` ainda não conhece.
 
 3. **Conferência.** Leia cada script de `scripts/calculations/` do PR antes de rodar, porque o `pnpm verify` executa esses scripts. Depois rode `pnpm verify studies/<slug>.md` para cada Ficha, mais `pnpm build` e `pnpm test`. Qualquer saída diferente de 0 bloqueia o merge: `gh pr review <pr> --request-changes` com a saída colada.
 
@@ -14,7 +14,7 @@ O revisor é outra sessão, nunca a que escreveu o PR. Ele faz o merge sozinho d
 
 6. **Sentido.** O script confere o número, não o que ele quer dizer. Abra a Fonte local no Onde de cada linha e veja se a Medida descreve o que o Trecho mede, com a mesma população e o mesmo período. `countries`, `period`, `sample` e `covers` batem com os métodos.
 
-7. **Guias.** Num PR de Guia, toda frase factual da prosa cita uma Ficha e diz o que a Ficha diz: "maioria" quando a Ficha diz 39% barra o merge.
+7. **Guias e Relatórios.** Num PR de Guia, toda frase factual da prosa cita uma Ficha e diz o que a Ficha diz: "maioria" quando a Ficha diz 39% barra o merge. O mesmo vale para o Relatório que cita o estudo de uma Ficha nova: link da Ficha, e país, amostra e números como a Ficha os dá.
 
 8. **Linha ética.** Evidência, nunca tática para pressionar, enganar ou explorar alguém. Qualquer dúvida aqui: sem merge, comente o que levantou a dúvida e `gh pr edit <pr> --add-label ready-for-human`.
 

@@ -56,4 +56,4 @@ covers:
 
 ## Como usamos
 
-<Quais relatórios e pesquisas citam este estudo e para afirmar o quê.>
+<Opcional. O que usa esta Ficha (Relatório, Dica, dado do Grupo possível) e para afirmar o quê.>
