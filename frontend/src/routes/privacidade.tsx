@@ -50,6 +50,11 @@ function OnTheDevice() {
         no uso normal: a conta do Grupo possível também roda no seu aparelho.
       </p>
       <p>
+        Até onde você leu cada Guia também fica só no navegador. É com isso que
+        a página inicial mostra “Continuar lendo” e marca como lido o Guia que
+        você terminou. O × de cada item apaga a leitura daquele Guia.
+      </p>
+      <p>
         Para apagar, limpe os dados deste site nas configurações do navegador.
         Outra pessoa que use o mesmo navegador vê o que ficou salvo.
       </p>
@@ -116,9 +121,10 @@ function InTheCount() {
       <p>
         Ela conta também a resposta do “Ajudou?”, qual Ficha foi aberta a partir
         de qual Guia e se uma calculadora foi usada, uma vez por visita e sem os
-        valores. Nunca recebe o seu gênero, quem você procura, a sua idade nem
-        se você preencheu o Perfil. Região, navegador e sistema ficam
-        desligados.
+        valores. Quando você toca num Guia em “Continuar lendo”, conta qual Guia
+        foi, mas não onde você tinha parado. Nunca recebe o seu gênero, quem
+        você procura, a sua idade nem se você preencheu o Perfil. Região,
+        navegador e sistema ficam desligados.
       </p>
       <p>
         O GoatCounter não liga as páginas de uma mesma visita: cada página

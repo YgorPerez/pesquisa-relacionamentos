@@ -32,6 +32,7 @@ import { ProfileBox } from '#/ui/profile'
 import { PrioritiesCard } from '#/ui/priorities'
 import { PossibleGroupCard } from '#/ui/possible-group'
 import { QuestionRow } from '#/ui/question-row'
+import { ReadingProgress } from '#/ui/reading-progress'
 import { Headline, Section } from '#/ui/section'
 import { Share } from '#/ui/share'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
@@ -40,7 +41,7 @@ import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 // "Em resumo", the Profile, the opening and the Chapters (each Question
 // answered where it fits, anchored by its slug), "O que levar", "O que não
 // se sabe", one list of Fact sheets, one "Ajudou?" and the Questions of other
-// Topics.
+// Topics. The reading bar sits on top of all that (#195).
 export const Route = createFileRoute('/$tema/')({
   // The `loaderData` carries only what the `head` uses; the Guide goes
   // through the `queryClient`.
@@ -99,6 +100,7 @@ function GuidePage() {
 
   return (
     <Sheet>
+      <ReadingProgress topic={guide.topic} chapters={guide.chapters} />
       <Column>
         <BackToGuide />
         <Display>{guide.title}</Display>

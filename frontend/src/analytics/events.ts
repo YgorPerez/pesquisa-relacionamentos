@@ -27,6 +27,7 @@ export type AnalyticsEvent =
   | `helped/no/${NoReason}/${string}`
   | `fact-sheet/${string}/${string}`
   | `calculator/${string}`
+  | `continue-reading/${string}`
 
 // Since #194 (2026-10-26) the Guide has one "Ajudou?" and its key is the
 // Topic's slug (`helped/yes/onde-conhecer-pessoas`); the per-Question series
@@ -45,4 +46,8 @@ export const EVENTS = {
   /** The calculator was used; counts once per visit. */
   calculator: (calculator: CountedCalculator): AnalyticsEvent =>
     `calculator/${CALCULATOR_EVENT[calculator]}`,
+  /** "Continuar lendo" on the home page: the Guide only, never where the
+   * reader stopped (#195). */
+  continueReading: (guide: string): AnalyticsEvent =>
+    `continue-reading/${guide}`,
 } as const

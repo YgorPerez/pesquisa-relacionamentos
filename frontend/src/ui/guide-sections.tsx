@@ -15,6 +15,7 @@ import type {
 } from '#/content/guide-view'
 import { useProfile } from '#/state/profile'
 import { useProfileInGuide } from '#/state/profile-in-guide'
+import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
 import { Headline, Panel, Section } from './section'
 import { AppliesToNote, ForYourProfile } from './profile'
@@ -49,15 +50,61 @@ export function SourcesArrow() {
 }
 
 /** A Chapter's number in the hand-drawn ring, the same in the table of
- * contents and before the Chapter's title. */
-function ChapterNumber({ n }: { n: number }) {
+ * contents and before the Chapter's title. `current` fills it with ink: the
+ * Chapter the reader is in, in the reading bar's list. */
+function ChapterNumber({
+  n,
+  current = false,
+}: {
+  n: number
+  current?: boolean
+}) {
   return (
     <span
-      className="inline-grid size-7.5 flex-none place-items-center rounded-bolota border-(length:--traco-controle) border-tinta font-label text-nota leading-none font-bold"
+      className={cn(
+        'inline-grid size-7.5 flex-none place-items-center rounded-bolota border-(length:--traco-controle) border-tinta font-label text-nota leading-none font-bold',
+        current && 'bg-tinta text-papel',
+      )}
       aria-hidden="true"
     >
       {n}
     </span>
+  )
+}
+
+/** The Chapters' links, each with its number: under the title and in the
+ * reading bar (`reading-progress.tsx`), where `current` marks the Chapter
+ * being read and `onPick` closes the list. */
+export function ChapterLinks({
+  chapters,
+  current,
+  onPick,
+}: {
+  chapters: ReadonlyArray<Pick<ChapterView, 'id' | 'title'>>
+  current?: number
+  onPick?: () => void
+}) {
+  return (
+    <ol className="m-0 list-none p-0" data-slot="capitulos">
+      {chapters.map((chapter, i) => (
+        <li
+          key={chapter.id}
+          className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta last:border-b-(length:--traco-etiqueta)"
+        >
+          <a
+            href={`#${chapter.id}`}
+            aria-current={i === current ? 'location' : undefined}
+            onClick={onPick}
+            className="flex min-h-toque items-center gap-sm py-1.5 font-bold no-underline hover:bg-amarelo-voce"
+          >
+            <ChapterNumber n={i + 1} current={i === current} />
+            <span className="underline decoration-2 underline-offset-5">
+              {chapter.title}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
   )
 }
 
@@ -73,24 +120,7 @@ export function GuideContents({
       <h2 id="t-capitulos" className="sr-only">
         Capítulos
       </h2>
-      <ol className="m-0 list-none p-0" data-slot="capitulos">
-        {chapters.map((chapter, i) => (
-          <li
-            key={chapter.id}
-            className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta last:border-b-(length:--traco-etiqueta)"
-          >
-            <a
-              href={`#${chapter.id}`}
-              className="flex min-h-toque items-center gap-sm py-1.5 font-bold no-underline hover:bg-amarelo-voce"
-            >
-              <ChapterNumber n={i + 1} />
-              <span className="underline decoration-2 underline-offset-5">
-                {chapter.title}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ol>
+      <ChapterLinks chapters={chapters} />
     </nav>
   )
 }

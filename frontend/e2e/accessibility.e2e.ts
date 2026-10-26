@@ -61,8 +61,17 @@ const lines = (results: Result, prefix = '') =>
  * it. So the contrast runs again with the background images removed, and
  * then no text may stay unmeasured. `overlays` disappear at the same time: a
  * drawing over the text, like the circled Fact sheet's loop, also leaves the
- * contrast unmeasured. */
+ * contrast unmeasured.
+ *
+ * The Guide's reading bar (#195) is sticky: whatever the scroll leaves under
+ * it, axe calls obscured (a link too small to tap, a text it cannot
+ * measure), and that changes with where the scroll stopped, not with the
+ * code. It leaves the page before the check, and has its own
+ * (`the reading bar, open, passes axe`). */
 async function violations(page: Page, overlays?: string): Promise<string[]> {
+  await page.addStyleTag({
+    content: '[data-slot="leitura"] { display: none !important; }',
+  })
   const { violations } = await new AxeBuilder({ page })
     .withTags(RULES)
     // An open Base UI list (the `Select`) puts `FocusGuard`s around it:
@@ -106,7 +115,8 @@ test('the Guide with the sections open and the circled Fact sheet passes axe', a
   await page.goto('/onde-conhecer-pessoas', { waitUntil: 'networkidle' })
   for (const summary of await page
     .locator(
-      'main details:not([open]) > summary, main [data-slot="collapsible-trigger"]:not([data-panel-open])',
+      // The reading bar's Chapter list is not a section of the page.
+      'main details:not([open]) > summary, main [data-slot="collapsible-trigger"]:not([data-panel-open]):not([data-slot="leitura"] *)',
     )
     .all())
     await summary.click()
@@ -132,6 +142,30 @@ test('the "Ajudou?" with the reasons for the no passes axe', async ({
     .click()
   await expect(page.getByRole('group', { name: 'O que faltou?' })).toBeVisible()
   expect(await violations(page)).toEqual([])
+})
+
+test('the reading bar, open, passes axe', async ({ page }) => {
+  await page.goto('/onde-conhecer-pessoas', { waitUntil: 'networkidle' })
+  const bar = page.locator('[data-slot="leitura"]')
+  await bar.waitFor({ state: 'attached' })
+  await page.evaluate(() => {
+    const chapter = document.getElementById('o-lugar-quase-nao-muda-a-relacao')!
+    window.scrollTo({
+      top: chapter.getBoundingClientRect().top + scrollY,
+      behavior: 'instant',
+    })
+  })
+  // A little back up, so the line shows on the phone too.
+  await page.evaluate(() => window.scrollBy({ top: -60, behavior: 'instant' }))
+  const trigger = bar.getByRole('button')
+  await expect(trigger).toHaveAccessibleName(/^Capítulo 2 de 2/)
+  await trigger.press('Enter')
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true')
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(RULES)
+    .include('[data-slot="leitura"]')
+    .analyze()
+  expect(lines(violations)).toEqual([])
 })
 
 test('the Possible group with the list of states open passes axe', async ({

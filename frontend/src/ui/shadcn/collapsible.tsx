@@ -6,17 +6,21 @@ import { cn } from '@/platform/cn'
 // (Priorities, "Antes: o parceiro explica pouco"); the `solid` one opens with
 // the thick rule and the title in `title` (the Possible group count). What
 // came from shadcn's `base-nova` had no drawing; the one here is the site's.
+// The `bar` one has no rule of its own: it is the Guide's reading bar, whose
+// rule is the progress line under it (`reading-progress.tsx`).
 
-type Variant = 'dotted' | 'solid'
+type Variant = 'dotted' | 'solid' | 'bar'
 
 const ROOT: Record<Variant, string> = {
   dotted: 'border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta',
   solid: 'border-t-2 border-tinta',
+  bar: '',
 }
 
 const TITLE: Record<Variant, string> = {
   dotted: 'min-h-12 gap-2.5 py-2 font-bold',
   solid: 'min-h-toque py-0 font-title text-grande font-bold',
+  bar: 'min-h-toque gap-2 py-0 font-label text-label',
 }
 
 function Collapsible({
