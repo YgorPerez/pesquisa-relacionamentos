@@ -9,7 +9,8 @@
 // in Portuguese (ADR 0039). The opt-out of being counted (#35) never goes
 // here.
 import { readProfile, type ProfileGender, type Profile } from './profile.ts'
-import { formatRange } from './numbers.ts'
+import { andList } from './lists.ts'
+import { formatRange, rangeParts } from './numbers.ts'
 import {
   top3Alert,
   readPriorities,
@@ -57,6 +58,9 @@ export type LinkState =
       readonly gender: ProfileGender | null
       readonly priorities: PrioritiesState
     }
+
+/** A Possible group link's state. */
+type GroupLink = Extract<LinkState, { calculator: 'grupo-possivel' }>
 
 /** The version `linkQuery` writes. */
 export const LINK_VERSION = 1
@@ -276,11 +280,6 @@ const EDUCATION_IN_SENTENCE: Readonly<
   superior: 'ensino superior',
 }
 
-const asList = (items: ReadonlyArray<string>): string =>
-  items.length < 2
-    ? (items[0] ?? '')
-    : `${items.slice(0, -1).join(', ')} e ${items.at(-1)}`
-
 /** "de 25 a 35", "de 40 anos ou mais"; empty if the range is any age. */
 function agesInSentence(age: Range | null): string {
   if (!age || (age.min <= MIN_SOUGHT_AGE && age.max >= MAX_SOUGHT_AGE))
@@ -321,7 +320,7 @@ export function linkSentence(
     const names = top3.map((id) => (options.names?.[id] ?? id).toLowerCase())
     parts.push(
       names.length
-        ? `topo 3 ${asList(names)}`
+        ? `topo 3 ${andList(names)}`
         : 'nenhuma característica escolhida',
     )
     return `Este link mostra: ${parts.join(', ')}, em ${OUTCOME_NAME[outcome].toLowerCase()}.`
@@ -424,8 +423,6 @@ export interface PreviewCount {
   readonly result: { readonly min: number; readonly max: number }
 }
 
-type GroupLink = Extract<LinkState, { calculator: 'grupo-possivel' }>
-
 /** What the preview and the share image say about the group, without the
  * sharer's gender or age: "mulheres de 25 a 35 em SP" and the other
  * Requirements. */
@@ -460,7 +457,7 @@ export function groupPreview(
     article: true,
   })
   const description = [
-    `Pela conta do Grupo possível, com ${asList(surveys)}.`,
+    `Pela conta do Grupo possível, com ${andList(surveys)}.`,
     others.length > 0 && `Também pediu: ${others.join(', ')}.`,
     'Faça a sua conta.',
   ]
@@ -481,7 +478,7 @@ export function prioritiesPreview(
   )
   if (names.length === 0) return null
   return {
-    title: `Topo 3: ${asList(names)}`,
+    title: `Topo 3: ${andList(names)}`,
     description:
       top3Alert(traits, top3, outcome) ??
       `Para ${OUTCOME_NAME[outcome].toLowerCase()}, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".`,
@@ -517,21 +514,18 @@ export function groupImage(
   const state = readLink('grupo-possivel', query)
   if (state?.calculator !== 'grupo-possivel') return null
   const { who, others } = soughtGroup(state, count.target, options.municipality)
-  const range = formatRange(count.result.min, count.result.max)
-  const about = range.startsWith('cerca de ')
+  const { before, numbers } = rangeParts(count.result.min, count.result.max)
   return {
-    before: about ? 'Cerca de' : 'Entre',
-    numbers: range.replace(/^(cerca de|entre) /, ''),
+    before: before === 'cerca de' ? 'Cerca de' : 'Entre',
+    numbers,
     unstable: count.result.unstable,
     who,
     also: others,
-    sources: asList(surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS)),
+    sources: andList(surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS)),
   }
 }
 
 // --- interface ----------------------------------------------------------------
-
-type GroupLinkState = Extract<LinkState, { calculator: 'grupo-possivel' }>
 
 /**
  * The state "Copiar link" may carry. The sensitive Requirements (LGPD art.
@@ -541,9 +535,9 @@ type GroupLinkState = Extract<LinkState, { calculator: 'grupo-possivel' }>
  * the share image) then shows only what went.
  */
 export function sharedLink(
-  state: GroupLinkState,
+  state: GroupLink,
   consent: boolean,
-): { state: GroupLinkState; leftOut: SensitiveRequirement[] } {
+): { state: GroupLink; leftOut: SensitiveRequirement[] } {
   const r = state.requirements
   const on = r ? sensitiveOn(r) : []
   if (!r || consent || on.length === 0) return { state, leftOut: [] }

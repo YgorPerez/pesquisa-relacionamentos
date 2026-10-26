@@ -36,13 +36,24 @@ export function formatAmount(x: number): string {
   return write(round2(x))
 }
 
-/** "entre 160 mil e 200 mil": the range always contains the count's interval. */
-export function formatRange(min: number, max: number): string {
+/** The range in its two parts: "entre" + "160 mil e 200 mil", or "cerca
+ * de" + "1,2 mil" when both ends round to the same number. The range always
+ * contains the count's interval. */
+export function rangeParts(
+  min: number,
+  max: number,
+): { before: 'entre' | 'cerca de'; numbers: string } {
   const from = round2(Math.max(0, min), 'down')
   const to = round2(Math.max(0, max), 'up')
   return from === to
-    ? `cerca de ${write(from)}`
-    : `entre ${write(from)} e ${write(to)}`
+    ? { before: 'cerca de', numbers: write(from) }
+    : { before: 'entre', numbers: `${write(from)} e ${write(to)}` }
+}
+
+/** "entre 160 mil e 200 mil". */
+export function formatRange(min: number, max: number): string {
+  const { before, numbers } = rangeParts(min, max)
+  return `${before} ${numbers}`
 }
 
 /** "×3,4", "×13". */

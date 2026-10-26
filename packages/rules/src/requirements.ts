@@ -3,6 +3,7 @@
 // (#32) reads and the link (#34) carries. Everything here serializes to JSON.
 // The values of the closed lists (education, income, color, religion) are the
 // link's, so they stay in Portuguese (ADR 0039).
+import { andList, orList } from './lists.ts'
 import type { Profile } from './profile.ts'
 
 /** The 27 states (UFs), with the IBGE code (the first two digits of a
@@ -223,14 +224,9 @@ export const sensitiveLabel = (id: SensitiveRequirement): string =>
   SENSITIVE_REQUIREMENTS.find((s) => s.id === id)!.label
 
 /** "IMC abaixo de 30, bissexual e vai à religião toda semana". */
-export function sensitiveList(
+export const sensitiveList = (
   ids: ReadonlyArray<SensitiveRequirement>,
-): string {
-  const labels = ids.map(sensitiveLabel)
-  return labels.length < 2
-    ? labels.join('')
-    : `${labels.slice(0, -1).join(', ')} e ${labels.at(-1)}`
-}
+): string => andList(ids.map(sensitiveLabel))
 
 /** The surveys a count with these Requirements reads, by short name ("PNS
  * 2019", or "a PNS 2019" with `article`): the Census and the PNS always (the
@@ -470,11 +466,6 @@ export const DRINKING_LABEL: Readonly<Record<Drinking, string>> = {
   raramente: 'menos de 1 vez por semana',
   semanal: 'toda semana',
 }
-
-const orList = (items: ReadonlyArray<string>) =>
-  items.length < 2
-    ? items.join('')
-    : `${items.slice(0, -1).join(', ')} ou ${items.at(-1)}`
 
 export const stateName = (uf: StateCode): string =>
   STATES.find((u) => u.abbr === uf)?.name ?? uf

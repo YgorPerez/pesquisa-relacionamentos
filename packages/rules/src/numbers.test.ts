@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vite-plus/test'
 import {
   formatRange,
+  rangeParts,
   formatGain,
   formatAmount,
   formatTimes,
@@ -29,6 +30,17 @@ describe('formatRange', () => {
   it('when both ends give the same number, it says "cerca de"', () => {
     expect(formatRange(1_200, 1_200)).toBe('cerca de 1,2 mil')
     expect(formatRange(1_201, 1_249)).toBe('entre 1,2 mil e 1,3 mil')
+  })
+
+  it('gives its parts apart, for whoever highlights the numbers', () => {
+    expect(rangeParts(163_900, 196_100)).toEqual({
+      before: 'entre',
+      numbers: '160 mil e 200 mil',
+    })
+    expect(rangeParts(1_200, 1_200)).toEqual({
+      before: 'cerca de',
+      numbers: '1,2 mil',
+    })
   })
 })
 

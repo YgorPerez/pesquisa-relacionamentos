@@ -6,6 +6,7 @@
 // the browser and carried by the link. The outcome values are the link's, so
 // they stay in Portuguese; the priorities file keys each outcome in English
 // (`OUTCOME_KEY`).
+import { andList } from './lists.ts'
 import type { ProfileGender } from './profile.ts'
 
 export const OUTCOMES = ['atracao', 'satisfacao', 'duracao'] as const
@@ -118,11 +119,6 @@ export function shelves(
   }))
 }
 
-const asList = (names: ReadonlyArray<string>): string =>
-  names.length < 2
-    ? (names[0] ?? '')
-    : `${names.slice(0, -1).join(', ')} e ${names[names.length - 1]}`
-
 /** The alert sentence: what of the top 3 falls on "quase nada" or "não
  * sabemos" for the outcome. No number and no judgment; `null` when there is
  * nothing to say. */
@@ -140,8 +136,8 @@ export function top3Alert(
   const noData = names(0)
   const parts = [
     almostNothing.length > 0 &&
-      `${asList(almostNothing)} ${almostNothing.length > 1 ? 'pesam' : 'pesa'} quase nada`,
-    noData.length > 0 && `para ${asList(noData)} não há boa evidência`,
+      `${andList(almostNothing)} ${almostNothing.length > 1 ? 'pesam' : 'pesa'} quase nada`,
+    noData.length > 0 && `para ${andList(noData)} não há boa evidência`,
   ].filter(Boolean)
   if (parts.length === 0) return null
   return `No seu topo 3, para ${OUTCOME_NAME[outcome].toLowerCase()}: ${parts.join('; ')}.`

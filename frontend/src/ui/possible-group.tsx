@@ -7,7 +7,7 @@ import type {
   RequirementId,
 } from '@tem-estudo/rules/possible-group'
 import {
-  formatRange,
+  rangeParts,
   formatAmount,
   formatTimes,
 } from '@tem-estudo/rules/numbers'
@@ -51,15 +51,13 @@ const STEP_ROW =
  * "instável". */
 export function EstimateRange({ estimate }: { estimate: Estimate }) {
   const { min, max, unstable } = estimate.result
-  const text = formatRange(min, max)
-  const [, before = '', numbers = text] =
-    /^(entre |cerca de )?(.*)$/.exec(text) ?? []
+  const { before, numbers } = rangeParts(min, max)
   return (
     <p
       className="m-0 mt-0.5 font-headline text-headline leading-tight"
       data-slot="gp-faixa"
     >
-      {before}
+      {before}{' '}
       <mark className="numero-chave">{numbers}</mark>
       {unstable && (
         <span className="ml-2.5 inline-block rounded-mao-2 border-(length:--traco-controle) fio-tracejado border-tinta px-2 py-0 align-[3px] font-label text-label leading-tight font-bold tracking-normal">
@@ -493,9 +491,10 @@ function IndependenceRange({
   estimate: Estimate
 }) {
   if (!independence) return null
-  const range = formatRange(independence.min, independence.max)
+  const { before, numbers } = rangeParts(independence.min, independence.max)
   // Rounded to the same number, the assumption changes nothing worth saying.
-  if (!range.startsWith('entre ')) return null
+  if (before !== 'entre') return null
+  const range = `${before} ${numbers}`
   const sources = independenceSources(active)
   return (
     <>

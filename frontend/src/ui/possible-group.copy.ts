@@ -6,10 +6,10 @@ import {
   type Cost,
   type RequirementId,
 } from '@tem-estudo/rules/possible-group'
+import { andList } from '@tem-estudo/rules/lists'
 import { formatGain, formatTimes } from '@tem-estudo/rules/numbers'
 import { REQUIREMENT_TITLE } from '@tem-estudo/rules/requirements'
 
-const list = new Intl.ListFormat('pt-BR', { type: 'conjunction' })
 
 /** The Requirements whose title alone ("Pais", "Casa") does not say what
  * they ask, written as in a sentence. */
@@ -50,7 +50,7 @@ export function independenceSources(active: ReadonlyArray<RequirementId>): {
     .filter(([ks]) => ks.length > 0)
     .map(
       ([ks, of]) =>
-        `${list.format(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'} ${of}`,
+        `${andList(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'} ${of}`,
     )
   const text = `${sides.join('; ')}.`
   return {
@@ -70,7 +70,7 @@ export function samplingText(
     active.some((k) => REQUIREMENT_SOURCE[k] === source),
   )
   if (others.length === 0) return `A faixa é ${census}.`
-  const intervals = list.format(others.map((source) => `da ${source}`))
+  const intervals = andList(others.map((source) => `da ${source}`))
   return `A faixa junta ${census} com ${others.length > 1 ? 'os intervalos' : 'o intervalo'} ${intervals}.`
 }
 
