@@ -15,14 +15,13 @@ const DATA = resolve(
 )
 
 let built: ReturnType<typeof buildPacks> | undefined
-const packs = () => (built ??= buildPacks(DATA)).packs
+const files = () => (built ??= buildPacks(DATA)).files
 
 const PACK = `${possibleGroup.base}/:file`
 
 export const server = setupServer(
   http.get(PACK, ({ params }) => {
-    const place = String(params.file).replace(/\.json$/, '')
-    const text = packs().get(place as never)
+    const text = files().get(String(params.file))
     return text
       ? new HttpResponse(text, {
           headers: { 'content-type': 'application/json' },
@@ -32,8 +31,16 @@ export const server = setupServer(
 )
 
 /** The Possible group packs do not arrive: the device has no network, until
- * the end of the test or until `voltar`. */
-export function goOffline() {
-  server.use(http.get(PACK, () => HttpResponse.error()))
+ * the end of the test or until `restore`. With `detailOnly`, only the detail
+ * packs (`-detalhe.json`) fail, as when the network drops after the default
+ * ones arrived. */
+export function goOffline({ detailOnly = false } = {}) {
+  server.use(
+    http.get(PACK, ({ params }) =>
+      !detailOnly || String(params.file).endsWith('-detalhe.json')
+        ? HttpResponse.error()
+        : undefined,
+    ),
+  )
   return { restore: () => server.resetHandlers() }
 }
