@@ -84,18 +84,34 @@ export interface GroupBase {
 }
 
 // --- cell code -------------------------------------------------------------
-// Each dimension becomes an index; "no data" is 0 and the list's value i is
-// i + 1. Sex, age group and union have no "no data".
-const RADICES = [
-  2,
-  AGE_GROUPS.length,
-  2,
-  EDUCATIONS.length + 1,
-  INCOMES.length + 1,
-  COLORS.length + 1,
-  RELIGIONS.length + 1,
-  3,
+// Each dimension becomes an index. In an optional one, "no data" (an empty
+// CSV value) is 0 and the list's value i is i + 1; sex, age group and union
+// always have a value, and value i is i.
+const NO_YES = ['nao', 'sim'] as const
+
+/** The Census CSV's dimensions, in the order of the cell code. */
+const DIMENSIONS = [
+  { key: 'sex', column: 'sexo', values: SEXES, optional: false },
+  { key: 'ageGroup', column: 'idade', values: AGE_GROUPS, optional: false },
+  { key: 'union', column: 'uniao', values: NO_YES, optional: false },
+  {
+    key: 'education',
+    column: 'escolaridade',
+    values: EDUCATIONS,
+    optional: true,
+  },
+  { key: 'income', column: 'renda', values: INCOMES, optional: true },
+  { key: 'color', column: 'cor', values: COLORS, optional: true },
+  { key: 'religion', column: 'religiao', values: RELIGIONS, optional: true },
+  /** Women only: 1 = has none, 2 = has. */
+  { key: 'children', column: 'filhos', values: NO_YES, optional: true },
+  /** 1 = lives with neither parent, 2 = with the mother, the father or a
+   * step-parent. */
+  { key: 'parents', column: 'pais', values: NO_YES, optional: true },
 ] as const
+type Dimension = (typeof DIMENSIONS)[number]['key']
+
+const RADICES = DIMENSIONS.map((d) => d.values.length + (d.optional ? 1 : 0))
 
 function encode(parts: ReadonlyArray<number>): number {
   let code = 0
@@ -146,33 +162,21 @@ function optionalIndex(
 function readCensus(text: string): CensusRow[] {
   const { header, rows } = csvLines(text)
   const col = (name: string) => indexOrThrow(header, name, 'column')
-  const c = {
-    sex: col('sexo'),
-    age: col('idade'),
-    uf: col('uf'),
-    union: col('uniao'),
-    education: col('escolaridade'),
-    income: col('renda'),
-    color: col('cor'),
-    religion: col('religiao'),
-    children: col('filhos'),
-    weight: col('peso'),
-    records: col('n_registros'),
-  }
+  const uf = col('uf')
+  const weight = col('peso')
+  const records = col('n_registros')
+  const dimensions = DIMENSIONS.map((d) => ({ ...d, at: col(d.column) }))
   return rows.map((l) => ({
-    uf: l[c.uf] ?? '',
-    code: encode([
-      indexOrThrow(SEXES, l[c.sex], 'sex'),
-      indexOrThrow(AGE_GROUPS, l[c.age], 'age group'),
-      indexOrThrow(['nao', 'sim'], l[c.union], 'union'),
-      optionalIndex(EDUCATIONS, l[c.education], 'education'),
-      optionalIndex(INCOMES, l[c.income], 'income'),
-      optionalIndex(COLORS, l[c.color], 'color'),
-      optionalIndex(RELIGIONS, l[c.religion], 'religion'),
-      optionalIndex(['nao', 'sim'], l[c.children], 'children'),
-    ]),
-    weight: Number(l[c.weight]),
-    records: Number(l[c.records]),
+    uf: l[uf] ?? '',
+    code: encode(
+      dimensions.map((d) =>
+        d.optional
+          ? optionalIndex(d.values, l[d.at], d.key)
+          : indexOrThrow(d.values, l[d.at], d.key),
+      ),
+    ),
+    weight: Number(l[weight]),
+    records: Number(l[records]),
   }))
 }
 
@@ -248,11 +252,14 @@ export function readGroupBase(files: GroupFiles): GroupBase {
 
 export type PackPlace = 'BR' | StateCode
 
+/** Goes up when the cell code changes. */
+const PACK_VERSION = 2
+
 /** What the browser downloads for a place. Only numbers and texts, in
  * columns. The build writes it under a path hashed from its content, so a
  * new format never meets an old page. */
 export interface Pack {
-  readonly version: 1
+  readonly version: typeof PACK_VERSION
   readonly place: PackPlace
   readonly cells: ReadonlyArray<number>
   readonly weights: ReadonlyArray<number>
@@ -278,7 +285,7 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
   const ages = base.ages.get(place)
   if (!ages) throw new Error(`no SIDRA 9514 single ages for ${place}`)
   return {
-    version: 1,
+    version: PACK_VERSION,
     place,
     cells: codes,
     weights: codes.map((c) => Math.round(sums.get(c)!.weight)),
@@ -294,20 +301,12 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
   }
 }
 
-/** A place opened for the count: one typed column per dimension. */
-export interface PlaceData {
+/** A place opened for the count: one typed column per dimension (see
+ * `DIMENSIONS`: in an optional one, 0 = no data and i + 1 = position i of the
+ * list). */
+export type PlaceData = { readonly [K in Dimension]: Uint8Array } & {
   readonly place: PackPlace
   readonly size: number
-  readonly sex: Uint8Array
-  readonly ageGroup: Uint8Array
-  readonly union: Uint8Array
-  /** 0 = no data; i + 1 = position i of the list (EDUCATIONS, INCOMES…). */
-  readonly education: Uint8Array
-  readonly income: Uint8Array
-  readonly color: Uint8Array
-  readonly religion: Uint8Array
-  /** 0 = no data (men), 1 = has none, 2 = has. */
-  readonly children: Uint8Array
   readonly weight: Float64Array
   readonly records: Float64Array
   readonly ages: AgesBySex
@@ -321,7 +320,7 @@ function isPack(value: unknown): value is Pack {
     typeof value === 'object' &&
     value !== null &&
     'version' in value &&
-    value.version === 1 &&
+    value.version === PACK_VERSION &&
     'cells' in value &&
     Array.isArray(value.cells)
   )
@@ -332,38 +331,19 @@ function isPack(value: unknown): value is Pack {
 export function openPack(pack: unknown): PlaceData {
   if (!isPack(pack)) throw new Error('possible group pack in an unknown format')
   const n = pack.cells.length
-  const columns = Array.from(
-    { length: RADICES.length },
-    () => new Uint8Array(n),
-  )
+  const columns = DIMENSIONS.map(() => new Uint8Array(n))
   const parts: number[] = []
   for (let i = 0; i < n; i++) {
     decode(pack.cells[i]!, parts)
-    for (let d = 0; d < RADICES.length; d++) columns[d]![i] = parts[d]!
+    for (let d = 0; d < columns.length; d++) columns[d]![i] = parts[d]!
   }
-  const [sex, ageGroup, union, education, income, color, religion, children] =
-    columns as [
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-    ]
   const uf = pack.place === 'BR' ? undefined : pack.place
   return {
+    ...(Object.fromEntries(
+      DIMENSIONS.map((d, i) => [d.key, columns[i]!]),
+    ) as Record<Dimension, Uint8Array>),
     place: pack.place,
     size: n,
-    sex,
-    ageGroup,
-    union,
-    education,
-    income,
-    color,
-    religion,
-    children,
     weight: Float64Array.from(pack.weights),
     records: Float64Array.from(pack.records),
     ages: pack.ages,

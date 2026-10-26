@@ -112,6 +112,9 @@ export interface Requirements {
   readonly colors: ReadonlyArray<Color>
   readonly religions: ReadonlyArray<Religion>
   readonly noChildren: boolean
+  /** "Não mora com os pais": neither the mother, the father nor a
+   * step-parent lives in the same household. */
+  readonly notWithParents: boolean
   readonly height: Range
   readonly nonSmoker: boolean
 }
@@ -125,6 +128,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   colors: [],
   religions: [],
   noChildren: false,
+  notWithParents: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
 }
@@ -226,6 +230,7 @@ export const REQUIREMENTS = [
   'color',
   'religion',
   'children',
+  'parents',
   'height',
   'smoking',
 ] as const
@@ -249,6 +254,7 @@ export function release(
     color: { colors: [] },
     religion: { religions: [] },
     children: { noChildren: false },
+    parents: { notWithParents: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
   }
@@ -267,6 +273,7 @@ export const REQUIREMENT_TITLE: Readonly<
   color: 'Cor ou raça',
   religion: 'Religião',
   children: 'Filhos',
+  parents: 'Pais',
   height: 'Altura',
   smoking: 'Cigarro',
 }
@@ -362,6 +369,10 @@ export function requirementValue(
       if (whoIsSought(profile).children === 'no-data')
         return 'sem dado para homens'
       return r.noChildren ? 'sem filhos' : 'com ou sem filhos'
+    case 'parents':
+      return r.notWithParents
+        ? 'não mora com os pais'
+        : 'mora ou não com os pais'
     case 'height': {
       const { min, max } = r.height
       if (min <= MIN_HEIGHT && max >= MAX_HEIGHT) return 'qualquer altura'
@@ -393,6 +404,7 @@ export function readRequirements(value: unknown): Requirements {
     colors: manyOf(COLORS, raw.colors),
     religions: manyOf(RELIGIONS, raw.religions),
     noChildren: raw.noChildren === true,
+    notWithParents: raw.notWithParents === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
   }

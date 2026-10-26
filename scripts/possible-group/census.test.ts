@@ -7,12 +7,12 @@ import { describe, it } from 'vite-plus/test'
 import { aggregatePeople, cellsToCsv } from './census.ts'
 
 const HEADER =
-  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110'
+  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110;P0300;P0310'
 
 // Woman in SP, 20–24, parda, not living with a partner (never has), no
 // children, evangelical, college degree, R$ 3,000 (between 2 and 5 minimum
 // wages of R$ 1,212).
-const WOMAN_SP = '3;35;10.5;2;05;4;3;0;2;7;3000'
+const WOMAN_SP = '3;35;10.5;2;05;4;3;0;2;7;3000;2;2'
 
 describe('aggregatePeople', () => {
   it('sums weights and counts records of the same combination', async () => {
@@ -32,6 +32,7 @@ describe('aggregatePeople', () => {
         cor: 'parda',
         religiao: 'evangelica',
         filhos: 'nao',
+        pais: 'nao',
         peso: 14.75,
         n_registros: 2,
       },
@@ -39,8 +40,8 @@ describe('aggregatePeople', () => {
   })
 
   it('translates the codes from the variable dictionary', async () => {
-    const manAC = '1;12;6.2;1;17;5;1;;7;3;1212'
-    const womanWithChildren = '1;12;2;2;06;1;2;3;3;1;0'
+    const manAC = '1;12;6.2;1;17;5;1;;7;3;1212;2;2'
+    const womanWithChildren = '1;12;2;2;06;1;2;3;3;1;0;2;2'
     const { cells } = await aggregatePeople([HEADER, manAC, womanWithChildren])
     assert.deepEqual(
       cells.map((c) => [
@@ -85,7 +86,10 @@ describe('aggregatePeople', () => {
   it('leaves empty what IBGE did not determine', async () => {
     // Race 9 (unknown), religion 9 (not declared), education 8 (not
     // determined) and blank children for a woman.
-    const { cells } = await aggregatePeople([HEADER, '1;35;1;2;07;9;3;;9;8;'])
+    const { cells } = await aggregatePeople([
+      HEADER,
+      '1;35;1;2;07;9;3;;9;8;;2;2',
+    ])
     const [c] = cells
     assert.deepEqual(
       [c?.cor, c?.religiao, c?.escolaridade, c?.filhos, c?.renda],
@@ -93,9 +97,30 @@ describe('aggregatePeople', () => {
     )
   })
 
+  it('records whether the mother, the father or a step-parent lives in the same household', async () => {
+    const withMother = WOMAN_SP.replace(/;2;2$/, ';1;2')
+    const withStepfather = WOMAN_SP.replace(/;2;2$/, ';2;1').replace(
+      '10.5',
+      '1',
+    )
+    const { cells } = await aggregatePeople([
+      HEADER,
+      WOMAN_SP,
+      withMother,
+      withStepfather,
+    ])
+    assert.deepEqual(
+      cells.map((c) => [c.pais, c.peso]),
+      [
+        ['nao', 10.5],
+        ['sim', 11.5],
+      ],
+    )
+  })
+
   it('keeps people aged 15 or more and counts the discarded ones', async () => {
-    const child = '1;35;3;1;03;1;3;;1;2;0'
-    const suppressedSex = '1;35;7;9;99;1;3;;1;2;0'
+    const child = '1;35;3;1;03;1;3;;1;2;0;2;2'
+    const suppressedSex = '1;35;7;9;99;1;3;;1;2;0;2;2'
     const { cells, discarded } = await aggregatePeople([
       HEADER,
       WOMAN_SP,
@@ -110,7 +135,7 @@ describe('aggregatePeople', () => {
   })
 
   it("sums the total weight of every record, to check against the state's population", async () => {
-    const child = '1;35;3;1;03;1;3;;1;2;0'
+    const child = '1;35;3;1;03;1;3;;1;2;0;2;2'
     const { totalWeight } = await aggregatePeople([HEADER, WOMAN_SP, child])
     assert.deepEqual(totalWeight, { SP: 13.5 })
   })
@@ -138,14 +163,14 @@ describe('cellsToCsv', () => {
     const { cells } = await aggregatePeople([
       HEADER,
       WOMAN_SP,
-      '1;12;6.2;1;17;5;1;;7;3;1212',
+      '1;12;6.2;1;17;5;1;;7;3;1212;2;2',
     ])
     assert.equal(
       cellsToCsv(cells),
       [
-        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,peso,n_registros',
-        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,6.20,1',
-        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,10.50,1',
+        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,pais,peso,n_registros',
+        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,nao,6.20,1',
+        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,nao,10.50,1',
         '',
       ].join('\n'),
     )

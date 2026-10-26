@@ -50,6 +50,7 @@ export const REQUIREMENT_ORDER = [
   'color',
   'religion',
   'children',
+  'parents',
   'height',
   'smoking',
 ] as const
@@ -68,6 +69,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   color: 'Censo',
   religion: 'Censo',
   children: 'Censo',
+  parents: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
 }
@@ -158,6 +160,7 @@ export function activeRequirements({
     color: r.colors.length > 0,
     religion: r.religions.length > 0,
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
+    parents: r.notWithParents,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
   }
@@ -371,6 +374,7 @@ function tally(
     : null
   const partner = active.has('partner')
   const noChildren = active.has('children')
+  const notWithParents = active.has('parents')
   const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
@@ -389,6 +393,7 @@ function tally(
     if (colors && !colors.has(d.color[i]!)) continue
     if (religions && !religions.has(d.religion[i]!)) continue
     if (noChildren && d.children[i] === 2) continue
+    if (notWithParents && d.parents[i] !== 1) continue
     const sg = s * G + d.ageGroup[i]!
     let f = factor[sg]!
     if (municipality)
@@ -457,6 +462,11 @@ function caveats(
       strong: false,
       text: '"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.',
     },
+    has('parents') && {
+      id: 'parents',
+      strong: false,
+      text: '"Não mora com os pais" tira quem mora no mesmo domicílio que a mãe, o pai, a madrasta ou o padrasto, inclusive quando são eles que moram na casa da pessoa.',
+    },
     has('orientation') && {
       id: 'orientation',
       strong: false,
@@ -471,7 +481,7 @@ function caveats(
       !!requirements.place?.municipality && {
         id: 'municipality',
         strong: false,
-        text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Escolaridade, renda, cor e religião seguem as do estado.',
+        text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Os outros Requisitos do Censo seguem os do estado.',
       },
     has('income') && {
       id: 'income',

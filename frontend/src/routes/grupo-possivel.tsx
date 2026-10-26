@@ -402,6 +402,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(noChildren) => change({ noChildren })}
       />
     ),
+    parents: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não mora com os pais"
+        checked={requirements.notWithParents}
+        onChange={(notWithParents) => change({ notWithParents })}
+      />
+    ),
     height: ({ requirements: { height }, change }) => (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Stepper

@@ -26,6 +26,7 @@ describe('readRequirements', () => {
       colors: ['preta', 'parda'],
       religions: ['sem-religiao'],
       noChildren: true,
+      notWithParents: true,
       height: { min: 160, max: 200 },
       nonSmoker: true,
     }

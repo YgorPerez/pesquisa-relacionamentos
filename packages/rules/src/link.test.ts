@@ -19,6 +19,7 @@ const ALL: Requirements = {
   colors: ['preta', 'parda'],
   religions: ['umbanda-candomble', 'sem-religiao'],
   noChildren: true,
+  notWithParents: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
 }
@@ -110,7 +111,8 @@ describe('old versions', () => {
     ).toEqual({
       calculator: 'grupo-possivel',
       profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
-      requirements: ALL,
+      // The Requirements that came after this link stay off.
+      requirements: { ...ALL, notWithParents: false },
     })
   })
 
@@ -224,7 +226,7 @@ describe('linkSentence', () => {
       ),
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
-        'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
+        'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, não mora com os pais, ' +
         'a partir de 160 cm, não fuma, em São Paulo (SP).',
     )
   })

@@ -102,6 +102,7 @@ export const COLUMNS = [
   'cor',
   'religiao',
   'filhos',
+  'pais',
 ] as const
 export type Column = (typeof COLUMNS)[number]
 
@@ -138,6 +139,8 @@ const READ = [
   'P0410',
   'P0760',
   'P1110',
+  'P0300',
+  'P0310',
 ] as const
 
 /** P1110, income from all sources, in minimum-wage bands. */
@@ -155,6 +158,14 @@ function incomeBand(value: string): string {
 function children(sex: string, value: string): string {
   if (sex !== 'mulher' || value === '') return ''
   return Number(value) > 0 ? 'sim' : 'nao'
+}
+
+/** P0300 (mother or stepmother) and P0310 (father or stepfather) live in the
+ * person's household: 1 yes, 2 no. Either one is "sim", whoever's house it
+ * is. */
+function livesWithParents(mother: string, father: string): string {
+  if (mother === '1' || father === '1') return 'sim'
+  return mother === '2' && father === '2' ? 'nao' : ''
 }
 
 /**
@@ -222,6 +233,7 @@ export async function aggregatePeople(
       RACE[field('P0210')] ?? '',
       RELIGION[field('P0410')] ?? '',
       children(sex, field('P0340')),
+      livesWithParents(field('P0300'), field('P0310')),
     ]
     const key = values.join('|')
     const cell = byKey.get(key)

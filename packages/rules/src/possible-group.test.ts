@@ -103,6 +103,25 @@ describe('estimateGroup: Census requirements', () => {
   })
 })
 
+describe('estimateGroup: "não mora com os pais"', () => {
+  const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+
+  it('removes whoever lives with the mother, the father or a step-parent, crossed with the other Census requirements', () => {
+    // Women 25 to 29 in Acre without a partner: 1,000 + 3,000, and the 3,000
+    // live with a parent.
+    const r = count({ seeks: 'mulheres' }, { ...ac, notWithParents: true })
+    expect(r.active).toContain('parents')
+    expect(r.result.central).toBeCloseTo(1000)
+    expect(r.caveats.map((c) => c.id)).toContain('parents')
+  })
+
+  it('is off by default and released by "soltar"', () => {
+    const on = { ...DEFAULT_REQUIREMENTS, notWithParents: true }
+    expect(DEFAULT_REQUIREMENTS.notWithParents).toBe(false)
+    expect(release(on, 'parents').notWithParents).toBe(false)
+  })
+})
+
 describe('estimateGroup: "sem filhos"', () => {
   const ac = {
     age: { min: 25, max: 29 },
