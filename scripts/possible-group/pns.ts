@@ -61,6 +61,8 @@ const POSITIONS = {
   C008: [117, 3],
   M001: [527, 1],
   P00404: [617, 3],
+  P027: [662, 1],
+  P02801: [663, 1],
   P050: [711, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
@@ -128,6 +130,23 @@ export const PNS_VARIABLES = [
     column: 'fumo',
     fields: ['P050'],
     read: code('P050', { '1': 'diario', '2': 'ocasional', '3': 'nao' }),
+    ordered: false,
+  },
+  {
+    // P027: never, under once a month, once a month or more. Only the last
+    // are asked P02801, the days a week (0 = under once a week). The doses
+    // (P029) and binge (P03201) stay out: the Requirement asks how often.
+    column: 'bebida',
+    fields: ['P027', 'P02801'],
+    read: (line) => {
+      const often = field(line, 'P027')
+      if (often === '1') return 'nunca'
+      if (often === '2') return 'raramente'
+      if (often !== '3') return null
+      const days = field(line, 'P02801')
+      if (days === '0') return 'raramente'
+      return /^[1-7]$/.test(days) ? 'semanal' : null
+    },
     ordered: false,
   },
 ] as const satisfies ReadonlyArray<PnsVariable>

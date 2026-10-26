@@ -21,6 +21,13 @@ const ALL: Requirements = {
   noChildren: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
+  drinking: ['nunca', 'raramente'],
+}
+
+/** What a link from before the PNS lifestyle Requirements carries: all of
+ * them off. */
+const BEFORE_LIFESTYLE: Partial<Requirements> = {
+  drinking: [],
 }
 
 describe('round trip', () => {
@@ -110,7 +117,7 @@ describe('old versions', () => {
     ).toEqual({
       calculator: 'grupo-possivel',
       profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
-      requirements: ALL,
+      requirements: { ...ALL, ...BEFORE_LIFESTYLE },
     })
   })
 
@@ -225,7 +232,7 @@ describe('linkSentence', () => {
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
         'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
-        'a partir de 160 cm, não fuma, em São Paulo (SP).',
+        'a partir de 160 cm, não fuma, bebe nunca ou menos de 1 vez por semana, em São Paulo (SP).',
     )
   })
 

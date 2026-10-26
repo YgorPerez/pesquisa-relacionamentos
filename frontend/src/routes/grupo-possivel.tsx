@@ -16,6 +16,8 @@ import {
   REQUIREMENTS,
   DEFAULT_REQUIREMENTS,
   COLOR_LABEL,
+  DRINKINGS,
+  DRINKING_LABEL,
   EDUCATION_LABEL,
   RELIGION_LABEL,
   INCOME_LABEL,
@@ -433,6 +435,21 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         label="Só quem não fuma"
         checked={requirements.nonSmoker}
         onChange={(nonSmoker) => change({ nonSmoker })}
+      />
+    ),
+    drinking: ({ requirements, change }) => (
+      <Options
+        legend="Com que frequência bebe"
+        type="checkbox"
+        values={DRINKINGS}
+        labels={DRINKING_LABEL}
+        checked={requirements.drinking}
+        onChange={(v, isChecked) =>
+          change({
+            drinking: toggle(DRINKINGS, requirements.drinking, v, isChecked),
+          })
+        }
+        hint="Nenhuma marcada é qualquer uma."
       />
     ),
   }

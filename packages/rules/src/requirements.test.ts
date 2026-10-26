@@ -28,6 +28,7 @@ describe('readRequirements', () => {
       noChildren: true,
       height: { min: 160, max: 200 },
       nonSmoker: true,
+      drinking: ['semanal'],
     }
     expect(readRequirements(JSON.parse(JSON.stringify(r)))).toEqual(r)
   })

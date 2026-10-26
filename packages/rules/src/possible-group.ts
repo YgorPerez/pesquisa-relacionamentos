@@ -8,7 +8,7 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking) are crossed with each other
+// - The PNS ones (orientation, height, smoking, drinking…) are crossed with each other
 //   on the PNS microdata: their joint share in the same sex and age bracket
 //   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
@@ -56,6 +56,7 @@ export const REQUIREMENT_ORDER = [
   'children',
   'height',
   'smoking',
+  'drinking',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -74,6 +75,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   children: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
+  drinking: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -174,6 +176,7 @@ export function activeRequirements({
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    drinking: r.drinking.length > 0,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -260,6 +263,10 @@ const PNS_FILTERS: {
     }
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
+  drinking: ({ requirements: { drinking } }) => ({
+    variable: 'bebida',
+    test: (value) => drinking.some((d) => d === value),
+  }),
 }
 
 export interface PnsBlock {
@@ -576,6 +583,11 @@ function caveats(
       id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
+    },
+    has('drinking') && {
+      id: 'drinking',
+      strong: false,
+      text: 'A bebida é autodeclarada na PNS 2019, e pesquisas assim costumam ter consumo de álcool subdeclarado: quem bebe toda semana tende a aparecer menos do que é.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

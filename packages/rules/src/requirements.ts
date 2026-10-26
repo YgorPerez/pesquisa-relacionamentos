@@ -65,6 +65,10 @@ export const RELIGIONS = [
   'outra',
 ] as const
 export type Religion = (typeof RELIGIONS)[number]
+/** How often one drinks (PNS P027 and P02801): never, under once a week,
+ * once a week or more. */
+export const DRINKINGS = ['nunca', 'raramente', 'semanal'] as const
+export type Drinking = (typeof DRINKINGS)[number]
 
 /** The minimum education and income one can ask for (the lowest step is
  * "any"). */
@@ -114,6 +118,8 @@ export interface Requirements {
   readonly noChildren: boolean
   readonly height: Range
   readonly nonSmoker: boolean
+  /** None checked = any (#291). */
+  readonly drinking: ReadonlyArray<Drinking>
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -127,6 +133,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   noChildren: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
+  drinking: [],
 }
 
 /** Who is sought, as the count says it. */
@@ -228,6 +235,7 @@ export const REQUIREMENTS = [
   'children',
   'height',
   'smoking',
+  'drinking',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -251,6 +259,7 @@ export function release(
     children: { noChildren: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
+    drinking: { drinking: [] },
   }
   return { ...requirements, ...released[requirement] }
 }
@@ -269,6 +278,7 @@ export const REQUIREMENT_TITLE: Readonly<
   children: 'Filhos',
   height: 'Altura',
   smoking: 'Cigarro',
+  drinking: 'Bebida',
 }
 
 export const EDUCATION_LABEL: Readonly<
@@ -303,6 +313,12 @@ export const RELIGION_LABEL: Readonly<Record<Religion, string>> = {
   'umbanda-candomble': 'umbanda ou candomblé',
   'sem-religiao': 'sem religião',
   outra: 'outra',
+}
+
+export const DRINKING_LABEL: Readonly<Record<Drinking, string>> = {
+  nunca: 'nunca',
+  raramente: 'menos de 1 vez por semana',
+  semanal: 'toda semana',
 }
 
 const orList = (items: ReadonlyArray<string>) =>
@@ -371,6 +387,10 @@ export function requirementValue(
     }
     case 'smoking':
       return r.nonSmoker ? 'não fuma' : 'fuma ou não'
+    case 'drinking':
+      return r.drinking.length
+        ? `bebe ${orList(r.drinking.map((d) => DRINKING_LABEL[d]))}`
+        : 'bebe ou não'
   }
 }
 
@@ -395,5 +415,6 @@ export function readRequirements(value: unknown): Requirements {
     noChildren: raw.noChildren === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
+    drinking: manyOf(DRINKINGS, raw.drinking),
   }
 }
