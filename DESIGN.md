@@ -191,7 +191,7 @@ Todas auto-hospedadas. A Source Sans 3 entra dentro da família da Atkinson por 
 
 ### Hierarchy
 
-- **Display** (700, clamp(33px, 8.6vw, 50px), 1.06, -0.022em): a Pergunta do Guia, text-wrap balance. Uma palavra em amarelo que se pinta da esquerda para a direita ao carregar.
+- **Display** (700, clamp(33px, 8.6vw, 50px), 1.06, -0.022em): o título da página (o Tema do Guia, a calculadora), text-wrap balance. Uma palavra em amarelo que se pinta da esquerda para a direita ao carregar.
 - **Headline** (700, 25px, 1.15, -0.015em): títulos de seção, sem ícone.
 - **Title** (600 a 700, 19 a 21px, -0.01em): frase do Mito, título das perguntas relacionadas, nível de Confiança, nome do site (21px).
 - **Nota de margem** (400, 17px, 1.3, verde-água de tinta): "quer conferir? as Fichas estão lá no fim" e "repara: só o último é do Brasil".
@@ -266,11 +266,13 @@ Desenhos são SVG de traço único com ponta arredondada, 1,8 a 2,4px: setas cur
 
 Barra do topo: nome em Bricolage 700 de 21px à esquerda, sempre numa linha; à direita, a etiqueta do Tema, reta, em folha com contorno de 1,5px em tinta. Um Tema de nome longo quebra a etiqueta em duas linhas, nunca o nome do site. Links do texto com sublinhado de 1,5px afastado 4px. O link do Perfil usa sublinhado tracejado de 2px. Sem Perfil, diz "Diga seu Perfil e veja o que vale para você", com "opcional" em tinta clara; com Perfil, vira "Seu Perfil: … · mudar".
 
-Índice dos Temas, na página inicial: um painel só, com uma dobra por Tema na ordem do `position` de cada `_topic.md`, separadas pela divisória pontilhada de 1,5px. Fechada, a dobra mostra a seta pequena que gira, o nome do Tema em title e "N Perguntas" em tinta clara; aberta, as Perguntas numeradas e "Abrir o Tema" com a seta desenhada. A dobra é o `<details>` do navegador: abre sem JS e volta aberta quando o leitor sai de um Guia pelo voltar. Fechados, os seis Temas cabem numa tela de celular; uma lista com todas as Perguntas não caberia.
+Índice dos Temas, na página inicial: um painel só, com uma dobra por Tema na ordem do `position` de cada `_topic.md`, separadas pela divisória pontilhada de 1,5px. Fechada, a dobra mostra a seta pequena que gira, o nome do Tema em title e "N Perguntas" em tinta clara; aberta, as Perguntas numeradas e "Abrir o Tema" com a seta desenhada. A dobra é o `<details>` do navegador: abre sem JS e volta aberta quando o leitor sai de um Guia pelo voltar. Fechados, os seis Temas cabem numa tela de celular; uma lista com todas as Perguntas não caberia. O Tema cujo Guia o leitor terminou neste navegador ganha, ao lado do nome, a etiqueta "lido" em folha com contorno de 1,5px em tinta, 14px em negrito.
+
+Continuar lendo, na página inicial, entre o lead e os Temas: só aparece no navegador que tem uma leitura em curso. Um painel com um item por Guia começado e não terminado, o mais recente primeiro. Cada item mostra o nome do Guia em title com a seta desenhada, "Capítulo 2 de 5 · <título>" em tinta clara, a régua de leitura e "27% lido". À direita, um × desenhado à mão, em tinta clara, com 44px de toque, esquece aquele Guia.
 
 ### Três degraus: Confiança e Força
 
-Três retângulos desenhados à mão, levemente tortos, contorno em tinta. Preenchidos conforme o nível: um para fraca, dois para moderada, três para forte. Na resposta curta, os degraus têm 72px e ficam ao lado de "Confiança da resposta" e do nível em Bricolage, separados do texto por uma linha pontilhada. Nos metadados da Ficha, a Força usa o mesmo desenho a 36px. A palavra sempre aparece.
+Três retângulos desenhados à mão, levemente tortos, contorno em tinta. Preenchidos conforme o nível: um para fraca, dois para moderada, três para forte. No bloco "Do Guia" das calculadoras, os degraus têm 72px e ficam ao lado de "Confiança da resposta" e do nível em Bricolage, separados do texto por uma linha pontilhada. Na resposta dentro do Guia e em "Em resumo", têm 36px, ao lado de "confiança moderada". Nos metadados da Ficha, a Força usa o mesmo desenho a 36px. A palavra sempre aparece.
 
 ### Status de verificação
 
@@ -288,9 +290,19 @@ Nada some quando o leitor informa o Perfil, e a nota "Vale para:" de cada achado
 
 - **Achado que cobre:** ganha o selo "vale para você" em amarelo junto da nota "Vale para:", que continua lá.
 - **Achado que não cobre:** a nota "Vale para:" ganha um anel vazio em tinta antes e termina com "Não há dado deste estudo para o seu Perfil." em negrito. Sem rosa.
-- **Resposta curta:** abaixo da resposta, depois de uma linha pontilhada, a frase "Para o seu Perfil: …" (15.5px) diz se o número-chave vale para o Perfil e, se não vale, qual número vale, com referência. Quando vale, a frase abre com o selo amarelo "vale para você".
-- **Nenhum achado cobre:** acima do título aparece uma caixa de aviso tracejada que nomeia o Perfil: "Nenhum estudo deste Guia separou pessoas com o seu Perfil (…)".
-- **Link e contagem:** o link do Perfil vira "Seu Perfil: … · mudar", e uma contagem na caixa do Perfil diz quantos achados têm dado para ele.
+- **Resposta curta:** abaixo da resposta, depois de uma linha pontilhada, a frase "Para o seu Perfil: …" (15.5px) diz se o número-chave vale para o Perfil e, se não vale, qual achado tem dado para ele, com referência, ou que nenhum número da Pergunta vem de uma amostra como a dele. Quando vale, a frase abre com o selo amarelo "vale para você".
+- **No meio do texto:** a frase que fala de uma amostra ganha, antes dela, o selo amarelo "vale para você" em 14px quando o Perfil está nessa amostra. Sem Perfil, ou sem JS, o selo não aparece; o texto diz a amostra de qualquer jeito.
+- **Caixa do Perfil:** uma só, logo depois de "Em resumo". Com Perfil, mostra "Seu Perfil: …" em amarelo e "mudar".
+
+### Guia em Capítulos
+
+O Guia é um texto corrido, não uma pilha de seções iguais (ADR 0042).
+
+- **Capítulos sob o título:** uma lista numerada, um link por Capítulo, com o número na bolota em contorno de tinta (30px) e o título em negrito sublinhado, entre divisórias pontilhadas de 1,5px; cada linha tem 44px de toque. O mesmo número abre o título do Capítulo.
+- **Barra de leitura:** quando o leitor entra no primeiro Capítulo, desce do topo uma linha em papel, presa ao alto da tela, com "2 de 5 · <título do Capítulo>" em label e a seta pequena, que abre a lista dos Capítulos com o atual na bolota cheia de tinta. Embaixo dela, a régua de leitura: um fio pontilhado de 2px que vira traço cheio de tinta conforme o leitor avança até "O que levar". No celular a linha sobe e some enquanto o leitor desce e volta quando ele sobe; a régua fica. Sem JS, não existe: basta a lista de Capítulos sob o título.
+- **Em resumo:** cada Pergunta em title, com os degraus da Confiança e a primeira frase da resposta curta, sem números de referência.
+- **A resposta no texto:** onde o raciocínio chega a uma Pergunta, uma nota sobre folha com contorno pontilhado de 1,5px em tinta e raio mao-2, sem retícula: é uma anotação do texto, não um painel. Traz a Pergunta em title (sem a palavra amarela, que é só do título da página), os degraus da Confiança e a resposta curta em corpo, com o número-chave em rosa. Um link antigo da Pergunta cai nela.
+- **"no Brasil":** uma etiqueta em folha com contorno de 1,5px em tinta, 14px em negrito, raio mao-2, antes da frase com dado brasileiro. Tinta e papel, sem cor: "Brasil" não é um dos três papéis das tintas.
 
 ### Mito
 

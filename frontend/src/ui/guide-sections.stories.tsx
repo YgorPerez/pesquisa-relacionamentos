@@ -2,16 +2,14 @@
 // fixture Guide (`e2e/library`), built the way the page builds it
 // (`guide.example.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { GUIDE, QUESTION, QUESTION_WITH_SECTIONS } from './guide.example'
+import { GUIDE, TIP } from './guide.example'
 import {
-  Evidence,
-  GuideIndex,
-  GuideTips,
-  Limitations,
-  Myths,
-  OwnSections,
+  Chapters,
+  GuideContents,
+  GuideSummary,
   SourcesArrow,
   Takeaways,
+  Unknowns,
 } from './guide-sections'
 
 const meta = {
@@ -22,56 +20,36 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/** The index at the top: each Question with its Confidence and the first
- * sentence of its short answer. */
-export const Index: Story = {
-  render: () => <GuideIndex index={GUIDE.index} />,
+/** The Chapters under the title, numbered in the reasoning's order. */
+export const TableOfContents: Story = {
+  render: () => <GuideContents chapters={GUIDE.chapters} />,
+}
+
+/** "Em resumo": each Question with its Confidence and the first sentence of
+ * its short answer. */
+export const InShort: Story = {
+  render: () => <GuideSummary questions={GUIDE.summary} />,
 }
 
 export const ArrowToFactSheets: Story = {
   render: () => <SourcesArrow />,
 }
 
-/** The Tips of a Question that follow no finding. */
-export const Tips: Story = {
-  render: () => <GuideTips question={QUESTION} verdicts={undefined} />,
-}
-
-/** The findings with country and year, and the divergence table. */
-export const WhatTheEvidenceSays: Story = {
-  render: () => <Evidence question={QUESTION} verdicts={undefined} />,
-}
-
-/** A finding with its Tip and Myth right after it. */
-export const TipAndMythNextToTheFinding: Story = {
+/** The Chapters: prose with Visuals, the answer where the reasoning reaches
+ * each Question, the struck-out Myth, the Tip and the "no Brasil" mark. */
+export const ChaptersOfTheGuide: Story = {
   render: () => (
-    <Evidence
-      question={{
-        ...QUESTION,
-        tips: QUESTION.tips.map((t) => ({ ...t, finding: 0 })),
-        myths: QUESTION.myths.map((m) => ({ ...m, finding: 0 })),
-      }}
-      verdicts={undefined}
-    />
+    <Chapters chapters={GUIDE.chapters} youMarks={GUIDE.youMarks} />
   ),
-}
-
-/** A section the Question titles itself, with a numbered reference. */
-export const QuestionOwnSections: Story = {
-  render: () => <OwnSections sections={QUESTION_WITH_SECTIONS.sections} />,
-}
-
-export const StruckOutMyths: Story = {
-  render: () => <Myths question={QUESTION} />,
 }
 
 /** "O que levar": the Guide's strongest Tips. */
 export const WhatToTakeAway: Story = {
-  render: () => <Takeaways tips={QUESTION.tips} />,
+  render: () => <Takeaways tips={[TIP]} />,
 }
 
-/** The Limitations, one group per Question while they still live in the
- * Question files. */
-export const LimitationsByStudy: Story = {
-  render: () => <Limitations groups={GUIDE.limitations} />,
+/** "O que não se sabe", in prose. */
+export const WhatIsNotKnown: Story = {
+  render: () =>
+    GUIDE.unknownsHtml ? <Unknowns html={GUIDE.unknownsHtml} /> : <></>,
 }

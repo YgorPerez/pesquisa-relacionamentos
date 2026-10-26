@@ -1,46 +1,42 @@
-// Topic, guide and tip read file by file: the decoded frontmatter and the cut
-// body. What depends on other files (inheritance from the fact sheets,
-// references, confidence, `order`) lives in `publication.ts`.
+// The Guide and the Tip read file by file: the decoded frontmatter and the
+// cut body. What depends on other files (inheritance from the fact sheets,
+// references, confidence) lives in `publication.ts`.
 import type { Schema } from 'effect'
 import { parse as parseYaml } from 'yaml'
 import {
   TipFrontmatter,
   GuideFrontmatter,
-  TopicFrontmatter,
   type Coverage,
-  type Divergence,
   type Myth,
+  type QuestionFrontmatter,
 } from './schema.ts'
 import { RESERVED_ROUTES, type Strength } from './lists.ts'
 import { splitFrontmatter, readBody } from './markdown.ts'
 import { decode, problem, type Problem } from './problems.ts'
-import { visualPlacementProblems } from './visuals.ts'
+import { visualPlacementProblems, type Visual } from './visuals.ts'
+import { YOU_MARK } from './marks.ts'
 
-/** A Topic and the frame of its Guide (ADR 0042), read from `_topic.md`. */
-export interface Topic extends Omit<TopicFrontmatter, 'takeaways'> {
-  /** The folder name in `guides/`, which becomes the path `/<topic>`. */
-  readonly slug: string
-  readonly file: string
-  /** The Guide's opening paragraph, in markdown: the body before the first
-   * `##`. */
-  readonly opening: string
-  /** The "O que levar" Tips, in the file's order. */
-  readonly takeaways: ReadonlyArray<string>
-  /** The Guide's "## Limitações", in markdown; empty while the Limitations
-   * still live in each Question file. */
-  readonly limitations: string
-  /** Every fact sheet the Guide's page cites, in page order: the opening,
-   * each Question, "O que levar" and the Limitations. Reference N on the
-   * page leads to item N of this list. */
-  readonly citedFactSheets: ReadonlyArray<string>
+/** A piece of a Chapter, in body order: text (which may place Visuals and
+ * carry the inline marks), or a line that places a Question's answer, a Tip
+ * or a Myth. */
+export type ChapterPart =
+  | { readonly kind: 'text'; readonly markdown: string }
+  | { readonly kind: 'question'; readonly slug: string }
+  | { readonly kind: 'tip'; readonly slug: string }
+  | { readonly kind: 'myth'; readonly id: string }
+
+/** A step of the Guide's reasoning: one `##` of the body (ADR 0042). */
+export interface Chapter {
+  /** The anchor, from the title: `#o-online-virou-o-caminho-mais-comum`. */
+  readonly id: string
+  readonly title: string
+  readonly parts: ReadonlyArray<ChapterPart>
 }
 
-/** The topic before `publication.ts` adds what depends on other files. */
-export type ParsedTopic = Omit<Topic, 'citedFactSheets'>
-
-/** A guide finding with what it inherited from the cited fact sheets. The
+/** A finding with what it inherited from the cited fact sheets. The
  * inherited keys keep the frontmatter names. */
 export interface GuideFinding {
+  readonly id: string
   readonly text: string
   readonly fact_sheets: ReadonlyArray<string>
   /** The finding's `country` or the fact sheets' countries, without repeats. */
@@ -54,42 +50,50 @@ export interface GuideFinding {
   /** Whether `covers` came from `applies_to` (a scope) and not from the fact
    * sheets. */
   readonly scoped: boolean
-  /** The tips and myths shown right after this finding. */
-  readonly tips: ReadonlyArray<string>
-  readonly myths: ReadonlyArray<Myth>
 }
 
-/** One Question of a Topic's Guide (ADR 0042): a section of the Topic's page.
- * The code still calls it a guide, the name it had when each Question had
- * its own page. */
-export interface Guide extends Omit<
-  GuideFrontmatter,
-  'findings' | 'tips' | 'myths' | 'related'
-> {
+/** A Topic and its Guide, read from `guides/<topic>.md` (ADR 0042). */
+export interface Topic {
+  /** The file name, which becomes the path `/<topic>`. */
   readonly slug: string
-  /** The topic slug, the file's folder. */
+  readonly file: string
+  readonly title: string
+  readonly position: number
+  readonly previous?: ReadonlyArray<string>
+  readonly seo?: GuideFrontmatter['seo']
+  /** The opening paragraph, in markdown: the body before the first `##`. */
+  readonly opening: string
+  readonly chapters: ReadonlyArray<Chapter>
+  /** "O que não se sabe", in markdown; empty while a Topic waits for its
+   * rewrite (ADR 0042, migration). */
+  readonly unknowns: string
+  /** The Questions' slugs, in the order "Em resumo" lists them. */
+  readonly questions: ReadonlyArray<string>
+  readonly findings: ReadonlyArray<GuideFinding>
+  readonly myths: ReadonlyArray<Myth>
+  readonly visuals: ReadonlyArray<Visual>
+  /** The "O que levar" Tips, in the file's order. */
+  readonly takeaways: ReadonlyArray<string>
+  /** Questions of other Topics. */
+  readonly related: ReadonlyArray<string>
+  /** Every fact sheet the page cites, in page order: the opening, each
+   * Chapter (its text, the answers, Tips and Myths it places), "O que levar"
+   * and "O que não se sabe". Reference N on the page leads to item N. */
+  readonly citedFactSheets: ReadonlyArray<string>
+}
+
+/** One Question of a Topic's Guide, answered in one of its Chapters. */
+export interface Question extends Omit<QuestionFrontmatter, 'findings'> {
   readonly topic: string
   readonly file: string
+  /** The Chapter that answers it. */
+  readonly chapter: string
+  /** The findings the answer rests on, in the order the Question names
+   * them. */
   readonly findings: ReadonlyArray<GuideFinding>
-  /** The tips not tied to a finding; `guideTips` lists all of them. */
-  readonly tips: ReadonlyArray<string>
-  /** The myths not tied to a finding. */
-  readonly myths: ReadonlyArray<Myth>
-  readonly related: ReadonlyArray<string>
-  /** The markdown before the first `##`. References like `[@fact-sheet-slug]`
-   * and the key number like `==39% dos casais==`. */
-  readonly shortAnswer: string
-  /** The narrative's own sections ("Efeitos psicológicos", "Então, vale a
-   * pena?"), in file order: any `##` before "Varia conforme o Perfil?". */
-  readonly sections: ReadonlyArray<GuideSection>
-  /** "E no Brasil?"; empty until the rewrite of the Topic gives it one. */
-  readonly inBrazil: string
-  readonly variesByProfile: string
-  /** The Question's own "Limitações", which the Guide shows in its
-   * Limitations block; empty once they moved to `_topic.md`. */
-  readonly limitations: string
-  /** Every fact sheet the Question cites, in the order they appear on the
-   * page. */
+  /** The fact sheets of the answer, of its findings and of the Chapter that
+   * answers it, without repeats: the Fact sheet's page lists the Question
+   * among the places that cite it. */
   readonly citedFactSheets: ReadonlyArray<string>
 }
 
@@ -110,23 +114,80 @@ export interface Tip {
   readonly seo?: TipFrontmatter['seo']
 }
 
-export interface GuideSection {
+/** The last `##` of a Guide, which the page shows after "O que levar". */
+export const UNKNOWNS_TITLE = 'O que não se sabe'
+
+/** The ids the Guide's page uses for its own blocks: a Question's slug and a
+ * Chapter's anchor cannot be one of them. */
+export const RESERVED_ANCHORS = [
+  'capitulos',
+  'em-resumo',
+  'perfil',
+  'o-que-levar',
+  'o-que-nao-se-sabe',
+  'fichas',
+  'ajudou',
+  'outros-temas',
+] as const
+
+/** A line that places a block: `{{question:<slug>}}`, `{{tip:<slug>}}` or
+ * `{{myth:<id>}}`. */
+const BLOCK_LINE = /^\{\{(question|tip|myth):([a-z0-9]+(?:-[a-z0-9]+)*)\}\}$/
+const ANY_MARK = /\{\{[^}]*\}\}/g
+const KNOWN_INLINE =
+  /^\{\{(?:brazil|you:[a-z0-9]+(?:-[a-z0-9]+)*|visual:[a-z0-9]+(?:-[a-z0-9]+)*)\}\}$/
+
+/** A Chapter heading may end in its own anchor, `## Title {#anchor}`, for
+ * when the title alone would repeat a Question's slug. */
+const OWN_ANCHOR = /\s*\{#([a-z0-9]+(?:-[a-z0-9]+)*)\}$/
+
+/** A Chapter's title and anchor: the one the heading gives, or the title
+ * without accents, lowercase, hyphenated. */
+export function chapterHeading(heading: string): {
+  readonly id: string
   readonly title: string
-  readonly markdown: string
+} {
+  const own = OWN_ANCHOR.exec(heading)
+  const title = heading.replace(OWN_ANCHOR, '')
+  return {
+    title,
+    id:
+      own?.[1] ??
+      title
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, ''),
+  }
 }
 
-export const GUIDE_SECTIONS = {
-  inBrazil: 'E no Brasil?',
-  profile: 'Varia conforme o Perfil?',
-  limitations: 'Limitações',
-} as const
-
-/** The sections every Question file has. "E no Brasil?" joins them when the
- * last Topic's rewrite gives one to each Question (ADR 0042, migration). */
-const REQUIRED_SECTIONS: ReadonlyArray<string> = [GUIDE_SECTIONS.profile]
-
-/** The one `##` a `_topic.md` may have; the body before it is the opening. */
-export const TOPIC_SECTIONS = { limitations: 'Limitações' } as const
+/** Cuts a Chapter's markdown at the lines that place a block. */
+export function chapterParts(markdown: string): ChapterPart[] {
+  const parts: ChapterPart[] = []
+  let text: string[] = []
+  const flush = () => {
+    const joined = text.join('\n').trim()
+    if (joined) parts.push({ kind: 'text', markdown: joined })
+    text = []
+  }
+  for (const line of markdown.split('\n')) {
+    const block = BLOCK_LINE.exec(line.trim())
+    if (!block) {
+      text.push(line)
+      continue
+    }
+    flush()
+    const [, kind, id = ''] = block
+    parts.push(
+      kind === 'myth'
+        ? { kind: 'myth', id }
+        : { kind: kind === 'tip' ? 'tip' : 'question', slug: id },
+    )
+  }
+  flush()
+  return parts
+}
 
 type Parsed<T> = {
   readonly value: T | null
@@ -171,52 +232,136 @@ export type ParsedItem<T> =
   | { readonly ok: true; readonly item: T }
   | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
-/** `guides/<topic>/_topic.md`. */
-export function readTopic(file: string, text: string): ParsedItem<ParsedTopic> {
-  const slug = file.split('/')[1] ?? ''
-  const { value, body, errors } = readFrontmatter(TopicFrontmatter, file, text)
+/** The Topic before `publication.ts` adds what depends on other files. */
+export type ParsedTopic = Omit<Topic, 'findings' | 'citedFactSheets'> & {
+  readonly findings: GuideFrontmatter['findings']
+}
+
+/** The Question before `publication.ts` links its findings. */
+export type ParsedQuestion = QuestionFrontmatter & {
+  readonly topic: string
+  readonly file: string
+  readonly chapter: string
+}
+
+export interface ParsedGuide {
+  readonly topic: ParsedTopic
+  readonly questions: ReadonlyArray<ParsedQuestion>
+}
+
+const repeated = (list: ReadonlyArray<string>) => [
+  ...new Set(list.filter((x, i) => list.indexOf(x) !== i)),
+]
+
+/** The marks of a text: block lines only in a Chapter, the known inline
+ * marks in the body, and none in a short answer. */
+function markProblems(
+  file: string,
+  field: string,
+  markdown: string,
+  where: 'chapter' | 'body' | 'answer',
+): Problem[] {
+  const errors: Problem[] = []
+  for (const line of markdown.split('\n'))
+    if (where !== 'chapter' && BLOCK_LINE.test(line.trim()))
+      errors.push(
+        problem(
+          file,
+          `"${line.trim()}" places a block, which only goes inside a Chapter`,
+          field,
+        ),
+      )
+  for (const [mark] of markdown.matchAll(ANY_MARK)) {
+    if (BLOCK_LINE.test(mark)) continue
+    if (where === 'answer')
+      errors.push(
+        problem(
+          file,
+          `"${mark}": the answer stays plain text, which "Em resumo" and the search also show`,
+          field,
+        ),
+      )
+    else if (!KNOWN_INLINE.test(mark))
+      errors.push(
+        problem(
+          file,
+          `unknown mark "${mark}"; the body knows {{question:…}}, {{tip:…}}, {{myth:…}}, {{visual:…}}, {{brazil}} and {{you:<finding>}}`,
+          field,
+        ),
+      )
+  }
+  return errors
+}
+
+/** `guides/<topic>.md`: the Topic, its Guide and its Questions. */
+export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
+  const slug = nameWithoutMd(file)
+  const { value, body, errors } = readFrontmatter(GuideFrontmatter, file, text)
   const parsed = readBody(body)
-  const opening = parsed.opening
-  if (value && !opening)
+  if (parsed.title)
+    errors.push(
+      problem(file, 'a Guide has no "#" title: the title comes from `title`'),
+    )
+  if (!parsed.opening)
     errors.push(
       problem(file, 'missing the opening paragraph before the first "##"'),
     )
-  if (parsed.title)
+
+  const unknownsAt = parsed.sections.findIndex(
+    (s) => s.title === UNKNOWNS_TITLE,
+  )
+  if (unknownsAt !== -1 && unknownsAt !== parsed.sections.length - 1)
     errors.push(
-      problem(file, 'a topic has no "#" title: the title comes from `title`'),
+      problem(
+        file,
+        `"## ${UNKNOWNS_TITLE}" is the last section of the Guide`,
+        UNKNOWNS_TITLE,
+      ),
     )
-  for (const section of parsed.sections) {
-    if (section.title !== TOPIC_SECTIONS.limitations)
+  const unknowns =
+    unknownsAt === -1 ? '' : (parsed.sections[unknownsAt]?.markdown ?? '')
+  if (unknownsAt !== -1 && !unknowns)
+    errors.push(
+      problem(
+        file,
+        `the section "## ${UNKNOWNS_TITLE}" is empty`,
+        UNKNOWNS_TITLE,
+      ),
+    )
+  const sections = parsed.sections.filter((s) => s.title !== UNKNOWNS_TITLE)
+  if (sections.length === 0)
+    errors.push(problem(file, 'a Guide has at least one Chapter ("## …")'))
+
+  const chapters: Chapter[] = sections.map((s) => ({
+    ...chapterHeading(s.title),
+    parts: chapterParts(s.markdown),
+  }))
+  for (const [i, section] of sections.entries()) {
+    const chapter = chapters[i]
+    if (!chapter) continue
+    if (!section.markdown)
       errors.push(
         problem(
           file,
-          `unknown section "## ${section.title}"; a _topic.md only has "## ${TOPIC_SECTIONS.limitations}"`,
+          `the Chapter "## ${section.title}" is empty`,
           section.title,
         ),
       )
-    else if (!section.markdown)
+    if (!chapter.id)
       errors.push(
         problem(
           file,
-          `the section "## ${section.title}" is empty`,
+          `the Chapter "## ${section.title}" needs letters or digits in its title, which become its anchor`,
           section.title,
         ),
       )
-    else
-      // The Limitations are grouped by Study: each `###` names the Study's
-      // Fact sheet (ADR 0042).
-      for (const [, heading = ''] of section.markdown.matchAll(
-        /^###\s+(.+?)\s*$/gm,
-      ))
-        if (!/^\[@[a-z0-9]+(?:-[a-z0-9]+)*\]$/.test(heading))
-          errors.push(
-            problem(
-              file,
-              `the Limitations are grouped by Study: write "### [@fact-sheet-slug]", not "### ${heading}"`,
-              section.title,
-            ),
-          )
+    errors.push(
+      ...markProblems(file, section.title, section.markdown, 'chapter'),
+    )
   }
+  errors.push(...markProblems(file, 'opening', parsed.opening, 'body'))
+  errors.push(...markProblems(file, UNKNOWNS_TITLE, unknowns, 'body'))
+
   const reserved: ReadonlyArray<string> = RESERVED_ROUTES
   if (reserved.includes(slug))
     errors.push(
@@ -229,131 +374,151 @@ export function readTopic(file: string, text: string): ParsedItem<ParsedTopic> {
     errors.push(
       problem(
         file,
-        'the topic folder name must be lowercase, without accents, hyphenated',
+        'the Guide file name must be lowercase, without accents, hyphenated',
       ),
     )
+
+  if (value) errors.push(...frontmatterProblems(file, value, chapters, body))
   if (!value || errors.length > 0) return { ok: false, errors }
+
+  const chapterOf = new Map(
+    chapters.flatMap((c) =>
+      c.parts.flatMap((p) => (p.kind === 'question' ? [[p.slug, c.id]] : [])),
+    ) as Array<[string, string]>,
+  )
   return {
     ok: true,
     item: {
-      ...value,
-      slug,
-      file,
-      opening,
-      takeaways: value.takeaways ?? [],
-      limitations:
-        parsed.sections.find((s) => s.title === TOPIC_SECTIONS.limitations)
-          ?.markdown ?? '',
+      topic: {
+        slug,
+        file,
+        title: value.title,
+        position: value.position,
+        ...(value.previous ? { previous: value.previous } : {}),
+        ...(value.seo ? { seo: value.seo } : {}),
+        opening: parsed.opening,
+        chapters,
+        unknowns,
+        questions: value.questions.map((q) => q.slug),
+        findings: value.findings,
+        myths: value.myths ?? [],
+        visuals: value.visuals ?? [],
+        takeaways: value.takeaways ?? [],
+        related: value.related ?? [],
+      },
+      questions: value.questions.map((q) => ({
+        ...q,
+        topic: slug,
+        file,
+        chapter: chapterOf.get(q.slug) ?? '',
+      })),
     },
   }
 }
 
-/** The guide still without the fact sheets' inheritance: the findings'
- * `countries`, `period` and `covers`, and `citedFactSheets`, arrive in
- * `publication.ts`. */
-export type ParsedGuide = Omit<Guide, 'findings' | 'citedFactSheets'> & {
-  readonly findings: GuideFrontmatter['findings']
-}
+/** What the frontmatter and the body must agree on: each Question and Myth
+ * placed once, each finding a Question names declared, each anchor free. */
+function frontmatterProblems(
+  file: string,
+  value: GuideFrontmatter,
+  chapters: ReadonlyArray<Chapter>,
+  body: string,
+): Problem[] {
+  const errors: Problem[] = []
+  const err = (message: string, field?: string) =>
+    errors.push(problem(file, message, field))
+  const questionSlugs = value.questions.map((q) => q.slug)
+  const findingIds = value.findings.map((f) => f.id)
+  const mythIds = (value.myths ?? []).map((m) => m.id)
+  for (const slug of repeated(questionSlugs))
+    err(`the Question "${slug}" is declared twice`, 'questions')
+  for (const id of repeated(findingIds))
+    err(`the finding "${id}" is declared twice`, 'findings')
+  for (const id of repeated(mythIds))
+    err(`the Myth "${id}" is declared twice`, 'myths')
+  if (value.questions.length === 0)
+    err('a Guide answers at least one Question', 'questions')
 
-/** `guides/<topic>/<slug>.md`. */
-export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
-  const [, topic = '', name = ''] = file.split('/')
-  const slug = nameWithoutMd(name)
-  const { value, body, errors } = readFrontmatter(GuideFrontmatter, file, text)
-  const parsed = readBody(body)
-  if (parsed.title)
-    errors.push(
-      problem(
-        file,
-        'a guide has no "#" title: the question comes from `question`',
-      ),
-    )
-  if (!parsed.opening)
-    errors.push(problem(file, 'missing the short answer before the first "##"'))
-  const known: ReadonlyArray<string> = Object.values(GUIDE_SECTIONS)
-  for (const title of REQUIRED_SECTIONS) {
-    if (!parsed.sections.some((s) => s.title === title))
-      errors.push(problem(file, `missing the section "## ${title}"`, title))
-  }
-  if (
-    parsed.sections.some(
-      (s) => s.title === GUIDE_SECTIONS.inBrazil && !s.markdown,
-    )
-  )
-    errors.push(
-      problem(
-        file,
-        `the section "## ${GUIDE_SECTIONS.inBrazil}" is empty; say the Brazilian data, or that none was found and what transfers`,
-        GUIDE_SECTIONS.inBrazil,
-      ),
-    )
-  // The narrative's own sections come before "Varia conforme o Perfil?"; past
-  // it, a `##` other than "Limitações" is most likely a typo.
-  const profileAt = parsed.sections.findIndex(
-    (s) => s.title === GUIDE_SECTIONS.profile,
-  )
-  parsed.sections.forEach((section, i) => {
-    if (!known.includes(section.title) && profileAt !== -1 && i > profileAt)
-      errors.push(
-        problem(
-          file,
-          `unknown section "## ${section.title}"; the Guide's own sections come before "## ${GUIDE_SECTIONS.profile}", and after it only "## ${GUIDE_SECTIONS.limitations}"`,
-          section.title,
-        ),
+  value.questions.forEach((q, i) => {
+    const field = `questions.${i}`
+    if ((q.question.match(/==[^=]+==/g) ?? []).length > 1)
+      err(
+        'the question highlights at most one word in yellow (==word==)',
+        `${field}.question`,
+      )
+    errors.push(...markProblems(file, `${field}.answer`, q.answer, 'answer'))
+    if (q.findings.length === 0)
+      err(
+        'the answer rests on at least one finding: name it in `findings`',
+        `${field}.findings`,
+      )
+    for (const id of q.findings)
+      if (!findingIds.includes(id))
+        err(
+          `the finding "${id}" is not declared in \`findings\``,
+          `${field}.findings`,
+        )
+    if ((RESERVED_ANCHORS as ReadonlyArray<string>).includes(q.slug))
+      err(
+        `a question cannot be called "${q.slug}": the Guide's page already uses #${q.slug} (${RESERVED_ANCHORS.join(', ')})`,
+        `${field}.slug`,
       )
   })
-  const own = parsed.sections.filter((s) => !known.includes(s.title))
-  for (const section of own) {
-    if (!section.markdown)
-      errors.push(
-        problem(
-          file,
-          `the section "## ${section.title}" is empty`,
-          section.title,
-        ),
+
+  const placed = chapters.flatMap((c) => c.parts)
+  const count = (kind: 'question' | 'myth', id: string) =>
+    placed.filter(
+      (p) => p.kind === kind && (p.kind === 'myth' ? p.id : p.slug) === id,
+    ).length
+  for (const slug of questionSlugs) {
+    const n = count('question', slug)
+    if (n === 0)
+      err(
+        `the Question "${slug}" is not answered in the body; put {{question:${slug}}} on a line of its own in the Chapter where it fits`,
+        'questions',
+      )
+    else if (n > 1) err(`the body answers the Question "${slug}" ${n} times`)
+  }
+  for (const id of mythIds) {
+    const n = count('myth', id)
+    if (n === 0)
+      err(
+        `the Myth "${id}" is declared and not placed; put {{myth:${id}}} on a line of its own in a Chapter`,
+        'myths',
+      )
+    else if (n > 1) err(`the body places the Myth "${id}" ${n} times`)
+  }
+  for (const part of placed) {
+    if (part.kind === 'question' && !questionSlugs.includes(part.slug))
+      err(
+        `the body answers the Question "${part.slug}", which \`questions\` does not declare`,
+      )
+    if (part.kind === 'myth' && !mythIds.includes(part.id))
+      err(
+        `the body places the Myth "${part.id}", which \`myths\` does not declare`,
       )
   }
-  if (value) {
-    const highlights = value.question.match(/==[^=]+==/g) ?? []
-    if (highlights.length > 1)
-      errors.push(
-        problem(
-          file,
-          'the question highlights at most one word in yellow (==word==)',
-          'question',
-        ),
+  for (const [, id = ''] of body.matchAll(YOU_MARK))
+    if (!findingIds.includes(id))
+      err(`{{you:${id}}} names a finding that \`findings\` does not declare`)
+
+  const anchors = chapters.map((c) => c.id)
+  for (const id of repeated(anchors))
+    err(`two Chapters have the anchor #${id}; give one of them another title`)
+  for (const id of anchors) {
+    if ((RESERVED_ANCHORS as ReadonlyArray<string>).includes(id))
+      err(
+        `the Chapter anchor #${id} is one of the page's own (${RESERVED_ANCHORS.join(', ')}); change the title`,
+      )
+    if (questionSlugs.includes(id))
+      err(
+        `the Chapter anchor #${id} is also a Question's slug; change the title`,
       )
   }
+
   // The Visuals (#182): each one declared is placed once in the body.
-  if (value)
-    errors.push(
-      ...visualPlacementProblems(
-        file,
-        value.visuals ?? [],
-        body,
-        parsed.opening,
-      ),
-    )
-  if (!value || errors.length > 0) return { ok: false, errors }
-  const section = (title: string) =>
-    parsed.sections.find((s) => s.title === title)?.markdown ?? ''
-  return {
-    ok: true,
-    item: {
-      ...value,
-      slug,
-      topic,
-      file,
-      tips: value.tips ?? [],
-      myths: value.myths ?? [],
-      related: value.related ?? [],
-      shortAnswer: parsed.opening,
-      sections: own,
-      inBrazil: section(GUIDE_SECTIONS.inBrazil),
-      variesByProfile: section(GUIDE_SECTIONS.profile),
-      limitations: section(GUIDE_SECTIONS.limitations),
-    },
-  }
+  errors.push(...visualPlacementProblems(file, value.visuals ?? [], body))
+  return errors
 }
 
 export type ParsedTip = TipFrontmatter & {
@@ -385,4 +550,4 @@ export function readTip(file: string, text: string): ParsedItem<ParsedTip> {
   return { ok: true, item: { ...value, slug, file, text: tipText } }
 }
 
-export type { Divergence, Myth }
+export type { Myth }

@@ -1,7 +1,7 @@
 // Paths and indexing derived from the content (#15). The URLs stay in
 // Portuguese (ADR 0039).
 import type { FactSheet } from './fact-sheet.ts'
-import type { Guide } from './items.ts'
+import type { Question } from './items.ts'
 import type { Calculator } from './lists.ts'
 
 export function factSheetPath(factSheet: Pick<FactSheet, 'slug'>): string {
@@ -12,10 +12,12 @@ export function topicPath(topic: { readonly slug: string }): string {
   return `/${topic.slug}`
 }
 
-/** A Question is a section of its Topic's Guide, anchored by its slug (ADR
- * 0042). */
-export function questionPath(guide: Pick<Guide, 'topic' | 'slug'>): string {
-  return `/${guide.topic}#${guide.slug}`
+/** A Question is answered inside its Topic's Guide, anchored by its slug
+ * (ADR 0042). */
+export function questionPath(
+  question: Pick<Question, 'topic' | 'slug'>,
+): string {
+  return `/${question.topic}#${question.slug}`
 }
 
 export function tipPath(tip: { readonly slug: string }): string {

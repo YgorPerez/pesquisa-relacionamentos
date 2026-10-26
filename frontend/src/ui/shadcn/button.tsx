@@ -10,7 +10,8 @@ import { cn } from '@/platform/cn'
 // with the arrow and no box, on the link and on the button. The `underlined`
 // one is the action in running text, without a box ("voltar ao texto"). The
 // `arrow` shape is the link that leads to a calculator, with the text and the
-// arrow side by side. What came from shadcn's `base-nova` was swapped for the
+// arrow side by side. The `icon` one is a drawn icon alone, which carries
+// its name in `aria-label`. What came from shadcn's `base-nova` was swapped for the
 // tokens.
 const BOX =
   'rounded-mao border-(length:--traco-controle) border-tinta px-4 py-2.5 font-label text-label text-tinta hover:-translate-y-px active:translate-y-px motion-reduce:hover:translate-none motion-reduce:active:translate-none'
@@ -29,6 +30,11 @@ const buttonVariants = cva('min-h-toque cursor-pointer', {
       underlined: [
         NO_BOX,
         'px-0 py-1 text-label leading-body underline decoration-(length:--traco-etiqueta) underline-offset-4',
+      ],
+      // Only a drawn icon, in a 44px square: the × of "Continuar lendo".
+      icon: [
+        NO_BOX,
+        'size-toque flex-none justify-center p-0 text-tinta-2 hover:text-tinta',
       ],
     },
     shape: {

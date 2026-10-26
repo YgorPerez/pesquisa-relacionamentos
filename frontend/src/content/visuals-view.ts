@@ -1,4 +1,4 @@
-// A Question's Visuals in the shape the `ui/visual-*` pieces draw, and
+// A Guide's Visuals in the shape the `ui/visual-*` pieces draw, and
 // drawn here, on the server, into the HTML that takes the place of each
 // `{{visual:<id>}}` line of the body (`view.ts`). The page gets finished SVG
 // and HTML: no chart code goes to the browser, and the Visual reads without
@@ -314,8 +314,8 @@ function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
   }
 }
 
-/** `scope` is the Question's slug: with it, the figure's id stays unique on
- * a page that shows several Questions. */
+/** `scope` is the Topic's slug, which keeps the figure's id apart from the
+ * page's other ids. */
 export function visualView(
   visual: Visual,
   library: Library,

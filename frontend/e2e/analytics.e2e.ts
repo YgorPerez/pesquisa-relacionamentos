@@ -8,7 +8,6 @@ import { linkQuery } from '@tem-estudo/rules/link'
 import { tap } from './touch'
 
 const GUIDE = '/onde-conhecer-pessoas'
-const FIRST = 'Onde os casais se conhecem hoje?'
 /** The query of a real link, with the Profile. */
 const QUERY_WITH_PROFILE = linkQuery({
   calculator: 'grupo-possivel',
@@ -58,11 +57,8 @@ async function fillProfile(page: Page, button: string) {
   await form.getByRole('button', { name: button }).click()
 }
 
-/** "Ajudou?" of the Guide's first Question. */
-const helped = (page: Page) =>
-  page
-    .getByRole('region', { name: FIRST, exact: true })
-    .getByRole('region', { name: 'Ajudou?' })
+/** The Guide's one "Ajudou?", near the end (#194). */
+const helped = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
 
 /** A whole visit: the Guide with "Ajudou?" and a Fact sheet opened from it,
  * and the two calculators used twice each. */
@@ -118,23 +114,18 @@ test.describe('usage count', () => {
     await expect(helped(page)).toContainText('Obrigado')
     await expect
       .poll(() => hits.map((e) => e.p))
-      .toContain('helped/yes/onde-os-casais-se-conhecem')
+      .toContain('helped/yes/onde-conhecer-pessoas')
     const event = hits.find((e) => e.p.startsWith('helped/'))
     expect(event?.e).toBe('true')
   })
 
-  test('"Ajudou?" at the end of each Question: yes, or no with one of four reasons, no free field', async ({
+  test('one "Ajudou?" for the whole Guide, after the Fact sheets: yes, or no with one of four reasons, no free field', async ({
     page,
   }) => {
     const { hits } = recordHits(page)
     await open(page, GUIDE)
-    await expect(page.getByRole('region', { name: 'Ajudou?' })).toHaveCount(2)
-    await expect(
-      page
-        .getByRole('region', { name: FIRST, exact: true })
-        .locator('h3')
-        .last(),
-    ).toHaveText('Ajudou?')
+    await expect(helped(page)).toHaveCount(1)
+    await expect(page.locator('#fichas ~ #ajudou')).toHaveCount(1)
 
     await helped(page).getByRole('button', { name: 'Não' }).click()
     const reasons = helped(page)
@@ -154,7 +145,7 @@ test.describe('usage count', () => {
     await expect(helped(page)).toContainText('Obrigado')
     await expect
       .poll(() => hits.map((e) => e.p))
-      .toContain('helped/no/do-not-trust/onde-os-casais-se-conhecem')
+      .toContain('helped/no/do-not-trust/onde-conhecer-pessoas')
   })
 
   test('no send carries a Profile field, nor whether it was filled in', async ({
@@ -178,9 +169,8 @@ test.describe('usage count', () => {
     expect(withProfile).toEqual(withoutProfile)
     const events = withoutProfile.filter((e) => e.e === 'true').map((e) => e.p)
     expect(events).toEqual([
-      'helped/no/hard-to-understand/onde-os-casais-se-conhecem',
-      // The list of Fact sheets closes the Guide, outside any Question: the
-      // key is the Topic.
+      'helped/no/hard-to-understand/onde-conhecer-pessoas',
+      // A Fact sheet opened from the Guide counts by the Topic.
       expect.stringMatching(/^fact-sheet\/onde-conhecer-pessoas\/[a-z0-9-]+$/),
       'calculator/possible-group',
       'calculator/priorities',
@@ -295,20 +285,18 @@ test('the privacy page says what stays on the device, in the link, in the log an
 })
 
 test.describe('usage count inside the Guide', () => {
-  test("a Fact sheet opened inside a Question counts by the Question's slug, as on its old page", async ({
+  test('a Fact sheet opened from a link in a Chapter counts by the Topic', async ({
     page,
   }) => {
     const { hits } = recordHits(page)
     await open(page, '/escolher-parceiro')
     await page
-      .getByRole('region', { name: 'E no Brasil?' })
+      .locator('[data-slot="capitulo"]')
       .getByRole('link', { name: 'a Ficha do estudo brasileiro' })
       .click()
     await expect(page).toHaveURL('/estudos/silva-2020-apps-brasil')
     await expect
       .poll(() => hits.map((e) => e.p))
-      .toContain(
-        'fact-sheet/que-caracteristicas-preveem/silva-2020-apps-brasil',
-      )
+      .toContain('fact-sheet/escolher-parceiro/silva-2020-apps-brasil')
   })
 })

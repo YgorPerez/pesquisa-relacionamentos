@@ -1,85 +1,288 @@
-// The Guide in jsdom (ADR 0035), over the fixture content: the Topic's page
-// holds both Questions in its order, each a section anchored by its slug.
-// `app-ou-presencial` has "Então, vale a pena?", which cites the same Fact
-// sheet as the first Question. The order of the blocks without JavaScript
-// stays in the e2e (`e2e/guide.e2e.ts`).
-import { screen, within } from '@testing-library/react'
-import { expect, it } from 'vite-plus/test'
+// The Guide in jsdom (ADR 0035), over the fixture content: two Chapters,
+// each answering one Question where its reasoning reaches it, with a Myth, a
+// Tip and the marks inside a sentence, then "O que levar". The order of the
+// blocks without JavaScript stays in the e2e (`e2e/guide.e2e.ts`).
+//
+// The reading bar (#195): jsdom draws nothing, so each of its tests says
+// where the page's pieces sit on the screen, as a reader's scroll would
+// leave them, and the scroll event tells the bar to look. With a real
+// browser, the journey is the e2e's (`e2e/reading.e2e.ts`).
+import {
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
+import { paragraphText } from '#/state/reading'
+import { CONTINUE_READING } from './continue-reading.copy'
+import { CHAPTER, chapterOf } from './reading-progress.copy'
 
 const follows = (a: Element, b: Element) =>
   (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
 
-it('the index lists each Question with the first sentence of its short answer and leads to its section', async () => {
+it('the table of contents lists the Chapters in order and leads to each', async () => {
   openScreen('/onde-conhecer-pessoas')
-  const index = await screen.findByRole('navigation', {
-    name: 'Perguntas deste Guia',
-  })
-  const links = within(index).getAllByRole('link')
+  const contents = await screen.findByRole('navigation', { name: 'Capítulos' })
+  const links = within(contents).getAllByRole('link')
+  expect(links.map((l) => [l.textContent, l.getAttribute('href')])).toEqual([
+    ['1O app virou um caminho comum', '#o-app-virou-um-caminho-comum'],
+    ['2O lugar quase não muda a relação', '#o-lugar-quase-nao-muda-a-relacao'],
+  ])
+  for (const link of links) {
+    const chapter = document.getElementById(link.getAttribute('href')!.slice(1))
+    expect(chapter).toHaveAttribute('data-slot', 'capitulo')
+  }
+})
+
+it('"Em resumo" lists each Question with the first sentence of its answer and leads to where the Guide answers it', async () => {
+  openScreen('/onde-conhecer-pessoas')
+  const summary = await screen.findByRole('region', { name: 'Em resumo' })
+  const links = within(summary).getAllByRole('link')
   expect(links.map((l) => [l.textContent, l.getAttribute('href')])).toEqual([
     ['Onde os casais se conhecem hoje?', '#onde-os-casais-se-conhecem'],
     ['App ou presencial, onde tenho mais chance?', '#app-ou-presencial'],
   ])
   for (const link of links) {
-    const section = document.getElementById(link.getAttribute('href')!.slice(1))
-    expect(section).toHaveAccessibleName(link.textContent!)
+    const answer = document.getElementById(link.getAttribute('href')!.slice(1))
+    expect(answer).toHaveAccessibleName(link.textContent!)
+    expect(answer).toHaveAttribute('data-slot', 'resposta')
   }
-  expect(index).toHaveTextContent(
+  expect(summary).toHaveTextContent(
     'No Brasil, 18% dos adultos jovens conheceram o parceiro por app.',
   )
-  // The rest of the short answer opens the Question's section, not the index.
-  expect(index).not.toHaveTextContent('Os estudos divergem')
-  // The index makes no claim of its own: the numbers are in the sections.
-  expect(within(index).queryByRole('link', { name: /^Ficha/ })).toBeNull()
+  // The rest of the answer is in its Chapter, not in the summary.
+  expect(summary).not.toHaveTextContent('Os estudos divergem')
+  expect(within(summary).queryByRole('link', { name: /^Ficha/ })).toBeNull()
 })
 
-it("shows a Question's own section before the evidence and Varia conforme o Perfil?, numbered on the Guide's single list", async () => {
+it('a Chapter reads as prose with its answer, Myth and marks in body order, numbered on the single list', async () => {
   openScreen('/onde-conhecer-pessoas')
-  const second = await screen.findByRole('region', {
-    name: 'App ou presencial, onde tenho mais chance?',
+  const chapter = await screen.findByRole('region', {
+    name: 'O app virou um caminho comum',
   })
-  const own = within(second).getByRole('region', {
-    name: 'Então, vale a pena?',
+  const answer = within(chapter).getByRole('region', {
+    name: 'Onde os casais se conhecem hoje?',
   })
-  expect(own).toHaveTextContent('Vale como um caminho entre outros')
-  const evidence = within(second).getByRole('region', {
-    name: 'O que a evidência diz',
+  expect(answer).toHaveTextContent('confiança moderada')
+  const myth = chapter.querySelector('[data-slot="mito"]')!
+  expect(myth).toHaveTextContent(
+    'Mais da metade dos casais se conhece por app.',
+  )
+  expect(follows(answer, myth)).toBe(true)
+  expect(within(chapter).getByText('no Brasil')).toHaveClass('marca-brasil')
+  // The findings back the answer at build time; the page does not list them.
+  expect(
+    screen.queryByRole('region', { name: 'O que a evidência diz' }),
+  ).toBeNull()
+  // Costa 2018 is number 2 in the first Chapter: the Guide has one list, so
+  // it is 2 in the second Chapter too, and leads to the second Fact sheet.
+  const second = screen.getByRole('region', {
+    name: 'O lugar quase não muda a relação',
   })
-  const profile = within(second).getByRole('region', {
-    name: 'Varia conforme o Perfil?',
-  })
-  expect(follows(own, evidence)).toBe(true)
-  expect(follows(evidence, profile)).toBe(true)
-  // Costa 2018 was already number 2 in the first Question: the Guide has one
-  // list, so here it is 2 too, and it leads to the second of "Fichas citadas".
-  const reference = within(own).getByRole('link', { name: /^Ficha 2:/ })
-  const [, second2] = within(
+  const [reference] = within(second).getAllByRole('link', { name: /^Ficha 2:/ })
+  const [, costa] = within(
     screen.getByRole('region', { name: 'Fichas citadas' }),
   ).getAllByRole('listitem')
   const target = document.getElementById(
-    reference.getAttribute('href')!.replace(/^#/, ''),
+    reference!.getAttribute('href')!.replace(/^#/, ''),
   )
-  expect(target?.closest('li')).toBe(second2)
+  expect(target?.closest('li')).toBe(costa)
 })
 
-it('the frame closes the Guide: the Limitations of each Question, the Fact sheets, then the Questions of other Topics', async () => {
+it('the frame closes the Guide: O que levar, O que não se sabe, the Fact sheets, one Ajudou? and the Questions of other Topics', async () => {
   openScreen('/onde-conhecer-pessoas')
-  const limitations = await screen.findByRole('region', {
-    name: 'Limitações e o que não se sabe',
-  })
-  const groups = within(limitations).getAllByRole('heading', { level: 3 })
-  expect(groups.map((h) => h.textContent)).toEqual([
-    'Onde os casais se conhecem hoje?',
-    'App ou presencial, onde tenho mais chance?',
-  ])
+  const takeaways = await screen.findByRole('region', { name: 'O que levar' })
+  const unknowns = screen.getByRole('region', { name: 'O que não se sabe' })
   const factSheets = screen.getByRole('region', { name: 'Fichas citadas' })
-  const lastQuestion = screen.getByRole('region', {
-    name: 'App ou presencial, onde tenho mais chance?',
+  const helped = screen.getByRole('region', { name: 'Ajudou?' })
+  const elsewhere = screen.getByRole('region', {
+    name: 'Perguntas de outros Temas',
   })
-  expect(follows(lastQuestion, limitations)).toBe(true)
-  expect(follows(limitations, factSheets)).toBe(true)
-  // Both Questions relate only to each other, in the same Topic.
-  expect(
-    screen.queryByRole('region', { name: 'Perguntas de outros Temas' }),
-  ).toBeNull()
+  expect(unknowns).toHaveTextContent('Nenhum estudo separou app de rede social')
+  expect(follows(takeaways, unknowns)).toBe(true)
+  expect(follows(unknowns, factSheets)).toBe(true)
+  expect(follows(factSheets, helped)).toBe(true)
+  expect(follows(helped, elsewhere)).toBe(true)
+  expect(screen.getAllByRole('region', { name: 'Ajudou?' })).toHaveLength(1)
+  expect(within(elsewhere).getByRole('link')).toHaveTextContent(
+    'Que características do parceiro preveem uma boa relação?',
+  )
+})
+
+// The reading bar.
+
+const KEY = 'tem-estudo:reading'
+const FIRST = 'o-app-virou-um-caminho-comum'
+const SECOND = 'o-lugar-quase-nao-muda-a-relacao'
+
+/** The top of each piece on the screen (px); the rest sits at 0, flat. */
+interface Layout {
+  readonly [FIRST]: number
+  readonly [SECOND]: number
+  readonly takeaways: number
+  /** The paragraph whose text starts like this, and where it sits. */
+  readonly paragraph?: { readonly text: string; readonly top: number }
+}
+
+function lay(layout: Layout) {
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(
+    function (this: Element) {
+      const box = (top: number, height: number) =>
+        DOMRect.fromRect({ x: 0, y: top, width: 400, height })
+      if (this.getAttribute('data-slot') === 'capitulos-texto')
+        return box(layout[FIRST], layout.takeaways - layout[FIRST])
+      if (this.id === FIRST || this.id === SECOND)
+        return box(layout[this.id], 1000)
+      if (this.id === 'o-que-levar') return box(layout.takeaways, 600)
+      if (this.tagName === 'P') {
+        const text = paragraphText(this.textContent ?? '')
+        const top =
+          layout.paragraph && text === layout.paragraph.text
+            ? layout.paragraph.top
+            : 100
+        return box(top, 60)
+      }
+      return box(0, 0)
+    },
+  )
+}
+
+const scroll = () => fireEvent.scroll(window)
+const saved = () =>
+  JSON.parse(localStorage.getItem(KEY) ?? 'null') as {
+    inProgress: Record<string, unknown>
+    finished: string[]
+  } | null
+
+/** jsdom's screen is 768px tall: the reading line sits at 40%. */
+const LINE = 768 * 0.4
+
+it('into the second Chapter, the bar names it, and its list jumps to another Chapter', async () => {
+  const user = userEvent.setup()
+  openScreen('/onde-conhecer-pessoas')
+  await screen.findByRole('region', { name: 'Em resumo' })
+  lay({ [FIRST]: -2000, [SECOND]: 100, takeaways: 3000 })
+  scroll()
+
+  const bar = await screen.findByRole('button', {
+    name: (name) =>
+      name.replace(/\s+/g, ' ') ===
+      `${CHAPTER} ${chapterOf(2, 2)} O lugar quase não muda a relação`,
+  })
+  expect(bar).toHaveAttribute('aria-expanded', 'false')
+  await user.click(bar)
+  expect(bar).toHaveAttribute('aria-expanded', 'true')
+  const list = bar.closest('[data-slot="leitura"]')!
+  const here = within(list as HTMLElement).getByRole('link', {
+    current: 'location',
+  })
+  expect(here).toHaveAttribute('href', `#${SECOND}`)
+
+  await user.click(
+    within(list as HTMLElement).getByRole('link', {
+      name: /O app virou um caminho comum/,
+    }),
+  )
+  expect(bar).toHaveAttribute('aria-expanded', 'false')
+})
+
+it('where the reader stops is saved: the Chapter, the paragraph at the top and how much was read', async () => {
+  openScreen('/onde-conhecer-pessoas')
+  await screen.findByRole('region', { name: 'Em resumo' })
+  lay({ [FIRST]: -2000, [SECOND]: 100, takeaways: 3000 })
+  scroll()
+
+  const first = paragraphText(
+    document.getElementById(SECOND)!.querySelector('p')!.textContent!,
+  )
+  await waitFor(() =>
+    expect(saved()?.inProgress['onde-conhecer-pessoas']).toMatchObject({
+      chapter: SECOND,
+      chapterTitle: 'O lugar quase não muda a relação',
+      chapterNumber: 2,
+      chapters: 2,
+      paragraph: { index: 0, text: first },
+      progress: Math.round(((LINE + 2000) / 5000) * 100) / 100,
+    }),
+  )
+})
+
+it('above the first Chapter nothing is saved, and reaching "O que levar" counts the Guide as read', async () => {
+  openScreen('/onde-conhecer-pessoas')
+  await screen.findByRole('region', { name: 'Em resumo' })
+  lay({ [FIRST]: 900, [SECOND]: 2000, takeaways: 3000 })
+  scroll()
+  lay({ [FIRST]: -3000, [SECOND]: -2000, takeaways: 100 })
+  scroll()
+  await waitFor(() =>
+    expect(saved()).toEqual({
+      inProgress: {},
+      finished: ['onde-conhecer-pessoas'],
+    }),
+  )
+})
+
+/** Leaves the reading in the browser, opens the home page and taps the
+ * item: the bar of the Guide takes the reader back. */
+async function continueFrom(paragraph: { index: number; text: string }) {
+  const user = userEvent.setup()
+  localStorage.setItem(
+    KEY,
+    JSON.stringify({
+      inProgress: {
+        'onde-conhecer-pessoas': {
+          chapter: SECOND,
+          chapterTitle: 'O lugar quase não muda a relação',
+          chapterNumber: 2,
+          chapters: 2,
+          paragraph,
+          progress: 0.5,
+          at: 1,
+        },
+      },
+      finished: [],
+    }),
+  )
+  const jumps = vi.fn<(options: ScrollToOptions) => void>()
+  window.scrollTo = jumps as typeof window.scrollTo
+  openScreen('/')
+  const region = await screen.findByRole('region', { name: CONTINUE_READING })
+  await user.click(within(region).getByRole('link'))
+  return jumps
+}
+
+it('"continuar" brings the saved paragraph to the top, even moved further in its Chapter', async () => {
+  // The text the bar kept of the Chapter's first paragraph.
+  openScreen('/onde-conhecer-pessoas')
+  await screen.findByRole('region', { name: 'Em resumo' })
+  const text = paragraphText(
+    document.getElementById(SECOND)!.querySelector('p')!.textContent!,
+  )
+  cleanup()
+  // It was the fourth paragraph then; today it is the first, at 1500.
+  lay({
+    [FIRST]: -2000,
+    [SECOND]: 900,
+    takeaways: 3000,
+    paragraph: { text, top: 1500 },
+  })
+  const jumps = await continueFrom({ index: 3, text })
+  await waitFor(() =>
+    expect(jumps).toHaveBeenCalledWith({ top: 1500 - 16, behavior: 'instant' }),
+  )
+})
+
+it('"continuar" to a paragraph that is gone lands on its Chapter\'s start', async () => {
+  lay({ [FIRST]: -2000, [SECOND]: 900, takeaways: 3000 })
+  const jumps = await continueFrom({
+    index: 0,
+    text: 'Um parágrafo que saiu do Guia na última revisão do texto.',
+  })
+  await waitFor(() =>
+    expect(jumps).toHaveBeenCalledWith({ top: 900 - 16, behavior: 'instant' }),
+  )
 })

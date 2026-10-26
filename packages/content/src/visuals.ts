@@ -1,4 +1,4 @@
-// A Question's Visuals (#182): data in the frontmatter, placed in the body by
+// A Guide's Visuals (#182): data in the frontmatter, placed in the body by
 // a line of its own, `{{visual:<id>}}`, and drawn as SVG on the server. Four
 // kinds: bar comparison, time line, table of Studies, relation diagram.
 //
@@ -145,13 +145,12 @@ const ANY_PLACEHOLDER = /\{\{\s*visual\b[^}]*\}\}/g
 
 export const placeholder = (id: string) => `{{visual:${id}}}`
 
-/** Each declared Visual is placed once in the body, outside the short
- * answer, and each placeholder names a declared Visual. */
+/** Each declared Visual is placed once in the body, and each placeholder
+ * names a declared Visual. */
 export function visualPlacementProblems(
   file: string,
   visuals: ReadonlyArray<Visual>,
   body: string,
-  shortAnswer: string,
 ): Problem[] {
   const errors: Problem[] = []
   const seen = new Set<string>()
@@ -182,14 +181,6 @@ export function visualPlacementProblems(
     }
     placed.push(alone[1])
   }
-  if (ANY_PLACEHOLDER.test(shortAnswer))
-    errors.push(
-      problem(
-        file,
-        'a Visual does not go in the short answer, which the search and the Topic page also show as text',
-      ),
-    )
-  ANY_PLACEHOLDER.lastIndex = 0
   for (const id of new Set(placed)) {
     const count = placed.filter((p) => p === id).length
     if (!seen.has(id))
@@ -329,9 +320,9 @@ const roundTo = (value: number, places: number) => {
   return Math.round(value * factor * (1 + Number.EPSILON)) / factor
 }
 
-/** A Question with Visuals, as the build has it after linking: its file and
+/** A Guide with Visuals, as the build has it after linking: its file and
  * the Fact sheets its text cites (the page's numbering). */
-export interface QuestionWithVisuals {
+export interface GuideWithVisuals {
   readonly file: string
   readonly visuals?: ReadonlyArray<Visual>
   readonly citedFactSheets: ReadonlyArray<string>
@@ -339,7 +330,7 @@ export interface QuestionWithVisuals {
 
 /** The Visuals' checks against the Fact sheets. */
 export function visualProblems(
-  questions: ReadonlyArray<QuestionWithVisuals>,
+  guides: ReadonlyArray<GuideWithVisuals>,
   factSheets: ReadonlyArray<FactSheet>,
 ): Problem[] {
   const bySlug = new Map(factSheets.map((f) => [f.slug, f]))
@@ -352,9 +343,9 @@ export function visualProblems(
     return found
   }
   const errors: Problem[] = []
-  for (const question of questions) {
+  for (const guide of guides) {
     const err = (text: string, field: string) =>
-      errors.push(problem(question.file, text, field))
+      errors.push(problem(guide.file, text, field))
 
     /** The Fact sheet exists, is ✅/🟡 and the page cites it. */
     const usable = (slug: string, field: string): FactSheet | null => {
@@ -370,9 +361,9 @@ export function visualProblems(
         )
         return null
       }
-      if (!question.citedFactSheets.includes(slug))
+      if (!guide.citedFactSheets.includes(slug))
         err(
-          `the Question does not cite the fact sheet "${slug}"; the text the Visual illustrates cites it with [@${slug}], so it has a number in the page's list`,
+          `the Guide does not cite the fact sheet "${slug}"; the text the Visual illustrates cites it with [@${slug}], so it has a number in the page's list`,
           field,
         )
       return factSheet
@@ -441,7 +432,7 @@ export function visualProblems(
         )
     }
 
-    question.visuals?.forEach((visual, i) => {
+    guide.visuals?.forEach((visual, i) => {
       const at = `visuals.${i}`
       switch (visual.kind) {
         case 'bars': {

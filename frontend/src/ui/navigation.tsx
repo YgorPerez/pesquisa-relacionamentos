@@ -264,6 +264,15 @@ export function BackLink({
  * notify. */
 const noSubscribers = () => () => {}
 
+/** `false` on the server and during hydration, `true` on the next render:
+ * for a piece that only the browser can draw. */
+export const useInBrowser = () =>
+  useSyncExternalStore(
+    noSubscribers,
+    () => true,
+    () => false,
+  )
+
 /** "Voltar para <Guia>", when the page came from another Guide. Does the
  * same as the browser's back. */
 export function BackToGuide() {
@@ -272,11 +281,7 @@ export function BackToGuide() {
   // The server does not know the history: the button only shows after
   // hydration. Hydration reads the server's `false`, and the next render the
   // `true`.
-  const inBrowser = useSyncExternalStore(
-    noSubscribers,
-    () => true,
-    () => false,
-  )
+  const inBrowser = useInBrowser()
   if (!inBrowser || !from) return null
 
   return (

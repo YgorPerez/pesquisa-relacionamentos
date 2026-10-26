@@ -1,16 +1,9 @@
 // The page pieces (`sheet.tsx`) and the section pieces (`section.tsx`): the
 // sheet, the column, the big title, the lead, the section with its title, the
-// block inside a Question with its smaller title, the panel and the notice.
+// panel and the notice.
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Column, Display, Sheet, Lead } from './sheet'
-import {
-  Notice,
-  Headline,
-  Panel,
-  Section,
-  Subhead,
-  Subsection,
-} from './section'
+import { Notice, Headline, Panel, Section } from './section'
 
 const meta = {
   parameters: { layout: 'fullscreen' },
@@ -38,10 +31,6 @@ export const OnePage: Story = {
           <Panel>
             <p className="m-0">Que características preveem uma boa relação?</p>
           </Panel>
-          <Subsection aria-labelledby="t-exemplo-brasil">
-            <Subhead id="t-exemplo-brasil">E no Brasil?</Subhead>
-            <p className="m-0">Nenhum estudo brasileiro mediu isso ainda.</p>
-          </Subsection>
         </Section>
       </Column>
     </Sheet>

@@ -9,7 +9,7 @@
 import { Link } from '@tanstack/react-router'
 import { FoldArrow, ForwardArrow } from './navigation'
 import { Panel } from './section'
-import { OPEN_TOPIC, questionCount } from './topic-index.copy'
+import { OPEN_TOPIC, READ, questionCount } from './topic-index.copy'
 
 type IndexTopic = {
   readonly slug: string
@@ -21,9 +21,26 @@ type IndexTopic = {
   }>
 }
 
+/** "lido", with the look of the "no Brasil" mark (`.marca-brasil`). */
+const ReadTag = () => (
+  <span
+    className="ml-2 inline-block rounded-mao-2 border-(length:--traco-etiqueta) border-tinta bg-folha px-xs align-middle font-label text-etiqueta leading-nota font-bold whitespace-nowrap"
+    data-slot="lido"
+  >
+    {READ}
+  </span>
+)
+
 /** The Topics, each a fold with the count of Questions; open, the Questions
- * in the Topic's order and "Abrir o Tema". */
-export function TopicIndex({ topics }: { topics: ReadonlyArray<IndexTopic> }) {
+ * in the Topic's order and "Abrir o Tema". A Topic in `read` (its Guide read
+ * to "O que levar" in this browser, #195) says "lido" next to its name. */
+export function TopicIndex({
+  topics,
+  read,
+}: {
+  topics: ReadonlyArray<IndexTopic>
+  read?: ReadonlySet<string>
+}) {
   return (
     <Panel className="py-1.5">
       <ol className="m-0 list-none p-0" data-slot="temas">
@@ -38,6 +55,7 @@ export function TopicIndex({ topics }: { topics: ReadonlyArray<IndexTopic> }) {
                 <span>
                   <span className="block font-title text-title decoration-2 underline-offset-4 group-hover/summary:underline">
                     {topic.title}
+                    {read?.has(topic.slug) && <ReadTag />}
                   </span>
                   <span className="block text-nota leading-nota text-tinta-2">
                     {questionCount(topic.questions.length)}

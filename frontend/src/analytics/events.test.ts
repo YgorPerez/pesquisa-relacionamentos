@@ -18,5 +18,8 @@ describe('EVENTS', () => {
       'calculator/possible-group',
     )
     expect(EVENTS.calculator('prioridades')).toBe('calculator/priorities')
+    expect(EVENTS.continueReading('onde-conhecer-pessoas')).toBe(
+      'continue-reading/onde-conhecer-pessoas',
+    )
   })
 })

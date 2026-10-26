@@ -58,12 +58,13 @@ export function searchWarnings(library: Library): Problem[] {
   ]
 }
 
-/** `previous` only lists paths that disappeared, and each has a single owner. */
+/** `previous` only lists paths that disappeared, and each has a single owner:
+ * one file and one destination (two Questions of one Guide share a file). */
 export function beforeErrors(library: Library): Problem[] {
   const errors: Problem[] = []
   const site = sitePaths(library)
-  const owner = new Map<string, string>()
-  for (const { old, file } of oldPaths(library)) {
+  const owner = new Map<string, { file: string; current: string }>()
+  for (const { old, file, current } of oldPaths(library)) {
     if (site.has(old)) {
       errors.push(
         problem(
@@ -75,12 +76,12 @@ export function beforeErrors(library: Library): Problem[] {
       continue
     }
     const other = owner.get(old)
-    if (other === undefined) owner.set(old, file)
-    else if (other !== file)
+    if (other === undefined) owner.set(old, { file, current })
+    else if (other.file !== file || other.current !== current)
       errors.push(
         problem(
           file,
-          `the path ${old} is already in the "previous" of ${other}`,
+          `the path ${old} already leads to ${other.current}, from ${other.file}`,
           'previous',
         ),
       )

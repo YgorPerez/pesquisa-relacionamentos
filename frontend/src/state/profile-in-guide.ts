@@ -1,4 +1,5 @@
-// The saved Profile applied to a Question of the Guide, by the package's rule.
+// The saved Profile applied to a Question's answer in the Guide, by the
+// package's rule.
 import {
   profileInGuide,
   type ProfileInGuide,
@@ -18,7 +19,7 @@ export function useProfileInGuide(question: QuestionView): {
       profileInGuide(profile, {
         key: question.keyCoverage,
         findings: question.findings.map((a) => a.coverage),
-        tips: question.tips.map((d) => d.coverage),
+        tips: [],
       }),
     [profile, question],
   )

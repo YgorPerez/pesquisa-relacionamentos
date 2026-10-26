@@ -57,13 +57,18 @@ function filesWith(swaps: Record<string, Swap> = {}): ContentFile[] {
 const buildWith = (swaps: Record<string, Swap>) =>
   buildLibrary(filesWith(swaps))
 
+/** Gives a Question of the fixture Guide its `previous`. */
+const questionPrevious = (slug: string, list: string) => (original: string) =>
+  original.replace(
+    `  - slug: ${slug}\n`,
+    `  - slug: ${slug}\n    previous: [${list}]\n`,
+  )
+
 /** Appends lines to the end of the frontmatter. */
 const inFrontmatter = (lines: string) => (original: string) =>
   original.replace(/\n---\n/, `\n${lines}\n---\n`)
 
-const GUIDE = 'guides/onde-conhecer/onde-os-casais-se-conhecem.md'
-const OTHER_GUIDE = 'guides/onde-conhecer/app-ou-presencial.md'
-const TOPIC = 'guides/onde-conhecer/_topic.md'
+const TOPIC = 'guides/onde-conhecer.md'
 const SILVA = 'studies/silva-2020-apps-brasil.md'
 
 describe('search title and description', () => {
@@ -121,9 +126,11 @@ describe('search title and description', () => {
     const title =
       'Onde os casais brasileiros de todas as idades se conhecem hoje em dia'
     const result = buildWith({
-      [TOPIC]: (t) => t.replace(/^title: .*$/m, `title: ${title}`),
       // A Question has no page of its own: a long question does not warn.
-      [GUIDE]: (t) => t.replace(/^question: .*$/m, `question: ${title}?`),
+      [TOPIC]: (t) =>
+        t
+          .replace(/^title: .*$/m, `title: ${title}`)
+          .replace('question: App ou presencial?', `question: ${title}?`),
     })
     expect(result.ok).toBe(true)
     expect(warningsOf(result)).toEqual([
@@ -180,15 +187,16 @@ describe('sitemap and robots', () => {
 })
 
 describe('previous: 301 from the old path', () => {
-  it("a fact sheet, tip and guide point the old slug to today's path", () => {
+  it("a fact sheet, tip and Question point the old slug to today's path", () => {
     const library = libraryOf(
       buildWith({
         [SILVA]: inFrontmatter('previous: [silva-2020-apps]'),
         'tips/apps-como-complemento.md': inFrontmatter(
           'previous: [app-complemento]',
         ),
-        [GUIDE]: inFrontmatter(
-          'previous: [onde-casais-se-conhecem, escolher-parceiro/onde-se-conhecem]',
+        [TOPIC]: questionPrevious(
+          'onde-os-casais-se-conhecem',
+          'onde-casais-se-conhecem, escolher-parceiro/onde-se-conhecem',
         ),
       }),
     )
@@ -205,11 +213,13 @@ describe('previous: 301 from the old path', () => {
     })
   })
 
-  it('a renamed topic takes its guides along, with the old slugs', () => {
+  it('a renamed topic takes its Questions along, with the old slugs', () => {
     const library = libraryOf(
       buildWith({
-        [TOPIC]: inFrontmatter('previous: [conhecer-gente]'),
-        [OTHER_GUIDE]: inFrontmatter('previous: [app-ou-bar]'),
+        [TOPIC]: (t) =>
+          inFrontmatter('previous: [conhecer-gente]')(
+            questionPrevious('app-ou-presencial', 'app-ou-bar')(t),
+          ),
       }),
     )
     expect(redirects(library)).toEqual({
@@ -225,7 +235,7 @@ describe('previous: 301 from the old path', () => {
     })
   })
 
-  it("without `previous`, each Question's old page leads to its section", () => {
+  it("without `previous`, each Question's old page leads to its answer in the Guide", () => {
     expect(redirects(libraryOf(buildLibrary(filesWith())))).toEqual({
       '/onde-conhecer/onde-os-casais-se-conhecem':
         '/onde-conhecer#onde-os-casais-se-conhecem',
@@ -233,30 +243,34 @@ describe('previous: 301 from the old path', () => {
     })
   })
 
-  it("fails when `previous` claims another Question's old page", () => {
+  it("fails when `previous` claims another Question's old page, even in the same Guide", () => {
     expect(
       errorsOf(
         buildWith({
-          [OTHER_GUIDE]: inFrontmatter(
-            'previous: [onde-os-casais-se-conhecem]',
+          [TOPIC]: questionPrevious(
+            'app-ou-presencial',
+            'onde-os-casais-se-conhecem',
           ),
         }),
       ),
     ).toContain(
-      `${OTHER_GUIDE}: previous: the path /onde-conhecer/onde-os-casais-se-conhecem is already in the "previous" of ${GUIDE}`,
+      `${TOPIC}: previous: the path /onde-conhecer/onde-os-casais-se-conhecem already leads to /onde-conhecer#onde-os-casais-se-conhecem, from ${TOPIC}`,
     )
   })
 
-  it('fails when two files declare the same old path', () => {
+  it('fails when two Questions declare the same old path', () => {
     expect(
       errorsOf(
         buildWith({
-          [GUIDE]: inFrontmatter('previous: [velho]'),
-          [OTHER_GUIDE]: inFrontmatter('previous: [velho]'),
+          [TOPIC]: (t) =>
+            questionPrevious(
+              'onde-os-casais-se-conhecem',
+              'velho',
+            )(questionPrevious('app-ou-presencial', 'velho')(t)),
         }),
       ),
     ).toContain(
-      `${OTHER_GUIDE}: previous: the path /onde-conhecer/velho is already in the "previous" of ${GUIDE}`,
+      `${TOPIC}: previous: the path /onde-conhecer/velho already leads to /onde-conhecer#onde-os-casais-se-conhecem, from ${TOPIC}`,
     )
   })
 
@@ -305,7 +319,7 @@ describe('the last published sitemap', () => {
     const previous = sitemap('/onde-conhecer/app-ou-bar', '/estudos/silva-2020')
     const result = buildLibrary(
       filesWith({
-        [OTHER_GUIDE]: inFrontmatter('previous: [app-ou-bar]'),
+        [TOPIC]: questionPrevious('app-ou-presencial', 'app-ou-bar'),
         [SILVA]: inFrontmatter('previous: [silva-2020]'),
       }),
       { previousSitemap: previous },
