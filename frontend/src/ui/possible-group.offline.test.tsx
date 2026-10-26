@@ -6,15 +6,19 @@
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
-import { newCount, range, requirement } from '#/platform/screens/possible-group'
+import {
+  newCount,
+  openPossibleGroup,
+  range,
+  requirement,
+} from '#/platform/screens/possible-group'
 import { enterProfile } from '#/platform/screens/profile'
 import { goOffline } from '#/platform/screens/network'
 
 it('without network, it says the data did not arrive, and retrying does the count', async () => {
   const user = userEvent.setup()
   const network = goOffline()
-  openScreen('/grupo-possivel')
+  openPossibleGroup()
   await enterProfile(
     user,
     { gender: 'mulher', seeks: 'homens', age: '40' },
@@ -34,7 +38,7 @@ it('without network, it says the data did not arrive, and retrying does the coun
 
 it('when the detail data (parents, work, home) does not arrive, it says so like the base data, and retrying does the count', async () => {
   const user = userEvent.setup()
-  openScreen('/grupo-possivel')
+  openPossibleGroup()
   await enterProfile(
     user,
     { gender: 'mulher', seeks: 'homens', age: '40' },

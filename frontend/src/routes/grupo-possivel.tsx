@@ -30,6 +30,7 @@ import {
   type Requirements,
 } from '@tem-estudo/rules/requirements'
 import {
+  groupImage,
   isLink,
   linkSentence,
   linkQuery,
@@ -42,6 +43,7 @@ import { fetchGroupPreview, previewMeta } from '#/content/preview'
 import { useReceivedLink } from '#/state/link'
 import { Share } from '#/ui/share'
 import { COUNTING_NOTICE } from '#/ui/share.copy'
+import { ShareImage } from '#/ui/share-image'
 import {
   saveRequirements,
   PLACES_WITH_DATA,
@@ -134,6 +136,9 @@ function PossibleGroupPage() {
     profile,
     requirements: saved,
   }
+  const query = linkQuery(link)
+  // The image reads the link itself, so it shows only what the link carries.
+  const image = groupImage(query, count.estimate, { municipality })
 
   return (
     <Sheet>
@@ -155,10 +160,12 @@ function PossibleGroupPage() {
         />
 
         <Share
-          query={linkQuery(link)}
+          query={query}
           sentence={linkSentence(link, { municipality })}
           notice={COUNTING_NOTICE}
-        />
+        >
+          {image && <ShareImage image={image} />}
+        </Share>
 
         {guide && <FromTheGuide guide={guide} />}
       </Column>
