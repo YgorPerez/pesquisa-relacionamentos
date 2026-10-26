@@ -24,6 +24,7 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
+import { renderVisuals, type RenderedVisual } from './visuals-view'
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -323,16 +324,33 @@ function guideTips(
   })
 }
 
-function ownSections(guide: Guide, numbers: Numbering): GuideView['sections'] {
+function ownSections(
+  guide: Guide,
+  numbers: Numbering,
+  visuals: ReadonlyMap<string, RenderedVisual>,
+): GuideView['sections'] {
   return guide.sections.map((s, i) => ({
     id: `t-secao-${i + 1}`,
     title: s.title,
-    html: html(withReferences(s.markdown, numbers)),
+    html: html(withReferences(s.markdown, numbers), visuals),
   }))
 }
 
+/** The Question's Visuals drawn, with the page's Fact sheet numbers. */
+const questionVisuals = (guide: Guide, library: Library, numbers: Numbering) =>
+  renderVisuals(
+    guide.visuals ?? [],
+    library,
+    (slug) => {
+      const factSheet = numbers.get(slug)
+      return factSheet && { ...factSheet, anchor: anchor(slug) }
+    },
+    guide.slug,
+  )
+
 export function guideView(guide: Guide, library: Library): GuideView {
   const numbers = numberFactSheets(guide.citedFactSheets, library)
+  const visuals = questionVisuals(guide, library, numbers)
   const topic = library.topics.find((t) => t.slug === guide.topic)
   return {
     ...guideSummary(guide),
@@ -361,13 +379,13 @@ export function guideView(guide: Guide, library: Library): GuideView {
           })),
         }
       : null,
-    sections: ownSections(guide, numbers),
-    profileHtml: html(withReferences(guide.variesByProfile, numbers)),
+    sections: ownSections(guide, numbers, visuals),
+    profileHtml: html(withReferences(guide.variesByProfile, numbers), visuals),
     myths: guide.myths.map((m) => ({
       claim: m.claim,
       whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
     })),
-    limitationsHtml: html(withReferences(guide.limitations, numbers)),
+    limitationsHtml: html(withReferences(guide.limitations, numbers), visuals),
     factSheets: citedFactSheets(guide.citedFactSheets, library),
     related: guide.related.flatMap((slug) => {
       const other = library.guides.find((g) => g.slug === slug)

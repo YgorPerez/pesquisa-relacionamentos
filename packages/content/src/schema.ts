@@ -11,6 +11,7 @@ import {
   SEEKS,
   VERIFICATION_STATUSES,
 } from './lists.ts'
+import { Visual } from './visuals.ts'
 
 const Text = Schema.String.check(
   Schema.isMinLength(1, { message: 'cannot be empty' }),
@@ -173,5 +174,8 @@ export const GuideFrontmatter = Schema.Struct({
   calculator: Schema.optional(Schema.Literals(CALCULATORS)),
   previous: Schema.optional(Schema.Array(GuidePath)),
   seo: Schema.optional(Seo),
+  /** The Question's Visuals (#182), each placed in the body by a line
+   * `{{visual:<id>}}`; `visuals.ts` has the format and the checks. */
+  visuals: Schema.optional(Schema.Array(Visual)),
 })
 export type GuideFrontmatter = typeof GuideFrontmatter.Type

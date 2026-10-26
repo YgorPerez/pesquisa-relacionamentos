@@ -21,6 +21,7 @@ import {
   type Topic,
 } from './items.ts'
 import { link } from './publication.ts'
+import { visualProblems } from './visuals.ts'
 import {
   PRIORITIES_FILE,
   PRIORITIES_META,
@@ -216,6 +217,7 @@ export function buildLibrary(
 
   const linked = link({ factSheets, topics, guides, tips, broken })
   errors.push(...linked.errors)
+  errors.push(...visualProblems(linked.guides, factSheets))
 
   const data: DataOrigin[] = []
   for (const meta of [...metas].sort((a, b) => a.path.localeCompare(b.path))) {
