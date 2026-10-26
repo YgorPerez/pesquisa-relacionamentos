@@ -457,6 +457,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(nonSmoker) => change({ nonSmoker })}
       />
     ),
+    office: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem trabalha em escritório"
+        checked={requirements.office}
+        onChange={(office) => change({ office })}
+      />
+    ),
     obesity: ({ requirements, change }) => (
       <CheckChip
         label="Só quem tem IMC abaixo de 30"

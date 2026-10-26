@@ -90,6 +90,8 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       noChildren: true,
       height: { min: 160, max: 190 },
       nonSmoker: true,
+      // Office occupation came after the move: an old save has it off.
+      office: false,
       // Born after the move to English: never under the old key.
       notObese: false,
       noDepressionSymptoms: false,

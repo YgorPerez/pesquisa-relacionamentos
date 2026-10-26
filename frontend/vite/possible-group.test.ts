@@ -50,6 +50,26 @@ describe('the Possible group packs', () => {
     expect(Math.abs(r.result.central - 229_861)).toBeLessThan(1)
   })
 
+  it("office work over the Census cells lands near the PNAD's own rate for women aged 25 to 29 (29.4%)", () => {
+    // The Census weighs each education with its own people; if its mix
+    // matches the PNAD's, the share comes back to the PNAD row without
+    // education.
+    const requirements = {
+      ...DEFAULT_REQUIREMENTS,
+      age: { min: 25, max: 29 },
+      noLiveInPartner: false,
+    }
+    const share = (office: boolean) =>
+      estimateGroup(
+        {
+          profile: { seeks: 'mulheres' },
+          requirements: { ...requirements, office },
+        },
+        { brazil },
+      ).result.central
+    expect(Math.abs(share(true) / share(false) - 0.294)).toBeLessThan(0.03)
+  })
+
   it('the estimate for someone who said nothing is adult Brazil not living with a partner', () => {
     expect(built.example.active).toEqual(['partner'])
     expect(built.example.target).toBe('people')

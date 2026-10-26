@@ -134,6 +134,7 @@ const REQUIREMENT_KEYS_V1 = [
   'sem-filhos',
   'altura',
   'nao-fuma',
+  'escritorio',
   ...SENSITIVE_KEYS.map(([, key]) => key),
 ]
 
@@ -169,6 +170,7 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
+  if (r.office) pairs.push(['escritorio', 'sim'])
   for (const [field, key] of SENSITIVE_KEYS)
     if (r[field]) pairs.push([key, 'sim'])
   return pairs
@@ -212,6 +214,7 @@ function readV1(
     noChildren: q.get('sem-filhos') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
+    office: q.get('escritorio') === 'sim',
     ...Object.fromEntries(
       SENSITIVE_KEYS.map(([field, key]) => [field, q.get(key) === 'sim']),
     ),
@@ -357,6 +360,7 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
       value('children'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
+    r.office && value('office'),
     ...sensitiveOn(r).map(sensitiveLabel),
   ].filter((x): x is string => typeof x === 'string')
 }

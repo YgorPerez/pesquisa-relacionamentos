@@ -114,6 +114,9 @@ export interface Requirements {
   readonly noChildren: boolean
   readonly height: Range
   readonly nonSmoker: boolean
+  /** Works in an office occupation: VD4011 groups 1 to 4 of the PNAD
+   * Contínua (#294). */
+  readonly office: boolean
   // The sensitive ones (`SENSITIVE_REQUIREMENTS`): health, sex life and
   // religion, LGPD art. 5º, II.
   /** BMI under 30, from the PNS self-reported weight and height. */
@@ -136,6 +139,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   noChildren: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
+  office: false,
   notObese: false,
   noDepressionSymptoms: false,
   bisexual: false,
@@ -296,6 +300,7 @@ export const REQUIREMENTS = [
   'children',
   'height',
   'smoking',
+  'office',
   'obesity',
   'depression',
   'bisexual',
@@ -323,6 +328,7 @@ export function release(
     children: { noChildren: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
+    office: { office: false },
     obesity: { notObese: false },
     worship: { weeklyWorship: false },
     bisexual: { bisexual: false },
@@ -345,6 +351,7 @@ export const REQUIREMENT_TITLE: Readonly<
   children: 'Filhos',
   height: 'Altura',
   smoking: 'Cigarro',
+  office: 'Ocupação',
   obesity: 'IMC',
   worship: 'Religião toda semana',
   bisexual: 'Bissexual',
@@ -451,6 +458,8 @@ export function requirementValue(
     }
     case 'smoking':
       return r.nonSmoker ? 'não fuma' : 'fuma ou não'
+    case 'office':
+      return r.office ? 'trabalha em escritório' : 'qualquer ocupação'
     case 'obesity':
       return r.notObese ? sensitiveLabel('obesity') : 'qualquer IMC'
     case 'worship':
@@ -487,6 +496,7 @@ export function readRequirements(value: unknown): Requirements {
     noChildren: raw.noChildren === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
+    office: raw.office === true,
     notObese: raw.notObese === true,
     noDepressionSymptoms: raw.noDepressionSymptoms === true,
     bisexual: raw.bisexual === true,
