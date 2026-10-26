@@ -1,13 +1,27 @@
-// The PNS 2019 probabilities that the possible group applies on top of the
-// Census (#8): sexual orientation (Y008), height (P00404) and smoking (P050),
-// by sex × age group, with the 95% interval of the sample design.
+// The PNS 2019 cells that the possible group crosses on top of the Census
+// (#8, #287): adults grouped by sex × age bracket and their answers to every
+// PNS variable (orientation Y008, height P00404, smoking P050…), with the
+// weight and the records of each group. Keeping the answers of the same
+// person together lets the count cross the PNS Requirements with each other
+// instead of multiplying one probability per question.
 //
 // The universe is the selected resident aged 18 or more with a completed
-// interview (M001 = 1), weighted by V00291. The interval comes from
-// linearizing the ratio with stratum (V0024) and PSU (UPA_PNS), the ultimate
-// cluster approximation that IBGE uses in the PNS tables.
+// interview (M001 = 1), weighted by V00291. The cells carry no stratum or
+// PSU, so each sex × bracket carries its design effect: the variance of the
+// sample design (linearizing the ratio with stratum V0024 and PSU UPA_PNS,
+// the ultimate cluster approximation IBGE uses in the PNS tables) over that
+// of a simple random sample of the same records. The count widens its
+// interval by it.
+//
+// A new PNS variable is one entry in `PNS_VARIABLES` (and its positions in
+// `POSITIONS`): it becomes a CSV column that the rules read without change.
+
+import { estimate } from './sample.ts'
 
 export type Sex = 'homem' | 'mulher'
+
+/** The CSV column of each PNS variable. */
+export type PnsColumn = (typeof PNS_VARIABLES)[number]['column']
 
 export interface PnsRecord {
   readonly stratum: string
@@ -15,23 +29,18 @@ export interface PnsRecord {
   readonly weight: number
   readonly sex: Sex
   readonly age: number
-  /** `null` when the question went unanswered for this person. */
-  readonly orientation: string | null
-  readonly height: number | null
-  readonly smoking: string | null
+  /** The answer as the CSV writes it; `null` when it went unanswered. */
+  readonly values: Readonly<Record<PnsColumn, string | null>>
 }
 
 /** One CSV row: the keys are the CSV columns. */
-export interface PnsRow {
-  readonly medida: 'orientacao' | 'altura' | 'fumo'
+export interface PnsCell {
   readonly sexo: Sex
   readonly idade: string
-  readonly categoria: string
-  readonly p: number
-  readonly p_min: number
-  readonly p_max: number
-  /** Unweighted records in the denominator. */
+  readonly values: Readonly<Record<PnsColumn, string | null>>
+  readonly peso: number
   readonly n_registros: number
+  readonly efeito_plano: number
 }
 
 /** The PNS age groups. Each 5-year Census group falls into exactly one. */
@@ -46,143 +55,6 @@ export const PNS_AGE_GROUPS = [
   { group: '70+', min: 70, max: Infinity },
 ] as const
 
-/** Y008, in dictionary order. */
-export const ORIENTATIONS = [
-  'heterossexual',
-  'bissexual',
-  'homossexual',
-  'outra',
-  'nao-sabe',
-  'recusou',
-] as const
-/** P050: daily, less than daily, does not smoke. */
-export const SMOKING = ['diario', 'ocasional', 'nao'] as const
-export const MIN_HEIGHT = 140
-export const MAX_HEIGHT = 200
-
-const ageGroupOf = (age: number) =>
-  PNS_AGE_GROUPS.find((g) => age >= g.min && age <= g.max)?.group
-
-interface Question {
-  readonly measure: PnsRow['medida']
-  readonly categories: ReadonlyArray<string>
-  readonly answered: (r: PnsRecord) => boolean
-  readonly indicator: (r: PnsRecord, category: string) => boolean
-}
-
-const heights = Array.from(
-  { length: MAX_HEIGHT - MIN_HEIGHT + 1 },
-  (_, i) => `ate-${MIN_HEIGHT + i}`,
-)
-
-const QUESTIONS: ReadonlyArray<Question> = [
-  {
-    measure: 'orientacao',
-    categories: ORIENTATIONS,
-    answered: (r) => r.orientation !== null,
-    indicator: (r, c) => r.orientation === c,
-  },
-  {
-    measure: 'altura',
-    categories: heights,
-    answered: (r) => r.height !== null,
-    indicator: (r, c) => (r.height ?? Infinity) <= Number(c.slice(4)),
-  },
-  {
-    measure: 'fumo',
-    categories: SMOKING,
-    answered: (r) => r.smoking !== null,
-    indicator: (r, c) => r.smoking === c,
-  },
-]
-
-const Z95 = 1.96
-
-/** The rows of the PNS file, ordered by measure, sex, age group and category. */
-export function estimatePns(records: ReadonlyArray<PnsRecord>): PnsRow[] {
-  const rows: PnsRow[] = []
-  for (const question of QUESTIONS) {
-    for (const sex of ['homem', 'mulher'] as const) {
-      for (const { group } of PNS_AGE_GROUPS) {
-        const domain = records.filter(
-          (r) =>
-            r.sex === sex &&
-            ageGroupOf(r.age) === group &&
-            question.answered(r),
-        )
-        if (domain.length === 0) continue
-        for (const category of question.categories) {
-          const estimate = proportion(domain, (r) =>
-            question.indicator(r, category),
-          )
-          rows.push({
-            medida: question.measure,
-            sexo: sex,
-            idade: group,
-            categoria: category,
-            ...estimate,
-          })
-        }
-      }
-    }
-  }
-  return rows
-}
-
-/** Its keys are the CSV columns of a `PnsRow`. */
-export interface Proportion {
-  readonly p: number
-  readonly p_min: number
-  readonly p_max: number
-  readonly n_registros: number
-}
-
-/** The weighted proportion of `y` in the domain, with the 95% interval. */
-export function proportion(
-  domain: ReadonlyArray<PnsRecord>,
-  y: (r: PnsRecord) => boolean,
-): Proportion {
-  const total = domain.reduce((s, r) => s + r.weight, 0)
-  const yes = domain.reduce((s, r) => s + (y(r) ? r.weight : 0), 0)
-  const p = yes / total
-  const error = Z95 * Math.sqrt(variance(domain, total, p, y))
-  return {
-    p,
-    p_min: Math.max(0, p - error),
-    p_max: Math.min(1, p + error),
-    n_registros: domain.length,
-  }
-}
-
-/**
- * Variance of the ratio p = Σwy / Σw by linearization: the residual
- * z = w(y − p)/Σw summed per PSU, and the variance between PSUs within each
- * stratum. A stratum with a single PSU in the domain does not contribute.
- */
-function variance(
-  domain: ReadonlyArray<PnsRecord>,
-  total: number,
-  p: number,
-  y: (r: PnsRecord) => boolean,
-): number {
-  const byStratum = new Map<string, Map<string, number>>()
-  for (const r of domain) {
-    const psus = byStratum.get(r.stratum) ?? new Map<string, number>()
-    byStratum.set(r.stratum, psus)
-    const z = (r.weight * ((y(r) ? 1 : 0) - p)) / total
-    psus.set(r.psu, (psus.get(r.psu) ?? 0) + z)
-  }
-  let v = 0
-  for (const psus of byStratum.values()) {
-    const n = psus.size
-    if (n < 2) continue
-    const zs = [...psus.values()]
-    const mean = zs.reduce((s, z) => s + z, 0) / n
-    v += (n / (n - 1)) * zs.reduce((s, z) => s + (z - mean) ** 2, 0)
-  }
-  return v
-}
-
 /** Positions from `input_PNS_2019.sas` (start column, length), 1-based. */
 const POSITIONS = {
   V0024: [3, 7],
@@ -190,25 +62,240 @@ const POSITIONS = {
   C006: [108, 1],
   C008: [117, 3],
   M001: [527, 1],
+  M01901: [556, 1],
+  N010: [564, 1],
+  N011: [565, 1],
+  N012: [566, 1],
+  N013: [567, 1],
+  N014: [568, 1],
+  N015: [569, 1],
+  N016: [570, 1],
+  N017: [571, 1],
+  N018: [572, 1],
+  P00104: [607, 5],
   P00404: [617, 3],
+  P027: [662, 1],
+  P02801: [663, 1],
+  P034: [673, 1],
+  P035: [674, 1],
+  P03701: [675, 2],
+  P03702: [677, 2],
+  P036: [679, 2],
   P050: [711, 1],
+  P06701: [796, 1],
+  U005: [1208, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
 } as const
+type Field = keyof typeof POSITIONS
 
-const field = (line: string, name: keyof typeof POSITIONS) => {
+const field = (line: string, name: Field) => {
   const [start, length] = POSITIONS[name]
   return line.slice(start - 1, start - 1 + length).trim()
 }
 
-const ORIENTATION_CODES: Readonly<Record<string, string>> = Object.fromEntries(
-  ORIENTATIONS.map((o, i) => [String(i + 1), o]),
-)
-const SMOKING_CODES: Readonly<Record<string, string>> = {
-  '1': 'diario',
-  '2': 'ocasional',
-  '3': 'nao',
+/** The requirements' height range; outside it, a height only needs to fall
+ * below or above, so it goes to 139 or 201 and the cells stay few. */
+export const MIN_HEIGHT = 140
+export const MAX_HEIGHT = 200
+
+/** Y008, in dictionary order. */
+const ORIENTATIONS = [
+  'heterossexual',
+  'bissexual',
+  'homossexual',
+  'outra',
+  'nao-sabe',
+  'recusou',
+] as const
+
+/** P036, the vigorous ones: running, treadmill running, aerobics, football,
+ * basketball and tennis. */
+const VIGOROUS = new Set(['03', '04', '06', '12', '13', '15'])
+
+/** The nine PHQ-9 items, in the PNS order. */
+const PHQ9 = [
+  'N010',
+  'N011',
+  'N012',
+  'N013',
+  'N014',
+  'N015',
+  'N016',
+  'N017',
+  'N018',
+] as const satisfies ReadonlyArray<Field>
+
+interface PnsVariable {
+  readonly column: string
+  /** The dictionary variables it reads, for the `.meta.yaml`. */
+  readonly fields: ReadonlyArray<Field>
+  readonly read: (line: string) => string | null
+  /** Ordered answers (height) count as "up to" each one for the design
+   * effect; the others, each answer on its own. */
+  readonly ordered: boolean
 }
+
+const code =
+  (name: Field, values: Readonly<Record<string, string>>) => (line: string) =>
+    values[field(line, name)] ?? null
+
+/** The PNS variables, one CSV column each. The answers keep only the detail
+ * the Requirements need, so the cells stay few. */
+export const PNS_VARIABLES = [
+  {
+    column: 'orientacao',
+    fields: ['Y008'],
+    read: code(
+      'Y008',
+      Object.fromEntries(ORIENTATIONS.map((o, i) => [String(i + 1), o])),
+    ),
+    ordered: false,
+  },
+  {
+    column: 'altura',
+    fields: ['P00404'],
+    read: (line) => {
+      const cm = Number(field(line, 'P00404'))
+      if (!(cm > 0 && cm < 999)) return null
+      return String(Math.min(MAX_HEIGHT + 1, Math.max(MIN_HEIGHT - 1, cm)))
+    },
+    ordered: true,
+  },
+  {
+    // P050: daily, less than daily, does not smoke.
+    column: 'fumo',
+    fields: ['P050'],
+    read: code('P050', { '1': 'diario', '2': 'ocasional', '3': 'nao' }),
+    ordered: false,
+  },
+  {
+    // P027: never, under once a month, once a month or more. Only the last
+    // are asked P02801, the days a week (0 = under once a week). The doses
+    // (P029) and binge (P03201) stay out: the Requirement asks how often.
+    column: 'bebida',
+    fields: ['P027', 'P02801'],
+    read: (line) => {
+      const often = field(line, 'P027')
+      if (often === '1') return 'nunca'
+      if (often === '2') return 'raramente'
+      if (often !== '3') return null
+      const days = field(line, 'P02801')
+      if (days === '0') return 'raramente'
+      return /^[1-7]$/.test(days) ? 'semanal' : null
+    },
+    ordered: false,
+  },
+  {
+    // 150 minutes a week or more, the WHO recommendation: P035 days a week
+    // times the usual duration (P03701 hours, P03702 minutes). Who did not
+    // exercise in the last 3 months (P034 = 2) or does it under once a week
+    // (P035 = 0) is not asked the rest. As in IBGE's leisure-time indicator,
+    // a minute of a vigorous main activity (P036) counts as two.
+    column: 'exercicio',
+    fields: ['P034', 'P035', 'P03701', 'P03702', 'P036'],
+    read: (line) => {
+      const exercised = field(line, 'P034')
+      if (exercised === '2') return 'nao'
+      if (exercised !== '1') return null
+      const days = field(line, 'P035')
+      if (days === '0') return 'nao'
+      const hours = Number(field(line, 'P03701'))
+      const minutes = Number(field(line, 'P03702'))
+      if (!/^[1-7]$/.test(days) || !(hours <= 24) || !(minutes <= 59))
+        return null
+      const intensity = VIGOROUS.has(field(line, 'P036')) ? 2 : 1
+      return Number(days) * (hours * 60 + minutes) * intensity >= 150
+        ? 'sim'
+        : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // U005, self-rated oral health: very good or good, against fair, poor
+    // or very poor.
+    column: 'saude_bucal',
+    fields: ['U005'],
+    read: code('U005', {
+      '1': 'boa',
+      '2': 'boa',
+      '3': 'nao',
+      '4': 'nao',
+      '5': 'nao',
+    }),
+    ordered: false,
+  },
+  {
+    // P06701, e-cigarette or heated tobacco: daily or less than daily
+    // against used it in the past or never.
+    column: 'cigarro_eletronico',
+    fields: ['P06701'],
+    read: code('P06701', { '1': 'usa', '2': 'usa', '3': 'nao', '4': 'nao' }),
+    ordered: false,
+  },
+  {
+    // BMI 30 or more (#295), from the final weight in kg ("070.5") and the
+    // height in cm, both self-reported. Only the yes/no goes, so the cells
+    // stay few.
+    column: 'obesidade',
+    fields: ['P00104', 'P00404'],
+    read: (line) => {
+      const kg = Number(field(line, 'P00104'))
+      const cm = Number(field(line, 'P00404'))
+      if (!(kg > 0 && cm > 0 && cm < 999)) return null
+      return kg / (cm / 100) ** 2 >= 30 ? 'sim' : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // Depression symptoms by the PHQ-9 (#296): N010 to N018 over the last 2
+    // weeks, each answer 1 to 4 worth 0 to 3, and 10 points or more is
+    // "sim". A 9 ("ignorado") or a blank leaves the person out.
+    column: 'depressao',
+    fields: PHQ9,
+    read: (line) => {
+      let score = 0
+      for (const item of PHQ9) {
+        const answer = Number(field(line, item))
+        if (!(answer >= 1 && answer <= 4)) return null
+        score += answer - 1
+      }
+      return score >= 10 ? 'sim' : 'nao'
+    },
+    ordered: false,
+  },
+  {
+    // Religious attendance in the last 12 months (#299): more than once or
+    // once a week is "semanal". The PNS does not ask which religion.
+    column: 'culto',
+    fields: ['M01901'],
+    read: code('M01901', {
+      '1': 'semanal',
+      '2': 'semanal',
+      '3': 'menos',
+      '4': 'menos',
+      '5': 'menos',
+      '6': 'menos',
+    }),
+    ordered: false,
+  },
+] as const satisfies ReadonlyArray<PnsVariable>
+
+/** The dictionary variables the CSV comes from, for the `.meta.yaml`. */
+export const PNS_FIELDS: ReadonlyArray<Field> = [
+  ...new Set<Field>([
+    'V0024',
+    'UPA_PNS',
+    'V00291',
+    'M001',
+    'C006',
+    'C008',
+    ...PNS_VARIABLES.flatMap((v) => v.fields),
+  ]),
+]
+
+const ageGroupOf = (age: number) =>
+  PNS_AGE_GROUPS.find((g) => age >= g.min && age <= g.max)?.group
 
 /**
  * One line of `PNS_2019.txt` (fixed-width text). Returns `null` for anyone
@@ -226,43 +313,108 @@ export function readPnsRecord(line: string): PnsRecord | null {
         : null
   const weight = Number(field(line, 'V00291'))
   if (!sex || !(weight > 0)) return null
-  const height = Number(field(line, 'P00404'))
   return {
     stratum: field(line, 'V0024'),
     psu: field(line, 'UPA_PNS'),
     weight,
     sex,
     age,
-    orientation: ORIENTATION_CODES[field(line, 'Y008')] ?? null,
-    height: height > 0 && height < 999 ? height : null,
-    smoking: SMOKING_CODES[field(line, 'P050')] ?? null,
+    values: Object.fromEntries(
+      PNS_VARIABLES.map((v) => [v.column, v.read(line)]),
+    ) as PnsRecord['values'],
   }
 }
 
+/** The cells, ordered by sex, age group and answers. */
+export function pnsCells(records: ReadonlyArray<PnsRecord>): PnsCell[] {
+  const cells: PnsCell[] = []
+  for (const sex of ['homem', 'mulher'] as const) {
+    for (const { group } of PNS_AGE_GROUPS) {
+      const domain = records.filter(
+        (r) => r.sex === sex && ageGroupOf(r.age) === group,
+      )
+      if (domain.length === 0) continue
+      const effect = designEffect(domain)
+      const byAnswers = new Map<string, PnsRecord[]>()
+      for (const r of domain) {
+        const key = JSON.stringify(PNS_VARIABLES.map((v) => r.values[v.column]))
+        const same = byAnswers.get(key) ?? []
+        same.push(r)
+        byAnswers.set(key, same)
+      }
+      const groups = [...byAnswers.values()].map((same) => ({
+        sexo: sex,
+        idade: group,
+        values: same[0]!.values,
+        peso: same.reduce((s, r) => s + r.weight, 0),
+        n_registros: same.length,
+        efeito_plano: effect,
+      }))
+      cells.push(...groups.sort(byAnswersOrder))
+    }
+  }
+  return cells
+}
+
+/** No answer first, then the answers in text order. */
+function byAnswersOrder(a: PnsCell, b: PnsCell): number {
+  for (const { column } of PNS_VARIABLES) {
+    const x = a.values[column] ?? ''
+    const y = b.values[column] ?? ''
+    if (x !== y) return x < y ? -1 : 1
+  }
+  return 0
+}
+
+/**
+ * The design effect of a sex × bracket: the median, over the indicators of
+ * every PNS variable that are neither 0 nor 1 in it, of the design variance
+ * over the simple random sample variance. Never below 1.
+ */
+function designEffect(domain: ReadonlyArray<PnsRecord>): number {
+  const effects: number[] = []
+  for (const v of PNS_VARIABLES) {
+    const answered = domain.filter((r) => r.values[v.column] !== null)
+    const levels = [...new Set(answered.map((r) => r.values[v.column]!))].sort()
+    for (const level of levels) {
+      const y = v.ordered
+        ? (r: PnsRecord) => Number(r.values[v.column]) <= Number(level)
+        : (r: PnsRecord) => r.values[v.column] === level
+      const { p, variance } = estimate(answered, y)
+      if (p <= 0 || p >= 1) continue
+      effects.push(variance / ((p * (1 - p)) / answered.length))
+    }
+  }
+  if (effects.length === 0) return 1
+  effects.sort((a, b) => a - b)
+  const middle = effects.length / 2
+  const median = Number.isInteger(middle)
+    ? (effects[middle - 1]! + effects[middle]!) / 2
+    : effects[Math.floor(middle)]!
+  return Math.max(1, median)
+}
+
 const PNS_COLUMNS = [
-  'medida',
   'sexo',
   'idade',
-  'categoria',
-  'p',
-  'p_min',
-  'p_max',
+  ...PNS_VARIABLES.map((v) => v.column),
+  'peso',
   'n_registros',
-] as const
+  'efeito_plano',
+]
 
-export function pnsToCsv(rows: ReadonlyArray<PnsRow>): string {
+/** The weight is rounded to the person, as in the Census pack. */
+export function pnsToCsv(cells: ReadonlyArray<PnsCell>): string {
   const out = [PNS_COLUMNS.join(',')]
-  for (const l of rows)
+  for (const c of cells)
     out.push(
       [
-        l.medida,
-        l.sexo,
-        l.idade,
-        l.categoria,
-        l.p.toFixed(5),
-        l.p_min.toFixed(5),
-        l.p_max.toFixed(5),
-        l.n_registros,
+        c.sexo,
+        c.idade,
+        ...PNS_VARIABLES.map((v) => c.values[v.column] ?? ''),
+        Math.round(c.peso),
+        c.n_registros,
+        c.efeito_plano.toFixed(3),
       ].join(','),
     )
   return out.join('\n') + '\n'

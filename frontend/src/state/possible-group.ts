@@ -11,7 +11,11 @@ import type {
   PlaceData,
   PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import {
+  estimateGroup,
+  needsDetail,
+  type Estimate,
+} from '@tem-estudo/rules/possible-group'
 import type { Profile } from '@tem-estudo/rules/profile'
 import {
   readRequirements,
@@ -86,6 +90,43 @@ export interface BrowserCount {
   readonly stateData: PlaceData | undefined
 }
 
+/**
+ * The count of what the shared link carries, when it differs from the one on
+ * the screen (`needed`): the sensitive Requirements left out for lack of
+ * consent. The share image says this number, not the screen's. `null` when
+ * not needed or while the data has not arrived. Leaving out a sensitive
+ * Requirement can change the pack: BMI, depression and religious attendance
+ * come in the detail pack, so without them the link's count may need the
+ * default pack, which the screen's count did not ask for. It asks here.
+ */
+export function useSharedEstimate(
+  profile: Profile | null,
+  shared: Requirements | null,
+  needed: boolean,
+): Estimate | null {
+  const requirements = shared ?? DEFAULT_REQUIREMENTS
+  const state = requirements.place?.state
+  const detail = needsDetail({ profile, requirements })
+  const brazil = usePack('BR', detail).data
+  const stateData = usePack(state, detail).data
+  useEffect(() => {
+    if (!needed) return
+    requestPack('BR', detail)
+    if (state) requestPack(state, detail)
+  }, [needed, detail, state])
+  return useMemo(() => {
+    if (!needed || !brazil || (state && !stateData)) return null
+    try {
+      return estimateGroup(
+        { profile, requirements },
+        { brazil, ...(stateData && { state: stateData }) },
+      )
+    } catch {
+      return null
+    }
+  }, [needed, profile, requirements, brazil, state, stateData])
+}
+
 /** The count for the Profile and the Requirements, redone on each change. */
 export function usePossibleGroup(
   profile: Profile | null,
@@ -94,15 +135,19 @@ export function usePossibleGroup(
   const requirements = saved ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
   const needed: PackPlace[] = state ? ['BR', state] : ['BR']
-  const brazilPack = usePack('BR')
-  const statePack = usePack(state)
+  // Parents, work, home, BMI, depression symptoms and religious attendance
+  // come only in the detail packs, downloaded when one of those
+  // Requirements is on.
+  const detail = needsDetail({ profile, requirements })
+  const brazilPack = usePack('BR', detail)
+  const statePack = usePack(state, detail)
 
   // Whoever never said anything sees the count done at build time, without
   // downloading anything.
   const isExample = profile === null && saved === null
 
   useEffect(() => {
-    if (!isExample) for (const place of needed) requestPack(place)
+    if (!isExample) for (const place of needed) requestPack(place, detail)
   })
 
   const brazil = brazilPack.data
@@ -134,7 +179,7 @@ export function usePossibleGroup(
     estimate,
     loading: !isExample && !computed,
     failed: brazilPack.failed || statePack.failed,
-    retry: () => needed.forEach((place) => requestPack(place, true)),
+    retry: () => needed.forEach((place) => requestPack(place, detail, true)),
     stateData,
   }
 }

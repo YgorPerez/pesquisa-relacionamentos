@@ -2,6 +2,10 @@
 // fixture data: the fixture's "Brazil" is only Acre (`e2e/library/dados`).
 // The number pinned at the top on scroll, touch, keyboard and control sizes
 // stay in the e2e (`e2e/possible-group.e2e.ts`), which has layout.
+import type {
+  SensitiveRequirement,
+  VisitorRequirement,
+} from '@tem-estudo/rules/requirements'
 import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
@@ -76,6 +80,107 @@ it('each active Requirement changes the number, and releasing it goes back to "q
   expect(
     requirement('education').getByRole('radio', { name: 'qualquer' }),
   ).toBeChecked()
+})
+
+it('"O que mais pesa" warns that the effects of releasing each Requirement do not add up', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  const current = await newCount(null)
+  await user.click(
+    requirement('education').getByRole('radio', {
+      name: 'superior completo',
+    }),
+  )
+  await newCount(current)
+  const count = screen.getByRole('region', { name: 'A conta' })
+  expect(
+    within(count).getByText(
+      'Cada linha solta só aquele Requisito e deixa os outros ligados. Os efeitos não se somam, então soltar dois não dá a soma das duas linhas.',
+    ),
+  ).toBeVisible()
+})
+
+it('"De onde vem a incerteza" gives the independence range apart from the sampling one', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  const independence = () =>
+    document.querySelector('[data-slot="gp-independencia"]')?.textContent ??
+    null
+  // Without a gender, nothing comes from the PNS: one range only.
+  await user.click(
+    await screen.findByRole('button', { name: 'De onde vem a incerteza' }),
+  )
+  expect(independence()).toBeNull()
+
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  const current = await newCount(null)
+  await user.click(
+    requirement('education').getByRole('radio', {
+      name: 'superior completo',
+    }),
+  )
+  await newCount(current)
+  expect(independence()).toMatch(
+    /^Orientação vem da PNS; morar com companheiro\(a\) e escolaridade vêm do Censo\. As duas pesquisas não entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo e idade, um lado não depende do outro\. Se depender, o grupo pode ficar em qualquer ponto entre .+ e .+: o menor e o maior número que os dados permitem\.$/,
+  )
+  expect(
+    screen.getByText(
+      'A faixa de cima junta intervalos de confiança de 95%, mas não é ela mesma um intervalo de 95% exato. Esta segunda não é intervalo de confiança.',
+    ),
+  ).toBeVisible()
+
+  // The office share comes from a third survey, under the same assumption.
+  await user.click(
+    requirement('office').getByRole('checkbox', {
+      name: 'Só quem trabalha em escritório',
+    }),
+  )
+  await waitFor(() =>
+    expect(independence()).toMatch(
+      /^Orientação vem da PNS; ocupação vem da PNAD; morar com companheiro\(a\) e escolaridade vêm do Censo\. As três pesquisas não entrevistaram as mesmas pessoas/,
+    ),
+  )
+  // The top range also carries the PNAD's interval.
+  expect(
+    screen.getByText(
+      /^A faixa junta o erro de amostra do Censo \(.+ registros\) com os intervalos da PNS e da PNAD\.$/,
+    ),
+  ).toBeVisible()
+})
+
+it('the independence range names a one-word Requirement by what it asks', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await user.click(
+    await screen.findByRole('button', { name: 'De onde vem a incerteza' }),
+  )
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  await newCount(null)
+  await user.click(
+    requirement('parents').getByRole('checkbox', {
+      name: 'Só quem não mora com os pais',
+    }),
+  )
+  await waitFor(() =>
+    expect(
+      document.querySelector('[data-slot="gp-independencia"]')?.textContent,
+    ).toMatch(
+      /; morar com companheiro\(a\) e morar com os pais vêm do Censo\./,
+    ),
+  )
 })
 
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {
@@ -166,3 +271,96 @@ it('the state is chosen by keyboard and goes back to the whole of Brazil', async
     requirement('place').queryByRole('combobox', { name: 'Município' }),
   ).toBeNull()
 })
+
+it('"tem casa própria" downloads the detail data when turned on, and the count shrinks', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await enterProfile(
+    user,
+    { gender: 'homem', seeks: 'mulheres', age: '30' },
+    BUTTON,
+  )
+  const before = await newCount(null)
+  await user.click(
+    requirement('home').getByRole('checkbox', {
+      name: 'Só quem tem casa própria',
+    }),
+  )
+  await newCount(before)
+  expect(requirement('home').value()).toBe('tem casa própria')
+  expect(requirement('home').cost()).toMatch(/^soltar só este: ×[\d,]+/)
+})
+
+it('Requirements saved with "trabalha" on open straight on its count', async () => {
+  // What a shared link also leaves on the device (`state/link.ts`).
+  localStorage.setItem(
+    'tem-estudo:profile',
+    JSON.stringify({ seeks: 'mulheres', age: 30 }),
+  )
+  localStorage.setItem(
+    'tem-estudo:requirements',
+    JSON.stringify({ work: 'trabalha', noLiveInPartner: true }),
+  )
+  openScreen(PAGE)
+  // The cost shows only once the count with "trabalha" came out.
+  await waitFor(() =>
+    expect(requirement('work').cost()).toMatch(/^soltar só este: ×[\d,]+/),
+  )
+  expect(
+    requirement('work').getByRole('radio', { name: 'trabalha' }),
+  ).toBeChecked()
+})
+it.each<
+  [
+    id: Extract<VisitorRequirement, SensitiveRequirement>,
+    checkbox: string,
+    value: string,
+    note: RegExp,
+  ]
+>([
+  // The weight and height are self-reported.
+  [
+    'obesity',
+    'Só quem tem IMC abaixo de 30',
+    'IMC abaixo de 30',
+    /peso e a altura que a pessoa declarou/,
+  ],
+  // The PHQ-9 covers the last 2 weeks, not a trait.
+  [
+    'depression',
+    'Só quem não teve sintomas de depressão',
+    'sem sintomas de depressão',
+    /2 últimas semanas: mede um período da vida/,
+  ],
+  [
+    'bisexual',
+    'Só quem se declara bissexual',
+    'bissexual',
+    /estatística experimental do IBGE/,
+  ],
+  [
+    'worship',
+    'Só quem vai à religião toda semana',
+    'vai à religião toda semana',
+    /não pergunta qual religião/,
+  ],
+])(
+  'the sensitive "%s" enters the count and its row says what it measures and that it stays on the device',
+  async (id, checkbox, value, note) => {
+    const user = userEvent.setup()
+    openScreen(PAGE)
+    await enterProfile(
+      user,
+      { gender: 'mulher', seeks: 'homens', age: '28' },
+      BUTTON,
+    )
+    const before = await newCount(null)
+    await user.click(requirement(id).getByRole('checkbox', { name: checkbox }))
+    await newCount(before)
+    expect(requirement(id).value()).toBe(value)
+    expect(requirement(id).getByText(note)).toBeVisible()
+    expect(
+      requirement(id).getByText(/Dado sensível: fica só neste aparelho/),
+    ).toBeVisible()
+  },
+)

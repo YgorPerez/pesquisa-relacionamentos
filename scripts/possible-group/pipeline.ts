@@ -6,19 +6,25 @@
 // 3. Aggregates the Census and reads the PNS.
 // 4. Cross-checks both against the published numbers. If anything does not
 //    match, exits with an error before writing any file.
-// 5. Writes to `data/possible-group/` the Census CSV, the PNS probabilities
+// 5. Writes to `data/possible-group/` the Census CSV (gzipped), the PNS cells
 //    and the SIDRA tables for exact age and municipality (population from
 //    9514, marital status from 10185), each with its `.meta.yaml`.
 //
+// 6. Reads the PNAD Contínua of 2022 Q3, cross-checks it against SIDRA 5435
+//    and writes the office occupation probability (`pnad-2022.csv`, #294).
+//
 // `--municipalities-only` rebuilds only marital status by municipality,
-// without downloading the microdata.
+// without downloading the microdata. `--pns-only` rebuilds only the PNS
+// cells, without the Census; `--pnad-only`, only step 6.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import { gzipSync } from 'node:zlib'
 import { download, FTP, RAW_DIR, zipEntries, zipLines } from './raw.ts'
 import {
   AGE_GROUPS,
   aggregatePeople,
   cellsToCsv,
+  readHouseholds,
   STATE_CODES,
 } from './census.ts'
 import {
@@ -28,13 +34,26 @@ import {
   STATE_TOLERANCE,
   type MaritalCell,
 } from './cross-check.ts'
-import { estimatePns, pnsToCsv, readPnsRecord, type PnsRecord } from './pns.ts'
+import {
+  PNS_FIELDS,
+  pnsCells,
+  pnsToCsv,
+  readPnsRecord,
+  type PnsRecord,
+} from './pns.ts'
 import {
   crossCheckMunicipalities,
   municipalitiesToCsv,
   type MunicipalityMarital,
 } from './municipalities.ts'
 import { fetchSidra, type SidraValue } from './sidra.ts'
+import {
+  crossCheckPnad,
+  estimatePnad,
+  pnadToCsv,
+  readPnadRecord,
+  type PnadRecord,
+} from './pnad.ts'
 
 const ROOT = join(import.meta.dirname, '..', '..')
 const OUTPUT = join(ROOT, 'data', 'possible-group')
@@ -357,10 +376,67 @@ function metaToYaml(meta: Meta): string {
   )
 }
 
-function write(name: string, content: string, meta: Meta) {
-  writeFileSync(join(OUTPUT, `${name}.csv`), content)
+/** `gzip` writes `<name>.csv.gz`: the Census CSV is over 100 MB as text,
+ * GitHub's limit for one file. */
+function write(
+  name: string,
+  content: string,
+  meta: Meta,
+  { gzip = false } = {},
+) {
+  const file = gzip ? `${name}.csv.gz` : `${name}.csv`
+  writeFileSync(
+    join(OUTPUT, file),
+    gzip ? gzipSync(content, { level: 9 }) : content,
+  )
   writeFileSync(join(OUTPUT, `${name}.meta.yaml`), metaToYaml(meta))
-  console.log(`wrote data/possible-group/${name}.csv`)
+  console.log(`wrote data/possible-group/${file}`)
+}
+
+// --- PNS -----------------------------------------------------------------
+
+async function readPns(pnsZip: string): Promise<PnsRecord[]> {
+  console.log('reading the PNS')
+  const records: PnsRecord[] = []
+  for await (const line of zipLines(pnsZip, 'PNS_2019.txt')) {
+    const record = readPnsRecord(line)
+    if (record) records.push(record)
+  }
+  return records
+}
+
+async function writePns(records: ReadonlyArray<PnsRecord>, pnsZip: string) {
+  const cells = pnsCells(records)
+  write('pns-2019', pnsToCsv(cells), {
+    fact_sheet: PNS_FACT_SHEET,
+    table: [
+      'Microdados da PNS 2019, morador selecionado de 18 anos ou mais, agrupado por sexo, faixa de idade e respostas',
+    ],
+    variables: [...PNS_FIELDS],
+    downloaded_on: fileDate(pnsZip),
+    version: `PNS_2019_20220525.zip publicado em ${await publishedOn(PNS_URL)}`,
+    cross_check:
+      'Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada.',
+  })
+  console.log(`${cells.length} PNS cells from ${records.length} records`)
+}
+
+/** `--pns-only`: rebuilds only the PNS cells, without the Census. */
+async function pnsOnly() {
+  const pnsZip = await download(
+    PNS_URL,
+    join(RAW_DIR, 'pns', 'PNS_2019_20220525.zip'),
+  )
+  const records = await readPns(pnsZip)
+  const failures = crossCheckPns(records)
+  if (failures.length > 0) {
+    console.error(
+      `The cross-check against what IBGE published failed; nothing was written.\n${failures.join('\n')}`,
+    )
+    process.exit(1)
+  }
+  mkdirSync(OUTPUT, { recursive: true })
+  await writePns(records, pnsZip)
 }
 
 // --- main ----------------------------------------------------------------
@@ -397,17 +473,27 @@ async function main() {
     .sort()
   if (files.length !== 27)
     throw new Error(`expected 27 people files in the zip, got ${files.length}`)
+  // Each state's households (D0190, for "casa própria") are read just before
+  // its people, so only one state's households are in memory at a time.
+  let households = new Map<string, string>()
   async function* allPeople() {
-    for (const file of files) yield* zipLines(censusZip, file)
+    for (const file of files) {
+      const state = /^Pessoas_(\d\d)_/.exec(file)![1]
+      households = await readHouseholds(
+        zipLines(censusZip, `Domicilios_${state}_publico.csv`),
+      )
+      yield* zipLines(censusZip, file)
+    }
   }
-  const aggregate = await aggregatePeople(allPeople())
+  const aggregate = await aggregatePeople(allPeople(), {
+    get: (control) => households.get(control),
+  })
+  if (aggregate.withoutHousehold > 0)
+    throw new Error(
+      `${aggregate.withoutHousehold} people records have no household in the households file`,
+    )
 
-  console.log('reading the PNS')
-  const records: PnsRecord[] = []
-  for await (const line of zipLines(pnsZip, 'PNS_2019.txt')) {
-    const record = readPnsRecord(line)
-    if (record) records.push(record)
-  }
+  const records = await readPns(pnsZip)
 
   const check = crossCheck(aggregate, { population, marital })
   const failures = [
@@ -427,53 +513,48 @@ async function main() {
   )
 
   mkdirSync(OUTPUT, { recursive: true })
-  const [censusVersion, pnsVersion] = await Promise.all([
-    publishedOn(CENSUS_URL),
-    publishedOn(PNS_URL),
-  ])
+  const censusVersion = await publishedOn(CENSUS_URL)
 
-  write('censo-2022', cellsToCsv(aggregate.cells), {
-    fact_sheet: CENSUS_FACT_SHEET,
-    table: ['Microdados da amostra, acesso público, arquivo de pessoas'],
-    variables: [
-      'P0020',
-      'P0110',
-      'P0150',
-      'P0180',
-      'P0210',
-      'P0280',
-      'P0340',
-      'P0410',
-      'P0760',
-      'P1110',
-    ],
-    downloaded_on: fileDate(censusZip),
-    version: `Todas_as_UFs.zip publicado em ${censusVersion}`,
-    cross_check:
-      `Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: ` +
-      `maior diferença de ${pct(check.maxDifferenceBrazil)}% no Brasil (tolerância ${pct(BRAZIL_TOLERANCE)}%) ` +
-      `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
-      `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
-  })
-  write('pns-2019', pnsToCsv(estimatePns(records)), {
-    fact_sheet: PNS_FACT_SHEET,
-    table: ['Microdados da PNS 2019, morador selecionado de 18 anos ou mais'],
-    variables: [
-      'V0024',
-      'UPA_PNS',
-      'V00291',
-      'M001',
-      'C006',
-      'C008',
-      'Y008',
-      'P00404',
-      'P050',
-    ],
-    downloaded_on: fileDate(pnsZip),
-    version: `PNS_2019_20220525.zip publicado em ${pnsVersion}`,
-    cross_check:
-      'Orientação sexual por sexo igual à Tabela 1.1.1 da PNS 2019 na casa decimal publicada.',
-  })
+  write(
+    'censo-2022',
+    cellsToCsv(aggregate.cells),
+    {
+      fact_sheet: CENSUS_FACT_SHEET,
+      table: [
+        'Microdados da amostra, acesso público, arquivo de pessoas',
+        'Microdados da amostra, acesso público, arquivo de domicílios',
+      ],
+      variables: [
+        'D0100',
+        'D0190',
+        'P0020',
+        'P0100',
+        'P0110',
+        'P0150',
+        'P0170',
+        'P0180',
+        'P0210',
+        'P0280',
+        'P0300',
+        'P0310',
+        'P0340',
+        'P0410',
+        'P0760',
+        'P0950',
+        'P0990',
+        'P1110',
+      ],
+      downloaded_on: fileDate(censusZip),
+      version: `Todas_as_UFs.zip publicado em ${censusVersion}`,
+      cross_check:
+        `Soma dos pesos igual à população de cada UF (SIDRA 9514). SIDRA 10185, estado conjugal por sexo e grupo de idade: ` +
+        `maior diferença de ${pct(check.maxDifferenceBrazil)}% no Brasil (tolerância ${pct(BRAZIL_TOLERANCE)}%) ` +
+        `e de ${pct(check.maxDifferenceState)} pontos na proporção sem união nas UFs (tolerância ${pct(STATE_TOLERANCE)}). ` +
+        `Fora do CSV: ${aggregate.discarded.sexOrAgeSuppressed.records} registros com sexo ou idade suprimidos.`,
+    },
+    { gzip: true },
+  )
+  await writePns(records, pnsZip)
   write('sidra-9514-idade', ageCsv, {
     fact_sheet: CENSUS_FACT_SHEET,
     table: ['SIDRA 9514'],
@@ -501,8 +582,75 @@ async function main() {
     municipalitiesToCsv(maritalMunicipalities),
     META_10185_MUNICIPALITIES(maritalMunicipalities.length),
   )
+  await pnad()
+}
+
+// --- PNAD Contínua (#294) ------------------------------------------------
+
+// 2022 Q3: the quarter of the Census reference date (July 31, 2022), so the
+// share of office work is that of the population the count multiplies. The
+// file is the one reweighted to the Census 2022 population (2025-08-15).
+const PNAD_QUARTER = '202203'
+const PNAD_FILE = 'PNADC_032022_20250815.zip'
+const PNAD_URL = `${FTP}/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2022/${PNAD_FILE}`
+const PNAD_FACT_SHEET = 'ibge-2022-pnad-ocupacao'
+
+/** `--pnad-only`, and the last step of the full run: the office occupation
+ * probability, cross-checked against SIDRA 5435 in the same quarter. */
+async function pnad() {
+  const zip = await download(PNAD_URL, join(RAW_DIR, 'pnadc', PNAD_FILE))
+  const [file] = (await zipEntries(zip)).filter((n) => n.endsWith('.txt'))
+  if (!file) throw new Error(`no .txt inside ${PNAD_FILE}`)
+  // Group 0 is SIDRA's total; 33370 to 33380 are VD4011 1 to 11.
+  const published = (
+    await fetchSidra(5435, 4090, 'N1[all]', ['694[all]'], PNAD_QUARTER)
+  ).map((v) => ({
+    group: v.categories[0] === '33356' ? 0 : Number(v.categories[0]) - 33369,
+    thousands: v.value,
+  }))
+  if (published.length !== 12)
+    throw new Error(`expected 12 groups in SIDRA 5435, got ${published.length}`)
+
+  console.log('reading the PNAD Contínua')
+  const records: PnadRecord[] = []
+  for await (const line of zipLines(zip, file)) {
+    const record = readPnadRecord(line)
+    if (record) records.push(record)
+  }
+  const failures = crossCheckPnad(records, published)
+  if (failures.length > 0) {
+    console.error(
+      `The PNAD does not match SIDRA 5435; nothing was written.\n${failures.join('\n')}`,
+    )
+    process.exit(1)
+  }
+  mkdirSync(OUTPUT, { recursive: true })
+  write('pnad-2022', pnadToCsv(estimatePnad(records)), {
+    fact_sheet: PNAD_FACT_SHEET,
+    table: [
+      'Microdados trimestrais da PNAD Contínua, 3º trimestre de 2022, pessoas de 18 anos ou mais',
+    ],
+    variables: [
+      'Estrato',
+      'UPA',
+      'V1028',
+      'V2007',
+      'V2009',
+      'VD3004',
+      'VD4002',
+      'VD4011',
+    ],
+    downloaded_on: fileDate(zip),
+    version: `${PNAD_FILE} publicado em ${await publishedOn(PNAD_URL)}`,
+    cross_check:
+      'Pessoas ocupadas de 14 anos ou mais por grupamento ocupacional (VD4011), no total e em cada um dos 11 grupos, iguais ao SIDRA 5435 do 3º trimestre de 2022 no milhar publicado.',
+  })
 }
 
 await (process.argv.includes('--municipalities-only')
   ? municipalitiesOnly()
-  : main())
+  : process.argv.includes('--pns-only')
+    ? pnsOnly()
+    : process.argv.includes('--pnad-only')
+      ? pnad()
+      : main())

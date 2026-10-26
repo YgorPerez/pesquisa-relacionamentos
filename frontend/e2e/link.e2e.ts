@@ -30,7 +30,10 @@ async function withClipboard(context: BrowserContext) {
 
 async function copyLink(page: Page): Promise<string> {
   await share(page).getByRole('button', { name: 'Copiar link' }).click()
-  await expect(share(page).getByRole('status')).toHaveText('Link copiado.')
+  // The share image has a status of its own in the same region.
+  await expect(
+    share(page).getByRole('status').filter({ hasText: 'Link' }),
+  ).toHaveText('Link copiado.')
   return page.evaluate(() => navigator.clipboard.readText())
 }
 

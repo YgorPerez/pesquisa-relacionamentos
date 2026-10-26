@@ -5,12 +5,15 @@ import {
   readLink,
   prioritiesPreview,
   groupPreview,
+  groupImage,
   linkQuery,
+  sharedLink,
   type LinkState,
 } from './link.ts'
 import { DEFAULT_REQUIREMENTS, type Requirements } from './requirements.ts'
 
 const ALL: Requirements = {
+  ...DEFAULT_REQUIREMENTS,
   age: { min: 25, max: 35 },
   place: { state: 'SP', municipality: '3550308' },
   noLiveInPartner: false,
@@ -19,8 +22,29 @@ const ALL: Requirements = {
   colors: ['preta', 'parda'],
   religions: ['umbanda-candomble', 'sem-religiao'],
   noChildren: true,
+  notWithParents: true,
+  work: 'negocio',
+  ownsHome: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
+  drinking: ['nunca', 'raramente'],
+  exercises: true,
+  goodTeeth: true,
+  nonVaper: true,
+  office: true,
+}
+
+/** What a link from before the PNS lifestyle Requirements carries: all of
+ * them off. */
+const BEFORE_LIFESTYLE: Partial<Requirements> = {
+  drinking: [],
+  exercises: false,
+  goodTeeth: false,
+  nonVaper: false,
+  notObese: false,
+  noDepressionSymptoms: false,
+  bisexual: false,
+  weeklyWorship: false,
 }
 
 describe('round trip', () => {
@@ -105,12 +129,19 @@ describe('old versions', () => {
         'grupo-possivel',
         '?v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&uf=SP&municipio=3550308&companheiro=nao' +
           '&escolaridade=superior&renda=5%2B&cor=preta,parda&religiao=umbanda-candomble,sem-religiao' +
-          '&sem-filhos=sim&altura=160-200&nao-fuma=sim',
+          '&sem-filhos=sim&altura=160-200&nao-fuma=sim&escritorio=sim',
       ),
     ).toEqual({
       calculator: 'grupo-possivel',
       profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
-      requirements: ALL,
+      // The Requirements that came after this link stay off.
+      requirements: {
+        ...ALL,
+        ...BEFORE_LIFESTYLE,
+        notWithParents: false,
+        work: null,
+        ownsHome: false,
+      },
     })
   })
 
@@ -224,8 +255,10 @@ describe('linkSentence', () => {
       ),
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
-        'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
-        'a partir de 160 cm, não fuma, em São Paulo (SP).',
+        'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, não mora com os pais, tem negócio próprio, tem casa própria, ' +
+        'a partir de 160 cm, não fuma, bebe nunca ou menos de 1 vez por semana, ' +
+        'faz 150 min de exercício por semana, saúde bucal boa, não usa cigarro eletrônico, trabalha em escritório, ' +
+        'em São Paulo (SP).',
     )
   })
 
@@ -293,6 +326,18 @@ describe('social preview', () => {
       description:
         'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019. Também pediu: não fuma. Faça a sua conta.',
     })
+  })
+
+  it('names the PNAD when the link carries office', () => {
+    const r = { ...DEFAULT_REQUIREMENTS, office: true }
+    expect(
+      groupPreview(
+        { calculator: 'grupo-possivel', profile: man30, requirements: r },
+        count,
+      ).description,
+    ).toMatch(
+      /^Pela conta do Grupo possível, com o Censo 2022, a PNS 2019 e a PNAD Contínua 2022\./,
+    )
   })
 
   it("never carries the sharer's gender or age, nor the age taken from it", () => {
@@ -365,5 +410,127 @@ describe('isLink', () => {
     expect(isLink('v=1&x=%E0%A4%A')).toBe(true)
     expect(isLink('utm_source=zap')).toBe(false)
     expect(isLink('')).toBe(false)
+  })
+})
+
+describe('share image', () => {
+  const count = {
+    target: 'women' as const,
+    result: { min: 123_400, max: 178_900, unstable: false },
+  }
+
+  it('shows the range, who is sought and the other Requirements the link carries', () => {
+    const query =
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&uf=SP&escolaridade=superior&nao-fuma=sim'
+    expect(groupImage(query, count)).toEqual({
+      before: 'Entre',
+      numbers: '120 mil e 180 mil',
+      unstable: false,
+      who: 'mulheres de 25 a 35 em SP',
+      also: ['ensino superior', 'não fuma'],
+      sources: 'Censo 2022 e PNS 2019',
+    })
+  })
+
+  it('names the PNAD among the sources when the link carries office', () => {
+    expect(
+      groupImage('v=1&procura=mulheres&escritorio=sim', count)?.sources,
+    ).toBe('Censo 2022, PNS 2019 e PNAD Contínua 2022')
+  })
+
+  it("never shows the sharer's gender or age, nor the age range taken from it", () => {
+    const image = groupImage('v=1&genero=homem&procura=mulheres&idade=30', {
+      ...count,
+      result: { min: 1_000, max: 1_000, unstable: true },
+    })
+    expect(image).toEqual({
+      before: 'Cerca de',
+      numbers: '1 mil',
+      unstable: true,
+      who: 'mulheres no Brasil, na idade procurada',
+      also: [],
+      sources: 'Censo 2022 e PNS 2019',
+    })
+    expect(JSON.stringify(image)).not.toMatch(/homem|homens|30|25|35/)
+  })
+
+  it('shows nothing the link does not carry: an unknown key stays out', () => {
+    const image = groupImage('v=1&procura=mulheres&peso=nao-obeso', count)
+    expect(image?.also).toEqual([])
+    expect(JSON.stringify(image)).not.toMatch(/peso|obes/)
+  })
+
+  it('is null for a query that is not a link', () => {
+    expect(groupImage('utm_source=zap', count)).toBeNull()
+  })
+})
+
+describe('sensitive Requirements (LGPD art. 11)', () => {
+  const profile = { gender: 'homem', seeks: 'mulheres', age: 30 } as const
+  const sensitive: Requirements = {
+    ...DEFAULT_REQUIREMENTS,
+    age: { min: 25, max: 35 },
+    notObese: true,
+    noDepressionSymptoms: true,
+    bisexual: true,
+    weeklyWorship: true,
+  }
+  const state: LinkState = {
+    calculator: 'grupo-possivel',
+    profile,
+    requirements: sensitive,
+  }
+
+  it('without consent, the link leaves them out and the sentence says which stayed out', () => {
+    const shared = sharedLink(state, false)
+    const query = linkQuery(shared.state)
+    expect(query).toBe(
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35',
+    )
+    expect(readLink('grupo-possivel', query)).toEqual({
+      ...state,
+      requirements: { ...DEFAULT_REQUIREMENTS, age: { min: 25, max: 35 } },
+    })
+    expect(shared.leftOut).toEqual([
+      'obesity',
+      'depression',
+      'bisexual',
+      'worship',
+    ])
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra: homem, 30, procura mulheres de 25 a 35. ' +
+        'Ficaram de fora 4 Requisitos sensíveis: IMC abaixo de 30, sem sintomas de depressão, bissexual e vai à religião toda semana.',
+    )
+  })
+
+  it('with consent, they go in the link, come back and enter the sentence', () => {
+    const shared = sharedLink(state, true)
+    const query = linkQuery(shared.state)
+    expect(query).toBe(
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&nao-obeso=sim&sem-depressao=sim&bissexual=sim&culto=sim',
+    )
+    expect(shared.leftOut).toEqual([])
+    expect(readLink('grupo-possivel', query)).toEqual(state)
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra: homem, 30, procura mulheres de 25 a 35, IMC abaixo de 30, sem sintomas de depressão, bissexual, vai à religião toda semana.',
+    )
+  })
+
+  it('with none of them on, there is nothing to leave out', () => {
+    const plain: LinkState = { ...state, requirements: ALL }
+    expect(sharedLink(plain, false)).toEqual({ state: plain, leftOut: [] })
+  })
+
+  it('a single one left out is said in the singular', () => {
+    const one: LinkState = {
+      calculator: 'grupo-possivel',
+      profile: null,
+      requirements: { ...DEFAULT_REQUIREMENTS, bisexual: true },
+    }
+    const shared = sharedLink(one, false)
+    expect(linkQuery(shared.state)).toBe('v=1')
+    expect(linkSentence(shared.state, { leftOut: shared.leftOut })).toBe(
+      'Este link mostra só a conta do Brasil inteiro, sem nada seu. Ficou de fora 1 Requisito sensível: bissexual.',
+    )
   })
 })

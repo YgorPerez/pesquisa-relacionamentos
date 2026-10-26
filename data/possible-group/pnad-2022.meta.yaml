@@ -1,0 +1,8 @@
+# Gerado por scripts/possible-group/pipeline.ts. Não edite à mão: rode `pnpm data:possible-group`.
+fact_sheet: ibge-2022-pnad-ocupacao
+table: ["Microdados trimestrais da PNAD Contínua, 3º trimestre de 2022, pessoas de 18 anos ou mais"]
+variables: ["Estrato", "UPA", "V1028", "V2007", "V2009", "VD3004", "VD4002", "VD4011"]
+downloaded_on: 2026-10-26
+script: scripts/possible-group/pipeline.ts
+version: "PNADC_032022_20250815.zip publicado em 2025-08-15"
+cross_check: "Pessoas ocupadas de 14 anos ou mais por grupamento ocupacional (VD4011), no total e em cada um dos 11 grupos, iguais ao SIDRA 5435 do 3º trimestre de 2022 no milhar publicado."

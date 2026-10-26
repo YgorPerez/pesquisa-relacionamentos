@@ -88,8 +88,24 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       colors: ['preta', 'parda'],
       religions: ['catolica'],
       noChildren: true,
+      // The Requirements that came after the move open at their defaults.
+      notWithParents: false,
+      work: null,
+      ownsHome: false,
       height: { min: 160, max: 190 },
       nonSmoker: true,
+      // Office occupation and the PNS lifestyle Requirements came after the
+      // move: an old save has them off.
+      drinking: [],
+      exercises: false,
+      goodTeeth: false,
+      nonVaper: false,
+      office: false,
+      // Born after the move to English: never under the old key.
+      notObese: false,
+      noDepressionSymptoms: false,
+      bisexual: false,
+      weeklyWorship: false,
     })
     expect(local.items.has('tem-estudo:grupo-possivel')).toBe(false)
   })

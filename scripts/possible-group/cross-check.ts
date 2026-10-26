@@ -17,7 +17,8 @@
 // 1.1.1 published by IBGE, which checks the weight, the adult filter and the
 // Y008 codes.
 import type { Aggregate } from './census.ts'
-import { proportion, type PnsRecord } from './pns.ts'
+import type { PnsRecord } from './pns.ts'
+import { proportion } from './sample.ts'
 
 export interface MaritalCell {
   /** `BR` or the state abbreviation. */
@@ -159,9 +160,12 @@ export function crossCheckPns(
   const failures: string[] = []
   for (const row of table) {
     const domain = records.filter(
-      (r) => r.sex === row.sex && r.orientation !== null,
+      (r) => r.sex === row.sex && r.values.orientacao !== null,
     )
-    const { p } = proportion(domain, (r) => r.orientation === row.category)
+    const { p } = proportion(
+      domain,
+      (r) => r.values.orientacao === row.category,
+    )
     // The table rounds to one decimal: the microdata must land within the same half tenth.
     if (Math.abs(p * 100 - row.percent) > 0.05 + 1e-9)
       failures.push(

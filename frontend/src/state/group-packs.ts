@@ -1,48 +1,55 @@
 // The Possible group packs by place, which the build writes
-// (`vite/possible-group.ts`) and the browser downloads. One request per place,
-// kept: going back to a state already downloaded does not request it again,
-// and two cards that ask for the same place share the request. The count
+// (`vite/possible-group.ts`) and the browser downloads. Each place has a
+// default pack and a detail one (with parents, work, home, BMI, depression
+// symptoms and religious attendance), which only the counts that read those
+// download (`needsDetail`). One request per pack, kept: going
+// back to a state already downloaded does not request it again, and two
+// cards that ask for the same pack share the request. The count
 // (`possible-group.ts`) only reads from here.
 import {
   openPack,
+  packFile,
   type PlaceData,
   type PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
 import { useSyncExternalStore } from 'react'
 import possibleGroup from 'virtual:possible-group'
 
-const opened = new Map<PackPlace, PlaceData>()
-const requests = new Map<PackPlace, Promise<void>>()
-const failures = new Set<PackPlace>()
+/** The packs by file name (`packFile`). */
+const opened = new Map<string, PlaceData>()
+const requests = new Map<string, Promise<void>>()
+const failures = new Set<string>()
 const subscribers = new Set<() => void>()
 const notify = () => {
   subscribers.forEach((subscriber) => subscriber())
 }
 
-/** Requests the place's pack, if it has not arrived nor is on its way. One
- * that failed is only requested `again` (the page's "Tentar de novo"): the
- * page requests on every render, and without network each failure requested
- * once more, nonstop, and the failure notice flickered. */
-export function requestPack(place: PackPlace, again = false) {
-  if (opened.has(place) || requests.has(place)) return
-  if (failures.has(place) && !again) return
-  failures.delete(place)
-  const request = fetch(`${possibleGroup.base}/${place}.json`)
+/** Requests the place's pack (the detail one with `detail`), if it has not
+ * arrived nor is on its way. One that failed is only requested `again` (the
+ * page's "Tentar de novo"): the page requests on every render, and without
+ * network each failure requested once more, nonstop, and the failure notice
+ * flickered. */
+export function requestPack(place: PackPlace, detail: boolean, again = false) {
+  const file = packFile(place, detail)
+  if (opened.has(file) || requests.has(file)) return
+  if (failures.has(file) && !again) return
+  failures.delete(file)
+  const request = fetch(`${possibleGroup.base}/${file}`)
     .then((response) => {
-      if (!response.ok) throw new Error(`pack ${place}: ${response.status}`)
+      if (!response.ok) throw new Error(`pack ${file}: ${response.status}`)
       return response.json()
     })
     .then((pack) => {
-      opened.set(place, openPack(pack))
+      opened.set(file, openPack(pack))
     })
     .catch(() => {
-      failures.add(place)
+      failures.add(file)
     })
     .finally(() => {
-      requests.delete(place)
+      requests.delete(file)
       notify()
     })
-  requests.set(place, request)
+  requests.set(file, request)
   notify()
 }
 
@@ -56,18 +63,22 @@ const subscribe = (subscriber: () => void) => {
  * the render: the React Compiler keeps what the render computes, and only a
  * value that comes from a hook says it changed. `undefined` requests
  * nothing. */
-export function usePack(place: PackPlace | undefined): {
+export function usePack(
+  place: PackPlace | undefined,
+  detail: boolean,
+): {
   data: PlaceData | undefined
   failed: boolean
 } {
+  const file = place && packFile(place, detail)
   const data = useSyncExternalStore(
     subscribe,
-    () => (place ? opened.get(place) : undefined),
+    () => (file ? opened.get(file) : undefined),
     () => undefined,
   )
   const failed = useSyncExternalStore(
     subscribe,
-    () => (place ? failures.has(place) : false),
+    () => (file ? failures.has(file) : false),
     () => false,
   )
   return { data, failed }

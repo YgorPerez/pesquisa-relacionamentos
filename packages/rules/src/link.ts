@@ -9,7 +9,8 @@
 // in Portuguese (ADR 0039). The opt-out of being counted (#35) never goes
 // here.
 import { readProfile, type ProfileGender, type Profile } from './profile.ts'
-import { formatRange } from './numbers.ts'
+import { andList } from './lists.ts'
+import { formatRange, rangeParts } from './numbers.ts'
 import {
   top3Alert,
   readPriorities,
@@ -27,6 +28,13 @@ import {
   DEFAULT_REQUIREMENTS,
   requirementValue,
   TARGET_NAME,
+  SENSITIVE_REQUIREMENTS,
+  sensitiveLabel,
+  sensitiveList,
+  sensitiveOn,
+  surveysOf,
+  withoutSensitive,
+  type SensitiveRequirement,
   type Range,
   type Sought,
   type Requirements,
@@ -50,6 +58,9 @@ export type LinkState =
       readonly gender: ProfileGender | null
       readonly priorities: PrioritiesState
     }
+
+/** A Possible group link's state. */
+type GroupLink = Extract<LinkState, { calculator: 'grupo-possivel' }>
 
 /** The version `linkQuery` writes. */
 export const LINK_VERSION = 1
@@ -102,7 +113,14 @@ const list = (text: string | undefined): string[] =>
 //   Possible group: &idades=25-35&uf=SP&municipio=3550308&companheiro=nao
 //     &escolaridade=superior&renda=2-5&cor=preta,parda&religiao=catolica
 //     &sem-filhos=sim&altura=160-200&nao-fuma=sim (only what is off default)
+//     &nao-obeso=sim&sem-depressao=sim&bissexual=sim&culto=sim (the
+//     sensitive ones, only with consent: `sharedLink`)
 //   Priorities: only the profile's gender, &topo=renda,sexo,calma&desfecho=satisfacao
+
+/** Each sensitive Requirement's field and its query key. */
+const SENSITIVE_KEYS = SENSITIVE_REQUIREMENTS.map(
+  (s) => [s.field, s.key] as const,
+)
 
 const REQUIREMENT_KEYS_V1 = [
   'idades',
@@ -114,9 +132,18 @@ const REQUIREMENT_KEYS_V1 = [
   'cor',
   'religiao',
   'sem-filhos',
+  'sem-pais',
+  'trabalho',
+  'casa-propria',
   'altura',
   'nao-fuma',
-] as const
+  'bebida',
+  'exercicio',
+  'saude-bucal',
+  'nao-vape',
+  'escritorio',
+  ...SENSITIVE_KEYS.map(([, key]) => key),
+]
 
 function writeV1(state: LinkState): Array<readonly [string, string]> {
   const pairs: Array<readonly [string, string]> = [['v', String(LINK_VERSION)]]
@@ -147,9 +174,19 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.colors.length > 0) pairs.push(['cor', r.colors.join(',')])
   if (r.religions.length > 0) pairs.push(['religiao', r.religions.join(',')])
   if (r.noChildren) pairs.push(['sem-filhos', 'sim'])
+  if (r.notWithParents) pairs.push(['sem-pais', 'sim'])
+  if (r.work) pairs.push(['trabalho', r.work])
+  if (r.ownsHome) pairs.push(['casa-propria', 'sim'])
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
+  if (r.drinking.length > 0) pairs.push(['bebida', r.drinking.join(',')])
+  if (r.exercises) pairs.push(['exercicio', 'sim'])
+  if (r.goodTeeth) pairs.push(['saude-bucal', 'sim'])
+  if (r.nonVaper) pairs.push(['nao-vape', 'sim'])
+  if (r.office) pairs.push(['escritorio', 'sim'])
+  for (const [field, key] of SENSITIVE_KEYS)
+    if (r[field]) pairs.push([key, 'sim'])
   return pairs
 }
 
@@ -189,8 +226,19 @@ function readV1(
     colors: list(q.get('cor')),
     religions: list(q.get('religiao')),
     noChildren: q.get('sem-filhos') === 'sim',
+    notWithParents: q.get('sem-pais') === 'sim',
+    work: q.get('trabalho'),
+    ownsHome: q.get('casa-propria') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
+    drinking: list(q.get('bebida')),
+    exercises: q.get('exercicio') === 'sim',
+    goodTeeth: q.get('saude-bucal') === 'sim',
+    nonVaper: q.get('nao-vape') === 'sim',
+    office: q.get('escritorio') === 'sim',
+    ...Object.fromEntries(
+      SENSITIVE_KEYS.map(([field, key]) => [field, q.get(key) === 'sim']),
+    ),
   })
   return { calculator, profile, requirements }
 }
@@ -227,11 +275,6 @@ const EDUCATION_IN_SENTENCE: Readonly<
   superior: 'ensino superior',
 }
 
-const asList = (items: ReadonlyArray<string>): string =>
-  items.length < 2
-    ? (items[0] ?? '')
-    : `${items.slice(0, -1).join(', ')} e ${items.at(-1)}`
-
 /** "de 25 a 35", "de 40 anos ou mais"; empty if the range is any age. */
 function agesInSentence(age: Range | null): string {
   if (!age || (age.min <= MIN_SOUGHT_AGE && age.max >= MAX_SOUGHT_AGE))
@@ -254,6 +297,9 @@ export interface SentenceOptions {
   readonly municipality?: string
   /** The name of each priorities trait, by id. */
   readonly names?: Readonly<Record<string, string>>
+  /** The sensitive Requirements on but left out of the link (`sharedLink`),
+   * which the sentence names after what the link shows. */
+  readonly leftOut?: ReadonlyArray<SensitiveRequirement>
 }
 
 /** "Este link mostra: homem, 30, procura mulheres de 25 a 35, ensino superior,
@@ -269,7 +315,7 @@ export function linkSentence(
     const names = top3.map((id) => (options.names?.[id] ?? id).toLowerCase())
     parts.push(
       names.length
-        ? `topo 3 ${asList(names)}`
+        ? `topo 3 ${andList(names)}`
         : 'nenhuma característica escolhida',
     )
     return `Este link mostra: ${parts.join(', ')}, em ${OUTCOME_NAME[outcome].toLowerCase()}.`
@@ -293,9 +339,24 @@ export function linkSentence(
     parts.push(...otherRequirements(profile, r))
     if (r.place) parts.push(placeInSentence(r, options.municipality))
   }
-  if (parts.length === 0)
-    return 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
-  return `Este link mostra: ${parts.join(', ')}.`
+  const shows =
+    parts.length === 0
+      ? 'Este link mostra só a conta do Brasil inteiro, sem nada seu.'
+      : `Este link mostra: ${parts.join(', ')}.`
+  return [shows, leftOutInSentence(options.leftOut ?? [])]
+    .filter(Boolean)
+    .join(' ')
+}
+
+/** "Ficaram de fora 2 Requisitos sensíveis: IMC abaixo de 30 e bissexual." */
+function leftOutInSentence(
+  leftOut: ReadonlyArray<SensitiveRequirement>,
+): string {
+  if (leftOut.length === 0) return ''
+  const names = sensitiveList(leftOut)
+  return leftOut.length === 1
+    ? `Ficou de fora 1 Requisito sensível: ${names}.`
+    : `Ficaram de fora ${leftOut.length} Requisitos sensíveis: ${names}.`
 }
 
 /** The requirements off default, except age and place, which the sentence
@@ -313,8 +374,17 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
     r.noChildren &&
       whoIsSought(profile).children !== 'no-data' &&
       value('children'),
+    r.notWithParents && value('parents'),
+    r.work && value('work'),
+    r.ownsHome && value('home'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
+    r.drinking.length > 0 && value('drinking'),
+    r.exercises && value('exercise'),
+    r.goodTeeth && value('teeth'),
+    r.nonVaper && value('vape'),
+    r.office && value('office'),
+    ...sensitiveOn(r).map(sensitiveLabel),
   ].filter((x): x is string => typeof x === 'string')
 }
 
@@ -348,28 +418,41 @@ export interface PreviewCount {
   readonly result: { readonly min: number; readonly max: number }
 }
 
-/** "Entre 120 mil e 180 mil mulheres de 25 a 35 em SP". */
-export function groupPreview(
-  state: Extract<LinkState, { calculator: 'grupo-possivel' }>,
-  count: PreviewCount,
-  options: Pick<SentenceOptions, 'municipality'> = {},
-): Preview {
+/** What the preview and the share image say about the group, without the
+ * sharer's gender or age: "mulheres de 25 a 35 em SP" and the other
+ * Requirements. */
+function soughtGroup(
+  state: GroupLink,
+  target: Sought['target'],
+  municipality: string | undefined,
+): { who: string; others: string[] } {
   const r = state.requirements ?? DEFAULT_REQUIREMENTS
-  const chosen = agesInSentence(r.age)
   const fromProfile = !r.age && state.profile?.age !== undefined
-  const title = [
-    formatRange(count.result.min, count.result.max),
-    TARGET_NAME[count.target],
-    chosen,
-    `${placeInSentence(r, options.municipality)}${fromProfile ? ', na idade procurada' : ''}`,
+  const who = [
+    TARGET_NAME[target],
+    agesInSentence(r.age),
+    `${placeInSentence(r, municipality)}${fromProfile ? ', na idade procurada' : ''}`,
   ]
     .filter(Boolean)
     .join(' ')
-  // Without the profile: `filhos` depends only on who is sought, which the
-  // title already says.
-  const others = otherRequirements({ seeks: state.profile?.seeks }, r)
+  // Without the profile: `filhos` depends only on who is sought, which `who`
+  // already says.
+  return { who, others: otherRequirements({ seeks: state.profile?.seeks }, r) }
+}
+
+/** "Entre 120 mil e 180 mil mulheres de 25 a 35 em SP". */
+export function groupPreview(
+  state: GroupLink,
+  count: PreviewCount,
+  options: Pick<SentenceOptions, 'municipality'> = {},
+): Preview {
+  const { who, others } = soughtGroup(state, count.target, options.municipality)
+  const title = `${formatRange(count.result.min, count.result.max)} ${who}`
+  const surveys = surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS, {
+    article: true,
+  })
   const description = [
-    'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019.',
+    `Pela conta do Grupo possível, com ${andList(surveys)}.`,
     others.length > 0 && `Também pediu: ${others.join(', ')}.`,
     'Faça a sua conta.',
   ]
@@ -390,14 +473,74 @@ export function prioritiesPreview(
   )
   if (names.length === 0) return null
   return {
-    title: `Topo 3: ${asList(names)}`,
+    title: `Topo 3: ${andList(names)}`,
     description:
       top3Alert(traits, top3, outcome) ??
       `Para ${OUTCOME_NAME[outcome].toLowerCase()}, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".`,
   }
 }
 
+// --- the share image (#302) -----------------------------------------------------
+// The image to post next to the link. It reads the link's own query, so it
+// can only show what the link carries: a Requirement left out of the link
+// stays out of the image too. Like the preview, never the sharer's gender
+// or age. Nor a score or a pickiness label: just the count.
+
+/** The share image's text: "Entre" + "120 mil e 180 mil" in pink, then
+ * "mulheres de 25 a 35 em SP" and the other Requirements. */
+export interface GroupImage {
+  readonly before: 'Entre' | 'Cerca de'
+  readonly numbers: string
+  readonly unstable: boolean
+  readonly who: string
+  readonly also: ReadonlyArray<string>
+  /** The surveys under the signature: "Censo 2022 e PNS 2019". */
+  readonly sources: string
+}
+
+/** The image's text for the link `query` (without the `?`); `null` if the
+ * query is not a Possible group link. `count` is the count of what the link
+ * carries. */
+export function groupImage(
+  query: string,
+  count: PreviewCount & { readonly result: { readonly unstable: boolean } },
+  options: Pick<SentenceOptions, 'municipality'> = {},
+): GroupImage | null {
+  const state = readLink('grupo-possivel', query)
+  if (state?.calculator !== 'grupo-possivel') return null
+  const { who, others } = soughtGroup(state, count.target, options.municipality)
+  const { before, numbers } = rangeParts(count.result.min, count.result.max)
+  return {
+    before: before === 'cerca de' ? 'Cerca de' : 'Entre',
+    numbers,
+    unstable: count.result.unstable,
+    who,
+    also: others,
+    sources: andList(surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS)),
+  }
+}
+
 // --- interface ----------------------------------------------------------------
+
+/**
+ * The state "Copiar link" may carry. The sensitive Requirements (LGPD art.
+ * 5º, II) go only with `consent`, which the visitor gives in a highlighted
+ * box when sharing (art. 11, I); without it they come off, and `leftOut`
+ * names them for the sentence. Everything that reads the query (the preview,
+ * the share image) then shows only what went.
+ */
+export function sharedLink(
+  state: GroupLink,
+  consent: boolean,
+): { state: GroupLink; leftOut: SensitiveRequirement[] } {
+  const r = state.requirements
+  const on = r ? sensitiveOn(r) : []
+  if (!r || consent || on.length === 0) return { state, leftOut: [] }
+  return {
+    state: { ...state, requirements: withoutSensitive(r) },
+    leftOut: on,
+  }
+}
 
 /** The link's query, without the `?`: "v=1&genero=homem&…". */
 export const linkQuery = (state: LinkState): string => encode(writeV1(state))

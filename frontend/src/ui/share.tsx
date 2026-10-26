@@ -2,7 +2,7 @@
 // link reveals and the notice that the site counts usage without keeping the
 // gender. The calculator passes the state's query; the Guide passes nothing,
 // and the link goes out without a query.
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { SiteButton } from './button'
 import { Headline, Section } from './section'
 import { Input } from '@/ui/shadcn/input'
@@ -17,7 +17,14 @@ export function Share({
   sentence,
   notice,
   untitled = false,
+  consent,
+  children,
 }: {
+  /** What the visitor must agree to before something goes in the link (the
+   * Possible group's sensitive Requirements): above the button. */
+  consent?: ReactNode
+  /** What else goes out with the link: the Possible group's image. */
+  children?: ReactNode
   /** Without the "Compartilhar" title: the Guide has the #7 section order,
    * and this is not one of them. */
   untitled?: boolean
@@ -50,6 +57,7 @@ export function Share({
         : { 'aria-labelledby': 't-compartilhar' })}
     >
       {!untitled && <Headline id="t-compartilhar">Compartilhar</Headline>}
+      {consent}
       <div className="flex flex-wrap items-center gap-sm">
         <SiteButton onClick={copyLink}>Copiar link</SiteButton>
         <p className="m-0 flex-[1_1_14rem] leading-nota">{sentence}</p>
@@ -60,6 +68,7 @@ export function Share({
         </p>
       )}
       <CopyOutcome copy={copy} />
+      {children}
     </Section>
   )
 }

@@ -16,9 +16,13 @@ import {
   REQUIREMENTS,
   DEFAULT_REQUIREMENTS,
   COLOR_LABEL,
+  DRINKINGS,
+  DRINKING_LABEL,
   EDUCATION_LABEL,
   RELIGION_LABEL,
   INCOME_LABEL,
+  WORKS,
+  WORK_LABEL,
   release,
   REQUIREMENT_TITLE,
   STATES,
@@ -27,19 +31,12 @@ import {
   type VisitorRequirement,
   type Requirements,
 } from '@tem-estudo/rules/requirements'
-import {
-  isLink,
-  linkSentence,
-  linkQuery,
-  type LinkState,
-} from '@tem-estudo/rules/link'
+import { isLink } from '@tem-estudo/rules/link'
 import { useId, useRef, type ReactNode } from 'react'
 import type { CalculatorGuide } from '#/content/guides'
 import { reads } from '#/content/reads'
 import { fetchGroupPreview, previewMeta } from '#/content/preview'
 import { useReceivedLink } from '#/state/link'
-import { Share } from '#/ui/share'
-import { COUNTING_NOTICE } from '#/ui/share.copy'
 import {
   saveRequirements,
   PLACES_WITH_DATA,
@@ -50,6 +47,7 @@ import {
 import { useProfile } from '#/state/profile'
 import { countCalculatorUse } from '#/analytics/counting'
 import { SiteButton } from '#/ui/button'
+import { GroupShare } from '#/ui/group-share'
 import {
   Folds,
   EstimateRange,
@@ -57,6 +55,7 @@ import {
   CheckChip,
   PinnedNumber,
   Options,
+  SensitiveNote,
   Stepper,
 } from '#/ui/possible-group'
 import { costText } from '#/ui/possible-group.copy'
@@ -92,7 +91,7 @@ export const Route = createFileRoute('/grupo-possivel')({
       {
         name: 'description',
         content:
-          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022 e a PNS 2019.',
+          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022, a PNS 2019 e a PNAD Contínua 2022.',
       },
       ...previewMeta(loaderData?.preview ?? null),
     ],
@@ -127,11 +126,6 @@ function PossibleGroupPage() {
     : undefined
   const value: RequirementValue = (k) =>
     requirementValue(k, profile, r, municipality)
-  const link: LinkState = {
-    calculator: 'grupo-possivel',
-    profile,
-    requirements: saved,
-  }
 
   return (
     <Sheet>
@@ -152,10 +146,11 @@ function PossibleGroupPage() {
           value={value}
         />
 
-        <Share
-          query={linkQuery(link)}
-          sentence={linkSentence(link, { municipality })}
-          notice={COUNTING_NOTICE}
+        <GroupShare
+          profile={profile}
+          saved={saved}
+          estimate={count.estimate}
+          municipality={municipality}
         />
 
         {guide && <FromTheGuide guide={guide} />}
@@ -185,7 +180,7 @@ function CountTop({
 
       <p className="mx-0 mt-5.5 mb-md">
         Diga quem você procura e ligue os seus Requisitos. O número de cima muda
-        junto, com dados do Censo 2022 e da PNS 2019.
+        junto, com dados do Censo 2022, da PNS 2019 e da PNAD Contínua 2022.
       </p>
       <CountNotices
         replaced={replaced}
@@ -264,7 +259,9 @@ function YourRequirements({
                     childrenData={estimate.children}
                     id={childrenReasonId}
                   />
-                ) : undefined
+                ) : (
+                  <SensitiveNote requirement={k} />
+                )
               }
             >
               <Control {...props} />
@@ -402,6 +399,31 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(noChildren) => change({ noChildren })}
       />
     ),
+    parents: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não mora com os pais"
+        checked={requirements.notWithParents}
+        onChange={(notWithParents) => change({ notWithParents })}
+      />
+    ),
+    work: ({ requirements, change }) => (
+      <Options
+        legend="Situação de trabalho"
+        type="radio"
+        values={[ANY, ...WORKS]}
+        labels={{ [ANY]: ANY, ...WORK_LABEL }}
+        checked={[requirements.work ?? ANY]}
+        onChange={(v) => change({ work: v === ANY ? null : v })}
+        hint="Na última semana de julho de 2022. Negócio próprio é ser empregador ou trabalhar por conta própria."
+      />
+    ),
+    home: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem tem casa própria"
+        checked={requirements.ownsHome}
+        onChange={(ownsHome) => change({ ownsHome })}
+      />
+    ),
     height: ({ requirements: { height }, change }) => (
       <div className="flex flex-wrap gap-x-5.5 gap-y-3">
         <Stepper
@@ -433,6 +455,77 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         label="Só quem não fuma"
         checked={requirements.nonSmoker}
         onChange={(nonSmoker) => change({ nonSmoker })}
+      />
+    ),
+    drinking: ({ requirements, change }) => (
+      <Options
+        legend="Com que frequência bebe"
+        type="checkbox"
+        values={DRINKINGS}
+        labels={DRINKING_LABEL}
+        checked={requirements.drinking}
+        onChange={(v, isChecked) =>
+          change({
+            drinking: toggle(DRINKINGS, requirements.drinking, v, isChecked),
+          })
+        }
+        hint="Nenhuma marcada é qualquer uma."
+      />
+    ),
+    exercise: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem faz 150 min de exercício por semana"
+        checked={requirements.exercises}
+        onChange={(exercises) => change({ exercises })}
+      />
+    ),
+    teeth: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem avalia a saúde bucal como boa"
+        checked={requirements.goodTeeth}
+        onChange={(goodTeeth) => change({ goodTeeth })}
+      />
+    ),
+    vape: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não usa cigarro eletrônico"
+        checked={requirements.nonVaper}
+        onChange={(nonVaper) => change({ nonVaper })}
+      />
+    ),
+    office: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem trabalha em escritório"
+        checked={requirements.office}
+        onChange={(office) => change({ office })}
+      />
+    ),
+    obesity: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem tem IMC abaixo de 30"
+        checked={requirements.notObese}
+        onChange={(notObese) => change({ notObese })}
+      />
+    ),
+    depression: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não teve sintomas de depressão"
+        checked={requirements.noDepressionSymptoms}
+        onChange={(noDepressionSymptoms) => change({ noDepressionSymptoms })}
+      />
+    ),
+    bisexual: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem se declara bissexual"
+        checked={requirements.bisexual}
+        onChange={(bisexual) => change({ bisexual })}
+      />
+    ),
+    worship: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem vai à religião toda semana"
+        checked={requirements.weeklyWorship}
+        onChange={(weeklyWorship) => change({ weeklyWorship })}
       />
     ),
   }
@@ -573,6 +666,32 @@ function CountCosts({
         que mais encolhe o grupo ao que menos.
       </p>
     )
+  return (
+    <>
+      {/* As the Pool Report does (https://datingpoolreport.com/methodology,
+       * #300): the "+…" of each row is measured with the others on, so two
+       * rows together are not their sum. One Requirement has nothing to sum. */}
+      {costs.length > 1 && (
+        <p className="m-0 mb-2 text-label leading-nota font-normal text-tinta-2">
+          Cada linha solta só aquele Requisito e deixa os outros ligados. Os
+          efeitos não se somam, então soltar dois não dá a soma das duas linhas.
+        </p>
+      )}
+      <CostRows costs={costs} value={value} onRelease={onRelease} />
+    </>
+  )
+}
+
+/** The rows of "O que mais pesa", each with its "soltar" button. */
+function CostRows({
+  costs,
+  value,
+  onRelease,
+}: {
+  costs: Estimate['costs']
+  value: (k: VisitorRequirement) => string
+  onRelease: (k: VisitorRequirement) => void
+}) {
   return (
     <ul className="m-0 list-none p-0">
       {costs.map((c) => {

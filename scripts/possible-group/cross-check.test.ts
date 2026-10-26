@@ -27,6 +27,9 @@ const cell = (
   cor: 'parda',
   religiao: 'catolica',
   filhos: '',
+  pais: '',
+  trabalho: '',
+  casa: '',
   peso,
   n_registros: 10,
 })
@@ -44,6 +47,7 @@ const aggregate: Aggregate = {
     under15: { records: 0, weight: 0 },
     sexOrAgeSuppressed: { records: 0, weight: 0 },
   },
+  withoutHousehold: 0,
 }
 
 // What SIDRA published for the same cells, 1% off.
@@ -78,9 +82,18 @@ describe('crossCheckPns', () => {
     weight: 1,
     sex: 'homem',
     age: 30,
-    orientation,
-    height: 170,
-    smoking: 'nao',
+    values: {
+      orientacao: orientation,
+      altura: '170',
+      fumo: 'nao',
+      bebida: null,
+      exercicio: null,
+      saude_bucal: null,
+      cigarro_eletronico: null,
+      obesidade: null,
+      depressao: null,
+      culto: null,
+    },
   })
   // 4 of 5 heterosexual (80%) and 1 homosexual (20%).
   const records = [

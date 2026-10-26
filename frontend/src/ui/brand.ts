@@ -1,6 +1,7 @@
 // The brand outside the CSS: what the `<head>` and the site icons need to
 // know without reading the Tailwind theme. The browser's `theme-color`, the
-// manifest and the icons (`scripts/brand-icons.ts`) read from here. The
+// manifest, the icons (`scripts/brand-icons.ts`) and the share image
+// (`share-image.draw.ts`) read from here. The
 // colors are DESIGN.md's, and `brand.test.ts` checks they still are.
 
 const SITE_NAME = 'Tem estudo?'
@@ -10,7 +11,9 @@ export const BRAND_COLORS = {
   papel: '#f5f8f8',
   folha: '#fcfdfd',
   tinta: '#1a1c1c',
+  'tinta-2': '#414948',
   'amarelo-voce': '#ecd36f',
+  'rosa-mito': '#e7a3b6',
 } as const
 
 /** The icons the script writes to `public/`: the tab's, the iPhone home

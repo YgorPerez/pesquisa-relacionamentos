@@ -23,6 +23,7 @@ import {
   CheckChip,
   PinnedNumber,
   Options,
+  SensitiveNote,
   Stepper,
 } from './possible-group'
 
@@ -140,6 +141,30 @@ export const RequirementRows: Story = {
       screen.getByRole('button', { name: 'Idade de: mais 1' }),
     )
     await expect(screen.getByLabelText('Idade de')).toHaveValue('29')
+  },
+}
+
+/** A sensitive Requirement's row, with the note on what it measures and
+ * where it stays. */
+export const SensitiveRow: Story = {
+  render: function Row(_args, { loaded }) {
+    const { estimate } = loaded as Loaded
+    const [bisexual, setBisexual] = useState(true)
+    return (
+      <RequirementRow
+        requirement="bisexual"
+        value="bissexual"
+        cost={estimate.costs.find((c) => c.requirement === 'bisexual')}
+        active={bisexual}
+        note={<SensitiveNote requirement="bisexual" />}
+      >
+        <CheckChip
+          label="Só quem se declara bissexual"
+          checked={bisexual}
+          onChange={setBisexual}
+        />
+      </RequirementRow>
+    )
   },
 }
 
