@@ -3,8 +3,8 @@ reference: "Büyükeren B, Makarin A, Xiong H. *The Impact of Dating Apps on You
 link: https://doi.org/10.1257/app.20240455
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Experimento natural com cerca de 1,1 milhão de respostas, mas sem amostra representativa nem sorteio: a interpretação causal depende de tendências paralelas entre membros e não membros de fraternidades e sororidades, sujeitos a efeitos entre grupos."
+strength: weak
+strength_reason: "Amostra não representativa de graduandos dos EUA, classificada como fraca pela rubrica do acervo apesar do experimento natural com cerca de 1,1 milhão de respostas; a interpretação causal depende de tendências paralelas entre membros e não membros de fraternidades e sororidades, sujeitos a efeitos entre grupos."
 countries: [EUA]
 period: "Segundo semestre de 2008 ao primeiro semestre de 2019; lançamento amplo do Tinder no verão de 2013"
 sample:
