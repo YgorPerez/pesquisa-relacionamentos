@@ -103,6 +103,7 @@ export const COLUMNS = [
   'religiao',
   'filhos',
   'pais',
+  'trabalho',
 ] as const
 export type Column = (typeof COLUMNS)[number]
 
@@ -141,6 +142,8 @@ const READ = [
   'P1110',
   'P0300',
   'P0310',
+  'P0950',
+  'P0990',
 ] as const
 
 /** P1110, income from all sources, in minimum-wage bands. */
@@ -166,6 +169,14 @@ function children(sex: string, value: string): string {
 function livesWithParents(mother: string, father: string): string {
   if (mother === '1' || father === '1') return 'sim'
   return mother === '2' && father === '2' ? 'nao' : ''
+}
+
+/** P0950: 1 employed in the reference week (25 to 31 July 2022), 0
+ * unemployed, blank outside the labor force. P0990 07 (employer) and 08
+ * (self-employed) are "negocio"; any other employed person is "sim". */
+function work(employed: string, position: string): string {
+  if (employed !== '1') return 'nao'
+  return position === '07' || position === '08' ? 'negocio' : 'sim'
 }
 
 /**
@@ -234,6 +245,7 @@ export async function aggregatePeople(
       RELIGION[field('P0410')] ?? '',
       children(sex, field('P0340')),
       livesWithParents(field('P0300'), field('P0310')),
+      work(field('P0950'), field('P0990')),
     ]
     const key = values.join('|')
     const cell = byKey.get(key)

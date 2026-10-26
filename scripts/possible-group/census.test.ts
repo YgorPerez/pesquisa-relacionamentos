@@ -7,7 +7,7 @@ import { describe, it } from 'vite-plus/test'
 import { aggregatePeople, cellsToCsv } from './census.ts'
 
 const HEADER =
-  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110;P0300;P0310'
+  'P0010;P0020;P0110;P0150;P0180;P0210;P0280;P0340;P0410;P0760;P1110;P0300;P0310;P0950;P0990'
 
 // Woman in SP, 20–24, parda, not living with a partner (never has), no
 // children, evangelical, college degree, R$ 3,000 (between 2 and 5 minimum
@@ -33,6 +33,7 @@ describe('aggregatePeople', () => {
         religiao: 'evangelica',
         filhos: 'nao',
         pais: 'nao',
+        trabalho: 'nao',
         peso: 14.75,
         n_registros: 2,
       },
@@ -118,6 +119,30 @@ describe('aggregatePeople', () => {
     )
   })
 
+  it('records whether the person was employed and whether in their own business', async () => {
+    // P0950 blank: outside the labor force; 0: unemployed; 1: employed, with
+    // the position in P0990 (03 private employee, 07 employer, 08
+    // self-employed).
+    const work = (p0950: string, p0990: string) =>
+      `${WOMAN_SP};${p0950};${p0990}`
+    const { cells } = await aggregatePeople([
+      HEADER,
+      work('', ''),
+      work('0', '').replace('10.5', '1'),
+      work('1', '03'),
+      work('1', '07').replace('10.5', '2'),
+      work('1', '08').replace('10.5', '3'),
+    ])
+    assert.deepEqual(
+      cells.map((c) => [c.trabalho, c.peso]),
+      [
+        ['nao', 11.5],
+        ['negocio', 5],
+        ['sim', 10.5],
+      ],
+    )
+  })
+
   it('keeps people aged 15 or more and counts the discarded ones', async () => {
     const child = '1;35;3;1;03;1;3;;1;2;0;2;2'
     const suppressedSex = '1;35;7;9;99;1;3;;1;2;0;2;2'
@@ -168,9 +193,9 @@ describe('cellsToCsv', () => {
     assert.equal(
       cellsToCsv(cells),
       [
-        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,pais,peso,n_registros',
-        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,nao,6.20,1',
-        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,nao,10.50,1',
+        'sexo,idade,uf,uniao,escolaridade,renda,cor,religiao,filhos,pais,trabalho,peso,n_registros',
+        'homem,80+,AC,sim,fundamental,ate-1,indigena,sem-religiao,,nao,nao,6.20,1',
+        'mulher,20-24,SP,nao,superior,2-5,parda,evangelica,nao,nao,nao,10.50,1',
         '',
       ].join('\n'),
     )

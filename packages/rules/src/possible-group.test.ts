@@ -122,6 +122,32 @@ describe('estimateGroup: "não mora com os pais"', () => {
   })
 })
 
+describe('estimateGroup: "trabalha" and "tem negócio próprio"', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+  const women = { seeks: 'mulheres' } as const
+
+  it('"trabalha" keeps whoever was employed, in their own business or not', () => {
+    // Without a partner: 1,000 employed, 3,000 not, 400 with a business.
+    const r = count(women, { ...ac, work: 'trabalha' })
+    expect(r.active).toContain('work')
+    expect(r.result.central).toBeCloseTo(1400)
+    expect(r.caveats.map((c) => c.id)).toContain('work')
+  })
+
+  it('"tem negócio próprio" keeps only employers and the self-employed', () => {
+    expect(count(women, { ...ac, work: 'negocio' }).result.central).toBeCloseTo(
+      400,
+    )
+  })
+
+  it('is any by default and released by "soltar"', () => {
+    expect(DEFAULT_REQUIREMENTS.work).toBeNull()
+    expect(
+      release({ ...DEFAULT_REQUIREMENTS, work: 'negocio' }, 'work').work,
+    ).toBeNull()
+  })
+})
+
 describe('estimateGroup: "sem filhos"', () => {
   const ac = {
     age: { min: 25, max: 29 },

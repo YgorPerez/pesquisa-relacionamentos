@@ -27,6 +27,7 @@ describe('readRequirements', () => {
       religions: ['sem-religiao'],
       noChildren: true,
       notWithParents: true,
+      work: 'trabalha',
       height: { min: 160, max: 200 },
       nonSmoker: true,
     }

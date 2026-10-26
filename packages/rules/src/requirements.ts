@@ -66,6 +66,11 @@ export const RELIGIONS = [
 ] as const
 export type Religion = (typeof RELIGIONS)[number]
 
+/** "Trabalha" (employed) and its variant "tem negócio próprio" (employer or
+ * self-employed). */
+export const WORKS = ['trabalha', 'negocio'] as const
+export type Work = (typeof WORKS)[number]
+
 /** The minimum education and income one can ask for (the lowest step is
  * "any"). */
 export const MIN_EDUCATIONS = [
@@ -115,6 +120,8 @@ export interface Requirements {
   /** "Não mora com os pais": neither the mother, the father nor a
    * step-parent lives in the same household. */
   readonly notWithParents: boolean
+  /** `null` = works or not. */
+  readonly work: Work | null
   readonly height: Range
   readonly nonSmoker: boolean
 }
@@ -129,6 +136,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   religions: [],
   noChildren: false,
   notWithParents: false,
+  work: null,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
 }
@@ -231,6 +239,7 @@ export const REQUIREMENTS = [
   'religion',
   'children',
   'parents',
+  'work',
   'height',
   'smoking',
 ] as const
@@ -255,6 +264,7 @@ export function release(
     religion: { religions: [] },
     children: { noChildren: false },
     parents: { notWithParents: false },
+    work: { work: null },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
   }
@@ -274,6 +284,7 @@ export const REQUIREMENT_TITLE: Readonly<
   religion: 'Religião',
   children: 'Filhos',
   parents: 'Pais',
+  work: 'Trabalho',
   height: 'Altura',
   smoking: 'Cigarro',
 }
@@ -293,6 +304,11 @@ export const INCOME_LABEL: Readonly<
   '1-2': 'mais de 1 salário mínimo',
   '2-5': 'mais de 2 salários mínimos',
   '5+': 'mais de 5 salários mínimos',
+}
+
+export const WORK_LABEL: Readonly<Record<Work, string>> = {
+  trabalha: 'trabalha',
+  negocio: 'tem negócio próprio',
 }
 
 export const COLOR_LABEL: Readonly<Record<Color, string>> = {
@@ -373,6 +389,8 @@ export function requirementValue(
       return r.notWithParents
         ? 'não mora com os pais'
         : 'mora ou não com os pais'
+    case 'work':
+      return r.work ? WORK_LABEL[r.work] : 'trabalha ou não'
     case 'height': {
       const { min, max } = r.height
       if (min <= MIN_HEIGHT && max >= MAX_HEIGHT) return 'qualquer altura'
@@ -405,6 +423,7 @@ export function readRequirements(value: unknown): Requirements {
     religions: manyOf(RELIGIONS, raw.religions),
     noChildren: raw.noChildren === true,
     notWithParents: raw.notWithParents === true,
+    work: oneOf(WORKS, raw.work) ?? null,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
   }

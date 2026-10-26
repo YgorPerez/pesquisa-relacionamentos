@@ -51,6 +51,7 @@ export const REQUIREMENT_ORDER = [
   'religion',
   'children',
   'parents',
+  'work',
   'height',
   'smoking',
 ] as const
@@ -70,6 +71,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   religion: 'Censo',
   children: 'Censo',
   parents: 'Censo',
+  work: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
 }
@@ -161,6 +163,7 @@ export function activeRequirements({
     religion: r.religions.length > 0,
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     parents: r.notWithParents,
+    work: r.work !== null,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
   }
@@ -375,6 +378,8 @@ function tally(
   const partner = active.has('partner')
   const noChildren = active.has('children')
   const notWithParents = active.has('parents')
+  // The `work` column: 1 employed, 2 in their own business.
+  const work = !active.has('work') ? 0 : r.work === 'negocio' ? 2 : 1
   const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
@@ -394,6 +399,7 @@ function tally(
     if (religions && !religions.has(d.religion[i]!)) continue
     if (noChildren && d.children[i] === 2) continue
     if (notWithParents && d.parents[i] !== 1) continue
+    if (d.work[i]! < work) continue
     const sg = s * G + d.ageGroup[i]!
     let f = factor[sg]!
     if (municipality)
@@ -466,6 +472,14 @@ function caveats(
       id: 'parents',
       strong: false,
       text: '"Não mora com os pais" tira quem mora no mesmo domicílio que a mãe, o pai, a madrasta ou o padrasto, inclusive quando são eles que moram na casa da pessoa.',
+    },
+    has('work') && {
+      id: 'work',
+      strong: false,
+      text:
+        requirements.work === 'negocio'
+          ? '"Tem negócio próprio" junta empregadores e quem trabalha por conta própria, na última semana de julho de 2022. O Censo não diz se é em tempo integral.'
+          : '"Trabalha" é quem tinha trabalho na última semana de julho de 2022, com ou sem carteira e em negócio próprio ou não. O Censo não diz se é em tempo integral.',
     },
     has('orientation') && {
       id: 'orientation',

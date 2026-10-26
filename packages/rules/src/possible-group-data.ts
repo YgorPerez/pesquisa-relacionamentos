@@ -108,6 +108,13 @@ const DIMENSIONS = [
   /** 1 = lives with neither parent, 2 = with the mother, the father or a
    * step-parent. */
   { key: 'parents', column: 'pais', values: NO_YES, optional: true },
+  /** 0 = not employed, 1 = employed, 2 = employer or self-employed. */
+  {
+    key: 'work',
+    column: 'trabalho',
+    values: ['nao', 'sim', 'negocio'],
+    optional: false,
+  },
 ] as const
 type Dimension = (typeof DIMENSIONS)[number]['key']
 

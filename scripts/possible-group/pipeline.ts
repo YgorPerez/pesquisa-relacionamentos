@@ -447,6 +447,8 @@ async function main() {
       'P0340',
       'P0410',
       'P0760',
+      'P0950',
+      'P0990',
       'P1110',
     ],
     downloaded_on: fileDate(censusZip),
