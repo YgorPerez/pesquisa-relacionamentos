@@ -78,6 +78,29 @@ it('each active Requirement changes the number, and releasing it goes back to "q
   ).toBeChecked()
 })
 
+it('"O que mais pesa" warns that the effects of releasing each Requirement do not add up', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  const current = await newCount(null)
+  await user.click(
+    requirement('education').getByRole('radio', {
+      name: 'superior completo',
+    }),
+  )
+  await newCount(current)
+  const count = screen.getByRole('region', { name: 'A conta' })
+  expect(
+    within(count).getByText(
+      'Cada linha solta só aquele Requisito e deixa os outros ligados. Os efeitos não se somam, então soltar dois não dá a soma das duas linhas.',
+    ),
+  ).toBeVisible()
+})
+
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {
   const user = userEvent.setup()
   openScreen(PAGE)
