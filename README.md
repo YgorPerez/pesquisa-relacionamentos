@@ -87,6 +87,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Eastwick & Finkel 2008](studies/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem o desejo real (speed dating) · ✅ · moderada
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
+- [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · moderada
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
