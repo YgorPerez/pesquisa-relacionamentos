@@ -18,6 +18,10 @@ const adult = (
     orientacao: 'heterossexual',
     altura: '175',
     fumo: 'nao',
+    bebida: 'nunca',
+    exercicio: 'sim',
+    saude_bucal: 'boa',
+    cigarro_eletronico: 'nao',
     obesidade: 'nao',
     depressao: 'nao',
     culto: 'menos',
@@ -108,6 +112,10 @@ describe('readPnsRecord', () => {
         orientacao: 'heterossexual',
         altura: '165',
         fumo: 'nao',
+        bebida: null,
+        exercicio: null,
+        saude_bucal: null,
+        cigarro_eletronico: null,
         obesidade: null,
         depressao: null,
         culto: null,
@@ -159,13 +167,98 @@ describe('readPnsRecord', () => {
   })
 })
 
+describe('readPnsRecord: lifestyle answers', () => {
+  /** The selected adult with these answers (`[start, value]` by name). */
+  const answering = (answers: Record<string, [number, string]>) =>
+    readPnsRecord(
+      line({
+        C006: [108, '1'],
+        C008: [117, '040'],
+        M001: [527, '1'],
+        V00291: [1426, '00000001.00000'],
+        ...answers,
+      }),
+    )!.values
+
+  it('drinking: never, less than once a week, or weekly; who did not say is left empty', () => {
+    // P027 at 662: 1 never, 2 under once a month, 3 once a month or more;
+    // P02801 at 663, days a week for those who drink monthly (0 = under once
+    // a week).
+    const drinking = (p027: string, p02801 = ' ') =>
+      answering({ P027: [662, p027], P02801: [663, p02801] }).bebida
+    assert.equal(drinking('1'), 'nunca')
+    assert.equal(drinking('2'), 'raramente')
+    assert.equal(drinking('3', '0'), 'raramente')
+    assert.equal(drinking('3', '1'), 'semanal')
+    assert.equal(drinking('3', '7'), 'semanal')
+    assert.equal(drinking('9'), null)
+    assert.equal(drinking('3', '9'), null)
+  })
+
+  it('exercise: 150 minutes a week or more, days times the usual duration', () => {
+    // P034 at 673 (exercised in the last 3 months), P035 at 674 (days a
+    // week, 0 = under once a week), P03701 at 675 (hours), P03702 at 677
+    // (minutes).
+    const exercise = (p034: string, days = ' ', hours = '  ', minutes = '  ') =>
+      answering({
+        P034: [673, p034],
+        P035: [674, days],
+        P03701: [675, hours],
+        P03702: [677, minutes],
+      }).exercicio
+    assert.equal(exercise('2'), 'nao')
+    assert.equal(exercise('1', '0'), 'nao')
+    assert.equal(exercise('1', '3', '00', '50'), 'sim')
+    assert.equal(exercise('1', '2', '01', '00'), 'nao')
+    assert.equal(exercise('1', '2', '01', '15'), 'sim')
+    assert.equal(exercise('1', '3', '00', '99'), null)
+    assert.equal(exercise('9'), null)
+  })
+
+  it('exercise: a minute of a vigorous main activity counts as two', () => {
+    // 2 days of 40 minutes: 80 walking (P036 = 01), 160 running (03).
+    const exercise = (activity: string) =>
+      answering({
+        P034: [673, '1'],
+        P035: [674, '2'],
+        P03701: [675, '00'],
+        P03702: [677, '40'],
+        P036: [679, activity],
+      }).exercicio
+    assert.equal(exercise('01'), 'nao')
+    assert.equal(exercise('03'), 'sim')
+  })
+
+  it('oral health: very good or good, against fair, poor or very poor', () => {
+    // U005 at 1208, from 1 (very good) to 5 (very poor), 9 unknown.
+    const teeth = (u005: string) =>
+      answering({ U005: [1208, u005] }).saude_bucal
+    assert.equal(teeth('1'), 'boa')
+    assert.equal(teeth('2'), 'boa')
+    assert.equal(teeth('3'), 'nao')
+    assert.equal(teeth('5'), 'nao')
+    assert.equal(teeth('9'), null)
+  })
+
+  it('e-cigarette: uses it (daily or not) against used it in the past or never', () => {
+    // P06701 at 796.
+    const vape = (p06701: string) =>
+      answering({ P06701: [796, p06701] }).cigarro_eletronico
+    assert.equal(vape('1'), 'usa')
+    assert.equal(vape('2'), 'usa')
+    assert.equal(vape('3'), 'nao')
+    assert.equal(vape('4'), 'nao')
+    assert.equal(vape('9'), null)
+  })
+})
+
 describe('pnsToCsv', () => {
   it('writes one column per PNS variable, the empty answer as ""', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,obesidade,depressao,culto,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nao,nao,menos,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,cigarro_eletronico,obesidade,depressao,culto,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nunca,sim,boa,nao,nao,nao,menos,3,1,1.000\n',
     )
   })
 })

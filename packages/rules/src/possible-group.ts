@@ -8,10 +8,10 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking, BMI, depression symptoms,
-//   bisexual, religious attendance) are crossed with each other
-//   on the PNS microdata: their joint share in the same sex and age bracket
-//   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
+// - The PNS ones (orientation, height, smoking, drinking, BMI…) are crossed with
+//   each other on the PNS microdata: their joint share in the same sex and
+//   age bracket (the PNS block, `pnsBlocks`) multiplies the cell, with its
+//   interval.
 // - The PNAD one (office occupation, #294) multiplies each cell by the
 //   probability in its sex, age group and education, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
@@ -59,6 +59,10 @@ export const REQUIREMENT_ORDER = [
   'children',
   'height',
   'smoking',
+  'drinking',
+  'exercise',
+  'teeth',
+  'vape',
   'office',
   'obesity',
   'depression',
@@ -83,10 +87,14 @@ export const REQUIREMENT_SOURCE: Readonly<
   children: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
+  drinking: 'PNS',
+  exercise: 'PNS',
+  teeth: 'PNS',
+  vape: 'PNS',
   obesity: 'PNS',
-  worship: 'PNS',
-  bisexual: 'PNS',
   depression: 'PNS',
+  bisexual: 'PNS',
+  worship: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -187,11 +195,15 @@ export function activeRequirements({
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    drinking: r.drinking.length > 0,
+    exercise: r.exercises,
+    teeth: r.goodTeeth,
+    vape: r.nonVaper,
     office: r.office,
     obesity: r.notObese,
-    worship: r.weeklyWorship,
-    bisexual: r.bisexual,
     depression: r.noDepressionSymptoms,
+    bisexual: r.bisexual,
+    worship: r.weeklyWorship,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -279,10 +291,20 @@ const PNS_FILTERS: {
     }
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
+  drinking: ({ requirements: { drinking } }) => ({
+    variable: 'bebida',
+    test: (value) => drinking.some((d) => d === value),
+  }),
+  exercise: () => ({ variable: 'exercicio', test: (value) => value === 'sim' }),
+  teeth: () => ({ variable: 'saude_bucal', test: (value) => value === 'boa' }),
+  vape: () => ({
+    variable: 'cigarro_eletronico',
+    test: (value) => value === 'nao',
+  }),
   obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
-  worship: () => ({
-    variable: 'culto',
-    test: (value) => value === 'semanal',
+  depression: () => ({
+    variable: 'depressao',
+    test: (value) => value === 'nao',
   }),
   // Like the orientation, whoever did not know or refused is out.
   bisexual: () => ({
@@ -292,9 +314,9 @@ const PNS_FILTERS: {
         ? null
         : value === 'bissexual',
   }),
-  depression: () => ({
-    variable: 'depressao',
-    test: (value) => value === 'nao',
+  worship: () => ({
+    variable: 'culto',
+    test: (value) => value === 'semanal',
   }),
 }
 
@@ -650,10 +672,25 @@ function caveats(
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
     },
-    has('office') && {
-      id: 'office',
+    has('drinking') && {
+      id: 'drinking',
       strong: false,
-      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
+      text: 'A frequência com que bebe é autodeclarada na PNS 2019, e o consumo de álcool costuma ser subdeclarado: quem bebe toda semana aparece menos do que é.',
+    },
+    has('exercise') && {
+      id: 'exercise',
+      strong: false,
+      text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS; como faz o IBGE, um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) vale dois.',
+    },
+    has('teeth') && {
+      id: 'teeth',
+      strong: false,
+      text: 'A saúde bucal é a autoavaliação da PNS 2019 ("boa" ou "muito boa"), não um exame de dentista.',
+    },
+    has('vape') && {
+      id: 'vape',
+      strong: false,
+      text: 'O cigarro eletrônico vem da PNS 2019, quando menos de 1% dos adultos o usava. O uso cresceu depois, então o número tende a sair alto. Quem usava era tão pouco na amostra (poucas dezenas de registros por sexo e idade) que a parte descontada é imprecisa.',
     },
     has('obesity') && {
       id: 'obesity',
@@ -677,6 +714,11 @@ function caveats(
       text: has('religion')
         ? 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião. Com uma religião marcada, a conta supõe que a parcela que vai toda semana é a mesma em todas as religiões, o que a PNS não deixa conferir.'
         : 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião: conta quem vai a cultos ou atividades da própria religião, ou de outra, pelo menos uma vez por semana.',
+    },
+    has('office') && {
+      id: 'office',
+      strong: false,
+      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

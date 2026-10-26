@@ -24,7 +24,24 @@ const ALL: Requirements = {
   noChildren: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
+  drinking: ['nunca', 'raramente'],
+  exercises: true,
+  goodTeeth: true,
+  nonVaper: true,
   office: true,
+}
+
+/** What a link from before the PNS lifestyle Requirements carries: all of
+ * them off. */
+const BEFORE_LIFESTYLE: Partial<Requirements> = {
+  drinking: [],
+  exercises: false,
+  goodTeeth: false,
+  nonVaper: false,
+  notObese: false,
+  noDepressionSymptoms: false,
+  bisexual: false,
+  weeklyWorship: false,
 }
 
 describe('round trip', () => {
@@ -114,7 +131,7 @@ describe('old versions', () => {
     ).toEqual({
       calculator: 'grupo-possivel',
       profile: { gender: 'homem', seeks: 'mulheres', age: 30 },
-      requirements: ALL,
+      requirements: { ...ALL, ...BEFORE_LIFESTYLE },
     })
   })
 
@@ -229,7 +246,9 @@ describe('linkSentence', () => {
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
         'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
-        'a partir de 160 cm, não fuma, trabalha em escritório, em São Paulo (SP).',
+        'a partir de 160 cm, não fuma, bebe nunca ou menos de 1 vez por semana, ' +
+        'faz 150 min de exercício por semana, saúde bucal boa, não usa cigarro eletrônico, trabalha em escritório, ' +
+        'em São Paulo (SP).',
     )
   })
 
@@ -413,6 +432,9 @@ describe('share image', () => {
 
   it('is null for a query that is not a link', () => {
     expect(groupImage('utm_source=zap', count)).toBeNull()
+  })
+})
+
 describe('sensitive Requirements (LGPD art. 11)', () => {
   const profile = { gender: 'homem', seeks: 'mulheres', age: 30 } as const
   const sensitive: Requirements = {

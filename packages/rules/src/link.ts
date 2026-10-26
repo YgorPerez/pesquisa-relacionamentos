@@ -134,6 +134,10 @@ const REQUIREMENT_KEYS_V1 = [
   'sem-filhos',
   'altura',
   'nao-fuma',
+  'bebida',
+  'exercicio',
+  'saude-bucal',
+  'nao-vape',
   'escritorio',
   ...SENSITIVE_KEYS.map(([, key]) => key),
 ]
@@ -170,6 +174,10 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
+  if (r.drinking.length > 0) pairs.push(['bebida', r.drinking.join(',')])
+  if (r.exercises) pairs.push(['exercicio', 'sim'])
+  if (r.goodTeeth) pairs.push(['saude-bucal', 'sim'])
+  if (r.nonVaper) pairs.push(['nao-vape', 'sim'])
   if (r.office) pairs.push(['escritorio', 'sim'])
   for (const [field, key] of SENSITIVE_KEYS)
     if (r[field]) pairs.push([key, 'sim'])
@@ -214,6 +222,10 @@ function readV1(
     noChildren: q.get('sem-filhos') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
+    drinking: list(q.get('bebida')),
+    exercises: q.get('exercicio') === 'sim',
+    goodTeeth: q.get('saude-bucal') === 'sim',
+    nonVaper: q.get('nao-vape') === 'sim',
     office: q.get('escritorio') === 'sim',
     ...Object.fromEntries(
       SENSITIVE_KEYS.map(([field, key]) => [field, q.get(key) === 'sim']),
@@ -360,6 +372,10 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
       value('children'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
+    r.drinking.length > 0 && value('drinking'),
+    r.exercises && value('exercise'),
+    r.goodTeeth && value('teeth'),
+    r.nonVaper && value('vape'),
     r.office && value('office'),
     ...sensitiveOn(r).map(sensitiveLabel),
   ].filter((x): x is string => typeof x === 'string')
