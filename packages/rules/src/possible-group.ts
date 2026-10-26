@@ -12,6 +12,8 @@
 //   on the PNS microdata: their joint share in the same sex and age bracket
 //   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
+// - Apart, the independence range (#301) gives the least and the most the
+//   PNS block and the Census Requirements could overlap.
 //
 // The caveat texts are interface text, in Portuguese.
 import {
@@ -148,6 +150,10 @@ export interface Estimate {
   /** The count by multiplication: the base times the fraction each
    * requirement leaves on its own. */
   readonly naive: number
+  /** The independence range (#301): the least and the most the group could
+   * be if the PNS block overlapped the Census Requirements in any other way.
+   * `null` when the count assumes no independence. */
+  readonly independence: Range | null
   readonly caveats: ReadonlyArray<Caveat>
   /** "Sem filhos": applies, only to women (seeking both) or no data (seeking
    * men). */
@@ -366,6 +372,41 @@ function unionSum(data: PlaceData): Float64Array {
 interface Tally extends Count {
   /** Weighted mean of who did not answer the orientation, when it enters. */
   readonly noAnswer: number
+  readonly independence: Range | null
+}
+
+export interface Range {
+  readonly min: number
+  readonly max: number
+}
+
+/**
+ * The independence range (#301): how many the group could have if the PNS
+ * block and the Census Requirements overlapped in any way, instead of
+ * independently. In each sex × age group, of N people, A pass the Census
+ * Requirements and P = p × N would pass the PNS block; the overlap is at
+ * least max(0, A + P − N) and at most min(A, P) (Fréchet–Hoeffding bounds).
+ * The age groups add up. It takes the central shares: it measures the
+ * assumption, not the sampling error, which stays in `min` and `max`.
+ * `null` when there is no assumption to measure: no PNS Requirement, or the
+ * Census cuts no one inside sex × age.
+ */
+function independenceRange(
+  everyone: Float64Array,
+  censusOnly: Float64Array,
+  pns: ReadonlyArray<PnsBlock | null>,
+  central: number,
+): Range | null {
+  let min = 0
+  let max = 0
+  for (let k = 0; k < everyone.length; k++) {
+    const n = everyone[k]!
+    const a = censusOnly[k]!
+    const p = (pns[k]?.p[1] ?? 1) * n
+    min += Math.max(0, a + p - n)
+    max += Math.min(a, p)
+  }
+  return max - min > 1e-9 * Math.max(1, central) ? { min, max } : null
 }
 
 function tally(
@@ -461,22 +502,28 @@ function tally(
   let records = 0
   let noAnswerSum = 0
   let weightSum = 0
+  // Everyone of the sex × age group in the place, and those the Census
+  // Requirements leave, for the independence range.
+  const everyone = new Float64Array(SEXES.length * G)
+  const censusOnly = new Float64Array(SEXES.length * G)
   const d = ofPlace
   for (let i = 0; i < d.size; i++) {
     const s = d.sex[i]!
     if (singleSex >= 0 && s !== singleSex) continue
-    if (partner && d.union[i] === 1) continue
-    if (d.education[i]! < education) continue
-    if (d.income[i]! < income) continue
-    if (colors && !colors.has(d.color[i]!)) continue
-    if (religions && !religions.has(d.religion[i]!)) continue
-    if (noChildren && d.children[i] === 2) continue
     const sg = s * G + d.ageGroup[i]!
     let f = factor[sg]!
     if (municipality)
       f *= municipality[unionIndex(s, d.ageGroup[i]!, d.union[i]!)]!
     if (f === 0) continue
     const w = d.weight[i]! * f
+    everyone[sg]! += w
+    if (partner && d.union[i] === 1) continue
+    if (d.education[i]! < education) continue
+    if (d.income[i]! < income) continue
+    if (colors && !colors.has(d.color[i]!)) continue
+    if (religions && !religions.has(d.religion[i]!)) continue
+    if (noChildren && d.children[i] === 2) continue
+    censusOnly[sg]! += w
     const block = pns[sg]
     const p = block ? block.p : ([1, 1, 1] as const)
     min += w * p[0]
@@ -489,6 +536,7 @@ function tally(
   }
   const error = Z95 / Math.sqrt(Math.max(records, 1))
   return {
+    independence: independenceRange(everyone, censusOnly, pns, central),
     min: min * Math.max(0, 1 - error),
     central,
     max: max * (1 + error),
@@ -580,7 +628,9 @@ function caveats(
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',
       strong: false,
-      text: 'Os Requisitos da PNS são cruzados entre si na mesma pessoa. O bloco deles entra supondo que, dentro do mesmo sexo e idade, não depende dos Requisitos do Censo.',
+      // What the PNS block assumes about the Census is the independence
+      // range's paragraph, next to the ranges (#301).
+      text: 'Os Requisitos da PNS são cruzados entre si, na mesma pessoa.',
     },
     {
       id: 'source',
@@ -627,8 +677,8 @@ export function estimateGroup(input: CountInput, data: CountData): Estimate {
         )
       : 0
 
-  const { noAnswer: _, ...result } = current
-  const { noAnswer: __, ...fromBase } = base
+  const { noAnswer: _, independence, ...result } = current
+  const { noAnswer: __, independence: ___, ...fromBase } = base
   const sought = whoIsSought(input.profile)
   return {
     target: sought.target,
@@ -641,6 +691,7 @@ export function estimateGroup(input: CountInput, data: CountData): Estimate {
     costs,
     funnel,
     naive,
+    independence,
     caveats: caveats(input, active, current),
     children: sought.children,
   }

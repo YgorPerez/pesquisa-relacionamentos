@@ -243,6 +243,49 @@ describe('estimateGroup: PNS requirements', () => {
   })
 })
 
+describe('estimateGroup: the independence range (#301)', () => {
+  // Women aged 25 to 29 in Acre: 6,000, of whom 4,000 do not live with a
+  // partner. Straight or bi: 920 of 960, so 5,750 of the 6,000.
+  const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+  const man = { gender: 'homem', seeks: 'mulheres' } as const
+
+  it('goes from the least to the most the Census and PNS groups can overlap, in the same sex and age', () => {
+    // At least 4,000 + 5,750 − 6,000; at most the smaller of the two.
+    const r = count(man, ac)
+    expect(r.independence?.min).toBeCloseTo(3750)
+    expect(r.independence?.max).toBeCloseTo(4000)
+    expect(r.result.central).toBeGreaterThan(r.independence!.min)
+    expect(r.result.central).toBeLessThan(r.independence!.max)
+  })
+
+  it('does not fall below zero when the two groups fit side by side', () => {
+    // Non-smokers: 750 of 990 → 4,545 of 6,000. With higher education and no
+    // partner, 1,000: they may not overlap at all.
+    const r = count(
+      { seeks: 'mulheres' },
+      { ...ac, nonSmoker: true, education: 'superior' },
+    )
+    expect(r.independence?.min).toBe(0)
+    expect(r.independence?.max).toBeCloseTo(1000)
+  })
+
+  it('bounds each age group on its own and sums them', () => {
+    // 30 to 34: 400 women, none living with a partner, so the Census cuts no
+    // one there and the bracket adds 400 × 920/960 to both ends.
+    const r = count(man, { age: { min: 25, max: 34 }, place: { state: 'AC' } })
+    const thirties = (400 * 920) / 960
+    expect(r.independence?.min).toBeCloseTo(3750 + thirties)
+    expect(r.independence?.max).toBeCloseTo(4000 + thirties)
+  })
+
+  it('has no range without a PNS Requirement, or when the Census cuts no one inside sex and age', () => {
+    expect(count({ seeks: 'mulheres' }, ac).independence).toBeNull()
+    expect(
+      count(man, { ...ac, noLiveInPartner: false }).independence,
+    ).toBeNull()
+  })
+})
+
 describe('estimateGroup: municipality', () => {
   it("scales the state's cells by the municipality's population in SIDRA 10185", () => {
     // Rio Branco has 2,000 of Acre's 4,000 women aged 25 to 29 not in a

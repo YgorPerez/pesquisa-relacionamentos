@@ -101,6 +101,37 @@ it('"O que mais pesa" warns that the effects of releasing each Requirement do no
   ).toBeVisible()
 })
 
+it('"De onde vem a incerteza" gives the independence range apart from the sampling one', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  const independence = () =>
+    document.querySelector('[data-slot="gp-independencia"]')
+  // Without a gender, nothing comes from the PNS: one range only.
+  await user.click(
+    await screen.findByRole('button', { name: 'De onde vem a incerteza' }),
+  )
+  expect(independence()).toBeNull()
+
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  const current = await newCount(null)
+  await user.click(
+    requirement('education').getByRole('radio', {
+      name: 'superior completo',
+    }),
+  )
+  await newCount(current)
+  expect(independence()).toHaveTextContent(
+    /^Orientação vem da PNS; morar com companheiro\(a\) e escolaridade vêm do Censo\. As duas pesquisas não entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo e idade, um lado não depende do outro\. Se depender, o grupo pode ficar em qualquer ponto entre .+ e .+: o menor e o maior número que os dados permitem\.$/,
+  )
+  expect(
+    screen.getByText('Nenhuma das duas faixas é um intervalo de confiança.'),
+  ).toBeVisible()
+})
+
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {
   const user = userEvent.setup()
   openScreen(PAGE)
