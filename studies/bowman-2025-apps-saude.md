@@ -4,8 +4,8 @@ link: https://doi.org/10.1016/j.chb.2024.108515
 license: "CC BY 4.0"
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Revisão sistemática pré-registrada de 45 estudos, com seleção e avaliação por dois revisores, mas predominantemente transversal, com amostras sobretudo ocidentais e medidas heterogêneas que impediram uma meta-análise."
+strength: weak
+strength_reason: "Revisão sistemática pré-registrada de 45 estudos, mas com amostras não representativas, sobretudo ocidentais e brancas, e desenhos predominantemente transversais; as medidas heterogêneas impediram uma meta-análise."
 countries: [EUA, Canadá, Reino Unido, Alemanha, Itália, Suécia, Singapura, Austrália, Nova Zelândia, França, Noruega, Espanha, Polônia, Bélgica, Hungria, Áustria, China]
 period: "Estudos publicados de 2016 a 2023; busca em novembro de 2023. O período de coleta não é informado para todos os estudos."
 sample:
@@ -46,6 +46,7 @@ O resumo informa 48,6% para saúde mental e bem-estar, mas a seção 3.3.2 e a d
 ## Limitações
 
 - A maioria dos estudos é transversal. A revisão não estabelece se o uso piora os desfechos, se quem já está pior usa mais apps ou se outros fatores explicam a associação. A linguagem causal das conclusões do artigo vai além do que esse desenho permite.
+- Muitos estudos medem o uso dos apps e os desfechos por questionários. O autorrelato pode sofrer viés de lembrança e desejabilidade social.
 - As medidas de uso e os instrumentos variam tanto que os autores não fizeram meta-análise. Contar estudos com resultados significativos não pondera a precisão ou o tamanho dos efeitos, e não permite concluir quanto os apps afetam cada desfecho.
 - Predominam amostras ocidentais e brancas. O apêndice B não identifica estudo brasileiro; há estudos multinacionais ou sem país informado. A revisão não estima separadamente o efeito no Brasil ou em cada gênero e orientação.
 - A busca se restringiu a artigos em inglês e revisados por pares. A data de publicação da revisão não é a da busca: ela não inclui pesquisas encontradas depois de novembro de 2023.
