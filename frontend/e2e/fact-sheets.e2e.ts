@@ -177,6 +177,7 @@ test.describe('/estudos/<slug>', () => {
     await expect(citedIn.locator('[data-slot="linha-pergunta"]')).toHaveText([
       /Onde os casais se conhecem hoje\?/,
       /App ou presencial, onde tenho mais chance\?/,
+      /Que características do parceiro preveem uma boa relação\?/,
     ])
     const tip = citedIn.getByRole('link', {
       name: 'Use o app como complemento, não como o único caminho.',
@@ -193,7 +194,7 @@ test.describe('/estudos/<slug>', () => {
         .first(),
     )
     await expect(page).toHaveURL(
-      '/onde-conhecer-pessoas/onde-os-casais-se-conhecem',
+      '/onde-conhecer-pessoas#onde-os-casais-se-conhecem',
     )
   })
 

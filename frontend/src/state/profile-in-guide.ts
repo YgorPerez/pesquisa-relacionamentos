@@ -1,14 +1,14 @@
-// The saved Profile applied to a Guide's view, by the package's rule.
+// The saved Profile applied to a Question of the Guide, by the package's rule.
 import {
   profileInGuide,
   type ProfileInGuide,
 } from '@tem-estudo/rules/profile-in-guide'
 import type { Profile } from '@tem-estudo/rules/profile'
 import { useMemo } from 'react'
-import type { GuideView } from '#/content/guide-view'
+import type { QuestionView } from '#/content/guide-view'
 import { useProfile } from './profile'
 
-export function useProfileInGuide(guide: GuideView): {
+export function useProfileInGuide(question: QuestionView): {
   profile: Profile | null
   inGuide: ProfileInGuide | null
 } {
@@ -16,11 +16,11 @@ export function useProfileInGuide(guide: GuideView): {
   const inGuide = useMemo(
     () =>
       profileInGuide(profile, {
-        key: guide.keyCoverage,
-        findings: guide.findings.map((a) => a.coverage),
-        tips: guide.tips.map((d) => d.coverage),
+        key: question.keyCoverage,
+        findings: question.findings.map((a) => a.coverage),
+        tips: question.tips.map((d) => d.coverage),
       }),
-    [profile, guide],
+    [profile, question],
   )
   return { profile, inGuide }
 }

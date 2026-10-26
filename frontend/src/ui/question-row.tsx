@@ -1,10 +1,11 @@
 // The big row of a Question (DESIGN.md, Navegação): the Question
 // highlighted, the first sentence of the answer and the arrow, in a card
-// with the halftone. The Guide's related ones, where the Fact sheet and the
-// Tip are cited, and the home page calculators.
+// with the halftone. It leads to the Question's section of its Topic's Guide
+// (ADR 0042). The Guide's Questions of other Topics, where the Fact sheet and
+// the Tip are cited, and the home page calculators.
 import { Link } from '@tanstack/react-router'
 
-/** What the row shows of a Guide: enough of a `GuiaResumo`. */
+/** What the row shows of a Question: enough of a `QuestionSummary`. */
 type RowQuestion = {
   readonly topic: string
   readonly slug: string
@@ -50,24 +51,25 @@ const ROW =
   'reticula group grid min-h-toque grid-cols-[1fr_auto] items-center gap-3 rounded-mao-2 border-2 border-tinta bg-folha p-4 no-underline hover:bg-amarelo-voce'
 
 /** A Question as a big row: the Question, the first sentence of the answer
- * and the arrow. `from` is the Question of the Guide being left, which the
- * other Guide shows in "Voltar para <Pergunta>". */
+ * and the arrow. `from` is the title of the Guide being left, which the
+ * other Guide shows in "Voltar para <Guia>". */
 export function QuestionRow({
-  guide,
+  question,
   from,
 }: {
-  guide: RowQuestion
+  question: RowQuestion
   from?: string
 }) {
   return (
     <Link
-      to="/$tema/$slug"
-      params={{ tema: guide.topic, slug: guide.slug }}
+      to="/$tema"
+      params={{ tema: question.topic }}
+      hash={question.slug}
       state={from ? { from: from } : undefined}
       className={ROW}
       data-slot="linha-pergunta"
     >
-      <RowBody title={guide.question} sentence={guide.firstSentence} />
+      <RowBody title={question.question} sentence={question.firstSentence} />
     </Link>
   )
 }

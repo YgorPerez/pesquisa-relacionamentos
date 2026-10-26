@@ -10,7 +10,7 @@ const TOPICS = [
   {
     slug: 'onde-conhecer-pessoas',
     title: 'Onde conhecer pessoas',
-    guides: guides('onde-conhecer-pessoas', [
+    questions: guides('onde-conhecer-pessoas', [
       'Onde os casais se conhecem hoje?',
       'O lugar onde nos conhecemos muda a relação?',
       'App ou presencial: onde tenho mais chance?',
@@ -20,7 +20,7 @@ const TOPICS = [
   {
     slug: 'conversar-e-se-conectar',
     title: 'Conversar e se conectar',
-    guides: guides('conversar-e-se-conectar', [
+    questions: guides('conversar-e-se-conectar', [
       'Como ter conversas melhores com quem acabei de conhecer?',
       'As 36 perguntas aproximam duas pessoas?',
       'A conversa foi tão ruim quanto eu acho?',
@@ -29,7 +29,7 @@ const TOPICS = [
   {
     slug: 'escolher-parceiro',
     title: 'Escolher parceiro',
-    guides: guides('escolher-parceiro', [
+    questions: guides('escolher-parceiro', [
       'Que características do parceiro preveem um bom relacionamento?',
       'Precisamos ser parecidos?',
     ]),
@@ -37,12 +37,12 @@ const TOPICS = [
   {
     slug: 'sexo-e-historico',
     title: 'Sexo e histórico antes de assumir',
-    guides: guides('sexo-e-historico', ['Como se proteger de IST?']),
+    questions: guides('sexo-e-historico', ['Como se proteger de IST?']),
   },
   {
     slug: 'manter-a-relacao',
     title: 'Manter a relação',
-    guides: guides('manter-a-relacao', [
+    questions: guides('manter-a-relacao', [
       'O que prevê um término?',
       'Brigar faz mal à relação?',
     ]),
@@ -50,7 +50,7 @@ const TOPICS = [
   {
     slug: 'apps-e-saude-mental',
     title: 'Apps, rejeição e saúde mental',
-    guides: guides('apps-e-saude-mental', [
+    questions: guides('apps-e-saude-mental', [
       'Usar apps de namoro faz mal à saúde mental?',
       'Como lidar com a rejeição?',
     ]),

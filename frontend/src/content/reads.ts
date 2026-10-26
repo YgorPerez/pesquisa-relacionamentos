@@ -15,7 +15,6 @@ import {
   getGuide,
   getCalculatorGuide,
   getPriorities,
-  getTopic,
   listTips,
   listTopics,
 } from './guides'
@@ -32,17 +31,13 @@ export const reads = {
   /** The Topics with their Questions, for the home page. */
   topics: () =>
     queryOptions({ queryKey: ['topics'], queryFn: () => listTopics() }),
-  topic: (topic: string) =>
+  /** The Topic's page: its Guide (ADR 0042). */
+  guide: (topic: string) =>
     queryOptions({
-      queryKey: ['topic', topic],
-      queryFn: () => getTopic({ data: topic }),
+      queryKey: ['guide', topic],
+      queryFn: () => getGuide({ data: topic }),
     }),
-  guide: (topic: string, slug: string) =>
-    queryOptions({
-      queryKey: ['guide', topic, slug],
-      queryFn: () => getGuide({ data: { topic, slug } }),
-    }),
-  /** The Guide that hosts the calculator, for the "Do Guia" block. */
+  /** The Question that hosts the calculator, for the "Do Guia" block. */
   calculatorGuide: (calculator: string) =>
     queryOptions({
       queryKey: ['calculator-guide', calculator],

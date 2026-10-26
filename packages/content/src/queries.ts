@@ -1,7 +1,7 @@
 // Queries over the assembled library. Only outside types: the browser and the
 // server functions import from here without pulling `node:fs` or Effect.
 import type { Library } from './library.ts'
-import type { Tip, Guide, Topic } from './items.ts'
+import type { Tip, Guide, Topic, Myth } from './items.ts'
 
 export const guideBySlug = (
   library: Library,
@@ -22,12 +22,36 @@ export const topicGuides = (
   topic: string,
 ): ReadonlyArray<Guide> => library.guides.filter((g) => g.topic === topic)
 
-/** The guides that carry the tip, in topic order. */
+/** The guides that carry the tip, loose or after a finding, in topic
+ * order. */
 export const guidesWithTip = (
   library: Library,
   tip: string,
-): ReadonlyArray<Guide> => library.guides.filter((g) => g.tips.includes(tip))
+): ReadonlyArray<Guide> =>
+  library.guides.filter((g) => guideTips(g).includes(tip))
 
 /** Only a tip whose fact sheets are all ✅ or 🟡 goes to the site. */
 export const isTipPublished = (tip: Pick<Tip, 'published'>): boolean =>
   tip.published
+
+/** Every tip of a Question in page order: those after each finding, then
+ * the loose ones. */
+export function guideTips(
+  guide: Pick<Guide, 'tips'> & {
+    readonly findings: ReadonlyArray<{ readonly tips?: ReadonlyArray<string> }>
+  },
+): ReadonlyArray<string> {
+  return [
+    ...new Set([...guide.findings.flatMap((f) => f.tips ?? []), ...guide.tips]),
+  ]
+}
+
+/** Every myth of a Question in page order: those after each finding, then
+ * the loose ones. */
+export function guideMyths(
+  guide: Pick<Guide, 'myths'> & {
+    readonly findings: ReadonlyArray<{ readonly myths?: ReadonlyArray<Myth> }>
+  },
+): ReadonlyArray<Myth> {
+  return [...guide.findings.flatMap((f) => f.myths ?? []), ...guide.myths]
+}

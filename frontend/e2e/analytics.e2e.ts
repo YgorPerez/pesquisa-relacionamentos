@@ -7,7 +7,8 @@ import { expect, test, type Page } from '@playwright/test'
 import { linkQuery } from '@tem-estudo/rules/link'
 import { tap } from './touch'
 
-const GUIDE = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
+const GUIDE = '/onde-conhecer-pessoas'
+const FIRST = 'Onde os casais se conhecem hoje?'
 /** The query of a real link, with the Profile. */
 const QUERY_WITH_PROFILE = linkQuery({
   calculator: 'grupo-possivel',
@@ -57,7 +58,11 @@ async function fillProfile(page: Page, button: string) {
   await form.getByRole('button', { name: button }).click()
 }
 
-const helped = (page: Page) => page.getByRole('region', { name: 'Ajudou?' })
+/** "Ajudou?" of the Guide's first Question. */
+const helped = (page: Page) =>
+  page
+    .getByRole('region', { name: FIRST, exact: true })
+    .getByRole('region', { name: 'Ajudou?' })
 
 /** A whole visit: the Guide with "Ajudou?" and a Fact sheet opened from it,
  * and the two calculators used twice each. */
@@ -118,13 +123,18 @@ test.describe('usage count', () => {
     expect(event?.e).toBe('true')
   })
 
-  test('"Ajudou?" at the end of the Guide: yes, or no with one of four reasons, no free field', async ({
+  test('"Ajudou?" at the end of each Question: yes, or no with one of four reasons, no free field', async ({
     page,
   }) => {
     const { hits } = recordHits(page)
     await open(page, GUIDE)
-    const titles = await page.locator('main h2').allTextContents()
-    expect(titles.indexOf('Ajudou?')).toBe(titles.indexOf('Fichas citadas') + 1)
+    await expect(page.getByRole('region', { name: 'Ajudou?' })).toHaveCount(2)
+    await expect(
+      page
+        .getByRole('region', { name: FIRST, exact: true })
+        .locator('h3')
+        .last(),
+    ).toHaveText('Ajudou?')
 
     await helped(page).getByRole('button', { name: 'Não' }).click()
     const reasons = helped(page)
@@ -169,12 +179,29 @@ test.describe('usage count', () => {
     const events = withoutProfile.filter((e) => e.e === 'true').map((e) => e.p)
     expect(events).toEqual([
       'helped/no/hard-to-understand/onde-os-casais-se-conhecem',
-      expect.stringMatching(
-        /^fact-sheet\/onde-os-casais-se-conhecem\/[a-z0-9-]+$/,
-      ),
+      // The list of Fact sheets closes the Guide, outside any Question: the
+      // key is the Topic.
+      expect.stringMatching(/^fact-sheet\/onde-conhecer-pessoas\/[a-z0-9-]+$/),
       'calculator/possible-group',
       'calculator/priorities',
     ])
+  })
+
+  test("a Fact sheet opened inside a Question counts by the Question's slug, as on its old page", async ({
+    page,
+  }) => {
+    const { hits } = recordHits(page)
+    await open(page, '/escolher-parceiro')
+    await page
+      .getByRole('region', { name: 'E no Brasil?' })
+      .getByRole('link', { name: 'a Ficha do estudo brasileiro' })
+      .click()
+    await expect(page).toHaveURL('/estudos/silva-2020-apps-brasil')
+    await expect
+      .poll(() => hits.map((e) => e.p))
+      .toContain(
+        'fact-sheet/que-caracteristicas-preveem/silva-2020-apps-brasil',
+      )
   })
 
   for (const [name, signal] of [

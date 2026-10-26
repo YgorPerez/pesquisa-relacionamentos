@@ -1,5 +1,5 @@
 // The Guide's navigation (#16, #28): the reference that circles the Fact
-// sheet and the "voltar ao texto", the "Voltar para <Pergunta>" for whoever
+// sheet and the "voltar ao texto", the "Voltar para <Guia>" for whoever
 // came from another Guide, and the reading point (scroll and open sections)
 // kept in the history.
 import { Link, useRouter, useRouterState } from '@tanstack/react-router'
@@ -18,7 +18,7 @@ import { loopPath } from './loop'
 
 declare module '@tanstack/react-router' {
   interface HistoryState {
-    /** The Question of the Guide the navigation came from. */
+    /** The title of the Guide the navigation came from. */
     from?: string
     /** Where the reader was when they left this history entry. */
     readingPoint?: { scroll: number; open: ReadonlyArray<string> }
@@ -264,7 +264,7 @@ export function BackLink({
  * notify. */
 const noSubscribers = () => () => {}
 
-/** "Voltar para <Pergunta>", when the page came from another Guide. Does the
+/** "Voltar para <Guia>", when the page came from another Guide. Does the
  * same as the browser's back. */
 export function BackToGuide() {
   const router = useRouter()

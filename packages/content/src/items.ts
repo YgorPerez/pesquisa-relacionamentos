@@ -15,13 +15,27 @@ import { RESERVED_ROUTES, type Strength } from './lists.ts'
 import { splitFrontmatter, readBody } from './markdown.ts'
 import { decode, problem, type Problem } from './problems.ts'
 
-export interface Topic extends TopicFrontmatter {
+/** A Topic and the frame of its Guide (ADR 0042), read from `_topic.md`. */
+export interface Topic extends Omit<TopicFrontmatter, 'takeaways'> {
   /** The folder name in `guides/`, which becomes the path `/<topic>`. */
   readonly slug: string
   readonly file: string
-  /** The context paragraph, in markdown. */
-  readonly context: string
+  /** The Guide's opening paragraph, in markdown: the body before the first
+   * `##`. */
+  readonly opening: string
+  /** The "O que levar" Tips, in the file's order. */
+  readonly takeaways: ReadonlyArray<string>
+  /** The Guide's "## Limitações", in markdown; empty while the Limitations
+   * still live in each Question file. */
+  readonly limitations: string
+  /** Every fact sheet the Guide's page cites, in page order: the opening,
+   * each Question, "O que levar" and the Limitations. Reference N on the
+   * page leads to item N of this list. */
+  readonly citedFactSheets: ReadonlyArray<string>
 }
+
+/** The topic before `publication.ts` adds what depends on other files. */
+export type ParsedTopic = Omit<Topic, 'citedFactSheets'>
 
 /** A guide finding with what it inherited from the cited fact sheets. The
  * inherited keys keep the frontmatter names. */
@@ -39,8 +53,14 @@ export interface GuideFinding {
   /** Whether `covers` came from `applies_to` (a scope) and not from the fact
    * sheets. */
   readonly scoped: boolean
+  /** The tips and myths shown right after this finding. */
+  readonly tips: ReadonlyArray<string>
+  readonly myths: ReadonlyArray<Myth>
 }
 
+/** One Question of a Topic's Guide (ADR 0042): a section of the Topic's page.
+ * The code still calls it a guide, the name it had when each Question had
+ * its own page. */
 export interface Guide extends Omit<
   GuideFrontmatter,
   'findings' | 'tips' | 'myths' | 'related'
@@ -50,19 +70,25 @@ export interface Guide extends Omit<
   readonly topic: string
   readonly file: string
   readonly findings: ReadonlyArray<GuideFinding>
+  /** The tips not tied to a finding; `guideTips` lists all of them. */
   readonly tips: ReadonlyArray<string>
+  /** The myths not tied to a finding. */
   readonly myths: ReadonlyArray<Myth>
   readonly related: ReadonlyArray<string>
   /** The markdown before the first `##`. References like `[@fact-sheet-slug]`
    * and the key number like `==39% dos casais==`. */
   readonly shortAnswer: string
-  /** The Guide's own sections ("Efeitos psicológicos", "Então, vale a
+  /** The narrative's own sections ("Efeitos psicológicos", "Então, vale a
    * pena?"), in file order: any `##` before "Varia conforme o Perfil?". */
   readonly sections: ReadonlyArray<GuideSection>
+  /** "E no Brasil?"; empty until the rewrite of the Topic gives it one. */
+  readonly inBrazil: string
   readonly variesByProfile: string
+  /** The Question's own "Limitações", which the Guide shows in its
+   * Limitations block; empty once they moved to `_topic.md`. */
   readonly limitations: string
-  /** Every fact sheet the page cites, in the order they appear; each
-   * reference's number is its position here plus one. */
+  /** Every fact sheet the Question cites, in the order they appear on the
+   * page. */
   readonly citedFactSheets: ReadonlyArray<string>
 }
 
@@ -89,9 +115,17 @@ export interface GuideSection {
 }
 
 export const GUIDE_SECTIONS = {
+  inBrazil: 'E no Brasil?',
   profile: 'Varia conforme o Perfil?',
   limitations: 'Limitações',
 } as const
+
+/** The sections every Question file has. "E no Brasil?" joins them when the
+ * last Topic's rewrite gives one to each Question (ADR 0042, migration). */
+const REQUIRED_SECTIONS: ReadonlyArray<string> = [GUIDE_SECTIONS.profile]
+
+/** The one `##` a `_topic.md` may have; the body before it is the opening. */
+export const TOPIC_SECTIONS = { limitations: 'Limitações' } as const
 
 type Parsed<T> = {
   readonly value: T | null
@@ -137,12 +171,51 @@ export type ParsedItem<T> =
   | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
 
 /** `guides/<topic>/_topic.md`. */
-export function readTopic(file: string, text: string): ParsedItem<Topic> {
+export function readTopic(file: string, text: string): ParsedItem<ParsedTopic> {
   const slug = file.split('/')[1] ?? ''
   const { value, body, errors } = readFrontmatter(TopicFrontmatter, file, text)
-  const context = body.trim()
-  if (value && !context)
-    errors.push(problem(file, 'missing the context paragraph in the body'))
+  const parsed = readBody(body)
+  const opening = parsed.opening
+  if (value && !opening)
+    errors.push(
+      problem(file, 'missing the opening paragraph before the first "##"'),
+    )
+  if (parsed.title)
+    errors.push(
+      problem(file, 'a topic has no "#" title: the title comes from `title`'),
+    )
+  for (const section of parsed.sections) {
+    if (section.title !== TOPIC_SECTIONS.limitations)
+      errors.push(
+        problem(
+          file,
+          `unknown section "## ${section.title}"; a _topic.md only has "## ${TOPIC_SECTIONS.limitations}"`,
+          section.title,
+        ),
+      )
+    else if (!section.markdown)
+      errors.push(
+        problem(
+          file,
+          `the section "## ${section.title}" is empty`,
+          section.title,
+        ),
+      )
+    else
+      // The Limitations are grouped by Study: each `###` names the Study's
+      // Fact sheet (ADR 0042).
+      for (const [, heading = ''] of section.markdown.matchAll(
+        /^###\s+(.+?)\s*$/gm,
+      ))
+        if (!/^\[@[a-z0-9]+(?:-[a-z0-9]+)*\]$/.test(heading))
+          errors.push(
+            problem(
+              file,
+              `the Limitations are grouped by Study: write "### [@fact-sheet-slug]", not "### ${heading}"`,
+              section.title,
+            ),
+          )
+  }
   const reserved: ReadonlyArray<string> = RESERVED_ROUTES
   if (reserved.includes(slug))
     errors.push(
@@ -159,7 +232,19 @@ export function readTopic(file: string, text: string): ParsedItem<Topic> {
       ),
     )
   if (!value || errors.length > 0) return { ok: false, errors }
-  return { ok: true, item: { ...value, slug, file, context } }
+  return {
+    ok: true,
+    item: {
+      ...value,
+      slug,
+      file,
+      opening,
+      takeaways: value.takeaways ?? [],
+      limitations:
+        parsed.sections.find((s) => s.title === TOPIC_SECTIONS.limitations)
+          ?.markdown ?? '',
+    },
+  }
 }
 
 /** The guide still without the fact sheets' inheritance: the findings'
@@ -185,12 +270,24 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
   if (!parsed.opening)
     errors.push(problem(file, 'missing the short answer before the first "##"'))
   const known: ReadonlyArray<string> = Object.values(GUIDE_SECTIONS)
-  for (const title of known) {
+  for (const title of REQUIRED_SECTIONS) {
     if (!parsed.sections.some((s) => s.title === title))
       errors.push(problem(file, `missing the section "## ${title}"`, title))
   }
-  // The Guide's own sections come before "Varia conforme o Perfil?"; past it,
-  // a `##` other than "Limitações" is most likely a typo.
+  if (
+    parsed.sections.some(
+      (s) => s.title === GUIDE_SECTIONS.inBrazil && !s.markdown,
+    )
+  )
+    errors.push(
+      problem(
+        file,
+        `the section "## ${GUIDE_SECTIONS.inBrazil}" is empty; say the Brazilian data, or that none was found and what transfers`,
+        GUIDE_SECTIONS.inBrazil,
+      ),
+    )
+  // The narrative's own sections come before "Varia conforme o Perfil?"; past
+  // it, a `##` other than "Limitações" is most likely a typo.
   const profileAt = parsed.sections.findIndex(
     (s) => s.title === GUIDE_SECTIONS.profile,
   )
@@ -241,6 +338,7 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
       related: value.related ?? [],
       shortAnswer: parsed.opening,
       sections: own,
+      inBrazil: section(GUIDE_SECTIONS.inBrazil),
       variesByProfile: section(GUIDE_SECTIONS.profile),
       limitations: section(GUIDE_SECTIONS.limitations),
     },

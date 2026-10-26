@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'vite-plus/test'
 import { withRedirects } from './redirects'
 
-const MAP = { '/estudos/silva-2020': '/estudos/silva-2020-apps-brasil' }
+const MAP = {
+  '/estudos/silva-2020': '/estudos/silva-2020-apps-brasil',
+  '/onde-conhecer-pessoas/app-ou-presencial':
+    '/onde-conhecer-pessoas#app-ou-presencial',
+}
 
 function setup() {
   const arrived: string[] = []
@@ -32,6 +36,20 @@ describe("the server's 301s", () => {
     expect(response.headers.get('location')).toBe(
       '/estudos/silva-2020-apps-brasil',
     )
+  })
+
+  test("a Question's old page goes to its section, the query before the fragment", async () => {
+    const { fetch, arrived } = setup()
+    const response = await fetch(
+      new Request(
+        'https://temestudo.cloud/onde-conhecer-pessoas/app-ou-presencial/?g=mulher',
+      ),
+    )
+    expect(response.status).toBe(301)
+    expect(response.headers.get('location')).toBe(
+      '/onde-conhecer-pessoas?g=mulher#app-ou-presencial',
+    )
+    expect(arrived).toEqual([])
   })
 
   test("an old path with a trailing slash goes straight to today's", async () => {
