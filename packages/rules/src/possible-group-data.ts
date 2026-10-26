@@ -374,8 +374,151 @@ export type PackPlace = 'BR' | StateCode
 export const packFile = (place: PackPlace, detail: boolean): string =>
   `${place}${detail ? '-detalhe' : ''}.json`
 
-/** Goes up when the cell code changes. */
-const PACK_VERSION = 4
+/**
+ * The PNS columns only the detail packs carry: BMI, depression symptoms and
+ * religious attendance (#295, #296, #299). Each one roughly doubles the PNS
+ * cells, and the default Brazil pack, which every visit downloads, has to
+ * stay small; the Requirements that read them ask for the detail pack
+ * (`needsDetail`).
+ */
+const DETAIL_PNS_COLUMNS: ReadonlyArray<string> = [
+  'obesidade',
+  'depressao',
+  'culto',
+]
+
+/** The PNS without `DETAIL_PNS_COLUMNS`: the cells that differ only in them
+ * summed. The design effect is per sex × bracket and stays. */
+function pnsWithoutDetail(pns: Pns): Pns {
+  const kept = Object.entries(pns.variables).filter(
+    ([name]) => !DETAIL_PNS_COLUMNS.includes(name),
+  )
+  const rows = new Map<string, number>()
+  const out = {
+    sex: [] as number[],
+    bracket: [] as number[],
+    codes: kept.map(() => [] as number[]),
+    weight: [] as number[],
+    records: [] as number[],
+  }
+  for (let i = 0; i < pns.weight.length; i++) {
+    const key = [
+      pns.sex[i],
+      pns.bracket[i],
+      ...kept.map(([, v]) => v.codes[i]),
+    ].join(',')
+    const at = rows.get(key)
+    if (at !== undefined) {
+      out.weight[at]! += pns.weight[i]!
+      out.records[at]! += pns.records[i]!
+      continue
+    }
+    rows.set(key, out.weight.length)
+    out.sex.push(pns.sex[i]!)
+    out.bracket.push(pns.bracket[i]!)
+    kept.forEach(([, v], c) => out.codes[c]!.push(v.codes[i]!))
+    out.weight.push(pns.weight[i]!)
+    out.records.push(pns.records[i]!)
+  }
+  return {
+    sex: out.sex,
+    bracket: out.bracket,
+    variables: Object.fromEntries(
+      kept.map(([name, v], c) => [
+        name,
+        { levels: v.levels, codes: out.codes[c]! },
+      ]),
+    ),
+    weight: out.weight,
+    records: out.records,
+    designEffect: pns.designEffect,
+  }
+}
+
+/** Goes up when the cell code or the pack's shape changes (5: the PNS codes
+ * as text). */
+const PACK_VERSION = 5
+
+// --- the PNS in the pack -----------------------------------------------------
+// The PNS has tens of thousands of cells (#291–#299) and each variable a code
+// per cell. As JSON numbers ("12,") they made most of Brazil's pack; as one
+// character per code (two when a variable has 64 levels or more), in a text,
+// they take a third.
+
+const CODE_ALPHABET =
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'
+const BASE = CODE_ALPHABET.length
+
+/** How many characters a code takes, for codes from 0 to `top`. */
+const codeWidth = (top: number) => (top < BASE ? 1 : 2)
+
+function packCodes(codes: ReadonlyArray<number>, top: number): string {
+  const width = codeWidth(top)
+  let text = ''
+  for (const code of codes)
+    text +=
+      width === 1
+        ? CODE_ALPHABET[code]
+        : CODE_ALPHABET[Math.floor(code / BASE)]! + CODE_ALPHABET[code % BASE]
+  return text
+}
+
+function unpackCodes(text: string, top: number): number[] {
+  const width = codeWidth(top)
+  const codes: number[] = []
+  for (let i = 0; i < text.length; i += width)
+    codes.push(
+      width === 1
+        ? CODE_ALPHABET.indexOf(text[i]!)
+        : CODE_ALPHABET.indexOf(text[i]!) * BASE +
+            CODE_ALPHABET.indexOf(text[i + 1]!),
+    )
+  return codes
+}
+
+/** The PNS as the pack carries it: sex, bracket and each variable's codes as
+ * text (`packCodes`). */
+interface PackedPns {
+  readonly sex: string
+  readonly bracket: string
+  readonly variables: Readonly<
+    Record<
+      string,
+      { readonly levels: ReadonlyArray<string>; readonly codes: string }
+    >
+  >
+  readonly weight: ReadonlyArray<number>
+  readonly records: ReadonlyArray<number>
+  readonly designEffect: ReadonlyArray<number>
+}
+
+const packPns = (pns: Pns): PackedPns => ({
+  sex: packCodes(pns.sex, SEXES.length),
+  bracket: packCodes(pns.bracket, PNS_BRACKETS.length),
+  variables: Object.fromEntries(
+    Object.entries(pns.variables).map(([name, v]) => [
+      name,
+      { levels: v.levels, codes: packCodes(v.codes, v.levels.length) },
+    ]),
+  ),
+  weight: pns.weight,
+  records: pns.records,
+  designEffect: pns.designEffect,
+})
+
+const unpackPns = (pns: PackedPns): Pns => ({
+  sex: unpackCodes(pns.sex, SEXES.length),
+  bracket: unpackCodes(pns.bracket, PNS_BRACKETS.length),
+  variables: Object.fromEntries(
+    Object.entries(pns.variables).map(([name, v]) => [
+      name,
+      { levels: v.levels, codes: unpackCodes(v.codes, v.levels.length) },
+    ]),
+  ),
+  weight: pns.weight,
+  records: pns.records,
+  designEffect: pns.designEffect,
+})
 
 /** What the browser downloads for a place. Only numbers and texts, in
  * columns. The build writes it under a path hashed from its content, so a
@@ -394,7 +537,7 @@ export interface Pack {
   readonly municipalities: ReadonlyArray<ReadonlyArray<string | number>>
   /** The PNS is national: only Brazil's packs (default and detail), one of
    * which the page always downloads, carry it. */
-  readonly pns: Pns | null
+  readonly pns: PackedPns | null
   readonly pnad: Pnad
 }
 
@@ -432,7 +575,10 @@ export function packForPlace(
         : base.municipalities
             .filter((m) => m.uf === place)
             .map((m) => [m.code, m.name, ...m.people]),
-    pns: place === 'BR' ? base.pns : null,
+    pns:
+      place !== 'BR'
+        ? null
+        : packPns(detail ? base.pns : pnsWithoutDetail(base.pns)),
     pnad: base.pnad,
   }
 }
@@ -504,7 +650,7 @@ export function openPack(pack: unknown): PlaceData {
           ])
         : [],
     ),
-    pns: pack.pns,
+    pns: pack.pns && unpackPns(pack.pns),
     pnad: pack.pnad,
   }
 }

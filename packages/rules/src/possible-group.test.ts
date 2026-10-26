@@ -50,6 +50,40 @@ describe('the default pack and the detail pack', () => {
     expect(needs({ ownsHome: true })).toBe(true)
   })
 
+  it('BMI, depression symptoms and religious attendance come only in the detail pack, which keeps the default Brazil pack small', () => {
+    const needs = (change: Partial<Requirements>) =>
+      needsDetail({
+        profile: null,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...change },
+      })
+    expect(needs({ notObese: true })).toBe(true)
+    expect(needs({ noDepressionSymptoms: true })).toBe(true)
+    expect(needs({ weeklyWorship: true })).toBe(true)
+    // Bisexual reads the orientation, which every pack has.
+    expect(needs({ bisexual: true })).toBe(false)
+    const plain = pack('BR').pns!
+    const full = pack('BR', true).pns!
+    expect(Object.keys(plain.variables)).not.toContain('obesidade')
+    expect(Object.keys(plain.variables)).not.toContain('depressao')
+    expect(Object.keys(plain.variables)).not.toContain('culto')
+    expect(Object.keys(full.variables)).toContain('obesidade')
+    const sum = (xs: ReadonlyArray<number>) => xs.reduce((s, x) => s + x, 0)
+    expect(sum(plain.weight)).toBe(sum(full.weight))
+    expect(sum(plain.records)).toBe(sum(full.records))
+    const input = {
+      profile: { gender: 'homem', seeks: 'mulheres' } as const,
+      requirements: {
+        ...DEFAULT_REQUIREMENTS,
+        ...ac,
+        nonSmoker: true,
+        bisexual: true,
+      },
+    } as const
+    expect(estimateGroup(input, data('AC')).result).toEqual(
+      estimateGroup(input, data('AC', true)).result,
+    )
+  })
+
   it('without those, both packs give the same count', () => {
     const input = {
       profile: { seeks: 'mulheres' } as const,

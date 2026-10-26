@@ -217,16 +217,20 @@ export function activeRequirements({
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
 
-/** The Requirements that read the detail dimensions, which only the detail
- * packs carry (`packForPlace`). */
+/** The Requirements that read what only the detail packs carry
+ * (`packForPlace`): the Census detail dimensions and the PNS columns in
+ * `DETAIL_PNS_COLUMNS`. */
 const DETAIL_REQUIREMENTS: ReadonlySet<RequirementId> = new Set<RequirementId>([
   'parents',
   'work',
   'home',
+  'obesity',
+  'depression',
+  'worship',
 ])
 
-/** The count needs the detail packs: a Requirement reads parents, work or
- * home. */
+/** The count needs the detail packs: a Requirement reads parents, work,
+ * home, BMI, depression symptoms or religious attendance. */
 export const needsDetail = (input: CountInput): boolean =>
   activeRequirements(input).some((k) => DETAIL_REQUIREMENTS.has(k))
 
