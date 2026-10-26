@@ -860,12 +860,16 @@ function caveats(
     has('drinking') && {
       id: 'drinking',
       strong: false,
+      // Only how often (#291). The doses (P029) and binge drinking (P03201)
+      // the ticket listed stay out on purpose: the Requirement asks the
+      // frequency, and each extra variable roughly doubles the PNS cells
+      // (`scripts/possible-group/pns.ts`).
       text: 'A frequência com que bebe é autodeclarada na PNS 2019, e o consumo de álcool costuma ser subdeclarado: quem bebe toda semana aparece menos do que é.',
     },
     has('exercise') && {
       id: 'exercise',
       strong: false,
-      text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS; como faz o IBGE, um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) vale dois.',
+      text: 'O exercício é autodeclarado na PNS 2019: dias por semana vezes a duração de costume, no esporte ou atividade principal. 150 minutos por semana é a recomendação da OMS, que conta um minuto de atividade vigorosa (corrida, futebol, ginástica aeróbica) como dois. A conta faz o mesmo.',
     },
     has('teeth') && {
       id: 'teeth',

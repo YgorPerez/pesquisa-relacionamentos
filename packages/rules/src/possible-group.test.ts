@@ -502,9 +502,10 @@ describe('estimateGroup: PNS requirements', () => {
     const r = count({ seeks: 'mulheres' }, { ...ac, exercises: true })
     expect(r.active).toContain('exercise')
     expect(r.result.central).toBeCloseTo((4000 * 770) / 990)
-    expect(r.caveats.find((x) => x.id === 'exercise')?.text).toContain(
-      '150 minutos',
-    )
+    const caveat = r.caveats.find((x) => x.id === 'exercise')?.text
+    expect(caveat).toContain('150 minutos')
+    // The decision of 2026-10-26: the WHO counts a vigorous minute as two.
+    expect(caveat).toMatch(/OMS.*vigorosa.*como dois/)
     const crossed = count(
       { seeks: 'mulheres' },
       { ...ac, exercises: true, drinking: ['nunca'] },
