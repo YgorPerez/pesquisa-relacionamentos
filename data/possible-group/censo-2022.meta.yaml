@@ -1,7 +1,7 @@
 # Gerado por scripts/possible-group/pipeline.ts. Não edite à mão: rode `pnpm data:possible-group`.
 fact_sheet: ibge-2022-censo-amostra
-table: ["Microdados da amostra, acesso público, arquivo de pessoas"]
-variables: ["P0020", "P0110", "P0150", "P0180", "P0210", "P0280", "P0340", "P0410", "P0760", "P1110"]
+table: ["Microdados da amostra, acesso público, arquivo de pessoas", "Microdados da amostra, acesso público, arquivo de domicílios"]
+variables: ["D0100", "D0190", "P0020", "P0100", "P0110", "P0150", "P0170", "P0180", "P0210", "P0280", "P0300", "P0310", "P0340", "P0410", "P0760", "P0950", "P0990", "P1110"]
 downloaded_on: 2026-10-19
 script: scripts/possible-group/pipeline.ts
 version: "Todas_as_UFs.zip publicado em 2026-09-14"

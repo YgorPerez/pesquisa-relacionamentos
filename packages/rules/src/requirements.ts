@@ -66,6 +66,11 @@ export const RELIGIONS = [
 ] as const
 export type Religion = (typeof RELIGIONS)[number]
 
+/** "Trabalha" (employed) and its variant "tem negócio próprio" (employer or
+ * self-employed). */
+export const WORKS = ['trabalha', 'negocio'] as const
+export type Work = (typeof WORKS)[number]
+
 /** The minimum education and income one can ask for (the lowest step is
  * "any"). */
 export const MIN_EDUCATIONS = [
@@ -112,6 +117,13 @@ export interface Requirements {
   readonly colors: ReadonlyArray<Color>
   readonly religions: ReadonlyArray<Religion>
   readonly noChildren: boolean
+  /** "Não mora com os pais": neither the mother, the father nor a
+   * step-parent lives in the same household. */
+  readonly notWithParents: boolean
+  /** `null` = works or not. */
+  readonly work: Work | null
+  /** "Tem casa própria": heads an owned household or is the head's spouse. */
+  readonly ownsHome: boolean
   readonly height: Range
   readonly nonSmoker: boolean
   /** Works in an office occupation: VD4011 groups 1 to 4 of the PNAD
@@ -128,6 +140,9 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   colors: [],
   religions: [],
   noChildren: false,
+  notWithParents: false,
+  work: null,
+  ownsHome: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
   office: false,
@@ -230,6 +245,9 @@ export const REQUIREMENTS = [
   'color',
   'religion',
   'children',
+  'parents',
+  'work',
+  'home',
   'height',
   'smoking',
   'office',
@@ -254,6 +272,9 @@ export function release(
     color: { colors: [] },
     religion: { religions: [] },
     children: { noChildren: false },
+    parents: { notWithParents: false },
+    work: { work: null },
+    home: { ownsHome: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
     office: { office: false },
@@ -273,6 +294,9 @@ export const REQUIREMENT_TITLE: Readonly<
   color: 'Cor ou raça',
   religion: 'Religião',
   children: 'Filhos',
+  parents: 'Pais',
+  work: 'Trabalho',
+  home: 'Casa',
   height: 'Altura',
   smoking: 'Cigarro',
   office: 'Ocupação',
@@ -293,6 +317,11 @@ export const INCOME_LABEL: Readonly<
   '1-2': 'mais de 1 salário mínimo',
   '2-5': 'mais de 2 salários mínimos',
   '5+': 'mais de 5 salários mínimos',
+}
+
+export const WORK_LABEL: Readonly<Record<Work, string>> = {
+  trabalha: 'trabalha',
+  negocio: 'tem negócio próprio',
 }
 
 export const COLOR_LABEL: Readonly<Record<Color, string>> = {
@@ -369,6 +398,14 @@ export function requirementValue(
       if (whoIsSought(profile).children === 'no-data')
         return 'sem dado para homens'
       return r.noChildren ? 'sem filhos' : 'com ou sem filhos'
+    case 'parents':
+      return r.notWithParents
+        ? 'não mora com os pais'
+        : 'mora ou não com os pais'
+    case 'work':
+      return r.work ? WORK_LABEL[r.work] : 'trabalha ou não'
+    case 'home':
+      return r.ownsHome ? 'tem casa própria' : 'com ou sem casa própria'
     case 'height': {
       const { min, max } = r.height
       if (min <= MIN_HEIGHT && max >= MAX_HEIGHT) return 'qualquer altura'
@@ -402,6 +439,9 @@ export function readRequirements(value: unknown): Requirements {
     colors: manyOf(COLORS, raw.colors),
     religions: manyOf(RELIGIONS, raw.religions),
     noChildren: raw.noChildren === true,
+    notWithParents: raw.notWithParents === true,
+    work: oneOf(WORKS, raw.work) ?? null,
+    ownsHome: raw.ownsHome === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
     office: raw.office === true,

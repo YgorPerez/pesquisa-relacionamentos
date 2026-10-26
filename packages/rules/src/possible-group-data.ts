@@ -1,8 +1,11 @@
 // The possible group data (#36) on its way to the browser.
 //
-// The Census CSV is 31 MB, but it is the whole of Brazil in 490 thousand
-// cells. The build cuts it into one pack per place: Brazil's (the states
-// summed, ~44 thousand cells) and one per state, with its municipalities. The
+// The Census CSV is 119 MB, but it is the whole of Brazil in 1.6 million
+// cells. The build cuts it into packs per place: Brazil's (the states
+// summed) and one per state, with its municipalities. Each place has a
+// default pack, with parents, work and home summed out (Brazil: 44 thousand
+// cells, 0.24 MB gzipped), and a detail pack with them (238 thousand cells,
+// 1.1 MB gzipped), downloaded only when one of those Requirements is on. The
 // browser downloads Brazil's and, if the visitor picks a state, that one too.
 // Each pack carries the SIDRA 9514 single ages; Brazil's also carries the PNS
 // cells, which are national and small (a few thousand).
@@ -137,18 +140,52 @@ export interface GroupBase {
 }
 
 // --- cell code -------------------------------------------------------------
-// Each dimension becomes an index; "no data" is 0 and the list's value i is
-// i + 1. Sex, age group and union have no "no data".
-const RADICES = [
-  2,
-  AGE_GROUPS.length,
-  2,
-  EDUCATIONS.length + 1,
-  INCOMES.length + 1,
-  COLORS.length + 1,
-  RELIGIONS.length + 1,
-  3,
+// Each dimension becomes an index. In an optional one, "no data" (an empty
+// CSV value) is 0 and the list's value i is i + 1; sex, age group and union
+// always have a value, and value i is i.
+const NO_YES = ['nao', 'sim'] as const
+
+/** The Census CSV's dimensions, in the order of the cell code. */
+const DIMENSIONS = [
+  { key: 'sex', column: 'sexo', values: SEXES, optional: false },
+  { key: 'ageGroup', column: 'idade', values: AGE_GROUPS, optional: false },
+  { key: 'union', column: 'uniao', values: NO_YES, optional: false },
+  {
+    key: 'education',
+    column: 'escolaridade',
+    values: EDUCATIONS,
+    optional: true,
+  },
+  { key: 'income', column: 'renda', values: INCOMES, optional: true },
+  { key: 'color', column: 'cor', values: COLORS, optional: true },
+  { key: 'religion', column: 'religiao', values: RELIGIONS, optional: true },
+  /** Women only: 1 = has none, 2 = has. */
+  { key: 'children', column: 'filhos', values: NO_YES, optional: true },
+  // From here on, the detail dimensions (see `DETAIL_DIMENSIONS`).
+  /** 1 = lives with neither parent, 2 = with the mother, the father or a
+   * step-parent. */
+  { key: 'parents', column: 'pais', values: NO_YES, optional: true },
+  /** 0 = not employed, 1 = employed, 2 = employer or self-employed. */
+  {
+    key: 'work',
+    column: 'trabalho',
+    values: ['nao', 'sim', 'negocio'],
+    optional: false,
+  },
+  /** 0 = no data (collective household), 1 = does not own, 2 = owns. */
+  { key: 'home', column: 'casa', values: NO_YES, optional: true },
 ] as const
+type Dimension = (typeof DIMENSIONS)[number]['key']
+
+const RADICES = DIMENSIONS.map((d) => d.values.length + (d.optional ? 1 : 0))
+
+/** The last dimensions (parents, work, home) only travel in the detail
+ * pack: they multiply the cells by 4 to 5, and only three Requirements read
+ * them. The default pack sums them out. */
+const DETAIL_DIMENSIONS = 3
+const DEFAULT_DIMENSIONS = DIMENSIONS.length - DETAIL_DIMENSIONS
+/** A full code divided by this is the code without the detail dimensions. */
+const DETAIL_SPAN = RADICES.slice(DEFAULT_DIMENSIONS).reduce((a, b) => a * b)
 
 function encode(parts: ReadonlyArray<number>): number {
   let code = 0
@@ -156,8 +193,10 @@ function encode(parts: ReadonlyArray<number>): number {
   return code
 }
 
-function decode(code: number, out: number[]): void {
-  for (let i = RADICES.length - 1; i >= 0; i--) {
+/** Decodes the first `dimensions` parts; the rest stay 0. */
+function decode(code: number, out: number[], dimensions: number): void {
+  out.fill(0, dimensions, RADICES.length)
+  for (let i = dimensions - 1; i >= 0; i--) {
     out[i] = code % RADICES[i]!
     code = Math.floor(code / RADICES[i]!)
   }
@@ -199,33 +238,21 @@ function optionalIndex(
 function readCensus(text: string): CensusRow[] {
   const { header, rows } = csvLines(text)
   const col = (name: string) => indexOrThrow(header, name, 'column')
-  const c = {
-    sex: col('sexo'),
-    age: col('idade'),
-    uf: col('uf'),
-    union: col('uniao'),
-    education: col('escolaridade'),
-    income: col('renda'),
-    color: col('cor'),
-    religion: col('religiao'),
-    children: col('filhos'),
-    weight: col('peso'),
-    records: col('n_registros'),
-  }
+  const uf = col('uf')
+  const weight = col('peso')
+  const records = col('n_registros')
+  const dimensions = DIMENSIONS.map((d) => ({ ...d, at: col(d.column) }))
   return rows.map((l) => ({
-    uf: l[c.uf] ?? '',
-    code: encode([
-      indexOrThrow(SEXES, l[c.sex], 'sex'),
-      indexOrThrow(AGE_GROUPS, l[c.age], 'age group'),
-      indexOrThrow(['nao', 'sim'], l[c.union], 'union'),
-      optionalIndex(EDUCATIONS, l[c.education], 'education'),
-      optionalIndex(INCOMES, l[c.income], 'income'),
-      optionalIndex(COLORS, l[c.color], 'color'),
-      optionalIndex(RELIGIONS, l[c.religion], 'religion'),
-      optionalIndex(['nao', 'sim'], l[c.children], 'children'),
-    ]),
-    weight: Number(l[c.weight]),
-    records: Number(l[c.records]),
+    uf: l[uf] ?? '',
+    code: encode(
+      dimensions.map((d) =>
+        d.optional
+          ? optionalIndex(d.values, l[d.at], d.key)
+          : indexOrThrow(d.values, l[d.at], d.key),
+      ),
+    ),
+    weight: Number(l[weight]),
+    records: Number(l[records]),
   }))
 }
 
@@ -316,7 +343,7 @@ function readPnad(text: string): Pnad {
 
 /** The files of `data/possible-group/`, as text. */
 export interface GroupFiles {
-  /** `censo-2022.csv` */
+  /** `censo-2022.csv.gz`, already gunzipped */
   readonly census: string
   /** `sidra-9514-idade.csv` */
   readonly ages: string
@@ -342,41 +369,59 @@ export function readGroupBase(files: GroupFiles): GroupBase {
 
 export type PackPlace = 'BR' | StateCode
 
+/** The pack's file under the version folder: `SP.json`, `SP-detalhe.json`
+ * (a public URL, so in Portuguese). */
+export const packFile = (place: PackPlace, detail: boolean): string =>
+  `${place}${detail ? '-detalhe' : ''}.json`
+
+/** Goes up when the cell code changes. */
+const PACK_VERSION = 4
+
 /** What the browser downloads for a place. Only numbers and texts, in
  * columns. The build writes it under a path hashed from its content, so a
  * new format never meets an old page. */
 export interface Pack {
-  readonly version: 2
+  readonly version: typeof PACK_VERSION
   readonly place: PackPlace
+  /** The cells carry the detail dimensions (parents, work, home); without
+   * them they are summed out. */
+  readonly detail: boolean
   readonly cells: ReadonlyArray<number>
   readonly weights: ReadonlyArray<number>
   readonly records: ReadonlyArray<number>
   readonly ages: AgesBySex
   /** `[code, name, ...people]` of each municipality in the state. */
   readonly municipalities: ReadonlyArray<ReadonlyArray<string | number>>
-  /** The PNS is national: only Brazil's pack, which the page always
-   * downloads, carries it. */
+  /** The PNS is national: only Brazil's packs (default and detail), one of
+   * which the page always downloads, carry it. */
   readonly pns: Pns | null
   readonly pnad: Pnad
 }
 
-/** A place's pack: for Brazil, the states' cells summed. The weight is
- * rounded to the person, which is what the count shows. */
-export function packForPlace(base: GroupBase, place: PackPlace): Pack {
+/** A place's pack: for Brazil, the states' cells summed; without `detail`,
+ * the cells that differ only in parents, work or home summed too. The weight
+ * is rounded to the person, which is what the count shows. */
+export function packForPlace(
+  base: GroupBase,
+  place: PackPlace,
+  { detail = false } = {},
+): Pack {
   const sums = new Map<number, { weight: number; records: number }>()
   for (const row of base.census) {
     if (place !== 'BR' && row.uf !== place) continue
-    const current = sums.get(row.code) ?? { weight: 0, records: 0 }
+    const code = detail ? row.code : Math.floor(row.code / DETAIL_SPAN)
+    const current = sums.get(code) ?? { weight: 0, records: 0 }
     current.weight += row.weight
     current.records += row.records
-    sums.set(row.code, current)
+    sums.set(code, current)
   }
   const codes = [...sums.keys()].sort((a, b) => a - b)
   const ages = base.ages.get(place)
   if (!ages) throw new Error(`no SIDRA 9514 single ages for ${place}`)
   return {
-    version: 2,
+    version: PACK_VERSION,
     place,
+    detail,
     cells: codes,
     weights: codes.map((c) => Math.round(sums.get(c)!.weight)),
     records: codes.map((c) => sums.get(c)!.records),
@@ -392,20 +437,14 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
   }
 }
 
-/** A place opened for the count: one typed column per dimension. */
-export interface PlaceData {
+/** A place opened for the count: one typed column per dimension (see
+ * `DIMENSIONS`: in an optional one, 0 = no data and i + 1 = position i of the
+ * list). Without `detail`, parents, work and home are all 0 and mean
+ * nothing. */
+export type PlaceData = { readonly [K in Dimension]: Uint8Array } & {
   readonly place: PackPlace
+  readonly detail: boolean
   readonly size: number
-  readonly sex: Uint8Array
-  readonly ageGroup: Uint8Array
-  readonly union: Uint8Array
-  /** 0 = no data; i + 1 = position i of the list (EDUCATIONS, INCOMES…). */
-  readonly education: Uint8Array
-  readonly income: Uint8Array
-  readonly color: Uint8Array
-  readonly religion: Uint8Array
-  /** 0 = no data (men), 1 = has none, 2 = has. */
-  readonly children: Uint8Array
   readonly weight: Float64Array
   readonly records: Float64Array
   readonly ages: AgesBySex
@@ -421,7 +460,9 @@ function isPack(value: unknown): value is Pack {
     typeof value === 'object' &&
     value !== null &&
     'version' in value &&
-    value.version === 2 &&
+    value.version === PACK_VERSION &&
+    'detail' in value &&
+    typeof value.detail === 'boolean' &&
     'cells' in value &&
     Array.isArray(value.cells)
   )
@@ -432,38 +473,21 @@ function isPack(value: unknown): value is Pack {
 export function openPack(pack: unknown): PlaceData {
   if (!isPack(pack)) throw new Error('possible group pack in an unknown format')
   const n = pack.cells.length
-  const columns = Array.from(
-    { length: RADICES.length },
-    () => new Uint8Array(n),
-  )
-  const parts: number[] = []
+  const columns = DIMENSIONS.map(() => new Uint8Array(n))
+  const parts: number[] = Array(RADICES.length).fill(0)
+  const dimensions = pack.detail ? RADICES.length : DEFAULT_DIMENSIONS
   for (let i = 0; i < n; i++) {
-    decode(pack.cells[i]!, parts)
-    for (let d = 0; d < RADICES.length; d++) columns[d]![i] = parts[d]!
+    decode(pack.cells[i]!, parts, dimensions)
+    for (let d = 0; d < columns.length; d++) columns[d]![i] = parts[d]!
   }
-  const [sex, ageGroup, union, education, income, color, religion, children] =
-    columns as [
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-      Uint8Array,
-    ]
   const uf = pack.place === 'BR' ? undefined : pack.place
   return {
+    ...(Object.fromEntries(
+      DIMENSIONS.map((d, i) => [d.key, columns[i]!]),
+    ) as Record<Dimension, Uint8Array>),
     place: pack.place,
+    detail: pack.detail,
     size: n,
-    sex,
-    ageGroup,
-    union,
-    education,
-    income,
-    color,
-    religion,
-    children,
     weight: Float64Array.from(pack.weights),
     records: Float64Array.from(pack.records),
     ages: pack.ages,

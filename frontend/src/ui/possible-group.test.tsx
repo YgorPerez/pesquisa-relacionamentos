@@ -189,3 +189,42 @@ it('the state is chosen by keyboard and goes back to the whole of Brazil', async
     requirement('place').queryByRole('combobox', { name: 'Município' }),
   ).toBeNull()
 })
+
+it('"tem casa própria" downloads the detail data when turned on, and the count shrinks', async () => {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await enterProfile(
+    user,
+    { gender: 'homem', seeks: 'mulheres', age: '30' },
+    BUTTON,
+  )
+  const before = await newCount(null)
+  await user.click(
+    requirement('home').getByRole('checkbox', {
+      name: 'Só quem tem casa própria',
+    }),
+  )
+  await newCount(before)
+  expect(requirement('home').value()).toBe('tem casa própria')
+  expect(requirement('home').cost()).toMatch(/^soltar só este: ×[\d,]+/)
+})
+
+it('Requirements saved with "trabalha" on open straight on its count', async () => {
+  // What a shared link also leaves on the device (`state/link.ts`).
+  localStorage.setItem(
+    'tem-estudo:profile',
+    JSON.stringify({ seeks: 'mulheres', age: 30 }),
+  )
+  localStorage.setItem(
+    'tem-estudo:requirements',
+    JSON.stringify({ work: 'trabalha', noLiveInPartner: true }),
+  )
+  openScreen(PAGE)
+  // The cost shows only once the count with "trabalha" came out.
+  await waitFor(() =>
+    expect(requirement('work').cost()).toMatch(/^soltar só este: ×[\d,]+/),
+  )
+  expect(
+    requirement('work').getByRole('radio', { name: 'trabalha' }),
+  ).toBeChecked()
+})
