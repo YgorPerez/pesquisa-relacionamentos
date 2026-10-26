@@ -60,6 +60,7 @@ const POSITIONS = {
   C006: [108, 1],
   C008: [117, 3],
   M001: [527, 1],
+  M01901: [556, 1],
   N010: [564, 1],
   N011: [565, 1],
   N012: [566, 1],
@@ -182,6 +183,21 @@ export const PNS_VARIABLES = [
       }
       return score >= 10 ? 'sim' : 'nao'
     },
+    ordered: false,
+  },
+  {
+    // Religious attendance in the last 12 months (#299): more than once or
+    // once a week is "semanal". The PNS does not ask which religion.
+    column: 'culto',
+    fields: ['M01901'],
+    read: code('M01901', {
+      '1': 'semanal',
+      '2': 'semanal',
+      '3': 'menos',
+      '4': 'menos',
+      '5': 'menos',
+      '6': 'menos',
+    }),
     ordered: false,
   },
 ] as const satisfies ReadonlyArray<PnsVariable>

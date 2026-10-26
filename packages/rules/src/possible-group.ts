@@ -8,7 +8,8 @@
 //   SIDRA 9514 single ages in the place.
 // - In a municipality, each state cell is scaled by the municipality's
 //   population in the same sex × age group × union combination (SIDRA 10185).
-// - The PNS ones (orientation, height, smoking) are crossed with each other
+// - The PNS ones (orientation, height, smoking, BMI, depression symptoms,
+//   bisexual, religious attendance) are crossed with each other
 //   on the PNS microdata: their joint share in the same sex and age bracket
 //   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
@@ -59,6 +60,7 @@ export const REQUIREMENT_ORDER = [
   'obesity',
   'depression',
   'bisexual',
+  'worship',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -78,6 +80,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   height: 'PNS',
   smoking: 'PNS',
   obesity: 'PNS',
+  worship: 'PNS',
   bisexual: 'PNS',
   depression: 'PNS',
 }
@@ -181,6 +184,7 @@ export function activeRequirements({
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
     obesity: r.notObese,
+    worship: r.weeklyWorship,
     bisexual: r.bisexual,
     depression: r.noDepressionSymptoms,
   }
@@ -270,6 +274,10 @@ const PNS_FILTERS: {
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
   obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
+  worship: () => ({
+    variable: 'culto',
+    test: (value) => value === 'semanal',
+  }),
   // Like the orientation, whoever did not know or refused is out.
   bisexual: () => ({
     variable: 'orientacao',
@@ -613,6 +621,14 @@ function caveats(
       id: 'bisexual',
       strong: false,
       text: 'A orientação vem da PNS 2019, uma estatística experimental do IBGE. Pouca gente se declara bissexual na amostra, então a conta se apoia em poucos registros e o número oscila muito.',
+    },
+    has('worship') && {
+      id: 'worship',
+      strong: false,
+      // #299: it may combine with the Census religion, with this caveat.
+      text: has('religion')
+        ? 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião. Com uma religião marcada, a conta supõe que a parcela que vai toda semana é a mesma em todas as religiões, o que a PNS não deixa conferir.'
+        : 'A frequência à religião vem da PNS 2019, que não pergunta qual é a religião: conta quem vai a cultos ou atividades da própria religião, ou de outra, pelo menos uma vez por semana.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

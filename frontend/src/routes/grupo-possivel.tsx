@@ -478,6 +478,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(bisexual) => change({ bisexual })}
       />
     ),
+    worship: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem vai à religião toda semana"
+        checked={requirements.weeklyWorship}
+        onChange={(weeklyWorship) => change({ weeklyWorship })}
+      />
+    ),
   }
 
 /** What each sensitive Requirement measures, under its control. The count's
@@ -489,6 +496,8 @@ const SENSITIVE_NOTE: Partial<Record<VisitorRequirement, string>> = {
     'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
   bisexual:
     'Quem se declara bissexual na PNS 2019, de 18 anos ou mais. É uma estatística experimental do IBGE, com poucos registros por idade.',
+  worship:
+    'Quem vai a cultos ou atividades da religião uma vez por semana ou mais, pela PNS 2019, que não pergunta qual religião.',
 }
 
 /** The note of a sensitive Requirement: what it measures and where it stays. */

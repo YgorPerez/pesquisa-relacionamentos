@@ -148,6 +148,26 @@ describe('estimateGroup: PNS requirements', () => {
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
 
+  it('"vai à religião toda semana" counts weekly attendance and, with a religion checked, says it assumes the same attendance in every religion', () => {
+    // Weekly: straight of 160 cm and 170 cm and gay, 740 of 990.
+    const r = count({ seeks: 'mulheres' }, { ...ac, weeklyWorship: true })
+    expect(r.active).toContain('worship')
+    expect(r.result.central).toBeCloseTo((4000 * 740) / 990)
+    const caveat = r.caveats.find((x) => x.id === 'worship')
+    expect(caveat?.text).toContain('não pergunta qual é a religião')
+    expect(caveat?.text).not.toContain('mesma em todas')
+    const withReligion = count(
+      { seeks: 'mulheres' },
+      { ...ac, weeklyWorship: true, religions: ['evangelica'] },
+    )
+    expect(withReligion.active).toEqual(
+      expect.arrayContaining(['religion', 'worship']),
+    )
+    expect(
+      withReligion.caveats.find((x) => x.id === 'worship')?.text,
+    ).toContain('mesma em todas as religiões')
+  })
+
   it('"bissexual" counts who said bisexual among who answered, on top of the orientation from the Profile', () => {
     // 20 of the 960 who answered; with the orientation (straight or bi),
     // still the same 20.

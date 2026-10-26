@@ -20,6 +20,7 @@ const adult = (
     fumo: 'nao',
     obesidade: 'nao',
     depressao: 'nao',
+    culto: 'menos',
     ...values,
   },
 })
@@ -109,6 +110,7 @@ describe('readPnsRecord', () => {
         fumo: 'nao',
         obesidade: null,
         depressao: null,
+        culto: null,
       },
     })
   })
@@ -145,6 +147,16 @@ describe('readPnsRecord', () => {
     assert.equal(phq9('111191111'), null) // "ignorado"
     assert.equal(phq9('         '), null)
   })
+
+  it('reads religious attendance as weekly (once a week or more) or less', () => {
+    const attends = (answer: string) =>
+      readPnsRecord(person('165', '3', { M01901: [556, answer] }))?.values.culto
+    assert.equal(attends('1'), 'semanal')
+    assert.equal(attends('2'), 'semanal')
+    assert.equal(attends('3'), 'menos')
+    assert.equal(attends('6'), 'menos')
+    assert.equal(attends(' '), null)
+  })
 })
 
 describe('pnsToCsv', () => {
@@ -152,8 +164,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,obesidade,depressao,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nao,nao,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,obesidade,depressao,culto,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nao,nao,menos,3,1,1.000\n',
     )
   })
 })

@@ -244,3 +244,12 @@ it('"bissexual" enters the count and says it is an experimental IBGE statistic',
     /estatística experimental do IBGE/,
   )
 })
+
+it('"vai à religião toda semana" enters the count and says the PNS does not ask which religion', async () => {
+  await turnOnSensitive(
+    'worship',
+    'Só quem vai à religião toda semana',
+    'vai à religião toda semana',
+    /não pergunta qual religião/,
+  )
+})
