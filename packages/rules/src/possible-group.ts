@@ -390,6 +390,13 @@ export interface Range {
  * assumption, not the sampling error, which stays in `min` and `max`.
  * `null` when there is no assumption to measure: no PNS Requirement, or the
  * Census cuts no one inside sex × age.
+ *
+ * A share that multiplies the Census cell on another key (the PNAD office
+ * occupation, #294, by sex × age group × education) is the same assumption
+ * and belongs in the range: bound it against the Census cell first, in each
+ * education (from max(0, A_e + Q_e − N_e) to min(A_e, Q_e)), sum those per
+ * sex × age group into [L, U], and then cross with P: from max(0, L + P −
+ * N) to min(U, P).
  */
 function independenceRange(
   everyone: Float64Array,
