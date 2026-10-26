@@ -1,74 +1,355 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
+import type { Profile } from '@tem-estudo/rules/profile'
+import {
+  DEFAULT_REQUIREMENTS,
+  requirementValue,
+} from '@tem-estudo/rules/requirements'
 import { reads } from '#/content/reads'
-import { ShortConfidence, Html } from '#/ui/guide'
-import { ForwardArrow } from '#/ui/navigation'
+import type { PrioritiesView } from '#/content/priorities-view'
+import { useCountOpenedFactSheets } from '#/analytics/counting'
+import { useProfile } from '#/state/profile'
+import { useProfileInGuide } from '#/state/profile-in-guide'
+import { usePriorities } from '#/state/priorities'
+import { usePossibleGroup, useSavedRequirements } from '#/state/possible-group'
+import { AnswerConfidence, CitedFactSheets, Html } from '#/ui/guide'
+import {
+  Evidence,
+  GuideIndex,
+  GuideTips,
+  Limitations,
+  Myths,
+  OwnSections,
+  SourcesArrow,
+  Takeaways,
+} from '#/ui/guide-sections'
+import { WasItHelpful } from '#/ui/counting'
+import {
+  BackToGuide,
+  useReadingPointInHistory,
+  useReferences,
+  type CircledFactSheet,
+} from '#/ui/navigation'
+import {
+  ForYourProfile,
+  NoDataNotice,
+  ProfileBox,
+  ProfileCount,
+  ProfileLink,
+} from '#/ui/profile'
+import { PrioritiesCard } from '#/ui/priorities'
+import { PossibleGroupCard } from '#/ui/possible-group'
+import { QuestionRow } from '#/ui/question-row'
+import { Headline, Panel, Section, Subhead, Subsection } from '#/ui/section'
+import { Share } from '#/ui/share'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
-import { Headline } from '#/ui/section'
 
+// The Topic's page is its Guide (ADR 0042): the index, the opening, one
+// section per Question (anchored by the Question's slug), "O que levar", the
+// Limitations, one list of Fact sheets and the Questions of other Topics.
 export const Route = createFileRoute('/$tema/')({
-  // The `loaderData` carries only what the `head` uses; the Topic goes
+  // The `loaderData` carries only what the `head` uses; the Guide goes
   // through the `queryClient`.
   loader: async ({ context, params }) => {
-    const topic = await context.queryClient.query(reads.topic(params.tema))
-    return { search: topic.search }
+    const guide = await context.queryClient.query(reads.guide(params.tema))
+    return { search: guide.search }
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.search.title} · Tem estudo?` },
-          { name: 'description', content: loaderData.search.description },
-        ]
-      : [],
-  }),
+  head: ({ loaderData }) => {
+    if (!loaderData) return { meta: [] }
+    const { search } = loaderData
+    // The link preview repeats the search title and description; the image
+    // is the site's fixed one, from the root.
+    return {
+      meta: [
+        { title: `${search.title} · Tem estudo?` },
+        { name: 'description', content: search.description },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:title', content: search.title },
+        { property: 'og:description', content: search.description },
+      ],
+    }
+  },
   notFoundComponent: TopicNotFound,
-  component: TopicPage,
+  component: GuidePage,
 })
 
-function TopicPage() {
-  const { data: topic } = useSuspenseQuery(reads.topic(Route.useParams().tema))
+const Marker = () => (
+  <svg
+    className="flex-none"
+    width="30"
+    height="34"
+    viewBox="0 0 30 34"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M24 3C10 6 4 16 8 30M8 30l-4-7M8 30l6-5" />
+  </svg>
+)
+
+/** The address's Guide, which the loader already put in the `queryClient`:
+ * each block of the page reads it from there, without requesting it again. */
+function useGuide() {
+  return useSuspenseQuery(reads.guide(Route.useParams().tema)).data
+}
+
+type QuestionView = ReturnType<typeof useGuide>['questions'][number]
+
+function GuidePage() {
+  const guide = useGuide()
+  const { circled, backToText } = useReferences(guide.topic)
+  useReadingPointInHistory()
+  useCountOpenedFactSheets(guide.topic)
 
   return (
     <Sheet>
       <Column>
-        <Display>{topic.title}</Display>
+        <BackToGuide />
+        <Display>{guide.title}</Display>
+        <GuideIndex index={guide.index} />
         <Html
-          className="prosa m-0 text-lead"
-          slot="contexto"
-          html={topic.contextHtml}
+          className="prosa mt-secao text-lead"
+          slot="abertura"
+          html={guide.openingHtml}
         />
+        <SourcesArrow />
+        <YourProfile />
 
-        <ol className="m-0 list-none p-0" data-slot="perguntas">
-          {topic.guides.map((guide) => (
-            <li key={guide.slug} className="regua mt-secao pt-5">
-              <Headline>
-                <Link
-                  to="/$tema/$slug"
-                  params={{ tema: guide.topic, slug: guide.slug }}
-                  className="decoration-2 underline-offset-5 hover:bg-amarelo-voce"
-                >
-                  {guide.question}
-                </Link>
-              </Headline>
-              <ShortConfidence
-                confidence={guide.confidence}
-                className="mb-2.5"
-              />
-              <Html className="prosa mt-2.5" html={guide.answerHtml} />
-              <Link
-                to="/$tema/$slug"
-                params={{ tema: guide.topic, slug: guide.slug }}
-                className="mt-1 inline-flex min-h-toque items-center gap-2 font-label text-aviso font-bold no-underline hover:underline"
-                aria-label={`Ler o Guia: ${guide.question}`}
-              >
-                Ler o Guia
-                <ForwardArrow />
-              </Link>
-            </li>
-          ))}
-        </ol>
+        {guide.questions.map((question) => (
+          <QuestionSection key={question.slug} question={question} />
+        ))}
+
+        <GuideTakeaways />
+        {guide.limitations.length > 0 && (
+          <Limitations groups={guide.limitations} />
+        )}
+        <GuideFactSheets circled={circled} backToText={backToText} />
+        {guide.elsewhere.length > 0 && <OtherTopics />}
+
+        <Share
+          untitled
+          sentence="O link leva só o endereço do Guia, sem o seu Perfil."
+        />
       </Column>
     </Sheet>
+  )
+}
+
+/** The page's one Profile box, before the first Question. */
+function YourProfile() {
+  const profile = useProfile()
+  return (
+    <Section id="perfil" aria-labelledby="t-perfil">
+      <Headline id="t-perfil">Seu Perfil</Headline>
+      <p className="m-0 text-nota leading-nota text-tinta-2">
+        Opcional. Em cada Pergunta, o Guia marca o que vale para você e o que
+        vem de outras amostras, sem esconder nada.
+      </p>
+      <ProfileBox profile={profile} withData={null} findingTotal={0} />
+    </Section>
+  )
+}
+
+/** "O que levar", with the "vale para você" of each Tip for the Profile. */
+function GuideTakeaways() {
+  const { takeaways } = useGuide()
+  const profile = useProfile()
+  if (takeaways.length === 0) return null
+  return (
+    <Takeaways
+      tips={takeaways}
+      verdicts={
+        profile
+          ? takeaways.map((t) => appliesToYou(profile, t.coverage))
+          : undefined
+      }
+    />
+  )
+}
+
+type InGuide = ReturnType<typeof useProfileInGuide>
+
+/** One Question of the Guide: the short answer with its Confidence, the
+ * narrative, "E no Brasil?", what varies by Profile, the Myths, the
+ * calculator card and "Ajudou?". */
+function QuestionSection({ question }: { question: QuestionView }) {
+  const { profile, inGuide } = useProfileInGuide(question)
+  const verdicts = inGuide ?? undefined
+  return (
+    <Section
+      id={question.slug}
+      aria-labelledby={`${question.slug}-pergunta`}
+      className="scroll-mt-md"
+      data-question={question.slug}
+    >
+      <ShortAnswer question={question} profile={profile} inGuide={inGuide} />
+      <OwnSections sections={question.sections} />
+      <Evidence question={question} verdicts={verdicts} />
+      {question.tips.some((t) => t.finding === null) && (
+        <GuideTips question={question} verdicts={verdicts} />
+      )}
+      <InBrazil question={question} />
+      <VariesByProfile
+        question={question}
+        profile={profile}
+        inGuide={inGuide}
+      />
+      {question.myths.some((m) => m.finding === null) && (
+        <Myths question={question} />
+      )}
+      {question.calculator === 'priorities' && <B1Card />}
+      {question.calculator === 'possible-group' && <B5Card profile={profile} />}
+      <WasItHelpful question={question.slug} />
+    </Section>
+  )
+}
+
+/** The Question, the notice when no study split the Profile, and the short
+ * answer with its Confidence and the "Para o seu Perfil" line. */
+function ShortAnswer({
+  question,
+  profile,
+  inGuide,
+}: { question: QuestionView } & InGuide) {
+  return (
+    <>
+      <Headline id={`${question.slug}-pergunta`}>
+        <Html as="span" html={question.questionHtml} />
+      </Headline>
+      {profile && inGuide?.withData === 0 && <NoDataNotice profile={profile} />}
+      <Panel className="mb-2 [&>p]:m-0 [&>p]:mt-xs" data-slot="resposta">
+        <AnswerConfidence confidence={question.confidence} />
+        <Html className="prosa text-lead" html={question.answerHtml} />
+        {inGuide && (
+          <ForYourProfile
+            keyNumber={inGuide.key}
+            findings={question.findings}
+          />
+        )}
+      </Panel>
+    </>
+  )
+}
+
+/** "E no Brasil?", once the Question has one. */
+function InBrazil({ question }: { question: QuestionView }) {
+  if (!question.inBrazilHtml) return null
+  return (
+    <Subsection aria-labelledby={`${question.slug}-brasil`}>
+      <Subhead id={`${question.slug}-brasil`}>E no Brasil?</Subhead>
+      <Html className="prosa" html={question.inBrazilHtml} />
+    </Subsection>
+  )
+}
+
+/** "Varia conforme o Perfil?": the text, how many findings have data for the
+ * Profile and the link to the Profile box. */
+function VariesByProfile({
+  question,
+  profile,
+  inGuide,
+}: { question: QuestionView } & InGuide) {
+  return (
+    <Subsection aria-labelledby={`${question.slug}-perfil`}>
+      <Subhead id={`${question.slug}-perfil`}>Varia conforme o Perfil?</Subhead>
+      <Html className="prosa" html={question.profileHtml} />
+      {inGuide && (
+        <ProfileCount
+          withData={inGuide.withData}
+          findingTotal={question.findings.length}
+          className="mt-sm"
+        />
+      )}
+      <ProfileLink profile={profile} />
+    </Subsection>
+  )
+}
+
+/** "Fichas citadas": the numbered list, with the way there and back between
+ * the number in the text and the Fact sheet. */
+function GuideFactSheets({
+  circled,
+  backToText,
+}: {
+  circled: CircledFactSheet | null
+  backToText: () => void
+}) {
+  const guide = useGuide()
+  return (
+    <Section id="fichas" aria-labelledby="t-fichas">
+      <Headline id="t-fichas">Fichas citadas</Headline>
+      <p className="-mt-1 mr-0 mb-3.5 ml-6 flex max-w-88 items-end gap-1 text-nota leading-folgada text-agua-tinta italic">
+        <Marker />
+        cada número do texto leva à Ficha com o mesmo número aqui
+      </p>
+      <CitedFactSheets
+        factSheets={guide.factSheets}
+        circled={circled}
+        backToText={backToText}
+      />
+    </Section>
+  )
+}
+
+/** The related Questions of other Topics, each on its own row. */
+function OtherTopics() {
+  const guide = useGuide()
+  return (
+    <Section id="outros-temas" aria-labelledby="t-outros-temas">
+      <Headline id="t-outros-temas">Perguntas de outros Temas</Headline>
+      <ul className="isolate m-0 list-none p-0">
+        {guide.elsewhere.map((other) => (
+          <li key={other.slug} className="not-first:mt-md">
+            <QuestionRow question={other} from={guide.title} />
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+/** The Priorities card, with the top 3 the visitor left on the page. */
+function B1Card() {
+  const { priorities } = useGuide()
+  return priorities ? <PrioritiesCardWithTop3 priorities={priorities} /> : null
+}
+
+function PrioritiesCardWithTop3({
+  priorities,
+}: {
+  priorities: PrioritiesView
+}) {
+  const { top3 } = usePriorities(priorities.traits.map((c) => c.id))
+  return (
+    <PrioritiesCard
+      split={priorities.bar}
+      traits={priorities.traits}
+      top3={top3}
+    />
+  )
+}
+
+/** The Possible group card, with the count the visitor left on the page. */
+function B5Card({ profile }: { profile: Profile | null }) {
+  const saved = useSavedRequirements()
+  const { estimate, loading, stateData } = usePossibleGroup(profile, saved)
+  const r = saved ?? DEFAULT_REQUIREMENTS
+  const municipality = r.place?.municipality
+    ? stateData?.municipalities.get(r.place.municipality)?.name
+    : undefined
+  return (
+    <PossibleGroupCard
+      estimate={estimate}
+      used={profile !== null || saved !== null}
+      active={estimate.active.map((k) =>
+        requirementValue(k, profile, r, municipality),
+      )}
+      loading={loading}
+    />
   )
 }
 

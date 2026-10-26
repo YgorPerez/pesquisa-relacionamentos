@@ -6,7 +6,7 @@ import { expect, it } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 
 it('shows one row per Study, its context taken from the Fact sheet, and its result', async () => {
-  openScreen('/onde-conhecer-pessoas/app-ou-presencial')
+  openScreen('/onde-conhecer-pessoas')
   const table = await screen.findByRole('table', {
     name: 'Os dois estudos lado a lado',
   })

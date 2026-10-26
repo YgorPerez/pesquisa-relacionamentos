@@ -5,7 +5,7 @@
 // uses comes out.
 import { resolve } from 'node:path'
 import { loadLibrary } from '@tem-estudo/content'
-import { guideBySlug } from '@tem-estudo/content/queries'
+import { topicBySlug } from '@tem-estudo/content/queries'
 import { describe, expect, it } from 'vite-plus/test'
 import { html, inlineHtml } from './view'
 import { guideView } from './guide-view'
@@ -70,20 +70,23 @@ describe('the library goes through the filter unchanged', () => {
   const result = loadLibrary(resolve(import.meta.dirname, '../../e2e/library'))
   if (!result.ok) throw new Error('invalid e2e fixture')
   const { library } = result
-  const guide = (slug: string) => {
-    const found = guideBySlug(library, slug)
-    if (!found) throw new Error(`no Guide ${slug}`)
-    return guideView(found, library)
+  const topic = topicBySlug(library, 'onde-conhecer-pessoas')
+  if (!topic) throw new Error('no Topic onde-conhecer-pessoas')
+  const guide = guideView(topic, library)
+  const question = (slug: string) => {
+    const found = guide.questions.find((q) => q.slug === slug)
+    if (!found) throw new Error(`no Question ${slug}`)
+    return found
   }
 
   it('the key number and the numbered reference, glued to the word', () => {
-    expect(guide('onde-os-casais-se-conhecem').answerHtml).toBe(
+    expect(question('onde-os-casais-se-conhecem').answerHtml).toBe(
       '<p>No Brasil, <mark class="numero-chave">18% dos adultos jovens</mark> conheceram o parceiro por <span class="nw">app<a class="ref" href="#ficha-silva-2020-apps-brasil" aria-label="Ficha 1: Silva e Souza (2020): apps de namoro no Brasil">1</a>.</span> Os estudos divergem sobre o lugar mudar a relação, e o de melhor desenho diz que o app junta muitos <span class="nw">casais<a class="ref" href="#ficha-costa-2018-satisfacao" aria-label="Ficha 2: Costa (2018): satisfação e onde os casais se conheceram">2</a>.</span></p>\n',
     )
   })
 
   it('the collapsible `<details>`, with the `id` that keeps the fold open', () => {
-    expect(guide('onde-os-casais-se-conhecem').limitationsHtml).toContain(
+    expect(guide.limitations.map((g) => g.html).join('')).toContain(
       '<details id="detalhe-capitais"><summary>Quais capitais</summary><p>São Paulo, Recife e Porto Alegre.</p>\n</details>',
     )
   })

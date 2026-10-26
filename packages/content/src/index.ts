@@ -15,7 +15,6 @@ export {
 export {
   tipSearch,
   factSheetSearch,
-  guideSearch,
   topicSearch,
   sitemapPaths,
   LIMITS,
@@ -29,7 +28,7 @@ export {
 export {
   tipPath,
   factSheetPath,
-  guidePath,
+  questionPath,
   topicPath,
   calculatorPath,
   isFactSheetIndexable,
@@ -39,6 +38,8 @@ export {
   isTipPublished,
   guideBySlug,
   guidesWithTip,
+  guideTips,
+  guideMyths,
   topicGuides,
   topicBySlug,
 } from './queries.ts'

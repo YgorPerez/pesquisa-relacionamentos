@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
   tipPath,
-  guidePath,
+  questionPath,
   topicPath,
   loadLibrary,
   tipBySlug,
@@ -13,6 +13,8 @@ import {
   formatProblems,
   guideBySlug,
   guidesWithTip,
+  guideTips,
+  guideMyths,
   topicGuides,
   topicBySlug,
   readFiles,
@@ -74,7 +76,7 @@ const TOPIC = 'guides/onde-conhecer/_topic.md'
 const TIP = 'tips/apps-como-complemento.md'
 
 describe('topics and guides', () => {
-  it("reads the folder's topic, with title, context and its guides in order", () => {
+  it("reads the folder's topic, with title, opening and its guides in order", () => {
     const library = libraryOf(loadLibrary(VALID))
     expect(library.topics).toEqual([
       {
@@ -83,7 +85,10 @@ describe('topics and guides', () => {
         title: 'Onde conhecer pessoas',
         position: 10,
         order: ['onde-os-casais-se-conhecem', 'app-ou-presencial'],
-        context: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+        opening: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
+        takeaways: [],
+        limitations: '',
+        citedFactSheets: ['silva-2020-apps-brasil', 'costa-2018-satisfacao'],
       },
     ])
     expect(library.guides.map((g) => [g.topic, g.slug])).toEqual([
@@ -123,6 +128,8 @@ describe('topics and guides', () => {
         },
       ],
       scoped: false,
+      tips: [],
+      myths: [],
     })
     expect(scoped).toMatchObject({
       countries: ['EUA'],
@@ -178,12 +185,12 @@ describe('tips', () => {
 })
 
 describe('paths and queries', () => {
-  it('a topic at /<topic>, a guide at /<topic>/<slug> and a tip at /dicas/<slug>', () => {
+  it('a topic at /<topic>, a question at its section /<topic>#<slug> and a tip at /dicas/<slug>', () => {
     const library = libraryOf(loadLibrary(VALID))
     expect(topicPath({ slug: 'onde-conhecer' })).toBe('/onde-conhecer')
-    expect(library.guides.map(guidePath)).toEqual([
-      '/onde-conhecer/onde-os-casais-se-conhecem',
-      '/onde-conhecer/app-ou-presencial',
+    expect(library.guides.map(questionPath)).toEqual([
+      '/onde-conhecer#onde-os-casais-se-conhecem',
+      '/onde-conhecer#app-ou-presencial',
     ])
     expect(tipPath({ slug: 'apps-como-complemento' })).toBe(
       '/dicas/apps-como-complemento',
@@ -488,7 +495,7 @@ describe('publication rules', () => {
     ])
   })
 
-  it('the guide body needs the short answer and the two sections, and nothing else after Varia conforme o Perfil?', () => {
+  it('the guide body needs the short answer and Varia conforme o Perfil?, and nothing else after it but Limitações', () => {
     const errors = errorsOf(
       withFile(OTHER_GUIDE, (t) =>
         t
@@ -498,8 +505,231 @@ describe('publication rules', () => {
     )
     expect(errors).toEqual([
       `${OTHER_GUIDE}: missing the short answer before the first "##"`,
-      `${OTHER_GUIDE}: Limitações: missing the section "## Limitações"`,
       `${OTHER_GUIDE}: Outra coisa: unknown section "## Outra coisa"; the Guide's own sections come before "## Varia conforme o Perfil?", and after it only "## Limitações"`,
+    ])
+    expect(
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace('## Varia conforme o Perfil?', '## Varia?'),
+        ),
+      ),
+    ).toEqual([
+      `${OTHER_GUIDE}: Varia conforme o Perfil?: missing the section "## Varia conforme o Perfil?"`,
+    ])
+  })
+})
+
+describe('the Guide of a Topic (ADR 0042)', () => {
+  const IN_BRAZIL =
+    '## E no Brasil?\n\nSó um estudo, de capitais [@silva-2020-apps-brasil].\n\n## Varia conforme o Perfil?'
+
+  it('"E no Brasil?" is read apart, and its references join the checks and the page order', () => {
+    const guide = guideBySlug(
+      libraryOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace('## Varia conforme o Perfil?', IN_BRAZIL),
+        ),
+      ),
+      'app-ou-presencial',
+    )
+    expect(guide?.inBrazil).toBe(
+      'Só um estudo, de capitais [@silva-2020-apps-brasil].',
+    )
+    expect(guide?.sections).toEqual([])
+    expect(guide?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+      'silva-2020-apps-brasil',
+    ])
+    expect(
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace(
+            '## Varia conforme o Perfil?',
+            IN_BRAZIL.replace('silva-2020', 'silva-2099'),
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${OTHER_GUIDE}: E no Brasil?: the fact sheet "silva-2099-apps-brasil" does not exist in studies/`,
+    ])
+  })
+
+  it('"E no Brasil?" may be missing until the rewrite, but not empty', () => {
+    expect(libraryOf(loadLibrary(VALID)).guides[1]?.inBrazil).toBe('')
+    expect(
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace(
+            '## Varia conforme o Perfil?',
+            '## E no Brasil?\n\n## Varia conforme o Perfil?',
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${OTHER_GUIDE}: E no Brasil?: the section "## E no Brasil?" is empty; say the Brazilian data, or that none was found and what transfers`,
+    ])
+  })
+
+  it("a finding's tips and myths go right after it, in the page order and in the tip's guides", () => {
+    const library = libraryOf(
+      withFile(OTHER_GUIDE, (t) =>
+        t.replace(
+          '    fact_sheets: [costa-2018-satisfacao]\n',
+          '    fact_sheets: [costa-2018-satisfacao]\n    tips: [apps-como-complemento]\n    myths: [{ claim: "X.", why_not: "Y [@silva-2020-apps-brasil].", fact_sheets: [] }]\n',
+        ),
+      ),
+    )
+    const guide = guideBySlug(library, 'app-ou-presencial')
+    expect(guide?.findings[0]).toMatchObject({
+      tips: ['apps-como-complemento'],
+      myths: [{ claim: 'X.' }],
+    })
+    expect(guide && guideTips(guide)).toEqual(['apps-como-complemento'])
+    expect(guide && guideMyths(guide).map((m) => m.claim)).toEqual(['X.'])
+    // costa from the short answer and the finding, silva from the tip.
+    expect(guide?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+      'silva-2020-apps-brasil',
+    ])
+    expect(
+      guidesWithTip(library, 'apps-como-complemento').map((g) => g.slug),
+    ).toEqual(['onde-os-casais-se-conhecem', 'app-ou-presencial'])
+    expect(
+      errorsOf(
+        withFile(OTHER_GUIDE, (t) =>
+          t.replace(
+            '    fact_sheets: [costa-2018-satisfacao]\n',
+            '    fact_sheets: [costa-2018-satisfacao]\n    tips: [encontros-presenciais, sumiu]\n',
+          ),
+        ),
+      ),
+    ).toEqual([
+      `${OTHER_GUIDE}: findings.0.tips: the tip "encontros-presenciais" cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
+      `${OTHER_GUIDE}: findings.0.tips: the tip "sumiu" does not exist in tips/`,
+    ])
+  })
+
+  const TOPIC_WITH_FRAME = (t: string) =>
+    t.replace(
+      'order: [onde-os-casais-se-conhecem, app-ou-presencial]',
+      'order: [onde-os-casais-se-conhecem, app-ou-presencial]\ntakeaways: [apps-como-complemento]',
+    ) + '\n## Limitações\n\n### [@lima-2015-encontros]\n\n- Amostra pequena.\n'
+
+  it('the _topic.md holds the opening, "O que levar" and the Limitations, which cite only ✅ or 🟡', () => {
+    expect(errorsOf(withFile(TOPIC, TOPIC_WITH_FRAME))).toEqual([
+      `${TOPIC}: Limitações: cites the fact sheet "lima-2015-encontros", which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets`,
+    ])
+    const topic = libraryOf(
+      withFile(TOPIC, (t) =>
+        TOPIC_WITH_FRAME(t).replace(
+          'lima-2015-encontros',
+          'costa-2018-satisfacao',
+        ),
+      ),
+    ).topics[0]
+    expect(topic).toMatchObject({
+      takeaways: ['apps-como-complemento'],
+      limitations: '### [@costa-2018-satisfacao]\n\n- Amostra pequena.',
+    })
+    expect(
+      errorsOf(
+        withFile(TOPIC, (t) =>
+          t
+            .replace('position: 10', 'position: 10\ntakeaways: [sumiu]')
+            .concat('\n## Outra\n\nX.\n'),
+        ),
+      ),
+    ).toEqual([
+      `${TOPIC}: Outra: unknown section "## Outra"; a _topic.md only has "## Limitações"`,
+    ])
+    expect(
+      errorsOf(
+        withFile(TOPIC, (t) =>
+          t.replace('position: 10', 'position: 10\ntakeaways: [sumiu]'),
+        ),
+      ),
+    ).toEqual([`${TOPIC}: takeaways: the tip "sumiu" does not exist in tips/`])
+    expect(
+      errorsOf(
+        withFile(
+          TOPIC,
+          (t) => `${t}\n## Limitações\n\n### Sobre o app\n\n- X.\n`,
+        ),
+      ),
+    ).toEqual([
+      `${TOPIC}: Limitações: the Limitations are grouped by Study: write "### [@fact-sheet-slug]", not "### Sobre o app"`,
+    ])
+  })
+
+  it("numbers the Guide's fact sheets in page order: opening, each Question, O que levar, then the Limitations", () => {
+    const library = libraryOf(
+      withFiles({
+        [TOPIC]: (t) =>
+          t
+            .replace(
+              'order: [onde-os-casais-se-conhecem, app-ou-presencial]',
+              'order: [app-ou-presencial, onde-os-casais-se-conhecem]',
+            )
+            .concat(
+              '\n## Limitações\n\n- Pouco dado [@silva-2020-apps-brasil].\n',
+            ),
+      }),
+    )
+    // app-ou-presencial comes first now and cites only costa; silva comes in
+    // with the second Question.
+    expect(library.topics[0]?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+      'silva-2020-apps-brasil',
+    ])
+    const withOpening = libraryOf(
+      withFile(TOPIC, (t) =>
+        t.replace(
+          'Onde os casais se conhecem',
+          'Onde os casais se conhecem [@costa-2018-satisfacao]',
+        ),
+      ),
+    )
+    expect(withOpening.topics[0]?.citedFactSheets).toEqual([
+      'costa-2018-satisfacao',
+      'silva-2020-apps-brasil',
+    ])
+  })
+
+  it('the confidence ceiling counts what backs the answer, not the Limitations', () => {
+    const errors = errorsOf(
+      withFiles({
+        [OTHER_GUIDE]: (t) =>
+          t
+            .replace('confidence: moderate', 'confidence: strong')
+            .replace(
+              '- Uma amostra só.',
+              '- Uma amostra só [@silva-2020-apps-brasil].',
+            ),
+      }),
+    )
+    expect(errors).toEqual([
+      `${OTHER_GUIDE}: confidence: the confidence (strong) is above the strongest fact sheet the guide cites (moderate)`,
+    ])
+  })
+
+  it("a question slug cannot take one of the page's own anchors", () => {
+    const files = validFiles().map((a) =>
+      a.path === OTHER_GUIDE
+        ? { ...a, path: 'guides/onde-conhecer/fichas.md' }
+        : a.path === TOPIC
+          ? { ...a, text: a.text.replace('app-ou-presencial]', 'fichas]') }
+          : a.path === GUIDE
+            ? {
+                ...a,
+                text: a.text.replace(
+                  'related: [app-ou-presencial]',
+                  'related: []',
+                ),
+              }
+            : a,
+    )
+    expect(errorsOf(buildLibrary(files))).toEqual([
+      'guides/onde-conhecer/fichas.md: a question cannot be called "fichas": the Guide\'s page already uses #fichas (indice, perfil, o-que-levar, limitacoes, fichas, outros-temas)',
     ])
   })
 })

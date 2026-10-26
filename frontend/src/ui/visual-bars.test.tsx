@@ -8,7 +8,8 @@ import { expect, it } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 import { VISUAL_COPY } from './visual.copy'
 
-const QUESTION = '/onde-conhecer-pessoas/app-ou-presencial'
+/** The Guide whose `app-ou-presencial` section has the Visuals. */
+const QUESTION = '/onde-conhecer-pessoas'
 
 it('reads each bar as its label and its number, and tags our own calculation', async () => {
   openScreen(QUESTION)

@@ -4,23 +4,28 @@
 // "Varia conforme o Perfil?".
 import { fileURLToPath } from 'node:url'
 import { formatProblems, loadLibrary } from '@tem-estudo/content'
-import { guideBySlug } from '@tem-estudo/content/queries'
+import { topicBySlug } from '@tem-estudo/content/queries'
 import { expect, it } from 'vite-plus/test'
 import { guideView } from './guide-view'
 import { html } from './view'
 
 const FIXTURE = fileURLToPath(new URL('../../e2e/library', import.meta.url))
 
+/** The Guide of "Onde conhecer pessoas" and its `app-ou-presencial`
+ * section. */
 function fixtureGuide() {
   const result = loadLibrary(FIXTURE)
   if (!result.ok) throw new Error(formatProblems(result.errors))
-  const guide = guideBySlug(result.library, 'app-ou-presencial')
-  if (!guide) throw new Error('the fixture has no app-ou-presencial')
-  return guideView(guide, result.library)
+  const topic = topicBySlug(result.library, 'onde-conhecer-pessoas')
+  if (!topic) throw new Error('the fixture has no onde-conhecer-pessoas')
+  const guide = guideView(topic, result.library)
+  const question = guide.questions.find((q) => q.slug === 'app-ou-presencial')
+  if (!question) throw new Error('the fixture has no app-ou-presencial')
+  return { ...guide, question }
 }
 
 /** The HTML of "Varia conforme o Perfil?", where the fixture places them. */
-const sectionHtml = () => fixtureGuide().profileHtml
+const sectionHtml = () => fixtureGuide().question.profileHtml
 
 it('draws each placed Visual on the server, as SVG or a table, where its line was', () => {
   const html = sectionHtml()
@@ -45,7 +50,7 @@ it('numbers the Visual’s references like the rest of the page', () => {
   const silva = guide.factSheets.find(
     (f) => f.slug === 'silva-2020-apps-brasil',
   )
-  expect(guide.profileHtml).toContain(
+  expect(guide.question.profileHtml).toContain(
     `<a class="ref" href="#${silva?.anchor}" aria-label="Ficha ${silva?.n}: ${silva?.title}">${silva?.n}</a>`,
   )
 })

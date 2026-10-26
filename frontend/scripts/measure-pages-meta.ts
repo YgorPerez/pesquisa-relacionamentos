@@ -40,10 +40,10 @@ export type PageName =
  * person taps as soon as the page opens, the interaction INP comes from. */
 export type Page = { name: PageName; path: string; tap: string }
 
-/** The fixture Guide and Fact sheet (`e2e/library`): the library has no
- * Guide yet. */
+/** The fixture Guide and Fact sheet (`e2e/library`). The Guide is the
+ * Topic's page (ADR 0042). */
 export const FIXTURE_PATHS = {
-  guide: '/onde-conhecer-pessoas/onde-os-casais-se-conhecem',
+  guide: '/onde-conhecer-pessoas',
   factSheet: '/estudos/lima-2015-encontros',
 } as const
 

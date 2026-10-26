@@ -14,12 +14,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const HelpedQuestion: Story = {
-  render: () => <WasItHelpful guide="onde-os-casais-se-conhecem" />,
+  render: () => <WasItHelpful question="onde-os-casais-se-conhecem" />,
 }
 
 /** The "no" asks for one of the four reasons, and the answer thanks. */
 export const HelpedNo: Story = {
-  render: () => <WasItHelpful guide="onde-os-casais-se-conhecem" />,
+  render: () => <WasItHelpful question="onde-os-casais-se-conhecem" />,
   play: async ({ canvasElement }) => {
     const screen = within(canvasElement)
     await userEvent.click(screen.getByRole('button', { name: 'Não' }))

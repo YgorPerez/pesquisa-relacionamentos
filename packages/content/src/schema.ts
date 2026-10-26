@@ -97,7 +97,9 @@ export type FactSheetFrontmatter = typeof FactSheetFrontmatter.Type
 
 const Slugs = Schema.Array(Slug)
 
-/** `guides/<topic>/_topic.md`: the body is the context paragraph. */
+/** `guides/<topic>/_topic.md`: the frame of the Topic's Guide (ADR 0042).
+ * The body holds the opening (before the first `##`) and, optionally,
+ * "## Limitações", grouped by Study under `### [@fact-sheet-slug]`. */
 export const TopicFrontmatter = Schema.Struct({
   title: Text,
   /** Where the topic goes on the home page, smallest first (#143). The
@@ -106,7 +108,10 @@ export const TopicFrontmatter = Schema.Struct({
   position: Schema.Int.check(
     Schema.isGreaterThan(0, { message: 'a whole number from 1 up' }),
   ),
+  /** The Questions, in the order the Guide answers them. */
   order: Slugs,
+  /** The "O que levar" block: the strongest Tips of the Guide. */
+  takeaways: Schema.optional(Slugs),
   previous: Schema.optional(Slugs),
   seo: Schema.optional(Seo),
 })
@@ -123,12 +128,23 @@ export const TipFrontmatter = Schema.Struct({
 })
 export type TipFrontmatter = typeof TipFrontmatter.Type
 
+export const Myth = Schema.Struct({
+  claim: Text,
+  why_not: Text,
+  fact_sheets: Slugs,
+})
+export type Myth = typeof Myth.Type
+
+/** A finding of a Question. Its `tips` and `myths` show right after it on
+ * the page, next to the finding they belong to (ADR 0042). */
 export const GuideFinding = Schema.Struct({
   text: Text,
   fact_sheets: Slugs,
   country: Schema.optional(Text),
   period: Schema.optional(Text),
   applies_to: Schema.optional(Coverage),
+  tips: Schema.optional(Slugs),
+  myths: Schema.optional(Schema.Array(Myth)),
 })
 
 const Side = Schema.Struct({ title: Text, text: Text, fact_sheets: Slugs })
@@ -140,13 +156,6 @@ export const Divergence = Schema.Struct({
   sides: Schema.Tuple([Side, Side]),
 })
 export type Divergence = typeof Divergence.Type
-
-export const Myth = Schema.Struct({
-  claim: Text,
-  why_not: Text,
-  fact_sheets: Slugs,
-})
-export type Myth = typeof Myth.Type
 
 /** A guide's `previous`: the old slug in the same topic, or `topic/slug` when the
  * guide came from another topic. */
@@ -160,9 +169,11 @@ const GuidePath = Schema.String.check(
   ),
 )
 
-/** `guides/<topic>/<slug>.md`: the body holds the short answer (before the
- * first `##`), the Guide's own sections if any, "Varia conforme o Perfil?"
- * and "Limitações". */
+/** `guides/<topic>/<slug>.md`, one Question of the Topic's Guide (ADR 0042;
+ * the code still calls the file a guide). The body holds the short answer
+ * (before the first `##`), the narrative's own sections if any, "E no
+ * Brasil?", "Varia conforme o Perfil?" and, until the rewrite moves them to
+ * `_topic.md`, "Limitações". */
 export const GuideFrontmatter = Schema.Struct({
   question: Text,
   confidence: Schema.Literals(STRENGTHS),

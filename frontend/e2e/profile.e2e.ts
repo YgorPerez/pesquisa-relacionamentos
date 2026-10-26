@@ -1,12 +1,22 @@
-// The Profile in the Guide (#30) over the fixture content: in the main Guide,
-// the 1st finding comes from men and women aged 18 to 35 and the 2nd from
-// man-woman couples; the Tip cites both. The other Guide only has the
-// man-woman couples finding.
+// The Profile in the Guide (#30) over the fixture content. The Guide has one
+// Profile box and two Questions: in the first, the 1st finding comes from
+// men and women aged 18 to 35 and the 2nd from man-woman couples, and the Tip
+// cites both; the second only has the man-woman couples finding.
 import { expect, test, type Page } from '@playwright/test'
 
-const GUIDE = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
-const OTHER_GUIDE = '/onde-conhecer-pessoas/app-ou-presencial'
+const GUIDE = '/onde-conhecer-pessoas'
+const FIRST = 'Onde os casais se conhecem hoje?'
+const SECOND = 'App ou presencial, onde tenho mais chance?'
 const NO_DATA = 'Não há dado deste estudo para o seu Perfil.'
+
+const question = (page: Page, name = FIRST) =>
+  page.getByRole('region', { name, exact: true })
+const variesByProfile = (page: Page, name = FIRST) =>
+  question(page, name).getByRole('region', {
+    name: 'Varia conforme o Perfil?',
+  })
+const profileBox = (page: Page) =>
+  page.getByRole('region', { name: 'Seu Perfil' })
 
 interface ProfileInForm {
   gender?: 'homem' | 'mulher' | 'outro'
@@ -31,7 +41,7 @@ async function enterProfile(page: Page, { gender, seeks, age }: ProfileInForm) {
 }
 
 const findings = (page: Page) =>
-  page
+  question(page)
     .getByRole('region', { name: 'O que a evidência diz' })
     .locator('ol[data-slot="achados-guia"] > li')
 
@@ -39,7 +49,9 @@ const findings = (page: Page) =>
  * Fact sheets. */
 const content = (page: Page) =>
   page.evaluate(() => ({
-    sections: [...document.querySelectorAll('main h2')].map(
+    // The Possible group card's title says whether it was used, which the
+    // Profile changes on purpose.
+    sections: [...document.querySelectorAll('main h2:not(#t-cartao-gp)')].map(
       (h) => h.textContent,
     ),
     findings: [
@@ -48,9 +60,7 @@ const content = (page: Page) =>
       ),
     ].map((p) => p.textContent),
     tips: [
-      ...document.querySelectorAll(
-        '[data-slot="dicas-do-guia"] > li > p:first-child',
-      ),
+      ...document.querySelectorAll('[data-slot="dica"] > p:first-child'),
     ].map((p) => p.textContent),
     factSheets: [
       ...document.querySelectorAll('[data-slot="fichas-citadas"] > li'),
@@ -59,11 +69,11 @@ const content = (page: Page) =>
   }))
 
 test.describe('Profile in the Guide', () => {
-  test('without a Profile, the link below the short answer invites and scrolls to the form', async ({
+  test("without a Profile, the link in a Question's Varia conforme o Perfil? invites and scrolls to the form", async ({
     page,
   }) => {
     await page.goto(GUIDE)
-    const link = page.getByRole('link', {
+    const link = variesByProfile(page, SECOND).getByRole('link', {
       name: /Diga seu Perfil e veja o que vale para você/,
     })
     await expect(link).toContainText('opcional')
@@ -121,58 +131,61 @@ test.describe('Profile in the Guide', () => {
       `Vale para: casais homem-mulher. ${NO_DATA}`,
     )
     await expect(
-      page
+      question(page)
         .getByRole('region', { name: 'Dicas' })
         .locator('[data-slot="selo-voce"]'),
     ).toHaveText('vale para você')
 
-    const answer = page.getByRole('region', { name: 'Resposta curta' })
+    const answer = question(page).locator('[data-slot="resposta"]')
     await expect(answer.locator('[data-slot="para-o-seu-perfil"]')).toHaveText(
       'vale para você o número em destaque vem de um estudo com pessoas do seu Perfil.',
     )
-    const box = page.getByRole('region', { name: 'Varia conforme o Perfil?' })
-    await expect(box).toContainText(
+    await expect(profileBox(page)).toContainText(
       'Seu Perfil: homem, procura homens, 30 anos',
     )
-    await expect(box).toContainText(
+    await expect(variesByProfile(page)).toContainText(
       '1 de 2 achados tem dado para o seu Perfil.',
     )
     await expect(
-      page.getByRole('link', {
+      variesByProfile(page).getByRole('link', {
         name: /Seu Perfil: homem, procura homens, 30 anos/,
       }),
     ).toContainText('mudar')
-    await expect(page.locator('[data-slot="aviso-perfil"]')).toHaveCount(0)
+    await expect(
+      question(page).locator('[data-slot="aviso-perfil"]'),
+    ).toHaveCount(0)
   })
 
-  test('the Profile applies on the other pages and on the next visit', async ({
+  test('the Profile applies to each Question and on the next visit', async ({
     page,
   }) => {
     await page.goto(GUIDE)
     await enterProfile(page, { gender: 'homem', seeks: 'homens', age: '30' })
     await page.reload()
-    await expect(
-      page.getByRole('link', {
-        name: /Seu Perfil: homem, procura homens, 30 anos/,
-      }),
-    ).toBeVisible()
+    await expect(profileBox(page)).toContainText(
+      'Seu Perfil: homem, procura homens, 30 anos',
+    )
     await expect(
       findings(page).nth(0).locator('[data-slot="selo-voce"]'),
     ).toBeVisible()
 
-    // In the other Guide, the only finding is about man-woman couples: a
-    // notice above the title.
-    await page.goto(OTHER_GUIDE)
-    const notice = page
+    // In the second Question, the only finding is about man-woman couples: a
+    // notice above its short answer, and none in the first.
+    const notice = question(page, SECOND)
       .getByRole('note')
-      .filter({ hasText: 'Nenhum estudo deste Guia separou' })
+      .filter({ hasText: 'Nenhum estudo desta Pergunta separou' })
     await expect(notice).toContainText('homem, procura homens, 30 anos')
     const noticeBox = await notice.boundingBox()
-    const title = await page.getByRole('heading', { level: 1 }).boundingBox()
-    expect(noticeBox!.y).toBeLessThan(title!.y)
+    const answer = await question(page, SECOND)
+      .locator('[data-slot="resposta"]')
+      .boundingBox()
+    expect(noticeBox!.y).toBeLessThan(answer!.y)
     await expect(
-      page.getByRole('region', { name: 'Varia conforme o Perfil?' }),
-    ).toContainText('O único achado não tem dado para o seu Perfil.')
+      question(page).locator('[data-slot="aviso-perfil"]'),
+    ).toHaveCount(0)
+    await expect(variesByProfile(page, SECOND)).toContainText(
+      'O único achado não tem dado para o seu Perfil.',
+    )
   })
 
   test('when the key number does not apply, the line says which finding does', async ({
@@ -184,7 +197,9 @@ test.describe('Profile in the Guide', () => {
       seeks: 'homens',
       age: '50',
     })
-    await expect(page.locator('[data-slot="para-o-seu-perfil"]')).toContainText(
+    await expect(
+      question(page).locator('[data-slot="para-o-seu-perfil"]'),
+    ).toContainText(
       'Para o seu Perfil: o número em destaque vem de outra amostra. O que tem dado para você: Nos EUA, a satisfação',
     )
   })
@@ -194,16 +209,18 @@ test.describe('Profile in the Guide', () => {
   }) => {
     await page.goto(GUIDE)
     await enterProfile(page, { gender: 'outro', seeks: 'homens' })
-    await expect(page.locator('[data-slot="aviso-perfil"]')).toContainText(
-      'outro gênero, procura homens',
-    )
-    await expect(page.getByText(NO_DATA)).toHaveCount(3)
-    await expect(page.locator('[data-slot="para-o-seu-perfil"]')).toContainText(
-      'nenhum número deste Guia vem de uma amostra como a sua.',
-    )
     await expect(
-      page.getByRole('region', { name: 'Varia conforme o Perfil?' }),
-    ).toContainText('Nenhum dos 2 achados tem dado para o seu Perfil.')
+      question(page).locator('[data-slot="aviso-perfil"]'),
+    ).toContainText('outro gênero, procura homens')
+    await expect(question(page).getByText(NO_DATA)).toHaveCount(3)
+    await expect(
+      question(page).locator('[data-slot="para-o-seu-perfil"]'),
+    ).toContainText(
+      'nenhum número desta Pergunta vem de uma amostra como a sua.',
+    )
+    await expect(variesByProfile(page)).toContainText(
+      'Nenhum dos 2 achados tem dado para o seu Perfil.',
+    )
   })
 
   test('someone seeking both sees which side has data', async ({ page }) => {
@@ -226,7 +243,9 @@ test.describe('Profile in the Guide', () => {
       seeks: 'mulheres',
       age: '24',
     })
-    await page.getByRole('link', { name: /Seu Perfil: mulher/ }).click()
+    await variesByProfile(page)
+      .getByRole('link', { name: /Seu Perfil: mulher/ })
+      .click()
     const form = page.getByRole('form', { name: 'Seu Perfil' })
     await expect(
       form.getByRole('radio', { name: 'mulher', exact: true }),
@@ -237,13 +256,13 @@ test.describe('Profile in the Guide', () => {
     await expect(form.getByLabel('Sua idade')).toHaveValue('24')
     await form.getByRole('radio', { name: 'homens', exact: true }).check()
     await form.getByRole('button', { name: 'Ver o que vale para mim' }).click()
-    await expect(
-      page.getByRole('region', { name: 'Varia conforme o Perfil?' }),
-    ).toContainText('Seu Perfil: mulher, procura homens, 24 anos')
-    await page.getByRole('button', { name: 'mudar' }).click()
+    await expect(profileBox(page)).toContainText(
+      'Seu Perfil: mulher, procura homens, 24 anos',
+    )
+    await profileBox(page).getByRole('button', { name: 'mudar' }).click()
     await page.getByRole('button', { name: 'Apagar o Perfil' }).click()
     await expect(
-      page.getByRole('link', { name: /Diga seu Perfil/ }),
+      variesByProfile(page).getByRole('link', { name: /Diga seu Perfil/ }),
     ).toBeVisible()
     await expect(page.locator('[data-slot="selo-voce"]')).toHaveCount(0)
   })
@@ -260,7 +279,9 @@ test.describe('Profile in the Guide', () => {
       if (await page.getByRole('button', { name: 'mudar' }).isVisible())
         await page.getByRole('button', { name: 'mudar' }).click()
       await enterProfile(page, profile)
-      await expect(page.locator('[data-slot="perfil-contagem"]')).toBeVisible()
+      await expect(
+        page.locator('[data-slot="perfil-contagem"]').first(),
+      ).toBeVisible()
       expect(await content(page)).toEqual(before)
     }
   })

@@ -58,13 +58,13 @@ function TipPage() {
 
         <Section aria-labelledby="t-guias">
           <Headline id="t-guias">Aparece nos Guias</Headline>
-          {tip.guides.length === 0 ? (
+          {tip.questions.length === 0 ? (
             <p className="text-tinta-2">Nenhum Guia traz esta Dica ainda.</p>
           ) : (
             <ul className="isolate m-0 list-none p-0">
-              {tip.guides.map((guide) => (
-                <li key={guide.slug} className="not-first:mt-md">
-                  <QuestionRow guide={guide} />
+              {tip.questions.map((question) => (
+                <li key={question.slug} className="not-first:mt-md">
+                  <QuestionRow question={question} />
                 </li>
               ))}
             </ul>

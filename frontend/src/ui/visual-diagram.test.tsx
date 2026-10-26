@@ -8,7 +8,7 @@ import { openScreen } from '#/platform/screens/open-screen'
 import { VISUAL_COPY } from './visual.copy'
 
 it('says each arrow in words, with what backs it and the Fact sheets', async () => {
-  openScreen('/onde-conhecer-pessoas/app-ou-presencial')
+  openScreen('/onde-conhecer-pessoas')
   const figure = await screen.findByRole('figure', {
     name: 'O app, o encontro e a satisfação',
   })

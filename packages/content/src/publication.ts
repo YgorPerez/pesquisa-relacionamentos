@@ -5,11 +5,13 @@ import type { Coverage } from './schema.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import {
   GUIDE_SECTIONS,
+  TOPIC_SECTIONS,
   type GuideFinding,
   type Tip,
   type ParsedTip,
   type Guide,
   type ParsedGuide,
+  type ParsedTopic,
   type Topic,
 } from './items.ts'
 import type { Strength } from './lists.ts'
@@ -43,7 +45,7 @@ function inherited(
 
 export interface ParsedItems {
   readonly factSheets: ReadonlyArray<FactSheet>
-  readonly topics: ReadonlyArray<Topic>
+  readonly topics: ReadonlyArray<ParsedTopic>
   readonly guides: ReadonlyArray<ParsedGuide>
   readonly tips: ReadonlyArray<ParsedTip>
   /** The paths of the files that exist but did not parse. They count as
@@ -59,30 +61,56 @@ export interface Linked {
   readonly errors: ReadonlyArray<Problem>
 }
 
-/** A guide's fact sheets in page order: short answer, tips, findings,
- * divergence, the Guide's own sections, profile, myths and limitations. */
-function factSheetsInPageOrder(
+type Myth = ParsedGuide['myths'][number]
+
+const mythFactSheets = (m: Myth) => [
+  ...referencesInText(m.why_not),
+  ...m.fact_sheets,
+]
+
+/** A Question's fact sheets in the order its section shows them (the page in
+ * `routes/$tema/index.tsx`): short answer, own sections, each finding with
+ * its tips and myths, divergence, the loose tips, "E no Brasil?", profile and
+ * the loose myths. Its own Limitations show at the end of the Guide, so they
+ * stay out. */
+function sectionFactSheets(
   guide: ParsedGuide,
   tips: ReadonlyMap<string, ParsedTip>,
 ): string[] {
+  const tipFactSheets = (slug: string) => tips.get(slug)?.fact_sheets ?? []
   return unique([
     ...referencesInText(guide.shortAnswer),
-    ...guide.tips.flatMap((slug) => tips.get(slug)?.fact_sheets ?? []),
+    ...guide.sections.flatMap((s) => referencesInText(s.markdown)),
     ...guide.findings.flatMap((a) => [
       ...referencesInText(a.text),
       ...a.fact_sheets,
+      ...(a.tips ?? []).flatMap(tipFactSheets),
+      ...(a.myths ?? []).flatMap(mythFactSheets),
     ]),
     ...(guide.divergence?.sides.flatMap((l) => [
       ...referencesInText(l.text),
       ...l.fact_sheets,
     ]) ?? []),
-    ...guide.sections.flatMap((s) => referencesInText(s.markdown)),
+    ...guide.tips.flatMap(tipFactSheets),
+    ...referencesInText(guide.inBrazil),
     ...referencesInText(guide.variesByProfile),
-    ...guide.myths.flatMap((m) => [
-      ...referencesInText(m.why_not),
-      ...m.fact_sheets,
-    ]),
-    ...referencesInText(guide.limitations),
+    ...guide.myths.flatMap(mythFactSheets),
+  ])
+}
+
+/** The Guide's page in order: the opening, each Question's section, "O que
+ * levar", the Topic's Limitations and then each Question's own. */
+function guideFactSheets(
+  topic: ParsedTopic,
+  guides: ReadonlyArray<ParsedGuide>,
+  tips: ReadonlyMap<string, ParsedTip>,
+): string[] {
+  return unique([
+    ...referencesInText(topic.opening),
+    ...guides.flatMap((g) => sectionFactSheets(g, tips)),
+    ...topic.takeaways.flatMap((slug) => tips.get(slug)?.fact_sheets ?? []),
+    ...referencesInText(topic.limitations),
+    ...guides.flatMap((g) => referencesInText(g.limitations)),
   ])
 }
 
@@ -100,6 +128,18 @@ function guideCitations(guide: ParsedGuide): Citation[] {
       { field: `findings.${i}.text`, factSheets: referencesInText(a.text) },
       { field: `findings.${i}.fact_sheets`, factSheets: a.fact_sheets },
     ]),
+    ...guide.findings.flatMap((a, i) =>
+      (a.myths ?? []).flatMap((m, j) => [
+        {
+          field: `findings.${i}.myths.${j}.why_not`,
+          factSheets: referencesInText(m.why_not),
+        },
+        {
+          field: `findings.${i}.myths.${j}.fact_sheets`,
+          factSheets: m.fact_sheets,
+        },
+      ]),
+    ),
     ...(guide.divergence?.sides.flatMap((l, i) => [
       {
         field: `divergence.sides.${i}.text`,
@@ -111,6 +151,10 @@ function guideCitations(guide: ParsedGuide): Citation[] {
       field: s.title,
       factSheets: referencesInText(s.markdown),
     })),
+    {
+      field: GUIDE_SECTIONS.inBrazil,
+      factSheets: referencesInText(guide.inBrazil),
+    },
     {
       field: GUIDE_SECTIONS.profile,
       factSheets: referencesInText(guide.variesByProfile),
@@ -128,6 +172,17 @@ function guideCitations(guide: ParsedGuide): Citation[] {
     },
   ]
 }
+
+/** The ids the Guide's page uses for its own blocks: a Question's slug is its
+ * section's anchor (`/<topic>#<slug>`), so it cannot be one of them. */
+export const RESERVED_ANCHORS = [
+  'indice',
+  'perfil',
+  'o-que-levar',
+  'limitacoes',
+  'fichas',
+  'outros-temas',
+] as const
 
 const RANK: Record<Strength, number> = { weak: 1, moderate: 2, strong: 3 }
 
@@ -284,7 +339,48 @@ export function link(items: ParsedItems): Linked {
   const ONLY_VERIFIED =
     'which was not verified (⬜); a guide only cites ✅ or 🟡 fact sheets'
 
+  /** Each tip exists and cites only ✅ or 🟡 fact sheets. */
+  const checkTips = (
+    file: string,
+    field: string,
+    slugs: ReadonlyArray<string>,
+  ) => {
+    for (const slug of slugs) {
+      const tip = tipBySlug.get(slug)
+      if (!tip && !items.broken.has(`tips/${slug}.md`))
+        errors.push(
+          problem(file, `the tip "${slug}" does not exist in tips/`, field),
+        )
+      for (const factSheet of tip?.fact_sheets.filter(isUnverified) ?? [])
+        errors.push(
+          problem(
+            file,
+            `the tip "${slug}" cites the fact sheet "${factSheet}", ${ONLY_VERIFIED}`,
+            field,
+          ),
+        )
+    }
+  }
+
   errors.push(...topicsAndGuides(items))
+  for (const topic of items.topics) {
+    checkTips(topic.file, 'takeaways', topic.takeaways)
+    for (const [field, text] of [
+      ['opening', topic.opening],
+      [TOPIC_SECTIONS.limitations, topic.limitations],
+    ] as const) {
+      const factSheets = referencesInText(text)
+      missingFactSheet(topic.file, field, factSheets)
+      for (const slug of unique(factSheets).filter(isUnverified))
+        errors.push(
+          problem(
+            topic.file,
+            `cites the fact sheet "${slug}", ${ONLY_VERIFIED}`,
+            field,
+          ),
+        )
+    }
+  }
   for (const tip of items.tips)
     missingFactSheet(tip.file, 'fact_sheets', tip.fact_sheets)
   for (const guide of items.guides) {
@@ -299,29 +395,26 @@ export function link(items: ParsedItems): Linked {
           ),
         )
     }
-    for (const slug of guide.tips) {
-      const tip = tipBySlug.get(slug)
-      if (!tip && !items.broken.has(`tips/${slug}.md`))
-        errors.push(
-          problem(
-            guide.file,
-            `the tip "${slug}" does not exist in tips/`,
-            'tips',
-          ),
-        )
-      for (const factSheet of tip?.fact_sheets.filter(isUnverified) ?? [])
-        errors.push(
-          problem(
-            guide.file,
-            `the tip "${slug}" cites the fact sheet "${factSheet}", ${ONLY_VERIFIED}`,
-            'tips',
-          ),
-        )
-    }
-    const cited = guideCitations(guide).flatMap((c) => c.factSheets)
-    if (cited.length === 0)
+    checkTips(guide.file, 'tips', guide.tips)
+    guide.findings.forEach((finding, i) =>
+      checkTips(guide.file, `findings.${i}.tips`, finding.tips ?? []),
+    )
+    const citations = guideCitations(guide)
+    if (citations.every((c) => c.factSheets.length === 0))
       errors.push(problem(guide.file, 'the guide cites no fact sheet'))
-    errors.push(...confidenceCeiling(guide, factSheetsOf(cited)))
+    // The Limitations say what the answer does not cover: a strong study
+    // cited there does not back the answer.
+    const backing = citations
+      .filter((c) => c.field !== GUIDE_SECTIONS.limitations)
+      .flatMap((c) => c.factSheets)
+    errors.push(...confidenceCeiling(guide, factSheetsOf(backing)))
+    if ((RESERVED_ANCHORS as ReadonlyArray<string>).includes(guide.slug))
+      errors.push(
+        problem(
+          guide.file,
+          `a question cannot be called "${guide.slug}": the Guide's page already uses #${guide.slug} (${RESERVED_ANCHORS.join(', ')})`,
+        ),
+      )
     for (const slug of guide.related)
       if (
         !guideBySlug.has(slug) &&
@@ -361,22 +454,35 @@ export function link(items: ParsedItems): Linked {
       t.order.map((slug, j) => [`${t.slug}/${slug}`, i * 1000 + j] as const),
     ),
   )
-  const guides: Guide[] = [...items.guides]
-    .sort(
-      (a, b) =>
-        (guideOrder.get(`${a.topic}/${a.slug}`) ?? Infinity) -
-          (guideOrder.get(`${b.topic}/${b.slug}`) ?? Infinity) ||
-        a.file.localeCompare(b.file),
-    )
-    .map((parsed) => ({
-      ...parsed,
-      findings: parsed.findings.map((a): GuideFinding => ({
-        text: a.text,
-        fact_sheets: a.fact_sheets,
-        ...inherited(factSheetsOf(a.fact_sheets), a),
-      })),
-      citedFactSheets: factSheetsInPageOrder(parsed, tipBySlug),
-    }))
+  const inOrder = [...items.guides].sort(
+    (a, b) =>
+      (guideOrder.get(`${a.topic}/${a.slug}`) ?? Infinity) -
+        (guideOrder.get(`${b.topic}/${b.slug}`) ?? Infinity) ||
+      a.file.localeCompare(b.file),
+  )
+  const guides: Guide[] = inOrder.map((parsed) => ({
+    ...parsed,
+    findings: parsed.findings.map((a): GuideFinding => ({
+      text: a.text,
+      fact_sheets: a.fact_sheets,
+      ...inherited(factSheetsOf(a.fact_sheets), a),
+      tips: a.tips ?? [],
+      myths: a.myths ?? [],
+    })),
+    citedFactSheets: unique([
+      ...sectionFactSheets(parsed, tipBySlug),
+      ...referencesInText(parsed.limitations),
+    ]),
+  }))
 
-  return { topics: items.topics, guides, tips, errors }
+  const topics: Topic[] = items.topics.map((topic) => ({
+    ...topic,
+    citedFactSheets: guideFactSheets(
+      topic,
+      inOrder.filter((g) => g.topic === topic.slug),
+      tipBySlug,
+    ),
+  }))
+
+  return { topics, guides, tips, errors }
 }

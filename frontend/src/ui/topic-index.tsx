@@ -1,6 +1,7 @@
 // The home page's Topic index (#143): one panel with a fold per Topic, in
 // the `position` order of the content. Closed, the six Topics fit on a phone
-// screen; a tap opens the Topic's Questions and the link to its page.
+// screen; a tap opens the Topic's Questions, each leading to its section of
+// the Topic's Guide, and the link to the Guide's top.
 //
 // The fold is the browser's `<details>`, not the Base UI `Collapsible`: it
 // opens without JavaScript and before hydration, and the Guide's reading
@@ -13,7 +14,7 @@ import { OPEN_TOPIC, questionCount } from './topic-index.copy'
 type IndexTopic = {
   readonly slug: string
   readonly title: string
-  readonly guides: ReadonlyArray<{
+  readonly questions: ReadonlyArray<{
     readonly topic: string
     readonly slug: string
     readonly question: string
@@ -39,20 +40,21 @@ export function TopicIndex({ topics }: { topics: ReadonlyArray<IndexTopic> }) {
                     {topic.title}
                   </span>
                   <span className="block text-nota leading-nota text-tinta-2">
-                    {questionCount(topic.guides.length)}
+                    {questionCount(topic.questions.length)}
                   </span>
                 </span>
               </summary>
               <div className="pb-sm pl-6">
                 <ol className="m-0 pl-marcador">
-                  {topic.guides.map((guide) => (
-                    <li key={guide.slug} className="not-first:mt-0.5">
+                  {topic.questions.map((question) => (
+                    <li key={question.slug} className="not-first:mt-0.5">
                       <Link
-                        to="/$tema/$slug"
-                        params={{ tema: guide.topic, slug: guide.slug }}
+                        to="/$tema"
+                        params={{ tema: question.topic }}
+                        hash={question.slug}
                         className="inline-flex min-h-toque items-center"
                       >
-                        {guide.question}
+                        {question.question}
                       </Link>
                     </li>
                   ))}

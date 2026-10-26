@@ -6,7 +6,7 @@ import { expect, it } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 
 it('lists each point in year order, with what it measured, its number and its Fact sheet', async () => {
-  openScreen('/onde-conhecer-pessoas/app-ou-presencial')
+  openScreen('/onde-conhecer-pessoas')
   const figure = await screen.findByRole('figure', {
     name: 'Dois retratos, dois países',
   })

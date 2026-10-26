@@ -622,8 +622,9 @@ function FromTheGuide({ guide }: { guide: CalculatorGuide }) {
         <AnswerConfidence confidence={guide.confidence} />
         <p className="text-lead">{guide.answer}</p>
         <Link
-          to="/$tema/$slug"
-          params={{ tema: guide.topic, slug: guide.slug }}
+          to="/$tema"
+          params={{ tema: guide.topic }}
+          hash={guide.slug}
           className="mt-1.5 inline-flex min-h-toque items-center font-bold"
         >
           Ler o Guia inteiro

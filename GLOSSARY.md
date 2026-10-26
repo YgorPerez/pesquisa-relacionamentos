@@ -14,17 +14,19 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 
 ## Site
 
-- **Guia** [guide]**:** uma página pública que responde a uma Pergunta, em que cada afirmação aponta para Fichas.
-- **Pergunta** [question]**:** uma dúvida do usuário que um Guia responde, por exemplo "onde conhecer alguém da minha idade?".
-- **Tema** [topic]**:** um agrupamento de Perguntas com página própria, como "Onde conhecer pessoas" ou "Escolher parceiro".
-- **Confiança** [confidence]**:** o rótulo da resposta curta de um Guia (forte, moderada ou fraca). O curador escolhe, mas nunca acima da Ficha mais forte que sustenta a resposta, e no máximo moderada se a resposta só se apoia em Fichas 🟡. Não confundir com Força da evidência, que é de uma Ficha.
+- **Guia** [guide]**:** o texto público de um Tema. Responde às Perguntas dele em ordem, numa narrativa que liga uma resposta à outra e explica o porquê, o que fazer, onde os Estudos discordam e o que vale no Brasil. Cada afirmação aponta para Fichas. Cada Tema tem um Guia.
+- **Pergunta** [question]**:** uma dúvida do usuário, por exemplo "onde conhecer alguém da minha idade?". É uma seção do Guia, que abre com a resposta curta e a Confiança dela.
+- **Tema** [topic]**:** um assunto com página própria, como "Onde conhecer pessoas" ou "Escolher parceiro". Reúne Perguntas, e o Guia dele as responde.
+- **Confiança** [confidence]**:** o rótulo da resposta curta de uma Pergunta (forte, moderada ou fraca). O curador escolhe, mas nunca acima da Ficha mais forte que sustenta a resposta, e no máximo moderada se a resposta só se apoia em Fichas 🟡. Não confundir com Força da evidência, que é de uma Ficha.
 - **Dica** [tip]**:** uma recomendação prática ligada às Fichas que a sustentam e à Força da evidência delas. A mesma Dica pode aparecer em mais de um Guia.
 - **Inferência** [inference]**:** uma Dica deduzida de Fichas sem estudo que a teste diretamente. Aparece marcada como "inferência nossa", com Força no máximo moderada.
-- **Mito** [myth]**:** uma afirmação popular sem fonte primária, ou que a fonte citada não traz, como "10 anos de diferença de idade = 39% mais divórcio". Um Guia pode desmontá-la no bloco "O que circula por aí e não se sustenta".
+- **Mito** [myth]**:** uma afirmação popular sem fonte primária, ou que a fonte citada não traz, como "10 anos de diferença de idade = 39% mais divórcio". Um Guia pode desmontá-la logo depois do achado que a contradiz.
 - **Perfil** [profile]**:** quem o usuário é e quem procura: o gênero dele, o gênero de quem ele procura e a idade. A orientação decorre das duas primeiras e não é perguntada. O Perfil é opcional: destaca o que vale para o usuário e marca com aviso o que vem de outras amostras, sem esconder nada.
 - **Requisito** [requirement]**:** uma característica que o usuário exige de um parceiro, como faixa de idade, escolaridade ou cidade.
 - **Grupo possível** [possible group, `possible-group`]**:** a estimativa de quantas pessoas no Brasil atendem ao Perfil procurado e a todos os Requisitos.
 - **Prioridade** [priority]**:** quanto o usuário valoriza uma característica de um parceiro. É comparada com o que a evidência diz que prevê um bom relacionamento.
 - **Calculadora** [calculator]**:** a ferramenta que um Guia hospeda: o Grupo possível ou as Prioridades.
+- **Visualização** [visual]**:** um gráfico de barras, uma linha no tempo, uma tabela de Estudos ou um diagrama de relações dentro de um Guia. Cada número vem de uma Ficha ✅ ou 🟡 ou de uma Conta nossa sobre elas. No diagrama, cada seta é um achado com Fichas, e o traço diz se um Estudo testou a causa, se só achou associação ou se é Inferência.
+- **Conta nossa** [own calculation]**:** um número que o Tem estudo? calculou a partir dos números de Fichas, como um recorte ou uma média. Aparece marcada como "conta nossa".
 
 _Evitar_: "pool" para Grupo possível, no texto e no código; "artigo" para Guia, porque artigo é um tipo de Estudo.
