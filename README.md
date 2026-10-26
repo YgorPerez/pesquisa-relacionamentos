@@ -58,6 +58,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
+- [Martinez et al. 2025](studies/martinez-2025-apps-risco-sexual.md): apps e comportamento sexual em universitários de Ribeirão Preto · ✅ · fraca
 - [Ministério da Saúde 2011](studies/ministerio-saude-2011-pcap-2008.md): PCAP 2008, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2016](studies/ministerio-saude-2016-pcap-2013.md): PCAP 2013, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2022](studies/ministerio-saude-2022-pcdt-ist.md): PCDT de Infecções Sexualmente Transmissíveis · ✅ · moderada
