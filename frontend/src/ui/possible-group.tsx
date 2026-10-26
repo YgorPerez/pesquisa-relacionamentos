@@ -34,6 +34,8 @@ import {
   costText,
   independenceSources,
   samplingText,
+  SENSITIVE_NOTE,
+  SENSITIVE_STAYS,
 } from './possible-group.copy'
 import { Headline, Panel, Section } from './section'
 
@@ -177,6 +179,22 @@ export function RequirementRow({
         {cost ? costText(cost) : active ? '' : 'não corta ninguém'}
       </p>
     </div>
+  )
+}
+
+/** The note of a sensitive Requirement, under its control: what it measures
+ * and where it stays. Nothing for the others. */
+export function SensitiveNote({
+  requirement,
+}: {
+  requirement: keyof typeof REQUIREMENT_TITLE
+}) {
+  const note = SENSITIVE_NOTE[requirement]
+  if (!note) return null
+  return (
+    <p className={HINT}>
+      {note} {SENSITIVE_STAYS}
+    </p>
   )
 }
 

@@ -8,7 +8,10 @@ import {
 } from '@tem-estudo/rules/possible-group'
 import { andList } from '@tem-estudo/rules/lists'
 import { formatGain, formatTimes } from '@tem-estudo/rules/numbers'
-import { REQUIREMENT_TITLE } from '@tem-estudo/rules/requirements'
+import {
+  REQUIREMENT_TITLE,
+  type SensitiveRequirement,
+} from '@tem-estudo/rules/requirements'
 
 
 /** The Requirements whose title alone ("Pais", "Casa") does not say what
@@ -73,6 +76,25 @@ export function samplingText(
   const intervals = andList(others.map((source) => `da ${source}`))
   return `A faixa junta ${census} com ${others.length > 1 ? 'os intervalos' : 'o intervalo'} ${intervals}.`
 }
+
+/** What each sensitive Requirement measures, under its control. The count's
+ * caveats say the rest. */
+export const SENSITIVE_NOTE: Readonly<
+  Partial<Record<RequirementId, string>> & Record<SensitiveRequirement, string>
+> = {
+  obesity:
+    'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
+  depression:
+    'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
+  bisexual:
+    'Quem se declara bissexual na PNS 2019, de 18 anos ou mais. É uma estatística experimental do IBGE, com poucos registros por idade.',
+  worship:
+    'Quem vai a cultos ou atividades da religião uma vez por semana ou mais, pela PNS 2019, que não pergunta qual religião.',
+}
+
+/** Where a sensitive Requirement stays, after what it measures. */
+export const SENSITIVE_STAYS =
+  'Dado sensível: fica só neste aparelho e vai no link só se você deixar.'
 
 /** "soltar só este: ×3,4 (+670)". Below 5%, it says it barely changes. */
 export function costText(cost: Cost): string {
