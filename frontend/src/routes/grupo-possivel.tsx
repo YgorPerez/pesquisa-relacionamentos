@@ -136,25 +136,6 @@ function PossibleGroupPage() {
     : undefined
   const value: RequirementValue = (k) =>
     requirementValue(k, profile, r, municipality)
-  const sensitive = sensitiveOn(r)
-  // The consent covers the sensitive Requirements on when it was given: a new
-  // one turned on afterwards asks again.
-  const [consentFor, setConsentFor] = useState<string | null>(null)
-  const consent = sensitive.length > 0 && consentFor === sensitive.join(',')
-  const shared = sharedLink(
-    { calculator: 'grupo-possivel', profile, requirements: saved },
-    consent,
-  )
-  const query = linkQuery(shared.state)
-  // The image reads the link itself, so it shows only what the link carries,
-  // with the count of that: without the sensitive Requirements left out.
-  const sharedEstimate = useSharedEstimate(
-    profile,
-    shared.state.requirements,
-    shared.leftOut.length > 0,
-  )
-  const imageCount = shared.leftOut.length > 0 ? sharedEstimate : count.estimate
-  const image = imageCount && groupImage(query, imageCount, { municipality })
 
   return (
     <Sheet>
@@ -175,31 +156,72 @@ function PossibleGroupPage() {
           value={value}
         />
 
-        <Share
-          query={query}
-          sentence={linkSentence(shared.state, {
-            municipality,
-            leftOut: shared.leftOut,
-          })}
-          notice={COUNTING_NOTICE}
-          consent={
-            sensitive.length > 0 && (
-              <SensitiveConsent
-                sensitive={sensitive}
-                checked={consent}
-                onChange={(yes) =>
-                  setConsentFor(yes ? sensitive.join(',') : null)
-                }
-              />
-            )
-          }
-        >
-          {image && <ShareImage image={image} />}
-        </Share>
+        <GroupShare
+          profile={profile}
+          saved={saved}
+          estimate={count.estimate}
+          municipality={municipality}
+        />
 
         {guide && <FromTheGuide guide={guide} />}
       </Column>
     </Sheet>
+  )
+}
+
+/** "Compartilhar": the link, its sentence, the consent for the sensitive
+ * Requirements and the image. */
+function GroupShare({
+  profile,
+  saved,
+  estimate,
+  municipality,
+}: {
+  profile: Profile | null
+  saved: Requirements | null
+  estimate: BrowserCount['estimate']
+  municipality: string | undefined
+}) {
+  const sensitive = sensitiveOn(saved ?? DEFAULT_REQUIREMENTS)
+  // The consent covers the sensitive Requirements on when it was given: a new
+  // one turned on afterwards asks again.
+  const [consentFor, setConsentFor] = useState<string | null>(null)
+  const consent = sensitive.length > 0 && consentFor === sensitive.join(',')
+  const shared = sharedLink(
+    { calculator: 'grupo-possivel', profile, requirements: saved },
+    consent,
+  )
+  const query = linkQuery(shared.state)
+  // The image reads the link itself, so it shows only what the link carries,
+  // with the count of that: without the sensitive Requirements left out.
+  const sharedEstimate = useSharedEstimate(
+    profile,
+    shared.state.requirements,
+    shared.leftOut.length > 0,
+  )
+  const imageCount = shared.leftOut.length > 0 ? sharedEstimate : estimate
+  const image = imageCount && groupImage(query, imageCount, { municipality })
+
+  return (
+    <Share
+      query={query}
+      sentence={linkSentence(shared.state, {
+        municipality,
+        leftOut: shared.leftOut,
+      })}
+      notice={COUNTING_NOTICE}
+      consent={
+        sensitive.length > 0 && (
+          <SensitiveConsent
+            sensitive={sensitive}
+            checked={consent}
+            onChange={(yes) => setConsentFor(yes ? sensitive.join(',') : null)}
+          />
+        )
+      }
+    >
+      {image && <ShareImage image={image} />}
+    </Share>
   )
 }
 
