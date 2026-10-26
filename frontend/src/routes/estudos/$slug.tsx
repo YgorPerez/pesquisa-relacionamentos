@@ -232,19 +232,19 @@ function CitedBy() {
   return (
     <Section aria-labelledby="citada-em">
       <Headline id="citada-em">Citada em</Headline>
-      {citedIn.guides.length === 0 && citedIn.tips.length === 0 ? (
+      {citedIn.questions.length === 0 && citedIn.tips.length === 0 ? (
         <p className="text-tinta-2">
           Nenhum Guia nem Dica publicada cita esta Ficha ainda.
         </p>
       ) : (
         <>
-          {citedIn.guides.length > 0 && (
+          {citedIn.questions.length > 0 && (
             <>
               <h3 className="mx-0 mt-md mb-sm font-title text-title">Guias</h3>
               <ul className="isolate m-0 list-none p-0">
-                {citedIn.guides.map((guide) => (
-                  <li key={guide.slug} className="not-first:mt-md">
-                    <QuestionRow guide={guide} />
+                {citedIn.questions.map((question) => (
+                  <li key={question.slug} className="not-first:mt-md">
+                    <QuestionRow question={question} />
                   </li>
                 ))}
               </ul>

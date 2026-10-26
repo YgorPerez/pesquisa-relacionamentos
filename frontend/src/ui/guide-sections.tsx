@@ -1,11 +1,14 @@
-// The sections only the Guide has: the arrow that points to the Fact sheets,
-// the Tips, what the evidence says (with the divergence), the Guide's own
-// sections and the struck-out Myths. The page (`routes/$tema/$slug.tsx`) assembles them in #7's order.
+// The blocks only the Guide has (ADR 0042). The frame: the index of the
+// Questions, the arrow that points to the Fact sheets, "O que levar" and the
+// Limitations by Study. Inside a Question: what the evidence says, with each
+// finding's Tips and struck-out Myths right after it, the loose Tips and
+// Myths, and the narrative's own sections. The page (`routes/$tema/index.tsx`)
+// assembles them.
 import type { Verdict } from '@tem-estudo/rules/applies-to-you'
 import { Link } from '@tanstack/react-router'
-import type { GuideView } from '#/content/guide-view'
-import { Html } from './guide'
-import { Headline, Panel, Section } from './section'
+import type { GuideTip, GuideView, QuestionView } from '#/content/guide-view'
+import { Html, ShortConfidence } from './guide'
+import { Headline, Panel, Section, Subhead, Subsection } from './section'
 import { AppliesToNote } from './profile'
 import { StrengthBadge } from './badges'
 
@@ -37,87 +40,214 @@ export function SourcesArrow() {
   )
 }
 
-export function GuideTips({
-  tips,
-  verdicts,
-}: {
-  tips: GuideView['tips']
-  verdicts: ReadonlyArray<Verdict> | undefined
-}) {
+/** The index at the top of the Guide: each Question, which leads to its
+ * section, with the Confidence and the first sentence of the short answer,
+ * so the list stays short on a phone. */
+export function GuideIndex({ index }: { index: GuideView['index'] }) {
   return (
-    <Section aria-labelledby="t-dicas">
-      <Headline id="t-dicas">Dicas</Headline>
-      <ul className="m-0 list-none p-0" data-slot="dicas-do-guia">
-        {tips.map((tip, i) => (
-          <Panel as="li" key={tip.slug} className="not-first:mt-lg [&>p]:m-0">
-            <Html as="p" html={tip.html} />
-            <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1">
-              <StrengthBadge strength={tip.strength} withLabel />
-              <Link
-                to="/dicas/$slug"
-                params={{ slug: tip.slug }}
-                className="inline-flex min-h-toque items-center text-label leading-body font-bold"
-              >
-                sobre esta Dica
-              </Link>
-            </div>
-            {tip.inference && (
-              <p className="mt-1 mb-0 text-nota text-tinta-2 italic">
-                Inferência nossa: nenhum estudo testou isso direto. Saiu das
-                Fichas citadas.
-              </p>
-            )}
-            <AppliesToNote
-              text={tip.appliesTo}
-              verdict={verdicts?.[i] ?? null}
+    <nav aria-labelledby="t-indice" id="indice">
+      <h2 id="t-indice" className="sr-only">
+        Perguntas deste Guia
+      </h2>
+      <ol className="m-0 list-none p-0" data-slot="perguntas">
+        {index.map((question) => (
+          <li
+            key={question.slug}
+            className="not-first:mt-md not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
+          >
+            <a
+              href={`#${question.slug}`}
+              className="font-title text-title decoration-2 underline-offset-5 hover:bg-amarelo-voce"
+            >
+              {question.question}
+            </a>
+            <ShortConfidence
+              confidence={question.confidence}
+              className="mt-1 flex"
             />
-          </Panel>
+            <p className="mt-xs mb-0">{question.firstSentence}</p>
+          </li>
         ))}
-      </ul>
-    </Section>
+      </ol>
+    </nav>
   )
 }
 
-/** "O que a evidência diz": the findings with country and year, and the
- * divergence. */
-export function Evidence({
-  guide,
-  verdicts,
+/** A Tip: the text with its numbers, the Strength, the link to its page, the
+ * inference notice and "Vale para". */
+function TipCard({
+  tip,
+  verdict,
+  as = 'li',
 }: {
-  guide: GuideView
-  verdicts: ReadonlyArray<Verdict> | undefined
+  tip: GuideTip
+  verdict: Verdict | null
+  as?: 'li' | 'div'
 }) {
   return (
-    <Section aria-labelledby="t-evidencia">
-      <Headline id="t-evidencia">O que a evidência diz</Headline>
+    <Panel as={as} className="[&>p]:m-0" data-slot="dica">
+      <Html as="p" html={tip.html} />
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1">
+        <StrengthBadge strength={tip.strength} withLabel />
+        <Link
+          to="/dicas/$slug"
+          params={{ slug: tip.slug }}
+          className="inline-flex min-h-toque items-center text-label leading-body font-bold"
+        >
+          sobre esta Dica
+        </Link>
+      </div>
+      {tip.inference && (
+        <p className="mt-1 mb-0 text-nota text-tinta-2 italic">
+          Inferência nossa: nenhum estudo testou isso direto. Saiu das Fichas
+          citadas.
+        </p>
+      )}
+      <AppliesToNote text={tip.appliesTo} verdict={verdict} />
+    </Panel>
+  )
+}
+
+/** A struck-out Myth and why it does not hold. */
+function MythCard({ myth }: { myth: QuestionView['myths'][number] }) {
+  return (
+    <Panel as="article" className="py-4" data-slot="mito">
+      <p className="m-0 font-title text-title leading-label">
+        <s className="risco-do-mito">{myth.claim}</s>
+      </p>
+      <Html as="p" className="mt-3 mb-0" html={myth.whyNotHtml} />
+    </Panel>
+  )
+}
+
+/** Verdicts of the Profile for a Question, by the index of the finding and
+ * of the Tip; `undefined` without a Profile. */
+interface Verdicts {
+  readonly findings?: ReadonlyArray<Verdict>
+  readonly tips?: ReadonlyArray<Verdict>
+}
+
+/** The Question's Tips that follow no finding. */
+export function GuideTips({
+  question,
+  verdicts,
+}: {
+  question: QuestionView
+  verdicts: Verdicts | undefined
+}) {
+  const id = `${question.slug}-dicas`
+  return (
+    <Subsection aria-labelledby={id}>
+      <Subhead id={id}>Dicas</Subhead>
+      <ul className="m-0 list-none p-0 [&>li]:not-first:mt-lg">
+        {question.tips.map(
+          (tip, i) =>
+            tip.finding === null && (
+              <TipCard
+                key={tip.slug}
+                tip={tip}
+                verdict={verdicts?.tips?.[i] ?? null}
+              />
+            ),
+        )}
+      </ul>
+    </Subsection>
+  )
+}
+
+/** "O que a evidência diz": the findings with country and year, each one's
+ * Tips and Myths right after it, and the divergence. */
+export function Evidence({
+  question,
+  verdicts,
+}: {
+  question: QuestionView
+  verdicts: Verdicts | undefined
+}) {
+  const id = `${question.slug}-evidencia`
+  return (
+    <Subsection aria-labelledby={id}>
+      <Subhead id={id}>O que a evidência diz</Subhead>
       <ol className="m-0 list-none p-0" data-slot="achados-guia">
-        {guide.findings.map((finding, i) => (
+        {question.findings.map((finding, i) => (
           <li
             key={finding.html}
-            className="grid grid-cols-[minmax(58px,max-content)_1fr] gap-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5 [&_[data-slot=vale]]:mt-xs [&_p]:m-0"
+            className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5"
           >
-            <span
-              className="h-max max-w-30 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha px-1.5 pt-1.75 pb-1.5 text-center font-title text-medio leading-cerrada font-bold wrap-anywhere"
-              data-slot="onde"
-            >
-              {finding.country}
-              <small className="mt-0.75 block font-label text-miudo leading-curta font-bold text-tinta-2">
-                {finding.period}
-              </small>
-            </span>
-            <div>
-              <Html as="p" html={finding.html} />
-              <AppliesToNote
-                text={finding.appliesTo}
-                verdict={verdicts?.[i] ?? null}
-              />
-            </div>
+            <Finding
+              finding={finding}
+              verdict={verdicts?.findings?.[i] ?? null}
+            />
+            <NextToTheFinding
+              question={question}
+              finding={i}
+              verdicts={verdicts}
+            />
           </li>
         ))}
       </ol>
 
-      {guide.divergence && <Divergence divergence={guide.divergence} />}
-    </Section>
+      {question.divergence && <Divergence divergence={question.divergence} />}
+    </Subsection>
+  )
+}
+
+/** A finding: the box with country and year, the text and "Vale para". */
+function Finding({
+  finding,
+  verdict,
+}: {
+  finding: QuestionView['findings'][number]
+  verdict: Verdict | null
+}) {
+  return (
+    <div className="grid grid-cols-[minmax(58px,max-content)_1fr] gap-sm [&_[data-slot=vale]]:mt-xs [&_p]:m-0">
+      <span
+        className="h-max max-w-30 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha px-1.5 pt-1.75 pb-1.5 text-center font-title text-medio leading-cerrada font-bold wrap-anywhere"
+        data-slot="onde"
+      >
+        {finding.country}
+        <small className="mt-0.75 block font-label text-miudo leading-curta font-bold text-tinta-2">
+          {finding.period}
+        </small>
+      </span>
+      <div>
+        <Html as="p" html={finding.html} />
+        <AppliesToNote text={finding.appliesTo} verdict={verdict} />
+      </div>
+    </div>
+  )
+}
+
+/** The Tips and Myths a finding carries, below it. */
+function NextToTheFinding({
+  question,
+  finding,
+  verdicts,
+}: {
+  question: QuestionView
+  finding: number
+  verdicts: Verdicts | undefined
+}) {
+  const tips = question.tips.flatMap((tip, i) =>
+    tip.finding === finding ? [{ tip, i }] : [],
+  )
+  const myths = question.myths.filter((m) => m.finding === finding)
+  if (tips.length === 0 && myths.length === 0) return null
+  return (
+    <div className="mt-sm flex flex-col gap-md">
+      {tips.map(({ tip, i }) => (
+        <TipCard
+          key={tip.slug}
+          as="div"
+          tip={tip}
+          verdict={verdicts?.tips?.[i] ?? null}
+        />
+      ))}
+      {myths.map((myth) => (
+        <MythCard key={myth.claim} myth={myth} />
+      ))}
+    </div>
   )
 }
 
@@ -126,7 +256,7 @@ export function Evidence({
 function Divergence({
   divergence,
 }: {
-  divergence: NonNullable<GuideView['divergence']>
+  divergence: NonNullable<QuestionView['divergence']>
 }) {
   return (
     <div className="mt-md">
@@ -168,38 +298,105 @@ function Divergence({
   )
 }
 
-/** The Guide's own sections ("Efeitos psicológicos", "Então, vale a
- * pena?"), each with the title the Guide gives it, in file order. */
-export function OwnSections({ sections }: { sections: GuideView['sections'] }) {
+/** The narrative's own sections ("Efeitos psicológicos", "Então, vale a
+ * pena?"), each with the title the Question gives it, in file order. */
+export function OwnSections({
+  sections,
+}: {
+  sections: QuestionView['sections']
+}) {
   return (
     <>
       {sections.map((section) => (
-        <Section key={section.id} aria-labelledby={section.id}>
-          <Headline id={section.id}>{section.title}</Headline>
+        <Subsection key={section.id} aria-labelledby={section.id}>
+          <Subhead id={section.id}>{section.title}</Subhead>
           <Html className="prosa" html={section.html} />
-        </Section>
+        </Subsection>
       ))}
     </>
   )
 }
 
-export function Myths({ myths }: { myths: GuideView['myths'] }) {
+/** The Question's Myths that follow no finding. */
+export function Myths({ question }: { question: QuestionView }) {
+  const id = `${question.slug}-mitos`
   return (
-    <Section aria-labelledby="t-mitos">
-      <Headline id="t-mitos">O que circula por aí e não se sustenta</Headline>
-      {myths.map((myth) => (
-        <Panel
-          as="article"
-          key={myth.claim}
-          className="py-4 not-first-of-type:mt-5.5"
-          data-slot="mito"
+    <Subsection aria-labelledby={id}>
+      <Subhead id={id}>O que circula por aí e não se sustenta</Subhead>
+      <div className="flex flex-col gap-5.5">
+        {question.myths.map(
+          (myth) =>
+            myth.finding === null && <MythCard key={myth.claim} myth={myth} />,
+        )}
+      </div>
+    </Subsection>
+  )
+}
+
+/** "O que levar": the Guide's strongest Tips, after the last Question. */
+export function Takeaways({
+  tips,
+  verdicts,
+}: {
+  tips: GuideView['takeaways']
+  verdicts?: ReadonlyArray<Verdict | null>
+}) {
+  return (
+    <Section id="o-que-levar" aria-labelledby="t-o-que-levar">
+      <Headline id="t-o-que-levar">O que levar</Headline>
+      <ul className="m-0 list-none p-0 [&>li]:not-first:mt-lg">
+        {tips.map((tip, i) => (
+          <TipCard key={tip.slug} tip={tip} verdict={verdicts?.[i] ?? null} />
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+/** The Guide's Limitations, one group per Study (its title leads to the
+ * Fact sheet's number in the list) or per Question. */
+export function Limitations({ groups }: { groups: GuideView['limitations'] }) {
+  return (
+    <Section id="limitacoes" aria-labelledby="t-limitacoes">
+      <Headline id="t-limitacoes">Limitações e o que não se sabe</Headline>
+      {groups.map((group) => (
+        <div
+          key={group.factSheet?.anchor ?? group.title ?? 'geral'}
+          className="not-first:mt-md"
+          data-slot="limitacoes-grupo"
         >
-          <p className="m-0 font-title text-title leading-label">
-            <s className="risco-do-mito">{myth.claim}</s>
-          </p>
-          <Html as="p" className="mt-3 mb-0" html={myth.whyNotHtml} />
-        </Panel>
+          {group.title && <GroupTitle group={group} title={group.title} />}
+          <Html className="prosa limites" html={group.html} />
+        </div>
       ))}
     </Section>
+  )
+}
+
+/** A Limitations group's title: the Study, with the number that leads to its
+ * Fact sheet, or the Question. */
+function GroupTitle({
+  group,
+  title,
+}: {
+  group: GuideView['limitations'][number]
+  title: string
+}) {
+  return (
+    <Subhead>
+      {title}
+      {group.factSheet && (
+        <>
+          {' '}
+          <a
+            className="ref"
+            href={`#${group.factSheet.anchor}`}
+            aria-label={`Ficha ${group.factSheet.n}: ${title}`}
+          >
+            {group.factSheet.n}
+          </a>
+        </>
+      )}
+    </Subhead>
   )
 }

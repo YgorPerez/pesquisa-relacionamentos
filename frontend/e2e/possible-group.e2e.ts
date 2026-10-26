@@ -258,7 +258,7 @@ test.describe('Possible group', () => {
       'A diferença de satisfação entre os dois caminhos é pequena.',
     )
     await tap(block.getByRole('link', { name: 'Ler o Guia inteiro' }))
-    await expect(page).toHaveURL('/onde-conhecer-pessoas/app-ou-presencial')
+    await expect(page).toHaveURL('/onde-conhecer-pessoas#app-ou-presencial')
   })
 
   test('the controls are at least 44px', async ({ page }) => {

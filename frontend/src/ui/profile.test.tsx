@@ -1,29 +1,37 @@
-// The Profile in the Guide, in jsdom (ADR 0035), over the fixture content: in
-// the main Guide, the 1st finding comes from men and women aged 18 to 35 and
-// the 2nd from man-woman couples; the Tip cites both. The other Guide only
-// has the man-woman couples finding. The link that scrolls to the form, the
-// options' size and the content order stay in the e2e
-// (`e2e/profile.e2e.ts`).
+// The Profile in the Guide, in jsdom (ADR 0035), over the fixture content.
+// The Guide has one Profile box and two Questions: in the first, the 1st
+// finding comes from men and women aged 18 to 35 and the 2nd from man-woman
+// couples, and the Tip cites both; the second only has the man-woman couples
+// finding. The link that scrolls to the form, the options' size and the
+// content order stay in the e2e (`e2e/profile.e2e.ts`).
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 import { enterProfile, type ProfileInForm } from '#/platform/screens/profile'
 
-const GUIDE = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
-const OTHER_GUIDE = '/onde-conhecer-pessoas/app-ou-presencial'
+const GUIDE = '/onde-conhecer-pessoas'
 const NO_DATA = 'Não há dado deste estudo para o seu Perfil.'
 const BUTTON = 'Ver o que vale para mim'
 
-/** Each finding of "O que a evidência diz", in order. */
+const FIRST = 'Onde os casais se conhecem hoje?'
+const SECOND = 'App ou presencial, onde tenho mais chance?'
+const question = (name: string) => screen.getByRole('region', { name })
+
+/** Each finding of the first Question's "O que a evidência diz", in order. */
 const findings = () =>
   within(
-    screen.getByRole('region', { name: 'O que a evidência diz' }),
+    within(question(FIRST)).getByRole('region', {
+      name: 'O que a evidência diz',
+    }),
   ).getAllByRole('listitem')
 const badge = (finding: HTMLElement | undefined) =>
   finding?.querySelector('[data-slot="selo-voce"]')?.textContent ?? null
-const variesByProfile = () =>
-  screen.getByRole('region', { name: 'Varia conforme o Perfil?' })
+const variesByProfile = (name = FIRST) =>
+  within(question(name)).getByRole('region', {
+    name: 'Varia conforme o Perfil?',
+  })
+const profileBox = () => screen.getByRole('region', { name: 'Seu Perfil' })
 
 async function openWithProfile(url: string, profile: ProfileInForm) {
   const user = userEvent.setup()
@@ -49,7 +57,7 @@ it('with a Profile, marks the finding that applies and says which has no data', 
     age: '30',
   })
   expect(
-    await within(variesByProfile()).findByText(/Seu Perfil:/),
+    await within(profileBox()).findByText(/Seu Perfil:/),
   ).toHaveTextContent('Seu Perfil: homem, procura homens, 30 anos')
   const [first, second] = findings()
   expect(badge(first)).toBe('vale para você')
@@ -71,7 +79,7 @@ it('someone seeking both sees which side has data', async () => {
     seeks: 'ambos',
     age: '30',
   })
-  await within(variesByProfile()).findByText(/Seu Perfil:/)
+  await within(profileBox()).findByText(/Seu Perfil:/)
   const [first, second] = findings()
   expect(badge(first)).toBe('vale para você')
   expect(badge(second)).toBe('vale para você quando procura mulheres')
@@ -79,8 +87,10 @@ it('someone seeking both sees which side has data', async () => {
 
 it('"outro" only matches what did not split by gender: here, nothing covers', async () => {
   await openWithProfile(GUIDE, { gender: 'outro', seeks: 'homens' })
-  await within(variesByProfile()).findByText(/Seu Perfil:/)
-  expect(screen.getAllByText(NO_DATA)).toHaveLength(3)
+  await within(profileBox()).findByText(/Seu Perfil:/)
+  // Two findings and the Tip of the first Question, and the one finding and
+  // the Tip of the second.
+  expect(within(question(FIRST)).getAllByText(NO_DATA)).toHaveLength(3)
   expect(variesByProfile()).toHaveTextContent(
     'Nenhum dos 2 achados tem dado para o seu Perfil.',
   )
@@ -93,7 +103,7 @@ it('"mudar" opens the filled-in form, and deleting goes back to the Guide withou
     age: '24',
   })
   await user.click(
-    await within(variesByProfile()).findByRole('button', { name: 'mudar' }),
+    await within(profileBox()).findByRole('button', { name: 'mudar' }),
   )
   const form = within(screen.getByRole('form', { name: 'Seu Perfil' }))
   expect(form.getByRole('radio', { name: 'mulher' })).toBeChecked()
@@ -102,31 +112,42 @@ it('"mudar" opens the filled-in form, and deleting goes back to the Guide withou
 
   await enterProfile(user, { seeks: 'homens' }, BUTTON)
   expect(
-    await within(variesByProfile()).findByText(/Seu Perfil:/),
+    await within(profileBox()).findByText(/Seu Perfil:/),
   ).toHaveTextContent('Seu Perfil: mulher, procura homens, 24 anos')
 
-  await user.click(
-    within(variesByProfile()).getByRole('button', { name: 'mudar' }),
-  )
+  await user.click(within(profileBox()).getByRole('button', { name: 'mudar' }))
   await user.click(screen.getByRole('button', { name: 'Apagar o Perfil' }))
   expect(localStorage.getItem('tem-estudo:profile')).toBeNull()
   expect(document.querySelector('[data-slot="selo-voce"]')).toBeNull()
 })
 
-it('the saved Profile applies in the other Guide, with the notice that no study split it', async () => {
-  const { unmount } = await openWithProfile(GUIDE, {
+it('the Profile applies to each Question apart, with the notice only where no study split it', async () => {
+  await openWithProfile(GUIDE, {
     gender: 'homem',
     seeks: 'homens',
     age: '30',
   })
-  await within(variesByProfile()).findByText(/Seu Perfil:/)
-  unmount()
-
-  openScreen(OTHER_GUIDE)
+  await within(profileBox()).findByText(/Seu Perfil:/)
   expect(
-    await screen.findByText(/Nenhum estudo deste Guia separou/),
+    within(question(SECOND)).getByText(/Nenhum estudo desta Pergunta separou/),
   ).toHaveTextContent('homem, procura homens, 30 anos')
-  expect(variesByProfile()).toHaveTextContent(
+  expect(
+    within(question(FIRST)).queryByText(/Nenhum estudo desta Pergunta/),
+  ).toBeNull()
+  expect(variesByProfile(SECOND)).toHaveTextContent(
     'O único achado não tem dado para o seu Perfil.',
   )
+})
+
+it('the saved Profile is still there when the Guide opens again', async () => {
+  const { unmount } = await openWithProfile(GUIDE, { gender: 'mulher' })
+  await within(profileBox()).findByText(/Seu Perfil:/)
+  unmount()
+
+  openScreen(GUIDE)
+  expect(
+    await within(
+      await screen.findByRole('region', { name: 'Seu Perfil' }),
+    ).findByText(/Seu Perfil:/),
+  ).toHaveTextContent('Seu Perfil: mulher')
 })

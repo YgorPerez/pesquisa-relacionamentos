@@ -19,11 +19,17 @@ export function withRedirects<Rest extends unknown[]>(
     const clean = url.pathname.replace(/^\/+/, '/')
     const noSlash = clean.length > 1 ? clean.replace(/\/+$/, '') || '/' : clean
     const target = Object.hasOwn(map, noSlash) ? map[noSlash] : noSlash
-    if (target && target !== url.pathname)
+    if (target && target !== url.pathname) {
+      // A Question's old page leads to its section, `/<tema>#<question>`
+      // (ADR 0042): the query goes before the fragment.
+      const [path, fragment] = target.split('#')
       return new Response(null, {
         status: 301,
-        headers: { location: `${target}${url.search}` },
+        headers: {
+          location: `${path}${url.search}${fragment ? `#${fragment}` : ''}`,
+        },
       })
+    }
     return fetch(request, ...rest)
   }
 }

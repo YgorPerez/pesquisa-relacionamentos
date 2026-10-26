@@ -1,7 +1,9 @@
-// Guides, Topics and Tips in the shape the pages draw. The markdown becomes
-// HTML on the server, with the `[@slug]` references numbered by the order of
-// the cited Fact sheets and the `==…==` key number in pink.
+// The Guide of a Topic, its Questions and the Tips in the shape the pages
+// draw. The markdown becomes HTML on the server, with the `[@slug]`
+// references numbered by the order of the Fact sheets on the Guide's page and
+// the `==…==` key number in pink.
 import type {
+  Calculator,
   Library,
   Coverage,
   Tip,
@@ -12,11 +14,15 @@ import type {
 } from '@tem-estudo/content'
 import {
   tipSearch,
-  guideSearch,
   topicSearch,
   type SearchMeta,
 } from '@tem-estudo/content/search'
-import { isTipPublished } from '@tem-estudo/content/queries'
+import {
+  guideMyths,
+  guideTips,
+  guidesWithTip,
+  isTipPublished,
+} from '@tem-estudo/content/queries'
 import { safeHtml, type SafeHtml } from './safe-html'
 import {
   html,
@@ -24,6 +30,7 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
+import { renderVisuals, type RenderedVisual } from './visuals-view'
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -205,7 +212,7 @@ export interface GuideTip {
   readonly coverage: ReadonlyArray<Coverage>
 }
 
-interface GuideFindingView {
+interface FindingView {
   readonly html: SafeHtml
   readonly country: string
   readonly period: string
@@ -218,7 +225,7 @@ export interface CitedFactSheet extends FactSheetSummary {
   readonly anchor: string
 }
 
-export interface GuideSummary {
+export interface QuestionSummary {
   readonly topic: string
   readonly slug: string
   readonly questionHtml: SafeHtml
@@ -227,15 +234,16 @@ export interface GuideSummary {
   readonly firstSentence: string
 }
 
-export interface GuideView extends GuideSummary {
-  readonly topic: string
-  readonly topicTitle: string
+/** A Question's section of the Guide (ADR 0042). */
+export interface QuestionView extends QuestionSummary {
   readonly answerHtml: SafeHtml
   /** The `covers` of the Fact sheets in the key-number sentence; `null`
    * without a marked number. */
   readonly keyCoverage: ReadonlyArray<Coverage> | null
-  readonly tips: ReadonlyArray<GuideTip>
-  readonly findings: ReadonlyArray<GuideFindingView>
+  /** Every Tip of the Question, in page order. `finding` is the index of the
+   * finding it follows, or `null` for a loose one. */
+  readonly tips: ReadonlyArray<GuideTip & { readonly finding: number | null }>
+  readonly findings: ReadonlyArray<FindingView>
   readonly divergence: {
     readonly bestDesignHtml: SafeHtml
     readonly sides: ReadonlyArray<{
@@ -243,26 +251,55 @@ export interface GuideView extends GuideSummary {
       readonly html: SafeHtml
     }>
   } | null
-  /** The Guide's own sections, between the evidence and "Varia conforme o
-   * Perfil?"; `id` names the headline. */
+  /** The narrative's own sections; `id` names the headline. */
   readonly sections: ReadonlyArray<{
     readonly id: string
     readonly title: string
     readonly html: SafeHtml
   }>
+  /** "E no Brasil?"; `null` until the Topic's rewrite gives it one. */
+  readonly inBrazilHtml: SafeHtml | null
   readonly profileHtml: SafeHtml
+  /** Every Myth, in page order; `finding` as in `tips`. */
   readonly myths: ReadonlyArray<{
     readonly claim: string
     readonly whyNotHtml: SafeHtml
+    readonly finding: number | null
   }>
-  readonly limitationsHtml: SafeHtml
+  /** The calculator card the Question hosts. */
+  readonly calculator: Calculator | null
+}
+
+/** A group of the Guide's Limitations: about one Study (`factSheet`), under a
+ * title of its own, or about one Question while its Limitations still live
+ * in the Question file. */
+export interface LimitationGroup {
+  readonly title: string | null
+  readonly factSheet: { readonly n: number; readonly anchor: string } | null
+  readonly html: SafeHtml
+}
+
+/** The Guide of a Topic: the Topic's whole page (ADR 0042). */
+export interface GuideView {
+  readonly topic: string
+  readonly title: string
+  readonly openingHtml: SafeHtml
+  /** The index at the top: each Question with its Confidence and the first
+   * sentence of its short answer, as text. */
+  readonly index: ReadonlyArray<QuestionSummary>
+  readonly questions: ReadonlyArray<QuestionView>
+  /** "O que levar". */
+  readonly takeaways: ReadonlyArray<GuideTip>
+  readonly limitations: ReadonlyArray<LimitationGroup>
+  /** One list for the whole page, numbered in page order. */
   readonly factSheets: ReadonlyArray<CitedFactSheet>
-  readonly related: ReadonlyArray<GuideSummary>
+  /** The related Questions that belong to other Topics. */
+  readonly elsewhere: ReadonlyArray<QuestionSummary>
   /** Search and Open Graph title and description (#15). */
   readonly search: SearchMeta
 }
 
-export function guideSummary(guide: Guide): GuideSummary {
+export function questionSummary(guide: Guide): QuestionSummary {
   return {
     topic: guide.topic,
     slug: guide.slug,
@@ -301,112 +338,235 @@ function keyCoverage(
   )
 }
 
-function guideTips(
+function guideTip(
+  slug: string,
+  library: Library,
+  numbers: Numbering,
+): GuideTip | null {
+  const tip = library.tips.find((d) => d.slug === slug)
+  return tip
+    ? {
+        slug,
+        html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
+        strength: tip.strength,
+        inference: tip.inference,
+        appliesTo: appliesTo(tip.covers),
+        coverage: tip.covers,
+      }
+    : null
+}
+
+/** The finding each Tip or Myth follows, by its index; a loose one is not
+ * in the map. */
+function findingIndex<T>(
+  guide: Guide,
+  pick: (finding: Guide['findings'][number]) => ReadonlyArray<T>,
+): ReadonlyMap<T, number> {
+  const map = new Map<T, number>()
+  guide.findings.forEach((finding, i) => {
+    for (const item of pick(finding)) if (!map.has(item)) map.set(item, i)
+  })
+  return map
+}
+
+function findingView(
+  finding: Guide['findings'][number],
+  numbers: Numbering,
+): FindingView {
+  const { country, period } = whereAndWhen(finding.countries, finding.period)
+  return {
+    html: textWithFactSheets(finding.text, finding.fact_sheets, numbers),
+    country,
+    period,
+    appliesTo: appliesTo(finding.covers),
+    coverage: finding.covers,
+  }
+}
+
+function divergenceView(
+  divergence: Guide['divergence'],
+  numbers: Numbering,
+): QuestionView['divergence'] {
+  if (!divergence) return null
+  return {
+    bestDesignHtml: inlineHtml(
+      withReferences(divergence.better_design, numbers),
+    ),
+    sides: divergence.sides.map((l) => ({
+      title: l.title,
+      html: textWithFactSheets(l.text, l.fact_sheets, numbers),
+    })),
+  }
+}
+
+/** Every Tip and Myth of the Question, each with the finding it follows. */
+function tipsAndMyths(
   guide: Guide,
   library: Library,
   numbers: Numbering,
-): ReadonlyArray<GuideTip> {
-  return guide.tips.flatMap((slug): GuideTip[] => {
-    const tip = library.tips.find((d) => d.slug === slug)
-    return tip
-      ? [
-          {
-            slug,
-            html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
-            strength: tip.strength,
-            inference: tip.inference,
-            appliesTo: appliesTo(tip.covers),
-            coverage: tip.covers,
-          },
-        ]
-      : []
+): Pick<QuestionView, 'tips' | 'myths'> {
+  const tipAt = findingIndex(guide, (f) => f.tips)
+  const mythAt = findingIndex(guide, (f) => f.myths)
+  return {
+    tips: guideTips(guide).flatMap((slug) => {
+      const tip = guideTip(slug, library, numbers)
+      return tip ? [{ ...tip, finding: tipAt.get(slug) ?? null }] : []
+    }),
+    myths: guideMyths(guide).map((m) => ({
+      claim: m.claim,
+      whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
+      finding: mythAt.get(m) ?? null,
+    })),
+  }
+}
+
+/** A Question's Visuals drawn, with the page's Fact sheet numbers (#182):
+ * each body `{{visual:<id>}}` line becomes one of them in `html()`. */
+type Visuals = ReadonlyMap<string, RenderedVisual>
+
+const questionVisuals = (
+  guide: Guide,
+  library: Library,
+  numbers: Numbering,
+): Visuals =>
+  renderVisuals(
+    guide.visuals ?? [],
+    library,
+    (slug) => {
+      const factSheet = numbers.get(slug)
+      return factSheet && { ...factSheet, anchor: anchor(slug) }
+    },
+    guide.slug,
+  )
+
+function questionView(
+  guide: Guide,
+  library: Library,
+  numbers: Numbering,
+  visuals: Visuals,
+): QuestionView {
+  const markdown = (text: string) =>
+    html(withReferences(text, numbers), visuals)
+  return {
+    ...questionSummary(guide),
+    ...tipsAndMyths(guide, library, numbers),
+    answerHtml: markdown(guide.shortAnswer),
+    keyCoverage: keyCoverage(guide.shortAnswer, library),
+    findings: guide.findings.map((f) => findingView(f, numbers)),
+    divergence: divergenceView(guide.divergence, numbers),
+    sections: guide.sections.map((s, i) => ({
+      id: `${guide.slug}-secao-${i + 1}`,
+      title: s.title,
+      html: markdown(s.markdown),
+    })),
+    inBrazilHtml: guide.inBrazil ? markdown(guide.inBrazil) : null,
+    profileHtml: markdown(guide.variesByProfile),
+    calculator: guide.calculator ?? null,
+  }
+}
+
+/** A `### [@slug]` heading of the Limitations: the group of one Study. */
+const STUDY_HEADING = /^\[@([a-z0-9]+(?:-[a-z0-9]+)*)\]$/
+
+/** The Topic's Limitations cut at their `###` headings: the text before the
+ * first one has no title. */
+function splitAtHeadings(
+  markdown: string,
+): Array<{ title: string | null; markdown: string }> {
+  const parts: Array<{ title: string | null; lines: string[] }> = [
+    { title: null, lines: [] },
+  ]
+  for (const line of markdown.split('\n')) {
+    const heading = /^###\s+(.+?)\s*$/.exec(line)
+    if (heading) parts.push({ title: heading[1] ?? null, lines: [] })
+    else parts[parts.length - 1]?.lines.push(line)
+  }
+  return parts
+    .map((p) => ({ title: p.title, markdown: p.lines.join('\n').trim() }))
+    .filter((p) => p.markdown || p.title !== null)
+}
+
+/** One group of the Topic's Limitations: a `### [@slug]` names the Study. */
+function studyGroup(
+  part: { title: string | null; markdown: string },
+  numbers: Numbering,
+): LimitationGroup {
+  const study = part.title ? STUDY_HEADING.exec(part.title)?.[1] : undefined
+  const factSheet = study ? numbers.get(study) : undefined
+  return {
+    title: factSheet ? factSheet.title : part.title,
+    factSheet:
+      study && factSheet ? { n: factSheet.n, anchor: anchor(study) } : null,
+    html: html(withReferences(part.markdown, numbers)),
+  }
+}
+
+/** The Topic's Limitations by Study, then each Question's own, under the
+ * Question. */
+function limitationGroups(
+  topic: Topic,
+  guides: ReadonlyArray<Guide>,
+  numbers: Numbering,
+  visualsOf: (guide: Guide) => Visuals,
+): LimitationGroup[] {
+  return [
+    ...splitAtHeadings(topic.limitations).map((p) => studyGroup(p, numbers)),
+    ...guides.flatMap((guide) =>
+      guide.limitations
+        ? [
+            {
+              title: withoutMarks(guide.question),
+              factSheet: null,
+              html: html(
+                withReferences(guide.limitations, numbers),
+                visualsOf(guide),
+              ),
+            },
+          ]
+        : [],
+    ),
+  ]
+}
+
+/** The related Questions that belong to other Topics. */
+function elsewhere(
+  guides: ReadonlyArray<Guide>,
+  library: Library,
+): QuestionSummary[] {
+  const here = new Set(guides.map((g) => g.slug))
+  return [...new Set(guides.flatMap((g) => g.related))].flatMap((slug) => {
+    const other = library.guides.find((g) => g.slug === slug)
+    return other && !here.has(other.slug) ? [questionSummary(other)] : []
   })
 }
 
-function ownSections(guide: Guide, numbers: Numbering): GuideView['sections'] {
-  return guide.sections.map((s, i) => ({
-    id: `t-secao-${i + 1}`,
-    title: s.title,
-    html: html(withReferences(s.markdown, numbers)),
-  }))
-}
-
-export function guideView(guide: Guide, library: Library): GuideView {
-  const numbers = numberFactSheets(guide.citedFactSheets, library)
-  const topic = library.topics.find((t) => t.slug === guide.topic)
+export function guideView(topic: Topic, library: Library): GuideView {
+  const numbers = numberFactSheets(topic.citedFactSheets, library)
+  const guides = library.guides.filter((g) => g.topic === topic.slug)
+  const drawn = new Map(
+    guides.map((g) => [g.slug, questionVisuals(g, library, numbers)]),
+  )
+  const visualsOf = (g: Guide): Visuals => drawn.get(g.slug) ?? new Map()
   return {
-    ...guideSummary(guide),
-    topicTitle: topic?.title ?? guide.topic,
-    answerHtml: html(withReferences(guide.shortAnswer, numbers)),
-    keyCoverage: keyCoverage(guide.shortAnswer, library),
-    tips: guideTips(guide, library, numbers),
-    findings: guide.findings.map((a): GuideFindingView => {
-      const { country, period } = whereAndWhen(a.countries, a.period)
-      return {
-        html: textWithFactSheets(a.text, a.fact_sheets, numbers),
-        country: country,
-        period: period,
-        appliesTo: appliesTo(a.covers),
-        coverage: a.covers,
-      }
-    }),
-    divergence: guide.divergence
-      ? {
-          bestDesignHtml: inlineHtml(
-            withReferences(guide.divergence.better_design, numbers),
-          ),
-          sides: guide.divergence.sides.map((l) => ({
-            title: l.title,
-            html: textWithFactSheets(l.text, l.fact_sheets, numbers),
-          })),
-        }
-      : null,
-    sections: ownSections(guide, numbers),
-    profileHtml: html(withReferences(guide.variesByProfile, numbers)),
-    myths: guide.myths.map((m) => ({
-      claim: m.claim,
-      whyNotHtml: textWithFactSheets(m.why_not, m.fact_sheets, numbers),
-    })),
-    limitationsHtml: html(withReferences(guide.limitations, numbers)),
-    factSheets: citedFactSheets(guide.citedFactSheets, library),
-    related: guide.related.flatMap((slug) => {
-      const other = library.guides.find((g) => g.slug === slug)
-      return other ? [guideSummary(other)] : []
-    }),
-    search: guideSearch(guide),
-  }
-}
-
-export interface TopicView {
-  readonly slug: string
-  readonly title: string
-  readonly contextHtml: SafeHtml
-  /** Search and Open Graph title and description (#15). */
-  readonly search: SearchMeta
-  readonly guides: ReadonlyArray<
-    GuideSummary & { readonly answerHtml: SafeHtml }
-  >
-}
-
-export function topicView(topic: Topic, library: Library): TopicView {
-  return {
-    slug: topic.slug,
+    topic: topic.slug,
     title: topic.title,
-    contextHtml: html(topic.context),
+    openingHtml: html(withReferences(topic.opening, numbers)),
+    // The index shows only the first sentence of each short answer, without
+    // the reference numbers: the whole answer opens the Question's section.
+    index: guides.map(questionSummary),
+    questions: guides.map((g) =>
+      questionView(g, library, numbers, visualsOf(g)),
+    ),
+    takeaways: topic.takeaways.flatMap((slug) => {
+      const tip = guideTip(slug, library, numbers)
+      return tip ? [tip] : []
+    }),
+    limitations: limitationGroups(topic, guides, numbers, visualsOf),
+    factSheets: citedFactSheets(topic.citedFactSheets, library),
+    elsewhere: elsewhere(guides, library),
     search: topicSearch(topic),
-    // On the Topic page the short answer goes without the numbers: the Fact
-    // sheets are in the Guide, and the Topic makes no new claim (#7).
-    guides: library.guides
-      .filter((g) => g.topic === topic.slug)
-      .map((g) => ({
-        ...guideSummary(g),
-        answerHtml: html(withoutReferences(g.shortAnswer)),
-      })),
   }
 }
-
-const withoutReferences = (markdown: string) =>
-  markdown.replace(REFS, '').replace(/==([^=\n]+)==/g, '$1')
 
 export interface TipSummary {
   readonly slug: string
@@ -418,7 +578,7 @@ export interface TipSummary {
 export interface TipView extends TipSummary {
   readonly appliesTo: string
   readonly factSheets: ReadonlyArray<CitedFactSheet>
-  readonly guides: ReadonlyArray<GuideSummary>
+  readonly questions: ReadonlyArray<QuestionSummary>
   readonly search: SearchMeta
 }
 
@@ -434,25 +594,23 @@ export function tipView(tip: Tip, library: Library): TipView {
     ...tipSummary(tip),
     appliesTo: appliesTo(tip.covers),
     factSheets: citedFactSheets(tip.fact_sheets, library),
-    guides: library.guides
-      .filter((g) => g.tips.includes(tip.slug))
-      .map(guideSummary),
+    questions: guidesWithTip(library, tip.slug).map(questionSummary),
     search: tipSearch(tip),
   }
 }
 
 export interface CitedIn {
-  readonly guides: ReadonlyArray<GuideSummary>
+  readonly questions: ReadonlyArray<QuestionSummary>
   readonly tips: ReadonlyArray<TipSummary>
 }
 
-/** The Guides and the published Tips that cite the Fact sheet, for its page.
- * A Guide also counts when the Fact sheet comes in only through one of its
- * Tips. */
+/** The Questions and the published Tips that cite the Fact sheet, for its
+ * page. A Question also counts when the Fact sheet comes in only through one
+ * of its Tips. */
 export const citedIn = (slug: string, library: Library): CitedIn => ({
-  guides: library.guides
+  questions: library.guides
     .filter((g) => g.citedFactSheets.includes(slug))
-    .map(guideSummary),
+    .map(questionSummary),
   tips: library.tips
     .filter((d) => isTipPublished(d) && d.fact_sheets.includes(slug))
     .map(tipSummary),

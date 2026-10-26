@@ -317,13 +317,11 @@ test("the Guide's Compartilhar copies the link without query", async ({
   context,
 }) => {
   await withClipboard(context)
-  await page.goto('/onde-conhecer-pessoas/app-ou-presencial?genero=homem', {
+  await page.goto('/onde-conhecer-pessoas?genero=homem#app-ou-presencial', {
     waitUntil: 'networkidle',
   })
   const link = await copyLink(page)
-  expect(link).toMatch(
-    /^http:\/\/localhost:\d+\/onde-conhecer-pessoas\/app-ou-presencial$/,
-  )
+  expect(link).toMatch(/^http:\/\/localhost:\d+\/onde-conhecer-pessoas$/)
   await expect(share(page)).toContainText(
     'O link leva só o endereço do Guia, sem o seu Perfil.',
   )

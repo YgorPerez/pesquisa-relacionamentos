@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Question: Story = {
   render: () => (
     <QuestionRow
-      guide={{
+      question={{
         topic: 'onde-conhecer-pessoas',
         slug: 'app-ou-presencial',
         question: 'App ou presencial: onde é melhor conhecer alguém?',

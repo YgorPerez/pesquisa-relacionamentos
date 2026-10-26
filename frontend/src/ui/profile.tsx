@@ -63,12 +63,12 @@ export function ProfileLink({ profile }: { profile: Profile | null }) {
   )
 }
 
-/** Above the title, only when no finding in the Guide has data for the
- * Profile. */
+/** Above a Question's short answer, only when none of its findings has data
+ * for the Profile. */
 export function NoDataNotice({ profile }: { profile: Profile }) {
   return (
-    <Notice className="m-0 mt-md" role="note" data-slot="aviso-perfil">
-      Nenhum estudo deste Guia separou pessoas com o seu Perfil (
+    <Notice className="m-0 mb-sm" role="note" data-slot="aviso-perfil">
+      Nenhum estudo desta Pergunta separou pessoas com o seu Perfil (
       <b>{describeProfile(profile)}</b>). O que segue vem de outras amostras:
       vale como pista, não como resposta para você.
     </Notice>
@@ -163,7 +163,7 @@ export function ForYourProfile({
           <Html as="span" html={other.html} />
         </>
       ) : (
-        'nenhum número deste Guia vem de uma amostra como a sua.'
+        'nenhum número desta Pergunta vem de uma amostra como a sua.'
       )}
     </p>
   )
@@ -349,15 +349,35 @@ export function ProfileBox({
         </div>
       )}
       {profile && withData !== null && (
-        <p
-          className="m-0 mt-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta pt-2.5 text-aviso font-bold"
-          aria-live="polite"
-          data-slot="perfil-contagem"
-        >
-          {findingCount(withData, findingTotal)}
-        </p>
+        <ProfileCount
+          withData={withData}
+          findingTotal={findingTotal}
+          className="mt-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta pt-2.5"
+        />
       )}
     </div>
+  )
+}
+
+/** How many findings have data for the Profile: in the Profile box, and in a
+ * Question's "Varia conforme o Perfil?". */
+export function ProfileCount({
+  withData,
+  findingTotal,
+  className,
+}: {
+  withData: number
+  findingTotal: number
+  className?: string
+}) {
+  return (
+    <p
+      className={cn('m-0 text-aviso font-bold', className)}
+      aria-live="polite"
+      data-slot="perfil-contagem"
+    >
+      {findingCount(withData, findingTotal)}
+    </p>
   )
 }
 

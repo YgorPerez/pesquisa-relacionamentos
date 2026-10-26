@@ -15,7 +15,6 @@ export {
 export {
   tipSearch,
   factSheetSearch,
-  guideSearch,
   topicSearch,
   sitemapPaths,
   LIMITS,
@@ -29,7 +28,7 @@ export {
 export {
   tipPath,
   factSheetPath,
-  guidePath,
+  questionPath,
   topicPath,
   calculatorPath,
   isFactSheetIndexable,
@@ -39,10 +38,21 @@ export {
   isTipPublished,
   guideBySlug,
   guidesWithTip,
+  guideTips,
+  guideMyths,
   topicGuides,
   topicBySlug,
 } from './queries.ts'
 export type { Coverage, Divergence, Myth, Seo } from './schema.ts'
+export type {
+  Visual,
+  BarsVisual,
+  TimelineVisual,
+  StudyTableVisual,
+  DiagramVisual,
+  Calculation,
+  Evidence,
+} from './visuals.ts'
 export type { GuideFinding, Tip, Guide, Topic } from './items.ts'
 export {
   CALCULATORS,

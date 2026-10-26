@@ -1,26 +1,24 @@
-// Topics, Guides and Tips for the pages, read on the server like the Fact
-// sheets (`fact-sheets.ts`): the browser gets only each page's finished view.
+// Topics (each one's page is its Guide) and Tips for the pages, read on the
+// server like the Fact sheets (`fact-sheets.ts`): the browser gets only each
+// page's finished view.
 import type { Strength } from '@tem-estudo/content'
 import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import {
   tipBySlug,
   isTipPublished,
-  guideBySlug,
   topicBySlug,
 } from '@tem-estudo/content/queries'
 import {
   tipSummary,
-  guideSummary,
+  questionSummary,
   withoutMarks,
   tipView,
   guideView,
-  topicView,
   type TipSummary,
   type TipView,
-  type GuideSummary,
+  type QuestionSummary,
   type GuideView,
-  type TopicView,
 } from './guide-view'
 import { buildPrioritiesView, type PrioritiesView } from './priorities-view'
 
@@ -32,7 +30,7 @@ const text = (value: unknown, name: string): string => {
 interface HomeTopic {
   readonly slug: string
   readonly title: string
-  readonly guides: ReadonlyArray<GuideSummary>
+  readonly questions: ReadonlyArray<QuestionSummary>
 }
 
 /** The Topics with their Questions in order, for the home page. */
@@ -42,48 +40,32 @@ export const listTopics = createServerFn({ method: 'GET' }).handler(
     return library.topics.map((topic): HomeTopic => ({
       slug: topic.slug,
       title: topic.title,
-      guides: library.guides
+      questions: library.guides
         .filter((g) => g.topic === topic.slug)
-        .map(guideSummary),
+        .map(questionSummary),
     }))
   },
 )
 
-export const getTopic = createServerFn({ method: 'GET' })
-  .validator((slug: unknown) => text(slug, 'topic'))
-  .handler(async ({ data: slug }): Promise<TopicView> => {
-    const { default: library } = await import('virtual:library')
-    const topic = topicBySlug(library, slug)
-    if (!topic) throw notFound()
-    return topicView(topic, library)
-  })
-
+/** The Topic's page, its Guide (ADR 0042), with the data of the calculator
+ * cards its Questions host. */
 export const getGuide = createServerFn({ method: 'GET' })
-  .validator((data: unknown) => {
-    const { topic, slug } = (data ?? {}) as Record<string, unknown>
-    return { topic: text(topic, 'topic'), slug: text(slug, 'slug') }
-  })
+  .validator((slug: unknown) => text(slug, 'topic'))
   .handler(
     async ({
-      data,
-    }): Promise<
-      GuideView & {
-        priorities: PrioritiesView | null
-        possibleGroup: boolean
-      }
-    > => {
+      data: slug,
+    }): Promise<GuideView & { priorities: PrioritiesView | null }> => {
       const { default: library } = await import('virtual:library')
-      const guide = guideBySlug(library, data.slug)
-      if (!guide || guide.topic !== data.topic) throw notFound()
+      const topic = topicBySlug(library, slug)
+      if (!topic) throw notFound()
+      const guide = guideView(topic, library)
       return {
-        ...guideView(guide, library),
-        // The B1 card reads the same file as the `/prioridades` page.
-        priorities:
-          guide.calculator === 'priorities'
-            ? buildPrioritiesView(library)
-            : null,
-        // The B5 card does the count in the browser, with the build's data.
-        possibleGroup: guide.calculator === 'possible-group',
+        ...guide,
+        // The B1 card reads the same file as the `/prioridades` page. The B5
+        // card does the count in the browser, with the build's data.
+        priorities: guide.questions.some((q) => q.calculator === 'priorities')
+          ? buildPrioritiesView(library)
+          : null,
       }
     },
   )
@@ -98,16 +80,16 @@ export interface CalculatorGuide {
   readonly answer: string
 }
 
-/** The Guide that hosts the calculator (`calculator:` in the frontmatter),
- * for the "Do Guia" block on its page; `null` while no published Guide hosts
- * it. */
+/** The Question that hosts the calculator (`calculator:` in the
+ * frontmatter), for the "Do Guia" block on its page; `null` while no
+ * Question hosts it. */
 export const getCalculatorGuide = createServerFn({ method: 'GET' })
   .validator((name: unknown) => text(name, 'calculator'))
   .handler(async ({ data: name }): Promise<CalculatorGuide | null> => {
     const { default: library } = await import('virtual:library')
     const guide = library.guides.find((g) => g.calculator === name)
     if (!guide) return null
-    const summary = guideSummary(guide)
+    const summary = questionSummary(guide)
     return {
       topic: guide.topic,
       slug: guide.slug,

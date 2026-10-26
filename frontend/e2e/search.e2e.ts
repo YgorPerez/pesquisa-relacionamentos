@@ -1,12 +1,14 @@
 // Search and stable links (#15), over the fixture content (`e2e/library`):
 // the build's sitemap and robots, canonical, `noindex` on a URL with state,
-// the Guide's Open Graph and the 301s of the trailing slash and of `antes`
-// (the silva-2020 Fact sheet and the app-ou-presencial Guide declare old
-// paths).
+// the Guide's Open Graph and the 301s of the trailing slash, of `previous`
+// (the silva-2020 Fact sheet and the app-ou-presencial Question declare old
+// paths) and of each Question's old page, which leads to its section of the
+// Guide (ADR 0042).
 import { expect, test } from '@playwright/test'
 
 const SITE = 'https://temestudo.cloud'
-const GUIDE = '/onde-conhecer-pessoas/app-ou-presencial'
+const GUIDE = '/onde-conhecer-pessoas'
+const SECTION = `${GUIDE}#app-ou-presencial`
 
 test.describe('sitemap and robots', () => {
   test('the sitemap lists the indexed pages and leaves the ⬜ Fact sheet out', async ({
@@ -20,12 +22,10 @@ test.describe('sitemap and robots', () => {
     ].map((m) => m[1])
     expect(locs).toEqual([
       `${SITE}/`,
-      // The Topics in their `position` order.
+      // The Topics in their `position` order; a Question is a section of
+      // its Topic's page.
       `${SITE}/onde-conhecer-pessoas`,
-      `${SITE}/onde-conhecer-pessoas/onde-os-casais-se-conhecem`,
-      `${SITE}${GUIDE}`,
       `${SITE}/escolher-parceiro`,
-      `${SITE}/escolher-parceiro/que-caracteristicas-preveem`,
       `${SITE}/dicas`,
       `${SITE}/dicas/apps-como-complemento`,
       `${SITE}/estudos`,
@@ -97,13 +97,13 @@ test.describe('Open Graph', () => {
       page.locator(`meta[property="og:${property}"]`)
     await expect(og('title')).toHaveAttribute(
       'content',
-      'App ou presencial, onde tenho mais chance?',
+      'Onde conhecer pessoas',
     )
     const description = await page
       .locator('meta[name="description"]')
       .getAttribute('content')
     expect(description).toBe(
-      'Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena.',
+      'Onde os casais se conhecem hoje e se o lugar muda a relação. Conteúdo de fixture para o teste de ponta a ponta.',
     )
     await expect(og('description')).toHaveAttribute('content', description!)
     await expect(og('url')).toHaveAttribute('content', `${SITE}${GUIDE}`)
@@ -126,7 +126,7 @@ test.describe('301', () => {
     expect(response.headers().location).toBe('/estudos?v=1')
   })
 
-  test("the Fact sheet's and the Guide's `antes` lead to today's path", async ({
+  test("the Fact sheet's and the Question's `previous` lead to today's path, the Question's to its section", async ({
     request,
   }) => {
     const factSheet = await request.get('/estudos/silva-2020', noFollow)
@@ -138,20 +138,35 @@ test.describe('301', () => {
       noFollow,
     )
     expect(guide.status()).toBe(301)
-    expect(guide.headers().location).toBe(`${GUIDE}?g=mulher`)
+    expect(guide.headers().location).toBe(`${GUIDE}?g=mulher#app-ou-presencial`)
 
     const fromAnotherTopic = await request.get(
       '/escolher-parceiro/onde-procurar',
       noFollow,
     )
-    expect(fromAnotherTopic.headers().location).toBe(GUIDE)
-  })
+    expect(fromAnotherTopic.headers().location).toBe(SECTION)
 
-  test('the browser reaches the new page', async ({ page }) => {
-    await page.goto('/onde-conhecer-pessoas/app-ou-bar/')
-    await expect(page).toHaveURL(GUIDE)
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(
-      'App ou presencial',
+    const today = await request.get(
+      '/onde-conhecer-pessoas/app-ou-presencial',
+      noFollow,
     )
+    expect(today.status()).toBe(301)
+    expect(today.headers().location).toBe(SECTION)
+  })
+})
+
+test.describe("301 of a Question's old page", () => {
+  test("the browser reaches the Question's section", async ({ page }) => {
+    await page.goto('/onde-conhecer-pessoas/app-ou-bar/')
+    await expect(page).toHaveURL(SECTION)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Onde conhecer pessoas',
+    )
+    await expect(
+      page.getByRole('heading', {
+        level: 2,
+        name: 'App ou presencial, onde tenho mais chance?',
+      }),
+    ).toBeInViewport()
   })
 })

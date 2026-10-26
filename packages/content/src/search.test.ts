@@ -6,13 +6,11 @@ import { describe, expect, it } from 'vite-plus/test'
 import {
   tipSearch,
   factSheetSearch,
-  guideSearch,
   topicSearch,
   sitemapPaths,
   tipBySlug,
   factSheetBySlug,
   formatProblems,
-  guideBySlug,
   readFiles,
   buildLibrary,
   redirects,
@@ -71,40 +69,7 @@ const SILVA = 'studies/silva-2020-apps-brasil.md'
 describe('search title and description', () => {
   const library = libraryOf(buildLibrary(filesWith()))
 
-  it('guide: the question and the short answer, without marks or references', () => {
-    expect(
-      guideSearch(guideBySlug(library, 'onde-os-casais-se-conhecem')!),
-    ).toEqual({
-      title: 'Onde os casais se conhecem hoje?',
-      description:
-        'No Brasil, 18% dos adultos jovens conheceram o parceiro por app. Nos EUA, a satisfação é parecida.',
-    })
-  })
-
-  it('guide: a long short answer is cut at a word, in up to 155 characters', () => {
-    const longText =
-      'Uma frase comprida sobre onde os casais se conhecem, '.repeat(5)
-    const guide = guideBySlug(
-      libraryOf(
-        buildWith({
-          [GUIDE]: (t) =>
-            t.replace(
-              /\nNo Brasil[^\n]*\n/,
-              `\n${longText}[@silva-2020-apps-brasil]\n`,
-            ),
-        }),
-      ),
-      'onde-os-casais-se-conhecem',
-    )!
-    const { description } = guideSearch(guide)
-    expect(description.length).toBeLessThanOrEqual(155)
-    expect(description).toMatch(
-      /^Uma frase comprida sobre onde os casais se conhecem, Uma frase .*\S…$/,
-    )
-    expect(longText.startsWith(description.slice(0, -1))).toBe(true)
-  })
-
-  it('topic: the title and the context paragraph', () => {
+  it('topic, whose page is its Guide: the title and the opening paragraph', () => {
     expect(topicSearch(topicBySlug(library, 'onde-conhecer')!)).toEqual({
       title: 'Onde conhecer pessoas',
       description: 'Onde os casais se conhecem e se o lugar muda alguma coisa.',
@@ -132,7 +97,6 @@ describe('search title and description', () => {
       'seo:\n  title: Onde os casais se conhecem\n  description: Uma descrição escrita à mão.'
     const swapped = libraryOf(
       buildWith({
-        [GUIDE]: inFrontmatter(seo),
         [SILVA]: inFrontmatter(seo),
         [TOPIC]: inFrontmatter(seo),
       }),
@@ -141,9 +105,6 @@ describe('search title and description', () => {
       title: 'Onde os casais se conhecem',
       description: 'Uma descrição escrita à mão.',
     }
-    expect(
-      guideSearch(guideBySlug(swapped, 'onde-os-casais-se-conhecem')!),
-    ).toEqual(expected)
     expect(
       factSheetSearch(factSheetBySlug(swapped, 'silva-2020-apps-brasil')!),
     ).toEqual(expected)
@@ -157,14 +118,16 @@ describe('search title and description', () => {
   })
 
   it('warns when the title goes over 60 characters, suggesting `seo`', () => {
-    const question =
-      'Onde os casais brasileiros de todas as idades se conhecem hoje em dia?'
+    const title =
+      'Onde os casais brasileiros de todas as idades se conhecem hoje em dia'
     const result = buildWith({
-      [GUIDE]: (t) => t.replace(/^question: .*$/m, `question: ${question}`),
+      [TOPIC]: (t) => t.replace(/^title: .*$/m, `title: ${title}`),
+      // A Question has no page of its own: a long question does not warn.
+      [GUIDE]: (t) => t.replace(/^question: .*$/m, `question: ${title}?`),
     })
     expect(result.ok).toBe(true)
     expect(warningsOf(result)).toEqual([
-      `${GUIDE}: question: the search title has ${question.length} characters and the limit is 60; write a shorter one in seo.title`,
+      `${TOPIC}: title: the search title has ${title.length} characters and the limit is 60; write a shorter one in seo.title`,
     ])
   })
 
@@ -182,12 +145,10 @@ describe('search title and description', () => {
 describe('sitemap and robots', () => {
   const library = libraryOf(buildLibrary(filesWith()))
 
-  it('lists home, topics, guides, published tips, the lists, the calculators and the ✅/🟡 fact sheets', () => {
+  it('lists home, topics, published tips, the lists, the calculators and the ✅/🟡 fact sheets; a Question is a section, not a page', () => {
     expect(sitemapPaths(library)).toEqual([
       '/',
       '/onde-conhecer',
-      '/onde-conhecer/onde-os-casais-se-conhecem',
-      '/onde-conhecer/app-ou-presencial',
       '/dicas',
       '/dicas/apps-como-complemento',
       '/estudos',
@@ -234,10 +195,13 @@ describe('previous: 301 from the old path', () => {
     expect(redirects(library)).toEqual({
       '/estudos/silva-2020-apps': '/estudos/silva-2020-apps-brasil',
       '/dicas/app-complemento': '/dicas/apps-como-complemento',
+      '/onde-conhecer/onde-os-casais-se-conhecem':
+        '/onde-conhecer#onde-os-casais-se-conhecem',
       '/onde-conhecer/onde-casais-se-conhecem':
-        '/onde-conhecer/onde-os-casais-se-conhecem',
+        '/onde-conhecer#onde-os-casais-se-conhecem',
       '/escolher-parceiro/onde-se-conhecem':
-        '/onde-conhecer/onde-os-casais-se-conhecem',
+        '/onde-conhecer#onde-os-casais-se-conhecem',
+      '/onde-conhecer/app-ou-presencial': '/onde-conhecer#app-ou-presencial',
     })
   })
 
@@ -250,19 +214,26 @@ describe('previous: 301 from the old path', () => {
     )
     expect(redirects(library)).toEqual({
       '/conhecer-gente': '/onde-conhecer',
+      '/onde-conhecer/onde-os-casais-se-conhecem':
+        '/onde-conhecer#onde-os-casais-se-conhecem',
       '/conhecer-gente/onde-os-casais-se-conhecem':
-        '/onde-conhecer/onde-os-casais-se-conhecem',
-      '/conhecer-gente/app-ou-presencial': '/onde-conhecer/app-ou-presencial',
-      '/onde-conhecer/app-ou-bar': '/onde-conhecer/app-ou-presencial',
-      '/conhecer-gente/app-ou-bar': '/onde-conhecer/app-ou-presencial',
+        '/onde-conhecer#onde-os-casais-se-conhecem',
+      '/onde-conhecer/app-ou-presencial': '/onde-conhecer#app-ou-presencial',
+      '/conhecer-gente/app-ou-presencial': '/onde-conhecer#app-ou-presencial',
+      '/onde-conhecer/app-ou-bar': '/onde-conhecer#app-ou-presencial',
+      '/conhecer-gente/app-ou-bar': '/onde-conhecer#app-ou-presencial',
     })
   })
 
-  it('without `previous`, no redirect', () => {
-    expect(redirects(libraryOf(buildLibrary(filesWith())))).toEqual({})
+  it("without `previous`, each Question's old page leads to its section", () => {
+    expect(redirects(libraryOf(buildLibrary(filesWith())))).toEqual({
+      '/onde-conhecer/onde-os-casais-se-conhecem':
+        '/onde-conhecer#onde-os-casais-se-conhecem',
+      '/onde-conhecer/app-ou-presencial': '/onde-conhecer#app-ou-presencial',
+    })
   })
 
-  it('fails when `previous` points to a path that still exists', () => {
+  it("fails when `previous` claims another Question's old page", () => {
     expect(
       errorsOf(
         buildWith({
@@ -272,7 +243,7 @@ describe('previous: 301 from the old path', () => {
         }),
       ),
     ).toContain(
-      `${OTHER_GUIDE}: previous: the path /onde-conhecer/onde-os-casais-se-conhecem is still a page of the site; "previous" only lists paths that disappeared`,
+      `${OTHER_GUIDE}: previous: the path /onde-conhecer/onde-os-casais-se-conhecem is already in the "previous" of ${GUIDE}`,
     )
   })
 
@@ -304,7 +275,7 @@ describe('the last published sitemap', () => {
       .map((c) => `  <url><loc>https://temestudo.cloud${c}</loc></url>`)
       .join('\n')}\n</urlset>\n`
 
-  it('passes when every path in it is still a page of the site, even a fact sheet that became ⬜', () => {
+  it("passes when every path in it is still a page of the site, even a fact sheet that became ⬜, or a Question's old page", () => {
     const previous = sitemap(
       '/',
       '/onde-conhecer/app-ou-presencial',
