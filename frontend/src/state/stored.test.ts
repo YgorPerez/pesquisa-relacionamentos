@@ -90,12 +90,13 @@ describe('the keys saved before the move to English (ADR 0039)', () => {
       noChildren: true,
       height: { min: 160, max: 190 },
       nonSmoker: true,
-      // The PNS lifestyle Requirements came after the move: an old save has
-      // them off.
+      // Office occupation and the PNS lifestyle Requirements came after the
+      // move: an old save has them off.
       drinking: [],
       exercises: false,
       goodTeeth: false,
       nonVaper: false,
+      office: false,
     })
     expect(local.items.has('tem-estudo:grupo-possivel')).toBe(false)
   })

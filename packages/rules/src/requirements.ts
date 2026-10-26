@@ -126,6 +126,9 @@ export interface Requirements {
   readonly goodTeeth: boolean
   /** Does not use an e-cigarette today (#297). */
   readonly nonVaper: boolean
+  /** Works in an office occupation: VD4011 groups 1 to 4 of the PNAD
+   * Contínua (#294). */
+  readonly office: boolean
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -143,6 +146,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   exercises: false,
   goodTeeth: false,
   nonVaper: false,
+  office: false,
 }
 
 /** Who is sought, as the count says it. */
@@ -248,6 +252,7 @@ export const REQUIREMENTS = [
   'exercise',
   'teeth',
   'vape',
+  'office',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -275,6 +280,7 @@ export function release(
     exercise: { exercises: false },
     teeth: { goodTeeth: false },
     vape: { nonVaper: false },
+    office: { office: false },
   }
   return { ...requirements, ...released[requirement] }
 }
@@ -297,6 +303,7 @@ export const REQUIREMENT_TITLE: Readonly<
   exercise: 'Exercício',
   teeth: 'Saúde bucal',
   vape: 'Cigarro eletrônico',
+  office: 'Ocupação',
 }
 
 export const EDUCATION_LABEL: Readonly<
@@ -419,6 +426,8 @@ export function requirementValue(
       return r.nonVaper
         ? 'não usa cigarro eletrônico'
         : 'usa cigarro eletrônico ou não'
+    case 'office':
+      return r.office ? 'trabalha em escritório' : 'qualquer ocupação'
   }
 }
 
@@ -447,5 +456,6 @@ export function readRequirements(value: unknown): Requirements {
     exercises: raw.exercises === true,
     goodTeeth: raw.goodTeeth === true,
     nonVaper: raw.nonVaper === true,
+    office: raw.office === true,
   }
 }
