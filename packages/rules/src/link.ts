@@ -119,6 +119,10 @@ const REQUIREMENT_KEYS_V1 = [
   'casa-propria',
   'altura',
   'nao-fuma',
+  'bebida',
+  'exercicio',
+  'saude-bucal',
+  'nao-vape',
   'escritorio',
 ] as const
 
@@ -157,6 +161,10 @@ function writeV1(state: LinkState): Array<readonly [string, string]> {
   if (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT)
     pairs.push(['altura', writeRange(r.height)])
   if (r.nonSmoker) pairs.push(['nao-fuma', 'sim'])
+  if (r.drinking.length > 0) pairs.push(['bebida', r.drinking.join(',')])
+  if (r.exercises) pairs.push(['exercicio', 'sim'])
+  if (r.goodTeeth) pairs.push(['saude-bucal', 'sim'])
+  if (r.nonVaper) pairs.push(['nao-vape', 'sim'])
   if (r.office) pairs.push(['escritorio', 'sim'])
   return pairs
 }
@@ -202,6 +210,10 @@ function readV1(
     ownsHome: q.get('casa-propria') === 'sim',
     height: readRange(q.get('altura')),
     nonSmoker: q.get('nao-fuma') === 'sim',
+    drinking: list(q.get('bebida')),
+    exercises: q.get('exercicio') === 'sim',
+    goodTeeth: q.get('saude-bucal') === 'sim',
+    nonVaper: q.get('nao-vape') === 'sim',
     office: q.get('escritorio') === 'sim',
   })
   return { calculator, profile, requirements }
@@ -330,6 +342,10 @@ function otherRequirements(profile: Profile | null, r: Requirements): string[] {
     r.ownsHome && value('home'),
     (r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT) && value('height'),
     r.nonSmoker && value('smoking'),
+    r.drinking.length > 0 && value('drinking'),
+    r.exercises && value('exercise'),
+    r.goodTeeth && value('teeth'),
+    r.nonVaper && value('vape'),
     r.office && value('office'),
   ].filter((x): x is string => typeof x === 'string')
 }

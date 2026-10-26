@@ -25,7 +25,20 @@ const ALL: Requirements = {
   ownsHome: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
+  drinking: ['nunca', 'raramente'],
+  exercises: true,
+  goodTeeth: true,
+  nonVaper: true,
   office: true,
+}
+
+/** What a link from before the PNS lifestyle Requirements carries: all of
+ * them off. */
+const BEFORE_LIFESTYLE: Partial<Requirements> = {
+  drinking: [],
+  exercises: false,
+  goodTeeth: false,
+  nonVaper: false,
 }
 
 describe('round trip', () => {
@@ -118,6 +131,7 @@ describe('old versions', () => {
       // The Requirements that came after this link stay off.
       requirements: {
         ...ALL,
+        ...BEFORE_LIFESTYLE,
         notWithParents: false,
         work: null,
         ownsHome: false,
@@ -236,7 +250,9 @@ describe('linkSentence', () => {
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
         'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, não mora com os pais, tem negócio próprio, tem casa própria, ' +
-        'a partir de 160 cm, não fuma, trabalha em escritório, em São Paulo (SP).',
+        'a partir de 160 cm, não fuma, bebe nunca ou menos de 1 vez por semana, ' +
+        'faz 150 min de exercício por semana, saúde bucal boa, não usa cigarro eletrônico, trabalha em escritório, ' +
+        'em São Paulo (SP).',
     )
   })
 
