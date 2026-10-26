@@ -52,4 +52,4 @@ Pela média, "I am too picky" ficou em primeiro entre os 18 fatores. Pela propor
 
 ## Como usamos
 
-O [relatório sobre exigência e desfecho](../reports/2026-10-26-exigencia-e-desfecho.md) cita este estudo para dizer que os solteiros apontam a exigência como motivo de estarem solteiros, e que isso é crença, não medida. A Ficha alimenta a pergunta `requisitos-exigentes-demais` do Guia [Escolher parceiro](../guides/escolher-parceiro.md).
+- [Relatório sobre exigência e desfecho de 2026-10-26](../reports/2026-10-26-exigencia-e-desfecho.md): sustenta que os solteiros apontam a exigência como motivo de estarem solteiros, e que isso é crença, não medida.

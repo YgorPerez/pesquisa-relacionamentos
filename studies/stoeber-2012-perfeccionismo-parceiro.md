@@ -54,4 +54,4 @@ Na Tabela 2, cada modelo põe os dois perfeccionismos juntos; o b de um é o efe
 
 ## Como usamos
 
-Candidata para a pergunta "Meus Requisitos são exigentes demais?" do Guia [`escolher-parceiro`](../guides/escolher-parceiro.md), a partir do relatório [Exigência e desfecho](../reports/2026-10-26-exigencia-e-desfecho.md).
+- [Relatório sobre exigência e desfecho de 2026-10-26](../reports/2026-10-26-exigencia-e-desfecho.md): sustenta que exigir perfeição do parceiro anda junto com menos satisfação e menos compromisso, com a ressalva de que a replicação pré-registrada não confirmou o efeito.

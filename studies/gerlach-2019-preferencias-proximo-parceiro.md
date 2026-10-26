@@ -5,11 +5,11 @@ status: verified
 verified_on: 2026-10-26
 strength: moderate
 strength_reason: "Longitudinal e pré-registrado, com 763 solteiros e 258 que formaram casal, mas numa amostra só, de voluntários jovens e escolarizados recrutados online, com o parceiro descrito pelo próprio participante e a análise do ajuste feita de forma exploratória."
-countries: [Alemanha]
+countries: []
 period: "não informado no texto lido"
 sample:
   n: 763
-  description: "763 solteiros falantes de alemão, de 18 a 40 anos, heterossexuais ou predominantemente heterossexuais, recrutados por listas de e-mail, fóruns e um site de testes psicológicos (Göttingen Mate Choice Study); o país de residência não é informado, e Alemanha é inferência pela universidade e pela língua; 68% mulheres, idade média de 25 anos, 73% universitários. Responderam de novo cinco meses depois; 258 tinham entrado numa relação."
+  description: "763 solteiros falantes de alemão, de 18 a 40 anos, heterossexuais ou predominantemente heterossexuais, recrutados por listas de e-mail, fóruns e um site de testes psicológicos (Göttingen Mate Choice Study); o país de residência não é informado (o estudo é da Universidade de Göttingen, na Alemanha); 68% mulheres, idade média de 25 anos, 73% universitários. Responderam de novo cinco meses depois; 258 tinham entrado numa relação."
   representative: false
 design: longitudinal
 conflict: "O manuscrito não declara financiamento nem conflitos de interesse. Os autores são da Universidade de Göttingen."
@@ -53,7 +53,7 @@ Os localizadores usam a paginação do manuscrito, que está no cabeçalho de ca
 
 ## Limitações
 
-- Voluntários recrutados pela internet, jovens, escolarizados e em sua maioria universitários, com o dobro de mulheres; os autores dizem que isso limita a generalização. O critério de entrada era falar alemão, não morar na Alemanha, e o artigo não diz em que país os participantes moravam. O país "Alemanha" do cabeçalho é inferência nossa: o estudo é da Universidade de Göttingen, em alemão, e cita as regras de ética alemãs. Pode haver participantes da Áustria e da Suíça.
+- Voluntários recrutados pela internet, jovens, escolarizados e em sua maioria universitários, com o dobro de mulheres; os autores dizem que isso limita a generalização. O critério de entrada era falar alemão, não morar na Alemanha, e o artigo não diz em que país os participantes moravam. Por isso o cabeçalho não dá país. A maioria deve morar na Alemanha, já que o estudo é da Universidade de Göttingen, em alemão, e cita as regras de ética alemãs, mas pode haver participantes da Áustria e da Suíça.
 - Quem descreveu o parceiro foi o próprio participante, no começo da relação. Um viés positivo seletivo, que exagera justo o que a pessoa valoriza, inflaria a previsão. Num estudo à parte com 160 casais, a nota dada ao parceiro concordou com a autoavaliação dele em r = 0,40 nos homens e 0,36 nas mulheres, mas foi sempre mais alta.
 - A análise do ajuste é exploratória: os autores dizem que ela não foi detalhada no pré-registro. O índice explode quando a distância entre ideal e parceiro é pequena; o resultado se mantém cortando os 5% mais extremos de cada lado.
 - O desvio do pré-registro: o plano previa só mulheres e comparar solteiros com relações "compromissadas". Com poucas relações assim, juntaram os três tipos de relação.
@@ -62,3 +62,7 @@ Os localizadores usam a paginação do manuscrito, que está no cabeçalho de ca
 - A associação entre preferência e parceiro pode vir em parte do ambiente: quem convive com gente parecida com o que quer acharia esse parceiro mesmo escolhendo ao acaso.
 - O texto diz que a amostra de relações teve "188 participants were female (73%) and 88 male (27%)", o que soma 276, não 258; a Tabela 6 dá 188 mulheres e 70 homens. Usamos o total de 258.
 - A versão lida é o manuscrito aceito, antes da revisão de texto da revista; números da versão publicada podem diferir em detalhe.
+
+## Como usamos
+
+- [Relatório sobre exigência e desfecho de 2026-10-26](../reports/2026-10-26-exigencia-e-desfecho.md): sustenta que as preferências de um solteiro preveem o parceiro seguinte e que quem forma casal com alguém abaixo do ideal baixa o ideal.

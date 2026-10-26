@@ -55,3 +55,7 @@ O PDF sai do `pdftotext` com o sinal de igual como "⫽", o de menos como "⫺",
 - Amostras de conveniência, com muitas mulheres (o Estudo 5 só tem mulheres) e muitos universitários. O Estudo 3 perdeu parte grande da amostra: das 3.612 pessoas, 1.242 entraram no acompanhamento e 202 disseram quem terminou.
 - Os perfis "pouco atenciosos" e "menos bonitos" não eram extremos, como os autores reconhecem: o estudo não diz até onde quem tem medo aceita descer.
 - O speed dating mede quantas pessoas cada um quis rever ao fim de encontros de 3 minutos, não o que veio depois.
+
+## Como usamos
+
+- [Relatório sobre exigência e desfecho de 2026-10-26](../reports/2026-10-26-exigencia-e-desfecho.md): sustenta que exigir pouco por medo de ficar solteiro anda junto com depender mais de uma relação insatisfatória, e que esse medo muda o que a pessoa faz, não os padrões que ela declara.
