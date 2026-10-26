@@ -26,6 +26,7 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 - **Requisito** [requirement]**:** uma característica que o usuário exige de um parceiro, como faixa de idade, escolaridade ou cidade.
 - **Grupo possível** [possible group, `possible-group`]**:** a estimativa de quantas pessoas no Brasil atendem ao Perfil procurado e a todos os Requisitos.
 - **Prioridade** [priority]**:** quanto o usuário valoriza uma característica de um parceiro. É comparada com o que a evidência diz que prevê um bom relacionamento.
+- **Desfecho** [outcome]**:** o que um Estudo mede para dizer se uma característica pesa num relacionamento: atração, satisfação ou duração.
 - **Calculadora** [calculator]**:** a ferramenta que um Guia hospeda: o Grupo possível ou as Prioridades.
 - **Visualização** [visual]**:** um gráfico de barras, uma linha no tempo, uma tabela de Estudos ou um diagrama de relações dentro de um Guia. Cada número vem de uma Ficha ✅ ou 🟡 ou de uma Conta nossa sobre elas. No diagrama, cada seta é um achado com Fichas, e o traço diz se um Estudo testou a causa, se só achou associação ou se é Inferência.
 - **Conta nossa** [own calculation]**:** um número que o Tem estudo? calculou a partir dos números de Fichas, como um recorte ou uma média. Aparece marcada como "conta nossa".

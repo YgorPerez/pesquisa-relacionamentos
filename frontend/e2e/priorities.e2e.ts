@@ -180,6 +180,20 @@ test.describe('/prioridades', () => {
     })
   })
 
+  test('the page asks for the outcome before the top 3', async ({ page }) => {
+    await open(page)
+    const outcome = await page
+      .getByRole('radiogroup', { name: 'Pesa para quê?' })
+      .boundingBox()
+    const top3 = await chips(page).boundingBox()
+    expect(outcome!.y).toBeLessThan(top3!.y)
+    await expect(
+      chips(page).getByText(
+        'Das dez, quais são as três que mais importam para você num parceiro?',
+      ),
+    ).toBeVisible()
+  })
+
   test('the outcome picker sticks to the top on scroll', async ({ page }) => {
     await open(page)
     await page.locator('[data-slot="aviso"]').scrollIntoViewIfNeeded()

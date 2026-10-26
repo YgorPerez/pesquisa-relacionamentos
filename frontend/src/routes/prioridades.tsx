@@ -1,6 +1,7 @@
-// /prioridades (variant A of the second round of #19): the visitor taps the
-// three traits that matter most, picks the outcome and sees on which shelf
-// the evidence puts each one.
+// /prioridades (variant A of the second round of #19): the visitor picks the
+// outcome, taps the three traits that matter most and sees on which shelf the
+// evidence puts each one. The outcome comes first so the visitor knows what
+// is being weighed before choosing (#286).
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ProfileGender } from '@tem-estudo/rules/profile'
@@ -36,7 +37,7 @@ import {
   OutcomePicker,
 } from '#/ui/priorities'
 import { FoldArrow } from '#/ui/navigation'
-import { Column, Display, Sheet, Lead } from '#/ui/sheet'
+import { Column, Display, Sheet } from '#/ui/sheet'
 import { Notice, Headline, Panel, Section } from '#/ui/section'
 import {
   Collapsible,
@@ -116,19 +117,7 @@ function Calculator({ view }: { view: PrioritiesView }) {
 
   return (
     <>
-      <Lead>
-        Das dez, quais são as três que mais importam para você num parceiro?
-        Toque nelas na ordem.
-      </Lead>
       <LinkNotice received={received} />
-
-      <Top3Picker
-        traits={traits}
-        top3={top3}
-        onToggle={(id) =>
-          saveAndCount({ ...state, top3: toggleInTop3(top3, id) })
-        }
-      />
 
       <div
         className="sticky top-0 z-5 -mx-md mt-lg mb-0 border-b-2 border-tinta bg-papel px-md py-2.5 folha:-mx-16 folha:px-16"
@@ -139,6 +128,14 @@ function Calculator({ view }: { view: PrioritiesView }) {
           onChoose={(d) => saveAndCount({ ...state, outcome: d })}
         />
       </div>
+
+      <Top3Picker
+        traits={traits}
+        top3={top3}
+        onToggle={(id) =>
+          saveAndCount({ ...state, top3: toggleInTop3(top3, id) })
+        }
+      />
 
       {outcome === 'satisfacao' && <BeforeTheList split={view.bar} />}
 

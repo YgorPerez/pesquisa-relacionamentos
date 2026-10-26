@@ -228,6 +228,10 @@ export function Top3Picker({
       <h2 id="t-topo3" className={STEP_LABEL}>
         Seu topo 3
       </h2>
+      <p className="m-0 mb-md text-lead">
+        Das dez, quais são as três que mais importam para você num parceiro?
+        Toque nelas na ordem.
+      </p>
       <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
         {traits.map((trait) => {
           const i = top3.indexOf(trait.id)
