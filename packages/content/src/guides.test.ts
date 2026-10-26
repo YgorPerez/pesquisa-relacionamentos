@@ -2,6 +2,9 @@
 // Guide with its Chapters, inheritance from the fact sheets and the
 // publication rules of #7 and #10. The failing cases start from the valid
 // fixture and swap a single file.
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
 import {
@@ -456,16 +459,18 @@ describe('publication rules', () => {
   })
 
   it('a folder of Question files left in guides/ fails, so no Question disappears without a word', () => {
-    expect(
-      errorsOf(
-        buildLibrary([
-          ...validFiles(),
-          { path: 'guides/onde-conhecer/velha.md', text: '---\n---\n' },
-        ]),
-      ),
-    ).toEqual([
-      'guides/onde-conhecer/velha.md: a Guide is one file, guides/<topic>.md; the folders of Question files are gone (ADR 0042)',
-    ])
+    // On disk: the valid fixture with an old Question folder left over.
+    const root = mkdtempSync(join(tmpdir(), 'guides-'))
+    try {
+      cpSync(VALID, root, { recursive: true })
+      mkdirSync(join(root, 'guides/onde-conhecer'))
+      writeFileSync(join(root, 'guides/onde-conhecer/velha.md'), '---\n---\n')
+      expect(errorsOf(loadLibrary(root))).toEqual([
+        'guides/onde-conhecer/velha.md: a Guide is one file, guides/<topic>.md; the folders of Question files are gone (ADR 0042)',
+      ])
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
   })
 
   it('a topic slug equal to an app route fails', () => {
