@@ -3,8 +3,8 @@ reference: "Rhoades GK, Stanley SM, Markman HJ. *The pre-engagement cohabitation
 link: https://doi.org/10.1037/a0014358
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Amostra de 1.050 casados recrutados por listas telefônicas nos EUA, com controles de escolaridade, religiosidade e duração do casamento; o desenho transversal, a lembrança retrospectiva e a exclusão de quem já se divorciou limitam a interpretação."
+strength: weak
+strength_reason: "Amostra não representativa de 1.050 casados recrutados por listas telefônicas nos EUA; o desenho transversal, a lembrança retrospectiva e a exclusão dos casamentos já dissolvidos impedem inferir causalidade e limitam a generalização."
 countries: [EUA]
 period: "Data da coleta não informada no texto; casamentos entre 1996 e 2007"
 sample:
@@ -26,14 +26,14 @@ Uma entrevista telefônica comparou casados que começaram a morar juntos antes 
 
 ## Achados
 
-Quem morou junto antes de noivar relatou menor satisfação, dedicação e confiança do que quem começou depois do noivado. Comparado a quem esperou até casar, também relatou mais comunicação negativa. As diferenças eram pequenas. Amizade e satisfação sexual não diferiram claramente entre os grupos, nem houve diferença significativa em qualquer desfecho entre morar junto depois do noivado e esperar até casar.
+Quem morou junto antes de noivar relatou menor satisfação, dedicação e confiança do que quem começou depois do noivado. Quem morou junto antes de noivar também relatou mais comunicação negativa do que quem esperou até casar. As diferenças eram pequenas. Amizade e satisfação sexual não diferiram claramente entre os grupos, nem houve diferença significativa em qualquer desfecho entre morar junto depois do noivado e esperar até casar.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Já houve sugestão séria de divórcio, entre quem morou junto antes do noivado | 18,7% | Results, parágrafo sobre divorce potential | "suggested divorce (18.7%)" |
-| Mesmo indicador, entre quem só morou junto ao casar | 10,2%; diferença significativa em relação ao grupo anterior | Results, mesmo parágrafo | "did not live together premaritally (10.2%," |
-| Mesmo indicador, entre quem morou junto depois do noivado | 12,3%; diferença não significativa em relação a morar junto antes do noivado | Results, comparação before versus after engagement | "than those who cohabited after engagement (12.3%," |
-| Comunicação negativa, antes do noivado versus só ao casar, sem controles | d = 0,33 | Tabela 1, Negative communication, coluna Before vs. not until marriage, valor fora dos parênteses | ".33" |
+| Já houve sugestão séria de divórcio, entre quem morou junto antes do noivado | 18,7% | Results, parágrafo sobre divorce potential | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
+| Mesmo indicador, entre quem só morou junto ao casar | 10,2%; diferença significativa em relação ao grupo anterior | Results, mesmo parágrafo | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
+| Mesmo indicador, entre quem morou junto depois do noivado | 12,3%; diferença não significativa em relação a morar junto antes do noivado | Results, comparação before versus after engagement | "those who cohabited before engagement were not significantly more likely to have ever suggested divorce than those who cohabited after engagement (12.3%," |
+| Comunicação negativa, antes do noivado versus só ao casar, sem controles | d = 0,33 | Tabela 1, Negative communication, coluna Before vs. not until marriage, valor fora dos parênteses | "Negative communication 1.46 (.45) 1.39 (.34) 1.33 (.36) .18 (.13) .33" |
 | Mesma comparação, com controles | d = 0,25 | Tabela 1, mesma célula, valor entre parênteses; nota da tabela | "(.25" |
 
 O d expressa a diferença entre grupos em desvios-padrão; positivo aqui indica mais comunicação negativa em quem morou junto antes de noivar. Os controles foram duração do casamento, religiosidade e escolaridade. Idade e renda foram comparadas entre os grupos, mas não entraram como covariáveis nessas análises porque não diferiram significativamente.
@@ -43,7 +43,7 @@ Depois dos controles, a associação com ter sugerido divórcio permaneceu na co
 ## Limitações
 
 - Desenho transversal com histórico de coabitação lembrado depois. Os controles não eliminam outras diferenças entre quem começa a morar junto antes ou depois de noivar, e não permitem atribuir causa à coabitação ou confirmar a teoria da inércia.
-- Só casados no momento da entrevista. Quem se divorciou cedo ficou de fora, o que os autores apontam como possível subestimação das diferenças.
+- Só casados no momento da entrevista. Casamentos já dissolvidos ficaram de fora, o que os autores apontam como possível subestimação das diferenças.
 - O indicador de divórcio registra uma sugestão séria em qualquer momento anterior, sem medir se o casamento acabou nem estimar a probabilidade de acabar.
 - Listas telefônicas e disposição para responder limitam a representatividade, apesar do sorteio dentro dessas listas. A amostra era majoritariamente branca, jovem e dos EUA; não fornece estimativa para o Brasil.
 - Escalas curtas e algumas perguntas únicas limitam a precisão. Por erro de aplicação, amizade e satisfação sexual não foram perguntadas aos primeiros entrevistados.
