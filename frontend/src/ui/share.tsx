@@ -18,10 +18,13 @@ export function Share({
   notice,
   untitled = false,
   consent,
+  children,
 }: {
   /** What the visitor must agree to before something goes in the link (the
    * Possible group's sensitive Requirements): above the button. */
   consent?: ReactNode
+  /** What else goes out with the link: the Possible group's image. */
+  children?: ReactNode
   /** Without the "Compartilhar" title: the Guide has the #7 section order,
    * and this is not one of them. */
   untitled?: boolean
@@ -65,6 +68,7 @@ export function Share({
         </p>
       )}
       <CopyOutcome copy={copy} />
+      {children}
     </Section>
   )
 }

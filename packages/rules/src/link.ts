@@ -395,26 +395,38 @@ export interface PreviewCount {
   readonly result: { readonly min: number; readonly max: number }
 }
 
-/** "Entre 120 mil e 180 mil mulheres de 25 a 35 em SP". */
-export function groupPreview(
-  state: Extract<LinkState, { calculator: 'grupo-possivel' }>,
-  count: PreviewCount,
-  options: Pick<SentenceOptions, 'municipality'> = {},
-): Preview {
+type GroupLink = Extract<LinkState, { calculator: 'grupo-possivel' }>
+
+/** What the preview and the share image say about the group, without the
+ * sharer's gender or age: "mulheres de 25 a 35 em SP" and the other
+ * Requirements. */
+function soughtGroup(
+  state: GroupLink,
+  target: Sought['target'],
+  municipality: string | undefined,
+): { who: string; others: string[] } {
   const r = state.requirements ?? DEFAULT_REQUIREMENTS
-  const chosen = agesInSentence(r.age)
   const fromProfile = !r.age && state.profile?.age !== undefined
-  const title = [
-    formatRange(count.result.min, count.result.max),
-    TARGET_NAME[count.target],
-    chosen,
-    `${placeInSentence(r, options.municipality)}${fromProfile ? ', na idade procurada' : ''}`,
+  const who = [
+    TARGET_NAME[target],
+    agesInSentence(r.age),
+    `${placeInSentence(r, municipality)}${fromProfile ? ', na idade procurada' : ''}`,
   ]
     .filter(Boolean)
     .join(' ')
-  // Without the profile: `filhos` depends only on who is sought, which the
-  // title already says.
-  const others = otherRequirements({ seeks: state.profile?.seeks }, r)
+  // Without the profile: `filhos` depends only on who is sought, which `who`
+  // already says.
+  return { who, others: otherRequirements({ seeks: state.profile?.seeks }, r) }
+}
+
+/** "Entre 120 mil e 180 mil mulheres de 25 a 35 em SP". */
+export function groupPreview(
+  state: GroupLink,
+  count: PreviewCount,
+  options: Pick<SentenceOptions, 'municipality'> = {},
+): Preview {
+  const { who, others } = soughtGroup(state, count.target, options.municipality)
+  const title = `${formatRange(count.result.min, count.result.max)} ${who}`
   const description = [
     'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019.',
     others.length > 0 && `Também pediu: ${others.join(', ')}.`,
@@ -441,6 +453,44 @@ export function prioritiesPreview(
     description:
       top3Alert(traits, top3, outcome) ??
       `Para ${OUTCOME_NAME[outcome].toLowerCase()}, a evidência não põe nenhuma delas em "quase nada" ou "não sabemos".`,
+  }
+}
+
+// --- the share image (#302) -----------------------------------------------------
+// The image to post next to the link. It reads the link's own query, so it
+// can only show what the link carries: a Requirement left out of the link
+// stays out of the image too. Like the preview, never the sharer's gender
+// or age. Nor a score or a pickiness label: just the count.
+
+/** The share image's text: "Entre" + "120 mil e 180 mil" in pink, then
+ * "mulheres de 25 a 35 em SP" and the other Requirements. */
+export interface GroupImage {
+  readonly before: 'Entre' | 'Cerca de'
+  readonly numbers: string
+  readonly unstable: boolean
+  readonly who: string
+  readonly also: ReadonlyArray<string>
+}
+
+/** The image's text for the link `query` (without the `?`); `null` if the
+ * query is not a Possible group link. `count` is the count of what the link
+ * carries. */
+export function groupImage(
+  query: string,
+  count: PreviewCount & { readonly result: { readonly unstable: boolean } },
+  options: Pick<SentenceOptions, 'municipality'> = {},
+): GroupImage | null {
+  const state = readLink('grupo-possivel', query)
+  if (state?.calculator !== 'grupo-possivel') return null
+  const { who, others } = soughtGroup(state, count.target, options.municipality)
+  const range = formatRange(count.result.min, count.result.max)
+  const about = range.startsWith('cerca de ')
+  return {
+    before: about ? 'Cerca de' : 'Entre',
+    numbers: range.replace(/^(cerca de|entre) /, ''),
+    unstable: count.result.unstable,
+    who,
+    also: others,
   }
 }
 

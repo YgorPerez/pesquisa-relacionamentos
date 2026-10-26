@@ -29,6 +29,7 @@ import {
   type Requirements,
 } from '@tem-estudo/rules/requirements'
 import {
+  groupImage,
   isLink,
   linkSentence,
   linkQuery,
@@ -42,10 +43,12 @@ import { useReceivedLink } from '#/state/link'
 import { Share } from '#/ui/share'
 import { COUNTING_NOTICE } from '#/ui/share.copy'
 import { SensitiveConsent } from '#/ui/share-consent'
+import { ShareImage } from '#/ui/share-image'
 import {
   saveRequirements,
   PLACES_WITH_DATA,
   usePossibleGroup,
+  useSharedEstimate,
   useSavedRequirements,
   type BrowserCount,
 } from '#/state/possible-group'
@@ -138,6 +141,16 @@ function PossibleGroupPage() {
     { calculator: 'grupo-possivel', profile, requirements: saved },
     consent,
   )
+  const query = linkQuery(shared.state)
+  // The image reads the link itself, so it shows only what the link carries,
+  // with the count of that: without the sensitive Requirements left out.
+  const sharedEstimate = useSharedEstimate(
+    profile,
+    shared.state.requirements,
+    shared.leftOut.length > 0,
+  )
+  const imageCount = shared.leftOut.length > 0 ? sharedEstimate : count.estimate
+  const image = imageCount && groupImage(query, imageCount, { municipality })
 
   return (
     <Sheet>
@@ -159,7 +172,7 @@ function PossibleGroupPage() {
         />
 
         <Share
-          query={linkQuery(shared.state)}
+          query={query}
           sentence={linkSentence(shared.state, {
             municipality,
             leftOut: shared.leftOut,
@@ -176,7 +189,9 @@ function PossibleGroupPage() {
               />
             )
           }
-        />
+        >
+          {image && <ShareImage image={image} />}
+        </Share>
 
         {guide && <FromTheGuide guide={guide} />}
       </Column>

@@ -6,6 +6,10 @@ import {
 } from '@tem-estudo/rules/requirements'
 import { screen, waitFor, within } from '@testing-library/react'
 import { expect } from 'vite-plus/test'
+import { openScreen } from './open-screen'
+
+/** The Possible group screen, as a first visit opens it. */
+export const openPossibleGroup = () => openScreen('/grupo-possivel')
 
 /** The range of the number pinned at the top ("entre … e …"). */
 export const range = () =>
