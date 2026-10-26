@@ -58,4 +58,4 @@ A distribuição do número de parceiros também se ampliou, com aumentos na cau
 
 ## Como usamos
 
-O relatório [Leituras conferidas](../reports/2026-10-26-leituras-conferidas.md), na Leitura sobre apps e economia do desejo, usa o estudo para a ressalva sobre violência sexual e ISTs. A versão publicada exige distinguir membros de fraternidades e sororidades dos demais estudantes ao discutir formação de relacionamentos e agressões. Para a Pergunta `apps-fazem-mal`, o estudo acrescenta evidência com desenho causal sem piora média de saúde mental nesse contexto; não permite concluir que todo app seja inofensivo ou benéfico.
+O relatório [Leituras conferidas](../reports/2026-10-26-leituras-conferidas.md), na Leitura sobre apps e economia do desejo, usa o estudo para a ressalva sobre violência sexual e ISTs.
