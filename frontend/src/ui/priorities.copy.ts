@@ -6,6 +6,10 @@ import type { PercentRange } from '@tem-estudo/content'
 import { decimal } from '@tem-estudo/rules/numbers'
 import { shareWord } from '@tem-estudo/rules/priorities'
 
+/** The top 3 step's question, under "Seu topo 3". */
+export const TOP3_QUESTION =
+  'Das dez, quais são as três que mais importam para você num parceiro? Toque nelas na ordem.'
+
 /** "0% a 1,9%". */
 const percentRange = ({ min, max }: PercentRange) =>
   `${decimal(min)}% a ${decimal(max)}%`

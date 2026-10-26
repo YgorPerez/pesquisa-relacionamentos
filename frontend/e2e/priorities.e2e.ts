@@ -3,7 +3,11 @@
 // fixture's Fact sheets. In satisfaction: "pesa" has sexual chemistry; "quase
 // nada", being alike; "não sabemos", income, education, religion and age.
 import { expect, test, type Page } from '@playwright/test'
-import { barLabel, cardTop3Lead } from '../src/ui/priorities.copy'
+import {
+  TOP3_QUESTION,
+  barLabel,
+  cardTop3Lead,
+} from '../src/ui/priorities.copy'
 import { tap } from './touch'
 
 /** The fixture's Joel 2020 bar. */
@@ -26,6 +30,17 @@ const saved = (page: Page) =>
   page.evaluate(() =>
     JSON.parse(localStorage.getItem('tem-estudo:priorities') ?? 'null'),
   )
+
+/** "Pesa para quê?" sits above the top 3, and the top 3 step carries its
+ * question (#286). */
+async function expectOutcomeBeforeTop3(page: Page) {
+  const outcome = await page
+    .getByRole('radiogroup', { name: 'Pesa para quê?' })
+    .boundingBox()
+  const top3 = await chips(page).boundingBox()
+  expect(outcome!.y).toBeLessThan(top3!.y)
+  await expect(chips(page).getByText(TOP3_QUESTION)).toBeVisible()
+}
 
 /** The page hydrates before the first tap, so the click is not lost. */
 async function open(page: Page, path = '/prioridades') {
@@ -182,16 +197,7 @@ test.describe('/prioridades', () => {
 
   test('the page asks for the outcome before the top 3', async ({ page }) => {
     await open(page)
-    const outcome = await page
-      .getByRole('radiogroup', { name: 'Pesa para quê?' })
-      .boundingBox()
-    const top3 = await chips(page).boundingBox()
-    expect(outcome!.y).toBeLessThan(top3!.y)
-    await expect(
-      chips(page).getByText(
-        'Das dez, quais são as três que mais importam para você num parceiro?',
-      ),
-    ).toBeVisible()
+    await expectOutcomeBeforeTop3(page)
   })
 
   test('the outcome picker sticks to the top on scroll', async ({ page }) => {
@@ -354,5 +360,14 @@ test.describe('B1 Guide card', () => {
     await expect(
       page.getByRole('region', { name: 'Onde ficam as suas prioridades?' }),
     ).toHaveCount(0)
+  })
+})
+
+test.describe('/prioridades without JavaScript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('the page asks for the outcome before the top 3', async ({ page }) => {
+    await page.goto('/prioridades')
+    await expectOutcomeBeforeTop3(page)
   })
 })
