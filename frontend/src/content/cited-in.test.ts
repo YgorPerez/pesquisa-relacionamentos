@@ -5,7 +5,7 @@
 import { resolve } from 'node:path'
 import { loadLibrary } from '@tem-estudo/content'
 import { describe, expect, it } from 'vite-plus/test'
-import { citedIn } from './guide-view'
+import { citedIn } from './cited-in'
 
 const result = loadLibrary(resolve(import.meta.dirname, '../../e2e/library'))
 if (!result.ok) throw new Error('invalid e2e fixture')

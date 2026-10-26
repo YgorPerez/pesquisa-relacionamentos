@@ -13,7 +13,7 @@ import {
   type FactSheetSummary,
   type FactSheetView,
 } from './view'
-import { citedIn, type CitedIn } from './guide-view'
+import { citedIn, type CitedIn } from './cited-in'
 
 const STATUS_ORDER: ReadonlyArray<string> = VERIFICATION_STATUSES
 
