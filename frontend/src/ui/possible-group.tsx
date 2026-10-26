@@ -59,8 +59,7 @@ export function EstimateRange({ estimate }: { estimate: Estimate }) {
       className="m-0 mt-0.5 font-headline text-headline leading-tight"
       data-slot="gp-faixa"
     >
-      {before}{' '}
-      <mark className="numero-chave">{numbers}</mark>
+      {before} <mark className="numero-chave">{numbers}</mark>
       {unstable && (
         <span className="ml-2.5 inline-block rounded-mao-2 border-(length:--traco-controle) fio-tracejado border-tinta px-2 py-0 align-[3px] font-label text-label leading-tight font-bold tracking-normal">
           instável

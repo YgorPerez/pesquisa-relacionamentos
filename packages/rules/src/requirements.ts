@@ -242,10 +242,7 @@ export const sensitiveList = (
  * 2019", or "a PNS 2019" with `article`): the Census and the PNS always (the
  * PNS gives the orientation), the PNAD Contínua only with office on
  * (#294). */
-export function surveysOf(
-  r: Requirements,
-  { article = false } = {},
-): string[] {
+export function surveysOf(r: Requirements, { article = false } = {}): string[] {
   const surveys = [
     ['o', 'Censo 2022'],
     ['a', 'PNS 2019'],

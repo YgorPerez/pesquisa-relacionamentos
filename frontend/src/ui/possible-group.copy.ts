@@ -13,7 +13,6 @@ import {
   type SensitiveRequirement,
 } from '@tem-estudo/rules/requirements'
 
-
 /** The Requirements whose title alone ("Pais", "Casa") does not say what
  * they ask, written as in a sentence. */
 const NOUN: Partial<Record<RequirementId, string>> = {

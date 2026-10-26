@@ -9,5 +9,4 @@ export const andList = (items: ReadonlyArray<string>): string =>
   AND.format(items)
 
 /** "preta, parda ou branca". */
-export const orList = (items: ReadonlyArray<string>): string =>
-  OR.format(items)
+export const orList = (items: ReadonlyArray<string>): string => OR.format(items)
