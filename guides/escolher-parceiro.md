@@ -234,7 +234,7 @@ findings:
     fact_sheets: [apostolou-2020-motivos-solteiro]
     period: publicado em 2020
   - id: rejeitar-menos-de-verdade
-    text: Num experimento com 132 solteiros, diante de um pretendente pouco atraente, 16% aceitaram trocar contato quando a situação era imaginária e 37% quando acreditavam que era real. Um segundo experimento, com um pretendente que tinha traços eliminatórios para a pessoa, repetiu a diferença (46% contra 74%). O que pesou foi a vontade de não magoar o outro.
+    text: Num experimento com 132 solteiros, diante de um pretendente pouco atraente, 16% aceitaram trocar contato quando a situação era imaginária e 37% quando acreditavam que era real. Um segundo experimento, com um pretendente que tinha traços eliminatórios para a pessoa, repetiu a diferença (46% contra 74%). Parte da diferença veio da vontade de não magoar o pretendente.
     fact_sheets: [joel-2014-rejeicao-real-hipotetica]
     period: publicado em 2014
   - id: ideal-baixa-com-o-parceiro
@@ -242,7 +242,7 @@ findings:
     fact_sheets: [gerlach-2019-preferencias-proximo-parceiro]
     period: publicado em 2019
   - id: ideal-rigido
-    text: Em dois estudos com universitários americanos que namoravam, um parceiro longe do ideal pesou mais na satisfação de quem tinha um ideal pouco flexível. O efeito apareceu em dois dos três traços em cada estudo, e não nos mesmos, e continuou depois de descontar o quanto o ideal era alto.
+    text: Em dois estudos com universitários americanos que namoravam, um parceiro longe do ideal pesou mais na satisfação de quem tinha um ideal pouco flexível. O efeito apareceu em dois dos três traços em cada estudo (num deles, só no limite da significância), e não nos mesmos, e continuou depois de descontar o quanto o ideal era alto.
     fact_sheets: [campbell-2001-ideal-flexivel]
     period: publicado em 2001
   - id: perfeccionismo-com-o-parceiro
