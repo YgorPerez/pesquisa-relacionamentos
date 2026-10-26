@@ -23,7 +23,7 @@ Das 12 Leituras, 11 ficaram. A Leitura 9 (o modelo matemático de Rey e Herrera)
 | Leitura | Decisão | Ressalva ou motivo |
 |---|---|---|
 | 1. Pew, online dating | fica | Todos os números batem com o relatório do Pew. |
-| 2. The Conversation, apps e economia do desejo | fica com Ressalva | O estudo de 2026 também achou mais agressões sexuais e ISTs, o que o texto omite. |
+| 2. The Conversation, apps e economia do desejo | fica com Ressalva | O estudo de 2026 também achou mais agressão sexual e clamídia entre membros de fraternidades e sororidades, o que o texto omite. |
 | 3. Greater Good, Thouin | fica com Ressalva | Conhecer pela internet é o caminho mais comum nos EUA, mas não o da maioria (39%). |
 | 4. Psychology Today, Stanley sobre Joel 2020 | fica | O resumo do estudo confere. Ganhou o aviso de causa do IFS. |
 | 5. Greater Good, Gordon | fica com Ressalva | A semelhança ainda pesa depois de uma conversa curta. |
@@ -71,7 +71,7 @@ Estudos pagos: nenhum. Fichas a fazer: nenhuma.
 
 ## 2. The Conversation Brasil: Como os apps de namoro afetam os relacionamentos e a economia do desejo
 
-**Nosso texto.** Descrição: "Um professor da PUC-Rio junta estudos sobre o que os apps mudaram no namoro: mais sexo casual, atenção mais desigual, nenhum ganho claro em relações estáveis e efeitos mistos na saúde mental." Aviso comercial: "O autor tem uma empresa que vende cursos online, a Garagem Psi." Ressalva: "O estudo de 2026 com universitários dos EUA também achou mais agressões sexuais e mais ISTs depois da chegada do Tinder, o que o texto não conta."
+**Nosso texto.** Descrição: "Um professor da PUC-Rio junta estudos sobre o que os apps mudaram no namoro: mais sexo casual, atenção mais desigual, nenhum ganho claro em relações estáveis e efeitos mistos na saúde mental." Aviso comercial: "O autor tem uma empresa que vende cursos online, a Garagem Psi." Ressalva: "O estudo de 2026 também achou mais relatos de agressão sexual e de clamídia entre membros de fraternidades e sororidades depois da chegada do Tinder, o que o texto não conta."
 
 A descrição antiga punha na manchete "ter mais opções não deixou as pessoas claramente mais satisfeitas", uma inferência do autor que nenhum estudo citado mede. O aviso comercial vem da biografia na própria página: "possui a empresa Garagem Psi, voltada para divulgação científica e oferta de cursos online".
 
@@ -85,11 +85,11 @@ A descrição antiga punha na manchete "ter mais opções não deixou as pessoas
 | Em alguns estudos, mais comportamento sexual de risco | [Shapiro et al. 2017](https://doi.org/10.1089/cyber.2017.0279) | confere (sexo não consentido OR 3,22; cinco ou mais parceiros OR 2,81; uso de camisinha sem diferença) | 🟡 | nenhuma |
 | "Revisões sobre Tinder e saúde sexual" | [Blanc 2023](https://doi.org/10.1007/s13178-023-00883-3) | exagera: não é revisão nem é sobre Tinder; é uma pesquisa com 2.288 espanhóis em que os usuários usam *mais* camisinha | ✅ | nenhuma |
 | Os resultados se repetem no Brasil | [Martinez et al. 2025](https://doi.org/10.47626/2237-6089-2023-0746) | exagera: um estudo, 487 estudantes de um campus da USP | ✅ | nenhuma |
-| Estudo de 2026, 1,1 milhão de respostas: mais atividade sexual sem mais relações estáveis | [Büyükeren, Makarin & Xiong 2026](https://doi.org/10.1257/app.20240455) | confere | ✅ (working paper) | nenhuma |
-| Mesmo estudo: a saúde mental não piorou e melhorou um pouco entre as mulheres | idem | confere, mas omite que o mesmo resumo acha "sexual assault and STDs" em alta (é a Ressalva) | ✅ | nenhuma |
+| Estudo de 2026, 1,1 milhão de respostas: mais atividade sexual sem mais relações estáveis | [Büyükeren, Makarin & Xiong 2026](../studies/buyukeren-2026-tinder.md) | confere | ✅ | nenhuma |
+| Mesmo estudo: a saúde mental não piorou e melhorou um pouco entre as mulheres | idem | confere, mas omite que o estudo acha mais relatos de agressão sexual (+1,9 ponto) e de clamídia (+0,6 ponto) entre membros de fraternidades e sororidades, comparados aos outros estudantes; na análise por instituição, a agressão não sobe de forma significativa (é a Ressalva) | ✅ | nenhuma |
 | Deslizar mais não garante mais matches; mulheres recebem mais curtidas | [Timmermans & Courtois 2018](https://doi.org/10.1080/01972243.2017.1414093) | confere, com uma palavra trocada: o estudo fala de matches, não de curtidas | 🟡 | nenhuma |
 | Parte da literatura liga o uso de app a pior saúde mental, quase tudo correlacional | [Sharabi, Ou, Von Feldt & Parsons 2026](https://doi.org/10.1016/j.chb.2025.108879) | confere até onde deu (por um resumo secundário: 23 estudos, mais de 26 mil pessoas, direção incerta) | ⬜ | nenhuma |
-| Revisões: efeito negativo consistente na imagem corporal, misto na saúde mental | [Bonilla-Zorita, Griffiths & Kuss 2020](https://doi.org/10.1007/s11469-020-00318-9) | afirmação certa, citação errada: o achado é de [Bowman et al. 2025](https://doi.org/10.1016/j.chb.2024.108515) (85% x 48,6% dos estudos), que a página não linka | ✅ | nenhuma |
+| Revisões: efeito negativo consistente na imagem corporal, misto na saúde mental | [Bonilla-Zorita, Griffiths & Kuss 2020](https://doi.org/10.1007/s11469-020-00318-9) | afirmação certa, citação errada: o achado é de [Bowman et al. 2025](../studies/bowman-2025-apps-saude.md) (86,4% x 48,3% dos estudos nos resultados; o resumo diz 48,6%), que a página não linka | ✅ | nenhuma |
 
 Afirmações sem fonte:
 
