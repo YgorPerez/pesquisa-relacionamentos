@@ -34,6 +34,15 @@ export default defineConfig({
     // The Chrome installed on the machine, without downloading a browser. The
     // GitHub Actions ubuntu image already has Google Chrome.
     channel: 'chrome',
+    // The e2e build counts on localhost (`VITE_COUNT_ON_LOCALHOST`, below),
+    // and since stats.temestudo.cloud went live its `keepalive` send never
+    // settles for Playwright: every `waitUntil: 'networkidle'` waited out the
+    // 30 s timeout. Chrome never resolves the host, so the send fails at
+    // once and no test counts on the real GoatCounter. The specs that
+    // intercept it with `page.route` still see it: routing runs first.
+    launchOptions: {
+      args: ['--host-resolver-rules=MAP stats.temestudo.cloud ~NOTFOUND'],
+    },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
