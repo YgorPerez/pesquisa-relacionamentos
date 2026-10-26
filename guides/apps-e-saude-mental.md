@@ -4,12 +4,15 @@ position: 60
 questions:
   - slug: apps-fazem-mal
     question: Usar apps de namoro faz ==mal== à saúde mental?
-    answer: Não dá para dizer que faz. Quem usa app de namoro está, em média, ==um pouco pior== de saúde mental do que quem não usa, sobretudo no uso compulsivo e na preocupação com o corpo [@cela-2026-meta-analise-apps]. Quase todos os estudos olharam um momento só, e os autores dizem que não dá para saber se o app piora a pessoa ou se quem já está pior usa mais o app [@cela-2026-meta-analise-apps]. Não achamos estudo brasileiro.
+    answer: Não dá para dizer que faz. Quem usa app está, em média, ==um pouco pior== de saúde mental, mas quase todos os estudos olharam um momento só, e não dá para saber se o app piora a pessoa ou se quem já está pior usa mais o app [@cela-2026-meta-analise-apps]. Quando o Tinder chegou às universidades dos EUA, a saúde mental média dos membros de fraternidades e sororidades melhorou em comparação com a dos outros estudantes, mas os relatos de agressão sexual entre eles aumentaram [@buyukeren-2026-tinder]. Não achamos estudo brasileiro.
     confidence: moderate
     findings:
       [
         usuarios-um-pouco-pior,
         pior-no-uso-compulsivo,
+        imagem-corporal-na-revisao,
+        saude-mental-apos-o-lancamento,
+        danos-apos-o-lancamento,
         aparencia-mulheres,
         aparencia-homens-gays,
         australia-acima-do-corte,
@@ -20,7 +23,7 @@ questions:
       ]
   - slug: ver-perfis-demais
     question: Ver perfis ==demais== atrapalha?
-    answer: Pode atrapalhar a escolha, pelo que se viu em laboratório. Ao longo de uma sequência de fotos de possíveis parceiros, a chance de aceitar alguém caiu ==27% em média== do primeiro ao último perfil, e quem recusou mais ficou menos satisfeito até com quem aceitou [@pronk-2020-mentalidade-rejeicao]. Esses estudos medem escolha, não saúde mental, e usaram fotos numa tarefa, não um app de verdade. Não achamos estudo brasileiro.
+    answer: Pode atrapalhar a escolha, pelo que se viu em laboratório. Ao longo de uma sequência de fotos, a chance de aceitar alguém caiu ==27% em média== do primeiro ao último perfil [@pronk-2020-mentalidade-rejeicao]. Em outro experimento, escolher entre 24 perfis deixou os participantes menos satisfeitos uma semana depois do que escolher entre 6, antes de qualquer contato [@dangelo-2017-excesso-opcoes]. Esse resultado não testa se limitar o uso de um app comercial melhora a saúde mental [@dangelo-2017-excesso-opcoes]. Não achamos estudo brasileiro.
     confidence: moderate
     findings:
       [
@@ -33,6 +36,7 @@ questions:
         match-das-mulheres-caiu,
         muitos-matches-excesso,
         curtir-mais-excesso,
+        mais-perfis-menos-satisfacao,
       ]
   - slug: silencio-do-app
     question: O silêncio do app pesa mais para os ==homens==?
@@ -81,6 +85,19 @@ findings:
     fact_sheets: [cela-2026-meta-analise-apps]
     country: vários, a maioria da América do Norte
     period: estudos de 2012 a 2025
+  - id: imagem-corporal-na-revisao
+    text: Numa revisão de 45 estudos, 86,4% dos 22 sobre imagem corporal e 48,3% dos 29 sobre saúde mental e bem-estar encontraram associações adversas com o uso de apps. São parcelas de estudos, não de usuários; a revisão não estima um efeito conjunto nem estabelece causa.
+    fact_sheets: [bowman-2025-apps-saude]
+  - id: saude-mental-apos-o-lancamento
+    text: Um experimento natural sobre o lançamento do Tinder encontrou melhora média no índice de saúde mental entre membros de fraternidades e sororidades dos EUA, em comparação com a mudança entre os demais estudantes. A interpretação causal depende de tendências paralelas; o uso individual do app não foi medido.
+    fact_sheets: [buyukeren-2026-tinder]
+    country: EUA
+    period: 2008 a 2019
+  - id: danos-apos-o-lancamento
+    text: Na mesma comparação, houve mais atividade sexual, mais relatos de agressão sexual e mais diagnósticos ou tratamentos de clamídia. A melhora média de saúde mental não significa ausência de danos individuais; o aumento de clamídia pode refletir mais infecções ou mais testagem.
+    fact_sheets: [buyukeren-2026-tinder]
+    country: EUA
+    period: 2008 a 2019
   - id: aparencia-mulheres
     text: As usuárias mostraram mais vulnerabilidade na aparência e no corpo.
     fact_sheets: [cela-2026-meta-analise-apps]
@@ -144,6 +161,10 @@ findings:
   - id: curtir-mais-excesso
     text: No mesmo experimento, quem curtiu mais perfis também sentiu mais excesso de opções. Essa parte não foi sorteada.
     fact_sheets: [thomas-2024-matches-solidao]
+  - id: mais-perfis-menos-satisfacao
+    text: Num experimento com universitários dos EUA, 99 deles na análise, escolher entre 24 perfis em vez de 6 reduziu a satisfação com a escolha uma semana depois, antes de qualquer contato. A diferença não foi significativa logo após a escolha. O estudo não testou saúde mental nem limitar o uso de apps comerciais.
+    fact_sheets: [dangelo-2017-excesso-opcoes]
+    country: EUA
   - id: homens-inseguros
     text: Entre os homens que usaram site ou app de namoro no último ano, 64% se sentiram inseguros por receber poucas mensagens, contra 40% das mulheres.
     fact_sheets: [pew-2023-2020-online-dating]
@@ -253,6 +274,19 @@ visuals:
         fact_sheet: cela-2026-meta-analise-apps
     highlight: Média de todas as medidas
     note: DP é desvio-padrão; 0,2 DP é uma diferença pequena, e 0,5, média
+  - id: estudos-com-associacoes-adversas
+    kind: bars
+    title: Parcela de estudos que encontrou associações adversas com o uso de apps
+    unit: '%'
+    bars:
+      - label: Imagem corporal (19 de 22 estudos)
+        value: 86.4
+        fact_sheet: bowman-2025-apps-saude
+      - label: Saúde mental e bem-estar (14 de 29 estudos)
+        value: 48.3
+        fact_sheet: bowman-2025-apps-saude
+    highlight: Imagem corporal (19 de 22 estudos)
+    note: conta estudos, não pessoas; não mede a chance de sofrer dano nem o tamanho do efeito
   - id: o-que-veio-antes
     kind: diagram
     title: Por que quem usa app aparece pior nas pesquisas
@@ -397,7 +431,7 @@ related:
 
 O app de namoro entrega rejeição em quantidade. Numa noite, você recusa dezenas de perfis, espera um match que não vem e vê uma conversa morrer no meio. Este Guia pergunta o que isso faz com a cabeça de quem usa e o que dá para fazer a respeito. Quem usa app está, em média, um pouco pior de saúde mental, e os estudos não dizem se o app causa isso [@cela-2026-meta-analise-apps]. Recusar perfil atrás de perfil deixa a escolha mais difícil [@pronk-2020-mentalidade-rejeicao]. Os homens contam mais silêncio no app, e as mulheres, mais excesso [@pew-2023-2020-online-dating]. Ser rejeitado dói na hora e alivia em parte em minutos [@hartgerink-2015-ostracismo-cyberball], e mais de quatro em cada dez términos de namoro trazem uma piora clara no bem-estar [@rhoades-2011-termino-saude-mental]. Quase todos esses estudos olharam um momento só, e nenhum é brasileiro.
 
-## Quem usa app está um pouco pior, e os estudos não dizem o que veio antes
+## Quem usa app está um pouco pior, e o que veio antes ainda é dúvida
 
 A maior síntese que achamos é uma meta-análise de 2026. Ela juntou 27 estudos, com 21.263 pessoas, que comparam quem usa app de deslizar, como Tinder, Bumble, Grindr e Hinge, com quem não usa [@cela-2026-meta-analise-apps]. Os usuários estavam um pouco pior. Na média de todas as medidas, a diferença foi de 0,28 desvio-padrão, o que a estatística chama de efeito pequeno: os dois grupos se sobrepõem muito, e o usuário típico fica só um pouco abaixo do não usuário típico. Os estudos também variam muito entre si, e em todas as medidas a faixa de resultados esperados para um estudo novo inclui zero, ou seja, em alguns contextos a diferença pode nem existir [@cela-2026-meta-analise-apps].
 
@@ -405,11 +439,19 @@ A diferença não é igual em tudo. Foi maior no uso compulsivo, do app ou de se
 
 {{visual:diferenca-por-medida}}
 
-Um dos estudos dá uma ideia do que isso quer dizer em gente. Na Austrália, 20,2% de quem usava app de deslizar passou do ponto de corte de sofrimento psicológico, contra 7,5% de quem não tinha usado nos últimos seis meses. Em depressão, foram 19,4% contra 9,4% [@holtzhausen-2020-apps-saude-mental]. A diferença continuou depois de descontar idade, gênero e orientação; em ansiedade e autoestima, não houve diferença clara. Quem usava todo dia tinha quase quatro vezes a chance de sofrimento psicológico de quem nunca usou, mas esse número não desconta nada e vem de grupos pequenos. O estudo tinha só 129 usuários, mediu depressão e ansiedade com duas perguntas cada, e parte da amostra veio de grupos de namoro do Facebook [@holtzhausen-2020-apps-saude-mental].
+Outra revisão, com 45 estudos, encontrou associações adversas em 86,4% dos 22 estudos sobre imagem corporal e em 48,3% dos 29 sobre saúde mental e bem-estar [@bowman-2025-apps-saude]. São percentuais de estudos, não de pessoas: não quer dizer que 86,4% dos usuários fiquem insatisfeitos com o corpo, nem que 48,3% adoeçam [@bowman-2025-apps-saude]. A revisão não calculou o tamanho do efeito, a contagem não pesa quão grande ou preciso foi cada resultado, e um mesmo estudo podia entrar nos dois grupos [@bowman-2025-apps-saude]. A maioria dos estudos mediu um momento só, então a revisão também não diz se o app causa o problema [@bowman-2025-apps-saude].
+
+{{visual:estudos-com-associacoes-adversas}}
+
+Um dos estudos da meta-análise dá uma ideia do que isso quer dizer em gente. Na Austrália, 20,2% de quem usava app de deslizar passou do ponto de corte de sofrimento psicológico, contra 7,5% de quem não tinha usado nos últimos seis meses. Em depressão, foram 19,4% contra 9,4% [@holtzhausen-2020-apps-saude-mental]. A diferença continuou depois de descontar idade, gênero e orientação; em ansiedade e autoestima, não houve diferença clara. Quem usava todo dia tinha quase quatro vezes a chance de sofrimento psicológico de quem nunca usou, mas esse número não desconta nada e vem de grupos pequenos. O estudo tinha só 129 usuários, mediu depressão e ansiedade com duas perguntas cada, e parte da amostra veio de grupos de namoro do Facebook [@holtzhausen-2020-apps-saude-mental].
 
 O problema é saber o que veio antes. Quase todos os 27 estudos mediram o uso do app e a saúde mental no mesmo momento; só uma parte menor acompanhou pessoas no tempo ou fez experimento [@cela-2026-meta-analise-apps]. Com esse desenho, o app pode piorar a pessoa, ou quem já está pior pode usar mais o app. Os autores da meta-análise lembram que gente mais impulsiva pode procurar mais os apps [@cela-2026-meta-analise-apps], e os do estudo australiano, que gente mais ansiosa ou deprimida pode preferir o app a abordar alguém pessoalmente [@holtzhausen-2020-apps-saude-mental]. Os próprios autores da meta-análise concluem que não dá para separar uma coisa da outra.
 
 {{visual:o-que-veio-antes}}
+
+Um estudo tentou chegar mais perto da causa. Um experimento natural comparou a mudança entre membros de fraternidades e sororidades dos EUA, que receberam mais divulgação do Tinder, com a dos demais estudantes da mesma instituição e semestre, antes e depois do lançamento amplo em 2013 [@buyukeren-2026-tinder]. Nessa comparação, o índice de saúde mental ruim no último mês caiu, em média, entre os membros. Quando a comparação foi entre instituições, a estimativa ficou imprecisa e sem mudança estatisticamente significativa [@buyukeren-2026-tinder]. A leitura causal depende de os grupos terem seguido tendências paralelas sem o lançamento, e o estudo não mediu quem usava o Tinder individualmente [@buyukeren-2026-tinder].
+
+No mesmo período, os membros passaram a relatar mais atividade sexual, mais relatos de agressão sexual e mais diagnósticos ou tratamentos de clamídia entre membros das organizações, sempre em comparação com os demais estudantes [@buyukeren-2026-tinder]. O aumento de clamídia pode refletir mais infecções ou mais testagem; o estudo não separa as duas explicações [@buyukeren-2026-tinder]. A melhora média não quer dizer que o app seja inofensivo nem que ninguém tenha sido prejudicado, e não diz o que acontecerá com alguém que instalar ou apagar um app hoje [@buyukeren-2026-tinder]. São graduandos dos EUA, sem base para generalizar ao Brasil ou a outras idades [@buyukeren-2026-tinder].
 
 {{myth:app-causa-depressao}}
 
@@ -431,11 +473,13 @@ O que mais pesou foi o número de recusas já feitas, mais que o de perfis visto
 
 {{visual:por-que-o-sim-fica-raro}}
 
+Um experimento mudou o número de opções por sorteio: participantes escolheram uma pessoa entre 6 ou 24 perfis, num site criado para a pesquisa [@dangelo-2017-excesso-opcoes]. Entre os 99 universitários dos EUA que entraram na análise, quem teve 24 opções ficou menos satisfeito com a escolha uma semana depois do que quem teve 6; logo após escolher, a diferença não foi significativa [@dangelo-2017-excesso-opcoes]. Ninguém tinha tido contato com a pessoa escolhida, então o estudo mede satisfação com um perfil, não com um encontro ou uma relação [@dangelo-2017-excesso-opcoes]. A amostra era pequena e houve exclusões depois do sorteio, inclusive de quem não voltou à segunda sessão [@dangelo-2017-excesso-opcoes].
+
 Homens e mulheres reagiram de jeitos diferentes. Os homens aceitaram mais perfis nos três estudos, de 19% a 34% mais que as mulheres, e neles a queda foi mais fraca, igual ou ausente, conforme o estudo. No único estudo com parceiros de verdade, em que quem dava match recebia o contato do outro, a chance de match das mulheres caiu 70% ao longo da tarefa, e a dos homens não caiu de forma significativa [@pronk-2020-mentalidade-rejeicao].
 
 Muitos matches também atrapalham, de outro jeito. Num experimento em Viena, 125 universitárias avaliaram 31 perfis, e um sorteio decidiu se cada perfil aceito virava match quase sempre ou quase nunca [@thomas-2024-matches-solidao]. {{you:muitos-matches-excesso}} As que receberam match em quase todo perfil sentiram mais excesso de opções do que as que quase não receberam. Quem curtiu mais perfis também sentiu mais excesso, mas essa parte não foi sorteada. Foi uma sessão só, e mais da metade das participantes nunca tinha usado app de namoro [@thomas-2024-matches-solidao].
 
-Os estudos com fotos não mediram saúde mental. Mediram escolhas, satisfação com as opções e otimismo, numa tarefa sem conversa nem perfil escrito [@pronk-2020-mentalidade-rejeicao]. Levar o achado para o seu app é inferência: o que se viu numa sessão de laboratório pode ou não valer para semanas de uso. Para quem procura alguém do mesmo sexo, nenhum deles traz resultado. {{brazil}} Também não achamos estudo brasileiro sobre isso; como o gesto de deslizar é o mesmo em qualquer país, a direção do achado deve valer aqui, mas é inferência nossa.
+Os estudos com fotos mediram escolhas, satisfação com as opções e otimismo, numa tarefa sem conversa nem perfil escrito, sem medir saúde mental [@pronk-2020-mentalidade-rejeicao]. O experimento com 6 ou 24 perfis também não mediu saúde mental nem testou se limitar o uso de um app comercial ajuda [@dangelo-2017-excesso-opcoes]. A Dica de limitar a busca, logo abaixo, é inferência nossa: nenhum dos dois testou se parar a sessão protege quem usa [@pronk-2020-mentalidade-rejeicao] [@dangelo-2017-excesso-opcoes]. Nos dois, os participantes procuravam alguém do outro sexo, nos EUA ou na Holanda; para quem procura alguém do mesmo sexo, não há resultado [@pronk-2020-mentalidade-rejeicao] [@dangelo-2017-excesso-opcoes]. {{brazil}} Não achamos estudo brasileiro sobre isso; levar os resultados para o uso de apps aqui é inferência nossa.
 
 {{question:ver-perfis-demais}}
 
@@ -487,4 +531,4 @@ Os dois estudos de término olharam só jovens adultos em relações entre homem
 
 ## O que não se sabe
 
-A pergunta principal continua aberta: o app piora a saúde mental, ou quem já está pior usa mais o app? Para responder, seria preciso acompanhar as mesmas pessoas por meses ou sortear quem usa menos. A meta-análise tem poucos estudos assim, e não achamos nenhum deles com texto aberto para ler. Também não achamos estudo que teste se usar menos o app, ver menos perfis por vez ou fazer uma pausa protege alguém. Os homens héteros, que recebem menos matches, não aparecem separados em nenhum estudo de saúde mental. Nenhum estudo que lemos testou um jeito de lidar com a rejeição, nem diz quanto tempo dura a piora depois de um término, e os de término olharam só casais de homem e mulher. Nada disso foi medido no Brasil. Os limites de cada estudo estão na página da Ficha dele.
+A pergunta principal continua aberta: o app piora a saúde mental, ou quem já está pior usa mais o app? As duas revisões são feitas quase só de estudos que olharam um momento só [@cela-2026-meta-analise-apps] [@bowman-2025-apps-saude]. O experimento natural do Tinder chega mais perto da causa, mas mediu a exposição ao lançamento entre universitários dos EUA, não o uso de cada um, e não diz o que instalar ou apagar um app faria por você [@buyukeren-2026-tinder]. O experimento com 6 ou 24 perfis mediu a satisfação com a escolha antes de qualquer contato, não a saúde mental [@dangelo-2017-excesso-opcoes]. Não achamos estudo que teste se usar menos um app de verdade, ver menos perfis por vez ou fazer uma pausa protege alguém. A meta-análise não separa os homens héteros, que recebem menos matches [@cela-2026-meta-analise-apps]. Nenhum estudo que lemos testou um jeito de lidar com a rejeição; o painel de términos não diz quanto tempo dura a piora, e os dois estudos de término olharam só casais de homem e mulher [@rhoades-2011-termino-saude-mental] [@verhallen-2019-termino-depressao]. Nada disso foi medido no Brasil. Os limites de cada estudo estão na página da Ficha dele.
