@@ -82,7 +82,15 @@ describe('crossCheckPns', () => {
     weight: 1,
     sex: 'homem',
     age: 30,
-    values: { orientacao: orientation, altura: '170', fumo: 'nao' },
+    values: {
+      orientacao: orientation,
+      altura: '170',
+      fumo: 'nao',
+      bebida: null,
+      exercicio: null,
+      saude_bucal: null,
+      cigarro_eletronico: null,
+    },
   })
   // 4 of 5 heterosexual (80%) and 1 homosexual (20%).
   const records = [
