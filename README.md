@@ -128,6 +128,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
 - [Rosenfeld & Thomas 2012](studies/rosenfeld-2012-searching-for-a-mate.md): a internet como intermediária na busca de parceiro · ✅ · moderada
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
+- [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
