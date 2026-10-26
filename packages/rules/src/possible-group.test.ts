@@ -497,13 +497,33 @@ describe('estimateGroup: PNS requirements', () => {
     expect(r.caveats.find((x) => x.id === 'unstable')).toBeUndefined()
   })
 
-  it('sums the PNS records of every bracket the group covers', () => {
-    // 25 to 34: brackets 25-29 and 30-34, 92 straight or bi records each.
+  // 25 to 34 and 155 to 165 cm: in each sex, 50 PNS records pass in the
+  // 25-29 bracket and 30 in the 30-34 one.
+  const thin = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+  const short = { min: 155, max: 165 }
+
+  it('a thin PNS bracket that carries a fifth of the group or more makes it unstable, even when the brackets add up past 50', () => {
+    // Men without a partner: 1,500 aged 25-29 and 600 aged 30-34, so the
+    // thin bracket carries 600 / 2,100 of the group.
+    const r = count(
+      { gender: 'mulher', seeks: 'homens' },
+      { ...thin, height: short },
+    )
+    expect(r.result.pnsRecords).toBe(30)
+    expect(r.result.unstable).toBe(true)
+    expect(r.caveats.find((x) => x.id === 'unstable-pns')?.text).toContain(
+      '30 registros da PNS',
+    )
+  })
+
+  it('a thin PNS bracket with a small share of the group does not', () => {
+    // Women without a partner: 4,000 aged 25-29 and 400 aged 30-34, under a
+    // tenth of the group.
     const r = count(
       { gender: 'homem', seeks: 'mulheres' },
-      { age: { min: 25, max: 34 }, place: { state: 'AC' } },
+      { ...thin, height: short },
     )
-    expect(r.result.pnsRecords).toBe(184)
+    expect(r.result.pnsRecords).toBe(50)
     expect(r.result.unstable).toBe(false)
   })
 

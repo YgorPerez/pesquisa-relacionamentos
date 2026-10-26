@@ -110,6 +110,24 @@ export const REQUIREMENT_SOURCE: Readonly<
  * Requirements (#287). */
 export const RECORDS_FOR_STABLE = 50
 
+/** A PNS bracket with at least this share of the count weighs on it by
+ * itself (#287). Below it, even a bracket of 10 records (±62% at 95%) moves
+ * the total by about a tenth, which the range already covers. */
+const SHARE_THAT_WEIGHS = 0.2
+
+/** The PNS records the count leans on: those of the thinnest bracket that
+ * carries a fifth of the group or more. Summing every bracket would let one
+ * thin bracket hide behind a thick one. With no bracket that large, the
+ * group spreads over many and the sum is what counts. */
+function recordsBehind(
+  brackets: ReadonlyArray<{ records: number; share: number }>,
+): number {
+  const weighing = brackets.filter((b) => b.share >= SHARE_THAT_WEIGHS)
+  return weighing.length > 0
+    ? Math.min(...weighing.map((b) => b.records))
+    : brackets.reduce((sum, b) => sum + b.records, 0)
+}
+
 /** Whether the count leans on too few records, from the Census or the PNS. */
 const isUnstable = (count: Count) =>
   count.records < RECORDS_FOR_STABLE ||
@@ -135,8 +153,9 @@ export interface Count {
   readonly max: number
   /** Sample records behind the number (split by age and municipality). */
   readonly records: number
-  /** PNS records that pass every PNS Requirement, summed over the PNS
-   * brackets the group reaches; `null` with no PNS Requirement. */
+  /** PNS records that pass every PNS Requirement, in the thinnest bracket
+   * that carries a fifth of the group (`recordsBehind`); `null` with no PNS
+   * Requirement. */
   readonly pnsRecords: number | null
 }
 
@@ -603,8 +622,9 @@ function tally(
   }
   const noAnswer = (s: number, g: number) =>
     noOrientation[s * B + PNS_BRACKET_OF_GROUP[g]!]?.p[1] ?? 0
-  /** The PNS brackets the group reaches, for the records behind the block. */
-  const reached = new Set<number>()
+  /** The PNS brackets the group reaches, with the part of the central count
+   * each one carries, for the records behind the block. */
+  const reached = new Map<number, number>()
 
   // Office occupation also depends on the cell's education: one interval
   // per sex × age group × education.
@@ -704,13 +724,17 @@ function tally(
     const block = pns[sg]
     const p = block ? block.p : NO_CUT
     const o = officeByCell?.[cell] ?? NO_CUT
+    const part = w * p[1] * o[1]
     min += w * p[0] * o[0]
-    central += w * p[1] * o[1]
+    central += part
     max += w * p[2] * o[2]
     records += d.records[i]! * f
     noAnswerSum += w * noAnswer(s, d.ageGroup[i]!)
     weightSum += w
-    if (block) reached.add(s * B + PNS_BRACKET_OF_GROUP[d.ageGroup[i]!]!)
+    if (block) {
+      const k = s * B + PNS_BRACKET_OF_GROUP[d.ageGroup[i]!]!
+      reached.set(k, (reached.get(k) ?? 0) + part)
+    }
   }
   const error = Z95 / Math.sqrt(Math.max(records, 1))
   return {
@@ -728,7 +752,12 @@ function tally(
     records,
     pnsRecords:
       filters.length > 0
-        ? [...reached].reduce((sum, k) => sum + blocks[k]!.records, 0)
+        ? recordsBehind(
+            [...reached].map(([k, part]) => ({
+              records: blocks[k]!.records,
+              share: central > 0 ? part / central : 0,
+            })),
+          )
         : null,
     noAnswer: weightSum > 0 ? noAnswerSum / weightSum : 0,
   }
@@ -756,7 +785,7 @@ function caveats(
       result.pnsRecords < RECORDS_FOR_STABLE && {
         id: 'unstable-pns',
         strong: true,
-        text: `Estimativa instável: os Requisitos da PNS se apoiam em só ${Math.round(result.pnsRecords)} registros da PNS 2019.`,
+        text: `Estimativa instável: numa faixa de idade que pesa no grupo, os Requisitos da PNS se apoiam em só ${Math.round(result.pnsRecords)} registros da PNS 2019.`,
       },
     profile?.gender === 'outro' && {
       id: 'other-gender',
