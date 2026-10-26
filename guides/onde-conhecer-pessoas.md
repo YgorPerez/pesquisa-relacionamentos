@@ -29,6 +29,7 @@ questions:
         mensagens-de-menos-e-demais,
         homens-mandam-as-mensagens,
         teste-no-tinder,
+        matches-belgica,
         usuarias-conteudo-sexual,
         amigos-e-familia,
         estudantes-menos-online,
@@ -38,11 +39,14 @@ questions:
       ]
   - slug: vale-a-pena-usar-app
     question: Vale a pena usar ==app de namoro==?
-    answer: Vale, como um caminho entre outros, não como a única aposta. Nos EUA, ==39% de quem já usou== site ou app de namoro namorou sério ou casou com alguém de lá [@pew-2023-2020-online-dating], e os casais que se conhecem online não terminam mais que os outros [@rosenfeld-2017-marriage-choice-couplehood]. O app rende mais para lésbicas, gays e bissexuais e para quem tem poucas opções por perto [@rosenfeld-2012-searching-for-a-mate]. Rende menos para homens héteros, que mandam a maior parte das mensagens e recebem resposta a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Entre as usuárias com menos de 50 anos, 66% já passaram por assédio no app [@pew-2023-2020-online-dating]. Não achamos dado brasileiro sobre quantos usuários chegam a namorar.
+    answer: Vale, como um caminho entre outros, não como a única aposta. Nos EUA, ==39% de quem já usou== site ou app de namoro namorou sério ou casou com alguém de lá [@pew-2023-2020-online-dating], e os casais que se conhecem online não terminam mais que os outros [@rosenfeld-2017-marriage-choice-couplehood]. Mas os estudos que compararam quem tinha o app com quem não tinha não acharam um ganho claro em namoro. Na Noruega, a vantagem de quem usava Tinder deixou de ser significativa depois dos ajustes [@erevik-2020-tinder-relacionamentos], e nos EUA a chegada do Tinder não mudou de forma significativa a fatia de universitários num relacionamento [@buyukeren-2026-tinder]. O app rende mais para lésbicas, gays e bissexuais e para quem tem poucas opções por perto [@rosenfeld-2012-searching-for-a-mate]. Rende menos para homens héteros, que mandam a maior parte das mensagens e recebem resposta a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Entre as usuárias com menos de 50 anos, 66% já passaram por assédio no app [@pew-2023-2020-online-dating]. Não achamos dado brasileiro sobre quantos usuários chegam a namorar.
     confidence: moderate
     findings:
       [
         usuarios-que-namoraram,
+        tinder-relacionamento-belgica,
+        tinder-noruega-ajustes,
+        chegada-do-tinder,
         experiencia-dividida,
         lgb-por-app,
         casais-do-mesmo-sexo-online,
@@ -140,6 +144,9 @@ findings:
   - id: teste-no-tinder
     text: Num teste com 14 perfis criados pelos autores no Tinder, os perfis de homem deram match com 0,6% de quem curtiram, e os de mulher, com 10,5%. São poucos perfis, então o número ilustra a diferença, mas não é a taxa de um usuário real.
     fact_sheets: [tyson-2016-tinder]
+  - id: matches-belgica
+    text: Num questionário com usuários atuais do Tinder, as mulheres relataram mais matches que os homens. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas.
+    fact_sheets: [timmermans-2018-tinder]
   - id: usuarias-conteudo-sexual
     text: Entre as usuárias com menos de 50 anos, 56% já receberam mensagem ou imagem sexual que não pediram.
     fact_sheets: [pew-2023-2020-online-dating]
@@ -164,6 +171,15 @@ findings:
     text: Entre os americanos que já usaram site ou app de namoro, 77% saíram com alguém que conheceram ali, e 39% namoraram sério ou casaram com alguém de lá. Os 39% contam a vida toda e incluem namoros que já acabaram.
     fact_sheets: [pew-2023-2020-online-dating]
     period: '2019'
+  - id: tinder-relacionamento-belgica
+    text: Entre os usuários atuais do Tinder que tinham encontrado pessoalmente alguém do app, 27% disseram ter começado um relacionamento com compromisso com alguém de lá. Ex-usuários ficaram de fora, e o estudo se contradiz sobre quantos se encontraram, então não dá uma taxa geral de sucesso.
+    fact_sheets: [timmermans-2018-tinder]
+  - id: tinder-noruega-ajustes
+    text: Entre estudantes solteiros de Bergen, quem usava Tinder estava mais num relacionamento um ano depois. A diferença deixou de ser significativa com o ajuste por personalidade ou por uso de álcool e drogas, o que não prova que o app ajude nem que não faça diferença.
+    fact_sheets: [erevik-2020-tinder-relacionamentos]
+  - id: chegada-do-tinder
+    text: Depois da chegada do Tinder, membros de fraternidades e sororidades, que receberam mais divulgação do app, não passaram a estar num relacionamento nem a morar com o parceiro mais que os outros graduandos. Na comparação entre faculdades, a coabitação aumentou. O estudo mede a exposição ao lançamento, não o uso de cada pessoa.
+    fact_sheets: [buyukeren-2026-tinder]
   - id: experiencia-dividida
     text: Entre quem usou, 53% descrevem a experiência como positiva e 46%, como negativa.
     fact_sheets: [pew-2023-2020-online-dating]
@@ -705,7 +721,7 @@ Saber onde os casais se conheceram não diz onde você tem mais chance. Para iss
 
 O que existe dá duas pistas. A primeira é que a maioria dos casais começa fora do app, mesmo entre os jovens. Nos EUA, só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro [@pew-2023-2020-online-dating]. No Reino Unido, amigos e família eram o lugar onde mais casais se conheciam, 25,8% dos que passaram a morar juntos de 2008 a 2012 [@lampard-2020-natsal-reino-unido]. Esses caminhos têm uma coisa em comum: você reencontra as mesmas pessoas várias vezes.
 
-A segunda pista é que, dentro do app, a disputa é desigual. Num site de namoro em quatro cidades dos EUA, os homens mandaram mais de 80% das primeiras mensagens, e as mulheres responderam a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com 0,6% de quem curtiram, e os de mulher, com 10,5% [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real.
+A segunda pista é que, dentro do app, a disputa é desigual. Num site de namoro em quatro cidades dos EUA, os homens mandaram mais de 80% das primeiras mensagens, e as mulheres responderam a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com 0,6% de quem curtiram, e os de mulher, com 10,5% [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real. Num questionário com usuários do Tinder na Bélgica, as mulheres também relataram mais matches que os homens [@timmermans-2018-tinder]. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas [@timmermans-2018-tinder].
 
 {{visual:match-no-tinder}}
 
@@ -729,6 +745,12 @@ A idade também mexe na conta. No Reino Unido, quem ainda estudava em tempo inte
 
 Se ninguém mediu a chance de cada caminho, a pergunta prática fica outra: quem tenta o app sai com alguma coisa? Nos EUA, 77% de quem já usou site ou app de namoro saiu com alguém que conheceu ali, e 39% namoraram sério ou casaram com alguém de lá [@pew-2023-2020-online-dating]. Os 39% contam a vida toda e incluem namoros que já acabaram. A experiência divide as pessoas quase ao meio: 53% a descrevem como positiva e 46%, como negativa [@pew-2023-2020-online-dating]. Mais homens que mulheres contam uma experiência boa, 57% contra 48%, mesmo recebendo menos mensagens [@pew-2023-2020-online-dating].
 
+Na Bélgica, entre os usuários atuais do Tinder que tinham encontrado pessoalmente alguém do app, 27% disseram ter começado um relacionamento com compromisso com alguém de lá [@timmermans-2018-tinder]. A conta é de pessoas, não de encontros, e deixa de fora quem já apagou o app, que pode ser justamente quem achou alguém [@timmermans-2018-tinder]. O estudo também se contradiz sobre quantos chegaram a se encontrar, então não dá uma taxa geral de sucesso [@timmermans-2018-tinder].
+
+Namorar alguém do app também não mostra que o app aumentou a chance de namorar. Para saber, é preciso comparar com quem não usa. Um estudo norueguês fez isso com estudantes solteiros de Bergen: um ano depois, quem usava Tinder estava mais num relacionamento, mas a diferença deixou de ser significativa quando os autores levaram em conta a personalidade ou o uso de álcool e drogas [@erevik-2020-tinder-relacionamentos]. Pode ser que quem usa o app já fosse diferente de quem não usa, e o estudo não prova que o app ajude, nem que não faça diferença [@erevik-2020-tinder-relacionamentos]. Mais da metade dos solteiros não respondeu ao seguimento, e o estudo não perguntou se o casal tinha se conhecido no Tinder [@erevik-2020-tinder-relacionamentos].
+
+Um estudo americano chegou mais perto de testar a causa. No lançamento, o Tinder foi mais divulgado entre membros de fraternidades e sororidades, e os autores compararam esses estudantes com os outros graduandos da mesma faculdade, antes e depois da chegada do app [@buyukeren-2026-tinder]. Os membros não passaram a estar num relacionamento nem a morar com o parceiro mais que os outros; a diferença não teve significância estatística [@buyukeren-2026-tinder]. Na comparação entre faculdades, as que tinham mais membros dessas organizações passaram a ter mais estudantes morando com o parceiro [@buyukeren-2026-tinder]. Morar junto é só uma aproximação de compromisso, e a exposição não foi sorteada, então o resultado depende de os grupos terem seguido a mesma tendência se o Tinder não tivesse chegado [@buyukeren-2026-tinder]. Como o estudo não sabe quem usou o app, ele mede o efeito da chegada do Tinder num campus, não o que acontece com quem o instala, e não vale direto para o Brasil [@buyukeren-2026-tinder].
+
 {{myth:app-acabou-com-o-namoro}}
 
 O app rende mais para quem tem poucos parceiros possíveis por perto. Antes dos apps de celular, gays, lésbicas e héteros de meia-idade eram os que mais dependiam da internet para achar alguém, e os héteros jovens estavam entre os que menos conheciam o parceiro online [@rosenfeld-2012-searching-for-a-mate]. {{you:casais-do-mesmo-sexo-online}} Dos casais do mesmo sexo formados na década antes de 2009, 41% se conheceram online, contra 17% dos casais héteros [@rosenfeld-2012-searching-for-a-mate]. A diferença continua com os apps, e a experiência também é melhor: 61% dos usuários lésbicas, gays e bissexuais contam uma experiência positiva, contra 53% dos héteros [@pew-2023-2020-online-dating].
@@ -749,7 +771,9 @@ O custo psicológico médio é pequeno. Numa meta-análise de 27 estudos, quem u
 
 {{brazil}} Não achamos dado brasileiro sobre quantos usuários de app chegam a namorar, nem sobre assédio ou golpe em app. O mais perto é aquele painel online de 2017: 37% dos internautas já tinham se relacionado com alguém que conheceram na internet, e 27% já tinham marcado encontro com alguém de app de paquera [@opinionbox-2017-relacionamentos-brasil]. Painel online tende a inflar esses números. O que deve se transferir é o padrão de quem ganha mais com o app, que os autores americanos ligam a ter poucas opções por perto [@rosenfeld-2012-searching-for-a-mate], e isso não depende do país.
 
-Então vale? Para a maioria das pessoas que querem conhecer alguém, sim, desde que o app seja um dos caminhos e não o único. A conclusão é nossa, tirada dos estudos acima: nenhum estudo testou se quem usa app acaba mais acompanhado do que quem não usa. Ajuda saber por que você está ali. Entre os americanos que usaram app no último ano, 44% dizem que um motivo principal é achar alguém para uma relação longa, 40% querem encontros casuais, 24%, sexo casual e 22%, fazer amigos [@pew-2023-2020-online-dating]. Nenhum estudo comparou a chance de dar certo conforme o objetivo.
+{{brazil}} O único estudo brasileiro com app que achamos mediu outra coisa, o comportamento sexual. Entre voluntários de um campus da USP em Ribeirão Preto, em 2021, quem já tinha tido IST relatava mais uso de app ou site para procurar parceiro sexual, 51,1% contra 31,0% [@martinez-2025-apps-risco-sexual]. É uma comparação sem ajuste, numa amostra que não representa o país, e não diz o que veio primeiro. Não mede o risco de pegar uma IST depois de começar a usar app [@martinez-2025-apps-risco-sexual]. Sobre camisinha, os autores escrevem que não houve associação clara, mas a própria tabela mostra uma entre os homens que não usavam camisinha na maioria das vezes com parceiras ocasionais, um grupo de sete [@martinez-2025-apps-risco-sexual]. Com essa divergência, o estudo não mostra que o app reduz o uso de camisinha, nem que não tem relação nenhuma com ele [@martinez-2025-apps-risco-sexual].
+
+Então vale? Para a maioria das pessoas que querem conhecer alguém, sim, desde que o app seja um dos caminhos e não o único. A conclusão é nossa, tirada dos estudos acima. Os dois que compararam quem tinha o app com quem não tinha não acharam um ganho claro em namoro [@erevik-2020-tinder-relacionamentos] [@buyukeren-2026-tinder], então ela se apoia no que contam os usuários, não numa prova de que o app aumente a chance. Ajuda saber por que você está ali. Entre os americanos que usaram app no último ano, 44% dizem que um motivo principal é achar alguém para uma relação longa, 40% querem encontros casuais, 24%, sexo casual e 22%, fazer amigos [@pew-2023-2020-online-dating]. Nenhum estudo comparou a chance de dar certo conforme o objetivo.
 
 - **Lésbicas, gays, bissexuais e quem tem poucas opções por perto.** O app vale mais. É o grupo que mais conheceu o parceiro online, antes e depois dos apps [@rosenfeld-2012-searching-for-a-mate] [@pew-2023-2020-online-dating].
 - **Homens héteros.** Vale como complemento. Contando só com o app, o mais provável é muita mensagem sem resposta [@bruch-2018-aspirational-pursuit].
@@ -816,4 +840,4 @@ Casar mais tarde é um problema? Pelo que se mediu, não. Nos EUA, entre mulhere
 
 ## O que não se sabe
 
-Quase tudo sobre onde os casais se conhecem vem dos EUA e da Europa. Do Brasil, há painéis online e registros oficiais que não perguntam como o casal se conheceu. Nenhum estudo sorteou onde cada casal ia se conhecer, então nenhum mostra que o lugar causa alguma coisa na relação. "Online" quase nunca separa app, site de namoro e rede social. E a pergunta que mais interessa a quem procura ficou sem estudo: ninguém comparou a chance de achar alguém por hora gasta no app e numa atividade presencial, nem seguiu pessoas parecidas, umas com app e outras sem, para ver quem forma mais casais. Os limites de cada estudo estão na página da Ficha dele.
+Quase tudo sobre onde os casais se conhecem vem dos EUA e da Europa. Do Brasil, há painéis online e registros oficiais que não perguntam como o casal se conheceu. Nenhum estudo sorteou onde cada casal ia se conhecer, então nenhum mostra que o lugar causa alguma coisa na relação. "Online" quase nunca separa app, site de namoro e rede social. E a pergunta que mais interessa a quem procura continua aberta: ninguém comparou a chance de achar alguém por hora gasta no app e numa atividade presencial. Os dois estudos que compararam quem tinha o app com quem não tinha olharam estudantes noruegueses e universitários americanos, e nenhum diz o que ganha uma pessoa que instala o app hoje [@erevik-2020-tinder-relacionamentos] [@buyukeren-2026-tinder]. No Brasil, ninguém acompanhou usuários de app para ver quem forma casal. Os limites de cada estudo estão na página da Ficha dele.
