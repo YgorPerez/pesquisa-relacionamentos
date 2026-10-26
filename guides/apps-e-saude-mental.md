@@ -4,7 +4,7 @@ position: 60
 questions:
   - slug: apps-fazem-mal
     question: Usar apps de namoro faz ==mal== à saúde mental?
-    answer: Não dá para dizer que faz. Quem usa app está, em média, ==um pouco pior== de saúde mental, mas quase todos os estudos olharam um momento só, e não dá para saber se o app piora a pessoa ou se quem já está pior usa mais o app [@cela-2026-meta-analise-apps]. Quando o Tinder chegou às universidades dos EUA, a saúde mental média dos membros de fraternidades e sororidades melhorou em comparação com a dos outros estudantes, mas os relatos de agressão sexual entre eles aumentaram [@buyukeren-2026-tinder]. Não achamos estudo brasileiro.
+    answer: Não dá para dizer que faz. Quem usa app está, em média, ==um pouco pior== de saúde mental, sobretudo no uso compulsivo e na preocupação com o corpo [@cela-2026-meta-analise-apps]. Quase todos os estudos olharam um momento só, e não dá para saber se o app piora a pessoa ou se quem já está pior usa mais o app [@cela-2026-meta-analise-apps]. Quando o Tinder chegou às universidades dos EUA, a saúde mental média dos membros de fraternidades e sororidades, mais expostos à divulgação, melhorou em comparação com a dos outros estudantes, mas os relatos de agressão sexual entre eles aumentaram [@buyukeren-2026-tinder]. O estudo não sabe quem usou o app e depende de os grupos terem seguido a mesma tendência sem ele; na comparação entre faculdades, a estimativa de saúde mental ficou imprecisa e sem significância [@buyukeren-2026-tinder]. Não achamos estudo brasileiro.
     confidence: moderate
     findings:
       [
@@ -23,7 +23,7 @@ questions:
       ]
   - slug: ver-perfis-demais
     question: Ver perfis ==demais== atrapalha?
-    answer: Pode atrapalhar a escolha, pelo que se viu em laboratório. Ao longo de uma sequência de fotos, a chance de aceitar alguém caiu ==27% em média== do primeiro ao último perfil [@pronk-2020-mentalidade-rejeicao]. Em outro experimento, escolher entre 24 perfis deixou os participantes menos satisfeitos uma semana depois do que escolher entre 6, antes de qualquer contato [@dangelo-2017-excesso-opcoes]. Esse resultado não testa se limitar o uso de um app comercial melhora a saúde mental [@dangelo-2017-excesso-opcoes]. Não achamos estudo brasileiro.
+    answer: Pode atrapalhar a escolha, pelo que se viu em laboratório. Ao longo de uma sequência de fotos, a chance de aceitar alguém caiu ==27% em média== do primeiro ao último perfil, e quem recusou mais ficou menos satisfeito até com quem aceitou [@pronk-2020-mentalidade-rejeicao]. Em outro experimento, escolher entre 24 perfis deixou os participantes menos satisfeitos uma semana depois do que escolher entre 6, antes de qualquer contato [@dangelo-2017-excesso-opcoes]. Esse resultado não testa se limitar o uso de um app comercial melhora a saúde mental [@dangelo-2017-excesso-opcoes]. Não achamos estudo brasileiro.
     confidence: moderate
     findings:
       [
@@ -439,7 +439,7 @@ A diferença não é igual em tudo. Foi maior no uso compulsivo, do app ou de se
 
 {{visual:diferenca-por-medida}}
 
-Outra revisão, com 45 estudos, encontrou associações adversas em 86,4% dos 22 estudos sobre imagem corporal e em 48,3% dos 29 sobre saúde mental e bem-estar [@bowman-2025-apps-saude]. São percentuais de estudos, não de pessoas: não quer dizer que 86,4% dos usuários fiquem insatisfeitos com o corpo, nem que 48,3% adoeçam [@bowman-2025-apps-saude]. A revisão não calculou o tamanho do efeito, a contagem não pesa quão grande ou preciso foi cada resultado, e um mesmo estudo podia entrar nos dois grupos [@bowman-2025-apps-saude]. A maioria dos estudos mediu um momento só, então a revisão também não diz se o app causa o problema [@bowman-2025-apps-saude].
+Outra revisão, com 45 estudos, encontrou associações adversas em 86,4% dos 22 estudos sobre imagem corporal e em 48,3% dos 29 sobre saúde mental e bem-estar [@bowman-2025-apps-saude]. São percentuais de estudos, não de usuários [@bowman-2025-apps-saude]. A contagem não pesa quão grande ou preciso foi cada resultado, e um mesmo estudo podia entrar nos dois grupos [@bowman-2025-apps-saude]. A maioria dos estudos mediu um momento só, então a revisão também não diz se o app causa o problema [@bowman-2025-apps-saude].
 
 {{visual:estudos-com-associacoes-adversas}}
 
@@ -451,7 +451,7 @@ O problema é saber o que veio antes. Quase todos os 27 estudos mediram o uso do
 
 Um estudo tentou chegar mais perto da causa. Um experimento natural comparou a mudança entre membros de fraternidades e sororidades dos EUA, que receberam mais divulgação do Tinder, com a dos demais estudantes da mesma instituição e semestre, antes e depois do lançamento amplo em 2013 [@buyukeren-2026-tinder]. Nessa comparação, o índice de saúde mental ruim no último mês caiu, em média, entre os membros. Quando a comparação foi entre instituições, a estimativa ficou imprecisa e sem mudança estatisticamente significativa [@buyukeren-2026-tinder]. A leitura causal depende de os grupos terem seguido tendências paralelas sem o lançamento, e o estudo não mediu quem usava o Tinder individualmente [@buyukeren-2026-tinder].
 
-No mesmo período, os membros passaram a relatar mais atividade sexual, mais relatos de agressão sexual e mais diagnósticos ou tratamentos de clamídia entre membros das organizações, sempre em comparação com os demais estudantes [@buyukeren-2026-tinder]. O aumento de clamídia pode refletir mais infecções ou mais testagem; o estudo não separa as duas explicações [@buyukeren-2026-tinder]. A melhora média não quer dizer que o app seja inofensivo nem que ninguém tenha sido prejudicado, e não diz o que acontecerá com alguém que instalar ou apagar um app hoje [@buyukeren-2026-tinder]. São graduandos dos EUA, sem base para generalizar ao Brasil ou a outras idades [@buyukeren-2026-tinder].
+No mesmo período, em comparação com os demais estudantes, os membros das organizações passaram a relatar mais atividade sexual, mais agressão sexual e mais diagnósticos ou tratamentos de clamídia [@buyukeren-2026-tinder]. O aumento de clamídia pode refletir mais infecções ou mais testagem; o estudo não separa as duas explicações [@buyukeren-2026-tinder]. A melhora média não quer dizer que ninguém tenha sido prejudicado, e não diz o que acontece com quem instala ou apaga um app hoje [@buyukeren-2026-tinder]. São graduandos dos EUA, sem base para generalizar ao Brasil ou a outras idades [@buyukeren-2026-tinder].
 
 {{myth:app-causa-depressao}}
 
