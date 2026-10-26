@@ -886,7 +886,9 @@ function caveats(
     {
       id: 'source',
       strong: false,
-      text: 'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
+      text: has('office')
+        ? 'Censo de julho de 2022, PNS 2019 e PNAD Contínua do 3º trimestre de 2022. Fonte: IBGE.'
+        : 'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
     },
   ]
   return list.filter((r): r is Caveat => r !== false)

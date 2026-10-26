@@ -101,7 +101,7 @@ export const Route = createFileRoute('/grupo-possivel')({
       {
         name: 'description',
         content:
-          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022 e a PNS 2019.',
+          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022, a PNS 2019 e a PNAD Contínua 2022.',
       },
       ...previewMeta(loaderData?.preview ?? null),
     ],
@@ -246,7 +246,7 @@ function CountTop({
 
       <p className="mx-0 mt-5.5 mb-md">
         Diga quem você procura e ligue os seus Requisitos. O número de cima muda
-        junto, com dados do Censo 2022 e da PNS 2019.
+        junto, com dados do Censo 2022, da PNS 2019 e da PNAD Contínua 2022.
       </p>
       <CountNotices
         replaced={replaced}

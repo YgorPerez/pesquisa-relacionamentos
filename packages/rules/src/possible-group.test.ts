@@ -611,6 +611,20 @@ describe('estimateGroup: office occupation (PNAD)', () => {
     expect(caveat).toContain('renda')
   })
 
+  it('the source line names the PNAD only when office is on', () => {
+    const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+    const source = (office: boolean) =>
+      count({ seeks: 'mulheres' }, { ...ac, office }).caveats.find(
+        (x) => x.id === 'source',
+      )?.text
+    expect(source(true)).toBe(
+      'Censo de julho de 2022, PNS 2019 e PNAD Contínua do 3º trimestre de 2022. Fonte: IBGE.',
+    )
+    expect(source(false)).toBe(
+      'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
+    )
+  })
+
   it('enters the independence range: bounded in each education first, then against the PNS block', () => {
     // Women 25 to 29 in Acre. High school: 3,000, all without a partner, 600
     // in an office: exactly 600. College: 3,000, 1,000 without a partner,

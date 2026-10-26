@@ -417,7 +417,7 @@ export function drawGroupImage(
   }
   drawLines(ctx, alsoLines, alsoStyle, frame.side + pad, inside + 36)
 
-  signature(ctx, frame, width, height)
+  signature(ctx, frame, width, height, image.sources)
 }
 
 /** The signature: the rule, the site's name, the address and the sources. */
@@ -426,6 +426,7 @@ function signature(
   frame: Frame,
   width: number,
   height: number,
+  sources: string,
 ) {
   const base = height - frame.bottom
   rule(ctx, frame.side, base - 96, width - frame.side * 2)
@@ -439,7 +440,7 @@ function signature(
   ctx.fillText(ADDRESS, width - frame.side, base - 50)
   ctx.font = `400 24px ${BODY}`
   ctx.fillStyle = INK_2
-  ctx.fillText('Censo 2022 e PNS 2019', width - frame.side, base - 14)
+  ctx.fillText(sources, width - frame.side, base - 14)
   ctx.textAlign = 'left'
 }
 

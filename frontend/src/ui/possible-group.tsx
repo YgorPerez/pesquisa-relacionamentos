@@ -30,7 +30,11 @@ import {
   CollapsibleTrigger,
 } from '@/ui/shadcn/collapsible'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
-import { costText, independenceSources } from './possible-group.copy'
+import {
+  costText,
+  independenceSources,
+  samplingText,
+} from './possible-group.copy'
 import { Headline, Panel, Section } from './section'
 
 /** While the data arrives, the old number stays, faded. */
@@ -463,11 +467,7 @@ function WhereUncertaintyComesFrom({ estimate }: { estimate: Estimate }) {
             juntos; por isso o site cruza os dados.
           </p>
         )}
-        <p className={HINT}>
-          A faixa junta o erro de amostra do Censo (
-          {Math.round(result.records).toLocaleString('pt-BR')} registros) com o
-          intervalo da PNS.
-        </p>
+        <p className={HINT}>{samplingText(active, result.records)}</p>
         <IndependenceRange estimate={estimate} />
         <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
           {caveats

@@ -50,6 +50,21 @@ export function independenceSources(active: ReadonlyArray<RequirementId>): {
   }
 }
 
+/** What the top range combines: the Census sampling error with the interval
+ * of each other survey the count reads (#287, #294). */
+export function samplingText(
+  active: ReadonlyArray<RequirementId>,
+  records: number,
+): string {
+  const census = `o erro de amostra do Censo (${Math.round(records).toLocaleString('pt-BR')} registros)`
+  const others = (['PNS', 'PNAD'] as const).filter((source) =>
+    active.some((k) => REQUIREMENT_SOURCE[k] === source),
+  )
+  if (others.length === 0) return `A faixa é ${census}.`
+  const intervals = list.format(others.map((source) => `da ${source}`))
+  return `A faixa junta ${census} com ${others.length > 1 ? 'os intervalos' : 'o intervalo'} ${intervals}.`
+}
+
 /** "soltar só este: ×3,4 (+670)". Below 5%, it says it barely changes. */
 export function costText(cost: Cost): string {
   if (cost.times < 1.05) return 'soltar este quase não muda o grupo'

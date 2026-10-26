@@ -31,6 +31,7 @@ import {
   sensitiveLabel,
   sensitiveList,
   sensitiveOn,
+  surveysOf,
   withoutSensitive,
   type SensitiveRequirement,
   type Range,
@@ -455,8 +456,11 @@ export function groupPreview(
 ): Preview {
   const { who, others } = soughtGroup(state, count.target, options.municipality)
   const title = `${formatRange(count.result.min, count.result.max)} ${who}`
+  const surveys = surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS, {
+    article: true,
+  })
   const description = [
-    'Pela conta do Grupo possível, com o Censo 2022 e a PNS 2019.',
+    `Pela conta do Grupo possível, com ${asList(surveys)}.`,
     others.length > 0 && `Também pediu: ${others.join(', ')}.`,
     'Faça a sua conta.',
   ]
@@ -498,6 +502,8 @@ export interface GroupImage {
   readonly unstable: boolean
   readonly who: string
   readonly also: ReadonlyArray<string>
+  /** The surveys under the signature: "Censo 2022 e PNS 2019". */
+  readonly sources: string
 }
 
 /** The image's text for the link `query` (without the `?`); `null` if the
@@ -519,6 +525,7 @@ export function groupImage(
     unstable: count.result.unstable,
     who,
     also: others,
+    sources: asList(surveysOf(state.requirements ?? DEFAULT_REQUIREMENTS)),
   }
 }
 

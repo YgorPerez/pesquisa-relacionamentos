@@ -232,6 +232,22 @@ export function sensitiveList(
     : `${labels.slice(0, -1).join(', ')} e ${labels.at(-1)}`
 }
 
+/** The surveys a count with these Requirements reads, by short name ("PNS
+ * 2019", or "a PNS 2019" with `article`): the Census and the PNS always (the
+ * PNS gives the orientation), the PNAD Contínua only with office on
+ * (#294). */
+export function surveysOf(
+  r: Requirements,
+  { article = false } = {},
+): string[] {
+  const surveys = [
+    ['o', 'Censo 2022'],
+    ['a', 'PNS 2019'],
+    ...(r.office ? [['a', 'PNAD Contínua 2022']] : []),
+  ]
+  return surveys.map(([the, name]) => (article ? `${the} ${name}` : name!))
+}
+
 /** Who is sought, as the count says it. */
 export type Target = 'men' | 'women' | 'people'
 

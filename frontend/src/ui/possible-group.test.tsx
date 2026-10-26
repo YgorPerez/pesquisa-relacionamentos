@@ -147,6 +147,12 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
       /^Orientação vem da PNS; ocupação vem da PNAD; morar com companheiro\(a\) e escolaridade vêm do Censo\. As três pesquisas não entrevistaram as mesmas pessoas/,
     ),
   )
+  // The top range also carries the PNAD's interval.
+  expect(
+    screen.getByText(
+      /^A faixa junta o erro de amostra do Censo \(.+ registros\) com os intervalos da PNS e da PNAD\.$/,
+    ),
+  ).toBeVisible()
 })
 
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {
