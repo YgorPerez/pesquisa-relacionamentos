@@ -11,12 +11,21 @@ import { REQUIREMENT_TITLE } from '@tem-estudo/rules/requirements'
 
 const list = new Intl.ListFormat('pt-BR', { type: 'conjunction' })
 
+/** The Requirements whose title alone ("Pais", "Casa") does not say what
+ * they ask, written as in a sentence. */
+const NOUN: Partial<Record<RequirementId, string>> = {
+  partner: 'morar com companheiro(a)',
+  parents: 'morar com os pais',
+  work: 'situação de trabalho',
+  home: 'casa própria',
+  drinking: 'frequência com que bebe',
+}
+
 /** A Requirement as a noun in a sentence ("escolaridade", "morar com
  * companheiro(a)"). */
 const noun = (k: RequirementId) =>
-  k === 'partner'
-    ? 'morar com companheiro(a)'
-    : REQUIREMENT_TITLE[k as keyof typeof REQUIREMENT_TITLE].toLowerCase()
+  NOUN[k] ??
+  REQUIREMENT_TITLE[k as keyof typeof REQUIREMENT_TITLE].toLowerCase()
 
 /** The opening of the independence range's paragraph (#301): which
  * Requirements come from which survey, and how many surveys that is. On the

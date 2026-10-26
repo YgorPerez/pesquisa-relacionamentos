@@ -133,7 +133,9 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
     /^Orientação vem da PNS; morar com companheiro\(a\) e escolaridade vêm do Censo\. As duas pesquisas não entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo e idade, um lado não depende do outro\. Se depender, o grupo pode ficar em qualquer ponto entre .+ e .+: o menor e o maior número que os dados permitem\.$/,
   )
   expect(
-    screen.getByText('Nenhuma das duas faixas é um intervalo de confiança.'),
+    screen.getByText(
+      'A faixa de cima junta intervalos de confiança de 95%, mas não é ela mesma um intervalo de 95% exato. Esta segunda não é intervalo de confiança.',
+    ),
   ).toBeVisible()
 
   // The office share comes from a third survey, under the same assumption.
@@ -153,6 +155,18 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
       /^A faixa junta o erro de amostra do Censo \(.+ registros\) com os intervalos da PNS e da PNAD\.$/,
     ),
   ).toBeVisible()
+
+  // A Requirement whose title is one word reads as what it asks.
+  await user.click(
+    requirement('parents').getByRole('checkbox', {
+      name: 'Só quem não mora com os pais',
+    }),
+  )
+  await waitFor(() =>
+    expect(independence()).toMatch(
+      /; morar com companheiro\(a\), escolaridade e morar com os pais vêm do Censo\./,
+    ),
+  )
 })
 
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {

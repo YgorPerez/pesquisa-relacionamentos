@@ -510,7 +510,9 @@ function IndependenceRange({
         menor e o maior número que os dados permitem.
       </p>
       <p className={HINT}>
-        Nenhuma das duas faixas é um intervalo de confiança.
+        A faixa de cima junta intervalos de confiança de 95%, mas não é ela
+        mesma um intervalo de 95% exato. Esta segunda não é intervalo de
+        confiança.
       </p>
     </>
   )
