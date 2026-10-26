@@ -2,11 +2,12 @@
 // fixture Guide (`e2e/library`), built the way the page builds it
 // (`guide.example.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { GUIDE, TIP } from './guide.example'
+import { GUIDE, MYTH, TIP } from './guide.example'
 import {
   Chapters,
   GuideContents,
   GuideSummary,
+  MythCard,
   SourcesArrow,
   Takeaways,
   Unknowns,
@@ -36,11 +37,17 @@ export const ArrowToFactSheets: Story = {
 }
 
 /** The Chapters: prose with Visuals, the answer where the reasoning reaches
- * each Question, the struck-out Myth, the Tip and the "no Brasil" mark. */
+ * each Question, the labelled, struck-out Myth, the Tip and the "no Brasil" mark. */
 export const ChaptersOfTheGuide: Story = {
   render: () => (
     <Chapters chapters={GUIDE.chapters} youMarks={GUIDE.youMarks} />
   ),
+}
+
+/** A Myth: the "Mito" label and its line, read before the struck-out claim,
+ * then why it does not hold. */
+export const Myth: Story = {
+  render: () => <MythCard myth={MYTH} />,
 }
 
 /** "O que levar": the Guide's strongest Tips. */

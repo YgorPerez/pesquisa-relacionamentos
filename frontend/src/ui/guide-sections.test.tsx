@@ -19,6 +19,7 @@ import { expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 import { paragraphText } from '#/state/reading'
 import { CONTINUE_READING } from './continue-reading.copy'
+import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
 import { CHAPTER, chapterOf } from './reading-progress.copy'
 
 const follows = (a: Element, b: Element) =>
@@ -57,6 +58,24 @@ it('"Em resumo" lists each Question with the first sentence of its answer and le
   // The rest of the answer is in its Chapter, not in the summary.
   expect(summary).not.toHaveTextContent('Os estudos divergem')
   expect(within(summary).queryByRole('link', { name: /^Ficha/ })).toBeNull()
+})
+
+it('a Myth says it is a Myth before its claim, in words a screen reader reads', async () => {
+  openScreen('/onde-conhecer-pessoas')
+  const chapter = await screen.findByRole('region', {
+    name: 'O app virou um caminho comum',
+  })
+  const myth = within(chapter).getByRole('article')
+  const claim = within(myth).getByText(
+    'Mais da metade dos casais se conhece por app.',
+  )
+  const label = within(myth).getByText(MYTH_LABEL)
+  expect(label).toBeVisible()
+  expect(label.closest('[aria-hidden="true"]')).toBeNull()
+  expect(myth.textContent).toMatch(new RegExp(`^${MYTH_LABEL}\\s*${MYTH_LINE}`))
+  // The strike alone is not announced: the label comes first in reading
+  // order, so the claim is heard as a Myth.
+  expect(follows(label, claim)).toBe(true)
 })
 
 it('a Chapter reads as prose with its answer, Myth and marks in body order, numbered on the single list', async () => {

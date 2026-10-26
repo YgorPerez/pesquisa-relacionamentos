@@ -30,5 +30,8 @@ function block<K extends ChapterBlock['kind']>(
 /** The fixture's Tip, as a Chapter places it. */
 export const TIP = block('tip').tip
 
+/** The fixture's Myth, as a Chapter places it. */
+export const MYTH = block('myth').myth
+
 /** The HTML of a Guide paragraph, as the server builds it from markdown. */
 export const excerpt = excerptWithReferences
