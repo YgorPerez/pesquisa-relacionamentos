@@ -130,6 +130,18 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
   expect(
     screen.getByText('Nenhuma das duas faixas é um intervalo de confiança.'),
   ).toBeVisible()
+
+  // The office share comes from a third survey, under the same assumption.
+  await user.click(
+    requirement('office').getByRole('checkbox', {
+      name: 'Só quem trabalha em escritório',
+    }),
+  )
+  await waitFor(() =>
+    expect(independence()).toHaveTextContent(
+      /^Orientação vem da PNS; ocupação vem da PNAD; morar com companheiro\(a\) e escolaridade vêm do Censo\. As três pesquisas não entrevistaram as mesmas pessoas/,
+    ),
+  )
 })
 
 it('"sem filhos" is disabled when seeking men, with the reason', async () => {

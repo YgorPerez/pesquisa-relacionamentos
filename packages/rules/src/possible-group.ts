@@ -11,6 +11,8 @@
 // - The PNS ones (orientation, height, smoking) are crossed with each other
 //   on the PNS microdata: their joint share in the same sex and age bracket
 //   (the PNS block, `pnsBlocks`) multiplies the cell, with its interval.
+// - The PNAD one (office occupation, #294) multiplies each cell by the
+//   probability in its sex, age group and education, with its interval.
 // - The range joins that interval with the Census sampling error, ±1.96/√n.
 // - Apart, the independence range (#301) gives the least and the most the
 //   PNS block and the Census Requirements could overlap.
@@ -58,13 +60,15 @@ export const REQUIREMENT_ORDER = [
   'children',
   'height',
   'smoking',
+  'office',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
 /** Where each requirement comes from. */
 export const REQUIREMENT_SOURCE: Readonly<
-  Record<RequirementId, 'Censo' | 'PNS'>
+  Record<RequirementId, 'Censo' | 'PNS' | 'PNAD'>
 > = {
+  office: 'PNAD',
   age: 'Censo',
   place: 'Censo',
   partner: 'Censo',
@@ -180,6 +184,7 @@ export function activeRequirements({
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    office: r.office,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -225,6 +230,7 @@ const PNS_BRACKET_OF_GROUP = [0, 0, 1, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7] as const
 
 /** [minimum, central, maximum]. */
 export type Interval = readonly [number, number, number]
+const NO_CUT: Interval = [1, 1, 1]
 
 /**
  * A PNS Requirement read on one person's answer to one PNS variable (a column
@@ -361,6 +367,29 @@ const NO_ORIENTATION: PnsFilter = {
   test: (value) => value === 'nao-sabe' || value === 'recusou',
 }
 
+/** P(office occupation) in the cell's sex, Census age group and education
+ * (`EDUCATIONS` position + 1, 0 = no data). A cell without education, or
+ * with one the file left out for having few records, takes the row of every
+ * education together. The universe is everyone (`todos`); the file also has
+ * the employed only (`ocupados`), for when the count already asks for a job. */
+function office(
+  data: PlaceData,
+  sex: number,
+  ageGroup: number,
+  education: number,
+): Interval {
+  const key = (e: string) => `todos|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
+  const row =
+    (education > 0 ? data.pnad[key(EDUCATIONS[education - 1]!)] : undefined) ??
+    data.pnad[key('')]
+  if (!row)
+    throw new Error(
+      `the PNAD has no office occupation for ${SEXES[sex]} ${AGE_GROUPS[ageGroup]}`,
+    )
+  const [p, min, max] = row
+  return [min, p, max]
+}
+
 function unionSum(data: PlaceData): Float64Array {
   const sum = new Float64Array(UNION_CELLS)
   for (let i = 0; i < data.size; i++)
@@ -380,38 +409,56 @@ export interface Range {
   readonly max: number
 }
 
+/** The Fréchet–Hoeffding bounds of two groups of `a` and `b` people among
+ * `n`: they overlap in at least max(0, a + b − n) and at most min(a, b). */
+const overlap = (a: number, b: number, n: number) =>
+  [Math.max(0, a + b - n), Math.min(a, b)] as const
+
 /**
- * The independence range (#301): how many the group could have if the PNS
- * block and the Census Requirements overlapped in any way, instead of
- * independently. In each sex × age group, of N people, A pass the Census
- * Requirements and P = p × N would pass the PNS block; the overlap is at
- * least max(0, A + P − N) and at most min(A, P) (Fréchet–Hoeffding bounds).
- * The age groups add up. It takes the central shares: it measures the
- * assumption, not the sampling error, which stays in `min` and `max`.
- * `null` when there is no assumption to measure: no PNS Requirement, or the
- * Census cuts no one inside sex × age.
+ * The independence range (#301): how many the group could have if the shares
+ * from other surveys overlapped the Census Requirements in any way, instead
+ * of independently. It takes the central shares: it measures the assumption,
+ * not the sampling error, which stays in `min` and `max`.
  *
- * A share that multiplies the Census cell on another key (the PNAD office
- * occupation, #294, by sex × age group × education) is the same assumption
- * and belongs in the range: bound it against the Census cell first, in each
- * education (from max(0, A_e + Q_e − N_e) to min(A_e, Q_e)), sum those per
- * sex × age group into [L, U], and then cross with P: from max(0, L + P −
- * N) to min(U, P).
+ * Each share is bounded on its own key, where the survey measured it. The
+ * PNAD office share (#294) goes by sex × age group × education: in each
+ * education, of N_e people, A_e pass the Census Requirements and Q_e = q_e ×
+ * N_e work in an office; the pair overlaps in [L_e, U_e] = `overlap(A_e,
+ * Q_e, N_e)`. The PNS block goes by sex and age: with L and U the sums over
+ * the educations, N everyone and P = p × N, the group is in [max(0, L + P −
+ * N), min(U, P)]. The age groups add up.
+ *
+ * `null` when there is no assumption to measure: no share from another
+ * survey, or the Census cuts no one inside its keys.
  */
 function independenceRange(
   everyone: Float64Array,
   censusOnly: Float64Array,
   pns: ReadonlyArray<PnsBlock | null>,
+  officeByCell: ReadonlyArray<Interval> | null,
   central: number,
 ): Range | null {
+  const E = EDUCATIONS.length + 1
   let min = 0
   let max = 0
-  for (let k = 0; k < everyone.length; k++) {
-    const n = everyone[k]!
-    const a = censusOnly[k]!
-    const p = (pns[k]?.p[1] ?? 1) * n
-    min += Math.max(0, a + p - n)
-    max += Math.min(a, p)
+  for (let sg = 0; sg < everyone.length / E; sg++) {
+    let n = 0
+    let low = 0
+    let high = 0
+    for (let cell = sg * E; cell < (sg + 1) * E; cell++) {
+      const q = officeByCell?.[cell]?.[1] ?? 1
+      const [l, u] = overlap(
+        censusOnly[cell]!,
+        q * everyone[cell]!,
+        everyone[cell]!,
+      )
+      n += everyone[cell]!
+      low += l
+      high += u
+    }
+    const p = (pns[sg]?.p[1] ?? 1) * n
+    min += Math.max(0, low + p - n)
+    max += Math.min(high, p)
   }
   return max - min > 1e-9 * Math.max(1, central) ? { min, max } : null
 }
@@ -472,6 +519,19 @@ function tally(
   /** The PNS brackets the group reaches, for the records behind the block. */
   const reached = new Set<number>()
 
+  // Office occupation also depends on the cell's education: one interval
+  // per sex × age group × education.
+  const E = EDUCATIONS.length + 1
+  let officeByCell: Interval[] | null = null
+  if (active.has('office')) {
+    officeByCell = []
+    for (const s of sexes)
+      for (let g = 0; g < G; g++)
+        if (factor[s * G + g]! > 0)
+          for (let e = 0; e < E; e++)
+            officeByCell[(s * G + g) * E + e] = office(ofPlace, s, g, e)
+  }
+
   let municipality: Float64Array | null = null
   if (active.has('place') && r.place?.municipality) {
     const m = ofPlace.municipalities.get(r.place.municipality)
@@ -511,8 +571,9 @@ function tally(
   let weightSum = 0
   // Everyone of the sex × age group in the place, and those the Census
   // Requirements leave, for the independence range.
-  const everyone = new Float64Array(SEXES.length * G)
-  const censusOnly = new Float64Array(SEXES.length * G)
+  // By sex × age group × education, the key of the office share.
+  const everyone = new Float64Array(SEXES.length * G * E)
+  const censusOnly = new Float64Array(SEXES.length * G * E)
   const d = ofPlace
   for (let i = 0; i < d.size; i++) {
     const s = d.sex[i]!
@@ -523,19 +584,21 @@ function tally(
       f *= municipality[unionIndex(s, d.ageGroup[i]!, d.union[i]!)]!
     if (f === 0) continue
     const w = d.weight[i]! * f
-    everyone[sg]! += w
+    const cell = sg * E + d.education[i]!
+    everyone[cell]! += w
     if (partner && d.union[i] === 1) continue
     if (d.education[i]! < education) continue
     if (d.income[i]! < income) continue
     if (colors && !colors.has(d.color[i]!)) continue
     if (religions && !religions.has(d.religion[i]!)) continue
     if (noChildren && d.children[i] === 2) continue
-    censusOnly[sg]! += w
+    censusOnly[cell]! += w
     const block = pns[sg]
-    const p = block ? block.p : ([1, 1, 1] as const)
-    min += w * p[0]
-    central += w * p[1]
-    max += w * p[2]
+    const p = block ? block.p : NO_CUT
+    const o = officeByCell?.[cell] ?? NO_CUT
+    min += w * p[0] * o[0]
+    central += w * p[1] * o[1]
+    max += w * p[2] * o[2]
     records += d.records[i]! * f
     noAnswerSum += w * noAnswer(s, d.ageGroup[i]!)
     weightSum += w
@@ -543,7 +606,13 @@ function tally(
   }
   const error = Z95 / Math.sqrt(Math.max(records, 1))
   return {
-    independence: independenceRange(everyone, censusOnly, pns, central),
+    independence: independenceRange(
+      everyone,
+      censusOnly,
+      pns,
+      officeByCell,
+      central,
+    ),
     min: min * Math.max(0, 1 - error),
     central,
     max: max * (1 + error),
@@ -631,6 +700,11 @@ function caveats(
       id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
+    },
+    has('office') && {
+      id: 'office',
+      strong: false,
+      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

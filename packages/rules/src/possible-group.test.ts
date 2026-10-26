@@ -3,6 +3,7 @@ import census from '../fixtures/possible-group/censo-2022.csv?raw'
 import ages from '../fixtures/possible-group/sidra-9514-idade.csv?raw'
 import municipalities from '../fixtures/possible-group/sidra-10185-municipios.csv?raw'
 import pns from '../fixtures/possible-group/pns-2019.csv?raw'
+import pnad from '../fixtures/possible-group/pnad-2022.csv?raw'
 import { openPack, readGroupBase, packForPlace } from './possible-group-data.ts'
 import { estimateGroup, type CountData } from './possible-group.ts'
 import type { Profile } from './profile.ts'
@@ -14,7 +15,7 @@ import {
 } from './requirements.ts'
 
 // The real path: CSV → JSON pack (what the browser downloads) → count.
-const base = readGroupBase({ census, ages, municipalities, pns })
+const base = readGroupBase({ census, ages, municipalities, pns, pnad })
 const pack = (place: 'BR' | 'AC' | 'AP') =>
   openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
 const data = (uf?: 'AC' | 'AP'): CountData => ({
@@ -283,6 +284,60 @@ describe('estimateGroup: the independence range (#301)', () => {
     expect(
       count(man, { ...ac, noLiveInPartner: false }).independence,
     ).toBeNull()
+  })
+})
+
+describe('estimateGroup: office occupation (PNAD)', () => {
+  const error = 1.96 / Math.sqrt(400)
+
+  it("multiplies each cell by the probability in its sex, age group and education, with that row's interval", () => {
+    // Women 25 to 29 in Acre not in a union: 1,000 college × 0.7 + 3,000
+    // high school × 0.2.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.active).toContain('office')
+    expect(r.result.central).toBeCloseTo(1300)
+    expect(r.result.min).toBeCloseTo((660 + 540) * (1 - error))
+    expect(r.result.max).toBeCloseTo((740 + 660) * (1 + error))
+  })
+
+  it('a cell whose education has no row takes the all-educations one', () => {
+    // The 400 college women aged 30 to 34 take 0.5.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 34 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.result.central).toBeCloseTo(1300 + 200)
+  })
+
+  it('says which occupations count and that it assumes the rest does not change them', () => {
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    const caveat = r.caveats.find((x) => x.id === 'office')?.text
+    expect(caveat).toContain('PNAD Contínua')
+    expect(caveat).toContain('apoio administrativo')
+    expect(caveat).toContain('renda')
+  })
+
+  it('enters the independence range: bounded in each education first, then against the PNS block', () => {
+    // Women 25 to 29 in Acre. High school: 3,000, all without a partner, 600
+    // in an office: exactly 600. College: 3,000, 1,000 without a partner,
+    // 2,100 in an office: from 100 to 1,000. Together, 700 to 1,600.
+    const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+    const alone = count({ seeks: 'mulheres' }, { ...ac, office: true })
+    expect(alone.independence?.min).toBeCloseTo(700)
+    expect(alone.independence?.max).toBeCloseTo(1600)
+    // Straight or bi: 5,750 of the 6,000. At least 700 + 5,750 − 6,000.
+    const withPns = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { ...ac, office: true },
+    )
+    expect(withPns.independence?.min).toBeCloseTo(450)
+    expect(withPns.independence?.max).toBeCloseTo(1600)
   })
 })
 

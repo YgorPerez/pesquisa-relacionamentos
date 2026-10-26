@@ -114,6 +114,9 @@ export interface Requirements {
   readonly noChildren: boolean
   readonly height: Range
   readonly nonSmoker: boolean
+  /** Works in an office occupation: VD4011 groups 1 to 4 of the PNAD
+   * Contínua (#294). */
+  readonly office: boolean
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -127,6 +130,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   noChildren: false,
   height: { min: MIN_HEIGHT, max: MAX_HEIGHT },
   nonSmoker: false,
+  office: false,
 }
 
 /** Who is sought, as the count says it. */
@@ -228,6 +232,7 @@ export const REQUIREMENTS = [
   'children',
   'height',
   'smoking',
+  'office',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -251,6 +256,7 @@ export function release(
     children: { noChildren: false },
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
+    office: { office: false },
   }
   return { ...requirements, ...released[requirement] }
 }
@@ -269,6 +275,7 @@ export const REQUIREMENT_TITLE: Readonly<
   children: 'Filhos',
   height: 'Altura',
   smoking: 'Cigarro',
+  office: 'Ocupação',
 }
 
 export const EDUCATION_LABEL: Readonly<
@@ -371,6 +378,8 @@ export function requirementValue(
     }
     case 'smoking':
       return r.nonSmoker ? 'não fuma' : 'fuma ou não'
+    case 'office':
+      return r.office ? 'trabalha em escritório' : 'qualquer ocupação'
   }
 }
 
@@ -395,5 +404,6 @@ export function readRequirements(value: unknown): Requirements {
     noChildren: raw.noChildren === true,
     height: range(raw.height, MIN_HEIGHT, MAX_HEIGHT) ?? defaults.height,
     nonSmoker: raw.nonSmoker === true,
+    office: raw.office === true,
   }
 }

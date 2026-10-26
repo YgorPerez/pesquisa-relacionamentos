@@ -484,9 +484,9 @@ function WhereUncertaintyComesFrom({ estimate }: { estimate: Estimate }) {
 }
 
 /** The second range (#301): the least and the most the group could be
- * without the independence between the PNS and the Census Requirements. It
- * can go from 0 to several times the number, so it stays in the fold, apart
- * from the range at the top. */
+ * without the independence between the Census Requirements and the shares
+ * from the PNS and the PNAD. It can go from 0 to several times the number,
+ * so it stays in the fold, apart from the range at the top. */
 function IndependenceRange({
   estimate: { independence, active },
 }: {
@@ -496,13 +496,18 @@ function IndependenceRange({
   const range = formatRange(independence.min, independence.max)
   // Rounded to the same number, the assumption changes nothing worth saying.
   if (!range.startsWith('entre ')) return null
+  const sources = independenceSources(active)
   return (
     <>
       <p className={HINT} data-slot="gp-independencia">
-        {independenceSources(active)} As duas pesquisas não entrevistaram as
-        mesmas pessoas, então a conta supõe que, no mesmo sexo e idade, um lado
-        não depende do outro. Se depender, o grupo pode ficar em qualquer ponto{' '}
-        <b>{range}</b>: o menor e o maior número que os dados permitem.
+        {sources.text} As {sources.surveys > 2 ? 'três' : 'duas'} pesquisas não
+        entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo
+        e idade,{' '}
+        {sources.surveys > 2
+          ? 'nenhum lado depende dos outros'
+          : 'um lado não depende do outro'}
+        . Se depender, o grupo pode ficar em qualquer ponto <b>{range}</b>: o
+        menor e o maior número que os dados permitem.
       </p>
       <p className={HINT}>
         Nenhuma das duas faixas é um intervalo de confiança.

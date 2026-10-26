@@ -18,20 +18,36 @@ const noun = (k: RequirementId) =>
     ? 'morar com companheiro(a)'
     : REQUIREMENT_TITLE[k as keyof typeof REQUIREMENT_TITLE].toLowerCase()
 
-/** The opening of the independence range's sentence (#301): which
- * Requirements come from the PNS and which from the Census, the ones that
- * cut inside sex and age (age and place cut both sides alike). */
-export function independenceSources(
-  active: ReadonlyArray<RequirementId>,
-): string {
-  const pns = active.filter((k) => REQUIREMENT_SOURCE[k] === 'PNS')
-  const census = active.filter(
-    (k) => REQUIREMENT_SOURCE[k] === 'Censo' && k !== 'age' && k !== 'place',
+/** The opening of the independence range's paragraph (#301): which
+ * Requirements come from which survey, and how many surveys that is. On the
+ * Census side, only the ones that cut inside sex and age (age and place cut
+ * every side alike). */
+export function independenceSources(active: ReadonlyArray<RequirementId>): {
+  readonly text: string
+  readonly surveys: number
+} {
+  const from = (source: string) =>
+    active.filter(
+      (k) => REQUIREMENT_SOURCE[k] === source && k !== 'age' && k !== 'place',
+    )
+  const sides = (
+    [
+      ['PNS', 'da PNS'],
+      ['PNAD', 'da PNAD'],
+      ['Censo', 'do Censo'],
+    ] as const
   )
-  const side = (ks: RequirementId[]) =>
-    `${list.format(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'}`
-  const text = `${side(pns)} da PNS; ${side(census)} do Censo.`
-  return text.charAt(0).toUpperCase() + text.slice(1)
+    .map(([source, of]) => [from(source), of] as const)
+    .filter(([ks]) => ks.length > 0)
+    .map(
+      ([ks, of]) =>
+        `${list.format(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'} ${of}`,
+    )
+  const text = `${sides.join('; ')}.`
+  return {
+    text: text.charAt(0).toUpperCase() + text.slice(1),
+    surveys: sides.length,
+  }
 }
 
 /** "soltar só este: ×3,4 (+670)". Below 5%, it says it barely changes. */

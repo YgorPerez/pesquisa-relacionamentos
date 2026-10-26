@@ -10,9 +10,12 @@
 //    and the SIDRA tables for exact age and municipality (population from
 //    9514, marital status from 10185), each with its `.meta.yaml`.
 //
+// 6. Reads the PNAD Contínua of 2022 Q3, cross-checks it against SIDRA 5435
+//    and writes the office occupation probability (`pnad-2022.csv`, #294).
+//
 // `--municipalities-only` rebuilds only marital status by municipality,
 // without downloading the microdata. `--pns-only` rebuilds only the PNS
-// cells, without the Census.
+// cells, without the Census; `--pnad-only`, only step 6.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { download, FTP, RAW_DIR, zipEntries, zipLines } from './raw.ts'
@@ -42,6 +45,13 @@ import {
   type MunicipalityMarital,
 } from './municipalities.ts'
 import { fetchSidra, type SidraValue } from './sidra.ts'
+import {
+  crossCheckPnad,
+  estimatePnad,
+  pnadToCsv,
+  readPnadRecord,
+  type PnadRecord,
+} from './pnad.ts'
 
 const ROOT = join(import.meta.dirname, '..', '..')
 const OUTPUT = join(ROOT, 'data', 'possible-group')
@@ -528,10 +538,75 @@ async function main() {
     municipalitiesToCsv(maritalMunicipalities),
     META_10185_MUNICIPALITIES(maritalMunicipalities.length),
   )
+  await pnad()
+}
+
+// --- PNAD Contínua (#294) ------------------------------------------------
+
+// 2022 Q3: the quarter of the Census reference date (July 31, 2022), so the
+// share of office work is that of the population the count multiplies. The
+// file is the one reweighted to the Census 2022 population (2025-08-15).
+const PNAD_QUARTER = '202203'
+const PNAD_FILE = 'PNADC_032022_20250815.zip'
+const PNAD_URL = `${FTP}/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2022/${PNAD_FILE}`
+const PNAD_FACT_SHEET = 'ibge-2022-pnad-ocupacao'
+
+/** `--pnad-only`, and the last step of the full run: the office occupation
+ * probability, cross-checked against SIDRA 5435 in the same quarter. */
+async function pnad() {
+  const zip = await download(PNAD_URL, join(RAW_DIR, 'pnadc', PNAD_FILE))
+  const [file] = (await zipEntries(zip)).filter((n) => n.endsWith('.txt'))
+  if (!file) throw new Error(`no .txt inside ${PNAD_FILE}`)
+  // Group 0 is SIDRA's total; 33370 to 33380 are VD4011 1 to 11.
+  const published = (
+    await fetchSidra(5435, 4090, 'N1[all]', ['694[all]'], PNAD_QUARTER)
+  ).map((v) => ({
+    group: v.categories[0] === '33356' ? 0 : Number(v.categories[0]) - 33369,
+    thousands: v.value,
+  }))
+  if (published.length !== 12)
+    throw new Error(`expected 12 groups in SIDRA 5435, got ${published.length}`)
+
+  console.log('reading the PNAD Contínua')
+  const records: PnadRecord[] = []
+  for await (const line of zipLines(zip, file)) {
+    const record = readPnadRecord(line)
+    if (record) records.push(record)
+  }
+  const failures = crossCheckPnad(records, published)
+  if (failures.length > 0) {
+    console.error(
+      `The PNAD does not match SIDRA 5435; nothing was written.\n${failures.join('\n')}`,
+    )
+    process.exit(1)
+  }
+  mkdirSync(OUTPUT, { recursive: true })
+  write('pnad-2022', pnadToCsv(estimatePnad(records)), {
+    fact_sheet: PNAD_FACT_SHEET,
+    table: [
+      'Microdados trimestrais da PNAD Contínua, 3º trimestre de 2022, pessoas de 18 anos ou mais',
+    ],
+    variables: [
+      'Estrato',
+      'UPA',
+      'V1028',
+      'V2007',
+      'V2009',
+      'VD3004',
+      'VD4002',
+      'VD4011',
+    ],
+    downloaded_on: fileDate(zip),
+    version: `${PNAD_FILE} publicado em ${await publishedOn(PNAD_URL)}`,
+    cross_check:
+      'Pessoas ocupadas de 14 anos ou mais por grupamento ocupacional (VD4011), no total e em cada um dos 11 grupos, iguais ao SIDRA 5435 do 3º trimestre de 2022 no milhar publicado.',
+  })
 }
 
 await (process.argv.includes('--municipalities-only')
   ? municipalitiesOnly()
   : process.argv.includes('--pns-only')
     ? pnsOnly()
-    : main())
+    : process.argv.includes('--pnad-only')
+      ? pnad()
+      : main())
