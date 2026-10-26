@@ -124,6 +124,8 @@ export interface Requirements {
   readonly exercises: boolean
   /** Rates their oral health good or very good (#293). */
   readonly goodTeeth: boolean
+  /** Does not use an e-cigarette today (#297). */
+  readonly nonVaper: boolean
 }
 
 export const DEFAULT_REQUIREMENTS: Requirements = {
@@ -140,6 +142,7 @@ export const DEFAULT_REQUIREMENTS: Requirements = {
   drinking: [],
   exercises: false,
   goodTeeth: false,
+  nonVaper: false,
 }
 
 /** Who is sought, as the count says it. */
@@ -244,6 +247,7 @@ export const REQUIREMENTS = [
   'drinking',
   'exercise',
   'teeth',
+  'vape',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -270,6 +274,7 @@ export function release(
     drinking: { drinking: [] },
     exercise: { exercises: false },
     teeth: { goodTeeth: false },
+    vape: { nonVaper: false },
   }
   return { ...requirements, ...released[requirement] }
 }
@@ -291,6 +296,7 @@ export const REQUIREMENT_TITLE: Readonly<
   drinking: 'Bebida',
   exercise: 'Exercício',
   teeth: 'Saúde bucal',
+  vape: 'Cigarro eletrônico',
 }
 
 export const EDUCATION_LABEL: Readonly<
@@ -409,6 +415,10 @@ export function requirementValue(
         : 'faz exercício ou não'
     case 'teeth':
       return r.goodTeeth ? 'saúde bucal boa' : 'qualquer saúde bucal'
+    case 'vape':
+      return r.nonVaper
+        ? 'não usa cigarro eletrônico'
+        : 'usa cigarro eletrônico ou não'
   }
 }
 
@@ -436,5 +446,6 @@ export function readRequirements(value: unknown): Requirements {
     drinking: manyOf(DRINKINGS, raw.drinking),
     exercises: raw.exercises === true,
     goodTeeth: raw.goodTeeth === true,
+    nonVaper: raw.nonVaper === true,
   }
 }

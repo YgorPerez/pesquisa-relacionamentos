@@ -21,6 +21,7 @@ const adult = (
     bebida: 'nunca',
     exercicio: 'sim',
     saude_bucal: 'boa',
+    cigarro_eletronico: 'nao',
     ...values,
   },
 })
@@ -106,6 +107,7 @@ describe('readPnsRecord', () => {
         bebida: null,
         exercicio: null,
         saude_bucal: null,
+        cigarro_eletronico: null,
       },
     })
   })
@@ -190,6 +192,17 @@ describe('readPnsRecord: lifestyle answers', () => {
     assert.equal(teeth('5'), 'nao')
     assert.equal(teeth('9'), null)
   })
+
+  it('e-cigarette: uses it (daily or not) against used it in the past or never', () => {
+    // P06701 at 796.
+    const vape = (p06701: string) =>
+      answering({ P06701: [796, p06701] }).cigarro_eletronico
+    assert.equal(vape('1'), 'usa')
+    assert.equal(vape('2'), 'usa')
+    assert.equal(vape('3'), 'nao')
+    assert.equal(vape('4'), 'nao')
+    assert.equal(vape('9'), null)
+  })
 })
 
 describe('pnsToCsv', () => {
@@ -197,8 +210,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nunca,sim,boa,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,bebida,exercicio,saude_bucal,cigarro_eletronico,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nunca,sim,boa,nao,3,1,1.000\n',
     )
   })
 })

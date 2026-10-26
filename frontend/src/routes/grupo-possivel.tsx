@@ -466,6 +466,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(goodTeeth) => change({ goodTeeth })}
       />
     ),
+    vape: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não usa cigarro eletrônico"
+        checked={requirements.nonVaper}
+        onChange={(nonVaper) => change({ nonVaper })}
+      />
+    ),
   }
 
 /** The "A conta" block: the range, what weighs most, with the button to

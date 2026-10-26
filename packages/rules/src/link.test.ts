@@ -24,6 +24,7 @@ const ALL: Requirements = {
   drinking: ['nunca', 'raramente'],
   exercises: true,
   goodTeeth: true,
+  nonVaper: true,
 }
 
 /** What a link from before the PNS lifestyle Requirements carries: all of
@@ -32,6 +33,7 @@ const BEFORE_LIFESTYLE: Partial<Requirements> = {
   drinking: [],
   exercises: false,
   goodTeeth: false,
+  nonVaper: false,
 }
 
 describe('round trip', () => {
@@ -237,7 +239,7 @@ describe('linkSentence', () => {
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
         'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
         'a partir de 160 cm, não fuma, bebe nunca ou menos de 1 vez por semana, ' +
-        'faz 150 min de exercício por semana, saúde bucal boa, em São Paulo (SP).',
+        'faz 150 min de exercício por semana, saúde bucal boa, não usa cigarro eletrônico, em São Paulo (SP).',
     )
   })
 

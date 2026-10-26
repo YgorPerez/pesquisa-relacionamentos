@@ -69,6 +69,7 @@ const POSITIONS = {
   P03702: [677, 2],
   P036: [679, 2],
   P050: [711, 1],
+  P06701: [796, 1],
   U005: [1208, 1],
   Y008: [1304, 1],
   V00291: [1426, 14],
@@ -196,6 +197,14 @@ export const PNS_VARIABLES = [
       '4': 'nao',
       '5': 'nao',
     }),
+    ordered: false,
+  },
+  {
+    // P06701, e-cigarette or heated tobacco: daily or less than daily
+    // against used it in the past or never.
+    column: 'cigarro_eletronico',
+    fields: ['P06701'],
+    read: code('P06701', { '1': 'usa', '2': 'usa', '3': 'nao', '4': 'nao' }),
     ordered: false,
   },
 ] as const satisfies ReadonlyArray<PnsVariable>

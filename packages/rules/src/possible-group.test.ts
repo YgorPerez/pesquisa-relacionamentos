@@ -143,7 +143,8 @@ describe('estimateGroup: PNS requirements', () => {
   // smoking (10, 1). Drinking, in the same order: never, weekly, under once a
   // week, under once a week, weekly, never, empty. Exercise (150 min a week):
   // yes, no, yes, no, yes, yes, empty. Oral health: good, good, not, good,
-  // not, good, empty. Design effect 2. The interval literals are the Wilson
+  // not, good, empty. E-cigarette: no, no, uses, no, uses, no, empty. Design
+  // effect 2. The interval literals are the Wilson
   // interval on records / 2, worked out by hand.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
@@ -260,6 +261,14 @@ describe('estimateGroup: PNS requirements', () => {
     expect(r.caveats.find((x) => x.id === 'teeth')?.text).toContain(
       'autoavaliação',
     )
+  })
+
+  it('"não usa cigarro eletrônico" counts who does not use it today, with the 2019 caveat', () => {
+    // 500 + 200 + 20 + 30 = 750 of 990.
+    const r = count({ seeks: 'mulheres' }, { ...ac, nonVaper: true })
+    expect(r.active).toContain('vape')
+    expect(r.result.central).toBeCloseTo((4000 * 750) / 990)
+    expect(r.caveats.find((x) => x.id === 'vape')?.text).toContain('2019')
   })
 
   it('a PNS block below 50 records is unstable and says so, even with a large Census cell', () => {

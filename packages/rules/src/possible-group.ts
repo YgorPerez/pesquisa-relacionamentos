@@ -59,6 +59,7 @@ export const REQUIREMENT_ORDER = [
   'drinking',
   'exercise',
   'teeth',
+  'vape',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -80,6 +81,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   drinking: 'PNS',
   exercise: 'PNS',
   teeth: 'PNS',
+  vape: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -183,6 +185,7 @@ export function activeRequirements({
     drinking: r.drinking.length > 0,
     exercise: r.exercises,
     teeth: r.goodTeeth,
+    vape: r.nonVaper,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -275,6 +278,10 @@ const PNS_FILTERS: {
   }),
   exercise: () => ({ variable: 'exercicio', test: (value) => value === 'sim' }),
   teeth: () => ({ variable: 'saude_bucal', test: (value) => value === 'boa' }),
+  vape: () => ({
+    variable: 'cigarro_eletronico',
+    test: (value) => value === 'nao',
+  }),
 }
 
 export interface PnsBlock {
@@ -606,6 +613,11 @@ function caveats(
       id: 'teeth',
       strong: false,
       text: 'A saúde bucal é a autoavaliação da PNS 2019 ("boa" ou "muito boa"), não um exame de dentista.',
+    },
+    has('vape') && {
+      id: 'vape',
+      strong: false,
+      text: 'O cigarro eletrônico vem da PNS 2019, quando menos de 1% dos adultos o usava. O uso cresceu depois, então o número tende a sair alto. Quem usava era tão pouco na amostra (poucas dezenas de registros por sexo e idade) que a parte descontada é imprecisa.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',
