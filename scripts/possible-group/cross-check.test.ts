@@ -27,6 +27,9 @@ const cell = (
   cor: 'parda',
   religiao: 'catolica',
   filhos: '',
+  pais: '',
+  trabalho: '',
+  casa: '',
   peso,
   n_registros: 10,
 })
@@ -44,6 +47,7 @@ const aggregate: Aggregate = {
     under15: { records: 0, weight: 0 },
     sexOrAgeSuppressed: { records: 0, weight: 0 },
   },
+  withoutHousehold: 0,
 }
 
 // What SIDRA published for the same cells, 1% off.
