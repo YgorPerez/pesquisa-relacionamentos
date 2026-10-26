@@ -2,10 +2,12 @@
 // (`readings.tsx`), shared with their tests.
 import type { NoticeKind, ReadingLanguage } from '@tem-estudo/content'
 
-/** The tag before each notice: what kind of interest the site has. */
+/** The tag before each notice: what kind of interest the site has, or that
+ * the page overstates a study it cites. */
 export const NOTICE_TAG: Readonly<Record<NoticeKind, string>> = {
   commercial: 'vende algo',
   cause: 'defende uma causa',
+  caveat: 'ressalva',
 }
 
 /** After the site's name. Portuguese, the reader's language, says nothing. */

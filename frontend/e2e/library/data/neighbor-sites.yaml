@@ -1,5 +1,5 @@
 # The e2e fixture's Neighbor sites: one in Portuguese, one in English with a
-# cause notice, three Readings of "Onde conhecer pessoas" (the English one
+# cause notice, three Readings (one with a Caveat) of "Onde conhecer pessoas" (the English one
 # listed first, so the page has to put the Portuguese ones ahead) and none of
 # "Escolher parceiro", whose Guide must not show the block.
 sites:
@@ -32,3 +32,5 @@ readings:
     url: https://revista-daqui.example/primeiro-encontro
     description: O que os estudos de encontro rápido dizem sobre a primeira conversa.
     topics: [onde-conhecer-pessoas]
+    notices:
+      caveat: O estudo achou um efeito menor do que a reportagem diz.

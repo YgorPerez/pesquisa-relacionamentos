@@ -2,7 +2,7 @@
 // Leitura): outside pages the site points readers to, never a Source. One
 // file, `data/neighbor-sites.yaml`. A site carries the notices every one of
 // its Readings inherits (what it sells, the cause it declares); a Reading
-// may add its own. The build fails on a repeated URL, a missing field, a
+// may add its own, and only a Reading a Caveat. The build fails on a repeated URL, a missing field, a
 // Topic that does not exist or a Reading of an unknown site.
 import { Schema } from 'effect'
 import { parse as parseYaml } from 'yaml'
@@ -16,15 +16,22 @@ const Text = Schema.String.check(
   Schema.isMinLength(1, { message: 'cannot be empty' }),
 )
 
-/** The two notices (`NOTICE_KINDS`), each one sentence in PT-BR for the
- * reader. */
-const Notices = Schema.Struct({
+/** A site's notices, each one sentence in PT-BR for the reader. */
+const SiteNotices = Schema.Struct({
   /** What the site or the author sells (a course, therapy, a book). */
   commercial: Schema.optional(Text),
   /** The cause the site declares, or where the page first came out. */
   cause: Schema.optional(Text),
+})
+
+/** A Reading's notices: the site's kinds and the Caveat (`NOTICE_KINDS`). */
+const ReadingNotices = Schema.Struct({
+  ...SiteNotices.fields,
+  /** What a study the page cites found, where the page overstates or
+   * distorts it on a side point (GLOSSARY: Ressalva). */
+  caveat: Schema.optional(Text),
 } satisfies Record<NoticeKind, unknown>)
-export type Notices = typeof Notices.Type
+export type Notices = typeof ReadingNotices.Type
 
 const NeighborSite = Schema.Struct({
   id: Slug,
@@ -32,7 +39,7 @@ const NeighborSite = Schema.Struct({
   /** The site's home. Kept for whoever curates; the page never links it. */
   home: Url,
   language: Schema.Literals(READING_LANGUAGES),
-  notices: Schema.optional(Notices),
+  notices: Schema.optional(SiteNotices),
 })
 export type NeighborSite = typeof NeighborSite.Type
 
@@ -45,7 +52,7 @@ const Reading = Schema.Struct({
   topics: Schema.Array(Slug).check(
     Schema.isMinLength(1, { message: 'name at least one Topic' }),
   ),
-  notices: Schema.optional(Notices),
+  notices: Schema.optional(ReadingNotices),
 })
 export type Reading = typeof Reading.Type
 

@@ -118,4 +118,19 @@ readings:${reading('')}
       'data/neighbor-sites.yaml: sites.2.id: the site daqui is listed twice',
     ])
   })
+
+  it('takes a Caveat on a Reading and refuses one on a site', () => {
+    const caveat = '    notices:\n      caveat: O estudo achou menos.'
+    const result = withFile(`${SITES}\nreadings:${reading(caveat)}`)
+    expect(result.ok && result.library.readings[0]?.notices).toEqual({
+      caveat: 'O estudo achou menos.',
+    })
+    const onSite = SITES.replace(
+      'cause: Defende uma causa.',
+      'caveat: O estudo achou menos.',
+    )
+    expect(errorsOf(withFile(`${onSite}\nreadings:${reading('')}`))).toEqual([
+      'data/neighbor-sites.yaml: sites.1.notices.caveat: unknown field',
+    ])
+  })
 })

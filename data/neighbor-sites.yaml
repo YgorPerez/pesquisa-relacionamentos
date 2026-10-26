@@ -1,9 +1,14 @@
 # Sites vizinhos e Leituras (#178, #179; GLOSSARY.md). Uma Leitura só entra
-# se a própria página linka ou referencia os estudos de que fala. Um aviso do
-# site (`notices`) vale para todas as Leituras dele; uma Leitura pode ter os
-# seus. Cada aviso é uma frase para o leitor: `commercial` diz o que se vende,
-# `cause` a causa declarada. `home` não aparece no site.
-# Conferido em 2026-10-26, abrindo cada página.
+# se a própria página linka ou referencia os estudos de que fala, e se o que
+# ela diz deles foi conferido nos estudos. Um aviso do site (`notices`) vale
+# para todas as Leituras dele; uma Leitura pode ter os seus. Cada aviso é uma
+# frase para o leitor: `commercial` diz o que se vende (só se a página
+# divulga), `cause` a causa declarada e `caveat`, só numa Leitura, a Ressalva:
+# o que o estudo achou onde a página exagera num ponto lateral. Um erro no
+# centro do texto tira a Leitura. `home` não aparece no site.
+# Conferido em 2026-10-26, afirmação por afirmação, em
+# reports/2026-10-26-leituras-conferidas.md. Leitura nova ou trocada passa
+# pela mesma conferência.
 
 sites:
   - id: the-conversation-brasil
@@ -41,13 +46,16 @@ readings:
   - site: pew
     title: Key findings about online dating in the U.S.
     url: https://www.pewresearch.org/short-reads/2023/02/02/key-findings-about-online-dating-in-the-u-s/
-    description: Pesquisa com 6.034 adultos dos EUA, em 2022, sobre quem usa app de namoro, o que acha dele e quantos já toparam com golpe.
+    description: Pesquisa com 6.034 adultos dos EUA, em 2022, sobre quem usa app de namoro, o que acha dele e quantos acham que já cruzaram com um golpista.
     topics: [onde-conhecer-pessoas, apps-e-saude-mental]
   - site: the-conversation-brasil
     title: Como os apps de namoro afetam os relacionamentos e a economia do desejo
     url: https://theconversation.com/como-os-apps-de-namoro-afetam-os-relacionamentos-e-a-economia-do-desejo-285046
-    description: Um professor da PUC-Rio junta estudos sobre o que os apps mudaram no namoro e conclui que ter mais opções não deixou as pessoas claramente mais satisfeitas.
+    description: "Um professor da PUC-Rio junta estudos sobre o que os apps mudaram no namoro: mais sexo casual, atenção mais desigual, nenhum ganho claro em relações estáveis e efeitos mistos na saúde mental."
     topics: [onde-conhecer-pessoas, apps-e-saude-mental, sexo-e-historico]
+    notices:
+      commercial: O autor tem uma empresa que vende cursos online, a Garagem Psi.
+      caveat: O estudo de 2026 com universitários dos EUA também achou mais agressões sexuais e mais ISTs depois da chegada do Tinder, o que o texto não conta.
   - site: greater-good
     title: How to Actually Enjoy the Dating Process
     url: https://greatergood.berkeley.edu/article/item/how_to_actually_enjoy_the_dating_process
@@ -55,50 +63,59 @@ readings:
     topics: [onde-conhecer-pessoas, conversar-e-se-conectar]
     notices:
       commercial: A autora vende uma masterclass de namoro.
+      caveat: "Nos EUA, conhecer o parceiro pela internet virou o caminho mais comum, mas não o da maioria: 39% dos casais em 2017."
   - site: psychology-today
     title: Massive New Study on Predictors of Relationship Satisfaction
     url: https://www.psychologytoday.com/us/blog/sliding-vs-deciding/202008/massive-new-study-on-predictors-of-relationship-satisfaction
-    description: Scott Stanley resume o estudo de Joel e colegas com 11.196 casais, em que o jeito da relação previu a satisfação muito melhor que os traços de cada um.
+    description: "Scott Stanley, um dos coautores, resume o estudo de Joel e colegas com 11.196 casais: o jeito da relação previu a satisfação melhor que os traços de cada um, e os traços quase nada acrescentaram."
     topics: [escolher-parceiro, manter-a-relacao]
+    notices:
+      cause: Saiu antes no blog do Institute for Family Studies, que defende o casamento.
   - site: greater-good
     title: Can Artificial Intelligence Predict the Right Partner for You?
     url: https://greatergood.berkeley.edu/article/item/can_artificial_intelligence_predict_the_right_partner_for_you
-    description: Uma pesquisadora explica por que a semelhança atrai antes de duas pessoas se conhecerem e pesa pouco depois de uma conversa.
+    description: "Uma pesquisadora de relacionamentos explica por que ainda não dá para prever quem vai combinar com quem, nem com IA: a ciência ainda não sabe o que torna duas pessoas compatíveis."
     topics: [escolher-parceiro]
+    notices:
+      caveat: A meta-análise citada achou que a semelhança ainda pesa depois de uma conversa curta e só deixa de pesar em casais já formados.
   - site: hbs-working-knowledge
     title: Asking Questions Can Get You a Better Job or a Second Date
     url: https://www.library.hbs.edu/working-knowledge/asking-questions-can-get-you-a-better-job-or-a-second-date
-    description: Três estudos de Harvard, um com encontros rápidos, em que quem fez mais perguntas, sobretudo de continuidade, agradou mais e ganhou mais segundos encontros.
+    description: "Pesquisadores de Harvard sortearam quem faria mais perguntas em chats entre desconhecidos: quem perguntou mais, sobretudo em cima do que o outro disse, agradou mais, e em dados de encontros rápidos isso veio junto com mais segundos encontros."
     topics: [conversar-e-se-conectar]
+    notices:
+      caveat: O estudo achou só uma associação entre fazer perguntas e ganhar um segundo encontro, e não testou se perguntas demais atrapalham.
   - site: the-conversation-brasil
     title: "'Phubbing': por que ignorar seu parceiro ou parceira usando o celular enfurece algumas pessoas e leva a retaliações"
     url: https://theconversation.com/phubbing-por-que-ignorar-seu-parceiro-ou-parceira-usando-o-celular-enfurece-algumas-pessoas-e-leva-a-retaliacoes-264672
-    description: "Duas psicólogas contam o que três estudos acharam sobre ignorar o parceiro pelo celular: menos satisfação e, às vezes, revide."
+    description: "Duas psicólogas contam o que acharam ao acompanhar por alguns dias 196 pessoas que moram com o parceiro: nos dias em que o outro ficou mais no celular, menos satisfação e, às vezes, revide."
     topics: [conversar-e-se-conectar, manter-a-relacao]
+    notices:
+      caveat: Os três estudos vêm do mesmo grupo de 196 pessoas, e nele o tédio foi o motivo mais apontado para pegar o celular.
   - site: psychology-today
     title: The Risks for Couples Moving in Together
     url: https://www.psychologytoday.com/us/blog/sliding-vs-deciding/201807/the-risks-couples-moving-in-together
-    description: Stanley e Rhoades reúnem pesquisas sobre ir morar junto antes de decidir casar e o que isso tem a ver com a qualidade do casamento e o divórcio.
+    description: Stanley e Rhoades leem um relatório do governo dos EUA sobre quem mora junto sem casar (renda, estudo, opiniões) e defendem que ir morar junto antes de decidir casar vem com casamento pior e mais divórcio.
     topics: [manter-a-relacao]
     notices:
       cause: Saiu antes no blog do Institute for Family Studies, que defende o casamento.
-  - site: the-conversation-brasil
-    title: Como um casal se separa? Anatomia matemática de uma queda
-    url: https://theconversation.com/como-um-casal-se-separa-anatomia-matematica-de-uma-queda-228177
-    description: Dois pesquisadores espanhóis explicam o modelo matemático que publicaram sobre por que a satisfação do casal cai com o tempo quando falta esforço.
-    topics: [manter-a-relacao]
+      caveat: "Os estudos citados mostram associação, não causa: quem foi morar junto antes de noivar teve, em média, um casamento um pouco pior e mais divórcio."
   - site: our-world-in-data
     title: Marriages and Divorces
     url: https://ourworldindata.org/marriages-and-divorces
-    description: Gráficos de casamento, divórcio e morar junto em vários países desde meados do século 20, com a fonte de cada número.
+    description: Gráficos de casamento, divórcio, idade ao casar e filhos fora do casamento em vários países desde meados do século 20, com a fonte de cada número.
     topics: [manter-a-relacao]
   - site: ifs
     title: Counterintuitive Trends in the Link Between Premarital Sex and Marital Stability
     url: https://ifstudies.org/blog/counterintuitive-trends-in-the-link-between-premarital-sex-and-marital-stability
     description: Com dados do governo dos EUA, Wolfinger compara a chance de divórcio em cinco anos pelo número de parceiros que a mulher teve antes de casar.
     topics: [sexo-e-historico]
+    notices:
+      caveat: Nos casamentos dos anos 1980, ter tido um parceiro antes não mudou de forma significativa a chance de divórcio.
   - site: ifs
     title: Testing Common Theories on the Relationship Between Premarital Sex and Marital Stability
     url: https://ifstudies.org/blog/testing-common-theories-on-the-relationship-between-premarital-sex-and-marital-stability
-    description: Smith e Wolfinger testam as explicações comuns para a ligação entre sexo antes do casamento e divórcio, e nenhuma dá conta dela.
+    description: Smith e Wolfinger testam as explicações comuns para a ligação entre sexo antes do casamento e divórcio, e nenhuma das que eles mediram dá conta dela.
     topics: [sexo-e-historico]
+    notices:
+      caveat: O estudo de Wolfinger e Perry achou só associação entre o número de parceiros e casar, e só no curto prazo, não efeito causal.

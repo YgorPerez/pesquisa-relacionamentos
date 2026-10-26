@@ -36,7 +36,7 @@ it('lists the Readings Portuguese first, each title opening its page in another 
 
 it("shows each Reading's site, its line and its notices: its own, and its site's on every one of the site's Readings", () => {
   render(<ReadingList readings={READINGS} />)
-  const [withNotice, plain, english] = items()
+  const [withNotice, withCaveat, english] = items()
   expect(withNotice).toHaveTextContent('Revista Daqui')
   expect(withNotice).not.toHaveTextContent('em inglês')
   expect(withNotice).toHaveTextContent(
@@ -45,7 +45,10 @@ it("shows each Reading's site, its line and its notices: its own, and its site's
   expect(withNotice).toHaveTextContent(
     `${NOTICE_TAG.commercial}A autora vende um curso sobre namoro.`,
   )
-  expect(within(plain!).queryByRole('list')).not.toBeInTheDocument()
+  expect(withCaveat).toHaveTextContent(
+    `${NOTICE_TAG.caveat}O estudo achou um efeito menor do que a reportagem diz.`,
+  )
+  expect(withCaveat).not.toHaveTextContent(NOTICE_TAG.commercial)
   expect(english).toHaveTextContent('Family Lab · em inglês')
   expect(english).toHaveTextContent(
     `${NOTICE_TAG.cause}O Family Lab defende o casamento.`,

@@ -55,6 +55,9 @@ test.describe('Neighbor sites page', () => {
     const group = page.getByRole('region', { name: TOPIC })
     await expect(group).toContainText('A autora vende um curso sobre namoro.')
     await expect(group).toContainText('O Family Lab defende o casamento.')
+    await expect(group).toContainText(
+      'O estudo achou um efeito menor do que a reportagem diz.',
+    )
     // No rating next to a Reading: no Confidence, no Strength.
     await expect(group).not.toContainText(/confiança|forte|moderada|fraca/i)
   })

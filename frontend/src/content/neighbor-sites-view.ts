@@ -36,6 +36,7 @@ export interface ReadingGroup {
 
 type ReadingsLibrary = Pick<Library, 'readings' | 'neighborSites'>
 
+/** A site's notices or a Reading's: a site has no Caveat. */
 const noticesOf = (notices: Notices | undefined): ReadingNotice[] =>
   NOTICE_KINDS.flatMap((kind) => {
     const text = notices?.[kind]

@@ -41,8 +41,9 @@ export const READING_LANGUAGES = ['pt', 'en'] as const
 export type ReadingLanguage = (typeof READING_LANGUAGES)[number]
 
 /** The notices a Neighbor site or a Reading carries, in the order shown:
- * what it sells, then the cause it declares. */
-export const NOTICE_KINDS = ['commercial', 'cause'] as const
+ * what it sells, the cause it declares, then the Caveat, which only a
+ * Reading carries (GLOSSARY: Ressalva). */
+export const NOTICE_KINDS = ['commercial', 'cause', 'caveat'] as const
 export type NoticeKind = (typeof NOTICE_KINDS)[number]
 
 /** The app's fixed paths, which no topic can use as its slug (#15). They are
