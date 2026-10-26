@@ -152,7 +152,7 @@ describe('search title and description', () => {
 describe('sitemap and robots', () => {
   const library = libraryOf(buildLibrary(filesWith()))
 
-  it('lists home, topics, published tips, the lists, the calculators and the ✅/🟡 fact sheets; a Question is a section, not a page', () => {
+  it('lists home, topics, published tips, the lists, the calculators, the ✅/🟡 fact sheets and the Neighbor sites; a Question is a section, not a page', () => {
     expect(sitemapPaths(library)).toEqual([
       '/',
       '/onde-conhecer',
@@ -163,6 +163,7 @@ describe('sitemap and robots', () => {
       '/estudos/silva-2020-apps-brasil',
       '/grupo-possivel',
       '/prioridades',
+      '/sites-vizinhos',
     ])
   })
 

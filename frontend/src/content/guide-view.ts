@@ -34,6 +34,7 @@ import {
   type FactSheetSummary,
 } from './view'
 import { renderVisuals, type RenderedVisual } from './visuals-view'
+import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -280,6 +281,9 @@ export interface GuideView {
   readonly takeaways: ReadonlyArray<GuideTip>
   /** "O que não se sabe"; `null` while the Topic waits for its rewrite. */
   readonly unknownsHtml: SafeHtml | null
+  /** "Para ler além daqui": the Topic's Readings, Portuguese first; empty
+   * when the Topic has none (#179). */
+  readonly readings: ReadonlyArray<ReadingView>
   /** One list for the whole page, numbered in page order. */
   readonly factSheets: ReadonlyArray<CitedFactSheet>
   /** The `covers` of each finding, by its id, for the `{{you:<id>}}`
@@ -468,6 +472,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
       return tip ? [tip] : []
     }),
     unknownsHtml: topic.unknowns ? prose(topic.unknowns, drawing) : null,
+    readings: topicReadingViews(library, topic.slug),
     factSheets: citedFactSheets(topic.citedFactSheets, library),
     youMarks: Object.fromEntries(
       topic.findings.map((f) => [f.id, f.covers] as const),

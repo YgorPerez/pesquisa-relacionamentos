@@ -125,6 +125,7 @@ export const RESERVED_ANCHORS = [
   'perfil',
   'o-que-levar',
   'o-que-nao-se-sabe',
+  'para-ler-alem-daqui',
   'fichas',
   'ajudou',
   'outros-temas',

@@ -21,6 +21,11 @@ import { paragraphText } from '#/state/reading'
 import { CONTINUE_READING } from './continue-reading.copy'
 import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
 import { CHAPTER, chapterOf } from './reading-progress.copy'
+import {
+  ALL_NEIGHBOR_SITES,
+  FURTHER_READING,
+  FURTHER_READING_LINE,
+} from './readings.copy'
 
 const follows = (a: Element, b: Element) =>
   (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
@@ -304,4 +309,38 @@ it('"continuar" to a paragraph that is gone lands on its Chapter\'s start', asyn
   await waitFor(() =>
     expect(jumps).toHaveBeenCalledWith({ top: 900 - 16, behavior: 'instant' }),
   )
+})
+
+// "Para ler além daqui" (#179), over the fixture's Neighbor sites: three
+// Readings of "Onde conhecer pessoas", none of "Escolher parceiro".
+
+it('the Guide ends its text with "Para ler além daqui", after "O que não se sabe" and before the Fact sheets', async () => {
+  openScreen('/onde-conhecer-pessoas')
+  const block = await screen.findByRole('region', { name: FURTHER_READING })
+  const unknowns = screen.getByRole('region', { name: 'O que não se sabe' })
+  expect(follows(unknowns, block)).toBe(true)
+  expect(
+    follows(block, screen.getByRole('region', { name: 'Fichas citadas' })),
+  ).toBe(true)
+  expect(block).toHaveTextContent(FURTHER_READING_LINE)
+  expect(
+    within(block)
+      .getAllByRole('link', { name: /abre em outra aba/ })
+      .map((link) => link.getAttribute('href')),
+  ).toEqual([
+    'https://revista-daqui.example/onde-se-conhecem',
+    'https://revista-daqui.example/primeiro-encontro',
+    'https://family-lab.example/how-couples-meet',
+  ])
+  expect(
+    within(block).getByRole('link', { name: ALL_NEIGHBOR_SITES }),
+  ).toHaveAttribute('href', '/sites-vizinhos')
+})
+
+it('a Guide whose Topic has no Reading has no "Para ler além daqui"', async () => {
+  openScreen('/escolher-parceiro')
+  await screen.findByRole('region', { name: 'Fichas citadas' })
+  expect(
+    screen.queryByRole('region', { name: FURTHER_READING }),
+  ).not.toBeInTheDocument()
 })

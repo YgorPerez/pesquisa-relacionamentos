@@ -28,6 +28,12 @@ import {
   readPriorities,
   type Priorities,
 } from './priorities.ts'
+import {
+  NEIGHBOR_SITES_FILE,
+  readNeighborSites,
+  type NeighborSite,
+  type Reading,
+} from './neighbor-sites.ts'
 import { decode, problem, type Problem } from './problems.ts'
 import {
   searchWarnings,
@@ -61,6 +67,10 @@ export interface Library {
   readonly data: ReadonlyArray<DataOrigin>
   /** The priorities file, or `null` while it does not exist. */
   readonly priorities: Priorities | null
+  /** The Neighbor sites, in file order; empty without the file. */
+  readonly neighborSites: ReadonlyArray<NeighborSite>
+  /** Their Readings, in file order; empty without the file. */
+  readonly readings: ReadonlyArray<Reading>
 }
 
 export type LoadResult =
@@ -115,6 +125,7 @@ export function readFiles(root: string): ReadonlyArray<ContentFile> {
     ...leftoverFolders(root),
     ...readMetas(root),
     ...readIfExists(root, PRIORITIES_FILE),
+    ...readIfExists(root, NEIGHBOR_SITES_FILE),
   ]
 }
 
@@ -178,6 +189,7 @@ export function buildLibrary(
   const metas: ContentFile[] = []
   const tips: ParsedTip[] = []
   let prioritiesFile: ContentFile | null = null
+  let neighborSitesFile: ContentFile | null = null
 
   const broken = new Set<string>()
   const keep = <T>(path: string, parsed: ParsedItem<T>, target: T[]) => {
@@ -193,6 +205,8 @@ export function buildLibrary(
     const name = parts[parts.length - 1] ?? ''
     if (path === PRIORITIES_FILE) {
       prioritiesFile = { path, text }
+    } else if (path === NEIGHBOR_SITES_FILE) {
+      neighborSitesFile = { path, text }
     } else if (parts[0] === DATA_FOLDER && name.endsWith(META_SUFFIX)) {
       metas.push({ path, text })
     } else if (
@@ -259,6 +273,18 @@ export function buildLibrary(
     else errors.push(...parsed.errors)
   }
 
+  let neighborSites: ReadonlyArray<NeighborSite> = []
+  let readings: ReadonlyArray<Reading> = []
+  if (neighborSitesFile) {
+    const parsed = readNeighborSites(
+      neighborSitesFile.path,
+      neighborSitesFile.text,
+      new Set(topics.map((t) => t.slug)),
+    )
+    if (parsed.ok) ({ sites: neighborSites, readings } = parsed.neighborSites)
+    else errors.push(...parsed.errors)
+  }
+
   if (errors.length > 0) return { ok: false, errors, warnings }
   const library: Library = {
     factSheets,
@@ -267,6 +293,8 @@ export function buildLibrary(
     tips: linked.tips,
     data,
     priorities,
+    neighborSites,
+    readings,
   }
   warnings.push(...searchWarnings(library))
   errors.push(...beforeErrors(library))

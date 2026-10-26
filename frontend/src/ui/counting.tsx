@@ -140,18 +140,29 @@ export function CountingSwitch({ className }: { className?: string }) {
   )
 }
 
-/** The footer of every page: the privacy page and the switch. On desktop,
+const FOOTER_LINKS = [
+  { to: '/privacidade', label: 'Privacidade' },
+  { to: '/sites-vizinhos', label: 'Sites vizinhos' },
+] as const
+
+/** The footer of every page: the privacy page, the Neighbor sites (#179)
+ * and the switch. On desktop,
  * it continues the page's sheet over the halftone. */
 export function Footer() {
   return (
     <footer className="mx-auto max-w-pagina border-t-2 border-tinta p-md text-nota text-tinta-2 folha:border-2 folha:border-t-0 folha:bg-papel folha:px-16">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1.5">
-        <Link
-          to="/privacidade"
-          className="inline-flex min-h-toque items-center font-bold text-tinta"
-        >
-          Privacidade
-        </Link>
+        <div className="flex flex-wrap gap-x-6">
+          {FOOTER_LINKS.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className="inline-flex min-h-toque items-center font-bold text-tinta"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
         <CountingSwitch />
       </div>
     </footer>

@@ -33,6 +33,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'profile.e2e.ts': ['perfil', 'guia'],
   'priorities.e2e.ts': ['prioridades', 'guia'],
   'privacy.e2e.ts': ['privacidade'],
+  'neighbor-sites.e2e.ts': ['sites-vizinhos', 'guia'],
   'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
 }
 
@@ -68,6 +69,9 @@ const ALIASES: Readonly<Record<string, string>> = {
   'reading-progress': 'leitura',
   'continue-reading': 'leitura',
   search: 'busca',
+  readings: 'sites-vizinhos',
+  'neighbor-sites': 'sites-vizinhos',
+  'neighbor-sites-view': 'sites-vizinhos',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

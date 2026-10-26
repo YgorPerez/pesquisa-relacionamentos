@@ -29,5 +29,8 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 - **Calculadora** [calculator]**:** a ferramenta que um Guia hospeda: o Grupo possível ou as Prioridades.
 - **Visualização** [visual]**:** um gráfico de barras, uma linha no tempo, uma tabela de Estudos ou um diagrama de relações dentro de um Guia. Cada número vem de uma Ficha ✅ ou 🟡 ou de uma Conta nossa sobre elas. No diagrama, cada seta é um achado com Fichas, e o traço diz se um Estudo testou a causa, se só achou associação ou se é Inferência.
 - **Conta nossa** [own calculation]**:** um número que o Tem estudo? calculou a partir dos números de Fichas, como um recorte ou uma média. Aparece marcada como "conta nossa".
+- **Site vizinho** [neighbor site]**:** um site externo sobre relacionamentos de onde o Tem estudo? indica Leituras. Se vende algo (curso, terapia, livro) ou defende uma causa declarada, suas Leituras levam esse aviso. Não é Fonte nem sustenta afirmação: um Guia cita Fichas, nunca um Site vizinho.
+- **Leitura** [reading]**:** uma página de um Site vizinho que o Tem estudo? indica ao leitor, ligada a um ou mais Temas. Só entra se ela mesma linka ou referencia os estudos de que fala, e se o que diz deles foi conferido nos estudos. Pode levar um aviso próprio, além do aviso do site, quando quem a escreveu vende algo ou ela saiu antes num site que defende uma causa.
+- **Ressalva** [caveat]**:** o aviso de uma Leitura que exagera ou distorce, num ponto lateral, um estudo que cita: uma frase com o que o estudo achou. Quando o erro está no centro do texto, a Leitura sai em vez de levar Ressalva.
 
-_Evitar_: "pool" para Grupo possível, no texto e no código; "artigo" para Guia, porque artigo é um tipo de Estudo.
+_Evitar_: "pool" para Grupo possível, no texto e no código; "artigo" para Guia, porque artigo é um tipo de Estudo; "recomendação" para Site vizinho, porque recomendação prática é Dica.

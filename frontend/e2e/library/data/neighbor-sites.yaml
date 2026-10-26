@@ -1,0 +1,36 @@
+# The e2e fixture's Neighbor sites: one in Portuguese, one in English with a
+# cause notice, three Readings (one with a Caveat) of "Onde conhecer pessoas" (the English one
+# listed first, so the page has to put the Portuguese ones ahead) and none of
+# "Escolher parceiro", whose Guide must not show the block.
+sites:
+  - id: revista-daqui
+    name: Revista Daqui
+    home: https://revista-daqui.example/
+    language: pt
+  - id: family-lab
+    name: Family Lab
+    home: https://family-lab.example/
+    language: en
+    notices:
+      cause: O Family Lab defende o casamento.
+
+readings:
+  - site: family-lab
+    title: How couples meet now
+    url: https://family-lab.example/how-couples-meet
+    description: Uma pesquisa com adultos dos EUA sobre onde os casais se conheceram, com o link do relatório.
+    topics: [onde-conhecer-pessoas]
+  - site: revista-daqui
+    title: Onde os brasileiros se conhecem
+    url: https://revista-daqui.example/onde-se-conhecem
+    description: Uma reportagem que junta os estudos brasileiros sobre apps e encontros, com o link de cada um.
+    topics: [onde-conhecer-pessoas]
+    notices:
+      commercial: A autora vende um curso sobre namoro.
+  - site: revista-daqui
+    title: Conversa de primeiro encontro
+    url: https://revista-daqui.example/primeiro-encontro
+    description: O que os estudos de encontro rápido dizem sobre a primeira conversa.
+    topics: [onde-conhecer-pessoas]
+    notices:
+      caveat: O estudo achou um efeito menor do que a reportagem diz.
