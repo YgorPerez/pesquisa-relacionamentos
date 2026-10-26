@@ -1,7 +1,7 @@
 # Gerado por scripts/possible-group/pipeline.ts. Não edite à mão: rode `pnpm data:possible-group`.
 fact_sheet: ibge-2019-pns
 table: ["Microdados da PNS 2019, morador selecionado de 18 anos ou mais, agrupado por sexo, faixa de idade e respostas"]
-variables: ["V0024", "UPA_PNS", "V00291", "M001", "C006", "C008", "Y008", "P00404", "P050", "P00104"]
+variables: ["V0024", "UPA_PNS", "V00291", "M001", "C006", "C008", "Y008", "P00404", "P050", "P00104", "N010", "N011", "N012", "N013", "N014", "N015", "N016", "N017", "N018"]
 downloaded_on: 2026-10-19
 script: scripts/possible-group/pipeline.ts
 version: "PNS_2019_20220525.zip publicado em 2022-05-25"

@@ -57,6 +57,7 @@ export const REQUIREMENT_ORDER = [
   'height',
   'smoking',
   'obesity',
+  'depression',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -76,6 +77,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   height: 'PNS',
   smoking: 'PNS',
   obesity: 'PNS',
+  depression: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -177,6 +179,7 @@ export function activeRequirements({
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
     obesity: r.notObese,
+    depression: r.noDepressionSymptoms,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -264,6 +267,10 @@ const PNS_FILTERS: {
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
   obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
+  depression: () => ({
+    variable: 'depressao',
+    test: (value) => value === 'nao',
+  }),
 }
 
 export interface PnsBlock {
@@ -585,6 +592,11 @@ function caveats(
       id: 'obesity',
       strong: false,
       text: 'O IMC sai do peso e da altura autodeclarados na PNS 2019. Quem informa o próprio peso costuma dizer menos do que pesa, então a pesquisa acha menos gente com IMC de 30 ou mais, e o grupo sai maior do que é.',
+    },
+    has('depression') && {
+      id: 'depression',
+      strong: false,
+      text: 'Os sintomas de depressão vêm do PHQ-9 da PNS 2019: nove perguntas sobre as 2 últimas semanas. Ele mostra como a pessoa estava naquele período, não um traço dela, e não é diagnóstico.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

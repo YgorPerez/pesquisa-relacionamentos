@@ -143,8 +143,24 @@ describe('estimateGroup: PNS requirements', () => {
   // smoking (10, 1). Design effect 2. The interval literals are the Wilson
   // interval on records / 2, worked out by hand. Only the straight
   // non-smokers of 180 cm have a BMI of 30 or more; "recusou" has no BMI.
+  // Only the straight smokers have depression symptoms; "não sabe" and
+  // "recusou" have no PHQ-9.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
+
+  it('"sem sintomas de depressão" counts who scored under 10 on the PHQ-9, and says it is the last 2 weeks', () => {
+    // 760 of the 960 with a PHQ-9.
+    const r = count(
+      { seeks: 'mulheres' },
+      { ...ac, noDepressionSymptoms: true },
+    )
+    expect(r.active).toContain('depression')
+    expect(r.result.central).toBeCloseTo((4000 * 760) / 960)
+    const caveat = r.caveats.find((x) => x.id === 'depression')
+    expect(caveat?.strong).toBe(false)
+    expect(caveat?.text).toContain('2 últimas semanas')
+    expect(caveat?.text).toContain('não é diagnóstico')
+  })
 
   it('"IMC abaixo de 30" counts who answered with a BMI under 30, crossed with the other PNS Requirements', () => {
     // 790 of the 990 with a BMI.

@@ -226,3 +226,12 @@ it('"IMC abaixo de 30" enters the count and says weight and height are self-repo
     /peso e a altura que a pessoa declarou/,
   )
 })
+
+it('"sem sintomas de depressão" enters the count and says the PHQ-9 is the last 2 weeks', async () => {
+  await turnOnSensitive(
+    'depression',
+    'Só quem não teve sintomas de depressão',
+    'sem sintomas de depressão',
+    /2 últimas semanas: mede um período da vida/,
+  )
+})

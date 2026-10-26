@@ -464,6 +464,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(notObese) => change({ notObese })}
       />
     ),
+    depression: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem não teve sintomas de depressão"
+        checked={requirements.noDepressionSymptoms}
+        onChange={(noDepressionSymptoms) => change({ noDepressionSymptoms })}
+      />
+    ),
   }
 
 /** What each sensitive Requirement measures, under its control. The count's
@@ -471,6 +478,8 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
 const SENSITIVE_NOTE: Partial<Record<VisitorRequirement, string>> = {
   obesity:
     'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
+  depression:
+    'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
 }
 
 /** The note of a sensitive Requirement: what it measures and where it stays. */

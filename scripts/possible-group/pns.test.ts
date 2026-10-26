@@ -19,6 +19,7 @@ const adult = (
     altura: '175',
     fumo: 'nao',
     obesidade: 'nao',
+    depressao: 'nao',
     ...values,
   },
 })
@@ -107,6 +108,7 @@ describe('readPnsRecord', () => {
         altura: '165',
         fumo: 'nao',
         obesidade: null,
+        depressao: null,
       },
     })
   })
@@ -129,6 +131,20 @@ describe('readPnsRecord', () => {
     assert.equal(bmi('     ', '170'), null)
     assert.equal(bmi('090.0', '999'), null)
   })
+
+  it('scores the PHQ-9 from N010 to N018 and marks depression symptoms from 10 points on', () => {
+    // Each answer 1 to 4 ("nenhum dia" to "quase todos os dias") is 0 to 3.
+    const phq9 = (answers: string) =>
+      readPnsRecord(person('165', '3', { N010: [564, answers] }))?.values
+        .depressao
+    assert.equal(phq9('111111111'), 'nao')
+    assert.equal(phq9('222222211'), 'nao') // 7 points
+    assert.equal(phq9('222222222'), 'nao') // 9 points
+    assert.equal(phq9('322222222'), 'sim') // 10 points
+    assert.equal(phq9('444444444'), 'sim')
+    assert.equal(phq9('111191111'), null) // "ignorado"
+    assert.equal(phq9('         '), null)
+  })
 })
 
 describe('pnsToCsv', () => {
@@ -136,8 +152,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,obesidade,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,nao,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,obesidade,depressao,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nao,nao,3,1,1.000\n',
     )
   })
 })
