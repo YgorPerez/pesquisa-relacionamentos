@@ -1,57 +1,55 @@
 // The Visuals reach the page as finished HTML: the server draws the SVG in
 // place of each `{{visual:<id>}}` line, so they read without JS (#182). Over
 // the e2e fixture, whose `app-ou-presencial` places one of each kind in
-// "Varia conforme o Perfil?".
+// "Varia conforme o Perfil?". That the Guide passes them to every body, and
+// numbers their rings like the page, is in the screen tests
+// (`ui/visual-*.test.tsx`).
 import { fileURLToPath } from 'node:url'
 import { formatProblems, loadLibrary } from '@tem-estudo/content'
-import { topicBySlug } from '@tem-estudo/content/queries'
+import { guideBySlug } from '@tem-estudo/content/queries'
 import { expect, it } from 'vite-plus/test'
-import { guideView } from './guide-view'
 import { html } from './view'
+import { renderVisuals } from './visuals-view'
 
 const FIXTURE = fileURLToPath(new URL('../../e2e/library', import.meta.url))
 
-/** The Guide of "Onde conhecer pessoas" and its `app-ou-presencial`
- * section. */
-function fixtureGuide() {
+/** The fixture Question's "Varia conforme o Perfil?" with its Visuals
+ * drawn, each Fact sheet numbered in the order the Question cites them. */
+function profileHtml() {
   const result = loadLibrary(FIXTURE)
   if (!result.ok) throw new Error(formatProblems(result.errors))
-  const topic = topicBySlug(result.library, 'onde-conhecer-pessoas')
-  if (!topic) throw new Error('the fixture has no onde-conhecer-pessoas')
-  const guide = guideView(topic, result.library)
-  const question = guide.questions.find((q) => q.slug === 'app-ou-presencial')
-  if (!question) throw new Error('the fixture has no app-ou-presencial')
-  return { ...guide, question }
+  const guide = guideBySlug(result.library, 'app-ou-presencial')
+  if (!guide) throw new Error('the fixture has no app-ou-presencial')
+  const visuals = renderVisuals(
+    guide.visuals ?? [],
+    result.library,
+    (slug) => {
+      const n = guide.citedFactSheets.indexOf(slug) + 1
+      return n > 0 ? { n, anchor: `ficha-${slug}`, title: slug } : undefined
+    },
+    guide.slug,
+  )
+  return html(guide.variesByProfile, visuals)
 }
 
-/** The HTML of "Varia conforme o Perfil?", where the fixture places them. */
-const sectionHtml = () => fixtureGuide().question.profileHtml
-
 it('draws each placed Visual on the server, as SVG or a table, where its line was', () => {
-  const html = sectionHtml()
-  expect(html).not.toContain('{{visual')
-  const figures = [...html.matchAll(/<figure id="([^"]+)"/g)].map((m) => m[1])
+  const page = profileHtml()
+  expect(page).not.toContain('{{visual')
+  const figures = [...page.matchAll(/<figure id="([^"]+)"/g)].map((m) => m[1])
   expect(figures).toEqual([
     'visual-app-ou-presencial-app-por-idade',
     'visual-app-ou-presencial-dois-retratos',
     'visual-app-ou-presencial-estudos-lado-a-lado',
     'visual-app-ou-presencial-app-e-satisfacao',
   ])
-  expect(html.match(/<svg/g)?.length).toBeGreaterThanOrEqual(3)
-  expect(html).toContain('<table')
+  expect(page.match(/<svg/g)?.length).toBeGreaterThanOrEqual(3)
+  expect(page).toContain('<table')
+  expect(page).toContain(
+    '<a class="ref" href="#ficha-silva-2020-apps-brasil" aria-label="Ficha',
+  )
   // After the paragraph that comes before the lines.
-  expect(html.indexOf('Nenhum estudo separou por idade')).toBeLessThan(
-    html.indexOf('<figure'),
-  )
-})
-
-it('numbers the Visual’s references like the rest of the page', () => {
-  const guide = fixtureGuide()
-  const silva = guide.factSheets.find(
-    (f) => f.slug === 'silva-2020-apps-brasil',
-  )
-  expect(guide.question.profileHtml).toContain(
-    `<a class="ref" href="#${silva?.anchor}" aria-label="Ficha ${silva?.n}: ${silva?.title}">${silva?.n}</a>`,
+  expect(page.indexOf('Nenhum estudo separou por idade')).toBeLessThan(
+    page.indexOf('<figure'),
   )
 })
 

@@ -3,9 +3,9 @@
 // through `virtual:library`: `app-ou-presencial` has one of each
 // kind.
 import type { Visual } from '@tem-estudo/content'
-import { guideBySlug, topicBySlug } from '@tem-estudo/content/queries'
+import { guideBySlug } from '@tem-estudo/content/queries'
 import library from 'virtual:library'
-import { guideView } from '#/content/guide-view'
+import { GUIDE } from './guide.example'
 import {
   visualView,
   type BarsView,
@@ -19,10 +19,8 @@ const SLUG = 'app-ou-presencial'
 
 const guide = guideBySlug(library, SLUG)
 if (!guide?.visuals) throw new Error(`the fixture's ${SLUG} has no Visuals`)
-const topic = topicBySlug(library, guide.topic)
-if (!topic) throw new Error(`the fixture has no ${guide.topic} Topic`)
 /** The Guide's numbered Fact sheets, which the Visual's rings use. */
-const { factSheets } = guideView(topic, library)
+const { factSheets } = GUIDE
 
 const view = (visual: Visual): VisualView =>
   visualView(
