@@ -58,6 +58,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
+- [Martinez et al. 2025](studies/martinez-2025-apps-risco-sexual.md): apps e comportamento sexual em universitários de Ribeirão Preto · ✅ · fraca
 - [Ministério da Saúde 2011](studies/ministerio-saude-2011-pcap-2008.md): PCAP 2008, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2016](studies/ministerio-saude-2016-pcap-2013.md): PCAP 2013, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2022](studies/ministerio-saude-2022-pcdt-ist.md): PCDT de Infecções Sexualmente Transmissíveis · ✅ · moderada
@@ -76,17 +77,22 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
+- [Bowman et al. 2025](studies/bowman-2025-apps-saude.md): apps de namoro, imagem corporal e saúde mental · ✅ · fraca
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
 - [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Busby, Carroll & Willoughby 2010](studies/busby-2010-compatibility-or-restraint.md): quanto o casal esperou para transar e a qualidade do casamento · ✅ · fraca
+- [Büyükeren et al. 2026](studies/buyukeren-2026-tinder.md): chegada do Tinder, sexo e saúde entre universitários dos EUA · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
+- [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
+- [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
 - [Eastwick & Finkel 2008](studies/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem o desejo real (speed dating) · ✅ · moderada
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
+- [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
@@ -94,16 +100,19 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
+- [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
+- [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
 - [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
 - [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
+- [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
@@ -116,16 +125,20 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
+- [Rhoades et al. 2009](studies/rhoades-2009-coabitacao-noivado.md): morar junto antes do noivado e qualidade do casamento · ✅ · fraca
 - [Rhoades et al. 2011](studies/rhoades-2011-termino-saude-mental.md): o término de um namoro e a saúde mental · ✅ · moderada
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
 - [Rosenfeld & Thomas 2012](studies/rosenfeld-2012-searching-for-a-mate.md): a internet como intermediária na busca de parceiro · ✅ · moderada
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
+- [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ⬜ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
+- [Stanley et al. 2010](studies/stanley-2010-coabitacao-noivado.md): coabitação antes do noivado e divórcio no primeiro casamento · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
+- [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
@@ -141,6 +154,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
+- [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ⬜ · forte
