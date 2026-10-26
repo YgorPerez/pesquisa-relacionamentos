@@ -25,6 +25,7 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 - **Perfil** [profile]**:** quem o usuário é e quem procura: o gênero dele, o gênero de quem ele procura e a idade. A orientação decorre das duas primeiras e não é perguntada. O Perfil é opcional: destaca o que vale para o usuário e marca com aviso o que vem de outras amostras, sem esconder nada.
 - **Requisito** [requirement]**:** uma característica que o usuário exige de um parceiro, como faixa de idade, escolaridade ou cidade.
 - **Grupo possível** [possible group, `possible-group`]**:** a estimativa de quantas pessoas no Brasil atendem ao Perfil procurado e a todos os Requisitos.
+- **Custo** [cost]**:** quanto o Grupo possível cresceria se o usuário soltasse um Requisito e mantivesse os outros.
 - **Prioridade** [priority]**:** quanto o usuário valoriza uma característica de um parceiro. É comparada com o que a evidência diz que prevê um bom relacionamento.
 - **Desfecho** [outcome]**:** o que um Estudo mede para dizer se uma característica pesa num relacionamento: atração, satisfação ou duração.
 - **Calculadora** [calculator]**:** a ferramenta que um Guia hospeda: o Grupo possível ou as Prioridades.
