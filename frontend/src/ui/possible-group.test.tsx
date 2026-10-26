@@ -194,62 +194,57 @@ it('the state is chosen by keyboard and goes back to the whole of Brazil', async
   ).toBeNull()
 })
 
-/** Turns a sensitive Requirement on and checks what its row says. */
-async function turnOnSensitive(
-  id: Extract<VisitorRequirement, SensitiveRequirement>,
-  checkbox: string,
-  value: string,
-  note: RegExp,
-) {
-  const user = userEvent.setup()
-  openScreen(PAGE)
-  await enterProfile(
-    user,
-    { gender: 'mulher', seeks: 'homens', age: '28' },
-    BUTTON,
-  )
-  const before = await newCount(null)
-  await user.click(requirement(id).getByRole('checkbox', { name: checkbox }))
-  await newCount(before)
-  expect(requirement(id).value()).toBe(value)
-  expect(requirement(id).getByText(note)).toBeVisible()
-  expect(
-    requirement(id).getByText(/Dado sensível: fica só neste aparelho/),
-  ).toBeVisible()
-}
-
-it('"IMC abaixo de 30" enters the count and says weight and height are self-reported', async () => {
-  await turnOnSensitive(
+it.each<
+  [
+    id: Extract<VisitorRequirement, SensitiveRequirement>,
+    checkbox: string,
+    value: string,
+    note: RegExp,
+  ]
+>([
+  // The weight and height are self-reported.
+  [
     'obesity',
     'Só quem tem IMC abaixo de 30',
     'IMC abaixo de 30',
     /peso e a altura que a pessoa declarou/,
-  )
-})
-
-it('"sem sintomas de depressão" enters the count and says the PHQ-9 is the last 2 weeks', async () => {
-  await turnOnSensitive(
+  ],
+  // The PHQ-9 covers the last 2 weeks, not a trait.
+  [
     'depression',
     'Só quem não teve sintomas de depressão',
     'sem sintomas de depressão',
     /2 últimas semanas: mede um período da vida/,
-  )
-})
-
-it('"bissexual" enters the count and says it is an experimental IBGE statistic', async () => {
-  await turnOnSensitive(
+  ],
+  [
     'bisexual',
     'Só quem se declara bissexual',
     'bissexual',
     /estatística experimental do IBGE/,
-  )
-})
-
-it('"vai à religião toda semana" enters the count and says the PNS does not ask which religion', async () => {
-  await turnOnSensitive(
+  ],
+  [
     'worship',
     'Só quem vai à religião toda semana',
     'vai à religião toda semana',
     /não pergunta qual religião/,
-  )
-})
+  ],
+])(
+  'the sensitive "%s" enters the count and its row says what it measures and that it stays on the device',
+  async (id, checkbox, value, note) => {
+    const user = userEvent.setup()
+    openScreen(PAGE)
+    await enterProfile(
+      user,
+      { gender: 'mulher', seeks: 'homens', age: '28' },
+      BUTTON,
+    )
+    const before = await newCount(null)
+    await user.click(requirement(id).getByRole('checkbox', { name: checkbox }))
+    await newCount(before)
+    expect(requirement(id).value()).toBe(value)
+    expect(requirement(id).getByText(note)).toBeVisible()
+    expect(
+      requirement(id).getByText(/Dado sensível: fica só neste aparelho/),
+    ).toBeVisible()
+  },
+)
