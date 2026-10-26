@@ -65,10 +65,16 @@ questions:
     calculator: priorities
   - slug: requisitos-exigentes-demais
     question: Meus Requisitos são ==exigentes== demais?
-    answer: Nenhum estudo que lemos diz quantos Requisitos é demais, mas dá para ver quanto cada um custa. Pelo Censo 2022, no Brasil havia ==3,9 milhões de homens e 3,3 milhões de mulheres== de 25 a 29 anos que não moravam com companheiro(a) [@ibge-2022-censo-amostra], e cada Requisito a mais corta esse grupo. Do outro lado, bater com a própria lista pesou pouco em quem as pessoas gostam [@eastwick-2024-preferencias-43-paises].
-    confidence: moderate
+    answer: Nenhum estudo que lemos diz quantos Requisitos é demais, e na prática as pessoas exigem menos do que dizem. Num experimento, diante de um pretendente pouco atraente, ==37% aceitaram trocar contato== quando achavam que a situação era real, e 16% quando só a imaginavam [@joel-2014-rejeicao-real-hipotetica]. Quem começou a namorar alguém abaixo do ideal baixou o ideal [@gerlach-2019-preferencias-proximo-parceiro]. Solteiros dos EUA deram a "sou exigente demais" a nota média mais alta entre os motivos para estarem sozinhos [@apostolou-2020-motivos-solteiro], mas isso é o que eles acham de si, não uma medida. O que dá para medir é quanto cada Requisito custa. Pelo Censo 2022, 3,9 milhões de homens e 3,3 milhões de mulheres de 25 a 29 anos não moravam com companheiro(a) [@ibge-2022-censo-amostra], e a calculadora logo abaixo mostra, para o seu Perfil, quanto esse grupo cresce se você soltar só um dos Requisitos.
+    confidence: weak
     findings:
       [
+        solteiros-se-acham-exigentes,
+        rejeitar-menos-de-verdade,
+        ideal-baixa-com-o-parceiro,
+        ideal-rigido,
+        perfeccionismo-com-o-parceiro,
+        medo-de-ficar-solteiro,
         mulheres-sem-companheiro,
         homens-sem-companheiro,
         sao-paulo-mulheres,
@@ -223,6 +229,30 @@ findings:
     text: Num site de namoro dos EUA, homens e mulheres escreveram em média para quem estava uns 25% acima deles num ranking de desejabilidade. Quanto maior a distância, menor a chance de resposta.
     fact_sheets: [bruch-2018-aspirational-pursuit]
     applies_to: { genders: [man, woman], couple: different-sex }
+  - id: solteiros-se-acham-exigentes
+    text: Entre 648 solteiros dos EUA, "sou exigente demais" teve a nota média mais alta entre 18 grupos de motivos para estar sozinho, 3,17 numa escala de 1 a 5. Pela fatia de quem concordou com algum item, ficou em quinto, e "não sei flertar" em primeiro, com 89%. É o motivo que cada um se atribui, não o que de fato o deixou solteiro.
+    fact_sheets: [apostolou-2020-motivos-solteiro]
+    period: publicado em 2020
+  - id: rejeitar-menos-de-verdade
+    text: Num experimento com 132 solteiros, diante de um pretendente pouco atraente, 16% aceitaram trocar contato quando a situação era imaginária e 37% quando acreditavam que era real. Um segundo experimento, com um pretendente que tinha traços eliminatórios para a pessoa, repetiu a diferença (46% contra 74%). Parte da diferença veio da vontade de não magoar o pretendente.
+    fact_sheets: [joel-2014-rejeicao-real-hipotetica]
+    period: publicado em 2014
+  - id: ideal-baixa-com-o-parceiro
+    text: 763 solteiros que falavam alemão foram acompanhados por cinco meses, e 258 começaram a namorar. Quem ficou com alguém abaixo do ideal baixou o ideal, fechando em média 39% da distância. Quem ficou com alguém acima quase não mexeu no ideal (1%).
+    fact_sheets: [gerlach-2019-preferencias-proximo-parceiro]
+    period: publicado em 2019
+  - id: ideal-rigido
+    text: Em dois estudos com universitários americanos que namoravam, um parceiro longe do ideal pesou mais na satisfação de quem tinha um ideal pouco flexível. O efeito apareceu em dois dos três traços em cada estudo (num deles, só no limite da significância), e não nos mesmos. No primeiro estudo, o efeito continuou depois de descontar o quanto o ideal era alto.
+    fact_sheets: [campbell-2001-ideal-flexivel]
+    period: publicado em 2001
+  - id: perfeccionismo-com-o-parceiro
+    text: Em 58 casais em que um dos dois estudava na University of Kent, na Inglaterra, quem exigia perfeição do parceiro estava menos satisfeito e menos comprometido com a relação, e o parceiro se sentia mais cobrado. Uma replicação pré-registrada não achou o efeito quando descontou a cobrança que a própria pessoa sentia.
+    fact_sheets: [stoeber-2012-perfeccionismo-parceiro]
+    period: publicado em 2012
+  - id: medo-de-ficar-solteiro
+    text: Em sete estudos no Canadá e nos EUA, quem tinha mais medo de ficar solteiro dependia mais de uma relação pouco satisfatória e, num speed dating, se interessou por mais gente. Esse medo não mudou os padrões que as pessoas diziam ter para um parceiro, só o que elas faziam. Parte dos efeitos ficou no limite da significância.
+    fact_sheets: [spielmann-2013-medo-ficar-solteiro]
+    period: publicado em 2013
 myths:
   - id: homens-aparencia-mulheres-dinheiro
     claim: Homens escolhem pela aparência, e mulheres, pelo dinheiro.
