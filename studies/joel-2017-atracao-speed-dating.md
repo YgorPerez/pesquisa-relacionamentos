@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Antes dos eventos, os participantes responderam a um questionário sobre personalidade, valores, bem-estar, estratégias de relacionamento, características próprias e preferências por um parceiro ideal. As análises usaram 182 medidas na amostra A e 112 na B, incluindo gênero nos modelos individuais. Depois de cada encontro de quatro minutos, cada pessoa avaliou quanto gostou da interação, sentiu atração sexual e pretendia dizer "sim" ao par.
+Antes dos eventos, os participantes responderam a um questionário sobre personalidade, valores, bem-estar, estratégias de relacionamento, características próprias e preferências por um parceiro ideal. As análises usaram 182 medidas na amostra A e 112 na B, incluindo gênero nos modelos individuais. Depois de cada encontro de quatro minutos, cada pessoa avaliou quanto gostou do par, sentiu atração sexual e pretendia dizer "sim" a ele.
 
 Os autores separaram a tendência geral a desejar outras pessoas, a tendência geral a ser desejado e o interesse específico por cada par que restava depois dessas duas tendências. Modelos de florestas aleatórias tentaram prever cada componente com os dados coletados antes dos encontros. Uma análise adicional treinou os modelos na amostra A e os testou na B, usando as medidas disponíveis nas duas.
 
