@@ -4,7 +4,7 @@ link: https://doi.org/10.1177/0146167201274007
 status: verified
 verified_on: 2026-10-26
 strength: weak
-strength_reason: "Dois estudos transversais com universitários de uma só universidade americana (239 pessoas e 104 casais); a rigidez do ideal mudou a ligação entre encaixe e satisfação em só dois dos três traços em cada estudo, e não nos mesmos dois, com efeitos de cerca de 3% da variância."
+strength_reason: "Dois estudos transversais com universitários de uma só universidade americana (239 pessoas e 104 casais); a rigidez do ideal mudou a ligação entre encaixe e satisfação em só dois dos três traços em cada estudo (no Estudo 1, um deles só marginal), e não nos mesmos dois, com efeitos de 1% a 3% da variância no Estudo 1."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
@@ -60,7 +60,7 @@ Na escala do encaixe, nota alta quer dizer que o parceiro bate com o ideal, embo
 
 - Transversal: a rigidez não foi sorteada, e os autores dizem que não dá para tirar causa.
 - Universitários de uma universidade do Texas, em namoro de cerca de um ano e meio; não diz nada de casamento, de quem está procurando parceiro, nem de outro país.
-- A interação apareceu em calor humano nos dois estudos, mas no segundo traço ela mudou: status no Estudo 1 (só marginal) e vitalidade no Estudo 2. Os efeitos são pequenos, cerca de 3% da variância, contra 25% do encaixe sozinho em calor humano.
+- A interação apareceu em calor humano nos dois estudos, mas no segundo traço ela mudou: status no Estudo 1 (só marginal) e vitalidade no Estudo 2. No Estudo 1 os efeitos são pequenos: 3% da variância em calor humano e 1% em status, contra 25% do encaixe sozinho em calor humano.
 - O estudo não responde "quanto é exigente demais". Ele mostra que, com o parceiro longe do ideal, quem é rígido sofre mais. Com o parceiro perto do ideal, quem é rígido está até mais satisfeito.
 - Tudo é autorrelato, inclusive o encaixe com o ideal, que pode ser só um jeito de dizer que se gosta do parceiro. Os autores controlaram o nível de comparação (CL e CLalt) no Estudo 1 e a avaliação geral do parceiro no Estudo 2, e as interações se mantiveram.
 - A escala mede só se o parceiro bate ou não com o ideal, e não se o supera.
