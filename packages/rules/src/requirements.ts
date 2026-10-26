@@ -298,6 +298,7 @@ export const REQUIREMENTS = [
   'smoking',
   'obesity',
   'depression',
+  'bisexual',
 ] as const
 export type VisitorRequirement = (typeof REQUIREMENTS)[number]
 
@@ -322,6 +323,7 @@ export function release(
     height: { height: defaults.height },
     smoking: { nonSmoker: false },
     obesity: { notObese: false },
+    bisexual: { bisexual: false },
     depression: { noDepressionSymptoms: false },
   }
   return { ...requirements, ...released[requirement] }
@@ -342,6 +344,7 @@ export const REQUIREMENT_TITLE: Readonly<
   height: 'Altura',
   smoking: 'Cigarro',
   obesity: 'IMC',
+  bisexual: 'Bissexual',
   depression: 'Sintomas de depressão',
 }
 
@@ -447,6 +450,8 @@ export function requirementValue(
       return r.nonSmoker ? 'não fuma' : 'fuma ou não'
     case 'obesity':
       return r.notObese ? sensitiveLabel('obesity') : 'qualquer IMC'
+    case 'bisexual':
+      return r.bisexual ? sensitiveLabel('bisexual') : 'bissexual ou não'
     case 'depression':
       return r.noDepressionSymptoms
         ? sensitiveLabel('depression')

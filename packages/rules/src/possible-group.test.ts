@@ -148,6 +148,24 @@ describe('estimateGroup: PNS requirements', () => {
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
 
+  it('"bissexual" counts who said bisexual among who answered, on top of the orientation from the Profile', () => {
+    // 20 of the 960 who answered; with the orientation (straight or bi),
+    // still the same 20.
+    const alone = count({ seeks: 'mulheres' }, { ...ac, bisexual: true })
+    expect(alone.active).toContain('bisexual')
+    expect(alone.result.central).toBeCloseTo((4000 * 20) / 960)
+    const withProfile = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { ...ac, bisexual: true },
+    )
+    expect(withProfile.result.central).toBeCloseTo((4000 * 20) / 960)
+    expect(withProfile.result.pnsRecords).toBe(2)
+    expect(withProfile.result.unstable).toBe(true)
+    expect(
+      withProfile.caveats.find((x) => x.id === 'bisexual')?.text,
+    ).toContain('estatística experimental')
+  })
+
   it('"sem sintomas de depressão" counts who scored under 10 on the PHQ-9, and says it is the last 2 weeks', () => {
     // 760 of the 960 with a PHQ-9.
     const r = count(

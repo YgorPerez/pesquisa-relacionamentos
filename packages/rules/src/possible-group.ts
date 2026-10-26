@@ -58,6 +58,7 @@ export const REQUIREMENT_ORDER = [
   'smoking',
   'obesity',
   'depression',
+  'bisexual',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -77,6 +78,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   height: 'PNS',
   smoking: 'PNS',
   obesity: 'PNS',
+  bisexual: 'PNS',
   depression: 'PNS',
 }
 
@@ -179,6 +181,7 @@ export function activeRequirements({
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
     obesity: r.notObese,
+    bisexual: r.bisexual,
     depression: r.noDepressionSymptoms,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
@@ -267,6 +270,14 @@ const PNS_FILTERS: {
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
   obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
+  // Like the orientation, whoever did not know or refused is out.
+  bisexual: () => ({
+    variable: 'orientacao',
+    test: (value) =>
+      value === 'nao-sabe' || value === 'recusou'
+        ? null
+        : value === 'bissexual',
+  }),
   depression: () => ({
     variable: 'depressao',
     test: (value) => value === 'nao',
@@ -597,6 +608,11 @@ function caveats(
       id: 'depression',
       strong: false,
       text: 'Os sintomas de depressão vêm do PHQ-9 da PNS 2019: nove perguntas sobre as 2 últimas semanas. Ele mostra como a pessoa estava naquele período, não um traço dela, e não é diagnóstico.',
+    },
+    has('bisexual') && {
+      id: 'bisexual',
+      strong: false,
+      text: 'A orientação vem da PNS 2019, uma estatística experimental do IBGE. Pouca gente se declara bissexual na amostra, então a conta se apoia em poucos registros e o número oscila muito.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

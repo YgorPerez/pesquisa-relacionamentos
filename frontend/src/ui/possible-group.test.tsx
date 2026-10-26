@@ -235,3 +235,12 @@ it('"sem sintomas de depressão" enters the count and says the PHQ-9 is the last
     /2 últimas semanas: mede um período da vida/,
   )
 })
+
+it('"bissexual" enters the count and says it is an experimental IBGE statistic', async () => {
+  await turnOnSensitive(
+    'bisexual',
+    'Só quem se declara bissexual',
+    'bissexual',
+    /estatística experimental do IBGE/,
+  )
+})

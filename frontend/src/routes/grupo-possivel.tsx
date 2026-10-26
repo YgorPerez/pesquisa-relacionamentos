@@ -471,6 +471,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(noDepressionSymptoms) => change({ noDepressionSymptoms })}
       />
     ),
+    bisexual: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem se declara bissexual"
+        checked={requirements.bisexual}
+        onChange={(bisexual) => change({ bisexual })}
+      />
+    ),
   }
 
 /** What each sensitive Requirement measures, under its control. The count's
@@ -480,6 +487,8 @@ const SENSITIVE_NOTE: Partial<Record<VisitorRequirement, string>> = {
     'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
   depression:
     'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
+  bisexual:
+    'Quem se declara bissexual na PNS 2019, de 18 anos ou mais. É uma estatística experimental do IBGE, com poucos registros por idade.',
 }
 
 /** The note of a sensitive Requirement: what it measures and where it stays. */
