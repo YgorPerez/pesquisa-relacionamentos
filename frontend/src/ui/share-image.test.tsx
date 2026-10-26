@@ -5,8 +5,11 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
-import { newCount, range } from '#/platform/screens/possible-group'
+import {
+  newCount,
+  openPossibleGroup,
+  range,
+} from '#/platform/screens/possible-group'
 import { enterProfile } from '#/platform/screens/profile'
 
 /** Every text the image drew, in order. */
@@ -49,7 +52,7 @@ afterEach(() => {
 
 async function countForAMan() {
   const user = userEvent.setup()
-  openScreen('/grupo-possivel')
+  openPossibleGroup()
   await screen.findByRole('form', { name: 'Seu Perfil' })
   const before = range()
   await enterProfile(

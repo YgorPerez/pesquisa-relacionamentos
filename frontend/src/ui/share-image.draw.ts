@@ -297,14 +297,11 @@ export async function loadImageFonts() {
   )
 }
 
-/** Draws `image` in `format` on `canvas`, at the format's size. */
-export function drawGroupImage(
-  canvas: HTMLCanvasElement,
-  image: GroupImage,
-  format: ImageFormat,
-) {
+type Frame = (typeof FRAME)[ImageFormat]
+
+/** The canvas at the format's size, painted papel. */
+function startCanvas(canvas: HTMLCanvasElement, format: ImageFormat) {
   const { width, height } = IMAGE_SIZE[format]
-  const frame = FRAME[format]
   canvas.width = width
   canvas.height = height
   const ctx = canvas.getContext('2d')
@@ -312,11 +309,16 @@ export function drawGroupImage(
   ctx.textBaseline = 'alphabetic'
   ctx.fillStyle = BRAND_COLORS.papel
   ctx.fillRect(0, 0, width, height)
+  return { ctx, width, height }
+}
 
-  const inner = width - frame.side * 2
-  const pad = format === 'story' ? 56 : 48
+const QUESTION: ReadonlyArray<Run> = [
+  { text: 'Quantas pessoas atendem ao que eu' },
+  { text: 'procuro?', mark: 'yellow' },
+]
 
-  const question: Style = {
+function questionStyle(frame: Frame): Style {
+  return {
     family: DISPLAY,
     size: frame.question,
     weight: 700,
@@ -324,15 +326,63 @@ export function drawGroupImage(
     tracking: -frame.question * 0.022,
     color: INK,
   }
-  const questionLines = wrap(
-    ctx,
-    [
-      { text: 'Quantas pessoas atendem ao que eu' },
-      { text: 'procuro?', mark: 'yellow' },
-    ],
-    question,
-    inner,
-  )
+}
+
+/** "Também pedi: ensino superior, não fuma." */
+function alsoRuns(image: GroupImage): Run[] {
+  if (image.also.length === 0) return [{ text: 'Sem outros Requisitos.' }]
+  return [
+    { text: 'Também pedi:' },
+    ...image.also.map((value, i) => ({
+      text: `${value}${i === image.also.length - 1 ? '.' : ','}`,
+      bold: true,
+    })),
+  ]
+}
+
+/** The answer, shrunk until it fits `room` or reaches the frame's minimum. */
+function fitAnswer(
+  ctx: CanvasRenderingContext2D,
+  image: GroupImage,
+  frame: Frame,
+  room: number,
+  width: number,
+) {
+  const runs: Run[] = [
+    { text: image.before },
+    { text: image.numbers, mark: 'pink' },
+    { text: image.who },
+  ]
+  let style = answerStyle(frame.answer[0])
+  let lines = wrap(ctx, runs, style, width)
+  for (
+    let size = frame.answer[0];
+    size > frame.answer[1] &&
+    lines.length * style.size * style.lineHeight > room;
+    size -= 2
+  ) {
+    style = answerStyle(size)
+    lines = wrap(ctx, runs, style, width)
+  }
+  return { style, lines, height: lines.length * style.size * style.lineHeight }
+}
+
+/** Draws `image` in `format` on `canvas`, at the format's size. */
+export function drawGroupImage(
+  canvas: HTMLCanvasElement,
+  image: GroupImage,
+  format: ImageFormat,
+) {
+  const { ctx, width, height } = startCanvas(canvas, format)
+  const frame = FRAME[format]
+  const inner = width - frame.side * 2
+  const pad = format === 'story' ? 56 : 48
+  const footer = format === 'story' ? 150 : 120
+
+  const question = questionStyle(frame)
+  const questionLines = wrap(ctx, QUESTION, question, inner)
+  const questionHeight =
+    questionLines.length * question.size * question.lineHeight
 
   // The answer shrinks until it and the Requirements fit the frame.
   const alsoStyle: Style = {
@@ -342,76 +392,43 @@ export function drawGroupImage(
     lineHeight: 1.4,
     color: INK_2,
   }
-  const alsoRuns: Run[] =
-    image.also.length > 0
-      ? [
-          { text: 'Também pedi:' },
-          ...image.also.map((value, i) => ({
-            text: `${value}${i === image.also.length - 1 ? '.' : ','}`,
-            bold: true,
-          })),
-        ]
-      : [{ text: 'Sem outros Requisitos.' }]
-  const alsoLines = wrap(ctx, alsoRuns, alsoStyle, inner - pad * 2)
+  const alsoLines = wrap(ctx, alsoRuns(image), alsoStyle, inner - pad * 2)
   const alsoHeight = alsoLines.length * alsoStyle.size * alsoStyle.lineHeight
   const tag = image.unstable ? 52 + 24 : 0
-
-  const footer = format === 'story' ? 150 : 120
-  const questionHeight =
-    questionLines.length * question.size * question.lineHeight
-  const room =
-    height -
-    frame.top -
-    frame.bottom -
-    questionHeight -
-    frame.gap -
-    footer -
-    pad * 2 -
-    alsoHeight -
-    tag -
-    36
-
-  const answerRuns: Run[] = [
-    { text: image.before },
-    { text: image.numbers, mark: 'pink' },
-    { text: image.who },
-  ]
-  let answer: Style = answerStyle(frame.answer[0])
-  let answerLines = wrap(ctx, answerRuns, answer, inner - pad * 2)
-  for (
-    let size = frame.answer[0];
-    size > frame.answer[1] &&
-    answerLines.length * answer.size * answer.lineHeight > room;
-    size -= 2
-  ) {
-    answer = answerStyle(size)
-    answerLines = wrap(ctx, answerRuns, answer, inner - pad * 2)
-  }
-  const answerHeight = answerLines.length * answer.size * answer.lineHeight
+  const fixed = questionHeight + frame.gap + footer + pad * 2 + alsoHeight
+  const room = height - frame.top - frame.bottom - fixed - tag - 36
+  const answer = fitAnswer(ctx, image, frame, room, inner - pad * 2)
 
   // The question and the panel sit in the middle of the band above the
   // signature.
-  const panelHeight = pad * 2 + answerHeight + 36 + alsoHeight + tag
+  const panelHeight = pad * 2 + answer.height + 36 + alsoHeight + tag
   const content = questionHeight + frame.gap + panelHeight + footer
   let y =
     frame.top + Math.max(0, (height - frame.top - frame.bottom - content) / 2)
-
   y += drawLines(ctx, questionLines, question, frame.side, y)
   y += frame.gap
 
   panel(ctx, frame.side, y, inner, panelHeight)
   let inside = y + pad
-  inside += drawLines(ctx, answerLines, answer, frame.side + pad, inside)
+  inside += drawLines(ctx, answer.lines, answer.style, frame.side + pad, inside)
   if (image.unstable) {
     unstableTag(ctx, frame.side + pad, inside + 18)
     inside += tag
   }
-  inside += 36
-  drawLines(ctx, alsoLines, alsoStyle, frame.side + pad, inside)
+  drawLines(ctx, alsoLines, alsoStyle, frame.side + pad, inside + 36)
 
-  // The signature: the rule, the site's name, the address and the sources.
+  signature(ctx, frame, width, height)
+}
+
+/** The signature: the rule, the site's name, the address and the sources. */
+function signature(
+  ctx: CanvasRenderingContext2D,
+  frame: Frame,
+  width: number,
+  height: number,
+) {
   const base = height - frame.bottom
-  rule(ctx, frame.side, base - 96, inner)
+  rule(ctx, frame.side, base - 96, width - frame.side * 2)
   ctx.letterSpacing = '-0.6px'
   ctx.font = `700 40px ${DISPLAY}`
   ctx.fillStyle = INK
