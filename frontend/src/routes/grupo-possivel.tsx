@@ -442,6 +442,13 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(nonSmoker) => change({ nonSmoker })}
       />
     ),
+    office: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem trabalha em escritório"
+        checked={requirements.office}
+        onChange={(office) => change({ office })}
+      />
+    ),
   }
 
 /** The "A conta" block: the range, what weighs most, with the button to

@@ -3,6 +3,7 @@ import census from '../fixtures/possible-group/censo-2022.csv?raw'
 import ages from '../fixtures/possible-group/sidra-9514-idade.csv?raw'
 import municipalities from '../fixtures/possible-group/sidra-10185-municipios.csv?raw'
 import pns from '../fixtures/possible-group/pns-2019.csv?raw'
+import pnad from '../fixtures/possible-group/pnad-2022.csv?raw'
 import { openPack, readGroupBase, packForPlace } from './possible-group-data.ts'
 import { estimateGroup, type CountData } from './possible-group.ts'
 import type { Profile } from './profile.ts'
@@ -14,7 +15,7 @@ import {
 } from './requirements.ts'
 
 // The real path: CSV → JSON pack (what the browser downloads) → count.
-const base = readGroupBase({ census, ages, municipalities, pns })
+const base = readGroupBase({ census, ages, municipalities, pns, pnad })
 const pack = (place: 'BR' | 'AC' | 'AP') =>
   openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
 const data = (uf?: 'AC' | 'AP'): CountData => ({
@@ -136,17 +137,22 @@ describe('estimateGroup: "sem filhos"', () => {
 })
 
 describe('estimateGroup: PNS requirements', () => {
+  // The PNS fixture has the same cells (weight, records) in every sex × age
+  // bracket: straight non-smokers of 160 cm (500, 50) and 180 cm (200, 20),
+  // straight smokers of 170 cm (200, 20), bi non-smoker (20, 2), gay smoker
+  // (40, 4), "não sabe" non-smoker (30, 3) and "recusou" with no height or
+  // smoking (10, 1). Design effect 2. The interval literals are the Wilson
+  // interval on records / 2, worked out by hand.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
 
   it('orientation comes from the profile: straight + bi of the sought sex, not counting who did not answer', () => {
-    // 90% + 2%, over the 96% who answered; the interval sums both
-    // categories' ones.
+    // 920 of the 960 who answered, on 96 records.
     const r = count({ gender: 'homem', seeks: 'mulheres' }, ac)
     expect(r.active).toContain('orientation')
-    expect(r.result.central).toBeCloseTo((4000 * 0.92) / 0.96)
-    expect(r.result.min).toBeCloseTo(((4000 * 0.89) / 0.96) * (1 - error))
-    expect(r.result.max).toBeCloseTo(((4000 * 0.95) / 0.96) * (1 + error))
+    expect(r.result.central).toBeCloseTo((4000 * 920) / 960)
+    expect(r.result.min).toBeCloseTo(4000 * 0.86024089 * (1 - error), 1)
+    expect(r.result.max).toBeCloseTo(4000 * 0.98849835 * (1 + error), 1)
     expect(r.caveats.find((x) => x.id === 'orientation')?.text).toContain(
       '4% não souberam',
     )
@@ -154,7 +160,7 @@ describe('estimateGroup: PNS requirements', () => {
 
   it('seeking the same gender, counts gay + bi', () => {
     const r = count({ gender: 'mulher', seeks: 'mulheres' }, ac)
-    expect(r.result.central).toBeCloseTo((4000 * 0.05) / 0.96)
+    expect(r.result.central).toBeCloseTo((4000 * 60) / 960)
   })
 
   it('gender "outro" does not discount orientation and carries the strong ceiling warning', () => {
@@ -174,20 +180,104 @@ describe('estimateGroup: PNS requirements', () => {
     })
   })
 
-  it('"não fuma" multiplies by the probability and opens the range by its interval', () => {
+  it('"não fuma" takes the share of non-smokers among who answered, with the interval of the design', () => {
+    // 750 of 990; Wilson on 99 records / 2.
     const r = count({ seeks: 'mulheres' }, { ...ac, nonSmoker: true })
-    expect(r.result.central).toBeCloseTo(3200)
-    expect(r.result.min).toBeCloseTo(4000 * 0.78 * (1 - error))
-    expect(r.result.max).toBeCloseTo(4000 * 0.82 * (1 + error))
+    expect(r.result.central).toBeCloseTo((4000 * 750) / 990)
+    expect(r.result.min).toBeCloseTo(4000 * 0.62253204 * (1 - error), 1)
+    expect(r.result.max).toBeCloseTo(4000 * 0.85551886 * (1 + error), 1)
   })
 
-  it('height in a range is F(max) − F(min − 1) of the cumulative', () => {
-    // In the fixture, F(cm) = (cm − 140)/60: F(170) − F(159) = 11/60.
+  it('height in a range counts who is between min and max centimeters', () => {
+    // 160 to 170 cm: 790 of the 990 who gave a height.
     const r = count(
       { seeks: 'mulheres' },
       { ...ac, height: { min: 160, max: 170 } },
     )
-    expect(r.result.central).toBeCloseTo((4000 * 11) / 60, 0)
+    expect(r.result.central).toBeCloseTo((4000 * 790) / 990)
+  })
+
+  it('crosses the PNS Requirements on the same person instead of multiplying them', () => {
+    // Straight or bi and non-smoker: 720 of the 960 who answered both. The
+    // product of the two alone would give 920/960 × 750/990.
+    const r = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { ...ac, nonSmoker: true },
+    )
+    expect(r.result.central).toBeCloseTo((4000 * 720) / 960)
+    expect(r.result.min).toBeCloseTo(4000 * 0.61215356 * (1 - error), 1)
+    expect(r.result.max).toBeCloseTo(4000 * 0.85079511 * (1 + error), 1)
+    // From 175 cm, non-smoker and straight: only the 180 cm cell, 200 of the
+    // 960 who answered all three.
+    const tall = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { ...ac, nonSmoker: true, height: { min: 175, max: 200 } },
+    )
+    expect(tall.result.central).toBeCloseTo((4000 * 200) / 960)
+  })
+
+  it('a PNS block below 50 records is unstable and says so, even with a large Census cell', () => {
+    // Gay or bi women: 6 PNS records in the 25-29 bracket.
+    const r = count({ gender: 'mulher', seeks: 'mulheres' }, ac)
+    expect(r.result.records).toBeCloseTo(400)
+    expect(r.result.pnsRecords).toBe(6)
+    expect(r.result.unstable).toBe(true)
+    const caveat = r.caveats.find((x) => x.id === 'unstable-pns')
+    expect(caveat?.strong).toBe(true)
+    expect(caveat?.text).toContain('6 registros da PNS')
+    expect(r.caveats.find((x) => x.id === 'unstable')).toBeUndefined()
+  })
+
+  it('sums the PNS records of every bracket the group covers', () => {
+    // 25 to 34: brackets 25-29 and 30-34, 92 straight or bi records each.
+    const r = count(
+      { gender: 'homem', seeks: 'mulheres' },
+      { age: { min: 25, max: 34 }, place: { state: 'AC' } },
+    )
+    expect(r.result.pnsRecords).toBe(184)
+    expect(r.result.unstable).toBe(false)
+  })
+
+  it('without a PNS Requirement, there are no PNS records to count', () => {
+    const r = count({ seeks: 'mulheres' }, ac)
+    expect(r.result.pnsRecords).toBeNull()
+  })
+})
+
+describe('estimateGroup: office occupation (PNAD)', () => {
+  const error = 1.96 / Math.sqrt(400)
+
+  it("multiplies each cell by the probability in its sex, age group and education, with that row's interval", () => {
+    // Women 25 to 29 in Acre not in a union: 1,000 college × 0.7 + 3,000
+    // high school × 0.2.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.active).toContain('office')
+    expect(r.result.central).toBeCloseTo(1300)
+    expect(r.result.min).toBeCloseTo((660 + 540) * (1 - error))
+    expect(r.result.max).toBeCloseTo((740 + 660) * (1 + error))
+  })
+
+  it('a cell whose education has no row takes the all-educations one', () => {
+    // The 400 college women aged 30 to 34 take 0.5.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 34 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.result.central).toBeCloseTo(1300 + 200)
+  })
+
+  it('says which occupations count and that it assumes the rest does not change them', () => {
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    const caveat = r.caveats.find((x) => x.id === 'office')?.text
+    expect(caveat).toContain('PNAD Contínua')
+    expect(caveat).toContain('apoio administrativo')
+    expect(caveat).toContain('renda')
   })
 })
 
