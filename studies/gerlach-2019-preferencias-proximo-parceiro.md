@@ -9,7 +9,7 @@ countries: [Alemanha]
 period: "não informado no texto lido"
 sample:
   n: 763
-  description: "763 solteiros falantes de alemão, de 18 a 40 anos, heterossexuais ou predominantemente heterossexuais, recrutados por listas de e-mail, fóruns e um site de testes psicológicos (Göttingen Mate Choice Study); 68% mulheres, idade média de 25 anos, 73% universitários. Responderam de novo cinco meses depois; 258 tinham entrado numa relação."
+  description: "763 solteiros falantes de alemão, de 18 a 40 anos, heterossexuais ou predominantemente heterossexuais, recrutados por listas de e-mail, fóruns e um site de testes psicológicos (Göttingen Mate Choice Study); o país de residência não é informado, e Alemanha é inferência pela universidade e pela língua; 68% mulheres, idade média de 25 anos, 73% universitários. Responderam de novo cinco meses depois; 258 tinham entrado numa relação."
   representative: false
 design: longitudinal
 conflict: "O manuscrito não declara financiamento nem conflitos de interesse. Os autores são da Universidade de Göttingen."
@@ -53,7 +53,7 @@ Os localizadores usam a paginação do manuscrito, que está no cabeçalho de ca
 
 ## Limitações
 
-- Voluntários recrutados pela internet, jovens, escolarizados e em sua maioria universitários, com o dobro de mulheres; os autores dizem que isso limita a generalização. O critério de entrada era falar alemão, não morar na Alemanha.
+- Voluntários recrutados pela internet, jovens, escolarizados e em sua maioria universitários, com o dobro de mulheres; os autores dizem que isso limita a generalização. O critério de entrada era falar alemão, não morar na Alemanha, e o artigo não diz em que país os participantes moravam. O país "Alemanha" do cabeçalho é inferência nossa: o estudo é da Universidade de Göttingen, em alemão, e cita as regras de ética alemãs. Pode haver participantes da Áustria e da Suíça.
 - Quem descreveu o parceiro foi o próprio participante, no começo da relação. Um viés positivo seletivo, que exagera justo o que a pessoa valoriza, inflaria a previsão. Num estudo à parte com 160 casais, a nota dada ao parceiro concordou com a autoavaliação dele em r = 0,40 nos homens e 0,36 nas mulheres, mas foi sempre mais alta.
 - A análise do ajuste é exploratória: os autores dizem que ela não foi detalhada no pré-registro. O índice explode quando a distância entre ideal e parceiro é pequena; o resultado se mantém cortando os 5% mais extremos de cada lado.
 - O desvio do pré-registro: o plano previa só mulheres e comparar solteiros com relações "compromissadas". Com poucas relações assim, juntaram os três tipos de relação.
