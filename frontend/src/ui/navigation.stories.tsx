@@ -25,7 +25,7 @@ export const BackToList: Story = {
 /** Whoever arrived from another Guide goes back to it. */
 export const BackToTheGuide: Story = {
   parameters: {
-    history: { from: 'Onde os casais se conhecem hoje?' },
+    history: { from: 'Escolher parceiro' },
   },
   render: () => <BackToGuide />,
 }

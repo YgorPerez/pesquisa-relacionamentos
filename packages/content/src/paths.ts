@@ -12,8 +12,10 @@ export function topicPath(topic: { readonly slug: string }): string {
   return `/${topic.slug}`
 }
 
-export function guidePath(guide: Pick<Guide, 'topic' | 'slug'>): string {
-  return `/${guide.topic}/${guide.slug}`
+/** A Question is a section of its Topic's Guide, anchored by its slug (ADR
+ * 0042). */
+export function questionPath(guide: Pick<Guide, 'topic' | 'slug'>): string {
+  return `/${guide.topic}#${guide.slug}`
 }
 
 export function tipPath(tip: { readonly slug: string }): string {

@@ -1,14 +1,19 @@
 // The reference that circles the Fact sheet and the navigation between
-// Guides (#28), over the fixture content (`e2e/library`).
+// Guides (#28), over the fixture content (`e2e/library`): "Escolher
+// parceiro" links to a Question of "Onde conhecer pessoas".
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { tap } from './touch'
 
-const GUIDE = '/onde-conhecer-pessoas/onde-os-casais-se-conhecem'
-const OTHER = '/onde-conhecer-pessoas/app-ou-presencial'
+const GUIDE = '/onde-conhecer-pessoas'
+const FIRST = 'Onde os casais se conhecem hoje?'
+const OTHER = '/escolher-parceiro'
+
+const firstQuestion = (page: Page) =>
+  page.getByRole('region', { name: FIRST, exact: true })
 
 const answerRef = (page: Page) =>
-  page
-    .getByRole('region', { name: 'Resposta curta' })
+  firstQuestion(page)
+    .locator('[data-slot="resposta"]')
     .getByRole('link', { name: /^Ficha 1:/ })
 
 /** Whether the element receiving a tap at `dx`, `dy` px from the target's
@@ -139,7 +144,7 @@ test.describe('reference that circles the Fact sheet', () => {
     await page.goto(GUIDE)
     // Fact sheet 1 is cited in the short answer and again in the Myth: it
     // leaves from the Myth.
-    const myth = page.getByRole('region', {
+    const myth = firstQuestion(page).getByRole('region', {
       name: 'O que circula por aí e não se sustenta',
     })
     const ref = myth.getByRole('link', { name: /^Ficha 1:/ })
@@ -173,60 +178,62 @@ test.describe('reference that circles the Fact sheet', () => {
 })
 
 test.describe('navigation between Guides', () => {
-  test('coming from another Guide, "Voltar para <Pergunta>" does the same as the browser back', async ({
+  const elsewhere = (page: Page) =>
+    page
+      .getByRole('region', { name: 'Perguntas de outros Temas' })
+      .getByRole('link', { name: /Onde os casais se conhecem/ })
+
+  test('coming from another Guide, "Voltar para <Guia>" does the same as the browser back', async ({
     page,
   }) => {
-    await page.goto(OTHER)
+    await page.goto(GUIDE)
     await expect(
       page.getByRole('button', { name: /^Voltar para/ }),
     ).toHaveCount(0)
 
-    await page.goto(GUIDE)
-    await tap(
-      page
-        .getByRole('region', { name: 'Perguntas relacionadas' })
-        .getByRole('link', { name: /App ou presencial/ }),
-    )
-    await expect(page).toHaveURL(OTHER)
+    await page.goto(OTHER)
+    await tap(elsewhere(page))
+    await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
+    await expect(
+      firstQuestion(page).getByRole('heading', { level: 2 }),
+    ).toBeInViewport()
     const back = page.getByRole('button', {
-      name: 'Voltar para Onde os casais se conhecem hoje?',
+      name: 'Voltar para Escolher parceiro',
     })
     await expect(back).toBeVisible()
     expect((await back.boundingBox())?.height).toBeGreaterThanOrEqual(44)
     await tap(back)
-    await expect(page).toHaveURL(GUIDE)
+    await expect(page).toHaveURL(OTHER)
     // It was a step back in the history, not a new entry.
     await page.goForward()
-    await expect(page).toHaveURL(OTHER)
+    await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
   })
 
   for (const how of ['the button', 'the browser back'] as const) {
     test(`going back by ${how} restores the scroll and the open sections`, async ({
       page,
     }) => {
-      await page.goto(GUIDE)
-      const detail = page.locator('details#detalhe-capitais')
+      await page.goto(OTHER)
+      const detail = page.locator('details#detalhe-amostra')
       await tap(detail.locator('summary'))
       await expect(detail).toHaveAttribute('open', '')
 
-      const related = page
-        .getByRole('region', { name: 'Perguntas relacionadas' })
-        .getByRole('link', { name: /App ou presencial/ })
+      const related = elsewhere(page)
       await related.scrollIntoViewIfNeeded()
       const before = await page.evaluate(() => scrollY)
       expect(before).toBeGreaterThan(300)
       await tap(related)
-      await expect(page).toHaveURL(OTHER)
+      await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-        'App ou presencial, onde tenho mais chance?',
+        'Onde conhecer pessoas',
       )
 
       if (how === 'the button')
         await tap(page.getByRole('button', { name: /^Voltar para/ }))
       else await page.goBack()
 
-      await expect(page).toHaveURL(GUIDE)
-      await expect(page.locator('details#detalhe-capitais')).toHaveAttribute(
+      await expect(page).toHaveURL(OTHER)
+      await expect(page.locator('details#detalhe-amostra')).toHaveAttribute(
         'open',
         '',
       )

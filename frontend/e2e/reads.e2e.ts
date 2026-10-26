@@ -19,7 +19,7 @@ const PAGES = [
   '/estudos',
   '/estudos/lima-2015-encontros',
   '/onde-conhecer-pessoas',
-  '/onde-conhecer-pessoas/onde-os-casais-se-conhecem',
+  '/escolher-parceiro',
   '/dicas',
   '/dicas/apps-como-complemento',
   '/grupo-possivel',

@@ -5,7 +5,6 @@ import type { Library } from './library.ts'
 import {
   tipSearch,
   factSheetSearch,
-  guideSearch,
   topicSearch,
   oldPaths,
   sitePaths,
@@ -49,9 +48,6 @@ export function searchWarnings(library: Library): Problem[] {
   return [
     ...library.topics.flatMap((t) =>
       itemWarnings(t.file, topicSearch(t), t.seo, 'title'),
-    ),
-    ...library.guides.flatMap((g) =>
-      itemWarnings(g.file, guideSearch(g), g.seo, 'question'),
     ),
     ...library.tips
       .filter((d) => d.published)

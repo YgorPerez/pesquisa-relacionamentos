@@ -14,7 +14,8 @@ const BAR = {
   partnerAdded: { baseline: BASELINE },
 }
 
-const GUIDE_B1 = '/escolher-parceiro/que-caracteristicas-preveem'
+const GUIDE_B1 = '/escolher-parceiro'
+const SECTION_B1 = `${GUIDE_B1}#que-caracteristicas-preveem`
 
 const chips = (page: Page) => page.getByRole('region', { name: 'Seu topo 3' })
 const chip = (page: Page, name: string) =>
@@ -245,7 +246,7 @@ test.describe('/prioridades', () => {
     )
     await expect(fromGuide).toContainText('moderada')
     await tap(fromGuide.getByRole('link', { name: 'Ler o Guia inteiro' }))
-    await expect(page).toHaveURL(GUIDE_B1)
+    await expect(page).toHaveURL(SECTION_B1)
   })
 
   test('by keyboard: Tab reaches the chips, space picks, arrows change the outcome', async ({
@@ -333,8 +334,8 @@ test.describe('B1 Guide card', () => {
     )
   })
 
-  test('the Guide without a calculator has no card', async ({ page }) => {
-    await page.goto('/onde-conhecer-pessoas/app-ou-presencial')
+  test('the Guide without the B1 Question has no card', async ({ page }) => {
+    await page.goto('/onde-conhecer-pessoas')
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(
       page.getByRole('region', { name: 'Onde ficam as suas prioridades?' }),

@@ -15,19 +15,15 @@ const PAGES: ReadonlyArray<{
   profile?: boolean
 }> = [
   { name: 'home', path: '/' },
-  { name: 'Topic', path: '/onde-conhecer-pessoas' },
+  { name: 'Guide without Profile', path: '/onde-conhecer-pessoas' },
   {
-    name: 'Guide without Profile',
-    path: '/onde-conhecer-pessoas/onde-os-casais-se-conhecem',
-  },
-  {
-    name: 'Guide with Profile',
-    path: '/onde-conhecer-pessoas/onde-os-casais-se-conhecem',
+    name: 'Guide with the Possible group card, with Profile',
+    path: '/onde-conhecer-pessoas',
     profile: true,
   },
   {
-    name: 'Guide with the calculator, with Profile',
-    path: '/onde-conhecer-pessoas/app-ou-presencial',
+    name: 'Guide with the whole frame and the Priorities card, with Profile',
+    path: '/escolher-parceiro',
     profile: true,
   },
   { name: 'Fact sheets', path: '/estudos' },
@@ -107,9 +103,7 @@ for (const { name, path, profile } of PAGES) {
 test('the Guide with the sections open and the circled Fact sheet passes axe', async ({
   page,
 }) => {
-  await page.goto('/onde-conhecer-pessoas/onde-os-casais-se-conhecem', {
-    waitUntil: 'networkidle',
-  })
+  await page.goto('/onde-conhecer-pessoas', { waitUntil: 'networkidle' })
   for (const summary of await page
     .locator(
       'main details:not([open]) > summary, main [data-slot="collapsible-trigger"]:not([data-panel-open])',
@@ -117,7 +111,8 @@ test('the Guide with the sections open and the circled Fact sheet passes axe', a
     .all())
     await summary.click()
   await page
-    .getByRole('region', { name: 'Resposta curta' })
+    .locator('[data-slot="resposta"]')
+    .first()
     .getByRole('link', { name: /^Ficha 1:/ })
     .click()
   await expect(
@@ -129,11 +124,10 @@ test('the Guide with the sections open and the circled Fact sheet passes axe', a
 test('the "Ajudou?" with the reasons for the no passes axe', async ({
   page,
 }) => {
-  await page.goto('/onde-conhecer-pessoas/onde-os-casais-se-conhecem', {
-    waitUntil: 'networkidle',
-  })
+  await page.goto('/onde-conhecer-pessoas', { waitUntil: 'networkidle' })
   await page
     .getByRole('region', { name: 'Ajudou?' })
+    .first()
     .getByRole('button', { name: 'Não' })
     .click()
   await expect(page.getByRole('group', { name: 'O que faltou?' })).toBeVisible()
