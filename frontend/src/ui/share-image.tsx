@@ -6,6 +6,7 @@
 import type { GroupImage } from '@tem-estudo/rules/link'
 import { useState } from 'react'
 import { SiteButton } from './button'
+import { IMAGE_FORMATS, IMAGE_NOTE, IMAGE_OUTCOME } from './share-image.copy'
 import {
   drawGroupImage,
   imageBlob,
@@ -13,22 +14,10 @@ import {
   type ImageFormat,
 } from './share-image.draw'
 
-const FORMATS: ReadonlyArray<{
-  readonly format: ImageFormat
-  readonly label: string
-  readonly file: string
-}> = [
-  {
-    format: 'square',
-    label: 'Imagem quadrada',
-    file: 'grupo-possivel-quadrada.png',
-  },
-  {
-    format: 'story',
-    label: 'Imagem para stories',
-    file: 'grupo-possivel-stories.png',
-  },
-]
+const FORMATS = (['square', 'story'] as const).map((format) => ({
+  format,
+  ...IMAGE_FORMATS[format],
+}))
 
 type Outcome = 'none' | 'working' | 'downloaded' | 'failed'
 
@@ -87,19 +76,14 @@ export function ShareImage({ image }: { image: GroupImage }) {
           </SiteButton>
         ))}
       </div>
-      <p className="mt-xs mb-0 leading-nota">
-        A imagem mostra o número, quem você procura e os seus Requisitos. Seu
-        gênero e sua idade ficam de fora.
-      </p>
+      <p className="mt-xs mb-0 leading-nota">{IMAGE_NOTE}</p>
       <p
         role="status"
         className="mt-xs mb-0 text-label leading-nota font-normal text-tinta-2 empty:m-0"
       >
-        {outcome === 'downloaded'
-          ? 'Imagem baixada.'
-          : outcome === 'failed'
-            ? 'Não deu para gerar a imagem.'
-            : ''}
+        {outcome === 'downloaded' || outcome === 'failed'
+          ? IMAGE_OUTCOME[outcome]
+          : ''}
       </p>
     </div>
   )
