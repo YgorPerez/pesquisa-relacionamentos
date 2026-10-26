@@ -7,7 +7,8 @@
     "./lists": "./src/lists.ts",
     "./paths": "./src/paths.ts",
     "./queries": "./src/queries.ts",
-    "./search": "./src/search.ts"
+    "./search": "./src/search.ts",
+    "./visuals": "./src/visuals.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

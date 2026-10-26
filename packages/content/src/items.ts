@@ -14,6 +14,7 @@ import {
 import { RESERVED_ROUTES, type Strength } from './lists.ts'
 import { splitFrontmatter, readBody } from './markdown.ts'
 import { decode, problem, type Problem } from './problems.ts'
+import { visualPlacementProblems } from './visuals.ts'
 
 /** A Topic and the frame of its Guide (ADR 0042), read from `_topic.md`. */
 export interface Topic extends Omit<TopicFrontmatter, 'takeaways'> {
@@ -323,6 +324,16 @@ export function readGuide(file: string, text: string): ParsedItem<ParsedGuide> {
         ),
       )
   }
+  // The Visuals (#182): each one declared is placed once in the body.
+  if (value)
+    errors.push(
+      ...visualPlacementProblems(
+        file,
+        value.visuals ?? [],
+        body,
+        parsed.opening,
+      ),
+    )
   if (!value || errors.length > 0) return { ok: false, errors }
   const section = (title: string) =>
     parsed.sections.find((s) => s.title === title)?.markdown ?? ''

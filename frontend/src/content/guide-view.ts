@@ -30,6 +30,7 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
+import { renderVisuals, type RenderedVisual } from './visuals-view'
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -421,12 +422,33 @@ function tipsAndMyths(
   }
 }
 
+/** A Question's Visuals drawn, with the page's Fact sheet numbers (#182):
+ * each body `{{visual:<id>}}` line becomes one of them in `html()`. */
+type Visuals = ReadonlyMap<string, RenderedVisual>
+
+const questionVisuals = (
+  guide: Guide,
+  library: Library,
+  numbers: Numbering,
+): Visuals =>
+  renderVisuals(
+    guide.visuals ?? [],
+    library,
+    (slug) => {
+      const factSheet = numbers.get(slug)
+      return factSheet && { ...factSheet, anchor: anchor(slug) }
+    },
+    guide.slug,
+  )
+
 function questionView(
   guide: Guide,
   library: Library,
   numbers: Numbering,
+  visuals: Visuals,
 ): QuestionView {
-  const markdown = (text: string) => html(withReferences(text, numbers))
+  const markdown = (text: string) =>
+    html(withReferences(text, numbers), visuals)
   return {
     ...questionSummary(guide),
     ...tipsAndMyths(guide, library, numbers),
@@ -487,6 +509,7 @@ function limitationGroups(
   topic: Topic,
   guides: ReadonlyArray<Guide>,
   numbers: Numbering,
+  visualsOf: (guide: Guide) => Visuals,
 ): LimitationGroup[] {
   return [
     ...splitAtHeadings(topic.limitations).map((p) => studyGroup(p, numbers)),
@@ -496,7 +519,10 @@ function limitationGroups(
             {
               title: withoutMarks(guide.question),
               factSheet: null,
-              html: html(withReferences(guide.limitations, numbers)),
+              html: html(
+                withReferences(guide.limitations, numbers),
+                visualsOf(guide),
+              ),
             },
           ]
         : [],
@@ -519,6 +545,10 @@ function elsewhere(
 export function guideView(topic: Topic, library: Library): GuideView {
   const numbers = numberFactSheets(topic.citedFactSheets, library)
   const guides = library.guides.filter((g) => g.topic === topic.slug)
+  const drawn = new Map(
+    guides.map((g) => [g.slug, questionVisuals(g, library, numbers)]),
+  )
+  const visualsOf = (g: Guide): Visuals => drawn.get(g.slug) ?? new Map()
   return {
     topic: topic.slug,
     title: topic.title,
@@ -529,12 +559,14 @@ export function guideView(topic: Topic, library: Library): GuideView {
       ...questionSummary(g),
       answerHtml: html(withoutReferences(g.shortAnswer)),
     })),
-    questions: guides.map((g) => questionView(g, library, numbers)),
+    questions: guides.map((g) =>
+      questionView(g, library, numbers, visualsOf(g)),
+    ),
     takeaways: topic.takeaways.flatMap((slug) => {
       const tip = guideTip(slug, library, numbers)
       return tip ? [tip] : []
     }),
-    limitations: limitationGroups(topic, guides, numbers),
+    limitations: limitationGroups(topic, guides, numbers, visualsOf),
     factSheets: citedFactSheets(topic.citedFactSheets, library),
     elsewhere: elsewhere(guides, library),
     search: topicSearch(topic),

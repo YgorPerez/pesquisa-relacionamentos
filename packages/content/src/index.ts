@@ -44,6 +44,15 @@ export {
   topicBySlug,
 } from './queries.ts'
 export type { Coverage, Divergence, Myth, Seo } from './schema.ts'
+export type {
+  Visual,
+  BarsVisual,
+  TimelineVisual,
+  StudyTableVisual,
+  DiagramVisual,
+  Calculation,
+  Evidence,
+} from './visuals.ts'
 export type { GuideFinding, Tip, Guide, Topic } from './items.ts'
 export {
   CALCULATORS,

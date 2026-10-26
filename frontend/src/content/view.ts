@@ -4,6 +4,7 @@ import type { Finding, FactSheet } from '@tem-estudo/content'
 import { factSheetSearch, type SearchMeta } from '@tem-estudo/content/search'
 import { Marked } from 'marked'
 import { safeHtml, type SafeHtml } from './safe-html'
+import type { RenderedVisual } from './visuals-view'
 
 const REPO = 'https://github.com/YgorPerez/pesquisa-relacionamentos/blob/main'
 
@@ -20,17 +21,54 @@ function rewriteLink(href: string): string {
   return `${REPO}/${path}`
 }
 
+/** Where a Visual goes in the filtered HTML: a private-use character the
+ * library's text never has, around the id. */
+const VISUAL_MARK = ''
+
 const marked = new Marked({
   gfm: true,
   walkTokens(token) {
     if (token.type === 'link') token.href = rewriteLink(token.href)
   },
+  // A body line `{{visual:<id>}}` (#182) becomes a mark that the filter lets
+  // through, and `html()` swaps it for the Visual drawn on the server.
+  extensions: [
+    {
+      name: 'visual',
+      level: 'block',
+      start: (src: string) => /^\{\{visual:/m.exec(src)?.index,
+      tokenizer(src: string) {
+        const line = /^\{\{visual:([a-z0-9-]+)\}\}[^\S\n]*(?:\n+|$)/.exec(src)
+        return line
+          ? { type: 'visual', raw: line[0], id: line[1] ?? '' }
+          : undefined
+      },
+      renderer: (token) => `${VISUAL_MARK}${String(token.id)}${VISUAL_MARK}\n`,
+    },
+  ],
 })
 
-// The HTML comes out filtered from here: it is what `ui/guide.tsx`'s `Html`
-// injects.
-export const html = (markdown: string) =>
-  safeHtml(marked.parse(markdown, { async: false }))
+/** The HTML of a body that may place Visuals: `visuals` has each one drawn
+ * (`visuals-view.ts`). It comes out filtered from here: it is what
+ * `ui/guide.tsx`'s `Html` injects. The Visuals go in after the filter, which
+ * strips SVG; React drew them from checked data and escaped every text. */
+export function html(
+  markdown: string,
+  visuals: ReadonlyMap<string, RenderedVisual> = new Map(),
+): SafeHtml {
+  const filtered = safeHtml(marked.parse(markdown, { async: false }))
+  return filtered.replace(
+    new RegExp(`${VISUAL_MARK}([a-z0-9-]+)${VISUAL_MARK}`, 'g'),
+    (_, id: string) => {
+      const visual = visuals.get(id)
+      if (visual === undefined)
+        throw new Error(
+          `the body places the Visual "${id}", and none was drawn`,
+        )
+      return visual
+    },
+  ) as SafeHtml
+}
 export const inlineHtml = (markdown: string) =>
   safeHtml(marked.parseInline(markdown, { async: false }))
 
