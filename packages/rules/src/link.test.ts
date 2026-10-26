@@ -21,6 +21,7 @@ const ALL: Requirements = {
   noChildren: true,
   height: { min: 160, max: 200 },
   nonSmoker: true,
+  office: true,
 }
 
 describe('round trip', () => {
@@ -105,7 +106,7 @@ describe('old versions', () => {
         'grupo-possivel',
         '?v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&uf=SP&municipio=3550308&companheiro=nao' +
           '&escolaridade=superior&renda=5%2B&cor=preta,parda&religiao=umbanda-candomble,sem-religiao' +
-          '&sem-filhos=sim&altura=160-200&nao-fuma=sim',
+          '&sem-filhos=sim&altura=160-200&nao-fuma=sim&escritorio=sim',
       ),
     ).toEqual({
       calculator: 'grupo-possivel',
@@ -225,7 +226,7 @@ describe('linkSentence', () => {
     ).toBe(
       'Este link mostra: outro gênero, procura pessoas de 25 a 35, mora ou não com companheiro(a), ensino superior, ' +
         'mais de 5 salários mínimos, cor preta ou parda, religião umbanda ou candomblé ou sem religião, sem filhos, ' +
-        'a partir de 160 cm, não fuma, em São Paulo (SP).',
+        'a partir de 160 cm, não fuma, trabalha em escritório, em São Paulo (SP).',
     )
   })
 
