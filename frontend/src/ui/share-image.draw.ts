@@ -237,7 +237,8 @@ function panel(
   dots.width = dots.height = 10
   const d = dots.getContext('2d')
   if (d) {
-    d.fillStyle = 'rgba(26, 28, 28, 0.62)'
+    d.globalAlpha = 0.62
+    d.fillStyle = INK
     d.beginPath()
     d.arc(5, 5, 2.1, 0, Math.PI * 2)
     d.fill()

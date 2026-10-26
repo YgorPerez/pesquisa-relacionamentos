@@ -41,6 +41,8 @@ beforeEach(() => {
 })
 
 afterEach(() => {
+  Reflect.deleteProperty(navigator, 'canShare')
+  Reflect.deleteProperty(navigator, 'share')
   vi.unstubAllGlobals()
   vi.restoreAllMocks()
 })
@@ -60,9 +62,9 @@ async function countForAMan() {
 }
 
 it("the phone's share sheet gets the square PNG, which shows who is sought and not who shares", async () => {
-  const share = vi.fn(async (_: ShareData) => {})
-  vi.stubGlobal('navigator', {
-    ...navigator,
+  // jsdom has no share sheet: this one takes files.
+  const share = vi.fn<(data: ShareData) => Promise<void>>(async () => {})
+  Object.assign(navigator, {
     canShare: (data: ShareData) => (data.files?.length ?? 0) > 0,
     share,
   })
@@ -102,7 +104,7 @@ it('without a share sheet, the story image downloads', async () => {
 })
 
 it('without a canvas, it says the image did not come out', async () => {
-  vi.mocked(HTMLCanvasElement.prototype.getContext).mockReturnValue(null)
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
   const user = await countForAMan()
 
   await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
