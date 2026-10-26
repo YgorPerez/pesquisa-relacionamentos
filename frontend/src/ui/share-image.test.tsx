@@ -147,3 +147,22 @@ it('a sensitive Requirement without consent stays out of the image, and so does 
   expect(after).toMatch(/bissexual/)
   expect(after).toContain(withIt.split(' e ')[0])
 })
+
+it('with only a detail-pack sensitive Requirement on and no consent, the image still comes out', async () => {
+  // A fresh visit with the Requirements saved: the screen asks for the
+  // detail packs (BMI lives there), and the link, without BMI, needs the
+  // default ones, which nothing else on the page asks for.
+  localStorage.setItem(
+    'tem-estudo:profile',
+    JSON.stringify({ gender: 'homem', seeks: 'mulheres', age: 30 }),
+  )
+  localStorage.setItem(
+    'tem-estudo:requirements',
+    JSON.stringify({ place: { state: 'AC' }, notObese: true }),
+  )
+  openPossibleGroup()
+
+  expect(
+    await screen.findByRole('button', { name: 'Imagem quadrada' }),
+  ).toBeVisible()
+})

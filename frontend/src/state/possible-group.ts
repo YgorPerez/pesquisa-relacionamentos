@@ -94,8 +94,10 @@ export interface BrowserCount {
  * The count of what the shared link carries, when it differs from the one on
  * the screen (`needed`): the sensitive Requirements left out for lack of
  * consent. The share image says this number, not the screen's. `null` when
- * not needed or while the data has not arrived; the packs are the ones the
- * screen's count already asked for.
+ * not needed or while the data has not arrived. Leaving out a sensitive
+ * Requirement can change the pack: BMI, depression and religious attendance
+ * come in the detail pack, so without them the link's count may need the
+ * default pack, which the screen's count did not ask for. It asks here.
  */
 export function useSharedEstimate(
   profile: Profile | null,
@@ -104,11 +106,14 @@ export function useSharedEstimate(
 ): Estimate | null {
   const requirements = shared ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
-  // The sensitive Requirements are all PNS: leaving them out never changes
-  // whether the count needs the detail packs.
   const detail = needsDetail({ profile, requirements })
   const brazil = usePack('BR', detail).data
   const stateData = usePack(state, detail).data
+  useEffect(() => {
+    if (!needed) return
+    requestPack('BR', detail)
+    if (state) requestPack(state, detail)
+  }, [needed, detail, state])
   return useMemo(() => {
     if (!needed || !brazil || (state && !stateData)) return null
     try {
