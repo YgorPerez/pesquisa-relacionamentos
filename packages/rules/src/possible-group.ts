@@ -58,6 +58,9 @@ export const REQUIREMENT_ORDER = [
   'color',
   'religion',
   'children',
+  'parents',
+  'work',
+  'home',
   'height',
   'smoking',
   'office',
@@ -78,6 +81,9 @@ export const REQUIREMENT_SOURCE: Readonly<
   color: 'Censo',
   religion: 'Censo',
   children: 'Censo',
+  parents: 'Censo',
+  work: 'Censo',
+  home: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
 }
@@ -182,12 +188,28 @@ export function activeRequirements({
     color: r.colors.length > 0,
     religion: r.religions.length > 0,
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
+    parents: r.notWithParents,
+    work: r.work !== null,
+    home: r.ownsHome,
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
     office: r.office,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
+
+/** The Requirements that read the detail dimensions, which only the detail
+ * packs carry (`packForPlace`). */
+const DETAIL_REQUIREMENTS: ReadonlySet<RequirementId> = new Set<RequirementId>([
+  'parents',
+  'work',
+  'home',
+])
+
+/** The count needs the detail packs: a Requirement reads parents, work or
+ * home. */
+export const needsDetail = (input: CountInput): boolean =>
+  activeRequirements(input).some((k) => DETAIL_REQUIREMENTS.has(k))
 
 const firstAge = (ageGroup: number) => 15 + 5 * ageGroup
 const lastAge = (ageGroup: number) =>
@@ -370,15 +392,18 @@ const NO_ORIENTATION: PnsFilter = {
 /** P(office occupation) in the cell's sex, Census age group and education
  * (`EDUCATIONS` position + 1, 0 = no data). A cell without education, or
  * with one the file left out for having few records, takes the row of every
- * education together. The universe is everyone (`todos`); the file also has
- * the employed only (`ocupados`), for when the count already asks for a job. */
+ * education together. The universe is everyone (`todos`) or, when "trabalha"
+ * already kept only the employed, the employed (`ocupados`): with `todos` the
+ * job would be counted twice. */
 function office(
   data: PlaceData,
+  universe: 'todos' | 'ocupados',
   sex: number,
   ageGroup: number,
   education: number,
 ): Interval {
-  const key = (e: string) => `todos|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
+  const key = (e: string) =>
+    `${universe}|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
   const row =
     (education > 0 ? data.pnad[key(EDUCATIONS[education - 1]!)] : undefined) ??
     data.pnad[key('')]
@@ -422,8 +447,9 @@ const overlap = (a: number, b: number, n: number) =>
  *
  * Each share is bounded on its own key, where the survey measured it. The
  * PNAD office share (#294) goes by sex × age group × education: in each
- * education, of N_e people, A_e pass the Census Requirements and Q_e = q_e ×
- * N_e work in an office; the pair overlaps in [L_e, U_e] = `overlap(A_e,
+ * education, of N_e people in the share's universe (everyone, or the
+ * employed with "trabalha"), A_e pass the Census Requirements and Q_e = q_e
+ * × N_e work in an office; the pair overlaps in [L_e, U_e] = `overlap(A_e,
  * Q_e, N_e)`. The PNS block goes by sex and age: with L and U the sums over
  * the educations, N everyone and P = p × N, the group is in [max(0, L + P −
  * N), min(U, P)]. The age groups add up.
@@ -433,6 +459,7 @@ const overlap = (a: number, b: number, n: number) =>
  */
 function independenceRange(
   everyone: Float64Array,
+  officeUniverse: Float64Array,
   censusOnly: Float64Array,
   pns: ReadonlyArray<PnsBlock | null>,
   officeByCell: ReadonlyArray<Interval> | null,
@@ -449,8 +476,8 @@ function independenceRange(
       const q = officeByCell?.[cell]?.[1] ?? 1
       const [l, u] = overlap(
         censusOnly[cell]!,
-        q * everyone[cell]!,
-        everyone[cell]!,
+        q * officeUniverse[cell]!,
+        officeUniverse[cell]!,
       )
       n += everyone[cell]!
       low += l
@@ -472,6 +499,10 @@ function tally(
   const ofPlace = active.has('place') ? data.state : data.brazil
   if (!ofPlace || (active.has('place') && ofPlace.place !== r.place?.state))
     throw new Error(`missing the data for ${r.place?.state} for the count`)
+  if (!ofPlace.detail && [...active].some((k) => DETAIL_REQUIREMENTS.has(k)))
+    throw new Error(
+      `the count of ${[...active].join(', ')} needs the detail pack for ${ofPlace.place}`,
+    )
 
   // Everything that depends only on sex × age group (and union, in a
   // municipality) comes out before the loop.
@@ -524,12 +555,19 @@ function tally(
   const E = EDUCATIONS.length + 1
   let officeByCell: Interval[] | null = null
   if (active.has('office')) {
+    const universe = active.has('work') ? 'ocupados' : 'todos'
     officeByCell = []
     for (const s of sexes)
       for (let g = 0; g < G; g++)
         if (factor[s * G + g]! > 0)
           for (let e = 0; e < E; e++)
-            officeByCell[(s * G + g) * E + e] = office(ofPlace, s, g, e)
+            officeByCell[(s * G + g) * E + e] = office(
+              ofPlace,
+              universe,
+              s,
+              g,
+              e,
+            )
   }
 
   let municipality: Float64Array | null = null
@@ -561,6 +599,10 @@ function tally(
     : null
   const partner = active.has('partner')
   const noChildren = active.has('children')
+  const notWithParents = active.has('parents')
+  // The `work` column: 1 employed, 2 in their own business.
+  const work = !active.has('work') ? 0 : r.work === 'negocio' ? 2 : 1
+  const ownsHome = active.has('home')
   const singleSex = sexes.length === 1 ? sexes[0] : -1
 
   let min = 0
@@ -574,6 +616,12 @@ function tally(
   // By sex × age group × education, the key of the office share.
   const everyone = new Float64Array(SEXES.length * G * E)
   const censusOnly = new Float64Array(SEXES.length * G * E)
+  // The office share's universe in each cell: everyone, or the employed when
+  // "trabalha" made the share come from `ocupados`.
+  const officeOfEmployed = active.has('work')
+  const officeUniverse = officeOfEmployed
+    ? new Float64Array(SEXES.length * G * E)
+    : everyone
   const d = ofPlace
   for (let i = 0; i < d.size; i++) {
     const s = d.sex[i]!
@@ -586,12 +634,16 @@ function tally(
     const w = d.weight[i]! * f
     const cell = sg * E + d.education[i]!
     everyone[cell]! += w
+    if (officeOfEmployed && d.work[i]! >= 1) officeUniverse[cell]! += w
     if (partner && d.union[i] === 1) continue
     if (d.education[i]! < education) continue
     if (d.income[i]! < income) continue
     if (colors && !colors.has(d.color[i]!)) continue
     if (religions && !religions.has(d.religion[i]!)) continue
     if (noChildren && d.children[i] === 2) continue
+    if (notWithParents && d.parents[i] !== 1) continue
+    if (d.work[i]! < work) continue
+    if (ownsHome && d.home[i] !== 2) continue
     censusOnly[cell]! += w
     const block = pns[sg]
     const p = block ? block.p : NO_CUT
@@ -608,6 +660,7 @@ function tally(
   return {
     independence: independenceRange(
       everyone,
+      officeUniverse,
       censusOnly,
       pns,
       officeByCell,
@@ -675,6 +728,24 @@ function caveats(
       strong: false,
       text: '"Não mora com companheiro(a)" inclui quem namora: nenhuma pesquisa oficial pergunta sobre namoro.',
     },
+    has('parents') && {
+      id: 'parents',
+      strong: false,
+      text: '"Não mora com os pais" tira quem mora no mesmo domicílio que a mãe, o pai, a madrasta ou o padrasto, inclusive quando são eles que moram na casa da pessoa.',
+    },
+    has('work') && {
+      id: 'work',
+      strong: false,
+      text:
+        requirements.work === 'negocio'
+          ? '"Tem negócio próprio" junta empregadores e quem trabalha por conta própria, na última semana de julho de 2022. O Censo não diz se é em tempo integral.'
+          : '"Trabalha" é quem tinha trabalho na última semana de julho de 2022, com ou sem carteira e em negócio próprio ou não. O Censo não diz se é em tempo integral.',
+    },
+    has('home') && {
+      id: 'home',
+      strong: false,
+      text: 'O Censo pergunta se a casa é de algum morador, não de quem. A conta só dá a casa como da pessoa quando ela é a responsável pelo domicílio ou o cônjuge: quem mora na casa própria dos pais não entra.',
+    },
     has('orientation') && {
       id: 'orientation',
       strong: false,
@@ -689,7 +760,7 @@ function caveats(
       !!requirements.place?.municipality && {
         id: 'municipality',
         strong: false,
-        text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Escolaridade, renda, cor e religião seguem as do estado.',
+        text: 'No município, a composição do estado é aplicada à população da cidade por sexo, idade e união (SIDRA 10185). Os outros Requisitos do Censo seguem os do estado.',
       },
     has('income') && {
       id: 'income',
@@ -704,7 +775,7 @@ function caveats(
     has('office') && {
       id: 'office',
       strong: false,
-      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
+      text: `Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade${has('work') ? ', entre quem trabalha' : ''}; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.`,
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

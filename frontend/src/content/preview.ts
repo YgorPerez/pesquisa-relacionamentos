@@ -7,6 +7,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import {
   openPack,
+  packFile,
   type PlaceData,
   type PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
@@ -28,23 +29,28 @@ const opened = new Map<string, Promise<PlaceData | null>>()
 /** The place's pack: the file in `public/` next to the build's server
  * (`.output/public`, or `/app/public` in the image) or, in `vite dev`, what
  * the plugin serves. Kept in memory after the first request. */
-async function pack(base: string, place: PackPlace): Promise<PlaceData | null> {
-  const key = `${base}/${place}`
+async function pack(
+  base: string,
+  place: PackPlace,
+  detail: boolean,
+): Promise<PlaceData | null> {
+  const name = packFile(place, detail)
+  const key = `${base}/${name}`
   let request = opened.get(key)
   if (!request) {
-    request = readPack(base, place).then((raw) => (raw ? openPack(raw) : null))
+    request = readPack(base, name).then((raw) => (raw ? openPack(raw) : null))
     opened.set(key, request)
   }
   return request
 }
 
-async function readPack(base: string, place: PackPlace): Promise<unknown> {
+async function readPack(base: string, name: string): Promise<unknown> {
   const [fs, path, url] = await Promise.all([
     import('node:fs/promises'),
     import('node:path'),
     import('node:url'),
   ])
-  const file = path.join('public', base, `${place}.json`)
+  const file = path.join('public', base, name)
   for (
     let folder = path.dirname(url.fileURLToPath(import.meta.url));
     ;
@@ -57,9 +63,7 @@ async function readPack(base: string, place: PackPlace): Promise<unknown> {
     }
   }
   const { getRequestUrl } = await import('@tanstack/react-start/server')
-  const response = await fetch(
-    new URL(`${base}/${place}.json`, getRequestUrl()),
-  )
+  const response = await fetch(new URL(`${base}/${name}`, getRequestUrl()))
   return response.ok ? response.json() : null
 }
 
@@ -71,5 +75,7 @@ export const fetchGroupPreview = createServerFn({ method: 'GET' })
   )
   .handler(async ({ data: query }): Promise<Preview | null> => {
     const { default: data } = await import('virtual:possible-group')
-    return buildGroupPreview(query, data, (place) => pack(data.base, place))
+    return buildGroupPreview(query, data, (place, detail) =>
+      pack(data.base, place, detail),
+    )
   })

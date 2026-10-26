@@ -7,7 +7,11 @@ import type {
   PlaceData,
   PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import {
+  estimateGroup,
+  needsDetail,
+  type Estimate,
+} from '@tem-estudo/rules/possible-group'
 import { readLink, groupPreview, type Preview } from '@tem-estudo/rules/link'
 import { DEFAULT_REQUIREMENTS } from '@tem-estudo/rules/requirements'
 
@@ -22,7 +26,8 @@ export interface PreviewData {
 export async function buildGroupPreview(
   query: string,
   data: PreviewData,
-  pack: (place: PackPlace) => Promise<PlaceData | null>,
+  /** The place's pack; the detail one (parents, work, home) with `detail`. */
+  pack: (place: PackPlace, detail: boolean) => Promise<PlaceData | null>,
 ): Promise<Preview | null> {
   const state = readLink('grupo-possivel', query)
   if (state?.calculator !== 'grupo-possivel') return null
@@ -31,9 +36,12 @@ export async function buildGroupPreview(
 
   const requirements = state.requirements ?? DEFAULT_REQUIREMENTS
   const stateCode = requirements.place?.state
-  const brazil = await pack('BR')
+  const detail = needsDetail({ profile: state.profile, requirements })
+  const brazil = await pack('BR', detail)
   const statePack =
-    stateCode && data.places.includes(stateCode) ? await pack(stateCode) : null
+    stateCode && data.places.includes(stateCode)
+      ? await pack(stateCode, detail)
+      : null
   if (!brazil || (stateCode && !statePack)) return null
   const count = (r: typeof requirements): Estimate =>
     estimateGroup(
