@@ -37,11 +37,12 @@ A diferença de satisfação entre os conjuntos não foi significativa logo apó
 
 ## Limitações
 
+- A Fonte local tem "in_press" no nome, mas contém a versão diagramada pela editora da publicação online de 16/02/2016, com páginas 1–27. A edição de 2017 usa o mesmo DOI e a mesma paginação. Não foi possível comparar o texto dessa edição com a cópia local, pois o site da editora bloqueou o acesso; eventuais mudanças nos números citados ou nas declarações de financiamento e conflito não puderam ser descartadas.
 - Amostra pequena de conveniência, jovem, predominantemente feminina e branca, de uma universidade dos EUA. O estudo não cobre participantes que procuravam alguém do mesmo sexo, e não apresenta resultados separados por gênero que permitam concluir que o efeito seja igual entre homens e mulheres.
 - Houve exclusões depois da alocação, inclusive por faltas na segunda sessão e por erro na checagem da manipulação. Os autores não encontraram diferenças nas características medidas entre excluídos e retidos, mas a análise não preserva toda a amostra inicialmente recrutada.
 - Mede satisfação antecipada com uma escolha de perfil. Não mede encontro, formação de casal, qualidade de relacionamento nem saúde mental. Também não testa uma intervenção para limitar o uso de apps comerciais.
 - O site era experimental. Os conjuntos tinham atratividade média semelhante, e o conjunto pequeno era um subconjunto do grande, mas isso não reproduz recomendações personalizadas nem a reciprocidade de um app real.
-- Há inconsistências entre algumas estatísticas de teste e os valores de significância apresentados na seção Results; por exemplo, o efeito principal de reversibilidade combina F = 0,001 com p = 0,74. A tabela acima transcreve os resultados publicados; conferir a extração não resolve esses problemas estatísticos. Os contrastes conjuntos pedem cautela adicional.
+- Há inconsistências entre algumas estatísticas de teste e os valores de significância apresentados na seção Results; por exemplo, o efeito principal de reversibilidade combina F = 0,001 com p = 0,74. A tabela acima transcreve os resultados da cópia local; conferir a extração não resolve esses problemas estatísticos. Os contrastes conjuntos pedem cautela adicional.
 - Arrependimento, ruminação e outros mecanismos propostos não foram medidos diretamente. O intervalo estudado foi de uma semana, sem acompanhar o que aconteceu depois de interagir com o parceiro.
 
 ## Como usamos
