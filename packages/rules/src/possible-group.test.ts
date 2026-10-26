@@ -141,9 +141,26 @@ describe('estimateGroup: PNS requirements', () => {
   // straight smokers of 170 cm (200, 20), bi non-smoker (20, 2), gay smoker
   // (40, 4), "não sabe" non-smoker (30, 3) and "recusou" with no height or
   // smoking (10, 1). Design effect 2. The interval literals are the Wilson
-  // interval on records / 2, worked out by hand.
+  // interval on records / 2, worked out by hand. Only the straight
+  // non-smokers of 180 cm have a BMI of 30 or more; "recusou" has no BMI.
   const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
   const error = 1.96 / Math.sqrt(400)
+
+  it('"IMC abaixo de 30" counts who answered with a BMI under 30, crossed with the other PNS Requirements', () => {
+    // 790 of the 990 with a BMI.
+    const r = count({ seeks: 'mulheres' }, { ...ac, notObese: true })
+    expect(r.active).toContain('obesity')
+    expect(r.result.central).toBeCloseTo((4000 * 790) / 990)
+    // Non-smoker too: 160 cm, bi and "não sabe", 550 of the 990.
+    const both = count(
+      { seeks: 'mulheres' },
+      { ...ac, notObese: true, nonSmoker: true },
+    )
+    expect(both.result.central).toBeCloseTo((4000 * 550) / 990)
+    expect(r.caveats.find((x) => x.id === 'obesity')?.text).toContain(
+      'autodeclarados',
+    )
+  })
 
   it('orientation comes from the profile: straight + bi of the sought sex, not counting who did not answer', () => {
     // 920 of the 960 who answered, on 96 records.

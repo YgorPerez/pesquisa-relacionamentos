@@ -2,6 +2,10 @@
 // fixture data: the fixture's "Brazil" is only Acre (`e2e/library/dados`).
 // The number pinned at the top on scroll, touch, keyboard and control sizes
 // stay in the e2e (`e2e/possible-group.e2e.ts`), which has layout.
+import type {
+  SensitiveRequirement,
+  VisitorRequirement,
+} from '@tem-estudo/rules/requirements'
 import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, it } from 'vite-plus/test'
@@ -188,4 +192,37 @@ it('the state is chosen by keyboard and goes back to the whole of Brazil', async
   expect(
     requirement('place').queryByRole('combobox', { name: 'Município' }),
   ).toBeNull()
+})
+
+/** Turns a sensitive Requirement on and checks what its row says. */
+async function turnOnSensitive(
+  id: Extract<VisitorRequirement, SensitiveRequirement>,
+  checkbox: string,
+  value: string,
+  note: RegExp,
+) {
+  const user = userEvent.setup()
+  openScreen(PAGE)
+  await enterProfile(
+    user,
+    { gender: 'mulher', seeks: 'homens', age: '28' },
+    BUTTON,
+  )
+  const before = await newCount(null)
+  await user.click(requirement(id).getByRole('checkbox', { name: checkbox }))
+  await newCount(before)
+  expect(requirement(id).value()).toBe(value)
+  expect(requirement(id).getByText(note)).toBeVisible()
+  expect(
+    requirement(id).getByText(/Dado sensível: fica só neste aparelho/),
+  ).toBeVisible()
+}
+
+it('"IMC abaixo de 30" enters the count and says weight and height are self-reported', async () => {
+  await turnOnSensitive(
+    'obesity',
+    'Só quem tem IMC abaixo de 30',
+    'IMC abaixo de 30',
+    /peso e a altura que a pessoa declarou/,
+  )
 })

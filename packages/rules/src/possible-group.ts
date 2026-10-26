@@ -56,6 +56,7 @@ export const REQUIREMENT_ORDER = [
   'children',
   'height',
   'smoking',
+  'obesity',
 ] as const
 export type RequirementId = (typeof REQUIREMENT_ORDER)[number]
 
@@ -74,6 +75,7 @@ export const REQUIREMENT_SOURCE: Readonly<
   children: 'Censo',
   height: 'PNS',
   smoking: 'PNS',
+  obesity: 'PNS',
 }
 
 /** Below this, the number carries "instável" (#8). It holds for the Census
@@ -174,6 +176,7 @@ export function activeRequirements({
     children: r.noChildren && whoIsSought(profile).children !== 'no-data',
     height: r.height.min > MIN_HEIGHT || r.height.max < MAX_HEIGHT,
     smoking: r.nonSmoker,
+    obesity: r.notObese,
   }
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
@@ -260,6 +263,7 @@ const PNS_FILTERS: {
     }
   },
   smoking: () => ({ variable: 'fumo', test: (value) => value === 'nao' }),
+  obesity: () => ({ variable: 'obesidade', test: (value) => value === 'nao' }),
 }
 
 export interface PnsBlock {
@@ -576,6 +580,11 @@ function caveats(
       id: 'height',
       strong: false,
       text: 'A altura é autodeclarada na PNS 2019.',
+    },
+    has('obesity') && {
+      id: 'obesity',
+      strong: false,
+      text: 'O IMC sai do peso e da altura autodeclarados na PNS 2019. Quem informa o próprio peso costuma dizer menos do que pesa, então a pesquisa acha menos gente com IMC de 30 ou mais, e o grupo sai maior do que é.',
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

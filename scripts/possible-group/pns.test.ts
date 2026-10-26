@@ -18,6 +18,7 @@ const adult = (
     orientacao: 'heterossexual',
     altura: '175',
     fumo: 'nao',
+    obesidade: 'nao',
     ...values,
   },
 })
@@ -76,7 +77,11 @@ function line(fields: Record<string, [start: number, value: string]>) {
 }
 
 describe('readPnsRecord', () => {
-  const person = (height: string, smoking = '3') =>
+  const person = (
+    height: string,
+    smoking = '3',
+    extra: Record<string, [number, string]> = {},
+  ) =>
     line({
       V0024: [3, '1110011'],
       UPA_PNS: [10, '110000016'],
@@ -87,6 +92,7 @@ describe('readPnsRecord', () => {
       P050: [711, smoking],
       Y008: [1304, '1'],
       V00291: [1426, '00000123.45678'],
+      ...extra,
     })
 
   it('reads the selected adult with the answers as the CSV writes them', () => {
@@ -96,7 +102,12 @@ describe('readPnsRecord', () => {
       weight: 123.45678,
       sex: 'mulher',
       age: 34,
-      values: { orientacao: 'heterossexual', altura: '165', fumo: 'nao' },
+      values: {
+        orientacao: 'heterossexual',
+        altura: '165',
+        fumo: 'nao',
+        obesidade: null,
+      },
     })
   })
 
@@ -106,6 +117,18 @@ describe('readPnsRecord', () => {
     assert.equal(readPnsRecord(person('   ', ' '))?.values.altura, null)
     assert.equal(readPnsRecord(person('   ', ' '))?.values.fumo, null)
   })
+
+  it('reads obesity as a BMI of 30 or more, from the self-reported weight and the height before the 140 to 200 cut', () => {
+    const bmi = (kg: string, cm: string) =>
+      readPnsRecord(person(cm, '3', { P00104: [607, kg] }))?.values.obesidade
+    // 90 kg at 1.70 m is 31.1; 86.6 kg is 29.97.
+    assert.equal(bmi('090.0', '170'), 'sim')
+    assert.equal(bmi('086.6', '170'), 'nao')
+    // 70 kg at 1.35 m is 38.4, though the height column keeps "below 140".
+    assert.equal(bmi('070.0', '135'), 'sim')
+    assert.equal(bmi('     ', '170'), null)
+    assert.equal(bmi('090.0', '999'), null)
+  })
 })
 
 describe('pnsToCsv', () => {
@@ -113,8 +136,8 @@ describe('pnsToCsv', () => {
     const csv = pnsToCsv(pnsCells([adult({ weight: 2.6 }, { altura: null })]))
     assert.equal(
       csv,
-      'sexo,idade,orientacao,altura,fumo,peso,n_registros,efeito_plano\n' +
-        'homem,18-24,heterossexual,,nao,3,1,1.000\n',
+      'sexo,idade,orientacao,altura,fumo,obesidade,peso,n_registros,efeito_plano\n' +
+        'homem,18-24,heterossexual,,nao,nao,3,1,1.000\n',
     )
   })
 })

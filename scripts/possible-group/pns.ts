@@ -60,6 +60,7 @@ const POSITIONS = {
   C006: [108, 1],
   C008: [117, 3],
   M001: [527, 1],
+  P00104: [607, 5],
   P00404: [617, 3],
   P050: [711, 1],
   Y008: [1304, 1],
@@ -130,17 +131,33 @@ export const PNS_VARIABLES = [
     read: code('P050', { '1': 'diario', '2': 'ocasional', '3': 'nao' }),
     ordered: false,
   },
+  {
+    // BMI 30 or more (#295), from the final weight in kg ("070.5") and the
+    // height in cm, both self-reported. Only the yes/no goes, so the cells
+    // stay few.
+    column: 'obesidade',
+    fields: ['P00104', 'P00404'],
+    read: (line) => {
+      const kg = Number(field(line, 'P00104'))
+      const cm = Number(field(line, 'P00404'))
+      if (!(kg > 0 && cm > 0 && cm < 999)) return null
+      return kg / (cm / 100) ** 2 >= 30 ? 'sim' : 'nao'
+    },
+    ordered: false,
+  },
 ] as const satisfies ReadonlyArray<PnsVariable>
 
 /** The dictionary variables the CSV comes from, for the `.meta.yaml`. */
 export const PNS_FIELDS: ReadonlyArray<Field> = [
-  'V0024',
-  'UPA_PNS',
-  'V00291',
-  'M001',
-  'C006',
-  'C008',
-  ...PNS_VARIABLES.flatMap((v) => v.fields),
+  ...new Set<Field>([
+    'V0024',
+    'UPA_PNS',
+    'V00291',
+    'M001',
+    'C006',
+    'C008',
+    ...PNS_VARIABLES.flatMap((v) => v.fields),
+  ]),
 ]
 
 const ageGroupOf = (age: number) =>

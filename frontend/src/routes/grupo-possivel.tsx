@@ -284,6 +284,8 @@ function YourRequirements({
                     childrenData={estimate.children}
                     id={childrenReasonId}
                   />
+                ) : SENSITIVE_NOTE[k] ? (
+                  <SensitiveNote text={SENSITIVE_NOTE[k]} />
                 ) : undefined
               }
             >
@@ -455,7 +457,31 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
         onChange={(nonSmoker) => change({ nonSmoker })}
       />
     ),
+    obesity: ({ requirements, change }) => (
+      <CheckChip
+        label="Só quem tem IMC abaixo de 30"
+        checked={requirements.notObese}
+        onChange={(notObese) => change({ notObese })}
+      />
+    ),
   }
+
+/** What each sensitive Requirement measures, under its control. The count's
+ * caveats say the rest. */
+const SENSITIVE_NOTE: Partial<Record<VisitorRequirement, string>> = {
+  obesity:
+    'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
+}
+
+/** The note of a sensitive Requirement: what it measures and where it stays. */
+function SensitiveNote({ text }: { text: string }) {
+  return (
+    <p className={HINT}>
+      {text} Dado sensível: fica só neste aparelho e vai no link só se você
+      deixar.
+    </p>
+  )
+}
 
 /** The "A conta" block: the range, what weighs most, with the button to
  * release each Requirement, and the cut-by-cut and uncertainty folds. */
