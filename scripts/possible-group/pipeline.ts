@@ -14,8 +14,8 @@
 //    and writes the office occupation probability (`pnad-2022.csv`, #294).
 //
 // `--municipalities-only` rebuilds only marital status by municipality,
-// without downloading the microdata; `--pnad-only`, only step 6;
-// `--pns-only`, only the PNS cells, without the Census.
+// without downloading the microdata. `--pns-only` rebuilds only the PNS
+// cells, without the Census; `--pnad-only`, only step 6.
 import { mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { gzipSync } from 'node:zlib'
@@ -649,8 +649,8 @@ async function pnad() {
 
 await (process.argv.includes('--municipalities-only')
   ? municipalitiesOnly()
-  : process.argv.includes('--pnad-only')
-    ? pnad()
-    : process.argv.includes('--pns-only')
-      ? pnsOnly()
+  : process.argv.includes('--pns-only')
+    ? pnsOnly()
+    : process.argv.includes('--pnad-only')
+      ? pnad()
       : main())
