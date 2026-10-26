@@ -93,3 +93,8 @@ export const OpenAndClose: Story = {
 export const OneQuestion: Story = {
   args: { topics: TOPICS.slice(3, 4) },
 }
+
+/** A Topic whose Guide this browser read to the end says "lido" (#195). */
+export const OneRead: Story = {
+  args: { read: new Set(['escolher-parceiro']) },
+}

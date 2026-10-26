@@ -1,6 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
+import { forgetReading, inProgress, useReading } from '#/state/reading'
+import { ContinueReading } from '#/ui/continue-reading'
 import { useReadingPointInHistory } from '#/ui/navigation'
 import { CalculatorRow } from '#/ui/question-row'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
@@ -36,6 +38,7 @@ const CALCULATORS = [
  * Guide published, the way to the studies. */
 function Topics() {
   const { data: topics } = useSuspenseQuery(reads.topics())
+  const reading = useReading()
   return (
     <Section aria-labelledby="temas">
       <Headline id="temas">Os Temas</Headline>
@@ -46,14 +49,26 @@ function Topics() {
           <Link to="/estudos">veja os estudos do acervo</Link>.
         </Notice>
       ) : (
-        <TopicIndex topics={topics} />
+        <TopicIndex topics={topics} read={new Set(reading?.finished)} />
       )}
     </Section>
   )
 }
 
-/** The home page: the site's sentence, the Topics with their Questions and
- * the shortcuts to the calculators. */
+/** "Continuar lendo": the Guides this browser started and did not finish
+ * (#195), with today's titles; a Topic gone from the content drops out. */
+function Continue() {
+  const { data: topics } = useSuspenseQuery(reads.topics())
+  const titles = new Map(topics.map((t) => [t.slug, t.title]))
+  const items = inProgress(useReading()).flatMap(({ topic, place }) => {
+    const title = titles.get(topic)
+    return title ? [{ topic, title, place }] : []
+  })
+  return <ContinueReading items={items} onForget={forgetReading} />
+}
+
+/** The home page: the site's sentence, the reading in progress, the Topics
+ * with their Questions and the shortcuts to the calculators. */
 function Home() {
   // Back from a Guide, the Topic that was open opens again, at the same
   // scroll.
@@ -71,6 +86,7 @@ function Home() {
           de onde saiu, e a gente avisa quando a pesquisa ainda não sabe.
         </Lead>
 
+        <Continue />
         <Topics />
 
         <Section aria-labelledby="calculadoras">

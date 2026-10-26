@@ -7,3 +7,6 @@ export const questionCount = (count: number): string =>
 
 /** The link to the Topic's page, at the end of the open fold. */
 export const OPEN_TOPIC = 'Abrir o Tema'
+
+/** Next to a Topic whose Guide was read to "O que levar" (#195). */
+export const READ = 'lido'

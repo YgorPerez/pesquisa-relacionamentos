@@ -33,6 +33,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'profile.e2e.ts': ['perfil', 'guia'],
   'priorities.e2e.ts': ['prioridades', 'guia'],
   'privacy.e2e.ts': ['privacidade'],
+  'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and
@@ -63,6 +64,9 @@ const ALIASES: Readonly<Record<string, string>> = {
   priorities: 'prioridades',
   'possible-group': 'grupo-possivel',
   reads: 'leituras',
+  reading: 'leitura',
+  'reading-progress': 'leitura',
+  'continue-reading': 'leitura',
   search: 'busca',
 }
 
