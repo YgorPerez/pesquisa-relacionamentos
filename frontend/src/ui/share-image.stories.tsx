@@ -78,6 +78,7 @@ export const Crowded: Story = {
         'de 170 a 190 cm',
         'não fuma',
       ],
+      sources: 'Censo 2022 e PNS 2019',
     },
   },
 }
