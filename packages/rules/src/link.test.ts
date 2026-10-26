@@ -5,6 +5,7 @@ import {
   readLink,
   prioritiesPreview,
   groupPreview,
+  groupImage,
   linkQuery,
   type LinkState,
 } from './link.ts'
@@ -365,5 +366,49 @@ describe('isLink', () => {
     expect(isLink('v=1&x=%E0%A4%A')).toBe(true)
     expect(isLink('utm_source=zap')).toBe(false)
     expect(isLink('')).toBe(false)
+  })
+})
+
+describe('share image', () => {
+  const count = {
+    target: 'women' as const,
+    result: { min: 123_400, max: 178_900, unstable: false },
+  }
+
+  it('shows the range, who is sought and the other Requirements the link carries', () => {
+    const query =
+      'v=1&genero=homem&procura=mulheres&idade=30&idades=25-35&uf=SP&escolaridade=superior&nao-fuma=sim'
+    expect(groupImage(query, count)).toEqual({
+      before: 'Entre',
+      numbers: '120 mil e 180 mil',
+      unstable: false,
+      who: 'mulheres de 25 a 35 em SP',
+      also: ['ensino superior', 'não fuma'],
+    })
+  })
+
+  it("never shows the sharer's gender or age, nor the age range taken from it", () => {
+    const image = groupImage('v=1&genero=homem&procura=mulheres&idade=30', {
+      ...count,
+      result: { min: 1_000, max: 1_000, unstable: true },
+    })
+    expect(image).toEqual({
+      before: 'Cerca de',
+      numbers: '1 mil',
+      unstable: true,
+      who: 'mulheres no Brasil, na idade procurada',
+      also: [],
+    })
+    expect(JSON.stringify(image)).not.toMatch(/homem|homens|30|25|35/)
+  })
+
+  it('shows nothing the link does not carry: an unknown key stays out', () => {
+    const image = groupImage('v=1&procura=mulheres&peso=nao-obeso', count)
+    expect(image?.also).toEqual([])
+    expect(JSON.stringify(image)).not.toMatch(/peso|obes/)
+  })
+
+  it('is null for a query that is not a link', () => {
+    expect(groupImage('utm_source=zap', count)).toBeNull()
   })
 })
