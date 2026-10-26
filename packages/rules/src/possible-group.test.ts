@@ -3,6 +3,7 @@ import census from '../fixtures/possible-group/censo-2022.csv?raw'
 import ages from '../fixtures/possible-group/sidra-9514-idade.csv?raw'
 import municipalities from '../fixtures/possible-group/sidra-10185-municipios.csv?raw'
 import pns from '../fixtures/possible-group/pns-2019.csv?raw'
+import pnad from '../fixtures/possible-group/pnad-2022.csv?raw'
 import { openPack, readGroupBase, packForPlace } from './possible-group-data.ts'
 import { estimateGroup, type CountData } from './possible-group.ts'
 import type { Profile } from './profile.ts'
@@ -14,7 +15,7 @@ import {
 } from './requirements.ts'
 
 // The real path: CSV → JSON pack (what the browser downloads) → count.
-const base = readGroupBase({ census, ages, municipalities, pns })
+const base = readGroupBase({ census, ages, municipalities, pns, pnad })
 const pack = (place: 'BR' | 'AC' | 'AP') =>
   openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
 const data = (uf?: 'AC' | 'AP'): CountData => ({
@@ -240,6 +241,43 @@ describe('estimateGroup: PNS requirements', () => {
   it('without a PNS Requirement, there are no PNS records to count', () => {
     const r = count({ seeks: 'mulheres' }, ac)
     expect(r.result.pnsRecords).toBeNull()
+  })
+})
+
+describe('estimateGroup: office occupation (PNAD)', () => {
+  const error = 1.96 / Math.sqrt(400)
+
+  it("multiplies each cell by the probability in its sex, age group and education, with that row's interval", () => {
+    // Women 25 to 29 in Acre not in a union: 1,000 college × 0.7 + 3,000
+    // high school × 0.2.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.active).toContain('office')
+    expect(r.result.central).toBeCloseTo(1300)
+    expect(r.result.min).toBeCloseTo((660 + 540) * (1 - error))
+    expect(r.result.max).toBeCloseTo((740 + 660) * (1 + error))
+  })
+
+  it('a cell whose education has no row takes the all-educations one', () => {
+    // The 400 college women aged 30 to 34 take 0.5.
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 34 }, place: { state: 'AC' }, office: true },
+    )
+    expect(r.result.central).toBeCloseTo(1300 + 200)
+  })
+
+  it('says which occupations count and that it assumes the rest does not change them', () => {
+    const r = count(
+      { seeks: 'mulheres' },
+      { age: { min: 25, max: 29 }, place: { state: 'AC' }, office: true },
+    )
+    const caveat = r.caveats.find((x) => x.id === 'office')?.text
+    expect(caveat).toContain('PNAD Contínua')
+    expect(caveat).toContain('apoio administrativo')
+    expect(caveat).toContain('renda')
   })
 })
 
