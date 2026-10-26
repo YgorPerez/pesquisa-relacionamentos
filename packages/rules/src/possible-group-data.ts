@@ -1,8 +1,11 @@
 // The possible group data (#36) on its way to the browser.
 //
 // The Census CSV is 119 MB, but it is the whole of Brazil in 1.6 million
-// cells. The build cuts it into one pack per place: Brazil's (the states
-// summed, ~240 thousand cells, 3.3 MB or 1.1 MB gzipped) and one per state, with its municipalities. The
+// cells. The build cuts it into packs per place: Brazil's (the states
+// summed) and one per state, with its municipalities. Each place has a
+// default pack, with parents, work and home summed out (Brazil: 44 thousand
+// cells, 0.24 MB gzipped), and a detail pack with them (238 thousand cells,
+// 1.1 MB gzipped), downloaded only when one of those Requirements is on. The
 // browser downloads Brazil's and, if the visitor picks a state, that one too.
 // Each pack carries the SIDRA 9514 single ages and the PNS probabilities,
 // which are small.
@@ -111,6 +114,7 @@ const DIMENSIONS = [
   { key: 'religion', column: 'religiao', values: RELIGIONS, optional: true },
   /** Women only: 1 = has none, 2 = has. */
   { key: 'children', column: 'filhos', values: NO_YES, optional: true },
+  // From here on, the detail dimensions (see `DETAIL_DIMENSIONS`).
   /** 1 = lives with neither parent, 2 = with the mother, the father or a
    * step-parent. */
   { key: 'parents', column: 'pais', values: NO_YES, optional: true },
@@ -128,14 +132,24 @@ type Dimension = (typeof DIMENSIONS)[number]['key']
 
 const RADICES = DIMENSIONS.map((d) => d.values.length + (d.optional ? 1 : 0))
 
+/** The last dimensions (parents, work, home) only travel in the detail
+ * pack: they multiply the cells by 4 to 5, and only three Requirements read
+ * them. The default pack sums them out. */
+const DETAIL_DIMENSIONS = 3
+const DEFAULT_DIMENSIONS = DIMENSIONS.length - DETAIL_DIMENSIONS
+/** A full code divided by this is the code without the detail dimensions. */
+const DETAIL_SPAN = RADICES.slice(DEFAULT_DIMENSIONS).reduce((a, b) => a * b)
+
 function encode(parts: ReadonlyArray<number>): number {
   let code = 0
   for (let i = 0; i < RADICES.length; i++) code = code * RADICES[i]! + parts[i]!
   return code
 }
 
-function decode(code: number, out: number[]): void {
-  for (let i = RADICES.length - 1; i >= 0; i--) {
+/** Decodes the first `dimensions` parts; the rest stay 0. */
+function decode(code: number, out: number[], dimensions: number): void {
+  out.fill(0, dimensions, RADICES.length)
+  for (let i = dimensions - 1; i >= 0; i--) {
     out[i] = code % RADICES[i]!
     code = Math.floor(code / RADICES[i]!)
   }
@@ -280,8 +294,13 @@ export function readGroupBase(files: GroupFiles): GroupBase {
 
 export type PackPlace = 'BR' | StateCode
 
+/** The pack's file under the version folder: `SP.json`, `SP-detalhe.json`
+ * (a public URL, so in Portuguese). */
+export const packFile = (place: PackPlace, detail: boolean): string =>
+  `${place}${detail ? '-detalhe' : ''}.json`
+
 /** Goes up when the cell code changes. */
-const PACK_VERSION = 2
+const PACK_VERSION = 3
 
 /** What the browser downloads for a place. Only numbers and texts, in
  * columns. The build writes it under a path hashed from its content, so a
@@ -289,6 +308,9 @@ const PACK_VERSION = 2
 export interface Pack {
   readonly version: typeof PACK_VERSION
   readonly place: PackPlace
+  /** The cells carry the detail dimensions (parents, work, home); without
+   * them they are summed out. */
+  readonly detail: boolean
   readonly cells: ReadonlyArray<number>
   readonly weights: ReadonlyArray<number>
   readonly records: ReadonlyArray<number>
@@ -299,16 +321,22 @@ export interface Pack {
   readonly pnad: Pnad
 }
 
-/** A place's pack: for Brazil, the states' cells summed. The weight is
- * rounded to the person, which is what the count shows. */
-export function packForPlace(base: GroupBase, place: PackPlace): Pack {
+/** A place's pack: for Brazil, the states' cells summed; without `detail`,
+ * the cells that differ only in parents, work or home summed too. The weight
+ * is rounded to the person, which is what the count shows. */
+export function packForPlace(
+  base: GroupBase,
+  place: PackPlace,
+  { detail = false } = {},
+): Pack {
   const sums = new Map<number, { weight: number; records: number }>()
   for (const row of base.census) {
     if (place !== 'BR' && row.uf !== place) continue
-    const current = sums.get(row.code) ?? { weight: 0, records: 0 }
+    const code = detail ? row.code : Math.floor(row.code / DETAIL_SPAN)
+    const current = sums.get(code) ?? { weight: 0, records: 0 }
     current.weight += row.weight
     current.records += row.records
-    sums.set(row.code, current)
+    sums.set(code, current)
   }
   const codes = [...sums.keys()].sort((a, b) => a - b)
   const ages = base.ages.get(place)
@@ -316,6 +344,7 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
   return {
     version: PACK_VERSION,
     place,
+    detail,
     cells: codes,
     weights: codes.map((c) => Math.round(sums.get(c)!.weight)),
     records: codes.map((c) => sums.get(c)!.records),
@@ -333,9 +362,11 @@ export function packForPlace(base: GroupBase, place: PackPlace): Pack {
 
 /** A place opened for the count: one typed column per dimension (see
  * `DIMENSIONS`: in an optional one, 0 = no data and i + 1 = position i of the
- * list). */
+ * list). Without `detail`, parents, work and home are all 0 and mean
+ * nothing. */
 export type PlaceData = { readonly [K in Dimension]: Uint8Array } & {
   readonly place: PackPlace
+  readonly detail: boolean
   readonly size: number
   readonly weight: Float64Array
   readonly records: Float64Array
@@ -352,6 +383,8 @@ function isPack(value: unknown): value is Pack {
     value !== null &&
     'version' in value &&
     value.version === PACK_VERSION &&
+    'detail' in value &&
+    typeof value.detail === 'boolean' &&
     'cells' in value &&
     Array.isArray(value.cells)
   )
@@ -363,9 +396,10 @@ export function openPack(pack: unknown): PlaceData {
   if (!isPack(pack)) throw new Error('possible group pack in an unknown format')
   const n = pack.cells.length
   const columns = DIMENSIONS.map(() => new Uint8Array(n))
-  const parts: number[] = []
+  const parts: number[] = Array(RADICES.length).fill(0)
+  const dimensions = pack.detail ? RADICES.length : DEFAULT_DIMENSIONS
   for (let i = 0; i < n; i++) {
-    decode(pack.cells[i]!, parts)
+    decode(pack.cells[i]!, parts, dimensions)
     for (let d = 0; d < columns.length; d++) columns[d]![i] = parts[d]!
   }
   const uf = pack.place === 'BR' ? undefined : pack.place
@@ -374,6 +408,7 @@ export function openPack(pack: unknown): PlaceData {
       DIMENSIONS.map((d, i) => [d.key, columns[i]!]),
     ) as Record<Dimension, Uint8Array>),
     place: pack.place,
+    detail: pack.detail,
     size: n,
     weight: Float64Array.from(pack.weights),
     records: Float64Array.from(pack.records),

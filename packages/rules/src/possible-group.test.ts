@@ -5,7 +5,7 @@ import municipalities from '../fixtures/possible-group/sidra-10185-municipios.cs
 import pns from '../fixtures/possible-group/pns-2019.csv?raw'
 import pnad from '../fixtures/possible-group/pnad-2022.csv?raw'
 import { openPack, readGroupBase, packForPlace } from './possible-group-data.ts'
-import { estimateGroup, type CountData } from './possible-group.ts'
+import { estimateGroup, needsDetail, type CountData } from './possible-group.ts'
 import type { Profile } from './profile.ts'
 import {
   DEFAULT_REQUIREMENTS,
@@ -16,20 +16,62 @@ import {
 
 // The real path: CSV → JSON pack (what the browser downloads) → count.
 const base = readGroupBase({ census, ages, municipalities, pns, pnad })
-const pack = (place: 'BR' | 'AC' | 'AP') =>
-  openPack(JSON.parse(JSON.stringify(packForPlace(base, place))))
-const data = (uf?: 'AC' | 'AP'): CountData => ({
-  brazil: pack('BR'),
-  ...(uf && { state: pack(uf) }),
+const pack = (place: 'BR' | 'AC' | 'AP', detail = false) =>
+  openPack(JSON.parse(JSON.stringify(packForPlace(base, place, { detail }))))
+const data = (uf?: 'AC' | 'AP', detail = false): CountData => ({
+  brazil: pack('BR', detail),
+  ...(uf && { state: pack(uf, detail) }),
 })
 
+/** The count over the packs the browser would download for it: the detail
+ * ones when a Requirement needs them. */
 const count = (profile: Profile | null, change: Partial<Requirements>) => {
   const requirements = { ...DEFAULT_REQUIREMENTS, ...change }
+  const input = { profile, requirements }
   return estimateGroup(
-    { profile, requirements },
-    data(requirements.place?.state as 'AC' | undefined),
+    input,
+    data(requirements.place?.state as 'AC' | undefined, needsDetail(input)),
   )
 }
+
+describe('the default pack and the detail pack', () => {
+  const ac = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+
+  it('only "não mora com os pais", "trabalha" and "tem casa própria" need the detail pack', () => {
+    const needs = (change: Partial<Requirements>) =>
+      needsDetail({
+        profile: null,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...change },
+      })
+    expect(needs({})).toBe(false)
+    expect(needs({ ...ac, education: 'superior', nonSmoker: true })).toBe(false)
+    expect(needs({ notWithParents: true })).toBe(true)
+    expect(needs({ work: 'negocio' })).toBe(true)
+    expect(needs({ ownsHome: true })).toBe(true)
+  })
+
+  it('without those, both packs give the same count', () => {
+    const input = {
+      profile: { seeks: 'mulheres' } as const,
+      requirements: { ...DEFAULT_REQUIREMENTS, ...ac, education: 'medio' },
+    } as const
+    expect(estimateGroup(input, data('AC')).result).toEqual(
+      estimateGroup(input, data('AC', true)).result,
+    )
+  })
+
+  it('the default pack refuses to count a Requirement it summed out', () => {
+    expect(() =>
+      estimateGroup(
+        {
+          profile: null,
+          requirements: { ...DEFAULT_REQUIREMENTS, ownsHome: true },
+        },
+        data(),
+      ),
+    ).toThrow(/detail pack/)
+  })
+})
 
 describe('estimateGroup: Census requirements', () => {
   it('sums the weight of the matching cells and opens the range by the sampling error', () => {

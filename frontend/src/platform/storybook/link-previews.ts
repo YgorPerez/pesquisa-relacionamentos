@@ -6,7 +6,11 @@
 // through `buildGroupPreview` (`content/group-preview.ts`), the one behind
 // `fetchGroupPreview`, with the packs the plugin serves; Priorities, through
 // `prioritiesPreview` over the library's view, like the route's loader.
-import { openPack } from '@tem-estudo/rules/possible-group-data'
+import {
+  openPack,
+  packFile,
+  type PackPlace,
+} from '@tem-estudo/rules/possible-group-data'
 import {
   readLink,
   prioritiesPreview,
@@ -66,8 +70,10 @@ const PATH = {
   prioridades: '/prioridades',
 } as const
 
-async function pack(place: string) {
-  const response = await fetch(`${possibleGroup.base}/${place}.json`)
+async function pack(place: PackPlace, detail: boolean) {
+  const response = await fetch(
+    `${possibleGroup.base}/${packFile(place, detail)}`,
+  )
   return response.ok ? openPack(await response.json()) : null
 }
 

@@ -413,7 +413,7 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
     ),
     work: ({ requirements, change }) => (
       <Options
-        legend="Trabalho"
+        legend="Situação de trabalho"
         type="radio"
         values={[ANY, ...WORKS]}
         labels={{ [ANY]: ANY, ...WORK_LABEL }}

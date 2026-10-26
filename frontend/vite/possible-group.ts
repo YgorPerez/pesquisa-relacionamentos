@@ -1,11 +1,14 @@
 // The Possible group data in the browser (#31). The Census CSV is 119 MB
 // (kept gzipped in the repository, under GitHub's 100 MB per file):
-// instead of it, the build writes one JSON pack per place (Brazil and each
+// instead of it, the build writes two JSON packs per place (Brazil and each
 // state, the latter with its municipalities), and the page downloads only
-// what the count needs. The count runs in the browser, so the Requirements
-// and the Profile never leave the device (story 68).
+// what the count needs. The default pack sums out parents, work and home;
+// the detail one keeps them and is downloaded only when one of those
+// Requirements is on. The count runs in the browser, so the Requirements and
+// the Profile never leave the device (story 68).
 //
-// The packs live at `/dados/grupo-possivel/<version>/<place>.json`, with the
+// The packs live at `/dados/grupo-possivel/<version>/<place>.json` and
+// `<place>-detalhe.json`, with the
 // version taken from the content: a new CSV changes the path, and the long
 // cache never serves stale data. `virtual:possible-group` gives the version,
 // the places and the estimate for someone who has not said anything yet
@@ -19,6 +22,7 @@ import {
   openPack,
   readGroupBase,
   packForPlace,
+  packFile,
   type GroupFiles,
   type PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
@@ -40,8 +44,14 @@ const FILES: Record<keyof GroupFiles, string> = {
 
 export interface BuiltData {
   readonly version: string
-  /** The JSON text of each pack. */
+  /** The JSON text of each default pack (parents, work and home summed
+   * out), which every count downloads. */
   readonly packs: ReadonlyMap<PackPlace, string>
+  /** The JSON text of each detail pack, downloaded only when a Requirement
+   * reads parents, work or home. */
+  readonly detailPacks: ReadonlyMap<PackPlace, string>
+  /** Both, by file name (`packFile`). */
+  readonly files: ReadonlyMap<string, string>
   readonly example: Estimate
 }
 
@@ -61,15 +71,31 @@ export function buildPacks(folder: string): BuiltData {
       base.census.some((row) => row.uf === state),
     ),
   ]
-  const packs = new Map(
-    places.map((place) => [place, JSON.stringify(packForPlace(base, place))]),
-  )
+  const build = (detail: boolean) =>
+    new Map(
+      places.map((place) => [
+        place,
+        JSON.stringify(packForPlace(base, place, { detail })),
+      ]),
+    )
+  const packs = build(false)
+  const detailPacks = build(true)
+  const files = new Map([
+    ...[...packs].map(
+      ([place, text]) => [packFile(place, false), text] as const,
+    ),
+    ...[...detailPacks].map(
+      ([place, text]) => [packFile(place, true), text] as const,
+    ),
+  ])
   const hash = createHash('sha256')
-  for (const text of packs.values()) hash.update(text)
+  for (const text of files.values()) hash.update(text)
   const brazil = openPack(JSON.parse(packs.get('BR')!))
   return {
     version: hash.digest('hex').slice(0, 10),
-    packs: packs,
+    packs,
+    detailPacks,
+    files,
     example: estimateGroup(
       { profile: null, requirements: DEFAULT_REQUIREMENTS },
       { brazil },
@@ -102,21 +128,20 @@ export function possibleGroup({ root }: { root: string }): Plugin {
     // The packs go to the browser output, served as static files.
     generateBundle() {
       if (this.environment.name !== 'client') return
-      const { version, packs } = data()
-      for (const [place, text] of packs)
+      const { version, files } = data()
+      for (const [file, text] of files)
         this.emitFile({
           type: 'asset',
-          fileName: `${PATH.slice(1)}/${version}/${place}.json`,
+          fileName: `${PATH.slice(1)}/${version}/${file}`,
           source: text,
         })
     },
     configureServer(server) {
       server.middlewares.use(PATH, (request, response, next) => {
         const [, version, file] = (request.url ?? '').split('/')
-        const place = file?.replace(/\.json$/, '') as PackPlace | undefined
         const text =
-          place && version === data().version
-            ? data().packs.get(place)
+          file && version === data().version
+            ? data().files.get(file)
             : undefined
         if (!text) return next()
         response.setHeader('content-type', 'application/json')

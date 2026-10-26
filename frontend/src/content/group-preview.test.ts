@@ -15,8 +15,8 @@ const data = {
   places: [...built.packs.keys()],
   example: built.example,
 }
-const pack = async (place: string) => {
-  const text = built.packs.get(place as never)
+const pack = async (place: string, detail: boolean) => {
+  const text = (detail ? built.detailPacks : built.packs).get(place as never)
   return text ? openPack(JSON.parse(text)) : null
 }
 const PROFILE = { gender: 'mulher', seeks: 'homens', age: 28 } as const
@@ -64,6 +64,21 @@ describe('buildGroupPreview', () => {
       },
     })
     expect((await preview(query))?.title).toMatch(/ em AC, /)
+  })
+
+  it('a link with "tem casa própria" counts over the detail packs and says it', async () => {
+    const query = linkQuery({
+      calculator: 'grupo-possivel',
+      profile: PROFILE,
+      requirements: {
+        ...DEFAULT_REQUIREMENTS,
+        place: { state: 'AC' },
+        ownsHome: true,
+      },
+    })
+    const result = await preview(query)
+    expect(result?.title).toMatch(/^Entre .+ e .+ homens em AC/)
+    expect(result?.description).toContain('tem casa própria')
   })
 
   it("without Brazil's pack, there is no preview", async () => {

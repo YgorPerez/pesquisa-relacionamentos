@@ -11,7 +11,11 @@ import type {
   PlaceData,
   PackPlace,
 } from '@tem-estudo/rules/possible-group-data'
-import { estimateGroup, type Estimate } from '@tem-estudo/rules/possible-group'
+import {
+  estimateGroup,
+  needsDetail,
+  type Estimate,
+} from '@tem-estudo/rules/possible-group'
 import type { Profile } from '@tem-estudo/rules/profile'
 import {
   readRequirements,
@@ -94,15 +98,18 @@ export function usePossibleGroup(
   const requirements = saved ?? DEFAULT_REQUIREMENTS
   const state = requirements.place?.state
   const needed: PackPlace[] = state ? ['BR', state] : ['BR']
-  const brazilPack = usePack('BR')
-  const statePack = usePack(state)
+  // Parents, work and home come only in the detail packs, downloaded when
+  // one of those Requirements is on.
+  const detail = needsDetail({ profile, requirements })
+  const brazilPack = usePack('BR', detail)
+  const statePack = usePack(state, detail)
 
   // Whoever never said anything sees the count done at build time, without
   // downloading anything.
   const isExample = profile === null && saved === null
 
   useEffect(() => {
-    if (!isExample) for (const place of needed) requestPack(place)
+    if (!isExample) for (const place of needed) requestPack(place, detail)
   })
 
   const brazil = brazilPack.data
@@ -134,7 +141,7 @@ export function usePossibleGroup(
     estimate,
     loading: !isExample && !computed,
     failed: brazilPack.failed || statePack.failed,
-    retry: () => needed.forEach((place) => requestPack(place, true)),
+    retry: () => needed.forEach((place) => requestPack(place, detail, true)),
     stateData,
   }
 }

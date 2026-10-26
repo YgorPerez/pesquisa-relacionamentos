@@ -178,6 +178,19 @@ export function activeRequirements({
   return REQUIREMENT_ORDER.filter((k) => isActive[k])
 }
 
+/** The Requirements that read the detail dimensions, which only the detail
+ * packs carry (`packForPlace`). */
+const DETAIL_REQUIREMENTS: ReadonlySet<RequirementId> = new Set<RequirementId>([
+  'parents',
+  'work',
+  'home',
+])
+
+/** The count needs the detail packs: a Requirement reads parents, work or
+ * home. */
+export const needsDetail = (input: CountInput): boolean =>
+  activeRequirements(input).some((k) => DETAIL_REQUIREMENTS.has(k))
+
 const firstAge = (ageGroup: number) => 15 + 5 * ageGroup
 const lastAge = (ageGroup: number) =>
   ageGroup === AGE_GROUPS.length - 1
@@ -342,6 +355,10 @@ function tally(
   const ofPlace = active.has('place') ? data.state : data.brazil
   if (!ofPlace || (active.has('place') && ofPlace.place !== r.place?.state))
     throw new Error(`missing the data for ${r.place?.state} for the count`)
+  if (!ofPlace.detail && [...active].some((k) => DETAIL_REQUIREMENTS.has(k)))
+    throw new Error(
+      `the count of ${[...active].join(', ')} needs the detail pack for ${ofPlace.place}`,
+    )
 
   // Everything that depends only on sex × age group (and union, in a
   // municipality) comes out before the loop.
