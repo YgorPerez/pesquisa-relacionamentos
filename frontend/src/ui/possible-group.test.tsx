@@ -105,7 +105,8 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
   const user = userEvent.setup()
   openScreen(PAGE)
   const independence = () =>
-    document.querySelector('[data-slot="gp-independencia"]')
+    document.querySelector('[data-slot="gp-independencia"]')?.textContent ??
+    null
   // Without a gender, nothing comes from the PNS: one range only.
   await user.click(
     await screen.findByRole('button', { name: 'De onde vem a incerteza' }),
@@ -124,7 +125,7 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
     }),
   )
   await newCount(current)
-  expect(independence()).toHaveTextContent(
+  expect(independence()).toMatch(
     /^Orientação vem da PNS; morar com companheiro\(a\) e escolaridade vêm do Censo\. As duas pesquisas não entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo e idade, um lado não depende do outro\. Se depender, o grupo pode ficar em qualquer ponto entre .+ e .+: o menor e o maior número que os dados permitem\.$/,
   )
   expect(
@@ -138,7 +139,7 @@ it('"De onde vem a incerteza" gives the independence range apart from the sampli
     }),
   )
   await waitFor(() =>
-    expect(independence()).toHaveTextContent(
+    expect(independence()).toMatch(
       /^Orientação vem da PNS; ocupação vem da PNAD; morar com companheiro\(a\) e escolaridade vêm do Censo\. As três pesquisas não entrevistaram as mesmas pessoas/,
     ),
   )
