@@ -401,7 +401,7 @@ findings:
 myths:
   - id: mulher-sempre-se-arrepende
     claim: Mulher sempre se arrepende de sexo casual.
-    why_not: As mulheres se arrependem mais que os homens, mas não sempre. Entre as heterossexuais de um questionário com mais de 24 mil adultos, 27% ficaram contentes com a última transa casual e 26% neutras. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter gostado do sexo veio com menos arrependimento.
+    why_not: 'Não: elas se arrependem mais que os homens, mas cerca de metade não se arrepende. Entre as heterossexuais de um questionário com mais de 24 mil adultos, 27% ficaram contentes com a última transa casual e 26% neutras. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter gostado do sexo veio com menos arrependimento.'
     fact_sheets:
       [
         galperin-2013-arrependimento-sexual,
@@ -409,7 +409,7 @@ myths:
       ]
   - id: sexo-casual-causa-depressao
     claim: Sexo casual causa depressão.
-    why_not: Os estudos que seguem as pessoas no tempo não acharam isso na média. Em um ano de universidade, ficar não mudou a depressão de quem ficou, e em calouras acompanhadas mês a mês, ficar não previu depressão nos meses seguintes. A associação que aparece nos estudos de um momento só pode vir de antes, porque em cinco estudos a depressão ou a autoestima baixa vieram antes do sexo casual. O que piorou o bem-estar foi o motivo, como pressão ou bebida.
+    why_not: 'Não na média: os estudos que seguem as pessoas no tempo não acharam isso. Em um ano de universidade, ficar não mudou a depressão de quem ficou, e em calouras acompanhadas mês a mês, ficar não previu depressão nos meses seguintes. A associação que aparece nos estudos de um momento só pode vir de antes, porque em cinco estudos a depressão ou a autoestima baixa vieram antes do sexo casual. O que piorou o bem-estar foi o motivo, como pressão ou bebida.'
     fact_sheets:
       [
         vrangalova-2015-sexo-casual-bem-estar,
@@ -418,20 +418,20 @@ myths:
       ]
   - id: amizade-colorida-vira-namoro
     claim: Amizade colorida acaba virando namoro.
-    why_not: A revisão de 71 estudos conclui que relações casuais raramente viram namoro, e quem entra nelas querendo namoro tem reações piores. O que costuma sobrar é a amizade. Num estudo, 81,5% continuaram amigos depois que a amizade colorida acabou.
+    why_not: 'Raramente, conclui a revisão de 71 estudos sobre relações casuais, e quem entra numa delas querendo namoro tem reações piores. O que costuma sobrar é a amizade. Num estudo, 81,5% continuaram amigos depois que a amizade colorida acabou.'
     fact_sheets:
       [
         wesche-2021-desfechos-emocionais-sexo-casual,
         owen-2013-amizade-depois-amizade-colorida,
       ]
   - id: brasileiros-mais-de-dez-em-2013
-    claim: Em 2013, 43,9% dos brasileiros tinham tido mais de dez parceiros sexuais.
-    why_not: O número está no relatório da PCAP 2013, mas foi calculado só entre quem teve mais de um parceiro. Entre todos os que já transaram, fica perto de 30%. Ao lado dos 25,3% de 2008, ele sugere uma alta muito maior que a real. Na mesma base, a mudança foi de cerca de 25% para cerca de 30%.
+    claim: 43,9% dos brasileiros tiveram mais de dez parceiros sexuais.
+    why_not: 'Leitura errada: o 43,9% do relatório da PCAP 2013 foi calculado só entre quem teve mais de um parceiro. Entre todos os que já transaram, fica perto de 30%. Ao lado dos 25,3% de 2008, ele sugere uma alta muito maior que a real. Na mesma base, a mudança foi de cerca de 25% para cerca de 30%.'
     fact_sheets:
       [ministerio-saude-2016-pcap-2013, ministerio-saude-2011-pcap-2008]
   - id: homens-tem-o-dobro
-    claim: Os homens têm o dobro de parceiras que as mulheres têm de parceiros.
-    why_not: Eles relatam o dobro. Numa população fechada as médias deveriam bater, e na Grã-Bretanha o jeito de contar, os poucos números extremos e as atitudes sobre sexo explicaram 63% da diferença. Os outros 37% ficam sem explicação, e o estudo não diz qual dos dois lados relata o número certo.
+    claim: Os homens têm, de fato, o dobro de parceiras que as mulheres têm de parceiros.
+    why_not: 'Não dá para afirmar: eles relatam o dobro, e o relato não prova que tenham. Numa população fechada as médias deveriam bater, e na Grã-Bretanha o jeito de contar, os poucos números extremos e as atitudes sobre sexo explicaram 63% da diferença. Os outros 37% ficam sem explicação, e o estudo não diz qual dos dois lados relata o número certo.'
     fact_sheets: [mitchell-2019-diferenca-genero-parceiros]
   - id: ocitocina-se-gasta
     claim: Cada parceiro sexual gasta a ocitocina, e quem teve muitos perde a capacidade de criar vínculo.

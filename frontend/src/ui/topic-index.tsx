@@ -8,7 +8,7 @@
 // point (`useReadingPointInHistory`) reopens it on the way back by its `id`.
 import { Link } from '@tanstack/react-router'
 import { FoldArrow, ForwardArrow } from './navigation'
-import { Panel } from './section'
+import { Panel, Tag } from './section'
 import { OPEN_TOPIC, READ, questionCount } from './topic-index.copy'
 
 type IndexTopic = {
@@ -21,14 +21,11 @@ type IndexTopic = {
   }>
 }
 
-/** "lido", with the look of the "no Brasil" mark (`.marca-brasil`). */
+/** "lido", the paper tag. */
 const ReadTag = () => (
-  <span
-    className="ml-2 inline-block rounded-mao-2 border-(length:--traco-etiqueta) border-tinta bg-folha px-xs align-middle font-label text-etiqueta leading-nota font-bold whitespace-nowrap"
-    data-slot="lido"
-  >
+  <Tag className="ml-2 inline-block align-middle" data-slot="lido">
     {READ}
-  </span>
+  </Tag>
 )
 
 /** The Topics, each a fold with the count of Questions; open, the Questions

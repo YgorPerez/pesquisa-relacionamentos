@@ -17,9 +17,10 @@ import { useProfile } from '#/state/profile'
 import { useProfileInGuide } from '#/state/profile-in-guide'
 import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
-import { Headline, Panel, Section } from './section'
+import { Headline, Panel, Section, Tag } from './section'
 import { AppliesToNote, ForYourProfile } from './profile'
 import { StrengthBadge } from './badges'
+import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
 
 /** Margin note 1 of 2: the arrow that points to the Fact sheets. */
 export function SourcesArrow() {
@@ -194,10 +195,19 @@ function TipCard({
   )
 }
 
-/** A struck-out Myth and why it does not hold. */
-function MythCard({ myth }: { myth: MythView }) {
+/** A struck-out Myth and why it does not hold. The label comes first, so a
+ * reader who misses the strike (a screen reader does not announce `<s>`)
+ * knows the claim is a Myth before reading it. */
+export function MythCard({ myth }: { myth: MythView }) {
   return (
     <Panel as="article" className="py-4" data-slot="mito">
+      <p
+        className="m-0 mb-2 flex flex-wrap items-baseline gap-x-2 text-nota leading-nota text-tinta-2"
+        data-slot="mito-rotulo"
+      >
+        <Tag tone="myth">{MYTH_LABEL}</Tag>
+        <span>{MYTH_LINE}</span>
+      </p>
       <p className="m-0 font-title text-title leading-label">
         <s className="risco-do-mito">{myth.claim}</s>
       </p>

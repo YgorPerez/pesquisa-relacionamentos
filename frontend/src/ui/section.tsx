@@ -23,6 +23,26 @@ export function Headline({ className, ...props }: ComponentProps<'h2'>) {
   )
 }
 
+/** The small tag in ink outline, 14px bold, the look of the "no Brasil" mark
+ * (`.marca-brasil`, drawn in the server's HTML): paper for "lido", the
+ * Myth's pink for "Mito". */
+export function Tag({
+  tone = 'paper',
+  className,
+  ...props
+}: ComponentProps<'span'> & { tone?: 'paper' | 'myth' }) {
+  return (
+    <span
+      className={cn(
+        'rounded-mao-2 border-(length:--traco-etiqueta) border-tinta px-xs font-label text-etiqueta leading-nota font-bold whitespace-nowrap text-tinta',
+        tone === 'myth' ? 'bg-rosa-mito' : 'bg-folha',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 /** The DESIGN.md `painel`: a sheet with a hand outline and the halftone
  * behind, the site's only elevation. `as` is the element (the short answer
  * is a section, the Guide's Tip a list item). */

@@ -153,8 +153,8 @@ Papel e tinta fazem quase todo o trabalho; a cor entra como tinta de risografia,
 
 ### Secondary
 
-- **Rosa risografia "atenção"** (rosa-mito): só o número-chave e o risco da frase do Mito.
-- O marca-texto rosa marca o número-chave no texto (a resposta curta) e nas Visualizações (o valor da barra ou do ponto em destaque). Fora dele, o rosa só aparece no risco do Mito.
+- **Rosa risografia "atenção"** (rosa-mito): só o número-chave, o risco da frase do Mito e a etiqueta "Mito".
+- O marca-texto rosa marca o número-chave no texto (a resposta curta) e nas Visualizações (o valor da barra ou do ponto em destaque). Fora dele, o rosa só aparece no Mito: no risco e na etiqueta.
 
 ### Tertiary
 
@@ -306,7 +306,7 @@ O Guia é um texto corrido, não uma pilha de seções iguais (ADR 0042).
 
 ### Mito
 
-Painel com a frase que circula em Bricolage 600, atravessada por uma faixa rosa de cerca de 30% da altura no meio da linha, e o porquê embaixo em corpo normal com referência. A faixa é um risco, mantido de propósito: diz "isto não se sustenta". Não é marca-texto, por isso não segue a regra da letra inteira.
+Painel que abre com a etiqueta "Mito" (rosa com contorno de 1,5px em tinta, 14px em negrito, raio mao-2) e, ao lado, "circula por aí, mas não se sustenta" em nota, tinta clara. O leitor de tela ouve os dois antes da frase, porque o risco (`<s>`) não é anunciado. Depois, a frase que circula em Bricolage 600, atravessada por uma faixa rosa de cerca de 30% da altura no meio da linha, e o porquê embaixo em corpo normal com referência. A faixa é um risco, mantido de propósito: diz "isto não se sustenta". Não é marca-texto, por isso não segue a regra da letra inteira.
 
 ## Do's and Don'ts
 
