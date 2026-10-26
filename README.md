@@ -58,6 +58,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
+- [Martinez et al. 2025](studies/martinez-2025-apps-risco-sexual.md): apps e comportamento sexual em universitários de Ribeirão Preto · ✅ · fraca
 - [Ministério da Saúde 2011](studies/ministerio-saude-2011-pcap-2008.md): PCAP 2008, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2016](studies/ministerio-saude-2016-pcap-2013.md): PCAP 2013, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2022](studies/ministerio-saude-2022-pcdt-ist.md): PCDT de Infecções Sexualmente Transmissíveis · ✅ · moderada
@@ -81,7 +82,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
 - [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Busby, Carroll & Willoughby 2010](studies/busby-2010-compatibility-or-restraint.md): quanto o casal esperou para transar e a qualidade do casamento · ✅ · fraca
+- [Büyükeren et al. 2026](studies/buyukeren-2026-tinder.md): chegada do Tinder, sexo e saúde entre universitários dos EUA · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
+- [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
@@ -107,6 +110,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
+- [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
