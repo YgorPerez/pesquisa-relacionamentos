@@ -30,7 +30,7 @@ import {
   CollapsibleTrigger,
 } from '@/ui/shadcn/collapsible'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
-import { costText } from './possible-group.copy'
+import { costText, independenceSources } from './possible-group.copy'
 import { Headline, Panel, Section } from './section'
 
 /** While the data arrives, the old number stays, faded. */
@@ -444,11 +444,8 @@ function CutByCut({
 
 /** "De onde vem a incerteza": how far off the naive count would be, the
  * sampling error and the caveats that do not go at the top. */
-function WhereUncertaintyComesFrom({
-  estimate: { naive, caveats, active, result },
-}: {
-  estimate: Estimate
-}) {
+function WhereUncertaintyComesFrom({ estimate }: { estimate: Estimate }) {
+  const { naive, caveats, active, result } = estimate
   const difference =
     result.central > 0 ? (naive - result.central) / result.central : 0
   return (
@@ -471,6 +468,7 @@ function WhereUncertaintyComesFrom({
           {Math.round(result.records).toLocaleString('pt-BR')} registros) com o
           intervalo da PNS.
         </p>
+        <IndependenceRange estimate={estimate} />
         <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
           {caveats
             .filter((r) => !r.strong)
@@ -482,6 +480,39 @@ function WhereUncertaintyComesFrom({
         </ul>
       </CollapsibleContent>
     </Collapsible>
+  )
+}
+
+/** The second range (#301): the least and the most the group could be
+ * without the independence between the Census Requirements and the shares
+ * from the PNS and the PNAD. It can go from 0 to several times the number,
+ * so it stays in the fold, apart from the range at the top. */
+function IndependenceRange({
+  estimate: { independence, active },
+}: {
+  estimate: Estimate
+}) {
+  if (!independence) return null
+  const range = formatRange(independence.min, independence.max)
+  // Rounded to the same number, the assumption changes nothing worth saying.
+  if (!range.startsWith('entre ')) return null
+  const sources = independenceSources(active)
+  return (
+    <>
+      <p className={HINT} data-slot="gp-independencia">
+        {sources.text} As {sources.surveys > 2 ? 'três' : 'duas'} pesquisas não
+        entrevistaram as mesmas pessoas, então a conta supõe que, no mesmo sexo
+        e idade,{' '}
+        {sources.surveys > 2
+          ? 'nenhum lado depende dos outros'
+          : 'um lado não depende do outro'}
+        . Se depender, o grupo pode ficar em qualquer ponto <b>{range}</b>: o
+        menor e o maior número que os dados permitem.
+      </p>
+      <p className={HINT}>
+        Nenhuma das duas faixas é um intervalo de confiança.
+      </p>
+    </>
   )
 }
 
