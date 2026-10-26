@@ -3,8 +3,8 @@ reference: "Erevik EK, Kristensen JH, Torsheim T, Vedaa Ø, Pallesen S. *Tinder 
 link: https://doi.org/10.3389/fpsyg.2020.01757
 status: verified
 verified_on: 2026-10-26
-strength: moderate
-strength_reason: "Coorte grande com comparação entre usuários e não usuários e ajustes, mas de estudantes de uma cidade, sem amostragem representativa e com perda de mais da metade dos solteiros no seguimento."
+strength: weak
+strength_reason: "Amostra não representativa de estudantes de uma cidade, com perda de mais da metade dos solteiros no seguimento, apesar da coorte grande, da comparação entre usuários e não usuários e dos ajustes."
 countries: [Noruega]
 period: "Outono de 2015 e outono de 2016"
 sample:
@@ -13,7 +13,7 @@ sample:
   representative: false
 design: longitudinal
 conflict: "Financiado pela Universidade de Bergen e pelo município de Bergen. Os autores declaram ausência de relações comerciais ou financeiras que pudessem constituir conflito de interesse."
-license: "Creative Commons Attribution License (CC BY), conforme o PDF do editor."
+license: "Creative Commons Attribution License (CC BY), confirmada na seção Copyright da página do editor e no PDF."
 covers:
   genders: [man, woman]
   ages: { min: 17, max: 75 }
