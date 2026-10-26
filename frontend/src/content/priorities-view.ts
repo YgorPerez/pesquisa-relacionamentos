@@ -106,7 +106,7 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
     factSheet: factSheet(fact_sheet),
   })
   const { explained_satisfaction: bar } = priorities
-  const guide = library.guides.find((g) => g.calculator === 'priorities')
+  const guide = library.questions.find((q) => q.calculator === 'priorities')
   return {
     bar: {
       relationship: bar.relationship,
@@ -131,7 +131,7 @@ export function buildPrioritiesView(library: Library): PrioritiesView | null {
           slug: guide.slug,
           question: withoutMarks(guide.question),
           confidence: guide.confidence,
-          answer: withoutMarks(guide.shortAnswer),
+          answer: withoutMarks(guide.answer),
         }
       : null,
   }

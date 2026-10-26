@@ -28,6 +28,10 @@ export type AnalyticsEvent =
   | `fact-sheet/${string}/${string}`
   | `calculator/${string}`
 
+// Since #194 (2026-10-26) the Guide has one "Ajudou?" and its key is the
+// Topic's slug (`helped/yes/onde-conhecer-pessoas`); the per-Question series
+// (`helped/…/onde-os-casais-se-conhecem`) stopped that day. A Fact sheet
+// opened from the Guide also counts by the Topic since then.
 export const EVENTS = {
   /** "Ajudou?" at the end of the Guide: yes. */
   helpedYes: (guide: string): AnalyticsEvent => `helped/yes/${guide}`,

@@ -112,11 +112,9 @@ export function useCountVisits() {
 }
 
 /** In the Guide: tapping a Fact sheet (the title in the list or a link in the
- * text) counts `fact-sheet/<question>/<fact sheet>`, by the Question whose
- * section (`data-question`) holds the link, so the series of each Question's
- * old page goes on (ADR 0042). Outside a Question (the list at the end, the
- * Limitations) the key is the Topic. The reference number only circles the
- * Fact sheet on the page, and does not count. One listener for the page. */
+ * text) counts `fact-sheet/<topic>/<fact sheet>`. The reference number only
+ * circles the Fact sheet on the page, and does not count. One listener for
+ * the page. */
 export function useCountOpenedFactSheets(topic: string) {
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
@@ -126,11 +124,7 @@ export function useCountOpenedFactSheets(topic: string) {
       const factSheet = link
         ?.getAttribute('href')
         ?.match(/^\/estudos\/([a-z0-9-]+)$/)?.[1]
-      if (!factSheet) return
-      const question = link
-        ?.closest('[data-question]')
-        ?.getAttribute('data-question')
-      countEvent(EVENTS.factSheetOpened(question ?? topic, factSheet))
+      if (factSheet) countEvent(EVENTS.factSheetOpened(topic, factSheet))
     }
     document.addEventListener('click', onClick, true)
     return () => document.removeEventListener('click', onClick, true)

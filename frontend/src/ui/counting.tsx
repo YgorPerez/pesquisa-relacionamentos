@@ -1,4 +1,4 @@
-// The usage-count pieces (#35): the "Ajudou?" at the end of each Question, the
+// The usage-count pieces (#35): the "Ajudou?" at the end of the Guide, the
 // "Contar minhas visitas" switch and the site footer, which carries it.
 import { Link } from '@tanstack/react-router'
 import { useId, useState } from 'react'
@@ -15,7 +15,7 @@ import {
 } from '#/analytics/events'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
-import { Subhead, Subsection } from './section'
+import { Headline, Section } from './section'
 import { Switch } from '@/ui/shadcn/switch'
 
 /** The copy of each of the four reasons for the "no" (#21). No free
@@ -29,10 +29,36 @@ const REASON_COPY: Readonly<Record<NoReason, string>> = {
 
 type Step = 'question' | 'reason' | 'answered'
 
-/** "Ajudou?" at the end of a Question of the Guide: yes, or no with one of
- * the four reasons. `question` is the Question's slug, the key the
- * GoatCounter series has carried since each Question had its own page. */
-export function WasItHelpful({ question }: { question: string }) {
+/** The four reasons for the "no", one button each. */
+function NoReasons({
+  id,
+  onPick,
+}: {
+  id: string
+  onPick: (reason: NoReason) => void
+}) {
+  return (
+    <div
+      role="group"
+      aria-labelledby={id}
+      className="flex flex-col items-start gap-2"
+    >
+      <p id={id} className="m-0 mb-0.5 font-bold">
+        O que faltou?
+      </p>
+      {NO_REASONS.map((reason) => (
+        <SiteButton key={reason} variant="light" onClick={() => onPick(reason)}>
+          {REASON_COPY[reason]}
+        </SiteButton>
+      ))}
+    </div>
+  )
+}
+
+/** "Ajudou?" near the end of the Guide, once per page: yes, or no with one
+ * of the four reasons. `guide` is the Topic's slug, the key of the series
+ * since #194 (`analytics/events.ts`). */
+export function WasItHelpful({ guide }: { guide: string }) {
   const [step, setStep] = useState<Step>('question')
   const state = useCountingState()
   const id = useId()
@@ -42,14 +68,14 @@ export function WasItHelpful({ question }: { question: string }) {
   }
 
   return (
-    <Subsection aria-labelledby={`${id}-ajudou`}>
-      <Subhead id={`${id}-ajudou`}>Ajudou?</Subhead>
+    <Section id="ajudou" aria-labelledby={`${id}-ajudou`}>
+      <Headline id={`${id}-ajudou`}>Ajudou?</Headline>
       {step === 'question' && (
         <div className="flex gap-2.5">
           <SiteButton
             variant="light"
             className="min-w-22"
-            onClick={() => answer(EVENTS.helpedYes(question))}
+            onClick={() => answer(EVENTS.helpedYes(guide))}
           >
             Sim
           </SiteButton>
@@ -63,24 +89,10 @@ export function WasItHelpful({ question }: { question: string }) {
         </div>
       )}
       {step === 'reason' && (
-        <div
-          role="group"
-          aria-labelledby={`${id}-motivo`}
-          className="flex flex-col items-start gap-2"
-        >
-          <p id={`${id}-motivo`} className="m-0 mb-0.5 font-bold">
-            O que faltou?
-          </p>
-          {NO_REASONS.map((reason) => (
-            <SiteButton
-              key={reason}
-              variant="light"
-              onClick={() => answer(EVENTS.helpedNo(reason, question))}
-            >
-              {REASON_COPY[reason]}
-            </SiteButton>
-          ))}
-        </div>
+        <NoReasons
+          id={`${id}-motivo`}
+          onPick={(reason) => answer(EVENTS.helpedNo(reason, guide))}
+        />
       )}
       <p role="status" className="m-0 text-tinta-2 empty:hidden">
         {step === 'answered' &&
@@ -88,7 +100,7 @@ export function WasItHelpful({ question }: { question: string }) {
             ? 'Obrigado. A resposta entra na contagem sem nada sobre você.'
             : 'Obrigado. Você pediu para não ser contado, então a resposta não sai do aparelho.')}
       </p>
-    </Subsection>
+    </Section>
   )
 }
 

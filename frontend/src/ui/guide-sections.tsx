@@ -1,15 +1,23 @@
-// The blocks only the Guide has (ADR 0042). The frame: the index of the
-// Questions, the arrow that points to the Fact sheets, "O que levar" and the
-// Limitations by Study. Inside a Question: what the evidence says, with each
-// finding's Tips and struck-out Myths right after it, the loose Tips and
-// Myths, and the narrative's own sections. The page (`routes/$tema/index.tsx`)
-// assembles them.
-import type { Verdict } from '@tem-estudo/rules/applies-to-you'
+// The blocks only the Guide has (ADR 0042): the Chapters' table of contents
+// under the title, "Em resumo", the arrow that points to the Fact sheets, the
+// Chapters themselves (prose with Visuals, the answer of each Question where
+// the reasoning reaches it, Tips and struck-out Myths), "O que levar" and
+// "O que não se sabe". The page (`routes/$tema/index.tsx`) assembles them.
+import { appliesToYou, type Verdict } from '@tem-estudo/rules/applies-to-you'
 import { Link } from '@tanstack/react-router'
-import type { GuideTip, GuideView, QuestionView } from '#/content/guide-view'
+import { useEffect, useRef, type ReactNode } from 'react'
+import type {
+  ChapterView,
+  GuideTip,
+  GuideView,
+  MythView,
+  QuestionView,
+} from '#/content/guide-view'
+import { useProfile } from '#/state/profile'
+import { useProfileInGuide } from '#/state/profile-in-guide'
 import { Html, ShortConfidence } from './guide'
-import { Headline, Panel, Section, Subhead, Subsection } from './section'
-import { AppliesToNote } from './profile'
+import { Headline, Panel, Section } from './section'
+import { AppliesToNote, ForYourProfile } from './profile'
 import { StrengthBadge } from './badges'
 
 /** Margin note 1 of 2: the arrow that points to the Fact sheets. */
@@ -40,17 +48,65 @@ export function SourcesArrow() {
   )
 }
 
-/** The index at the top of the Guide: each Question, which leads to its
- * section, with the Confidence and the first sentence of the short answer,
- * so the list stays short on a phone. */
-export function GuideIndex({ index }: { index: GuideView['index'] }) {
+/** A Chapter's number in the hand-drawn ring, the same in the table of
+ * contents and before the Chapter's title. */
+function ChapterNumber({ n }: { n: number }) {
   return (
-    <nav aria-labelledby="t-indice" id="indice">
-      <h2 id="t-indice" className="sr-only">
-        Perguntas deste Guia
+    <span
+      className="inline-grid size-7.5 flex-none place-items-center rounded-bolota border-(length:--traco-controle) border-tinta font-label text-nota leading-none font-bold"
+      aria-hidden="true"
+    >
+      {n}
+    </span>
+  )
+}
+
+/** The Chapters under the title: the reasoning's steps, in order, each
+ * leading to its Chapter. */
+export function GuideContents({
+  chapters,
+}: {
+  chapters: ReadonlyArray<Pick<ChapterView, 'id' | 'title'>>
+}) {
+  return (
+    <nav aria-labelledby="t-capitulos" id="capitulos" className="mt-md">
+      <h2 id="t-capitulos" className="sr-only">
+        Capítulos
       </h2>
+      <ol className="m-0 list-none p-0" data-slot="capitulos">
+        {chapters.map((chapter, i) => (
+          <li
+            key={chapter.id}
+            className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta last:border-b-(length:--traco-etiqueta)"
+          >
+            <a
+              href={`#${chapter.id}`}
+              className="flex min-h-toque items-center gap-sm py-1.5 font-bold no-underline hover:bg-amarelo-voce"
+            >
+              <ChapterNumber n={i + 1} />
+              <span className="underline decoration-2 underline-offset-5">
+                {chapter.title}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+/** "Em resumo": each Question with its Confidence and the first sentence of
+ * its short answer; the Question leads to where the Guide answers it. */
+export function GuideSummary({
+  questions,
+}: {
+  questions: GuideView['summary']
+}) {
+  return (
+    <Section id="em-resumo" aria-labelledby="t-em-resumo">
+      <Headline id="t-em-resumo">Em resumo</Headline>
       <ol className="m-0 list-none p-0" data-slot="perguntas">
-        {index.map((question) => (
+        {questions.map((question) => (
           <li
             key={question.slug}
             className="not-first:mt-md not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
@@ -69,7 +125,7 @@ export function GuideIndex({ index }: { index: GuideView['index'] }) {
           </li>
         ))}
       </ol>
-    </nav>
+    </Section>
   )
 }
 
@@ -109,7 +165,7 @@ function TipCard({
 }
 
 /** A struck-out Myth and why it does not hold. */
-function MythCard({ myth }: { myth: QuestionView['myths'][number] }) {
+function MythCard({ myth }: { myth: MythView }) {
   return (
     <Panel as="article" className="py-4" data-slot="mito">
       <p className="m-0 font-title text-title leading-label">
@@ -120,220 +176,165 @@ function MythCard({ myth }: { myth: QuestionView['myths'][number] }) {
   )
 }
 
-/** Verdicts of the Profile for a Question, by the index of the finding and
- * of the Tip; `undefined` without a Profile. */
-interface Verdicts {
-  readonly findings?: ReadonlyArray<Verdict>
-  readonly tips?: ReadonlyArray<Verdict>
-}
-
-/** The Question's Tips that follow no finding. */
-export function GuideTips({
+/** Where the reasoning reaches a Question: the Question, its short answer
+ * and Confidence, on a sheet with a dotted outline (no halftone: it is a
+ * note in the text, not a panel), and the "Para o seu Perfil" line. The anchor is the Question's slug, where its old address lands. */
+function Answer({
   question,
-  verdicts,
+  after,
 }: {
   question: QuestionView
-  verdicts: Verdicts | undefined
+  after: ReactNode
 }) {
-  const id = `${question.slug}-dicas`
-  return (
-    <Subsection aria-labelledby={id}>
-      <Subhead id={id}>Dicas</Subhead>
-      <ul className="m-0 list-none p-0 [&>li]:not-first:mt-lg">
-        {question.tips.map(
-          (tip, i) =>
-            tip.finding === null && (
-              <TipCard
-                key={tip.slug}
-                tip={tip}
-                verdict={verdicts?.tips?.[i] ?? null}
-              />
-            ),
-        )}
-      </ul>
-    </Subsection>
-  )
-}
-
-/** "O que a evidência diz": the findings with country and year, each one's
- * Tips and Myths right after it, and the divergence. */
-export function Evidence({
-  question,
-  verdicts,
-}: {
-  question: QuestionView
-  verdicts: Verdicts | undefined
-}) {
-  const id = `${question.slug}-evidencia`
-  return (
-    <Subsection aria-labelledby={id}>
-      <Subhead id={id}>O que a evidência diz</Subhead>
-      <ol className="m-0 list-none p-0" data-slot="achados-guia">
-        {question.findings.map((finding, i) => (
-          <li
-            key={finding.html}
-            className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5"
-          >
-            <Finding
-              finding={finding}
-              verdict={verdicts?.findings?.[i] ?? null}
-            />
-            <NextToTheFinding
-              question={question}
-              finding={i}
-              verdicts={verdicts}
-            />
-          </li>
-        ))}
-      </ol>
-
-      {question.divergence && <Divergence divergence={question.divergence} />}
-    </Subsection>
-  )
-}
-
-/** A finding: the box with country and year, the text and "Vale para". */
-function Finding({
-  finding,
-  verdict,
-}: {
-  finding: QuestionView['findings'][number]
-  verdict: Verdict | null
-}) {
-  return (
-    <div className="grid grid-cols-[minmax(58px,max-content)_1fr] gap-sm [&_[data-slot=vale]]:mt-xs [&_p]:m-0">
-      <span
-        className="h-max max-w-30 rounded-mao-2 border-(length:--traco-controle) border-tinta bg-folha px-1.5 pt-1.75 pb-1.5 text-center font-title text-medio leading-cerrada font-bold wrap-anywhere"
-        data-slot="onde"
-      >
-        {finding.country}
-        <small className="mt-0.75 block font-label text-miudo leading-curta font-bold text-tinta-2">
-          {finding.period}
-        </small>
-      </span>
-      <div>
-        <Html as="p" html={finding.html} />
-        <AppliesToNote text={finding.appliesTo} verdict={verdict} />
-      </div>
-    </div>
-  )
-}
-
-/** The Tips and Myths a finding carries, below it. */
-function NextToTheFinding({
-  question,
-  finding,
-  verdicts,
-}: {
-  question: QuestionView
-  finding: number
-  verdicts: Verdicts | undefined
-}) {
-  const tips = question.tips.flatMap((tip, i) =>
-    tip.finding === finding ? [{ tip, i }] : [],
-  )
-  const myths = question.myths.filter((m) => m.finding === finding)
-  if (tips.length === 0 && myths.length === 0) return null
-  return (
-    <div className="mt-sm flex flex-col gap-md">
-      {tips.map(({ tip, i }) => (
-        <TipCard
-          key={tip.slug}
-          as="div"
-          tip={tip}
-          verdict={verdicts?.tips?.[i] ?? null}
-        />
-      ))}
-      {myths.map((myth) => (
-        <MythCard key={myth.claim} myth={myth} />
-      ))}
-    </div>
-  )
-}
-
-/** When the evidence diverges: one side per column and which has the
- * better design. */
-function Divergence({
-  divergence,
-}: {
-  divergence: NonNullable<QuestionView['divergence']>
-}) {
-  return (
-    <div className="mt-md">
-      <table
-        aria-label="A evidência diverge"
-        className="w-full table-fixed border-separate border-spacing-0 rounded-mao border-2 border-tinta bg-folha text-aviso leading-normal"
-      >
-        <thead>
-          <tr>
-            {divergence.sides.map((side) => (
-              <th
-                key={side.title}
-                scope="col"
-                className="border-b-(length:--traco-etiqueta) fio-pontilhado border-tinta px-3 pt-3 pb-3.5 text-left align-top font-title text-body leading-tight font-bold not-first:border-l-(length:--traco-etiqueta)"
-              >
-                {side.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {divergence.sides.map((side) => (
-              <td
-                key={side.title}
-                className="px-3 pt-3 pb-3.5 text-left align-top not-first:border-l-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta"
-              >
-                <Html html={side.html} />
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-      <p className="mt-3 mb-0 text-aviso" data-slot="melhor-desenho">
-        <b>Qual lado tem o melhor desenho: </b>
-        <Html as="span" html={divergence.bestDesignHtml} />
-      </p>
-    </div>
-  )
-}
-
-/** The narrative's own sections ("Efeitos psicológicos", "Então, vale a
- * pena?"), each with the title the Question gives it, in file order. */
-export function OwnSections({
-  sections,
-}: {
-  sections: QuestionView['sections']
-}) {
+  const { inGuide } = useProfileInGuide(question)
+  const title = `${question.slug}-pergunta`
   return (
     <>
-      {sections.map((section) => (
-        <Subsection key={section.id} aria-labelledby={section.id}>
-          <Subhead id={section.id}>{section.title}</Subhead>
-          <Html className="prosa" html={section.html} />
-        </Subsection>
-      ))}
+      <section
+        id={question.slug}
+        aria-labelledby={title}
+        className="my-lg scroll-mt-md rounded-mao-2 border-(length:--traco-etiqueta) fio-pontilhado border-tinta bg-folha px-md py-md"
+        data-slot="resposta"
+      >
+        <h3
+          id={title}
+          className="m-0 font-title text-title text-balance"
+          data-slot="pergunta"
+        >
+          {question.question}
+        </h3>
+        <ShortConfidence
+          confidence={question.confidence}
+          className="mt-1 flex"
+        />
+        <Html className="prosa mt-sm" html={question.answerHtml} />
+        {inGuide && (
+          <ForYourProfile
+            keyNumber={inGuide.key}
+            findings={question.findings}
+          />
+        )}
+      </section>
+      {after}
     </>
   )
 }
 
-/** The Question's Myths that follow no finding. */
-export function Myths({ question }: { question: QuestionView }) {
-  const id = `${question.slug}-mitos`
+/** The "vale para você" marks inside the prose: the server leaves each one
+ * hidden, with the finding it names, and here it shows when the saved
+ * Profile is in the finding's sample. The prose is the server's HTML, so the
+ * mark is switched on the element itself; React never rewrites that HTML,
+ * whose string does not change. */
+function useYouMarks(marks: GuideView['youMarks']) {
+  const profile = useProfile()
+  const box = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    for (const mark of box.current?.querySelectorAll<HTMLElement>(
+      '[data-voce]',
+    ) ?? []) {
+      const coverage = marks[mark.dataset['voce'] ?? '']
+      mark.hidden = !(
+        profile &&
+        coverage &&
+        appliesToYou(profile, coverage)?.covered
+      )
+    }
+  }, [profile, marks])
+  return box
+}
+
+/** One piece of a Chapter: its prose, an answer (with what follows it), a
+ * Tip or a Myth. */
+function Block({
+  block,
+  afterAnswer,
+}: {
+  block: ChapterView['blocks'][number]
+  afterAnswer: (question: QuestionView) => ReactNode
+}) {
+  const profile = useProfile()
+  switch (block.kind) {
+    case 'text':
+      return <Html className="prosa" html={block.html} />
+    case 'question':
+      return (
+        <Answer question={block.question} after={afterAnswer(block.question)} />
+      )
+    case 'tip':
+      return (
+        <div className="my-lg">
+          <TipCard
+            as="div"
+            tip={block.tip}
+            verdict={profile ? appliesToYou(profile, block.tip.coverage) : null}
+          />
+        </div>
+      )
+    case 'myth':
+      return (
+        <div className="my-lg">
+          <MythCard myth={block.myth} />
+        </div>
+      )
+  }
+}
+
+/** One Chapter: its number and title, then its blocks in body order. */
+function Chapter({
+  chapter,
+  n,
+  afterAnswer,
+}: {
+  chapter: ChapterView
+  n: number
+  afterAnswer: (question: QuestionView) => ReactNode
+}) {
+  const title = `t-${chapter.id}`
   return (
-    <Subsection aria-labelledby={id}>
-      <Subhead id={id}>O que circula por aí e não se sustenta</Subhead>
-      <div className="flex flex-col gap-5.5">
-        {question.myths.map(
-          (myth) =>
-            myth.finding === null && <MythCard key={myth.claim} myth={myth} />,
-        )}
-      </div>
-    </Subsection>
+    <Section
+      id={chapter.id}
+      aria-labelledby={title}
+      className="scroll-mt-md"
+      data-slot="capitulo"
+    >
+      <Headline id={title} className="flex items-baseline gap-sm">
+        <ChapterNumber n={n} />
+        <span>{chapter.title}</span>
+      </Headline>
+      {chapter.blocks.map((block) => (
+        <Block key={block.key} block={block} afterAnswer={afterAnswer} />
+      ))}
+    </Section>
   )
 }
 
-/** "O que levar": the Guide's strongest Tips, after the last Question. */
+/** The Chapters, in order. `afterAnswer` draws what follows a Question's
+ * answer: the calculator card it hosts. */
+export function Chapters({
+  chapters,
+  youMarks,
+  afterAnswer = () => null,
+}: {
+  chapters: GuideView['chapters']
+  youMarks: GuideView['youMarks']
+  afterAnswer?: (question: QuestionView) => ReactNode
+}) {
+  const box = useYouMarks(youMarks)
+  return (
+    <div ref={box} data-slot="capitulos-texto">
+      {chapters.map((chapter, i) => (
+        <Chapter
+          key={chapter.id}
+          chapter={chapter}
+          n={i + 1}
+          afterAnswer={afterAnswer}
+        />
+      ))}
+    </div>
+  )
+}
+
+/** "O que levar": the Guide's strongest Tips, after the last Chapter. */
 export function Takeaways({
   tips,
   verdicts,
@@ -353,50 +354,17 @@ export function Takeaways({
   )
 }
 
-/** The Guide's Limitations, one group per Study (its title leads to the
- * Fact sheet's number in the list) or per Question. */
-export function Limitations({ groups }: { groups: GuideView['limitations'] }) {
-  return (
-    <Section id="limitacoes" aria-labelledby="t-limitacoes">
-      <Headline id="t-limitacoes">Limitações e o que não se sabe</Headline>
-      {groups.map((group) => (
-        <div
-          key={group.factSheet?.anchor ?? group.title ?? 'geral'}
-          className="not-first:mt-md"
-          data-slot="limitacoes-grupo"
-        >
-          {group.title && <GroupTitle group={group} title={group.title} />}
-          <Html className="prosa limites" html={group.html} />
-        </div>
-      ))}
-    </Section>
-  )
-}
-
-/** A Limitations group's title: the Study, with the number that leads to its
- * Fact sheet, or the Question. */
-function GroupTitle({
-  group,
-  title,
+/** "O que não se sabe": the gaps that weigh on the conclusion, in prose.
+ * Each Study's own limitations live on its Fact sheet's page. */
+export function Unknowns({
+  html,
 }: {
-  group: GuideView['limitations'][number]
-  title: string
+  html: NonNullable<GuideView['unknownsHtml']>
 }) {
   return (
-    <Subhead>
-      {title}
-      {group.factSheet && (
-        <>
-          {' '}
-          <a
-            className="ref"
-            href={`#${group.factSheet.anchor}`}
-            aria-label={`Ficha ${group.factSheet.n}: ${title}`}
-          >
-            {group.factSheet.n}
-          </a>
-        </>
-      )}
-    </Subhead>
+    <Section id="o-que-nao-se-sabe" aria-labelledby="t-o-que-nao-se-sabe">
+      <Headline id="t-o-que-nao-se-sabe">O que não se sabe</Headline>
+      <Html className="prosa" html={html} />
+    </Section>
   )
 }

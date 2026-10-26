@@ -1,9 +1,9 @@
 // The Guide (the Topic's page, ADR 0042), the home page and the Tips over the
-// fixture content (`e2e/library`): "Onde conhecer pessoas" with two
-// Questions, "Escolher parceiro" with one Question and the whole frame
-// ("E no Brasil?", a Myth next to its finding, "O que levar", Limitations by
-// Study, a Question of another Topic), one published Tip (an inference) and
-// one that rests on a ⬜ Fact sheet and stays off the site.
+// fixture content (`e2e/library`): "Onde conhecer pessoas" with two Chapters,
+// each answering one Question, a Myth, a Tip, the marks inside a sentence and
+// "O que não se sabe"; "Escolher parceiro" with one Chapter and the frame
+// ("O que levar", a Question of another Topic); one published Tip (an
+// inference) and one that rests on a ⬜ Fact sheet and stays off the site.
 import { expect, test, type Page } from '@playwright/test'
 
 const GUIDE = '/onde-conhecer-pessoas'
@@ -11,8 +11,13 @@ const FIRST = 'Onde os casais se conhecem hoje?'
 const SECOND = 'App ou presencial, onde tenho mais chance?'
 const OTHER_GUIDE = '/escolher-parceiro'
 const OTHER = 'Que características do parceiro preveem uma boa relação?'
+const CHAPTER_1 = 'O app virou um caminho comum'
+const CHAPTER_2 = 'O lugar quase não muda a relação'
 
-const question = (page: Page, name: string) =>
+/** Where the Guide answers a Question. */
+const answer = (page: Page, name: string) =>
+  page.getByRole('region', { name, exact: true })
+const chapter = (page: Page, name: string) =>
   page.getByRole('region', { name, exact: true })
 
 const noSideScroll = async (page: Page) => {
@@ -24,7 +29,7 @@ const noSideScroll = async (page: Page) => {
 }
 
 test.describe('Guide page', () => {
-  test('has the index, the opening, one section per Question and the frame, in order', async ({
+  test('has the Chapters, Em resumo, the Profile, the opening, the Chapters and the frame, in order', async ({
     page,
   }) => {
     await page.goto(GUIDE)
@@ -33,127 +38,117 @@ test.describe('Guide page', () => {
       'Onde conhecer pessoas',
     )
     await expect(page.locator('main h2')).toHaveText([
-      'Perguntas deste Guia',
+      'Capítulos',
+      'Em resumo',
       'Seu Perfil',
-      FIRST,
-      SECOND,
-      // The Possible group card of the second Question.
+      `1${CHAPTER_1}`,
+      `2${CHAPTER_2}`,
+      // The Possible group card after the second answer.
       'Faça a conta',
-      'Limitações e o que não se sabe',
+      'O que levar',
+      'O que não se sabe',
       'Fichas citadas',
+      'Ajudou?',
+      'Perguntas de outros Temas',
     ])
     await expect(page.locator('[data-slot="abertura"]')).toContainText(
       'Onde os casais se conhecem hoje e se o lugar muda a relação.',
     )
-    await expect(question(page, FIRST).locator('h3')).toHaveText([
-      'O que a evidência diz',
-      'Dicas',
-      'Varia conforme o Perfil?',
-      'O que circula por aí e não se sustenta',
-      'Ajudou?',
-    ])
+    // Each answer is a note in its Chapter, with no block of its own: no
+    // findings list, no "E no Brasil?" nor "Varia conforme o Perfil?".
+    await expect(chapter(page, CHAPTER_1).locator('h3')).toHaveText([FIRST])
+    await expect(page.locator('[data-slot="achados-guia"]')).toHaveCount(0)
     await noSideScroll(page)
   })
 
-  test('the index lists each Question with the first sentence of its short answer, without numbers, and leads to its section', async ({
+  test('the Chapters under the title lead to each Chapter', async ({
     page,
   }) => {
     await page.goto(GUIDE)
-    const index = page.getByRole('navigation', { name: 'Perguntas deste Guia' })
-    const items = index.locator('ol[data-slot="perguntas"] > li')
+    const contents = page.getByRole('navigation', { name: 'Capítulos' })
+    await expect(contents.getByRole('link')).toHaveText([
+      `1${CHAPTER_1}`,
+      `2${CHAPTER_2}`,
+    ])
+    await contents.getByRole('link').nth(1).click()
+    await expect(page).toHaveURL(`${GUIDE}#o-lugar-quase-nao-muda-a-relacao`)
+    await expect(
+      chapter(page, CHAPTER_2).getByRole('heading', { level: 2 }).first(),
+    ).toBeInViewport()
+  })
+
+  test('Em resumo lists each Question with the first sentence of its short answer, without numbers, and leads to the answer', async ({
+    page,
+  }) => {
+    await page.goto(GUIDE)
+    const summary = page.getByRole('region', { name: 'Em resumo' })
+    const items = summary.locator('ol[data-slot="perguntas"] > li')
     await expect(items.getByRole('link')).toHaveText([FIRST, SECOND])
     await expect(items.nth(0)).toContainText(
       'No Brasil, 18% dos adultos jovens conheceram o parceiro por app.',
     )
     await expect(items.nth(0)).not.toContainText('Os estudos divergem')
     await expect(items.nth(0)).toContainText('moderada')
-    await expect(index.locator('a.ref')).toHaveCount(0)
+    await expect(summary.locator('a.ref')).toHaveCount(0)
     await items.nth(1).getByRole('link').click()
     await expect(page).toHaveURL(`${GUIDE}#app-ou-presencial`)
-    await expect(
-      question(page, SECOND).getByRole('heading', { level: 2 }).first(),
-    ).toBeInViewport()
+    await expect(answer(page, SECOND).locator('h3')).toBeInViewport()
   })
 })
 
-test.describe("a Question's section", () => {
-  test('the short answer shows the Confidence in three steps, with the word, and the key number with the Fact sheet', async ({
+test.describe('a Chapter', () => {
+  test('the answer shows the Question, the Confidence in three steps with the word, and the key number with the Fact sheet', async ({
     page,
   }) => {
     await page.goto(GUIDE)
-    const answer = question(page, FIRST).locator('[data-slot="resposta"]')
-    await expect(answer).toContainText('Confiança da resposta')
-    await expect(answer.locator('[data-confidence="moderate"]')).toContainText(
+    const first = answer(page, FIRST)
+    await expect(first).toHaveAttribute('data-slot', 'resposta')
+    await expect(first.locator('[data-confidence="moderate"]')).toContainText(
       'moderada',
     )
     await expect(
-      answer.locator('[data-confidence] svg path[fill="currentColor"]'),
+      first.locator('[data-confidence] svg path[fill="currentColor"]'),
     ).toHaveCount(2)
-    await expect(answer.locator('mark.numero-chave')).toHaveText(
+    await expect(first.locator('mark.numero-chave')).toHaveText(
       '18% dos adultos jovens',
     )
-    const ref = answer.getByRole('link', {
+    const ref = first.getByRole('link', {
       name: 'Ficha 1: Silva e Souza (2020): apps de namoro no Brasil',
     })
     await expect(ref).toHaveText('1')
     await expect(ref).toHaveAttribute('href', '#ficha-silva-2020-apps-brasil')
   })
 
-  test('the Tip states the Strength and marks our inference', async ({
+  test('the prose carries the "no Brasil" mark, and the Myth and the Tip sit where the body places them', async ({
     page,
   }) => {
     await page.goto(GUIDE)
-    const tips = question(page, FIRST).getByRole('region', { name: 'Dicas' })
-    await expect(tips).toContainText(
+    const one = chapter(page, CHAPTER_1)
+    await expect(one.locator('.marca-brasil')).toHaveText('no Brasil')
+    // The "vale para você" waits for a Profile.
+    await expect(one.locator('[data-voce]')).toBeHidden()
+    const myth = one.locator('[data-slot="mito"]')
+    await expect(myth.locator('s')).toHaveText(
+      'Mais da metade dos casais se conhece por app.',
+    )
+    await expect(myth).toContainText(
+      'No Brasil, foi menos de um em cada cinco1.',
+    )
+    const tip = chapter(page, CHAPTER_2).locator('[data-slot="dica"]')
+    await expect(tip).toContainText(
       'Use o app como complemento, não como o único caminho12.',
     )
-    await expect(tips).toContainText('Inferência nossa')
-    await expect(tips.locator('[data-strength="moderate"]')).toContainText(
+    await expect(tip).toContainText('Inferência nossa')
+    await expect(tip.locator('[data-strength="moderate"]')).toContainText(
       'moderada',
     )
     // One reference per Fact sheet, glued, before the final period.
-    await expect(tips.locator('a.ref')).toHaveText(['1', '2'])
-    await expect(tips.locator('.nw').first()).toHaveText('caminho12.')
+    await expect(tip.locator('a.ref')).toHaveText(['1', '2'])
+    await expect(tip.locator('.nw').first()).toHaveText('caminho12.')
   })
+})
 
-  test('each finding shows country and year and the Vale para note', async ({
-    page,
-  }) => {
-    await page.goto(GUIDE)
-    const evidence = question(page, FIRST).getByRole('region', {
-      name: 'O que a evidência diz',
-    })
-    const findings = evidence.locator('ol[data-slot="achados-guia"] > li')
-    await expect(findings).toHaveCount(2)
-    await expect(findings.nth(0).locator('[data-slot="onde"]')).toHaveText(
-      'Brasil2019',
-    )
-    await expect(findings.nth(0)).toContainText(
-      'Vale para: homens e mulheres, de 18 a 35 anos.',
-    )
-    await expect(findings.nth(1).locator('[data-slot="onde"]')).toHaveText(
-      'EUA2017',
-    )
-    await expect(findings.nth(1)).toContainText(
-      'Vale para: casais homem-mulher.',
-    )
-  })
-
-  test('the divergence shows in a table with both sides and the better design', async ({
-    page,
-  }) => {
-    await page.goto(GUIDE)
-    const table = page.getByRole('table', { name: 'A evidência diverge' })
-    await expect(table.getByRole('columnheader')).toHaveText([
-      'O app junta muitos casais',
-      'O lugar quase não importa',
-    ])
-    await expect(table.getByRole('cell')).toHaveCount(2)
-    await expect(page.locator('[data-slot="melhor-desenho"]')).toContainText(
-      'A amostra brasileira foi sorteada',
-    )
-  })
-
+test.describe('a Visual on a small phone', () => {
   test('a relation diagram fits a phone narrower than 340px', async ({
     page,
   }) => {
@@ -175,35 +170,6 @@ test.describe("a Question's section", () => {
     expect(overflow).toBeLessThanOrEqual(1)
     await noSideScroll(page)
   })
-
-  test('Profile, struck-out Myths and the Limitations of each Question', async ({
-    page,
-  }) => {
-    await page.goto(GUIDE)
-    await expect(
-      question(page, FIRST).getByRole('region', {
-        name: 'Varia conforme o Perfil?',
-      }),
-    ).toContainText('Entre 18 e 24 anos, a fatia sobe para 24%')
-    const myth = question(page, FIRST)
-      .getByRole('region', { name: 'O que circula por aí e não se sustenta' })
-      .locator('[data-slot="mito"]')
-    await expect(myth.locator('s')).toHaveText(
-      'Mais da metade dos casais se conhece por app.',
-    )
-    await expect(myth).toContainText(
-      'No Brasil, foi menos de um em cada cinco1.',
-    )
-    const limitations = page.getByRole('region', {
-      name: 'Limitações e o que não se sabe',
-    })
-    await expect(limitations.locator('h3')).toHaveText([FIRST, SECOND])
-    await expect(limitations.getByRole('listitem')).toHaveText([
-      'O estudo brasileiro só ouviu capitais.',
-      'Ninguém separou app de rede social.',
-      'Uma amostra só, dos EUA.',
-    ])
-  })
 })
 
 test.describe("the Guide's frame", () => {
@@ -223,13 +189,12 @@ test.describe("the Guide's frame", () => {
     await expect(factSheets.nth(0)).toContainText('lido no original')
     await expect(factSheets.nth(0)).toContainText('forte')
     await expect(factSheets.nth(1)).toContainText('parcial')
-    // Costa 2018 is number 2 in both Questions: one list, one number.
-    await expect(
-      question(page, SECOND).locator('a.ref').first(),
-    ).toHaveAttribute('href', '#ficha-costa-2018-satisfacao')
-    await expect(question(page, SECOND).locator('a.ref').first()).toHaveText(
-      '2',
+    // Costa 2018 is number 2 in both Chapters: one list, one number.
+    await expect(answer(page, SECOND).locator('a.ref').first()).toHaveAttribute(
+      'href',
+      '#ficha-costa-2018-satisfacao',
     )
+    await expect(answer(page, SECOND).locator('a.ref').first()).toHaveText('2')
     await factSheets
       .nth(1)
       .getByRole('link', {
@@ -239,59 +204,45 @@ test.describe("the Guide's frame", () => {
     await expect(page).toHaveURL('/estudos/costa-2018-satisfacao')
   })
 
-  test('the whole frame, in order, with E no Brasil? and a Myth next to its finding', async ({
+  test('O que não se sabe is short prose, and no Limitations block is left', async ({
+    page,
+  }) => {
+    await page.goto(GUIDE)
+    await expect(
+      page.getByRole('region', { name: 'O que não se sabe' }),
+    ).toHaveText(
+      'O que não se sabeNenhum estudo separou app de rede social, e o estudo brasileiro só ouviu capitais.',
+    )
+    await expect(
+      page.getByRole('region', { name: 'Limitações e o que não se sabe' }),
+    ).toHaveCount(0)
+  })
+})
+
+test.describe('the other Guide', () => {
+  test('the other Guide: one Chapter, the Priorities card after its answer, O que levar and the Questions of other Topics', async ({
     page,
   }) => {
     await page.goto(OTHER_GUIDE)
     await expect(page.locator('main h2')).toHaveText([
-      'Perguntas deste Guia',
+      'Capítulos',
+      'Em resumo',
       'Seu Perfil',
-      OTHER,
+      '1Como vocês se tratam pesa mais',
       'Onde ficam as suas prioridades?',
       'O que levar',
-      'Limitações e o que não se sabe',
       'Fichas citadas',
+      'Ajudou?',
       'Perguntas de outros Temas',
     ])
-    const section = question(page, OTHER)
-    await expect(
-      section.getByRole('region', { name: 'E no Brasil?' }),
-    ).toContainText('Nenhum estudo brasileiro mediu isso.')
-    // The Myth sits right after its finding, with no block of its own.
-    const finding = section.locator('ol[data-slot="achados-guia"] > li')
-    await expect(finding.locator('[data-slot="mito"] s')).toHaveText(
-      'Basta achar a pessoa certa.',
+    await expect(answer(page, OTHER)).toContainText(
+      'Como vocês se tratam pesa mais que a lista de qualidades do parceiro',
     )
-    await expect(
-      section.getByRole('region', {
-        name: 'O que circula por aí e não se sustenta',
-      }),
-    ).toHaveCount(0)
-  })
-
-  test('O que levar, the Limitations by Study and the Questions of other Topics', async ({
-    page,
-  }) => {
-    await page.goto(OTHER_GUIDE)
     await expect(
       page
         .getByRole('region', { name: 'O que levar' })
         .locator('[data-slot="dica"]'),
     ).toContainText(['Use o app como complemento'])
-    const limitations = page.getByRole('region', {
-      name: 'Limitações e o que não se sabe',
-    })
-    const study = limitations.locator('h3')
-    await expect(study).toContainText(
-      'Costa (2018): satisfação e onde os casais se conheceram',
-    )
-    await expect(study.locator('a.ref')).toHaveAttribute(
-      'href',
-      '#ficha-costa-2018-satisfacao',
-    )
-    await expect(limitations.getByRole('listitem')).toHaveText([
-      'Uma amostra só, dos EUA.',
-    ])
     const elsewhere = page
       .getByRole('region', { name: 'Perguntas de outros Temas' })
       .getByRole('link', { name: new RegExp(FIRST.replace('?', '\\?')) })
@@ -313,7 +264,7 @@ test.describe("the Guide's addresses", () => {
     )
   })
 
-  test("a Question's old page answers 301 to its section, and inside the app it lands there too", async ({
+  test("a Question's old page answers 301 to its answer, and inside the app it lands there too", async ({
     page,
     request,
   }) => {
@@ -324,9 +275,7 @@ test.describe("the Guide's addresses", () => {
     expect(old.headers().location).toBe(`${GUIDE}#app-ou-presencial`)
     await page.goto(`${GUIDE}/app-ou-presencial`)
     await expect(page).toHaveURL(`${GUIDE}#app-ou-presencial`)
-    await expect(
-      question(page, SECOND).getByRole('heading', { level: 2 }).first(),
-    ).toBeInViewport()
+    await expect(answer(page, SECOND).locator('h3')).toBeInViewport()
   })
 
   test('a Question that does not exist, or in the wrong Topic, answers 404, and so does a Topic', async ({
@@ -343,20 +292,26 @@ test.describe("the Guide's addresses", () => {
 test.describe('Guide page without JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('the whole Guide is in the HTML, and the index and the old address lead to the section', async ({
+  test('the whole Guide is in the HTML, and Em resumo, the Chapters and the old address lead to their place', async ({
     page,
   }) => {
     await page.goto(`${GUIDE}/app-ou-presencial`)
     await expect(page).toHaveURL(`${GUIDE}#app-ou-presencial`)
-    await expect(page.locator('main h2')).toContainText([FIRST, SECOND])
+    await expect(page.locator('main h3')).toContainText([FIRST, SECOND])
     await page
-      .getByRole('navigation', { name: 'Perguntas deste Guia' })
+      .getByRole('region', { name: 'Em resumo' })
       .getByRole('link', { name: FIRST })
       .click()
     await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
-    await expect(
-      question(page, FIRST).getByRole('heading', { level: 2 }).first(),
-    ).toBeInViewport()
+    await expect(answer(page, FIRST).locator('h3')).toBeInViewport()
+    await page
+      .getByRole('navigation', { name: 'Capítulos' })
+      .getByRole('link')
+      .nth(1)
+      .click()
+    await expect(page).toHaveURL(`${GUIDE}#o-lugar-quase-nao-muda-a-relacao`)
+    // The "vale para você" stays hidden without JS, as without a Profile.
+    await expect(page.locator('[data-voce]')).toBeHidden()
   })
 })
 
@@ -401,7 +356,7 @@ test.describe('home page', () => {
 test.describe('home page without JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test("a Topic opens and its Question leads to the Question's section", async ({
+  test("a Topic opens and its Question leads to the Question's answer", async ({
     page,
   }) => {
     await page.goto('/')
@@ -429,7 +384,7 @@ test.describe('Tips', () => {
     await expect(page).toHaveURL('/dicas/apps-como-complemento')
   })
 
-  test('/dicas/<slug> shows the Tip, the Fact sheets and the Questions it appears in', async ({
+  test('/dicas/<slug> shows the Tip, the Fact sheets and the Questions of the Chapter that places it', async ({
     page,
   }) => {
     await page.goto('/dicas/apps-como-complemento')
@@ -442,12 +397,9 @@ test.describe('Tips', () => {
     const questions = page
       .getByRole('region', { name: 'Aparece nos Guias' })
       .getByRole('link')
-    await expect(questions).toHaveText([
-      /Onde os casais se conhecem hoje\?/,
-      /App ou presencial/,
-    ])
+    await expect(questions).toHaveText([/App ou presencial/])
     await questions.first().click()
-    await expect(page).toHaveURL(`${GUIDE}#onde-os-casais-se-conhecem`)
+    await expect(page).toHaveURL(`${GUIDE}#app-ou-presencial`)
   })
 
   test('a Tip resting on a ⬜ Fact sheet is not published', async ({

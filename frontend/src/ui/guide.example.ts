@@ -3,27 +3,32 @@
 // through `virtual:library` (`.storybook/vite.config.ts`).
 import { topicBySlug } from '@tem-estudo/content/queries'
 import library from 'virtual:library'
-import { excerptWithReferences, guideView } from '#/content/guide-view'
+import {
+  excerptWithReferences,
+  guideView,
+  type ChapterBlock,
+} from '#/content/guide-view'
 
-/** The fixture's Guide of "Onde conhecer pessoas", with two Questions. */
+/** The fixture's Guide of "Onde conhecer pessoas": two Chapters, two
+ * Questions, a Myth, a Tip and the marks inside a sentence. */
 export const GUIDE = (() => {
   const found = topicBySlug(library, 'onde-conhecer-pessoas')
   if (!found) throw new Error('the fixture has no onde-conhecer-pessoas Topic')
   return guideView(found, library)
 })()
 
-const question = (slug: string) => {
-  const found = GUIDE.questions.find((q) => q.slug === slug)
-  if (!found) throw new Error(`the fixture Guide has no ${slug} Question`)
-  return found
+const blocks = GUIDE.chapters.flatMap((c) => c.blocks)
+
+function block<K extends ChapterBlock['kind']>(
+  kind: K,
+): Extract<ChapterBlock, { kind: K }> {
+  const found = blocks.find((b) => b.kind === kind)
+  if (!found) throw new Error(`the fixture Guide has no ${kind} block`)
+  return found as Extract<ChapterBlock, { kind: K }>
 }
 
-/** The fixture's Question with Tips, divergence and Myths. */
-export const QUESTION = question('onde-os-casais-se-conhecem')
-
-/** The fixture's Question with a section of its own ("Então, vale a
- * pena?"). */
-export const QUESTION_WITH_SECTIONS = question('app-ou-presencial')
+/** The fixture's Tip, as a Chapter places it. */
+export const TIP = block('tip').tip
 
 /** The HTML of a Guide paragraph, as the server builds it from markdown. */
 export const excerpt = excerptWithReferences

@@ -2,7 +2,7 @@
 // the build's sitemap and robots, canonical, `noindex` on a URL with state,
 // the Guide's Open Graph and the 301s of the trailing slash, of `previous`
 // (the silva-2020 Fact sheet and the app-ou-presencial Question declare old
-// paths) and of each Question's old page, which leads to its section of the
+// paths) and of each Question's old page, which leads to its answer in the
 // Guide (ADR 0042).
 import { expect, test } from '@playwright/test'
 
@@ -22,7 +22,7 @@ test.describe('sitemap and robots', () => {
     ].map((m) => m[1])
     expect(locs).toEqual([
       `${SITE}/`,
-      // The Topics in their `position` order; a Question is a section of
+      // The Topics in their `position` order; a Question is answered in
       // its Topic's page.
       `${SITE}/onde-conhecer-pessoas`,
       `${SITE}/escolher-parceiro`,
@@ -126,7 +126,7 @@ test.describe('301', () => {
     expect(response.headers().location).toBe('/estudos?v=1')
   })
 
-  test("the Fact sheet's and the Question's `previous` lead to today's path, the Question's to its section", async ({
+  test("the Fact sheet's and the Question's `previous` lead to today's path, the Question's to its answer", async ({
     request,
   }) => {
     const factSheet = await request.get('/estudos/silva-2020', noFollow)
@@ -156,7 +156,7 @@ test.describe('301', () => {
 })
 
 test.describe("301 of a Question's old page", () => {
-  test("the browser reaches the Question's section", async ({ page }) => {
+  test("the browser reaches the Question's answer", async ({ page }) => {
     await page.goto('/onde-conhecer-pessoas/app-ou-bar/')
     await expect(page).toHaveURL(SECTION)
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
@@ -164,7 +164,7 @@ test.describe("301 of a Question's old page", () => {
     )
     await expect(
       page.getByRole('heading', {
-        level: 2,
+        level: 3,
         name: 'App ou presencial, onde tenho mais chance?',
       }),
     ).toBeInViewport()

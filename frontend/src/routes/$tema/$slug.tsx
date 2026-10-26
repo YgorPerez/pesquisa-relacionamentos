@@ -7,14 +7,14 @@ import {
 import { reads } from '#/content/reads'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 
-// A Question's old page. Since ADR 0042 the Question is a section of its
+// A Question's old page. Since ADR 0042 the Question is answered inside its
 // Topic's Guide: the server answers the old address with a 301 to
 // `/<tema>#<question>` (`platform/redirects.ts`), and this route does the same
 // for a link followed inside the app. An unknown Question is a 404.
 export const Route = createFileRoute('/$tema/$slug')({
   loader: async ({ context, params }) => {
     const guide = await context.queryClient.query(reads.guide(params.tema))
-    if (!guide.questions.some((q) => q.slug === params.slug)) throw notFound()
+    if (!guide.summary.some((q) => q.slug === params.slug)) throw notFound()
     throw redirect({
       to: '/$tema',
       params: { tema: params.tema },

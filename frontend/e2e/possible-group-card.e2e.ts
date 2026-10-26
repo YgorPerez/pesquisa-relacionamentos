@@ -1,13 +1,12 @@
 // The Possible group card in the B5 Question (#32), over the fixture: the
 // `app-ou-presencial` Question declares `calculator: possible-group`, and the
-// data is only Acre's (the fixture's "Brazil"). The card sits in the
-// Question's section of the Guide (ADR 0042).
+// data is only Acre's (the fixture's "Brazil"). The card follows the
+// Question's answer in its Chapter of the Guide (ADR 0042).
 import { expect, test, type Page } from '@playwright/test'
 import { tap } from './touch'
 
 const GUIDE = '/onde-conhecer-pessoas'
 const SECTION = `${GUIDE}#app-ou-presencial`
-const QUESTION_B5 = 'App ou presencial, onde tenho mais chance?'
 const UNUSED = 'Faça a conta'
 const USED = 'Seu Grupo possível'
 
@@ -34,16 +33,12 @@ test.describe('the B5 Guide card', () => {
     )
     await expect(card(page, USED)).toHaveCount(0)
 
-    // In its Question, after "Varia conforme o Perfil?" and before
-    // "Ajudou?".
-    const titles = await page
-      .getByRole('region', { name: QUESTION_B5, exact: true })
-      .locator('h2[data-slot="headline"], h3')
-      .allTextContents()
-    expect(titles.indexOf(UNUSED)).toBe(titles.indexOf('Ajudou?') - 1)
-    expect(titles.indexOf('Varia conforme o Perfil?')).toBeLessThan(
-      titles.indexOf(UNUSED),
-    )
+    // Right after the answer it belongs to, in the same Chapter.
+    expect(
+      await page
+        .locator('#app-ou-presencial + *')
+        .evaluate((el) => el.textContent?.includes('Faça a conta')),
+    ).toBe(true)
 
     const button = unused.getByRole('link', { name: 'Fazer a conta' })
     expect((await button.boundingBox())?.height).toBeGreaterThanOrEqual(44)

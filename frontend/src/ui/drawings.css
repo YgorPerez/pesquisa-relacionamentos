@@ -10,8 +10,9 @@
  *    used in JSX are `@utility`, and `@shadcn/lint` knows them.
  * 2. The HTML that comes out of the library's Markdown
  *    (`content/guide-view.ts`), which has no `className`: `.prosa`, `.ref`,
- *    `.nw`, `.numero-chave` and `.marca-texto`. The names are the closed
- *    list of `content/safe-html.ts`.
+ *    `.nw`, `.numero-chave` and `.marca-texto`, the closed list of
+ *    `content/safe-html.ts`, plus the marks `guide-view.ts` puts in after
+ *    the filter, `.marca-brasil` and `.selo-voce-texto`.
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
  *    with `stroke-dashoffset`, in `@keyframes`. */
 
@@ -237,6 +238,38 @@
       center / 100% 100% no-repeat;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+  }
+
+  /* ---------- the small marks inside a sentence (ADR 0042) ---------- */
+  /* "no Brasil": ink and paper, like the Topic tag (no ink of its own). */
+  .marca-brasil,
+  .selo-voce-texto {
+    display: inline-block;
+    margin-right: 0.3em;
+    padding: 0 var(--spacing-xs);
+    font-family: var(--font-label);
+    font-size: var(--text-etiqueta);
+    font-weight: 700;
+    line-height: var(--leading-nota);
+    vertical-align: 1px;
+    white-space: nowrap;
+    border-radius: var(--radius-mao-2);
+  }
+
+  .marca-brasil {
+    background: var(--color-folha);
+    border: var(--traco-etiqueta) solid var(--color-tinta);
+  }
+
+  /* "vale para você": the yellow of what applies to the reader. */
+  .selo-voce-texto {
+    background: var(--color-amarelo-voce);
+    color: var(--color-tinta);
+    border: var(--traco-etiqueta) solid transparent;
+  }
+
+  .selo-voce-texto[hidden] {
+    display: none;
   }
 }
 

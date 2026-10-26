@@ -23,23 +23,6 @@ export function Headline({ className, ...props }: ComponentProps<'h2'>) {
   )
 }
 
-/** A block inside a Question of the Guide ("E no Brasil?", "Dicas"): no rule
- * of its own, since the Question's section already opens with one. */
-export function Subsection({ className, ...props }: ComponentProps<'section'>) {
-  return <section className={cn('mt-lg', className)} {...props} />
-}
-
-/** The title of a `Subsection`, one level below the Question's. */
-export function Subhead({ className, ...props }: ComponentProps<'h3'>) {
-  return (
-    <h3
-      className={cn('m-0 mb-xs font-title text-title text-balance', className)}
-      data-slot="subhead"
-      {...props}
-    />
-  )
-}
-
 /** The DESIGN.md `painel`: a sheet with a hand outline and the halftone
  * behind, the site's only elevation. `as` is the element (the short answer
  * is a section, the Guide's Tip a list item). */
