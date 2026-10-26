@@ -297,15 +297,18 @@ function height(
 /** P(office occupation) in the cell's sex, Census age group and education
  * (`EDUCATIONS` position + 1, 0 = no data). A cell without education, or
  * with one the file left out for having few records, takes the row of every
- * education together. The universe is everyone (`todos`); the file also has
- * the employed only (`ocupados`), for when the count already asks for a job. */
+ * education together. The universe is everyone (`todos`) or, when "trabalha"
+ * already kept only the employed, the employed (`ocupados`): with `todos` the
+ * job would be counted twice. */
 function office(
   data: PlaceData,
+  universe: 'todos' | 'ocupados',
   sex: number,
   ageGroup: number,
   education: number,
 ): Interval {
-  const key = (e: string) => `todos|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
+  const key = (e: string) =>
+    `${universe}|${SEXES[sex]}|${AGE_GROUPS[ageGroup]}|${e}`
   const row =
     (education > 0 ? data.pnad[key(EDUCATIONS[education - 1]!)] : undefined) ??
     data.pnad[key('')]
@@ -385,12 +388,19 @@ function tally(
   const E = EDUCATIONS.length + 1
   let officeByCell: Interval[] | null = null
   if (active.has('office')) {
+    const universe = active.has('work') ? 'ocupados' : 'todos'
     officeByCell = []
     for (const s of sexes)
       for (let g = 0; g < G; g++)
         if (factor[s * G + g]! > 0)
           for (let e = 0; e < E; e++)
-            officeByCell[(s * G + g) * E + e] = office(ofPlace, s, g, e)
+            officeByCell[(s * G + g) * E + e] = office(
+              ofPlace,
+              universe,
+              s,
+              g,
+              e,
+            )
   }
 
   let municipality: Float64Array | null = null
@@ -563,7 +573,7 @@ function caveats(
     has('office') && {
       id: 'office',
       strong: false,
-      text: 'Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.',
+      text: `Escritório são os quatro primeiros grupos de ocupação da PNAD Contínua: diretores e gerentes, profissionais das ciências e intelectuais (como médicos, professores e engenheiros), técnicos de nível médio e apoio administrativo. A chance vem do 3º trimestre de 2022, por sexo, idade e escolaridade${has('work') ? ', entre quem trabalha' : ''}; a conta supõe que, dentro disso, ela não depende de renda, cor, religião ou união.`,
     },
     active.some((k) => REQUIREMENT_SOURCE[k] === 'PNS') && {
       id: 'independence',

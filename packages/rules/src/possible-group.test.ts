@@ -282,6 +282,25 @@ describe('estimateGroup: office occupation (PNAD)', () => {
     expect(r.result.central).toBeCloseTo(1300 + 200)
   })
 
+  it('with "trabalha" on, takes the chance among the employed, so the job is not counted twice', () => {
+    // Women 25 to 29 in Acre not in a union who work: the 1,000 college
+    // ones. Among the employed the file has only the all-educations row,
+    // 0.4; among everyone, college would give 0.7.
+    const r = count(
+      { seeks: 'mulheres' },
+      {
+        age: { min: 25, max: 29 },
+        place: { state: 'AC' },
+        office: true,
+        work: 'trabalha',
+      },
+    )
+    expect(r.result.central).toBeCloseTo(400)
+    expect(r.caveats.find((x) => x.id === 'office')?.text).toContain(
+      'entre quem trabalha',
+    )
+  })
+
   it('says which occupations count and that it assumes the rest does not change them', () => {
     const r = count(
       { seeks: 'mulheres' },
