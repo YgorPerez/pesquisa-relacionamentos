@@ -193,7 +193,13 @@ function axisTicks(largest: number, max: number | undefined, unit: string) {
   const ticks: number[] = []
   for (let at = 0; at <= end + 1e-9; at += step)
     ticks.push(Number(at.toFixed(6)))
-  if (max !== undefined && ticks[ticks.length - 1] !== max) ticks.push(max)
+  if (max !== undefined && ticks[ticks.length - 1] !== max) {
+    // A round tick half a step or less from the top would print on top of
+    // it (6 and 7 on a scale of 1 to 7): the top takes its place.
+    const last = ticks[ticks.length - 1] ?? 0
+    if (last > 0 && max - last <= step / 2) ticks.pop()
+    ticks.push(max)
+  }
   return ticks
 }
 
@@ -212,9 +218,14 @@ function barsView(visual: BarsVisual, cite: Cite): Own<BarsView> {
   }))
   return {
     kind: 'bars',
-    ticks: ticks.map((at) => ({
+    // A word unit ("pontos", "anos") goes only on the last tick, so the
+    // axis does not crowd on a phone.
+    ticks: ticks.map((at, i) => ({
       at: at / end,
-      text: withUnit(at, visual.unit),
+      text:
+        visual.unit === '%' || i === ticks.length - 1
+          ? withUnit(at, visual.unit)
+          : formatNumber(at),
     })),
     bars,
     sources: allSources(bars.map((b) => b.number)),

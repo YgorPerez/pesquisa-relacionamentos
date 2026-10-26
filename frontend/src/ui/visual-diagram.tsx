@@ -1,28 +1,45 @@
 // The relation diagram: the nodes stacked in one column, the arrows between
-// neighbours straight down and the others in arcs on the right, so it fits
-// a 360px phone. Each arrow's stroke says what backs it: solid when a study
-// tested the cause, dashed when it found only an association, dotted with a
-// "?" when it is our inference. The arrowheads are the hand-drawn touch.
-// The arrows are an SVG at a fixed 320px, and the nodes HTML boxes over it,
-// so axe can measure the text's contrast. The list under it says each arrow
-// in words, with its Fact sheets, and is what a screen reader reads.
+// neighbours straight down and the others in arcs on the right. Each
+// arrow's stroke says what backs it: solid when a study tested the cause,
+// dashed when it found only an association, dotted with a "?" when it is
+// our inference. The arrowheads are the hand-drawn touch.
+// The drawing is fluid up to 320px, so it fits a phone narrower than 340px:
+// the nodes are HTML boxes as wide as the column minus the lane on the
+// right where the arcs go, so axe can measure the text's contrast. The
+// straight arrows are a narrow SVG at the boxes' centre, and the arcs an
+// SVG in the lane, each as wide as its arcs need. The list under it says
+// each arrow in words, with its Fact sheets, and is what a screen reader
+// reads.
 import type { Evidence } from '@tem-estudo/content'
 import type { DiagramView } from '#/content/visuals-view'
 import { SourceRefs, VisualFrame, VisualListItem } from './visual-frame'
 import { VISUAL_COPY } from './visual.copy'
 
-const WIDTH = 320
 const BOX_X = 4
-const BOX_W = 212
 const LINE = 19
 const PAD = 10
 const GAP = 44
-/** How far right an arc's control points go: the first arc, and the last
- * one, which still keeps the curve and its "?" inside `WIDTH`. */
-const NEAREST = BOX_X + BOX_W + 26
-const FARTHEST = WIDTH - 12
-/** About how many letters of the body type fit in a node's line. */
-const LETTERS = 24
+/** How far from the boxes' right edge the arcs reach: the first one, the
+ * step to the next, and the room after the last for its "?". */
+const ARC_FIRST = 26
+const ARC_STEP = 22
+const ARC_END = 14
+/** The narrowest column the labels are wrapped for: a 320px phone minus the
+ * page's margins. On a wider column the boxes only get some air. */
+const NARROWEST = 280
+/** About how wide a letter of the body type is in a node, in px. */
+const LETTER_PX = 8.2
+/** The width of the SVG that draws the straight arrows, at the boxes'
+ * centre. */
+const SPINE = 24
+
+/** The lane on the right that holds `arcs` arcs, in px. */
+const laneFor = (arcs: number) =>
+  arcs === 0 ? 0 : ARC_FIRST + ARC_STEP * (arcs - 1) + ARC_END
+
+/** About how many letters fit in a node's line at the narrowest column. */
+const lettersFor = (lane: number) =>
+  Math.floor((NARROWEST - BOX_X - lane - 2 * PAD) / LETTER_PX)
 
 const DASH: Record<Evidence, string | undefined> = {
   cause: undefined,
@@ -30,11 +47,11 @@ const DASH: Record<Evidence, string | undefined> = {
   inference: '0.5 6',
 }
 
-function wrap(label: string): string[] {
+function wrap(label: string, letters: number): string[] {
   const lines: string[] = []
   for (const word of label.split(/\s+/)) {
     const last = lines[lines.length - 1]
-    if (last !== undefined && `${last} ${word}`.length <= LETTERS)
+    if (last !== undefined && `${last} ${word}`.length <= letters)
       lines[lines.length - 1] = `${last} ${word}`
     else lines.push(word)
   }
@@ -112,11 +129,12 @@ interface Box {
   readonly lines: ReadonlyArray<string>
 }
 
-/** The nodes one under the other, each as tall as its wrapped label. */
-function stack(nodes: DiagramView['nodes']): Box[] {
+/** The nodes one under the other, each as tall as its label wrapped at the
+ * narrowest column. */
+function stack(nodes: DiagramView['nodes'], letters: number): Box[] {
   const boxes: Box[] = []
   for (const node of nodes) {
-    const lines = wrap(node.label)
+    const lines = wrap(node.label, letters)
     const previous = boxes[boxes.length - 1]
     const y = previous ? previous.y + previous.height + GAP : 2
     boxes.push({ y, height: lines.length * LINE + 2 * PAD, lines })
@@ -124,27 +142,33 @@ function stack(nodes: DiagramView['nodes']): Box[] {
   return boxes
 }
 
-/** Each arrow's line, head and middle (where the "?" of an inference goes):
- * the first arrow between two neighbours goes straight; the others arc on
- * the right, each a little further out, and all of them inside the
- * drawing's width. */
-function route(arrows: DiagramView['arrows'], boxes: ReadonlyArray<Box>) {
+/** Which arrows go straight: the first one between two neighbours. */
+function straightArrows(arrows: DiagramView['arrows']): boolean[] {
   const seen = new Set<string>()
-  const straight = arrows.map((arrow) => {
+  return arrows.map((arrow) => {
     const pair = `${Math.min(arrow.from, arrow.to)}-${Math.max(arrow.from, arrow.to)}`
     const first = Math.abs(arrow.from - arrow.to) === 1 && !seen.has(pair)
     seen.add(pair)
     return first
   })
-  const arcCount = straight.filter((s) => !s).length
-  const step = Math.min(22, (FARTHEST - NEAREST) / Math.max(arcCount - 1, 1))
+}
+
+/** Each arrow's line, head and middle (where the "?" of an inference goes),
+ * and whether it goes straight: then in the spine's coordinates, centred on
+ * `SPINE / 2`; otherwise it arcs in the lane's, which start at the boxes'
+ * right edge, each arc a little further out. */
+function route(
+  arrows: DiagramView['arrows'],
+  straight: ReadonlyArray<boolean>,
+  boxes: ReadonlyArray<Box>,
+) {
   let arcs = 0
   return arrows.map((arrow, i) => {
     const from = boxes[arrow.from]
     const to = boxes[arrow.to]
     if (!from || !to) return null
     if (straight[i]) {
-      const x = BOX_X + BOX_W / 2
+      const x = SPINE / 2
       const down = arrow.to > arrow.from
       const y1 = down ? from.y + from.height + 3 : from.y - 3
       const y2 = down ? to.y - 4 : to.y + to.height + 4
@@ -153,32 +177,43 @@ function route(arrows: DiagramView['arrows'], boxes: ReadonlyArray<Box>) {
         head: head(x, y2, down ? Math.PI / 2 : -Math.PI / 2),
         middle: { x, y: (y1 + y2) / 2 },
         evidence: arrow.evidence,
+        straight: true,
       }
     }
-    const reach = NEAREST + step * arcs
+    const reach = ARC_FIRST + ARC_STEP * arcs
     arcs += 1
-    const x1 = BOX_X + BOX_W + 3
+    const x1 = 3
     const y1 = from.y + from.height / 2
-    const x2 = BOX_X + BOX_W + 5
+    const x2 = 5
     const y2 = to.y + to.height / 2
     return {
       d: `M${x1} ${y1}C${reach} ${y1} ${reach} ${y2} ${x2} ${y2}`,
       head: head(x2, y2, Math.PI),
       middle: { x: 0.125 * x1 + 0.75 * reach + 0.125 * x2, y: (y1 + y2) / 2 },
       evidence: arrow.evidence,
+      straight: false,
     }
   })
 }
 
 type Route = NonNullable<ReturnType<typeof route>[number]>
 
-/** A node: an HTML box over the arrows' SVG, at the place `stack` gave it.
- * The text is HTML so axe can measure its contrast on the box's paper. */
-function NodeBox({ box, label }: { box: Box; label: string }) {
+/** A node: an HTML box at the place `stack` gave it, as wide as the column
+ * minus the arcs' lane. The text is HTML so axe can measure its contrast on
+ * the box's paper. */
+function NodeBox({
+  box,
+  label,
+  lane,
+}: {
+  box: Box
+  label: string
+  lane: number
+}) {
   return (
     <div
       className="absolute flex items-center justify-center rounded-mao border-2 border-tinta bg-folha px-2 text-center font-body text-nota leading-tight"
-      style={{ top: box.y, left: BOX_X, width: BOX_W, height: box.height }}
+      style={{ top: box.y, left: BOX_X, right: lane, height: box.height }}
     >
       {label}
     </div>
@@ -229,11 +264,21 @@ function ArrowList({ visual }: { visual: DiagramView }) {
   )
 }
 
+/** Some arrows, each in its stroke, inside the SVG that holds them. Each
+ * line is unique: a second arrow between the same two nodes arcs. */
+function Arrows({ paths }: { paths: ReadonlyArray<Route> }) {
+  return paths.map((path) => <ArrowDrawing key={path.d} path={path} />)
+}
+
 export function VisualDiagram({ visual }: { visual: DiagramView }) {
-  const boxes = stack(visual.nodes)
+  const straight = straightArrows(visual.arrows)
+  const lane = laneFor(straight.filter((s) => !s).length)
+  const boxes = stack(visual.nodes, lettersFor(lane))
   const last = boxes[boxes.length - 1]
   const height = last ? last.y + last.height + 4 : 0
-  const paths = route(visual.arrows, boxes)
+  const paths = route(visual.arrows, straight, boxes).filter(
+    (path): path is Route => path !== null,
+  )
   return (
     <VisualFrame domId={visual.domId} title={visual.title} note={visual.note}>
       <div
@@ -243,20 +288,30 @@ export function VisualDiagram({ visual }: { visual: DiagramView }) {
         data-slot="diagrama"
       >
         <svg
-          width={WIDTH}
+          width={SPINE}
           height={height}
-          className="absolute inset-0 overflow-visible"
+          className="absolute top-0 overflow-visible"
+          style={{
+            left: `calc(${BOX_X}px + (100% - ${BOX_X + lane}px) / 2 - ${SPINE / 2}px)`,
+          }}
         >
-          {paths.map(
-            (path, i) =>
-              path && <ArrowDrawing key={`${path.d}-${i}`} path={path} />,
-          )}
+          <Arrows paths={paths.filter((p) => p.straight)} />
         </svg>
+        {lane > 0 && (
+          <svg
+            width={lane}
+            height={height}
+            className="absolute top-0 right-0 overflow-visible"
+          >
+            <Arrows paths={paths.filter((p) => !p.straight)} />
+          </svg>
+        )}
         {boxes.map((box, i) => (
           <NodeBox
             key={visual.nodes[i]?.id}
             box={box}
             label={visual.nodes[i]?.label ?? ''}
+            lane={lane}
           />
         ))}
       </div>

@@ -153,7 +153,8 @@ Papel e tinta fazem quase todo o trabalho; a cor entra como tinta de risografia,
 
 ### Secondary
 
-- **Rosa risografia "atenção"** (rosa-mito): só o número-chave da resposta curta e o risco da frase do Mito.
+- **Rosa risografia "atenção"** (rosa-mito): só o número-chave e o risco da frase do Mito.
+- O marca-texto rosa marca o número-chave no texto (a resposta curta) e nas Visualizações (o valor da barra ou do ponto em destaque). Fora dele, o rosa só aparece no risco do Mito.
 
 ### Tertiary
 

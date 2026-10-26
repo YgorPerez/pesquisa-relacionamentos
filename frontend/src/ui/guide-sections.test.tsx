@@ -10,7 +10,7 @@ import { openScreen } from '#/platform/screens/open-screen'
 const follows = (a: Element, b: Element) =>
   (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
 
-it('the index lists each Question with its short answer and leads to its section', async () => {
+it('the index lists each Question with the first sentence of its short answer and leads to its section', async () => {
   openScreen('/onde-conhecer-pessoas')
   const index = await screen.findByRole('navigation', {
     name: 'Perguntas deste Guia',
@@ -24,7 +24,11 @@ it('the index lists each Question with its short answer and leads to its section
     const section = document.getElementById(link.getAttribute('href')!.slice(1))
     expect(section).toHaveAccessibleName(link.textContent!)
   }
-  expect(index).toHaveTextContent('18% dos adultos jovens')
+  expect(index).toHaveTextContent(
+    'No Brasil, 18% dos adultos jovens conheceram o parceiro por app.',
+  )
+  // The rest of the short answer opens the Question's section, not the index.
+  expect(index).not.toHaveTextContent('Os estudos divergem')
   // The index makes no claim of its own: the numbers are in the sections.
   expect(within(index).queryByRole('link', { name: /^Ficha/ })).toBeNull()
 })

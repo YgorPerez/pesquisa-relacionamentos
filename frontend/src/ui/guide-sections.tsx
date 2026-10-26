@@ -41,7 +41,8 @@ export function SourcesArrow() {
 }
 
 /** The index at the top of the Guide: each Question, which leads to its
- * section, with the Confidence and the short answer. */
+ * section, with the Confidence and the first sentence of the short answer,
+ * so the list stays short on a phone. */
 export function GuideIndex({ index }: { index: GuideView['index'] }) {
   return (
     <nav aria-labelledby="t-indice" id="indice">
@@ -64,7 +65,7 @@ export function GuideIndex({ index }: { index: GuideView['index'] }) {
               confidence={question.confidence}
               className="mt-1 flex"
             />
-            <Html className="prosa mt-xs" html={question.answerHtml} />
+            <p className="mt-xs mb-0">{question.firstSentence}</p>
           </li>
         ))}
       </ol>
