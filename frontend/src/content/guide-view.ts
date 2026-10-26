@@ -284,11 +284,9 @@ export interface GuideView {
   readonly topic: string
   readonly title: string
   readonly openingHtml: SafeHtml
-  /** The index at the top: each Question with its short answer, without the
-   * reference numbers. */
-  readonly index: ReadonlyArray<
-    QuestionSummary & { readonly answerHtml: SafeHtml }
-  >
+  /** The index at the top: each Question with its Confidence and the first
+   * sentence of its short answer, as text. */
+  readonly index: ReadonlyArray<QuestionSummary>
   readonly questions: ReadonlyArray<QuestionView>
   /** "O que levar". */
   readonly takeaways: ReadonlyArray<GuideTip>
@@ -553,12 +551,9 @@ export function guideView(topic: Topic, library: Library): GuideView {
     topic: topic.slug,
     title: topic.title,
     openingHtml: html(withReferences(topic.opening, numbers)),
-    // The index repeats each short answer without the numbers: the numbers
-    // lead to the Fact sheets from the Question's section.
-    index: guides.map((g) => ({
-      ...questionSummary(g),
-      answerHtml: html(withoutReferences(g.shortAnswer)),
-    })),
+    // The index shows only the first sentence of each short answer, without
+    // the reference numbers: the whole answer opens the Question's section.
+    index: guides.map(questionSummary),
     questions: guides.map((g) =>
       questionView(g, library, numbers, visualsOf(g)),
     ),
@@ -572,9 +567,6 @@ export function guideView(topic: Topic, library: Library): GuideView {
     search: topicSearch(topic),
   }
 }
-
-const withoutReferences = (markdown: string) =>
-  markdown.replace(REFS, '').replace(/==([^=\n]+)==/g, '$1')
 
 export interface TipSummary {
   readonly slug: string

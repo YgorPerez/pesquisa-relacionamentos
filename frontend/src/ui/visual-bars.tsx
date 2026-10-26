@@ -94,7 +94,7 @@ function Axis({ ticks }: { ticks: BarsView['ticks'] }) {
         <span
           key={tick.at}
           className={cn(
-            'absolute top-1',
+            'absolute top-1 whitespace-nowrap',
             i === last ? '-translate-x-full' : i > 0 && '-translate-x-1/2',
           )}
           style={{ left: at(tick.at) }}

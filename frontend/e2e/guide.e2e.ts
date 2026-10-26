@@ -55,7 +55,7 @@ test.describe('Guide page', () => {
     await noSideScroll(page)
   })
 
-  test('the index lists each Question with its short answer, without numbers, and leads to its section', async ({
+  test('the index lists each Question with the first sentence of its short answer, without numbers, and leads to its section', async ({
     page,
   }) => {
     await page.goto(GUIDE)
@@ -65,6 +65,7 @@ test.describe('Guide page', () => {
     await expect(items.nth(0)).toContainText(
       'No Brasil, 18% dos adultos jovens conheceram o parceiro por app.',
     )
+    await expect(items.nth(0)).not.toContainText('Os estudos divergem')
     await expect(items.nth(0)).toContainText('moderada')
     await expect(index.locator('a.ref')).toHaveCount(0)
     await items.nth(1).getByRole('link').click()
@@ -151,6 +152,28 @@ test.describe("a Question's section", () => {
     await expect(page.locator('[data-slot="melhor-desenho"]')).toContainText(
       'A amostra brasileira foi sorteada',
     )
+  })
+
+  test('a relation diagram fits a phone narrower than 340px', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 800 })
+    await page.goto(GUIDE)
+    const drawing = page.locator('[data-slot="diagrama"]').first()
+    await expect(drawing).toBeVisible()
+    // What each SVG draws and each node box, against the column's edges.
+    const overflow = await drawing.evaluate((element) => {
+      const column = element.getBoundingClientRect()
+      const rights = [...element.children].map((child) => {
+        const rect = child.getBoundingClientRect()
+        if (!(child instanceof SVGSVGElement)) return rect.right
+        const drawn = child.getBBox()
+        return rect.left + drawn.x + drawn.width
+      })
+      return Math.max(...rights) - column.right
+    })
+    expect(overflow).toBeLessThanOrEqual(1)
+    await noSideScroll(page)
   })
 
   test('Profile, struck-out Myths and the Limitations of each Question', async ({

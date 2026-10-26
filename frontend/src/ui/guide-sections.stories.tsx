@@ -22,8 +22,8 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/** The index at the top: each Question with its Confidence and short
- * answer. */
+/** The index at the top: each Question with its Confidence and the first
+ * sentence of its short answer. */
 export const Index: Story = {
   render: () => <GuideIndex index={GUIDE.index} />,
 }
