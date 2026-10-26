@@ -17,7 +17,8 @@
 // 1.1.1 published by IBGE, which checks the weight, the adult filter and the
 // Y008 codes.
 import type { Aggregate } from './census.ts'
-import { proportion, type PnsRecord } from './pns.ts'
+import type { PnsRecord } from './pns.ts'
+import { proportion } from './sample.ts'
 
 export interface MaritalCell {
   /** `BR` or the state abbreviation. */

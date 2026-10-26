@@ -84,6 +84,51 @@ describe('the default pack and the detail pack', () => {
     )
   })
 
+  // One change that turns each Requirement on. A new Requirement has to come
+  // in here, so the next test covers it.
+  const ON: Readonly<Record<VisitorRequirement, Partial<Requirements>>> = {
+    age: { age: { min: 25, max: 34 } },
+    place: { place: { state: 'AC' } },
+    partner: { noLiveInPartner: true },
+    education: { education: 'superior' },
+    income: { income: '2-5' },
+    color: { colors: ['branca'] },
+    religion: { religions: ['catolica'] },
+    children: { noChildren: true },
+    parents: { notWithParents: true },
+    work: { work: 'trabalha' },
+    home: { ownsHome: true },
+    height: { height: { min: 160, max: 170 } },
+    smoking: { nonSmoker: true },
+    drinking: { drinking: ['nunca'] },
+    exercise: { exercises: true },
+    teeth: { goodTeeth: true },
+    vape: { nonVaper: true },
+    office: { office: true },
+    obesity: { notObese: true },
+    depression: { noDepressionSymptoms: true },
+    bisexual: { bisexual: true },
+    worship: { weeklyWorship: true },
+  }
+
+  it.each(Object.entries(ON))(
+    'with only %s on, a count that does not ask for the detail pack gets the same number from the default one',
+    (_, change) => {
+      // The Census detail dimensions, the PNS detail columns and the
+      // Requirements that ask for them are three lists kept by hand: a
+      // Requirement that reads a summed-out column without asking for the
+      // detail pack counts wrong on the default one.
+      const input = {
+        profile: { gender: 'homem', seeks: 'mulheres' } as const,
+        requirements: { ...DEFAULT_REQUIREMENTS, ...ac, ...change },
+      }
+      if (needsDetail(input)) return
+      expect(estimateGroup(input, data('AC')).result).toEqual(
+        estimateGroup(input, data('AC', true)).result,
+      )
+    },
+  )
+
   it('without those, both packs give the same count', () => {
     const input = {
       profile: { seeks: 'mulheres' } as const,
@@ -457,9 +502,10 @@ describe('estimateGroup: PNS requirements', () => {
     const r = count({ seeks: 'mulheres' }, { ...ac, exercises: true })
     expect(r.active).toContain('exercise')
     expect(r.result.central).toBeCloseTo((4000 * 770) / 990)
-    expect(r.caveats.find((x) => x.id === 'exercise')?.text).toContain(
-      '150 minutos',
-    )
+    const caveat = r.caveats.find((x) => x.id === 'exercise')?.text
+    expect(caveat).toContain('150 minutos')
+    // The decision of 2026-10-26: the WHO counts a vigorous minute as two.
+    expect(caveat).toMatch(/OMS.*vigorosa.*como dois/)
     const crossed = count(
       { seeks: 'mulheres' },
       { ...ac, exercises: true, drinking: ['nunca'] },
@@ -497,13 +543,33 @@ describe('estimateGroup: PNS requirements', () => {
     expect(r.caveats.find((x) => x.id === 'unstable')).toBeUndefined()
   })
 
-  it('sums the PNS records of every bracket the group covers', () => {
-    // 25 to 34: brackets 25-29 and 30-34, 92 straight or bi records each.
+  // 25 to 34 and 155 to 165 cm: in each sex, 50 PNS records pass in the
+  // 25-29 bracket and 30 in the 30-34 one.
+  const thin = { age: { min: 25, max: 34 }, place: { state: 'AC' } } as const
+  const short = { min: 155, max: 165 }
+
+  it('a thin PNS bracket that carries a fifth of the group or more makes it unstable, even when the brackets add up past 50', () => {
+    // Men without a partner: 1,500 aged 25-29 and 600 aged 30-34, so the
+    // thin bracket carries 600 / 2,100 of the group.
+    const r = count(
+      { gender: 'mulher', seeks: 'homens' },
+      { ...thin, height: short },
+    )
+    expect(r.result.pnsRecords).toBe(30)
+    expect(r.result.unstable).toBe(true)
+    expect(r.caveats.find((x) => x.id === 'unstable-pns')?.text).toContain(
+      '30 registros da PNS',
+    )
+  })
+
+  it('a thin PNS bracket with a small share of the group does not', () => {
+    // Women without a partner: 4,000 aged 25-29 and 400 aged 30-34, under a
+    // tenth of the group.
     const r = count(
       { gender: 'homem', seeks: 'mulheres' },
-      { age: { min: 25, max: 34 }, place: { state: 'AC' } },
+      { ...thin, height: short },
     )
-    expect(r.result.pnsRecords).toBe(184)
+    expect(r.result.pnsRecords).toBe(50)
     expect(r.result.unstable).toBe(false)
   })
 
@@ -609,6 +675,20 @@ describe('estimateGroup: office occupation (PNAD)', () => {
     expect(caveat).toContain('PNAD Contínua')
     expect(caveat).toContain('apoio administrativo')
     expect(caveat).toContain('renda')
+  })
+
+  it('the source line names the PNAD only when office is on', () => {
+    const ac = { age: { min: 25, max: 29 }, place: { state: 'AC' } } as const
+    const source = (office: boolean) =>
+      count({ seeks: 'mulheres' }, { ...ac, office }).caveats.find(
+        (x) => x.id === 'source',
+      )?.text
+    expect(source(true)).toBe(
+      'Censo de julho de 2022, PNS 2019 e PNAD Contínua do 3º trimestre de 2022. Fonte: IBGE.',
+    )
+    expect(source(false)).toBe(
+      'Censo de julho de 2022 e PNS 2019. Fonte: IBGE.',
+    )
   })
 
   it('enters the independence range: bounded in each education first, then against the PNS block', () => {

@@ -28,37 +28,26 @@ import {
   STATES,
   TARGET_NAME,
   requirementValue,
-  sensitiveOn,
   type VisitorRequirement,
   type Requirements,
 } from '@tem-estudo/rules/requirements'
-import {
-  groupImage,
-  isLink,
-  linkSentence,
-  linkQuery,
-  sharedLink,
-} from '@tem-estudo/rules/link'
-import { useId, useRef, useState, type ReactNode } from 'react'
+import { isLink } from '@tem-estudo/rules/link'
+import { useId, useRef, type ReactNode } from 'react'
 import type { CalculatorGuide } from '#/content/guides'
 import { reads } from '#/content/reads'
 import { fetchGroupPreview, previewMeta } from '#/content/preview'
 import { useReceivedLink } from '#/state/link'
-import { Share } from '#/ui/share'
-import { COUNTING_NOTICE } from '#/ui/share.copy'
-import { SensitiveConsent } from '#/ui/share-consent'
-import { ShareImage } from '#/ui/share-image'
 import {
   saveRequirements,
   PLACES_WITH_DATA,
   usePossibleGroup,
-  useSharedEstimate,
   useSavedRequirements,
   type BrowserCount,
 } from '#/state/possible-group'
 import { useProfile } from '#/state/profile'
 import { countCalculatorUse } from '#/analytics/counting'
 import { SiteButton } from '#/ui/button'
+import { GroupShare } from '#/ui/group-share'
 import {
   Folds,
   EstimateRange,
@@ -66,6 +55,7 @@ import {
   CheckChip,
   PinnedNumber,
   Options,
+  SensitiveNote,
   Stepper,
 } from '#/ui/possible-group'
 import { costText } from '#/ui/possible-group.copy'
@@ -101,7 +91,7 @@ export const Route = createFileRoute('/grupo-possivel')({
       {
         name: 'description',
         content:
-          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022 e a PNS 2019.',
+          'Quantas pessoas no Brasil atendem ao que você procura: idade, cidade, escolaridade, renda e outros Requisitos, com o Censo 2022, a PNS 2019 e a PNAD Contínua 2022.',
       },
       ...previewMeta(loaderData?.preview ?? null),
     ],
@@ -169,62 +159,6 @@ function PossibleGroupPage() {
   )
 }
 
-/** "Compartilhar": the link, its sentence, the consent for the sensitive
- * Requirements and the image. */
-function GroupShare({
-  profile,
-  saved,
-  estimate,
-  municipality,
-}: {
-  profile: Profile | null
-  saved: Requirements | null
-  estimate: BrowserCount['estimate']
-  municipality: string | undefined
-}) {
-  const sensitive = sensitiveOn(saved ?? DEFAULT_REQUIREMENTS)
-  // The consent covers the sensitive Requirements on when it was given: a new
-  // one turned on afterwards asks again.
-  const [consentFor, setConsentFor] = useState<string | null>(null)
-  const consent = sensitive.length > 0 && consentFor === sensitive.join(',')
-  const shared = sharedLink(
-    { calculator: 'grupo-possivel', profile, requirements: saved },
-    consent,
-  )
-  const query = linkQuery(shared.state)
-  // The image reads the link itself, so it shows only what the link carries,
-  // with the count of that: without the sensitive Requirements left out.
-  const sharedEstimate = useSharedEstimate(
-    profile,
-    shared.state.requirements,
-    shared.leftOut.length > 0,
-  )
-  const imageCount = shared.leftOut.length > 0 ? sharedEstimate : estimate
-  const image = imageCount && groupImage(query, imageCount, { municipality })
-
-  return (
-    <Share
-      query={query}
-      sentence={linkSentence(shared.state, {
-        municipality,
-        leftOut: shared.leftOut,
-      })}
-      notice={COUNTING_NOTICE}
-      consent={
-        sensitive.length > 0 && (
-          <SensitiveConsent
-            sensitive={sensitive}
-            checked={consent}
-            onChange={(yes) => setConsentFor(yes ? sensitive.join(',') : null)}
-          />
-        )
-      }
-    >
-      {image && <ShareImage image={image} />}
-    </Share>
-  )
-}
-
 /** The title, the number pinned at the top, the invitation and the count's
  * notices. `replaced`: a received link replaced the saved Profile and
  * Requirements. */
@@ -246,7 +180,7 @@ function CountTop({
 
       <p className="mx-0 mt-5.5 mb-md">
         Diga quem você procura e ligue os seus Requisitos. O número de cima muda
-        junto, com dados do Censo 2022 e da PNS 2019.
+        junto, com dados do Censo 2022, da PNS 2019 e da PNAD Contínua 2022.
       </p>
       <CountNotices
         replaced={replaced}
@@ -325,9 +259,9 @@ function YourRequirements({
                     childrenData={estimate.children}
                     id={childrenReasonId}
                   />
-                ) : SENSITIVE_NOTE[k] ? (
-                  <SensitiveNote text={SENSITIVE_NOTE[k]} />
-                ) : undefined
+                ) : (
+                  <SensitiveNote requirement={k} />
+                )
               }
             >
               <Control {...props} />
@@ -595,29 +529,6 @@ const CONTROL: Record<VisitorRequirement, (props: ControlProps) => ReactNode> =
       />
     ),
   }
-
-/** What each sensitive Requirement measures, under its control. The count's
- * caveats say the rest. */
-const SENSITIVE_NOTE: Partial<Record<VisitorRequirement, string>> = {
-  obesity:
-    'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
-  depression:
-    'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
-  bisexual:
-    'Quem se declara bissexual na PNS 2019, de 18 anos ou mais. É uma estatística experimental do IBGE, com poucos registros por idade.',
-  worship:
-    'Quem vai a cultos ou atividades da religião uma vez por semana ou mais, pela PNS 2019, que não pergunta qual religião.',
-}
-
-/** The note of a sensitive Requirement: what it measures and where it stays. */
-function SensitiveNote({ text }: { text: string }) {
-  return (
-    <p className={HINT}>
-      {text} Dado sensível: fica só neste aparelho e vai no link só se você
-      deixar.
-    </p>
-  )
-}
 
 /** The "A conta" block: the range, what weighs most, with the button to
  * release each Requirement, and the cut-by-cut and uncertainty folds. */

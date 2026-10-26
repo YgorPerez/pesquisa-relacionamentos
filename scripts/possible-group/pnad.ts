@@ -12,6 +12,7 @@
 // and PSU (UPA), as the PNS file does.
 
 import type { Sex } from './pns.ts'
+import { proportion } from './sample.ts'
 
 export type Education = 'sem-fundamental' | 'fundamental' | 'medio' | 'superior'
 
@@ -108,42 +109,6 @@ export function estimatePnad(records: ReadonlyArray<PnadRecord>): PnadRow[] {
           })
         }
   return rows
-}
-
-const Z95 = 1.96
-
-/** The weighted proportion of `y` in the domain, with the 95% interval. */
-function proportion(
-  domain: ReadonlyArray<PnadRecord>,
-  y: (r: PnadRecord) => boolean,
-) {
-  const total = domain.reduce((s, r) => s + r.weight, 0)
-  const yes = domain.reduce((s, r) => s + (y(r) ? r.weight : 0), 0)
-  const p = yes / total
-  // Linearization: the residual w(y − p)/Σw summed per PSU, and the variance
-  // between PSUs within each stratum. A stratum with one PSU adds nothing.
-  const byStratum = new Map<string, Map<string, number>>()
-  for (const r of domain) {
-    const psus = byStratum.get(r.stratum) ?? new Map<string, number>()
-    byStratum.set(r.stratum, psus)
-    const z = (r.weight * ((y(r) ? 1 : 0) - p)) / total
-    psus.set(r.psu, (psus.get(r.psu) ?? 0) + z)
-  }
-  let variance = 0
-  for (const psus of byStratum.values()) {
-    const n = psus.size
-    if (n < 2) continue
-    const zs = [...psus.values()]
-    const mean = zs.reduce((s, z) => s + z, 0) / n
-    variance += (n / (n - 1)) * zs.reduce((s, z) => s + (z - mean) ** 2, 0)
-  }
-  const error = Z95 * Math.sqrt(variance)
-  return {
-    p,
-    p_min: Math.max(0, p - error),
-    p_max: Math.min(1, p + error),
-    n_registros: domain.length,
-  }
 }
 
 /** Positions from `input_PNADC_trimestral.sas` (start column, length), 1-based. */

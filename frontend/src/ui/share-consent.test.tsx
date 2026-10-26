@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import { DEFAULT_REQUIREMENTS } from '@tem-estudo/rules/requirements'
 import { expect, it } from 'vite-plus/test'
 import { openPossibleGroup } from '#/platform/screens/possible-group'
+import { CONSENT_STORAGE, consentLabel } from './share-consent.copy'
 
 function saveRequirements(change: object) {
   localStorage.setItem(
@@ -23,7 +24,7 @@ it('a sensitive Requirement stays out of the link until the visitor checks the b
   await screen.findByRole('region', { name: 'Compartilhar' })
 
   const consent = await share().findByRole('checkbox', {
-    name: 'Incluir no link: bissexual',
+    name: consentLabel(['bisexual']),
   })
   expect(consent).not.toBeChecked()
   expect(
@@ -49,13 +50,16 @@ it('says the sensitive Requirements stay saved only on this device and never rea
   saveRequirements({ notObese: true, weeklyWorship: true })
   openPossibleGroup()
   await screen.findByRole('region', { name: 'Compartilhar' })
+  // The box names each one, in words.
   expect(
     await share().findByRole('checkbox', {
-      name: 'Incluir no link: IMC abaixo de 30 e vai à religião toda semana',
+      name: consentLabel(['obesity', 'worship']),
     }),
   ).not.toBeChecked()
-  expect(share().getByText(/ficam salvos só neste aparelho/)).toBeVisible()
-  expect(share().getByText(/não os guarda nem os conta/)).toBeVisible()
+  expect(consentLabel(['obesity', 'worship'])).toBe(
+    'Incluir no link: IMC abaixo de 30 e vai à religião toda semana',
+  )
+  expect(share().getByText(CONSENT_STORAGE)).toBeVisible()
 })
 
 it('with no sensitive Requirement on, there is nothing to consent to', async () => {

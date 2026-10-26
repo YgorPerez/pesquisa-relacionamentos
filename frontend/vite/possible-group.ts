@@ -2,9 +2,10 @@
 // (kept gzipped in the repository, under GitHub's 100 MB per file):
 // instead of it, the build writes two JSON packs per place (Brazil and each
 // state, the latter with its municipalities), and the page downloads only
-// what the count needs. The default pack sums out parents, work and home;
+// what the count needs. The default pack sums out the Census parents, work
+// and home and the PNS BMI, depression symptoms and religious attendance;
 // the detail one keeps them and is downloaded only when one of those
-// Requirements is on. The count runs in the browser, so the Requirements and
+// Requirements is on (`needsDetail`). The count runs in the browser, so the Requirements and
 // the Profile never leave the device (story 68).
 //
 // The packs live at `/dados/grupo-possivel/<version>/<place>.json` and
@@ -44,11 +45,11 @@ const FILES: Record<keyof GroupFiles, string> = {
 
 export interface BuiltData {
   readonly version: string
-  /** The JSON text of each default pack (parents, work and home summed
-   * out), which every count downloads. */
+  /** The JSON text of each default pack (the detail columns summed out),
+   * which every count downloads. */
   readonly packs: ReadonlyMap<PackPlace, string>
   /** The JSON text of each detail pack, downloaded only when a Requirement
-   * reads parents, work or home. */
+   * reads a detail column (`needsDetail`). */
   readonly detailPacks: ReadonlyMap<PackPlace, string>
   /** Both, by file name (`packFile`). */
   readonly files: ReadonlyMap<string, string>

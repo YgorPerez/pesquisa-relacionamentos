@@ -7,7 +7,7 @@ import type {
   RequirementId,
 } from '@tem-estudo/rules/possible-group'
 import {
-  formatRange,
+  rangeParts,
   formatAmount,
   formatTimes,
 } from '@tem-estudo/rules/numbers'
@@ -30,7 +30,13 @@ import {
   CollapsibleTrigger,
 } from '@/ui/shadcn/collapsible'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
-import { costText, independenceSources } from './possible-group.copy'
+import {
+  costText,
+  independenceSources,
+  samplingText,
+  SENSITIVE_NOTE,
+  SENSITIVE_STAYS,
+} from './possible-group.copy'
 import { Headline, Panel, Section } from './section'
 
 /** While the data arrives, the old number stays, faded. */
@@ -47,16 +53,13 @@ const STEP_ROW =
  * "instável". */
 export function EstimateRange({ estimate }: { estimate: Estimate }) {
   const { min, max, unstable } = estimate.result
-  const text = formatRange(min, max)
-  const [, before = '', numbers = text] =
-    /^(entre |cerca de )?(.*)$/.exec(text) ?? []
+  const { before, numbers } = rangeParts(min, max)
   return (
     <p
       className="m-0 mt-0.5 font-headline text-headline leading-tight"
       data-slot="gp-faixa"
     >
-      {before}
-      <mark className="numero-chave">{numbers}</mark>
+      {before} <mark className="numero-chave">{numbers}</mark>
       {unstable && (
         <span className="ml-2.5 inline-block rounded-mao-2 border-(length:--traco-controle) fio-tracejado border-tinta px-2 py-0 align-[3px] font-label text-label leading-tight font-bold tracking-normal">
           instável
@@ -175,6 +178,22 @@ export function RequirementRow({
         {cost ? costText(cost) : active ? '' : 'não corta ninguém'}
       </p>
     </div>
+  )
+}
+
+/** The note of a sensitive Requirement, under its control: what it measures
+ * and where it stays. Nothing for the others. */
+export function SensitiveNote({
+  requirement,
+}: {
+  requirement: keyof typeof REQUIREMENT_TITLE
+}) {
+  const note = SENSITIVE_NOTE[requirement]
+  if (!note) return null
+  return (
+    <p className={HINT}>
+      {note} {SENSITIVE_STAYS}
+    </p>
   )
 }
 
@@ -463,11 +482,7 @@ function WhereUncertaintyComesFrom({ estimate }: { estimate: Estimate }) {
             juntos; por isso o site cruza os dados.
           </p>
         )}
-        <p className={HINT}>
-          A faixa junta o erro de amostra do Censo (
-          {Math.round(result.records).toLocaleString('pt-BR')} registros) com o
-          intervalo da PNS.
-        </p>
+        <p className={HINT}>{samplingText(active, result.records)}</p>
         <IndependenceRange estimate={estimate} />
         <ul className="mx-0 mt-2.5 mb-sm pl-marcador-curto text-nota leading-normal">
           {caveats
@@ -493,9 +508,10 @@ function IndependenceRange({
   estimate: Estimate
 }) {
   if (!independence) return null
-  const range = formatRange(independence.min, independence.max)
+  const { before, numbers } = rangeParts(independence.min, independence.max)
   // Rounded to the same number, the assumption changes nothing worth saying.
-  if (!range.startsWith('entre ')) return null
+  if (before !== 'entre') return null
+  const range = `${before} ${numbers}`
   const sources = independenceSources(active)
   return (
     <>
@@ -510,7 +526,9 @@ function IndependenceRange({
         menor e o maior número que os dados permitem.
       </p>
       <p className={HINT}>
-        Nenhuma das duas faixas é um intervalo de confiança.
+        A faixa de cima junta intervalos de confiança de 95%, mas não é ela
+        mesma um intervalo de 95% exato. Esta segunda não é intervalo de
+        confiança.
       </p>
     </>
   )

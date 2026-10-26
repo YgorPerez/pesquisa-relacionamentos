@@ -6,17 +6,28 @@ import {
   type Cost,
   type RequirementId,
 } from '@tem-estudo/rules/possible-group'
+import { andList } from '@tem-estudo/rules/lists'
 import { formatGain, formatTimes } from '@tem-estudo/rules/numbers'
-import { REQUIREMENT_TITLE } from '@tem-estudo/rules/requirements'
+import {
+  REQUIREMENT_TITLE,
+  type SensitiveRequirement,
+} from '@tem-estudo/rules/requirements'
 
-const list = new Intl.ListFormat('pt-BR', { type: 'conjunction' })
+/** The Requirements whose title alone ("Pais", "Casa") does not say what
+ * they ask, written as in a sentence. */
+const NOUN: Partial<Record<RequirementId, string>> = {
+  partner: 'morar com companheiro(a)',
+  parents: 'morar com os pais',
+  work: 'situação de trabalho',
+  home: 'casa própria',
+  drinking: 'frequência com que bebe',
+}
 
 /** A Requirement as a noun in a sentence ("escolaridade", "morar com
  * companheiro(a)"). */
 const noun = (k: RequirementId) =>
-  k === 'partner'
-    ? 'morar com companheiro(a)'
-    : REQUIREMENT_TITLE[k as keyof typeof REQUIREMENT_TITLE].toLowerCase()
+  NOUN[k] ??
+  REQUIREMENT_TITLE[k as keyof typeof REQUIREMENT_TITLE].toLowerCase()
 
 /** The opening of the independence range's paragraph (#301): which
  * Requirements come from which survey, and how many surveys that is. On the
@@ -41,7 +52,7 @@ export function independenceSources(active: ReadonlyArray<RequirementId>): {
     .filter(([ks]) => ks.length > 0)
     .map(
       ([ks, of]) =>
-        `${list.format(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'} ${of}`,
+        `${andList(ks.map(noun))} ${ks.length > 1 ? 'vêm' : 'vem'} ${of}`,
     )
   const text = `${sides.join('; ')}.`
   return {
@@ -49,6 +60,40 @@ export function independenceSources(active: ReadonlyArray<RequirementId>): {
     surveys: sides.length,
   }
 }
+
+/** What the top range combines: the Census sampling error with the interval
+ * of each other survey the count reads (#287, #294). */
+export function samplingText(
+  active: ReadonlyArray<RequirementId>,
+  records: number,
+): string {
+  const census = `o erro de amostra do Censo (${Math.round(records).toLocaleString('pt-BR')} registros)`
+  const others = (['PNS', 'PNAD'] as const).filter((source) =>
+    active.some((k) => REQUIREMENT_SOURCE[k] === source),
+  )
+  if (others.length === 0) return `A faixa é ${census}.`
+  const intervals = andList(others.map((source) => `da ${source}`))
+  return `A faixa junta ${census} com ${others.length > 1 ? 'os intervalos' : 'o intervalo'} ${intervals}.`
+}
+
+/** What each sensitive Requirement measures, under its control. The count's
+ * caveats say the rest. */
+export const SENSITIVE_NOTE: Readonly<
+  Partial<Record<RequirementId, string>> & Record<SensitiveRequirement, string>
+> = {
+  obesity:
+    'IMC é o peso dividido pela altura ao quadrado; 30 ou mais é o corte de obesidade da OMS. A PNS 2019 usa o peso e a altura que a pessoa declarou.',
+  depression:
+    'Pelo PHQ-9 da PNS 2019, um questionário sobre as 2 últimas semanas: mede um período da vida, não quem a pessoa é.',
+  bisexual:
+    'Quem se declara bissexual na PNS 2019, de 18 anos ou mais. É uma estatística experimental do IBGE, com poucos registros por idade.',
+  worship:
+    'Quem vai a cultos ou atividades da religião uma vez por semana ou mais, pela PNS 2019, que não pergunta qual religião.',
+}
+
+/** Where a sensitive Requirement stays, after what it measures. */
+export const SENSITIVE_STAYS =
+  'Dado sensível: fica só neste aparelho e vai no link só se você deixar.'
 
 /** "soltar só este: ×3,4 (+670)". Below 5%, it says it barely changes. */
 export function costText(cost: Cost): string {

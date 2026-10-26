@@ -5,12 +5,15 @@
 // rest), given by a positive act: the box starts unchecked
 // (`reports/2026-10-18-lgpd-estado-link.md`). The page shows it only while
 // a sensitive Requirement is on.
-import {
-  sensitiveList,
-  type SensitiveRequirement,
-} from '@tem-estudo/rules/requirements'
+import type { SensitiveRequirement } from '@tem-estudo/rules/requirements'
 import { useId } from 'react'
 import { CheckChip } from './possible-group'
+import {
+  CONSENT_STORAGE,
+  CONSENT_TEXT,
+  CONSENT_TITLE,
+  consentLabel,
+} from './share-consent.copy'
 
 export function SensitiveConsent({
   sensitive,
@@ -33,22 +36,19 @@ export function SensitiveConsent({
         id={`${id}-t`}
         className="m-0 font-title text-linha leading-label font-bold"
       >
-        Requisitos sensíveis ficam fora do link
+        {CONSENT_TITLE}
       </h3>
       <p className="mt-xs mb-sm leading-nota" id={`${id}-d`}>
-        Peso, saúde mental, orientação sexual e religião são dados sensíveis
-        pela LGPD. Eles só vão no link se você marcar abaixo, e quem receber o
-        link vê esses Requisitos.
+        {CONSENT_TEXT}
       </p>
       <CheckChip
-        label={`Incluir no link: ${sensitiveList(sensitive)}`}
+        label={consentLabel(sensitive)}
         checked={checked}
         description={`${id}-d`}
         onChange={onChange}
       />
       <p className="mt-sm mb-0 text-label leading-nota font-normal text-tinta-2">
-        Eles ficam salvos só neste aparelho, no navegador, até você desligar. O
-        site não os guarda nem os conta nas visitas.
+        {CONSENT_STORAGE}
       </p>
     </div>
   )

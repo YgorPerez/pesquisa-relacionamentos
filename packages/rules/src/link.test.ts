@@ -328,6 +328,18 @@ describe('social preview', () => {
     })
   })
 
+  it('names the PNAD when the link carries office', () => {
+    const r = { ...DEFAULT_REQUIREMENTS, office: true }
+    expect(
+      groupPreview(
+        { calculator: 'grupo-possivel', profile: man30, requirements: r },
+        count,
+      ).description,
+    ).toMatch(
+      /^Pela conta do Grupo possível, com o Censo 2022, a PNS 2019 e a PNAD Contínua 2022\./,
+    )
+  })
+
   it("never carries the sharer's gender or age, nor the age taken from it", () => {
     const preview = groupPreview(
       { calculator: 'grupo-possivel', profile: man30, requirements: null },
@@ -416,7 +428,14 @@ describe('share image', () => {
       unstable: false,
       who: 'mulheres de 25 a 35 em SP',
       also: ['ensino superior', 'não fuma'],
+      sources: 'Censo 2022 e PNS 2019',
     })
+  })
+
+  it('names the PNAD among the sources when the link carries office', () => {
+    expect(
+      groupImage('v=1&procura=mulheres&escritorio=sim', count)?.sources,
+    ).toBe('Censo 2022, PNS 2019 e PNAD Contínua 2022')
   })
 
   it("never shows the sharer's gender or age, nor the age range taken from it", () => {
@@ -430,6 +449,7 @@ describe('share image', () => {
       unstable: true,
       who: 'mulheres no Brasil, na idade procurada',
       also: [],
+      sources: 'Censo 2022 e PNS 2019',
     })
     expect(JSON.stringify(image)).not.toMatch(/homem|homens|30|25|35/)
   })

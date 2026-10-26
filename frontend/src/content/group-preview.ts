@@ -26,7 +26,7 @@ export interface PreviewData {
 export async function buildGroupPreview(
   query: string,
   data: PreviewData,
-  /** The place's pack; the detail one (parents, work, home) with `detail`. */
+  /** The place's pack; the detail one with `detail` (`needsDetail`). */
   pack: (place: PackPlace, detail: boolean) => Promise<PlaceData | null>,
 ): Promise<Preview | null> {
   const state = readLink('grupo-possivel', query)

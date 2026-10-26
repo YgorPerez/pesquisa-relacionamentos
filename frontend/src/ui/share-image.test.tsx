@@ -12,6 +12,10 @@ import {
   requirement,
 } from '#/platform/screens/possible-group'
 import { enterProfile } from '#/platform/screens/profile'
+import { consentLabel } from './share-consent.copy'
+import { IMAGE_FORMATS, IMAGE_OUTCOME } from './share-image.copy'
+
+const { square: SQUARE, story: STORY } = IMAGE_FORMATS
 
 /** Every text the image drew, in order. */
 let drawn: string[] = []
@@ -74,11 +78,11 @@ it("the phone's share sheet gets the square PNG, which shows who is sought and n
   })
   const user = await countForAMan()
 
-  await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
+  await user.click(screen.getByRole('button', { name: SQUARE.label }))
 
   await waitFor(() => expect(share).toHaveBeenCalledOnce())
   const [file] = share.mock.calls[0]![0].files!
-  expect(file!.name).toBe('grupo-possivel-quadrada.png')
+  expect(file!.name).toBe(SQUARE.file)
   expect(file!.type).toBe('image/png')
   const text = drawn.join(' ')
   expect(text).toMatch(/procuro\?/)
@@ -101,19 +105,19 @@ it('without a share sheet, the story image downloads', async () => {
     downloads.push(this.download)
   })
 
-  await user.click(screen.getByRole('button', { name: 'Imagem para stories' }))
+  await user.click(screen.getByRole('button', { name: STORY.label }))
 
-  await waitFor(() => expect(downloads).toEqual(['grupo-possivel-stories.png']))
-  expect(screen.getByText('Imagem baixada.')).toBeVisible()
+  await waitFor(() => expect(downloads).toEqual([STORY.file]))
+  expect(screen.getByText(IMAGE_OUTCOME.downloaded)).toBeVisible()
 })
 
 it('without a canvas, it says the image did not come out', async () => {
   vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null)
   const user = await countForAMan()
 
-  await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
+  await user.click(screen.getByRole('button', { name: SQUARE.label }))
 
-  expect(await screen.findByText('Não deu para gerar a imagem.')).toBeVisible()
+  expect(await screen.findByText(IMAGE_OUTCOME.failed)).toBeVisible()
 })
 
 it('a sensitive Requirement without consent stays out of the image, and so does its cut in the number', async () => {
@@ -131,7 +135,7 @@ it('a sensitive Requirement without consent stays out of the image, and so does 
   const imageText = async () => {
     drawn = []
     share.mockClear()
-    await user.click(screen.getByRole('button', { name: 'Imagem quadrada' }))
+    await user.click(screen.getByRole('button', { name: SQUARE.label }))
     await waitFor(() => expect(share).toHaveBeenCalledOnce())
     return drawn.join(' ')
   }
@@ -141,9 +145,28 @@ it('a sensitive Requirement without consent stays out of the image, and so does 
   expect(before).toContain(withoutIt.split(' e ')[0])
 
   await user.click(
-    screen.getByRole('checkbox', { name: 'Incluir no link: bissexual' }),
+    screen.getByRole('checkbox', { name: consentLabel(['bisexual']) }),
   )
   const after = await imageText()
   expect(after).toMatch(/bissexual/)
   expect(after).toContain(withIt.split(' e ')[0])
+})
+
+it('with only a detail-pack sensitive Requirement on and no consent, the image still comes out', async () => {
+  // A fresh visit with the Requirements saved: the screen asks for the
+  // detail packs (BMI lives there), and the link, without BMI, needs the
+  // default ones, which nothing else on the page asks for.
+  localStorage.setItem(
+    'tem-estudo:profile',
+    JSON.stringify({ gender: 'homem', seeks: 'mulheres', age: 30 }),
+  )
+  localStorage.setItem(
+    'tem-estudo:requirements',
+    JSON.stringify({ place: { state: 'AC' }, notObese: true }),
+  )
+  openPossibleGroup()
+
+  expect(
+    await screen.findByRole('button', { name: SQUARE.label }),
+  ).toBeVisible()
 })

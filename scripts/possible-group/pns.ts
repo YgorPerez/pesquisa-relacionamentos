@@ -16,6 +16,8 @@
 // A new PNS variable is one entry in `PNS_VARIABLES` (and its positions in
 // `POSITIONS`): it becomes a CSV column that the rules read without change.
 
+import { estimate } from './sample.ts'
+
 export type Sex = 'homem' | 'mulher'
 
 /** The CSV column of each PNS variable. */
@@ -390,61 +392,6 @@ function designEffect(domain: ReadonlyArray<PnsRecord>): number {
     ? (effects[middle - 1]! + effects[middle]!) / 2
     : effects[Math.floor(middle)]!
   return Math.max(1, median)
-}
-
-/** A weighted proportion with its 95% interval, for the cross-check. */
-export interface Proportion {
-  readonly p: number
-  readonly p_min: number
-  readonly p_max: number
-  readonly n_registros: number
-}
-
-const Z95 = 1.96
-
-/** The weighted proportion of `y` in the domain, with the 95% interval of
- * the sample design. */
-export function proportion(
-  domain: ReadonlyArray<PnsRecord>,
-  y: (r: PnsRecord) => boolean,
-): Proportion {
-  const { p, variance } = estimate(domain, y)
-  const error = Z95 * Math.sqrt(variance)
-  return {
-    p,
-    p_min: Math.max(0, p - error),
-    p_max: Math.min(1, p + error),
-    n_registros: domain.length,
-  }
-}
-
-/**
- * The ratio p = Σwy / Σw and its variance by linearization: the residual
- * z = w(y − p)/Σw summed per PSU, and the variance between PSUs within each
- * stratum. A stratum with a single PSU in the domain does not contribute.
- */
-function estimate(
-  domain: ReadonlyArray<PnsRecord>,
-  y: (r: PnsRecord) => boolean,
-): { p: number; variance: number } {
-  const total = domain.reduce((s, r) => s + r.weight, 0)
-  const p = domain.reduce((s, r) => s + (y(r) ? r.weight : 0), 0) / total
-  const byStratum = new Map<string, Map<string, number>>()
-  for (const r of domain) {
-    const psus = byStratum.get(r.stratum) ?? new Map<string, number>()
-    byStratum.set(r.stratum, psus)
-    const z = (r.weight * ((y(r) ? 1 : 0) - p)) / total
-    psus.set(r.psu, (psus.get(r.psu) ?? 0) + z)
-  }
-  let variance = 0
-  for (const psus of byStratum.values()) {
-    const n = psus.size
-    if (n < 2) continue
-    const zs = [...psus.values()]
-    const mean = zs.reduce((s, z) => s + z, 0) / n
-    variance += (n / (n - 1)) * zs.reduce((s, z) => s + (z - mean) ** 2, 0)
-  }
-  return { p, variance }
 }
 
 const PNS_COLUMNS = [
