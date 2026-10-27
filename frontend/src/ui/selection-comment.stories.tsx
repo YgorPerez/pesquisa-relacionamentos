@@ -25,6 +25,8 @@ function CommentButton() {
       <CommentOnQuote
         quote={{ ...QUOTE, range }}
         show={setPanel}
+        showForm={(_title, form) => setPanel(form)}
+        finish={() => setPanel(null)}
         close={() => {}}
       />
       {panel !== null && <div className="mt-xs">{panel}</div>}

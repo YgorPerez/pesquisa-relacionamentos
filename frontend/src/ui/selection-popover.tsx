@@ -20,7 +20,9 @@ import {
   type RefObject,
 } from 'react'
 import type { SelectionAction } from '#/analytics/events'
+import { BottomSheet } from './bottom-sheet'
 import { HighlightAction } from './highlight-action'
+import { Notices, useNotice } from './notice'
 import { CommentOnQuote } from './selection-comment'
 import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
@@ -187,45 +189,92 @@ function useSelectionQuote(popup: RefObject<HTMLDivElement | null>) {
   return { quote, panel, setPanel, pointer, close: () => setQuote(null) }
 }
 
-export function SelectionPopover() {
+/** The form in the sheet at the bottom of the screen, with its title. */
+interface SheetForm {
+  readonly title: string
+  readonly form: ReactNode
+}
+
+/** The popover, and on touch the sheet its form moves to (#345). */
+function SelectionActions() {
   const popup = useRef<HTMLDivElement>(null)
   const { quote, panel, setPanel, pointer, close } = useSelectionQuote(popup)
+  const [sheet, setSheet] = useState<SheetForm | null>(null)
+  const notice = useNotice()
+
+  const showForm = (title: string, form: ReactNode) => {
+    if (pointer === 'mouse') return setPanel(form)
+    // The page's selection goes, and with it the system's menu and handles
+    // over the text; the sheet keeps the quote it was given.
+    document.getSelection()?.removeAllRanges()
+    close()
+    setSheet({ title, form })
+  }
+  const finish = (message: string) => {
+    document.getSelection()?.removeAllRanges()
+    close()
+    setSheet(null)
+    notice(message)
+  }
 
   return (
-    <Popover.Root
-      open={quote !== null}
-      // A press outside is the selection's to judge: the click that ends a
-      // mouse selection lands outside the popover it has just opened, and a
-      // press that clears the selection closes it in `read`.
-      onOpenChange={(open, details) => {
-        if (!open && details.reason !== 'outside-press') close()
-      }}
-    >
-      {quote && (
-        <TextPopover
-          range={quote.range}
-          side={pointer === 'touch' ? 'bottom' : 'top'}
-          // On touch, below the handles that hang from the selection.
-          sideOffset={pointer === 'touch' ? 28 : 8}
-          ref={popup}
-          aria-label={POPOVER_LABEL}
-          initialFocus={false}
-          finalFocus={false}
-          // A press on the popover keeps the selection and its quote; a
-          // press on a text field of a panel (the Comentário) focuses it.
-          onMouseDown={(event) => {
-            if (!(event.target as Element).closest('textarea, input'))
-              event.preventDefault()
-          }}
-          className="select-none"
-          data-slot="trecho-acoes"
-        >
-          <ActionRow quote={quote} show={setPanel} close={close} />
-          {panel !== null && (
-            <PopoverPanel className="select-text">{panel}</PopoverPanel>
-          )}
-        </TextPopover>
-      )}
-    </Popover.Root>
+    <>
+      <Popover.Root
+        open={quote !== null}
+        // A press outside is the selection's to judge: the click that ends a
+        // mouse selection lands outside the popover it has just opened, and a
+        // press that clears the selection closes it in `read`.
+        onOpenChange={(open, details) => {
+          if (!open && details.reason !== 'outside-press') close()
+        }}
+      >
+        {quote && (
+          <TextPopover
+            range={quote.range}
+            side={pointer === 'touch' ? 'bottom' : 'top'}
+            // On touch, below the handles that hang from the selection.
+            sideOffset={pointer === 'touch' ? 28 : 8}
+            ref={popup}
+            aria-label={POPOVER_LABEL}
+            initialFocus={false}
+            finalFocus={false}
+            // A press on the popover keeps the selection and its quote; a
+            // press on a text field of a panel (the Comentário) focuses it.
+            onMouseDown={(event) => {
+              if (!(event.target as Element).closest('textarea, input'))
+                event.preventDefault()
+            }}
+            className="select-none"
+            data-slot="trecho-acoes"
+          >
+            <ActionRow
+              quote={quote}
+              show={setPanel}
+              showForm={showForm}
+              finish={finish}
+              close={close}
+            />
+            {panel !== null && (
+              <PopoverPanel className="select-text">{panel}</PopoverPanel>
+            )}
+          </TextPopover>
+        )}
+      </Popover.Root>
+      <BottomSheet
+        open={sheet !== null}
+        onClose={() => setSheet(null)}
+        title={sheet?.title ?? ''}
+      >
+        {sheet?.form}
+      </BottomSheet>
+    </>
+  )
+}
+
+export function SelectionPopover() {
+  return (
+    <Notices>
+      <SelectionActions />
+    </Notices>
   )
 }

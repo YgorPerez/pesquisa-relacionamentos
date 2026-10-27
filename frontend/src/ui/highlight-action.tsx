@@ -9,7 +9,7 @@ import { canPaint, requestOpen, usePainted, within } from './highlight-paint'
 import { pageText, quoteInPage } from './highlight-text'
 import { pageTitle } from './quote-text'
 import { ACTION_LABEL } from './selection-popover.copy'
-import type { Quote, SelectionActionProps } from './selection-action'
+import type { ActionOnQuote, Quote } from './selection-action'
 import { ActionButton } from './selection-button'
 import { countSelection } from './selection-count'
 
@@ -26,7 +26,7 @@ function save(quote: Quote) {
   })
 }
 
-export function HighlightAction({ quote, close }: SelectionActionProps) {
+export function HighlightAction({ quote, close }: ActionOnQuote) {
   const painted = usePainted()
   if (!canPaint()) return null
   const open = (id: string) => {

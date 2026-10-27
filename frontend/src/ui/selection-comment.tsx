@@ -2,8 +2,10 @@
 // message from the reader to the curator. The form asks for a type and the
 // text; the quote, its link and the page's title go along by themselves,
 // and there is no contact field. The server opens an issue in the private
-// sources repo (`content/comment.ts`). A failure keeps what was typed, and
-// the count carries the action's name only, once a comment is sent.
+// sources repo (`content/comment.ts`). On touch the form opens in a sheet at
+// the bottom of the screen (#345). Once sent, the popover or the sheet
+// closes and a notice says so; a failure keeps what was typed. The count
+// carries the action's name only, once a comment is sent.
 import { useId, useState, type FormEvent } from 'react'
 import { sendComment } from '#/content/comment'
 import {
@@ -25,7 +27,7 @@ import type { Quote, SelectionActionProps } from './selection-action'
 import { pageTitle } from './quote-text'
 import { PopoverLine } from './text-popover'
 
-type Status = 'editing' | 'sending' | 'sent' | 'failed'
+type Status = 'editing' | 'sending' | 'failed'
 
 /** What is missing before the form can go, or `null`. */
 function missing(kind: CommentKind | null, text: string) {
@@ -138,15 +140,12 @@ function TextField({
   )
 }
 
-function CommentForm({ quote }: { quote: Quote }) {
+function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
   const [kind, setKind] = useState<CommentKind | null>(null)
   const [text, setText] = useState('')
   const [website, setWebsite] = useState('')
   const [status, setStatus] = useState<Status>('editing')
   const [problem, setProblem] = useState<string | null>(null)
-
-  if (status === 'sent')
-    return <PopoverLine role="status">{COMMENT.sent}</PopoverLine>
 
   const submit = async (event: FormEvent) => {
     event.preventDefault()
@@ -156,12 +155,15 @@ function CommentForm({ quote }: { quote: Quote }) {
     setStatus('sending')
     if (await send(quote, kind, text, website)) {
       countSelection('comment')
-      setStatus('sent')
+      onSent()
     } else setStatus('failed')
   }
 
   return (
     <form className="flex flex-col gap-xs" onSubmit={submit} noValidate>
+      <blockquote className="m-0 line-clamp-3 border-l-2 border-tinta pl-xs text-nota text-tinta-2">
+        {quote.text}
+      </blockquote>
       <KindChoice kind={kind} onPick={setKind} />
       <TextField text={text} onChange={setText} />
       <Honeypot value={website} onChange={setWebsite} />
@@ -180,11 +182,17 @@ function CommentForm({ quote }: { quote: Quote }) {
   )
 }
 
-/** "Comentar": opens the form under the row of actions. */
-export function CommentOnQuote({ quote, show }: SelectionActionProps) {
-  return (
-    <ActionButton onClick={() => show(<CommentForm quote={quote} />)}>
-      {ACTION_LABEL.comment}
-    </ActionButton>
-  )
+/** "Comentar": opens the form under the row of actions, or in a sheet on
+ * touch. */
+export function CommentOnQuote({
+  quote,
+  showForm,
+  finish,
+}: SelectionActionProps) {
+  const open = () =>
+    showForm(
+      ACTION_LABEL.comment,
+      <CommentForm quote={quote} onSent={() => finish(COMMENT.sent)} />,
+    )
+  return <ActionButton onClick={open}>{ACTION_LABEL.comment}</ActionButton>
 }
