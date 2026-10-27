@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { CountingSwitch } from '#/ui/counting'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Headline, Section } from '#/ui/section'
@@ -51,8 +51,9 @@ function OnTheDevice() {
       </p>
       <p>
         Os Grifos que você faz num texto, com a Nota de cada um, também ficam só
-        no navegador: não vão para o servidor nem para a contagem. “Tirar grifo”
-        apaga o Grifo e a Nota.
+        no navegador: não vão para o servidor nem para a contagem. A página{' '}
+        <Link to="/grifos">Grifos</Link> mostra todos. “Tirar grifo” apaga o
+        Grifo e a Nota.
       </p>
       <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que

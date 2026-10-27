@@ -52,6 +52,7 @@ export const RESERVED_ROUTES = [
   'busca',
   'estudos',
   'dicas',
+  'grifos',
   'grupo-possivel',
   'prioridades',
   'privacidade',
