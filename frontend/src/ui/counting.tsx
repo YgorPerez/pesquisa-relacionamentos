@@ -15,6 +15,7 @@ import {
 } from '#/analytics/events'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
+import { HIGHLIGHTS } from './highlight-list.copy'
 import { Headline, Section } from './section'
 import { Switch } from '@/ui/shadcn/switch'
 
@@ -143,10 +144,11 @@ export function CountingSwitch({ className }: { className?: string }) {
 const FOOTER_LINKS = [
   { to: '/privacidade', label: 'Privacidade' },
   { to: '/sites-vizinhos', label: 'Sites vizinhos' },
+  { to: '/grifos', label: HIGHLIGHTS },
 ] as const
 
-/** The footer of every page: the privacy page, the Neighbor sites (#179)
- * and the switch. On desktop,
+/** The footer of every page: the privacy page, the Neighbor sites (#179),
+ * the Grifos (#335) and the switch. On desktop,
  * it continues the page's sheet over the halftone. */
 export function Footer() {
   return (
