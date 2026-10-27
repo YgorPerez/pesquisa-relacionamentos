@@ -9,7 +9,8 @@ import { withRouter } from '@/platform/storybook/with-router'
 import { CopyLink, CopyText } from './selection-copy'
 import { SelectionPopover } from './selection-popover'
 import { POPOVER_LABEL } from './selection-popover.copy'
-import { quotable, type Quote } from './selection-quote'
+import type { Quote } from './selection-action'
+import { quotable } from './selection-quote'
 
 const SENTENCE =
   'A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto.'

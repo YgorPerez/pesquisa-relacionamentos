@@ -12,6 +12,7 @@ import {
   COPY_BY_HAND,
   COPY_FAILED,
 } from './selection-popover.copy'
+import { PopoverLine } from './text-popover'
 
 type CopyKind = 'copy' | 'link'
 
@@ -41,12 +42,9 @@ function CopyButton({
 function CopyOutcome({ kind, failed }: { kind: CopyKind; failed?: string }) {
   return (
     <>
-      <p
-        role="status"
-        className="m-0 text-label leading-nota font-normal text-tinta-2"
-      >
+      <PopoverLine role="status">
         {failed === undefined ? COPIED[kind] : COPY_FAILED[kind]}
-      </p>
+      </PopoverLine>
       {failed !== undefined && (
         <Input
           small

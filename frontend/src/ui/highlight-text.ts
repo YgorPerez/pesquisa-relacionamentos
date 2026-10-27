@@ -6,8 +6,10 @@
 // finding it again looks for the exact quote and uses the context only to
 // pick among repeats. A quote that is not there is not found: no fuzzy
 // matching (#332).
+import { PROFILE_MARK_CLASS } from '#/content/text-fragment'
+import type { TextQuote } from '#/state/highlight-record'
 import { CONTEXT_LENGTH } from '#/state/highlights'
-import { blockOf, quoteRoot, REF, UNSEEN } from './quote-text'
+import { blockOf, quoteRoot, RING, UNSEEN } from './quote-text'
 
 interface Point {
   readonly node: Text
@@ -21,13 +23,6 @@ export interface PageText {
   readonly points: ReadonlyArray<Point | null>
 }
 
-/** Where the quote is, as the store keeps it. */
-export interface TextQuote {
-  readonly exact: string
-  readonly prefix: string
-  readonly suffix: string
-}
-
 /** A quote found on the page: the whole stretch, and one range per text
  * node, without the reference numbers in between, for the paint. */
 export interface FoundQuote {
@@ -37,12 +32,12 @@ export interface FoundQuote {
 
 /** The "vale para você" mark comes and goes with the Profile: a Grifo is
  * found with or without it. */
-const PROFILE_MARK = '.selo-voce-texto'
+const PROFILE_MARK = `.${PROFILE_MARK_CLASS}`
 
 const counts = (element: Element) =>
   quoteRoot(element) !== null &&
   element.closest(UNSEEN) === null &&
-  element.closest(REF) === null &&
+  element.closest(RING) === null &&
   element.closest(PROFILE_MARK) === null
 
 /** Reads the quotable text under `root`. */

@@ -39,6 +39,7 @@ function setup({ token = 'github_pat_test', limit = 3 } = {}) {
     send,
     posted,
     fail: () => void (ok = false),
+    recover: () => void (ok = true),
     later: (ms: number) => void (clock += ms),
   }
 }
@@ -104,6 +105,32 @@ describe('the anti-spam and the failures', () => {
     later(60_001)
     await send()
     expect(posted).toHaveLength(4)
+  })
+
+  it('a send that did not go out leaves the room it took, so the reader can try again', async () => {
+    const { send, posted, fail, recover } = setup({ limit: 2 })
+    fail()
+    await send()
+    await send()
+    await send()
+    recover()
+    expect(await send()).toEqual({ sent: true })
+    expect(await send()).toEqual({ sent: true })
+    expect(posted).toHaveLength(5)
+
+    await send()
+    expect(posted).toHaveLength(5)
+
+    const noToken = setup({ token: '', limit: 1 })
+    await noToken.send()
+    await noToken.send()
+    expect(await noToken.send()).toEqual({ sent: false })
+  })
+
+  it('two sends at once from one IP with room for one: only one reaches GitHub', async () => {
+    const { send, posted } = setup({ limit: 1 })
+    await Promise.all([send(), send()])
+    expect(posted).toHaveLength(1)
   })
 
   it('when GitHub refuses, or there is no token, the reply says it was not sent', async () => {

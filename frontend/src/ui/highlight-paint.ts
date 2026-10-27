@@ -9,7 +9,8 @@
 // Grifo's popover through `requestOpen`, which "Grifar" calls on the Grifo it
 // has just made.
 import { useSyncExternalStore } from 'react'
-import { markFound, type Highlight } from '#/state/highlights'
+import type { Highlight } from '#/state/highlight-record'
+import { markFound } from '#/state/highlights'
 import { findQuote, pageText, type FoundQuote } from './highlight-text'
 import type { Quote } from './selection-action'
 import { quoteOf } from './selection-quote'

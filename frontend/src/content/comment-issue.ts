@@ -161,7 +161,8 @@ export function commentDesk({
   windowMs: number
 }) {
   const sent = new Map<string, number[]>()
-  /** Whether this IP still has room, counting this one if it has. */
+  /** Whether this IP still has room, holding a place for this one if it
+   * has: two sends at once cannot both take the last place. */
   const admit = (ip: string, now: number) => {
     for (const [key, times] of sent) {
       const recent = times.filter((time) => now - time < windowMs)
@@ -173,15 +174,28 @@ export function commentDesk({
     sent.set(ip, [...times, now])
     return true
   }
+  /** Gives back the place a send that did not go out held. */
+  const release = (ip: string, now: number) => {
+    const times = sent.get(ip) ?? []
+    const at = times.lastIndexOf(now)
+    if (at < 0) return
+    const rest = times.filter((_, i) => i !== at)
+    if (rest.length > 0) sent.set(ip, rest)
+    else sent.delete(ip)
+  }
   return {
+    // Only a comment that became an issue counts against the IP: a reader
+    // whose send failed (no token, GitHub refusing or offline) keeps the
+    // text and may try again.
     async deliver(
       comment: CommentInput,
       { ip, token, now, post }: Delivery,
     ): Promise<CommentReply> {
       if (comment.website !== '') return { sent: true }
       if (!admit(ip, now)) return { sent: true }
-      if (!token) return { sent: false }
-      return { sent: await post(issueOf(comment), token) }
+      const went = token ? await post(issueOf(comment), token) : false
+      if (!went) release(ip, now)
+      return { sent: went }
     },
   }
 }

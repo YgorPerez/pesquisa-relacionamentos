@@ -22,6 +22,9 @@
     // Its `@tanstack/react-start/server`, by alias in the same project and
     // in `.storybook/vite.config.ts`.
     "src/platform/screens/test-request.ts",
+    // The app server's variables: `content/comment.ts` imports it inside the
+    // server function's handler, in a `Promise.all` fallow does not follow.
+    "src/platform/server-env.ts",
   ],
   "duplicates": {
     "ignore": [

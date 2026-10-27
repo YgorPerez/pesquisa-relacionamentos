@@ -5,8 +5,9 @@
 // its Chapter, or of the page outside a Chapter (`selection-sentences.ts`).
 //
 // The page says which Fact sheets it has with `<PageSources>` around its
-// `<SelectionPopover />`; without it, the action is not there. The count
-// carries the action's name only.
+// popovers (`page-selection.tsx`); without it, the action is not there. It
+// is in the popover on selected text and in a Grifo's. The count carries
+// the action's name only.
 import { createContext, useContext, type ReactNode } from 'react'
 import type { FactSheetSummary } from '#/content/view'
 import { FactSheetTitle } from './guide'
@@ -22,6 +23,7 @@ import {
   type SourcesPage,
 } from './selection-source.copy'
 import { sourcesOf, type SelectionSources } from './selection-sentences'
+import { PopoverLine } from './text-popover'
 
 interface PageSourcesValue {
   /** Every Fact sheet the page's rings lead to, in the page's order. */
@@ -70,8 +72,6 @@ function SourceList({
   )
 }
 
-const LINE = 'm-0 text-label leading-nota font-normal text-tinta-2'
-
 /** The Fact sheets near the sentences with no citation: their Chapters', or
  * the page's when one sits outside a Chapter. */
 function nearby(
@@ -109,19 +109,21 @@ function SourcesPanel({
         : 'one'
   const near = sources.uncited.length > 0 ? nearby(sources, page) : null
   return (
-    <div role="status" className="max-h-80 overflow-y-auto">
+    <div role="status">
       {sources.cited.length > 0 && (
         <>
-          <p className={LINE}>{CITES[count]}</p>
+          <PopoverLine>{CITES[count]}</PopoverLine>
           <SourceList factSheets={among(page.factSheets, sources.cited)} />
         </>
       )}
       {near && (
         <>
-          <p className={sources.cited.length > 0 ? `${LINE} mt-sm` : LINE}>
+          <PopoverLine
+            className={sources.cited.length > 0 ? 'mt-sm' : undefined}
+          >
             <b className="text-tinta">{CITES_NONE[count]}</b>
             {near.factSheets.length > 0 && ` ${near.label}`}
-          </p>
+          </PopoverLine>
           <SourceList factSheets={near.factSheets} />
         </>
       )}

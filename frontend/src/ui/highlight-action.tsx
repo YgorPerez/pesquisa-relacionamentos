@@ -7,6 +7,7 @@ import { addHighlight } from '#/state/highlights'
 import { SEE_HIGHLIGHT } from './highlight.copy'
 import { canPaint, requestOpen, usePainted, within } from './highlight-paint'
 import { pageText, quoteInPage } from './highlight-text'
+import { pageTitle } from './quote-text'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
 import { ActionButton } from './selection-button'
@@ -19,7 +20,7 @@ function save(quote: Quote) {
   return addHighlight({
     ...where,
     path: quote.path,
-    pageTitle: document.querySelector('h1')?.textContent?.trim() || quote.path,
+    pageTitle: pageTitle() || quote.path,
     link: quote.link.slice(new URL(quote.link).origin.length),
     text: quote.text,
   })

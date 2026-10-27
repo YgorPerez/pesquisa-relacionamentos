@@ -22,13 +22,10 @@ import { COMMENT } from './selection-comment.copy'
 import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
+import { pageTitle } from './quote-text'
+import { PopoverLine } from './text-popover'
 
 type Status = 'editing' | 'sending' | 'sent' | 'failed'
-
-const NOTE = 'm-0 text-label leading-nota font-normal text-tinta-2'
-
-/** The page's own title, without the site's name after it. */
-const pageTitle = () => document.title.split(' · ')[0]!.trim()
 
 /** What is missing before the form can go, or `null`. */
 function missing(kind: CommentKind | null, text: string) {
@@ -149,11 +146,7 @@ function CommentForm({ quote }: { quote: Quote }) {
   const [problem, setProblem] = useState<string | null>(null)
 
   if (status === 'sent')
-    return (
-      <p role="status" className={NOTE}>
-        {COMMENT.sent}
-      </p>
-    )
+    return <PopoverLine role="status">{COMMENT.sent}</PopoverLine>
 
   const submit = async (event: FormEvent) => {
     event.preventDefault()
@@ -172,7 +165,7 @@ function CommentForm({ quote }: { quote: Quote }) {
       <KindChoice kind={kind} onPick={setKind} />
       <TextField text={text} onChange={setText} />
       <Honeypot value={website} onChange={setWebsite} />
-      <p className={NOTE}>{COMMENT.anonymous}</p>
+      <PopoverLine>{COMMENT.anonymous}</PopoverLine>
       {(problem ?? status === 'failed') && (
         <p role="alert" className={FIELD_LABEL}>
           {problem ?? COMMENT.failed}

@@ -24,14 +24,10 @@ import { HighlightAction } from './highlight-action'
 import { CommentOnQuote } from './selection-comment'
 import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
-import {
-  quoteOf,
-  snapToWords,
-  type Quote,
-  type QuotedPage,
-  type SelectionActionProps,
-} from './selection-quote'
+import type { Quote, SelectionActionProps } from './selection-action'
+import { quoteOf, snapToWords, type QuotedPage } from './selection-quote'
 import { WhereFrom } from './selection-source'
+import { PopoverPanel, TextPopover } from './text-popover'
 
 // The actions, in the popover's order (#332). Each is a component of its
 // own file that gets the quote, a place for a panel under the row and the
@@ -54,19 +50,6 @@ const ACTIONS: ReadonlyArray<{
 
 /** How the last selection was made: it decides the side. */
 type Pointer = 'mouse' | 'touch'
-
-/** The selection's box, read again each time the popover is placed: it
- * follows the text when the page scrolls. jsdom has no layout. */
-function anchorOf(range: Range) {
-  return {
-    getBoundingClientRect: () =>
-      range.getBoundingClientRect?.() ?? new DOMRect(),
-    contextElement:
-      range.startContainer instanceof Element
-        ? range.startContainer
-        : (range.startContainer.parentElement ?? undefined),
-  }
-}
 
 /** The selected range, or `null` when nothing is selected. */
 function selectedRange(): Range | null {
@@ -218,38 +201,31 @@ export function SelectionPopover() {
         if (!open && details.reason !== 'outside-press') close()
       }}
     >
-      <Popover.Portal>
-        {quote && (
-          <Popover.Positioner
-            anchor={anchorOf(quote.range)}
-            side={pointer === 'touch' ? 'bottom' : 'top'}
-            // On touch, below the handles that hang from the selection.
-            sideOffset={pointer === 'touch' ? 28 : 8}
-            collisionPadding={8}
-            className="z-20"
-          >
-            <Popover.Popup
-              ref={popup}
-              aria-label={POPOVER_LABEL}
-              initialFocus={false}
-              finalFocus={false}
-              // A press on the popover keeps the selection and its quote; a
-              // press on a text field of a panel (the Comentário) focuses it.
-              onMouseDown={(event) => {
-                if (!(event.target as Element).closest('textarea, input'))
-                  event.preventDefault()
-              }}
-              className="max-w-88 rounded-mao border-2 border-tinta bg-papel p-xs select-none"
-              data-slot="trecho-acoes"
-            >
-              <ActionRow quote={quote} show={setPanel} close={close} />
-              {panel !== null && (
-                <div className="mt-xs select-text">{panel}</div>
-              )}
-            </Popover.Popup>
-          </Popover.Positioner>
-        )}
-      </Popover.Portal>
+      {quote && (
+        <TextPopover
+          range={quote.range}
+          side={pointer === 'touch' ? 'bottom' : 'top'}
+          // On touch, below the handles that hang from the selection.
+          sideOffset={pointer === 'touch' ? 28 : 8}
+          ref={popup}
+          aria-label={POPOVER_LABEL}
+          initialFocus={false}
+          finalFocus={false}
+          // A press on the popover keeps the selection and its quote; a
+          // press on a text field of a panel (the Comentário) focuses it.
+          onMouseDown={(event) => {
+            if (!(event.target as Element).closest('textarea, input'))
+              event.preventDefault()
+          }}
+          className="select-none"
+          data-slot="trecho-acoes"
+        >
+          <ActionRow quote={quote} show={setPanel} close={close} />
+          {panel !== null && (
+            <PopoverPanel className="select-text">{panel}</PopoverPanel>
+          )}
+        </TextPopover>
+      )}
     </Popover.Root>
   )
 }

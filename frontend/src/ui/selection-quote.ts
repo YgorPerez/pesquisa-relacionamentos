@@ -13,11 +13,14 @@ import {
   type CharKind,
   type Line,
 } from '#/content/text-fragment'
-import { blockOf, QUOTE, quoteRoot, REF, UNSEEN } from './quote-text'
+import {
+  blockOf,
+  QUOTE_ATTRIBUTE,
+  quotableTexts,
+  quoteRoot,
+  RING,
+} from './quote-text'
 import type { Quote } from './selection-action'
-
-// The types live in `selection-action.ts`; the actions import them there.
-export type { Quote, SelectionActionProps } from './selection-action'
 
 const HEADING = 'data-quote-heading'
 
@@ -26,7 +29,7 @@ const HEADING = 'data-quote-heading'
  * link goes to the anchor alone, like the search's. */
 export function quotable(anchor: string | null, heading = false) {
   return {
-    [QUOTE]: anchor ?? '',
+    [QUOTE_ATTRIBUTE]: anchor ?? '',
     ...(heading ? { [HEADING]: '' } : {}),
   }
 }
@@ -55,16 +58,7 @@ export function snapToWords(range: Range): Range {
 
 /** The quotable text nodes the range covers, each cut to the range. */
 function* selectedTexts(range: Range) {
-  const root = range.commonAncestorContainer
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
-  for (
-    let node = root instanceof Text ? root : walker.nextNode();
-    node;
-    node = walker.nextNode()
-  ) {
-    if (!(node instanceof Text) || !range.intersectsNode(node)) continue
-    const element = node.parentElement
-    if (!element || !quoteRoot(element) || element.closest(UNSEEN)) continue
+  for (const { node, element } of quotableTexts(range)) {
     const from = node === range.startContainer ? range.startOffset : 0
     const to = node === range.endContainer ? range.endOffset : node.data.length
     yield { element, text: node.data.slice(from, to) }
@@ -88,7 +82,7 @@ function read(range: Range): { line: Line; text: string } {
     }
     if (block === undefined) blocks.push('')
     block = here
-    const kind: CharKind = element.closest(REF)
+    const kind: CharKind = element.closest(RING)
       ? 'ref'
       : element.closest(BOX)
         ? 'box'
@@ -118,7 +112,7 @@ export function quoteOf(selected: Range, location: QuotedPage): Quote | null {
   const range = snapToWords(selected)
   const { line, text } = read(range)
   if (!text) return null
-  const anchor = start.getAttribute(QUOTE) || null
+  const anchor = start.getAttribute(QUOTE_ATTRIBUTE) || null
   const heading = start === end && start.hasAttribute(HEADING)
   const { origin, pathname } = location
   return {

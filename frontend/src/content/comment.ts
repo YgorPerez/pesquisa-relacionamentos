@@ -22,15 +22,12 @@ const desk = commentDesk({ limit: 5, windowMs: 60 * 60 * 1000 })
 export const sendComment = createServerFn({ method: 'POST' })
   .validator(readComment)
   .handler(async ({ data }): Promise<CommentReply> => {
-    const [{ getRequestHeader, getRequestIP }, { optionalSecret, readEnv }] =
+    const [{ getRequestHeader, getRequestIP }, { serverEnv }] =
       await Promise.all([
         import('@tanstack/react-start/server'),
-        import('../../../scripts/env.ts'),
+        import('#/platform/server-env'),
       ])
-    const { COMMENT_GITHUB_TOKEN: token } = readEnv(
-      { COMMENT_GITHUB_TOKEN: optionalSecret },
-      process.env,
-    )
+    const { COMMENT_GITHUB_TOKEN: token } = serverEnv()
     return desk.deliver(data, {
       ip: clientIp(getRequestHeader('x-forwarded-for'), getRequestIP()),
       token,

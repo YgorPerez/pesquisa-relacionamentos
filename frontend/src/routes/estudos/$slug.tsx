@@ -14,9 +14,7 @@ import {
   FactSheetMeta,
 } from '#/ui/badges'
 import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
-import { HighlightLayer } from '#/ui/highlight-layer'
-import { SelectionPopover } from '#/ui/selection-popover'
-import { PageSources } from '#/ui/selection-source'
+import { PageSelection } from '#/ui/page-selection'
 import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/estudos/$slug')({
@@ -132,20 +130,15 @@ function FactSheetPage() {
         </Section>
       </Column>
       <FactSheetSelection />
-      <HighlightLayer />
     </Sheet>
   )
 }
 
-/** The popover on selected text, where this Fact sheet is what the text
+/** The reader's actions on the text, where this Fact sheet is what the text
  * rests on. */
 function FactSheetSelection() {
   const factSheet = useFactSheet()
-  return (
-    <PageSources factSheets={[factSheet]} page="fact-sheet">
-      <SelectionPopover />
-    </PageSources>
-  )
+  return <PageSelection factSheets={[factSheet]} page="fact-sheet" />
 }
 
 /** The Fact sheet's data, one per row: where it came from, how it was

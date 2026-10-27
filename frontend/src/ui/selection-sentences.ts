@@ -8,12 +8,12 @@
 //
 // Inside a Visual, the whole figure is one sentence: its rings, in the
 // source line, are where each label and value came from.
-import { QUOTE as QUOTE_ATTRIBUTE, REF as RING, UNSEEN } from './quote-text'
+import { CHAPTER_SLOT } from './guide-sections'
+import { quotableTexts, RING, UNSEEN } from './quote-text'
 
 /** A ring that leads to a Fact sheet of the page. */
-const REF = `a${RING}[href^="#ficha-"]`
-const QUOTE = `[${QUOTE_ATTRIBUTE}]`
-const CHAPTER = '[data-slot="capitulo"]'
+const CITING_RING = `a${RING}[href^="#ficha-"]`
+const CHAPTER = `[data-slot="${CHAPTER_SLOT}"]`
 /** The elements a sentence does not cross: fewer than `quote-text.ts`'s
  * blocks, since a sentence may run through a `div` or a `span`. */
 const BLOCK =
@@ -23,7 +23,7 @@ const slugOf = (ref: Element) =>
   (ref.getAttribute('href') ?? '').slice('#ficha-'.length)
 
 const slugsIn = (element: Element) => [
-  ...new Set([...element.querySelectorAll(REF)].map(slugOf)),
+  ...new Set([...element.querySelectorAll(CITING_RING)].map(slugOf)),
 ]
 
 /** Where a sentence with no ring sends the reader: its Chapter, with the
@@ -50,22 +50,10 @@ interface Sentence {
 
 /** The blocks the selection touches, in page order. */
 function selectedBlocks(range: Range): Element[] {
-  const root = range.commonAncestorContainer
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
   // A set keeps the order it was filled in.
   const blocks = new Set<Element>()
-  for (
-    let node = root instanceof Text ? root : walker.nextNode();
-    node;
-    node = walker.nextNode()
-  ) {
-    const element = node.parentElement
-    if (!element || !range.intersectsNode(node)) continue
-    const quote = element.closest(QUOTE)
-    if (!quote || element.closest(UNSEEN)) continue
-    const block = element.closest('figure') ?? element.closest(BLOCK) ?? quote
-    blocks.add(block)
-  }
+  for (const { element, root } of quotableTexts(range))
+    blocks.add(element.closest('figure') ?? element.closest(BLOCK) ?? root)
   return [...blocks]
 }
 
@@ -101,7 +89,7 @@ function blockText(block: Element) {
   const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT)
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     if (!(node instanceof Text) || node.parentElement?.closest(UNSEEN)) continue
-    const ring = node.parentElement?.closest(REF) ?? null
+    const ring = node.parentElement?.closest(CITING_RING) ?? null
     pieces.push({ node, at: text.length, ref: ring })
     text += node.data
     for (let i = 0; i < node.data.length; i++) ref.push(ring !== null)
