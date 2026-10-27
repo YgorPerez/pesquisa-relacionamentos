@@ -24,14 +24,12 @@ const CALCULATOR_EVENT: Readonly<Record<CountedCalculator, string>> = {
 }
 
 /** The actions of the popover on selected text (#332), in its order. */
-export const SELECTION_ACTIONS = [
-  'copy',
-  'link',
-  'highlight',
-  'source',
-  'comment',
-] as const
-export type SelectionAction = (typeof SELECTION_ACTIONS)[number]
+export type SelectionAction =
+  | 'copy'
+  | 'link'
+  | 'highlight'
+  | 'source'
+  | 'comment'
 
 export type AnalyticsEvent =
   | `helped/yes/${string}`

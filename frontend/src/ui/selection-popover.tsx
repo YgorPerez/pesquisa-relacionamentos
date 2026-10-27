@@ -25,6 +25,7 @@ import {
   quoteOf,
   snapToWords,
   type Quote,
+  type QuotedPage,
   type SelectionActionProps,
 } from './selection-quote'
 
@@ -63,6 +64,117 @@ function anchorOf(range: Range) {
   }
 }
 
+/** The selected range, or `null` when nothing is selected. */
+function selectedRange(): Range | null {
+  const selection = document.getSelection()
+  return selection && !selection.isCollapsed && selection.rangeCount > 0
+    ? selection.getRangeAt(0)
+    : null
+}
+
+/** Grows a quotable selection to whole words. The selection's range is
+ * live: the copy is snapped before it is swapped in. */
+function snapSelection(page: QuotedPage) {
+  const range = selectedRange()
+  if (!range || !quoteOf(range, page)) return
+  const snapped = snapToWords(range)
+  if (
+    snapped.compareBoundaryPoints(Range.START_TO_START, range) === 0 &&
+    snapped.compareBoundaryPoints(Range.END_TO_END, range) === 0
+  )
+    return
+  const selection = document.getSelection()!
+  selection.removeAllRanges()
+  selection.addRange(snapped)
+}
+
+/** Tab from the page goes to the popover's first control. */
+function tabIntoPopover(event: KeyboardEvent, popup: HTMLElement) {
+  if (event.key !== 'Tab' || event.shiftKey) return
+  if (popup.contains(document.activeElement)) return
+  const first = popup.querySelector<HTMLElement>('button, input')
+  if (!first) return
+  event.preventDefault()
+  first.focus()
+}
+
+interface Follower {
+  readonly page: QuotedPage
+  readonly popup: () => HTMLElement | null
+  /** A new quote, or `null` when the selection leaves the quotable text. */
+  readonly onQuote: (quote: Quote | null) => void
+  readonly onPointer: (pointer: Pointer) => void
+}
+
+/** Follows the page's selection until the returned function is called. */
+function followSelection({ page, popup, onQuote, onPointer }: Follower) {
+  let pressed = false
+  /** The quote on the screen, to tell a new selection from the same one. */
+  let shown: Quote | null = null
+  const inPopup = (node: EventTarget | null) =>
+    node instanceof Node && (popup()?.contains(node) ?? false)
+
+  const read = () => {
+    // A field of the popover (the link to copy by hand) has a selection of
+    // its own.
+    if (inPopup(document.activeElement)) return
+    const range = selectedRange()
+    const next = range ? quoteOf(range, page) : null
+    if (next?.link === shown?.link && next?.text === shown?.text) return
+    shown = next
+    onQuote(next)
+  }
+  const onPointerDown = (event: PointerEvent) => {
+    if (inPopup(event.target)) return
+    pressed = true
+    onPointer(event.pointerType === 'mouse' ? 'mouse' : 'touch')
+  }
+  const onPointerUp = (event: PointerEvent) => {
+    if (!pressed) return
+    pressed = false
+    if (event.pointerType === 'mouse') snapSelection(page)
+    read()
+  }
+  // While the pointer is down the reader is still selecting; touch moves the
+  // selection's handles without a pointer on the page.
+  const onSelectionChange = () => {
+    if (!pressed) read()
+  }
+  const onKeyDown = (event: KeyboardEvent) => {
+    const open = popup()
+    if (!open) return
+    if (event.key === 'Escape') {
+      shown = null
+      onQuote(null)
+    } else tabIntoPopover(event, open)
+  }
+
+  const listeners = [
+    ['pointerdown', onPointerDown],
+    ['pointerup', onPointerUp],
+    ['pointercancel', onPointerUp],
+    ['selectionchange', onSelectionChange],
+    ['keydown', onKeyDown],
+  ] as const
+  for (const [type, listener] of listeners)
+    document.addEventListener(type, listener as EventListener, true)
+  return () => {
+    for (const [type, listener] of listeners)
+      document.removeEventListener(type, listener as EventListener, true)
+  }
+}
+
+/** The actions, side by side, wrapping on a narrow screen. */
+function ActionRow(props: SelectionActionProps) {
+  return (
+    <div className="flex flex-wrap gap-xs">
+      {ACTIONS.map(({ id, Action }) => (
+        <Action key={id} {...props} />
+      ))}
+    </div>
+  )
+}
+
 export function SelectionPopover() {
   const [quote, setQuote] = useState<Quote | null>(null)
   const [panel, setPanel] = useState<ReactNode>(null)
@@ -72,100 +184,19 @@ export function SelectionPopover() {
   // memory history's in the screen tests.
   const pathname = useRouterState({ select: (s) => s.location.pathname })
 
-  useEffect(() => {
-    const page = { origin: window.location.origin, pathname }
-    let pressed = false
-    /** The quote on the screen, to tell a new selection from the same one. */
-    let shown: Quote | null = null
-    const inPopup = (node: EventTarget | Node | null) =>
-      node instanceof Node && (popup.current?.contains(node) ?? false)
-
-    const read = () => {
-      // A field of the popover (the link to copy by hand) has a selection
-      // of its own.
-      if (inPopup(document.activeElement)) return
-      const selection = document.getSelection()
-      const range =
-        selection && !selection.isCollapsed && selection.rangeCount > 0
-          ? selection.getRangeAt(0)
-          : null
-      const next = range ? quoteOf(range, page) : null
-      const same =
-        shown !== null &&
-        next !== null &&
-        shown.link === next.link &&
-        shown.text === next.text
-      if (same) return
-      shown = next
-      setQuote(next)
-      setPanel(null)
-    }
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (inPopup(event.target)) return
-      pressed = true
-      setPointer(event.pointerType === 'mouse' ? 'mouse' : 'touch')
-    }
-    const onPointerUp = (event: PointerEvent) => {
-      if (!pressed) return
-      pressed = false
-      const selection = document.getSelection()
-      if (
-        event.pointerType === 'mouse' &&
-        selection &&
-        !selection.isCollapsed &&
-        selection.rangeCount > 0
-      ) {
-        // The selection's range is live: snap a copy before swapping it in.
-        const range = selection.getRangeAt(0)
-        const snapped = snapToWords(range)
-        if (
-          quoteOf(range, page) &&
-          (snapped.compareBoundaryPoints(Range.START_TO_START, range) !== 0 ||
-            snapped.compareBoundaryPoints(Range.END_TO_END, range) !== 0)
-        ) {
-          selection.removeAllRanges()
-          selection.addRange(snapped)
-        }
-      }
-      read()
-    }
-    // While the pointer is down the reader is still selecting; touch moves
-    // the selection's handles without a pointer on the page.
-    const onSelectionChange = () => {
-      if (!pressed) read()
-    }
-    const onKeyDown = (event: KeyboardEvent) => {
-      const open = popup.current
-      if (!open) return
-      if (event.key === 'Escape') {
-        setQuote(null)
-      } else if (
-        event.key === 'Tab' &&
-        !event.shiftKey &&
-        !inPopup(document.activeElement)
-      ) {
-        const first = open.querySelector<HTMLElement>('button, input')
-        if (first) {
-          event.preventDefault()
-          first.focus()
-        }
-      }
-    }
-
-    document.addEventListener('pointerdown', onPointerDown, true)
-    document.addEventListener('pointerup', onPointerUp, true)
-    document.addEventListener('pointercancel', onPointerUp, true)
-    document.addEventListener('selectionchange', onSelectionChange)
-    document.addEventListener('keydown', onKeyDown, true)
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown, true)
-      document.removeEventListener('pointerup', onPointerUp, true)
-      document.removeEventListener('pointercancel', onPointerUp, true)
-      document.removeEventListener('selectionchange', onSelectionChange)
-      document.removeEventListener('keydown', onKeyDown, true)
-    }
-  }, [pathname])
+  useEffect(
+    () =>
+      followSelection({
+        page: { origin: window.location.origin, pathname },
+        popup: () => popup.current,
+        onQuote: (next) => {
+          setQuote(next)
+          setPanel(null)
+        },
+        onPointer: setPointer,
+      }),
+    [pathname],
+  )
 
   const close = () => setQuote(null)
 
@@ -199,16 +230,7 @@ export function SelectionPopover() {
               className="max-w-88 rounded-mao border-2 border-tinta bg-papel p-xs select-none"
               data-slot="trecho-acoes"
             >
-              <div className="flex flex-wrap gap-xs">
-                {ACTIONS.map(({ id, Action }) => (
-                  <Action
-                    key={id}
-                    quote={quote}
-                    show={setPanel}
-                    close={close}
-                  />
-                ))}
-              </div>
+              <ActionRow quote={quote} show={setPanel} close={close} />
               {panel !== null && (
                 <div className="mt-xs select-text">{panel}</div>
               )}

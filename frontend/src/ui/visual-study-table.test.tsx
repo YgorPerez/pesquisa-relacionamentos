@@ -1,15 +1,12 @@
 // The table of Studies on the fixture Question, in jsdom (ADR 0035): each
 // row is a Study, with its place, year, sample and design from the Fact
 // sheet, next to the number it found.
-import { screen, within } from '@testing-library/react'
+import { within } from '@testing-library/react'
 import { expect, it } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
+import { openVisual } from '#/platform/screens/visual'
 
 it('shows one row per Study, its context taken from the Fact sheet, and its result', async () => {
-  openScreen('/onde-conhecer-pessoas')
-  const table = await screen.findByRole('table', {
-    name: 'Os dois estudos lado a lado',
-  })
+  const table = await openVisual('Os dois estudos lado a lado', 'table')
   const [, ...rows] = within(table).getAllByRole('row')
   expect(
     rows.map((row) => [
