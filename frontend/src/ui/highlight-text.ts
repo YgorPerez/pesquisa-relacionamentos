@@ -7,7 +7,7 @@
 // pick among repeats. A quote that is not there is not found: no fuzzy
 // matching (#332).
 import { CONTEXT_LENGTH } from '#/state/highlights'
-import { blockOf, quoteRoot, REF, UNSEEN } from './selection-quote'
+import { blockOf, quoteRoot, REF, UNSEEN } from './quote-text'
 
 interface Point {
   readonly node: Text

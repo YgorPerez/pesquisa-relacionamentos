@@ -3,15 +3,14 @@
 // written. A selection inside a Grifo already painted gets "Ver grifo"
 // instead, which opens that one: the way in for a keyboard, which has no
 // tap. The count carries the action's name only.
-import { countEvent } from '#/analytics/counting'
-import { EVENTS } from '#/analytics/events'
 import { addHighlight } from '#/state/highlights'
 import { SiteButton } from './button'
 import { SEE_HIGHLIGHT } from './highlight.copy'
 import { canPaint, requestOpen, usePainted, within } from './highlight-paint'
 import { pageText, quoteInPage } from './highlight-text'
 import { ACTION_LABEL } from './selection-popover.copy'
-import type { Quote, SelectionActionProps } from './selection-quote'
+import type { Quote, SelectionActionProps } from './selection-action'
+import { countSelection } from './selection-count'
 
 /** Saves the quote as a Grifo; `null` when it holds no quotable text. */
 function save(quote: Quote) {
@@ -44,7 +43,7 @@ export function HighlightAction({ quote, close }: SelectionActionProps) {
   const highlight = () => {
     const made = save(quote)
     if (!made) return
-    countEvent(EVENTS.selection('highlight'))
+    countSelection('highlight')
     open(made.id)
   }
   return (

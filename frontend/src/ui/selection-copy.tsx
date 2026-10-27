@@ -2,11 +2,10 @@
 // puts its value on the clipboard and says so; when the browser refuses the
 // clipboard, the value shows up in a field to copy by hand, like
 // "Compartilhar" (`share.tsx`). The count carries the action's name only.
-import { countEvent } from '#/analytics/counting'
-import { EVENTS } from '#/analytics/events'
 import { Input } from '@/ui/shadcn/input'
 import { SiteButton } from './button'
-import type { SelectionActionProps } from './selection-quote'
+import type { SelectionActionProps } from './selection-action'
+import { countSelection } from './selection-count'
 import {
   ACTION_LABEL,
   COPIED,
@@ -26,7 +25,7 @@ function CopyButton({
   show: SelectionActionProps['show']
 }) {
   const copy = async () => {
-    countEvent(EVENTS.selection(kind))
+    countSelection(kind)
     try {
       await navigator.clipboard.writeText(value)
       show(<CopyOutcome kind={kind} />)
