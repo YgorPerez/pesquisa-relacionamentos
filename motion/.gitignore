@@ -1,0 +1,7 @@
+# Remotion's own install (motion/video is not in the pnpm workspace).
+video/node_modules/
+# Copied or written by make-video.mjs on each render.
+video/public/fonts/
+video/public/soundtrack.wav
+# The rendered video: it goes to WhatsApp, not to git.
+/*.mp4

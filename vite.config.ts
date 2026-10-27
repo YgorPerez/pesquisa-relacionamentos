@@ -37,6 +37,9 @@ const IGNORED = [
   'packages/rules/fixtures/**',
   'scripts/fixtures/**',
   'frontend/e2e/library/**',
+  // The promo video: an npm project of its own, outside the workspace, whose
+  // Remotion the CI never installs (`motion/README.md`).
+  'motion/**',
   // Vendored: third-party skills and what `impeccable` generates.
   '.claude/skills/unslop/**',
   '.claude/skills/grilling/**',

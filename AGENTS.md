@@ -31,7 +31,7 @@ Vocabulário em `GLOSSARY.md`. Convenções de Fichas (Status de verificação, 
 
 ## Onde um arquivo mora
 
-O app fica em `frontend/`, os pacotes puros em `packages/` (`content`, que lê e valida o acervo, e `rules`, as contas sem dependência), os scripts do repositório em `scripts/` e os do deploy em `frontend/scripts/`. Dentro de `frontend/src/`, cada pasta tem um papel:
+O app fica em `frontend/`, os pacotes puros em `packages/` (`content`, que lê e valida o acervo, e `rules`, as contas sem dependência), os scripts do repositório em `scripts/`, os do deploy em `frontend/scripts/` e o vídeo de divulgação em `motion/` (Remotion, fora do workspace; ver `motion/README.md`). Dentro de `frontend/src/`, cada pasta tem um papel:
 
 - `routes/`: só arquivos de rota.
 - `ui/`: as peças da tela, vestidas com as classes do Tailwind no próprio componente (ADR 0026), com o `.copy.ts` de cada uma ao lado. O CSS à mão fica só em `ui/drawings.css`, para o que o Tailwind não cobre (`docs/agents/standards-ui.md`, §3).

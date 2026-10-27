@@ -1,0 +1,103 @@
+[
+ {
+  "t": 0.383,
+  "type": "grifar-start"
+ },
+ {
+  "t": 0.875,
+  "type": "press",
+  "x": 24,
+  "y": 428
+ },
+ {
+  "t": 2.449,
+  "type": "release",
+  "x": 241,
+  "y": 479
+ },
+ {
+  "t": 3.315,
+  "type": "tap",
+  "x": 255,
+  "y": 326,
+  "label": "Grifar"
+ },
+ {
+  "t": 4.459,
+  "type": "nota-start"
+ },
+ {
+  "t": 4.74,
+  "type": "tap",
+  "x": 80,
+  "y": 528,
+  "label": "Escrever nota"
+ },
+ {
+  "t": 6.934,
+  "type": "tap",
+  "x": 72,
+  "y": 678,
+  "label": "Salvar nota"
+ },
+ {
+  "t": 8.425,
+  "type": "comentar-start"
+ },
+ {
+  "t": 8.928,
+  "type": "press",
+  "x": 24,
+  "y": 450
+ },
+ {
+  "t": 10.051,
+  "type": "release",
+  "x": 177,
+  "y": 466
+ },
+ {
+  "t": 10.801,
+  "type": "tap",
+  "x": 239,
+  "y": 584,
+  "label": "Comentar"
+ },
+ {
+  "t": 11.71,
+  "type": "tap",
+  "x": 202,
+  "y": 661,
+  "label": "Falta estudo"
+ },
+ {
+  "t": 12.432,
+  "type": "tap",
+  "x": 184,
+  "y": 781,
+  "label": "campo"
+ },
+ {
+  "t": 14.324,
+  "type": "tap",
+  "x": 55,
+  "y": 800,
+  "label": "Enviar"
+ },
+ {
+  "t": 15.414,
+  "type": "enviado"
+ },
+ {
+  "t": 16.715,
+  "type": "grifos-start"
+ },
+ {
+  "t": 17.38,
+  "type": "grifos-loaded"
+ },
+ {
+  "t": 20.887,
+  "type": "end"
+ }
+]
