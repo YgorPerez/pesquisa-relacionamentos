@@ -3,7 +3,7 @@
 // screen test's (`selection-comment.test.tsx`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { expect, userEvent, within } from 'storybook/test'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 import { Textarea } from '@/ui/shadcn/textarea'
 import { BottomSheet } from './bottom-sheet'
 import { CLOSE } from './bottom-sheet.copy'
@@ -33,6 +33,9 @@ export const Open: Story = {
     const sheet = await page.findByRole('dialog', { name: 'Comentar' })
     await expect(within(sheet).getByLabelText('Seu comentário')).toBeVisible()
     await userEvent.click(within(sheet).getByRole('button', { name: CLOSE }))
-    await expect(page.queryByRole('dialog', { name: 'Comentar' })).toBeNull()
+    // The sheet leaves the page once its way out has run.
+    await waitFor(() =>
+      expect(page.queryByRole('dialog', { name: 'Comentar' })).toBeNull(),
+    )
   },
 }
