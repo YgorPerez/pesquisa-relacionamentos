@@ -20,6 +20,7 @@ import {
   type RefObject,
 } from 'react'
 import type { SelectionAction } from '#/analytics/events'
+import { HighlightAction } from './highlight-action'
 import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
 import {
@@ -42,7 +43,7 @@ const ACTIONS: ReadonlyArray<{
 
   { id: 'link', Action: CopyLink },
 
-  // Grifar (#334)
+  { id: 'highlight', Action: HighlightAction },
 
   // De onde vem isso? (#336)
 
