@@ -3,7 +3,7 @@
 // clipboard, the value shows up in a field to copy by hand, like
 // "Compartilhar" (`share.tsx`). The count carries the action's name only.
 import { Input } from '@/ui/shadcn/input'
-import type { SelectionActionProps } from './selection-action'
+import type { ActionOnQuote } from './selection-action'
 import { ActionButton } from './selection-button'
 import { countSelection } from './selection-count'
 import {
@@ -23,7 +23,7 @@ function CopyButton({
 }: {
   kind: CopyKind
   value: string
-  show: SelectionActionProps['show']
+  show: ActionOnQuote['show']
 }) {
   const copy = async () => {
     countSelection(kind)
@@ -61,11 +61,11 @@ function CopyOutcome({ kind, failed }: { kind: CopyKind; failed?: string }) {
 }
 
 /** "Copiar": the selected text, nothing appended. */
-export function CopyText({ quote, show }: SelectionActionProps) {
+export function CopyText({ quote, show }: ActionOnQuote) {
   return <CopyButton kind="copy" value={quote.text} show={show} />
 }
 
 /** "Copiar link": the address that opens the page on the selection. */
-export function CopyLink({ quote, show }: SelectionActionProps) {
+export function CopyLink({ quote, show }: ActionOnQuote) {
   return <CopyButton kind="link" value={quote.link} show={show} />
 }

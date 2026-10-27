@@ -13,7 +13,7 @@ import type { FactSheetSummary } from '#/content/view'
 import { FactSheetTitle } from './guide'
 import { ACTION_LABEL } from './selection-popover.copy'
 import { countSelection } from './selection-count'
-import type { SelectionActionProps } from './selection-action'
+import type { ActionOnQuote } from './selection-action'
 import { ActionButton } from './selection-button'
 import {
   CITES,
@@ -133,7 +133,7 @@ function SourcesPanel({
 
 /** "De onde vem isso?": the panel with the Fact sheets behind the
  * selection. */
-export function WhereFrom({ quote, show }: SelectionActionProps) {
+export function WhereFrom({ quote, show }: ActionOnQuote) {
   const page = useContext(PageSourcesContext)
   if (!page) return null
   const open = () => {

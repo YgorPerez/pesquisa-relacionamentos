@@ -24,6 +24,22 @@ export interface SelectionActionProps {
   /** Puts `panel` under the actions, in place of what was there: how the
    * copy went, a form. `null` clears it. */
   readonly show: (panel: ReactNode) => void
+  /** Puts a form where the reader can type it (#345): under the actions
+   * with a mouse, as `show` does; on touch, the popover closes and the form
+   * goes in a sheet at the bottom of the screen, titled `title`, because
+   * with the keyboard open the popover has a few lines of room. */
+  readonly showForm: (title: string, form: ReactNode) => void
+  /** Closes the popover or the sheet, clears the selection and tells
+   * `message` at the bottom of the screen. */
+  readonly finish: (message: string) => void
   /** Closes the popover. */
   readonly close: () => void
 }
+
+/** What the actions that the Grifo's popover shares (`highlight-popover.tsx`)
+ * get there: the quote, the panel and the way to close, with no form nor
+ * sheet. */
+export type ActionOnQuote = Pick<
+  SelectionActionProps,
+  'quote' | 'show' | 'close'
+>
