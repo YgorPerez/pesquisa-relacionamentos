@@ -10,6 +10,7 @@
 // set, Nota intact, and `/grifos` (#335) says "este trecho mudou". Everything
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
+import { useSyncExternalStore } from 'react'
 import { stored } from './stored'
 
 export interface Highlight {
@@ -90,6 +91,9 @@ export function validateHighlights(
 
 const highlights = stored('highlights', validateHighlights)
 
+/** No Grifo: one array, so React sees the same snapshot each time. */
+const NONE: ReadonlyArray<Highlight> = []
+
 /** Calls `notify` on every change, in this tab or another, until the
  * returned function is called. */
 export const followHighlights = (notify: () => void): (() => void) =>
@@ -97,7 +101,12 @@ export const followHighlights = (notify: () => void): (() => void) =>
 
 /** Every Grifo, outside React. */
 export const readHighlights = (): ReadonlyArray<Highlight> =>
-  highlights.read() ?? []
+  highlights.read() ?? NONE
+
+/** Every Grifo, in React. `null` on the server and during hydration, which
+ * tells "not read yet" from "none" (`useStored` gives `null` for both). */
+export const useHighlights = (): ReadonlyArray<Highlight> | null =>
+  useSyncExternalStore(highlights.subscribe, readHighlights, () => null)
 
 const save = (next: ReadonlyArray<Highlight>) =>
   highlights.write(next.length > 0 ? [...next] : null)

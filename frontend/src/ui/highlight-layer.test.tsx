@@ -19,6 +19,7 @@ import {
   SAVE_NOTE,
   SEE_HIGHLIGHT,
 } from './highlight.copy'
+import { ALL_HIGHLIGHTS, saved } from './highlight-list.copy'
 import { ACTION_LABEL, POPOVER_LABEL } from './selection-popover.copy'
 
 const GUIDE = '/onde-conhecer-pessoas'
@@ -149,6 +150,17 @@ it('Grifar paints the selection, and the paint comes back after a reload', async
   expect(saved!.link).toBe(
     `${GUIDE}#${SECTION}:~:text=A%20satisfa%C3%A7%C3%A3o%20de%20quem,conheceu%20pessoalmente%20fica%20perto`,
   )
+})
+
+it("the Grifo's popover leads to the list of every Grifo", async () => {
+  const user = userEvent.setup()
+  await openGuide()
+  select('A satisfação de quem', 'perto')
+  const popover = await highlight(user)
+  await user.click(within(popover).getByRole('link', { name: ALL_HIGHLIGHTS }))
+  expect(
+    await screen.findByRole('heading', { name: saved(1, 1) }),
+  ).toBeInTheDocument()
 })
 
 it('a repeated phrase comes back where it was made, and not on its first copy', async () => {

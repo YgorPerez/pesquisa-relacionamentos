@@ -2,7 +2,8 @@
 // grifo": the Nota, if there is one, and the actions on the Grifo. "Escrever
 // nota" or "Editar nota" opens the Nota's field under the row; "Tirar grifo"
 // forgets the Grifo and its Nota; "Copiar" and "Copiar link" are the ones of
-// the popover on selected text, over the Grifo's text.
+// the popover on selected text, over the Grifo's text. Under them, the way
+// to `/grifos` (#335).
 import { Popover } from '@base-ui/react/popover'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { removeHighlight, setNote, NOTE_LENGTH } from '#/state/highlights'
@@ -19,7 +20,9 @@ import {
   REMOVE_HIGHLIGHT,
   SAVE_NOTE,
 } from './highlight.copy'
+import { ALL_HIGHLIGHTS } from './highlight-list.copy'
 import type { Painted } from './highlight-paint'
+import { SmallLink } from './section'
 import { CopyLink, CopyText } from './selection-copy'
 
 /** The Grifo's box, read again each time the popover is placed. */
@@ -128,6 +131,9 @@ function HighlightActions({
         {quote && <CopyLink quote={quote} show={setPanel} close={close} />}
       </div>
       {panel !== null && <div className="mt-xs">{panel}</div>}
+      <SmallLink to="/grifos" className="mt-xs">
+        {ALL_HIGHLIGHTS}
+      </SmallLink>
     </>
   )
 }
