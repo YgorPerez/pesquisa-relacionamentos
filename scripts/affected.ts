@@ -40,6 +40,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
   'highlights.e2e.ts': ['grifo', 'grifos'],
   'selection-source.e2e.ts': ['selecao', 'guia', 'estudos'],
+  'selection-comment.e2e.ts': ['comentario', 'selecao'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and
@@ -98,6 +99,10 @@ const ALIASES: Readonly<Record<string, string>> = {
   'selection-source': 'selecao',
   'selection-sentences': 'selecao',
   'selection-button': 'selecao',
+  'selection-comment': 'comentario',
+  comment: 'comentario',
+  'comment-issue': 'comentario',
+  'comment-kinds': 'comentario',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

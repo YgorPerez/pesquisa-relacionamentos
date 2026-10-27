@@ -59,6 +59,25 @@ const UPLOAD = [
   ...HOST_CONFIG.map(([name]) => name),
 ] as const
 
+/** The app's environment on the VPS, in the app folder, read by
+ * `docker run --env-file` on every swap, the rollback's too. Only root
+ * reads it. Today it holds `COMMENT_GITHUB_TOKEN` (#337, ADR 0043). */
+const APP_ENV = 'app.env'
+
+/** A GitHub token: letters, digits and `_`. It goes inside a bash script,
+ * through `ssh`'s stdin, never on a command line. */
+const GITHUB_TOKEN = /^[A-Za-z0-9_]{20,255}$/
+
+/** Writes the comment token to `APP_ENV`, which the swap after it hands to
+ * the new container. `printf` is a bash builtin: the token does not show up
+ * in the VPS's process list. */
+function writeAppEnv(token: string) {
+  return String.raw`( umask 077; printf '%s\n' 'COMMENT_GITHUB_TOKEN=${token}' > ${APP_ENV}.novo )
+mv -f ${APP_ENV}.novo ${APP_ENV}
+echo "Comment token written to ${APP_ENV}."
+`
+}
+
 /** Goes on the `ssh` command line: only a SHA passes. */
 const SHA = /^[0-9a-f]{7,40}$/
 
@@ -175,9 +194,11 @@ LIVE=$(grep -o '127\.0\.0\.1:[0-9]*' "$INCLUDE" 2>/dev/null | cut -d: -f2 || tru
 if [ "$LIVE" = "${ports[0]}" ]; then PORT=${ports[1]}; else PORT=${ports[0]}; fi
 NEW=${container}-novo
 docker rm -f "$NEW" >/dev/null 2>&1 || true
+ENV_FILE=()
+if [ -f ${APP_ENV} ]; then ENV_FILE=(--env-file ${APP_ENV}); fi
 docker run -d --name "$NEW" --restart unless-stopped --init \
   --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
-  --log-opt max-size=10m --log-opt max-file=3 \
+  --log-opt max-size=10m --log-opt max-file=3 "${'$'}{ENV_FILE[@]}" \
   -p "127.0.0.1:$PORT:3000" ${container}:sha-${sha} >/dev/null
 UP=0
 for i in $(seq 1 30); do
@@ -341,18 +362,28 @@ function scriptOrFailure(build: () => string) {
 }
 
 /** Publishing a build: the upload, the image, GoatCounter, which does not
- * hold the site back, and the swap, which installs the host configuration
- * along with it. */
+ * hold the site back, the comment token when the deploy has one, and the
+ * swap, which installs the host configuration along with it. Without
+ * `commentToken`, the VPS keeps the `app.env` it had. */
 export function publishPlan({
   sha,
   email,
+  commentToken,
   paths = ON_VPS,
 }: {
   sha: string
   email?: string
+  /** `COMMENT_GITHUB_TOKEN`, from the deploy's secret. */
+  commentToken?: string
   paths?: VpsPaths
 }): Step[] {
   if (!SHA.test(sha)) throw new Error(`"${sha}" is not a SHA.`)
+  // The message never carries the value: the deploy log is public.
+  if (commentToken !== undefined && !GITHUB_TOKEN.test(commentToken))
+    throw new Error('COMMENT_GITHUB_TOKEN is not a GitHub token.')
+  const token: Step[] = commentToken
+    ? [{ name: 'Comment token', script: writeAppEnv(commentToken) }]
+    : []
   return [
     {
       name: 'Upload',
@@ -374,6 +405,7 @@ export function publishPlan({
           'could not check whether GoatCounter was left without a site.',
       },
     },
+    ...token,
     { name: 'Swap', script: swapApp(sha, true, paths) },
   ]
 }

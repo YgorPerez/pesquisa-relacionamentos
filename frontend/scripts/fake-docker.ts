@@ -2,8 +2,8 @@
 // (`docker-de-mentira.ts` there): the plan's scripts run in a real bash, in a
 // temporary folder that plays `/`, and the `docker`, `curl`, `nginx`,
 // `systemctl`, `pgrep` and `sleep` on the `PATH` are fake. The `docker`
-// remembers, in files, the images, the containers (the image, the port and
-// whether they stopped) and the GoatCounter site. Each call goes to `calls`,
+// remembers, in files, the images, the containers (the image, the port,
+// whether they stopped and their `--env-file`) and the GoatCounter site. Each call goes to `calls`,
 // in order.
 
 import { spawnSync } from 'node:child_process'
@@ -45,11 +45,12 @@ case "$1" in
   pull) grep -qxF "$3" "$E/images" || echo "$3" >> "$E/images" ;;
   volume) ;;
   run)
-    shift; NAME=; PORT=; IMAGE=
+    shift; NAME=; PORT=; IMAGE=; ENV_FILE=
     while [ $# -gt 0 ]; do
       case "$1" in
         --name) NAME=$2; shift 2 ;;
         -p) PORT=$(echo "$2" | cut -d: -f2); shift 2 ;;
+        --env-file) ENV_FILE=$2; shift 2 ;;
         --restart|--tmpfs|--cap-drop|--security-opt|--log-opt|-v) shift 2 ;;
         -*) shift ;;
         *) IMAGE=$1; break ;;
@@ -57,14 +58,15 @@ case "$1" in
     done
     grep -qxF "$IMAGE" "$E/images" || { echo "Unable to find image $IMAGE" >&2; exit 125; }
     [ ! -f "$C/$NAME" ] || { echo "Conflict: $NAME already exists" >&2; exit 125; }
-    echo "$IMAGE" > "$C/$NAME"; echo "$PORT" > "$C/$NAME.port" ;;
+    echo "$IMAGE" > "$C/$NAME"; echo "$PORT" > "$C/$NAME.port"
+    if [ -n "$ENV_FILE" ]; then cp "$ENV_FILE" "$C/$NAME.env"; fi ;;
   rm)
     [ -f "$C/$LAST" ] || { echo "No such container: $LAST" >&2; exit 1; }
-    rm -f "$C/$LAST" "$C/$LAST.port" "$C/$LAST.stopped" ;;
+    rm -f "$C/$LAST" "$C/$LAST.port" "$C/$LAST.stopped" "$C/$LAST.env" ;;
   stop) [ -f "$C/$LAST" ] && touch "$C/$LAST.stopped" ;;
   restart) rm -f "$C/$LAST.stopped" ;;
   rename)
-    for EXT in "" .port .stopped; do
+    for EXT in "" .port .stopped .env; do
       if [ -f "$C/$2$EXT" ]; then mv "$C/$2$EXT" "$C/$3$EXT"; fi
     done ;;
   logs) echo "the log of $LAST" ;;
@@ -211,6 +213,8 @@ export function fakeVps() {
     paths,
     read,
     container,
+    /** The `--env-file` the container started with, or `null`. */
+    containerEnv: (name: string) => read(join(state, 'c', `${name}.env`)),
     containers: () =>
       readdirSync(join(state, 'c')).filter((n) => !n.includes('.')),
     images: () =>

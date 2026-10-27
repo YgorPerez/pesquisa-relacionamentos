@@ -24,6 +24,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import {
   optionalEmail,
+  optionalSecret,
   readEnv,
   port as aPort,
   user as aUser,
@@ -154,7 +155,8 @@ function followThePlan({
 }
 
 /** Publishes the build's `.output` with the commit's SHA. Outside the test,
- * `email` comes from `GOATCOUNTER_EMAIL`. */
+ * `email` comes from `GOATCOUNTER_EMAIL` and `commentToken` from
+ * `COMMENT_GITHUB_TOKEN`. */
 export function publish({
   output,
   vps,
@@ -233,17 +235,24 @@ if (import.meta.main) {
     process.exit(1)
   }
   if (!target) usage()
-  else if (mode === '--publish' && a && b)
+  else if (mode === '--publish' && a && b) {
+    // Validated before the first step (ADR 0032).
+    const read = readEnv(
+      {
+        GOATCOUNTER_EMAIL: optionalEmail,
+        COMMENT_GITHUB_TOKEN: optionalSecret,
+      },
+      process.env,
+    )
     publish({
       output: resolve(a),
       sha: b,
-      // Validated before the first step (ADR 0032).
-      email: readEnv({ GOATCOUNTER_EMAIL: optionalEmail }, process.env)
-        .GOATCOUNTER_EMAIL,
+      email: read.GOATCOUNTER_EMAIL,
+      commentToken: read.COMMENT_GITHUB_TOKEN,
       vps: overSsh(target),
       say,
     })
-  else if (mode === '--rollback')
+  } else if (mode === '--rollback')
     rollback({ sha: a, vps: overSsh(target), say })
   else usage()
 }
