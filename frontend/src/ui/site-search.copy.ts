@@ -41,3 +41,6 @@ export const nothingFound = (query: string) =>
 
 export const NOTHING_LINE =
   'Tente outra palavra, uma parte dela ou menos palavras.'
+
+/** Read by the screen reader while a search runs. */
+export const SEARCHING = 'Buscando…'

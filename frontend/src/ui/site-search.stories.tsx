@@ -2,7 +2,11 @@
 // (`site-search.example.ts`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MANY, NOTHING, WORDS } from './site-search.example'
-import { SearchForm, SearchResultsList } from './site-search'
+import {
+  SearchForm,
+  SearchResultsList,
+  SearchResultsSkeleton,
+} from './site-search'
 
 const meta = {
   parameters: { layout: 'padded' },
@@ -35,4 +39,14 @@ export const EveryWord: Story = {
 
 export const NothingFound: Story = {
   render: () => <SearchResultsList results={NOTHING} />,
+}
+
+/** While a search runs: the results' shape in grey. */
+export const Searching: Story = {
+  render: () => (
+    <>
+      <SearchForm query="complemento" />
+      <SearchResultsSkeleton />
+    </>
+  ),
 }

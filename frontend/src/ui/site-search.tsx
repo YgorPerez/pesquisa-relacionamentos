@@ -3,7 +3,7 @@
 // `Link`: the browser only reads the Text Fragment (`#…:~:text=`) when it
 // loads a page, and it is the fragment that scrolls to the sentence and
 // paints it.
-import type { FormEvent } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import type { SearchResults } from '#/content/site-search-view'
 import { Headline, Notice, Section, Tag } from './section'
 import { SiteButton } from './button'
@@ -13,6 +13,7 @@ import {
   KIND_TAG,
   NOTHING_LINE,
   SEARCH,
+  SEARCHING,
   SUBMIT,
   WORDS_ONLY,
   found,
@@ -20,14 +21,17 @@ import {
 } from './site-search.copy'
 
 /** The field. Without JS it is a GET form to `/busca`; with it, `onSearch`
- * goes there through the router. */
+ * goes there through the router. With `onType` the field is the caller's:
+ * `query` is what it shows, and each key reaches `onType`. */
 export function SearchForm({
   query,
   autoFocus = false,
+  onType,
   onSearch,
 }: {
   query: string
   autoFocus?: boolean
+  onType?: (text: string) => void
   onSearch?: (query: string) => void
 }) {
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -50,7 +54,13 @@ export function SearchForm({
         <Input
           type="search"
           name="q"
-          defaultValue={query}
+          {...(onType
+            ? {
+                value: query,
+                onChange: (event: ChangeEvent<HTMLInputElement>) =>
+                  onType(event.currentTarget.value),
+              }
+            : { defaultValue: query })}
           // Only on the empty page, which the magnifier opens: over the
           // results, the phone's keyboard would cover them.
           autoFocus={autoFocus}
@@ -138,6 +148,73 @@ export function SearchResultsList({ results }: { results: SearchResults }) {
           </li>
         ))}
       </ol>
+    </Section>
+  )
+}
+
+/** A grey line where the text will be, as wide as `width` and as tall as
+ * the letters of the box around it. */
+function Bar({ width }: { width: string }) {
+  return (
+    <span
+      className={`inline-block h-[0.7em] max-w-full rounded-mao bg-tinta/10 align-middle ${width}`}
+    />
+  )
+}
+
+/** Each page the skeleton draws: its title and, per hit, the place and the
+ * sentence's lines. Fixed widths, so it never jumps between renders. */
+const SKELETON_PAGES = [
+  {
+    title: 'w-1/2',
+    hits: [
+      ['w-1/3', 'w-full', 'w-4/5'],
+      ['w-1/4', 'w-11/12', 'w-2/3'],
+    ],
+  },
+  { title: 'w-2/5', hits: [['w-2/5', 'w-full', 'w-3/5']] },
+  { title: 'w-3/5', hits: [['w-1/4', 'w-10/12', 'w-1/2']] },
+] as const
+
+/** While a search runs: the shape of the results, the count and three pages
+ * in grey, so the page does not jump when they come. */
+export function SearchResultsSkeleton() {
+  return (
+    <Section aria-labelledby="t-buscando" aria-busy="true" data-slot="buscando">
+      <h2 id="t-buscando" role="status" className="sr-only">
+        {SEARCHING}
+      </h2>
+      <div
+        aria-hidden="true"
+        className="animate-pulse motion-reduce:animate-none"
+      >
+        <span className="mb-sm block font-headline text-headline">
+          <Bar width="w-56" />
+        </span>
+        {SKELETON_PAGES.map((page, i) => (
+          <div
+            key={i}
+            className="not-first:mt-lg not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta/25 not-first:pt-md"
+          >
+            <span className="mb-xs flex items-center gap-2 font-title text-title">
+              <span className="inline-block h-[1.2em] w-11 shrink-0 rounded-mao-2 bg-tinta/10" />
+              <Bar width={page.title} />
+            </span>
+            {page.hits.map(([place, ...lines], j) => (
+              <div key={j} className="not-first:mt-sm">
+                <span className="block font-label text-nota leading-nota">
+                  <Bar width={place} />
+                </span>
+                {lines.map((line, k) => (
+                  <span key={k} className="block">
+                    <Bar width={line} />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </Section>
   )
 }

@@ -24,6 +24,20 @@ test.describe('site search', () => {
     ).toBeVisible()
   })
 
+  test('the results come as the reader types, and the address follows the field', async ({
+    page,
+  }) => {
+    await page.goto('/busca', { waitUntil: 'networkidle' })
+    const field = page.getByRole('searchbox', { name: 'Palavra ou frase' })
+    await field.pressSequentially('complemento')
+    await expect(
+      page.getByRole('heading', { name: '3 trechos em 3 páginas' }),
+    ).toBeVisible()
+    await expect(page).toHaveURL('/busca?q=complemento')
+    await expect(field).toBeFocused()
+    await expect(field).toHaveValue('complemento')
+  })
+
   // The search copies each section's anchor from the pages
   // (`ui/guide-sections.tsx`, `routes/estudos/$slug.tsx`): a renamed section
   // would leave its hits stopping at the top of the page.
