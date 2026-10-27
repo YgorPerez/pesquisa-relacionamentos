@@ -15,6 +15,7 @@ import {
 } from '#/ui/badges'
 import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
 import { SelectionPopover } from '#/ui/selection-popover'
+import { PageSources } from '#/ui/selection-source'
 import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/estudos/$slug')({
@@ -129,8 +130,19 @@ function FactSheetPage() {
           <FactSheetLegend />
         </Section>
       </Column>
-      <SelectionPopover />
+      <FactSheetSelection />
     </Sheet>
+  )
+}
+
+/** The popover on selected text, where this Fact sheet is what the text
+ * rests on. */
+function FactSheetSelection() {
+  const factSheet = useFactSheet()
+  return (
+    <PageSources factSheets={[factSheet]} page="fact-sheet">
+      <SelectionPopover />
+    </PageSources>
   )
 }
 

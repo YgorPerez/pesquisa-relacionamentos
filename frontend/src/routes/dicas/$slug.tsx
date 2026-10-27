@@ -8,6 +8,7 @@ import { BackLink } from '#/ui/navigation'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Headline, Panel, Section } from '#/ui/section'
 import { SelectionPopover } from '#/ui/selection-popover'
+import { PageSources } from '#/ui/selection-source'
 import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/dicas/$slug')({
@@ -80,7 +81,9 @@ function TipPage() {
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
       </Column>
-      <SelectionPopover />
+      <PageSources factSheets={tip.factSheets} page="tip">
+        <SelectionPopover />
+      </PageSources>
     </Sheet>
   )
 }

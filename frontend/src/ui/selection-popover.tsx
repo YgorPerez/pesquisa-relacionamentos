@@ -29,6 +29,7 @@ import {
   type QuotedPage,
   type SelectionActionProps,
 } from './selection-quote'
+import { WhereFrom } from './selection-source'
 
 // The actions, in the popover's order (#332). Each is a component of its
 // own file that gets the quote, a place for a panel under the row and the
@@ -44,7 +45,7 @@ const ACTIONS: ReadonlyArray<{
 
   // Grifar (#334)
 
-  // De onde vem isso? (#336)
+  { id: 'source', Action: WhereFrom },
 
   // Comentar (#337)
 ]
