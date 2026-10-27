@@ -7,6 +7,7 @@ import {
   folder,
   optionalEmail,
   optionalFile,
+  optionalSecret,
   port,
   readEnv,
   user,
@@ -88,6 +89,16 @@ describe('readEnv', () => {
     expect(() => readEnv(schema, { GOATCOUNTER_EMAIL: 'me@site' })).toThrow(
       'GOATCOUNTER_EMAIL="me@site": expected an e-mail',
     )
+  })
+
+  it('a secret is trimmed, and blank counts as missing', () => {
+    const schema = { COMMENT_GITHUB_TOKEN: optionalSecret }
+    expect(readEnv(schema, { COMMENT_GITHUB_TOKEN: '  ' })).toEqual({
+      COMMENT_GITHUB_TOKEN: undefined,
+    })
+    expect(
+      readEnv(schema, { COMMENT_GITHUB_TOKEN: ' github_pat_x\n' }),
+    ).toEqual({ COMMENT_GITHUB_TOKEN: 'github_pat_x' })
   })
 
   it('the VPS user is a system name', () => {

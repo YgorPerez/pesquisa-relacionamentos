@@ -1,5 +1,6 @@
 // The deploy against a fake VPS (`fake-docker.ts`): the same plan that goes
 // over SSH, run in a bash, with no real Docker or Nginx.
+import { statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
 import { fakeFrontend, fakeVps } from './fake-docker.ts'
@@ -19,10 +20,11 @@ function aVps() {
   return {
     ...vps,
     log,
-    publish: (sha: string) =>
+    publish: (sha: string, commentToken?: string) =>
       publish({
         output: fakeFrontend(sha),
         sha,
+        commentToken,
         vps: vps.vps,
         paths: vps.paths,
         say,
@@ -136,6 +138,34 @@ describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
     expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
     expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_2}\n`)
     expect(vps.log).toContain(`Rolling back to sha-${SHA_1}.`)
+  })
+
+  it('the comment token reaches the app through a file only root reads, and stays for the next deploy and the rollback', () => {
+    const vps = aVps()
+    const envFile = join(vps.paths.folder, 'app.env')
+
+    vps.publish(SHA_1)
+    expect(vps.containerEnv('temestudo-app')).toBeNull()
+
+    vps.publish(SHA_2, 'github_pat_11ABC_def')
+    expect(vps.containerEnv('temestudo-app')).toBe(
+      'COMMENT_GITHUB_TOKEN=github_pat_11ABC_def\n',
+    )
+    expect(statSync(envFile).mode & 0o777).toBe(0o600)
+    expect(vps.log.join('\n')).not.toContain('github_pat_11ABC_def')
+
+    vps.publish(SHA_3)
+    expect(vps.containerEnv('temestudo-app')).toContain('github_pat_11ABC_def')
+    vps.rollback()
+    expect(vps.containerEnv('temestudo-app')).toContain('github_pat_11ABC_def')
+  })
+
+  it('a token that could break out of the script stops the deploy before the VPS', () => {
+    const vps = aVps()
+    expect(() => vps.publish(SHA_1, "x'; rm -rf / #")).toThrow(
+      'COMMENT_GITHUB_TOKEN is not a GitHub token.',
+    )
+    expect(vps.live()).toEqual({ include: null, app: null })
   })
 
   it('rolling back to a SHA the VPS did not keep leaves what is live alone', () => {

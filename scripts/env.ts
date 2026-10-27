@@ -1,8 +1,10 @@
 // The repository's environment variables, read and validated with T3 Env
 // (ADR 0032, modeled on Festival dos Macacos' `env.server.ts`). Readers:
 // `./ports.ts` (the port of each use), `frontend/vite/environment.ts` (the build
-// ones: the library, the sitemap and counting on localhost) and
-// `frontend/scripts/vps.ts` (the VPS and the GoatCounter login).
+// ones: the library, the sitemap and counting on localhost),
+// `frontend/scripts/vps.ts` (the VPS, the GoatCounter login and the comment
+// token it hands the app) and `frontend/src/content/comment.ts` (that token,
+// in the app server).
 //
 // Each type is a hand-written Standard Schema, which `createEnv` accepts per
 // key: the app does not use Effect (spec #23), and a zod just for this would
@@ -80,6 +82,18 @@ export const optionalEmail = variable<string | undefined>(
   undefined,
   (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? value : undefined),
 )
+
+/** A secret, like the token that opens a Comentário's issue, or nothing
+ * (blank too). It never fails: the error message would print its value. */
+export const optionalSecret: Schema<string | undefined> = {
+  '~standard': {
+    version: 1,
+    vendor: 'tem-estudo',
+    validate: (raw) => ({
+      value: (typeof raw === 'string' && raw.trim()) || undefined,
+    }),
+  },
+}
 
 /** An on/off switch, `1` or `0`, like `VITE_COUNT_ON_LOCALHOST`. */
 export const flag = (fallback: boolean) =>
