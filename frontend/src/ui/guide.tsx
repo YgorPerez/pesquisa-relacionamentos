@@ -3,8 +3,10 @@
 // sheets and a Question's big row.
 import type { Strength } from '@tem-estudo/content'
 import { Link } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 import type { SafeHtml } from '#/content/safe-html'
 import type { CitedFactSheet } from '#/content/guide-view'
+import type { FactSheetSummary } from '#/content/view'
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
 import { FactSheetLoop, type CircledFactSheet } from './navigation'
@@ -15,24 +17,30 @@ import {
   VerificationStatusBadge,
 } from './badges'
 import { STRENGTH_WORD } from './badges.copy'
+import { quotable } from './selection-quote'
 
 export function Html({
   html,
   as = 'div',
   className,
   slot,
+  quote,
 }: {
   html: SafeHtml
   as?: 'div' | 'span' | 'p'
   className?: string
   /** The `data-slot`, by which the test finds the block. */
   slot?: string
+  /** Text the selection popover quotes, with the anchor of its section
+   * (`null` at the top of the page); without it, not quoted. */
+  quote?: string | null
 }) {
   const Tag = as
   return (
     <Tag
       className={className}
       data-slot={slot}
+      {...(quote === undefined ? {} : quotable(quote))}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )
@@ -110,6 +118,33 @@ export function CitedFactSheets({
   )
 }
 
+/** A Fact sheet's title, leading to its page, over its Status and its
+ * Strength; `children` go at the end of that row. */
+export function FactSheetTitle({
+  factSheet,
+  children,
+}: {
+  factSheet: FactSheetSummary
+  children?: ReactNode
+}) {
+  return (
+    <>
+      <Link
+        to="/estudos/$slug"
+        params={{ slug: factSheet.slug }}
+        className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
+      >
+        {factSheet.title}
+      </Link>
+      <FactSheetMeta>
+        <VerificationStatusBadge status={factSheet.status} />
+        <StrengthBadge strength={factSheet.strength} />
+        {children}
+      </FactSheetMeta>
+    </>
+  )
+}
+
 /** A cited Fact sheet: the number, the title with the Status and the
  * Strength and, if the reader came from the text to it (`circled`), the loop
  * and "voltar ao texto". */
@@ -138,18 +173,9 @@ function FactSheetItem({
         {factSheet.n}
       </span>
       <div>
-        <Link
-          to="/estudos/$slug"
-          params={{ slug: factSheet.slug }}
-          className="inline-flex min-h-toque items-center font-bold decoration-agua-tinta hover:bg-agua-fonte"
-        >
-          {factSheet.title}
-        </Link>
-        <FactSheetMeta>
-          <VerificationStatusBadge status={factSheet.status} />
-          <StrengthBadge strength={factSheet.strength} />
+        <FactSheetTitle factSheet={factSheet}>
           <span className="text-tinta-2">{factSheet.context}</span>
-        </FactSheetMeta>
+        </FactSheetTitle>
         {isTarget && backToText && (
           <Button variant="underlined" className="mt-1.5" onClick={backToText}>
             voltar ao texto

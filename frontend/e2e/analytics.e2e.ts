@@ -266,6 +266,7 @@ test('the privacy page says what stays on the device, in the link, in the log an
   expect(sections).toEqual([
     'O que fica no seu aparelho',
     'O que vai no link',
+    'O que vai num Comentário',
     'O que o servidor anota',
     'O que a contagem de visitas guarda',
     'Não ser contado',

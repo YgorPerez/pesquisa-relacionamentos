@@ -22,5 +22,7 @@ describe('EVENTS', () => {
       'continue-reading/onde-conhecer-pessoas',
     )
     expect(EVENTS.neighborSite('pew')).toBe('neighbor-site/pew')
+    expect(EVENTS.selection('copy')).toBe('selection/copy')
+    expect(EVENTS.selection('link')).toBe('selection/link')
   })
 })

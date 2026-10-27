@@ -182,6 +182,10 @@ jobs:
           # The login the first deploy creates in GoatCounter. Without the
           # repository variable, it is admin@temestudo.cloud.
           GOATCOUNTER_EMAIL: ${{ vars.GOATCOUNTER_EMAIL }}
+          # The fine-grained token that opens a Comentário's issue in the
+          # private sources repo (ADR 0043). It goes to `app.env` on the VPS;
+          # without the secret, the VPS keeps the one it had, if any.
+          COMMENT_GITHUB_TOKEN: ${{ secrets.COMMENT_GITHUB_TOKEN }}
         run: node scripts/vps.ts --publish .output "$GITHUB_SHA"
 
       # From outside, over the internet (ADR 0008): the page arrives with

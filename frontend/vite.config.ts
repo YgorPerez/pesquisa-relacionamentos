@@ -104,6 +104,15 @@ export default defineConfig(({ mode }) => ({
                 new URL('src/platform/screens/test-server.ts', import.meta.url),
               ),
             },
+            {
+              find: /^@tanstack\/react-start\/server$/,
+              replacement: fileURLToPath(
+                new URL(
+                  'src/platform/screens/test-request.ts',
+                  import.meta.url,
+                ),
+              ),
+            },
           ],
         },
         test: {

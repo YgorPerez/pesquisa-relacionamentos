@@ -2,16 +2,13 @@
 // associations and one inference of ours. The drawing is hidden from screen
 // readers; the list under it says each arrow, what backs it and its Fact
 // sheets.
-import { screen, within } from '@testing-library/react'
+import { within } from '@testing-library/react'
 import { expect, it } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
+import { openVisual } from '#/platform/screens/visual'
 import { VISUAL_COPY } from './visual.copy'
 
 it('says each arrow in words, with what backs it and the Fact sheets', async () => {
-  openScreen('/onde-conhecer-pessoas')
-  const figure = await screen.findByRole('figure', {
-    name: 'O app, o encontro e a satisfação',
-  })
+  const figure = await openVisual('O app, o encontro e a satisfação')
   const arrows = within(figure).getAllByRole('listitem')
   expect(arrows.map((a) => a.textContent?.replace(/[\d]+$/, ''))).toEqual([
     `Usar app de namoro → Conhecer o parceiro (${VISUAL_COPY.evidence.association}): Quase um em cada cinco adultos jovens conheceu o parceiro por app.`,

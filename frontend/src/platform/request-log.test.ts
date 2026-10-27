@@ -37,6 +37,20 @@ describe("the server's log of each request", () => {
     expect(lines.join('\n')).not.toMatch(/[?&=#%]|mulher|trans|bi/)
   })
 
+  test('a Comentário, which goes in the body of a POST, never reaches the log, nor the IP it came from', async () => {
+    const { fetch, lines } = setup(() => new Response('{}', { status: 200 }))
+
+    await fetch(
+      new Request('https://temestudo.cloud/_serverFn/abc?createServerFn', {
+        method: 'POST',
+        headers: { 'x-forwarded-for': '203.0.113.7' },
+        body: JSON.stringify({ text: 'meu namorado e eu' }),
+      }),
+    )
+
+    expect(lines).toEqual(['POST /_serverFn/abc 200 12ms'])
+  })
+
   test('every response goes out with Referrer-Policy: strict-origin', async () => {
     const { fetch } = setup(
       () => new Response('ok', { headers: { 'content-type': 'text/html' } }),

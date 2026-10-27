@@ -14,6 +14,8 @@ import {
   FactSheetMeta,
 } from '#/ui/badges'
 import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
+import { PageSelection } from '#/ui/page-selection'
+import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/estudos/$slug')({
   // The `loaderData` carries only what the `head` uses; the Fact sheet goes
@@ -89,7 +91,9 @@ function FactSheetPage() {
           </Notice>
         )}
 
-        <Display small>{factSheet.title}</Display>
+        <Display small {...quotable(null, true)}>
+          {factSheet.title}
+        </Display>
 
         <FactSheetMeta large>
           <VerificationStatusBadge status={factSheet.status} />
@@ -98,23 +102,24 @@ function FactSheetPage() {
 
         <FactSheetData />
 
-        <Section aria-labelledby="o-que-mediu">
-          <Headline id="o-que-mediu">O que mediu</Headline>
-          <Html className="prosa" html={factSheet.whatItMeasuredHtml} />
-        </Section>
+        <WhatItMeasured />
 
         <Findings />
 
         {factSheet.otherSections.map((section, i) => (
           <Section key={section.title} aria-labelledby={`secao-${i}`}>
             <Headline id={`secao-${i}`}>{section.title}</Headline>
-            <Html className="prosa" html={section.html} />
+            <Html className="prosa" html={section.html} quote={`secao-${i}`} />
           </Section>
         ))}
 
         <Section aria-labelledby="limitacoes">
           <Headline id="limitacoes">Limitações</Headline>
-          <Html className="prosa limites" html={factSheet.limitationsHtml} />
+          <Html
+            className="prosa limites"
+            html={factSheet.limitationsHtml}
+            quote="limitacoes"
+          />
         </Section>
 
         <CitedBy />
@@ -124,8 +129,16 @@ function FactSheetPage() {
           <FactSheetLegend />
         </Section>
       </Column>
+      <FactSheetSelection />
     </Sheet>
   )
+}
+
+/** The reader's actions on the text, where this Fact sheet is what the text
+ * rests on. */
+function FactSheetSelection() {
+  const factSheet = useFactSheet()
+  return <PageSelection factSheets={[factSheet]} page="fact-sheet" />
 }
 
 /** The Fact sheet's data, one per row: where it came from, how it was
@@ -152,13 +165,13 @@ function FactSheetData() {
           : 'Ainda não conferida na fonte.'}
       </DataRow>
       <DataRow title={`Por que ${STRENGTH_WORD[factSheet.strength]}`}>
-        {factSheet.strengthReason}
+        <span {...quotable(null)}>{factSheet.strengthReason}</span>
       </DataRow>
       <DataRow title="Amostra">
         {factSheet.n !== null && (
           <strong>{numberFormat.format(factSheet.n)}. </strong>
         )}
-        <Html as="span" html={factSheet.sampleHtml} />{' '}
+        <Html as="span" html={factSheet.sampleHtml} quote={null} />{' '}
         {factSheet.representative
           ? 'Representativa da população.'
           : 'Não é representativa da população.'}
@@ -172,7 +185,7 @@ function FactSheetData() {
       </DataRow>
       <DataRow title="Financiamento e conflito de interesse">
         {factSheet.conflictHtml ? (
-          <Html as="span" html={factSheet.conflictHtml} />
+          <Html as="span" html={factSheet.conflictHtml} quote={null} />
         ) : (
           'Não declarado.'
         )}
@@ -181,6 +194,17 @@ function FactSheetData() {
         <DataRow title="Licença">{factSheet.license}</DataRow>
       )}
     </dl>
+  )
+}
+
+/** "O que mediu", in prose. */
+function WhatItMeasured() {
+  const { whatItMeasuredHtml } = useFactSheet()
+  return (
+    <Section aria-labelledby="o-que-mediu">
+      <Headline id="o-que-mediu">O que mediu</Headline>
+      <Html className="prosa" html={whatItMeasuredHtml} quote="o-que-mediu" />
+    </Section>
   )
 }
 
@@ -200,9 +224,15 @@ function Findings() {
             <Html
               className="max-w-38 font-title text-title leading-title font-bold tracking-normal wrap-anywhere estreito:max-w-none"
               html={finding.value}
+              quote="achados"
             />
             <div>
-              <Html as="span" className="block" html={finding.measure} />
+              <Html
+                as="span"
+                className="block"
+                html={finding.measure}
+                quote="achados"
+              />
               {finding.excerpt ? (
                 <blockquote className="m-0 mt-xs border-l-2 border-agua-tinta pl-3 italic">
                   <Html as="span" html={finding.excerpt} />
@@ -221,7 +251,7 @@ function Findings() {
           </li>
         ))}
       </ol>
-      {notesHtml && <Html className="prosa" html={notesHtml} />}
+      {notesHtml && <Html className="prosa" html={notesHtml} quote="achados" />}
     </Section>
   )
 }

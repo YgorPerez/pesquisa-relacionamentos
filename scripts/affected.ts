@@ -36,6 +36,11 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'privacy.e2e.ts': ['privacidade'],
   'neighbor-sites.e2e.ts': ['sites-vizinhos', 'guia'],
   'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
+  'selection.e2e.ts': ['selecao', 'busca', 'guia', 'dicas', 'estudos'],
+  'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
+  'highlights.e2e.ts': ['grifo', 'grifos'],
+  'selection-source.e2e.ts': ['selecao', 'guia', 'estudos'],
+  'selection-comment.e2e.ts': ['comentario', 'selecao'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and
@@ -75,6 +80,29 @@ const ALIASES: Readonly<Record<string, string>> = {
   readings: 'sites-vizinhos',
   'neighbor-sites': 'sites-vizinhos',
   'neighbor-sites-view': 'sites-vizinhos',
+  'text-fragment': 'busca',
+  'selection-popover': 'selecao',
+  'selection-quote': 'selecao',
+  'selection-copy': 'selecao',
+  'selection-action': 'selecao',
+  'selection-count': 'selecao',
+  'quote-text': 'selecao',
+  highlight: 'grifo',
+  highlights: 'grifo',
+  'highlight-action': 'grifo',
+  'highlight-layer': 'grifo',
+  'highlight-paint': 'grifo',
+  'highlight-popover': 'grifo',
+  'highlight-text': 'grifo',
+  'highlight-list': 'grifos',
+  'highlight-record': 'grifo',
+  'selection-source': 'selecao',
+  'selection-sentences': 'selecao',
+  'selection-button': 'selecao',
+  'selection-comment': 'comentario',
+  comment: 'comentario',
+  'comment-issue': 'comentario',
+  'comment-kinds': 'comentario',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

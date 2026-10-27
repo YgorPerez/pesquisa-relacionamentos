@@ -35,4 +35,8 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 - **Leitura** [reading]**:** uma página de um Site vizinho que o Tem estudo? indica ao leitor, ligada a um ou mais Temas. Só entra se ela mesma linka ou referencia os estudos de que fala, e se o que diz deles foi conferido nos estudos. Pode levar um aviso próprio, além do aviso do site, quando quem a escreveu vende algo ou ela saiu antes num site que defende uma causa.
 - **Ressalva** [caveat]**:** o aviso de uma Leitura que exagera ou distorce, num ponto lateral, um estudo que cita: uma frase com o que o estudo achou. Quando o erro está no centro do texto, a Leitura sai em vez de levar Ressalva.
 
-_Evitar_: "pool" para Grupo possível, no texto e no código; "artigo" para Guia, porque artigo é um tipo de Estudo; "recomendação" para Site vizinho, porque recomendação prática é Dica.
+- **Grifo** [highlight]**:** um trecho de um Guia, de uma Ficha ou de uma Dica que o usuário marcou para rever. Fica só no aparelho dele. Se o texto muda e o trecho some, o Grifo continua guardado, marcado como trecho que mudou.
+- **Nota** [note]**:** o texto que o usuário escreve num Grifo. É opcional e, como o Grifo, só ele vê.
+- **Comentário** [comment]**:** o recado de um leitor ao curador sobre um trecho: um erro, um estudo que falta, algo que não entendeu. É anônimo, só o curador lê e nunca aparece no site.
+
+_Evitar_: "pool" para Grupo possível, no texto e no código; "artigo" para Guia, porque artigo é um tipo de Estudo; "recomendação" para Site vizinho, porque recomendação prática é Dica; "aviso" para Comentário, porque aviso é o alerta de um Site vizinho ou de uma Leitura; "anotação" para Nota.

@@ -85,7 +85,7 @@ Para ver as imagens que a VPS tem: `ssh root@<ip> docker images temestudo-app`.
 
 | O quê                    | Onde                                                                                               |
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
-| Pasta do app             | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`, `goatcounter-senha`)             |
+| Pasta do app             | `/opt/temestudo` (`no-ar`, `anterior`, `publicar.lock`, `envio/`, `goatcounter-senha`, `app.env`)  |
 | Desafio do certbot       | `/opt/temestudo/acme`                                                                              |
 | Vhosts                   | `/etc/nginx/sites-available/temestudo.conf` e `temestudo-stats.conf`, com link em `sites-enabled/` |
 | GoatCounter              | contêiner `temestudo-stats` em `127.0.0.1:3051`, banco no volume `temestudo-stats`                 |
@@ -110,6 +110,17 @@ O link de compartilhamento leva o Perfil na query ([ADR 0001](adr/0001-full-stat
 - `Referrer-Policy: strict-origin` sai do app nas páginas e do Nginx em todo o resto. O Nginx esconde a do app para o cabeçalho não sair duplicado.
 
 Os testes conferem isso: `frontend/src/platform/request-log.test.ts` manda um pedido com query e lê a linha de log, e `frontend/nginx/nginx.test.ts` lê o formato declarado no vhost e na rotação.
+
+## Comentário (#337)
+
+O Comentário de um leitor vira issue no repo privado `YgorPerez/pesquisa-relacionamentos-fontes` ([ADR 0043](adr/0043-comments-become-issues-in-the-private-sources-repo.md)). O app abre a issue com o token do secret `COMMENT_GITHUB_TOKEN`:
+
+- é um token fine-grained, só desse repo, com a permissão Issues em Read and write (Metadata: Read vem junto);
+- o deploy o grava em `/opt/temestudo/app.env`, do root, com modo 600, e cada troca de contêiner, o rollback também, passa o arquivo ao `docker run --env-file`;
+- sem o secret, o deploy deixa o `app.env` como estava. Para tirar o token da VPS, apague o arquivo e publique de novo;
+- sem token nenhum, o site segue no ar, e cada Comentário responde que não foi enviado.
+
+Os rótulos das issues são os quatro tipos do formulário: Está errado, Falta estudo, Não entendi, Outro.
 
 ## GoatCounter (#35)
 
