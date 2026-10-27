@@ -12,8 +12,12 @@ const SENTENCE =
   'A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto'
 
 /** Counts the sends to GoatCounter, opens the Guide, selects the sentence
- * and opens the form. */
+ * and opens the form. Each test comes from an address of its own, as Nginx
+ * would forward it: the server's per-IP limit (5 an hour) would otherwise
+ * answer the later tests, and every retry, with its neutral "sent". */
 async function openForm(page: Page) {
+  const ip = `198.51.100.${Math.floor(Math.random() * 254) + 1}`
+  await page.setExtraHTTPHeaders({ 'x-forwarded-for': ip })
   const counted: string[] = []
   await page.route(`${STATS}**`, async (route) => {
     counted.push(route.request().url())
