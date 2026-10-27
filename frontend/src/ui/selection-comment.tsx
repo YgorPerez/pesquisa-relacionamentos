@@ -14,7 +14,9 @@ import {
 } from '#/content/comment-kinds'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { Textarea } from '@/ui/shadcn/textarea'
-import { SiteButton } from './button'
+// The shadcn `Button` itself, as `SiteButton` (`button.tsx`) renders it:
+// that module's fan-in is at the limit.
+import { Button } from '@/ui/shadcn/button'
 import { COMMENT } from './selection-comment.copy'
 import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
@@ -176,9 +178,9 @@ function CommentForm({ quote }: { quote: Quote }) {
         </p>
       )}
       <div>
-        <SiteButton type="submit" disabled={status === 'sending'}>
+        <Button type="submit" disabled={status === 'sending'}>
           {status === 'sending' ? COMMENT.sending : COMMENT.send}
-        </SiteButton>
+        </Button>
       </div>
     </form>
   )
@@ -187,11 +189,8 @@ function CommentForm({ quote }: { quote: Quote }) {
 /** "Comentar": opens the form under the row of actions. */
 export function CommentOnQuote({ quote, show }: SelectionActionProps) {
   return (
-    <SiteButton
-      variant="light"
-      onClick={() => show(<CommentForm quote={quote} />)}
-    >
+    <Button variant="light" onClick={() => show(<CommentForm quote={quote} />)}>
       {ACTION_LABEL.comment}
-    </SiteButton>
+    </Button>
   )
 }
