@@ -17,6 +17,7 @@ import {
   useState,
   type ComponentType,
   type ReactNode,
+  type RefObject,
 } from 'react'
 import type { SelectionAction } from '#/analytics/events'
 import { CopyLink, CopyText } from './selection-copy'
@@ -175,15 +176,15 @@ function ActionRow(props: SelectionActionProps) {
   )
 }
 
-export function SelectionPopover() {
+/** The quote of the page's selection, the panel under the actions and how
+ * the selection was made. */
+function useSelectionQuote(popup: RefObject<HTMLDivElement | null>) {
   const [quote, setQuote] = useState<Quote | null>(null)
   const [panel, setPanel] = useState<ReactNode>(null)
   const [pointer, setPointer] = useState<Pointer>('mouse')
-  const popup = useRef<HTMLDivElement>(null)
   // The router's path, which is the address bar's in the browser and the
   // memory history's in the screen tests.
   const pathname = useRouterState({ select: (s) => s.location.pathname })
-
   useEffect(
     () =>
       followSelection({
@@ -195,10 +196,14 @@ export function SelectionPopover() {
         },
         onPointer: setPointer,
       }),
-    [pathname],
+    [pathname, popup],
   )
+  return { quote, panel, setPanel, pointer, close: () => setQuote(null) }
+}
 
-  const close = () => setQuote(null)
+export function SelectionPopover() {
+  const popup = useRef<HTMLDivElement>(null)
+  const { quote, panel, setPanel, pointer, close } = useSelectionQuote(popup)
 
   return (
     <Popover.Root

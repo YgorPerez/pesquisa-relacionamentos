@@ -102,14 +102,7 @@ function FactSheetPage() {
 
         <FactSheetData />
 
-        <Section aria-labelledby="o-que-mediu">
-          <Headline id="o-que-mediu">O que mediu</Headline>
-          <Html
-            className="prosa"
-            html={factSheet.whatItMeasuredHtml}
-            quote="o-que-mediu"
-          />
-        </Section>
+        <WhatItMeasured />
 
         <Findings />
 
@@ -194,6 +187,17 @@ function FactSheetData() {
         <DataRow title="Licença">{factSheet.license}</DataRow>
       )}
     </dl>
+  )
+}
+
+/** "O que mediu", in prose. */
+function WhatItMeasured() {
+  const { whatItMeasuredHtml } = useFactSheet()
+  return (
+    <Section aria-labelledby="o-que-mediu">
+      <Headline id="o-que-mediu">O que mediu</Headline>
+      <Html className="prosa" html={whatItMeasuredHtml} quote="o-que-mediu" />
+    </Section>
   )
 }
 
