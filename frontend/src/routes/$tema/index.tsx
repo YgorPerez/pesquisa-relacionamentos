@@ -35,6 +35,7 @@ import { QuestionRow } from '#/ui/question-row'
 import { ReadingProgress } from '#/ui/reading-progress'
 import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
+import { HighlightLayer } from '#/ui/highlight-layer'
 import { SelectionPopover } from '#/ui/selection-popover'
 import { quotable } from '#/ui/selection-quote'
 import { Share } from '#/ui/share'
@@ -143,6 +144,7 @@ function GuidePage() {
         />
       </Column>
       <SelectionPopover />
+      <HighlightLayer />
     </Sheet>
   )
 }

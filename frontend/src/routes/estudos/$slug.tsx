@@ -14,6 +14,7 @@ import {
   FactSheetMeta,
 } from '#/ui/badges'
 import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
+import { HighlightLayer } from '#/ui/highlight-layer'
 import { SelectionPopover } from '#/ui/selection-popover'
 import { quotable } from '#/ui/selection-quote'
 
@@ -130,6 +131,7 @@ function FactSheetPage() {
         </Section>
       </Column>
       <SelectionPopover />
+      <HighlightLayer />
     </Sheet>
   )
 }

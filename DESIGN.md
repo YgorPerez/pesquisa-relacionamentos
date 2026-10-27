@@ -165,7 +165,7 @@ Papel e tinta fazem quase todo o trabalho; a cor entra como tinta de risografia,
 
 - **Papel frio** (papel): fundo da página. Frio de propósito: creme lê como autoajuda.
 - **Folha** (folha): painéis, Mitos, caixa do Perfil, cartões relacionados, etiqueta de país, etiqueta do Tema.
-- **Tinta** (tinta): texto, contornos, divisórias pontilhadas, régua de seção, retícula, degraus preenchidos, anel vazio de "não há dado".
+- **Tinta** (tinta): texto, contornos, divisórias pontilhadas, régua de seção, retícula, degraus preenchidos, anel vazio de "não há dado", o sublinhado ondulado do Grifo (o reto é do link, e o amarelo é da seleção e do "vale para você").
 - **Tinta clara** (tinta-2): texto secundário (rótulo da Confiança, intro, "Vale para:", legenda, Inferência, rodapé).
 
 ### Named Rules

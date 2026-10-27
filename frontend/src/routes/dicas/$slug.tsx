@@ -7,6 +7,7 @@ import { StrengthBadge } from '#/ui/badges'
 import { BackLink } from '#/ui/navigation'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Headline, Panel, Section } from '#/ui/section'
+import { HighlightLayer } from '#/ui/highlight-layer'
 import { SelectionPopover } from '#/ui/selection-popover'
 import { quotable } from '#/ui/selection-quote'
 
@@ -81,6 +82,7 @@ function TipPage() {
         </Section>
       </Column>
       <SelectionPopover />
+      <HighlightLayer />
     </Sheet>
   )
 }

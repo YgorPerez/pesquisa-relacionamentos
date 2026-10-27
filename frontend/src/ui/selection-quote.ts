@@ -54,7 +54,7 @@ export interface SelectionActionProps {
   readonly close: () => void
 }
 
-const quoteRoot = (node: Node | null): Element | null =>
+export const quoteRoot = (node: Node | null): Element | null =>
   (node instanceof Element ? node : (node?.parentElement ?? null))?.closest(
     `[${QUOTE}]`,
   ) ?? null
@@ -62,9 +62,9 @@ const quoteRoot = (node: Node | null): Element | null =>
 /** What the page does not show as text: a drawing, what is hidden (but not
  * `hidden="until-found"`), a drawing's decoration, what only a screen reader
  * hears. */
-const UNSEEN =
+export const UNSEEN =
   'svg, script, style, [hidden]:not([hidden="until-found"]), [aria-hidden="true"], .sr-only'
-const REF = `.${REF_CLASS}`
+export const REF = `.${REF_CLASS}`
 const BOX = BOX_CLASSES.map((c) => `.${c}`).join(', ')
 
 /** The elements that start a new line of text (`site-search-view.ts`). */
@@ -73,7 +73,7 @@ const BLOCK =
 
 /** The block a text node sits in; inside a Visual, each node is a block of
  * its own (its labels and values are boxes apart). */
-const blockOf = (element: Element): Element | null =>
+export const blockOf = (element: Element): Element | null =>
   element.closest('figure') ? element : element.closest(BLOCK)
 
 const isWordChar = (char: string | undefined) =>
