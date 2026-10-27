@@ -11,6 +11,8 @@
 import { useSyncExternalStore } from 'react'
 import { markFound, type Highlight } from '#/state/highlights'
 import { findQuote, pageText, type FoundQuote } from './highlight-text'
+import type { Quote } from './selection-action'
+import { quoteOf } from './selection-quote'
 
 /** The name `drawings.css` paints. */
 const NAME = 'grifo'
@@ -18,6 +20,8 @@ const NAME = 'grifo'
 /** A Grifo found on the page, and where. */
 export interface Painted extends FoundQuote {
   readonly highlight: Highlight
+  /** The Grifo's text as a quote, for "Copiar" and "Copiar link". */
+  readonly quote: Quote | null
 }
 
 export const canPaint = (): boolean =>
@@ -42,9 +46,12 @@ export function paintPage(path: string, saved: ReadonlyArray<Highlight>) {
   // Most pages have none: no need to read the page's text.
   if (here.length === 0) return unpaint()
   const page = pageText()
+  const { origin } = window.location
   const found = here.flatMap((highlight) => {
     const where = findQuote(page, highlight)
-    return where ? [{ highlight, ...where }] : []
+    if (!where) return []
+    const quote = quoteOf(where.whole, { origin, pathname: path })
+    return [{ highlight, quote, ...where }]
   })
   CSS.highlights.set(
     NAME,

@@ -4,7 +4,7 @@
 // forgets the Grifo and its Nota; "Copiar" and "Copiar link" are the ones of
 // the popover on selected text, over the Grifo's text.
 import { Popover } from '@base-ui/react/popover'
-import { useState, type ReactNode } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { removeHighlight, setNote, NOTE_LENGTH } from '#/state/highlights'
 import { Input } from '@/ui/shadcn/input'
 import { SiteButton } from './button'
@@ -21,7 +21,6 @@ import {
 } from './highlight.copy'
 import type { Painted } from './highlight-paint'
 import { CopyLink, CopyText } from './selection-copy'
-import { quoteOf } from './selection-quote'
 
 /** The Grifo's box, read again each time the popover is placed. */
 function anchorOf(range: Range) {
@@ -31,6 +30,8 @@ function anchorOf(range: Range) {
     contextElement: range.startContainer.parentElement ?? undefined,
   }
 }
+
+const NOTE_NAME = 'nota'
 
 /** The Nota's field; an empty Nota is no Nota. */
 function NoteForm({
@@ -42,22 +43,22 @@ function NoteForm({
   note: string
   done: () => void
 }) {
-  const [value, setValue] = useState(note)
+  // The page stays: the Nota goes to the store, never to a server.
+  const save = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const value = new FormData(event.currentTarget).get(NOTE_NAME)
+    setNote(id, typeof value === 'string' ? value : '')
+    done()
+  }
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault()
-        setNote(id, value)
-        done()
-      }}
-    >
+    <form onSubmit={save}>
       <Input
         small
         className="w-full"
+        name={NOTE_NAME}
         aria-label={NOTE_FIELD}
-        value={value}
+        defaultValue={note}
         maxLength={NOTE_LENGTH}
-        onChange={(event) => setValue(event.currentTarget.value)}
         autoFocus
       />
       <div className="mt-xs flex flex-wrap gap-xs">
@@ -103,11 +104,8 @@ function HighlightActions({
   close: () => void
 }) {
   const [panel, setPanel] = useState<ReactNode>(null)
-  const { id, note } = painted.highlight
-  const quote = quoteOf(painted.whole, {
-    origin: window.location.origin,
-    pathname: painted.highlight.path,
-  })
+  const { highlight, quote } = painted
+  const { id, note } = highlight
   const editNote = () =>
     setPanel(<NoteForm id={id} note={note} done={() => setPanel(null)} />)
   return (
