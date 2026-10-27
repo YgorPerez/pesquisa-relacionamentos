@@ -2,7 +2,7 @@
 // leads there, a Grifo's link lands on its sentence through the Text
 // Fragment and the Guide paints it, "Tirar grifo" empties the list for good,
 // and axe passes on the list and on the empty page. The grouping, the
-// changed passage and the storage are `ui/highlight-list.test.tsx`'s; making
+// changed passage and the storage are `ui/highlight-layer.test.tsx`'s; making
 // a Grifo is `highlight.e2e.ts`'s, so here it is seeded as Grifar saves it.
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
