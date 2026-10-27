@@ -38,6 +38,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
   'selection.e2e.ts': ['selecao', 'busca', 'guia', 'dicas', 'estudos'],
   'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
+  'selection-source.e2e.ts': ['selecao', 'guia', 'estudos'],
   'selection-comment.e2e.ts': ['comentario', 'selecao'],
 }
 
@@ -92,6 +93,9 @@ const ALIASES: Readonly<Record<string, string>> = {
   'highlight-paint': 'grifo',
   'highlight-popover': 'grifo',
   'highlight-text': 'grifo',
+  'selection-source': 'selecao',
+  'selection-sentences': 'selecao',
+  'selection-button': 'selecao',
   'selection-comment': 'comentario',
   comment: 'comentario',
   'comment-issue': 'comentario',

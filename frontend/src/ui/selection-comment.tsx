@@ -14,9 +14,10 @@ import {
 } from '#/content/comment-kinds'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { Textarea } from '@/ui/shadcn/textarea'
-// The shadcn `Button` itself, as `SiteButton` (`button.tsx`) renders it:
-// that module's fan-in is at the limit.
+// The form's "Enviar" is the yellow shadcn `Button`, as `SiteButton`
+// (`button.tsx`) renders it: that module's fan-in is at the limit.
 import { Button } from '@/ui/shadcn/button'
+import { ActionButton } from './selection-button'
 import { COMMENT } from './selection-comment.copy'
 import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
@@ -189,8 +190,8 @@ function CommentForm({ quote }: { quote: Quote }) {
 /** "Comentar": opens the form under the row of actions. */
 export function CommentOnQuote({ quote, show }: SelectionActionProps) {
   return (
-    <Button variant="light" onClick={() => show(<CommentForm quote={quote} />)}>
+    <ActionButton onClick={() => show(<CommentForm quote={quote} />)}>
       {ACTION_LABEL.comment}
-    </Button>
+    </ActionButton>
   )
 }

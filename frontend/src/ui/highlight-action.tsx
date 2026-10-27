@@ -4,12 +4,12 @@
 // instead, which opens that one: the way in for a keyboard, which has no
 // tap. The count carries the action's name only.
 import { addHighlight } from '#/state/highlights'
-import { SiteButton } from './button'
 import { SEE_HIGHLIGHT } from './highlight.copy'
 import { canPaint, requestOpen, usePainted, within } from './highlight-paint'
 import { pageText, quoteInPage } from './highlight-text'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
+import { ActionButton } from './selection-button'
 import { countSelection } from './selection-count'
 
 /** Saves the quote as a Grifo; `null` when it holds no quotable text. */
@@ -36,9 +36,9 @@ export function HighlightAction({ quote, close }: SelectionActionProps) {
   const inside = painted.find((p) => within(p.whole, quote.range))
   if (inside)
     return (
-      <SiteButton variant="light" onClick={() => open(inside.highlight.id)}>
+      <ActionButton onClick={() => open(inside.highlight.id)}>
         {SEE_HIGHLIGHT}
-      </SiteButton>
+      </ActionButton>
     )
   const highlight = () => {
     const made = save(quote)
@@ -47,8 +47,6 @@ export function HighlightAction({ quote, close }: SelectionActionProps) {
     open(made.id)
   }
   return (
-    <SiteButton variant="light" onClick={highlight}>
-      {ACTION_LABEL.highlight}
-    </SiteButton>
+    <ActionButton onClick={highlight}>{ACTION_LABEL.highlight}</ActionButton>
   )
 }
