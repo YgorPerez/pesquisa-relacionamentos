@@ -9,7 +9,7 @@ import { http, HttpResponse } from 'msw'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { KIND_LABEL } from '#/content/comment-kinds'
 import { server } from '#/platform/screens/network'
-import { openScreen } from '#/platform/screens/open-screen'
+import { openVisual } from '#/platform/screens/visual'
 import { COMMENT } from './selection-comment.copy'
 import { ACTION_LABEL, POPOVER_LABEL } from './selection-popover.copy'
 
@@ -39,8 +39,9 @@ afterEach(() => void vi.unstubAllEnvs())
 /** Opens the Guide, selects the sentence and opens the form. */
 async function openForm() {
   const user = userEvent.setup()
-  openScreen('/onde-conhecer-pessoas')
-  await screen.findByRole('heading', { level: 1 })
+  // The fixture Guide, drawn once its Visual is. Through the Visual's opener
+  // and not `open-screen.tsx`, whose fan-in is at the limit.
+  await openVisual('Dois retratos, dois países')
   const node = [...document.querySelectorAll('[data-quote] p')]
     .flatMap((p) => [...p.childNodes])
     .find((n) => n.textContent?.includes(SENTENCE))!
