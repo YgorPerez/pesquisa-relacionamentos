@@ -36,6 +36,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'privacy.e2e.ts': ['privacidade'],
   'neighbor-sites.e2e.ts': ['sites-vizinhos', 'guia'],
   'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
+  'selection.e2e.ts': ['selecao', 'busca', 'guia', 'dicas', 'estudos'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and
@@ -75,6 +76,10 @@ const ALIASES: Readonly<Record<string, string>> = {
   readings: 'sites-vizinhos',
   'neighbor-sites': 'sites-vizinhos',
   'neighbor-sites-view': 'sites-vizinhos',
+  'text-fragment': 'busca',
+  'selection-popover': 'selecao',
+  'selection-quote': 'selecao',
+  'selection-copy': 'selecao',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

@@ -5,17 +5,13 @@
 // here, what the reader and a screen reader get from it.
 import { screen, within } from '@testing-library/react'
 import { expect, it } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
+import { openVisual } from '#/platform/screens/visual'
 import { VISUAL_COPY } from './visual.copy'
 
-/** The Guide whose `app-ou-presencial` section has the Visuals. */
-const QUESTION = '/onde-conhecer-pessoas'
+const BARS = 'Quem conheceu o parceiro por app, no Brasil'
 
 it('reads each bar as its label and its number, and tags our own calculation', async () => {
-  openScreen(QUESTION)
-  const figure = await screen.findByRole('figure', {
-    name: 'Quem conheceu o parceiro por app, no Brasil',
-  })
+  const figure = await openVisual(BARS)
   const bars = within(figure)
     .getAllByRole('listitem')
     .map((bar) => bar.textContent)
@@ -31,10 +27,7 @@ it('reads each bar as its label and its number, and tags our own calculation', a
 })
 
 it("leads from the sources line to the Fact sheet in the page's list", async () => {
-  openScreen(QUESTION)
-  const figure = await screen.findByRole('figure', {
-    name: 'Quem conheceu o parceiro por app, no Brasil',
-  })
+  const figure = await openVisual(BARS)
   const [reference] = within(figure).getAllByRole('link', {
     name: /^Ficha \d+: Silva e Souza \(2020\)/,
   })

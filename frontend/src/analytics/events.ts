@@ -23,6 +23,14 @@ const CALCULATOR_EVENT: Readonly<Record<CountedCalculator, string>> = {
   prioridades: 'priorities',
 }
 
+/** The actions of the popover on selected text (#332), in its order. */
+export type SelectionAction =
+  | 'copy'
+  | 'link'
+  | 'highlight'
+  | 'source'
+  | 'comment'
+
 export type AnalyticsEvent =
   | `helped/yes/${string}`
   | `helped/no/${NoReason}/${string}`
@@ -31,6 +39,7 @@ export type AnalyticsEvent =
   | `continue-reading/${string}`
   | `neighbor-site/${string}`
   | 'search/no-result'
+  | `selection/${SelectionAction}`
 
 // Since #194 (2026-10-26) the Guide has one "Ajudou?" and its key is the
 // Topic's slug (`helped/yes/onde-conhecer-pessoas`); the per-Question series
@@ -59,4 +68,7 @@ export const EVENTS = {
   /** A search on `/busca` found nothing (#275). Never the term: what a
    * reader types may say something about their sex life (#18). */
   searchWithoutResult: (): AnalyticsEvent => 'search/no-result',
+  /** An action of the popover on selected text (#332): its name only,
+   * never the text nor the page. */
+  selection: (action: SelectionAction): AnalyticsEvent => `selection/${action}`,
 } as const

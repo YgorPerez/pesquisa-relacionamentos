@@ -35,6 +35,8 @@ import { QuestionRow } from '#/ui/question-row'
 import { ReadingProgress } from '#/ui/reading-progress'
 import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
+import { SelectionPopover } from '#/ui/selection-popover'
+import { quotable } from '#/ui/selection-quote'
 import { Share } from '#/ui/share'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 
@@ -104,7 +106,7 @@ function GuidePage() {
       <ReadingProgress topic={guide.topic} chapters={guide.chapters} />
       <Column>
         <BackToGuide />
-        <Display>{guide.title}</Display>
+        <Display {...quotable(null, true)}>{guide.title}</Display>
         <GuideContents chapters={guide.chapters} />
         <GuideSummary questions={guide.summary} />
         <YourProfile />
@@ -112,6 +114,7 @@ function GuidePage() {
           className="prosa mt-secao text-lead"
           slot="abertura"
           html={guide.openingHtml}
+          quote={null}
         />
         <SourcesArrow />
         <Chapters
@@ -139,6 +142,7 @@ function GuidePage() {
           sentence="O link leva só o endereço do Guia, sem o seu Perfil."
         />
       </Column>
+      <SelectionPopover />
     </Sheet>
   )
 }

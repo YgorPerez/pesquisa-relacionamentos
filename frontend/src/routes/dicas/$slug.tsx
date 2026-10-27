@@ -7,6 +7,8 @@ import { StrengthBadge } from '#/ui/badges'
 import { BackLink } from '#/ui/navigation'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 import { Headline, Panel, Section } from '#/ui/section'
+import { SelectionPopover } from '#/ui/selection-popover'
+import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/dicas/$slug')({
   // The `loaderData` carries only what the `head` uses; the Tip goes through
@@ -35,7 +37,9 @@ function TipPage() {
       <Column>
         <BackLink to="/dicas">Todas as Dicas</BackLink>
 
-        <Display small>{tip.text}</Display>
+        <Display small {...quotable(null)}>
+          {tip.text}
+        </Display>
 
         <Panel
           as="section"
@@ -76,6 +80,7 @@ function TipPage() {
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
       </Column>
+      <SelectionPopover />
     </Sheet>
   )
 }
