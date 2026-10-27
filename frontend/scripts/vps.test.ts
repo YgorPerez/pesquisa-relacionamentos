@@ -147,17 +147,23 @@ describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
     vps.publish(SHA_1)
     expect(vps.containerEnv('temestudo-app')).toBeNull()
 
-    vps.publish(SHA_2, 'github_pat_11ABC_def')
+    // Letters and `_`, as the deploy accepts, but no GitHub token's shape:
+    // a secret scanner reads tests too.
+    vps.publish(SHA_2, 'comment_token_for_tests')
     expect(vps.containerEnv('temestudo-app')).toBe(
-      'COMMENT_GITHUB_TOKEN=github_pat_11ABC_def\n',
+      'COMMENT_GITHUB_TOKEN=comment_token_for_tests\n',
     )
     expect(statSync(envFile).mode & 0o777).toBe(0o600)
-    expect(vps.log.join('\n')).not.toContain('github_pat_11ABC_def')
+    expect(vps.log.join('\n')).not.toContain('comment_token_for_tests')
 
     vps.publish(SHA_3)
-    expect(vps.containerEnv('temestudo-app')).toContain('github_pat_11ABC_def')
+    expect(vps.containerEnv('temestudo-app')).toContain(
+      'comment_token_for_tests',
+    )
     vps.rollback()
-    expect(vps.containerEnv('temestudo-app')).toContain('github_pat_11ABC_def')
+    expect(vps.containerEnv('temestudo-app')).toContain(
+      'comment_token_for_tests',
+    )
   })
 
   it('a token that could break out of the script stops the deploy before the VPS', () => {
