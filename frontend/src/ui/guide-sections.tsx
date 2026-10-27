@@ -20,6 +20,7 @@ import { Headline, Panel, Section, SmallLink, Tag } from './section'
 import { AppliesToNote, ForYourProfile } from './profile'
 import { StrengthBadge } from './badges'
 import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
+import { quotable } from './selection-quote'
 
 /** Margin note 1 of 2: the arrow that points to the Fact sheets. */
 export function SourcesArrow() {
@@ -151,7 +152,9 @@ export function GuideSummary({
               confidence={question.confidence}
               className="mt-1 flex"
             />
-            <p className="mt-xs mb-0">{question.firstSentence}</p>
+            <p className="mt-xs mb-0" {...quotable('em-resumo')}>
+              {question.firstSentence}
+            </p>
           </li>
         ))}
       </ol>
@@ -164,15 +167,18 @@ export function GuideSummary({
 function TipCard({
   tip,
   verdict,
+  anchor,
   as = 'li',
 }: {
   tip: GuideTip
   verdict: Verdict | null
+  /** The `id` of the section it sits in, for the selection's link. */
+  anchor: string
   as?: 'li' | 'div'
 }) {
   return (
     <Panel as={as} className="[&>p]:m-0" data-slot="dica">
-      <Html as="p" html={tip.html} />
+      <Html as="p" html={tip.html} quote={anchor} />
       <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1">
         <StrengthBadge strength={tip.strength} withLabel />
         <SmallLink to="/dicas/$slug" params={{ slug: tip.slug }}>
@@ -193,7 +199,16 @@ function TipCard({
 /** A struck-out Myth and why it does not hold. The label comes first, so a
  * reader who misses the strike (a screen reader does not announce `<s>`)
  * knows the claim is a Myth before reading it. */
-export function MythCard({ myth }: { myth: MythView }) {
+export function MythCard({
+  myth,
+  anchor,
+}: {
+  myth: MythView
+  /** The `id` of the Chapter it sits in, for the selection's link; without
+   * it, not quoted. */
+  anchor?: string
+}) {
+  const quote = anchor === undefined ? {} : quotable(anchor)
   return (
     <Panel as="article" className="py-4" data-slot="mito">
       <p
@@ -203,10 +218,15 @@ export function MythCard({ myth }: { myth: MythView }) {
         <Tag tone="myth">{MYTH_LABEL}</Tag>
         <span>{MYTH_LINE}</span>
       </p>
-      <p className="m-0 font-title text-title leading-label">
+      <p className="m-0 font-title text-title leading-label" {...quote}>
         <s className="risco-do-mito">{myth.claim}</s>
       </p>
-      <Html as="p" className="mt-3 mb-0" html={myth.whyNotHtml} />
+      <Html
+        as="p"
+        className="mt-3 mb-0"
+        html={myth.whyNotHtml}
+        quote={anchor}
+      />
     </Panel>
   )
 }
@@ -235,6 +255,7 @@ function Answer({
           id={title}
           className="m-0 font-title text-title text-balance"
           data-slot="pergunta"
+          {...quotable(question.slug, true)}
         >
           {question.question}
         </h3>
@@ -242,7 +263,11 @@ function Answer({
           confidence={question.confidence}
           className="mt-1 flex"
         />
-        <Html className="prosa mt-sm" html={question.answerHtml} />
+        <Html
+          className="prosa mt-sm"
+          html={question.answerHtml}
+          quote={question.slug}
+        />
         {inGuide && (
           <ForYourProfile
             keyNumber={inGuide.key}
@@ -282,15 +307,18 @@ function useYouMarks(marks: GuideView['youMarks']) {
  * Tip or a Myth. */
 function Block({
   block,
+  chapter,
   afterAnswer,
 }: {
   block: ChapterView['blocks'][number]
+  /** The Chapter's `id`, the anchor of its text. */
+  chapter: string
   afterAnswer: (question: QuestionView) => ReactNode
 }) {
   const profile = useProfile()
   switch (block.kind) {
     case 'text':
-      return <Html className="prosa" html={block.html} />
+      return <Html className="prosa" html={block.html} quote={chapter} />
     case 'question':
       return (
         <Answer question={block.question} after={afterAnswer(block.question)} />
@@ -302,13 +330,14 @@ function Block({
             as="div"
             tip={block.tip}
             verdict={profile ? appliesToYou(profile, block.tip.coverage) : null}
+            anchor={chapter}
           />
         </div>
       )
     case 'myth':
       return (
         <div className="my-lg">
-          <MythCard myth={block.myth} />
+          <MythCard myth={block.myth} anchor={chapter} />
         </div>
       )
   }
@@ -334,10 +363,15 @@ function Chapter({
     >
       <Headline id={title} className="flex items-baseline gap-sm">
         <ChapterNumber n={n} />
-        <span>{chapter.title}</span>
+        <span {...quotable(chapter.id, true)}>{chapter.title}</span>
       </Headline>
       {chapter.blocks.map((block) => (
-        <Block key={block.key} block={block} afterAnswer={afterAnswer} />
+        <Block
+          key={block.key}
+          block={block}
+          chapter={chapter.id}
+          afterAnswer={afterAnswer}
+        />
       ))}
     </Section>
   )
@@ -382,7 +416,12 @@ export function Takeaways({
       <Headline id="t-o-que-levar">O que levar</Headline>
       <ul className="m-0 list-none p-0 [&>li]:not-first:mt-lg">
         {tips.map((tip, i) => (
-          <TipCard key={tip.slug} tip={tip} verdict={verdicts?.[i] ?? null} />
+          <TipCard
+            key={tip.slug}
+            tip={tip}
+            verdict={verdicts?.[i] ?? null}
+            anchor="o-que-levar"
+          />
         ))}
       </ul>
     </Section>
@@ -399,7 +438,7 @@ export function Unknowns({
   return (
     <Section id="o-que-nao-se-sabe" aria-labelledby="t-o-que-nao-se-sabe">
       <Headline id="t-o-que-nao-se-sabe">O que não se sabe</Headline>
-      <Html className="prosa" html={html} />
+      <Html className="prosa" html={html} quote="o-que-nao-se-sabe" />
     </Section>
   )
 }

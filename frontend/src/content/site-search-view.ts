@@ -3,8 +3,7 @@
 // on that sentence. The text searched is the one the page shows: the same
 // views the pages draw (`guide-view.ts`, `view.ts`), read back from their
 // HTML. The link carries the section's anchor and a Text Fragment
-// (`#<anchor>:~:text=…`), which the browser scrolls to and paints without
-// JS; a browser without it stops at the section.
+// (`text-fragment.ts`), which the browser scrolls to and paints without JS.
 //
 // What stays out: the Fact sheets' Excerpts (quotes in English), the
 // Readings, the calculators' controls and the labels the pieces add around
@@ -23,6 +22,14 @@ import {
   type ChapterBlock,
   type GuideView,
 } from './guide-view'
+import {
+  BOX_CLASSES,
+  fragmentTarget,
+  REF_CLASS,
+  type CharKind,
+  type FragmentPlace,
+  type Line,
+} from './text-fragment'
 import { factSheetView } from './view'
 
 export type SearchKind = 'guide' | 'tip' | 'fact-sheet'
@@ -63,13 +70,8 @@ const MIN_QUERY = 2
 const MAX_QUERY = 100
 
 /** Where a stretch of text sits on its page. */
-interface Place {
-  /** The `id` the link goes to; `null` for the top of the page. */
-  readonly anchor: string | null
+interface Place extends FragmentPlace {
   readonly title: string | null
-  /** A heading: the link goes to the anchor alone, since the same words
-   * repeat earlier on the page (the Chapter list, "Em resumo"). */
-  readonly heading?: boolean
 }
 
 interface Passage extends Place {
@@ -288,21 +290,8 @@ const decode = (text: string) =>
     return ENTITIES[name.toLowerCase()] ?? whole
   })
 
-/** What a character of a line is: plain text; inside a box of its own (the
- * "no Brasil" mark, drawn `inline-block`), which the result shows but a Text
- * Fragment cannot cross; or a reference number, in its ring (`inline-grid`),
- * which neither shows. */
-type CharKind = 'text' | 'box' | 'ref'
-
-/** The classes of the inline boxes inside a sentence (`ui/drawings.css`). */
-const BOX = /\sclass="(?:marca-brasil|selo-voce-texto)"/
-const REF = /\sclass="ref"/
-
-/** A line of text and the kind of each of its UTF-16 units. */
-interface Line {
-  text: string
-  kinds: CharKind[]
-}
+const BOX = new RegExp(`\\sclass="(?:${BOX_CLASSES.join('|')})"`)
+const REF = new RegExp(`\\sclass="${REF_CLASS}"`)
 
 /** An element still open, with whether it hides its text and what kind its
  * text is. */
@@ -399,21 +388,6 @@ const withoutRefs = (line: Line) =>
     .filter((_, i) => line.kinds[i] !== 'ref')
     .join('')
 
-/** The stretches of plain text between the boxes, those with a letter or a
- * digit (not the `.` after a reference), the last without its final
- * punctuation: the same sentence with or without a reference before its
- * `.` gives the same Text Fragment. */
-function runsOf(line: Line): string[] {
-  const runs: string[] = ['']
-  for (let i = 0; i < line.text.length; i++) {
-    if (line.kinds[i] === 'text') runs[runs.length - 1] += line.text[i]
-    else if (runs.at(-1) !== '') runs.push('')
-  }
-  const kept = runs.map(squeeze).filter((run) => /[\p{L}\p{N}]/u.test(run))
-  const last = kept.pop()
-  return last === undefined ? kept : [...kept, last.replace(/[.!?…;:,]+$/u, '')]
-}
-
 const squeeze = (text: string) => text.replace(/\s+/g, ' ').trim()
 
 /** Lowercase, without accents, and where each character came from. */
@@ -430,37 +404,12 @@ function fold(text: string): { folded: string; origin: number[] } {
   return { folded, origin }
 }
 
-/** A sentence of one run this long or shorter goes whole in the Text
- * Fragment; any other goes by the first words of its first run and the last
- * words of its last one. */
-const WHOLE_WORDS = 8
-const EDGE_WORDS = 4
-
-/** The Text Fragment's text, encoded: `-`, `,` and `&` mean something in
- * it. */
-const fragmentText = (words: ReadonlyArray<string>) =>
-  encodeURIComponent(words.join(' ')).replace(/-/g, '%2D')
-
-/** Where a sentence's link lands: its section's anchor and, but for a
- * heading, the Text Fragment of its runs. */
-function targetOf(place: Place, runs: ReadonlyArray<string>): string {
-  const hash = place.anchor ? `#${place.anchor}` : ''
-  const first = runs[0]?.split(' ')
-  const last = runs.at(-1)?.split(' ')
-  if (place.heading || !first || !last) return hash
-  const text =
-    runs.length === 1 && first.length <= WHOLE_WORDS
-      ? fragmentText(first)
-      : `${fragmentText(first.slice(0, EDGE_WORDS))},${fragmentText(last.slice(-EDGE_WORDS))}`
-  return `${hash || '#'}:~:text=${text}`
-}
-
 function sentence(place: Place, line: Line): Sentence | null {
   const shown = squeeze(withoutRefs(line))
   if (!shown) return null
   return {
     place: place.title,
-    target: targetOf(place, runsOf(line)),
+    target: fragmentTarget(place, line),
     shown,
     ...fold(shown),
   }
