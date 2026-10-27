@@ -3,8 +3,8 @@
 // clipboard, the value shows up in a field to copy by hand, like
 // "Compartilhar" (`share.tsx`). The count carries the action's name only.
 import { Input } from '@/ui/shadcn/input'
-import { SiteButton } from './button'
 import type { SelectionActionProps } from './selection-action'
+import { ActionButton } from './selection-button'
 import { countSelection } from './selection-count'
 import {
   ACTION_LABEL,
@@ -33,11 +33,7 @@ function CopyButton({
       show(<CopyOutcome kind={kind} failed={value} />)
     }
   }
-  return (
-    <SiteButton variant="light" onClick={copy}>
-      {ACTION_LABEL[kind]}
-    </SiteButton>
-  )
+  return <ActionButton onClick={copy}>{ACTION_LABEL[kind]}</ActionButton>
 }
 
 /** How the copy went, told to the screen reader; if it failed, the value in

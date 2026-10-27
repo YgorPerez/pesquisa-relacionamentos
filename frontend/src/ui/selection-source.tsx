@@ -9,11 +9,11 @@
 // carries the action's name only.
 import { createContext, useContext, type ReactNode } from 'react'
 import type { FactSheetSummary } from '#/content/view'
-import { SiteButton } from './button'
 import { FactSheetTitle } from './guide'
 import { ACTION_LABEL } from './selection-popover.copy'
 import { countSelection } from './selection-count'
 import type { SelectionActionProps } from './selection-action'
+import { ActionButton } from './selection-button'
 import {
   CITES,
   CITES_NONE,
@@ -138,9 +138,5 @@ export function WhereFrom({ quote, show }: SelectionActionProps) {
     countSelection('source')
     show(<SourcesPanel sources={sourcesOf(quote.range)} page={page} />)
   }
-  return (
-    <SiteButton variant="light" onClick={open}>
-      {ACTION_LABEL.source}
-    </SiteButton>
-  )
+  return <ActionButton onClick={open}>{ACTION_LABEL.source}</ActionButton>
 }
