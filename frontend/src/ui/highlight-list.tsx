@@ -9,8 +9,8 @@
 // reason: the browser only reads the Text Fragment (`#…:~:text=`) when it
 // loads a page.
 import type { SearchKind } from '#/content/site-search-view'
-import type { Highlight } from '#/state/highlights'
-import { SiteButton } from './button'
+import type { Highlight } from '#/state/highlight-record'
+import { Button } from '@/ui/shadcn/button'
 import { NOTE_HEADING, REMOVE_HIGHLIGHT } from './highlight.copy'
 import {
   CHANGED,
@@ -94,14 +94,14 @@ function SavedHighlight({
           </p>
         </div>
       )}
-      <SiteButton
+      <Button
         variant="light"
         className="mt-xs"
         aria-label={removeLabel(text)}
         onClick={() => onRemove(id)}
       >
         {REMOVE_HIGHLIGHT}
-      </SiteButton>
+      </Button>
     </li>
   )
 }

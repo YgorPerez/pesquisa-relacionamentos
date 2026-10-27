@@ -11,31 +11,10 @@
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
+import type { Highlight } from './highlight-record'
 import { stored } from './stored'
 
-export interface Highlight {
-  readonly id: string
-  /** The page's path (`/onde-conhecer-pessoas`). */
-  readonly path: string
-  /** The page's title when the Grifo was made, to group them by page. */
-  readonly pageTitle: string
-  /** The path, the section anchor and the Text Fragment: what "Copiar link"
-   * gives, without the origin. */
-  readonly link: string
-  /** The text as the page shows it, one line per block (`Quote.text`). */
-  readonly text: string
-  /** The quote in the page's text, spaces collapsed: what is looked for. */
-  readonly exact: string
-  /** Up to `CONTEXT_LENGTH` characters before and after it. */
-  readonly prefix: string
-  readonly suffix: string
-  /** The Nota; `''` when there is none. */
-  readonly note: string
-  /** The last time its page was open, the quote was not found there. */
-  readonly changed: boolean
-  /** When it was made (ms since 1970). */
-  readonly at: number
-}
+export type { Highlight } from './highlight-record'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
 export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>

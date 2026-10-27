@@ -4,7 +4,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
-import type { Highlight } from '#/state/highlights'
+import type { Highlight } from '#/state/highlight-record'
 import { HighlightList } from './highlight-list'
 import { CHANGED, EMPTY_HEADING, removeLabel } from './highlight-list.copy'
 

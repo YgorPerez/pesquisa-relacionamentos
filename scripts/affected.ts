@@ -93,6 +93,7 @@ const ALIASES: Readonly<Record<string, string>> = {
   'highlight-popover': 'grifo',
   'highlight-text': 'grifo',
   'highlight-list': 'grifos',
+  'highlight-record': 'grifo',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

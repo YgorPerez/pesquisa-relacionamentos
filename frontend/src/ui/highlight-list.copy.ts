@@ -3,7 +3,7 @@
 import { REMOVE_HIGHLIGHT } from './highlight.copy'
 
 /** The page's title, its last word marked in yellow. */
-export const TITLE = { rest: 'Seus', marked: 'grifos' } as const
+export const PAGE_TITLE = { rest: 'Seus', marked: 'grifos' } as const
 
 /** The tab's title and the footer's link. */
 export const HIGHLIGHTS = 'Grifos'

@@ -1,7 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { removeHighlight, useHighlights } from '#/state/highlights'
 import { HighlightList } from '#/ui/highlight-list'
-import { HIGHLIGHTS, LEAD, NEEDS_JS, TITLE } from '#/ui/highlight-list.copy'
+import {
+  HIGHLIGHTS,
+  LEAD,
+  NEEDS_JS,
+  PAGE_TITLE,
+} from '#/ui/highlight-list.copy'
 import { Column, Display, Lead, Sheet } from '#/ui/sheet'
 
 export const Route = createFileRoute('/grifos')({
@@ -23,7 +28,8 @@ function HighlightsPage() {
     <Sheet>
       <Column>
         <Display>
-          {TITLE.rest} <span className="marca-texto">{TITLE.marked}</span>
+          {PAGE_TITLE.rest}{' '}
+          <span className="marca-texto">{PAGE_TITLE.marked}</span>
         </Display>
         <Lead>{LEAD}</Lead>
         <noscript>
