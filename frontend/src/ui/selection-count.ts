@@ -1,10 +1,9 @@
-// The count of the popover's actions (#332): one GoatCounter event per
-// action, its name only, never the text nor the page. The actions count
-// through here and not `analytics/counting.ts` itself, which many pages
-// import already.
+// The count of an action of the popover on selected text (#332): one
+// GoatCounter event with the action's name, never the text nor the page.
+// The actions count through here, so the count's module keeps a small
+// fan-in however many actions there are.
 import { countEvent } from '#/analytics/counting'
 import { EVENTS, type SelectionAction } from '#/analytics/events'
 
-export function countSelection(action: SelectionAction) {
+export const countSelection = (action: SelectionAction) =>
   countEvent(EVENTS.selection(action))
-}

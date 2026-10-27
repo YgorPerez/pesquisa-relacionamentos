@@ -51,6 +51,11 @@ function OnTheDevice() {
         no uso normal: a conta do Grupo possível também roda no seu aparelho.
       </p>
       <p>
+        Os Grifos que você faz num texto, com a Nota de cada um, também ficam só
+        no navegador: não vão para o servidor nem para a contagem. “Tirar grifo”
+        apaga o Grifo e a Nota.
+      </p>
+      <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que
         a página inicial mostra “Continuar lendo” e marca como lido o Guia que
         você terminou. O × de cada item apaga a leitura daquele Guia.

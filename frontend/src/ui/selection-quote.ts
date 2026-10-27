@@ -7,16 +7,18 @@
 // selection becomes a `Line`, in which the reference ring is `ref` and the
 // "no Brasil" mark and the edge between two blocks are `box`, so a selection
 // that crosses one keeps its plain-text part.
-import type { ReactNode } from 'react'
 import {
   BOX_CLASSES,
   fragmentTarget,
-  REF_CLASS,
   type CharKind,
   type Line,
 } from '#/content/text-fragment'
+import { blockOf, QUOTE, quoteRoot, REF, UNSEEN } from './quote-text'
+import type { Quote } from './selection-action'
 
-const QUOTE = 'data-quote'
+// The types live in `selection-action.ts`; the actions import them there.
+export type { Quote, SelectionActionProps } from './selection-action'
+
 const HEADING = 'data-quote-heading'
 
 /** The attributes that mark an element's text as quotable: `anchor` is the
@@ -29,52 +31,7 @@ export function quotable(anchor: string | null, heading = false) {
   }
 }
 
-/** The selection, as the popover's actions use it. */
-export interface Quote {
-  /** The text as the page shows it: without the reference numbers nor what
-   * only a screen reader hears, one line per block. */
-  readonly text: string
-  /** The page's address with the section's anchor and the Text Fragment. */
-  readonly link: string
-  /** The page's path. */
-  readonly path: string
-  /** The `id` of the section it starts in; `null` at the top of the page. */
-  readonly anchor: string | null
-  /** The selected stretch, snapped to whole words. */
-  readonly range: Range
-}
-
-/** What each action of the popover receives (`selection-popover.tsx`). */
-export interface SelectionActionProps {
-  readonly quote: Quote
-  /** Puts `panel` under the actions, in place of what was there: how the
-   * copy went, a form. `null` clears it. */
-  readonly show: (panel: ReactNode) => void
-  /** Closes the popover. */
-  readonly close: () => void
-}
-
-const quoteRoot = (node: Node | null): Element | null =>
-  (node instanceof Element ? node : (node?.parentElement ?? null))?.closest(
-    `[${QUOTE}]`,
-  ) ?? null
-
-/** What the page does not show as text: a drawing, what is hidden (but not
- * `hidden="until-found"`), a drawing's decoration, what only a screen reader
- * hears. */
-const UNSEEN =
-  'svg, script, style, [hidden]:not([hidden="until-found"]), [aria-hidden="true"], .sr-only'
-const REF = `.${REF_CLASS}`
 const BOX = BOX_CLASSES.map((c) => `.${c}`).join(', ')
-
-/** The elements that start a new line of text (`site-search-view.ts`). */
-const BLOCK =
-  'p, li, h1, h2, h3, h4, h5, h6, td, th, tr, dt, dd, div, section, figure, figcaption, caption, blockquote, pre, ul, ol, table'
-
-/** The block a text node sits in; inside a Visual, each node is a block of
- * its own (its labels and values are boxes apart). */
-const blockOf = (element: Element): Element | null =>
-  element.closest('figure') ? element : element.closest(BLOCK)
 
 const isWordChar = (char: string | undefined) =>
   char !== undefined && /[\p{L}\p{N}]/u.test(char)

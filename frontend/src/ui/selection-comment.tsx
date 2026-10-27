@@ -18,7 +18,7 @@ import { SiteButton } from './button'
 import { COMMENT } from './selection-comment.copy'
 import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
-import type { Quote, SelectionActionProps } from './selection-quote'
+import type { Quote, SelectionActionProps } from './selection-action'
 
 type Status = 'editing' | 'sending' | 'sent' | 'failed'
 

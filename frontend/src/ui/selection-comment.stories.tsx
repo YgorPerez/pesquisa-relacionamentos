@@ -7,7 +7,7 @@ import { expect, userEvent, within } from 'storybook/test'
 import { Textarea } from '@/ui/shadcn/textarea'
 import { CommentOnQuote } from './selection-comment'
 import { COMMENT } from './selection-comment.copy'
-import type { Quote } from './selection-quote'
+import type { Quote } from './selection-action'
 
 const QUOTE: Omit<Quote, 'range'> = {
   text: 'A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto.',
