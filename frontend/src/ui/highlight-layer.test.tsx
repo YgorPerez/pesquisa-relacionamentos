@@ -9,7 +9,7 @@ import { cleanup, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
-import type { Highlight } from '#/state/highlights'
+import type { Highlight } from '#/state/highlight-record'
 import {
   ADD_NOTE,
   DELETE_NOTE,
@@ -169,6 +169,22 @@ it("the Grifo's popover leads to the list of every Grifo", async () => {
   expect(
     await screen.findByRole('heading', { name: saved(1, 1) }),
   ).toBeInTheDocument()
+})
+
+it("the Grifo's popover says where its text comes from: the Fact sheets its sentence cites", async () => {
+  const user = userEvent.setup()
+  await openGuide()
+  select('A satisfação de quem', 'perto')
+  const popover = await highlight(user)
+  await user.click(
+    within(popover).getByRole('button', { name: ACTION_LABEL.source }),
+  )
+  const panel = await within(popover).findByRole('status')
+  expect(
+    within(panel)
+      .getAllByRole('link')
+      .map((link) => link.textContent),
+  ).toEqual(['Costa (2018): satisfação e onde os casais se conheceram'])
 })
 
 it('a repeated phrase comes back where it was made, and not on its first copy', async () => {

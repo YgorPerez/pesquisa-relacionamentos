@@ -11,10 +11,8 @@
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
-import type { Highlight } from './highlight-record'
+import { sameQuote, type Highlight } from './highlight-record'
 import { stored } from './stored'
-
-export type { Highlight } from './highlight-record'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
 export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>
@@ -97,13 +95,7 @@ const newId = () =>
  * page is the Grifo already there. */
 export function addHighlight(made: NewHighlight): Highlight {
   const saved = readHighlights()
-  const same = saved.find(
-    (h) =>
-      h.path === made.path &&
-      h.exact === made.exact &&
-      h.prefix === made.prefix &&
-      h.suffix === made.suffix,
-  )
+  const same = saved.find((h) => h.path === made.path && sameQuote(h, made))
   if (same) return same
   const highlight: Highlight = {
     ...made,

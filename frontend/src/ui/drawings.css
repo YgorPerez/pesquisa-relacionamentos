@@ -16,7 +16,8 @@
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
  *    with `stroke-dashoffset`, in `@keyframes`.
  * 4. The Grifo, which the CSS Custom Highlight API paints and only a
- *    `::highlight()` rule styles. */
+ *    `::highlight()` rule styles, and the `grifo` class that rule takes
+ *    its look from. */
 
 /* ---------- 1. drawings the JSX uses ---------- */
 
@@ -333,13 +334,19 @@
 
 /* ---------- 4. the Grifo ---------- */
 
-/* The reader's Grifo (#334, `highlight-paint.ts`). A wavy underline in ink:
- * no fourth ink (The Three Inks Rule), not the yellow of the selection and
- * of "vale para você", and not the straight underline of a link. */
-::highlight(grifo) {
+/* The reader's Grifo (#334). A wavy underline in ink: no fourth ink (The
+ * Three Inks Rule), not the yellow of the selection and of "vale para
+ * você", and not the straight underline of a link. The page paints it with
+ * `::highlight(grifo)` (`highlight-paint.ts`); the list of `/grifos`
+ * (`highlight-list.tsx`) draws it on its quotes with the `grifo` class. */
+@utility grifo {
   text-decoration-line: underline;
   text-decoration-style: wavy;
   text-decoration-color: var(--color-tinta);
   text-decoration-thickness: 1.5px;
   text-underline-offset: 5px;
+}
+
+::highlight(grifo) {
+  @apply grifo;
 }

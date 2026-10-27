@@ -16,9 +16,11 @@ import {
 import { HighlightAction } from './highlight-action'
 import { HIGHLIGHT_LABEL } from './highlight.copy'
 import { HighlightLayer } from './highlight-layer'
+import { HighlightNote } from './highlight-note'
 import { usePainted } from './highlight-paint'
 import { HighlightPopover } from './highlight-popover'
-import { quotable, type Quote } from './selection-quote'
+import type { Quote } from './selection-action'
+import { quotable } from './selection-quote'
 
 const SENTENCE =
   'A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto.'
@@ -106,4 +108,9 @@ function GrifarButton() {
 
 export const GrifarAction: Story = {
   render: () => <GrifarButton />,
+}
+
+/** A Nota alone, under its heading, as the popover and `/grifos` show it. */
+export const ANote: Story = {
+  render: () => <HighlightNote note={NOTE} />,
 }

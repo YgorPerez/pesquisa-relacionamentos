@@ -1,6 +1,6 @@
-// The types of a Comentário (#337), shared by the form (`ui/comment.tsx`) and
-// the issue it becomes (`comment-issue.ts`): the label shown on the form is
-// the label of the issue in the private repo.
+// The types of a Comentário (#337), shared by the form
+// (`ui/selection-comment.tsx`) and the issue it becomes (`comment-issue.ts`):
+// the label shown on the form is the label of the issue in the private repo.
 
 export const COMMENT_KINDS = [
   'wrong',

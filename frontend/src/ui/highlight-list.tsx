@@ -11,7 +11,8 @@
 import type { SearchKind } from '#/content/site-search-view'
 import type { Highlight } from '#/state/highlight-record'
 import { Button } from '@/ui/shadcn/button'
-import { NOTE_HEADING, REMOVE_HIGHLIGHT } from './highlight.copy'
+import { REMOVE_HIGHLIGHT } from './highlight.copy'
+import { HighlightNote } from './highlight-note'
 import {
   CHANGED,
   CHANGED_LINE,
@@ -82,17 +83,13 @@ function SavedHighlight({
         className="block whitespace-pre-line no-underline"
         data-slot="trecho"
       >
-        <span className="underline decoration-tinta decoration-wavy underline-offset-4 hover:decoration-2">
-          {text}
-        </span>
+        <span className="grifo hover:decoration-2">{text}</span>
       </a>
       {note !== '' && (
-        <div className="mt-xs border-l-2 border-tinta pl-sm">
-          <p className="m-0 text-label text-tinta-2">{NOTE_HEADING}</p>
-          <p className="m-0 text-nota leading-nota break-words whitespace-pre-line">
-            {note}
-          </p>
-        </div>
+        <HighlightNote
+          note={note}
+          className="mt-xs border-l-2 border-tinta pl-sm"
+        />
       )}
       <Button
         variant="light"

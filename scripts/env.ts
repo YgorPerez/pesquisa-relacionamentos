@@ -3,8 +3,8 @@
 // `./ports.ts` (the port of each use), `frontend/vite/environment.ts` (the build
 // ones: the library, the sitemap and counting on localhost),
 // `frontend/scripts/vps.ts` (the VPS, the GoatCounter login and the comment
-// token it hands the app) and `frontend/src/content/comment.ts` (that token,
-// in the app server).
+// token it hands the app) and `frontend/src/platform/server-env.ts` (that
+// token, in the app server).
 //
 // Each type is a hand-written Standard Schema, which `createEnv` accepts per
 // key: the app does not use Effect (spec #23), and a zod just for this would

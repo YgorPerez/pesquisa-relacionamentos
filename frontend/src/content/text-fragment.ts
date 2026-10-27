@@ -23,10 +23,14 @@ export interface Line {
  * (`guide-view.ts`). */
 export const REF_CLASS = 'ref'
 
+/** The class of the "vale para você" mark, which comes and goes with the
+ * Profile (`guide-view.ts`). */
+export const PROFILE_MARK_CLASS = 'selo-voce-texto'
+
 /** The classes of the inline boxes inside a sentence (`ui/drawings.css`). */
 export const BOX_CLASSES: ReadonlyArray<string> = [
   'marca-brasil',
-  'selo-voce-texto',
+  PROFILE_MARK_CLASS,
 ]
 
 const squeeze = (text: string) => text.replace(/\s+/g, ' ').trim()

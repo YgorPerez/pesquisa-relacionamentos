@@ -14,6 +14,7 @@ import {
   usePainted,
 } from './highlight-paint'
 import { HighlightPopover } from './highlight-popover'
+import { QUOTABLE } from './quote-text'
 
 /** What a tap on the text lands on, when it is not a control of its own. */
 const CONTROL = 'a, button, input, label, [role="dialog"]'
@@ -26,8 +27,8 @@ const touchesText = (records: ReadonlyArray<MutationRecord>) =>
         ? record.target
         : record.target.parentElement
     return (
-      target?.closest('[data-quote]') != null ||
-      target?.querySelector('[data-quote]') != null
+      target?.closest(QUOTABLE) != null ||
+      target?.querySelector(QUOTABLE) != null
     )
   })
 
