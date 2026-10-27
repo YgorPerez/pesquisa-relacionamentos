@@ -35,6 +35,7 @@ import { QuestionRow } from '#/ui/question-row'
 import { ReadingProgress } from '#/ui/reading-progress'
 import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
+import { HighlightLayer } from '#/ui/highlight-layer'
 import { SelectionPopover } from '#/ui/selection-popover'
 import { PageSources } from '#/ui/selection-source'
 import { quotable } from '#/ui/selection-quote'
@@ -146,6 +147,7 @@ function GuidePage() {
       <PageSources factSheets={guide.factSheets} page="guide">
         <SelectionPopover />
       </PageSources>
+      <HighlightLayer />
     </Sheet>
   )
 }

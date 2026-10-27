@@ -8,17 +8,16 @@
 //
 // Inside a Visual, the whole figure is one sentence: its rings, in the
 // source line, are where each label and value came from.
-import { REF_CLASS } from '#/content/text-fragment'
+import { QUOTE as QUOTE_ATTRIBUTE, REF as RING, UNSEEN } from './quote-text'
 
-const REF = `a.${REF_CLASS}[href^="#ficha-"]`
-const QUOTE = '[data-quote]'
+/** A ring that leads to a Fact sheet of the page. */
+const REF = `a${RING}[href^="#ficha-"]`
+const QUOTE = `[${QUOTE_ATTRIBUTE}]`
 const CHAPTER = '[data-slot="capitulo"]'
-/** The elements a sentence does not cross. */
+/** The elements a sentence does not cross: fewer than `quote-text.ts`'s
+ * blocks, since a sentence may run through a `div` or a `span`. */
 const BLOCK =
   'p, li, h1, h2, h3, h4, h5, h6, td, th, dt, dd, figcaption, caption, blockquote'
-/** What the page does not show as text (`selection-quote.ts`). */
-const UNSEEN =
-  'svg, script, style, [hidden]:not([hidden="until-found"]), [aria-hidden="true"], .sr-only'
 
 const slugOf = (ref: Element) =>
   (ref.getAttribute('href') ?? '').slice('#ficha-'.length)

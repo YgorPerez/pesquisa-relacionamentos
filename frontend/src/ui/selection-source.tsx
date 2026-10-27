@@ -13,7 +13,7 @@ import { SiteButton } from './button'
 import { FactSheetTitle } from './guide'
 import { ACTION_LABEL } from './selection-popover.copy'
 import { countSelection } from './selection-count'
-import type { SelectionActionProps } from './selection-quote'
+import type { SelectionActionProps } from './selection-action'
 import {
   CITES,
   CITES_NONE,

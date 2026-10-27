@@ -37,6 +37,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'neighbor-sites.e2e.ts': ['sites-vizinhos', 'guia'],
   'reading.e2e.ts': ['leitura', 'inicio', 'guia'],
   'selection.e2e.ts': ['selecao', 'busca', 'guia', 'dicas', 'estudos'],
+  'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
   'selection-source.e2e.ts': ['selecao', 'guia', 'estudos'],
 }
 
@@ -81,9 +82,18 @@ const ALIASES: Readonly<Record<string, string>> = {
   'selection-popover': 'selecao',
   'selection-quote': 'selecao',
   'selection-copy': 'selecao',
+  'selection-action': 'selecao',
+  'selection-count': 'selecao',
+  'quote-text': 'selecao',
+  highlight: 'grifo',
+  highlights: 'grifo',
+  'highlight-action': 'grifo',
+  'highlight-layer': 'grifo',
+  'highlight-paint': 'grifo',
+  'highlight-popover': 'grifo',
+  'highlight-text': 'grifo',
   'selection-source': 'selecao',
   'selection-sentences': 'selecao',
-  'selection-count': 'selecao',
 }
 
 /** What changes outside the import graph, or what everything else uses. */

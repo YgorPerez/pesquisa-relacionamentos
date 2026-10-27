@@ -4,8 +4,8 @@
 // "Compartilhar" (`share.tsx`). The count carries the action's name only.
 import { Input } from '@/ui/shadcn/input'
 import { SiteButton } from './button'
+import type { SelectionActionProps } from './selection-action'
 import { countSelection } from './selection-count'
-import type { SelectionActionProps } from './selection-quote'
 import {
   ACTION_LABEL,
   COPIED,

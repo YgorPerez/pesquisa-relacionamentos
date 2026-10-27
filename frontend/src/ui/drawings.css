@@ -14,7 +14,9 @@
  *    `content/safe-html.ts`, plus the marks `guide-view.ts` puts in after
  *    the filter, `.marca-brasil` and `.selo-voce-texto`.
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
- *    with `stroke-dashoffset`, in `@keyframes`. */
+ *    with `stroke-dashoffset`, in `@keyframes`.
+ * 4. The Grifo, which the CSS Custom Highlight API paints and only a
+ *    `::highlight()` rule styles. */
 
 /* ---------- 1. drawings the JSX uses ---------- */
 
@@ -327,4 +329,17 @@
       stroke-dashoffset: 0;
     }
   }
+}
+
+/* ---------- 4. the Grifo ---------- */
+
+/* The reader's Grifo (#334, `highlight-paint.ts`). A wavy underline in ink:
+ * no fourth ink (The Three Inks Rule), not the yellow of the selection and
+ * of "vale para você", and not the straight underline of a link. */
+::highlight(grifo) {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-tinta);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
 }
