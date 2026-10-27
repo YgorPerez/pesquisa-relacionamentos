@@ -12,7 +12,30 @@ import { possibleGroup } from '../vite/possible-group.ts'
 const CONTENT = resolve(import.meta.dirname, '..', 'e2e', 'library')
 
 export default defineConfig({
-  resolve: { tsconfigPaths: true },
+  resolve: {
+    tsconfigPaths: true,
+    // The Comentário's server function (`src/content/comment.ts`) is the
+    // first one a story's piece imports. Without the Start plugin, Start's
+    // own modules do not run in the browser, so the stories get the screen
+    // tests' stand-ins (ADR 0035), as in `vite.config.ts`. No story sends a
+    // comment.
+    alias: [
+      {
+        find: /^@tanstack\/react-start$/,
+        replacement: resolve(
+          import.meta.dirname,
+          '../src/platform/screens/test-server.ts',
+        ),
+      },
+      {
+        find: /^@tanstack\/react-start\/server$/,
+        replacement: resolve(
+          import.meta.dirname,
+          '../src/platform/screens/test-request.ts',
+        ),
+      },
+    ],
+  },
   // On the site, the Guide view is only built on the server; here the story
   // builds it in the browser, and its `xss` is CommonJS: Vite bundles it
   // first, or the named import fails.

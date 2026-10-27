@@ -20,6 +20,7 @@ import {
   type RefObject,
 } from 'react'
 import type { SelectionAction } from '#/analytics/events'
+import { CommentOnQuote } from './selection-comment'
 import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
 import {
@@ -46,7 +47,7 @@ const ACTIONS: ReadonlyArray<{
 
   // De onde vem isso? (#336)
 
-  // Comentar (#337)
+  { id: 'comment', Action: CommentOnQuote },
 ]
 
 /** How the last selection was made: it decides the side. */
@@ -230,8 +231,12 @@ export function SelectionPopover() {
               aria-label={POPOVER_LABEL}
               initialFocus={false}
               finalFocus={false}
-              // A press on the popover keeps the selection and its quote.
-              onMouseDown={(event) => event.preventDefault()}
+              // A press on the popover keeps the selection and its quote; a
+              // press on a text field of a panel (the Comentário) focuses it.
+              onMouseDown={(event) => {
+                if (!(event.target as Element).closest('textarea, input'))
+                  event.preventDefault()
+              }}
               className="max-w-88 rounded-mao border-2 border-tinta bg-papel p-xs select-none"
               data-slot="trecho-acoes"
             >

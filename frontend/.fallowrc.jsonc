@@ -19,6 +19,9 @@
     // The screen tests' `@tanstack/react-start`: the `screens` project of
     // `vite.config.ts` points to it by alias, and no import does (ADR 0035).
     "src/platform/screens/test-server.ts",
+    // Its `@tanstack/react-start/server`, by alias in the same project and
+    // in `.storybook/vite.config.ts`.
+    "src/platform/screens/test-request.ts",
   ],
   "duplicates": {
     "ignore": [

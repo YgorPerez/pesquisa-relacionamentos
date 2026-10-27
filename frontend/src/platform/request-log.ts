@@ -1,7 +1,9 @@
 // The log of each request on the server (ADR 0001). The share link carries
 // the Profile in the query, and the app log keeps only method, path, status
 // and time: `GET /grupo-possivel 200 12ms`. The query and the fragment stay
-// out, and the `Referer` and the cookies never enter the line.
+// out, and the `Referer` and the cookies never enter the line. Nor does the
+// body: a Comentário (#337) travels in a POST's, and the line keeps only the
+// server function's path. The IP is not the app's to log either.
 //
 // Every response goes out with `Referrer-Policy: strict-origin`, so the
 // query does not go along when the visitor opens an external Study. The

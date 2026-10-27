@@ -61,9 +61,10 @@ export default defineConfig({
   // sheet of each Status, and not the repository's library. Run `pnpm build`
   // again before `pnpm start` with the real content.
   // `VITE_COUNT_ON_LOCALHOST` turns counting on in localhost, where
-  // `analytics.e2e.ts` intercepts the sends to GoatCounter.
+  // `analytics.e2e.ts` intercepts the sends to GoatCounter. A blank
+  // `COMMENT_GITHUB_TOKEN`: no e2e comment reaches GitHub.
   webServer: {
-    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && PORT=${port} node .output/server/index.mjs`,
+    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && COMMENT_GITHUB_TOKEN= PORT=${port} node .output/server/index.mjs`,
     url: `http://localhost:${port}/`,
     reuseExistingServer: false,
     stdout: 'ignore',

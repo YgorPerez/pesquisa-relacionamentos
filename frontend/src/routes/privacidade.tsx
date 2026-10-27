@@ -31,6 +31,7 @@ function Privacy() {
 
         <OnTheDevice />
         <InTheLink />
+        <InAComment />
         <OnTheServer />
         <InTheCount />
         <NotBeingCounted />
@@ -78,6 +79,36 @@ function InTheLink() {
         prévia que aparece numa rede social mostra o resultado e quem se
         procura, nunca o seu gênero ou a sua idade. O link de um Guia não leva
         nada seu, e a escolha de não ser contado nunca vai num link.
+      </p>
+    </Section>
+  )
+}
+
+/** "Comentar" (#337, ADR 0043): what goes, where, and that it is
+ * anonymous. */
+function InAComment() {
+  return (
+    <Section className="prosa" aria-labelledby="p-comentario">
+      <Headline id="p-comentario">O que vai num Comentário</Headline>
+      <p>
+        Só quando você seleciona um trecho, toca em “Comentar” e envia. Vão o
+        tipo que você escolheu, o que você escreveu, o trecho selecionado, o
+        link para ele e o título da página. Mais nada: nem nome, nem e-mail, nem
+        o seu IP, nem o seu navegador, nem o Perfil.
+      </p>
+      <p>
+        O Comentário vira uma issue num repositório privado do GitHub, que só o
+        curador lê, e nunca aparece no site. Por isso ele é anônimo, e também
+        não tem como a gente responder. Não escreva nele nada que diga quem você
+        é.
+      </p>
+      <p>
+        Para barrar spam, o servidor conta quantos Comentários saem de cada IP
+        na última hora. Essa conta fica só na memória do servidor, nunca vai
+        para um arquivo nem para a issue, e some quando ele reinicia. O envio
+        entra no registro do servidor como qualquer pedido (abaixo), sem o
+        texto. A contagem de visitas conta que um Comentário foi enviado, sem o
+        texto nem a página.
       </p>
     </Section>
   )
