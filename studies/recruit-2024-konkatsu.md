@@ -64,4 +64,4 @@ O instituto de pesquisa de casamentos da Recruit perguntou, pela internet, a 50.
 
 ## Como usamos
 
-O Relatório `reports/2026-10-28-chance-por-caminho.md` usa esta Ficha como a única fonte achada com taxa por caminho lado a lado, presencial incluído, e para mostrar o defeito dessa aproximação: ela conta só quem formou casal.
+O [Relatório sobre a chance de cada caminho](../reports/2026-10-28-chance-por-caminho.md) usa esta Ficha como a única fonte achada com taxa por caminho lado a lado, presencial incluído, e para mostrar o defeito dessa aproximação: ela conta só quem formou casal.

@@ -34,7 +34,7 @@ Um questionário online perguntou a jovens holandeses de 18 a 30 anos que já ti
 | Média do motivo amor (escala de 1 a 5) | 2,24 | Tabela 2 | "Love – M = 2.24, SD =1.01, α = .88" |
 | Média do motivo sexo casual (escala de 1 a 5) | 1,88 | Tabela 2 | "Casual Sex – M = 1.88" |
 | Média do motivo validação da autoestima (escala de 1 a 5) e consistência | 2,22; α = 0,87 | Tabela 2 | "Self-Worth Validation – M = 2.22, SD = 0.87, α = .87" |
-| Motivo sexo casual, mulheres e homens | 1,42 e 2,33; diferença significativa | Tabela 4 | "Casual Sex 1.42 (0.62) 2.33 (0.99)**" |
+| Motivo sexo casual, mulheres e homens | 1,42 e 2,33; diferença [[significativa]] | Tabela 4 | "Casual Sex 1.42 (0.62) 2.33 (0.99)**" |
 | Motivo validação da autoestima, mulheres e homens | 2,16 e 2,29, sem diferença | Tabela 4 | "Self-Worth Validation 2.16 (0.88) 2.29 (0.86)" |
 | Modelo da frequência de uso (seis motivos, idade e gênero) | R² = 0,18; R² ajustado = 0,10; F(8, 84) = 2,227 | Resultados, 4.4 | "R2= .18, Adjusted R2 = .10, F(8, 84) = 2.227, p = .033" |
 | Validação da autoestima e frequência de uso, no modelo com os seis motivos | β = 0,45 (p = 0,018); único motivo significativo | Resultados, 4.4 | "Self-Worth Validation was the only motivation that significantly related to a higher Tinder Use (β = .45, p = .018)" |
