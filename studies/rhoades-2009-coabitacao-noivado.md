@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Uma entrevista telefônica comparou casados que começaram a morar juntos antes do noivado, depois do noivado ou só ao casar. Mediu satisfação, dedicação ao relacionamento, confiança no futuro, amizade, satisfação sexual e comunicação negativa, com perguntas breves. O indicador chamado de potencial de divórcio perguntava se a pessoa ou seu cônjuge já tinha sugerido seriamente o divórcio; não acompanhou divórcios posteriores.
+Uma entrevista telefônica comparou casados que começaram a morar juntos antes do noivado, depois do noivado ou só ao casar. Mediu [[satisfação]], dedicação ao relacionamento, confiança no futuro, amizade, satisfação sexual e comunicação negativa, com perguntas breves. O indicador chamado de potencial de divórcio perguntava se a pessoa ou seu cônjuge já tinha sugerido seriamente o divórcio; não acompanhou divórcios posteriores.
 
 ## Achados
 
@@ -39,6 +39,12 @@ Quem morou junto antes de noivar relatou menor satisfação, dedicação e confi
 O d expressa a diferença entre grupos em desvios-padrão; positivo aqui indica mais comunicação negativa em quem morou junto antes de noivar. Os controles foram duração do casamento, religiosidade e escolaridade. Idade e renda foram comparadas entre os grupos, mas não entraram como covariáveis nessas análises porque não diferiram significativamente.
 
 Depois dos controles, a associação com ter sugerido divórcio permaneceu na comparação antes do noivado versus só ao casar. O teste geral para dedicação deixou de ser significativo. Na subamostra que só morou junto com o atual cônjuge, permaneceram as diferenças ajustadas em comunicação negativa e sugestão de divórcio, mas não em satisfação, dedicação ou confiança.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma pergunta, "no geral, quão satisfeito você está com a sua relação?", de 1 (completamente satisfeito) a 5 (nada), com a escala invertida na análise | Method, Continuous relationship variables | "participants answered "All in all, how satisfied are you with your relationship?" on a 1 (completely satisfied) to 5 (not at all) scale (reverse coded for analyses)." |
 
 ## Limitações
 

@@ -59,7 +59,7 @@ A autora acompanhou casais do painel pairfam desde o começo da relação até o
 - O pairfam sorteia uma amostra representativa de três coortes, mas a própria autora diz que os dados ainda são uma "nonrandom sample of observations". A análise exclui os já casados, as relações vistas numa onda só e quem tinha dado faltando, e a resposta ao painel ficou entre 30% e 45% por onda.
 - Poucas relações online: 243 de homens e 309 de mulheres (Tabela 1). Os modelos com atitudes do casal perdem mais da metade da amostra, porque muitos parceiros não responderam, e faltam mais dados entre os de menor escolaridade.
 - Junta site, app, rede social e chat numa categoria só, embora o pairfam separe esses meios nas ondas mais recentes.
-- Mede a passagem para o casamento, não satisfação nem duração do casamento. A maioria morou junto antes de casar; só 14 casais online casaram direto.
+- Mede a passagem para o casamento, não contentamento com o casamento nem duração dele. A maioria morou junto antes de casar; só 14 casais online casaram direto.
 - Só casais de sexo diferente, na Alemanha. A autora pondera que, em países mais igualitários ou com fosso educacional maior no casamento, como os EUA, o padrão pode ser outro.
 - Na p. 1991 o texto diz que o subrisco de 1,859 seria "85.9% of that" das mulheres que se conheceram fora da internet. Pela própria definição do modelo, 1,859 é 85,9% **maior**; a Ficha usa o número da tabela, que bate com a direção do Resumo e com a Figura 1.
 

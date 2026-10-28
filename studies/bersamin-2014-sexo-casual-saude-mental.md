@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Num questionário único, os autores perguntaram quantas vezes, nos últimos 30 dias, o aluno fez sexo com alguém que conhecia havia menos de uma semana. Como poucos disseram que sim, a resposta virou sim ou não. Depois compararam quem fez e quem não fez em duas medidas latentes: bem-estar (autoestima, satisfação com a vida, bem-estar psicológico e bem-estar eudaimônico) e sofrimento psicológico (ansiedade geral, ansiedade social e depressão). O modelo controlou o nível socioeconômico e testou se a relação era diferente entre homens e mulheres.
+Num questionário único, os autores perguntaram quantas vezes, nos últimos 30 dias, o aluno fez sexo com alguém que conhecia havia menos de uma semana. Como poucos disseram que sim, a resposta virou sim ou não. Depois compararam quem fez e quem não fez em duas medidas latentes: bem-estar (autoestima, [[satisfação]] com a vida, bem-estar psicológico e bem-estar eudaimônico) e sofrimento psicológico (ansiedade geral, ansiedade social e depressão). O modelo controlou o nível socioeconômico e testou se a relação era diferente entre homens e mulheres.
 
 ## Achados
 
@@ -42,6 +42,12 @@ Num questionário único, os autores perguntaram quantas vezes, nos últimos 30 
 | Ansiedade social, média de quem fez vs. quem não fez | 52,87 vs. 50,16, a menor diferença | Tabela 2 | "Social anxiety 52.87 (15.12) 50.16 (14.19)" |
 
 Na Tabela 2, o d de Cohen dessas diferenças vai de 0,19 (ansiedade social) a 0,76 (bem-estar psicológico); depressão e ansiedade geral ficam perto de 0,5. São comparações simples de médias, sem os controles do modelo.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com a vida, não com a relação: a Satisfaction with Life Scale, de 5 itens | Method, Measures | "We assessed life satisfaction using the 5-item Satisfaction with Life Scale" |
 
 ## Limitações
 

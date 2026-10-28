@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Os dois membros de cada casal responderam a duas escalas adaptadas da Multidimensional Perfectionism Scale: o perfeccionismo com o parceiro ("partner-oriented", o quanto a pessoa espera que o parceiro seja perfeito; 15 itens, de 1 a 7) e o perfeccionismo cobrado pelo parceiro ("partner-prescribed", o quanto a pessoa sente que o parceiro espera perfeição dela). Os desfechos foram a satisfação com a relação (Relationship Assessment Scale, de 1 a 5) e o compromisso de longo prazo (subescala de agenda da relação do Commitment Inventory, de 1 a 7). Regressões multinível com as variáveis padronizadas separaram o efeito sobre a própria pessoa (ator) do efeito sobre o parceiro.
+Os dois membros de cada casal responderam a duas escalas adaptadas da Multidimensional Perfectionism Scale: o perfeccionismo com o parceiro ("partner-oriented", o quanto a pessoa espera que o parceiro seja perfeito; 15 itens, de 1 a 7) e o perfeccionismo cobrado pelo parceiro ("partner-prescribed", o quanto a pessoa sente que o parceiro espera perfeição dela). Os desfechos foram a [[satisfação]] com a relação (Relationship Assessment Scale, de 1 a 5) e o compromisso de longo prazo (subescala de agenda da relação do Commitment Inventory, de 1 a 7). Regressões multinível com as variáveis padronizadas separaram o efeito sobre a própria pessoa (ator) do efeito sobre o parceiro.
 
 ## Achados
 
@@ -41,6 +41,12 @@ Os dois membros de cada casal responderam a duas escalas adaptadas da Multidimen
 | Quem exige perfeição e o quanto o parceiro se sente cobrado | b = 0,36 | Results, Main Analyses | "Results showed a significant partner effect (b = 0.36, SE = 0.09, t = 4.16, df = 109.42, p < .001; pseudo R² = .110)." |
 
 Na Tabela 2, cada modelo põe os dois perfeccionismos juntos; o b de um é o efeito com o outro fixo. Todas as variáveis foram padronizadas, então b = −0,27 quer dizer cerca de um quarto de desvio-padrão a menos de satisfação para cada desvio-padrão a mais de exigência. O PDF extraído escreve o sinal de menos como "–". Os Trechos da Tabela 2 param antes dos asteriscos de significância (\*\*\* p < 0,001 para −0,27 e −0,30, \* p < 0,05 para −0,16), que a tabela do Markdown não reproduz; "102.41" é a última célula da coluna de satisfação, logo antes do −0,16 do compromisso.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | A Relationship Assessment Scale: 7 perguntas sobre quão satisfeita a pessoa está com a relação, como "em geral, quão satisfeito você está com a sua relação?", de 1 a 5 | Method, Measures (p. 11) | "which comprises 7 items asking people to evaluate how satisfied they are with their relationship (e.g. "In general, how satisfied are you with your relationship?"). All items are answered on a scale from 1 to 5" |
 
 ## Limitações
 

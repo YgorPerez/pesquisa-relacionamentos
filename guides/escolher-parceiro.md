@@ -20,7 +20,7 @@ questions:
       ]
   - slug: aparencia-e-dinheiro-importam
     question: Aparência e dinheiro ==importam==?
-    answer: Para atrair, a aparência pesa bastante e a renda, pouco. Numa meta-análise de quase 100 amostras, a aparência teve associação ==de moderada a forte== com o interesse, e a renda, pequena, igual para homens e mulheres [@eastwick-2014-meta-analise-preferencias]. Dentro do casamento, a aparência se associou pouco com a satisfação [@meltzer-2014-atratividade-casamento]. Mais dinheiro andou junto com menos divórcio, mas o estudo mede o patrimônio do casal durante o casamento, não a renda de quem se escolhe [@killewald-2023-riqueza-divorcio]. Nenhum desses estudos é brasileiro.
+    answer: Para atrair, a aparência pesa bastante e a renda, pouco. Numa meta-análise de quase 100 amostras, a aparência teve associação ==de moderada a forte== com o interesse, e a renda, pequena, igual para homens e mulheres [@eastwick-2014-meta-analise-preferencias]. Dentro do casamento, a aparência se associou pouco com a [[satisfação]] [@meltzer-2014-atratividade-casamento]. Mais dinheiro andou junto com menos divórcio, mas o estudo mede o patrimônio do casal durante o casamento, não a renda de quem se escolhe [@killewald-2023-riqueza-divorcio]. Nenhum desses estudos é brasileiro.
     confidence: moderate
     findings:
       [
@@ -50,7 +50,7 @@ questions:
       ]
   - slug: que-caracteristicas-preveem
     question: Que características do parceiro ==preveem== um bom relacionamento?
-    answer: Quem o parceiro é explica pouco, e como a relação funciona explica muito. Em 43 estudos com 11 mil casais, a forma como cada um via a própria relação explicou ==45% das diferenças de satisfação== no começo dos estudos, e as características do parceiro, 5% [@joel-2020-machine-learning-43-datasets]. O que mais pesou foi sentir o compromisso do outro, apreciação, satisfação sexual e pouco conflito. Nenhum desses estudos é brasileiro.
+    answer: Quem o parceiro é explica pouco, e como a relação funciona explica muito. Em 43 estudos com 11 mil casais, a forma como cada um via a própria relação explicou ==45% das diferenças== de [[satisfação]] no começo dos estudos, e as características do parceiro, 5% [@joel-2020-machine-learning-43-datasets]. O que mais pesou foi sentir o compromisso do outro, apreciação, satisfação sexual e pouco conflito. Nenhum desses estudos é brasileiro.
     confidence: strong
     findings:
       [
@@ -485,7 +485,7 @@ A diferença entre os sexos aparece no papel. No speed dating, ao dizer o que qu
 
 Os dois números mudam conforme quem mede. A renda que a pessoa acha que o outro tem anda junto com o interesse (r = 0,27 entre os homens e 0,28 entre as mulheres); a renda medida de fato, quase nada, de 0,03 a 0,05 [@eastwick-2014-meta-analise-preferencias]. Com a aparência acontece algo parecido. Quando avaliadores de fora dão a nota, ela pesa antes de existir uma relação (r = 0,37) e quase nada em quem já namora ou é casado (r = 0,08).
 
-Dentro do casamento, o efeito fica pequeno. Um estudo acompanhou 458 casais recém-casados nos EUA por quatro anos, com a aparência avaliada por terceiros [@meltzer-2014-atratividade-casamento]. {{you:maridos-mais-satisfeitos}} Os maridos de esposas mais bonitas começaram o casamento um pouco mais satisfeitos (r = 0,10), e a diferença durou os quatro anos. {{you:esposas-sem-efeito}} A aparência do marido não se associou à satisfação da esposa. A diferença entre maridos e esposas passou raspando no teste estatístico, e outro grupo de pesquisadores contestou o resultado.
+Dentro do casamento, o efeito fica pequeno. Um estudo acompanhou 458 casais recém-casados nos EUA por quatro anos, com a aparência avaliada por terceiros [@meltzer-2014-atratividade-casamento]. {{you:maridos-mais-satisfeitos}} Os maridos de esposas mais bonitas começaram o casamento um pouco mais satisfeitos (r = 0,10), e a diferença durou os quatro anos. {{you:esposas-sem-efeito}} A aparência do marido não se associou à [[satisfação]] da esposa. A diferença entre maridos e esposas passou raspando no teste estatístico, e outro grupo de pesquisadores contestou o resultado.
 
 Do dinheiro, o dado que temos sobre duração não é sobre escolher, é sobre o patrimônio do casal depois de casado. Num painel americano que acompanhou casamentos de 1985 a 2018, com os controles, ter 40 mil dólares em vez de nada se associou a uma chance de divórcio no ano seguinte 0,7 ponto percentual menor. Ir de 40 mil a 400 mil deu a mesma queda [@killewald-2023-riqueza-divorcio]. Sair do zero conta mais que enriquecer, e os autores dizem que não estimam causa.
 
@@ -525,7 +525,7 @@ Sobre diferença de idade, só achamos um estudo, e fraco. Num questionário onl
 
 ## O que mais prevê uma boa relação não está na lista
 
-Sobra a pergunta de fundo: o que prevê uma boa relação. O maior estudo que lemos sobre isso juntou 43 pesquisas que acompanharam 11.196 casais, de 29 laboratórios, e testou 2.413 medidas para ver quais previam a satisfação com a relação [@joel-2020-machine-learning-43-datasets]. A forma como a própria pessoa via a relação explicou 45% das diferenças de satisfação no começo dos estudos. Os traços dela mesma explicaram 19%. Os traços do parceiro, quem ele é, explicaram 5%.
+Sobra a pergunta de fundo: o que prevê uma boa relação. O maior estudo que lemos sobre isso juntou 43 pesquisas que acompanharam 11.196 casais, de 29 laboratórios, e testou 2.413 medidas para ver quais previam a [[satisfação]] com a relação [@joel-2020-machine-learning-43-datasets]. A forma como a própria pessoa via a relação explicou 45% das diferenças de satisfação no começo dos estudos. Os traços dela mesma explicaram 19%. Os traços do parceiro, quem ele é, explicaram 5%.
 
 {{visual:o-que-explica-a-satisfacao}}
 
@@ -563,7 +563,7 @@ A calculadora que vem depois da resposta, mais abaixo, faz essa conta com o seu 
 
 {{question:requisitos-exigentes-demais}}
 
-Do outro lado da balança, o ganho de cada Requisito é pequeno. Bater traço a traço com a própria lista mal mexeu em quanto as pessoas gostaram de alguém [@eastwick-2024-preferencias-43-paises], e o ideal de parceiro ajudou a prever a satisfação em só 10% das vezes em que foi testado [@joel-2020-machine-learning-43-datasets]. A conclusão é nossa, tirada desses dois estudos: um Requisito que corta metade do grupo precisa importar muito para você, como religião para quem é religioso, porque a evidência não diz que ele melhora a relação.
+Do outro lado da balança, o ganho de cada Requisito é pequeno. Bater traço a traço com a própria lista mal mexeu em quanto as pessoas gostaram de alguém [@eastwick-2024-preferencias-43-paises]. E o ideal de parceiro ajudou a prever a [[satisfação]] em só 10% das vezes em que foi testado [@joel-2020-machine-learning-43-datasets]. A conclusão é nossa, tirada desses dois estudos: um Requisito que corta metade do grupo precisa importar muito para você, como religião para quem é religioso, porque a evidência não diz que ele melhora a relação.
 
 O mesmo vale para mirar alto. Num site de namoro dos EUA, homens e mulheres escreveram, em média, para pessoas uns 25% acima deles num ranking de desejabilidade, e quanto maior a distância, menor a chance de resposta [@bruch-2018-aspirational-pursuit]. O estudo olhou só homens e mulheres héteros, e não achamos dado brasileiro sobre isso.
 

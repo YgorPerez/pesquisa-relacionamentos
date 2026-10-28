@@ -51,7 +51,7 @@ A distribuição do número de parceiros também se ampliou, com aumentos na cau
 - A interpretação causal depende de que os grupos teriam seguido tendências paralelas sem o lançamento. Os autores verificam tendências anteriores e fazem testes de seleção e de efeitos entre grupos, mas a exposição não foi sorteada.
 - O uso do Tinder não foi medido individualmente. Não se estima aqui o que acontecerá com uma pessoa que decidir instalar ou apagar o app.
 - Os participantes são graduandos dos EUA; a amostra não permite generalizar para o Brasil, outras idades ou o uso atual dos apps. O Bumble adotou divulgação semelhante e pode contribuir para os efeitos nos anos finais.
-- Coabitação é uma aproximação de compromisso, e qualidade da relação é medida por problemas e abuso. Isso não cobre todos os namoros sérios nem equivale a medir satisfação com a relação.
+- Coabitação é uma aproximação de compromisso, e qualidade da relação é medida por problemas e abuso. Isso não cobre todos os namoros sérios nem equivale a medir quão contente a pessoa está com a relação.
 - Diagnósticos de clamídia podem aumentar tanto por mais infecções quanto por mais testagem. O estudo não separa essas explicações.
 - A melhora média de saúde mental entre membros das organizações convive com aumento de agressões sexuais. Ela não significa ausência de danos individuais; no conjunto das instituições, a estimativa de saúde mental é imprecisa.
 - Há uma inconsistência de redação: a seção de resultados menciona sintomas no último ano, mas a tabela de saúde mental e a codificação do suplemento usam o último mês. Esta Ficha segue a tabela e a codificação.

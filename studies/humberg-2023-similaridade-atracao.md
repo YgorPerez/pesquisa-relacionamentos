@@ -48,7 +48,7 @@ Não encontrar essa associação não equivale a estimar um efeito exatamente nu
 ## Limitações
 
 - Uma única amostra de jovens heterossexuais na Alemanha, em sua maioria estudantes. Não representa a população brasileira, pessoas mais velhas ou encontros entre pessoas do mesmo sexo; os autores pedem replicações diretas.
-- Encontros de laboratório, filmados e muito breves. O estudo mede a avaliação logo após o contato, sem testar formação, satisfação ou duração de uma relação.
+- Encontros de laboratório, filmados e muito breves. O estudo mede a avaliação logo após o contato, sem testar formação, contentamento ou duração de uma relação.
 - As escalas de adjetivos usadas para a personalidade percebida são curtas, cobrem só parte de cada traço e têm alguma sobreposição entre traços. As análises alternativas deram conclusões semelhantes, mas os autores recomendam medidas mais abrangentes.
 - Testou níveis de traços dos Cinco Grandes. Não testou semelhança em valores, religião, interesses ou escolaridade, nem a avaliação direta de "somos parecidos".
 - O plano de análise foi pré-registrado depois da coleta e antes das análises; o próprio artigo classifica o teste de semelhança como exploratório. O desenho observacional não estabelece causalidade, e as percepções do parceiro e a atração foram avaliadas na mesma ocasião.

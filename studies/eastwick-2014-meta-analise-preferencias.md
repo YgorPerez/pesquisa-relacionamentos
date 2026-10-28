@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-A primeira seção do artigo é uma meta-análise: quanto a atratividade física e a perspectiva de renda de **pessoas reais**, que o participante conheceu pessoalmente, se associam à avaliação romântica que ele faz delas (atração, desejo de sair de novo, satisfação, compromisso, amor), e se esse peso difere entre homens e mulheres como as preferências declaradas sugerem. Cada traço foi medido de três jeitos: pelo relato do participante, pelo relato do próprio parceiro e por uma medida objetiva (notas de avaliadores, renda pessoal). As outras seções revisam as diferenças individuais nas preferências e propõem um modelo por fase da relação.
+A primeira seção do artigo é uma meta-análise: quanto a atratividade física e a perspectiva de renda de **pessoas reais**, que o participante conheceu pessoalmente, se associam à avaliação romântica que ele faz delas (atração, desejo de sair de novo, [[satisfação]], compromisso, amor), e se esse peso difere entre homens e mulheres como as preferências declaradas sugerem. Cada traço foi medido de três jeitos: pelo relato do participante, pelo relato do próprio parceiro e por uma medida objetiva (notas de avaliadores, renda pessoal). As outras seções revisam as diferenças individuais nas preferências e propõem um modelo por fase da relação.
 
 ## Achados
 
@@ -48,6 +48,12 @@ A primeira seção do artigo é uma meta-análise: quanto a atratividade física
 - Dados publicados deram correlações um pouco maiores que os inéditos em 2 de 6 análises: "there was a modicum of evidence that correlations were stronger in published analyses than unpublished ones."
 - O trim and fill não achou estudos faltando que mudassem a diferença entre os sexos.
 - Na revisão (Seção 2), as preferências declaradas preveem a avaliação de perfis, antes de conhecer a pessoa, e não a atração depois do contato. Dentro de relações, elas preveem quando se olha o padrão de vários traços juntos, não traço a traço.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma das avaliações românticas que a meta-análise juntou, ao lado de atração, compromisso e amor: medidas de satisfação com a relação ou com o sexo | Meta-Analysis, Method (p. 628) | "Relevant romantic evaluation DVs were measures of romantic liking, attraction, satisfaction (relationship or sexual), commitment, trust, intimacy, love, passion" |
 
 ## Limitações
 

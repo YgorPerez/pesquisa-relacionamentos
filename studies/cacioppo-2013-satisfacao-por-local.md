@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Questionário online da Harris Interactive, de junho de 2012, com pessoas que casaram entre 2005 e 2012. Perguntou se a pessoa conheceu o cônjuge online ou offline e em qual local, se o casamento terminou em separação ou divórcio e, para quem continuava casado, a satisfação conjugal: a média de duas escalas de 1 a 7. Comparou separação e satisfação entre online e offline e entre os locais, com e sem controles demográficos e do ano do casamento.
+Questionário online da Harris Interactive, de junho de 2012, com pessoas que casaram entre 2005 e 2012. Perguntou se a pessoa conheceu o cônjuge online ou offline e em qual local, se o casamento terminou em separação ou divórcio e, para quem continuava casado, a [[satisfação]] conjugal: a média de duas escalas de 1 a 7. Comparou separação e satisfação entre online e offline e entre os locais, com e sem controles demográficos e do ano do casamento.
 
 ## Achados
 

@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Os autores perguntaram a pessoas casadas quanto tempo depois de começar a namorar transaram pela primeira vez com o cônjuge (de "antes de começarmos a namorar" a "só depois de casar") e relacionaram isso à qualidade sexual, à comunicação, à satisfação com a relação e à estabilidade percebida (quantas vezes acha que a relação está em crise, pensa em terminar ou já terminou e voltou). Um modelo de equações estruturais controla religiosidade, tempo de relação, escolaridade e o número de parceiros sexuais que a pessoa declarou, e uma comparação de três grupos (sexo no primeiro mês, entre um mês e dois anos, só depois de casar) usa os mesmos controles. O número de parceiros não é a pergunta central, mas o artigo publica o efeito dele sobre satisfação e estabilidade, para homens e mulheres.
+Os autores perguntaram a pessoas casadas quanto tempo depois de começar a namorar transaram pela primeira vez com o cônjuge (de "antes de começarmos a namorar" a "só depois de casar") e relacionaram isso à qualidade sexual, à comunicação, à [[satisfação]] com a relação e à estabilidade percebida (quantas vezes acha que a relação está em crise, pensa em terminar ou já terminou e voltou). Um modelo de equações estruturais controla religiosidade, tempo de relação, escolaridade e o número de parceiros sexuais que a pessoa declarou, e uma comparação de três grupos (sexo no primeiro mês, entre um mês e dois anos, só depois de casar) usa os mesmos controles. O número de parceiros não é a pergunta central, mas o artigo publica o efeito dele sobre satisfação e estabilidade, para homens e mulheres.
 
 ## Achados
 
@@ -47,6 +47,12 @@ Os autores perguntaram a pessoas casadas quanto tempo depois de começar a namor
 | Representatividade, segundo os autores | Amostra não representativa, mais escolarizada e branca | p. 773, Discussion | "The sample in this study is clearly not representative and consists of a more educated, white population than a random sample would have produced." |
 
 Os efeitos da Tabela 2 são padronizados (desvios-padrão de mudança no desfecho por desvio-padrão do preditor) e somam o caminho direto e os indiretos, como o que passa por transar mais cedo. O sinal negativo aparece no PDF como "⫺". Na Tabela 1, o PDF separa as categorias das contagens; as nove contagens, na ordem das categorias, vão de "antes de começar a namorar" (126) a "só depois de casar" (336). Somadas, dão 2.035, a amostra do modelo, embora o título da tabela diga N = 2097. Nas colunas da Tabela 2, o quarto valor é o número de parceiros e o quinto, o momento do sexo.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma escala de quão satisfeita a pessoa está com cinco áreas da relação: o tempo juntos, o amor, o jeito de resolver os conflitos, a igualdade e a relação como um todo | p. 769, Measures | "This scale consisted of questions about how satisfied participants were with five different areas including the time they spent together, the love they experienced, the way conflict was resolved, the amount of relationship equality they experienced, and satisfaction with their overall relationship." |
 
 ## Limitações
 

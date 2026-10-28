@@ -45,7 +45,13 @@ Em 1983, 79 casais tiveram no laboratório duas conversas de 15 minutos gravadas
 | Desprezo do marido, precoce vs. tardio | média 0,12 vs. 0,02 | Resultados, p. 742 | "earlier divorcing couples' M = .12, later divorcing couples' M = .02" |
 | Modelo completo do resumo | 93% de acerto | Resumo, p. 737 | "The model predicted divorce with 93% accuracy." |
 
-O resumo dá 93% para um modelo com satisfação, ideia de separação e afeto nas duas conversas. Os Resultados não trazem esse número: as taxas que aparecem lá são 83,5%, 88,5%, 86,2%, 75% e 95%.
+O resumo dá 93% para um modelo com [[satisfação]], ideia de separação e afeto nas duas conversas. Os Resultados não trazem esse número: as taxas que aparecem lá são 83,5%, 88,5%, 86,2%, 75% e 95%.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com o casamento: a média de duas escalas, a de Locke-Wallace e a de Locke-Williamson | Métodos, p. 739 | "The Time 1 average marital satisfaction for husbands was (average of Locke-Wallace and Locke-Williamson scales)" |
 
 ## Limitações
 

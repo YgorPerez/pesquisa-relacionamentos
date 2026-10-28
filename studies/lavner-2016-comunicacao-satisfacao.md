@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casais tiveram em casa três conversas gravadas de 8 minutos: uma sobre um desacordo do casal e duas de apoio (cada um falou de algo que queria mudar em si). Codificadores treinados pontuaram cada cônjuge em três escalas: positividade (afeto, humor, carinho, escuta), negatividade (coerção irritada, desprezo, hostilidade, ataque verbal) e eficácia (assertividade, qualidade e quantidade de soluções). Cada cônjuge também respondeu um questionário de satisfação conjugal. Modelos de defasagem cruzada (*cross-lagged*) testaram, nos dois sentidos, se a comunicação numa onda previa a mudança da satisfação na seguinte e se a satisfação previa a mudança da comunicação.
+Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casais tiveram em casa três conversas gravadas de 8 minutos: uma sobre um desacordo do casal e duas de apoio (cada um falou de algo que queria mudar em si). Codificadores treinados pontuaram cada cônjuge em três escalas: positividade (afeto, humor, carinho, escuta), negatividade (coerção irritada, desprezo, hostilidade, ataque verbal) e eficácia (assertividade, qualidade e quantidade de soluções). Cada cônjuge também respondeu um questionário de [[satisfação]] conjugal. Modelos de defasagem cruzada (*cross-lagged*) testaram, nos dois sentidos, se a comunicação numa onda previa a mudança da satisfação na seguinte e se a satisfação previa a mudança da comunicação.
 
 ## Achados
 
@@ -49,6 +49,12 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 | Total de efeitos comunicação → satisfação nas defasagens de 9 meses | 7 de 36 significativos | Discussão, p. 10 | "Of the 36 crosslagged effects using the 9-month lags, only 7 were significant for communication-tosatisfaction" |
 | Comparação direta do tamanho dos dois sentidos | sem diferença em 85% dos casos | Discussão, p. 10 | "the effects did not differ significantly in 85% of cases" |
 | Conclusão dos autores | os dois sentidos são fracos e inconsistentes | Discussão, p. 10 | "satisfaction is a more consistent and stronger predictor of communication than the reverse, but overall both effects are fairly inconsistent and similar in magnitude" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | A soma de oito perguntas; cinco delas perguntam quão satisfeita a pessoa está com áreas da relação, como o tempo que passam juntos, de 1 (muito insatisfeita) a 5 (muito satisfeita) | Método, Marital Satisfaction Questionnaire, p. 7 | "Marital satisfaction was assessed by summing responses on an eight-item questionnaire. Five items asked how satisfied the respondent was with certain areas of their relationship (e.g., "satisfaction with the amount of time spent together"), and were scored on a 5-point scale (ranging from 1 = very dissatisfied to 5 = very satisfied)." |
 
 ## Limitações
 

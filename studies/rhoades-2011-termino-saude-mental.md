@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Adultos que namoravam no início foram acompanhados por 20 meses, com questionário a cada quatro meses sobre sofrimento psicológico (12 itens de humor e ansiedade, de 1 a 5) e satisfação com a vida (escala de Diener, de 1 a 7). Para quem terminou, os autores compararam a mesma pessoa antes e depois do término, e testaram se morar junto, ter planos de casar, falar com o ex, ter sido deixado ou já estar com outra pessoa mudavam o tamanho da queda.
+Adultos que namoravam no início foram acompanhados por 20 meses, com questionário a cada quatro meses sobre sofrimento psicológico (12 itens de humor e ansiedade, de 1 a 5) e [[satisfação]] com a vida (escala de Diener, de 1 a 7). Para quem terminou, os autores compararam a mesma pessoa antes e depois do término, e testaram se morar junto, ter planos de casar, falar com o ex, ter sido deixado ou já estar com outra pessoa mudavam o tamanho da queda.
 
 ## Achados
 
@@ -41,6 +41,12 @@ Adultos que namoravam no início foram acompanhados por 20 meses, com questioná
 | Fatores e sofrimento psicológico | Nenhum mudou o sofrimento | Results | "none were significant predictors of psychological distress following a break-up" |
 
 "d" é a mudança média em desvios-padrão, comparando a mesma pessoa antes e depois do término; 0,2 é pequeno, 0,5 é médio. Uma média pequena esconde trajetórias opostas: perto de metade dos términos trouxe uma piora média ou maior, e uma parte trouxe melhora.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com a vida, não com a relação: a escala de Diener, com frases como "na maior parte, minha vida está perto do meu ideal", de 1 (discordo totalmente) a 7 (concordo totalmente) | Method, Life satisfaction | "Items such as "In most ways my life is close to my ideal" and "If I could live my life over, I would change almost nothing" are rated on a 7-point scale ranging from 1 ( strongly disagree ) to 7 ( strongly agree )." |
 
 ## Limitações
 
