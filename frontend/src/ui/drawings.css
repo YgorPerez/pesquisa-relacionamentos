@@ -246,8 +246,11 @@
     text-underline-offset: 4px;
   }
 
-  .verbete:hover {
-    text-decoration-style: solid;
+  /* Only where there is a pointer: on a phone, a tap would leave it on. */
+  @media (hover: hover) {
+    .verbete:hover {
+      text-decoration-style: solid;
+    }
   }
 
   /* ---------- key number in pink, the whole letter height ---------- */
