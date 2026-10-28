@@ -84,7 +84,7 @@ Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for
 - **Achado:**
   - Solidão: o motivo de aprovação interagiu com a idade (p = 0,031, Tabela 5). Nos mais velhos (1 desvio-padrão acima da média de idade), mais aprovação andou com mais solidão (β = 0,28; p = 0,025); nos mais novos, não (β = −0,16; p = 0,203; Resultados, "Loneliness", e Figura 1). A correlação simples entre aprovação e solidão foi de 0,08, sem significância (Tabela 3).
   - Ansiedade (Tabela 7): aprovação (β = 0,18), busca de relação (β = 0,13) e experiência sexual (β = 0,17) previram mais ansiedade, sem diferença por idade.
-  - Satisfação com a vida (Tabela 4): o motivo de aprovação previu _mais_ satisfação (β = 0,13; p = 0,032).
+  - Satisfação com a vida (Tabela 4): o motivo de aprovação previu _mais_ satisfação (β = 0,13), sem interação com a idade.
   - Depressão: nenhum motivo previu, só a idade.
 - **Causal?** Não. Os autores dizem que não dá para saber se o motivo afeta a saúde mental ou se o estado prévio leva ao motivo, e propõem que a ligação com a solidão nos mais velhos pode ir nos dois sentidos.
 - **Ressalva:** amostra de painel online, com 11 preditores por modelo e efeitos pequenos (R² ajustado de 0,06 a 0,19). Uma citação deste artigo é imprecisa: ele cita Her & Timmermans 2021 para ligar aprovação a mais tristeza e ansiedade, uma ligação que lá existe só na correlação simples e some na regressão com os outros motivos e o uso compulsivo (ver abaixo).
