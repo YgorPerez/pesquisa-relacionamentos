@@ -16,6 +16,7 @@ conflict: "Financiado pela National Science Foundation (SES-0751977) e, em Stanf
 covers:
   genders: [man, woman]
   ages: { min: 19, max: 99 }
+institution: stanford
 ---
 
 # Rosenfeld & Thomas (2012): a internet como intermediária na busca de parceiro
@@ -50,6 +51,12 @@ Como os casais americanos se conheceram, de 1940 a 2009, e como a internet mudou
 | Idade e conhecer o parceiro online, heterossexuais | Os mais jovens não são os que mais conhecem online | Age and Meeting Online, p. 25 | "the youngest respondents were not the most likely to meet their partners online" |
 | Jovens adultos heterossexuais | Entre os que menos conhecem o parceiro online | Discussion, p. 32 | "Young heterosexual adults, who we presume to be among the most technologically savvy people in society, are among the least likely to meet partners online" |
 | Quem mais depende da internet para achar parceiro | Gays, lésbicas e heterossexuais de meia-idade, em mercados "finos" | Discussion, p. 33 | "Gays, lesbians, and middle-aged heterosexuals all face thin dating markets, and these are the groups that are most likely to rely on the Internet to find their partners" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | A qualidade da relação que a própria pessoa relata, numa escala de 1 (muito ruim) a 5 (excelente) | Results, p. 19 | "The average relationship quality (on a scale of 1-5 with 5 being "excellent" and 1 being "very poor")" |
 
 ## Limitações
 

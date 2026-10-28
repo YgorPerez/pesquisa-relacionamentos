@@ -16,6 +16,7 @@ conflict: "O Pew Research Center é subsidiário da The Pew Charitable Trusts, s
 covers:
   genders: [man, woman]
   ages: { min: 18, max: 99 }
+institution: pew
 ---
 
 # Pew Research Center (2023 e 2020): namoro online nos EUA
