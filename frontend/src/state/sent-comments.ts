@@ -9,8 +9,13 @@
 // da lista" forgets the record here; the issue stays.
 import { useSyncExternalStore } from 'react'
 import { COMMENT_KINDS, type CommentKind } from '#/content/comment-kinds'
-import { markedFound, type KeptQuote } from './highlight-record'
-import { CONTEXT_LENGTH } from './highlights'
+import {
+  decodeKeptQuote,
+  decodeQuoteList,
+  isQuoteRecord,
+  markedFound,
+  type KeptQuote,
+} from './highlight-record'
 import { stored } from './stored'
 import type { CommentStatus, IssueStatus } from '#/content/comment-status'
 
@@ -44,43 +49,19 @@ export type NewSentComment = Omit<
 const validStatus = (raw: unknown): raw is CommentStatus =>
   raw === 'received' || raw === 'corrected' || raw === 'not-planned'
 
-const isRecord = (raw: unknown): raw is Record<string, unknown> =>
-  typeof raw === 'object' && raw !== null && !Array.isArray(raw)
-
-const STRINGS = [
-  'id',
-  'path',
-  'pageTitle',
-  'link',
-  'text',
-  'exact',
-  'comment',
-] as const
-
 function validComment(raw: unknown): SentComment | null {
-  if (!isRecord(raw)) return null
-  for (const key of STRINGS)
-    if (typeof raw[key] !== 'string' || raw[key] === '') return null
-  const { prefix, suffix, kind, issue, changed, at } = raw
-  if (typeof prefix !== 'string' || typeof suffix !== 'string') return null
+  if (!isQuoteRecord(raw)) return null
+  const quote = decodeKeptQuote(raw)
+  if (!quote) return null
+  const { kind, issue, comment } = raw
+  if (typeof comment !== 'string' || comment === '') return null
   if (!COMMENT_KINDS.includes(kind as CommentKind)) return null
   if (!Number.isSafeInteger(issue) || (issue as number) < 1) return null
-  if (typeof at !== 'number' || !Number.isFinite(at)) return null
-  const text = (key: (typeof STRINGS)[number]) => raw[key] as string
   return {
-    id: text('id'),
-    path: text('path'),
-    pageTitle: text('pageTitle'),
-    link: text('link'),
-    text: text('text'),
-    exact: text('exact'),
-    prefix: prefix.slice(-CONTEXT_LENGTH),
-    suffix: suffix.slice(0, CONTEXT_LENGTH),
+    ...quote,
     kind: kind as CommentKind,
-    comment: text('comment'),
+    comment,
     issue: issue as number,
-    changed: changed === true,
-    at,
     ...(validStatus(raw.status) ? { status: raw.status } : {}),
     ...(validStatus(raw.seenStatus) ? { seenStatus: raw.seenStatus } : {}),
   }
@@ -91,14 +72,7 @@ function validComment(raw: unknown): SentComment | null {
 export function validateSentComments(
   raw: unknown,
 ): ReadonlyArray<SentComment> | null {
-  if (!Array.isArray(raw)) return null
-  const seen = new Set<string>()
-  return raw.flatMap((item) => {
-    const valid = validComment(item)
-    if (!valid || seen.has(valid.id)) return []
-    seen.add(valid.id)
-    return [valid]
-  })
+  return decodeQuoteList(raw, validComment)
 }
 
 const comments = stored('sent-comments', validateSentComments)

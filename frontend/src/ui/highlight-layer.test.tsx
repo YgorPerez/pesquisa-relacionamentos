@@ -6,7 +6,7 @@
 // nor layout, so the test gives it a registry of painted ranges and a box
 // for each painted range; the paint itself, in a real Chrome, is the e2e's
 // (`e2e/highlight.e2e.ts`).
-import { cleanup, screen, waitFor, within } from '@testing-library/react'
+import { act, cleanup, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
@@ -410,11 +410,11 @@ const GUIDE_A = grifo(
   'O que pesa na escolha',
 )
 
-const grifos = () => screen.getByRole('region', { name: HIGHLIGHTS })
-const comentarios = () => screen.getByRole('region', { name: COMMENTS })
+const highlightsRegion = () => screen.getByRole('region', { name: HIGHLIGHTS })
+const commentsRegion = () => screen.getByRole('region', { name: COMMENTS })
 
 const pages = () =>
-  within(grifos())
+  within(highlightsRegion())
     .getAllByRole('listitem')
     .filter((item) => item.dataset['slot'] === 'pagina-grifada')
 
@@ -430,7 +430,7 @@ it('lists every Grifo by page, Guides then Tips then Fact sheets, each with its 
   save(GUIDE_B_LATER, FACT_SHEET, TIP, GUIDE_B, GUIDE_A)
   await openKept()
 
-  expect(within(grifos()).getByText(saved(5, 4))).toBeInTheDocument()
+  expect(within(highlightsRegion()).getByText(saved(5, 4))).toBeInTheDocument()
   expect(
     pages().map((page) => within(page).getAllByRole('heading')[0]!.textContent),
   ).toEqual([
@@ -461,7 +461,7 @@ it('a Grifo whose quote left its page says the passage changed, and keeps its qu
   save({ ...GUIDE_B, changed: true }, TIP)
   await openKept()
 
-  const changed = within(grifos()).getByText(CHANGED).closest('li')!
+  const changed = within(highlightsRegion()).getByText(CHANGED).closest('li')!
   expect(within(changed).getByText(GUIDE_B.text)).toBeInTheDocument()
   expect(within(changed).getByText('Ver a amostra')).toBeInTheDocument()
   expect(screen.getAllByText(CHANGED)).toHaveLength(1)
@@ -475,24 +475,26 @@ it('"Tirar grifo" takes the Grifo off the list and out of the storage, and the l
   await user.click(screen.getByRole('button', { name: removeLabel(TIP.text) }))
   expect(screen.queryByText(TIP.text)).not.toBeInTheDocument()
   expect(savedTexts()).toEqual([GUIDE_B.text])
-  expect(within(grifos()).getByText(saved(1, 1))).toBeInTheDocument()
+  expect(within(highlightsRegion()).getByText(saved(1, 1))).toBeInTheDocument()
 
   await user.click(
     screen.getByRole('button', { name: removeLabel(GUIDE_B.text) }),
   )
   expect(savedTexts()).toEqual([])
   expect(
-    await within(grifos()).findByText(NO_HIGHLIGHTS, { exact: false }),
+    await within(highlightsRegion()).findByText(NO_HIGHLIGHTS, {
+      exact: false,
+    }),
   ).toBeInTheDocument()
 })
 
 it('with nothing kept, each section says how to fill it', async () => {
   await openKept()
   expect(
-    within(grifos()).getByText(NO_HIGHLIGHTS, { exact: false }),
+    within(highlightsRegion()).getByText(NO_HIGHLIGHTS, { exact: false }),
   ).toHaveTextContent('Grifar')
   expect(
-    within(comentarios()).getByText(NO_COMMENTS, { exact: false }),
+    within(commentsRegion()).getByText(NO_COMMENTS, { exact: false }),
   ).toHaveTextContent('Comentar')
 })
 
@@ -516,7 +518,7 @@ it('every page links to Seus trechos from its footer, and the old /grifos leads 
 
 const COMMENTS_KEY = 'tem-estudo:sent-comments'
 
-function comentario(
+function sentComment(
   path: string,
   pageTitle: string,
   text: string,
@@ -547,13 +549,13 @@ const saveComments = (...comments: SentComment[]) =>
 const keptComments = (): SentComment[] =>
   JSON.parse(localStorage.getItem(COMMENTS_KEY) ?? '[]') as SentComment[]
 
-const ON_GUIDE = comentario(
+const ON_GUIDE = sentComment(
   '/onde-conhecer-pessoas',
   'Onde conhecer pessoas',
   SENTENCE,
   { comment: 'O número não bate com a Ficha.' },
 )
-const ON_TIP = comentario(
+const ON_TIP = sentComment(
   '/dicas/apps-como-complemento',
   'Use o app como complemento',
   'Use o app como complemento',
@@ -565,7 +567,7 @@ const ON_TIP = comentario(
 )
 
 const sentItems = () =>
-  within(comentarios())
+  within(commentsRegion())
     .getAllByRole('listitem')
     .filter((item) => item.dataset['slot'] === 'comentario-enviado')
 
@@ -573,7 +575,7 @@ it('lists every sent Comentário, newest first, with its quote leading to its se
   saveComments(ON_GUIDE, ON_TIP)
   await openKept()
 
-  expect(within(comentarios()).getByText(sentCount(2))).toBeInTheDocument()
+  expect(within(commentsRegion()).getByText(sentCount(2))).toBeInTheDocument()
   const [tip, guide] = sentItems()
   expect(within(tip!).getByText(KIND_LABEL['missing-study'])).toBeVisible()
   expect(within(tip!).getByText('Tem estudo disso?')).toBeVisible()
@@ -591,10 +593,30 @@ it('lists every sent Comentário, newest first, with its quote leading to its se
   expect(
     within(guide!).getByRole('link', { name: 'Onde conhecer pessoas' }),
   ).toHaveAttribute('href', '/onde-conhecer-pessoas')
-  expect(within(comentarios()).queryByText(CHANGED)).toBeNull()
+  expect(within(commentsRegion()).queryByText(CHANGED)).toBeNull()
 })
 
 it('announces an unseen status in the footer, highlights it in the list and remembers it was seen', async () => {
+  let enterViewport = () => {}
+  vi.stubGlobal(
+    'IntersectionObserver',
+    class {
+      constructor(callback: IntersectionObserverCallback) {
+        enterViewport = () =>
+          callback(
+            [
+              {
+                isIntersecting: true,
+                intersectionRatio: 1,
+              } as IntersectionObserverEntry,
+            ],
+            this as unknown as IntersectionObserver,
+          )
+      }
+      observe() {}
+      disconnect() {}
+    },
+  )
   saveComments({ ...ON_GUIDE, status: 'corrected', seenStatus: 'received' })
   const { router } = openScreen('/privacidade')
   expect(
@@ -603,6 +625,8 @@ it('announces an unseen status in the footer, highlights it in the list and reme
   await router.navigate({ to: '/trechos' })
   expect(await screen.findByText('Corrigido')).toBeVisible()
   expect(screen.getByText('Status atualizado')).toBeVisible()
+  expect(keptComments()[0]?.seenStatus).toBe('received')
+  await act(async () => enterViewport())
   await waitFor(() => expect(keptComments()[0]?.seenStatus).toBe('corrected'))
   expect(screen.queryByText('Há novidade nos seus Comentários')).toBeNull()
 })
@@ -640,21 +664,21 @@ it('"Tirar da lista" forgets the Comentário on this device only, and the last o
     screen.getByRole('button', { name: removeCommentLabel(ON_TIP.text) }),
   )
   expect(keptComments().map((c) => c.id)).toEqual([ON_GUIDE.id])
-  expect(within(comentarios()).getByText(sentCount(1))).toBeInTheDocument()
+  expect(within(commentsRegion()).getByText(sentCount(1))).toBeInTheDocument()
 
   await user.click(
     screen.getByRole('button', { name: removeCommentLabel(ON_GUIDE.text) }),
   )
   expect(localStorage.getItem(COMMENTS_KEY)).toBeNull()
   expect(
-    within(comentarios()).getByText(NO_COMMENTS, { exact: false }),
+    within(commentsRegion()).getByText(NO_COMMENTS, { exact: false }),
   ).toBeInTheDocument()
 })
 
 it('on its page, a sent Comentário whose quote is gone is marked changed, one whose quote is there is not, and neither is painted', async () => {
   saveComments(
     { ...ON_GUIDE, changed: true },
-    comentario('/onde-conhecer-pessoas', 'Onde conhecer pessoas', 'saiu', {
+    sentComment('/onde-conhecer-pessoas', 'Onde conhecer pessoas', 'saiu', {
       exact: 'uma frase que o Guia não tem mais',
     }),
     { ...ON_TIP, changed: false },

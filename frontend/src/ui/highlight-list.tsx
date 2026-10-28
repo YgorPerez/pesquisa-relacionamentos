@@ -11,6 +11,7 @@
 // loads a page.
 import type { SearchKind } from '#/content/site-search-view'
 import type { Highlight } from '#/state/highlight-record'
+import type { ComponentProps } from 'react'
 import { Button } from '@/ui/shadcn/button'
 import { REMOVE_HIGHLIGHT } from './highlight.copy'
 import { HighlightNote } from './highlight-note'
@@ -30,6 +31,26 @@ interface PageGroup {
   readonly title: string
   readonly kind: SearchKind
   readonly highlights: ReadonlyArray<Highlight>
+}
+
+/** A list entry separated from the previous page group or comment. */
+export function SeparatedListItem(props: ComponentProps<'li'>) {
+  return (
+    <li
+      {...props}
+      className="not-first:mt-lg not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
+    />
+  )
+}
+
+/** Keeps the old quote visible when it no longer matches its page. */
+export function ChangedPassageNotice({ children }: { children: string }) {
+  return (
+    <Notice className="mb-xs">
+      <strong className="block">{CHANGED}</strong>
+      {children}
+    </Notice>
+  )
 }
 
 /** The kind of page at `path`, by the site's routes. */
@@ -97,12 +118,7 @@ function SavedHighlight({
   const { id, link, text, note, changed } = highlight
   return (
     <li className="not-first:mt-md" data-slot="grifo-salvo">
-      {changed && (
-        <Notice className="mb-xs">
-          <strong className="block">{CHANGED}</strong>
-          {CHANGED_LINE}
-        </Notice>
-      )}
+      {changed && <ChangedPassageNotice>{CHANGED_LINE}</ChangedPassageNotice>}
       <a
         href={link}
         className="block whitespace-pre-line no-underline"
@@ -160,11 +176,7 @@ function PageGroups({
   return (
     <ol className="m-0 list-none p-0">
       {groups.map((group) => (
-        <li
-          key={group.path}
-          className="not-first:mt-lg not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
-          data-slot="pagina-grifada"
-        >
+        <SeparatedListItem key={group.path} data-slot="pagina-grifada">
           <h3 className="m-0 mb-sm font-title text-title">
             <Tag className="mr-2 inline-block align-middle">
               {KIND_TAG[group.kind]}
@@ -176,7 +188,7 @@ function PageGroups({
               <SavedHighlight key={h.id} highlight={h} onRemove={onRemove} />
             ))}
           </ul>
-        </li>
+        </SeparatedListItem>
       ))}
     </ol>
   )
