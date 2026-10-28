@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no começo do casamento e como essa satisfação muda nos quatro primeiros anos. Assistentes treinados deram notas de 1 a 10 ao rosto de cada cônjuge, a partir de um quadro de vídeo ou de uma foto, e a concordância entre eles ficou entre ICC 0,78 e 0,93. A satisfação foi medida com o Quality Marriage Index até oito vezes, a cada seis meses mais ou menos. O modelo de curva de crescimento controla a idade, a renda e a extroversão dos dois e a atratividade da própria pessoa.
+Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no começo do casamento e como essa [[satisfação]] muda nos quatro primeiros anos. Assistentes treinados deram notas de 1 a 10 ao rosto de cada cônjuge, a partir de um quadro de vídeo ou de uma foto, e a concordância entre eles ficou entre ICC 0,78 e 0,93. A satisfação foi medida com o Quality Marriage Index até oito vezes, a cada seis meses mais ou menos. O modelo de curva de crescimento controla a idade, a renda e a extroversão dos dois e a atratividade da própria pessoa.
 
 ## Achados
 
@@ -38,6 +38,12 @@ Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no
 | Atratividade da própria esposa → mudança na satisfação dela | β = 0,12; r = 0,11 (queda menor) | Tabela 3 | "Wives' Physical Attractiveness 0.03 0.04 .03 0.12 0.05 .11 *" |
 | O efeito difere entre os quatro estudos? | não (p > 0,25) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "None of these effects differed across the four studies (all p s > .25)." |
 | Teste direto: o efeito na satisfação inicial é maior para maridos que para esposas | χ²(1) = 3,86; p = 0,046 | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "wives' attractiveness and husbands' initial marital satisfaction was stronger than the nonsignificant association between husbands' attractiveness and wives' initial marital satisfaction, χ 2 (1) = 3.86, p = .046" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | O Quality Marriage Index: seis frases gerais sobre o casamento, como "temos um bom casamento", cinco numa escala de 7 pontos e uma numa de 10, somando de 6 a 45 | Method, Marital satisfaction | "The QMI is a six-item scale asking spouses to report the extent to which they agree or disagree with general statements about their marriage (e.g., "We have a good marriage," and "My relationship with my partner makes me happy.") Five items ask spouses to respond according to a 7-point scale, whereas one item asks spouses to respond according to a 10-point scale, yielding scores from 6 to 45." |
 
 ## Limitações
 

@@ -38,7 +38,7 @@ A comparação foi feita em três contextos: sem interação (por exemplo, perfi
 
 ## Limitações
 
-- O desfecho é **atração**, não satisfação de longo prazo nem duração.
+- O desfecho é **atração**, não contentamento com a relação no longo prazo nem duração.
 - Os r gerais são inflados por estudos sem interação, em que a "similaridade" é manipulada num perfil fictício.
 - A similaridade percebida pode ser **consequência** de gostar da pessoa, e não causa.
 - O tamanho do efeito por contexto não foi conferido.

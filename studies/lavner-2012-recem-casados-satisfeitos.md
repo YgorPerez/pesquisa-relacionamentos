@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram os 136 em que marido e esposa relataram satisfação alta e estável nos quatro primeiros anos (oito medições). Compararam os que se divorciaram até o décimo ano com os que continuaram casados em quatro áreas medidas no começo do casamento: compromisso (média dos primeiros 18 meses), comunicação observada em laboratório (afeto, habilidades na conversa sobre um problema do casal e apoio numa conversa sobre algo que a pessoa queria mudar em si), personalidade (neuroticismo, raiva, autoestima) e estresse fora do casamento. Os grupos foram comparados por testes t, com d de Cohen sobre escores padronizados.
+Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram os 136 em que marido e esposa relataram [[satisfação]] alta e estável nos quatro primeiros anos (oito medições). Compararam os que se divorciaram até o décimo ano com os que continuaram casados em quatro áreas medidas no começo do casamento: compromisso (média dos primeiros 18 meses), comunicação observada em laboratório (afeto, habilidades na conversa sobre um problema do casal e apoio numa conversa sobre algo que a pessoa queria mudar em si), personalidade (neuroticismo, raiva, autoestima) e estresse fora do casamento. Os grupos foram comparados por testes t, com d de Cohen sobre escores padronizados.
 
 ## Achados
 
@@ -45,6 +45,12 @@ Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram o
 | Comunicação negativa controlando compromisso, personalidade ou estresse | seguiu significativa em sete de nove testes | Resultados, último § | "In seven of out of nine cases, the negative behavioral variables remained significant" |
 | Pais divorciados do marido | 35% nos que se divorciaram vs. 14% nos que ficaram casados | Resultados, §2 | "35% parental divorce in the eventual divorce group, versus 14% in the non-divorce group" |
 | Idade do marido no início | 25,48 anos nos que se divorciaram vs. 27,74 nos que ficaram casados | Resultados, §2 | "were 25.48 ( SD = 3.31) and 24.90 ( SD = 3.06), respectively, compared to mean ages of 27.74" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | O Marital Adjustment Test de Locke e Wallace, de 15 itens | Método, Measures, Marital satisfaction | "Marital satisfaction was assessed with the widely used 15-item Marital Adjustment Test (MAT; Locke & Wallace, 1959 )." |
 
 ## Limitações
 

@@ -54,5 +54,5 @@ As razões de chance vêm dos modelos de tempo discreto e se leem como razão de
 - O dado de separação e divórcio não é distinguido: conta o fim do casamento como o respondente o relata.
 - Para 6% da amostra completa não dava para saber se houve parceiro antes do casamento, e o valor foi imputado.
 - O texto diz que as razões de chance da Tabela 3 vão de 2,50 a 2,52, mas a própria tabela traz 2,61, 2,54 e 2,52; a Ficha usa a tabela.
-- Os autores medem divórcio, não satisfação nem qualidade do casamento.
+- Os autores medem divórcio, não contentamento nem qualidade do casamento.
 - A Ficha usa o manuscrito aceito no PubMed Central. Na versão da revista (Journal of Family Issues 45(3):674–696), conferida em 25/10/2026, os cortes (0, 1 a 8 e 9 ou mais), as razões de chance das Tabelas 3 e 4 e as porcentagens são os mesmos; o resumo da revista e o do PubMed falam em "nine or more" e "one to eight". O resumo com "six or more" e "one to two", que aparece no OpenAlex, é o da versão submetida ao SocArXiv em novembro de 2021 (https://osf.io/ke5fj), que dividia os parceiros em 0, 1–2, 3–5 e 6 ou mais e tinha outras razões de chance (2,29 a 2,43 para 6 ou mais). Os autores mudaram os cortes depois da submissão; a Ficha e o Guia usam os números publicados.

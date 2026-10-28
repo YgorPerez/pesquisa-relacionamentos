@@ -52,7 +52,7 @@ Antes do evento, cada participante disse quanto valoriza atratividade física, p
 ## Limitações
 
 - Universitários (19,6 anos em média) de uma só universidade particular americana, de porte médio, que aceitaram ir a um speed dating. Os autores dizem que conclusões firmes esperam replicação em outras amostras.
-- Mede atração inicial e as primeiras semanas, não satisfação nem duração de longo prazo.
+- Mede atração inicial e as primeiras semanas, não contentamento com a relação nem duração de longo prazo.
 - Os traços do parceiro vêm sobretudo da avaliação do próprio participante; só no speed dating há notas de consenso e de fotos.
 - Todos os homens estudavam numa universidade respeitada ("respectable", nas palavras dos autores). Os autores lembram que o estudo não testa se mulheres exigem um mínimo de renda, só que, acima desse mínimo, os sexos não diferem.
 - Amostra pequena para efeitos de interação pequenos. O teste de 2024 em 43 países ([Eastwick et al. 2024](eastwick-2024-preferencias-43-paises.md)) acha esses efeitos traço a traço, mas muito pequenos (β médio = 0,04).

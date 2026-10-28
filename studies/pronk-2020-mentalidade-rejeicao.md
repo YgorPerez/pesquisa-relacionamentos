@@ -42,11 +42,17 @@ Em três estudos, solteiros heterossexuais avaliaram uma sequência de fotos num
 | O que explica a queda | O número de rejeições já feitas, não só o de perfis vistos | Additional Analyses Across All Studies | "Results indicated that it was the cumulative rejection of profiles that increased the likelihood of rejecting a following partner" |
 | O que os autores sugerem | Limitar a busca, ou ao menos o número de rejeições (sugestão, não testada) | General Discussion | "people may benefit from restricting their search (or at least the amount of rejections during this search)" |
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com as opções da tarefa, não com uma relação: no terceiro estudo, depois de cada bloco de fotos, a frase "estou satisfeito com a qualidade das fotos do bloco anterior", numa barra de 0 a 100 | Study 3, Method (p. 393) | "including one question about level of satisfaction with the quality of the pictures ("I am satisfied with the quality of the pictures in the previous block"), measured with a slider (0–100; the default starting point of 50)" |
+
 ## Limitações
 
 - Tarefa de laboratório com fotos, sem conversa nem perfil escrito. Só o Estudo 2 tinha consequência real (o contato de quem deu match).
 - Só solteiros heterossexuais de 18 a 30 anos, do MTurk e de uma universidade holandesa.
-- Não mede saúde mental. Mede escolhas, satisfação com as opções e otimismo sobre o próprio sucesso.
+- Não mede saúde mental. Mede escolhas, [[satisfação]] com as opções e otimismo sobre o próprio sucesso.
 - A explicação por insatisfação e pessimismo é uma mediação estatística medida durante a tarefa, não um efeito sorteado.
 - Número de perfis vistos e número de rejeições andam juntos (r = 0,70); os autores pedem cautela ao separar os dois.
 - A diferença entre homens e mulheres na queda não se repetiu igual nos três estudos (mais fraca, igual ou ausente nos homens).

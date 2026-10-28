@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Os autores mediram, no começo do ano letivo, a sociossexualidade de cada aluno (o inventário SOI-R: quantos parceiros de uma noite já teve, quanto deseja e quanto aprova sexo sem compromisso) e depois compararam o bem-estar de quem teve e de quem não teve sexo casual com penetração (oral, vaginal ou anal fora de um relacionamento estabelecido). Fizeram isso em três janelas: semana a semana num diário de 12 semanas, ao longo de 3 meses e ao longo de 9 meses. Os desfechos foram autoestima, satisfação com a vida, depressão e ansiedade, controlando o bem-estar anterior, gênero, raça, ano do curso e, nos 9 meses, nível socioeconômico. A pergunta é se o efeito do sexo casual depende de a pessoa ser "irrestrita" (orientada para o sexo casual) ou "restrita".
+Os autores mediram, no começo do ano letivo, a sociossexualidade de cada aluno (o inventário SOI-R: quantos parceiros de uma noite já teve, quanto deseja e quanto aprova sexo sem compromisso) e depois compararam o bem-estar de quem teve e de quem não teve sexo casual com penetração (oral, vaginal ou anal fora de um relacionamento estabelecido). Fizeram isso em três janelas: semana a semana num diário de 12 semanas, ao longo de 3 meses e ao longo de 9 meses. Os desfechos foram autoestima, [[satisfação]] com a vida, depressão e ansiedade, controlando o bem-estar anterior, gênero, raça, ano do curso e, nos 9 meses, nível socioeconômico. A pergunta é se o efeito do sexo casual depende de a pessoa ser "irrestrita" (orientada para o sexo casual) ou "restrita".
 
 ## Achados
 
@@ -49,6 +49,12 @@ Os autores mediram, no começo do ano letivo, a sociossexualidade de cada aluno 
 | Poder entre os restritos | Só 16% a 23% dos abaixo da mediana tiveram sexo casual | p. 889, Discussion | "only 16–23% of those below the median sociosexuality score engaged in casual sex" |
 
 γ e B são diferenças na escala de 1 a 5 de cada desfecho, já ajustadas pelos controles. "Irrestrito" e "restrito" são quem está 1 desvio-padrão acima ou abaixo da média de sociossexualidade do próprio sexo; homens tiveram sociossexualidade média maior que mulheres.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com a vida, não com a relação: a escala de 5 itens de Pavot e Diener, com frases como "estou satisfeito com a minha vida", de 1 (discordo totalmente) a 5 (concordo totalmente) | p. 885, Measures | "the 5-item Satisfaction with Life Scale (Pavot & Diener, 1993), with statements (e.g., ''I take a positive attitude toward myself'' and ''I am satisfied with my life,'' respectively) rated on a scale from 1 (strongly disagree) to 5 (strongly agree)" |
 
 ## Limitações
 

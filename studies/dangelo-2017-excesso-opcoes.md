@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Num site de namoro criado para o experimento, os participantes foram sorteados para escolher uma pessoa entre 6 ou 24 perfis, com ou sem a possibilidade de trocar a escolha na semana seguinte. Avaliaram a satisfação logo após escolher e uma semana depois, antes de qualquer contato com a pessoa escolhida. Durante o intervalo, podiam rever o perfil escolhido e as alternativas; os perfis eram de estudantes de outra instituição, embora os participantes acreditassem que eram colegas da própria universidade.
+Num site de namoro criado para o experimento, os participantes foram sorteados para escolher uma pessoa entre 6 ou 24 perfis, com ou sem a possibilidade de trocar a escolha na semana seguinte. Avaliaram a [[satisfação]] logo após escolher e uma semana depois, antes de qualquer contato com a pessoa escolhida. Durante o intervalo, podiam rever o perfil escolhido e as alternativas; os perfis eram de estudantes de outra instituição, embora os participantes acreditassem que eram colegas da própria universidade.
 
 ## Achados
 
@@ -34,6 +34,12 @@ Num site de namoro criado para o experimento, os participantes foram sorteados p
 | Troca efetiva da escolha entre quem podia trocar, no conjunto grande | 13% | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
 
 A diferença de satisfação entre os conjuntos não foi [[significativa]] logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com a pessoa escolhida no site, antes de qualquer contato: perguntas como "quão satisfeito você está com quem escolheu?", cada uma de 1 (nada) a 7 (extremamente) | p. 13, Measures | "The scale contained items such as: "How much do you like the individual whose profile you selected?", "How satisfied are you with the dater you chose?", and "How much are you looking forward to contacting this individual?" Each item was measured using a 7-point Likert scale, from 1 (not at all) to 7 (extremely)." |
 
 ## Limitações
 
