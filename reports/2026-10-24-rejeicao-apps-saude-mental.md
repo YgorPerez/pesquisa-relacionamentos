@@ -123,7 +123,6 @@ O Guia deve linkar o Guia do MVP "app ou presencial" (A3) em vez de repetir quan
 - **Estudos sem texto completo acessível** (a issue `acervo` #149 lista o que tentamos):
   - Sharabi et al. 2026, a outra meta-análise de apps e saúde mental (Computers in Human Behavior 177:108879, fechada).
   - Sharabi et al. 2024, "Burnt out and still single", painel de 12 semanas sobre esgotamento com apps (New Media & Society, fechado).
-  - Thomas et al. 2023, "99+ matches but a spark ain't one", painel sobre swipe excessivo e medo de ficar solteiro (Telematics and Informatics, CC BY, mas o site bloqueou o download).
   - Eisenberger et al. 2003, o estudo original de "rejeição dói" (Science, fechado).
   - Fisher et al. 2010, neuroimagem de quem foi rejeitado no amor (Journal of Neurophysiology, fechado).
 - Um estudo longitudinal com homens heterossexuais que meça matches recebidos e saúde mental ao longo do tempo.
@@ -132,3 +131,5 @@ O Guia deve linkar o Guia do MVP "app ou presencial" (A3) em vez de repetir quan
 - Ruminação depois da rejeição como causa de depressão, com texto aberto.
 
 Atualização de 26/10/2026: o texto completo de Bowman foi conferido na [Ficha de 2025](../studies/bowman-2025-apps-saude.md) e entrou na seção 3. A seção de resultados traz 48,3% (14 de 29 estudos) para saúde mental e bem-estar; o resumo traz 48,6%, em desacordo com essa contagem.
+
+Atualização de 28/10/2026: Thomas et al. 2023 ("99+ matches but a spark ain't one") saiu da lista acima e tem [Ficha](../studies/thomas-2023-swipe-excessivo.md). Não é um painel, como esta seção dizia: é um questionário transversal com 464 jovens alemães. Nele, quem usa mais o app tem mais swipe compulsivo, e o swipe compulsivo vem junto com mais comparação, mais medo de ficar solteiro e mais sobrecarga de opções; a frequência de uso sozinha não se liga a nenhum dos três. Sem desenho que permita falar em causa, ainda não entrou na seção 4.
