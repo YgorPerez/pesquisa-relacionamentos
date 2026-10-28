@@ -29,11 +29,22 @@ function github(status: number) {
         body: await request.json(),
         authorization: request.headers.get('authorization'),
       })
-      return HttpResponse.json({}, { status })
+      return HttpResponse.json(status === 201 ? { number: ISSUE_NUMBER } : {}, {
+        status,
+      })
     }),
   )
   return received
 }
+
+/** The number GitHub gives the issue it opens. */
+const ISSUE_NUMBER = 57
+
+/** What this browser kept of the comments it sent. */
+const keptComments = () =>
+  JSON.parse(
+    localStorage.getItem('tem-estudo:sent-comments') ?? '[]',
+  ) as unknown[]
 
 beforeEach(() => void vi.stubEnv('COMMENT_GITHUB_TOKEN', 'github_pat_test'))
 afterEach(() => void vi.unstubAllEnvs())
@@ -99,6 +110,34 @@ it('sends the type, the text, the quote and its link as one issue, and says it w
   expect(JSON.stringify(received)).not.toContain('203.0.113.7')
 })
 
+it('keeps the sent comment on the device, with its issue number, and the notice leads to Seus trechos', async () => {
+  github(201)
+  const { user, form } = await openForm()
+
+  await user.click(form.getByRole('radio', { name: KIND_LABEL.wrong }))
+  await user.type(form.getByLabelText(COMMENT.text), 'O número não bate.')
+  await user.click(form.getByRole('button', { name: COMMENT.send }))
+
+  await expectSent()
+  expect(keptComments()).toEqual([
+    expect.objectContaining({
+      path: '/onde-conhecer-pessoas',
+      text: SENTENCE,
+      exact: SENTENCE,
+      kind: 'wrong',
+      comment: 'O número não bate.',
+      issue: ISSUE_NUMBER,
+      changed: false,
+    }),
+  ])
+  const [kept] = keptComments() as { link: string }[]
+  expect(kept!.link).toMatch(/^\/onde-conhecer-pessoas#.+:~:text=/)
+  expect(screen.getByRole('link', { name: COMMENT.seeSent })).toHaveAttribute(
+    'href',
+    '/trechos',
+  )
+})
+
 it('without a type or a text, says what is missing and sends nothing', async () => {
   const received = github(201)
   const { user, form } = await openForm()
@@ -122,6 +161,7 @@ it('when the server cannot open the issue, says so and keeps the text to send ag
 
   expect(await form.findByRole('alert')).toHaveTextContent(COMMENT.failed)
   expect(form.getByLabelText(COMMENT.text)).toHaveValue('Não entendi a conta.')
+  expect(keptComments()).toEqual([])
 
   github(201)
   await user.click(form.getByRole('button', { name: COMMENT.send }))

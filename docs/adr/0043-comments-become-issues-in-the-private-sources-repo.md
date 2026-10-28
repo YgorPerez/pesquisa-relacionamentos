@@ -7,6 +7,7 @@ A reader can select a passage and send the curator a Comentário (#332): a type 
 - **A server function opens an issue in `YgorPerez/pesquisa-relacionamentos-fontes`**, the private repo of the private sources (ADR 0040), labelled by the Comentário's type. The body carries the quote, the link to the sentence and the reader's text. Nothing else: no contact field, no IP, no user agent.
 - **The credential is a fine-grained token that can only write issues in that repo.** It is not the read-only deploy key from ADR 0040, which stays as it is.
 - **Anti-spam lives in the server's memory** (a honeypot and a per-IP rate limit). No IP is written to disk, a log or the issue.
+- **The reply carries the issue's number** (amended 2026-10-28, spec #346). The reader's browser keeps the sent Comentário with that number, so "Seus trechos" (`/trechos`) can list it. A comment the anti-spam drops gets a made-up number, 1 to 3 past the last real one the server opened (or 1 to 100 before the first since a restart), so the reply still looks the same to a bot. A made-up number can match a real issue; the most that leaks is that issue's status, never its text. The user accepted that.
 - What turns into work is copied by hand into the public repo's queue.
 
 ## Why
@@ -24,5 +25,6 @@ What a reader writes about a relationship can be personal, so it cannot land in 
 ## Consequences
 
 - The private sources repo now mixes licensed sources with reader comments. Its issues are the comments; its files are the sources.
-- `/privacidade` has to say what a Comentário sends and where it goes.
+- `/privacidade` has to say what a Comentário sends and where it goes, and what the device keeps of it.
+- A Comentário sent before the reply carried the number is not on the reader's device, and there is no way to recover it.
 - Rotating or revoking the token only stops comments. The rest of the site keeps working.

@@ -7,15 +7,21 @@ import { Notices, useNotice } from './notice'
 
 const MESSAGE = 'Comentário enviado. Obrigado!'
 
-function ShowNotice() {
+const LINK = { to: '/trechos', label: 'Ver em Seus trechos' } as const
+
+function ShowNotice({ withLink }: { withLink: boolean }) {
   const notice = useNotice()
-  return <SiteButton onClick={() => notice(MESSAGE)}>Enviar</SiteButton>
+  return (
+    <SiteButton onClick={() => notice(MESSAGE, withLink ? LINK : undefined)}>
+      Enviar
+    </SiteButton>
+  )
 }
 
-function WithNotices() {
+function WithNotices({ withLink = false }: { withLink?: boolean }) {
   return (
     <Notices>
-      <ShowNotice />
+      <ShowNotice withLink={withLink} />
     </Notices>
   )
 }
@@ -36,5 +42,18 @@ export const Shown: Story = {
       within(canvasElement).getByRole('button', { name: 'Enviar' }),
     )
     await expect(await within(document.body).findByText(MESSAGE)).toBeVisible()
+  },
+}
+
+/** A notice with a link under its line, as a sent comment's (#347). */
+export const WithLink: Story = {
+  args: { withLink: true },
+  play: async ({ canvasElement }) => {
+    await userEvent.click(
+      within(canvasElement).getByRole('button', { name: 'Enviar' }),
+    )
+    await expect(
+      await within(document.body).findByRole('link', { name: LINK.label }),
+    ).toHaveAttribute('href', LINK.to)
   },
 }

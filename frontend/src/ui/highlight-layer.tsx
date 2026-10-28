@@ -2,7 +2,9 @@
 // mounts it once, next to the popover on selected text. After hydration it
 // paints the page's Grifos (`highlight-paint.ts`) and paints them again when
 // the store or the quotable text changes; a tap on a painted Grifo opens its
-// popover. Without JS, and on the server, there is nothing.
+// popover. It also tells the sent Comentários of the page whether their
+// quotes are still there (`sent-comment-check.ts`, #347). Without JS, and on
+// the server, there is nothing.
 import { useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { followHighlights, readHighlights } from '#/state/highlights'
@@ -15,6 +17,7 @@ import {
 } from './highlight-paint'
 import { HighlightPopover } from './highlight-popover'
 import { QUOTABLE } from './quote-text'
+import { checkSentComments } from './sent-comment-check'
 
 /** What a tap on the text lands on, when it is not a control of its own. */
 const CONTROL = 'a, button, input, label, [role="dialog"]'
@@ -79,9 +82,13 @@ export function HighlightLayer() {
   const [open, setOpen] = useState<string | null>(null)
 
   // Paints again when the store changes (here or in another tab) and when
-  // the quotable text does.
+  // the quotable text does. Each time, the sent Comentários' quotes are
+  // looked for too.
   useEffect(() => {
-    const paint = () => paintPage(path, readHighlights())
+    const paint = () => {
+      paintPage(path, readHighlights())
+      checkSentComments(path)
+    }
     paint()
     const stopText = repaintOnChange(paint)
     const stopStore = followHighlights(paint)

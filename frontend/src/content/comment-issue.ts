@@ -25,10 +25,12 @@ export interface CommentInput {
 }
 
 /** The reply, the same for a sent comment and for one the anti-spam
- * dropped: a bot learns nothing from it. */
-export interface CommentReply {
-  readonly sent: boolean
-}
+ * dropped: a bot learns nothing from it. A sent one carries the number of
+ * its issue, which the reader's device keeps (#347); a dropped one, a
+ * made-up number. */
+export type CommentReply =
+  | { readonly sent: true; readonly issue: number }
+  | { readonly sent: false }
 
 export interface Issue {
   readonly title: string
@@ -116,9 +118,18 @@ export function clientIp(
   return last || connection || ''
 }
 
-/** Opens the issue on GitHub; `true` only when it was created. */
+/** The issue's number in GitHub's reply to its creation, or `null`. */
+async function createdNumber(response: Response): Promise<number | null> {
+  if (response.status !== 201) return null
+  const { number } = (await response.json()) as { number?: unknown }
+  return Number.isSafeInteger(number) && (number as number) > 0
+    ? (number as number)
+    : null
+}
+
+/** Opens the issue on GitHub; its number only when it was created. */
 export function postIssue(fetch: typeof globalThis.fetch) {
-  return async (issue: Issue, token: string): Promise<boolean> => {
+  return async (issue: Issue, token: string): Promise<number | null> => {
     try {
       const response = await fetch(
         `https://api.github.com/repos/${REPO}/issues`,
@@ -133,9 +144,9 @@ export function postIssue(fetch: typeof globalThis.fetch) {
           body: JSON.stringify(issue),
         },
       )
-      return response.status === 201
+      return await createdNumber(response)
     } catch {
-      return false
+      return null
     }
   }
 }
@@ -147,7 +158,37 @@ interface Delivery {
   readonly token: string | undefined
   /** Milliseconds. */
   readonly now: number
-  readonly post: (issue: Issue, token: string) => Promise<boolean>
+  readonly post: (issue: Issue, token: string) => Promise<number | null>
+}
+
+/** A made-up number lands 1 to `SPREAD` past the last real issue, where the
+ * next real one would. */
+const SPREAD = 3
+
+/** Before any real issue since the server started, a made-up number lands
+ * between 1 and this. */
+const FIRST_GUESS = 100
+
+/** The numbers the replies carry: the real ones GitHub gave, and for a
+ * comment the anti-spam dropped, a number a real issue could have. A
+ * made-up one may match a real issue, whose status is all it reveals
+ * (#346). */
+function issueNumbers(random: () => number) {
+  /** The last issue this server opened; 0 before the first. */
+  let latest = 0
+  return {
+    opened(issue: number): CommentReply {
+      latest = Math.max(latest, issue)
+      return { sent: true, issue }
+    },
+    madeUp(): CommentReply {
+      const issue =
+        latest > 0
+          ? latest + 1 + Math.floor(random() * SPREAD)
+          : 1 + Math.floor(random() * FIRST_GUESS)
+      return { sent: true, issue }
+    },
+  }
 }
 
 /** The anti-spam in memory: a server restart forgets it, and the IPs live
@@ -155,12 +196,16 @@ interface Delivery {
 export function commentDesk({
   limit,
   windowMs,
+  random = Math.random,
 }: {
   /** How many comments one IP sends per window. */
   limit: number
   windowMs: number
+  /** In [0, 1), for the made-up numbers. */
+  random?: () => number
 }) {
   const sent = new Map<string, number[]>()
+  const numbers = issueNumbers(random)
   /** Whether this IP still has room, holding a place for this one if it
    * has: two sends at once cannot both take the last place. */
   const admit = (ip: string, now: number) => {
@@ -191,11 +236,14 @@ export function commentDesk({
       comment: CommentInput,
       { ip, token, now, post }: Delivery,
     ): Promise<CommentReply> {
-      if (comment.website !== '') return { sent: true }
-      if (!admit(ip, now)) return { sent: true }
-      const went = token ? await post(issueOf(comment), token) : false
-      if (!went) release(ip, now)
-      return { sent: went }
+      if (comment.website !== '') return numbers.madeUp()
+      if (!admit(ip, now)) return numbers.madeUp()
+      const issue = token ? await post(issueOf(comment), token) : null
+      if (issue === null) {
+        release(ip, now)
+        return { sent: false }
+      }
+      return numbers.opened(issue)
     },
   }
 }

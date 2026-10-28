@@ -3,7 +3,7 @@
 // nota" or "Editar nota" opens the Nota's field under the row; "Tirar grifo"
 // forgets the Grifo and its Nota; "Copiar", "Copiar link" and "De onde vem
 // isso?" are the ones of the popover on selected text, over the Grifo's
-// text. Under them, the way to `/grifos` (#335).
+// text. Under them, the way to "Seus trechos" (`/trechos`, #335).
 import { Popover } from '@base-ui/react/popover'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { removeHighlight, setNote, NOTE_LENGTH } from '#/state/highlights'
@@ -114,7 +114,7 @@ function HighlightActions({
         {onQuote && <WhereFrom {...onQuote} />}
       </div>
       {panel !== null && <PopoverPanel>{panel}</PopoverPanel>}
-      <SmallLink to="/grifos" className="mt-xs">
+      <SmallLink to="/trechos" className="mt-xs">
         {ALL_HIGHLIGHTS}
       </SmallLink>
     </>

@@ -53,8 +53,15 @@ function OnTheDevice() {
       <p>
         Os Grifos que você faz num texto, com a Nota de cada um, também ficam só
         no navegador: não vão para o servidor nem para a contagem. A página{' '}
-        <Link to="/grifos">Grifos</Link> mostra todos. “Tirar grifo” apaga o
-        Grifo e a Nota.
+        <Link to="/trechos">Seus trechos</Link> mostra todos. “Tirar grifo”
+        apaga o Grifo e a Nota.
+      </p>
+      <p>
+        Cada Comentário que você envia também fica guardado no navegador, para
+        você achar de novo: o trecho, o link, o tipo, o que você escreveu, a
+        data e o número que ele ganhou no repositório do curador. Seus trechos
+        mostra todos. “Tirar da lista” apaga o Comentário deste aparelho, mas
+        ele continua com o curador.
       </p>
       <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que
@@ -107,6 +114,11 @@ function InAComment() {
         curador lê, e nunca aparece no site. Por isso ele é anônimo, e também
         não tem como a gente responder. Não escreva nele nada que diga quem você
         é.
+      </p>
+      <p>
+        Na volta, o servidor manda só o número da issue, que o seu navegador
+        guarda junto com uma cópia do Comentário (acima, em “O que fica no seu
+        aparelho”).
       </p>
       <p>
         Para barrar spam, o servidor conta quantos Comentários saem de cada IP
