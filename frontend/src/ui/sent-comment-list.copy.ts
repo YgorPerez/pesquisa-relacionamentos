@@ -36,3 +36,10 @@ const DATE = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' })
 
 /** When it was sent, in the reader's time zone. */
 export const sentOn = (at: number) => `Enviado em ${DATE.format(at)}`
+export const STATUS_NEWS = 'Há novidade nos seus Comentários'
+export const STATUS_UPDATED = 'Status atualizado'
+export const STATUS_LABEL = {
+  received: 'Recebido',
+  corrected: 'Corrigido',
+  'not-planned': 'Não vamos mudar',
+} as const

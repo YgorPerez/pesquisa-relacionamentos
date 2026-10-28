@@ -5,6 +5,8 @@ import {
   readSentComments,
   removeSentComment,
   validateSentComments,
+  updateCommentStatuses,
+  markCommentStatusesSeen,
   type NewSentComment,
 } from './sent-comments'
 
@@ -48,6 +50,20 @@ const sent = (
 })
 
 const stored = () => JSON.parse(items.get(KEY) ?? 'null') as unknown
+
+test('old records default to received; a changed status stays unread until seen', () => {
+  const made = addSentComment(sent('fica perto'))
+  updateCommentStatuses([{ issue: made.issue, status: 'corrected' }])
+  expect(readSentComments()[0]).toMatchObject({
+    status: 'corrected',
+    seenStatus: 'received',
+  })
+  markCommentStatusesSeen([made.id])
+  expect(readSentComments()[0]).toMatchObject({
+    status: 'corrected',
+    seenStatus: 'corrected',
+  })
+})
 
 test('a sent Comentário is kept with its quote, link, type, text, date and issue number', () => {
   vi.setSystemTime(new Date('2026-10-28T12:00:00Z'))

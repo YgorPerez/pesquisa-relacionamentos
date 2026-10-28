@@ -48,6 +48,8 @@ const COMMENTS: ReadonlyArray<SentComment> = [
     'Use o app como complemento',
     {
       kind: 'missing-study',
+      status: 'corrected',
+      seenStatus: 'received',
       comment: 'Tem estudo sobre isso no Brasil?',
       at: Date.parse('2026-10-27T15:00:00Z'),
     },
@@ -59,6 +61,8 @@ const COMMENTS: ReadonlyArray<SentComment> = [
     'Nenhum estudo separou app de rede social.',
     {
       kind: 'unclear',
+      status: 'not-planned',
+      seenStatus: 'not-planned',
       comment: 'Não entendi o que é rede social aqui.',
       changed: true,
       at: Date.parse('2026-10-10T15:00:00Z'),

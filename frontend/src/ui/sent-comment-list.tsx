@@ -9,7 +9,11 @@
 // The quote is a plain `<a>`, as the Grifos' (`highlight-list.tsx`): the
 // browser only reads the Text Fragment when it loads a page.
 import { KIND_LABEL } from '#/content/comment-kinds'
-import type { SentComment } from '#/state/sent-comments'
+import { useEffect, useState } from 'react'
+import {
+  markCommentStatusesSeen,
+  type SentComment,
+} from '#/state/sent-comments'
 import { RemoveButton } from './highlight-list'
 import { HighlightNote } from './highlight-note'
 import { CHANGED } from './highlight-list.copy'
@@ -24,6 +28,8 @@ import {
   sentCount,
   sentOn,
   YOUR_COMMENT,
+  STATUS_LABEL,
+  STATUS_UPDATED,
 } from './sent-comment-list.copy'
 
 /** Its type, the day it went and its page, over the quote. */
@@ -32,6 +38,7 @@ function About({ comment }: { comment: SentComment }) {
   return (
     <p className="m-0 mb-xs flex flex-wrap items-center gap-x-sm gap-y-1 text-nota leading-nota text-tinta-2">
       <Tag>{KIND_LABEL[kind]}</Tag>
+      <Tag>{STATUS_LABEL[comment.status ?? 'received']}</Tag>
       <time dateTime={new Date(at).toISOString()}>{sentOn(at)}</time>
       <a href={path} className="font-bold text-tinta">
         {pageTitle}
@@ -48,11 +55,22 @@ function SentItem({
   onRemove: (id: string) => void
 }) {
   const { id, link, path, text, changed } = comment
+  const [updated] = useState(
+    () => (comment.status ?? 'received') !== (comment.seenStatus ?? 'received'),
+  )
+  useEffect(() => {
+    markCommentStatusesSeen([id])
+  }, [id])
   return (
     <li
       className="not-first:mt-lg not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
       data-slot="comentario-enviado"
     >
+      {updated && (
+        <p className="m-0 mb-xs border-l-2 border-tinta pl-xs font-bold">
+          {STATUS_UPDATED}
+        </p>
+      )}
       {changed && (
         <Notice className="mb-xs">
           <strong className="block">{CHANGED}</strong>
@@ -105,7 +123,7 @@ export function SentCommentList({
           <ul className="m-0 list-none p-0">
             {newest.map((comment) => (
               <SentItem
-                key={comment.id}
+                key={`${comment.id}-${comment.status ?? 'received'}`}
                 comment={comment}
                 onRemove={onRemove}
               />
