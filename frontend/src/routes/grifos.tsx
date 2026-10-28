@@ -1,44 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { removeHighlight, useHighlights } from '#/state/highlights'
-import { HighlightList } from '#/ui/highlight-list'
-import {
-  HIGHLIGHTS,
-  LEAD,
-  NEEDS_JS,
-  PAGE_TITLE,
-} from '#/ui/highlight-list.copy'
-import { Column, Display, Lead, Sheet } from '#/ui/sheet'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+// `/grifos` (#335) became "Seus trechos", at `/trechos` (#347): a 301 from
+// the server and a redirect for a link followed inside the app.
 export const Route = createFileRoute('/grifos')({
-  head: () => ({
-    meta: [
-      { title: `${HIGHLIGHTS} · Tem estudo?` },
-      // What is here lives in one browser: there is nothing to index.
-      { name: 'robots', content: 'noindex' },
-    ],
-  }),
-  component: HighlightsPage,
+  beforeLoad: () => {
+    throw redirect({ to: '/trechos', statusCode: 301, replace: true })
+  },
 })
-
-/** `/grifos` (#335): the Grifos of this browser. The server has none, so the
- * list comes after hydration; without JS the page says it needs it. */
-function HighlightsPage() {
-  const highlights = useHighlights()
-  return (
-    <Sheet>
-      <Column>
-        <Display>
-          {PAGE_TITLE.rest}{' '}
-          <span className="marca-texto">{PAGE_TITLE.marked}</span>
-        </Display>
-        <Lead>{LEAD}</Lead>
-        <noscript>
-          <p>{NEEDS_JS}</p>
-        </noscript>
-        {highlights !== null && (
-          <HighlightList highlights={highlights} onRemove={removeHighlight} />
-        )}
-      </Column>
-    </Sheet>
-  )
-}

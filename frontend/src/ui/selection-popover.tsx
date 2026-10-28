@@ -22,7 +22,7 @@ import {
 import type { SelectionAction } from '#/analytics/events'
 import { BottomSheet } from './bottom-sheet'
 import { HighlightAction } from './highlight-action'
-import { Notices, useNotice } from './notice'
+import { Notices, useNotice, type NoticeLink } from './notice'
 import { CommentOnQuote } from './selection-comment'
 import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
@@ -210,11 +210,11 @@ function SelectionActions() {
     close()
     setSheet({ title, form })
   }
-  const finish = (message: string) => {
+  const finish = (message: string, link?: NoticeLink) => {
     document.getSelection()?.removeAllRanges()
     close()
     setSheet(null)
-    notice(message)
+    notice(message, link)
   }
 
   return (

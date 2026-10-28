@@ -1,12 +1,12 @@
-// The list of `/grifos` (`highlight-list.tsx`, #335): Grifos on a Guide, a
-// Tip and a Fact sheet, one with a Nota and one whose passage changed, and
-// the empty page.
+// The Grifos section of "Seus trechos" (`highlight-list.tsx`, #335): Grifos
+// on a Guide, a Tip and a Fact sheet, one with a Nota and one whose passage
+// changed, and the empty section.
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import type { Highlight } from '#/state/highlight-record'
 import { HighlightList } from './highlight-list'
-import { CHANGED, EMPTY_HEADING, removeLabel } from './highlight-list.copy'
+import { CHANGED, NO_HIGHLIGHTS, removeLabel } from './highlight-list.copy'
 
 function grifo(
   id: string,
@@ -91,7 +91,8 @@ export const ThreePages: Story = {
 /** No Grifo yet: how to make one. */
 export const Empty: Story = { args: { highlights: [] } }
 
-/** "Tirar grifo" takes a Grifo off; with the last one gone, the empty page. */
+/** "Tirar grifo" takes a Grifo off; with the last one gone, the empty
+ * section. */
 export const RemoveAll: Story = {
   args: { highlights: HIGHLIGHTS.slice(2, 3) },
   play: async ({ canvasElement }) => {
@@ -102,7 +103,7 @@ export const RemoveAll: Story = {
       }),
     )
     await expect(
-      screen.getByRole('heading', { name: EMPTY_HEADING }),
+      screen.getByText(NO_HIGHLIGHTS, { exact: false }),
     ).toBeVisible()
   },
 }

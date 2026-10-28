@@ -4,7 +4,8 @@
 // form opens in a sheet at the bottom of the screen (#345); on the desktop,
 // under the popover, where its text field takes the focus on a press
 // without closing it. The server's "not sent" keeps the text; a sent one
-// closes the form and says so at the bottom of the screen.
+// closes the form, says so at the bottom of the screen and is kept in "Seus
+// trechos" (#347).
 // The issue a comment becomes is `ui/selection-comment.test.tsx`'s, with
 // GitHub faked.
 import { expect, test, type Page } from '@playwright/test'
@@ -103,18 +104,19 @@ test('on a small phone the sheet stays inside the screen: its title on top, the 
   await expect(send).toBeInViewport()
 })
 
-test('a comment sent closes the form, says so at the bottom of the screen, and counts the name only', async ({
+test('a comment sent closes the form, says so at the bottom of the screen, counts the name only, and is kept in Seus trechos', async ({
   page,
   isMobile,
 }) => {
-  // The server's own reply, turned into "sent": without a token it never
-  // is (`playwright.config.ts`).
+  // The server's own reply, turned into "sent" with issue 57: without a
+  // token it never is (`playwright.config.ts`).
   await page.route('**/_serverFn/**', async (route) => {
     const response = await route.fetch()
-    // Start's wire format (seroval): the constant 3 is `false`, 2 `true`.
+    // Start's wire format (seroval): the constant 3 is `false`, 2 `true`;
+    // a node of type 0 is a number.
     const body = (await response.text()).replace(
       '"sent"],"v":[{"t":2,"s":3}',
-      '"sent"],"v":[{"t":2,"s":2}',
+      '"sent","issue"],"v":[{"t":2,"s":2},{"t":0,"s":57}',
     )
     await route.fulfill({ response, body })
   })
@@ -133,5 +135,19 @@ test('a comment sent closes the form, says so at the bottom of the screen, and c
     .toEqual(['selection/comment'])
   expect(decodeURIComponent(commentEvents(counted)[0]!)).not.toMatch(
     /bate|satisfa|onde-conhecer/,
+  )
+
+  // The notice leads to the comment, kept on this device.
+  await page.getByRole('link', { name: 'Ver em Seus trechos' }).click()
+  await expect(page).toHaveURL('/trechos')
+  const kept = page.getByRole('region', { name: 'Comentários' })
+  await expect(kept.getByText('1 comentário enviado')).toBeVisible()
+  await expect(kept.getByText('O número não bate.')).toBeVisible()
+  // The selection is the sentence's first text node, which ends before
+  // "perto".
+  const quote = kept.getByRole('link', { name: /^A satisfação de quem/ })
+  await expect(quote).toHaveAttribute(
+    'href',
+    /^\/onde-conhecer-pessoas#.+:~:text=/,
   )
 })

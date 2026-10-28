@@ -11,7 +11,7 @@
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
-import { sameQuote, type Highlight } from './highlight-record'
+import { markedFound, sameQuote, type Highlight } from './highlight-record'
 import { stored } from './stored'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
@@ -123,14 +123,6 @@ export function removeHighlight(id: string) {
 /** After the page at `path` looked for its Grifos: the ones in `found` were
  * there, the others are marked changed. Writes only when a mark moves. */
 export function markFound(path: string, found: ReadonlySet<string>) {
-  const saved = readHighlights()
-  const moved = saved.some(
-    (h) => h.path === path && h.changed === found.has(h.id),
-  )
-  if (!moved) return
-  save(
-    saved.map((h) =>
-      h.path === path ? { ...h, changed: !found.has(h.id) } : h,
-    ),
-  )
+  const next = markedFound(readHighlights(), path, found)
+  if (next) save(next)
 }

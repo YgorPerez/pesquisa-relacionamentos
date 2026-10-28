@@ -15,7 +15,7 @@ import {
 } from '#/analytics/events'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
-import { HIGHLIGHTS } from './highlight-list.copy'
+import { KEPT_PASSAGES } from './highlight-list.copy'
 import { Headline, Section } from './section'
 import { Switch } from '@/ui/shadcn/switch'
 
@@ -145,11 +145,11 @@ const FOOTER_LINKS = [
   { to: '/privacidade', label: 'Privacidade' },
   { to: '/sites-vizinhos', label: 'Sites vizinhos' },
   { to: '/glossario', label: 'Glossário' },
-  { to: '/grifos', label: HIGHLIGHTS },
+  { to: '/trechos', label: KEPT_PASSAGES },
 ] as const
 
 /** The footer of every page: the privacy page, the Neighbor sites (#179),
- * the Grifos (#335) and the switch. On desktop,
+ * "Seus trechos" (#335, #347) and the switch. On desktop,
  * it continues the page's sheet over the halftone. */
 export function Footer() {
   return (
