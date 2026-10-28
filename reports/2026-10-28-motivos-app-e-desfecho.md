@@ -37,7 +37,7 @@ Orosz G, Benyó M, Berkes B, Nikoletti E, Gál É, Tóth-Király I, Bőthe B. _T
 
 #### Sumter, Vandenbosch & Ligtenberg 2017 (Holanda)
 
-Sumter SR, Vandenbosch L, Ligtenberg L. _Love me Tinder: Untangling emerging adults' motivations for using the dating application Tinder_. Telematics and Informatics 34(1):67–78, 2017. https://doi.org/10.1016/j.tele.2016.04.009. ✅ manuscrito aceito, no repositório Lirias da KU Leuven.
+Sumter SR, Vandenbosch L, Ligtenberg L. _Love me Tinder: Untangling emerging adults' motivations for using the dating application Tinder_. Telematics and Informatics 34(1):67–78, 2017. https://doi.org/10.1016/j.tele.2016.04.009. Tem [Ficha](../studies/sumter-2017-motivos-tinder.md), ✅, a partir do manuscrito aceito no repositório Lirias da KU Leuven.
 
 - **Amostra:** 266 jovens holandeses de 18 a 30 anos, amostra de conveniência pela rede de dois estudantes de pós-graduação, outono de 2014. A análise usa os 163 que já tinham usado o Tinder: 59 usuários atuais e 104 ex-usuários, idade média de 23,7 anos, 62,7% universitários.
 - **Motivo:** escala própria com seis fatores: amor, sexo casual, facilidade de comunicação, validação da autoestima ("To improve my self-esteem", "To feel better about myself"; α = 0,87), emoção da novidade e moda.
@@ -47,7 +47,7 @@ Sumter SR, Vandenbosch L, Ligtenberg L. _Love me Tinder: Untangling emerging adu
   - Sexo de uma noite (Tabela 5): o motivo sexo aumentou a chance (OR = 4,31) e a validação diminuiu (OR = 0,33; p = 0,03).
   - Para comparação: 45,5% já tinham saído com alguém do app e 18,6% tinham tido sexo de uma noite.
 - **Causal?** Não. Os autores citam o desenho transversal e a amostra de conveniência como limites.
-- **Ressalva:** amostra pequena, que mistura usuários atuais e ex-usuários. Não mede namoro nem bem-estar.
+- **Ressalva:** amostra pequena, que mistura usuários atuais e ex-usuários. Não mede namoro nem bem-estar. As contagens da Tabela 1 dão 44,3% de encontros, não os 45,5% do texto.
 
 #### Bonilla-Zorita, Griffiths & Kuss 2021 (revisão)
 
@@ -145,7 +145,7 @@ Strugo J, Muise A. _Swiping for the right reasons: Approach and avoidance goals 
 | Estudo                     | País, N                                         | Desenho                           | Motivo de validação medido? | Desfecho                                   | Achado para validação                                                                    | Causal? | Lido            |
 | -------------------------- | ----------------------------------------------- | --------------------------------- | --------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- | ------- | --------------- |
 | Orosz 2018                 | Hungria, 346 e 298                              | transversal                       | sim (autoestima)            | uso problemático                           | maior preditor (β 0,37; 0,49 e 0,46)                                                     | não     | Ficha ✅        |
-| Sumter 2017                | Holanda, 163                                    | transversal                       | sim                         | frequência, encontro, sexo de uma noite    | mais uso (β 0,45); encontro sem efeito (OR 0,95)                                         | não     | ✅              |
+| Sumter 2017                | Holanda, 163                                    | transversal                       | sim                         | frequência, encontro, sexo de uma noite    | mais uso (β 0,45); encontro sem efeito (OR 0,95)                                         | não     | Ficha ✅        |
 | Bonilla-Zorita 2021        | revisão, 43 estudos                             | revisão narrativa                 | —                           | uso problemático                           | só um estudo (Orosz)                                                                     | —       | ✅              |
 | Stevic 2025                | não informado no resumo, 521                    | painel de 2 ondas, representativo | sim (aprovação)             | solidão, satisfação com a vida             | mais solidão; busca de relação, não                                                      | não     | 🟡 + roteiro OSF |
 | Liang & Bailey 2026        | 4 países, 301                                   | transversal, Prolific             | sim (aprovação)             | solidão, satisfação, depressão, ansiedade  | solidão só nos mais velhos (β 0,28); ansiedade (β 0,18); mais satisfação (β 0,13)        | não     | ✅              |
