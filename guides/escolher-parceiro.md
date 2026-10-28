@@ -75,6 +75,7 @@ questions:
         ideal-rigido,
         perfeccionismo-com-o-parceiro,
         medo-de-ficar-solteiro,
+        capacidade-de-manter-parceiro,
         mulheres-sem-companheiro,
         homens-sem-companheiro,
         sao-paulo-mulheres,
@@ -253,6 +254,10 @@ findings:
     text: Em sete estudos no Canadá e nos EUA, quem tinha mais medo de ficar solteiro dependia mais de uma relação pouco satisfatória e, num speed dating, se interessou por mais gente. Esse medo não mudou os padrões que as pessoas diziam ter para um parceiro, só o que elas faziam. Parte dos efeitos ficou no limite da significância.
     fact_sheets: [spielmann-2013-medo-ficar-solteiro]
     period: publicado em 2013
+  - id: capacidade-de-manter-parceiro
+    text: Em três amostras online, uma grega, uma russa e uma ucraniana, com 2.296 pessoas, quem relatou menos capacidade de manter um parceiro estava mais vezes solteiro, sem querer, por escolha ou entre relações, tinha passado mais anos solteiro e estava havia menos tempo na relação atual. É um retrato de um momento só, todo autorrelatado, e a escala, nova, pergunta se as relações duram o quanto a pessoa quer.
+    fact_sheets: [apostolou-2026-capacidade-manter-parceiro]
+    period: '2024'
 myths:
   - id: homens-aparencia-mulheres-dinheiro
     claim: Homens escolhem pela aparência, e mulheres, pelo dinheiro.
@@ -568,6 +573,8 @@ Do outro lado da balança, o ganho de cada Requisito é pequeno. Bater traço a 
 O mesmo vale para mirar alto. Num site de namoro dos EUA, homens e mulheres escreveram, em média, para pessoas uns 25% acima deles num ranking de desejabilidade, e quanto maior a distância, menor a chance de resposta [@bruch-2018-aspirational-pursuit]. O estudo olhou só homens e mulheres héteros, e não achamos dado brasileiro sobre isso.
 
 {{tip:mensagem-um-pouco-acima}}
+
+Ser exigente pode não ser o único caminho para ficar solteiro: pode haver quem fique sozinho porque as relações acabam antes do que queria. Um estudo testou essa hipótese em 2024, com 2.296 pessoas que responderam a um questionário online em três amostras, uma grega, uma russa e uma ucraniana [@apostolou-2026-capacidade-manter-parceiro]. Quem deu nota mais baixa à própria capacidade de manter um parceiro estava mais vezes solteiro, em cada um dos três tipos que o questionário separa: sem querer, por escolha ou entre uma relação e outra [@apostolou-2026-capacidade-manter-parceiro]. Também tinha passado mais anos solteiro e, se tinha parceiro, estava havia menos tempo com ele [@apostolou-2026-capacidade-manter-parceiro]. Das 2.296 pessoas, 23,7% deram a si mesmas média abaixo de 3 numa escala de 1 a 5, o corte que os autores chamam de capacidade "fraca" [@apostolou-2026-capacidade-manter-parceiro]. Esse um em cada quatro depende de um corte que ninguém validou [@apostolou-2026-capacidade-manter-parceiro]. A evidência é fraca: o estudo mediu cada pessoa uma vez só, tudo pelo que ela mesma contou, em amostras que ninguém sorteou, e a russa veio de um painel pago para responder [@apostolou-2026-capacidade-manter-parceiro]. A escala é nova e pergunta se as relações duram o quanto a pessoa quer, o que fica muito perto do que ela tenta prever [@apostolou-2026-capacidade-manter-parceiro]. Nenhuma das escalas do estudo pergunta o quanto a pessoa exige de um parceiro [@apostolou-2026-capacidade-manter-parceiro]. A conclusão é nossa: por isso, o estudo não mostra que a exigência explica a solteirice, nem que não explica. Não há amostra brasileira.
 
 ## O que não se sabe
 
