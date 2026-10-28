@@ -15,9 +15,9 @@
  *    the filter, `.marca-brasil` and `.selo-voce-texto`.
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
  *    with `stroke-dashoffset`, in `@keyframes`.
- * 4. The Grifo, which the CSS Custom Highlight API paints and only a
- *    `::highlight()` rule styles, and the `grifo` class that rule takes
- *    its look from. */
+ * 4. The Grifo and the sent Comentário's quote, which the CSS Custom
+ *    Highlight API paints and only a `::highlight()` rule styles, and the
+ *    `grifo` class the Grifo's rule takes its look from. */
 
 /* ---------- 1. drawings the JSX uses ---------- */
 
@@ -372,4 +372,16 @@
 
 ::highlight(grifo) {
   @apply grifo;
+}
+
+/* The quote of a Comentário sent from the page (#441): a dotted underline in
+ * ink, which reads apart from the Grifo's wave and from a link's straight
+ * line. `comment-paint.ts` paints it; where a passage is both, the Grifo's
+ * higher priority draws the wave over it. */
+::highlight(comentario) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--color-tinta);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }

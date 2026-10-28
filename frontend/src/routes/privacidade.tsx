@@ -59,10 +59,10 @@ function OnTheDevice() {
       <p>
         Cada Comentário que você envia também fica guardado no navegador, para
         você achar de novo: o trecho, o link, o tipo, o que você escreveu, a
-        data, o número que ele ganhou no repositório do curador e o status. Seus
-        trechos mostra todos. “Tirar da lista” apaga o Comentário deste
-        aparelho, mas ele continua com o curador. O navegador também guarda
-        quando consultou os status e quais você já viu.
+        data, o número que ele ganhou no repositório do curador, a chave que
+        permite editá-lo e o status. Seus trechos mostra todos. “Tirar da lista”
+        apaga o Comentário deste aparelho, mas ele continua com o curador. O
+        navegador também guarda quando consultou os status e quais você já viu.
       </p>
       <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que
@@ -125,15 +125,24 @@ function InAComment() {
         é.
       </p>
       <p>
-        Na volta, o servidor manda só o número da issue, que o seu navegador
-        guarda junto com uma cópia do Comentário (acima, em “O que fica no seu
-        aparelho”).
+        Na volta, o servidor manda só o número da issue e uma chave sorteada,
+        que o seu navegador guarda junto com uma cópia do Comentário (acima, em
+        “O que fica no seu aparelho”). A chave fica só no seu aparelho: a issue
+        guarda uma impressão dela da qual não dá para tirar a chave.
       </p>
       <p>
-        Para barrar spam, o servidor conta quantos Comentários saem de cada IP
-        na última hora. Essa conta fica só na memória do servidor, nunca vai
-        para um arquivo nem para a issue, e some quando ele reinicia. O envio
-        entra no registro do servidor como qualquer pedido (abaixo), sem o
+        Enquanto o Comentário está Recebido, você pode editá-lo deste aparelho.
+        Vão o número da issue, a chave, o tipo e o novo texto. O servidor só
+        troca o tipo e o texto da issue se a chave bater; o trecho e o link
+        ficam. O GitHub guarda o texto anterior no histórico da issue, que só o
+        curador vê. Quem apagar os dados do site perde a chave, e o Comentário
+        não pode mais ser editado.
+      </p>
+      <p>
+        Para barrar spam, o servidor conta quantos Comentários e edições saem de
+        cada IP na última hora. Essa conta fica só na memória do servidor, nunca
+        vai para um arquivo nem para a issue, e some quando ele reinicia. O
+        envio entra no registro do servidor como qualquer pedido (abaixo), sem o
         texto. A contagem de visitas conta que um Comentário foi enviado, sem o
         texto nem a página.
       </p>
