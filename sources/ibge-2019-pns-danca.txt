@@ -1,0 +1,39 @@
+IBGE. Pesquisa Nacional de Saúde 2019. Official microdata documentation.
+Retrieved 2026-10-28.
+https://ftp.ibge.gov.br/PNS/2019/Microdados/Documentacao/Dicionario_e_input_20220530.zip
+SHA256 bcfed57f8835c07cac38b7343950a500759692974359e007e43217904a2f78da
+
+Transcription of dictionary entries (position, length, variable, description,
+category and label; line breaks normalized):
+
+3 7 V0024 Estrato
+10 9 UPA_PNS UPA
+108 1 C006 Sexo
+1 Homem
+2 Mulher
+117 3 C008 Idade do morador na data de referência
+673 1 P034 Nos últimos três meses, o(a) Sr(a) praticou algum tipo de exercício físico ou esporte?
+1 Sim
+679 2 P036 Qual o exercício físico ou esporte que o(a) Sr(a) pratica (praticava) com mais frequência? (Anotar apenas o primeiro citado)
+16 Dança (com o objetivo de praticar atividade física)
+1426 14 V00291 Peso do morador selecionado com calibração
+Peso do morador selecionado com correção de não entrevista com calibração pela projeção de população para morador selecionado - Usado no cálculo de indicadores de morador selecionado
+
+Official methodological publication:
+https://biblioteca.ibge.gov.br/visualizacao/livros/liv101764.pdf
+Printed p. 11:
+A PNS é uma pesquisa domiciliar, e o plano amostral empregado é o de amostragem conglomerada em três estágios, com estratificação das unidades primárias de amostragem (UPAs).
+os moradores de 15 anos ou mais de idade definem as unidades de terceiro estágio.
+Printed p. 12:
+No terceiro estágio, um morador de 15 anos ou mais de idade foi selecionado, em cada domicílio selecionado, para responder o questionário específico, também por amostragem aleatória simples
+
+Calculation inputs, derived by this repository (not a table published by IBGE):
+sources/ibge-2019-pns-danca-psu.csv contains all selected-person PSUs,
+their stratum, respondent counts and calibrated dance totals by sex.
+Zero-dancer PSUs are retained. These are aggregated sufficient statistics;
+the individual microdata are not included in the repository.
+Raw archive:
+https://ftp.ibge.gov.br/PNS/2019/Microdados/Dados/PNS_2019_20220525.zip
+SHA256 a789f6b0cbf6057111939fb3d1fe62ad1d5e848ba9c1f7860d7b44daa4be6057
+Reproduce extraction and the Taylor-linearized domain ratio using
+scripts/calculations/ibge-2019-pns-danca.py (Python standard library).
