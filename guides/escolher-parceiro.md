@@ -75,6 +75,7 @@ questions:
         ideal-rigido,
         perfeccionismo-com-o-parceiro,
         medo-de-ficar-solteiro,
+        capacidade-de-manter-parceiro,
         mulheres-sem-companheiro,
         homens-sem-companheiro,
         sao-paulo-mulheres,
@@ -253,6 +254,10 @@ findings:
     text: Em sete estudos no Canadá e nos EUA, quem tinha mais medo de ficar solteiro dependia mais de uma relação pouco satisfatória e, num speed dating, se interessou por mais gente. Esse medo não mudou os padrões que as pessoas diziam ter para um parceiro, só o que elas faziam. Parte dos efeitos ficou no limite da significância.
     fact_sheets: [spielmann-2013-medo-ficar-solteiro]
     period: publicado em 2013
+  - id: capacidade-de-manter-parceiro
+    text: Em três amostras online, uma grega, uma russa e uma ucraniana, com 2.296 pessoas, quem relatou menos capacidade de manter um parceiro estava mais vezes solteiro, sem querer, por escolha ou entre relações, tinha passado mais anos solteiro e estava havia menos tempo na relação atual. É um retrato de um momento só, todo autorrelatado, e a escala, nova, pergunta se as relações duram o quanto a pessoa quer.
+    fact_sheets: [apostolou-2026-capacidade-manter-parceiro]
+    period: '2024'
 myths:
   - id: homens-aparencia-mulheres-dinheiro
     claim: Homens escolhem pela aparência, e mulheres, pelo dinheiro.
@@ -560,6 +565,8 @@ Se a lista prevê pouco, vale saber quanto ela custa. Nenhum estudo que lemos di
 {{visual:homo-ou-bi-por-idade}}
 
 A calculadora que vem depois da resposta, mais abaixo, faz essa conta com o seu Perfil e os seus Requisitos. A orientação entra pelas proporções da PNS por sexo e idade [@ibge-2019-pns]; para quem marcou gênero "outro", a conta não desconta orientação, e o número vira um teto. O Censo só pergunta sobre filhos às mulheres, então "sem filhos" não funciona quando você procura homens [@ibge-2022-censo-amostra]. O arquivo público do Censo vai só até o estado, com a idade em grupos de 5 anos [@ibge-2022-censo-amostra]. Para a cidade e a idade exata, a conta reparte pela população, supondo que dentro do estado a composição é a mesma.
+
+Ser exigente não é o único caminho para ficar solteiro. Há quem fique sozinho porque as relações acabam antes do que queria. Em 2024, 2.296 pessoas responderam a um questionário online em três amostras, uma grega, uma russa e uma ucraniana [@apostolou-2026-capacidade-manter-parceiro]. Quem deu nota mais baixa à própria capacidade de manter um parceiro estava mais vezes solteiro, sem querer, por escolha ou entre uma relação e outra, tinha passado mais anos solteiro e estava havia menos tempo na relação atual [@apostolou-2026-capacidade-manter-parceiro]. Pelos autores, 23,7% têm capacidade "fraca", mas esse um em cada quatro depende do corte que eles escolheram, uma média abaixo de 3 numa escala de 1 a 5, e que ninguém validou [@apostolou-2026-capacidade-manter-parceiro]. A evidência é fraca. O estudo mediu cada pessoa uma vez só, tudo pelo que ela mesma contou, em amostras que ninguém sorteou, e a russa veio de um painel pago para responder [@apostolou-2026-capacidade-manter-parceiro]. A escala é nova e pergunta se as relações duram o quanto a pessoa quer, o que fica muito perto do que ela tenta prever [@apostolou-2026-capacidade-manter-parceiro]. E o estudo não mediu o quanto cada um é exigente, então não mostra que a exigência explica a solteirice, nem que não explica [@apostolou-2026-capacidade-manter-parceiro]. Não há amostra brasileira.
 
 {{question:requisitos-exigentes-demais}}
 
