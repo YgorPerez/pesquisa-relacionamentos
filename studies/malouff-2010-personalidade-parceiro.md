@@ -41,7 +41,7 @@ Desenho, como descrito antes da migração: [[meta-análise]] de estudos correla
 
 - Sem o texto completo, não sabemos o tamanho de cada efeito nem como os estudos foram ponderados.
 - Os estudos são majoritariamente transversais: não dá para saber se a personalidade afeta o quanto o parceiro está satisfeito ou o contrário.
-- Uma parte da associação pode vir de estar satisfeito colorir a forma como se avalia o parceiro, quando a personalidade é relatada pelo próprio parceiro (não conferido como cada estudo mediu).
+- Uma parte da associação pode vir de quem está contente com a relação avaliar melhor o parceiro, quando a personalidade é relatada pelo próprio parceiro (não conferido como cada estudo mediu).
 
 ## Como usamos
 

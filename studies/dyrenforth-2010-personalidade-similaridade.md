@@ -19,7 +19,7 @@ covers: {}
 
 ## O que mediu
 
-Quanto de quão satisfeita a pessoa está com a relação e com a vida é explicado por três coisas:
+O quanto a pessoa está contente com a relação e com a vida, e quanto disso três coisas explicam:
 
 1. a personalidade da própria pessoa (efeito ator);
 2. a personalidade do parceiro (efeito parceiro);

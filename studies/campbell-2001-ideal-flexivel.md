@@ -60,7 +60,7 @@ Na escala do encaixe, nota alta quer dizer que o parceiro bate com o ideal, embo
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Não sozinha: o desfecho é a "qualidade da relação", a média padronizada de três escalas, a de satisfação de Hendrick, a de amor de Rubin e a de compromisso de Lund | Study 1, Method, Relationship quality (p. 451) | "Three measures were used to assess the general quality of participants' relationships: Hendrick, Hendrick, and Adler's (1988) Satisfaction Scale, Rubin's (1970) Love Scale, and Lund's (1985) Commitment Scale." |
+| satisfacao | Não sozinha: a escala de satisfação de Hendrick é uma das três medidas da "qualidade da relação", ao lado da escala de amor de Rubin e da de compromisso de Lund | Study 1, Method, Relationship quality (p. 451) | "Three measures were used to assess the general quality of participants' relationships: Hendrick, Hendrick, and Adler's (1988) Satisfaction Scale, Rubin's (1970) Love Scale, and Lund's (1985) Commitment Scale." |
 
 ## Limitações
 

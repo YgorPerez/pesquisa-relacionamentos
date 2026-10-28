@@ -49,7 +49,7 @@ Na Tabela 6, o tamanho de efeito dessa linha (o r máximo de 0,59 citado acima) 
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Só a avaliação geral do casamento: 15 pares de adjetivos opostos, como ruim–bom e insatisfeito–satisfeito, cada um numa escala de 7 pontos, somando de 15 a 105 | Método, Measures, Marital satisfaction | "This measure asks spouses to rate their perceptions of their relationship on 7-point scales between 15 pairs of opposing adjectives (e.g., bad–good, dissatisfied–satisfied ), yielding scores from 15 to 105" |
+| satisfacao | Como cada cônjuge vê a relação em 15 pares de adjetivos opostos, como ruim–bom e insatisfeito–satisfeito, cada um numa escala de 7 pontos, somando de 15 a 105 | Método, Measures, Marital satisfaction | "This measure asks spouses to rate their perceptions of their relationship on 7-point scales between 15 pairs of opposing adjectives (e.g., bad–good, dissatisfied–satisfied ), yielding scores from 15 to 105" |
 
 ## Limitações
 

@@ -46,7 +46,7 @@ Adultos que namoravam no início foram acompanhados por 20 meses, com questioná
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Satisfação com a vida, não com a relação: a escala de Diener, com frases como "na maior parte, minha vida está perto do meu ideal", de 1 (discordo totalmente) a 7 (concordo totalmente) | Method, Life satisfaction | "Items such as "In most ways my life is close to my ideal" and "If I could live my life over, I would change almost nothing" are rated on a 7-point scale ranging from 1 ( strongly disagree ) to 7 ( strongly agree )." |
+| satisfacao | Satisfação com a vida, não com a relação: frases como "na maior parte, minha vida está perto do meu ideal", de 1 (discordo totalmente) a 7 (concordo totalmente) | Method, Life satisfaction | "Items such as "In most ways my life is close to my ideal" and "If I could live my life over, I would change almost nothing" are rated on a 7-point scale ranging from 1 ( strongly disagree ) to 7 ( strongly agree )." |
 
 ## Limitações
 
