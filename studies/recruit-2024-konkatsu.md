@@ -18,11 +18,11 @@ covers:
   ages: { min: 20, max: 49 }
 ---
 
-# Recruit Bridal Research (2024): procura de cônjuge no Japão e taxa de casamento por caminho
+# Recruit Bridal (2024): casamento por caminho no Japão
 
 ## O que mediu
 
-O instituto de pesquisa de casamentos da Recruit perguntou, pela internet, a 50.000 japoneses de 20 a 49 anos se tinham usado serviços de _konkatsu_ (procura de cônjuge: agência matrimonial, site ou app, festas e eventos) e outras formas de procurar parceiro, e se casaram com alguém conhecido por elas. Para quem casou em 2023, o relatório calcula, para cada caminho, a parcela que casou por ele entre os que casaram e tinham usado aquele caminho. Uma segunda etapa, com 2.353 solteiros pesados pelo Censo, pergunta se arrumaram namorado ou namorada pelos serviços, como agiram e quanto estão satisfeitos com a relação atual.
+O instituto de pesquisa de casamentos da Recruit perguntou, pela internet, a 50.000 japoneses de 20 a 49 anos se tinham usado serviços de _konkatsu_ (procura de cônjuge: agência matrimonial, site ou app, festas e eventos) e outras formas de procurar parceiro, e se casaram com alguém conhecido por elas. Para quem casou em 2023, o relatório calcula, para cada caminho, a parcela que casou por ele entre os que casaram e tinham usado aquele caminho. Uma segunda etapa, com 2.353 solteiros pesados pelo Censo, pergunta se arrumaram namorado ou namorada pelos serviços, como agiram e qual a [[satisfação]] com a relação atual.
 
 ## Achados
 
@@ -45,6 +45,12 @@ O instituto de pesquisa de casamentos da Recruit perguntou, pela internet, a 50.
 | Arrumaram namorado ou namorada, entre quem começou a usar em 2023 | 17,7% | p. 12 | "2023年に婚活サービスを新規で利用開始した人のうち、17.7%が恋人ができたと回答。" |
 | Arrumaram namorado ou namorada: quem usou mais de um serviço ao mesmo tempo vs. um só | 38,3% vs. 30,6% | p. 16 | "併用している 併用していない 10.0 20.0 30.0 38.3 40.0 50.0 60.0 70.0 61.7 30.6" |
 | Satisfeitos com a relação atual, por onde conheceram o parceiro | 71,5% por um serviço vs. 65,5% por outro caminho | p. 17 | "婚活サービスで出会った人が71.5%、それ以外 の出会いの人が65.5%" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma pergunta só, entre duas frases: "estou satisfeito com a relação com meu namorado ou namorada atual" e "não estou"; conta quem ficou mais perto da primeira ou um pouco mais perto dela | p. 17 | "【A】今の恋人との関係に満足している 【B】今の恋人との関係に満足していないのどちらに近いかの問いで、 「Aの方に近い」+「ややAの方に近い」の割合" |
 
 ## Limitações
 
