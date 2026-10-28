@@ -127,6 +127,7 @@ it('keeps the sent comment on the device, with its issue number, and the notice 
       kind: 'wrong',
       comment: 'O número não bate.',
       issue: ISSUE_NUMBER,
+      editKey: expect.stringMatching(/^[\w-]{43}$/),
       changed: false,
     }),
   ])

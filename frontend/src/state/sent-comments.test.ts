@@ -1,6 +1,7 @@
 import { beforeEach, expect, test, vi } from 'vite-plus/test'
 import {
   addSentComment,
+  editSentComment,
   markCommentsFound,
   readSentComments,
   removeSentComment,
@@ -134,4 +135,69 @@ test('after its page looked for the quotes, the missing ones are marked changed,
 
   markCommentsFound('/onde-conhecer-pessoas', new Set([here.id, gone.id]))
   expect(readSentComments().find((c) => c.id === gone.id)!.changed).toBe(false)
+})
+
+const KEY_A = 'a'.repeat(43)
+
+type Edit = Parameters<typeof editSentComment>[2]
+
+test('the edit key is kept with the Comentário; a record without one, or with a broken one, stays and cannot be edited', async () => {
+  addSentComment({ ...sent('fica perto'), editKey: KEY_A })
+  expect(readSentComments()[0]!.editKey).toBe(KEY_A)
+
+  const old = { ...sent('online'), id: 'old', changed: false, at: 1 }
+  expect(
+    validateSentComments([old, { ...old, id: 'bad', editKey: 'x' }]),
+  ).toEqual([old, { ...old, id: 'bad' }])
+
+  const edit = vi.fn<Edit>(async () => ({ edit: 'edited' }))
+  const plain = addSentComment(sent('sem chave'))
+  expect(
+    await editSentComment(plain.id, { kind: 'other', comment: 'novo' }, edit),
+  ).toBe('failed')
+  expect(edit).not.toHaveBeenCalled()
+})
+
+test('an edit the server took gives the entry the new type and text; a closed or failed one leaves it', async () => {
+  const made = addSentComment({ ...sent('fica perto'), editKey: KEY_A })
+  const edit = vi.fn<Edit>(async () => ({ edit: 'edited' }))
+
+  expect(
+    await editSentComment(
+      made.id,
+      { kind: 'unclear', comment: ' novo ' },
+      edit,
+    ),
+  ).toBe('edited')
+  expect(edit).toHaveBeenCalledWith({
+    issue: 41,
+    key: KEY_A,
+    kind: 'unclear',
+    text: ' novo ',
+  })
+  expect(readSentComments()[0]).toMatchObject({
+    kind: 'unclear',
+    comment: 'novo',
+    editKey: KEY_A,
+    issue: 41,
+  })
+
+  for (const reply of ['closed', 'failed'] as const) {
+    expect(
+      await editSentComment(
+        made.id,
+        { kind: 'other', comment: 'outro' },
+        async () => ({ edit: reply }),
+      ),
+    ).toBe(reply)
+  }
+  expect(
+    await editSentComment(made.id, { kind: 'other', comment: 'outro' }, () =>
+      Promise.reject(new TypeError('offline')),
+    ),
+  ).toBe('failed')
+  expect(readSentComments()[0]).toMatchObject({
+    kind: 'unclear',
+    comment: 'novo',
+  })
 })

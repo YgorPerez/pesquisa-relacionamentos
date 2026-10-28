@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { removeHighlight, useHighlights } from '#/state/highlights'
+import { removeHighlight, setNote, useHighlights } from '#/state/highlights'
 import { removeSentComment, useSentComments } from '#/state/sent-comments'
 import { HighlightList } from '#/ui/highlight-list'
 import {
@@ -40,7 +40,11 @@ function KeptPassagesPage() {
           <p>{NEEDS_JS}</p>
         </noscript>
         {highlights !== null && (
-          <HighlightList highlights={highlights} onRemove={removeHighlight} />
+          <HighlightList
+            highlights={highlights}
+            onNote={setNote}
+            onRemove={removeHighlight}
+          />
         )}
         {comments !== null && (
           <SentCommentList comments={comments} onRemove={removeSentComment} />

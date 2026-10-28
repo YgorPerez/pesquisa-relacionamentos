@@ -6,7 +6,8 @@
 //
 // The quote is kept as a Grifo keeps it (`highlight-record.ts`), so its page
 // looks for it the same way and marks it `changed` when it is gone. "Tirar
-// da lista" forgets the record here; the issue stays.
+// da lista" forgets the record here; the issue stays. The edit key the send
+// replied with stays here too, and only here (#442).
 import { useSyncExternalStore } from 'react'
 import { COMMENT_KINDS, type CommentKind } from '#/content/comment-kinds'
 import {
@@ -18,6 +19,7 @@ import {
 } from './highlight-record'
 import { stored } from './stored'
 import type { CommentStatus, IssueStatus } from '#/content/comment-status'
+import type { EditInput, EditReply } from '#/content/comment-issue'
 
 /** A sent Comentário, as `localStorage` keeps it. */
 export interface SentComment extends KeptQuote {
@@ -34,6 +36,10 @@ export interface SentComment extends KeptQuote {
   /** The issue's number in the private sources repo; made-up when the
    * anti-spam dropped the comment (#346). */
   readonly issue: number
+  /** The key the send replied with, which edits the issue while it is
+   * open (#442). A comment sent before it existed has none and cannot be
+   * edited. */
+  readonly editKey?: string
   /** When it was sent (ms since 1970). */
   readonly at: number
   readonly status?: CommentStatus
@@ -49,6 +55,9 @@ export type NewSentComment = Omit<
 const validStatus = (raw: unknown): raw is CommentStatus =>
   raw === 'received' || raw === 'corrected' || raw === 'not-planned'
 
+const validKey = (raw: unknown): raw is string =>
+  typeof raw === 'string' && /^[\w-]{43}$/.test(raw)
+
 function validComment(raw: unknown): SentComment | null {
   if (!isQuoteRecord(raw)) return null
   const quote = decodeKeptQuote(raw)
@@ -62,6 +71,7 @@ function validComment(raw: unknown): SentComment | null {
     kind: kind as CommentKind,
     comment,
     issue: issue as number,
+    ...(validKey(raw.editKey) ? { editKey: raw.editKey } : {}),
     ...(validStatus(raw.status) ? { status: raw.status } : {}),
     ...(validStatus(raw.seenStatus) ? { seenStatus: raw.seenStatus } : {}),
   }
@@ -106,6 +116,36 @@ export function addSentComment(made: NewSentComment): SentComment {
   }
   save([...readSentComments(), comment])
   return comment
+}
+
+/** Edits the Comentário's issue through `edit` (`editComment`, ADR 0043)
+ * and, once the server says it did, gives the entry the new type and text.
+ * An entry without an edit key never asks. */
+export async function editSentComment(
+  id: string,
+  { kind, comment }: Pick<SentComment, 'kind' | 'comment'>,
+  edit: (input: EditInput) => Promise<EditReply>,
+): Promise<EditReply['edit']> {
+  const sent = readSentComments().find((c) => c.id === id)
+  if (!sent?.editKey) return 'failed'
+  let reply: EditReply
+  try {
+    reply = await edit({
+      issue: sent.issue,
+      key: sent.editKey,
+      kind,
+      text: comment,
+    })
+  } catch {
+    return 'failed'
+  }
+  if (reply.edit === 'edited')
+    save(
+      readSentComments().map((c) =>
+        c.id === id ? { ...c, kind, comment: comment.trim() } : c,
+      ),
+    )
+  return reply.edit
 }
 
 /** "Tirar da lista": forgets the entry on this device. */
