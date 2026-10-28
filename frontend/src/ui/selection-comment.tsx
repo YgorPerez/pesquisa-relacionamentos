@@ -40,8 +40,8 @@ function missing(kind: CommentKind | null, text: string) {
   return null
 }
 
-/** Sends the comment; the issue's number only when the server says it
- * went. */
+/** Sends the comment; the issue's number and edit key only when the
+ * server says it went. */
 async function send(
   quote: Quote,
   kind: CommentKind,
@@ -59,7 +59,7 @@ async function send(
         website,
       },
     })
-    return reply.sent ? reply.issue : null
+    return reply.sent ? reply : null
   } catch {
     return null
   }
@@ -70,7 +70,7 @@ async function send(
  * saw it. */
 function toKeep(quote: Quote, kind: CommentKind, text: string) {
   const where = quoteInPage(pageText(), quote.range)
-  return (issue: number) =>
+  return ({ issue, editKey }: { issue: number; editKey: string }) =>
     addSentComment({
       exact: where?.exact ?? quote.text.replace(/\s+/g, ' ').trim(),
       prefix: where?.prefix ?? '',
@@ -82,6 +82,7 @@ function toKeep(quote: Quote, kind: CommentKind, text: string) {
       kind,
       comment: text.trim(),
       issue,
+      editKey,
     })
 }
 
@@ -179,9 +180,9 @@ function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
     if (gap || !kind) return
     setStatus('sending')
     const keep = toKeep(quote, kind, text)
-    const issue = await send(quote, kind, text, website)
-    if (issue === null) return setStatus('failed')
-    keep(issue)
+    const sent = await send(quote, kind, text, website)
+    if (sent === null) return setStatus('failed')
+    keep(sent)
     countSelection('comment')
     onSent()
   }
