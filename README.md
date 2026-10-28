@@ -190,6 +190,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
+- [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
