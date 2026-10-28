@@ -29,16 +29,12 @@ jobs:
         with:
           node-version: 24
       - run: pnpm install --frozen-lockfile
-      - name: Restore consecutive failures from the last successful run
-        run: |
-          previous=$(gh run list --workflow reading-check.yml --branch "$GITHUB_REF_NAME" --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')
-          if [ -n "$previous" ]; then
-            gh run download "$previous" --name reading-check-state --dir "$RUNNER_TEMP/reading-check"
-            cp "$RUNNER_TEMP/reading-check/reading-state.json" "$RUNNER_TEMP/reading-state.json"
-          fi
+      - name: Restore the latest usable observations
+        run: node scripts/reading-check.ts --restore-state --state "$RUNNER_TEMP/reading-state.json"
       - name: Check Readings and report
         run: node scripts/reading-check.ts --state "$RUNNER_TEMP/reading-state.json"
       - name: Save consecutive failures
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reading-check-state
