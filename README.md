@@ -51,6 +51,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
 - [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
+- [Hogan, Dutton & Li 2011](studies/hogan-2011-me-myspouse.md): onde casais de 18 países se conheceram · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns.md): Pesquisa Nacional de Saúde · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns-danca.md): composição por sexo na dança como exercício · ✅ · moderada
