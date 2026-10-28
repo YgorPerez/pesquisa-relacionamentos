@@ -53,7 +53,7 @@ export const getFactSheet = createServerFn({ method: 'GET' })
       const view = factSheetView(
         factSheet,
         isFactSheetIndexable(factSheet),
-        (markdown) => withTermLinks(markdown, library.terms, used, slug),
+        (markdown) => withTermLinks(markdown, library.terms, used, [slug]),
       )
       return {
         ...view,

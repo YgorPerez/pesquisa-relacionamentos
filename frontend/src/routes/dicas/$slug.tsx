@@ -2,6 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
 import { CitedFactSheets } from '#/ui/guide'
+import { Html } from '#/ui/html'
+import { TermPopover } from '#/ui/term-popover'
 import { QuestionRow } from '#/ui/question-row'
 import { StrengthBadge } from '#/ui/badges'
 import { BackLink } from '#/ui/navigation'
@@ -38,7 +40,7 @@ function TipPage() {
         <BackLink to="/dicas">Todas as Dicas</BackLink>
 
         <Display small {...quotable(null)}>
-          {tip.text}
+          <Html as="span" html={tip.textHtml} />
         </Display>
 
         <Panel
@@ -81,6 +83,7 @@ function TipPage() {
         </Section>
       </Column>
       <PageSelection factSheets={tip.factSheets} page="tip" />
+      <TermPopover terms={tip.terms} />
     </Sheet>
   )
 }

@@ -68,23 +68,25 @@ const REFERENCE = /\[@([a-z0-9-]+)\]/g
 const SENTENCES = /(?<=[.!?…])(\s+)/
 
 /** Turns the marks a page writes into links, sentence by sentence; `used`
- * collects the Verbetes, for the page to send their views along. On a Fact
- * sheet's page, `own` is the Study every sentence speaks of. A mark the
- * build would not take stays as its word. */
+ * collects the Verbetes, for the page to send their views along. Where the
+ * text cites no `[@slug]` of its own, `cited` says which Studies every
+ * sentence speaks of: a Fact sheet's page, its Study; a Tip, its Fact
+ * sheets. A mark the build would not take stays as its word. */
 export function withTermLinks(
   markdown: string,
   terms: ReadonlyArray<Term>,
   used: Set<string>,
-  own?: string,
+  cited?: ReadonlyArray<string>,
 ): string {
   if (!markdown.includes('[[')) return markdown
   const find = termFinder(terms)
   return markdown
     .split(SENTENCES)
     .map((sentence) => {
-      const cited = own
-        ? [own]
-        : [...new Set([...sentence.matchAll(REFERENCE)].map((m) => m[1] ?? ''))]
+      const inSentence = [
+        ...new Set([...sentence.matchAll(REFERENCE)].map((m) => m[1] ?? '')),
+      ]
+      const factSheets = inSentence.length > 0 ? inSentence : (cited ?? [])
       return sentence.replace(
         TERM_MARK,
         (_, first: string, shown: string | undefined) => {
@@ -92,7 +94,7 @@ export function withTermLinks(
           const term = find(first, shown)
           if (!term) return word
           used.add(term.slug)
-          return `<a class="verbete" href="${termHref(term.slug)}" data-verbete="${term.slug}" data-fichas="${cited.join(' ')}">${escape(word)}</a>`
+          return `<a class="verbete" href="${termHref(term.slug)}" data-verbete="${term.slug}" data-fichas="${factSheets.join(' ')}">${escape(word)}</a>`
         },
       )
     })
