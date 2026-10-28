@@ -117,7 +117,7 @@ findings:
     text: Entre os casais que passaram a morar juntos de 2008 a 2012, 10,9% se conheceram online. O primeiro lugar continuava com amigos e família (25,8%), seguido de trabalho (16,3%) e pub ou balada (16,0%).
     fact_sheets: [lampard-2020-natsal-reino-unido]
   - id: cinquenta-paises-online
-    text: Em 50 países, 16% das pessoas com parceiro o conheceram online, de 7% em Gana a 33% na Polônia. Nas relações que começaram em 2010 ou depois, 21%. A amostra veio de painéis online, que deixam de fora quem não tem internet.
+    text: Em 50 países, 16% das pessoas com parceiro o conheceram online, de 7% em Gana a 33% na Polônia. Nas relações que começaram em 2010 ou depois, 21%. A pesquisa foi respondida pela internet, então quem não usa internet ficou fora da conta.
     fact_sheets: [kowal-2025-50-paises]
   - id: brasil-painel-cinquenta-paises
     text: No recorte brasileiro desse estudo de 50 países, 23 de 119 pessoas com parceiro (19,3%) o conheceram online. É uma conta nossa com os dados públicos, sem peso e com poucos casos.
@@ -380,7 +380,7 @@ visuals:
         measure: Parceiro atual conhecido de 2005 a 2013, só site de encontro (o estudo diz "menos de")
         value: 9
         unit: '%'
-    note: os casais novos dão o número maior; todos os casais, o menor
+    note: contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor
   - id: online-por-pais
     kind: bars
     title: Pessoas com parceiro que o conheceram online, em 2024
@@ -399,7 +399,7 @@ visuals:
         value: 33
         fact_sheet: kowal-2025-50-paises
     highlight: Brasil (23 de 119 pessoas, sem peso)
-    note: painéis online, que deixam de fora quem não usa internet
+    note: a pesquisa foi respondida pela internet, então só contou quem usa internet, e isso tende a aumentar a fatia online
   - id: mensagens-de-menos-e-de-mais
     kind: bars
     title: Como homens e mulheres vivem as mensagens no app, nos EUA
