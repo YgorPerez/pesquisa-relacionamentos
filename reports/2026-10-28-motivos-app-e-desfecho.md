@@ -119,16 +119,17 @@ Zervoulis K, Smith DS, Reed R, Dinos S. _Use of 'gay dating apps' and its relati
 
 #### Timmermans & Courtois 2018 (Bélgica)
 
-Tem [Ficha](../studies/timmermans-2018-tinder.md), ✅. Os números de motivo abaixo vêm do mesmo manuscrito (repub.eur.nl) e ainda não estão na Ficha.
+Tem [Ficha](../studies/timmermans-2018-tinder.md), ✅, com os achados de motivo abaixo, tirados do mesmo manuscrito (repub.eur.nl).
 
 - **Amostra:** 1.038 usuários atuais do Tinder de 18 a 29 anos.
-- **Motivo:** três subescalas da Tinder Motives Scale: relação, sexo e socializar. Aprovação social não entrou.
-- **Achado (Resultados, p. 14–15 do PDF):**
-  - Quem tinha motivo de relação teve chance 65% maior de encontros presenciais com gente do app, e quem tinha motivo social, 19% maior.
-  - O motivo sexual aumentou a chance de sexo de uma noite (32%) e de relação sexual casual (51%).
+- **Motivo:** três subescalas da Tinder Motives Scale, de 1 a 7: relação, sexo e socializar. Aprovação social não entrou.
+- **Achado (Resultados, p. 15–16, e Discussão, p. 21 do PDF; Tabela 2):** cada ponto a mais na escala do motivo, com os outros preditores no modelo, mudou o número esperado de:
+  - encontros presenciais com gente do app: 65% maior com o motivo de relação e 19% maior com o motivo social;
+  - sexo de uma noite: 32% maior com o motivo sexual;
+  - relações sexuais casuais: 51% maior com o motivo sexual, e 16% maior entre quem pontuava baixo no motivo de relação.
   - O motivo de relação não se associou a mais relações com compromisso com alguém do app. Os autores escrevem que o Tinder "might not be that successful in gratifying a relationship need".
 - **Causal?** Não.
-- **Ressalva:** a Ficha registra que texto e tabela divergem em algumas magnitudes, e que os modelos são de contagem, embora o texto fale em "odds". Os percentuais acima são os do texto. O estudo exclui ex-usuários, que podem ser justamente os que acharam alguém.
+- **Ressalva:** os modelos são de contagem com excesso de zeros, embora o texto fale em "odds". Nessas linhas, texto e Tabela 2 coincidem; a divergência que a Ficha registra é a dos números por gênero. O efeito do motivo de relação sobre encontros aparece entre quem nunca tinha feito sexo, não entre quem já tinha. O estudo exclui ex-usuários, que podem ser justamente os que acharam alguém.
 
 #### Strugo & Muise 2019 (Canadá ou EUA, não informado no resumo)
 
