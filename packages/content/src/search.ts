@@ -16,6 +16,7 @@ import {
 import type { FactSheet } from './fact-sheet.ts'
 import type { Tip, Topic } from './items.ts'
 import { CALCULATORS, RESERVED_ROUTES } from './lists.ts'
+import { withoutTermMarks } from './marks.ts'
 
 /** The site's address, for the sitemap, the canonical and Open Graph. */
 export const ORIGIN = 'https://temestudo.cloud'
@@ -31,7 +32,7 @@ export interface SearchMeta {
 /** Content markdown as plain text: no `[@slug]` references, no `==mark==`, no
  * links or emphasis. */
 export function plainText(markdown: string): string {
-  return markdown
+  return withoutTermMarks(markdown)
     .replace(/\s*\[@[a-z0-9-]+\]/g, '')
     .replace(/==([^=\n]+)==/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')

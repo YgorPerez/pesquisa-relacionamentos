@@ -90,10 +90,29 @@ export const FactSheetFrontmatter = Schema.Struct({
   conflict: Schema.optional(Text),
   license: Schema.optional(Text),
   covers: Coverage,
+  /** The Verbete of the institution that ran the Study (#349). */
+  institution: Schema.optional(Slug),
   previous: Schema.optional(Schema.Array(Slug)),
   seo: Schema.optional(Seo),
 })
 export type FactSheetFrontmatter = typeof FactSheetFrontmatter.Type
+
+/** `terms/<slug>.md`, a Verbete (#349): the body is the general
+ * definition. */
+export const TermFrontmatter = Schema.Struct({
+  /** The word as the Glossário lists it. */
+  name: Text,
+  /** Other ways the text writes it ("Pew Research Center"), besides
+   * `name`. */
+  forms: Schema.optional(Schema.Array(Text)),
+  /** Each Study defines it its own way, and each Fact sheet that uses it
+   * says how, in "## Definições". */
+  varies_by_study: Schema.optional(Schema.Boolean),
+  /** An institution that runs Studies; a Fact sheet names it in
+   * `institution`. */
+  institution: Schema.optional(Schema.Boolean),
+})
+export type TermFrontmatter = typeof TermFrontmatter.Type
 
 const Slugs = Schema.Array(Slug)
 

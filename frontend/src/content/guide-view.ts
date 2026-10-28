@@ -14,7 +14,11 @@ import type {
   Tip,
   Topic,
 } from '@tem-estudo/content'
-import { BRAZIL_MARK, YOU_MARK } from '@tem-estudo/content/marks'
+import {
+  BRAZIL_MARK,
+  YOU_MARK,
+  withoutTermMarks,
+} from '@tem-estudo/content/marks'
 import {
   tipSearch,
   topicSearch,
@@ -134,7 +138,7 @@ function textWithFactSheets(
 
 /** Plain text, for search, Open Graph and the related questions' summary. */
 export function withoutMarks(markdown: string): string {
-  return markdown
+  return withoutTermMarks(markdown)
     .replace(REFS, '')
     .replace(/\{\{[^}]*\}\}\s*/g, '')
     .replace(/==([^=\n]+)==/g, '$1')
