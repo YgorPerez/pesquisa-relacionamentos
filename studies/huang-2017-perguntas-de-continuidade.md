@@ -1,8 +1,8 @@
 ---
-reference: "Huang K, Yeomans M, Brooks AW, Minson J, Gino F. *It doesn't hurt to ask: Question-asking increases liking*. Journal of Personality and Social Psychology 113(3):430–452, 2017. Dados e código: https://osf.io/8k7rf/"
+reference: "Huang K, Yeomans M, Brooks AW, Minson J, Gino F. *It doesn't hurt to ask: Question-asking increases liking*. Journal of Personality and Social Psychology 113(3):430–452, 2017. Dados e código: https://osf.io/8k7rf/. Correção: Journal of Personality and Social Psychology 128(3):669, 2025, https://doi.org/10.1037/pspi0000491. Relatórios da auditoria: https://osf.io/rymv8/"
 link: https://doi.org/10.1037/pspi0000097
 status: verified
-verified_on: 2026-10-20
+verified_on: 2026-10-28
 strength: moderate
 strength_reason: "Dois experimentos aleatorizados com conversas reais (398 e 338 pessoas) e efeito replicado, mas pequeno (d de 0,27 a 0,35), em chat de texto entre desconhecidos; a parte de speed dating, com 110 pessoas, é correlacional."
 countries: [EUA]
@@ -43,13 +43,15 @@ O PDF do editor sai do `pdftotext` com o sinal de igual como "⫽" e o beta como
 
 ## Limitações
 
-- O que a Dica afirma tem apoio: perguntar mais, e sobretudo perguntar em cima do que o outro disse, aumentou o gosto do parceiro em dois experimentos. Mas o efeito é pequeno (d de 0,27 a 0,35, numa escala de 1 a 7) e foi medido em chat de texto de 15 minutos, entre desconhecidos, sem interesse romântico.
+- O que a Dica afirma tem apoio: perguntar mais aumentou o gosto do parceiro em dois experimentos, e a pergunta em cima do que o outro disse foi o tipo que andou junto com esse gosto. Mas o efeito é pequeno (d de 0,27 a 0,35, numa escala de 1 a 7) e foi medido em chat de texto de 15 minutos, entre desconhecidos, sem interesse romântico.
 - A única evidência num encontro romântico é o speed dating, que é correlacional: "Of course, one cannot interpret this relationship causally." Ao controlar o quanto cada pessoa já era desejada, o peso das perguntas cai (p. 441).
 - O efeito de continuidade não foi sorteado: os autores sortearam só o número de perguntas e classificaram o tipo depois.
 - Os autores supõem que o efeito tenha limite: "it may be the case that one can ask too many questions, annoying the conversation partner while not revealing sufficient information about oneself." Ninguém testou os extremos.
 - O resultado por gênero vem só do speed dating (Estudo 3), que é correlacional. O texto não traz o efeito do sorteio separado por gênero nos Estudos 1 e 2A.
 - Amostras americanas de laboratório e do MTurk, sem idade relatada no texto lido.
-- Francesca Gino, uma das autoras, teve outros artigos retratados por suspeita de fraude a partir de 2023. Não achei correção nem retratação deste (busca em 2026-10-20), e os dados estão abertos no OSF.
+- Francesca Gino, uma das autoras, teve outros artigos retratados por suspeita de fraude a partir de 2023. Este não foi retratado. Em 2024, pesquisadores independentes do Imperial College London e da Universidade de Sussex refizeram o caminho dos dados brutos até os números publicados (relatórios de integridade e de reprodutibilidade em https://osf.io/rymv8/), e em 2025 saiu uma correção (doi:10.1037/pspi0000491). A página da correção na APA não abriu; o que li foi o resumo dela no registro da PsycInfo (EBSCO), que fala em "several minor errors in how some results were reported" e diz que "the substantive results of every hypothesis test in the paper remain unchanged".
+- A auditoria reproduz os números desta tabela, às vezes com diferença no último dígito; o p do Estudo 2A sai .002, não .001. A mudança que importa está numa análise que a Ficha não usa: a mediação do efeito do sorteio pela proporção de perguntas de continuidade, publicada como .06, com p = .006, sai .04, com p = .06, e deixa de ser significativa. A Tabela 3, que compara os tipos de pergunta, não tinha código, e os coeficientes refeitos são outros; a pergunta de continuidade continua sendo a única que prevê o gosto do parceiro. Sem a mediação, o peso maior da pergunta de continuidade se apoia só em associações, não num efeito sorteado.
+- Os registros do MTurk usados para tirar quem se inscreveu mais de uma vez nos Estudos 2A e 2B (5% e 12% dos dados brutos) se perderam quando a conta da autora principal foi fechada, e a auditoria não pôde conferir esse passo. O resto dos dados brutos veio direto do Qualtrics, do ChatPlat e do e-mail de Jurafsky e bateu com o que está no OSF. Os quatro coautores dizem que Gino não participou da coleta de nenhum dos estudos (página #45 do Many Co-Authors, https://manycoauthors.org/gino/45).
 
 ## Como usamos
 
