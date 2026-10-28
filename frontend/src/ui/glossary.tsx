@@ -4,7 +4,7 @@
 // without JS land on the entry's anchor.
 import { Link } from '@tanstack/react-router'
 import type { TermView } from '#/content/terms-view'
-import { Html } from './guide'
+import { Html } from './html'
 import { Headline, Notice, Section } from './section'
 import { EACH_STUDY, EMPTY_GLOSSARY, STUDIES_OF } from './term-popover.copy'
 import { StudyDefinitions } from './term-popover'

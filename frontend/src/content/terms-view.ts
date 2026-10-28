@@ -9,7 +9,7 @@ import { inlineHtml } from './view'
 import type { SafeHtml } from './safe-html'
 
 /** A Verbete's anchor in the Glossário. */
-export const termHref = (slug: string) => `${GLOSSARY_PATH}#${slug}`
+const termHref = (slug: string) => `${GLOSSARY_PATH}#${slug}`
 
 /** How one Study defined the Verbete, from its Fact sheet's Definições. */
 export interface StudyDefinition {
@@ -32,7 +32,7 @@ export interface TermView {
   }>
 }
 
-export function termView(term: Term, library: Library): TermView {
+function termView(term: Term, library: Library): TermView {
   return {
     slug: term.slug,
     name: term.name,

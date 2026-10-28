@@ -23,7 +23,7 @@ export default defineConfig({
         // tags and attributes, `href` only http(s), an anchor or a relative
         // path. Nothing the visitor types or that comes in the URL gets here.
         rules: ['react-doctor/dangerous-html-sink'],
-        files: ['src/ui/guide.tsx'],
+        files: ['src/ui/html.tsx'],
       },
     ],
   },
