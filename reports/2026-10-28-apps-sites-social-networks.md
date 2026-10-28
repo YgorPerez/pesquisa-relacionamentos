@@ -1,6 +1,6 @@
 # Apps, dating sites and social networks: follow-up for issue #50
 
-Search date: 2026-10-28. Branch: `acervo/50-apps-vs-sites-2`. Potarca 2020 was already merged in PR #90 and was not edited. Existing DOIs and file names in `studies/` were checked before adding a sheet.
+Search date: 2026-10-28. Potarca 2020 was already merged in PR #90 and was not edited. Existing DOIs and file names in `studies/` were checked before adding a sheet.
 
 ## Delivered study
 
@@ -20,12 +20,9 @@ This was a targeted follow-up, not a systematic review. Queries combined dating 
 - **Tian 2026, DOI 10.1080/1369118X.2026.2729550:** the [publisher methods](https://www.tandfonline.com/doi/full/10.1080/1369118X.2026.2729550) distinguish online dating from other online settings, but not swipe apps from sites; the outcomes are assortative mating. Excluded.
 - Potarca 2021, Kowal 2025, Cacioppo 2013 and Sharabi 2024 already have sheets. No duplicate was created. No additional eligible study separating all three venues on couple quality or duration was established in this search. That is a search result, not proof none exists.
 
-## Local sources for the orchestrator
+## Sources
 
-Do not commit the shared private repository concurrently with other agents.
-
-- **Required:** `sources/private/hall-2014-redes-sociais-casamento.txt`. Origin: [author-uploaded ResearchGate article](https://www.researchgate.net/publication/260680968_First_Comes_Social_Networking_Then_Comes_Marriage_Characteristics_of_Americans_Married_2005-2012_Who_Met_Through_Social_Networking_Sites). This is the web tool's article-text extraction, with line labels removed, not a manually reconstructed article. Provenance and the missing figure are recorded in the file. No open redistribution license was established; keep private.
-- **Screened out; not required by the sheet:** `sources/private/langlais-2024-apps-relacionamentos.pdf`. Origin: https://www.mdpi.com/2076-0760/13/10/541/pdf?version=1728720123. The article declares CC BY 4.0. Left in the private source directory because this agent owns only new sheets and this report; it can be omitted from the private-source commit or retained for a separately scoped follow-up.
+- `hall-2014-redes-sociais-casamento.txt` (private): text of the [author-uploaded ResearchGate article](https://www.researchgate.net/publication/260680968_First_Comes_Social_Networking_Then_Comes_Marriage_Characteristics_of_Americans_Married_2005-2012_Who_Met_Through_Social_Networking_Sites), with line labels removed. Figure 1 is missing. No open license established.
 
 Hall download attempts: the supplied [KU API PDF](https://kuscholarworks.ku.edu/server/api/core/bitstreams/e834b1d5-2764-4f8a-836e-7ecc6bf9140f/content) and query variants returned HTTP 403; the KU `/bitstreams/.../download` route returned a login page. The [institutional record](https://kuscholarworks.ku.edu/handle/1808/16399) still points to that bitstream. The publisher PDF and ResearchGate PDF download were also blocked. OCR tools were installed successfully, but there was no valid PDF to OCR. The author-page text provided an alternative readable source.
 
@@ -36,16 +33,3 @@ Hall download attempts: the supplied [KU API PDF](https://kuscholarworks.ku.edu/
 - The reports `2026-10-18-onde-casais-se-conhecem.md` and `2026-10-25-vale-a-pena-apps-de-namoro.md` can incorporate the distinctions after the source is integrated and reviewed. Hall cannot establish current app outcomes.
 - No direct change to a Dica or Guia follows from Hall. In particular, it does not strengthen a causal recommendation to prefer sites, apps or social networks. No files in `tips/` or Guides were edited.
 - No study newly marked `ready-for-human`: Hall's textual claims are readable, the other unread items were excluded at screening or already have an owner. The publisher PDFs' access limitations should not be mistaken for unreadable author-page text.
-- The orchestrator must commit/push the required private source, regenerate the README study index and open the PR. The README was left untouched under the assigned file ownership.
-
-## Verification
-
-`pnpm verify studies/hall-2014-redes-sociais-casamento.md`:
-
-```text
-ok    studies/hall-2014-redes-sociais-casamento.md (sources/private/hall-2014-redes-sociais-casamento.txt): 3 of 3 rows verified
-```
-
-`pnpm build` passed with the real library. `pnpm fmt` and `node scripts/minimal-proof.ts --base origin/main` passed (content/frontend types, affected tests and changed-file check). `pnpm check` passed formatting, lint and types, then failed at the stale README study index; later commands in that chain did not run. Regenerating the index is reserved for the orchestrator under the assigned file ownership. No PR was opened and no private-source commit was made by this agent.
-
-Access attempts and screening results were [commented on issue #50](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/50#issuecomment-6471422236). The issue was left open for integration.
