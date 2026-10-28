@@ -27,8 +27,11 @@ export function commentStatusVisit() {
     if (!issues.length) return
     checked.write(now)
     try {
+      const batches: number[][] = []
       for (let offset = 0; offset < issues.length; offset += 100)
-        updateCommentStatuses(await lookup(issues.slice(offset, offset + 100)))
+        batches.push(issues.slice(offset, offset + 100))
+      const answers = await Promise.all(batches.map((batch) => lookup(batch)))
+      updateCommentStatuses(answers.flat())
     } catch {
       // Offline: keep the last known states and check again on a later visit.
     }

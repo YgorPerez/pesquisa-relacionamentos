@@ -7,7 +7,7 @@ test('returns only status, caches successful answers for ten minutes and retries
   const lookup = issueStatuses(
     async (input) => {
       calls++
-      const number = Number(String(input).split('/').at(-1))
+      const number = Number(new Request(input).url.split('/').at(-1))
       if (number === 4) return new Response('', { status: 404 })
       return Response.json({
         state: number === 1 ? 'open' : 'closed',

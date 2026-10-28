@@ -1,6 +1,7 @@
 import { beforeEach, expect, test, vi } from 'vite-plus/test'
 import { addSentComment, readSentComments } from './sent-comments'
 import { commentStatusVisit } from './comment-status'
+import type { IssueStatus } from '#/content/comment-status'
 
 beforeEach(() => {
   const items = new Map<string, string>()
@@ -26,9 +27,9 @@ test('checks once per visit, at most every six hours per browser, only still ope
     comment: 'erro',
     issue: 41,
   })
-  const lookup = vi.fn(async () => [
-    { issue: 41, status: 'corrected' as const },
-  ])
+  const lookup = vi.fn<(issues: number[]) => Promise<IssueStatus[]>>(
+    async () => [{ issue: 41, status: 'corrected' as const }],
+  )
   const visit = commentStatusVisit()
   await visit(lookup, 1_000_000)
   expect(readSentComments()[0]?.status).toBe('corrected')

@@ -44,7 +44,7 @@ import {
 } from './sent-comment-list.copy'
 
 vi.mock('#/content/check-comment-status', () => ({
-  checkCommentStatus: vi.fn(async () => []),
+  checkCommentStatus: vi.fn<() => Promise<[]>>(async () => []),
 }))
 
 const GUIDE = '/onde-conhecer-pessoas'
