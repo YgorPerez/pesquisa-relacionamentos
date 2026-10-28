@@ -125,7 +125,7 @@ export function readEdit(data: unknown): EditInput {
 }
 
 /** A new edit key: only the reader's device ever holds it. */
-export function newEditKey(): string {
+function newEditKey(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(32))
   return btoa(String.fromCharCode(...bytes))
     .replaceAll('+', '-')
@@ -312,7 +312,7 @@ export function githubIssues(fetch: typeof globalThis.fetch) {
   }
 }
 
-export type GitHubIssues = ReturnType<typeof githubIssues>
+type GitHubIssues = ReturnType<typeof githubIssues>
 
 interface Delivery {
   /** For the rate limit only; it never leaves this module's memory. */
