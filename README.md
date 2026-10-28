@@ -126,7 +126,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
 - [Mitchell et al. 2019](studies/mitchell-2019-diferenca-genero-parceiros.md): por que os homens relatam mais parceiras do que as mulheres relatam parceiros · ✅ · forte
+- [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · moderada
 - [NCHS 2021](studies/nchs-2021-nsfg-parceiros-na-vida.md): parceiros na vida nos EUA, NSFG 2015–2019 · 🟡 · forte
+- [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
@@ -151,7 +153,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Stoeber 2012](studies/stoeber-2012-perfeccionismo-parceiro.md): exigir perfeição do parceiro e satisfação no namoro · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
-- [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
+- [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
