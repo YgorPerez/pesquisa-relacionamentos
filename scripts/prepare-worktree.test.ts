@@ -10,6 +10,7 @@ import {
 } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vite-plus/test'
 import { behindMain, link } from './prepare-worktree.ts'
 
@@ -196,5 +197,44 @@ describe('link', () => {
       )
       expect(readFileSync(join(worktree, RELATIVE), 'utf8')).toBe('mine')
     })
+  })
+})
+
+describe('loading the script', () => {
+  // It runs to install `node_modules`, so nothing it loads before running may
+  // come from there (#461). A child `node` records every module the import
+  // graph resolves; importing (not running) the script loads just that graph.
+  it('reaches only node: modules and files of its own', () => {
+    const script = fileURLToPath(
+      new URL('./prepare-worktree.ts', import.meta.url),
+    )
+    const recorder = `
+      import { registerHooks } from 'node:module'
+      const loaded = []
+      registerHooks({
+        resolve(specifier, context, next) {
+          const result = next(specifier, context)
+          loaded.push(result.url)
+          return result
+        },
+      })
+      await import(${JSON.stringify(new URL(`file://${script}`).href)})
+      console.log(JSON.stringify(loaded))
+    `
+    const loaded: string[] = JSON.parse(
+      execFileSync(
+        process.execPath,
+        ['--input-type=module', '--eval', recorder],
+        { encoding: 'utf8' },
+      ),
+    )
+    const scripts = new URL('.', import.meta.url).href
+    const outside = loaded.filter(
+      (url) =>
+        !url.startsWith('node:') &&
+        !(url.startsWith(scripts) && !url.includes('/node_modules/')),
+    )
+    expect(loaded.length).toBeGreaterThan(0)
+    expect(outside).toEqual([])
   })
 })

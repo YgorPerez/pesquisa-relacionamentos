@@ -37,13 +37,23 @@ import {
   symlinkSync,
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+// What this file imports loads before it runs, so before its own
+// `pnpm install`: only `node:` modules and scripts that reach nothing else
+// (#461, checked by `prepare-worktree.test.ts`). `ports.ts` reaches a package
+// through `env.ts`, and loads after the install.
 import { installHooks } from './install-hooks.ts'
-import { checkoutPort, ROOT } from './ports.ts'
 import {
   dropLegacyLink,
   ensurePrivateSources,
   PRIVATE_SOURCES,
 } from './private-sources.ts'
+
+/** The root of the checkout this file is in, as `ports.ts` says it. */
+const ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(
+  /[\\/]+$/,
+  '',
+)
 
 /** What the main checkout has, git does not carry, and the worktree needs. */
 const FROM_MAIN = [
@@ -226,6 +236,7 @@ if (import.meta.main) {
   // pointing elsewhere stays, with the warning.
   say(installHooks(ROOT).text)
   for (const line of behindMain(ROOT)) say(line)
+  const { checkoutPort } = await import('./ports.ts')
   say(
     `Ready. \`pnpm dev\` starts on http://localhost:${checkoutPort('dev')}; ` +
       'the other ports: `node scripts/ports.ts`.',
