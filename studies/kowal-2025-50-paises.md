@@ -63,7 +63,7 @@ As linhas de cálculo próprio leem o arquivo público `Dataset_Relationship_For
 
 ## Limitações
 
-- Os autores chamam as amostras de "nacionalmente representativas", mas elas vêm de painéis online com cotas, não de sorteio. Eles mesmos reconhecem que o recrutamento online deixa de fora quem não tem internet, gente que tende a ter conhecido o parceiro fora dela.
+- Os autores chamam as amostras de "nacionalmente representativas", mas elas vêm de [[painéis online]] com cotas, não de sorteio. Eles mesmos reconhecem que o recrutamento online deixa de fora quem não tem internet, gente que tende a ter conhecido o parceiro fora dela.
 - Transversal: não mostra causa. Quem procura parceiro online pode diferir em valor no mercado de parceiros, apego, autoestima ou personalidade, coisas que o estudo não mediu e que os autores citam.
 - Online/offline é uma pergunta binária: não separa app, site de namoro e rede social.
 - Os d publicados (0,35 a 0,51) não batem com o resto do artigo. As médias marginais diferem em 0,06 a 0,08 ponto numa escala de 1 a 5, e nos dados públicos a diferença bruta dividida pelo desvio-padrão fica entre 0,09 e 0,12 nas relações de 2010 em diante. O artigo não diz como calculou o d (a Fig. 4 fala em "weighted Cohen's d"). A diferença existe e é estatisticamente significativa, mas é pequena; os d de 0,35 a 0,51 não devem ser repetidos sem essa ressalva.

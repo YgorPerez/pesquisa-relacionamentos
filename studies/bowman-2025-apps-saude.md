@@ -25,7 +25,7 @@ covers:
 
 Revisão sistemática de estudos sobre o uso de apps de namoro geolocalizados e sua relação com imagem corporal, saúde mental e bem-estar. A busca em PsycINFO, PsycArticles, MEDLINE, CINAHL, Scopus e Web of Science incluiu trabalhos empíricos em inglês, revisados por pares. Dois revisores selecionaram os estudos e avaliaram sua qualidade com o Mixed Methods Appraisal Tool (MMAT).
 
-A síntese é narrativa, sem meta-análise nem estimativa conjunta do tamanho dos efeitos. As medidas de uso variam entre ser usuário, frequência, duração, motivações e uso problemático; os desfechos incluem insatisfação corporal, alimentação desordenada, autoestima, depressão e ansiedade.
+A síntese é narrativa, sem [[meta-análise]] nem estimativa conjunta do tamanho dos efeitos. As medidas de uso variam entre ser usuário, frequência, duração, motivações e uso problemático; os desfechos incluem insatisfação corporal, alimentação desordenada, autoestima, depressão e ansiedade.
 
 ## Achados
 

@@ -23,7 +23,7 @@ institution: stanford
 
 ## O que mediu
 
-Se conhecer o parceiro online prevê término e casamento. Usa dois conjuntos de dados da HCMST: um prospectivo, que segue de 2009 a 2015 quem tinha parceiro em 2009, e um retrospectivo, montado com a história dos casais contada em 2009. Os modelos são regressões logísticas de história de eventos, com peso amostral e controles de idade, duração da relação e outros. O casamento é analisado só para casais heterossexuais, porque o casamento entre pessoas do mesmo sexo não era legal na maior parte do período.
+Se conhecer o parceiro online prevê término e casamento. Usa dois conjuntos de dados da [[HCMST]]: um prospectivo, que segue de 2009 a 2015 quem tinha parceiro em 2009, e um retrospectivo, montado com a história dos casais contada em 2009. Os modelos são regressões logísticas de história de eventos, com peso amostral e controles de idade, duração da relação e outros. O casamento é analisado só para casais heterossexuais, porque o casamento entre pessoas do mesmo sexo não era legal na maior parte do período.
 
 ## Achados
 
