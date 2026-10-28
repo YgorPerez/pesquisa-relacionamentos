@@ -1,20 +1,25 @@
 // Grifar and the Nota (#334) in jsdom (ADR 0035), over the fixture content:
 // the paint, what survives a reload, the Nota, "Tirar grifo" and the Grifo
 // whose quote left the page; then "Seus trechos" (`/trechos`, #335, #347),
-// with the sent Comentários, at the end. One file for all keeps
+// with the Nota edited there (#440) and the sent Comentários, edited there
+// and on their page (#443), at the end. One file for all keeps
 // `open-screen.tsx` under before-merge's fan-in limit. jsdom has neither the CSS Custom Highlight API
 // nor layout, so the test gives it a registry of painted ranges and a box
 // for each painted range; the paint itself, in a real Chrome, is the e2e's
 // (`e2e/highlight.e2e.ts`).
 import { act, cleanup, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { http, HttpResponse } from 'msw'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
+import { server } from '#/platform/screens/network'
+import { editKeyHash } from '#/content/comment-issue'
 import { KIND_LABEL } from '#/content/comment-kinds'
 import type { Highlight } from '#/state/highlight-record'
-import type { SentComment } from '#/state/sent-comments'
+import type { PaintedComment } from './comment-paint'
 import {
   ADD_NOTE,
+  CANCEL,
   DELETE_NOTE,
   EDIT_NOTE,
   HIGHLIGHT_LABEL,
@@ -30,6 +35,7 @@ import {
   HIGHLIGHTS,
   KEPT_PASSAGES,
   NO_HIGHLIGHTS,
+  noteLabel,
   removeLabel,
   saved,
 } from './highlight-list.copy'
@@ -40,8 +46,23 @@ import {
   removeCommentLabel,
   sentCount,
   sentOn,
+  STATUS_LABEL,
   YOUR_COMMENT,
 } from './sent-comment-list.copy'
+import {
+  ALL_COMMENTS,
+  ALSO_COMMENTED,
+  COMMENT_LABEL,
+  SEE_COMMENT,
+} from './comment-popover.copy'
+import {
+  CLOSED,
+  EDIT_COMMENT,
+  editCommentLabel,
+  FAILED,
+  SAVE,
+} from './comment-edit.copy'
+import { COMMENT } from './selection-comment.copy'
 
 vi.mock('#/content/check-comment-status', () => ({
   checkCommentStatus: vi.fn<() => Promise<[]>>(async () => []),
@@ -64,6 +85,8 @@ class FakeHighlight extends Set<Range> {
 }
 
 beforeEach(() => {
+  // The token "Editar comentário" reaches GitHub (MSW) with.
+  vi.stubEnv('COMMENT_GITHUB_TOKEN', 'github_pat_test')
   const highlights = new Map<string, FakeHighlight>()
   vi.stubGlobal('Highlight', FakeHighlight)
   vi.stubGlobal('CSS', { highlights })
@@ -71,24 +94,25 @@ beforeEach(() => {
   Object.defineProperty(Range.prototype, 'getClientRects', {
     configurable: true,
     value(this: Range) {
-      const drawn = [...(highlights.get('grifo') ?? [])].includes(this)
+      const drawn = [...highlights.values()].some((paint) => paint.has(this))
       return drawn ? [new DOMRect(0, 0, 10, 10)] : []
     },
   })
 })
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.unstubAllEnvs()
   Reflect.deleteProperty(Range.prototype, 'getClientRects')
 })
 
-/** The ranges painted as Grifos. */
-const paintedRanges = (): Range[] => [
-  ...((CSS.highlights.get('grifo') as unknown as Set<Range> | undefined) ?? []),
+/** The ranges painted under `name`: Grifos, or sent Comentários' quotes. */
+const paintedRanges = (name = 'grifo'): Range[] => [
+  ...((CSS.highlights.get(name) as unknown as Set<Range> | undefined) ?? []),
 ]
 
 /** The painted text of each Grifo's parts, joined. */
-const paintedText = () =>
-  paintedRanges()
+const paintedText = (name = 'grifo') =>
+  paintedRanges(name)
     .map((range) => range.toString())
     .join('')
 
@@ -488,6 +512,46 @@ it('"Tirar grifo" takes the Grifo off the list and out of the storage, and the l
   ).toBeInTheDocument()
 })
 
+it("a Nota is written, edited and removed in the list with the popover's field, a changed Grifo's too, and goes to the storage", async () => {
+  const user = userEvent.setup()
+  save({ ...GUIDE_B, changed: true }, TIP)
+  await openKept()
+  const notes = () =>
+    (JSON.parse(localStorage.getItem(KEY) ?? '[]') as Highlight[]).map(
+      (h) => h.note,
+    )
+
+  await user.click(
+    screen.getByRole('button', { name: noteLabel(TIP.text, '') }),
+  )
+  await user.type(screen.getByLabelText(NOTE_FIELD), 'Testar por um mês')
+  await user.click(screen.getByRole('button', { name: SAVE_NOTE }))
+  expect(await screen.findByText('Testar por um mês')).toBeVisible()
+  expect(screen.queryByLabelText(NOTE_FIELD)).toBeNull()
+  expect(notes()).toEqual(['Ver a amostra', 'Testar por um mês'])
+
+  const changed = within(highlightsRegion()).getByText(CHANGED).closest('li')!
+  const edit = within(changed).getByRole('button', {
+    name: noteLabel(GUIDE_B.text, GUIDE_B.note),
+  })
+  await user.click(edit)
+  const field = within(changed).getByLabelText(NOTE_FIELD)
+  expect(field).toHaveValue('Ver a amostra')
+  await user.clear(field)
+  await user.type(field, 'Descartado')
+  await user.click(within(changed).getByRole('button', { name: CANCEL }))
+  expect(within(changed).getByText('Ver a amostra')).toBeVisible()
+  expect(notes()[0]).toBe('Ver a amostra')
+
+  await user.click(edit)
+  await user.click(within(changed).getByRole('button', { name: DELETE_NOTE }))
+  expect(within(changed).queryByText(NOTE_HEADING)).toBeNull()
+  expect(
+    within(changed).getByRole('button', { name: noteLabel(GUIDE_B.text, '') }),
+  ).toBeVisible()
+  expect(notes()).toEqual(['', 'Testar por um mês'])
+})
+
 it('with nothing kept, each section says how to fill it', async () => {
   await openKept()
   expect(
@@ -517,6 +581,9 @@ it('every page links to Seus trechos from its footer, and the old /grifos leads 
 // (`state/sent-comments.ts`).
 
 const COMMENTS_KEY = 'tem-estudo:sent-comments'
+
+/** A sent Comentário as the store keeps it. */
+type SentComment = PaintedComment['comment']
 
 function sentComment(
   path: string,
@@ -675,7 +742,7 @@ it('"Tirar da lista" forgets the Comentário on this device only, and the last o
   ).toBeInTheDocument()
 })
 
-it('on its page, a sent Comentário whose quote is gone is marked changed, one whose quote is there is not, and neither is painted', async () => {
+it('on its page, a sent Comentário whose quote is there is painted apart from the Grifos; one whose quote is gone is marked changed and not painted', async () => {
   saveComments(
     { ...ON_GUIDE, changed: true },
     sentComment('/onde-conhecer-pessoas', 'Onde conhecer pessoas', 'saiu', {
@@ -688,5 +755,224 @@ it('on its page, a sent Comentário whose quote is gone is marked changed, one w
   await waitFor(() =>
     expect(keptComments().map((c) => c.changed)).toEqual([false, true, false]),
   )
+  expect(paintedText('comentario')).toBe(SENTENCE)
   expect(paintedText()).toBe('')
+})
+
+const commentPopover = () =>
+  screen.findByRole('dialog', { name: COMMENT_LABEL })
+
+it("a tap on a sent Comentário's quote opens it: its type, its status, what was written and the way to Seus trechos", async () => {
+  const user = userEvent.setup()
+  saveComments({ ...ON_GUIDE, status: 'corrected', seenStatus: 'corrected' })
+  await openGuide()
+  await waitFor(() => expect(paintedText('comentario')).toBe(SENTENCE))
+
+  await tapGrifo(user)
+  const popover = await commentPopover()
+  expect(within(popover).getByText(KIND_LABEL.wrong)).toBeVisible()
+  expect(within(popover).getByText(STATUS_LABEL.corrected)).toBeVisible()
+  expect(within(popover).getByText(YOUR_COMMENT)).toBeVisible()
+  expect(
+    within(popover).getByText('O número não bate com a Ficha.'),
+  ).toBeVisible()
+  expect(
+    within(popover).getByRole('link', { name: ALL_COMMENTS }),
+  ).toHaveAttribute('href', '/trechos#comentarios')
+  expect(screen.queryByRole('dialog', { name: HIGHLIGHT_LABEL })).toBeNull()
+})
+
+it("a tap on a Grifo over a Comentário's quote opens the Grifo, which tells of the Comentário and opens it", async () => {
+  const user = userEvent.setup()
+  saveComments(ON_GUIDE)
+  await openGuide()
+  select('A satisfação de quem', 'perto')
+  await highlight(user)
+  await user.keyboard('{Escape}')
+  await waitFor(() => expect(paintedText('comentario')).toBe(SENTENCE))
+
+  await tapGrifo(user)
+  const grifo = await grifoPopover()
+  expect(within(grifo).getByText(ALSO_COMMENTED)).toBeVisible()
+  await user.click(within(grifo).getByRole('button', { name: SEE_COMMENT }))
+  expect(
+    within(await commentPopover()).getByText('O número não bate com a Ficha.'),
+  ).toBeVisible()
+  expect(screen.queryByRole('dialog', { name: HIGHLIGHT_LABEL })).toBeNull()
+})
+
+it("without the CSS Custom Highlight API a Comentário's quote is looked for but not drawn, and a tap opens nothing", async () => {
+  const user = userEvent.setup()
+  vi.stubGlobal('CSS', {})
+  saveComments({ ...ON_GUIDE, changed: true })
+  await openGuide()
+
+  await waitFor(() => expect(keptComments()[0]?.changed).toBe(false))
+  await tapGrifo(user)
+  expect(screen.queryByRole('dialog', { name: COMMENT_LABEL })).toBeNull()
+})
+
+// "Editar comentário" (#443): GitHub is MSW (`platform/screens/network.ts`),
+// with the issue as the send left it (`content/comment-issue.ts`).
+
+const ISSUE =
+  'https://api.github.com/repos/YgorPerez/pesquisa-relacionamentos-fontes/issues/:issue'
+
+const EDIT_KEY = 'k'.repeat(43)
+
+/** The issue on GitHub, `open` or not, and each PATCH it received. */
+async function issueOnGitHub(state: 'open' | 'closed') {
+  const hash = await editKeyHash(EDIT_KEY)
+  const patched: { title: string; labels: string[]; body: string }[] = []
+  server.use(
+    http.get(ISSUE, () =>
+      HttpResponse.json({
+        title: `${KIND_LABEL.wrong}: Onde conhecer pessoas`,
+        labels: [{ name: KIND_LABEL.wrong }],
+        state,
+        body: `**Trecho**\n\n> ${SENTENCE}\n\n**Link:** https://temestudo.cloud${GUIDE}\n\n**Comentário**\n\nO número não bate com a Ficha.\n\n<!-- edit-key-sha256: ${hash} -->`,
+      }),
+    ),
+    http.patch(ISSUE, async ({ request }) => {
+      patched.push((await request.json()) as (typeof patched)[number])
+      return HttpResponse.json({})
+    }),
+  )
+  return patched
+}
+
+const EDITABLE = { ...ON_GUIDE, editKey: EDIT_KEY }
+
+it('in Seus trechos, a Recebido Comentário opens with its type and text, and Salvar rewrites the issue and the list', async () => {
+  const user = userEvent.setup()
+  const patched = await issueOnGitHub('open')
+  saveComments(EDITABLE)
+  await openKept()
+
+  await user.click(
+    screen.getByRole('button', { name: editCommentLabel(SENTENCE) }),
+  )
+  const [item] = sentItems()
+  expect(
+    within(item!).getByRole('radio', { name: KIND_LABEL.wrong }),
+  ).toBeChecked()
+  const field = within(item!).getByLabelText(COMMENT.text)
+  expect(field).toHaveValue('O número não bate com a Ficha.')
+  await user.click(
+    within(item!).getByRole('radio', { name: KIND_LABEL.unclear }),
+  )
+  await user.clear(field)
+  await user.type(field, 'Não ficou claro de onde vem o número.')
+  await user.click(within(item!).getByRole('button', { name: SAVE }))
+
+  await waitFor(() =>
+    expect(within(item!).queryByLabelText(COMMENT.text)).toBeNull(),
+  )
+  expect(
+    within(item!).getByText('Não ficou claro de onde vem o número.'),
+  ).toBeVisible()
+  expect(within(item!).getByText(KIND_LABEL.unclear)).toBeVisible()
+  expect(keptComments()[0]).toMatchObject({
+    kind: 'unclear',
+    comment: 'Não ficou claro de onde vem o número.',
+  })
+  expect(patched).toHaveLength(1)
+  expect(patched[0]!.labels).toEqual([KIND_LABEL.unclear])
+  expect(patched[0]!.body).toContain('Não ficou claro de onde vem o número.')
+  expect(patched[0]!.body).toContain(`> ${SENTENCE}`)
+})
+
+it('on its page, the popover edits the Comentário, and the popover shows the new text', async () => {
+  const user = userEvent.setup()
+  await issueOnGitHub('open')
+  saveComments(EDITABLE)
+  await openGuide()
+  await waitFor(() => expect(paintedText('comentario')).toBe(SENTENCE))
+
+  await tapGrifo(user)
+  const popover = await commentPopover()
+  await user.click(within(popover).getByRole('button', { name: EDIT_COMMENT }))
+  const field = within(popover).getByLabelText(COMMENT.text)
+  await user.clear(field)
+  await user.type(field, 'Outro texto.')
+  await user.click(within(popover).getByRole('button', { name: SAVE }))
+
+  await waitFor(() =>
+    expect(within(popover).queryByLabelText(COMMENT.text)).toBeNull(),
+  )
+  expect(within(await commentPopover()).getByText('Outro texto.')).toBeVisible()
+  expect(keptComments()[0]?.comment).toBe('Outro texto.')
+})
+
+it('an issue the curator closed is not edited: the form says so and the button goes', async () => {
+  const user = userEvent.setup()
+  const patched = await issueOnGitHub('closed')
+  saveComments(EDITABLE)
+  await openKept()
+
+  await user.click(
+    screen.getByRole('button', { name: editCommentLabel(SENTENCE) }),
+  )
+  await user.type(screen.getByLabelText(COMMENT.text), ' Mais.')
+  await user.click(screen.getByRole('button', { name: SAVE }))
+
+  expect(await screen.findByText(CLOSED)).toBeVisible()
+  expect(
+    screen.queryByRole('button', { name: editCommentLabel(SENTENCE) }),
+  ).toBeNull()
+  expect(patched).toHaveLength(0)
+  expect(keptComments()[0]?.comment).toBe('O número não bate com a Ficha.')
+})
+
+it('when GitHub does not answer, the form stays with what was typed and says it was not saved', async () => {
+  const user = userEvent.setup()
+  server.use(http.get(ISSUE, () => HttpResponse.error()))
+  saveComments(EDITABLE)
+  await openKept()
+
+  await user.click(
+    screen.getByRole('button', { name: editCommentLabel(SENTENCE) }),
+  )
+  await user.type(screen.getByLabelText(COMMENT.text), ' Mais.')
+  await user.click(screen.getByRole('button', { name: SAVE }))
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(FAILED)
+  expect(screen.getByLabelText(COMMENT.text)).toHaveValue(
+    'O número não bate com a Ficha. Mais.',
+  )
+  expect(keptComments()[0]?.comment).toBe('O número não bate com a Ficha.')
+})
+
+it('Cancelar closes the form and keeps the Comentário as it was', async () => {
+  const user = userEvent.setup()
+  saveComments(EDITABLE)
+  await openKept()
+
+  await user.click(
+    screen.getByRole('button', { name: editCommentLabel(SENTENCE) }),
+  )
+  await user.type(screen.getByLabelText(COMMENT.text), ' Mais.')
+  await user.click(screen.getByRole('button', { name: CANCEL }))
+
+  expect(screen.queryByLabelText(COMMENT.text)).toBeNull()
+  expect(keptComments()[0]?.comment).toBe('O número não bate com a Ficha.')
+})
+
+it('a Corrigido or Não vamos mudar Comentário, or one sent without an edit key, has no "Editar comentário"', async () => {
+  saveComments(
+    { ...EDITABLE, status: 'corrected', seenStatus: 'corrected' },
+    {
+      ...ON_TIP,
+      editKey: EDIT_KEY,
+      status: 'not-planned',
+      seenStatus: 'not-planned',
+    },
+    sentComment(GUIDE, 'Onde conhecer pessoas', 'sem chave'),
+  )
+  await openKept()
+
+  expect(sentItems()).toHaveLength(3)
+  expect(
+    screen.queryByRole('button', { name: /^Editar comentário/ }),
+  ).toBeNull()
 })

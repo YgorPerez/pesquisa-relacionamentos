@@ -1,8 +1,8 @@
 // The words of "Seus trechos" (`/trechos`, #335, #347) and of its Grifos
-// section (`highlight-list.tsx`), shared with their tests. "Sua nota" and
-// "Tirar grifo" are the Grifo popover's (`highlight.copy.ts`); the
+// section (`highlight-list.tsx`), shared with their tests. "Sua nota", the
+// Nota's buttons and "Tirar grifo" are the Grifo popover's (`highlight.copy.ts`); the
 // Comentários section's are `sent-comment-list.copy.ts`.
-import { REMOVE_HIGHLIGHT } from './highlight.copy'
+import { ADD_NOTE, EDIT_NOTE, REMOVE_HIGHLIGHT } from './highlight.copy'
 
 /** The page's title, its last word marked in yellow. */
 export const PAGE_TITLE = { rest: 'Seus', marked: 'trechos' } as const
@@ -55,3 +55,7 @@ export function quoteButtonLabel(action: string, text: string): string {
 /** The name of a Grifo's "Tirar grifo". */
 export const removeLabel = (text: string): string =>
   quoteButtonLabel(REMOVE_HIGHLIGHT, text)
+
+/** The name of a Grifo's "Escrever nota", or "Editar nota" once it has one. */
+export const noteLabel = (text: string, note: string): string =>
+  quoteButtonLabel(note === '' ? ADD_NOTE : EDIT_NOTE, text)

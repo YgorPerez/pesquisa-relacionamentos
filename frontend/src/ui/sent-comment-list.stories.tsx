@@ -40,6 +40,8 @@ const COMMENTS: ReadonlyArray<SentComment> = [
     '/onde-conhecer-pessoas',
     'Onde conhecer pessoas',
     'A satisfação de quem se conheceu online e de quem se conheceu pessoalmente fica perto.',
+    // Recebido, with the key that edits it (#443).
+    { editKey: 'k'.repeat(43) },
   ),
   sent(
     '2',

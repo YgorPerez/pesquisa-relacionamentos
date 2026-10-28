@@ -5,79 +5,23 @@
 // isso?" are the ones of the popover on selected text, over the Grifo's
 // text. Under them, the way to "Seus trechos" (`/trechos`, #335).
 import { Popover } from '@base-ui/react/popover'
-import { useState, type FormEvent, type ReactNode } from 'react'
-import { removeHighlight, setNote, NOTE_LENGTH } from '#/state/highlights'
-import { Input } from '@/ui/shadcn/input'
+import { useState, type ReactNode } from 'react'
+import { removeHighlight, setNote } from '#/state/highlights'
 import { SiteButton } from './button'
 import {
   ADD_NOTE,
-  CANCEL,
-  DELETE_NOTE,
   EDIT_NOTE,
   HIGHLIGHT_LABEL,
-  NOTE_FIELD,
   REMOVE_HIGHLIGHT,
-  SAVE_NOTE,
 } from './highlight.copy'
 import { ALL_HIGHLIGHTS } from './highlight-list.copy'
 import { HighlightNote } from './highlight-note'
+import { NoteForm } from './note-form'
 import type { Painted } from './highlight-paint'
 import { SmallLink } from './section'
 import { CopyLink, CopyText } from './selection-copy'
 import { WhereFrom } from './selection-source'
 import { PopoverPanel, TextPopover } from './text-popover'
-
-const NOTE_NAME = 'nota'
-
-/** The Nota's field; an empty Nota is no Nota. */
-function NoteForm({
-  id,
-  note,
-  done,
-}: {
-  id: string
-  note: string
-  done: () => void
-}) {
-  // The page stays: the Nota goes to the store, never to a server.
-  const save = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const value = new FormData(event.currentTarget).get(NOTE_NAME)
-    setNote(id, typeof value === 'string' ? value : '')
-    done()
-  }
-  return (
-    <form onSubmit={save}>
-      <Input
-        small
-        className="w-full"
-        name={NOTE_NAME}
-        aria-label={NOTE_FIELD}
-        defaultValue={note}
-        maxLength={NOTE_LENGTH}
-        autoFocus
-      />
-      <div className="mt-xs flex flex-wrap gap-xs">
-        <SiteButton type="submit">{SAVE_NOTE}</SiteButton>
-        {note !== '' && (
-          <SiteButton
-            variant="light"
-            type="button"
-            onClick={() => {
-              setNote(id, '')
-              done()
-            }}
-          >
-            {DELETE_NOTE}
-          </SiteButton>
-        )}
-        <SiteButton variant="light" type="button" onClick={done}>
-          {CANCEL}
-        </SiteButton>
-      </div>
-    </form>
-  )
-}
 
 /** The row of actions on the Grifo, and the panel under it. */
 function HighlightActions({
@@ -91,7 +35,13 @@ function HighlightActions({
   const { highlight, quote } = painted
   const { id, note } = highlight
   const editNote = () =>
-    setPanel(<NoteForm id={id} note={note} done={() => setPanel(null)} />)
+    setPanel(
+      <NoteForm
+        note={note}
+        onSave={(next) => setNote(id, next)}
+        done={() => setPanel(null)}
+      />,
+    )
   const onQuote = quote && { quote, show: setPanel, close }
   return (
     <>
@@ -124,9 +74,12 @@ function HighlightActions({
 export function HighlightPopover({
   painted,
   close,
+  children,
 }: {
   painted: Painted
   close: () => void
+  /** Under the actions: the passage's Comentário, if it has one (#441). */
+  children?: ReactNode
 }) {
   return (
     <Popover.Root
@@ -143,6 +96,7 @@ export function HighlightPopover({
         data-slot="grifo"
       >
         <HighlightActions painted={painted} close={close} />
+        {children}
       </TextPopover>
     </Popover.Root>
   )

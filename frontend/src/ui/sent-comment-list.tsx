@@ -1,7 +1,9 @@
 // The Comentários section of "Seus trechos" (`/trechos`, #347): every
 // Comentário sent from this browser, newest first. Each shows its type, the
 // day it went, its page, its quote leading to its sentence and what the
-// reader wrote, and "Tirar da lista", which forgets it here only. A
+// reader wrote, "Editar comentário" while it is Recebido
+// (`comment-edit.tsx`, #443) and "Tirar da lista", which forgets it here
+// only. A
 // Comentário whose quote left its page (`changed`, set by that page's layer)
 // says so, keeps the old text, and its quote leads to the page. Everything
 // comes from the store (`state/sent-comments.ts`).
@@ -14,6 +16,8 @@ import {
   markCommentStatusesSeen,
   type SentComment,
 } from '#/state/sent-comments'
+import { CommentEdit } from './comment-edit'
+import { editCommentLabel } from './comment-edit.copy'
 import {
   ChangedPassageNotice,
   RemoveButton,
@@ -108,12 +112,20 @@ function SentItem({
         note={comment.comment}
         className="mt-xs"
       />
-      <RemoveButton
-        label={removeCommentLabel(text)}
-        onClick={() => onRemove(id)}
-      >
-        {REMOVE_FROM_LIST}
-      </RemoveButton>
+      <div className="flex flex-wrap gap-xs">
+        <CommentEdit
+          comment={comment}
+          label={editCommentLabel(text)}
+          className="mt-xs"
+        >
+          <RemoveButton
+            label={removeCommentLabel(text)}
+            onClick={() => onRemove(id)}
+          >
+            {REMOVE_FROM_LIST}
+          </RemoveButton>
+        </CommentEdit>
+      </div>
     </SeparatedListItem>
   )
 }
