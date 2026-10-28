@@ -33,6 +33,7 @@ questions:
         amizade-depois-da-colorida,
         quem-deixou-de-ser-amigo,
         brasil-parceiro-casual,
+        satisfacao-sexual-solteiros,
       ]
   - slug: quantos-parceiros-antes-de-casar
     question: Quantos parceiros as pessoas têm ==antes de casar==?
@@ -67,7 +68,7 @@ questions:
       ]
   - slug: mais-parceiros-faz-mal
     question: Transar com mais pessoas antes de assumir uma relação ==faz mal==?
-    answer: Não há prova de que faça, e nenhum estudo é experimento. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Tudo vem dos EUA; no Brasil, não achamos estudo sobre isso.
+    answer: Não há prova de que faça, e nenhum estudo é experimento. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Os três estudos são dos EUA; no Brasil, não achamos estudo sobre isso.
     confidence: moderate
     findings:
       [
@@ -204,6 +205,9 @@ findings:
     text: No Brasil, em 2013, 24,5% de quem fez sexo no último ano teve parceiro casual. Entre os jovens de 15 a 24 anos, cerca de 41%.
     fact_sheets: [ministerio-saude-2016-pcap-2013]
     period: '2013'
+  - id: satisfacao-sexual-solteiros
+    text: Entre solteiros nunca casados da Alemanha, de 18 a 50 anos, cada ponto a mais de satisfação com a vida sexual (nota de 0 a 10) de um ano para o outro veio com 0,024 ponto a menos de vontade de ter parceiro nos homens e 0,026 nas mulheres (escala de 1 a 5). Transar mais vezes não teve associação clara. O modelo explica de 1% a 2% da mudança dentro de cada pessoa, e o estudo não sabe o que vem antes.
+    fact_sheets: [kislev-2026-satisfacao-sexual-desejo-relacao]
   - id: camisinha-brasil-2013
     text: No Brasil, em 2013, com parceiro casual, 66,7% usaram camisinha na última transa e 54,9% em todas as transas do ano. Com parceiro fixo, 19,9% usaram em todas.
     fact_sheets: [ministerio-saude-2016-pcap-2013]
@@ -740,6 +744,8 @@ A bebida aparece em vários dos piores desfechos. Beber logo antes veio com mais
 A expectativa é o último ponto. Quem entra numa relação casual esperando que ela vire namoro costuma se frustrar: a revisão conclui que relações casuais raramente viram namoro, e entrar com esse objetivo veio com reações piores [@wesche-2021-desfechos-emocionais-sexo-casual]. Não achamos estudo que diga quantas amizades coloridas viram namoro. O que se mediu é que a amizade costuma sobreviver. Depois que a amizade colorida acabou, 81,5% dos universitários continuaram amigos, 35,4% tão próximos quanto antes e 14,6% mais próximos; 18,5% deixaram de ser [@owen-2013-amizade-depois-amizade-colorida]. Quem deixou de ser amigo se sentia mais enganado e contava que a relação era mais sexo que amizade. Dizer com clareza o que cada um quer parece ajudar, mas isso é inferência nossa: o estudo mede um momento só.
 
 {{myth:amizade-colorida-vira-namoro}}
+
+Uma vida sexual boa enquanto se está solteiro tira a vontade de namorar? Um painel alemão seguiu solteiros nunca casados de 18 a 50 anos que continuaram solteiros de um ano para o outro. Quando a [[satisfação]] com a vida sexual subiu, a vontade de ter um parceiro caiu, em homens e em mulheres, mas muito pouco: cada ponto a mais numa nota de 0 a 10 veio com 0,024 ponto a menos de vontade nos homens e 0,026 nas mulheres, numa escala de 1 a 5 [@kislev-2026-satisfacao-sexual-desejo-relacao]. Transar mais vezes não teve associação clara com a vontade. O modelo explica de 1% a 2% do quanto a vontade de cada pessoa mudou. O estudo só observou, e não se sabe o que vem antes, a satisfação ou a falta de vontade. Ele também não mede sexo casual, porque a pergunta sobre quantas vezes a pessoa transou não separa com quem. E com os mesmos dados e outro modelo, um estudo anterior (Park e colegas, 2021) achou o contrário para a frequência: transar mais veio com mais vontade de ter parceiro [@kislev-2026-satisfacao-sexual-desejo-relacao]. Não achamos estudo brasileiro sobre isso.
 
 Então, vale a pena? Para quem quer, pelos próprios motivos, os estudos não acham dano na média, e muita gente gosta. Vale menos quando o sexo vem de pressão, de vontade de agradar, de bebida demais ou da esperança de um namoro. A leitura é nossa, tirada dos estudos acima, e nenhum deles sorteou quem teria sexo casual: "costuma ir bem" quer dizer que quem tem esse perfil e faz costuma contar coisas boas. A Dica sobre motivo e sobriedade, em "O que levar", resume o que observar.
 
