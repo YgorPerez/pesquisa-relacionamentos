@@ -1,7 +1,8 @@
 // The navigation: the top bar, the DESIGN.md back links and the loop that
 // circles the tapped Fact sheet (`navigation.tsx`, `header.tsx`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { FactSheetLoop, BackLink, BackToGuide, FoldArrow } from './navigation'
+import { FactSheetLoop } from './fact-sheet-loop'
+import { BackLink, BackToGuide, FoldArrow } from './navigation'
 import { Header } from './header'
 
 const meta = {

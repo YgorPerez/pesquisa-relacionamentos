@@ -4,8 +4,9 @@
 // word is a link there (`content/terms-view.ts`), so without JS, or with a
 // modifier key, the tap just follows it.
 import { Popover } from '@base-ui/react/popover'
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { scrollBehavior } from './loop'
 import type { StudyDefinition, TermView } from '#/content/terms-view'
 import { Html } from './html'
 import { SmallLink } from './section'
@@ -20,6 +21,39 @@ interface Opened {
   readonly range: Range
   /** The Fact sheets the word's sentence cites. */
   readonly factSheets: ReadonlyArray<string>
+  /** Which of the page's marked words it is, for the way back. */
+  readonly index: number
+}
+
+const termLinks = () => [...document.querySelectorAll(`main ${TERM_LINK}`)]
+
+/** Back from the Glossário's "voltar ao texto" (#358): once the history has
+ * put the reading point back, the word the reader left from comes to the
+ * middle of the screen and takes the focus, as a reference ring does
+ * (`navigation.tsx`). */
+function useBackToTheWord() {
+  // The entry already drawn, as `useReadingPointInHistory` reads it.
+  const entry = useRouterState({
+    select: (s) => s.resolvedLocation?.state.__TSR_key,
+  })
+  useEffect(() => {
+    const state = window.history.state as {
+      __TSR_key?: string
+      verbeteOrigin?: number
+    } | null
+    if (!state || state.__TSR_key !== entry) return
+    const { verbeteOrigin: index, ...rest } = state
+    if (index === undefined) return
+    window.history.replaceState(rest, '')
+    // After the reading point's own frame, scheduled in a layout effect.
+    const frame = requestAnimationFrame(() => {
+      const word = termLinks()[index]
+      if (!(word instanceof HTMLElement)) return
+      word.scrollIntoView({ block: 'center', behavior: scrollBehavior() })
+      word.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [entry])
 }
 
 /** How Studies defined the Verbete: each Fact sheet's title, leading to
@@ -52,9 +86,12 @@ export function StudyDefinitions({
 export function TermCard({
   term,
   factSheets,
+  onLeave,
 }: {
   term: TermView
   factSheets: ReadonlyArray<string>
+  /** Before "Ver no Glossário" leaves the page. */
+  onLeave?: () => void
 }) {
   const cited = new Set(factSheets)
   const inStudy = term.definitions.filter((d) => cited.has(d.factSheet))
@@ -70,7 +107,13 @@ export function TermCard({
           <StudyDefinitions definitions={inStudy} />
         </div>
       )}
-      <SmallLink to="/glossario" hash={term.slug} className="mt-xs">
+      <SmallLink
+        to="/glossario"
+        hash={term.slug}
+        state={{ fromText: true }}
+        onClick={onLeave}
+        className="mt-xs"
+      >
         {SEE_IN_GLOSSARY}
       </SmallLink>
     </>
@@ -95,7 +138,7 @@ function followTaps(
     const factSheets = (link.getAttribute('data-fichas') ?? '')
       .split(' ')
       .filter(Boolean)
-    open({ slug, range, factSheets })
+    open({ slug, range, factSheets, index: termLinks().indexOf(link) })
   }
   document.addEventListener('click', onClick)
   return () => document.removeEventListener('click', onClick)
@@ -109,6 +152,7 @@ export function TermPopover({
 }) {
   const [opened, setOpened] = useState<Opened | null>(null)
   useEffect(() => followTaps(terms, setOpened), [terms])
+  useBackToTheWord()
   const term = opened && terms[opened.slug]
   if (!opened || !term) return null
   return (
@@ -125,7 +169,17 @@ export function TermPopover({
         aria-label={termLabel(term.name)}
         data-slot="verbete"
       >
-        <TermCard term={term} factSheets={opened.factSheets} />
+        <TermCard
+          term={term}
+          factSheets={opened.factSheets}
+          // On the entry the page is leaving, next to its reading point.
+          onLeave={() =>
+            window.history.replaceState(
+              { ...window.history.state, verbeteOrigin: opened.index },
+              '',
+            )
+          }
+        />
       </TextPopover>
     </Popover.Root>
   )

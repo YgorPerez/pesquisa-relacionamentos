@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useLocation, useRouter } from '@tanstack/react-router'
 import { glossaryQuery } from '#/content/glossary'
 import { Glossary } from '#/ui/glossary'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
@@ -24,6 +24,16 @@ export const Route = createFileRoute('/glossario')({
 /** The Verbetes (#351), alphabetical, each on its anchor. */
 function GlossaryPage() {
   const { data: terms } = useSuspenseQuery(glossaryQuery())
+  const router = useRouter()
+  // Came from a text's "Ver no Glossário": circle the Verbete, and go back
+  // to the sentence, whose reading point the history kept.
+  const { hash, fromText } = useLocation({
+    select: (l) => ({ hash: l.hash, fromText: l.state.fromText === true }),
+  })
+  const cameFrom =
+    fromText && hash
+      ? { slug: hash, backToText: () => router.history.back() }
+      : null
   return (
     <Sheet>
       <Column>
@@ -35,7 +45,7 @@ function GlossaryPage() {
           satisfação, cada estudo mede de um jeito, e aqui fica como cada um
           mediu.
         </Lead>
-        <Glossary terms={terms} />
+        <Glossary terms={terms} cameFrom={cameFrom} />
       </Column>
     </Sheet>
   )

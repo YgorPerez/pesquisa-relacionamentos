@@ -13,3 +13,8 @@ export function loopPath(width: number, height: number): string {
     (((i++ % 2 === 0 ? width : height) * Number(n)) / 100).toFixed(1),
   )
 }
+
+/** How the page scrolls to what the loop circles, and back to the text:
+ * smooth, unless the reader asked for less motion. */
+export const scrollBehavior = (): ScrollBehavior =>
+  matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'

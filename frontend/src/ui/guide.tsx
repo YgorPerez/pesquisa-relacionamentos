@@ -8,7 +8,8 @@ import type { CitedFactSheet } from '#/content/guide-view'
 import type { FactSheetSummary } from '#/content/view'
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
-import { FactSheetLoop, type CircledFactSheet } from './navigation'
+import { FactSheetLoop } from './fact-sheet-loop'
+import type { CircledFactSheet } from './navigation'
 import {
   Steps,
   StrengthBadge,

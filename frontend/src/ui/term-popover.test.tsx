@@ -16,6 +16,7 @@ import { expect, it } from 'vite-plus/test'
 import { Glossary } from './glossary'
 import { TermPopover } from './term-popover'
 import {
+  BACK_TO_TEXT,
   EACH_STUDY,
   IN_STUDY,
   SEE_IN_GLOSSARY,
@@ -113,4 +114,6 @@ it('lists every Verbete in the Glossário, with each Study’s definition and an
   )
   expect(satisfaction!.getByText(EACH_STUDY)).toBeVisible()
   expect(satisfaction!.getByText(COSTA_DEFINITION)).toBeVisible()
+  // Not from a text: no way back.
+  expect(screen.queryByRole('button', { name: BACK_TO_TEXT })).toBeNull()
 })
