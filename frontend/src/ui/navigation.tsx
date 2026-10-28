@@ -14,12 +14,15 @@ import {
 } from 'react'
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
-import { loopPath } from './loop'
+import { scrollBehavior } from './loop'
 
 declare module '@tanstack/react-router' {
   interface HistoryState {
     /** The title of the Guide the navigation came from. */
     from?: string
+    /** The reader came to a Glossário entry from a text (#358): the page
+     * circles it and offers "voltar ao texto". */
+    fromText?: boolean
     /** Where the reader was when they left this history entry. */
     readingPoint?: { scroll: number; open: ReadonlyArray<string> }
   }
@@ -76,45 +79,6 @@ export function useReferences(page: string) {
   }, [])
 
   return { circled, backToText }
-}
-
-const scrollBehavior = (): ScrollBehavior =>
-  matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-
-/** The loop and the short arrow around the Fact sheet. Mounted inside the
- * Fact sheet's `li`: it measures its real size, redraws the loop, scrolls to
- * it and focuses it. */
-export function FactSheetLoop() {
-  const svg = useRef<SVGSVGElement>(null)
-
-  useLayoutEffect(() => {
-    const drawing = svg.current
-    const factSheet = drawing?.parentElement
-    if (!drawing || !factSheet) return
-    const width = factSheet.offsetWidth + 20
-    const height = factSheet.offsetHeight + 20
-    drawing.setAttribute('viewBox', `0 0 ${width} ${height}`)
-    drawing.querySelector('path')?.setAttribute('d', loopPath(width, height))
-    factSheet.scrollIntoView({ block: 'center', behavior: scrollBehavior() })
-    factSheet.focus({ preventScroll: true })
-  }, [])
-
-  return (
-    <>
-      <svg ref={svg} className="laco" aria-hidden="true">
-        <path pathLength={1} />
-      </svg>
-      <svg
-        className="seta-laco"
-        width="34"
-        height="34"
-        viewBox="0 0 34 34"
-        aria-hidden="true"
-      >
-        <path pathLength={1} d="M3 3c4 12 10 20 22 26M25 29l-9 1M25 29l-2-9" />
-      </svg>
-    </>
-  )
 }
 
 function saveReadingPoint() {
