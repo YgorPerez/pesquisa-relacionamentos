@@ -6,10 +6,11 @@
 // (`drawings.css`), the dotted underline. Looking needs only the page's
 // text; the paint needs the CSS Custom Highlight API, and without it nothing
 // is drawn and nothing opens on a tap.
-import { useSyncExternalStore } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import {
   markCommentsFound,
   readSentComments,
+  useSentComments,
   type SentComment,
 } from '#/state/sent-comments'
 import { canPaint, partsAt } from './highlight-paint'
@@ -34,7 +35,7 @@ function setPainted(next: ReadonlyArray<PaintedComment>) {
 
 /** Looks for the quotes of the Comentários sent from the page at `path`,
  * marks the missing ones changed in the store and paints the others. */
-export function paintComments(path: string) {
+function paintComments(path: string) {
   const here = readSentComments().filter((comment) => comment.path === path)
   // Most pages have none: no need to read the page's text.
   if (here.length === 0) return unpaintComments()
@@ -53,9 +54,29 @@ export function paintComments(path: string) {
 }
 
 /** Takes the paint off the page. */
-export function unpaintComments() {
+function unpaintComments() {
   if (canPaint()) CSS.highlights.delete(NAME)
   if (painted !== NONE) setPainted(NONE)
+}
+
+/** Paints the Comentários of the page at `path` after hydration, and again
+ * when their store changes (here or in another tab) and each time `follow`
+ * calls back, which the layer does when the quotable text changes. */
+export function usePaintComments(
+  path: string,
+  follow: (paint: () => void) => () => void,
+) {
+  const sent = useSentComments()
+  useEffect(() => {
+    if (sent === null) return
+    const paint = () => paintComments(path)
+    paint()
+    const stop = follow(paint)
+    return () => {
+      stop()
+      unpaintComments()
+    }
+  }, [path, sent, follow])
 }
 
 /** The Comentários painted now. */

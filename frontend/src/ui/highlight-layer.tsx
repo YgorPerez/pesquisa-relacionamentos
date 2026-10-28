@@ -8,12 +8,10 @@
 import { useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { followHighlights, readHighlights } from '#/state/highlights'
-import { useSentComments } from '#/state/sent-comments'
 import {
   commentOver,
-  paintComments,
   paintedCommentAt,
-  unpaintComments,
+  usePaintComments,
   usePaintedComments,
 } from './comment-paint'
 import { AlsoCommented, CommentPopover } from './comment-popover'
@@ -94,7 +92,6 @@ export function HighlightLayer() {
   })
   const painted = usePainted()
   const comments = usePaintedComments()
-  const sent = useSentComments()
   const [open, setOpen] = useState<Open>(null)
 
   // Paints again when the store changes (here or in another tab) and when
@@ -110,18 +107,9 @@ export function HighlightLayer() {
       unpaint()
     }
   }, [path])
-  // The same for the sent Comentários, whose store `sent` follows: a
-  // Comentário just sent is marked at once.
-  useEffect(() => {
-    if (sent === null) return
-    const paint = () => paintComments(path)
-    paint()
-    const stopText = repaintOnChange(paint)
-    return () => {
-      stopText()
-      unpaintComments()
-    }
-  }, [path, sent])
+  // The same for the sent Comentários: a Comentário just sent is marked at
+  // once.
+  usePaintComments(path, repaintOnChange)
   useEffect(() => followTaps(setOpen), [])
 
   const close = () => setOpen(null)

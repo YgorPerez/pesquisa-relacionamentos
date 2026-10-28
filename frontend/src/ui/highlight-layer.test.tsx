@@ -12,7 +12,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 import { KIND_LABEL } from '#/content/comment-kinds'
 import type { Highlight } from '#/state/highlight-record'
-import type { SentComment } from '#/state/sent-comments'
+import type { PaintedComment } from './comment-paint'
 import {
   ADD_NOTE,
   DELETE_NOTE,
@@ -524,6 +524,9 @@ it('every page links to Seus trechos from its footer, and the old /grifos leads 
 // (`state/sent-comments.ts`).
 
 const COMMENTS_KEY = 'tem-estudo:sent-comments'
+
+/** A sent Comentário as the store keeps it. */
+type SentComment = PaintedComment['comment']
 
 function sentComment(
   path: string,
