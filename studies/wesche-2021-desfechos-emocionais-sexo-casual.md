@@ -22,7 +22,7 @@ covers:
 
 As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualquer encontro sexual com alguém que a pessoa não considera parceiro romântico) a dois tipos de desfecho. O primeiro são as reações subjetivas: o que a pessoa diz que sentiu depois, como [[satisfação]], arrependimento, vergonha ou se sentir usada. O segundo é a saúde emocional em geral: sintomas depressivos, ansiedade, solidão, autoestima. Também listaram o que torna o desfecho pior ou melhor (gênero, atitudes, motivos, álcool, tipo de parceiro, tipo de sexo, camisinha, satisfação sexual).
 
-É uma revisão sistemática narrativa. A ficha usa `meta-analysis` porque a lista de desenhos não tem opção para revisão, mas não há meta-análise: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
+É uma revisão sistemática narrativa. A ficha usa `meta-analysis` porque a lista de desenhos não tem opção para revisão, mas não há [[meta-análise]]: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
 
 ## Achados
 

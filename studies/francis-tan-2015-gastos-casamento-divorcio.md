@@ -29,7 +29,7 @@ Os controles incluem idade, idade ao casar, sexo, raça, escolaridade, emprego, 
 
 ## Achados
 
-Razões de risco (hazard ratios) de divórcio no modelo multivariado com pesos populacionais. Na tabela do artigo, um asterisco marca significância a 10%, dois a 5% e três a 1%; aqui, "significativo" é a 5% ou menos e "marginal" é só a 10%. Os Trechos das linhas de tabela são a sequência em que o texto extraído do PDF traz o número, sem os asteriscos.
+Razões de risco (hazard ratios) de divórcio no modelo multivariado com pesos populacionais. Na tabela do artigo, um asterisco marca [[significância]] a 10%, dois a 5% e três a 1%; aqui, "significativo" é a 5% ou menos e "marginal" é só a 10%. Os Trechos das linhas de tabela são a sequência em que o texto extraído do PDF traz o número, sem os asteriscos.
 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|

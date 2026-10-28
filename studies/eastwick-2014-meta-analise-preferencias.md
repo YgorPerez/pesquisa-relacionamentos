@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-A primeira seção do artigo é uma meta-análise: quanto a atratividade física e a perspectiva de renda de **pessoas reais**, que o participante conheceu pessoalmente, se associam à avaliação romântica que ele faz delas (atração, desejo de sair de novo, [[satisfação]], compromisso, amor), e se esse peso difere entre homens e mulheres como as preferências declaradas sugerem. Cada traço foi medido de três jeitos: pelo relato do participante, pelo relato do próprio parceiro e por uma medida objetiva (notas de avaliadores, renda pessoal). As outras seções revisam as diferenças individuais nas preferências e propõem um modelo por fase da relação.
+A primeira seção do artigo é uma [[meta-análise]]: quanto a atratividade física e a perspectiva de renda de **pessoas reais**, que o participante conheceu pessoalmente, se associam à avaliação romântica que ele faz delas (atração, desejo de sair de novo, [[satisfação]], compromisso, amor), e se esse peso difere entre homens e mulheres como as preferências declaradas sugerem. Cada traço foi medido de três jeitos: pelo relato do participante, pelo relato do próprio parceiro e por uma medida objetiva (notas de avaliadores, renda pessoal). As outras seções revisam as diferenças individuais nas preferências e propõem um modelo por fase da relação.
 
 ## Achados
 

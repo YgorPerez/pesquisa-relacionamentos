@@ -52,7 +52,7 @@ Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar re
 
 - O desfecho é a satisfação com o casamento, não o divórcio. Houve só 14 separações nas duas amostras, poucas para testar o divórcio.
 - Os autores avisam que o resultado é correlacional: uma terceira variável não medida pode explicar o padrão.
-- Os testes de significância são unicaudais, o que facilita achar efeito.
+- Os testes de [[significância]] são unicaudais, o que facilita achar efeito.
 - Amostras pequenas, de recém-casados quase todos brancos de duas regiões dos EUA. Os autores lembram que casamentos mais antigos podem reagir de outro jeito.
 - No estudo 1, a separação entre culpar e rejeitar foi recodificada depois que os autores formularam a hipótese.
 - O comportamento foi medido só na primeira visita, em duas conversas de laboratório.

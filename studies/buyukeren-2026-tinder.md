@@ -44,7 +44,7 @@ As primeiras linhas são diferenças de mudança entre membros e não membros de
 
 Na análise por instituição, β acompanha a interação entre a proporção de membros dessas organizações e o período após o lançamento. A escala desse tratamento é diferente da comparação individual; os coeficientes não são diretamente comparáveis.
 
-A distribuição do número de parceiros também se ampliou, com aumentos na cauda de maior atividade, sobretudo entre homens (tabela 3 e suplemento, tabela A8). A análise por instituição encontrou aumento de coabitação, inclusive entre não membros (suplemento, tabela A23). Nessa análise, não houve aumento estatisticamente significativo de agressão sexual (tabela 8). Portanto, os resultados da comparação individual não descrevem todos os universitários da mesma forma.
+A distribuição do número de parceiros também se ampliou, com aumentos na cauda de maior atividade, sobretudo entre homens (tabela 3 e suplemento, tabela A8). A análise por instituição encontrou aumento de coabitação, inclusive entre não membros (suplemento, tabela A23). Nessa análise, não houve aumento estatisticamente [[significativo]] de agressão sexual (tabela 8). Portanto, os resultados da comparação individual não descrevem todos os universitários da mesma forma.
 
 ## Limitações
 

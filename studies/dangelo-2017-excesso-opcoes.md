@@ -33,7 +33,7 @@ Num site de namoro criado para o experimento, os participantes foram sorteados p
 | Efeito isolado de poder trocar a escolha sobre a satisfação uma semana depois | Não significativo; p = 0,74 | p. 14, Results, efeito principal de reversibilidade | "p = .74" |
 | Troca efetiva da escolha entre quem podia trocar, no conjunto grande | 13% | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
 
-A diferença de satisfação entre os conjuntos não foi significativa logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
+A diferença de satisfação entre os conjuntos não foi [[significativa]] logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
 
 ## Definições
 

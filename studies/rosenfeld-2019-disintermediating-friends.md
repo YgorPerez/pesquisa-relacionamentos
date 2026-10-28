@@ -23,7 +23,7 @@ institution: stanford
 
 ## O que mediu
 
-As duas ondas da HCMST perguntaram, em texto livre, como a pessoa e o parceiro se conheceram. As respostas foram codificadas em nove categorias que não se excluem: o mesmo casal pode ter se conhecido online e por amigos. O artigo compara, pelo ano em que o casal se conheceu, a fatia de casais heterossexuais em cada categoria, e testa a tendência de 1995 a 2017 com regressões logísticas. Também compara, entre quem se conheceu online, quantos já se conheciam ou foram apresentados por alguém.
+As duas ondas da [[HCMST]] perguntaram, em texto livre, como a pessoa e o parceiro se conheceram. As respostas foram codificadas em nove categorias que não se excluem: o mesmo casal pode ter se conhecido online e por amigos. O artigo compara, pelo ano em que o casal se conheceu, a fatia de casais heterossexuais em cada categoria, e testa a tendência de 1995 a 2017 com regressões logísticas. Também compara, entre quem se conheceu online, quantos já se conheciam ou foram apresentados por alguém.
 
 ## Achados
 

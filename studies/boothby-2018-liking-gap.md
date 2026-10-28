@@ -42,7 +42,7 @@ Desconhecidos conversaram (de 5 minutos a 45 minutos) e depois cada um disse qua
 
 - A Dica ("você provavelmente acha que a conversa foi pior do que foi") tem apoio nos cinco estudos. A "replicação" está dentro do mesmo artigo, com amostras pequenas de conveniência; esta Ficha não conferiu replicações de outros grupos.
 - Nenhum estudo é de encontro romântico. Os Estudos 1a e 2 usaram duplas do mesmo sexo; o 3 incluiu duplas mistas, mas a conversa era de laboratório, sem interesse romântico declarado.
-- O tamanho do erro é modesto: de 0,36 a 0,65 ponto numa escala de 1 a 7, conforme o estudo. No Estudo 1a, quem tinha pouca timidez não errou de forma significativa.
+- O tamanho do erro é modesto: de 0,36 a 0,65 ponto numa escala de 1 a 7, conforme o estudo. No Estudo 1a, quem tinha pouca timidez não errou de forma [[significativa]].
 - O Estudo 5 mostra que o erro dura meses, mas some no fim do ano letivo, quando as pessoas já se conhecem bem.
 - A explicação (pensamentos autocríticos depois da conversa) vem de uma mediação estatística no Estudo 2, não de um experimento.
 

@@ -64,7 +64,7 @@ Tabela 2 do artigo, médias sem ajuste, escala de 1 a 7, só entre quem continua
 | Trabalho | 5,38 | 2.474 | | | |
 | Encontro às cegas | 5,31 | 299 | | | |
 
-Entre os sites de namoro, a eHarmony teve a média mais alta (5,86) e a Yahoo a mais baixa (5,29). As diferenças entre locais offline vão de 5,31 a 5,67: significativas, mas pequenas.
+Entre os sites de namoro, a eHarmony teve a média mais alta (5,86) e a Yahoo a mais baixa (5,29). As diferenças entre locais offline vão de 5,31 a 5,67: [[significativas]], mas pequenas.
 
 Quem se conheceu online era mais frequentemente homem, de 30 a 49 anos, hispânico, de renda mais alta e empregado (Tabela 1).
 
@@ -86,7 +86,7 @@ Fonte: Methods (p. 10139–10140) e o questionário da Harris Interactive no App
 - **Tempo médio: 4,41 anos.** Online e offline quase iguais: 4,39 e 4,43 anos; entre quem continuava casado, 4,45 e 4,48. A comparação de satisfação e de separação entre online e offline não é distorcida por um grupo ter casamentos mais longos que o outro.
 - Os casamentos começaram entre 2005 e junho de 2012, então tinham de zero a cerca de sete anos e meio na data da pesquisa. Idade média ponderada dos respondentes: 37,83 anos (Tabela S1).
 - Online e offline foram comparados com controle do ano do casamento, o que corrige parte da diferença de tempo de exposição à separação entre os grupos. O efeito protetor de ter se conhecido online foi maior entre os casados mais recentemente (interação com o ano, P = 0,015).
-- Para comparação: no Brasil, o divórcio ocorre em média mais de uma década depois do casamento ([IBGE 2024](ibge-2024-registro-civil.md)). Muitas separações ainda não tinham acontecido na data da pesquisa.
+- Para comparação: no Brasil, o divórcio ocorre em média mais de uma década depois do casamento ([[IBGE]] [2024](ibge-2024-registro-civil.md)). Muitas separações ainda não tinham acontecido na data da pesquisa.
 
 ## Definições
 
@@ -97,7 +97,7 @@ Fonte: Methods (p. 10139–10140) e o questionário da Harris Interactive no App
 ## Limitações
 
 - Conflito de interesse com a eHarmony, mitigado pela supervisão de estatísticos independentes, pelo plano de análise pré-especificado e pelo acordo de publicação, mas presente.
-- Painel online de adesão voluntária: dos 471.710 convidados, 20.047 chegaram à amostra final. Os pesos de propensão aproximam a amostra da população casada no período; os próprios autores dizem que ela não é uma representação perfeita. Sem ponderação, 62,96% dos respondentes eram mulheres (Tabela S1).
+- [[Painel online]] de adesão voluntária: dos 471.710 convidados, 20.047 chegaram à amostra final. Os pesos de propensão aproximam a amostra da população casada no período; os próprios autores dizem que ela não é uma representação perfeita. Sem ponderação, 62,96% dos respondentes eram mulheres (Tabela S1).
 - Transversal e observacional. Os autores apontam que personalidade e motivação para um casamento longo podem explicar as diferenças entre online e offline.
 - Cobre só os primeiros 6 ou 7 anos de casamento, com casamentos de meses e de sete anos na mesma análise (o ano do casamento entra como controle).
 - Satisfação medida só em quem continuava casado: quem se separou saiu da comparação.

@@ -20,7 +20,7 @@ questions:
       ]
   - slug: aparencia-e-dinheiro-importam
     question: Aparência e dinheiro ==importam==?
-    answer: Para atrair, a aparência pesa bastante e a renda, pouco. Numa meta-análise de quase 100 amostras, a aparência teve associação ==de moderada a forte== com o interesse, e a renda, pequena, igual para homens e mulheres [@eastwick-2014-meta-analise-preferencias]. Dentro do casamento, a aparência se associou pouco com a [[satisfação]] [@meltzer-2014-atratividade-casamento]. Mais dinheiro andou junto com menos divórcio, mas o estudo mede o patrimônio do casal durante o casamento, não a renda de quem se escolhe [@killewald-2023-riqueza-divorcio]. Nenhum desses estudos é brasileiro.
+    answer: Para atrair, a aparência pesa bastante e a renda, pouco. Numa [[meta-análise]] de quase 100 amostras, a aparência teve associação ==de moderada a forte== com o interesse, e a renda, pequena, igual para homens e mulheres [@eastwick-2014-meta-analise-preferencias]. Dentro do casamento, a aparência se associou pouco com a [[satisfação]] [@meltzer-2014-atratividade-casamento]. Mais dinheiro andou junto com menos divórcio, mas o estudo mede o patrimônio do casal durante o casamento, não a renda de quem se escolhe [@killewald-2023-riqueza-divorcio]. Nenhum desses estudos é brasileiro.
     confidence: moderate
     findings:
       [
@@ -451,7 +451,7 @@ Quase todo mundo tem uma lista do que procura em alguém. Este Guia põe a lista
 
 ## A lista na cabeça erra quem atrai
 
-Num speed dating nos EUA, 163 universitários disseram, antes do evento, quanto valorizavam aparência, renda e simpatia num parceiro. Depois tiveram de 9 a 13 encontros de 4 minutos e responderam questionários por 30 dias sobre quem tinham conhecido [@eastwick-2008-preferencias-speed-dating]. O peso que cada um disse dar a um traço não bateu com o peso que o traço teve no interesse dele: das 72 correlações testadas, só 2 foram positivas e significativas. Os autores sugerem que as pessoas talvez não consigam enxergar, olhando para dentro, o que de fato as atrai.
+Num speed dating nos EUA, 163 universitários disseram, antes do evento, quanto valorizavam aparência, renda e simpatia num parceiro. Depois tiveram de 9 a 13 encontros de 4 minutos e responderam questionários por 30 dias sobre quem tinham conhecido [@eastwick-2008-preferencias-speed-dating]. O peso que cada um disse dar a um traço não bateu com o peso que o traço teve no interesse dele: das 72 correlações testadas, só 2 foram positivas e [[significativas]]. Os autores sugerem que as pessoas talvez não consigam enxergar, olhando para dentro, o que de fato as atrai.
 
 Um estudo maior refez o teste em 43 países, com 10.358 pessoas [@eastwick-2024-preferencias-43-paises]. Cada uma deu nota a 35 atributos num parceiro ideal e depois avaliou o parceiro atual, ou, se solteira, a pessoa que mais desejava. Bater traço a traço com a lista pessoal teve efeito médio de β = 0,04, tão pequeno que seria preciso ter umas 4.500 pessoas para detectá-lo com segurança. O que pesou foi outra coisa: o parceiro ter os traços que quase todo mundo valoriza, como ser caloroso, confiável e atraente. Esse encaixe com o que todos valorizam pesou cerca de três vezes mais que o encaixe com a lista pessoal inteira.
 
@@ -475,7 +475,7 @@ Isso não quer dizer que nenhuma preferência importe. O estudo testou as respos
 
 ## A aparência pesa no começo, e a renda quase nada
 
-Para aparência e renda, há uma meta-análise. Ela juntou 97 amostras, com 29.414 pessoas, sobre aparência e 56 amostras sobre renda, sempre com gente que se conheceu pessoalmente, de um primeiro encontro a um casamento [@eastwick-2014-meta-analise-preferencias]. A aparência teve uma associação de moderada a forte com o interesse, r ≈ 0,40, e a renda, uma associação pequena, r ≈ 0,10. Homens e mulheres ficaram praticamente iguais nas duas.
+Para aparência e renda, há uma [[meta-análise]]. Ela juntou 97 amostras, com 29.414 pessoas, sobre aparência e 56 amostras sobre renda, sempre com gente que se conheceu pessoalmente, de um primeiro encontro a um casamento [@eastwick-2014-meta-analise-preferencias]. A aparência teve uma associação de moderada a forte com o interesse, r ≈ 0,40, e a renda, uma associação pequena, r ≈ 0,10. Homens e mulheres ficaram praticamente iguais nas duas.
 
 {{visual:aparencia-e-renda}}
 
@@ -571,4 +571,4 @@ O mesmo vale para mirar alto. Num site de namoro dos EUA, homens e mulheres escr
 
 ## O que não se sabe
 
-Quase nada do que se sabe sobre escolher parceiro vem do Brasil. Daqui há os dados do IBGE, que contam pessoas mas não dizem o que faz uma relação dar certo, um estudo dos anos 1990 sobre o fim das uniões e 124 brasileiros num estudo de 43 países. Os estudos de casamento olharam casais homem-mulher, quase todos nos EUA, e nenhum sorteou com quem cada um ia casar, então nenhum mostra que escolaridade ou religião em comum causam um casamento mais estável. Ainda não dá para dizer quanto pesam a estabilidade emocional e a gentileza do parceiro, nem quanto conta sentir-se parecido com o parceiro: os estudos que medem isso ainda não foram conferidos no texto completo, e este Guia não usa os números deles. E a pergunta que mais interessa a quem tem uma lista ficou sem estudo: ninguém seguiu pessoas que filtram muito e pessoas que filtram pouco para ver quem acaba mais satisfeito. Os limites de cada estudo estão na página da Ficha dele.
+Quase nada do que se sabe sobre escolher parceiro vem do Brasil. Daqui há os dados do [[IBGE]], que contam pessoas mas não dizem o que faz uma relação dar certo, um estudo dos anos 1990 sobre o fim das uniões e 124 brasileiros num estudo de 43 países. Os estudos de casamento olharam casais homem-mulher, quase todos nos EUA, e nenhum sorteou com quem cada um ia casar, então nenhum mostra que escolaridade ou religião em comum causam um casamento mais estável. Ainda não dá para dizer quanto pesam a estabilidade emocional e a gentileza do parceiro, nem quanto conta sentir-se parecido com o parceiro: os estudos que medem isso ainda não foram conferidos no texto completo, e este Guia não usa os números deles. E a pergunta que mais interessa a quem tem uma lista ficou sem estudo: ninguém seguiu pessoas que filtram muito e pessoas que filtram pouco para ver quem acaba mais satisfeito. Os limites de cada estudo estão na página da Ficha dele.

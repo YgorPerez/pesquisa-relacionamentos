@@ -39,7 +39,7 @@ No Estudo 1, o pretendente vinha com a foto de uma pessoa pouco atraente. No Est
 | Estudo 2: aceitaram trocar contato, condição real | 74% (35 participantes) | Study 2, Results, p. 2238 | "35 of the participants in the real condition chose to exchange contact information (74%)" |
 | Estudo 2: diferença entre as condições | χ²(1) = 8,22; p = 0,004; n = 99 | Study 2, Results, p. 2238 | "χ2(1, N = 99) = 8.22, p = .004" |
 
-Nos dois estudos, quem acreditava na situação real relatou mais vontade de não magoar o pretendente do que quem só a imaginava (Tabelas 1 e 3), e essa vontade explicou parte da diferença entre as condições. No Estudo 1, essa mediação foi significativa, e o interesse genuíno no encontro também pesou, de forma marginal. No Estudo 2, a mediação pelos motivos voltados ao outro foi só marginal, e o interesse genuíno não mudou entre as condições.
+Nos dois estudos, quem acreditava na situação real relatou mais vontade de não magoar o pretendente do que quem só a imaginava (Tabelas 1 e 3), e essa vontade explicou parte da diferença entre as condições. No Estudo 1, essa mediação foi [[significativa]], e o interesse genuíno no encontro também pesou, de forma marginal. No Estudo 2, a mediação pelos motivos voltados ao outro foi só marginal, e o interesse genuíno não mudou entre as condições.
 
 ## Limitações
 

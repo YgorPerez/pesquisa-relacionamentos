@@ -71,7 +71,7 @@ Duas pesquisas com adultos americanos sobre apps e sites de namoro: quem já uso
 
 - Só EUA, e só autorrelato.
 - O ATP é sorteado e ponderado, mas a taxa de resposta acumulada desde o recrutamento é de 3% (2023) e 5,3% (2020): a ponderação corrige o perfil demográfico, não necessariamente o resto.
-- Mede o **estoque** de casais (todos os que existem hoje), não os recém-formados; por isso os números ficam abaixo dos da HCMST.
+- Mede o **estoque** de casais (todos os que existem hoje), não os recém-formados; por isso os números ficam abaixo dos da [[HCMST]].
 - As perguntas sobre mensagens não têm o mesmo público: em 2023, quem usou no último ano; em 2020, quem usou nos últimos cinco anos. Não dá para somar os dois anos como uma série.
 - As porcentagens de homens e mulheres que já usaram (34% e 27%) aparecem só no gráfico do relatório de 2023, sem frase no texto; ficaram fora da tabela.
 - O grupo LGB é agregado (lésbicas, gays e bissexuais juntos) por causa do tamanho da amostra.

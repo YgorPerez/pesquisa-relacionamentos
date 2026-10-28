@@ -43,7 +43,7 @@ Recém-casados responderam a cada 6 meses, por 4 anos (oito ondas), sobre [[sati
 | Conclusão do resumo | o nível inicial separou os grupos melhor que a mudança, em todos os fatores | Resumo | "Across all predictor variables, initial values afforded stronger discrimination of outcome groups than did rates of change in these variables." |
 | Tempo de namoro antes do casamento | não previu o risco nem sua mudança | Nota 5 | "couples' risk trajectories appear to be independent of the length of time a given couple knew each other before marriage" |
 
-Na Tabela 6, o tamanho de efeito dessa linha (o r máximo de 0,59 citado acima) vem depois dos asteriscos de significância; o Trecho para antes deles.
+Na Tabela 6, o tamanho de efeito dessa linha (o r máximo de 0,59 citado acima) vem depois dos asteriscos de [[significância]]; o Trecho para antes deles.
 
 ## Definições
 

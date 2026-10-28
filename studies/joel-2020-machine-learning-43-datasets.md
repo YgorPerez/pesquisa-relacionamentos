@@ -28,7 +28,7 @@ Quanto da [[satisfação]] e do compromisso com a relação dá para prever a pa
 3. diferenças individuais do ator (personalidade, humor, apego, idade, renda etc.);
 4. diferenças individuais do parceiro.
 
-Em cada base, Random Forests previram a satisfação na linha de base, no fim do seguimento e a mudança entre as duas. Os resultados das 43 bases foram combinados por meta-análise de efeitos aleatórios. O estudo também contou quantas vezes cada construto entrou como preditor útil entre as bases (a "taxa de sucesso").
+Em cada base, Random Forests previram a satisfação na linha de base, no fim do seguimento e a mudança entre as duas. Os resultados das 43 bases foram combinados por [[meta-análise]] de efeitos aleatórios. O estudo também contou quantas vezes cada construto entrou como preditor útil entre as bases (a "taxa de sucesso").
 
 ## Achados
 
