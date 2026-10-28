@@ -11,8 +11,8 @@ O ticket nasceu da resposta curta de "Meus Requisitos são exigentes demais?" no
 
 ## Resposta curta
 
-- **Nenhum estudo que achei diz quantos Requisitos é demais.** Nenhum mede número de critérios, filtros num app ou um corte a partir do qual a exigência passa a custar. O mais perto é [Stavang et al. 2026](#stavang-et-al-2026-noruega), que pede o percentil mínimo aceito em 18 traços. Mesmo ali o resultado é uma inclinação por ponto da escala, sem limiar.
-- **Se ser mais exigente atrasa achar alguém, a resposta é "às vezes, pouco, e não para todo mundo".** Na amostra representativa da Noruega, a exigência geral não previu os anos de solteira das mulheres e, nos homens, previu *menos* anos solteiro. Só a exigência com aparência, nos homens, previu mais anos solteiro: 0,41 ano por ponto da escala de 0 a 10. Na Grécia, a exigência não previu a solteirice involuntária, só a de quem diz preferir ficar solteiro ([Apostolou 2021](#apostolou-2021-grécia)). Num segundo estudo grego, ela previu a solteirice involuntária das mulheres, e só delas (pelo resumo). Tudo transversal e autorrelatado.
+- **Nenhum estudo que achei diz quantos Requisitos é demais.** Nenhum mede número de critérios, filtros num app ou um corte a partir do qual a exigência passa a custar. O mais perto é [Stavang et al. 2026](#stavang-et-al-2026-noruega), que pede o percentil mínimo aceito em 16 traços, mais a altura mínima e máxima. Mesmo ali o resultado é uma inclinação por unidade de um fator de exigência, sem limiar.
+- **Se ser mais exigente atrasa achar alguém, a resposta é "às vezes, pouco, e não para todo mundo".** Na amostra noruega recrutada para representar a população, a exigência geral não previu os anos de solteira das mulheres e, nos homens, previu *menos* anos solteiro. Só a exigência com aparência, nos homens, previu mais anos solteiro: b = 0,41 por unidade do fator, "around half a year", nas palavras dos autores. Na Grécia, a exigência não previu a solteirice involuntária, só a de quem diz preferir ficar solteiro ([Apostolou 2021](#apostolou-2021-grécia)). Num segundo estudo grego, ela previu a solteirice involuntária das mulheres, e só delas (pelo resumo). Tudo transversal e autorrelatado.
 - **Quem está solteiro aponta a exigência como motivo.** Entre 648 solteiros americanos, "sou exigente demais" foi o fator com a nota média mais alta de 18 ([Apostolou, O & Esposito 2020](../studies/apostolou-2020-motivos-solteiro.md)). Isso é o que eles acham, não o que os dados mostram, e o mesmo grupo de pesquisa não achou o efeito ao medir a exigência direto.
 - **Depois que o casal se forma, conta menos o nível do ideal e mais o encaixe e a rigidez.** Quem vê o parceiro perto do próprio ideal está mais satisfeito e termina menos ([Fletcher, Simpson & Thomas 2000](#ideal-standards-model-nova-zelândia-e-eua)). Quem tem um ideal pouco flexível sofre mais com a distância entre os dois ([Campbell et al. 2001](../studies/campbell-2001-ideal-flexivel.md)). Exigir perfeição do parceiro anda junto com menos satisfação ([Stoeber 2012](../studies/stoeber-2012-perfeccionismo-parceiro.md)), mas uma replicação pré-registrada não confirmou o efeito. Nada disso é causal.
 - **Exigir pouco também cobra.** Quem deseja todo mundo num speed dating é menos desejado de volta ([Eastwick et al. 2007](../studies/eastwick-2007-desejo-seletivo.md)). O medo de ficar solteiro prevê depender mais de uma relação insatisfatória e, com efeitos frágeis, aceitar parceiros menos atenciosos ([Spielmann et al. 2013](../studies/spielmann-2013-medo-ficar-solteiro.md), Ficha de força fraca). E as pessoas rejeitam bem menos na vida real do que dizem que rejeitariam ([Joel, Teper & MacDonald 2014](../studies/joel-2014-rejeicao-real-hipotetica.md)). Não achei nada brasileiro.
@@ -27,17 +27,17 @@ Agrupei pelo Desfecho. Em cada um, "Responde" diz se o estudo dá um número (qu
 
 #### Stavang et al. 2026 (Noruega)
 
-Stavang M, Bendixen M, Kleppestø TH, Kennair LEO. *Too picky to be picked? Minimum mate standards explain number of years spent single, in uncommitted and committed relationships*. Evolution and Human Behavior, 2026. https://doi.org/10.1016/j.evolhumbehav.2026.106956. ✅ no preprint v1 do PsyArXiv (https://doi.org/10.31234/osf.io/5fwr2_v1); a versão publicada é de acesso aberto, mas a página da revista bloqueou a leitura, e o título mudou de "predict" para "explain". Os números abaixo são do preprint e precisam ser conferidos na versão publicada antes de uma Ficha.
+Stavang M, Bendixen M, Kleppestø TH, Kennair LEO. *Too picky to be picked? Minimum mate standards explain number of years spent single, in uncommitted and committed relationships*. Evolution and Human Behavior, 2026. https://doi.org/10.1016/j.evolhumbehav.2026.106956. ✅ na versão publicada, de acesso aberto (CC BY): [Ficha](../studies/stavang-2026-exigencia-anos-solteiro.md), verificada em 2026-10-28 (#317). Esta seção foi escrita com o preprint v1 do PsyArXiv (https://doi.org/10.31234/osf.io/5fwr2_v1) e conferida depois na versão publicada: os coeficientes, os p e a amostra são os mesmos.
 
-- **Amostra:** 1.182 pessoas de 18 a 60 anos, painel da Norstat com cotas de idade, gênero e região (dezembro de 2023); 1.136 na análise (606 mulheres, 530 homens).
-- **Exigência:** para cada traço, o mínimo aceito numa escala de 0 a 10 em que cada ponto é um percentil da população ("selecionar 6 de 10 em atratividade do rosto" quer dizer mais atraente que 68% das pessoas). Mais altura mínima e máxima em centímetros. Um modelo bifatorial separa a exigência geral da exigência por área (aparência, lealdade, status).
+- **Amostra:** 1.182 pessoas de 18 a 60 anos, recrutadas pela Norstat numa amostragem em várias etapas para representar a população por idade, gênero e local, sem sorteio descrito (dezembro de 2023); 1.136 na análise (606 mulheres, 530 homens).
+- **Exigência:** para cada traço, o mínimo aceito numa escala de 0 a 10 em que cada ponto é um percentil da população ("selecionar 6 de 10 em atratividade do rosto" quer dizer mais atraente que 68% das pessoas). Mais altura mínima e máxima em centímetros. Um modelo bifatorial separa a exigência geral da exigência por área: confiabilidade, atratividade física e status e dedicação, este último só nas mulheres (o dos homens saiu do modelo).
 - **Desfecho:** anos que a pessoa diz ter passado solteira, em relação sem compromisso e em relação com compromisso, ao longo da vida, e os motivos que ela dá para estar solteira.
 - **Achado:** nas mulheres, a exigência geral não previu anos com compromisso (b = −0,18; p = 0,70) nem anos solteira (b = −0,27; p = 0,56); previu mais anos sem compromisso (b = 0,40; p = 0,036). Nos homens, a exigência geral previu *menos* anos solteiro (b = −1,71; p = 0,015) e mais anos com compromisso (b = 1,58; p = 0,024). A exigência com aparência, nos homens, previu mais anos solteiro (b = 0,41; p = 0,041) e menos anos com compromisso (b = −0,41; p = 0,038). Os modelos controlam idade, valor de parceiro percebido, vontade de ter parceiro e esforço de busca.
 - **Responde:** direção, por traço e por sexo. Não há limiar.
-- **Causal?** Não. Os autores chamam o desenho transversal de "the primary limitation": a exigência é medida hoje e os anos são de toda a vida.
+- **Causal?** Não. Os autores põem a falta de dados longitudinais entre as limitações: a exigência é medida hoje e os anos são de toda a vida.
 - **Ressalva:** os dados foram coletados com a emissora NRK para uma série sobre solteiros de longa data, e os autores declaram isso como possível conflito de interesse.
 
-**Leitura.** É o estudo mais próximo da pergunta e o único com amostra representativa. O título sugere "exigente demais para ser escolhido", mas o resultado é misto: só a exigência com aparência, nos homens, vai na direção do título.
+**Leitura.** É o estudo mais próximo da pergunta e o único com uma amostra recrutada para representar a população, ainda que sem sorteio. O título sugere "exigente demais para ser escolhido", mas o resultado é misto: só a exigência com aparência, nos homens, vai na direção do título.
 
 #### Apostolou 2021 (Grécia)
 
@@ -109,7 +109,7 @@ Os três primeiros já têm Ficha.
 
 | Estudo | País, N | Desenho | Exigência medida como | Desfecho | Responde | Causal? | Lido |
 |---|---|---|---|---|---|---|---|
-| Stavang 2026 | Noruega, 1.136 | transversal, amostra representativa | percentil mínimo em 18 traços | anos solteiro, com e sem compromisso | direção, misto | não | ✅ preprint |
+| Stavang 2026 | Noruega, 1.136 | transversal, painel recrutado para representar a população | percentil mínimo em 16 traços, mais altura | anos solteiro, com e sem compromisso | direção, misto | não | ✅ publicado |
 | Apostolou 2021 | Grécia, 1.228 | transversal, conveniência | escala de 3 itens | solteirice involuntária e voluntária, anos solteiro | direção (só voluntária) | não | ✅ |
 | Apostolou & Michaelidou 2024 (PAID) | Grécia, 1.432 | transversal | escala de 3 itens | solteirice involuntária, anos solteiro | direção (só mulheres) | não | 🟡 |
 | Apostolou & Michaelidou 2024 (Studia) | Grécia, 1.432 | transversal, mediação | idem | idem | direção (só mulheres, efeito minúsculo) | não | ✅ |
@@ -137,7 +137,7 @@ Nenhuma linha responde "quanto é demais".
 
 ## Candidatos a Ficha
 
-1. Stavang, Bendixen, Kleppestø & Kennair 2026, *Evolution and Human Behavior*: o único estudo com amostra representativa que mede a exigência por traço e anos solteiro; conferir os números na versão publicada, que é de acesso aberto.
+1. ~~Stavang, Bendixen, Kleppestø & Kennair 2026, *Evolution and Human Behavior*~~: [Ficha](../studies/stavang-2026-exigencia-anos-solteiro.md) verificada na versão publicada em 2026-10-28 (#317).
 2. Apostolou 2021, *Personality and Individual Differences* 176:110782: mede exigência e solteirice involuntária no mesmo questionário e não acha a ligação, um contraponto direto ao "exigente demais".
 3. Apostolou & Michaelidou 2024, *Personality and Individual Differences* 216:112422: o achado nas mulheres (exigência e solteirice involuntária) é a melhor evidência a favor da tese; falta o texto completo.
 4. Apostolou, O & Esposito 2020, *Frontiers in Psychology* 11:746: mostra que "sou exigente demais" é o motivo que os solteiros mais dão, útil para separar o que se acha do que se mede; já tem Ficha.
