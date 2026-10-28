@@ -12,7 +12,7 @@ sample:
   description: "1.182 noruegueses de 18 a 60 anos responderam online, recrutados pela agência Norstat, que usa uma amostragem em várias etapas para representar a população por idade, gênero e local. Depois das exclusões (sem anos de relação, sem gênero ou orientação, respostas improváveis), ficaram 1.136: 606 mulheres e 530 homens, idade média de 39,1 anos; 90% heterossexuais. O artigo chama a amostra de representativa, mas não descreve um sorteio."
   representative: false
 design: cross-sectional
-conflict: "Os dados foram financiados e coletados com a emissora pública norueguesa NRK para a série \"Singelgåten\", sobre solteiros de longa data; o primeiro autor declara apoio financeiro da NRK e consultoria para ela, e usou os itens de exigência com os participantes do programa. Os autores dizem que os resultados não dependem da série. Os autores são da Universidade Norueguesa de Ciência e Tecnologia (NTNU)."
+conflict: "Os dados foram financiados e coletados com a emissora pública norueguesa NRK para a série \"Singelgåten\", sobre solteiros de longa data; o primeiro autor declara apoio financeiro da NRK e consultoria para ela, e usou os itens de exigência com os participantes do programa. Os autores dizem que os resultados não dependem, em grande parte, da série. Os autores são da Universidade Norueguesa de Ciência e Tecnologia (NTNU)."
 license: "CC BY 4.0 (como diz a primeira página do artigo)"
 covers:
   genders: [man, woman]

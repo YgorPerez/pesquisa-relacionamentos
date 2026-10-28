@@ -310,7 +310,7 @@ myths:
     fact_sheets: [pew-2023-2020-online-dating]
   - id: casamentos-brasil-quase-vinte-por-cento
     claim: Quase 20% dos casais brasileiros se conheceram pela internet, segundo a Casamentos.com.br.
-    why_not: 'É um número divulgado pela imprensa cuja pesquisa original não localizamos. A [matéria da Agência Brasil de 12/06/2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia) fala em mais de 3,4 mil casais de 26 a 40 anos com planos de casar, não em todos os casais brasileiros. Nas buscas de 20 e 28/10/2026, não achamos relatório, questionário nem metodologia. Não sabemos quando a pesquisa foi feita ou como recrutou os participantes; 2021 é o ano da matéria. Sem essas informações, o número não sustenta uma estimativa nacional. Isso não prova que ele seja falso: a pesquisa pode existir sem ter sido publicada.'
+    why_not: 'Não achamos a pesquisa por trás dele, só uma [matéria da Agência Brasil de 2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia). Ela fala de 3,4 mil casais de 26 a 40 anos com planos de casar, não de todos os casais do país, e não diz como eles foram recrutados. Sem isso, o número não serve de estimativa nacional, o que não quer dizer que seja falso.'
     fact_sheets: []
   - id: relacao-de-app-dura-menos
     claim: Relação que começa em app dura menos.
