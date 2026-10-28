@@ -42,7 +42,7 @@ Questionário online que perguntou se a pessoa já havia usado aplicativos ou si
 
 RP é a razão de prevalências de uso dos apps; os intervalos de confiança são de 95%. Por exemplo, a linha de IST compara uso de apps entre quem relatava histórico de IST e quem não relatava. Não mede o risco de adquirir uma IST depois de usar apps. As comparações não têm ajuste multivariável.
 
-A discussão afirma que não houve associação clara entre apps e uso de camisinha. A tabela, porém, registra a associação entre homens que não usavam na maioria das vezes com parceiras ocasionais, num grupo muito pequeno. Isso impede tanto resumir o artigo como prova de que apps reduzem o uso de camisinha quanto dizer que todas as comparações foram nulas. Também não houve associação significativa em várias comparações do número de parceiros, como a de duas a quatro parceiras da tabela acima.
+A discussão afirma que não houve associação clara entre apps e uso de camisinha. A tabela, porém, registra a associação entre homens que não usavam na maioria das vezes com parceiras ocasionais, num grupo muito pequeno. Isso impede tanto resumir o artigo como prova de que apps reduzem o uso de camisinha quanto dizer que todas as comparações foram nulas. Também não houve associação [[significativa]] em várias comparações do número de parceiros, como a de duas a quatro parceiras da tabela acima.
 
 ## Limitações
 

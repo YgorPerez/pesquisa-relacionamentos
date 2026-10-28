@@ -40,7 +40,7 @@ Os dois membros de cada casal responderam a duas escalas adaptadas da Multidimen
 | Efeito sobre a satisfação e o compromisso do parceiro | nenhum significativo (pseudo R² = 0,020 e 0,000) | Results, Main Analyses | "Results showed no significant partner effects, for neither relationship satisfaction (pseudo R² = .020) nor longterm commitment (pseudo R² = .000)" |
 | Quem exige perfeição e o quanto o parceiro se sente cobrado | b = 0,36 | Results, Main Analyses | "Results showed a significant partner effect (b = 0.36, SE = 0.09, t = 4.16, df = 109.42, p < .001; pseudo R² = .110)." |
 
-Na Tabela 2, cada modelo põe os dois perfeccionismos juntos; o b de um é o efeito com o outro fixo. Todas as variáveis foram padronizadas, então b = −0,27 quer dizer cerca de um quarto de desvio-padrão a menos de satisfação para cada desvio-padrão a mais de exigência. O PDF extraído escreve o sinal de menos como "–". Os Trechos da Tabela 2 param antes dos asteriscos de significância (\*\*\* p < 0,001 para −0,27 e −0,30, \* p < 0,05 para −0,16), que a tabela do Markdown não reproduz; "102.41" é a última célula da coluna de satisfação, logo antes do −0,16 do compromisso.
+Na Tabela 2, cada modelo põe os dois perfeccionismos juntos; o b de um é o efeito com o outro fixo. Todas as variáveis foram padronizadas, então b = −0,27 quer dizer cerca de um quarto de desvio-padrão a menos de satisfação para cada desvio-padrão a mais de exigência. O PDF extraído escreve o sinal de menos como "–". Os Trechos da Tabela 2 param antes dos asteriscos de [[significância]] (\*\*\* p < 0,001 para −0,27 e −0,30, \* p < 0,05 para −0,16), que a tabela do Markdown não reproduz; "102.41" é a última célula da coluna de satisfação, logo antes do −0,16 do compromisso.
 
 ## Limitações
 

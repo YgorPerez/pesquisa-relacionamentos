@@ -26,7 +26,7 @@ Uma entrevista telefônica comparou casados que começaram a morar juntos antes 
 
 ## Achados
 
-Quem morou junto antes de noivar relatou menor satisfação, dedicação e confiança do que quem começou depois do noivado. Quem morou junto antes de noivar também relatou mais comunicação negativa do que quem esperou até casar. As diferenças eram pequenas. Amizade e satisfação sexual não diferiram claramente entre os grupos, nem houve diferença significativa em qualquer desfecho entre morar junto depois do noivado e esperar até casar.
+Quem morou junto antes de noivar relatou menor satisfação, dedicação e confiança do que quem começou depois do noivado. Quem morou junto antes de noivar também relatou mais comunicação negativa do que quem esperou até casar. As diferenças eram pequenas. Amizade e satisfação sexual não diferiram claramente entre os grupos, nem houve diferença [[significativa]] em qualquer desfecho entre morar junto depois do noivado e esperar até casar.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|

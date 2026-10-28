@@ -38,7 +38,7 @@ Os autores seguiram jovens da Califórnia em três questionários anuais, dos 19
 | Sexo sem camisinha com parceiro casual e apego evitativo | Mais desse sexo na onda 9 veio antes de um pouco mais de apego evitativo na onda 10 (β = 0,10); na onda 10, antes de menos apego evitativo na onda 11 (β = −0,16) | Results, Avoidant Attachment | "greater engagement in condomless sex with casual partners at Wave 9 was associated with more avoidant attachment (β = 0.10 (CI: 0.06, 0.14), p < .001) at Wave 10, whereas greater engagement in condomless sex with casual partners at Wave 10 was associated with less avoidant attachment (β = −0.16 (CI: −0.19, −0.12), p < .001) at Wave 11" |
 | Média de parceiros nos últimos 3 meses | 1,28 nas duas primeiras ondas; 1,50 na última | Tabela 1 | "Number of sex partners (0-100) 1.28 (5.49) 1.28 (5.10) 1.50 (5.38)" |
 
-A onda 9 é a dos 19 anos em média, a 10 a dos 20 e a 11 a dos 21–22. β são coeficientes padronizados. No modelo do apego ansioso, os coeficientes do número de parceiros para o apego do ano seguinte ficam perto de zero e sem significância (−0,022 e −0,021, Tabela 2). A ausência de associação entre parceiros e apego vale para o intervalo de um ano entre as ondas.
+A onda 9 é a dos 19 anos em média, a 10 a dos 20 e a 11 a dos 21–22. β são coeficientes padronizados. No modelo do apego ansioso, os coeficientes do número de parceiros para o apego do ano seguinte ficam perto de zero e sem [[significância]] (−0,022 e −0,021, Tabela 2). A ausência de associação entre parceiros e apego vale para o intervalo de um ano entre as ondas.
 
 ## Limitações
 

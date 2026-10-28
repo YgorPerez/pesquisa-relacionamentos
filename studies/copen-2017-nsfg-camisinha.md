@@ -60,7 +60,7 @@ Fonte local: `sources/copen-2017-nsfg-camisinha.pdf`, o relatório do CDC.
 - O tipo de parceiro é o do último parceiro, não o de todos os parceiros do ano. Quem teve um parceiro casual e depois um namorado entra como namoro.
 - Nas mulheres, o tipo de parceiro só existe em 2013–2015 e foi montado de forma "similar, mas não exatamente comparável" à variável dos homens. Comparar mulheres e homens na mesma linha pede cuidado; o relatório evita comparar os sexos.
 - A mulher responde pela camisinha do parceiro.
-- Nas mulheres, a diferença entre parceiro casual e namorado firme em "todas as transas" (26,7% contra 25,8%) não é significativa.
+- Nas mulheres, a diferença entre parceiro casual e namorado firme em "todas as transas" (26,7% contra 25,8%) não é [[significativa]].
 - O grupo de mulheres com parceiro casual é pequeno (erro-padrão de 2,6 a 2,9 pontos).
 - Dados de 2011–2015.
 

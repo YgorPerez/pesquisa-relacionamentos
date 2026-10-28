@@ -54,7 +54,7 @@ Cada pessoa avaliou a si mesma, o parceiro ideal e o quanto o parceiro atual bat
 | Diferença entre homens e mulheres nos efeitos | nenhuma | Results (p. 457) | "There were no gender differences; therefore, gender is not discussed further." |
 | Desenho | transversal, sem inferência causal | Caveats and Conclusions (p. 461) | "all of the data are cross-sectional in nature. Hence, it is not possible to draw causal inferences from the present studies." |
 
-Na escala do encaixe, nota alta quer dizer que o parceiro bate com o ideal, embora o artigo a chame de "partner discrepancies". Por isso o coeficiente positivo da interação diz que o encaixe pesa mais para quem é rígido. O PDF sai do `pdftotext` com as tabelas em colunas soltas e com os asteriscos de significância no meio dos números; os Trechos das Tabelas 1, 3 e 6 copiam uma sequência de números sem asterisco como ela sai, e a coluna Onde diz de que célula vem o número. Na Tabela 3, cada bloco sai como os três b (encaixe, rigidez, interação) seguidos dos três t.
+Na escala do encaixe, nota alta quer dizer que o parceiro bate com o ideal, embora o artigo a chame de "partner discrepancies". Por isso o coeficiente positivo da interação diz que o encaixe pesa mais para quem é rígido. O PDF sai do `pdftotext` com as tabelas em colunas soltas e com os asteriscos de [[significância]] no meio dos números; os Trechos das Tabelas 1, 3 e 6 copiam uma sequência de números sem asterisco como ela sai, e a coluna Onde diz de que célula vem o número. Na Tabela 3, cada bloco sai como os três b (encaixe, rigidez, interação) seguidos dos três t.
 
 ## Limitações
 

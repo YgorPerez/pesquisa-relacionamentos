@@ -42,7 +42,7 @@ Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no
 ## Limitações
 
 - O efeito para os maridos é pequeno (r = 0,10) e aparece no nível inicial da satisfação, não na inclinação. Como a inclinação não muda, os maridos de esposas mais bonitas seguem um pouco mais satisfeitos nos quatro anos, que é como os autores leem o resultado.
-- A diferença entre os sexos passa raspando (p = 0,046), e a significância dos efeitos aparece com p < 0,05, sem correção para os muitos coeficientes testados.
+- A diferença entre os sexos passa raspando (p = 0,046), e a [[significância]] dos efeitos aparece com p < 0,05, sem correção para os muitos coeficientes testados.
 - Os autores apontam: amostras homogêneas (jovens, brancos na maioria, de cidades universitárias), dados correlacionais com outros fatores não controlados, sem medir o ideal de parceiro de cada um antes do casamento, e a atratividade medida só no início.
 - As amostras já tinham sido usadas em outros artigos do grupo; Eastwick et al. (2013) usaram a amostra do Estudo 2 com outra medida de atratividade, correlacionada com esta só moderadamente (r = 0,42 para maridos e 0,61 para esposas, nota 1).
 - O resultado foi contestado por Eastwick, Neff, Finkel, Luchies & Hunt (2014), e os autores responderam no mesmo número da revista (PubMed 24588091). Essas duas peças não foram lidas aqui.

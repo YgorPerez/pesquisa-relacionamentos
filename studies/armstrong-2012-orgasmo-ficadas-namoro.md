@@ -65,7 +65,7 @@ As probabilidades previstas (Tabela 4) mudam uma variável e deixam as outras na
 - Transversal e de autorrelato, sobre um evento de cada tipo. A ficada e o sexo no namoro não são o mesmo evento nem a mesma mulher sempre.
 - "Ficar" ficou na definição de cada aluna: 34% das ficadas foram só beijo, o que puxa para baixo o orgasmo em "todas as ficadas".
 - As autoras lembram que o efeito das ficadas repetidas pode ser seleção: a mulher volta a ficar com quem o sexo foi bom. Também pode ser que o orgasmo leve à transa, e não o contrário, e que o interesse em namorar venha do sexo bom.
-- Os testes de significância não corrigem o agrupamento por universidade e turma, e podem ser pouco conservadores (nota 12).
+- Os testes de [[significância]] não corrigem o agrupamento por universidade e turma, e podem ser pouco conservadores (nota 12).
 - Os números citados antes no relatório (31% e 10% na primeira ficada, 85% e 68% no namoro, homens e mulheres) vêm de um capítulo de 2009, citado por fonte secundária. Este artigo usa a versão final da base, de junho de 2011, e avisa que publicações anteriores usam versões mais antigas, com outros n (nota 6). Ele só dá os números das mulheres.
 
 ## Como usamos

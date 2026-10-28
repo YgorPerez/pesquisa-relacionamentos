@@ -55,7 +55,7 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 - Amostra de recém-casados de baixa renda, quase toda hispânica, em primeiro casamento, de uma região. Os autores dizem que o resultado pode não valer para casais mais antigos, recasados, do mesmo sexo ou que não casaram.
 - Seguimento de três anos: o estudo não mede divórcio, só satisfação. Os efeitos da comunicação podem aparecer mais tarde.
 - As conversas foram estruturadas e gravadas em casa, com uma câmera; não capturam tudo o que o casal faz no dia a dia. Padrões como cobrança e retraimento não foram codificados à parte.
-- A satisfação é muito mais estável que a comunicação, o que deixa menos variação a explicar. Os autores testaram isso com correlações simples (10 de 12 significativas no sentido satisfação → comunicação, 3 de 12 no outro) e o quadro se manteve.
+- A satisfação é muito mais estável que a comunicação, o que deixa menos variação a explicar. Os autores testaram isso com correlações simples (10 de 12 [[significativas]] no sentido satisfação → comunicação, 3 de 12 no outro) e o quadro se manteve.
 - O texto da p. 8 diz "Positivity was a significant predictor of communication" onde, pelo contexto, quer dizer "of satisfaction"; a Ficha lê assim.
 - É associação ao longo do tempo, não experimento: um terceiro fator (estresse, personalidade) pode mover as duas coisas, como os próprios autores sugerem.
 

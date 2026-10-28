@@ -36,7 +36,7 @@ Comparou estudantes solteiros que declararam usar Tinder com os que não usavam,
 | Ajuste por uso de álcool e drogas ilícitas | OR = 1,13; IC de 0,90 a 1,42 | p. 6, Tabela 3, Adjusted for substance use, linha Tinder use | "1.13 (0.90–1.42)" |
 | Ajuste por todas as características medidas | OR = 1,08; IC de 0,85 a 1,35 | p. 6, Tabela 3, Fully adjusted, linha Tinder use | "1.08 (0.85–1.35)" |
 
-OR é a razão de chances de estar em um relacionamento no seguimento, comparando usuários com não usuários; os intervalos de confiança são de 95%. A associação bruta foi positiva e significativa, e permaneceu assim com ajustes separados por características demográficas ou saúde mental. Ela deixou de ser significativa com o ajuste por personalidade, por uso de substâncias ou por todas as características juntas. Isso é compatível com diferenças entre quem usa e quem não usa Tinder; não prova que o app aumente a formação de relacionamentos nem que seu efeito seja zero.
+OR é a razão de chances de estar em um relacionamento no seguimento, comparando usuários com não usuários; os intervalos de confiança são de 95%. A associação bruta foi positiva e [[significativa]], e permaneceu assim com ajustes separados por características demográficas ou saúde mental. Ela deixou de ser significativa com o ajuste por personalidade, por uso de substâncias ou por todas as características juntas. Isso é compatível com diferenças entre quem usa e quem não usa Tinder; não prova que o app aumente a formação de relacionamentos nem que seu efeito seja zero.
 
 ## Limitações
 

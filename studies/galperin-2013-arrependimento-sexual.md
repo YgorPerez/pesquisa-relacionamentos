@@ -61,7 +61,7 @@ As porcentagens da Tabela 3 são de quem teve a experiência; por arredondamento
 - Todos os estudos são transversais e o arrependimento é lembrado na hora da pergunta, não medido logo depois do sexo. Os autores reconhecem que a pergunta pode trazer à tona arrependimentos que a pessoa não sentiria no dia a dia.
 - Uma pergunta só, de quatro opções, sobre a última vez. O questionário não definia "sexo casual" nem perguntava quando foi, com quem ou como foi.
 - A maior parte do estudo 3 estava num relacionamento sério (de 56% dos gays a 85% dos homens heterossexuais). O texto não diz há quanto tempo foi a última transa casual.
-- Com amostra tão grande, até diferença pequena é significativa; os autores destacam o tamanho do efeito.
+- Com amostra tão grande, até diferença pequena é [[significativa]]; os autores destacam o tamanho do efeito.
 - O estudo 2 não mediu com que frequência cada experiência aconteceu, só se a pessoa se arrependia. Parte das diferenças pode vir de homens e mulheres viverem situações diferentes.
 - O artigo testa uma explicação evolucionista, mas não a separa de explicações sociais, como o medo da gravidez, a reputação e o sexo pior para a mulher. Os próprios autores citam essas causas.
 - Os grupos de lésbicas (136 com sexo casual) e de gays e bissexuais são bem menores que os de heterossexuais.
