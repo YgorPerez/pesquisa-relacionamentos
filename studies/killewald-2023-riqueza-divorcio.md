@@ -47,7 +47,7 @@ Se o patrimônio líquido do casal (bens menos dívidas) se associa ao risco de 
 - Observacional. Os próprios autores dizem que não estimam o efeito causal da riqueza: "we cannot estimate the causal effect of wealth on divorce".
 - É o patrimônio **do casal**, medido durante o casamento. Não é a renda nem o patrimônio do parceiro na hora de escolher.
 - Uma só coorte dos EUA, nascida no fim dos anos 1950 e começo dos 1960 e acompanhada de 1985 a 2018.
-- O NLSY79 não mediu patrimônio em todas as ondas; ele foi imputado, e falta em 36% das observações. Numa análise só com casos completos, ter casa e ter carro deixam de ser significativos (nota 14).
+- O NLSY79 não mediu patrimônio em todas as ondas; ele foi imputado, e falta em 36% das observações. Numa análise só com casos completos, ter casa e ter carro deixam de ser [[significativos]] (nota 14).
 - Com os dados públicos, não dá para ajustar o desenho amostral estratificado; por isso os erros-padrão subestimam a incerteza (nota 5).
 - Alguns controles (renda, filhos) podem ser efeito de riqueza anterior, então o modelo completo pode subestimar a associação.
 - O "divórcio" inclui separação permanente sem divórcio formal.

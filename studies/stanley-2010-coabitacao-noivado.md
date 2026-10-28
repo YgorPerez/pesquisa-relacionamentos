@@ -34,7 +34,7 @@ Nos dois primeiros resultados, a referência é quem começou a morar junto sem 
 
 ## Limitações
 
-- A comparação com quem esperou até o casamento teve apenas significância marginal; os autores a consideram favorável à hipótese por terem previsto a direção. Não houve diferença significativa entre esperar até o noivado e esperar até o casamento.
+- A comparação com quem esperou até o casamento teve apenas [[significância]] marginal; os autores a consideram favorável à hipótese por terem previsto a direção. Não houve diferença significativa entre esperar até o noivado e esperar até o casamento.
 - Os controles do modelo de divórcio incluem duração do casamento, idade ao casar, filhos, escolaridade, gênero, raça/etnia e estado. Religiosidade, crenças sobre casamento e renda não entram nesse modelo. A lista de controles da análise de qualidade conjugal é mais ampla e não deve ser atribuída à análise de divórcio.
 - O histórico é retrospectivo e os grupos podem já diferir antes de morar juntos. A hipótese de que a coabitação mantém casais que de outro modo terminariam não foi testada diretamente. O estudo não demonstra que esperar pelo noivado previna divórcios.
 - Não há dados sobre divórcio no segundo casamento. Na qualidade dos segundos casamentos, o padrão sugere associação com coabitar antes de casar, independentemente do noivado; as comparações ajustadas têm pouca precisão. A propensão declarada ao divórcio é uma medida distinta do divórcio ocorrido.

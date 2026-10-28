@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casais tiveram em casa três conversas gravadas de 8 minutos: uma sobre um desacordo do casal e duas de apoio (cada um falou de algo que queria mudar em si). Codificadores treinados pontuaram cada cônjuge em três escalas: positividade (afeto, humor, carinho, escuta), negatividade (coerção irritada, desprezo, hostilidade, ataque verbal) e eficácia (assertividade, qualidade e quantidade de soluções). Cada cônjuge também respondeu um questionário de satisfação conjugal. Modelos de defasagem cruzada (*cross-lagged*) testaram, nos dois sentidos, se a comunicação numa onda previa a mudança da satisfação na seguinte e se a satisfação previa a mudança da comunicação.
+Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casais tiveram em casa três conversas gravadas de 8 minutos: uma sobre um desacordo do casal e duas de apoio (cada um falou de algo que queria mudar em si). Codificadores treinados pontuaram cada cônjuge em três escalas: positividade (afeto, humor, carinho, escuta), negatividade (coerção irritada, desprezo, hostilidade, ataque verbal) e eficácia (assertividade, qualidade e quantidade de soluções). Cada cônjuge também respondeu um questionário de [[satisfação]] conjugal. Modelos de defasagem cruzada (*cross-lagged*) testaram, nos dois sentidos, se a comunicação numa onda previa a mudança da satisfação na seguinte e se a satisfação previa a mudança da comunicação.
 
 ## Achados
 
@@ -50,12 +50,18 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 | Comparação direta do tamanho dos dois sentidos | sem diferença em 85% dos casos | Discussão, p. 10 | "the effects did not differ significantly in 85% of cases" |
 | Conclusão dos autores | os dois sentidos são fracos e inconsistentes | Discussão, p. 10 | "satisfaction is a more consistent and stronger predictor of communication than the reverse, but overall both effects are fairly inconsistent and similar in magnitude" |
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | A soma de oito perguntas; cinco delas perguntam quão satisfeita a pessoa está com áreas da relação, como o tempo que passam juntos, de 1 (muito insatisfeita) a 5 (muito satisfeita) | Método, Marital Satisfaction Questionnaire, p. 7 | "Marital satisfaction was assessed by summing responses on an eight-item questionnaire. Five items asked how satisfied the respondent was with certain areas of their relationship (e.g., "satisfaction with the amount of time spent together"), and were scored on a 5-point scale (ranging from 1 = very dissatisfied to 5 = very satisfied)." |
+
 ## Limitações
 
 - Amostra de recém-casados de baixa renda, quase toda hispânica, em primeiro casamento, de uma região. Os autores dizem que o resultado pode não valer para casais mais antigos, recasados, do mesmo sexo ou que não casaram.
 - Seguimento de três anos: o estudo não mede divórcio, só satisfação. Os efeitos da comunicação podem aparecer mais tarde.
 - As conversas foram estruturadas e gravadas em casa, com uma câmera; não capturam tudo o que o casal faz no dia a dia. Padrões como cobrança e retraimento não foram codificados à parte.
-- A satisfação é muito mais estável que a comunicação, o que deixa menos variação a explicar. Os autores testaram isso com correlações simples (10 de 12 significativas no sentido satisfação → comunicação, 3 de 12 no outro) e o quadro se manteve.
+- A satisfação é muito mais estável que a comunicação, o que deixa menos variação a explicar. Os autores testaram isso com correlações simples (10 de 12 [[significativas]] no sentido satisfação → comunicação, 3 de 12 no outro) e o quadro se manteve.
 - O texto da p. 8 diz "Positivity was a significant predictor of communication" onde, pelo contexto, quer dizer "of satisfaction"; a Ficha lê assim.
 - É associação ao longo do tempo, não experimento: um terceiro fator (estresse, personalidade) pode mover as duas coisas, como os próprios autores sugerem.
 

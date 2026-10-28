@@ -23,7 +23,7 @@ institution: stanford
 
 ## O que mediu
 
-Como os casais americanos se conheceram, de 1940 a 2009, e como a internet mudou isso, com a primeira onda da HCMST (2009). Compara a qualidade da relação e o término em um ano conforme o lugar onde o casal se conheceu, mede quem conhece o parceiro online (casais do mesmo sexo, idade) e testa se ter internet em casa vem junto com ter parceiro e se a taxa de pessoas com parceiro subiu na era da internet. A Fonte local é a versão do autor do artigo publicado, com numeração própria de páginas (P.1 em diante).
+Como os casais americanos se conheceram, de 1940 a 2009, e como a internet mudou isso, com a primeira onda da [[HCMST]] (2009). Compara a qualidade da relação e o término em um ano conforme o lugar onde o casal se conheceu, mede quem conhece o parceiro online (casais do mesmo sexo, idade) e testa se ter internet em casa vem junto com ter parceiro e se a taxa de pessoas com parceiro subiu na era da internet. A Fonte local é a versão do autor do artigo publicado, com numeração própria de páginas (P.1 em diante).
 
 ## Achados
 

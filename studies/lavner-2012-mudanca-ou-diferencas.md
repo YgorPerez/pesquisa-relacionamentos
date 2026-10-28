@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Recém-casados responderam a cada 6 meses, por 4 anos (oito ondas), sobre satisfação no casamento, problemas da relação, agressão verbal, atribuições negativas (culpar o parceiro pelo que dá errado), estresse externo e autoestima. Modelos de trajetória agruparam maridos e esposas pelo formato da satisfação ao longo do tempo. Modelos de crescimento testaram o que separava os grupos: o nível inicial dos fatores de risco (modelo de diferenças iniciais) ou a mudança neles ao longo dos anos (modelo de mudança gradual). O estudo também comparou a taxa de separação entre os grupos.
+Recém-casados responderam a cada 6 meses, por 4 anos (oito ondas), sobre [[satisfação]] no casamento, problemas da relação, agressão verbal, atribuições negativas (culpar o parceiro pelo que dá errado), estresse externo e autoestima. Modelos de trajetória agruparam maridos e esposas pelo formato da satisfação ao longo do tempo. Modelos de crescimento testaram o que separava os grupos: o nível inicial dos fatores de risco (modelo de diferenças iniciais) ou a mudança neles ao longo dos anos (modelo de mudança gradual). O estudo também comparou a taxa de separação entre os grupos.
 
 ## Achados
 
@@ -43,7 +43,13 @@ Recém-casados responderam a cada 6 meses, por 4 anos (oito ondas), sobre satisf
 | Conclusão do resumo | o nível inicial separou os grupos melhor que a mudança, em todos os fatores | Resumo | "Across all predictor variables, initial values afforded stronger discrimination of outcome groups than did rates of change in these variables." |
 | Tempo de namoro antes do casamento | não previu o risco nem sua mudança | Nota 5 | "couples' risk trajectories appear to be independent of the length of time a given couple knew each other before marriage" |
 
-Na Tabela 6, o tamanho de efeito dessa linha (o r máximo de 0,59 citado acima) vem depois dos asteriscos de significância; o Trecho para antes deles.
+Na Tabela 6, o tamanho de efeito dessa linha (o r máximo de 0,59 citado acima) vem depois dos asteriscos de [[significância]]; o Trecho para antes deles.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Como cada cônjuge vê a relação em 15 pares de adjetivos opostos, como ruim–bom e insatisfeito–satisfeito, cada um numa escala de 7 pontos, somando de 15 a 105 | Método, Measures, Marital satisfaction | "This measure asks spouses to rate their perceptions of their relationship on 7-point scales between 15 pairs of opposing adjectives (e.g., bad–good, dissatisfied–satisfied ), yielding scores from 15 to 105" |
 
 ## Limitações
 

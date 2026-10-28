@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Os autores juntaram os estudos que comparam quem usa apps de namoro de deslizar com quem não usa, em qualquer medida de saúde mental, e calcularam a diferença padronizada (g de Hedges) em seis grupos de desfecho: sofrimento emocional (depressão, ansiedade, estresse), bem-estar (satisfação com a vida, solidão), avaliação da aparência (autoestima, satisfação com o corpo), corpo e transtornos alimentares, desregulação do comportamento (uso compulsivo do app, hipersexualidade) e sensibilidade interpessoal (sensibilidade à rejeição, medo de avaliação negativa). Um g positivo quer dizer pior nos usuários. Um modelo multinível estimou também um efeito geral com as 87 estimativas.
+Os autores juntaram os estudos que comparam quem usa apps de namoro de deslizar com quem não usa, em qualquer medida de saúde mental, e calcularam a diferença padronizada (g de Hedges) em seis grupos de desfecho: sofrimento emocional (depressão, ansiedade, estresse), bem-estar ([[satisfação]] com a vida, solidão), avaliação da aparência (autoestima, satisfação com o corpo), corpo e transtornos alimentares, desregulação do comportamento (uso compulsivo do app, hipersexualidade) e sensibilidade interpessoal (sensibilidade à rejeição, medo de avaliação negativa). Um g positivo quer dizer pior nos usuários. Um modelo multinível estimou também um efeito geral com as 87 estimativas.
 
 ## Achados
 
@@ -48,6 +48,12 @@ Os autores juntaram os estudos que comparam quem usa apps de namoro de deslizar 
 | Viés de publicação no uso compulsivo | Assimetria; g ajustado de 0,44 para 0,48 | Results, Publication bias | "slightly higher adjusted effect size (from g = 0.44 to g = 0.48)" |
 
 O g de Hedges é a diferença entre usuários e não usuários em desvios-padrão: 0,2 é pequeno, 0,5 é médio. Um g de 0,28 quer dizer que o usuário médio está um pouco pior que o não usuário médio, com muita sobreposição entre os dois grupos.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com a vida, não com a relação: entra no grupo de bem-estar, que junta satisfação com a vida, bem-estar subjetivo, regulação emocional, afeto positivo e solidão | Methods, Outcome domains | "Wellbeing and positive functioning (II): Encompasses life satisfaction, subjective wellbeing, emotional regulation, positive affect, and indicators of loneliness or isolation." |
 
 ## Limitações
 

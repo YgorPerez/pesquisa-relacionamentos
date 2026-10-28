@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-O Cyberball é um jogo de passar bola na tela. O participante acha que joga com outras pessoas, mas os outros jogadores são o programa: no grupo excluído, ele recebe a bola duas vezes e depois é ignorado; no incluído, recebe a bola tanto quanto os outros. A meta-análise juntou os experimentos que sortearam quem seria excluído e comparou os dois grupos na primeira medida depois do jogo (em geral pertencimento, autoestima, controle e sentido, além de humor) e na última medida do estudo, minutos depois.
+O Cyberball é um jogo de passar bola na tela. O participante acha que joga com outras pessoas, mas os outros jogadores são o programa: no grupo excluído, ele recebe a bola duas vezes e depois é ignorado; no incluído, recebe a bola tanto quanto os outros. A [[meta-análise]] juntou os experimentos que sortearam quem seria excluído e comparou os dois grupos na primeira medida depois do jogo (em geral pertencimento, autoestima, controle e sentido, além de humor) e na última medida do estudo, minutos depois.
 
 ## Achados
 

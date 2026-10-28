@@ -43,7 +43,7 @@ Antes do evento, cada participante disse quanto valoriza atratividade física, p
 | Conclusão dessa análise | as preferências declaradas não se relacionam com as reveladas | Results, Individual Differences (p. 30) | "participants' stated preferences were unrelated to their in-vivo preferences" |
 | Preferência por alguém parecido consigo nesses traços | nenhuma evidência em 9 regressões | Results, Similarity effects (p. 32) | "None of the 9 regressions revealed any evidence that participants desired similarity." |
 
-- As notas de consenso dos outros participantes, as notas de fotos por avaliadores e a renda mediana da cidade de origem deram a mesma conclusão: nenhuma diferença significativa entre os sexos.
+- As notas de consenso dos outros participantes, as notas de fotos por avaliadores e a renda mediana da cidade de origem deram a mesma conclusão: nenhuma diferença [[significativa]] entre os sexos.
 - Nem quem queria uma relação séria nem quem tinha sociossexualidade mais restrita mostrou a diferença entre os sexos que as preferências declaradas sugerem.
 - O próprio valor percebido no mercado afetivo não explicou a falta de relação entre o declarado e o real.
 - A única explicação alternativa com apoio modesto, numa análise exploratória que os autores chamam de preliminar: com pouca ansiedade de apego em relação a um parceiro específico, a diferença esperada entre os sexos apareceu em parte (atratividade só nos pares do evento; renda mais nos write-ins).
@@ -52,7 +52,7 @@ Antes do evento, cada participante disse quanto valoriza atratividade física, p
 ## Limitações
 
 - Universitários (19,6 anos em média) de uma só universidade particular americana, de porte médio, que aceitaram ir a um speed dating. Os autores dizem que conclusões firmes esperam replicação em outras amostras.
-- Mede atração inicial e as primeiras semanas, não satisfação nem duração de longo prazo.
+- Mede atração inicial e as primeiras semanas, não contentamento com a relação nem duração de longo prazo.
 - Os traços do parceiro vêm sobretudo da avaliação do próprio participante; só no speed dating há notas de consenso e de fotos.
 - Todos os homens estudavam numa universidade respeitada ("respectable", nas palavras dos autores). Os autores lembram que o estudo não testa se mulheres exigem um mínimo de renda, só que, acima desse mínimo, os sexos não diferem.
 - Amostra pequena para efeitos de interação pequenos. O teste de 2024 em 43 países ([Eastwick et al. 2024](eastwick-2024-preferencias-43-paises.md)) acha esses efeitos traço a traço, mas muito pequenos (β médio = 0,04).

@@ -22,9 +22,9 @@ covers:
 
 ## O que mediu
 
-Segundo o resumo, mediu a associação entre a personalidade (Big Five) de uma pessoa e a satisfação do **parceiro** com a relação.
+Segundo o resumo, mediu a associação entre a personalidade (Big Five) de uma pessoa e o quanto o **parceiro** está satisfeito com a relação.
 
-Desenho, como descrito antes da migração: meta-análise de estudos correlacionais.
+Desenho, como descrito antes da migração: [[meta-análise]] de estudos correlacionais.
 
 ## Achados
 
@@ -40,8 +40,8 @@ Desenho, como descrito antes da migração: meta-análise de estudos correlacion
 ## Limitações
 
 - Sem o texto completo, não sabemos o tamanho de cada efeito nem como os estudos foram ponderados.
-- Os estudos são majoritariamente transversais: não dá para saber se a personalidade afeta a satisfação ou o contrário.
-- Uma parte da associação pode vir de a satisfação colorir a forma como se avalia o parceiro, quando a personalidade é relatada pelo próprio parceiro (não conferido como cada estudo mediu).
+- Os estudos são majoritariamente transversais: não dá para saber se a personalidade afeta o quanto o parceiro está satisfeito ou o contrário.
+- Uma parte da associação pode vir de quem está contente com a relação avaliar melhor o parceiro, quando a personalidade é relatada pelo próprio parceiro (não conferido como cada estudo mediu).
 
 ## Como usamos
 

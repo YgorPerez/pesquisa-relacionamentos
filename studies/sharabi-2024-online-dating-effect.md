@@ -20,7 +20,7 @@ covers: {}
 
 ## O que mediu
 
-Se casamentos iniciados online diferem em satisfação e estabilidade (ter pensado em divórcio), e se estigma, aprovação da rede social, distância inicial e autorrevelação explicam a diferença.
+Se casamentos iniciados online diferem em quão satisfeitos os cônjuges estão e em estabilidade (ter pensado em divórcio), e se estigma, aprovação da rede social, distância inicial e autorrevelação explicam a diferença.
 
 ## Achados
 

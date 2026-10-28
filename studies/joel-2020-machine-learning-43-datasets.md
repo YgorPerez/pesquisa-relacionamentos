@@ -21,14 +21,14 @@ covers:
 
 ## O que mediu
 
-Quanto da satisfação e do compromisso com a relação dá para prever a partir de 2.413 medidas da linha de base, quase todas de autorrelato, agrupadas em quatro conjuntos:
+Quanto da [[satisfação]] e do compromisso com a relação dá para prever a partir de 2.413 medidas da linha de base, quase todas de autorrelato, agrupadas em quatro conjuntos:
 
 1. variáveis da relação relatadas pela própria pessoa ("ator"), como conflito, apreciação e compromisso percebido do parceiro;
 2. as mesmas variáveis relatadas pelo parceiro;
 3. diferenças individuais do ator (personalidade, humor, apego, idade, renda etc.);
 4. diferenças individuais do parceiro.
 
-Em cada base, Random Forests previram a satisfação na linha de base, no fim do seguimento e a mudança entre as duas. Os resultados das 43 bases foram combinados por meta-análise de efeitos aleatórios. O estudo também contou quantas vezes cada construto entrou como preditor útil entre as bases (a "taxa de sucesso").
+Em cada base, Random Forests previram a satisfação na linha de base, no fim do seguimento e a mudança entre as duas. Os resultados das 43 bases foram combinados por [[meta-análise]] de efeitos aleatórios. O estudo também contou quantas vezes cada construto entrou como preditor útil entre as bases (a "taxa de sucesso").
 
 ## Achados
 
@@ -57,6 +57,12 @@ Em cada base, Random Forests previram a satisfação na linha de base, no fim do
 - Demografia pesou pouco: "Demographic variables, such as sex/gender, race/ethnicity, and education mattered little."
 - As interações ator × parceiro, que é onde um "match" entre os dois apareceria, não estão no modelo da Fig. 5 porque, segundo os autores, "are likely quite small".
 - Conclusão dos autores: os fatores de risco individuais "may matter little" se a relação tem apreciação, satisfação sexual e pouco conflito.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | A medida de satisfação com a relação que cada base de dados trazia, usada como a medida principal da qualidade da relação, isto é, de quão boa ou ruim a pessoa acha a própria relação | Métodos, Measures | "The dependent measure was relationship quality (i.e., a person's subjective perception that their relationship is relatively good vs. bad; a person's evaluation of the relationship), and our primary operationalization of this construct consisted of relationship-satisfaction measures." |
 
 ## Limitações
 

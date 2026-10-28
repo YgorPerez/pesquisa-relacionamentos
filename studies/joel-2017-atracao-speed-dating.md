@@ -38,7 +38,7 @@ O resultado quase nulo diz respeito ao interesse específico pelo par, descontad
 ## Limitações
 
 - São universitários jovens que aceitaram participar de encontros rápidos. Os autores observam que uma amostra mais diversa poderia revelar combinações por idade, condição socioeconômica, cultura ou religião que este desenho não captou.
-- O desfecho é atração logo após uma conversa breve, não formação, satisfação ou duração de um relacionamento. O artigo não testa um algoritmo de compatibilidade de longo prazo.
+- O desfecho é atração logo após uma conversa breve, não formação, contentamento ou duração de um relacionamento. O artigo não testa um algoritmo de compatibilidade de longo prazo.
 - O fracasso destes modelos não prova que toda previsão seja impossível. Os autores consideram tanto medidas ainda desconhecidas quanto muitos efeitos de interação pequenos, que exigiriam amostras maiores.
 - Os traços e as preferências foram autorrelatados. O estudo testa sua capacidade conjunta de prever o interesse, sem mostrar que cada preferência declarada deixa de importar em qualquer situação.
 - A amostra A já foi analisada em publicações anteriores, incluindo [Eastwick & Finkel (2008)](eastwick-2008-preferencias-speed-dating.md). Essas Fichas não contam como replicações independentes entre si.

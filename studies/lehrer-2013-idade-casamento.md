@@ -47,7 +47,7 @@ Se a idade da mulher no primeiro casamento muda o risco de separação, e se ess
 | Filho de união anterior, painel II | razão de risco 1,31 | Tabela 2 | "1.31 0.25 0.75(0.21)" |
 | Casos com 33 anos ou mais ao casar | 159 | Limitações, p. 534 | "a relatively small number of cases in the 33 years and older age at marriage category (n=159)" |
 
-As razões de risco 0,59 e 1,31 aparecem na tabela logo depois dos coeficientes −0,53 e 0,27 (exp(−0,53) ≈ 0,59; exp(0,27) ≈ 1,31); o Trecho dessas linhas começa na razão de risco porque os asteriscos de significância logo antes dela não podem entrar num Trecho. A probabilidade de separação até o quinto ano vem como proporção (0,31 = 31%).
+As razões de risco 0,59 e 1,31 aparecem na tabela logo depois dos coeficientes −0,53 e 0,27 (exp(−0,53) ≈ 0,59; exp(0,27) ≈ 1,31); o Trecho dessas linhas começa na razão de risco porque os asteriscos de [[significância]] logo antes dela não podem entrar num Trecho. A probabilidade de separação até o quinto ano vem como proporção (0,31 = 31%).
 
 ## Limitações
 

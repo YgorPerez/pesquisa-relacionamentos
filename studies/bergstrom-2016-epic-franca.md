@@ -47,7 +47,7 @@ A pesquisa Épic perguntou a uma amostra aleatória de franceses de 26 a 65 anos
 | EUA, fim dos anos 2000, na definição ampla de "online" do estudo de Rosenfeld e Thomas (2012) | 22% dos casais heterossexuais | Encadré 2 | "22 % des couples hétérosexuels, formés à la fin des années 2000, seraient nés sur le réseau" |
 | Idem, contando só sites de encontro, na mesma pesquisa | cerca de 9% das relações | Encadré 2 | "Aux États-Unis à la fin des années 2000, environ 9 % des relations amoureuses et/ou sexuelles ont débuté sur un site de rencontres." |
 
-A autora usa o Encadré 2 para criticar dois atalhos: o painel online com cotas, que super-representa quem usa muito a internet, e a definição ampla de "conheceu online" do HCMST, que conta como online um casal que se viu na faculdade e depois retomou contato pela internet. Os 9% dos EUA são cálculo dela com os dados do HCMST, e a unidade muda: são relações amorosas e/ou sexuais, não só casais.
+A autora usa o Encadré 2 para criticar dois atalhos: o [[painel online]] com cotas, que super-representa quem usa muito a internet, e a definição ampla de "conheceu online" do [[HCMST]], que conta como online um casal que se viu na faculdade e depois retomou contato pela internet. Os 9% dos EUA são cálculo dela com os dados do HCMST, e a unidade muda: são relações amorosas e/ou sexuais, não só casais.
 
 ## Limitações
 

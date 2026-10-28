@@ -24,7 +24,7 @@ covers:
 
 ## O que mediu
 
-As autoras compararam pessoas numa relação amorosa mantida só pela internet, sem encontro presencial (RAMI), com pessoas numa relação presencial (RAP). Mediram os três componentes do amor da Escala Triangular de Sternberg (intimidade, paixão, decisão/compromisso), a satisfação com a relação, problemas conjugais pelo GRIMS e o tempo diário de internet, e usaram uma análise discriminante para ver o que separa os dois grupos. A coleta foi um questionário online.
+As autoras compararam pessoas numa relação amorosa mantida só pela internet, sem encontro presencial (RAMI), com pessoas numa relação presencial (RAP). Mediram os três componentes do amor da Escala Triangular de Sternberg (intimidade, paixão, decisão/compromisso), a [[satisfação]] com a relação, problemas conjugais pelo GRIMS e o tempo diário de internet, e usaram uma análise discriminante para ver o que separa os dois grupos. A coleta foi um questionário online.
 
 ## Achados
 
@@ -40,6 +40,12 @@ As autoras compararam pessoas numa relação amorosa mantida só pela internet, 
 | Classificação correta pela função discriminante | 76,7% | Tabela 4, nota | "Nota: Porcentagem de classificação correta dos casos 76.7%." |
 
 As cargas da função discriminante só dizem quais variáveis separam os grupos e em que direção. O artigo não informa as médias de amor e satisfação de cada grupo.
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Um dos itens do questionário de informações gerais, sobre a satisfação com o relacionamento, ao lado do tempo semanal de uso da internet | p. 37, Instrumentos | "tempo semanal de uso da internet, satisfação com o relacionamento, entre outros" |
 
 ## Limitações
 

@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar resolver um problema da relação. Codificadores marcaram cada fala como culpar ("você nunca me escuta"), mandar ("não faça mais isso"), rejeitar (insultar ou desprezar o ponto de vista do outro) ou negativo indireto (sarcasmo, pergunta hostil, atribuir intenções, fugir da responsabilidade). Os cônjuges avaliaram a gravidade dos problemas do casamento e a satisfação a cada seis meses, até oito vezes no estudo 1 e três no estudo 2. Modelos de curva de crescimento testaram se o efeito de cada comportamento sobre a mudança na satisfação dependia da gravidade inicial dos problemas.
+Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar resolver um problema da relação. Codificadores marcaram cada fala como culpar ("você nunca me escuta"), mandar ("não faça mais isso"), rejeitar (insultar ou desprezar o ponto de vista do outro) ou negativo indireto (sarcasmo, pergunta hostil, atribuir intenções, fugir da responsabilidade). Os cônjuges avaliaram a gravidade dos problemas do casamento e a [[satisfação]] a cada seis meses, até oito vezes no estudo 1 e três no estudo 2. Modelos de curva de crescimento testaram se o efeito de cada comportamento sobre a mudança na satisfação dependia da gravidade inicial dos problemas.
 
 ## Achados
 
@@ -42,11 +42,17 @@ Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar re
 | Retenção nas análises | 100% no estudo 1 e 87% no estudo 2 | Strengths and Limitations | "analyses in the current study were able to use data from 100% (Study 1) and 87% (Study 2) of the initial samples" |
 | Confiabilidade mais baixa da codificação | ICC 0,65 (indireto, estudo 1; rejeitar, estudo 2) e 0,61 (mandar, estudo 2) | Método, Observed Negative Behavior | "in Study 1, ICC for Indirect Negatives = .65; in Study 2, ICC for Rejections = .65 and ICC for Commands = .61" |
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Como cada cônjuge vê a relação em quinze pares de adjetivos opostos, cada um numa escala de 7 pontos | Método, Marital Satisfaction | "This version of the SMD asks spouses to rate their perceptions of their relationship on 7-point scales between fifteen pairs of opposing adjectives" |
+
 ## Limitações
 
 - O desfecho é a satisfação com o casamento, não o divórcio. Houve só 14 separações nas duas amostras, poucas para testar o divórcio.
 - Os autores avisam que o resultado é correlacional: uma terceira variável não medida pode explicar o padrão.
-- Os testes de significância são unicaudais, o que facilita achar efeito.
+- Os testes de [[significância]] são unicaudais, o que facilita achar efeito.
 - Amostras pequenas, de recém-casados quase todos brancos de duas regiões dos EUA. Os autores lembram que casamentos mais antigos podem reagir de outro jeito.
 - No estudo 1, a separação entre culpar e rejeitar foi recodificada depois que os autores formularam a hipótese.
 - O comportamento foi medido só na primeira visita, em duas conversas de laboratório.

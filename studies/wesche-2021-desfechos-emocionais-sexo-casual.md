@@ -20,9 +20,9 @@ covers:
 
 ## O que mediu
 
-As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualquer encontro sexual com alguém que a pessoa não considera parceiro romântico) a dois tipos de desfecho. O primeiro são as reações subjetivas: o que a pessoa diz que sentiu depois, como satisfação, arrependimento, vergonha ou se sentir usada. O segundo é a saúde emocional em geral: sintomas depressivos, ansiedade, solidão, autoestima. Também listaram o que torna o desfecho pior ou melhor (gênero, atitudes, motivos, álcool, tipo de parceiro, tipo de sexo, camisinha, satisfação sexual).
+As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualquer encontro sexual com alguém que a pessoa não considera parceiro romântico) a dois tipos de desfecho. O primeiro são as reações subjetivas: o que a pessoa diz que sentiu depois, como [[satisfação]], arrependimento, vergonha ou se sentir usada. O segundo é a saúde emocional em geral: sintomas depressivos, ansiedade, solidão, autoestima. Também listaram o que torna o desfecho pior ou melhor (gênero, atitudes, motivos, álcool, tipo de parceiro, tipo de sexo, camisinha, satisfação sexual).
 
-É uma revisão sistemática narrativa. A ficha usa `meta-analysis` porque a lista de desenhos não tem opção para revisão, mas não há meta-análise: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
+É uma revisão sistemática narrativa. A ficha usa `meta-analysis` porque a lista de desenhos não tem opção para revisão, mas não há [[meta-análise]]: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
 
 ## Achados
 
@@ -58,6 +58,12 @@ As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualque
 | Quem tem desfecho pior, resumo | Ser mulher, atitudes negativas, sem camisinha, álcool, pouca satisfação sexual, não conhecer bem o parceiro | Discussion | "Characteristics of individuals (being a woman, having negative attitudes about CSREs) and situations (not using condoms, drinking alcohol, not being sexually satisfied, and not knowing a partner well) increase the likelihood and severity of negative emotional outcomes" |
 | Conclusão | Não apoia a ideia de que o sexo casual é danoso por natureza | Conclusion | "The results of this review do not support the idea that CSREs are inherently negative and emotionally harmful experiences." |
 | Minorias sexuais na base | Três artigos com homens que fazem sexo com homens; dois com mulheres e homens de minoria sexual | Limitations and strengths | "only three articles addressed emotional outcomes for men who have sex with men" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com um encontro, não com uma relação: uma das reações que a pessoa relata depois de sexo casual, ao lado de empolgação, arrependimento e vergonha | Introdução | "Subjective emotional reactions are the emotions that individuals report feeling as a result of their CSREs, such as excitement, satisfaction, regret, embarrassment, or feeling used." |
 
 ## Limitações
 

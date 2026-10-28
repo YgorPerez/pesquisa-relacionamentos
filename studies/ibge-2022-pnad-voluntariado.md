@@ -16,13 +16,14 @@ license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); a b
 covers:
   genders: [man, woman]
   ages: { min: 14, max: 99 }
+institution: ibge
 ---
 
 # IBGE (2022): PNAD Contínua, trabalho voluntário
 
 ## O que mediu
 
-Na quinta visita ao domicílio, a PNAD Contínua pergunta se cada morador de 14 anos ou mais fez trabalho voluntário, sem pagamento, por pelo menos uma hora na semana de referência: em igreja, sindicato, escola, hospital, ONG, associação de moradores ou esportiva, mutirão, proteção de animais, ou ajudando quem não é parente. O IBGE publica a taxa de quem fez e a contagem de voluntários por sexo, idade e forma de inserção.
+Na quinta visita ao domicílio, a PNAD Contínua pergunta se cada morador de 14 anos ou mais fez trabalho voluntário, sem pagamento, por pelo menos uma hora na semana de referência: em igreja, sindicato, escola, hospital, ONG, associação de moradores ou esportiva, mutirão, proteção de animais, ou ajudando quem não é parente. O [[IBGE]] publica a taxa de quem fez e a contagem de voluntários por sexo, idade e forma de inserção.
 
 ## Achados
 

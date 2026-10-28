@@ -20,7 +20,7 @@ covers: {}
 
 ## O que mediu
 
-Uma pesquisa de painel online sobre o uso da internet para relacionamentos: se o respondente com parceiro o conheceu pela internet, o que acha de apps de paquera, qual usa, e por quais situações já passou (encontro por app, olhar o celular do parceiro, traição). A publicação inteira é o post do blog, com um parágrafo de metodologia; não há relatório técnico nem questionário publicados, por isso a Ficha é parcial.
+Uma pesquisa de [[painel online]] sobre o uso da internet para relacionamentos: se o respondente com parceiro o conheceu pela internet, o que acha de apps de paquera, qual usa, e por quais situações já passou (encontro por app, olhar o celular do parceiro, traição). A publicação inteira é o post do blog, com um parágrafo de metodologia; não há relatório técnico nem questionário publicados, por isso a Ficha é parcial.
 
 ## Achados
 

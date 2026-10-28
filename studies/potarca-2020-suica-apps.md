@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-A pesquisa oficial suíça sobre famílias de 2018 perguntou onde a pessoa conheceu o parceiro atual, com respostas separadas para site de namoro (eDarling, Parship), app de celular (Tinder, Lovoo, Grindr) e rede social, chat ou outro serviço online (Facebook, Instagram). A autora comparou esses três grupos com quem se conheceu fora da internet em satisfação com a relação (escala de 0 a 10), satisfação com a vida, intenção de casar, de morar junto e de ter filhos, e na diferença entre os parceiros em escolaridade, origem, idade e distância. As regressões controlam idade, tipo de união, duração da relação, escolaridade, emprego, filhos, religiosidade, origem, conflito trabalho-família e saúde. Uma análise à parte, com o Painel Suíço de Domicílios, olha os solteiros que usam apps.
+A pesquisa oficial suíça sobre famílias de 2018 perguntou onde a pessoa conheceu o parceiro atual, com respostas separadas para site de namoro (eDarling, Parship), app de celular (Tinder, Lovoo, Grindr) e rede social, chat ou outro serviço online (Facebook, Instagram). A autora comparou esses três grupos com quem se conheceu fora da internet em [[satisfação]] com a relação (escala de 0 a 10), satisfação com a vida, intenção de casar, de morar junto e de ter filhos, e na diferença entre os parceiros em escolaridade, origem, idade e distância. As regressões controlam idade, tipo de união, duração da relação, escolaridade, emprego, filhos, religiosidade, origem, conflito trabalho-família e saúde. Uma análise à parte, com o Painel Suíço de Domicílios, olha os solteiros que usam apps.
 
 ## Achados
 

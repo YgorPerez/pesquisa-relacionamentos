@@ -16,6 +16,7 @@ conflict: "Órgão oficial de estatística."
 license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o FTP do IBGE não traz termo de licença."
 covers:
   genders: [man, woman]
+institution: ibge
 ---
 
 # IBGE (2019): Pesquisa Nacional de Saúde

@@ -21,7 +21,7 @@ institution: ftc
 
 ## O que mediu
 
-Quantas pessoas relataram à Federal Trade Commission (FTC) um golpe romântico em 2022, quanto disseram ter perdido, por onde o golpista fez o primeiro contato e como o dinheiro foi tirado. Os números vêm das queixas na Consumer Sentinel Network, a base de denúncias de consumidores que a FTC mantém, e das narrativas escritas nelas.
+Quantas pessoas relataram à [[Federal Trade Commission]] (FTC) um golpe romântico em 2022, quanto disseram ter perdido, por onde o golpista fez o primeiro contato e como o dinheiro foi tirado. Os números vêm das queixas na Consumer Sentinel Network, a base de denúncias de consumidores que a FTC mantém, e das narrativas escritas nelas.
 
 ## Achados
 

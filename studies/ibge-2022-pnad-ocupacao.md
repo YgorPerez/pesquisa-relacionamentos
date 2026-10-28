@@ -17,13 +17,14 @@ license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o F
 covers:
   genders: [man, woman]
   ages: { min: 14, max: 99 }
+institution: ibge
 ---
 
 # IBGE (2022): PNAD Contínua, ocupação
 
 ## O que mediu
 
-Inquérito domiciliar trimestral que pergunta a cada morador de 14 anos ou mais se trabalhou na semana de referência e em quê. O IBGE classifica a ocupação do trabalho principal em 11 grupamentos (VD4011). O microdado traz no mesmo registro o sexo, a idade, o nível de instrução (VD3004), o peso calibrado (V1028), o estrato e a UPA, o que dá a proporção de cada grupamento por sexo, idade e escolaridade, com o intervalo de 95%.
+Inquérito domiciliar trimestral que pergunta a cada morador de 14 anos ou mais se trabalhou na semana de referência e em quê. O [[IBGE]] classifica a ocupação do trabalho principal em 11 grupamentos (VD4011). O microdado traz no mesmo registro o sexo, a idade, o nível de instrução (VD3004), o peso calibrado (V1028), o estrato e a UPA, o que dá a proporção de cada grupamento por sexo, idade e escolaridade, com o intervalo de 95%.
 
 ## Achados
 

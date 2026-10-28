@@ -44,14 +44,14 @@ As primeiras linhas são diferenças de mudança entre membros e não membros de
 
 Na análise por instituição, β acompanha a interação entre a proporção de membros dessas organizações e o período após o lançamento. A escala desse tratamento é diferente da comparação individual; os coeficientes não são diretamente comparáveis.
 
-A distribuição do número de parceiros também se ampliou, com aumentos na cauda de maior atividade, sobretudo entre homens (tabela 3 e suplemento, tabela A8). A análise por instituição encontrou aumento de coabitação, inclusive entre não membros (suplemento, tabela A23). Nessa análise, não houve aumento estatisticamente significativo de agressão sexual (tabela 8). Portanto, os resultados da comparação individual não descrevem todos os universitários da mesma forma.
+A distribuição do número de parceiros também se ampliou, com aumentos na cauda de maior atividade, sobretudo entre homens (tabela 3 e suplemento, tabela A8). A análise por instituição encontrou aumento de coabitação, inclusive entre não membros (suplemento, tabela A23). Nessa análise, não houve aumento estatisticamente [[significativo]] de agressão sexual (tabela 8). Portanto, os resultados da comparação individual não descrevem todos os universitários da mesma forma.
 
 ## Limitações
 
 - A interpretação causal depende de que os grupos teriam seguido tendências paralelas sem o lançamento. Os autores verificam tendências anteriores e fazem testes de seleção e de efeitos entre grupos, mas a exposição não foi sorteada.
 - O uso do Tinder não foi medido individualmente. Não se estima aqui o que acontecerá com uma pessoa que decidir instalar ou apagar o app.
 - Os participantes são graduandos dos EUA; a amostra não permite generalizar para o Brasil, outras idades ou o uso atual dos apps. O Bumble adotou divulgação semelhante e pode contribuir para os efeitos nos anos finais.
-- Coabitação é uma aproximação de compromisso, e qualidade da relação é medida por problemas e abuso. Isso não cobre todos os namoros sérios nem equivale a medir satisfação com a relação.
+- Coabitação é uma aproximação de compromisso, e qualidade da relação é medida por problemas e abuso. Isso não cobre todos os namoros sérios nem equivale a medir quão contente a pessoa está com a relação.
 - Diagnósticos de clamídia podem aumentar tanto por mais infecções quanto por mais testagem. O estudo não separa essas explicações.
 - A melhora média de saúde mental entre membros das organizações convive com aumento de agressões sexuais. Ela não significa ausência de danos individuais; no conjunto das instituições, a estimativa de saúde mental é imprecisa.
 - Há uma inconsistência de redação: a seção de resultados menciona sintomas no último ano, mas a tabela de saúde mental e a codificação do suplemento usam o último mês. Esta Ficha segue a tabela e a codificação.
