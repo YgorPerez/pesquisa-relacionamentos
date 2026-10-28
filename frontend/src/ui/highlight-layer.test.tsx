@@ -1,7 +1,7 @@
 // Grifar and the Nota (#334) in jsdom (ADR 0035), over the fixture content:
 // the paint, what survives a reload, the Nota, "Tirar grifo" and the Grifo
 // whose quote left the page; then "Seus trechos" (`/trechos`, #335, #347),
-// with the sent Comentários, at the end. One file for all keeps
+// with the Nota edited there (#440) and the sent Comentários, at the end. One file for all keeps
 // `open-screen.tsx` under before-merge's fan-in limit. jsdom has neither the CSS Custom Highlight API
 // nor layout, so the test gives it a registry of painted ranges and a box
 // for each painted range; the paint itself, in a real Chrome, is the e2e's
@@ -15,6 +15,7 @@ import type { Highlight } from '#/state/highlight-record'
 import type { PaintedComment } from './comment-paint'
 import {
   ADD_NOTE,
+  CANCEL,
   DELETE_NOTE,
   EDIT_NOTE,
   HIGHLIGHT_LABEL,
@@ -30,6 +31,7 @@ import {
   HIGHLIGHTS,
   KEPT_PASSAGES,
   NO_HIGHLIGHTS,
+  noteLabel,
   removeLabel,
   saved,
 } from './highlight-list.copy'
@@ -493,6 +495,46 @@ it('"Tirar grifo" takes the Grifo off the list and out of the storage, and the l
       exact: false,
     }),
   ).toBeInTheDocument()
+})
+
+it("a Nota is written, edited and removed in the list with the popover's field, a changed Grifo's too, and goes to the storage", async () => {
+  const user = userEvent.setup()
+  save({ ...GUIDE_B, changed: true }, TIP)
+  await openKept()
+  const notes = () =>
+    (JSON.parse(localStorage.getItem(KEY) ?? '[]') as Highlight[]).map(
+      (h) => h.note,
+    )
+
+  await user.click(
+    screen.getByRole('button', { name: noteLabel(TIP.text, '') }),
+  )
+  await user.type(screen.getByLabelText(NOTE_FIELD), 'Testar por um mês')
+  await user.click(screen.getByRole('button', { name: SAVE_NOTE }))
+  expect(await screen.findByText('Testar por um mês')).toBeVisible()
+  expect(screen.queryByLabelText(NOTE_FIELD)).toBeNull()
+  expect(notes()).toEqual(['Ver a amostra', 'Testar por um mês'])
+
+  const changed = within(highlightsRegion()).getByText(CHANGED).closest('li')!
+  const edit = within(changed).getByRole('button', {
+    name: noteLabel(GUIDE_B.text, GUIDE_B.note),
+  })
+  await user.click(edit)
+  const field = within(changed).getByLabelText(NOTE_FIELD)
+  expect(field).toHaveValue('Ver a amostra')
+  await user.clear(field)
+  await user.type(field, 'Descartado')
+  await user.click(within(changed).getByRole('button', { name: CANCEL }))
+  expect(within(changed).getByText('Ver a amostra')).toBeVisible()
+  expect(notes()[0]).toBe('Ver a amostra')
+
+  await user.click(edit)
+  await user.click(within(changed).getByRole('button', { name: DELETE_NOTE }))
+  expect(within(changed).queryByText(NOTE_HEADING)).toBeNull()
+  expect(
+    within(changed).getByRole('button', { name: noteLabel(GUIDE_B.text, '') }),
+  ).toBeVisible()
+  expect(notes()).toEqual(['', 'Testar por um mês'])
 })
 
 it('with nothing kept, each section says how to fill it', async () => {

@@ -1,12 +1,19 @@
 // The Grifos section of "Seus trechos" (`highlight-list.tsx`, #335): Grifos
 // on a Guide, a Tip and a Fact sheet, one with a Nota and one whose passage
-// changed, and the empty section.
+// changed, a Nota written and edited in the list (#440), and the empty
+// section.
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { expect, userEvent, within } from 'storybook/test'
 import type { Highlight } from '#/state/highlight-record'
+import { NOTE_FIELD, SAVE_NOTE } from './highlight.copy'
 import { HighlightList } from './highlight-list'
-import { CHANGED, NO_HIGHLIGHTS, removeLabel } from './highlight-list.copy'
+import {
+  CHANGED,
+  NO_HIGHLIGHTS,
+  noteLabel,
+  removeLabel,
+} from './highlight-list.copy'
 
 function grifo(
   id: string,
@@ -60,12 +67,15 @@ const HIGHLIGHTS: ReadonlyArray<Highlight> = [
   ),
 ]
 
-/** With "Tirar grifo" working, as on the page. */
+/** With the Nota and "Tirar grifo" working, as on the page. */
 function Removing({ highlights }: { highlights: ReadonlyArray<Highlight> }) {
   const [left, setLeft] = useState(highlights)
   return (
     <HighlightList
       highlights={left}
+      onNote={(id, note) =>
+        setLeft((now) => now.map((h) => (h.id === id ? { ...h, note } : h)))
+      }
       onRemove={(id) => setLeft((now) => now.filter((h) => h.id !== id))}
     />
   )
@@ -104,6 +114,28 @@ export const RemoveAll: Story = {
     )
     await expect(
       screen.getByText(NO_HIGHLIGHTS, { exact: false }),
+    ).toBeVisible()
+  },
+}
+
+/** "Escrever nota" opens the Nota's field under a Grifo; once saved, the
+ * Nota shows and the button says "Editar nota". */
+export const WriteNote: Story = {
+  args: { highlights: HIGHLIGHTS.slice(2, 3) },
+  play: async ({ canvasElement }) => {
+    const screen = within(canvasElement)
+    const text = 'Use o app como complemento'
+    await userEvent.click(
+      screen.getByRole('button', { name: noteLabel(text, '') }),
+    )
+    await userEvent.type(
+      screen.getByRole('textbox', { name: NOTE_FIELD }),
+      'Testar por um mês',
+    )
+    await userEvent.click(screen.getByRole('button', { name: SAVE_NOTE }))
+    await expect(screen.getByText('Testar por um mês')).toBeVisible()
+    await expect(
+      screen.getByRole('button', { name: noteLabel(text, 'x') }),
     ).toBeVisible()
   },
 }
