@@ -124,9 +124,12 @@ function HighlightActions({
 export function HighlightPopover({
   painted,
   close,
+  children,
 }: {
   painted: Painted
   close: () => void
+  /** Under the actions: the passage's Comentário, if it has one (#441). */
+  children?: ReactNode
 }) {
   return (
     <Popover.Root
@@ -143,6 +146,7 @@ export function HighlightPopover({
         data-slot="grifo"
       >
         <HighlightActions painted={painted} close={close} />
+        {children}
       </TextPopover>
     </Popover.Root>
   )

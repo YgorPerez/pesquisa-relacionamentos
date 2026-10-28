@@ -12,7 +12,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
 import { KIND_LABEL } from '#/content/comment-kinds'
 import type { Highlight } from '#/state/highlight-record'
-import type { SentComment } from '#/state/sent-comments'
+import type { PaintedComment } from './comment-paint'
 import {
   ADD_NOTE,
   DELETE_NOTE,
@@ -40,8 +40,15 @@ import {
   removeCommentLabel,
   sentCount,
   sentOn,
+  STATUS_LABEL,
   YOUR_COMMENT,
 } from './sent-comment-list.copy'
+import {
+  ALL_COMMENTS,
+  ALSO_COMMENTED,
+  COMMENT_LABEL,
+  SEE_COMMENT,
+} from './comment-popover.copy'
 
 vi.mock('#/content/check-comment-status', () => ({
   checkCommentStatus: vi.fn<() => Promise<[]>>(async () => []),
@@ -71,7 +78,7 @@ beforeEach(() => {
   Object.defineProperty(Range.prototype, 'getClientRects', {
     configurable: true,
     value(this: Range) {
-      const drawn = [...(highlights.get('grifo') ?? [])].includes(this)
+      const drawn = [...highlights.values()].some((paint) => paint.has(this))
       return drawn ? [new DOMRect(0, 0, 10, 10)] : []
     },
   })
@@ -81,14 +88,14 @@ afterEach(() => {
   Reflect.deleteProperty(Range.prototype, 'getClientRects')
 })
 
-/** The ranges painted as Grifos. */
-const paintedRanges = (): Range[] => [
-  ...((CSS.highlights.get('grifo') as unknown as Set<Range> | undefined) ?? []),
+/** The ranges painted under `name`: Grifos, or sent Comentários' quotes. */
+const paintedRanges = (name = 'grifo'): Range[] => [
+  ...((CSS.highlights.get(name) as unknown as Set<Range> | undefined) ?? []),
 ]
 
 /** The painted text of each Grifo's parts, joined. */
-const paintedText = () =>
-  paintedRanges()
+const paintedText = (name = 'grifo') =>
+  paintedRanges(name)
     .map((range) => range.toString())
     .join('')
 
@@ -518,6 +525,9 @@ it('every page links to Seus trechos from its footer, and the old /grifos leads 
 
 const COMMENTS_KEY = 'tem-estudo:sent-comments'
 
+/** A sent Comentário as the store keeps it. */
+type SentComment = PaintedComment['comment']
+
 function sentComment(
   path: string,
   pageTitle: string,
@@ -675,7 +685,7 @@ it('"Tirar da lista" forgets the Comentário on this device only, and the last o
   ).toBeInTheDocument()
 })
 
-it('on its page, a sent Comentário whose quote is gone is marked changed, one whose quote is there is not, and neither is painted', async () => {
+it('on its page, a sent Comentário whose quote is there is painted apart from the Grifos; one whose quote is gone is marked changed and not painted', async () => {
   saveComments(
     { ...ON_GUIDE, changed: true },
     sentComment('/onde-conhecer-pessoas', 'Onde conhecer pessoas', 'saiu', {
@@ -688,5 +698,59 @@ it('on its page, a sent Comentário whose quote is gone is marked changed, one w
   await waitFor(() =>
     expect(keptComments().map((c) => c.changed)).toEqual([false, true, false]),
   )
+  expect(paintedText('comentario')).toBe(SENTENCE)
   expect(paintedText()).toBe('')
+})
+
+const commentPopover = () =>
+  screen.findByRole('dialog', { name: COMMENT_LABEL })
+
+it("a tap on a sent Comentário's quote opens it: its type, its status, what was written and the way to Seus trechos", async () => {
+  const user = userEvent.setup()
+  saveComments({ ...ON_GUIDE, status: 'corrected', seenStatus: 'corrected' })
+  await openGuide()
+  await waitFor(() => expect(paintedText('comentario')).toBe(SENTENCE))
+
+  await tapGrifo(user)
+  const popover = await commentPopover()
+  expect(within(popover).getByText(KIND_LABEL.wrong)).toBeVisible()
+  expect(within(popover).getByText(STATUS_LABEL.corrected)).toBeVisible()
+  expect(within(popover).getByText(YOUR_COMMENT)).toBeVisible()
+  expect(
+    within(popover).getByText('O número não bate com a Ficha.'),
+  ).toBeVisible()
+  expect(
+    within(popover).getByRole('link', { name: ALL_COMMENTS }),
+  ).toHaveAttribute('href', '/trechos#comentarios')
+  expect(screen.queryByRole('dialog', { name: HIGHLIGHT_LABEL })).toBeNull()
+})
+
+it("a tap on a Grifo over a Comentário's quote opens the Grifo, which tells of the Comentário and opens it", async () => {
+  const user = userEvent.setup()
+  saveComments(ON_GUIDE)
+  await openGuide()
+  select('A satisfação de quem', 'perto')
+  await highlight(user)
+  await user.keyboard('{Escape}')
+  await waitFor(() => expect(paintedText('comentario')).toBe(SENTENCE))
+
+  await tapGrifo(user)
+  const grifo = await grifoPopover()
+  expect(within(grifo).getByText(ALSO_COMMENTED)).toBeVisible()
+  await user.click(within(grifo).getByRole('button', { name: SEE_COMMENT }))
+  expect(
+    within(await commentPopover()).getByText('O número não bate com a Ficha.'),
+  ).toBeVisible()
+  expect(screen.queryByRole('dialog', { name: HIGHLIGHT_LABEL })).toBeNull()
+})
+
+it("without the CSS Custom Highlight API a Comentário's quote is looked for but not drawn, and a tap opens nothing", async () => {
+  const user = userEvent.setup()
+  vi.stubGlobal('CSS', {})
+  saveComments({ ...ON_GUIDE, changed: true })
+  await openGuide()
+
+  await waitFor(() => expect(keptComments()[0]?.changed).toBe(false))
+  await tapGrifo(user)
+  expect(screen.queryByRole('dialog', { name: COMMENT_LABEL })).toBeNull()
 })
