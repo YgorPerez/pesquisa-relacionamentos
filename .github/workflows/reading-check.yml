@@ -1,0 +1,47 @@
+name: Reading check
+
+'on':
+  schedule:
+    # Mondays at 08:00 in Brasília.
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: reading-check
+  cancel-in-progress: false
+
+jobs:
+  readings:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: pnpm install --frozen-lockfile
+      - name: Restore consecutive failures from the last successful run
+        run: |
+          previous=$(gh run list --workflow reading-check.yml --branch "$GITHUB_REF_NAME" --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+          if [ -n "$previous" ]; then
+            gh run download "$previous" --name reading-check-state --dir "$RUNNER_TEMP/reading-check"
+            cp "$RUNNER_TEMP/reading-check/reading-state.json" "$RUNNER_TEMP/reading-state.json"
+          fi
+      - name: Check Readings and report
+        run: node scripts/reading-check.ts --state "$RUNNER_TEMP/reading-state.json"
+      - name: Save consecutive failures
+        uses: actions/upload-artifact@v4
+        with:
+          name: reading-check-state
+          path: ${{ runner.temp }}/reading-state.json
+          retention-days: 90
+          if-no-files-found: error

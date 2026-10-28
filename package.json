@@ -26,8 +26,10 @@
     "@shadcn/lint": "^0.2.1",
     "@t3-oss/env-core": "^0.13.11",
     "@types/node": "catalog:",
+    "linkedom": "^0.18.14",
     "typescript": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "yaml": "catalog:"
   },
   "packageManager": "pnpm@12.10.1"
 }
