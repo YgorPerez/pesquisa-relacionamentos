@@ -62,8 +62,9 @@ const painted = (page: Page) =>
       .join(''),
   )
 
-const grifos = (page: Page) => page.getByRole('region', { name: 'Grifos' })
-const comentarios = (page: Page) =>
+const highlightsRegion = (page: Page) =>
+  page.getByRole('region', { name: 'Grifos' })
+const commentsRegion = (page: Page) =>
   page.getByRole('region', { name: 'Comentários' })
 
 async function noViolations(page: Page) {
@@ -72,6 +73,53 @@ async function noViolations(page: Page) {
     .analyze()
   expect(violations.map((v) => `${v.id}: ${v.help}`)).toEqual([])
 }
+
+test('a changed status stays unread below the fold until its comment enters the viewport', async ({
+  page,
+}) => {
+  await seed(page)
+  await page.evaluate(
+    ([saved, sent]) => {
+      localStorage.setItem(
+        'tem-estudo:highlights',
+        JSON.stringify(
+          Array.from({ length: 20 }, (_, i) => ({
+            ...saved,
+            id: `saved-${i}`,
+          })),
+        ),
+      )
+      localStorage.setItem(
+        'tem-estudo:sent-comments',
+        JSON.stringify([
+          { ...sent, status: 'corrected', seenStatus: 'received' },
+        ]),
+      )
+    },
+    [SAVED, SENT] as const,
+  )
+  await page.goto('/trechos', { waitUntil: 'networkidle' })
+  const comment = page
+    .getByRole('region', { name: 'Comentários' })
+    .getByRole('listitem')
+  await expect(comment).not.toBeInViewport()
+  const seenStatus = () =>
+    page.evaluate(
+      () =>
+        (
+          JSON.parse(
+            localStorage.getItem('tem-estudo:sent-comments')!,
+          ) as Array<{ seenStatus: string }>
+        )[0]?.seenStatus,
+    )
+  expect(await seenStatus()).toBe('received')
+  await page.goto('/privacidade')
+  await page.goto('/trechos', { waitUntil: 'networkidle' })
+  await expect(comment.getByText('Status atualizado')).toBeVisible()
+  await comment.scrollIntoViewIfNeeded()
+  await expect(comment).toBeInViewport()
+  await expect.poll(seenStatus).toBe('corrected')
+})
 
 test('the footer leads to Seus trechos, and the Grifo’s link lands on the painted sentence', async ({
   page,
@@ -82,15 +130,17 @@ test('the footer leads to Seus trechos, and the Grifo’s link lands on the pain
     page.getByRole('contentinfo').getByRole('link', { name: 'Seus trechos' }),
   )
   await expect(page).toHaveURL('/trechos')
-  await expect(grifos(page).getByText('1 grifo em 1 página')).toBeVisible()
-  await expect(grifos(page).getByText(NOTE)).toBeVisible()
   await expect(
-    comentarios(page).getByText('1 comentário enviado'),
+    highlightsRegion(page).getByText('1 grifo em 1 página'),
   ).toBeVisible()
-  await expect(comentarios(page).getByText(SENT.comment)).toBeVisible()
+  await expect(highlightsRegion(page).getByText(NOTE)).toBeVisible()
+  await expect(
+    commentsRegion(page).getByText('1 comentário enviado'),
+  ).toBeVisible()
+  await expect(commentsRegion(page).getByText(SENT.comment)).toBeVisible()
   await noViolations(page)
 
-  await tap(grifos(page).getByRole('link', { name: SENTENCE }))
+  await tap(highlightsRegion(page).getByRole('link', { name: SENTENCE }))
   await expect(page).toHaveURL(/\/onde-conhecer-pessoas#o-lugar/)
   await expect(page.getByText(SENTENCE)).toBeInViewport()
   await expect.poll(() => painted(page)).toBe(SENTENCE)
@@ -99,7 +149,7 @@ test('the footer leads to Seus trechos, and the Grifo’s link lands on the pain
 test('a sent Comentário’s quote lands on its sentence', async ({ page }) => {
   await seed(page)
   await page.goto('/trechos', { waitUntil: 'networkidle' })
-  await tap(comentarios(page).getByRole('link', { name: SENTENCE }))
+  await tap(commentsRegion(page).getByRole('link', { name: SENTENCE }))
   await expect(page).toHaveURL(/\/onde-conhecer-pessoas#o-lugar/)
   await expect(page.getByText(SENTENCE)).toBeInViewport()
 })
@@ -111,16 +161,20 @@ test('"Tirar grifo" and "Tirar da lista" empty their sections, and the Guide no 
   await page.goto('/trechos', { waitUntil: 'networkidle' })
   await tap(page.getByRole('button', { name: /^Tirar grifo/ }))
   await tap(page.getByRole('button', { name: /^Tirar da lista/ }))
-  await expect(grifos(page).getByText(/^Nenhum grifo ainda/)).toBeVisible()
   await expect(
-    comentarios(page).getByText(/^Nenhum comentário enviado/),
+    highlightsRegion(page).getByText(/^Nenhum grifo ainda/),
+  ).toBeVisible()
+  await expect(
+    commentsRegion(page).getByText(/^Nenhum comentário enviado/),
   ).toBeVisible()
   await noViolations(page)
 
   await page.reload({ waitUntil: 'networkidle' })
-  await expect(grifos(page).getByText(/^Nenhum grifo ainda/)).toBeVisible()
   await expect(
-    comentarios(page).getByText(/^Nenhum comentário enviado/),
+    highlightsRegion(page).getByText(/^Nenhum grifo ainda/),
+  ).toBeVisible()
+  await expect(
+    commentsRegion(page).getByText(/^Nenhum comentário enviado/),
   ).toBeVisible()
   await page.goto(GUIDE, { waitUntil: 'networkidle' })
   expect(await painted(page)).toBe('')

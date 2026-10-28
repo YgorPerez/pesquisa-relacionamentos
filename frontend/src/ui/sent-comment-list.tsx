@@ -9,15 +9,18 @@
 // The quote is a plain `<a>`, as the Grifos' (`highlight-list.tsx`): the
 // browser only reads the Text Fragment when it loads a page.
 import { KIND_LABEL } from '#/content/comment-kinds'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   markCommentStatusesSeen,
   type SentComment,
 } from '#/state/sent-comments'
-import { RemoveButton } from './highlight-list'
+import {
+  ChangedPassageNotice,
+  RemoveButton,
+  SeparatedListItem,
+} from './highlight-list'
 import { HighlightNote } from './highlight-note'
-import { CHANGED } from './highlight-list.copy'
-import { Headline, Notice, Section, Tag } from './section'
+import { Headline, Section, Tag } from './section'
 import {
   COMMENT_CHANGED_LINE,
   COMMENTS,
@@ -47,6 +50,29 @@ function About({ comment }: { comment: SentComment }) {
   )
 }
 
+/** Only viewport entry acknowledges a changed status, never mounting alone. */
+function useStatusVisibility(id: string, updated: boolean) {
+  const item = useRef<HTMLLIElement>(null)
+  useEffect(() => {
+    const element = item.current
+    if (!element || !updated || typeof IntersectionObserver === 'undefined')
+      return
+    const observer = new IntersectionObserver((entries) => {
+      if (
+        !entries.some(
+          (entry) => entry.isIntersecting && entry.intersectionRatio > 0,
+        )
+      )
+        return
+      markCommentStatusesSeen([id])
+      observer.disconnect()
+    })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [id, updated])
+  return item
+}
+
 function SentItem({
   comment,
   onRemove,
@@ -58,24 +84,16 @@ function SentItem({
   const [updated] = useState(
     () => (comment.status ?? 'received') !== (comment.seenStatus ?? 'received'),
   )
-  useEffect(() => {
-    markCommentStatusesSeen([id])
-  }, [id])
+  const item = useStatusVisibility(id, updated)
   return (
-    <li
-      className="not-first:mt-lg not-first:border-t-(length:--traco-etiqueta) not-first:fio-pontilhado not-first:border-tinta not-first:pt-md"
-      data-slot="comentario-enviado"
-    >
+    <SeparatedListItem ref={item} data-slot="comentario-enviado">
       {updated && (
         <p className="m-0 mb-xs border-l-2 border-tinta pl-xs font-bold">
           {STATUS_UPDATED}
         </p>
       )}
       {changed && (
-        <Notice className="mb-xs">
-          <strong className="block">{CHANGED}</strong>
-          {COMMENT_CHANGED_LINE}
-        </Notice>
+        <ChangedPassageNotice>{COMMENT_CHANGED_LINE}</ChangedPassageNotice>
       )}
       <About comment={comment} />
       <a
@@ -96,7 +114,7 @@ function SentItem({
       >
         {REMOVE_FROM_LIST}
       </RemoveButton>
-    </li>
+    </SeparatedListItem>
   )
 }
 

@@ -59,3 +59,57 @@ export interface Highlight extends KeptQuote {
   /** When it was made (ms since 1970). */
   readonly at: number
 }
+
+/** How much text on each side is kept to tell repeats apart. */
+export const CONTEXT_LENGTH = 32
+
+export const isQuoteRecord = (raw: unknown): raw is Record<string, unknown> =>
+  typeof raw === 'object' && raw !== null && !Array.isArray(raw)
+
+const QUOTE_STRINGS = [
+  'id',
+  'path',
+  'pageTitle',
+  'link',
+  'text',
+  'exact',
+] as const
+
+/** The page and quote fields shared by saved highlights and sent comments. */
+export function decodeKeptQuote(
+  raw: Record<string, unknown>,
+): Omit<Highlight, 'note'> | null {
+  for (const key of QUOTE_STRINGS)
+    if (typeof raw[key] !== 'string' || raw[key] === '') return null
+  const { prefix, suffix, changed, at } = raw
+  if (typeof prefix !== 'string' || typeof suffix !== 'string') return null
+  if (typeof at !== 'number' || !Number.isFinite(at)) return null
+  const text = (key: (typeof QUOTE_STRINGS)[number]) => raw[key] as string
+  return {
+    id: text('id'),
+    path: text('path'),
+    pageTitle: text('pageTitle'),
+    link: text('link'),
+    text: text('text'),
+    exact: text('exact'),
+    prefix: prefix.slice(-CONTEXT_LENGTH),
+    suffix: suffix.slice(0, CONTEXT_LENGTH),
+    changed: changed === true,
+    at,
+  }
+}
+
+/** Drop invalid records and repeated IDs, keeping the first valid record. */
+export function decodeQuoteList<T extends KeptQuote>(
+  raw: unknown,
+  decode: (item: unknown) => T | null,
+): ReadonlyArray<T> | null {
+  if (!Array.isArray(raw)) return null
+  const seen = new Set<string>()
+  return raw.flatMap((item) => {
+    const valid = decode(item)
+    if (!valid || seen.has(valid.id)) return []
+    seen.add(valid.id)
+    return [valid]
+  })
+}

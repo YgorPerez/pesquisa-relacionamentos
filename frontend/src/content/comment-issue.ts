@@ -161,7 +161,7 @@ interface Delivery {
   readonly post: (issue: Issue, token: string) => Promise<number | null>
 }
 
-/** A made-up number lands 1 to `SPREAD` past the last real issue, where the
+/** A made-up number lands 1 to `SPREAD` past the last reply, where the
  * next real one would. */
 const SPREAD = 3
 
@@ -174,7 +174,7 @@ const FIRST_GUESS = 100
  * made-up one may match a real issue, whose status is all it reveals
  * (#346). */
 function issueNumbers(random: () => number) {
-  /** The last issue this server opened; 0 before the first. */
+  /** The highest number returned, real or made-up; 0 before the first. */
   let latest = 0
   return {
     opened(issue: number): CommentReply {
@@ -186,6 +186,7 @@ function issueNumbers(random: () => number) {
         latest > 0
           ? latest + 1 + Math.floor(random() * SPREAD)
           : 1 + Math.floor(random() * FIRST_GUESS)
+      latest = issue
       return { sent: true, issue }
     },
   }

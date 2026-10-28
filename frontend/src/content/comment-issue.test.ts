@@ -91,6 +91,17 @@ describe('a Comentário', () => {
 })
 
 describe('the anti-spam and the failures', () => {
+  it('keeps repeated dropped replies distinct and increasing after a real send', async () => {
+    const { send, posted } = setup({ limit: 1 })
+    const replies = [await send()]
+    for (let i = 0; i < 4; i++) replies.push(await send())
+    replies.push(await send({ ...COMMENT, website: 'bot' }))
+    expect(replies.map((reply) => reply.sent && reply.issue)).toEqual([
+      41, 42, 43, 44, 45, 46,
+    ])
+    expect(posted).toHaveLength(1)
+  })
+
   it('with the honeypot filled, opens no issue and replies as if it had, with a made-up number', async () => {
     const { send, posted } = setup()
     const reply = await send({ ...COMMENT, website: 'http://spam.example' })
@@ -133,7 +144,7 @@ describe('the anti-spam and the failures', () => {
     expect(await noToken.send()).toEqual({ sent: false })
   })
 
-  it('a made-up number sits just past the last real one, as the next issue would', async () => {
+  it('a made-up number advances past the previous reply, as the next issue would', async () => {
     const steps = [0, 0.5, 0.99]
     const { send, posted } = setup({ limit: 2, random: () => steps.shift()! })
     expect(await send()).toEqual({ sent: true, issue: FIRST_ISSUE })
@@ -141,8 +152,8 @@ describe('the anti-spam and the failures', () => {
     const madeUp = await Promise.all([send(), send(), send()])
     expect(madeUp.map((reply) => reply.sent && reply.issue)).toEqual([
       FIRST_ISSUE + 2,
-      FIRST_ISSUE + 3,
       FIRST_ISSUE + 4,
+      FIRST_ISSUE + 7,
     ])
     expect(posted).toHaveLength(2)
   })
