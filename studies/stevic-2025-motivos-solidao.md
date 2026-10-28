@@ -3,8 +3,8 @@ reference: "Stevic A, Lee AY, Liu SX, Hancock J. *Of Loving and Losing: The Infl
 link: https://doi.org/10.1177/20563051251346888
 status: verified
 verified_on: 2026-10-28
-strength: moderate
-strength_reason: "Painel de duas ondas, com um mês de intervalo, que controla a solidão e a satisfação da primeira onda; mas a amostra é de um painel online alemão por cotas, não sorteada, só de usuários de app de 18 a 40 anos, perdeu 40,53% entre as ondas (os autores acham que não ao acaso), e os efeitos são pequenos."
+strength: weak
+strength_reason: "Fraca pela rubrica, porque a amostra não é representativa. É um painel de duas ondas, com um mês de intervalo, que controla a solidão e a satisfação da primeira onda; mas a amostra é de um painel online alemão por cotas, não sorteada, só de usuários de app de 18 a 40 anos, perdeu 40,53% entre as ondas (os autores acham que não ao acaso), e os efeitos são pequenos."
 countries: [Alemanha]
 period: "Agosto a outubro de 2022"
 sample:
