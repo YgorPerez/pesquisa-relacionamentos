@@ -205,7 +205,7 @@ Estudo principal: [Huang et al. 2017](../studies/huang-2017-perguntas-de-continu
 
 Afirmações sem fonte: nenhuma além das acima.
 
-Estudos pagos: nenhum. Fichas a fazer: a correção da Ficha de Huang, [#253](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/253).
+Estudos pagos: nenhum. Fichas a fazer: nenhuma (a correção da Ficha de Huang entrou pela [#253](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/253)).
 
 ---
 
@@ -462,7 +462,7 @@ Estudos que um Guia usaria, cada um numa issue `acervo`.
 ## Integridade
 
 - Nenhum estudo citado pelas 12 Leituras foi retratado, nem tem manifestação de preocupação.
-- [Huang et al. 2017](../studies/huang-2017-perguntas-de-continuidade.md) recebeu uma correção em março de 2025 ([10.1037/pspi0000491](https://doi.org/10.1037/pspi0000491)) depois de uma auditoria independente. Ela corrige "several minor errors in how some results were reported" e diz que "all the conclusions in the paper are valid". A Ficha ainda diz que não há correção. Fica para a [#253](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/253).
+- [Huang et al. 2017](../studies/huang-2017-perguntas-de-continuidade.md) recebeu uma correção em março de 2025 ([10.1037/pspi0000491](https://doi.org/10.1037/pspi0000491)) depois de uma auditoria independente. Ela corrige "several minor errors in how some results were reported" e diz que "all the conclusions in the paper are valid". A Ficha já traz a correção e a auditoria ([#253](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/253)).
 - Francesca Gino é coautora de Huang 2017. O artigo não está entre os dela que foram retratados, e o relatório de integridade de 2024 rastreou os dados brutos. A lacuna que ele aponta são os registros do MTurk usados para excluir 5% e 12% das amostras dos estudos 2A e 2B.
 - Scott Stanley é um dos 86 coautores de Joel 2020, e a Leitura 4 é ele resumindo o próprio estudo. A descrição diz isso.
 - Dan Ariely, coautor de Hitsch, Hortaçsu & Ariely 2010, tem achados de fabricação de dados em outros artigos (o de honestidade na PNAS de 2012, retratado em 2021). Para este artigo não achei retratação, manifestação de preocupação nem discussão no PubPeer, e os dados de replicação estão no openICPSR (112322).
