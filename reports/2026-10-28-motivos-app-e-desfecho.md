@@ -77,7 +77,7 @@ Stevic A, Lee AY, Liu SX, Hancock J. _Of Loving and Losing: The Influence of Dat
 
 #### Liang & Bailey 2026
 
-Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for Well-Being in Older Adulthood_. Psychology and Aging, publicado online em 16 de abril de 2026. https://doi.org/10.1037/pag0000985. ✅ texto publicado, CC BY 4.0.
+Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for Well-Being in Older Adulthood_. Psychology and Aging, publicado online em 16 de abril de 2026. https://doi.org/10.1037/pag0000985. ✅ texto publicado, CC BY 4.0. Tem [Ficha](../studies/liang-2026-motivos-idade.md), ✅.
 
 - **Amostra:** 301 usuários atuais de app, recrutados pelo Prolific em julho e agosto de 2023, morando na Austrália, nos EUA, no Canadá ou no Reino Unido. Idade de 18 a 86 anos (média de 52,4), 49,8% homens. Os autores dizem que a amostra é sobretudo hétero, branca e escolarizada.
 - **Motivo:** cinco subescalas da Tinder Motives Scale de Timmermans & De Caluwé (2017), de 1 a 7. Aprovação social tem seis itens (α = 0,94), e as outras são busca de relação, experiência sexual, socializar e entretenimento.
@@ -87,7 +87,7 @@ Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for
   - Satisfação com a vida (Tabela 4): o motivo de aprovação previu _mais_ satisfação (β = 0,13; p = 0,032).
   - Depressão: nenhum motivo previu, só a idade.
 - **Causal?** Não. Os autores dizem que não dá para saber se o motivo afeta a saúde mental ou se o estado prévio leva ao motivo, e propõem que a ligação com a solidão nos mais velhos pode ir nos dois sentidos.
-- **Ressalva:** amostra de painel online, com 11 preditores por modelo e efeitos pequenos (R² ajustado de 0,06 a 0,19). Uma citação deste artigo está errada: ele atribui a Her & Timmermans 2021 uma ligação entre aprovação e mais tristeza e ansiedade que a regressão daquele estudo não mostra (ver abaixo).
+- **Ressalva:** amostra de painel online, com 11 preditores por modelo e efeitos pequenos (R² ajustado de 0,06 a 0,19). Uma citação deste artigo é imprecisa: ele cita Her & Timmermans 2021 para ligar aprovação a mais tristeza e ansiedade, uma ligação que lá existe só na correlação simples e some na regressão com os outros motivos e o uso compulsivo (ver abaixo).
 
 #### Her & Timmermans 2021 (EUA)
 
