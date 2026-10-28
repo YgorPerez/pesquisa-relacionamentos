@@ -308,6 +308,10 @@ myths:
     claim: O app acabou com o namoro.
     why_not: 'Não: muita gente namora sério com quem conheceu no app, e os outros caminhos continuam funcionando. Entre os americanos que usaram site ou app, 39% namoraram sério ou casaram com alguém de lá. E só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro.'
     fact_sheets: [pew-2023-2020-online-dating]
+  - id: casamentos-brasil-quase-vinte-por-cento
+    claim: Quase 20% dos casais brasileiros se conheceram pela internet, segundo a Casamentos.com.br.
+    why_not: 'Não achamos a pesquisa por trás dele, só uma [matéria da Agência Brasil de 2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia). Ela fala de 3,4 mil casais de 26 a 40 anos com planos de casar, não de todos os casais do país, e não diz como eles foram recrutados. Sem isso, o número não serve de estimativa nacional, o que não quer dizer que seja falso.'
+    fact_sheets: []
   - id: relacao-de-app-dura-menos
     claim: Relação que começa em app dura menos.
     why_not: 'Não: nos EUA, os casais que se conheceram online terminaram no mesmo ritmo dos outros, 7,0% contra 7,3% ao ano. Esses dados são de antes do Tinder; com dados de 2017, como o casal se conheceu também não mudou o risco de término.'
@@ -706,6 +710,8 @@ Qual número usar depende do que você quer saber. Para saber como começam os c
 {{myth:metade-a-dois-tercos-online}}
 
 {{brazil}} Aqui, não achamos pesquisa com amostra sorteada que pergunte onde o casal atual se conheceu, e o registro civil não guarda essa informação [@ibge-2024-registro-civil]. Os números que existem vêm de painéis online. Num painel de 2017, 23% de quem estava num relacionamento conheceu o parceiro pela internet, 17% em sites e redes sociais e 6% em apps de paquera [@opinionbox-2017-relacionamentos-brasil]. No recorte brasileiro do estudo de 50 países, 23 de 119 pessoas com parceiro o conheceram online, 19,3% numa conta nossa, sem peso e com poucos casos; o Brasil ficou em 15º entre os 50 países [@kowal-2025-50-paises].
+
+{{myth:casamentos-brasil-quase-vinte-por-cento}}
 
 {{visual:online-por-pais}}
 

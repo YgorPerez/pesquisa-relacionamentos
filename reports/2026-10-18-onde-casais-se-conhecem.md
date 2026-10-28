@@ -24,7 +24,7 @@ ticket: 4
    - **França 2020–2024:** um dado mais recente do Ined fala em 24% dos casais que passaram a morar juntos, mas não pôde ser conferido (⬜).
 4. **Qualidade e duração continuam sem consenso.** Os estudos pós-2020 apontam em direções diferentes:
    - **50 países:** satisfação um pouco menor para quem se conheceu online ([Kowal 2025](../studies/kowal-2025-50-paises.md)).
-   - **EUA:** casamentos online um pouco menos satisfeitos e estáveis ([Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md), ⬜).
+   - **EUA:** casamentos online um pouco menos satisfeitos e com menor estabilidade autorrelatada, medida por pensamentos e conversas sobre divórcio, sem observar separações ([Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md), ✅ moderada).
    - **Alemanha:** casais online casam tanto ou mais ([Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md), ✅).
    - **Suíça:** casais de app não diferem em satisfação ([Potarca 2020](../studies/potarca-2020-suica-apps.md)).
    - **EUA, HCMST:** como o casal se conheceu não prevê término ([Rosenfeld 2017](../studies/rosenfeld-2017-marriage-choice-couplehood.md)).
@@ -56,7 +56,7 @@ O recorte brasileiro abaixo é cálculo próprio, sem ponderação e sem teste e
 |---|---|---|
 | [Opinion Box 2017](../studies/opinionbox-2017-relacionamentos-brasil.md) | 23% dos internautas com parceiro o conheceram online (17% sites e redes sociais; 6% apps). n = 1.735, painel online | 🟡 · fraca |
 | [Mobile Time/Opinion Box 2025](../studies/mobiletime-2025-apps-relacionamento-brasil.md) | 23% dos brasileiros com smartphone já tiveram encontro por app (29% entre 16–29 anos). Mede encontros, não casais | 🟡 · fraca |
-| Casamentos.com.br, via [Agência Brasil, 12/06/2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia) | "Quase 20%" de 3,4 mil casais de 26–40 anos com planos de casar se conheceram pela internet e redes sociais. Dos encontros online, 36% em app, cerca de 33% no Facebook, 15% no Instagram e 7% em grupos de WhatsApp | ⬜ o relatório original foi procurado e não existe publicado ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)). Toda a cobertura copia a mesma matéria, sem data de campo, texto da pergunta nem forma de recrutamento; só a data da matéria é conhecida. Amostra de usuários de um portal de casamentos |
+| Casamentos.com.br, via [Agência Brasil, 12/06/2021](https://agenciabrasil.ebc.com.br/geral/noticia/2021-06/internet-foi-cupido-de-casais-que-se-formaram-durante-pandemia) | "Quase 20%" de mais de 3,4 mil casais de 26–40 anos com planos de casar se conheceram pela internet e redes sociais. Dos encontros online, 36% em app, cerca de 33% no Facebook, 15% no Instagram e 7% em grupos de WhatsApp | ⬜ relatório original não localizado nas buscas de 20 e 28/10/2026 ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6472997231)). A cobertura consultada repete o número sem data de campo, texto da pergunta nem forma de recrutamento; só a data da matéria é conhecida. Recrutamento entre usuários do portal é hipótese, não informação confirmada. Sem metodologia, o número não sustenta uma estimativa nacional; não foi refutado |
 
 ### 1.3 Pesquisas de opinião nacionais (Datafolha, Ipsos, outras)
 
@@ -137,7 +137,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 | [Potarca 2021](../studies/potarca-2021-alemanha-pairfam.md) | Alemanha | longitudinal (pairfam, n = 3.561) | Homens de casais online casam mais; mulheres com ensino superior casam mais se o casal for online | ✅ moderada |
 | [Potarca 2020](../studies/potarca-2020-suica-apps.md) | Suíça | transversal, pesquisa oficial | Casais de app sem diferença de satisfação | ✅ moderada |
 | [Kowal 2025](../studies/kowal-2025-50-paises.md) | 50 países | transversal, painel | Online: satisfação e amor um pouco menores. O artigo publica d de 0,35 a 0,51, mas as médias dele e os dados públicos indicam efeito pequeno (diferença bruta de 0,09 a 0,12 desvio-padrão). No Brasil, sem diferença bruta (n pequeno) | ✅ moderada |
-| [Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md) | EUA | transversal, n = 923 casados | Online: satisfação e estabilidade um pouco menores, explicadas em parte por estigma e menor aprovação da rede | ⬜ |
+| [Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md) | EUA | transversal, painel online, n = 923 ainda casados | Online vs. offline: menor satisfação (b = −0,20) e estabilidade autorrelatada (b = −0,40), ambas com p < 0,001. Apps vs. sites, análise adicional na p. 5, nota de rodapé 1 à seção 4.2.1: satisfação sem diferença significativa (b = −0,13; p = 0,06), estabilidade menor nos apps (b = −0,26; p < 0,01). Estabilidade mede pensamentos e conversas sobre divórcio, não separações observadas; os coeficientes são diferenças nas escalas, não percentuais de divórcio. Associações indiretas com marginalização e menor aprovação da rede não demonstram causa | ✅ moderada |
 | Hu, Zhu & Zhang 2024, *Cyberpsychology, Behavior, and Social Networking* 27(9) | EUA | dados do Pew 2019 (n = 4.860) | Segundo cobertura, casais online só têm menor "sucesso" se não falam da relação nas redes sociais | ⬜ não conferido; sem Ficha |
 | [Cacioppo 2013](../studies/cacioppo-2013-satisfacao-por-local.md) | EUA | transversal, eHarmony | Online: um pouco mais satisfeitos e menos separações | ✅ moderada (conflito de interesse) |
 
@@ -150,8 +150,8 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 ## 5. O que fica em aberto
 
 - Conferir no site do Ined (fora do ar em 2026-10-18) a fiche ERFI-2 nº 22 com os 24% de 2020–2024 e criar Ficha.
-- Ler o texto completo de Sharabi & Dorrance-Hall 2024. ~~Potarca 2021~~ lido em 2026-10-21.
-- ~~Procurar o relatório original da Casamentos.com.br.~~ Procurado em 2026-10-20 e não encontrado: só há a matéria da Agência Brasil de 12/06/2021 e cópias dela ([#45](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6300173204)).
+- ~~Ler o texto completo de Sharabi & Dorrance-Hall 2024.~~ Ficha verificada em 2026-10-28 (#375), incluindo apps vs. sites. ~~Potarca 2021~~ lido em 2026-10-21.
+- ~~Procurar o relatório original da Casamentos.com.br.~~ Não localizado em três buscas (2026-10-20 e duas em 2026-10-28). As buscas adicionais cobriram site e imprensa do portal pelo Wayback, artigos c9260–c9329 com capturas de 2021–2024 e o Issuu de "O livro imprescindível dos casamentos", cuja amostra é diferente. Nenhum relatório, questionário ou metodologia da pesquisa foi localizado; o número segue na cobertura, sem ter sido refutado ([#45, buscas de 28/10](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/45#issuecomment-6472997231)).
 - ~~Buscar diretamente no SciELO e no Catálogo de Teses da CAPES.~~ Feito em 2026-10-20 (seção 1.4), junto com Datafolha, Ipsos e IBGE (seção 1.3): não há pesquisa representativa sobre onde os casais brasileiros se conhecem ([#48](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/48)). Uma pesquisa assim teria de ser encomendada ou incluída num levantamento nacional.
 
 ## Fontes consultadas nesta pesquisa
@@ -164,7 +164,7 @@ Por isso, números de painéis (Opinion Box, Kowal) não são comparáveis um a 
 - Haack & Falcke 2017, PDF na Revista Colombiana de Psicología.
 - Opinion Box 2017, post original.
 - Agência Brasil, 12/06/2021 (Casamentos.com.br).
-- PsyPost (cobertura de Sharabi & Dorrance-Hall 2024).
+- Sharabi & Dorrance-Hall 2024: a cobertura da PsyPost foi substituída pelos achados da [Ficha verificada em 2026-10-28](../studies/sharabi-2024-online-dating-effect.md), com texto completo publicado pela autora no ResearchGate e Fonte local em `sources/private/sharabi-2024-online-dating-effect.txt`.
 - Em 2026-10-20: busca do SciELO (https://search.scielo.org/) e API do Catálogo de Teses da CAPES (https://catalogodeteses.capes.gov.br/), com as consultas da seção 1.4; resumos no SciELO e no OpenAlex dos artigos citados ali.
 - Datafolha, *Sexualidade dos Brasileiros*, página de 23/02/2010 e relatório de tabelas (http://media.folha.uol.com.br/datafolha/2013/05/02/sexualidade_23022010.pdf); página *Família fica ainda mais importante para brasileiros* (07/10/2007); busca do site da Folha restrita ao Datafolha.
 - Dicionário de variáveis da PNS 2019 (https://ftp.ibge.gov.br/PNS/2019/Microdados/Documentacao/Dicionario_e_input_20220530.zip).

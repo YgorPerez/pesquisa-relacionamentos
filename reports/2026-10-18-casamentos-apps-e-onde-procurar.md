@@ -201,7 +201,7 @@ Fonte: [apresentação oficial do IBGE, Registro Civil 2024](https://agenciadeno
 
 - **Quase toda a evidência de qualidade é dos EUA.** No Brasil não existe dado representativo sobre *onde* os casais se conhecem nem sobre o desfecho por local.
 - **O 39% (HCMST 2017) é um ponto anual** de uma amostra modesta: N total de 5.421 casais em todas as décadas, de modo que poucos se conheceram em 2017. Além disso, as categorias se sobrepõem (online + bar).
-- **"Online" ≠ "app".** O "online" da HCMST e de Cacioppo inclui sites, redes sociais, jogos e chats. Só Potarca separa **apps**.
+- **"Online" ≠ "app".** O "online" da HCMST e de Cacioppo inclui sites, redes sociais, jogos e chats. Potarca 2020 e [Sharabi & Dorrance-Hall 2024](../studies/sharabi-2024-online-dating-effect.md) separam apps de sites. Na análise adicional de Sharabi (p. 5, nota de rodapé 1 à seção 4.2.1), a satisfação não difere significativamente (b = −0,13; p = 0,06), e a estabilidade autorrelatada é menor nos apps (b = −0,26; p < 0,01). Estabilidade mede pensamentos e conversas sobre divórcio entre pessoas ainda casadas, não divórcios observados. A comparação é transversal e não demonstra que sites causem casamentos mais duradouros.
 - **Causalidade:** todos os estudos são observacionais. Diferenças de qualidade podem refletir quem escolhe cada canal, e não o canal em si.
 - **Conflito de interesse:** Cacioppo 2013 foi financiado pela eHarmony. Pesquisas de empresas de app (Tinder, Match "Singles in America", Happn) não foram usadas como evidência principal aqui.
 - **Os dados de 2020–2022 com mais de 50% online** não estão publicados em periódico e vêm de subamostras pequenas.
