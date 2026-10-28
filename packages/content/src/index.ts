@@ -68,7 +68,8 @@ export type {
   Topic,
 } from './items.ts'
 export { UNKNOWNS_TITLE } from './items.ts'
-export { BRAZIL_MARK, YOU_MARK } from './marks.ts'
+export { BRAZIL_MARK, YOU_MARK, TERM_MARK, withoutTermMarks } from './marks.ts'
+export type { Term } from './terms.ts'
 export {
   CALCULATORS,
   COUPLES,
@@ -83,7 +84,7 @@ export {
   type Strength,
   type VerificationStatus,
 } from './lists.ts'
-export type { Finding, FactSheet } from './fact-sheet.ts'
+export type { Definition, Finding, FactSheet } from './fact-sheet.ts'
 export type {
   Trait,
   PriorityCell,

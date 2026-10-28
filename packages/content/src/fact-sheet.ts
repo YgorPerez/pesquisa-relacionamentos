@@ -23,6 +23,17 @@ export interface Finding {
   readonly calculation: string | null
 }
 
+/** A row of the Definições table: how the Study defined a Verbete that
+ * varies by Study (#349). */
+export interface Definition {
+  /** The Verbete's slug. */
+  readonly term: string
+  /** Our words for the Study's definition. */
+  readonly text: string
+  readonly locator: string
+  readonly excerpt: string
+}
+
 export interface FactSheet extends FactSheetFrontmatter {
   /** The file name without `.md`, which becomes the path `/estudos/<slug>`. */
   readonly slug: string
@@ -37,6 +48,7 @@ export interface FactSheet extends FactSheetFrontmatter {
   /** The markdown of the Achados section outside the table (notes before and
    * after). */
   readonly findingsNotes: string
+  readonly definitions: ReadonlyArray<Definition>
   /** Extra sections, between Achados and Limitações, in file order. */
   readonly otherSections: ReadonlyArray<Section>
   readonly limitations: string
@@ -47,11 +59,13 @@ export interface FactSheet extends FactSheetFrontmatter {
 export const SECTIONS = {
   whatItMeasured: 'O que mediu',
   findings: 'Achados',
+  definitions: 'Definições',
   limitations: 'Limitações',
   howWeUseIt: 'Como usamos',
 } as const
 
 const COLUMNS = ['Medida', 'Valor', 'Onde', 'Trecho'] as const
+const DEFINITION_COLUMNS = ['Verbete', 'Definição', 'Onde', 'Trecho'] as const
 const CALCULATION_COLUMN = 'Cálculo'
 
 export function doiFromLink(link: string): string | null {
@@ -194,6 +208,12 @@ export function readFactSheet(file: string, text: string): ParsedFactSheet {
     }
   }
 
+  const definitions = readDefinitions(
+    file,
+    section(SECTIONS.definitions)?.markdown,
+    errors,
+  )
+
   if (decoded?.ok) {
     const fm = decoded.value
     if (fm.status !== 'unverified') {
@@ -244,9 +264,55 @@ export function readFactSheet(file: string, text: string): ParsedFactSheet {
       whatItMeasured: section(SECTIONS.whatItMeasured)?.markdown ?? '',
       findings,
       findingsNotes,
+      definitions,
       otherSections: parsed.sections.filter((s) => !known.includes(s.title)),
       limitations: section(SECTIONS.limitations)?.markdown ?? '',
       howWeUseIt: section(SECTIONS.howWeUseIt)?.markdown ?? null,
     },
   }
+}
+
+/** The "## Definições" table, which is optional. Unlike an Achados row, a
+ * definition always quotes the original: it only exists for a Guide to show
+ * it next to a sentence. */
+function readDefinitions(
+  file: string,
+  markdown: string | undefined,
+  errors: Problem[],
+): Definition[] {
+  if (markdown === undefined) return []
+  const expected = DEFINITION_COLUMNS.join(' | ')
+  const table = firstTable(markdown)
+  if (!table) {
+    errors.push(
+      problem(file, `missing the table | ${expected} |`, SECTIONS.definitions),
+    )
+    return []
+  }
+  const header = table.header
+  if (
+    header.length !== DEFINITION_COLUMNS.length ||
+    DEFINITION_COLUMNS.some((c, i) => header[i] !== c)
+  ) {
+    errors.push(
+      problem(
+        file,
+        `the table needs the columns | ${expected} |, got | ${header.join(' | ')} |`,
+        SECTIONS.definitions,
+      ),
+    )
+    return []
+  }
+  return table.rows.map((row, i) => {
+    const [term = '', text = '', locator = '', excerpt = ''] = row
+    if (!term || !text || !locator || !excerpt)
+      errors.push(
+        problem(
+          file,
+          `row ${i + 1} of the table needs Verbete, Definição, Onde and Trecho`,
+          SECTIONS.definitions,
+        ),
+      )
+    return { term, text, locator, excerpt }
+  })
 }

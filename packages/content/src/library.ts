@@ -22,6 +22,7 @@ import {
 } from './items.ts'
 import { link } from './publication.ts'
 import { visualProblems } from './visuals.ts'
+import { readTerm, termProblems, type Term } from './terms.ts'
 import {
   PRIORITIES_FILE,
   PRIORITIES_META,
@@ -67,6 +68,8 @@ export interface Library {
   readonly data: ReadonlyArray<DataOrigin>
   /** The priorities file, or `null` while it does not exist. */
   readonly priorities: Priorities | null
+  /** The Verbetes in slug order (#349). */
+  readonly terms: ReadonlyArray<Term>
   /** The Neighbor sites, in file order; empty without the file. */
   readonly neighborSites: ReadonlyArray<NeighborSite>
   /** Their Readings, in file order; empty without the file. */
@@ -91,6 +94,7 @@ export type LoadResult =
 const FACT_SHEETS_FOLDER = 'studies'
 const TIPS_FOLDER = 'tips'
 const GUIDES_FOLDER = 'guides'
+const TERMS_FOLDER = 'terms'
 /** The calculators' data. Only the `.meta.yaml` files come in: the CSVs are
  * large and the calculator is the one that reads them. */
 const DATA_FOLDER = 'data'
@@ -120,6 +124,7 @@ export function readFiles(root: string): ReadonlyArray<ContentFile> {
     ...readFolder(root, FACT_SHEETS_FOLDER, isItem),
     ...readFolder(root, TIPS_FOLDER, isItem),
     ...readFolder(root, GUIDES_FOLDER, isItem),
+    ...readFolder(root, TERMS_FOLDER, isItem),
     // A folder left in `guides/` comes in so the build says the format
     // changed, instead of dropping its Questions without a word.
     ...leftoverFolders(root),
@@ -188,6 +193,7 @@ export function buildLibrary(
   const questions: ParsedQuestion[] = []
   const metas: ContentFile[] = []
   const tips: ParsedTip[] = []
+  const terms: Term[] = []
   let prioritiesFile: ContentFile | null = null
   let neighborSitesFile: ContentFile | null = null
 
@@ -220,6 +226,14 @@ export function buildLibrary(
         parsed.ok ? { ok: true, item: parsed.factSheet } : parsed,
         factSheets,
       )
+    } else if (
+      parts[0] === TERMS_FOLDER &&
+      parts.length === 2 &&
+      isItem(name)
+    ) {
+      const parsed = readTerm(path, text)
+      if (parsed.ok) terms.push(parsed.term)
+      else errors.push(...parsed.errors)
     } else if (parts[0] === TIPS_FOLDER && parts.length === 2 && isItem(name)) {
       keep(path, readTip(path, text), tips)
     } else if (
@@ -248,11 +262,21 @@ export function buildLibrary(
   factSheets.sort((a, b) => a.slug.localeCompare(b.slug))
   topics.sort((a, b) => a.position - b.position || a.slug.localeCompare(b.slug))
   tips.sort((a, b) => a.slug.localeCompare(b.slug))
+  terms.sort((a, b) => a.slug.localeCompare(b.slug))
   errors.push(...duplicateDois(factSheets))
 
   const linked = link({ factSheets, topics, questions, tips, broken })
   errors.push(...linked.errors)
   errors.push(...visualProblems(linked.topics, factSheets))
+  const checkedTerms = termProblems({
+    terms,
+    factSheets,
+    topics: linked.topics,
+    questions: linked.questions,
+    tips: linked.tips,
+  })
+  errors.push(...checkedTerms.errors)
+  warnings.push(...checkedTerms.warnings)
 
   const data: DataOrigin[] = []
   for (const meta of [...metas].sort((a, b) => a.path.localeCompare(b.path))) {
@@ -293,6 +317,7 @@ export function buildLibrary(
     tips: linked.tips,
     data,
     priorities,
+    terms,
     neighborSites,
     readings,
   }
