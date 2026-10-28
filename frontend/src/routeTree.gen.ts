@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BuscaRouteImport } from './routes/busca'
+import { Route as GlossarioRouteImport } from './routes/glossario'
 import { Route as GrifosRouteImport } from './routes/grifos'
 import { Route as GrupoPossivelRouteImport } from './routes/grupo-possivel'
 import { Route as PrioridadesRouteImport } from './routes/prioridades'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 const BuscaRoute = BuscaRouteImport.update({
   id: '/busca',
   path: '/busca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossarioRoute = GlossarioRouteImport.update({
+  id: '/glossario',
+  path: '/glossario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GrifosRoute = GrifosRouteImport.update({
@@ -92,6 +98,7 @@ const EstudosSlugRoute = EstudosSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
+  '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
   '/prioridades': typeof PrioridadesRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/busca'
+    | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
     | '/prioridades'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/busca'
+    | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
     | '/prioridades'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/busca'
+    | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
     | '/prioridades'
@@ -186,6 +198,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuscaRoute: typeof BuscaRoute
+  GlossarioRoute: typeof GlossarioRoute
   GrifosRoute: typeof GrifosRoute
   GrupoPossivelRoute: typeof GrupoPossivelRoute
   PrioridadesRoute: typeof PrioridadesRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/busca'
       fullPath: '/busca'
       preLoaderRoute: typeof BuscaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossario': {
+      id: '/glossario'
+      path: '/glossario'
+      fullPath: '/glossario'
+      preLoaderRoute: typeof GlossarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/grifos': {
@@ -298,6 +318,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuscaRoute: BuscaRoute,
+  GlossarioRoute: GlossarioRoute,
   GrifosRoute: GrifosRoute,
   GrupoPossivelRoute: GrupoPossivelRoute,
   PrioridadesRoute: PrioridadesRoute,

@@ -12,6 +12,7 @@ import {
   topicPath,
   isFactSheetIndexable,
   NEIGHBOR_SITES_PATH,
+  GLOSSARY_PATH,
 } from './paths.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import type { Tip, Topic } from './items.ts'
@@ -104,6 +105,8 @@ export function sitemapPaths(library: Library): string[] {
     ...library.factSheets.filter(isFactSheetIndexable).map(factSheetPath),
     ...CALCULATORS.map(calculatorPath),
     NEIGHBOR_SITES_PATH,
+    // An empty Glossário stays out of search until it has a Verbete.
+    ...(library.terms.length > 0 ? [GLOSSARY_PATH] : []),
   ]
 }
 

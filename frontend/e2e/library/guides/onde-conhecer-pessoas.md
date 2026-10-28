@@ -9,7 +9,7 @@ questions:
     findings: [app-no-brasil, satisfacao-online]
   - slug: app-ou-presencial
     question: App ou presencial, onde tenho mais ==chance==?
-    answer: Depende de quem você procura. A diferença de satisfação entre os dois caminhos é pequena [@costa-2018-satisfacao].
+    answer: Depende de quem você procura. A diferença de [[satisfação]] entre os dois caminhos é pequena [@costa-2018-satisfacao].
     confidence: moderate
     findings: [satisfacao-online]
     calculator: possible-group

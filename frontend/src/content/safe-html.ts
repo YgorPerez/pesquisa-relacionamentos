@@ -35,14 +35,14 @@ const TAGS: Record<string, ReadonlyArray<string>> = {
   td: ['align'],
   details: ['id', 'open'],
   summary: [],
-  a: ['href', 'class', 'aria-label'],
+  a: ['href', 'class', 'aria-label', 'data-verbete', 'data-fichas'],
   span: ['class'],
   mark: ['class'],
 }
 
 /** The classes the app itself puts in the Markdown (`guide-view.ts`). */
 const CLASSES: Record<string, ReadonlySet<string>> = {
-  a: new Set(['ref']),
+  a: new Set(['ref', 'verbete']),
   span: new Set(['nw', 'marca-texto']),
   mark: new Set(['numero-chave']),
 }
@@ -89,6 +89,16 @@ function filterAttribute(tag: string, name: string, raw: string) {
     }
     case 'id':
       return /^[a-z][a-z0-9-]*$/.test(value) ? attribute('id', value) : ''
+    // A Verbete's link (`terms-view.ts`): its slug, and the slugs of the
+    // Fact sheets its sentence cites.
+    case 'data-verbete':
+      return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)
+        ? attribute(name, value)
+        : ''
+    case 'data-fichas':
+      return /^([a-z0-9]+(-[a-z0-9]+)*( |$))*$/.test(value)
+        ? attribute(name, value)
+        : ''
     case 'start':
       return /^\d+$/.test(value) ? attribute('start', value) : ''
     case 'align':

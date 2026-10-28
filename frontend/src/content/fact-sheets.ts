@@ -14,6 +14,7 @@ import {
   type FactSheetView,
 } from './view'
 import { citedIn, type CitedIn } from './cited-in'
+import { pageTerms, withTermLinks, type TermView } from './terms-view'
 
 const STATUS_ORDER: ReadonlyArray<string> = VERIFICATION_STATUSES
 
@@ -37,13 +38,27 @@ export const getFactSheet = createServerFn({ method: 'GET' })
     return slug
   })
   .handler(
-    async ({ data: slug }): Promise<FactSheetView & { citedIn: CitedIn }> => {
+    async ({
+      data: slug,
+    }): Promise<
+      FactSheetView & {
+        citedIn: CitedIn
+        terms: Readonly<Record<string, TermView>>
+      }
+    > => {
       const { default: library } = await import('virtual:library')
       const factSheet = library.factSheets.find((f) => f.slug === slug)
       if (!factSheet) throw notFound()
+      const used = new Set<string>()
+      const view = factSheetView(
+        factSheet,
+        isFactSheetIndexable(factSheet),
+        (markdown) => withTermLinks(markdown, library.terms, used, slug),
+      )
       return {
-        ...factSheetView(factSheet, isFactSheetIndexable(factSheet)),
+        ...view,
         citedIn: citedIn(slug, library),
+        terms: pageTerms(used, library),
       }
     },
   )

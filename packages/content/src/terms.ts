@@ -7,7 +7,7 @@ import { TermFrontmatter } from './schema.ts'
 import { splitFrontmatter } from './markdown.ts'
 import { decode, problem, type Problem } from './problems.ts'
 import { parse as parseYaml } from 'yaml'
-import { TERM_MARK } from './marks.ts'
+import { formKey, termFinder, TERM_MARK } from './marks.ts'
 import { referencesInText } from './publication.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import type { Question, Tip, Topic } from './items.ts'
@@ -196,11 +196,12 @@ export function termProblems(sources: TermSources): TermProblems {
   const errors: Problem[] = []
   const warnings: Problem[] = []
   const bySlug = new Map(terms.map((t) => [t.slug, t]))
+  const find = termFinder(terms)
 
   const byForm = new Map<string, Term>()
   for (const term of terms)
     for (const form of term.forms) {
-      const key = form.toLocaleLowerCase('pt-BR')
+      const key = formKey(form)
       const other = byForm.get(key)
       if (other && other !== term)
         errors.push(
@@ -277,11 +278,7 @@ export function termProblems(sources: TermSources): TermProblems {
     const marks: Array<{ index: number; term: Term }> = []
     for (const m of text.matchAll(TERM_MARK)) {
       const [whole, first = '', shown] = m
-      const term =
-        shown === undefined
-          ? (byForm.get(first.trim().toLocaleLowerCase('pt-BR')) ??
-            bySlug.get(first.trim()))
-          : bySlug.get(first.trim())
+      const term = find(first, shown)
       if (!term) {
         errors.push(
           problem(
@@ -337,11 +334,7 @@ export function termProblems(sources: TermSources): TermProblems {
     }
     for (const sentence of markdown.split(SENTENCE_END)) {
       const varying = [...sentence.matchAll(TERM_MARK)]
-        .map(([, first = '', shown]) =>
-          shown === undefined
-            ? byForm.get(first.trim().toLocaleLowerCase('pt-BR'))
-            : bySlug.get(first.trim()),
-        )
+        .map(([, first = '', shown]) => find(first, shown))
         .filter((t): t is Term => t?.variesByStudy === true)
       if (varying.length === 0) continue
       for (const slug of new Set(referencesInText(sentence))) {
