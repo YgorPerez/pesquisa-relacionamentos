@@ -36,6 +36,7 @@ import { ReadingProgress } from '#/ui/reading-progress'
 import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
 import { PageSelection } from '#/ui/page-selection'
+import { TermPopover } from '#/ui/term-popover'
 import { quotable } from '#/ui/selection-quote'
 import { Share } from '#/ui/share'
 import { Column, Display, Sheet, Lead } from '#/ui/sheet'
@@ -143,6 +144,7 @@ function GuidePage() {
         />
       </Column>
       <PageSelection factSheets={guide.factSheets} page="guide" />
+      <TermPopover terms={guide.terms} />
     </Sheet>
   )
 }

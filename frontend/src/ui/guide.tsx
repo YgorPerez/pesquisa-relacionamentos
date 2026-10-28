@@ -4,7 +4,6 @@
 import type { Strength } from '@tem-estudo/content'
 import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import type { SafeHtml } from '#/content/safe-html'
 import type { CitedFactSheet } from '#/content/guide-view'
 import type { FactSheetSummary } from '#/content/view'
 import { cn } from '@/platform/cn'
@@ -17,34 +16,8 @@ import {
   VerificationStatusBadge,
 } from './badges'
 import { STRENGTH_WORD } from './badges.copy'
-import { quotable } from './selection-quote'
 
-export function Html({
-  html,
-  as = 'div',
-  className,
-  slot,
-  quote,
-}: {
-  html: SafeHtml
-  as?: 'div' | 'span' | 'p'
-  className?: string
-  /** The `data-slot`, by which the test finds the block. */
-  slot?: string
-  /** Text the selection popover quotes, with the anchor of its section
-   * (`null` at the top of the page); without it, not quoted. */
-  quote?: string | null
-}) {
-  const Tag = as
-  return (
-    <Tag
-      className={className}
-      data-slot={slot}
-      {...(quote === undefined ? {} : quotable(quote))}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  )
-}
+export { Html } from './html'
 
 /** Three 72px steps next to "Confiança da resposta" and the level. */
 export function AnswerConfidence({ confidence }: { confidence: Strength }) {

@@ -156,9 +156,12 @@ export function factSheetSummary(factSheet: FactSheet): FactSheetSummary {
   }
 }
 
+/** `link` turns the body's Verbete marks into links (`terms-view.ts`); the
+ * search does without it. */
 export function factSheetView(
   factSheet: FactSheet,
   isIndexable: boolean,
+  link: (markdown: string) => string = (markdown) => markdown,
 ): FactSheetView {
   return {
     ...factSheetSummary(factSheet),
@@ -174,16 +177,16 @@ export function factSheetView(
     n: factSheet.sample.n ?? null,
     conflictHtml: factSheet.conflict ? inlineHtml(factSheet.conflict) : null,
     license: factSheet.license ?? null,
-    whatItMeasuredHtml: html(factSheet.whatItMeasured),
+    whatItMeasuredHtml: html(link(factSheet.whatItMeasured)),
     findings: factSheet.findings.map(findingView),
     findingsNotesHtml: factSheet.findingsNotes
-      ? html(factSheet.findingsNotes)
+      ? html(link(factSheet.findingsNotes))
       : null,
     otherSections: factSheet.otherSections.map((s) => ({
       title: s.title,
-      html: html(s.markdown),
+      html: html(link(s.markdown)),
     })),
-    limitationsHtml: html(factSheet.limitations),
+    limitationsHtml: html(link(factSheet.limitations)),
     indexable: isIndexable,
     search: factSheetSearch(factSheet),
   }

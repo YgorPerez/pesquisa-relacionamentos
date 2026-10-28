@@ -15,6 +15,7 @@ import {
 } from '#/ui/badges'
 import { DESIGN_NAME, STRENGTH_WORD } from '#/ui/badges.copy'
 import { PageSelection } from '#/ui/page-selection'
+import { TermPopover } from '#/ui/term-popover'
 import { quotable } from '#/ui/selection-quote'
 
 export const Route = createFileRoute('/estudos/$slug')({
@@ -138,7 +139,12 @@ function FactSheetPage() {
  * rests on. */
 function FactSheetSelection() {
   const factSheet = useFactSheet()
-  return <PageSelection factSheets={[factSheet]} page="fact-sheet" />
+  return (
+    <>
+      <PageSelection factSheets={[factSheet]} page="fact-sheet" />
+      <TermPopover terms={factSheet.terms} />
+    </>
+  )
 }
 
 /** The Fact sheet's data, one per row: where it came from, how it was

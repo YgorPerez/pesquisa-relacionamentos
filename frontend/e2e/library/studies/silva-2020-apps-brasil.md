@@ -13,6 +13,7 @@ sample:
   description: "2.400 adultos de 18 a 35 anos, amostra probabilística."
   representative: true
 design: cross-sectional
+institution: instituto-exemplo
 conflict: "Financiado pela universidade; sem conflito declarado."
 license: CC BY 4.0
 covers:
