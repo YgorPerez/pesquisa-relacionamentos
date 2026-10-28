@@ -4,12 +4,12 @@ link: https://doi.org/10.1016/j.evolhumbehav.2026.106987
 status: verified
 verified_on: 2026-10-28
 strength: weak
-strength_reason: "Transversal e todo autorrelatado, em três amostras que não são probabilísticas (redes sociais e alunos na Grécia e na Ucrânia, painel comercial pago na Rússia); a escala é nova, saiu de itens gerados por IA e pergunta se as relações duram o quanto a pessoa quer, o que fica colado nos desfechos que ela prevê."
+strength_reason: "Transversal e todo autorrelatado, em amostras de conveniência na Grécia e na Ucrânia, como os autores dizem, e num painel comercial pago na Rússia que eles chamam de representativo, mas que pela nossa leitura também não é sorteado; a escala é nova, saiu de itens gerados por IA e pergunta se as relações duram o quanto a pessoa quer, o que fica colado nos desfechos que ela prevê."
 countries: [Grécia, Chipre, Rússia, Ucrânia]
 period: "2024"
 sample:
   n: 2296
-  description: "2.296 pessoas (1.307 mulheres, 965 homens, 18 de outro sexo e 6 sem resposta) em três amostras online. Grega: 1.092 pessoas, pelo Facebook e Instagram para moradores da Grécia e de Chipre, por alunos e colegas que repassaram o link e por alunos de graduação que recrutaram em suas redes, cafés e shoppings em troca de crédito na disciplina. Russa: 818 pessoas do painel de uma empresa comercial de pesquisa, pagas para responder. Ucraniana: 386 pessoas, por alunos e colegas de uma universidade de Kiev que repassaram o link."
+  description: "2.296 pessoas (1.307 mulheres, 965 homens, 18 de outro sexo e 6 sem resposta) em três amostras online. Grega: 1.092 pessoas, pelo Facebook e Instagram para moradores da Grécia e de Chipre, por alunos e colegas que repassaram o link e por alunos de graduação que recrutaram em suas redes, cafés e shoppings em troca de crédito na disciplina. Russa: 818 pessoas do painel de uma empresa comercial de pesquisa, pagas para responder. Ucraniana: 386 pessoas, por alunos e colegas da universidade de um dos autores que repassaram o link."
   representative: false
 design: cross-sectional
 conflict: "A parte de Dmitry Grigoryev foi feita num projeto do Basic Research Program da HSE University, em Moscou; o artigo não cita outro financiamento. Os autores declaram não ter conflito de interesse."
@@ -59,7 +59,7 @@ Com a situação amorosa (numa relação ou casado, solteiro sem querer, solteir
 
 Os Trechos que citam as Tabelas 2, 4 e 6 são colunas: o texto extraído do PDF lê cada tabela coluna por coluna. Na Tabela 2, a coluna Women da porcentagem vem depois da coluna total (23,7; 23,7; 23,8; 23,6) e lista as amostras na ordem total, grega, russa e ucraniana; o 27,6 abre a coluna Men. Na coluna das médias, o 3,48 é a linha do total, e 3,58 e 3,34 abrem as colunas de mulheres e homens. Na Tabela 4, a coluna p-value dos anos solteiro lista total, mulheres, homens, por amostra; o 0,052 é a linha Russian. Na Tabela 6, o Trecho do 0,61 começa no intervalo da célula de cima (trabalho acima da relação, 1,27, de 1,08 a 1,49), e os asteriscos de [[significância]] que seguem cada valor ficam fora, porque a tabela do Markdown não os reproduz.
 
-Pela Tabela 3, o efeito da MRCI na situação amorosa foi parecido nos dois sexos e nas três amostras: a razão de chance de estar solteiro sem querer ficou em 0,17 para mulheres e para homens, 0,14 na amostra russa e 0,22 na ucraniana. Nos anos solteiro, o efeito foi pequeno pelos próprios autores (η²p de 0,017) e não apareceu na amostra ucraniana. Nos fatores da TIRMI, os efeitos indiretos maiores foram os de insegurança, sexo ruim e problemas com o círculo social; trabalho acima da relação e personalidade difícil só tiveram efeito direto.
+Pela Tabela 3, o efeito da MRCI na situação amorosa foi parecido nos dois sexos e nas três amostras: a razão de chance de estar solteiro sem querer ficou em 0,17 para mulheres e para homens, 0,14 na amostra russa e 0,22 na ucraniana. Nos anos solteiro, o efeito foi pequeno pelos próprios autores (η²p de 0,017) e não apareceu na amostra ucraniana. Nos fatores da TIRMI, solteiro contra em relação, os efeitos indiretos maiores na Tabela 6 foram os de insegurança (1,26), sexo ruim (1,17) e não monogamia (1,13); os autores, na discussão, põem problemas com o círculo social (1,09) no lugar da não monogamia. O círculo social teve também um dos maiores efeitos diretos (1,43), e trabalho acima da relação e personalidade difícil só tiveram efeito direto.
 
 ## Limitações
 
