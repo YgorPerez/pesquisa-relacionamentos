@@ -110,6 +110,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
+- [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
