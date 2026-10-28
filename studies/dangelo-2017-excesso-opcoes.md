@@ -39,7 +39,7 @@ A diferença de satisfação entre os conjuntos não foi [[significativa]] logo 
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Satisfação com a pessoa escolhida no site, antes de qualquer contato: perguntas como "quão satisfeito você está com quem escolheu?", cada uma de 1 (nada) a 7 (extremamente) | p. 13, Measures | "The scale contained items such as: "How much do you like the individual whose profile you selected?", "How satisfied are you with the dater you chose?", and "How much are you looking forward to contacting this individual?" Each item was measured using a 7-point Likert scale, from 1 (not at all) to 7 (extremely)." |
+| satisfacao | Satisfação com uma escolha, não com uma relação: perguntas sobre a pessoa escolhida, como quanto gosta dela, "quão satisfeito você está com quem escolheu?" e quanto quer entrar em contato, cada uma de 1 (nada) a 7 (extremamente) | p. 13, Measures | "The scale contained items such as: "How much do you like the individual whose profile you selected?", "How satisfied are you with the dater you chose?", and "How much are you looking forward to contacting this individual?" Each item was measured using a 7-point Likert scale, from 1 (not at all) to 7 (extremely)." |
 
 ## Limitações
 

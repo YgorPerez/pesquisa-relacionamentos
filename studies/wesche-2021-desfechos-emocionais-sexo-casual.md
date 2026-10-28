@@ -63,7 +63,7 @@ As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualque
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Uma das reações que a pessoa relata depois de sexo casual, ao lado de empolgação, arrependimento e vergonha; não é satisfação com uma relação | Introdução | "Subjective emotional reactions are the emotions that individuals report feeling as a result of their CSREs, such as excitement, satisfaction, regret, embarrassment, or feeling used." |
+| satisfacao | Satisfação com um encontro, não com uma relação: uma das reações que a pessoa relata depois de sexo casual, ao lado de empolgação, arrependimento e vergonha | Introdução | "Subjective emotional reactions are the emotions that individuals report feeling as a result of their CSREs, such as excitement, satisfaction, regret, embarrassment, or feeling used." |
 
 ## Limitações
 

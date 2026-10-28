@@ -46,7 +46,7 @@ Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar re
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Só a avaliação geral do casamento, a cada seis meses: pares de adjetivos opostos, como ruim–bom e insatisfeito–satisfeito, cada um numa escala de 7 pontos | Método, Marital Satisfaction | "This version of the SMD asks spouses to rate their perceptions of their relationship on 7-point scales between fifteen pairs of opposing adjectives" |
+| satisfacao | Como cada cônjuge vê a relação em quinze pares de adjetivos opostos, cada um numa escala de 7 pontos | Método, Marital Satisfaction | "This version of the SMD asks spouses to rate their perceptions of their relationship on 7-point scales between fifteen pairs of opposing adjectives" |
 
 ## Limitações
 

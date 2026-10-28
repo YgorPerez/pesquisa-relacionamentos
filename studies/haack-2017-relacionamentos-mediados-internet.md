@@ -45,7 +45,7 @@ As cargas da função discriminante só dizem quais variáveis separam os grupos
 
 | Verbete | Definição | Onde | Trecho |
 |---|---|---|---|
-| satisfacao | Uma pergunta do questionário de informações gerais sobre a satisfação com o relacionamento; o artigo não diz a escala | p. 37, Instrumentos | "tempo semanal de uso da internet, satisfação com o relacionamento, entre outros" |
+| satisfacao | Um dos itens do questionário de informações gerais, sobre a satisfação com o relacionamento, ao lado do tempo semanal de uso da internet | p. 37, Instrumentos | "tempo semanal de uso da internet, satisfação com o relacionamento, entre outros" |
 
 ## Limitações
 
