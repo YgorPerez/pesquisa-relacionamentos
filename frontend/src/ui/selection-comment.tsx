@@ -2,15 +2,13 @@
 // message from the reader to the curator. The form asks for a type and the
 // text; the quote, its link and the page's title go along by themselves,
 // and there is no contact field. The server opens an issue in the private
-// sources repo (`content/comment.ts`). On touch the form opens in a sheet at
+// sources repo (`content/comment.ts`, through `comment-send.ts`). On touch the form opens in a sheet at
 // the bottom of the screen (#345). Once sent, this browser keeps the comment
 // with its issue's number (`state/sent-comments.ts`, #347), the popover or
 // the sheet closes and a notice says so, with a link to "Seus trechos"; a
 // failure keeps what was typed and keeps nothing. The count carries the
 // action's name only, once a comment is sent.
 import { useId, useState, type FormEvent } from 'react'
-import { sendComment } from '#/content/comment'
-import { addSentComment } from '#/state/sent-comments'
 import {
   COMMENT_KINDS,
   COMMENT_LIMITS,
@@ -22,69 +20,15 @@ import { Textarea } from '@/ui/shadcn/textarea'
 // The form's "Enviar" is the yellow shadcn `Button`, as `SiteButton`
 // (`button.tsx`) renders it: that module's fan-in is at the limit.
 import { Button } from '@/ui/shadcn/button'
-import { pageText, quoteInPage } from './highlight-text'
+import { missing, send, toKeep } from './comment-send'
 import { ActionButton } from './selection-button'
 import { COMMENT } from './selection-comment.copy'
 import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
-import { pageTitle } from './quote-text'
 import { PopoverLine } from './text-popover'
 
 type Status = 'editing' | 'sending' | 'failed'
-
-/** What is missing before the form can go, or `null`. */
-function missing(kind: CommentKind | null, text: string) {
-  if (!kind) return COMMENT.missingKind
-  if (!text.trim()) return COMMENT.missingText
-  return null
-}
-
-/** Sends the comment; the issue's number and edit key only when the
- * server says it went. */
-async function send(
-  quote: Quote,
-  kind: CommentKind,
-  text: string,
-  website: string,
-) {
-  try {
-    const reply = await sendComment({
-      data: {
-        kind,
-        text,
-        quote: quote.text.slice(0, COMMENT_LIMITS.quote),
-        link: quote.link,
-        page: pageTitle().slice(0, COMMENT_LIMITS.page),
-        website,
-      },
-    })
-    return reply.sent ? reply : null
-  } catch {
-    return null
-  }
-}
-
-/** What this browser keeps of the comment about to go (#347): the quote as
- * a Grifo keeps it, read before the send, while the page is as the reader
- * saw it. */
-function toKeep(quote: Quote, kind: CommentKind, text: string) {
-  const where = quoteInPage(pageText(), quote.range)
-  return ({ issue, editKey }: { issue: number; editKey: string }) =>
-    addSentComment({
-      exact: where?.exact ?? quote.text.replace(/\s+/g, ' ').trim(),
-      prefix: where?.prefix ?? '',
-      suffix: where?.suffix ?? '',
-      path: quote.path,
-      pageTitle: pageTitle() || quote.path,
-      link: quote.link.slice(new URL(quote.link).origin.length),
-      text: quote.text,
-      kind,
-      comment: text.trim(),
-      issue,
-      editKey,
-    })
-}
 
 /** A field no reader sees nor reaches with Tab; a bot that fills every
  * field fills it too, and the server drops that comment. */
@@ -166,6 +110,36 @@ function TextField({
   )
 }
 
+/** The type and the text, which the send and "Editar comentário"
+ * (`comment-edit.tsx`, #443) share. */
+export function CommentFields({
+  kind,
+  text,
+  onKind,
+  onText,
+}: {
+  kind: CommentKind | null
+  text: string
+  onKind: (kind: CommentKind) => void
+  onText: (text: string) => void
+}) {
+  return (
+    <>
+      <KindChoice kind={kind} onPick={onKind} />
+      <TextField text={text} onChange={onText} />
+    </>
+  )
+}
+
+/** What went wrong with the form, read out as it shows. */
+export function FormProblem({ children }: { children: string }) {
+  return (
+    <p role="alert" className={FIELD_LABEL}>
+      {children}
+    </p>
+  )
+}
+
 function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
   const [kind, setKind] = useState<CommentKind | null>(null)
   const [text, setText] = useState('')
@@ -192,14 +166,16 @@ function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
       <blockquote className="m-0 line-clamp-3 border-l-2 border-tinta pl-xs text-nota text-tinta-2">
         {quote.text}
       </blockquote>
-      <KindChoice kind={kind} onPick={setKind} />
-      <TextField text={text} onChange={setText} />
+      <CommentFields
+        kind={kind}
+        text={text}
+        onKind={setKind}
+        onText={setText}
+      />
       <Honeypot value={website} onChange={setWebsite} />
       <PopoverLine>{COMMENT.anonymous}</PopoverLine>
       {(problem ?? status === 'failed') && (
-        <p role="alert" className={FIELD_LABEL}>
-          {problem ?? COMMENT.failed}
-        </p>
+        <FormProblem>{problem ?? COMMENT.failed}</FormProblem>
       )}
       <div>
         <Button type="submit" disabled={status === 'sending'}>

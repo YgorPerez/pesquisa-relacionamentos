@@ -14,6 +14,7 @@ import {
   usePaintComments,
   usePaintedComments,
 } from './comment-paint'
+import { CommentEdit } from './comment-edit'
 import { AlsoCommented, CommentPopover } from './comment-popover'
 import {
   onOpenRequest,
@@ -115,7 +116,13 @@ export function HighlightLayer() {
   const close = () => setOpen(null)
   if (open && 'comment' in open) {
     const shown = comments.find((p) => p.comment.id === open.comment)
-    return shown ? <CommentPopover painted={shown} close={close} /> : null
+    return shown ? (
+      <CommentPopover
+        painted={shown}
+        close={close}
+        actions={<CommentEdit comment={shown.comment} />}
+      />
+    ) : null
   }
   const shown = open && painted.find((p) => p.highlight.id === open.grifo)
   if (!shown) return null

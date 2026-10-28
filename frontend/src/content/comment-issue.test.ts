@@ -373,7 +373,9 @@ describe('editing a sent Comentário', () => {
     ).toEqual({ edit: 'edited' })
     expect(desk.updates).toEqual([])
   })
+})
 
+describe('what a sent Comentário cannot edit', () => {
   it('the key a dropped comment got edits nothing, even when its made-up number is a real issue', async () => {
     const desk = editing()
     const real = await desk.send()
@@ -489,7 +491,9 @@ describe('reading and rewriting the issue on GitHub', () => {
     expect(calls[1]!.headers.get('authorization')).toBe('Bearer tok')
     expect(await calls[1]!.json()).toEqual(edit)
   })
+})
 
+describe('the issue GitHub does not give', () => {
   it('a missing issue or a pull request is missing; a refusal or no network is no answer', async () => {
     const answering = (response: () => Response) =>
       githubIssues(async () => response()).read(41, 'tok')

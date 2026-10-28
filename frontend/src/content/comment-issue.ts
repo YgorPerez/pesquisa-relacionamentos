@@ -362,9 +362,38 @@ function issueNumbers(random: () => number) {
   }
 }
 
-/** The anti-spam in memory: a server restart forgets it, and the IPs live
- * only in this `Map`, dropped once their window passes. Sends and edits
- * share one count per IP. */
+/** The count per IP of `commentDesk`: the IPs live only in this `Map`,
+ * dropped once their window passes. */
+function ipCount(limit: number, windowMs: number) {
+  const sent = new Map<string, number[]>()
+  return {
+    /** Whether this IP still has room, holding a place for this one if it
+     * has: two sends at once cannot both take the last place. */
+    admit: (ip: string, now: number) => {
+      for (const [key, times] of sent) {
+        const recent = times.filter((time) => now - time < windowMs)
+        if (recent.length > 0) sent.set(key, recent)
+        else sent.delete(key)
+      }
+      const times = sent.get(ip) ?? []
+      if (times.length >= limit) return false
+      sent.set(ip, [...times, now])
+      return true
+    },
+    /** Gives back the place a send that did not go out held. */
+    release: (ip: string, now: number) => {
+      const times = sent.get(ip) ?? []
+      const at = times.lastIndexOf(now)
+      if (at < 0) return
+      const rest = times.filter((_, i) => i !== at)
+      if (rest.length > 0) sent.set(ip, rest)
+      else sent.delete(ip)
+    },
+  }
+}
+
+/** The anti-spam in memory: a server restart forgets it (`ipCount`).
+ * Sends and edits share one count per IP. */
 export function commentDesk({
   limit,
   windowMs,
@@ -376,30 +405,8 @@ export function commentDesk({
   /** In [0, 1), for the made-up numbers. */
   random?: () => number
 }) {
-  const sent = new Map<string, number[]>()
+  const { admit, release } = ipCount(limit, windowMs)
   const numbers = issueNumbers(random)
-  /** Whether this IP still has room, holding a place for this one if it
-   * has: two sends at once cannot both take the last place. */
-  const admit = (ip: string, now: number) => {
-    for (const [key, times] of sent) {
-      const recent = times.filter((time) => now - time < windowMs)
-      if (recent.length > 0) sent.set(key, recent)
-      else sent.delete(key)
-    }
-    const times = sent.get(ip) ?? []
-    if (times.length >= limit) return false
-    sent.set(ip, [...times, now])
-    return true
-  }
-  /** Gives back the place a send that did not go out held. */
-  const release = (ip: string, now: number) => {
-    const times = sent.get(ip) ?? []
-    const at = times.lastIndexOf(now)
-    if (at < 0) return
-    const rest = times.filter((_, i) => i !== at)
-    if (rest.length > 0) sent.set(ip, rest)
-    else sent.delete(ip)
-  }
   const failed = (ip: string, now: number): EditReply => {
     release(ip, now)
     return { edit: 'failed' }
