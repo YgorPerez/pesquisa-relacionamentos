@@ -154,6 +154,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Stanley et al. 2010](studies/stanley-2010-coabitacao-noivado.md): coabitação antes do noivado e divórcio no primeiro casamento · ✅ · fraca
 - [Stavang et al. 2026](studies/stavang-2026-exigencia-anos-solteiro.md): ser exigente e os anos passados solteiro, na Noruega · ✅ · moderada
+- [Stevic et al. 2025](studies/stevic-2025-motivos-solidao.md): motivo para usar app de namoro, sucesso percebido e solidão · ✅ · fraca
 - [Stoeber 2012](studies/stoeber-2012-perfeccionismo-parceiro.md): exigir perfeição do parceiro e satisfação no namoro · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
