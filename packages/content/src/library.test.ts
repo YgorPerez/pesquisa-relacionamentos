@@ -186,20 +186,6 @@ X.
     ])
   })
 
-  it('a full text from a mirror of the publisher PDF fails', () => {
-    const text = fixtureText('valid', 'lima-2015-encontros').replace(
-      '## Limitações\n',
-      '## Limitações\n\nTexto completo: https://www.gwern.net/doc/x.pdf\n',
-    )
-    expect(
-      errorsOf(
-        buildLibrary([{ path: 'studies/lima-2015-encontros.md', text }]),
-      ),
-    ).toEqual([
-      'studies/lima-2015-encontros.md: the full text comes from gwern.net, a copy re-hosted by a third party; use the publisher, an author or an institutional repository',
-    ])
-  })
-
   it('a body without the sections or with the old table fails', () => {
     const file = 'studies/nunes-2020-corpo.md'
     expect(errorsOf(loadLibrary(fixture('incomplete-body')))).toEqual([

@@ -73,18 +73,6 @@ export function doiFromLink(link: string): string | null {
   return match?.[1] ? decodeURIComponent(match[1]).toLowerCase() : null
 }
 
-/** Sites that re-host publisher PDFs without the publisher's or the author's
- * leave. A Local source from one of them is not a source (the Kahn 1991
- * Scribd copy, #329). */
-const MIRRORS = [
-  'gwern.net',
-  'scribd.com',
-  'sci-hub',
-  'libgen',
-  'annas-archive',
-  'z-lib',
-]
-
 export type ParsedFactSheet =
   | { readonly ok: true; readonly factSheet: FactSheet }
   | { readonly ok: false; readonly errors: ReadonlyArray<Problem> }
@@ -122,17 +110,6 @@ export function readFactSheet(file: string, text: string): ParsedFactSheet {
       problem(
         file,
         'the file name must be lowercase, without accents, hyphenated',
-      ),
-    )
-
-  const mirror = MIRRORS.find((host) =>
-    new RegExp(`https?://(www\\.)?${host.replace('.', '\\.')}`, 'i').test(text),
-  )
-  if (mirror)
-    errors.push(
-      problem(
-        file,
-        `the full text comes from ${mirror}, a copy re-hosted by a third party; use the publisher, an author or an institutional repository`,
       ),
     )
 
