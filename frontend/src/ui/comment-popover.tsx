@@ -1,8 +1,8 @@
 // A sent Comentário's popover on its page (#441), opened by a tap on its
 // dotted underline (`comment-paint.ts`) or by "Ver comentário" in the
 // popover of a Grifo over the same passage: the type, the status, what the
-// reader wrote, the row for the actions on it ("Editar comentário" comes
-// with #443) and the way to "Seus trechos" (`/trechos`). Only this browser
+// reader wrote, the row for the actions on it ("Editar comentário",
+// `comment-edit.tsx`, #443) and the way to "Seus trechos" (`/trechos`). Only this browser
 // knows it, as with a Grifo.
 import { Popover } from '@base-ui/react/popover'
 import type { ReactNode } from 'react'
@@ -51,7 +51,12 @@ export function CommentPopover({
         </p>
         <HighlightNote heading={YOUR_COMMENT} note={comment} />
         {actions != null && (
-          <div className="mt-xs flex flex-wrap gap-xs">{actions}</div>
+          // Empty when no action applies, as for a closed Comentário. It
+          // scrolls when the open form has no room (a phone), as a
+          // `PopoverPanel` does.
+          <div className="mt-xs flex min-h-0 shrink flex-wrap gap-xs overflow-y-auto empty:hidden">
+            {actions}
+          </div>
         )}
         <SmallLink to="/trechos" hash="comentarios" className="mt-xs">
           {ALL_COMMENTS}
