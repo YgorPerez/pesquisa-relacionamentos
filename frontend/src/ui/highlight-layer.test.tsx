@@ -43,6 +43,10 @@ import {
   YOUR_COMMENT,
 } from './sent-comment-list.copy'
 
+vi.mock('#/content/check-comment-status', () => ({
+  checkCommentStatus: vi.fn<() => Promise<[]>>(async () => []),
+}))
+
 const GUIDE = '/onde-conhecer-pessoas'
 const SECTION = 'o-lugar-quase-nao-muda-a-relacao'
 const SENTENCE =
@@ -588,6 +592,31 @@ it('lists every sent Comentário, newest first, with its quote leading to its se
     within(guide!).getByRole('link', { name: 'Onde conhecer pessoas' }),
   ).toHaveAttribute('href', '/onde-conhecer-pessoas')
   expect(within(comentarios()).queryByText(CHANGED)).toBeNull()
+})
+
+it('announces an unseen status in the footer, highlights it in the list and remembers it was seen', async () => {
+  saveComments({ ...ON_GUIDE, status: 'corrected', seenStatus: 'received' })
+  const { router } = openScreen('/privacidade')
+  expect(
+    await screen.findByText('Há novidade nos seus Comentários'),
+  ).toBeInTheDocument()
+  await router.navigate({ to: '/trechos' })
+  expect(await screen.findByText('Corrigido')).toBeVisible()
+  expect(screen.getByText('Status atualizado')).toBeVisible()
+  await waitFor(() => expect(keptComments()[0]?.seenStatus).toBe('corrected'))
+  expect(screen.queryByText('Há novidade nos seus Comentários')).toBeNull()
+})
+
+it('shows the received and not planned states alongside the kind', async () => {
+  saveComments(ON_GUIDE, {
+    ...ON_TIP,
+    status: 'not-planned',
+    seenStatus: 'not-planned',
+  })
+  await openKept()
+  expect(screen.getByText('Recebido')).toBeVisible()
+  expect(screen.getByText('Não vamos mudar')).toBeVisible()
+  expect(screen.queryByText('Status atualizado')).toBeNull()
 })
 
 it('a Comentário whose quote left its page says the passage changed, keeps the old text and leads to the page', async () => {

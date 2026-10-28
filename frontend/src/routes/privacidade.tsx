@@ -59,9 +59,10 @@ function OnTheDevice() {
       <p>
         Cada Comentário que você envia também fica guardado no navegador, para
         você achar de novo: o trecho, o link, o tipo, o que você escreveu, a
-        data e o número que ele ganhou no repositório do curador. Seus trechos
-        mostra todos. “Tirar da lista” apaga o Comentário deste aparelho, mas
-        ele continua com o curador.
+        data, o número que ele ganhou no repositório do curador e o status. Seus
+        trechos mostra todos. “Tirar da lista” apaga o Comentário deste
+        aparelho, mas ele continua com o curador. O navegador também guarda
+        quando consultou os status e quais você já viu.
       </p>
       <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que
@@ -103,6 +104,14 @@ function InAComment() {
   return (
     <Section className="prosa" aria-labelledby="p-comentario">
       <Headline id="p-comentario">O que vai num Comentário</Headline>
+      <p>
+        Para consultar o status dos seus Comentários ainda recebidos, o
+        navegador envia só os números ao servidor, uma vez por visita e no
+        máximo a cada seis horas. O servidor consulta o GitHub e guarda a
+        resposta na memória por dez minutos. Nem os números nem os status entram
+        no log. A resposta traz só Recebido, Corrigido ou Não vamos mudar, nunca
+        o texto da issue.
+      </p>
       <p>
         Só quando você seleciona um trecho, toca em “Comentar” e envia. Vão o
         tipo que você escolheu, o que você escreveu, o trecho selecionado, o

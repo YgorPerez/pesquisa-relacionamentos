@@ -12,6 +12,7 @@ import { COMMENT_KINDS, type CommentKind } from '#/content/comment-kinds'
 import { markedFound, type KeptQuote } from './highlight-record'
 import { CONTEXT_LENGTH } from './highlights'
 import { stored } from './stored'
+import type { CommentStatus, IssueStatus } from '#/content/comment-status'
 
 /** A sent Comentário, as `localStorage` keeps it. */
 export interface SentComment extends KeptQuote {
@@ -30,10 +31,18 @@ export interface SentComment extends KeptQuote {
   readonly issue: number
   /** When it was sent (ms since 1970). */
   readonly at: number
+  readonly status?: CommentStatus
+  readonly seenStatus?: CommentStatus
 }
 
 /** What the form gives once the server took the comment. */
-export type NewSentComment = Omit<SentComment, 'id' | 'changed' | 'at'>
+export type NewSentComment = Omit<
+  SentComment,
+  'id' | 'changed' | 'at' | 'status' | 'seenStatus'
+>
+
+const validStatus = (raw: unknown): raw is CommentStatus =>
+  raw === 'received' || raw === 'corrected' || raw === 'not-planned'
 
 const isRecord = (raw: unknown): raw is Record<string, unknown> =>
   typeof raw === 'object' && raw !== null && !Array.isArray(raw)
@@ -72,6 +81,8 @@ function validComment(raw: unknown): SentComment | null {
     issue: issue as number,
     changed: changed === true,
     at,
+    ...(validStatus(raw.status) ? { status: raw.status } : {}),
+    ...(validStatus(raw.seenStatus) ? { seenStatus: raw.seenStatus } : {}),
   }
 }
 
@@ -134,4 +145,31 @@ export function removeSentComment(id: string) {
 export function markCommentsFound(path: string, found: ReadonlySet<string>) {
   const next = markedFound(readSentComments(), path, found)
   if (next) save(next)
+}
+
+/** Missing fields are records from before status checking: received and seen. */
+export function updateCommentStatuses(answers: readonly IssueStatus[]) {
+  const statuses = new Map(
+    answers.map((answer) => [answer.issue, answer.status]),
+  )
+  save(
+    readSentComments().map((comment) => {
+      const status = statuses.get(comment.issue)
+      return status && status !== (comment.status ?? 'received')
+        ? { ...comment, status, seenStatus: comment.seenStatus ?? 'received' }
+        : comment
+    }),
+  )
+}
+
+/** Acknowledge only the entries the list actually displayed. */
+export function markCommentStatusesSeen(ids: readonly string[]) {
+  const shown = new Set(ids)
+  const saved = readSentComments()
+  if (!saved.some((c) => shown.has(c.id) && c.status !== c.seenStatus)) return
+  save(
+    saved.map((c) =>
+      shown.has(c.id) ? { ...c, seenStatus: c.status ?? 'received' } : c,
+    ),
+  )
 }
