@@ -165,6 +165,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
+- [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
