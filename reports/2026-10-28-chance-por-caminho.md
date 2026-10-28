@@ -50,14 +50,14 @@ Para o Guia, a frase absoluta não se sustenta, porque Miwa 2010 fez a conta. Me
 
 #### Recruit Bridal Research 2024 (Japão)
 
-Recruit Bridal Research Institute (リクルートブライダル総研). 「婚活実態調査2024」, 24 de setembro de 2024. Comunicado: https://souken.zexy.net/data/konkatsu/konkatsu2024_release.pdf. Relatório: https://www.recruit.co.jp/newsroom/pressrelease/assets/20240924_marriage_02.pdf. ✅ os dois PDFs, em japonês.
+Recruit Bridal Research Institute (リクルートブライダル総研). 「婚活実態調査2024」, 24 de setembro de 2024. Relatório: https://www.recruit.co.jp/newsroom/pressrelease/assets/20240924_marriage_02.pdf. Comunicado: https://souken.zexy.net/data/konkatsu/konkatsu2024_release.pdf. ✅ os dois PDFs, em japonês. [Ficha](../studies/recruit-2024-konkatsu.md), força fraca.
 
 - **Amostra:** levantamento pela internet, em maio e junho de 2024, de 50.000 pessoas de 20 a 49 anos. Foram tiradas de 120.000 respostas para bater com o Censo de 2020 em estado civil, sexo e faixa de idade. Uma segunda etapa ouviu 2.353 solteiros, com peso.
-- **Achado entre quem casou em 2023 (p. 5–6 e 11 do relatório):** 32,3% tinham usado algum serviço de _konkatsu_ (agência, site ou app, festas e eventos), e 47,4% desses casaram com alguém de lá, ou 15,3% de todos os que casaram. Tomando como base quem fez cada atividade, a parcela que casou por ela foi de 45,2% para site ou app, 29,8% para agência matrimonial, 16,7% para encontros online em grupo, 16,1% para festas e eventos, 14,4% para pedir apresentação a conhecidos e 11,9% para hobby ou curso.
-- **Achado entre solteiros (p. 8–12):** 26,3% dos solteiros sem parceiro que querem namorar ou casar já usaram um serviço. Entre os que usaram em 2023, 47,8% dizem que arrumaram namorado ou namorada por ele. Entre os que começaram a usar em 2023, foram 17,7%. Quem usou mais de um serviço ao mesmo tempo arrumou parceiro mais vezes (38,3%) do que quem usou um só (30,6%).
-- **Responde:** é a única fonte que achei com uma taxa por caminho lado a lado, incluindo caminhos presenciais. Só que a base da taxa por caminho são pessoas que casaram, então ela diz "entre quem casou e tentou X, quantos casaram por X", e não a chance de quem tenta X. A taxa de 47,8% entre solteiros usa quem tentou, mas não separa os serviços e deixa de fora quem casou no ano.
+- **Achado entre quem casou em 2023 (p. 4, 5 e 7 do relatório):** 32,3% tinham usado algum serviço de _konkatsu_ (agência, site ou app, festas e eventos), e 47,4% desses casaram com alguém de lá, ou 15,3% de todos os que casaram. Tomando como base quem casou e tinha feito cada atividade, a parcela que casou por ela foi de 45,2% para site ou app, 29,8% para agência matrimonial, 16,7% para encontros online em grupo, 16,1% para festas e eventos, 14,4% para pedir apresentação a conhecidos e 11,9% para hobby ou curso. O relatório não diz quantas pessoas há em cada base.
+- **Achado entre solteiros (p. 8, 12 e 16):** 26,3% dos solteiros sem parceiro que querem namorar ou casar já usaram um serviço. Entre os que usaram em 2023, 47,8% dizem que arrumaram namorado ou namorada por ele. Entre os que começaram a usar em 2023, foram 17,7%. Quem usou mais de um serviço ao mesmo tempo arrumou parceiro mais vezes (38,3%) do que quem usou um só (30,6%).
+- **Responde:** é a única fonte que achei com uma taxa por caminho lado a lado, incluindo caminhos presenciais. Só que a base da taxa por caminho são pessoas que casaram e tinham tentado aquele caminho, não todo mundo que tentou. Ela diz "entre quem casou e tentou X, quantos casaram por X", e não a chance de quem tenta X. A taxa de 47,8% entre solteiros usa quem tentou, mas não separa os serviços e deixa de fora quem casou no ano.
 - **Causal?** Não.
-- **Ressalva:** é um painel online, e o instituto é da Recruit, dona da marca de casamentos Zexy (o relatório está em souken.zexy.net). As taxas mudam muito de um ano para o outro: a de agência foi de 38,5% em 2022 para 29,8% em 2023. A força seria fraca.
+- **Ressalva:** é um painel online, e o instituto é da Recruit, dona da marca de casamentos Zexy (o relatório está em souken.zexy.net). As taxas mudam muito de um ano para o outro: a de agência foi de 38,5% em 2022 para 29,8% em 2023, e a de pedir apresentação a conhecidos, de 23,4% para 14,4%.
 
 #### Hogan, Dutton & Li 2011 (18 países, incluindo o Brasil)
 
@@ -98,7 +98,7 @@ Hall JA. _How many hours does it take to make a friend?_ Journal of Social and P
 | ----------------------- | -------------------------------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------ | -------- |
 | Miwa 2010               | Japão, 1.192 solteiros sem parceiro    | quem tentou e quem não tentou  | sim, 12 atividades             | tenta (painel e escore de propensão); efeitos não significativos | ✅       |
 | Murakami 2010           | Japão, 816                             | quem tentou e quem não tentou  | não, só o número de atividades | não                                                          | ✅       |
-| Recruit 2024            | Japão, 50.000 (painel online)          | quem casou e tentou            | sim                            | não                                                          | ✅       |
+| Recruit 2024            | Japão, 50.000 (painel online)          | quem casou e tentou            | sim                            | não                                                          | Ficha ✅ |
 | Hogan, Dutton & Li 2011 | 18 países, casais (painel online)      | quem formou casal e tentou     | sim, grosseiro                 | não                                                          | ✅       |
 | Pew 2020                | EUA                                    | quem usou app ou site          | não                            | não                                                          | Ficha ✅ |
 | Erevik 2020             | Noruega, 2.385                         | usa e não usa Tinder           | não                            | não                                                          | Ficha ✅ |
@@ -121,7 +121,7 @@ Até a Ficha sair, o mínimo honesto é tirar o absoluto da resposta curta: "Qua
 ## Estudos que valem uma Ficha
 
 1. **Miwa 2010**, JLPS. Sem DOI; PDF aberto no site do CSRDA, Universidade de Tóquio. É o único estudo que responde à pergunta. Força provável moderada (painel nacional, ajuste por propensão), rebaixada por ser working paper e ter poucos casos. A Ficha precisa ler os valores da Figura 3 na imagem do PDF.
-2. **Recruit Bridal Research 2024**, _婚活実態調査2024_. Sem DOI; PDFs abertos. A única fonte com taxa por caminho lado a lado, presencial incluído. Força fraca (painel online, empresa do ramo, base em quem casou).
+2. **Recruit Bridal Research 2024**, _婚活実態調査2024_. Sem DOI; PDFs abertos. A única fonte com taxa por caminho lado a lado, presencial incluído. Força fraca (painel online, empresa do ramo, base em quem casou). Já tem [Ficha](../studies/recruit-2024-konkatsu.md).
 3. **Hogan, Dutton & Li 2011**. DOI 10.2139/ssrn.1763884; aberto (green) no site do OII. Tem a taxa grosseira por lugar e uma amostra brasileira. Força fraca (painel online, financiado pelo eHarmony, sem peso).
 4. **Asendorpf, Penke & Back 2011**. DOI 10.1002/per.768; fechado na editora, cópia do autor na HU Berlin atrás de verificação anti-robô. Só se o texto completo for obtido, para saber a base dos 4%.
 
