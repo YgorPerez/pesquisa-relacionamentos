@@ -351,7 +351,7 @@ function guideTip(
     ? {
         slug,
         html: textWithFactSheets(
-          withTermLinks(tip.text, library.terms, used),
+          withTermLinks(tip.text, library.terms, used, tip.fact_sheets),
           tip.fact_sheets,
           numbers,
         ),
@@ -520,6 +520,10 @@ export interface TipSummary {
 }
 
 export interface TipView extends TipSummary {
+  /** The text as the page's title, with its Verbetes linked (#360). */
+  readonly textHtml: SafeHtml
+  /** The Verbetes it marks, by slug, for their popover. */
+  readonly terms: Readonly<Record<string, TermView>>
   readonly appliesTo: string
   readonly factSheets: ReadonlyArray<CitedFactSheet>
   readonly questions: ReadonlyArray<QuestionSummary>
@@ -534,8 +538,19 @@ export const tipSummary = (tip: Tip): TipSummary => ({
 })
 
 export function tipView(tip: Tip, library: Library): TipView {
+  const used = new Set<string>()
+  // Without the other marks and the references, as the plain `text`: the
+  // Tip's Fact sheets are listed under it.
+  const linked = withTermLinks(
+    tip.text.replace(REFS, '').replace(/\{\{[^}]*\}\}\s*/g, ''),
+    library.terms,
+    used,
+    tip.fact_sheets,
+  )
   return {
     ...tipSummary(tip),
+    textHtml: inlineHtml(linked),
+    terms: pageTerms(used, library),
     appliesTo: appliesTo(tip.covers),
     factSheets: citedFactSheets(tip.fact_sheets, library),
     questions: questionsWithTip(library, tip.slug).map(questionSummary),
