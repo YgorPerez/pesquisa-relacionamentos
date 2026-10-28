@@ -3,8 +3,8 @@ reference: "Miwa S (三輪哲). *結婚活動の「成果」と「効果」* (As
 link: https://csrda.iss.u-tokyo.ac.jp/panel/dp/PanelDP_037Miwa.pdf
 status: verified
 verified_on: 2026-10-28
-strength: moderate
-strength_reason: "Painel nacional japonês com um ano de seguimento e ajuste por escore de propensão, mas é working paper sem revisão por pares, a taxa de resposta foi de 36%, cada atividade tem poucos casos e nenhum efeito ajustado ficou significativo."
+strength: weak
+strength_reason: "Fraca pela rubrica: amostra não representativa, com taxa de resposta de 36% e sorteio não descrito, poucos casos por atividade e working paper sem revisão por pares. O painel nacional japonês com um ano de seguimento e ajuste por escore de propensão é um bom desenho, mas nenhum efeito ajustado ficou significativo."
 countries: [Japão]
 period: "2007–2008 (primeira onda de janeiro a abril de 2007, segunda um ano depois)"
 sample:
@@ -32,6 +32,7 @@ Na segunda onda de um painel nacional japonês, os solteiros marcaram o que tinh
 | Responderam de novo um ano depois | 3.965 de 4.800 | Seção 2 | "第 1 回調査の回答者 4800 名のうち，3965 名から有効回収票を得た" |
 | Solteiros sem parceiro em 2007 na análise de resultado | 1.192 | Figura 3, legenda | "図3 この1年に交際開始したきっかけと結婚活動の結果（N=1192）" |
 | Solteiros que não fizeram nenhuma atividade de busca no ano | cerca de seis em cada dez | Seção 3, Figura 1 | "「活動をしなかった」人の割合が 6 割にのぼ" |
+| Quanto cada atividade foi feita no ano, entre os solteiros da segunda onda (média de cada item, na ordem da tabela: apresentação de amigos, _goukon_, colegas ou chefes, pais ou irmãos, outros parentes, _omiai_, festa de _omiai_, serviço matrimonial, aula ou clube, rua ou viagem, hobby ou curso, internet e celular, outros) | 21,5%, 16,7%, 8,4%, 3,8%, 1,4%, 2,0%, 2,3%, 1,8%, 4,4%, 2,2%, 6,0%, 4,1% e 1,4% | Seção 3, Tabela 2, coluna da média | "21.5% 16.7% 8.4% 3.8% 1.4% 2.0% 2.3% 1.8% 4.4% 2.2% 6.0% 4.1% 1.4%" |
 | Formas de começar namoro mais comuns no ano, entre quem estava sem parceiro: apresentação de amigos e trabalho | pouco mais de 3% cada | Seção 5 | "それぞれ 3 パーセント強を占める友人・知 人の紹介と，職場での出会いであった" |
 | Namoros novos que vieram de alguma atividade de busca | cerca de quatro em cada dez | Seção 5 | "新たに成立したカップルのうちおよそ 4 割もが何らかの結婚活動によ る結果としてもたらされたものであった" |
 | Razão de chances sem ajuste, rede de amigos (amigos, _goukon_, colegas) contra aula, clube, hobby e rua | cerca de 1,4 contra cerca de 1,8 | Seção 5, Figura 3 | "前者に属する 3 項目ではオッズ比がだいたい 1.4 程 度になっているが，後者の 3 項目では 1.8 ほどの値である" |
@@ -40,30 +41,13 @@ Na segunda onda de um painel nacional japonês, os solteiros marcaram o que tinh
 | Quem fez alguma atividade contra quem não fez, sem ajuste, em média | cerca de 1,5 vez | Seção 5 | "平均的にみておよそ 1.5 倍" |
 | Razão de chances de apresentação por parentes, antes e depois do ajuste por propensão | 1,97 → 1,66 | Seção 5, Figura 3 | "1.97 と最も高かっ た「親族の紹介」のオッズ比も，調整後には 1.66 にまで減少している" |
 | Efeito ajustado da apresentação por amigos | praticamente nenhum | Seção 5 | "自体が持つ効果はほとんどないに等しい" |
-| Efeitos ajustados de aula, clube, hobby e rua, os únicos que ficaram com algum tamanho | sem significância estatística | Seção 5 | "統計的有意ではなく，効果の存在を裏付ける強い証拠は得られなかった" |
+| Efeitos ajustados de aula, clube, hobby e rua, os únicos que ficaram com algum tamanho | sem [[significância estatística]] | Seção 5 | "統計的有意ではなく，効果の存在を裏付ける強い証拠は得られなかった" |
+| Razões de chances depois do ajuste por propensão, no geral | encolhem | Seção 5, Figura 3 | "全体的に，オッズ比が縮小していることに気付く" |
+| Atividades com menos resultado sem ajuste | festa de _omiai_ e serviço matrimonial | Seção 5 | "成果の得られにくい結婚活動は，お見合いパーティーと結婚仲介サービスである" |
+| Namoros por apresentação de amigos que vieram de quem fazia essa atividade para conhecer alguém | cerca de seis em cada dez | Seção 5, Figura 3 | "友人・知人の紹介 のタテ棒のうち，およそ 6 割が灰色で塗られている" |
+| Namoros de aula, hobby e internet que vieram de quem fazia essa atividade para conhecer alguém | cerca de metade | Seção 5, Figura 3 | "でほぼ半々ずつを占めあう" |
 
-### Os valores da Figura 3, lidos na imagem
-
-A Figura 3 (p. 9 do texto, p. 11 do PDF) traz a razão de chances de cada atividade em dois traçados: a linha pontilhada é a conta sem ajuste e a linha cheia, a estratificada por escore de propensão. A extração de texto embaralha os rótulos, então os valores abaixo foram lidos na imagem da página e não passam pela conferência automática. Pela legenda, número em itálico é [[significancia-estatistica|significativo]] a 10% e em negrito itálico, a 5%.
-
-| Atividade | Sem ajuste | Com ajuste |
-|---|---|---|
-| Hobby ou curso | 1,84 (5%) | 1,52 |
-| Aula, atividade de clube ou círculo | 1,82 (10%) | 1,47 |
-| Abordar na rua ou em viagem | 1,89 | 1,63 |
-| Apresentação por amigos ou conhecidos | 1,48 (5%) | 1,11 |
-| _Goukon_ (encontro em grupo arranjado) | 1,41 (10%) | 1,06 |
-| Apresentação por colegas ou chefes | 1,36 | ver abaixo |
-| Apresentação por pais ou irmãos | 1,70 | 1,40 |
-| Festa de _omiai_ | 1,07 | ver abaixo |
-| _Omiai_ | 1,54 | 1,37 |
-| Agência ou serviço matrimonial | 0,82 | 0,64 |
-| Apresentação por outros parentes | 1,97 | 1,66 |
-| Internet e celular | 1,27 | 1,03 |
-
-Na linha cheia, dois rótulos não batem com o ponto desenhado: o de colegas ou chefes diz 0,95, mas o ponto está perto de 1,08 no eixo; o da festa de _omiai_ diz 1,36, mas o ponto está abaixo de 1,0. Por isso esses dois valores ajustados ficam de fora. Nenhum valor ajustado aparece em itálico.
-
-As barras da mesma figura dão a parcela dos 1.192 que começou namoro por cada via no ano. Trabalho e apresentação de amigos ficam perto de 3% cada, e internet e celular, perto de 1%. Segundo o texto, cerca de 6 em cada 10 namoros por apresentação de amigos e cerca de metade dos de aula, hobby e internet vieram de quem fazia aquela atividade para conhecer alguém.
+A Figura 3 traz, para cada uma das 12 atividades, a razão de chances sem ajuste (linha pontilhada) e com ajuste por escore de propensão (linha cheia), e em barras a parcela dos 1.192 que começou namoro por cada via no ano. A extração de texto separa os valores dos rótulos, então só entram nesta Ficha os valores que o texto repete, nas linhas acima.
 
 ## Limitações
 
@@ -72,7 +56,7 @@ As barras da mesma figura dão a parcela dos 1.192 que começou namoro por cada 
 - A taxa de resposta da primeira onda foi de 36%, e o texto não descreve como a amostra foi sorteada.
 - Os dados são de 2007 a 2008, antes dos apps de celular. "Internet e celular" é uma categoria só, que mistura sites de encontro, redes sociais e o que mais o respondente entendeu.
 - O resultado é começar um namoro, não casar nem ficar junto. O trabalho entra só como lugar onde o namoro começou, não como atividade de busca.
-- Os valores por atividade só estão na Figura 3, e dois rótulos dela contradizem o desenho.
+- Os valores de cada atividade estão só na Figura 3. O texto repete poucos deles, e o ajustado de internet e celular não está entre eles.
 
 ## Como usamos
 
