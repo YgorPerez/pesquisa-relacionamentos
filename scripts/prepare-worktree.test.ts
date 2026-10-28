@@ -10,7 +10,6 @@ import {
 } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vite-plus/test'
 import { behindMain, link } from './prepare-worktree.ts'
 
@@ -205,9 +204,7 @@ describe('loading the script', () => {
   // come from there (#461). A child `node` records every module the import
   // graph resolves; importing (not running) the script loads just that graph.
   it('reaches only node: modules and files of its own', () => {
-    const script = fileURLToPath(
-      new URL('./prepare-worktree.ts', import.meta.url),
-    )
+    const script = new URL('./prepare-worktree.ts', import.meta.url).href
     const recorder = `
       import { registerHooks } from 'node:module'
       const loaded = []
@@ -218,7 +215,7 @@ describe('loading the script', () => {
           return result
         },
       })
-      await import(${JSON.stringify(new URL(`file://${script}`).href)})
+      await import(${JSON.stringify(script)})
       console.log(JSON.stringify(loaded))
     `
     const loaded: string[] = JSON.parse(

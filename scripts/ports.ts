@@ -17,8 +17,10 @@
 
 import { createHash } from 'node:crypto'
 import { statSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
 import { port, readEnv } from './env.ts'
+import { ROOT } from './root.ts'
+
+export { ROOT }
 
 /** The main checkout's ports. `vite dev` on 4310, the build server
  * (`pnpm start`) on 4311, the e2e one on 4312, Storybook on 6310 and the
@@ -47,12 +49,6 @@ const BLOCK_WIDTH = 10
  * refuse the busy port, and the use's variable picks another. */
 const FIRST_WORKTREE_PORT = 40_100
 const BLOCKS = 800
-
-/** The root of the checkout this file is in, without the trailing slash. */
-export const ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(
-  /[\\/]+$/,
-  '',
-)
 
 /** In a worktree (`git worktree add`), `.git` is a file pointing to the main
  * repository; in the main checkout it is the folder. No `.git` at all (a loose

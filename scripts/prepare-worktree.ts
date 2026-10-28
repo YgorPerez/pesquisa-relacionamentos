@@ -37,7 +37,6 @@ import {
   symlinkSync,
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 // What this file imports loads before it runs, so before its own
 // `pnpm install`: only `node:` modules and scripts that reach nothing else
 // (#461, checked by `prepare-worktree.test.ts`). `ports.ts` reaches a package
@@ -48,12 +47,7 @@ import {
   ensurePrivateSources,
   PRIVATE_SOURCES,
 } from './private-sources.ts'
-
-/** The root of the checkout this file is in, as `ports.ts` says it. */
-const ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(
-  /[\\/]+$/,
-  '',
-)
+import { ROOT } from './root.ts'
 
 /** What the main checkout has, git does not carry, and the worktree needs. */
 const FROM_MAIN = [
