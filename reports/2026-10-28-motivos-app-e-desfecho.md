@@ -77,7 +77,7 @@ Stevic A, Lee AY, Liu SX, Hancock J. _Of Loving and Losing: The Influence of Dat
 
 #### Liang & Bailey 2026
 
-Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for Well-Being in Older Adulthood_. Psychology and Aging, publicado online em 16 de abril de 2026. https://doi.org/10.1037/pag0000985. ✅ texto publicado, CC BY 4.0.
+Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for Well-Being in Older Adulthood_. Psychology and Aging, publicado online em 16 de abril de 2026. https://doi.org/10.1037/pag0000985. ✅ texto publicado, CC BY 4.0. Tem [Ficha](../studies/liang-2026-motivos-idade.md), ✅.
 
 - **Amostra:** 301 usuários atuais de app, recrutados pelo Prolific em julho e agosto de 2023, morando na Austrália, nos EUA, no Canadá ou no Reino Unido. Idade de 18 a 86 anos (média de 52,4), 49,8% homens. Os autores dizem que a amostra é sobretudo hétero, branca e escolarizada.
 - **Motivo:** cinco subescalas da Tinder Motives Scale de Timmermans & De Caluwé (2017), de 1 a 7. Aprovação social tem seis itens (α = 0,94), e as outras são busca de relação, experiência sexual, socializar e entretenimento.
@@ -87,17 +87,17 @@ Liang R, Bailey PE. _Age Differences in Dating App Motivations: Implications for
   - Satisfação com a vida (Tabela 4): o motivo de aprovação previu _mais_ satisfação (β = 0,13; p = 0,032).
   - Depressão: nenhum motivo previu, só a idade.
 - **Causal?** Não. Os autores dizem que não dá para saber se o motivo afeta a saúde mental ou se o estado prévio leva ao motivo, e propõem que a ligação com a solidão nos mais velhos pode ir nos dois sentidos.
-- **Ressalva:** amostra de painel online, com 11 preditores por modelo e efeitos pequenos (R² ajustado de 0,06 a 0,19). Uma citação deste artigo está errada: ele atribui a Her & Timmermans 2021 uma ligação entre aprovação e mais tristeza e ansiedade que a regressão daquele estudo não mostra (ver abaixo).
+- **Ressalva:** amostra de painel online, com 11 preditores por modelo e efeitos pequenos (R² ajustado de 0,06 a 0,19). Uma citação deste artigo é imprecisa: ele cita Her & Timmermans 2021 para ligar aprovação a mais tristeza e ansiedade, uma ligação que lá existe só na correlação simples e some na regressão com os outros motivos e o uso compulsivo (ver abaixo).
 
 #### Her & Timmermans 2021 (EUA)
 
-Her Y-C, Timmermans E. _Tinder blue, mental flu? Exploring the associations between Tinder use and well-being_. Information, Communication & Society 24(9):1303–1319, 2021 (online em 2020). https://doi.org/10.1080/1369118X.2020.1764606. ✅ texto publicado, acesso aberto (cópia no Lirias).
+Her Y-C, Timmermans E. _Tinder blue, mental flu? Exploring the associations between Tinder use and well-being_. Information, Communication & Society 24(9):1303–1319, 2021 (online em 2020). https://doi.org/10.1080/1369118X.2020.1764606. ✅ texto publicado, acesso aberto (cópia no Lirias). Tem [Ficha](../studies/her-2021-tinder-bem-estar.md), ✅, força fraca.
 
 - **Amostra:** 296 usuários do Tinder na última semana, recrutados no MTurk, de 18 a 29 anos (média de 26,3), 61% homens, 90% héteros e 70% solteiros.
 - **Motivo:** quatro subescalas da Tinder Motives Scale (entretenimento, aprovação social, busca de relação e experiência sexual), com uso compulsivo, sucesso percebido e comparação social no mesmo modelo. Os Desfechos são alegria, tristeza e ansiedade _depois de usar o Tinder na última semana_, controlando o humor do momento.
 - **Achado (Tabela 3):** com tudo no modelo, a aprovação não previu tristeza (β = 0,070) nem ansiedade (β = 0,114). A busca de relação previu mais tristeza (β = 0,192) e mais ansiedade (β = 0,176), e um pouco mais de alegria (β = 0,106). O uso compulsivo foi o preditor mais forte de tristeza (β = 0,446) e ansiedade (β = 0,376). Sentir-se bem-sucedido no app previu menos tristeza (β = −0,222). Sozinha, a aprovação se correlaciona com tristeza (r = 0,16) e ansiedade (r = 0,24), e se correlaciona 0,52 com o uso compulsivo (Tabela 2). A hipótese de que a aprovação pioraria o bem-estar "could not be supported".
 - **Causal?** Não. Os autores dizem que o desenho transversal limita a leitura causal.
-- **Ressalva:** a aprovação anda muito junto com o uso compulsivo. Parte do efeito dela pode estar dentro do efeito do uso compulsivo.
+- **Ressalva:** a aprovação anda muito junto com o uso compulsivo. Parte do efeito dela pode estar dentro do efeito do uso compulsivo. Os coeficientes brutos do uso compulsivo no texto dos Resultados não batem com os da Tabela 3; os números acima são os da tabela.
 
 #### Zervoulis et al. 2020 (Reino Unido, homens que fazem sexo com homens)
 

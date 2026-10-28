@@ -15,7 +15,7 @@ Um leitor viu, na resposta de "App ou presencial: onde tenho mais chance?" no Gu
 - **Fora isso, achei só aproximações, todas com o mesmo defeito.** Elas contam a "taxa de acerto" só entre quem já formou casal. Numa pesquisa online japonesa da Recruit, entre quem casou em 2023 e tinha usado site ou app de _konkatsu_ (procura de cônjuge), 45,2% casaram com alguém de lá. Para agência matrimonial a taxa foi de 29,8%, para festas e eventos 16,1%, e para hobby ou curso 11,9% ([Recruit 2024](#recruit-bridal-research-2024-japão)). Num painel online de casais de 18 países, financiado pelo eHarmony, 23% de quem procurou em bar conheceu o parceiro num bar, e só 1 em 15 de quem procurou na igreja o conheceu lá ([Hogan, Dutton & Li 2011](#hogan-dutton--li-2011-18-países-incluindo-o-brasil)). Quem tentou e continua sozinho fica fora dessas duas contas.
 - **Por hora gasta, ninguém mediu.** Não achei estudo que compare uma hora no app com uma hora numa atividade presencial. O único desenho por hora que achei, de [Hall 2018](#hall-2018-horas-para-fazer-um-amigo), mede amizade.
 - **Os outros estudos sobre usuários de app medem só o app**, e estão no Guia: Pew (39% dos usuários já namoraram sério ou casaram com alguém de lá), Timmermans 2018, Erevik 2020 e Büyükeren 2026. Nenhum compara caminhos.
-- **Não achei nada brasileiro.** A amostra do OII inclui 2.438 brasileiros, mas o relatório não dá a taxa de cada caminho por país.
+- **Não achei nada brasileiro.** A amostra do OII inclui 2.438 brasileiros, mas o relatório não dá a taxa de cada caminho por país. Do Brasil, ele dá só a fatia dos casais que se conheceram online desde 1997 (22,5%) e por qual meio.
 
 Para o Guia, a frase absoluta não se sustenta, porque Miwa 2010 fez a conta. Mesmo assim o que ela quer dizer sobrevive: ninguém mostrou que um caminho dê mais chance que outro depois de comparar pessoas parecidas, e ninguém mediu por hora.
 
@@ -61,14 +61,15 @@ Recruit Bridal Research Institute (リクルートブライダル総研). 「婚
 
 #### Hogan, Dutton & Li 2011 (18 países, incluindo o Brasil)
 
-Hogan B, Dutton WH, Li N. _A Global Shift in the Social Relationships of Networked Individuals: Meeting and Dating Online Comes of Age_. Oxford Internet Institute, 14 de fevereiro de 2011. https://doi.org/10.2139/ssrn.1763884. ✅ texto completo no site do OII (https://www.oii.ox.ac.uk/wp-content/uploads/old-docs/Me-MySpouse_GlobalReport.pdf).
+[Ficha](../studies/hogan-2011-me-myspouse.md). Hogan B, Dutton WH, Li N. _A Global Shift in the Social Relationships of Networked Individuals: Meeting and Dating Online Comes of Age_. Oxford Internet Institute, 14 de fevereiro de 2011. https://doi.org/10.2139/ssrn.1763884. Força fraca.
 
-- **Amostra:** casais que moram juntos e têm internet em casa, em 16 países europeus, no Japão e no Brasil (2.438 brasileiros). As duas pessoas de cada casal responderam. Os entrevistados vieram do painel online da Toluna, e os dados não têm peso (Tabela 1.1; seção 1.3).
+- **Amostra:** 25.200 pessoas de casais que moram juntos e têm internet em casa, em 16 países europeus, no Japão e no Brasil (2.438 brasileiros). As duas pessoas de cada casal responderam. Os entrevistados vieram do painel online da Toluna, e os dados não têm peso (Tabela 1.1; seções 1.3 e 1.4). O ano da coleta não aparece no texto.
 - **Medida:** onde a pessoa procurou parceiro antes da relação atual e onde conheceu o parceiro.
-- **Achado (seção 3.3, p. 17–18):** os autores fazem uma "taxa de sucesso" grosseira e avisam que ela "needs many qualifications". De quem procurou em bares e baladas, 23% conheceram o parceiro atual ali, mas quase 9% de quem não procurou em bar também o conheceu num bar. Só 1 em 15 de quem procurou na igreja conheceu o parceiro lá. Família, igreja e grupos de hobby parecem render menos. O relatório não dá essa taxa para o online.
+- **Achado (seção 3.3, p. 17–18):** os autores fazem uma "taxa de sucesso" grosseira e avisam que ela "needs many qualifications". De quem procurou em bares e baladas, 23% conheceram o parceiro atual ali, mas quase 9% de quem não procurou em bar também o conheceu num bar. Só 1 em 15 de quem procurou na igreja conheceu o parceiro lá. Família, igreja e grupos de hobby parecem render menos. O relatório não dá essa taxa para o online nem por país.
+- **Brasil (figuras 2.5 e 3.5):** 22,5% das relações que começaram desde 1997 começaram online, no meio da tabela dos 18 países. Entre os brasileiros que conheceram o parceiro online, 38% o conheceram numa rede social e 27% num site de namoro.
 - **Responde:** só em parte. A conta inclui só quem formou casal.
 - **Causal?** Não.
-- **Ressalva:** o projeto foi financiado pelo eHarmony, que ajudou a desenhar as perguntas (nota da capa). É um painel online e um working paper.
+- **Ressalva:** o projeto foi financiado pelo eHarmony, que ajudou a desenhar as perguntas e a execução (nota da capa). É um painel online e um working paper preliminar.
 
 ### O que mede só o app, ou só a internet
 
@@ -99,7 +100,7 @@ Hall JA. _How many hours does it take to make a friend?_ Journal of Social and P
 | Miwa 2010               | Japão, 1.192 solteiros sem parceiro    | quem tentou e quem não tentou  | sim, 12 atividades             | tenta (painel e escore de propensão); efeitos não significativos | ✅       |
 | Murakami 2010           | Japão, 816                             | quem tentou e quem não tentou  | não, só o número de atividades | não                                                          | ✅       |
 | Recruit 2024            | Japão, 50.000 (painel online)          | quem casou e tentou            | sim                            | não                                                          | Ficha ✅ |
-| Hogan, Dutton & Li 2011 | 18 países, casais (painel online)      | quem formou casal e tentou     | sim, grosseiro                 | não                                                          | ✅       |
+| Hogan, Dutton & Li 2011 | 18 países, 25.200 (painel online)      | quem formou casal e tentou     | sim, grosseiro                 | não                                                          | Ficha ✅ |
 | Pew 2020                | EUA                                    | quem usou app ou site          | não                            | não                                                          | Ficha ✅ |
 | Erevik 2020             | Noruega, 2.385                         | usa e não usa Tinder           | não                            | não                                                          | Ficha ✅ |
 | Büyükeren 2026          | EUA, campi                             | chegada do Tinder              | não                            | quase-experimento                                            | Ficha ✅ |

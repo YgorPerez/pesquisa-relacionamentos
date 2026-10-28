@@ -51,6 +51,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
 - [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
+- [Hogan, Dutton & Li 2011](studies/hogan-2011-me-myspouse.md): onde casais de 18 países se conheceram · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns.md): Pesquisa Nacional de Saúde · ✅ · moderada
 - [IBGE 2019](studies/ibge-2019-pns-danca.md): composição por sexo na dança como exercício · ✅ · moderada
@@ -106,6 +107,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
+- [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
@@ -121,6 +123,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
+- [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
