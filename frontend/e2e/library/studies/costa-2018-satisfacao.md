@@ -19,13 +19,19 @@ covers:
 
 ## O que mediu
 
-A satisfação conjugal conforme o lugar onde o casal se conheceu.
+A [[satisfação]] conjugal conforme o lugar onde o casal se conheceu.
 
 ## Achados
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Diferença de satisfação, online vs. presencial | 0,1 ponto | Resumo | "a difference of 0.1 points" |
+
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma nota de 1 a 7 que cada cônjuge deu ao casamento. | Resumo | "rated their marriage from 1 to 7" |
 
 ## Limitações
 

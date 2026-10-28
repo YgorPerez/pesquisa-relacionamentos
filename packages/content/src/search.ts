@@ -12,10 +12,12 @@ import {
   topicPath,
   isFactSheetIndexable,
   NEIGHBOR_SITES_PATH,
+  GLOSSARY_PATH,
 } from './paths.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import type { Tip, Topic } from './items.ts'
 import { CALCULATORS, RESERVED_ROUTES } from './lists.ts'
+import { withoutTermMarks } from './marks.ts'
 
 /** The site's address, for the sitemap, the canonical and Open Graph. */
 export const ORIGIN = 'https://temestudo.cloud'
@@ -31,7 +33,7 @@ export interface SearchMeta {
 /** Content markdown as plain text: no `[@slug]` references, no `==mark==`, no
  * links or emphasis. */
 export function plainText(markdown: string): string {
-  return markdown
+  return withoutTermMarks(markdown)
     .replace(/\s*\[@[a-z0-9-]+\]/g, '')
     .replace(/==([^=\n]+)==/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
@@ -103,6 +105,8 @@ export function sitemapPaths(library: Library): string[] {
     ...library.factSheets.filter(isFactSheetIndexable).map(factSheetPath),
     ...CALCULATORS.map(calculatorPath),
     NEIGHBOR_SITES_PATH,
+    // An empty Glossário stays out of search until it has a Verbete.
+    ...(library.terms.length > 0 ? [GLOSSARY_PATH] : []),
   ]
 }
 

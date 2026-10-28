@@ -29,6 +29,9 @@ const CALCULATOR_PATHS: Record<Calculator, string> = {
   priorities: '/prioridades',
 }
 
+/** The Glossário, the page of the Verbetes (#351). */
+export const GLOSSARY_PATH = '/glossario'
+
 /** The page of the Neighbor sites' Readings (#179). */
 export const NEIGHBOR_SITES_PATH = '/sites-vizinhos'
 

@@ -16,6 +16,7 @@ conflict: "Pesquisa da Gerência de Pesquisas de Opinião do Datafolha, institut
 covers:
   genders: [man, woman]
   ages: { min: 18, max: 60 }
+institution: datafolha
 ---
 
 # Datafolha (2009): Sexualidade dos Brasileiros

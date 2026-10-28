@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useEffectEvent, useState } from 'react'
 import { countEvent } from '#/analytics/counting'
 import { EVENTS } from '#/analytics/events'
 import { searchQuery } from '#/content/site-search'
@@ -53,7 +53,7 @@ function SearchPage() {
   const { q = '' } = Route.useSearch()
   const navigate = useNavigate()
   const [text, setText] = useState(q)
-  const [searched, setSearched] = useState(q.trim())
+  const [searched, setSearched] = useState(() => q.trim())
   const typed = text.trim()
 
   // Back, forward and the header's magnifier change the address from
@@ -81,11 +81,13 @@ function SearchPage() {
     [navigate],
   )
 
+  // The pause restarts only when the text does, not when `search` does.
+  const searchAfterPause = useEffectEvent((query: string) => search(query))
   useEffect(() => {
     if (typed === searched || !enoughToSearch(typed)) return
-    const timer = setTimeout(() => search(typed), TYPING_PAUSE)
+    const timer = setTimeout(() => searchAfterPause(typed), TYPING_PAUSE)
     return () => clearTimeout(timer)
-  }, [typed, searched, search])
+  }, [typed, searched])
 
   const { data: results, isPending } = useQuery({
     ...searchQuery(searched),

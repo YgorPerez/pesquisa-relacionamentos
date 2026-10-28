@@ -36,6 +36,9 @@ conflict: "<quem financiou; vínculos dos autores>"
 covers:
   genders: [man, woman]
   ages: { min: 18, max: 99 }
+# Opcional: o Verbete da instituição que fez o estudo (terms/<slug>.md, com
+# institution: true), como o Pew. O Glossário lista os estudos dela.
+# institution: <slug>
 ---
 
 # <Autor et al. (ano)>: <título curto>
@@ -49,6 +52,14 @@ covers:
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | <o que foi medido> | <número> | <tabela, figura ou página> | <trecho do original, quando verificado> |
+
+## Definições
+
+<Opcional. Como o estudo definiu cada Verbete de `terms/` que varia por estudo (`varies_by_study: true`), como "satisfação". Toda linha tem Trecho, e o build exige a linha quando um Guia marca o Verbete numa frase que cita esta Ficha. Apague a seção se não houver nenhum.>
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| <slug do Verbete> | <como o estudo o mediu, em português> | <tabela, figura ou página> | <trecho do original> |
 
 ## Limitações
 

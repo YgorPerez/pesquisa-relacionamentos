@@ -33,6 +33,7 @@ Vocabulário em `GLOSSARY.md`; rubrica de Força em `README.md`; campos da Ficha
    - Achados na tabela `| Medida | Valor | Onde | Trecho |`. **Trecho** é uma frase curta copiada do texto extraído da Fonte local, no idioma original, entre aspas, que contém o número. **Onde** é página, tabela ou seção. **Valor** em português ("18,5%", "r = 0,04") e só com números que estão no Trecho: o script exige cada um deles.
    - Número calculado por você: acrescente a coluna `| Cálculo |` com o caminho de um script em `scripts/calculations/<slug>.<ts|py>` que imprime o número. Os dados que ele lê ficam ao lado da Fonte local, em `sources/` ou `sources/private/`. O Trecho dessa linha traz os insumos.
    - Corpo com `# Autor et al. (ano): tema`, `## O que mediu`, `## Achados`, `## Limitações` (as do artigo e as que você viu). `## Como usamos` é opcional e lista o que usa a Ficha: Relatório, Dica ou dado do Grupo possível.
+   - Verbetes (`terms/`): `institution: <slug>` quando o estudo é de uma instituição que tem Verbete. Para cada Verbete que varia por estudo e que o texto usa, uma linha em `## Definições` (`| Verbete | Definição | Onde | Trecho |`), com Trecho como nos Achados. No texto, marque o primeiro uso de um Verbete em cada Capítulo com `[[palavra]]` ou `[[slug|palavra]]`.
 
    Pronto quando cada linha dos Achados tem Onde e Trecho.
 

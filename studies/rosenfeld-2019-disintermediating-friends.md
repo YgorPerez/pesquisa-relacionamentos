@@ -16,6 +16,7 @@ conflict: "NSF (SES-0751977 e SES-1153867), Institute for Research in the Social
 covers:
   genders: [man, woman]
   couple: different-sex
+institution: stanford
 ---
 
 # Rosenfeld, Thomas & Hausen (2019): online substitui os amigos como intermediário

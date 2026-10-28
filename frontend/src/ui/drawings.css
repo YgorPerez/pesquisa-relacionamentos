@@ -10,7 +10,7 @@
  *    used in JSX are `@utility`, and `@shadcn/lint` knows them.
  * 2. The HTML that comes out of the library's Markdown
  *    (`content/guide-view.ts`), which has no `className`: `.prosa`, `.ref`,
- *    `.nw`, `.numero-chave` and `.marca-texto`, the closed list of
+ *    `.verbete`, `.nw`, `.numero-chave` and `.marca-texto`, the closed list of
  *    `content/safe-html.ts`, plus the marks `guide-view.ts` puts in after
  *    the filter, `.marca-brasil` and `.selo-voce-texto`.
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
@@ -230,6 +230,27 @@
   .ref:hover {
     background-color: var(--color-agua-fonte);
     color: var(--color-tinta);
+  }
+
+  /* ---------- a Verbete: the word that explains itself (#351) ----------
+   * A dotted underline in ink, the dictionary's mark: not the straight line
+   * of a link nor the wavy one of a Grifo, and the word keeps the text's
+   * color. Without JS it is a link to `/glossario`; with it, a tap opens
+   * the popover (`ui/term-popover.tsx`). */
+  .verbete {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-tinta);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
+
+  /* Only where there is a pointer: on a phone, a tap would leave it on. */
+  @media (hover: hover) {
+    .verbete:hover {
+      text-decoration-style: solid;
+    }
   }
 
   /* ---------- key number in pink, the whole letter height ---------- */

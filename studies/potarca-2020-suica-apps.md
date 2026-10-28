@@ -51,6 +51,12 @@ A pesquisa oficial suíça sobre famílias de 2018 perguntou onde a pessoa conhe
 
 Na Tabela 2 o grupo de referência é quem conheceu o parceiro fora da internet, com N = 3.206 para a satisfação com a relação. Os coeficientes são diferenças na escala de 0 a 10, com o erro-padrão entre parênteses.
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma pergunta, "quanto você está satisfeito com a relação com o seu parceiro?", de 0 (nada satisfeito) a 10 (muito satisfeito) | p. 7, Measurements | "To measure relationship satisfaction, respondents provided answers on a scale from 0 ("not at all satisfied") to 10 ("very satisfied")" |
+
 ## Limitações
 
 - Transversal: só entram casais que ainda estavam juntos na entrevista. A autora atribui a vantagem dos sites entre os namoros sem morar junto, que some nas uniões mais firmes, à saída seletiva das relações insatisfeitas. O estudo não mede duração nem término.

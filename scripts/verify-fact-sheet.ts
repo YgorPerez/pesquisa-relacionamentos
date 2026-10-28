@@ -1,6 +1,7 @@
 // Fact sheet verification (#37): for each Achados row, the excerpt is in the
 // local source, the number in the Valor is in the excerpt and the `Cálculo`
-// reproduces the Valor. The private folder is a clone of the private sources
+// reproduces the Valor; each Definições row quotes the source in the same
+// way. The private folder is a clone of the private sources
 // repo (ADR 0040): on a machine, `prepare-worktree.ts` sets it up; in CI,
 // `.github/scripts/fact-sheets.ts` runs this on the verified fact sheets.
 //
@@ -172,6 +173,24 @@ export function verifyFactSheet(file: string, options: Options): Verification {
     }
     if (failures.length === before) verified++
   })
+
+  // How the Study defined a Verbete (#349): the excerpt is in the source,
+  // and a number of the definition is in the excerpt.
+  for (const definition of read.factSheet.definitions) {
+    const fail = (reason: string) =>
+      failures.push({
+        row: null,
+        measure: null,
+        reason: `the definition of ${definition.term}: ${reason}`,
+      })
+    const excerpt = cleanExcerpt(definition.excerpt)
+    if (!text.includes(normalize(excerpt)))
+      fail(`the excerpt is not in the source: "${excerpt}"`)
+    const inExcerpt = numbers(excerpt)
+    for (const n of numbers(definition.text))
+      if (!inExcerpt.some((t) => sameNumber(n, t)))
+        fail(`the number ${n.raw} does not appear in the excerpt`)
+  }
 
   return { factSheet: file, source, failures, verified }
 }

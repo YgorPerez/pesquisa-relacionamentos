@@ -34,6 +34,8 @@ test.describe('sitemap and robots', () => {
       `${SITE}/grupo-possivel`,
       `${SITE}/prioridades`,
       `${SITE}/sites-vizinhos`,
+      // The fixture has Verbetes, so the Glossário is indexed.
+      `${SITE}/glossario`,
     ])
   })
 

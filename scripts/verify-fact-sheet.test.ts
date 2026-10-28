@@ -53,6 +53,21 @@ describe('verifyFactSheet', () => {
     assert.equal(r.verified, 1)
   })
 
+  it('checks each definition like a finding: the excerpt in the source, the number in the excerpt', () => {
+    const r = verify(
+      'lima-2021-definicao',
+      'sources/private/lima-2021-conferida.txt',
+    )
+    assert.deepEqual(
+      r.failures.map((f) => f.reason),
+      [
+        'the definition of satisfacao-com-erro: the number 5 does not appear in the excerpt',
+        'the definition of amor: the excerpt is not in the source: "love was a single item"',
+      ],
+    )
+    assert.equal(r.verified, 3)
+  })
+
   it('runs the Cálculo and blocks the Valor it does not reproduce', () => {
     const r = verify(
       'lima-2021-calculo',

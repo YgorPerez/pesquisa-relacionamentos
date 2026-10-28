@@ -1,6 +1,7 @@
 // The content package's Fact sheet in the shape the pages draw: the markdown
 // already became HTML on the server, and the browser gets only what it shows.
 import type { Finding, FactSheet } from '@tem-estudo/content'
+import { withoutTermMarks } from '@tem-estudo/content/marks'
 import { factSheetSearch, type SearchMeta } from '@tem-estudo/content/search'
 import { Marked } from 'marked'
 import { safeHtml, type SafeHtml } from './safe-html'
@@ -56,7 +57,10 @@ export function html(
   markdown: string,
   visuals: ReadonlyMap<string, RenderedVisual> = new Map(),
 ): SafeHtml {
-  const filtered = safeHtml(marked.parse(markdown, { async: false }))
+  // A Verbete reads as its word until the page draws it (#351).
+  const filtered = safeHtml(
+    marked.parse(withoutTermMarks(markdown), { async: false }),
+  )
   return filtered.replace(
     new RegExp(`${VISUAL_MARK}([a-z0-9-]+)${VISUAL_MARK}`, 'g'),
     (_, id: string) => {
@@ -70,7 +74,7 @@ export function html(
   ) as SafeHtml
 }
 export const inlineHtml = (markdown: string) =>
-  safeHtml(marked.parseInline(markdown, { async: false }))
+  safeHtml(marked.parseInline(withoutTermMarks(markdown), { async: false }))
 
 export interface FindingView {
   readonly measure: SafeHtml
@@ -152,9 +156,12 @@ export function factSheetSummary(factSheet: FactSheet): FactSheetSummary {
   }
 }
 
+/** `link` turns the body's Verbete marks into links (`terms-view.ts`); the
+ * search does without it. */
 export function factSheetView(
   factSheet: FactSheet,
   isIndexable: boolean,
+  link: (markdown: string) => string = (markdown) => markdown,
 ): FactSheetView {
   return {
     ...factSheetSummary(factSheet),
@@ -170,16 +177,16 @@ export function factSheetView(
     n: factSheet.sample.n ?? null,
     conflictHtml: factSheet.conflict ? inlineHtml(factSheet.conflict) : null,
     license: factSheet.license ?? null,
-    whatItMeasuredHtml: html(factSheet.whatItMeasured),
+    whatItMeasuredHtml: html(link(factSheet.whatItMeasured)),
     findings: factSheet.findings.map(findingView),
     findingsNotesHtml: factSheet.findingsNotes
-      ? html(factSheet.findingsNotes)
+      ? html(link(factSheet.findingsNotes))
       : null,
     otherSections: factSheet.otherSections.map((s) => ({
       title: s.title,
-      html: html(s.markdown),
+      html: html(link(s.markdown)),
     })),
-    limitationsHtml: html(factSheet.limitations),
+    limitationsHtml: html(link(factSheet.limitations)),
     indexable: isIndexable,
     search: factSheetSearch(factSheet),
   }

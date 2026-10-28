@@ -14,7 +14,11 @@ import type {
   Tip,
   Topic,
 } from '@tem-estudo/content'
-import { BRAZIL_MARK, YOU_MARK } from '@tem-estudo/content/marks'
+import {
+  BRAZIL_MARK,
+  YOU_MARK,
+  withoutTermMarks,
+} from '@tem-estudo/content/marks'
 import {
   tipSearch,
   topicSearch,
@@ -34,6 +38,7 @@ import {
 } from './view'
 import { renderVisuals, type RenderedVisual } from './visuals-view'
 import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
+import { pageTerms, withTermLinks, type TermView } from './terms-view'
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -134,7 +139,7 @@ function textWithFactSheets(
 
 /** Plain text, for search, Open Graph and the related questions' summary. */
 export function withoutMarks(markdown: string): string {
-  return markdown
+  return withoutTermMarks(markdown)
     .replace(REFS, '')
     .replace(/\{\{[^}]*\}\}\s*/g, '')
     .replace(/==([^=\n]+)==/g, '$1')
@@ -290,6 +295,8 @@ export interface GuideView {
   readonly youMarks: Readonly<Record<string, ReadonlyArray<Coverage>>>
   /** The Questions of other Topics. */
   readonly elsewhere: ReadonlyArray<QuestionSummary>
+  /** The Verbetes the page marks, by slug, for their popover. */
+  readonly terms: Readonly<Record<string, TermView>>
   /** Search and Open Graph title and description (#15). */
   readonly search: SearchMeta
 }
@@ -337,12 +344,17 @@ function guideTip(
   slug: string,
   library: Library,
   numbers: Numbering,
+  used: Set<string>,
 ): GuideTip | null {
   const tip = library.tips.find((d) => d.slug === slug)
   return tip
     ? {
         slug,
-        html: textWithFactSheets(tip.text, tip.fact_sheets, numbers),
+        html: textWithFactSheets(
+          withTermLinks(tip.text, library.terms, used),
+          tip.fact_sheets,
+          numbers,
+        ),
         strength: tip.strength,
         inference: tip.inference,
         appliesTo: appliesTo(tip.covers),
@@ -355,10 +367,16 @@ function questionView(
   question: Question,
   library: Library,
   numbers: Numbering,
+  used: Set<string>,
 ): QuestionView {
   return {
     ...questionSummary(question),
-    answerHtml: html(withReferences(question.answer, numbers)),
+    answerHtml: html(
+      withReferences(
+        withTermLinks(question.answer, library.terms, used),
+        numbers,
+      ),
+    ),
     keyCoverage: keyCoverage(question.answer, library),
     findings: question.findings.map((f) => ({
       html: textWithFactSheets(f.text, f.fact_sheets, numbers),
@@ -379,14 +397,24 @@ interface Drawing {
   readonly library: Library
   readonly numbers: Numbering
   readonly visuals: ReadonlyMap<string, RenderedVisual>
+  /** The Verbetes the page marked, as it is drawn. */
+  readonly used: Set<string>
 }
 
-/** Prose of the body: references, Visuals and the inline marks. */
-const prose = (markdown: string, { numbers, visuals }: Drawing) =>
-  withMarks(html(withReferences(markdown, numbers), visuals))
+/** Prose of the body: Verbetes, references, Visuals and the inline marks. */
+const prose = (
+  markdown: string,
+  { library, numbers, visuals, used }: Drawing,
+) =>
+  withMarks(
+    html(
+      withReferences(withTermLinks(markdown, library.terms, used), numbers),
+      visuals,
+    ),
+  )
 
 function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
-  const { topic, library, numbers } = drawing
+  const { topic, library, numbers, used } = drawing
   return {
     id: chapter.id,
     title: chapter.title,
@@ -407,13 +435,13 @@ function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
                 {
                   key: `question-${part.slug}`,
                   kind: 'question',
-                  question: questionView(question, library, numbers),
+                  question: questionView(question, library, numbers, used),
                 },
               ]
             : []
         }
         case 'tip': {
-          const tip = guideTip(part.slug, library, numbers)
+          const tip = guideTip(part.slug, library, numbers, used)
           return tip ? [{ key: `tip-${n}-${part.slug}`, kind: 'tip', tip }] : []
         }
         case 'myth': {
@@ -456,6 +484,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
       },
       topic.slug,
     ),
+    used: new Set(),
   }
   const questions = topicQuestions(library, topic.slug)
   return {
@@ -467,7 +496,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
     // without the reference numbers: the whole answer is in its Chapter.
     summary: questions.map(questionSummary),
     takeaways: topic.takeaways.flatMap((slug) => {
-      const tip = guideTip(slug, library, numbers)
+      const tip = guideTip(slug, library, numbers, drawing.used)
       return tip ? [tip] : []
     }),
     unknownsHtml: topic.unknowns ? prose(topic.unknowns, drawing) : null,
@@ -477,6 +506,8 @@ export function guideView(topic: Topic, library: Library): GuideView {
       topic.findings.map((f) => [f.id, f.covers] as const),
     ),
     elsewhere: elsewhere(topic, library),
+    // Last: every block above is drawn and has named its Verbetes.
+    terms: pageTerms(drawing.used, library),
     search: topicSearch(topic),
   }
 }
