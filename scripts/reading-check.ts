@@ -118,7 +118,7 @@ export function restoreReadingState(
         '--status',
         'completed',
         '--limit',
-        '20',
+        '1',
         '--json',
         'databaseId',
       ]),

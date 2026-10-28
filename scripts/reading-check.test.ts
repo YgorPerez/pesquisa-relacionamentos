@@ -102,15 +102,15 @@ test('restarts counters and warns when the prior artifact has expired', () => {
 
 test('restores observations from the latest completed run even when publication failed', () => {
   const dir = mkdtempSync(join(tmpdir(), 'reading-restore-'))
+  const commands: string[][] = []
   try {
     const statePath = join(dir, 'reading-state.json')
     restoreReadingState(
       (args) => {
+        commands.push(args)
         if (args[1] === 'list') {
-          expect(args[args.indexOf('--status') + 1]).toBe('completed')
           return '[{"databaseId":456}]'
         }
-        expect(args.slice(0, 3)).toEqual(['run', 'download', '456'])
         writeFileSync(
           join(args[args.indexOf('--dir') + 1]!, 'reading-state.json'),
           JSON.stringify({ [reading.url]: 0 }),
@@ -123,6 +123,8 @@ test('restores observations from the latest completed run even when publication 
     expect(JSON.parse(readFileSync(statePath, 'utf8'))).toEqual({
       [reading.url]: 0,
     })
+    expect(commands[0]![commands[0]!.indexOf('--status') + 1]).toBe('completed')
+    expect(commands[1]!.slice(0, 3)).toEqual(['run', 'download', '456'])
   } finally {
     rmSync(dir, { recursive: true, force: true })
   }
@@ -236,7 +238,7 @@ test('persists all observations before a failed issue operation, including a lat
         throw new Error('GitHub unavailable')
       },
     }),
-  ).rejects.toThrow()
+  ).rejects.toThrow('Reading issue publication failed')
   expect(saved).toEqual({ [reading.url]: 2, [recovered.url]: 0 })
 })
 
