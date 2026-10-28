@@ -9,10 +9,15 @@ import userEvent from '@testing-library/user-event'
 import library from 'virtual:library'
 import { expect, it, vi } from 'vite-plus/test'
 import { searchSite } from '#/content/site-search-view'
-import { SearchForm, SearchResultsList } from './site-search'
+import {
+  SearchForm,
+  SearchResultsList,
+  SearchResultsSkeleton,
+} from './site-search'
 import {
   FIELD,
   KIND_TAG,
+  SEARCHING,
   WORDS_ONLY,
   found,
   nothingFound,
@@ -69,4 +74,20 @@ it('the empty field has the cursor, and Enter searches what was typed', async ()
   expect(field).toHaveFocus()
   await user.type(field, 'Pessoalmente{Enter}')
   expect(onSearch).toHaveBeenCalledWith('Pessoalmente')
+})
+
+it('the field the page holds shows its text and hands over each key', async () => {
+  const user = userEvent.setup()
+  const onType = vi.fn<(text: string) => void>()
+  render(<SearchForm query="amo" onType={onType} />)
+  const field = screen.getByRole('searchbox', { name: FIELD })
+  expect(field).toHaveValue('amo')
+  await user.type(field, 'r')
+  expect(onType).toHaveBeenLastCalledWith('amor')
+})
+
+it('while a search runs, tells the screen reader and hides the grey lines from it', () => {
+  render(<SearchResultsSkeleton />)
+  expect(screen.getByRole('status')).toHaveTextContent(SEARCHING)
+  expect(screen.getByRole('region', { busy: true })).toBeInTheDocument()
 })
