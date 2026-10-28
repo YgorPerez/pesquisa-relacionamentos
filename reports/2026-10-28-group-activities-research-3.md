@@ -1,8 +1,6 @@
 # Group activities: second follow-up to issue #51
 
-Branch: `acervo/51-atividades-em-grupo-3`.
-
-Scope: Chronomax's original report and weighted PNS 2019 dance composition. Existing PNAD and Ticket Sports fact sheets remain unchanged. No PR opened; integration belongs to the orchestrator.
+Scope: Chronomax's original report and weighted PNS 2019 dance composition. Existing PNAD and Ticket Sports fact sheets remain unchanged.
 
 ## Delivered fact sheet
 
@@ -26,22 +24,9 @@ No fact sheet was created. On 2026-10-28, web fetch of <https://estudo.chronomax
 
 The useful new lead was the `/01` address linked by [Corrida On Demand](https://corridaondemand.com.br/inscricoes-abertas-maratona-de-sorocaba-e-piracicaba-o-recorde-da-olympikus-sn-09-02-2026/). The Wayback CDX lookup for that exact address returned a 200 HTML snapshot dated `20260516211241`. Retrieved <https://web.archive.org/web/20260516211241id_/https://estudo.chronomax.com.br/01>. It contains only metadata and an empty application root; the content requires `/assets/index-Sxpb1Lh3.js`. Retrieval of that archived JavaScript failed; CDX for the assets path returned an empty array. The bare-domain CDX lookup returned no snapshots; wildcard lookups were also attempted, including one that returned HTTP 429. The original metadata additionally names <https://chronomax.com.br/estudo>; that lead returned HTTP 404. Search-index landing-page text and press percentages were not accepted as a substitute for the complete study.
 
-Private source saved, **not committed or pushed to the shared private repo**:
-
-- `sources/private/chronomax-2025-corridas-archive-shell.html`, from the Wayback snapshot URL above. This is an incomplete application shell, not evidence supporting a fact sheet. It need not be published for the PNS sheet's verification.
-
-Issue #51 already has `ready-for-human`. The unresolved Chronomax item needs a readable complete original (PDF/export or working application). Splitting follow-up issues and deciding the parent issue's closure remain with the orchestrator.
+The Chronomax study needs a readable complete original (PDF, export or a working application).
 
 Attempts and PNS results were [reported on issue #51](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/51#issuecomment-6473855179).
-
-## Verification
-
-- `pnpm verify studies/ibge-2019-pns-danca.md`: `ok`, 3 of 3 rows verified.
-- `node scripts/study-index.ts`: README index updated.
-- `pnpm fmt`: passed.
-- `node scripts/minimal-proof.ts --base origin/main`: all steps passed (content and frontend types, affected Vitest runs, changed-file check; no affected tests found).
-- `pnpm build`: passed; existing CSS warning about `::highlight(grifo)`.
-- No new suppression. No screen change. No edits to Tips or Guides.
 
 ## Content implications
 
