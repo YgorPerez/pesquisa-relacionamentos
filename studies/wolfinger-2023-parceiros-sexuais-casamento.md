@@ -57,7 +57,7 @@ As porcentagens da Tabela 4 são a queda na taxa anual de casar (razão de risco
 
 ## Limitações
 
-- Observacional. O probit bivariado, que os autores leem como sinal de efeito causal, roda só no NSFG: só mulheres, com parceiros contados de forma retrospectiva e desfecho censurado (os próprios autores dizem que os coeficientes ficam enviesados e não interpretam o tamanho). O instrumento, idade da menarca, tem coeficientes pequenos e não significativos na equação de parceiros (Tabela 2), o que deixa a identificação fraca.
+- Observacional. O probit bivariado, que os autores leem como sinal de efeito causal, roda só no NSFG: só mulheres, com parceiros contados de forma retrospectiva e desfecho censurado (os próprios autores dizem que os coeficientes ficam enviesados e não interpretam o tamanho). O instrumento, idade da menarca, tem coeficientes pequenos e não [[significativos]] na equação de parceiros (Tabela 2), o que deixa a identificação fraca.
 - Causalidade reversa: quem está num namoro firme tende a ter um parceiro só no ano em que casa. Os autores reconhecem isso no NSFG e testam a defasagem de um ano no NLSY97, mas o painel não separa "estar num relacionamento sério" de "ter um parceiro".
 - O número anual de parceiros não diz se eles eram casuais. Dois parceiros num ano podem ser dois namoros seguidos. A Ficha fala de "mais parceiros", não de "sexo casual".
 - O desfecho é só casamento. Coabitação entra como controle (Modelo 5), não como desfecho, então o estudo não diz se quem teve muitos parceiros forma união estável sem casar.

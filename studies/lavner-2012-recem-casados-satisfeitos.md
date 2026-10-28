@@ -49,7 +49,7 @@ Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram o
 ## Limitações
 
 - Só 21 divórcios. Os autores reconhecem amostra pequena, sem representatividade nacional e com pouco poder para efeitos pequenos.
-- Muitas comparações (cerca de 20 na Tabela 3) sem correção; algumas diferenças podem ser acaso. A diferença em afeto negativo deixou de ser significativa ao controlar compromisso ou estresse.
+- Muitas comparações (cerca de 20 na Tabela 3) sem correção; algumas diferenças podem ser acaso. A diferença em afeto negativo deixou de ser [[significativa]] ao controlar compromisso ou estresse.
 - A comunicação foi observada uma vez, nos primeiros seis meses. A satisfação entre o quarto e o décimo ano não foi medida, então não se sabe se esses casais ficaram satisfeitos até perto do divórcio.
 - Casais de Los Angeles, em primeiro casamento, sem filhos, que responderam a uma carta (17,8%) e tinham mais estudo que os que não responderam.
 - É associação. O desenho não mostra que mudar a comunicação muda o desfecho.

@@ -39,7 +39,7 @@ A síntese é narrativa, sem meta-análise nem estimativa conjunta do tamanho do
 | Estudos com pontuação de qualidade de pelo menos 80% no MMAT | 34 estudos (75,6%) | p. 4, seção 3.4 | "34 studies (75.6%) scoring 80% or higher using the MMAT" |
 | Estudos focados em homens de minorias sexuais | 16 estudos (35,6%) | p. 3, seção 3.1 | "sexual minority men (n = 16; 35.6%)" |
 
-Esses percentuais descrevem a parcela de estudos com achados adversos em cada grupo de desfechos. Não medem a parcela de usuários que adoece, a probabilidade de sofrer dano ou o tamanho de uma diferença. Um mesmo estudo pode examinar imagem corporal e saúde mental, e ter resultados distintos conforme o desfecho. As tabelas de resultados também incluem associações favoráveis e resultados sem significância estatística.
+Esses percentuais descrevem a parcela de estudos com achados adversos em cada grupo de desfechos. Não medem a parcela de usuários que adoece, a probabilidade de sofrer dano ou o tamanho de uma diferença. Um mesmo estudo pode examinar imagem corporal e saúde mental, e ter resultados distintos conforme o desfecho. As tabelas de resultados também incluem associações favoráveis e resultados sem [[significância estatística]].
 
 O resumo informa 48,6% para saúde mental e bem-estar, mas a seção 3.3.2 e a discussão informam 48,3%, com 14 de 29 estudos. Usamos o valor do corpo do artigo. A seção 3.2 também cita 28 estudos nesse grupo, em desacordo com os 29 do resumo e da seção de achados.
 
