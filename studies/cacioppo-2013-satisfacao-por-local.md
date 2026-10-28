@@ -64,7 +64,7 @@ Tabela 2 do artigo, médias sem ajuste, escala de 1 a 7, só entre quem continua
 | Trabalho | 5,38 | 2.474 | | | |
 | Encontro às cegas | 5,31 | 299 | | | |
 
-Entre os sites de namoro, a eHarmony teve a média mais alta (5,86) e a Yahoo a mais baixa (5,29). As diferenças entre locais offline vão de 5,31 a 5,67: significativas, mas pequenas.
+Entre os sites de namoro, a eHarmony teve a média mais alta (5,86) e a Yahoo a mais baixa (5,29). As diferenças entre locais offline vão de 5,31 a 5,67: [[significativas]], mas pequenas.
 
 Quem se conheceu online era mais frequentemente homem, de 30 a 49 anos, hispânico, de renda mais alta e empregado (Tabela 1).
 

@@ -44,7 +44,7 @@ Se o tipo de relação com o sexo oposto no fim do ensino médio prevê quando e
 | Perda da amostra | 1.756 dos 1.832 casos perdidos saíram por atrito na Onda III | Dados | "Wave III sample attrition, which accounts for 1,756 of the 1,832 cases lost." |
 | Idade máxima no fim do acompanhamento | 26 anos | Discussão | "The fact that the oldest members of our sample are only age 26 at the time of the third wave" |
 
-"Significativa" é p < 0,05 ou p < 0,01, os asteriscos das tabelas. Razão de taxas acima de 1 quer dizer união mais cedo (ou mais provável a cada ano) do que entre quem não teve sexo fora de namoro; abaixo de 1, mais tarde.
+"[[Significativa]]" é p < 0,05 ou p < 0,01, os asteriscos das tabelas. Razão de taxas acima de 1 quer dizer união mais cedo (ou mais provável a cada ano) do que entre quem não teve sexo fora de namoro; abaixo de 1, mais tarde.
 
 ## Limitações
 

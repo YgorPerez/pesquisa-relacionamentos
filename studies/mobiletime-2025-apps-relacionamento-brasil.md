@@ -38,7 +38,7 @@ Quantos brasileiros com smartphone já saíram com alguém que conheceram em app
 
 - Mede **ter saído com alguém** conhecido em app, não namoro nem casamento.
 - Só donos de smartphone que respondem pesquisa online; a margem de erro publicada supõe amostra aleatória, o que um [[painel online]] não é.
-- A matéria não publica o questionário, o tamanho de cada faixa etária nem os números por gênero, só que a diferença não foi significativa.
+- A matéria não publica o questionário, o tamanho de cada faixa etária nem os números por gênero, só que a diferença não foi [[significativa]].
 
 ## Como usamos
 

@@ -54,7 +54,7 @@ O resumo dá 93% para um modelo com satisfação, ideia de separação e afeto n
 - Stanley, Bradbury & Markman (2000, *Journal of Marriage and the Family* 62:256–264) criticaram a passagem desses achados para conselhos a casais, com Gottman et al. (1998) como exemplo. Não lemos esse texto; o resumo vem de Heyman & Slep, que citam também a resposta de Gottman et al. (2000).
 - Amostra pequena e local: 79 casais de uma cidade de Indiana, recrutados por anúncio, casados em média havia 5 anos quando entraram. O desenho em duas etapas sobrerrepresenta casais muito satisfeitos e muito insatisfeitos.
 - Os quatro cavaleiros só previram o divórcio precoce. Para o divórcio tardio, o que contou foi a falta de afeto positivo, não a presença dos quatro.
-- Nem os quatro pesaram nos dois cônjuges: crítica do marido e *stonewalling* da esposa não foram significativos no divórcio precoce.
+- Nem os quatro pesaram nos dois cônjuges: crítica do marido e *stonewalling* da esposa não foram [[significativos]] no divórcio precoce.
 - O texto traz dois valores para o F da crítica da esposa no mesmo teste (4,63 na p. 741 e 4,03 na p. 742).
 - As conversas sempre vieram na mesma ordem, sem contrabalancear. Os autores admitem que não sabem se os resultados se mantêm com outra ordem.
 - É um estudo de casais já casados, observados em laboratório. Não testa se evitar esses comportamentos muda o desfecho, nem diz nada sobre como escolher alguém antes de a relação começar.

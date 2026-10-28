@@ -52,7 +52,7 @@ Se conhecer o parceiro online prevê término e casamento. Usa dois conjuntos de
 - Só EUA, e só casais que se conheceram até março de 2009, antes do Tinder e dos apps de celular; o autor diz que ainda não há dado representativo sobre eles.
 - Observacional: o autor diz no resumo que não mede efeito causal, e a autosseleção de quem quer casar pode explicar toda a diferença no casamento.
 - Poucos eventos: 407 términos e 109 casamentos nos dados prospectivos; o poder só basta para diferenças de término a partir de razão de chances 1,5, e o próprio autor chama de modesto o poder para diferenças pequenas.
-- A vantagem de "online" no casamento não fica significativa com controles (p = 0,057); a de site de namoro fica, mas com intervalo largo.
+- A vantagem de "online" no casamento não fica [[significativa]] com controles (p = 0,057); a de site de namoro fica, mas com intervalo largo.
 - A perda de seguimento chega a 54% na onda 5. O autor argumenta que ela depende de a pessoa continuar no painel, não da relação, e que o resultado não muda com pesos corrigidos (Apêndice 2 do suplemento).
 - Os dados retrospectivos não têm término (todo casal estava junto em 2009) nem escolaridade.
 

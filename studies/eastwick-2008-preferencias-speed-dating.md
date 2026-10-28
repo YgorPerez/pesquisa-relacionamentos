@@ -43,7 +43,7 @@ Antes do evento, cada participante disse quanto valoriza atratividade física, p
 | Conclusão dessa análise | as preferências declaradas não se relacionam com as reveladas | Results, Individual Differences (p. 30) | "participants' stated preferences were unrelated to their in-vivo preferences" |
 | Preferência por alguém parecido consigo nesses traços | nenhuma evidência em 9 regressões | Results, Similarity effects (p. 32) | "None of the 9 regressions revealed any evidence that participants desired similarity." |
 
-- As notas de consenso dos outros participantes, as notas de fotos por avaliadores e a renda mediana da cidade de origem deram a mesma conclusão: nenhuma diferença significativa entre os sexos.
+- As notas de consenso dos outros participantes, as notas de fotos por avaliadores e a renda mediana da cidade de origem deram a mesma conclusão: nenhuma diferença [[significativa]] entre os sexos.
 - Nem quem queria uma relação séria nem quem tinha sociossexualidade mais restrita mostrou a diferença entre os sexos que as preferências declaradas sugerem.
 - O próprio valor percebido no mercado afetivo não explicou a falta de relação entre o declarado e o real.
 - A única explicação alternativa com apoio modesto, numa análise exploratória que os autores chamam de preliminar: com pouca ansiedade de apego em relação a um parceiro específico, a diferença esperada entre os sexos apareceu em parte (atratividade só nos pares do evento; renda mais nos write-ins).

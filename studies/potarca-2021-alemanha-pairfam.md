@@ -51,7 +51,7 @@ A autora acompanhou casais do painel pairfam desde o começo da relação até o
 | Dados do parceiro sobre trabalho da mãe | Só 44,3% dos parceiros responderam | p. 1987, Measures | "only 44.3% provided data on attitudes toward maternal employment" |
 | Resposta do pairfam | 30% a 45% a cada onda | p. 1985, Data | "30% to 45% at each wave" |
 
-"Significativo" quer dizer p < 0,05, o asterisco da Tabela 2. O subrisco (*subhazard ratio*) compara a taxa de casamento ao longo do tempo, contando morar junto e terminar como desfechos concorrentes. Nos modelos com interação, o efeito de conhecer online vale para quem tem ensino superior, a categoria de referência; para quem não tem, multiplica-se pela interação.
+"[[Significativo]]" quer dizer p < 0,05, o asterisco da Tabela 2. O subrisco (*subhazard ratio*) compara a taxa de casamento ao longo do tempo, contando morar junto e terminar como desfechos concorrentes. Nos modelos com interação, o efeito de conhecer online vale para quem tem ensino superior, a categoria de referência; para quem não tem, multiplica-se pela interação.
 
 ## Limitações
 

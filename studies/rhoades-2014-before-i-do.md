@@ -52,7 +52,7 @@ As autoras acompanharam por cinco anos jovens adultos americanos que namoravam e
 | Divórcios durante o estudo | 20 casamentos acabaram | p. 19, Appendix, Participants | "Of them, 20 experienced the break-up of their marriage during the study." |
 | Duração média do casamento observada | 28,77 meses até o divórcio ou o fim do estudo | p. 19, Appendix, Participants | "The mean length of marriage at the time of divorce or the end of the study was 28.77 months" |
 
-Os coeficientes da Tabela 2 estão em pontos da escala de 0 a 21; "com controles" inclui anos de estudo, renda, raça e etnia, religiosidade e frequência a cultos. "Significativo" quer dizer p < 0,05 ou menos, pelos asteriscos da Tabela 2 (\*\*\* p < 0,001, \*\* p < 0,01, \* p < 0,05), que o Trecho não reproduz. A Tabela 2 é uma imagem no PDF original; a Fonte local tem uma camada de OCR nessa página, que lê algumas vírgulas no lugar do ponto decimal (-1,08, -0,95). Os Trechos curtos da coluna com controles ("-0.04", "0.58") são a célula seguinte da mesma linha na tabela.
+Os coeficientes da Tabela 2 estão em pontos da escala de 0 a 21; "com controles" inclui anos de estudo, renda, raça e etnia, religiosidade e frequência a cultos. "[[Significativo]]" quer dizer p < 0,05 ou menos, pelos asteriscos da Tabela 2 (\*\*\* p < 0,001, \*\* p < 0,01, \* p < 0,05), que o Trecho não reproduz. A Tabela 2 é uma imagem no PDF original; a Fonte local tem uma camada de OCR nessa página, que lê algumas vírgulas no lugar do ponto decimal (-1,08, -0,95). Os Trechos curtos da coluna com controles ("-0.04", "0.58") são a célula seguinte da mesma linha na tabela.
 
 ## Limitações
 
