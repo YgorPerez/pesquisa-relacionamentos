@@ -2,7 +2,7 @@
 reference: "Timmermans E, Courtois C. *From swiping to casual sex and/or committed relationships: Exploring the experiences of Tinder users*. The Information Society 34(2):59–70, 2018. Texto completo aberto: https://repub.eur.nl/pub/105005/Timmermans-Courtois_2018_TheInformationSociety.pdf"
 link: https://doi.org/10.1080/01972243.2017.1414093
 status: verified
-verified_on: 2026-10-26
+verified_on: 2026-10-28
 strength: weak
 strength_reason: "Questionário transversal com 1.038 usuários atuais do Tinder na Bélgica, recrutados por Facebook sem amostragem probabilística; autorrelato, exclusão de ex-usuários e inconsistências internas limitam as estimativas."
 countries: [Bélgica]
@@ -18,7 +18,7 @@ covers:
   ages: { min: 18, max: 29 }
 ---
 
-# Timmermans & Courtois (2018): matches, conversas e relacionamentos pelo Tinder
+# Timmermans & Courtois (2018): motivos, matches, conversas e relacionamentos pelo Tinder
 
 ## O que mediu
 
@@ -34,8 +34,15 @@ Um questionário perguntou a usuários atuais do Tinder na Bélgica sobre seus m
 | Relato de ao menos um encontro sexual de uma noite com alguém do Tinder, entre quem teve encontro presencial | Vinte e três por cento | Medidas, comportamento presencial, p. 13 do PDF | "Twenty-three percent of those with offline Tinder meetings reported to have had at least one one-night stand" |
 | Relato de relação sexual casual com alguém do Tinder, entre quem teve encontro presencial | 31% | Medidas, comportamento presencial, p. 13 do PDF | "31% engaged in a casual sexual relationship with another Tinder user" |
 | Relato de relacionamento com compromisso com alguém do Tinder, entre quem teve encontro presencial | 27% | Medidas, comportamento presencial, p. 13 do PDF | "whereas 27% started a committed relationship with another Tinder user" |
+| Número de encontros presenciais com gente do Tinder, por motivo de relação e por motivo social | 65% maior com motivo de relação; 19% maior com motivo social | Resultados, p. 15 do PDF; Tabela 2, modelo 4 | "Tinder users with a relationship motive (65%) or a social motive (19%)" |
+| Número de encontros sexuais de uma noite com gente do Tinder, por motivo sexual | 32% maior | Resultados, p. 15 do PDF; Tabela 2, modelo 5 | "The odds for having a one-night stand with another Tinder user were 32% higher for users with a sexual motive" |
+| Número de relações sexuais casuais com gente do Tinder, por motivo sexual | 51% maior | Resultados, p. 15 do PDF; Tabela 2, modelo 6 | "the odds of having a casual sexual relationship were 51% higher for users with a sexual motive" |
+| Número de relações sexuais casuais com gente do Tinder, por motivo de relação | 16% maior entre quem pontuava baixo no motivo de relação | Resultados, p. 16 do PDF; Tabela 2, modelo 6 | "were 16% higher for users with low scores on relationship motive" |
+| Número de relacionamentos com compromisso com gente do Tinder, por motivo de relação | Sem associação | Discussão, p. 21 do PDF; Tabela 2, modelo 7 | "having a relationship motive was not associated with reporting a higher number of committed relationships" |
 
 Os percentuais finais descrevem participantes que relataram encontro presencial, não a porcentagem de cada encontro que virou sexo ou relacionamento. As categorias podem se sobrepor e não devem ser somadas. O estudo mede matches, que exigem interesse recíproco, e não curtidas recebidas. A associação positiva esperada entre deslizar e matches não apareceu; isso não demonstra que deslizar mais nunca ajude uma pessoa.
+
+Os motivos foram medidos por três subescalas da Tinder Motives Scale, de 1 a 7: relação, sexo e socializar. Os percentuais por motivo vêm de modelos de contagem com excesso de zeros e dizem quanto o número esperado de encontros ou relações cresce a cada ponto a mais na escala do motivo, com os outros preditores no modelo. Não são a porcentagem de usuários com aquele motivo que teve o desfecho. Nessas linhas, texto e Tabela 2 coincidem (Exp(B) de 1,65, 1,19, 1,32 e 1,51; 0,86 para o motivo de relação nas relações casuais). Na Tabela 2, o motivo de relação não teve efeito significativo sobre relacionamentos com compromisso (Exp(B) de 1,11). Os autores concluem que o Tinder "might not be that successful in gratifying a relationship need".
 
 ## Limitações
 
@@ -44,10 +51,11 @@ Os percentuais finais descrevem participantes que relataram encontro presencial,
 - O desenho transversal e o autorrelato não permitem acompanhar a sequência entre conversa, encontro, sexo e relacionamento, nem estimar o efeito causal de usar o Tinder. Não há comparação com não usuários.
 - Há inconsistências sobre encontros presenciais. Os métodos informam 571 participantes com encontro numa amostra de 1.038; os resultados mencionam 46,5% de zeros para encontros e aproximadamente 45% sem encontro; resumo e discussão dizem que menos da metade teve encontro. A Ficha não usa essas passagens para estimar a proporção total que encontrou alguém.
 - Texto e Tabela 1 divergem na magnitude das diferenças por gênero: para matches entre mulheres e homens, o texto informa 1,34 e a tabela mostra Exp(B) de 2,34. Também divergem na magnitude do início de conversas. Mantemos apenas as direções que ambos sustentam. O texto chama coeficientes de modelos de contagem de "odds", o que não os transforma em razões de chances.
+- O efeito do motivo de relação sobre encontros depende da experiência sexual: o texto relata chance 41% maior de encontros entre virgens com esse motivo, mas não entre quem já tinha experiência sexual, e a Tabela 2 traz a interação negativa (Exp(B) de 0,71). O 65% é o efeito principal num modelo com essa interação, e não vale igual para todos os usuários.
 - O resumo e a discussão por vezes descrevem resultados por encontro; a seção de medidas atribui os percentuais aos participantes com encontros. A Ficha segue esse denominador explícito.
 - Os autores não distinguiram os tipos de relação sexual casual nem acompanharam sua evolução. A hipótese de que sexo casual levasse a relacionamentos com compromisso não recebeu apoio nas associações ou na mediação testadas.
 - O manuscrito não informa quando os dados foram coletados nem declara financiamento. Suas descrições de recursos do Tinder pertencem à época do estudo.
 
 ## Como usamos
 
-O [Relatório de Leituras conferidas](../reports/2026-10-26-leituras-conferidas.md), na conferência da Leitura 2, já cita este estudo com base no resumo. O texto completo permite distinguir matches de curtidas recebidas e registrar as inconsistências sobre encontros presenciais. Os resultados mostram relatos de sexo casual e de relacionamentos com compromisso entre usuários, sem medir se usar o app aumenta a chance de encontrar um parceiro.
+O [Relatório de Leituras conferidas](../reports/2026-10-26-leituras-conferidas.md), na conferência da Leitura 2, já cita este estudo com base no resumo. O [Relatório sobre chance por caminho](../reports/2026-10-28-chance-por-caminho.md) usa os 27% de relacionamentos com compromisso, e o [Relatório sobre motivos de uso de app e desfecho](../reports/2026-10-28-motivos-app-e-desfecho.md) usa os achados de motivo: quem procurava relação teve mais encontros, mas não mais relacionamentos com compromisso. O texto completo permite distinguir matches de curtidas recebidas e registrar as inconsistências sobre encontros presenciais. Os resultados mostram relatos de sexo casual e de relacionamentos com compromisso entre usuários, sem medir se usar o app aumenta a chance de encontrar um parceiro.
