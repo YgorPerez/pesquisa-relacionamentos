@@ -46,7 +46,7 @@ O próprio autor faz a ressalva principal: "male and female preference distribut
 
 A castidade foi a característica que mais variou entre os países. China, Índia, Indonésia, Irã, Taiwan e os árabes palestinos de Israel a valorizaram muito; Suécia, Noruega, Finlândia, Holanda, Alemanha Ocidental e França a acharam irrelevante (Seção 3.5).
 
-### A Dica "Gentileza e inteligência estão entre as características mais valorizadas por ambos os sexos"
+### A Dica "Gentileza e inteligência estão entre o que homens e mulheres mais dizem querer num parceiro"
 
 Apoia. Homens e mulheres puseram "gentil e compreensivo" e "inteligente" acima de capacidade de ganhar dinheiro e de atratividade física em todas as amostras (Seção 4.1). Na resposta aos comentários, o autor diz que as duas ficaram entre as quatro primeiras nas 37 sociedades. Vale com a mesma ressalva do estudo inteiro: é o que as pessoas dizem querer num cônjuge, não o que escolhem.
 
