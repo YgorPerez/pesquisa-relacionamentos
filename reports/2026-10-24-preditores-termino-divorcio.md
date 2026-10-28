@@ -4,7 +4,7 @@ ticket: 140
 
 # O que prevê o fim de um casamento, e quais brigas são sinal de alerta?
 
-*Pesquisa feita em 24/10/2026 para o ticket #140. As Fichas citadas foram lidas no texto completo e conferidas com `pnpm verify`. Quase tudo vem dos EUA e de casais heterossexuais casados; o Brasil entra com a DHS de 1996 (só mulheres) e com o Registro Civil do IBGE. Ficaram de fora, sem texto aberto: a meta-análise de Le et al. 2010 sobre o fim de namoros (#127), a de Karney & Bradbury 1995 sobre o casamento, Gottman et al. 1998, Clements, Stanley & Markman 2004, Amato & Previti 2003 e os outros listados em "O que falta".*
+*Pesquisa feita em 24/10/2026 para o ticket #140. As Fichas citadas foram lidas no texto completo e conferidas com `pnpm verify`. Quase tudo vem dos EUA e de casais heterossexuais casados; o Brasil entra com a DHS de 1996 (só mulheres) e com o Registro Civil do IBGE. Ficaram de fora, sem texto aberto: a meta-análise de Le et al. 2010 sobre o fim de namoros (#127), a de Karney & Bradbury 1995 sobre o casamento, Gottman et al. 1998, Clements, Stanley & Markman 2004 e os outros listados em "O que falta".*
 
 ---
 
@@ -72,8 +72,10 @@ Duas ressalvas mudam como a pergunta deve ser respondida. Primeiro, Lavner 2016 
 | 68,6% disseram que houve uma "gota d'água"; as mais comuns foram infidelidade (24%), violência doméstica (21,2%) e abuso de substâncias (12,1%) | [Scott et al. 2013](../studies/scott-2013-motivos-divorcio.md) | fraca |
 | 65,8% dos homens e 73,8% das mulheres acham que o ex deveria ter se esforçado mais; só 31,6% e 33,3% dizem isso de si | [Scott et al. 2013](../studies/scott-2013-motivos-divorcio.md) | fraca |
 | 30,8% queriam ter reconhecido os sinais de alerta antes de casar | [Scott et al. 2013](../studies/scott-2013-motivos-divorcio.md) | fraca |
+| Num painel nacional sorteado, os motivos mais citados por 208 divorciados foram infidelidade (21,6%), incompatibilidade (19,2%), álcool ou drogas (10,6%) e distanciamento (9,6%); mulheres citaram mais infidelidade (25,2% contra 15,6%), bebida ou drogas e abuso, quase sempre do ex-marido | [Amato & Previti 2003](../studies/amato-2003-motivos-divorcio.md) | moderada |
+| 40% das mulheres e 21% dos homens culparam o ex; 1,5% e 10% culparam a si mesmos. Quem culpou a relação, e não uma pessoa, se ajustou melhor ao divórcio | [Amato & Previti 2003](../studies/amato-2003-motivos-divorcio.md) | moderada |
 
-São 52 pessoas de um único estudo de educação pré-marital, quase todas brancas e casadas na igreja, contando anos depois. Sem grupo de comparação, não dá para saber se esses problemas são mais comuns em quem se separa. Três autores têm vínculo comercial com o programa PREP (dois são donos da empresa que o vende; uma recebe royalties). Serve para dar voz aos números das seções anteriores, não para somar evidência.
+São 52 pessoas de um único estudo de educação pré-marital, quase todas brancas e casadas na igreja, contando anos depois. Sem grupo de comparação, não dá para saber se esses problemas são mais comuns em quem se separa. Três autores têm vínculo comercial com o programa PREP (dois são donos da empresa que o vende; uma recebe royalties). Serve para dar voz aos números das seções anteriores, não para somar evidência. Amato & Previti 2003 dá a mesma pergunta a uma amostra nacional e acha a infidelidade no topo também, mas o motivo segue sendo o que um dos ex-cônjuges conta depois, e os próprios autores dizem que não dá para saber se a infidelidade causou o afastamento ou veio dele.
 
 A infidelidade aparece entre os motivos mais citados, mas contar o motivo depois não diz se ela causou o fim. [Previti & Amato 2004](../studies/previti-2004-infidelidade-qualidade.md) (moderada) acompanharam 1.475 pessoas casadas de um painel nacional que não tinham relatado infidelidade em 1980. Quem já pensava e falava em divórcio teve mais infidelidade nos três anos seguintes; depois dela, a felicidade no casamento caiu e a propensão ao divórcio subiu (0,67 e 0,74 desvio padrão), e a chance de divórcio até 1997 ficou 2,6 vezes maior, mesmo descontadas as duas. A resposta dos autores é que ela é causa e consequência ao mesmo tempo. São só 68 casos de infidelidade, medida por uma pergunta que pega só a que virou problema conhecido no casamento.
 
@@ -89,7 +91,7 @@ Não achamos estudo brasileiro sobre conflito do casal e separação com desenho
 
 - **Meta-análises atrás de paywall.** Le et al. 2010 (fim de namoros, #127), Karney & Bradbury 1995 (casamento) e Woodin 2011 (conflito) dariam tamanhos de efeito agregados. Sem elas, o Relatório usa estudos isolados.
 - **Namoro.** Quase tudo aqui é casamento. O fim de namoros depende de Le 2010, que segue ⬜.
-- **Outros estudos sem texto aberto (tentados em 24/10/2026 via Unpaywall, OpenAlex, Semantic Scholar e Europe PMC):** Gottman, Coan, Carrere & Swanson 1998; Clements, Stanley & Markman 2004; Kurdek 1993; Amato & Previti 2003; Stanley, Markman & Whitton 2002; Hawkins, Willoughby & Doherty 2012; Jose, O'Leary & Moyer 2010 (coabitação, meta-análise); Rosenfeld & Roesler 2019 (coabitação). Todos estão na issue #147.
+- **Outros estudos sem texto aberto (tentados em 24/10/2026 via Unpaywall, OpenAlex, Semantic Scholar e Europe PMC):** Gottman, Coan, Carrere & Swanson 1998; Clements, Stanley & Markman 2004; Kurdek 1993; Stanley, Markman & Whitton 2002; Hawkins, Willoughby & Doherty 2012; Jose, O'Leary & Moyer 2010 (coabitação, meta-análise); Rosenfeld & Roesler 2019 (coabitação). Todos estão na issue #147.
 - **Revisões narrativas lidas, mas sem Ficha** porque não são estudo primário nem meta-análise: Karney & Bradbury 2020, Raley & Sweeney 2020, Overall & McNulty 2017, Lyngstad & Jalovaara 2010. Servem de pista para uma próxima rodada.
 - **Dados brasileiros** sobre conflito, satisfação e separação, e qualquer dado com homens.
 - **Casais do mesmo sexo**, ausentes de todas as Fichas desta seção.
@@ -99,7 +101,7 @@ Não achamos estudo brasileiro sobre conflito do casal e separação com desenho
 
 1. **"Quais brigas são sinal de alerta numa relação?"** Seção 3. Confiança no máximo moderada (Birditt), com a ressalva de Lavner 2016 e McNulty & Russell.
 2. **"Brigar muito quer dizer que vamos nos separar?"** Seções 2 e 3: o tipo de briga importa mais que a briga em si, e a briga ruim é também sintoma.
-3. **"O que faz um casamento acabar?"** Seções 1 e 4: fatores de partida (forte, Raley & Bumpass) e os motivos que os divorciados contam (fraca).
+3. **"O que faz um casamento acabar?"** Seções 1 e 4: fatores de partida (forte, Raley & Bumpass) e os motivos que os divorciados contam (moderada em Amato & Previti, fraca em Scott).
 4. **"Casar cedo aumenta a chance de divórcio?"** Seção 1: quem casa cedo se separa mais, até o começo dos 30; o estudo não separa a idade do que vem com ela. O mito da curva em U não se sustenta (Lehrer & Chen, moderada).
 5. **"Se estamos bem agora, estamos seguros?"** Seção 2: a maioria segue satisfeita, mas casais satisfeitos com comunicação negativa também se separaram (fraca).
 
