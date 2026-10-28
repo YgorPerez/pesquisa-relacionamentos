@@ -76,6 +76,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 ### Outros países
 
+- [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
 - [Apostolou, O & Esposito 2020](studies/apostolou-2020-motivos-solteiro.md): por que os solteiros dizem estar solteiros · ✅ · fraca
 - [Apostolou et al. 2026](studies/apostolou-2026-capacidade-manter-parceiro.md): capacidade de manter um parceiro e solteirice · ✅ · fraca
 - [Armstrong et al. 2012](studies/armstrong-2012-orgasmo-ficadas-namoro.md): orgasmo e prazer das universitárias em ficadas e namoros · ✅ · moderada
