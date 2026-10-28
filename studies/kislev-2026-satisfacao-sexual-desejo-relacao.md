@@ -54,11 +54,11 @@ Um coeficiente b de −0,024 quer dizer que cada ponto a mais de satisfação se
 
 ## Limitações
 
-- Observacional. Os efeitos fixos tiram o que não muda na pessoa, mas não o que muda junto com a satisfação sexual. Os autores dizem que b não deve ser lido como efeito causal nem estritamente prospectivo: a mudança termina na mesma onda em que a vontade de ter parceiro é medida, e a direção pode ser a inversa.
+- Observacional. Os efeitos fixos tiram o que não muda na pessoa, mas não o que muda junto com a satisfação sexual. Os autores dizem que b não deve ser lido como efeito causal nem estritamente prospectivo, porque a mudança termina na mesma onda em que a vontade de ter parceiro é medida. Eles levantam a direção inversa só para a frequência sexual; pela nossa leitura, ela vale também para a satisfação.
 - Efeito pequeno. O modelo explica de 1% a 2% da variação dentro da pessoa, e mesmo um salto grande de satisfação sexual mexe pouco numa escala de 1 a 5.
 - A frequência sexual não separa número de parceiros, tipo de relação nem sexo sozinho. A satisfação sexual pode estar alta com frequência zero, então o estudo não mede sexo casual diretamente.
 - Só entra quem ficou solteiro em duas ondas seguidas; quem começou um namoro, e a mudança logo depois, fica de fora. Quem namorou entre as duas ondas pode estar dentro.
 - Não considera tempo desde a última relação, qualidade das relações anteriores nem o contexto do sexo sem compromisso.
 - Só Alemanha. A primeira onda teve 37% de resposta, e a amostra analisada é um recorte do painel, não uma [[amostra representativa]] dos solteiros.
-- Os mesmos dados, até a onda 10 e com outro modelo (Park et al., 2021), deram a mesma associação negativa da satisfação sexual, mas uma associação positiva da frequência sexual com a vontade de ter parceiro. A satisfação replica dentro do pairfam; a frequência depende do modelo.
+- Os mesmos dados, até a onda 10 e com outro modelo (Park et al., 2021), deram a mesma associação negativa da satisfação sexual, mas uma associação positiva da frequência sexual com a vontade de ter parceiro. Com parte dos mesmos dados e outra medida, os dois acham a mesma direção para a satisfação; a da frequência depende do modelo.
 - A medida da vontade de namorar é uma frase só.
