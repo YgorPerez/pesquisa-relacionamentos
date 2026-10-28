@@ -8,5 +8,4 @@ As Dicas com Ficha já estão uma por arquivo nesta pasta.
 
 | Dica | Base | Força dita antes |
 |---|---|---|
-| Gentileza e inteligência estão entre as características mais valorizadas por ambos os sexos | Buss 1989 (37 culturas) | Forte |
 | Aparência pesa no primeiro contato; cuidados pessoais, roupa e exercício estão no seu controle | Walster et al. 1966; estudos de speed-dating | Forte (atratividade); fraca para truques específicos |

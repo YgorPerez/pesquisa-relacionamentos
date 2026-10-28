@@ -62,4 +62,4 @@ Apoia. Homens e mulheres puseram "gentil e compreensivo" e "inteligente" acima d
 
 ## Como usamos
 
-Base da Dica "Gentileza e inteligência estão entre as características mais valorizadas por ambos os sexos" em `tips/_sem-ficha.md`.
+Base da Dica [`gentileza-e-inteligencia`](../tips/gentileza-e-inteligencia.md).
