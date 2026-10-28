@@ -58,6 +58,7 @@ export const RESERVED_ROUTES = [
   'prioridades',
   'privacidade',
   'sites-vizinhos',
+  'trechos',
   'sitemap.xml',
   'robots.txt',
 ] as const

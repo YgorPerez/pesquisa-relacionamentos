@@ -11,43 +11,33 @@
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
-import { sameQuote, type Highlight } from './highlight-record'
+import {
+  decodeKeptQuote,
+  decodeQuoteList,
+  isQuoteRecord,
+  markedFound,
+  sameQuote,
+  type Highlight,
+} from './highlight-record'
 import { stored } from './stored'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
 export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>
 
 /** How much text on each side is kept to tell repeats apart. */
-export const CONTEXT_LENGTH = 32
+export { CONTEXT_LENGTH } from './highlight-record'
 
 /** The longest Nota kept. */
 export const NOTE_LENGTH = 500
 
-const isRecord = (raw: unknown): raw is Record<string, unknown> =>
-  typeof raw === 'object' && raw !== null && !Array.isArray(raw)
-
-const STRINGS = ['id', 'path', 'pageTitle', 'link', 'text', 'exact'] as const
-
 function validHighlight(raw: unknown): Highlight | null {
-  if (!isRecord(raw)) return null
-  for (const key of STRINGS)
-    if (typeof raw[key] !== 'string' || raw[key] === '') return null
-  const { prefix, suffix, note, changed, at } = raw
-  if (typeof prefix !== 'string' || typeof suffix !== 'string') return null
-  if (typeof at !== 'number' || !Number.isFinite(at)) return null
-  const text = (key: (typeof STRINGS)[number]) => raw[key] as string
+  if (!isQuoteRecord(raw)) return null
+  const quote = decodeKeptQuote(raw)
+  if (!quote) return null
+  const { note } = raw
   return {
-    id: text('id'),
-    path: text('path'),
-    pageTitle: text('pageTitle'),
-    link: text('link'),
-    text: text('text'),
-    exact: text('exact'),
-    prefix: prefix.slice(-CONTEXT_LENGTH),
-    suffix: suffix.slice(0, CONTEXT_LENGTH),
+    ...quote,
     note: typeof note === 'string' ? note.slice(0, NOTE_LENGTH) : '',
-    changed: changed === true,
-    at,
   }
 }
 
@@ -56,14 +46,7 @@ function validHighlight(raw: unknown): Highlight | null {
 export function validateHighlights(
   raw: unknown,
 ): ReadonlyArray<Highlight> | null {
-  if (!Array.isArray(raw)) return null
-  const seen = new Set<string>()
-  return raw.flatMap((item) => {
-    const valid = validHighlight(item)
-    if (!valid || seen.has(valid.id)) return []
-    seen.add(valid.id)
-    return [valid]
-  })
+  return decodeQuoteList(raw, validHighlight)
 }
 
 const highlights = stored('highlights', validateHighlights)
@@ -123,14 +106,6 @@ export function removeHighlight(id: string) {
 /** After the page at `path` looked for its Grifos: the ones in `found` were
  * there, the others are marked changed. Writes only when a mark moves. */
 export function markFound(path: string, found: ReadonlySet<string>) {
-  const saved = readHighlights()
-  const moved = saved.some(
-    (h) => h.path === path && h.changed === found.has(h.id),
-  )
-  if (!moved) return
-  save(
-    saved.map((h) =>
-      h.path === path ? { ...h, changed: !found.has(h.id) } : h,
-    ),
-  )
+  const next = markedFound(readHighlights(), path, found)
+  if (next) save(next)
 }

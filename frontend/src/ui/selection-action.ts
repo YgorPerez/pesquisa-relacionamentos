@@ -2,6 +2,7 @@
 // types, in a module of their own: each action imports them without adding
 // to the fan-in of `selection-quote.ts`, which reads the page.
 import type { ReactNode } from 'react'
+import type { NoticeLink } from './notice'
 
 /** The selection, as the popover's actions use it. */
 export interface Quote {
@@ -30,8 +31,8 @@ export interface SelectionActionProps {
    * with the keyboard open the popover has a few lines of room. */
   readonly showForm: (title: string, form: ReactNode) => void
   /** Closes the popover or the sheet, clears the selection and tells
-   * `message` at the bottom of the screen. */
-  readonly finish: (message: string) => void
+   * `message` at the bottom of the screen, with `link` under it if given. */
+  readonly finish: (message: string, link?: NoticeLink) => void
   /** Closes the popover. */
   readonly close: () => void
 }

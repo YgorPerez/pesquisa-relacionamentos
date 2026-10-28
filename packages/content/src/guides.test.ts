@@ -479,7 +479,7 @@ describe('publication rules', () => {
       path: a.path.replace(GUIDE, 'guides/dicas.md'),
     }))
     expect(errorsOf(buildLibrary(files))).toEqual([
-      'guides/dicas.md: a topic cannot be called "dicas", which is a site route (busca, estudos, dicas, glossario, grifos, grupo-possivel, prioridades, privacidade, sites-vizinhos, sitemap.xml, robots.txt)',
+      'guides/dicas.md: a topic cannot be called "dicas", which is a site route (busca, estudos, dicas, glossario, grifos, grupo-possivel, prioridades, privacidade, sites-vizinhos, trechos, sitemap.xml, robots.txt)',
     ])
   })
 

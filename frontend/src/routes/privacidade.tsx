@@ -53,8 +53,16 @@ function OnTheDevice() {
       <p>
         Os Grifos que você faz num texto, com a Nota de cada um, também ficam só
         no navegador: não vão para o servidor nem para a contagem. A página{' '}
-        <Link to="/grifos">Grifos</Link> mostra todos. “Tirar grifo” apaga o
-        Grifo e a Nota.
+        <Link to="/trechos">Seus trechos</Link> mostra todos. “Tirar grifo”
+        apaga o Grifo e a Nota.
+      </p>
+      <p>
+        Cada Comentário que você envia também fica guardado no navegador, para
+        você achar de novo: o trecho, o link, o tipo, o que você escreveu, a
+        data, o número que ele ganhou no repositório do curador e o status. Seus
+        trechos mostra todos. “Tirar da lista” apaga o Comentário deste
+        aparelho, mas ele continua com o curador. O navegador também guarda
+        quando consultou os status e quais você já viu.
       </p>
       <p>
         Até onde você leu cada Guia também fica só no navegador. É com isso que
@@ -97,6 +105,14 @@ function InAComment() {
     <Section className="prosa" aria-labelledby="p-comentario">
       <Headline id="p-comentario">O que vai num Comentário</Headline>
       <p>
+        Para consultar o status dos seus Comentários ainda recebidos, o
+        navegador envia só os números ao servidor, uma vez por visita e no
+        máximo a cada seis horas. O servidor consulta o GitHub e guarda a
+        resposta na memória por dez minutos. Nem os números nem os status entram
+        no log. A resposta traz só Recebido, Corrigido ou Não vamos mudar, nunca
+        o texto da issue.
+      </p>
+      <p>
         Só quando você seleciona um trecho, toca em “Comentar” e envia. Vão o
         tipo que você escolheu, o que você escreveu, o trecho selecionado, o
         link para ele e o título da página. Mais nada: nem nome, nem e-mail, nem
@@ -107,6 +123,11 @@ function InAComment() {
         curador lê, e nunca aparece no site. Por isso ele é anônimo, e também
         não tem como a gente responder. Não escreva nele nada que diga quem você
         é.
+      </p>
+      <p>
+        Na volta, o servidor manda só o número da issue, que o seu navegador
+        guarda junto com uma cópia do Comentário (acima, em “O que fica no seu
+        aparelho”).
       </p>
       <p>
         Para barrar spam, o servidor conta quantos Comentários saem de cada IP

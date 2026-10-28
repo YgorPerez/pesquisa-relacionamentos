@@ -11,6 +11,8 @@ export const COMMENT = {
   missingKind: 'Escolha o que é.',
   missingText: 'Escreva o comentário.',
   sent: 'Comentário enviado. Obrigado!',
+  /** The notice's link to where the sent comment is kept. */
+  seeSent: 'Ver em Seus trechos',
   failed:
     'Não deu para enviar. O seu texto continua aqui; tente de novo daqui a pouco.',
   /** The honeypot's name, which a bot fills and a reader never sees. */

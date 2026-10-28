@@ -1,7 +1,11 @@
 // The usage-count pieces (#35): the "Ajudou?" at the end of the Guide, the
 // "Contar minhas visitas" switch and the site footer, which carries it.
 import { Link } from '@tanstack/react-router'
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
+import { checkCommentStatus } from '#/content/check-comment-status'
+import { checkStatusesThisVisit } from '#/state/comment-status'
+import { useSentComments } from '#/state/sent-comments'
+import { STATUS_NEWS } from './sent-comment-list.copy'
 import {
   countEvent,
   saveCounting,
@@ -15,7 +19,7 @@ import {
 } from '#/analytics/events'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
-import { HIGHLIGHTS } from './highlight-list.copy'
+import { KEPT_PASSAGES } from './highlight-list.copy'
 import { Headline, Section } from './section'
 import { Switch } from '@/ui/shadcn/switch'
 
@@ -145,13 +149,22 @@ const FOOTER_LINKS = [
   { to: '/privacidade', label: 'Privacidade' },
   { to: '/sites-vizinhos', label: 'Sites vizinhos' },
   { to: '/glossario', label: 'Glossário' },
-  { to: '/grifos', label: HIGHLIGHTS },
+  { to: '/trechos', label: KEPT_PASSAGES },
 ] as const
 
 /** The footer of every page: the privacy page, the Neighbor sites (#179),
- * the Grifos (#335) and the switch. On desktop,
+ * "Seus trechos" (#335, #347) and the switch. On desktop,
  * it continues the page's sheet over the halftone. */
 export function Footer() {
+  const comments = useSentComments()
+  const unread = comments?.some(
+    (c) => (c.status ?? 'received') !== (c.seenStatus ?? 'received'),
+  )
+  useEffect(() => {
+    void checkStatusesThisVisit((issues) =>
+      checkCommentStatus({ data: issues }),
+    )
+  }, [])
   return (
     <footer className="mx-auto max-w-pagina border-t-2 border-tinta p-md text-nota text-tinta-2 folha:border-2 folha:border-t-0 folha:bg-papel folha:px-16">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1.5">
@@ -163,6 +176,15 @@ export function Footer() {
               className="inline-flex min-h-toque items-center font-bold text-tinta"
             >
               {label}
+              {to === '/trechos' && unread && (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="ml-1.5 size-2 rounded-full bg-tinta"
+                  />
+                  <span className="sr-only">{STATUS_NEWS}</span>
+                </>
+              )}
             </Link>
           ))}
         </div>
