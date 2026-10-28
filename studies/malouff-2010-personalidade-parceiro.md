@@ -24,7 +24,7 @@ covers:
 
 Segundo o resumo, mediu a associação entre a personalidade (Big Five) de uma pessoa e a satisfação do **parceiro** com a relação.
 
-Desenho, como descrito antes da migração: meta-análise de estudos correlacionais.
+Desenho, como descrito antes da migração: [[meta-análise]] de estudos correlacionais.
 
 ## Achados
 

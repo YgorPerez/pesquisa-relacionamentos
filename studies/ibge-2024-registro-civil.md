@@ -23,7 +23,7 @@ institution: ibge
 
 ## O que mediu
 
-Os casamentos civis registrados nos Cartórios de Registro Civil de Pessoas Naturais e os divórcios concedidos pelas varas de família ou lavrados em escritura nos tabelionatos em 2024. O IBGE publica quantos houve, a idade média ao casar e ao divorciar, o estado civil anterior dos cônjuges e o tempo entre o casamento e o divórcio. A Ficha usa o informativo da pesquisa, a apresentação de divulgação e duas tabelas do SIDRA para os totais.
+Os casamentos civis registrados nos Cartórios de Registro Civil de Pessoas Naturais e os divórcios concedidos pelas varas de família ou lavrados em escritura nos tabelionatos em 2024. O [[IBGE]] publica quantos houve, a idade média ao casar e ao divorciar, o estado civil anterior dos cônjuges e o tempo entre o casamento e o divórcio. A Ficha usa o informativo da pesquisa, a apresentação de divulgação e duas tabelas do SIDRA para os totais.
 
 ## Achados
 

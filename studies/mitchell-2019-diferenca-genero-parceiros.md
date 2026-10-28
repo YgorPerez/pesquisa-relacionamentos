@@ -51,7 +51,7 @@ Fonte local: `sources/mitchell-2019-diferenca-genero-parceiros.html`, a página 
 
 ## Limitações
 
-- Só a Grã-Bretanha e só parceiros do sexo oposto. Não diz se o padrão se repete no Brasil, onde a diferença relatada é maior (20,3 contra 3,9 no Datafolha 2009).
+- Só a Grã-Bretanha e só parceiros do sexo oposto. Não diz se o padrão se repete no Brasil, onde a diferença relatada é maior (20,3 contra 3,9 no [[Datafolha]] 2009).
 - As atitudes medidas são aproximações fracas da pressão das normas de gênero, e os autores dizem que podem subestimar esse efeito.
 - Não testou todas as explicações de amostragem para a vida toda, como parceiros de fora do Reino Unido.
 - Não diz quem está certo: a análise mostra de onde vem a diferença, não qual dos dois sexos relata o número verdadeiro.

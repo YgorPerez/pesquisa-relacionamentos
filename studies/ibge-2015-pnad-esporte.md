@@ -17,6 +17,7 @@ license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); a b
 covers:
   genders: [man, woman]
   ages: { min: 15, max: 99 }
+institution: ibge
 ---
 
 # IBGE (2015): PNAD, práticas de esporte e atividade física
@@ -60,7 +61,7 @@ Fonte local: `sources/ibge-2015-pnad-esporte.txt`, com o texto das páginas cita
 - Os dados são de 2014–2015. A corrida de rua e o beach tennis, por exemplo, cresceram desde então, e a divisão por sexo pode ter mudado.
 - As tabelas são da modalidade **principal**. Quem dança como segunda atividade não entra na linha da dança.
 - A mesma prática aparece como esporte para uns e como atividade física para outros: a corrida está dentro de atletismo na Tabela 5 (64,5% homens) e sozinha na Tabela 13 (79,2% homens). A dança só tem linha própria na Tabela 5; na Tabela 13 está em "outras atividades".
-- A dança é uma modalidade pequena: na Tabela 4 ela está dentro de "outros esportes", que somam 14,7% dos praticantes. O livro não dá o número de pessoas nem o coeficiente de variação da linha; o IBGE diz que publicou os coeficientes no portal, que não conferimos.
+- A dança é uma modalidade pequena: na Tabela 4 ela está dentro de "outros esportes", que somam 14,7% dos praticantes. O livro não dá o número de pessoas nem o coeficiente de variação da linha; o [[IBGE]] diz que publicou os coeficientes no portal, que não conferimos.
 - A tabela por sexo não vem cruzada com idade. Não dá para dizer a proporção na dança entre pessoas de 25 a 39 anos, por exemplo.
 - A pesquisa mede quem pratica, não se a prática é em grupo. Caminhada e corrida podem ser solitárias; a dança de salão e os esportes coletivos, não.
 - Sexo é o registrado na PNAD; não há identidade de gênero nem orientação sexual.

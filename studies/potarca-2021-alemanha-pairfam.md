@@ -56,7 +56,7 @@ A autora acompanhou casais do painel pairfam desde o começo da relação até o
 ## Limitações
 
 - Observacional. A autora controla variáveis observadas e, em análises suplementares, personalidade e o valor de status dado à relação, e admite que diferenças não medidas podem restar, de modo que a associação pode não ser causal.
-- O pairfam sorteia uma amostra representativa de três coortes, mas a própria autora diz que os dados ainda são uma "nonrandom sample of observations". A análise exclui os já casados, as relações vistas numa onda só e quem tinha dado faltando, e a resposta ao painel ficou entre 30% e 45% por onda.
+- O pairfam sorteia uma [[amostra representativa]] de três coortes, mas a própria autora diz que os dados ainda são uma "nonrandom sample of observations". A análise exclui os já casados, as relações vistas numa onda só e quem tinha dado faltando, e a resposta ao painel ficou entre 30% e 45% por onda.
 - Poucas relações online: 243 de homens e 309 de mulheres (Tabela 1). Os modelos com atitudes do casal perdem mais da metade da amostra, porque muitos parceiros não responderam, e faltam mais dados entre os de menor escolaridade.
 - Junta site, app, rede social e chat numa categoria só, embora o pairfam separe esses meios nas ondas mais recentes.
 - Mede a passagem para o casamento, não satisfação nem duração do casamento. A maioria morou junto antes de casar; só 14 casais online casaram direto.

@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-A ideia de que a rejeição "dói" literalmente veio de estudos pequenos de ressonância em que ser excluído no Cyberball ativava regiões ligadas à dor física, como o córtex cingulado anterior dorsal (dACC). Os autores juntaram as coordenadas cerebrais desses estudos numa meta-análise (MKDA) e fizeram outra com os estudos de término romântico, em que a pessoa revive o fim de uma relação que não queria terminar, para ver se uma rejeição mais marcante ativaria a "matriz da dor".
+A ideia de que a rejeição "dói" literalmente veio de estudos pequenos de ressonância em que ser excluído no Cyberball ativava regiões ligadas à dor física, como o córtex cingulado anterior dorsal (dACC). Os autores juntaram as coordenadas cerebrais desses estudos numa [[meta-análise]] (MKDA) e fizeram outra com os estudos de término romântico, em que a pessoa revive o fim de uma relação que não queria terminar, para ver se uma rejeição mais marcante ativaria a "matriz da dor".
 
 ## Achados
 

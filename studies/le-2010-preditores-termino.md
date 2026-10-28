@@ -22,7 +22,7 @@ covers: {}
 
 Quais variáveis interpessoais, individuais e da rede social preveem o término de relações não conjugais (namoros).
 
-Desenho, como descrito antes da migração: meta-análise de estudos que medem preditores e depois verificam se o namoro terminou.
+Desenho, como descrito antes da migração: [[meta-análise]] de estudos que medem preditores e depois verificam se o namoro terminou.
 
 ## Achados
 
