@@ -55,6 +55,12 @@ Os autores perguntaram a pessoas com parceiro, em 50 países, se conheceram o pa
 
 As linhas de cálculo próprio leem o arquivo público `Dataset_Relationship_Formation.csv` do OSF. São médias e proporções simples, sem peso, sem os controles do artigo e sem teste estatístico; não são números publicados pelos autores.
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Uma pergunta, "quão satisfeito você está com a relação com o seu parceiro?", de 1 (nada) a 5 (extremamente) | p. 4, 2.2 Measures | "Relationship satisfaction was measured with the question "How satisfied are you with your relationship with your partner?", using a 5-point Likert scale, ranging from "1 − not at all" to "5 – extremely."" |
+
 ## Limitações
 
 - Os autores chamam as amostras de "nacionalmente representativas", mas elas vêm de painéis online com cotas, não de sorteio. Eles mesmos reconhecem que o recrutamento online deixa de fora quem não tem internet, gente que tende a ter conhecido o parceiro fora dela.

@@ -16,6 +16,7 @@ conflict: "Órgão oficial de estatística."
 license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); a biblioteca do IBGE e o SIDRA não trazem termo de licença."
 covers:
   genders: [man, woman]
+institution: ibge
 ---
 
 # IBGE (2024): Estatísticas do Registro Civil

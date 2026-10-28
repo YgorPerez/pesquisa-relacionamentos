@@ -16,6 +16,7 @@ design: longitudinal
 conflict: "NSF (SES-0751977 e SES-1153867), Institute for Research in the Social Sciences de Stanford e United Parcel Service Endowment de Stanford. O artigo não declara vínculo do autor com empresa de namoro."
 covers:
   genders: [man, woman]
+institution: stanford
 ---
 
 # Rosenfeld (2017): casamento e casal na era da internet
