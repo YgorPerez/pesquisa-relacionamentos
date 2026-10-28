@@ -88,6 +88,12 @@ Fonte: Methods (p. 10139–10140) e o questionário da Harris Interactive no App
 - Online e offline foram comparados com controle do ano do casamento, o que corrige parte da diferença de tempo de exposição à separação entre os grupos. O efeito protetor de ter se conhecido online foi maior entre os casados mais recentemente (interação com o ano, P = 0,015).
 - Para comparação: no Brasil, o divórcio ocorre em média mais de uma década depois do casamento ([IBGE 2024](ibge-2024-registro-civil.md)). Muitas separações ainda não tinham acontecido na data da pesquisa.
 
+## Definições
+
+| Verbete | Definição | Onde | Trecho |
+|---|---|---|---|
+| satisfacao | Satisfação com o casamento, só de quem continuava casado: a média do Couples Satisfaction Index, quatro perguntas como "em geral, quão satisfeito você está com o seu casamento", de 1 a 7, com uma segunda escala de onze frases sobre o cônjuge | Methods, p. 10140 | "and "In general, how satisfied are you with your marriage" on a scale of 1 "Extremely Unhappy" to 7 "Perfect."" |
+
 ## Limitações
 
 - Conflito de interesse com a eHarmony, mitigado pela supervisão de estatísticos independentes, pelo plano de análise pré-especificado e pelo acordo de publicação, mas presente.

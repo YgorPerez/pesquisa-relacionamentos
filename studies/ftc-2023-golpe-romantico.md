@@ -14,6 +14,7 @@ sample:
 design: administrative
 conflict: "Publicação da Federal Trade Commission, órgão do governo dos EUA. Sem financiamento externo nem vínculo com a indústria de apps."
 covers: {}
+institution: ftc
 ---
 
 # FTC (2023): golpe romântico nas queixas de 2022

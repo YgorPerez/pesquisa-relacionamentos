@@ -16,6 +16,7 @@ license: "Dados abertos do Executivo federal (Decreto 8.777/2016, art. 4º); o I
 covers:
   genders: [man, woman]
   ages: { min: 10, max: 99 }
+institution: ibge
 ---
 
 # IBGE (2022): uniões consensuais no Censo
