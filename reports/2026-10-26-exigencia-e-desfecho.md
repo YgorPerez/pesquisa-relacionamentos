@@ -41,7 +41,7 @@ Stavang M, Bendixen M, Kleppestø TH, Kennair LEO. *Too picky to be picked? Mini
 
 #### Apostolou 2021 (Grécia)
 
-Apostolou M. *Involuntary singlehood and its causes: The effects of flirting capacity, mating effort, choosiness and capacity to perceive signals of interest*. Personality and Individual Differences 176:110782, 2021. https://doi.org/10.1016/j.paid.2021.110782. ✅ texto publicado.
+Apostolou M. *Involuntary singlehood and its causes: The effects of flirting capacity, mating effort, choosiness and capacity to perceive signals of interest*. Personality and Individual Differences 176:110782, 2021. https://doi.org/10.1016/j.paid.2021.110782. ✅ texto publicado; Ficha em [apostolou-2021-solteirice-involuntaria](../studies/apostolou-2021-solteirice-involuntaria.md).
 
 - **Amostra:** 1.228 pessoas que falam grego, recrutadas por Facebook e Instagram a partir de uma universidade privada de Chipre; idade média de cerca de 30 anos.
 - **Exigência:** escala de seletividade de três itens (α = 0,67).
