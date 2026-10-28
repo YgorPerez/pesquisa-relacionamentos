@@ -1,13 +1,22 @@
 // The reader's Grifos on a Guide, a Fact sheet or a Tip (#334). Each page
 // mounts it once, next to the popover on selected text. After hydration it
-// paints the page's Grifos (`highlight-paint.ts`) and paints them again when
-// the store or the quotable text changes; a tap on a painted Grifo opens its
-// popover. It also tells the sent Comentários of the page whether their
-// quotes are still there (`sent-comment-check.ts`, #347). Without JS, and on
-// the server, there is nothing.
+// paints the page's Grifos (`highlight-paint.ts`) and the quotes of the
+// Comentários sent from it (`comment-paint.ts`, #441), and paints them again
+// when a store or the quotable text changes. A tap on a painted Grifo opens
+// its popover; a tap on a Comentário's quote, outside every Grifo, opens the
+// Comentário's. Without JS, and on the server, there is nothing.
 import { useRouterState } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { followHighlights, readHighlights } from '#/state/highlights'
+import { useSentComments } from '#/state/sent-comments'
+import {
+  commentOver,
+  paintComments,
+  paintedCommentAt,
+  unpaintComments,
+  usePaintedComments,
+} from './comment-paint'
+import { AlsoCommented, CommentPopover } from './comment-popover'
 import {
   onOpenRequest,
   paintedAt,
@@ -17,10 +26,12 @@ import {
 } from './highlight-paint'
 import { HighlightPopover } from './highlight-popover'
 import { QUOTABLE } from './quote-text'
-import { checkSentComments } from './sent-comment-check'
 
 /** What a tap on the text lands on, when it is not a control of its own. */
 const CONTROL = 'a, button, input, label, [role="dialog"]'
+
+/** The popover open: a Grifo's or a Comentário's, by id. */
+type Open = { readonly grifo: string } | { readonly comment: string } | null
 
 /** Whether a DOM change touched the quotable text. */
 const touchesText = (records: ReadonlyArray<MutationRecord>) =>
@@ -56,16 +67,19 @@ function repaintOnChange(paint: () => void) {
   }
 }
 
-/** Opens the Grifo under a tap, or the one asked for by "Grifar". */
-function followTaps(open: (id: string) => void) {
+/** Opens what is under a tap, a Grifo before a Comentário, or the Grifo
+ * asked for by "Grifar". */
+function followTaps(open: (next: Open) => void) {
   const onClick = (event: MouseEvent) => {
     if (!(document.getSelection()?.isCollapsed ?? true)) return
     if (event.target instanceof Element && event.target.closest(CONTROL)) return
-    const hit = paintedAt(event.clientX, event.clientY)
-    if (hit) open(hit.highlight.id)
+    const grifo = paintedAt(event.clientX, event.clientY)
+    if (grifo) return open({ grifo: grifo.highlight.id })
+    const comment = paintedCommentAt(event.clientX, event.clientY)
+    if (comment) open({ comment: comment.comment.id })
   }
   document.addEventListener('click', onClick)
-  const stop = onOpenRequest(open)
+  const stop = onOpenRequest((grifo) => open({ grifo }))
   return () => {
     document.removeEventListener('click', onClick)
     stop()
@@ -79,16 +93,14 @@ export function HighlightLayer() {
     select: (s) => (s.resolvedLocation ?? s.location).pathname,
   })
   const painted = usePainted()
-  const [open, setOpen] = useState<string | null>(null)
+  const comments = usePaintedComments()
+  const sent = useSentComments()
+  const [open, setOpen] = useState<Open>(null)
 
   // Paints again when the store changes (here or in another tab) and when
-  // the quotable text does. Each time, the sent Comentários' quotes are
-  // looked for too.
+  // the quotable text does.
   useEffect(() => {
-    const paint = () => {
-      paintPage(path, readHighlights())
-      checkSentComments(path)
-    }
+    const paint = () => paintPage(path, readHighlights())
     paint()
     const stopText = repaintOnChange(paint)
     const stopStore = followHighlights(paint)
@@ -98,10 +110,35 @@ export function HighlightLayer() {
       unpaint()
     }
   }, [path])
+  // The same for the sent Comentários, whose store `sent` follows: a
+  // Comentário just sent is marked at once.
+  useEffect(() => {
+    if (sent === null) return
+    const paint = () => paintComments(path)
+    paint()
+    const stopText = repaintOnChange(paint)
+    return () => {
+      stopText()
+      unpaintComments()
+    }
+  }, [path, sent])
   useEffect(() => followTaps(setOpen), [])
 
-  const shown = painted.find((p) => p.highlight.id === open)
-  return shown ? (
-    <HighlightPopover painted={shown} close={() => setOpen(null)} />
-  ) : null
+  const close = () => setOpen(null)
+  if (open && 'comment' in open) {
+    const shown = comments.find((p) => p.comment.id === open.comment)
+    return shown ? <CommentPopover painted={shown} close={close} /> : null
+  }
+  const shown = open && painted.find((p) => p.highlight.id === open.grifo)
+  if (!shown) return null
+  const commented = commentOver(comments, shown.whole)
+  return (
+    <HighlightPopover painted={shown} close={close}>
+      {commented && (
+        <AlsoCommented
+          open={() => setOpen({ comment: commented.comment.id })}
+        />
+      )}
+    </HighlightPopover>
+  )
 }

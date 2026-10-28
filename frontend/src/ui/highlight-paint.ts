@@ -54,10 +54,11 @@ export function paintPage(path: string, saved: ReadonlyArray<Highlight>) {
     const quote = quoteOf(where.whole, { origin, pathname: path })
     return [{ highlight, quote, ...where }]
   })
-  CSS.highlights.set(
-    NAME,
-    new globalThis.Highlight(...found.flatMap((p) => p.parts)),
-  )
+  const paint = new globalThis.Highlight(...found.flatMap((p) => p.parts))
+  // Over a sent Comentário's dotted line (`comment-paint.ts`), whichever
+  // was painted first.
+  paint.priority = 1
+  CSS.highlights.set(NAME, paint)
   setPainted(found)
   markFound(path, new Set(found.map((p) => p.highlight.id)))
 }
@@ -83,14 +84,22 @@ export function usePainted(): ReadonlyArray<Painted> {
 const contains = (rect: DOMRect, x: number, y: number) =>
   x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
 
-/** The Grifo drawn under the point, the most recent one if they overlap. */
-export function paintedAt(x: number, y: number): Painted | null {
-  for (const p of [...painted].reverse())
+/** Which of `all` is drawn under the point, the last one if they overlap.
+ * The sent Comentários' paint (`comment-paint.ts`) looks the same way. */
+export function partsAt<T extends { readonly parts: ReadonlyArray<Range> }>(
+  all: ReadonlyArray<T>,
+  x: number,
+  y: number,
+): T | null {
+  for (const p of [...all].reverse())
     for (const part of p.parts)
       for (const rect of part.getClientRects())
         if (contains(rect, x, y)) return p
   return null
 }
+
+/** The Grifo drawn under the point, the most recent one if they overlap. */
+export const paintedAt = (x: number, y: number) => partsAt(painted, x, y)
 
 /** Whether `range` lies inside `outer`. */
 export const within = (outer: Range, range: Range): boolean =>
