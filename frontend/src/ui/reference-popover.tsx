@@ -11,25 +11,21 @@ import type { CitedFactSheet } from '#/content/guide-view'
 import { citedBy } from './cited-text'
 import { CitedFactSheetCard } from './guide'
 import { canPaint } from './highlight-paint'
-import { RING } from './quote-text'
 import { OPEN_FACT_SHEET, referenceLabel } from './reference-popover.copy'
 import { SmallLink } from './section'
+import { CITING_RING, slugOf } from './selection-sentences'
 import { TextPopover } from './text-popover'
 
 /** The name `drawings.css` paints. */
 const NAME = 'citacao'
 /** What a Visual's figure takes while it is the cited one. */
 const CITED_FIGURE = 'data-citado'
-const PREFIX = '#ficha-'
-const CITING_RING = `main a${RING}[href^="${PREFIX}"]`
 
 const ringOf = (target: EventTarget | null): HTMLElement | null => {
-  const ring = target instanceof Element ? target.closest(CITING_RING) : null
+  const ring =
+    target instanceof Element ? target.closest(`main ${CITING_RING}`) : null
   return ring instanceof HTMLElement ? ring : null
 }
-
-const slugOf = (ring: Element) =>
-  (ring.getAttribute('href') ?? '').slice(PREFIX.length)
 
 /** Marks what `ring` cites, and gives back how to take the mark off. */
 function mark(ring: HTMLElement): () => void {

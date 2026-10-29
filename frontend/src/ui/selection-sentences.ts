@@ -12,7 +12,7 @@ import { CHAPTER_SLOT } from './guide-sections'
 import { quotableTexts, RING, UNSEEN } from './quote-text'
 
 /** A ring that leads to a Fact sheet of the page. */
-const CITING_RING = `a${RING}[href^="#ficha-"]`
+export const CITING_RING = `a${RING}[href^="#ficha-"]`
 const CHAPTER = `[data-slot="${CHAPTER_SLOT}"]`
 /** The elements a sentence does not cross: fewer than `quote-text.ts`'s
  * blocks, since a sentence may run through a `div` or a `span`. A ring's
@@ -20,7 +20,8 @@ const CHAPTER = `[data-slot="${CHAPTER_SLOT}"]`
 export const BLOCK =
   'p, li, h1, h2, h3, h4, h5, h6, td, th, dt, dd, figcaption, caption, blockquote'
 
-const slugOf = (ref: Element) =>
+/** The slug of the Fact sheet a citing ring leads to. */
+export const slugOf = (ref: Element) =>
   (ref.getAttribute('href') ?? '').slice('#ficha-'.length)
 
 const slugsIn = (element: Element) => [
@@ -64,7 +65,7 @@ const CLOSE = /[.!?…"”’»)\]]/
 /** The `[start, end)` of each sentence of `text`. A sentence ends at a stop
  * followed by a space, past the rings and closing quotes glued to it; not
  * when the next word starts in lowercase ("vs. presencial", "et al. e"). */
-function sentenceSpans(text: string, ref: ReadonlyArray<boolean>) {
+function sentenceSpans(text: string, ref: ReadonlyArray<Element | null>) {
   const spans: Array<[number, number]> = []
   let start = 0
   for (let i = 0; i < text.length; i++) {
@@ -82,10 +83,11 @@ function sentenceSpans(text: string, ref: ReadonlyArray<boolean>) {
   return spans
 }
 
-/** The block's text, each text node with where it starts and its ring. */
-function blockText(block: Element) {
+/** The block's text, each text node with where it starts and its ring, and
+ * the ring each character sits in (`cited-text.ts` reads it too). */
+export function blockText(block: Element) {
   const pieces: Array<{ node: Text; at: number; ref: Element | null }> = []
-  const ref: boolean[] = []
+  const ref: Array<Element | null> = []
   let text = ''
   const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT)
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
@@ -93,7 +95,7 @@ function blockText(block: Element) {
     const ring = node.parentElement?.closest(CITING_RING) ?? null
     pieces.push({ node, at: text.length, ref: ring })
     text += node.data
-    for (let i = 0; i < node.data.length; i++) ref.push(ring !== null)
+    for (let i = 0; i < node.data.length; i++) ref.push(ring)
   }
   return { pieces, ref, text }
 }

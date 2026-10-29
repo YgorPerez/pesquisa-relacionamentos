@@ -15,6 +15,7 @@ import type { ReactNode } from 'react'
 import { afterEach, beforeEach, expect, it, vi } from 'vite-plus/test'
 import { excerpt, GUIDE } from './guide.example'
 import { Html } from './html'
+import { ForYourProfile } from './profile'
 import { ReferencePopover } from './reference-popover'
 import { OPEN_FACT_SHEET, referenceLabel } from './reference-popover.copy'
 
@@ -155,4 +156,21 @@ it('a ring in a Visual marks the whole figure', async () => {
   expect(figure).toHaveAttribute('data-citado')
   await user.unhover(ring(1))
   expect(figure).not.toHaveAttribute('data-citado')
+})
+
+it('in "Para o seu Perfil", a ring marks the finding, not the line before it', async () => {
+  const user = userEvent.setup()
+  await page(
+    <main>
+      <ForYourProfile
+        keyNumber={{ applies: false, finding: 0 }}
+        findings={[
+          { html: excerpt(`${FIRST} [@${SILVA!.slug}].`, [SILVA!, COSTA!]) },
+        ]}
+      />
+      <ReferencePopover factSheets={GUIDE.factSheets} />
+    </main>,
+  )
+  await user.hover(ring(1))
+  expect(marked()).toBe(FIRST)
 })

@@ -26,6 +26,12 @@ export const UNSEEN =
 /** The reference ring. */
 export const RING = `.${REF_CLASS}`
 
+/** A finding quoted inside a line of its own ("Para o seu Perfil: …",
+ * `profile.tsx`): the text its ring cites starts where it does
+ * (`cited-text.ts`). Here, a leaf, since `profile.tsx` sits in a cycle with
+ * `selection-sentences.ts`. */
+export const FINDING_SLOT = 'achado'
+
 /** The elements that start a new line of text (`site-search-view.ts`). */
 const BLOCK =
   'p, li, h1, h2, h3, h4, h5, h6, td, th, tr, dt, dd, div, section, figure, figcaption, caption, blockquote, pre, ul, ol, table'

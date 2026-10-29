@@ -278,7 +278,7 @@ Três retângulos desenhados à mão, levemente tortos, contorno em tinta. Preen
 
 Ícone de 18px antes da palavra: caixa com visto verde-água = "lido no original"; caixa hachurada = "parcial". Uma legenda no fim da lista explica Status e Força.
 
-### Referência numerada e a Ficha circulada (assinatura)
+### Referência numerada e o trecho que ela cita (assinatura)
 
 O número da referência fica dentro de um anel desenhado à mão (SVG, traço de 1,8px em verde-água de tinta) de 26 por 25px sobre folha, com o número em verde-água de tinta, cerca de 0,3em de espaço antes e área de toque ampliada; no hover o fundo vira verde-água. Ao tocar, o texto que o número cita ganha esse mesmo fundo verde-água claro, do anel anterior do parágrafo (ou do começo dele) até o anel, e abre ao lado do anel um popover com o cartão da Ficha da lista do fim e "abrir Ficha". Anéis lado a lado marcam o mesmo trecho. Num Visual, a figura inteira ganha contorno e fundo verde-água claro. No desktop, o hover ou o foco do teclado marcam o trecho sem abrir o popover. A marca sai quando o popover fecha ou o ponteiro sai. Sem JS, o número leva à Ficha na lista do fim.
 
