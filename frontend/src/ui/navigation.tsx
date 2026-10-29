@@ -1,20 +1,16 @@
-// The Guide's navigation (#16, #28): the reference that circles the Fact
-// sheet and the "voltar ao texto", the "Voltar para <Guia>" for whoever
+// The Guide's navigation (#16, #28): the "Voltar para <Guia>" for whoever
 // came from another Guide, and the reading point (scroll and open sections)
-// kept in the history.
+// kept in the history. A reference ring opens its Fact sheet in a popover
+// (`reference-popover.tsx`, #467).
 import { Link, useRouter, useRouterState } from '@tanstack/react-router'
 import {
   type ReactNode,
-  useCallback,
   useEffect,
   useLayoutEffect,
-  useRef,
-  useState,
   useSyncExternalStore,
 } from 'react'
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
-import { scrollBehavior } from './loop'
 
 declare module '@tanstack/react-router' {
   interface HistoryState {
@@ -26,59 +22,6 @@ declare module '@tanstack/react-router' {
     /** Where the reader was when they left this history entry. */
     readingPoint?: { scroll: number; open: ReadonlyArray<string> }
   }
-}
-
-const ANCHOR_PREFIX = '#ficha-'
-
-export interface CircledFactSheet {
-  readonly slug: string
-  /** Changes on each tap, so the loop is drawn again. */
-  readonly tapCount: number
-}
-
-/** Links the page's reference numbers to the cited Fact sheets. Tapping a
- * number circles the Fact sheet; `backToText` takes the reader back to the
- * number. The `#ficha-<slug>` link still works without JavaScript. */
-export function useReferences(page: string) {
-  const [circled, setCircled] = useState<CircledFactSheet | null>(null)
-  const origin = useRef<HTMLElement | null>(null)
-  // Another page starts with no circled Fact sheet. Swapped during render,
-  // and not in an effect, so the new page does not paint once with the old
-  // one's loop. The old `origin` need not go: only a new tap shows the
-  // "voltar ao texto", and the tap records its own.
-  const [seenPage, setSeenPage] = useState(page)
-  if (seenPage !== page) {
-    setSeenPage(page)
-    setCircled(null)
-  }
-
-  useEffect(() => {
-    const onTap = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0) return
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
-        return
-      const ref = (event.target as Element | null)?.closest?.('main a.ref')
-      const href = ref?.getAttribute('href')
-      if (!(ref instanceof HTMLElement) || !href?.startsWith(ANCHOR_PREFIX))
-        return
-      event.preventDefault()
-      origin.current = ref
-      const slug = href.slice(ANCHOR_PREFIX.length)
-      setCircled((before) => ({ slug, tapCount: (before?.tapCount ?? 0) + 1 }))
-    }
-    document.addEventListener('click', onTap)
-    return () => document.removeEventListener('click', onTap)
-  }, [])
-
-  const backToText = useCallback(() => {
-    setCircled(null)
-    const ref = origin.current
-    if (!ref?.isConnected) return
-    ref.scrollIntoView({ block: 'center', behavior: scrollBehavior() })
-    ref.focus({ preventScroll: true })
-  }, [])
-
-  return { circled, backToText }
 }
 
 function saveReadingPoint() {

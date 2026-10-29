@@ -3,6 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
 import { CitedFactSheets } from '#/ui/guide'
 import { Html } from '#/ui/html'
+import { ReferencePopover } from '#/ui/reference-popover'
 import { TermPopover } from '#/ui/term-popover'
 import { QuestionRow } from '#/ui/question-row'
 import { StrengthBadge } from '#/ui/badges'
@@ -84,6 +85,7 @@ function TipPage() {
       </Column>
       <PageSelection factSheets={tip.factSheets} page="tip" />
       <TermPopover terms={tip.terms} />
+      <ReferencePopover key={tip.slug} factSheets={tip.factSheets} />
     </Sheet>
   )
 }

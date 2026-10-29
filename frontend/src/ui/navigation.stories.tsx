@@ -48,7 +48,8 @@ export const FoldArrows: Story = {
   ),
 }
 
-/** The Fact sheet circled after a tap on a reference number. */
+/** The loop that circles what the reader came to: a Glossário entry from a
+ * Verbete. */
 export const CircledFactSheet: Story = {
   render: () => (
     <ul className="m-0 list-none p-0">

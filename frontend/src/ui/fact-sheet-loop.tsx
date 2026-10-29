@@ -1,6 +1,6 @@
 // The loop and the short arrow that circle what the reader came to (#28): a
-// cited Fact sheet from its reference ring, and a Glossário entry from a
-// Verbete (#358). Alone so each page imports just this.
+// Glossário entry from a Verbete (#358). Alone so each page imports just
+// this.
 import { useLayoutEffect, useRef } from 'react'
 import { loopPath, scrollBehavior } from './loop'
 

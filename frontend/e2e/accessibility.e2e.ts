@@ -60,7 +60,7 @@ const lines = (results: Result, prefix = '') =>
  * an image: it leaves the text as "incomplete", neither passing nor failing
  * it. So the contrast runs again with the background images removed, and
  * then no text may stay unmeasured. `overlays` disappear at the same time: a
- * drawing over the text, like the circled Fact sheet's loop, also leaves the
+ * sheet over the text, like a reference ring's popover, also leaves the
  * contrast unmeasured.
  *
  * The Guide's reading bar (#195) is sticky: whatever the scroll leaves under
@@ -109,7 +109,7 @@ for (const { name, path, profile } of PAGES) {
   })
 }
 
-test('the Guide with the sections open and the circled Fact sheet passes axe', async ({
+test('the Guide with the sections open and a reference ring’s popover passes axe', async ({
   page,
 }) => {
   await page.goto('/onde-conhecer-pessoas', { waitUntil: 'networkidle' })
@@ -125,10 +125,10 @@ test('the Guide with the sections open and the circled Fact sheet passes axe', a
     .first()
     .getByRole('link', { name: /^Ficha 1:/ })
     .click()
-  await expect(
-    page.getByRole('button', { name: 'voltar ao texto' }),
-  ).toBeVisible()
-  expect(await violations(page, 'svg.laco, svg.seta-laco')).toEqual([])
+  await expect(page.getByRole('dialog', { name: /^Ficha 1:/ })).toBeVisible()
+  // The popover covers the text: the first pass measures it, and it leaves
+  // for the one without halftone, which measures the text under it.
+  expect(await violations(page, '[data-slot="ficha-referencia"]')).toEqual([])
 })
 
 test('the "Ajudou?" with the reasons for the no passes axe', async ({

@@ -7,8 +7,9 @@ import type { ReactNode } from 'react'
 import type { SourceRef } from '#/content/visuals-view'
 import { VISUAL_COPY } from './visual.copy'
 
-/** The references in their rings, the same `.ref` as the text's: they lead
- * to the Fact sheet in the page's list. `glued` goes right before them, and
+/** The references in their rings, the same `.ref` as the text's: they open
+ * the Fact sheet's popover (`reference-popover.tsx`), and without JS lead to
+ * it in the page's list. `glued` goes right before them, and
  * `after` is a text whose last word does: either keeps the rings off the
  * start of a line (The Glued Ref Rule). */
 export function SourceRefs({
@@ -88,9 +89,11 @@ export function VisualFrame({
 }) {
   const titleId = `${domId}-titulo`
   return (
+    // While one of its rings is tapped, under the pointer or focused, the
+    // figure is what it cites (`reference-popover.tsx`).
     <figure
       id={domId}
-      className="mx-0 my-lg"
+      className="mx-0 my-lg rounded-mao-2 data-citado:bg-agua-fonte/30 data-citado:outline-2 data-citado:outline-offset-4 data-citado:outline-agua-tinta"
       data-slot="visual"
       aria-labelledby={titleId}
     >

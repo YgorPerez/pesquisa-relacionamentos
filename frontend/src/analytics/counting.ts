@@ -112,15 +112,15 @@ export function useCountVisits() {
   }, [path])
 }
 
-/** In the Guide: tapping a Fact sheet (the title in the list or a link in the
- * text) counts `fact-sheet/<topic>/<fact sheet>`. The reference number only
- * circles the Fact sheet on the page, and does not count. One listener for
- * the page. */
+/** In the Guide: tapping a Fact sheet (the title in the list, a link in the
+ * text or one in a reference ring's popover) counts
+ * `fact-sheet/<topic>/<fact sheet>`. The ring itself only opens the popover,
+ * and does not count. One listener for the page. */
 export function useCountOpenedFactSheets(topic: string) {
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest?.(
-        'main a[href^="/estudos/"]',
+        'main a[href^="/estudos/"], [data-slot="ficha-referencia"] a[href^="/estudos/"]',
       )
       const factSheet = link
         ?.getAttribute('href')

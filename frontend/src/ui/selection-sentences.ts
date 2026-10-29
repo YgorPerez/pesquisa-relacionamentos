@@ -15,8 +15,9 @@ import { quotableTexts, RING, UNSEEN } from './quote-text'
 const CITING_RING = `a${RING}[href^="#ficha-"]`
 const CHAPTER = `[data-slot="${CHAPTER_SLOT}"]`
 /** The elements a sentence does not cross: fewer than `quote-text.ts`'s
- * blocks, since a sentence may run through a `div` or a `span`. */
-const BLOCK =
+ * blocks, since a sentence may run through a `div` or a `span`. A ring's
+ * cited text does not either (`cited-text.ts`). */
+export const BLOCK =
   'p, li, h1, h2, h3, h4, h5, h6, td, th, dt, dd, figcaption, caption, blockquote'
 
 const slugOf = (ref: Element) =>

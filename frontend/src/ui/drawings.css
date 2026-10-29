@@ -15,9 +15,9 @@
  *    the filter, `.marca-brasil` and `.selo-voce-texto`.
  * 3. The animation of the loop that circles the Fact sheet: the stroke drawn
  *    with `stroke-dashoffset`, in `@keyframes`.
- * 4. The Grifo and the sent Comentário's quote, which the CSS Custom
- *    Highlight API paints and only a `::highlight()` rule styles, and the
- *    `grifo` class the Grifo's rule takes its look from. */
+ * 4. The Grifo, the sent Comentário's quote and a ring's cited text, which
+ *    the CSS Custom Highlight API paints and only a `::highlight()` rule
+ *    styles, and the `grifo` class the Grifo's rule takes its look from. */
 
 /* ---------- 1. drawings the JSX uses ---------- */
 
@@ -355,7 +355,7 @@
   }
 }
 
-/* ---------- 4. the Grifo ---------- */
+/* ---------- 4. the Grifo, the Comentário and the cited text ---------- */
 
 /* The reader's Grifo (#334). A wavy underline in ink: no fourth ink (The
  * Three Inks Rule), not the yellow of the selection and of "vale para
@@ -384,4 +384,12 @@
   text-decoration-color: var(--color-tinta);
   text-decoration-thickness: 2px;
   text-underline-offset: 5px;
+}
+
+/* What a reference ring cites (#467), while the ring is tapped, under the
+ * pointer or focused: the ring's own hover água behind the text, which is
+ * neither a Grifo's wave nor the pink marker. `reference-popover.tsx`
+ * paints it. */
+::highlight(citacao) {
+  background-color: var(--color-agua-fonte);
 }

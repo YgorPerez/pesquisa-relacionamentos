@@ -1,5 +1,5 @@
-// The reference that circles the Fact sheet and the navigation between
-// Guides (#28), over the fixture content (`e2e/library`): "Escolher
+// The reference ring that shows what it cites (#467) and the navigation
+// between Guides (#28), over the fixture content (`e2e/library`): "Escolher
 // parceiro" links to a Question of "Onde conhecer pessoas".
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { tap } from './touch'
@@ -13,6 +13,18 @@ const firstQuestion = (page: Page) =>
 
 const answerRef = (page: Page) =>
   firstQuestion(page).getByRole('link', { name: /^Ficha 1:/ })
+
+/** The Guide, hydrated before the first tap: before it, the ring is only
+ * the link to the list. */
+const hydrated = (page: Page) => page.goto(GUIDE, { waitUntil: 'networkidle' })
+
+/** The text the page paints as cited (`::highlight(citacao)`), or `''`. */
+const cited = (page: Page) =>
+  page.evaluate(() =>
+    [...((CSS.highlights.get('citacao') as Set<Range> | undefined) ?? [])]
+      .map((range) => range.toString())
+      .join(''),
+  )
 
 /** Whether the element receiving a tap at `dx`, `dy` px from the target's
  * center is the target. */
@@ -54,7 +66,7 @@ const onTheWordLine = (target: Locator) =>
     return a.bottom > b.top && a.top < b.bottom
   })
 
-test.describe('reference that circles the Fact sheet', () => {
+test.describe('reference ring', () => {
   test('the number sits in the ring, stuck to the word, with a 44px touch area', async ({
     page,
   }) => {
@@ -72,105 +84,82 @@ test.describe('reference that circles the Fact sheet', () => {
     }
   })
 
-  test('tapping scrolls to the Fact sheet, draws the loop and the arrow and shows "voltar ao texto"', async ({
+  test('a tap marks the cited text and opens the Fact sheet next to the ring, without leaving the text', async ({
     page,
   }) => {
-    await page.goto(GUIDE)
+    await hydrated(page)
     const ref = answerRef(page)
     await tap(ref)
 
-    const factSheet = page.locator('#ficha-silva-2020-apps-brasil')
-    await expect(factSheet).toBeInViewport()
-    await expect(factSheet).toBeFocused()
-    await expect(page).toHaveURL(GUIDE)
-
-    const loop = factSheet.locator('svg.laco path')
-    const arrow = factSheet.locator('svg.seta-laco path')
-    await expect(loop).toHaveCSS('animation-duration', '0.9s')
-    await expect(arrow).toHaveCSS('animation-duration', '0.5s')
-    await expect(arrow).toHaveCSS('animation-delay', '0.7s')
-    // The loop is redone at the Fact sheet's real size: the drawing's box is
-    // its box.
-    const box = await factSheet.evaluate((li: HTMLElement) => {
-      const svg = li.querySelector('svg.laco')
-      return {
-        viewBox: svg?.getAttribute('viewBox'),
-        w: li.offsetWidth + 20,
-        h: li.offsetHeight + 20,
-      }
-    })
-    expect(box.viewBox).toBe(`0 0 ${box.w} ${box.h}`)
-    // Once the animation ends, the stroke is whole.
-    await expect(loop).toHaveCSS('stroke-dashoffset', '0px')
-    await expect(arrow).toHaveCSS('stroke-dashoffset', '0px')
-
-    const back = factSheet.getByRole('button', { name: 'voltar ao texto' })
-    await expect(back).toBeVisible()
-    expect((await back.boundingBox())?.height).toBeGreaterThanOrEqual(44)
-    // Only the tapped Fact sheet stays circled.
-    await expect(page.locator('svg.laco')).toHaveCount(1)
-  })
-
-  test('with prefers-reduced-motion, the loop and the arrow show up ready', async ({
-    page,
-  }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto(GUIDE)
-    await tap(answerRef(page))
-    const factSheet = page.locator('#ficha-silva-2020-apps-brasil')
-    await expect(factSheet.locator('svg.laco path')).toHaveCSS(
-      'animation-name',
-      'none',
-    )
-    await expect(factSheet.locator('svg.laco path')).toHaveCSS(
-      'stroke-dashoffset',
-      '0px',
-    )
-    await expect(factSheet.locator('svg.seta-laco path')).toHaveCSS(
-      'animation-name',
-      'none',
-    )
-    await expect(factSheet.locator('svg.seta-laco path')).toHaveCSS(
-      'stroke-dashoffset',
-      '0px',
-    )
-  })
-
-  test('"voltar ao texto" returns the scroll and the focus to the number it came from', async ({
-    page,
-  }) => {
-    await page.goto(GUIDE)
-    // Fact sheet 1 is cited in the short answer and again in the Myth: it
-    // leaves from the Myth.
-    const ref = page
-      .locator('[data-slot="mito"]')
-      .getByRole('link', { name: /^Ficha 1:/ })
-    await tap(ref)
-    const factSheet = page.locator('#ficha-silva-2020-apps-brasil')
-    await expect(factSheet).toBeInViewport()
-
-    await tap(factSheet.getByRole('button', { name: 'voltar ao texto' }))
-    await expect(ref).toBeFocused()
-    await expect(ref).toBeInViewport()
-    await expect(page.locator('svg.laco')).toHaveCount(0)
+    const popover = page.getByRole('dialog', { name: /^Ficha 1:/ })
+    await expect(popover).toBeVisible()
+    await expect(popover).toContainText('Silva e Souza (2020)')
     await expect(
-      page.getByRole('button', { name: 'voltar ao texto' }),
-    ).toHaveCount(0)
+      popover.getByRole('link', { name: 'abrir Ficha' }),
+    ).toHaveAttribute('href', '/estudos/silva-2020-apps-brasil')
+    expect(await cited(page)).toBe(
+      'No Brasil, 18% dos adultos jovens conheceram o parceiro por app',
+    )
+    // The ring no longer goes to the list.
+    await expect(page).toHaveURL(GUIDE)
+    await expect(
+      page.locator('#ficha-silva-2020-apps-brasil'),
+    ).not.toBeInViewport()
+    await expect(ref).toBeInViewport()
+
+    // A tap outside closes it, and the mark goes with it.
+    await tap(page.getByRole('heading', { level: 1 }))
+    await expect(popover).toBeHidden()
+    expect(await cited(page)).toBe('')
+
+    // The next ring of the answer cites from the first one on.
+    await tap(firstQuestion(page).getByRole('link', { name: /^Ficha 2:/ }))
+    await expect(page.getByRole('dialog', { name: /^Ficha 2:/ })).toBeVisible()
+    expect(await cited(page)).toBe(
+      'Os estudos divergem sobre o lugar mudar a relação, e o de melhor desenho diz que o app junta muitos casais',
+    )
   })
 
-  test('by keyboard, Enter on the number goes to the Fact sheet and back', async ({
+  test('with a mouse, the pointer over the ring marks the text, without the popover', async ({
     page,
   }) => {
-    await page.goto(GUIDE)
+    test.skip(Boolean(test.info().project.use.hasTouch), 'no pointer to hover')
+    await hydrated(page)
+    await answerRef(page).hover()
+    await expect.poll(() => cited(page)).not.toBe('')
+    await expect(page.getByRole('dialog')).toHaveCount(0)
+    await page.mouse.move(0, 0)
+    await expect.poll(() => cited(page)).toBe('')
+  })
+
+  test('by keyboard, the focus marks the text, Enter opens the popover and Escape closes it', async ({
+    page,
+  }) => {
+    await hydrated(page)
     const ref = answerRef(page)
     await ref.focus()
-    await page.keyboard.press('Enter')
-    const factSheet = page.locator('#ficha-silva-2020-apps-brasil')
-    await expect(factSheet).toBeFocused()
-    await factSheet
-      .getByRole('button', { name: 'voltar ao texto' })
-      .press('Enter')
+    await page.keyboard.press('Shift+Tab')
+    await page.keyboard.press('Tab')
     await expect(ref).toBeFocused()
+    await expect.poll(() => cited(page)).not.toBe('')
+    await page.keyboard.press('Enter')
+    const popover = page.getByRole('dialog', { name: /^Ficha 1:/ })
+    await expect(popover).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(popover).toBeHidden()
+  })
+})
+
+test.describe('reference ring without JavaScript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('the ring leads to the Fact sheet in the list at the end', async ({
+    page,
+  }) => {
+    await page.goto(GUIDE)
+    await answerRef(page).click()
+    await expect(page).toHaveURL(`${GUIDE}#ficha-silva-2020-apps-brasil`)
+    await expect(page.locator('#ficha-silva-2020-apps-brasil')).toBeInViewport()
   })
 })
 

@@ -16,6 +16,5 @@ export const EACH_STUDY = 'Como cada Estudo definiu'
 export const STUDIES_OF = 'Estudos dela no acervo'
 export const EMPTY_GLOSSARY = 'Nenhum Verbete ainda.'
 
-/** Under the circled Verbete, the way back to the sentence (#358), as under
- * a circled Fact sheet. */
+/** Under the circled Verbete, the way back to the sentence (#358). */
 export const BACK_TO_TEXT = 'voltar ao texto'
