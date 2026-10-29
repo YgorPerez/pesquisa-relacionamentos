@@ -14,7 +14,7 @@ import { PopoverLine, TextPopover } from './text-popover'
 import { IN_STUDY, SEE_IN_GLOSSARY, termLabel } from './term-popover.copy'
 
 /** The marked word on the page, by its server-side link. */
-const TERM_LINK = 'a[data-verbete]'
+export const TERM_LINK = 'a[data-verbete]'
 
 interface Opened {
   readonly slug: string
