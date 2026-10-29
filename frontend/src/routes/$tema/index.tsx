@@ -22,12 +22,7 @@ import {
   Unknowns,
 } from '#/ui/guide-sections'
 import { WasItHelpful } from '#/ui/counting'
-import {
-  BackToGuide,
-  useReadingPointInHistory,
-  useReferences,
-  type CircledFactSheet,
-} from '#/ui/navigation'
+import { BackToGuide, useReadingPointInHistory } from '#/ui/navigation'
 import { ProfileBox } from '#/ui/profile'
 import { PrioritiesCard } from '#/ui/priorities'
 import { PossibleGroupCard } from '#/ui/possible-group'
@@ -36,6 +31,7 @@ import { ReadingProgress } from '#/ui/reading-progress'
 import { FurtherReading } from '#/ui/readings'
 import { Headline, Section } from '#/ui/section'
 import { PageSelection } from '#/ui/page-selection'
+import { ReferencePopover } from '#/ui/reference-popover'
 import { TermPopover } from '#/ui/term-popover'
 import { quotable } from '#/ui/selection-quote'
 import { Share } from '#/ui/share'
@@ -97,7 +93,6 @@ function useGuide() {
 
 function GuidePage() {
   const guide = useGuide()
-  const { circled, backToText } = useReferences(guide.topic)
   useReadingPointInHistory()
   useCountOpenedFactSheets(guide.topic)
   const profile = useProfile()
@@ -134,7 +129,7 @@ function GuidePage() {
         {guide.readings.length > 0 && (
           <FurtherReading readings={guide.readings} />
         )}
-        <GuideFactSheets circled={circled} backToText={backToText} />
+        <GuideFactSheets />
         <WasItHelpful guide={guide.topic} />
         {guide.elsewhere.length > 0 && <OtherTopics />}
 
@@ -145,6 +140,7 @@ function GuidePage() {
       </Column>
       <PageSelection factSheets={guide.factSheets} page="guide" />
       <TermPopover terms={guide.terms} />
+      <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />
     </Sheet>
   )
 }
@@ -181,15 +177,9 @@ function GuideTakeaways() {
   )
 }
 
-/** "Fichas citadas": the numbered list, with the way there and back between
- * the number in the text and the Fact sheet. */
-function GuideFactSheets({
-  circled,
-  backToText,
-}: {
-  circled: CircledFactSheet | null
-  backToText: () => void
-}) {
+/** "Fichas citadas": the numbered list, where a number in the text leads
+ * without JS. */
+function GuideFactSheets() {
   const guide = useGuide()
   return (
     <Section id="fichas" aria-labelledby="t-fichas">
@@ -198,11 +188,7 @@ function GuideFactSheets({
         <Marker />
         cada número do texto leva à Ficha com o mesmo número aqui
       </p>
-      <CitedFactSheets
-        factSheets={guide.factSheets}
-        circled={circled}
-        backToText={backToText}
-      />
+      <CitedFactSheets factSheets={guide.factSheets} />
     </Section>
   )
 }

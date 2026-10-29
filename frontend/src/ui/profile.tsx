@@ -21,6 +21,7 @@ import { saveProfile } from '#/state/profile'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
 import { Html } from './guide'
+import { FINDING_SLOT } from './quote-text'
 import { Input } from '@/ui/shadcn/input'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 
@@ -109,7 +110,7 @@ export function ForYourProfile({
       {other ? (
         <>
           o número em destaque vem de outra amostra. O que tem dado para você:{' '}
-          <Html as="span" html={other.html} />
+          <Html as="span" slot={FINDING_SLOT} html={other.html} />
         </>
       ) : (
         'nenhum número desta Pergunta vem de uma amostra como a sua.'

@@ -278,9 +278,9 @@ Três retângulos desenhados à mão, levemente tortos, contorno em tinta. Preen
 
 Ícone de 18px antes da palavra: caixa com visto verde-água = "lido no original"; caixa hachurada = "parcial". Uma legenda no fim da lista explica Status e Força.
 
-### Referência numerada e a Ficha circulada (assinatura)
+### Referência numerada e o trecho que ela cita (assinatura)
 
-O número da referência fica dentro de um anel desenhado à mão (SVG, traço de 1,8px em verde-água de tinta) de 26 por 25px sobre folha, com o número em verde-água de tinta, cerca de 0,3em de espaço antes e área de toque ampliada; no hover o fundo vira verde-água. Ao tocar, a página rola até a Ficha, desenha um laço à mão em volta dela (0,9s) com preenchimento verde-água claro, depois uma seta curta entrando nela (0,5s, a partir de 0,7s), e mostra "voltar ao texto", que devolve o leitor ao número de onde saiu. O laço é redesenhado no tamanho real da Ficha para o traço não deformar. Com prefers-reduced-motion, laço e seta aparecem prontos.
+O número da referência fica dentro de um anel desenhado à mão (SVG, traço de 1,8px em verde-água de tinta) de 26 por 25px sobre folha, com o número em verde-água de tinta, cerca de 0,3em de espaço antes e área de toque ampliada; no hover o fundo vira verde-água. Ao tocar, o texto que o número cita ganha esse mesmo fundo verde-água claro, do anel anterior do parágrafo (ou do começo dele) até o anel, e abre ao lado do anel um popover com o cartão da Ficha da lista do fim e "abrir Ficha". Anéis lado a lado marcam o mesmo trecho. Num Visual, a figura inteira ganha contorno e fundo verde-água claro. No desktop, o hover ou o foco do teclado marcam o trecho sem abrir o popover. A marca sai quando o popover fecha ou o ponteiro sai. Sem JS, o número leva à Ficha na lista do fim.
 
 A primeira proposta era uma seta traçada do número até a Ficha. Ela foi trocada por círculo e seta curta porque uma seta do tamanho da página não se lê num celular.
 
