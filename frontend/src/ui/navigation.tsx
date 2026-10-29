@@ -15,6 +15,7 @@ import {
 import { cn } from '@/platform/cn'
 import { Button } from '@/ui/shadcn/button'
 import { scrollBehavior } from './loop'
+import { TERM_LINK } from './term-popover'
 
 declare module '@tanstack/react-router' {
   interface HistoryState {
@@ -112,6 +113,10 @@ export function useReadingPointInHistory() {
       const link = (event.target as Element | null)?.closest?.('a[href]')
       if (!(link instanceof HTMLAnchorElement) || link.target === '_blank')
         return
+      // A Verbete opens its popover and stays on the page. Saving would
+      // rewrite the history entry, and the router, which hears every
+      // `replaceState`, would load again and scroll to the URL's hash (#466).
+      if (link.matches(TERM_LINK)) return
       const target = new URL(link.href)
       if (
         target.origin !== location.origin ||

@@ -4,6 +4,7 @@
 // server draws is tested in `content/terms-view.test.ts`; the popover's
 // place on the screen is the stories'.
 import {
+  createBrowserHistory,
   createMemoryHistory,
   createRootRoute,
   createRouter,
@@ -14,6 +15,7 @@ import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { expect, it } from 'vite-plus/test'
 import { Glossary } from './glossary'
+import { useReadingPointInHistory } from './navigation'
 import { TermPopover } from './term-popover'
 import {
   BACK_TO_TEXT,
@@ -98,6 +100,34 @@ it('a sentence that cites no Study shows the general definition only', async () 
   )
   expect(popover.queryByText(IN_STUDY.one)).toBeNull()
   expect(popover.getByRole('link', { name: SEE_IN_GLOSSARY })).toBeVisible()
+})
+
+it('a tap on a page opened at an anchor leaves the router where it is', async () => {
+  // The browser history, which hears every `replaceState`: a load would
+  // scroll the page back to the anchor (#466).
+  window.history.replaceState(null, '', '/apps-e-saude-mental#apps-fazem-mal')
+  const user = userEvent.setup()
+  function Guide() {
+    useReadingPointInHistory()
+    return (
+      <>
+        {sentence('costa-2018-satisfacao')}
+        <TermPopover terms={{ satisfacao: SATISFACTION }} />
+      </>
+    )
+  }
+  const router = createRouter({
+    routeTree: createRootRoute({ component: Guide }),
+    history: createBrowserHistory(),
+  })
+  render(<RouterProvider router={router} />)
+  await router.load()
+  let loads = 0
+  const unsubscribe = router.subscribe('onBeforeLoad', () => loads++)
+  await user.click(screen.getByRole('link', { name: 'satisfação' }))
+  await screen.findByRole('dialog', { name: termLabel('satisfação') })
+  unsubscribe()
+  expect(loads).toBe(0)
 })
 
 it('lists every Verbete in the Glossário, with each Study’s definition and an institution’s Studies', async () => {
