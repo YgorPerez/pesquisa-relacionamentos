@@ -53,6 +53,7 @@ export type { Coverage, Myth, Seo } from './schema.ts'
 export type {
   Visual,
   BarsVisual,
+  StackedBarsVisual,
   TimelineVisual,
   StudyTableVisual,
   DiagramVisual,

@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DefinitionGlyph } from './definition-glyph'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, STACKED } from './visual-chart.example'
 import VisualChartPlot from './visual-chart-plot'
 import { VisualDetail } from './visual-detail'
 
@@ -55,6 +55,38 @@ export const TapDetail: Story = {
     ).toBeInTheDocument()
     await userEvent.click(close)
     await expect(page.queryByRole('button', { name: 'Fechar' })).toBeNull()
+  },
+}
+
+/** Stacked bars, the four answers of each group from the left. With a
+ * Profile of a woman who seeks men, "você" on the women's bar. */
+export const Stacked: Story = {
+  args: { chart: STACKED, profile: { gender: 'mulher', seeks: 'homens' } },
+}
+
+/** Enter on stacked bars opens the first part, with its answer, and the
+ * arrow keys go through the parts bar by bar. */
+export const StackedTap: Story = {
+  args: { chart: STACKED },
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement)
+    const chart = await page.findByRole(
+      'img',
+      { name: STACKED.title },
+      { timeout: 10_000 },
+    )
+    chart.focus()
+    await userEvent.keyboard('{Enter}')
+    const detail = await page.findByText('Contentes', {
+      selector: '[data-slot="detalhe-do-grafico"] span',
+    })
+    await expect(detail).toBeInTheDocument()
+    await userEvent.keyboard('{ArrowRight}{Enter}')
+    await expect(
+      await page.findByText('Neutros', {
+        selector: '[data-slot="detalhe-do-grafico"] span',
+      }),
+    ).toBeInTheDocument()
   },
 }
 

@@ -4,8 +4,9 @@
 // view is what both sides draw from, plain data that crosses the server
 // function as JSON.
 //
-// A bar comparison draws bars; a Study table whose numbers share one unit
-// draws one dot per Study. A table that mixes units stays a table.
+// A bar comparison draws bars; stacked bars draw each bar's parts side by
+// side, up to 100%; a Study table whose numbers share one unit draws one dot
+// per Study. A table that mixes units stays a table.
 import type { Library, Visual } from '@tem-estudo/content'
 import type { Coverage } from '@tem-estudo/rules/applies-to-you'
 import { BRAZIL, countrySlug } from '@tem-estudo/rules/country'
@@ -47,10 +48,17 @@ export interface ChartPoint {
   readonly brazil: boolean
   /** Who the Fact sheets behind the number cover, for the "você" mark. */
   readonly covers: ReadonlyArray<Coverage>
+  /** On stacked bars, the part this point is: its bar's key, its place
+   * in `ChartView.segments` and where it starts on the axis. */
+  readonly stack?: {
+    readonly bar: string
+    readonly part: number
+    readonly start: number
+  }
 }
 
 export interface ChartView {
-  readonly kind: 'bars' | 'dots'
+  readonly kind: 'bars' | 'dots' | 'stacked'
   /** The figure's id on the page. */
   readonly domId: string
   readonly title: string
@@ -69,6 +77,8 @@ export interface ChartView {
   readonly ownLines: ReadonlyArray<string>
   /** Every Fact sheet the chart cites, in the page's order. */
   readonly sources: ReadonlyArray<SourceRef>
+  /** On stacked bars, what each part is, from the left: the legend. */
+  readonly segments?: ReadonlyArray<string>
 }
 
 /** The Visuals the library draws, by `<topic>/<id>`. #471 moved one bar
@@ -85,7 +95,6 @@ const country = (name: string): ChartCountry => ({
 })
 
 interface Datum {
-  readonly value: number
   readonly fact_sheet?: string | undefined
   readonly calculation?:
     | { readonly inputs: ReadonlyArray<{ readonly fact_sheet: string }> }
@@ -176,6 +185,39 @@ export function chartView(
           : [],
       ),
       sources: allSources(points.map((p) => p.number)),
+    }
+  }
+  if (visual.kind === 'stacked-bars') {
+    // One point per part, bar after bar, so the tap and the screen-reader
+    // list give each answer of each group.
+    const points = visual.bars.flatMap((bar, i) => {
+      const facts = pointFacts(bar, library, [])
+      return bar.values.map((value, part): ChartPoint => {
+        const start = bar.values.slice(0, part).reduce((a, b) => a + b, 0)
+        return {
+          key: `${i}-${part}`,
+          label: bar.label,
+          detail: visual.segments[part] ?? null,
+          value,
+          number: numberView({ value, fact_sheet: bar.fact_sheet }, '%', cite),
+          highlight: false,
+          ...facts,
+          // A bar is one group of the sample: its own scope, as a
+          // finding's `applies_to` is.
+          covers: bar.applies_to ? [bar.applies_to] : facts.covers,
+          stack: { bar: `${i}`, part, start },
+        }
+      })
+    })
+    return {
+      kind: 'stacked',
+      ...common,
+      ticks: ticksOf(100, 100, '%'),
+      points,
+      definitions: [],
+      ownLines: [],
+      sources: allSources(points.map((p) => p.number)),
+      segments: visual.segments,
     }
   }
   if (visual.kind === 'study-table') {

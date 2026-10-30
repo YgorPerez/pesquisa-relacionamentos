@@ -345,6 +345,12 @@ export function visualView(
       return { ...common, ...studyTableView(visual, library, cite) }
     case 'diagram':
       return { ...common, ...diagramView(visual, cite) }
+    case 'stacked-bars':
+      // Born on the chart library (#476), with no hand-drawn form:
+      // `renderVisuals` never sends one here.
+      throw new Error(
+        `the Visual "${visual.id}" is stacked bars, which only chart-view.ts draws`,
+      )
   }
 }
 
@@ -374,9 +380,10 @@ export function renderVisuals(
   scope: string,
 ): ReadonlyMap<string, RenderedVisual> {
   return new Map(
-    visuals.map((visual) => [
-      visual.id,
-      render(visualView(visual, library, cite, scope)),
-    ]),
+    visuals.flatMap((visual) =>
+      visual.kind === 'stacked-bars'
+        ? []
+        : [[visual.id, render(visualView(visual, library, cite, scope))]],
+    ),
   )
 }

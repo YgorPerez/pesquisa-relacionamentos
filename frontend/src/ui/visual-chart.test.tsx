@@ -6,7 +6,7 @@
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, STACKED } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
 
 // Rendered as the server renders: with the plot already loaded.
@@ -84,6 +84,53 @@ it('tags "você" on the Studies that cover the Profile', () => {
     ),
   )
   expect(young.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
+})
+
+it('serves each part of a stacked bar with its value inside, and the parts as a legend', () => {
+  const stacked = page(
+    renderToString(
+      <VisualChart chart={STACKED} country={null} profile={null} />,
+    ),
+  )
+  const svg = stacked.querySelector('svg[role="img"]')
+  expect(svg?.querySelectorAll('rect[data-ts-key]').length).toBe(8)
+  const words = [...(svg?.querySelectorAll('text') ?? [])].map(
+    (t) => t.textContent,
+  )
+  for (const value of ['27%', '26%', '20%', '52%', '15%', '7%'])
+    expect(words).toContain(value)
+  // One label per bar, not one per part.
+  expect(words.filter((w) => w === 'Mulheres heterossexuais')).toHaveLength(1)
+  const legend = stacked.querySelector('[data-slot="partes"]')
+  expect(legend?.textContent).toContain('Contentes')
+  expect(legend?.textContent).toContain('Muito arrependidos')
+  // The list a screen reader reads names each part of each bar.
+  expect(stacked.querySelector('ul.sr-only')?.textContent).toContain(
+    'Homens heterossexuais, Muito arrependidos: 7%',
+  )
+})
+
+it('tags "você" once, on the bar whose group is the Profile', () => {
+  const woman = page(
+    renderToString(
+      <VisualChart
+        chart={STACKED}
+        country={null}
+        profile={{ gender: 'mulher', seeks: 'homens' }}
+      />,
+    ),
+  )
+  expect(woman.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
+  const none = page(
+    renderToString(
+      <VisualChart
+        chart={STACKED}
+        country={null}
+        profile={{ gender: 'outro' }}
+      />,
+    ),
+  )
+  expect(none.querySelector('[data-ts-key="voce"]')).toBeNull()
 })
 
 it('shows the definitions as a legend of shapes', () => {
