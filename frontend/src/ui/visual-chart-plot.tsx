@@ -205,8 +205,9 @@ const LINE = {
   height: 220,
   /** Without a value scale, the dots sit on the year axis. */
   flatHeight: 110,
-  /** The value's baseline above its dot. */
-  valueAbove: 16,
+  /** How far the value's line sits above its dot, clear of Brazil's
+   * ring. */
+  valueAbove: 22,
   /** Room above the values for the "você" tag. */
   top: 48,
 } as const
@@ -288,10 +289,12 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
       marks,
       scales: {
         x: {
-          // One year alone still needs a span to sit in.
-          scale: scaleLinear().domain(
-            first === last ? [first - 1, last + 1] : [first, last],
-          ),
+          // A margin of years on each side, so the values centered over
+          // the first and last dots clear the value axis and the edge.
+          scale: scaleLinear().domain([
+            first - Math.max((last - first) * 0.12, 1),
+            last + Math.max((last - first) * 0.12, 1),
+          ]),
           axis: {
             ticks: {
               values: years.map((t) => t.value),

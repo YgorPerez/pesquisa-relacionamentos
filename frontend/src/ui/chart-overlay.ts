@@ -74,13 +74,9 @@ export function overlayLayers(
       const drawn =
         m.valueAbove === undefined
           ? marker(m.x + VALUE_DX - 3, m.y, valueWidth(m))
-          : // The value's baseline is `valueAbove` over the dot; its middle
-            // half a line higher.
-            marker(
-              m.x - valueWidth(m) / 2,
-              m.y - m.valueAbove - 5,
-              valueWidth(m),
-            )
+          : // The library centers the value's line `valueAbove` over the
+            // dot.
+            marker(m.x - valueWidth(m) / 2, m.y - m.valueAbove, valueWidth(m))
       return `<g data-ts-key="sob-${escape(m.key)}">${drawn}</g>`
     })
   const over = marks
@@ -90,7 +86,7 @@ export function overlayLayers(
         ? ''
         : m.valueAbove === undefined
           ? you(right, m.y - labelOffset)
-          : you(m.x + tagWidth() / 2, m.y - m.valueAbove - LABEL_HEIGHT - 6)
+          : you(m.x + tagWidth() / 2, m.y - m.valueAbove - LABEL_HEIGHT - 2)
       return `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y) : ''}${tag}</g>`
     })
   return {
