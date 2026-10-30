@@ -520,8 +520,9 @@ export function guideView(topic: Topic, library: Library): GuideView {
   }
   const charts = new Map(
     topic.visuals.flatMap((visual) => {
-      // Every Visual but the diagram: bars (#473), time lines (#474), and
-      // Study tables as dots of one unit or a table of mixed ones (#475).
+      // Every Visual but the diagram: bars (#473), time lines (#474),
+      // Study tables as dots of one unit or a table of mixed ones (#475),
+      // and stacked bars (#476).
       if (visual.kind === 'diagram') return []
       const chart: GuideChart | null =
         chartView(visual, library, cite, topic.slug) ??

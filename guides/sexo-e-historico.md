@@ -465,7 +465,23 @@ visuals:
         value: 16
         fact_sheet: galperin-2013-arrependimento-sexual
     highlight: Mulheres, da última transa casual
-    note: questionário online com mais de 24 mil adultos, que não representa o país
+    note: mais de 24 mil voluntários de um questionário online, e não pessoas sorteadas entre os americanos
+  - id: sentimento-ultima-transa-casual
+    kind: stacked-bars
+    title: Como heterossexuais americanos se sentem sobre a última transa casual
+    segments: [Contentes, Neutros, Um pouco arrependidos, Muito arrependidos]
+    bars:
+      - label: Mulheres heterossexuais
+        values: [27, 26, 27, 20]
+        fact_sheet: galperin-2013-arrependimento-sexual
+        applies_to:
+          { genders: [woman], seeks: [men], ages: { min: 18, max: 65 } }
+      - label: Homens heterossexuais
+        values: [52, 25, 15, 7]
+        fact_sheet: galperin-2013-arrependimento-sexual
+        applies_to:
+          { genders: [man], seeks: [women], ages: { min: 18, max: 65 } }
+    note: na linha dos homens, as partes somam 99% por causa do arredondamento
   - id: por-que-um-momento-so-engana
     kind: diagram
     title: Por que estudos de um momento só acham saúde mental pior
@@ -722,7 +738,11 @@ O arrependimento não se divide por igual. Num questionário online com mais de 
 
 {{visual:arrependimento-por-sexo}}
 
-Mais arrependimento não quer dizer arrependimento sempre. {{you:arrependimento-mulheres-hetero}} Entre as mulheres heterossexuais do questionário americano, 27% ficaram contentes com a última transa casual, 26% neutras, 27% um pouco arrependidas e 20% muito. {{you:arrependimento-homens-hetero}} Entre os homens heterossexuais, 52% ficaram contentes e 7% muito arrependidos [@galperin-2013-arrependimento-sexual]. {{you:lesbicas-arrependem-menos}} Lésbicas e mulheres bissexuais se arrependeram menos que as heterossexuais; entre os homens, a orientação não mudou nada.
+Mais arrependimento não quer dizer arrependimento sempre. {{you:arrependimento-mulheres-hetero}} Entre as mulheres heterossexuais do questionário americano, cerca de metade ficou contente ou neutra com a última transa casual. {{you:arrependimento-homens-hetero}} Entre os homens heterossexuais, mais da metade ficou contente [@galperin-2013-arrependimento-sexual].
+
+{{visual:sentimento-ultima-transa-casual}}
+
+Quem respondeu clicou num anúncio do site msnbc.com, em vez de ser sorteado como numa [[pesquisa representativa]] [@galperin-2013-arrependimento-sexual]. {{you:lesbicas-arrependem-menos}} Lésbicas e mulheres bissexuais se arrependeram menos que as heterossexuais; entre os homens, a orientação não mudou nada.
 
 {{myth:mulher-sempre-se-arrepende}}
 

@@ -145,6 +145,57 @@ it("takes the point's own country and its definition's place in the list", () =>
   ])
 })
 
+it('stacks the parts of each bar from the left, each part a point with its answer and the bar’s group', () => {
+  const stacked: Visual = {
+    id: 'partes',
+    kind: 'stacked-bars',
+    title: 'Partes',
+    segments: ['Contentes', 'Arrependidos'],
+    bars: [
+      {
+        label: 'Mulheres',
+        values: [18, 82],
+        fact_sheet: 'silva-2020-apps-brasil',
+        applies_to: { genders: ['woman'] },
+      },
+      {
+        label: 'Homens',
+        values: [24, 76],
+        fact_sheet: 'silva-2020-apps-brasil',
+      },
+    ],
+  }
+  const view = chartView(stacked, library(), cite, 'tema')
+  expect(view).toMatchObject({
+    kind: 'stacked',
+    segments: ['Contentes', 'Arrependidos'],
+    points: [
+      {
+        label: 'Mulheres',
+        detail: 'Contentes',
+        number: { text: '18%' },
+        stack: { bar: '0', part: 0, start: 0 },
+        covers: [{ genders: ['woman'] }],
+        country: { slug: 'brasil' },
+      },
+      {
+        label: 'Mulheres',
+        detail: 'Arrependidos',
+        stack: { bar: '0', part: 1, start: 18 },
+      },
+      {
+        label: 'Homens',
+        detail: 'Contentes',
+        stack: { bar: '1', part: 0, start: 0 },
+        // Without `applies_to`, the Fact sheet's own `covers`.
+        covers: [{ ages: { min: 18, max: 35 } }],
+      },
+      { label: 'Homens', stack: { bar: '1', part: 1, start: 24 } },
+    ],
+  })
+  expect(view?.ticks.at(-1)).toEqual({ value: 100, text: '100%' })
+})
+
 it('draws bars with the highlighted one marked, and lists the countries of every chart once', () => {
   const bars: Visual = {
     id: 'barras',

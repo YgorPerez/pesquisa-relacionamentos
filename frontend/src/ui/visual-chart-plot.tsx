@@ -33,6 +33,7 @@ import {
   withOverlay,
   type OverlayMark,
 } from './chart-overlay'
+import { partTone } from './stack-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
 const INK = 'var(--color-tinta)'
@@ -52,6 +53,7 @@ const LAYOUT = {
   bars: { row: 50, label: [15], measure: [] },
   wrappedBars: { row: 66, label: [31, 15], measure: [] },
   dots: { row: 80, label: [42], measure: [28, 15] },
+  stacked: { row: 60, label: [21], measure: [] },
 } as const
 /** Letters per line of a bar's label (13px) and of a measure (12px), which
  * fit a 350px phone. */
@@ -110,6 +112,7 @@ function valueRoom(chart: ChartView, dx: number) {
 
 function layoutOf(chart: ChartView) {
   if (chart.kind === 'dots') return LAYOUT.dots
+  if (chart.kind === 'stacked') return LAYOUT.stacked
   return chart.points.some((p) => p.label.length > LABEL_LINE)
     ? LAYOUT.wrappedBars
     : LAYOUT.bars
@@ -237,6 +240,103 @@ const MARK_FOCUS: ChartFocusStrategy<Row, number, string> = {
   navigation: (points) => focusNearestY.navigation(onlyMarks(points)),
 }
 
+/** The row a point sits on: its own, or its stacked bar's. */
+const bandOf = (r: ChartPoint) => r.stack?.bar ?? r.key
+const bands = (rows: ReadonlyArray<ChartPoint>) => [
+  ...new Set(rows.map(bandOf)),
+]
+
+/** On stacked bars a tap falls inside a part: the nearest bar, then the
+ * part whose right end is the first past the finger (the library places a
+ * bar's point at that end). The keys go through the parts bar by bar. */
+const STACK_FOCUS: ChartFocusStrategy<Row, number, string> = {
+  resolve: (points, context) => {
+    const marks = onlyMarks(points)
+    const [near] = focusNearestY.resolve(marks, context)
+    if (!near) return []
+    const bar = marks
+      .filter((p) => bandOf(p.datum) === bandOf(near.datum))
+      .sort((a, b) => a.x - b.x)
+    const hit = bar.find((p) => p.x >= context.x) ?? bar[bar.length - 1]
+    return hit ? [hit] : []
+  },
+  group: (_, { point }) => [point],
+  navigation: (points) =>
+    [...onlyMarks(points)].sort((a, b) => a.y - b.y || a.x - b.x),
+}
+
+/** Values on parts thinner than this stay in the tap and the list: they
+ * would not fit inside. */
+const SMALLEST_WRITTEN_PART = 5
+
+/** Stacked bars: one mark per part and look, then the bar's label above
+ * it and each part's value inside it. */
+function stackedMarks(
+  chart: ChartView,
+  rows: Row[],
+  words: Row[],
+  labelOffset: number,
+) {
+  const parts = chart.segments?.length ?? 1
+  const start = (r: Row) => r.stack?.start ?? 0
+  const marks: ChartMark<Row, number, string>[] = []
+  for (const dimmed of [false, true])
+    for (let part = 0; part < parts; part++) {
+      const these = rows.filter(
+        (r) => r.dimmed === dimmed && r.stack?.part === part,
+      )
+      if (these.length === 0) continue
+      const fade = dimmed ? DIMMED : 1
+      marks.push(
+        barX(these, {
+          id: `marca-${dimmed ? 'apagada' : 'acesa'}-${part}`,
+          x1: start,
+          x2: (r) => start(r) + r.value,
+          y: bandOf,
+          key: 'key',
+          maxThickness: 26,
+          fill: INK,
+          fillOpacity: partTone(part, parts).opacity * fade,
+          stroke: INK,
+          strokeWidth: 1,
+          strokeOpacity: fade,
+        }),
+      )
+    }
+  marks.push(
+    text(
+      words.filter((r) => r.stack?.part === 0),
+      {
+        id: 'rotulo',
+        x: () => 0,
+        y: bandOf,
+        key: (r) => `rotulo-${r.key}`,
+        text: 'label',
+        anchor: 'start',
+        dy: -labelOffset,
+        fontSize: 13,
+        fill: (r) => (r.dimmed ? 'var(--color-tinta-2)' : INK),
+      },
+    ),
+    text(
+      words.filter((r) => r.value >= SMALLEST_WRITTEN_PART),
+      {
+        id: 'valor',
+        x: (r) => start(r) + r.value / 2,
+        y: bandOf,
+        key: (r) => `valor-${r.key}`,
+        text: (r) => r.number.text,
+        anchor: 'middle',
+        fontSize: 12,
+        fontWeight: 700,
+        fill: (r) =>
+          r.dimmed ? INK : partTone(r.stack?.part ?? 0, parts).text,
+      },
+    ),
+  )
+  return marks
+}
+
 /** The marks of one kind, one per look: a definition's shape (dots only),
  * dimmed or not. */
 function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
@@ -307,9 +407,10 @@ function overlayMarks(
   for (const point of points) {
     const datum = point.datum as Row | undefined
     const found = datum && byKey.get(datum.key)
-    if (!point.markId.startsWith('marca') || !found || seen.has(found.key))
+    // One ring or tag per row: a stacked bar's parts share theirs (#476).
+    if (!point.markId.startsWith('marca') || !found || seen.has(bandOf(found)))
       continue
-    seen.add(found.key)
+    seen.add(bandOf(found))
     marks.push({
       key: found.key,
       x: point.x,
@@ -519,8 +620,13 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     // The texts' own copies of the rows: the focus ring marks every point
     // whose datum is the focused one, and it belongs on the mark only.
     const words = rows.map((r) => ({ ...r }))
+    const stacked = chart.kind === 'stacked'
+    // Stacked bars write their values inside the parts, not after the mark.
+    const stackMarks = stacked
+      ? stackedMarks(chart, rows, words, layout.label[0] ?? 0)
+      : null
     return defineChart({
-      marks: [
+      marks: stackMarks ?? [
         ...rangeMarks(rows),
         ...pointMarks(chart, rows, hatch),
         ...layout.label.map((dy, line) =>
@@ -582,7 +688,8 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       scales: {
         x: {
           scale: scaleLinear().domain([0, top]),
-          grid: { strokeOpacity: 0.25 },
+          // The parts' light washes would let the grid show through.
+          grid: stacked ? false : { strokeOpacity: 0.25 },
           axis: {
             ticks: {
               values: ticks.map((t) => t.value),
@@ -593,18 +700,19 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
         },
         y: {
           scale: scaleBand<string>()
-            .domain(rows.map((r) => r.key))
+            .domain(bands(rows))
             .paddingInner(0)
             .paddingOuter(0),
           axis: false,
         },
       },
-      focus: MARK_FOCUS,
+      focus: stacked ? STACK_FOCUS : MARK_FOCUS,
       // The sides are fixed: a long label must not squeeze the scale.
       margin: {
         top: (layout.label[0] ?? 0) - layout.row / 2 + 16,
         left: 12,
-        right: valueRoom(chart, valueDx),
+        // Stacked bars end at 100%: room for that tick's text only.
+        right: stacked ? 20 : valueRoom(chart, valueDx),
       },
       theme: THEME,
     })
@@ -634,7 +742,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       definition={definition}
       renderSvg={renderSvg}
       initialWidth={INITIAL_WIDTH}
-      height={rows.length * layout.row + 40}
+      height={bands(rows).length * layout.row + 40}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className="font-body text-tinta"

@@ -253,6 +253,70 @@ describe('a range of a Study table row', () => {
   })
 })
 
+/** Bars split into parts that add up to 100% (#476): each bar's answers, in
+ * the order of `segments`, with who the bar is about. */
+const STACKED = (
+  first = '[18, 24, 35, 24]',
+  segments = '[Contentes, Neutros, Um pouco, Muito]',
+) =>
+  `  - id: partes
+    kind: stacked-bars
+    title: Partes
+    segments: ${segments}
+    bars:
+      - label: Mulheres
+        values: ${first}
+        fact_sheet: silva-2020-apps-brasil
+        applies_to: { genders: [woman] }
+      - label: Homens
+        values: [24, 18, 24, 35]
+        fact_sheet: silva-2020-apps-brasil
+        country: Brasil`
+
+describe('a stacked bar comparison', () => {
+  it('splits each bar into the parts of `segments`, with who it is about', () => {
+    const result = withVisuals(STACKED(), '{{visual:partes}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      kind: 'stacked-bars',
+      segments: ['Contentes', 'Neutros', 'Um pouco', 'Muito'],
+      bars: [
+        { values: [18, 24, 35, 24], applies_to: { genders: ['woman'] } },
+        { values: [24, 18, 24, 35], country: 'Brasil' },
+      ],
+    })
+  })
+
+  it.each([
+    [
+      'a bar with more or fewer parts than `segments`',
+      STACKED('[18, 24, 35]'),
+      'visuals.0.bars.0.values: the bar has 3 parts, and `segments` names 4',
+    ],
+    [
+      'a part the Fact sheet does not have',
+      STACKED('[18, 24, 35, 25]'),
+      'visuals.0.bars.0.values.3: the number 25 is not in the fact sheet "silva-2020-apps-brasil"',
+    ],
+    [
+      'parts that do not add up to 100%, rounding aside',
+      STACKED('[18, 18, 24, 24]'),
+      'visuals.0.bars.0.values: the parts add up to 84%; a stacked bar adds up to 100%, give or take the rounding',
+    ],
+    [
+      'a single part',
+      STACKED('[18]', '[Todos]'),
+      'visuals.0.segments: a stacked bar has two or more parts',
+    ],
+  ])('rejects %s', (_, yaml, message) => {
+    expect(errorsOf(withVisuals(yaml, '{{visual:partes}}'))).toContainEqual(
+      expect.stringContaining(message),
+    )
+  })
+})
+
 describe('the build rejects', () => {
   it('a number that is not in the cited Fact sheet', () => {
     const result = withVisuals(BARS.replace('value: 24', 'value: 25'), PLACED)
@@ -357,7 +421,7 @@ describe('the build rejects', () => {
     const result = withVisuals(BARS.replace('kind: bars', 'kind: pie'), PLACED)
     expect(errorsOf(result)).toEqual([
       expect.stringContaining(
-        `${GUIDE}: visuals.0: \`kind\` is one of bars | timeline | study-table | diagram`,
+        `${GUIDE}: visuals.0: \`kind\` is one of bars | stacked-bars | timeline | study-table | diagram`,
       ),
     ])
   })

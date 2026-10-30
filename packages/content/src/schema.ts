@@ -2,13 +2,11 @@
 // validator and the app read the same schema; the closed lists come from
 // `lists.ts`. Keys and values are the content contract, in English since #70.
 import { Schema } from 'effect'
+import { Coverage } from './coverage.ts'
 import {
   CALCULATORS,
-  COUPLES,
   DESIGNS,
   STRENGTHS,
-  GENDERS,
-  SEEKS,
   VERIFICATION_STATUSES,
 } from './lists.ts'
 import { Visual } from './visuals.ts'
@@ -36,21 +34,7 @@ export const Slug = Schema.String.check(
   }),
 )
 
-const Age = Schema.Int.check(
-  Schema.isBetween(
-    { minimum: 0, maximum: 120 },
-    { message: 'age between 0 and 120' },
-  ),
-)
-
-/** Who the sample covers. A missing key means the study did not split by it. */
-export const Coverage = Schema.Struct({
-  genders: Schema.optional(Schema.Array(Schema.Literals(GENDERS))),
-  seeks: Schema.optional(Schema.Array(Schema.Literals(SEEKS))),
-  ages: Schema.optional(Schema.Struct({ min: Age, max: Age })),
-  couple: Schema.optional(Schema.Literals(COUPLES)),
-})
-export type Coverage = typeof Coverage.Type
+export { Coverage } from './coverage.ts'
 
 /** Search title and description in place of the derived ones (#15). */
 export const Seo = Schema.Struct({

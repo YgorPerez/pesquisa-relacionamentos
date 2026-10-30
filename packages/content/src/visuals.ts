@@ -1,6 +1,7 @@
 // A Guide's Visuals (#182): data in the frontmatter, placed in the body by
-// a line of its own, `{{visual:<id>}}`, and drawn as SVG on the server. Four
-// kinds: bar comparison, time line, table of Studies, relation diagram.
+// a line of its own, `{{visual:<id>}}`, and drawn as SVG on the server. Five
+// kinds: bar comparison, stacked bars, time line, table of Studies, relation
+// diagram.
 //
 // Every number names where it comes from: a ✅/🟡 Fact sheet whose text has
 // that number, or an own calculation ("conta nossa") over such numbers, which
@@ -8,6 +9,7 @@
 // too. The checks against the Fact sheets live in `visualProblems`, the ones
 // inside one file in `visualPlacementProblems`.
 import { Schema } from 'effect'
+import { Coverage } from './coverage.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import { problem, type Problem } from './problems.ts'
 
@@ -90,6 +92,30 @@ export const BarsVisual = Schema.Struct({
   note: Schema.optional(Text),
 })
 
+/** Bars split into parts that add up to 100% (#476), one bar per group:
+ * how many gave each answer of a question, in the order of `segments`,
+ * from the left. A bar is about one group of the Fact sheet's sample, so
+ * its `applies_to` says who, as a finding's does, for the "você" mark. */
+export const StackedBarsVisual = Schema.Struct({
+  id: Slug,
+  kind: Schema.Literal('stacked-bars'),
+  title: Text,
+  /** What each part is ("Contentes", "Neutros"), from the left. */
+  segments: Schema.Array(Text),
+  bars: Schema.Array(
+    Schema.Struct({
+      label: Text,
+      /** One percentage per segment, as the Fact sheet has it. */
+      values: Schema.Array(Schema.Finite),
+      fact_sheet: Slug,
+      applies_to: Schema.optional(Coverage),
+      country: point.country,
+      year: point.year,
+    }),
+  ),
+  note: Schema.optional(Text),
+})
+
 export const TimelineVisual = Schema.Struct({
   id: Slug,
   kind: Schema.Literal('timeline'),
@@ -162,20 +188,28 @@ export const DiagramVisual = Schema.Struct({
   note: Schema.optional(Text),
 })
 
-export const KINDS = ['bars', 'timeline', 'study-table', 'diagram'] as const
+export const KINDS = [
+  'bars',
+  'stacked-bars',
+  'timeline',
+  'study-table',
+  'diagram',
+] as const
 
 export const Visual = Schema.Union([
   BarsVisual,
+  StackedBarsVisual,
   TimelineVisual,
   StudyTableVisual,
   DiagramVisual,
 ]).annotate({
   // Effect picks the member by `kind`; with an unknown `kind` it would list
-  // the four structs.
+  // the structs.
   message: `\`kind\` is one of ${KINDS.join(' | ')}`,
 })
 export type Visual = typeof Visual.Type
 export type BarsVisual = typeof BarsVisual.Type
+export type StackedBarsVisual = typeof StackedBarsVisual.Type
 export type TimelineVisual = typeof TimelineVisual.Type
 export type StudyTableVisual = typeof StudyTableVisual.Type
 export type DiagramVisual = typeof DiagramVisual.Type
@@ -532,6 +566,40 @@ export function visualProblems(
             !visual.bars.some((b) => b.label === visual.highlight)
           )
             err(`no bar is labelled "${visual.highlight}"`, `${at}.highlight`)
+          break
+        }
+        case 'stacked-bars': {
+          const parts = visual.segments.length
+          if (parts < 2)
+            err('a stacked bar has two or more parts', `${at}.segments`)
+          if (visual.bars.length === 0)
+            err('a stacked bar comparison has at least one bar', `${at}.bars`)
+          visual.bars.forEach((bar, j) => {
+            const field = `${at}.bars.${j}`
+            if (bar.values.length !== parts)
+              return err(
+                `the bar has ${bar.values.length} parts, and \`segments\` names ${parts}`,
+                `${field}.values`,
+              )
+            bar.values.forEach((value, k) =>
+              fromFactSheet(value, bar.fact_sheet, `${field}.values.${k}`),
+            )
+            if (bar.year !== undefined)
+              fromFactSheet(bar.year, bar.fact_sheet, `${field}.year`)
+            if (bar.values.some((v) => v < 0))
+              err('a part does not go below zero', `${field}.values`)
+            // Each part is rounded, so the sum may miss 100 by half a point
+            // per part.
+            const sum = roundTo(
+              bar.values.reduce((a, b) => a + b, 0),
+              2,
+            )
+            if (Math.abs(sum - 100) > parts / 2)
+              err(
+                `the parts add up to ${sum}%; a stacked bar adds up to 100%, give or take the rounding`,
+                `${field}.values`,
+              )
+          })
           break
         }
         case 'timeline': {

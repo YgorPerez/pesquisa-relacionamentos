@@ -20,6 +20,7 @@ import {
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { DefinitionGlyph } from './definition-glyph'
+import { partTone } from './stack-tones'
 import { Plot, wantPlot } from './visual-chart-loader'
 import { CHART_COPY } from './visual-chart.copy'
 import { VisualDetail } from './visual-detail'
@@ -122,6 +123,30 @@ export function VisualChart({
           {chart.definitions.map((d, i) => (
             <span key={d.id}>
               <DefinitionGlyph shape={i} /> {d.legend}
+            </span>
+          ))}
+        </p>
+      )}
+      {chart.segments && (
+        <p
+          className="m-0 mb-xs flex flex-wrap gap-x-sm gap-y-1 text-nota leading-nota"
+          data-slot="partes"
+        >
+          {chart.segments.map((segment, i, all) => (
+            <span key={segment} className="inline-flex items-center gap-1">
+              <svg width="14" height="14" aria-hidden="true">
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="13"
+                  height="13"
+                  rx="2"
+                  fill="var(--color-tinta)"
+                  fillOpacity={partTone(i, all.length).opacity}
+                  stroke="var(--color-tinta)"
+                />
+              </svg>
+              {segment}
             </span>
           ))}
         </p>

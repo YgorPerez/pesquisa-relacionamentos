@@ -4,17 +4,9 @@
 // and HTML: no chart code goes to the browser, and the Visual reads without
 // JS (#182). The Visuals the chart library draws go through `chart-view.ts`
 // instead (ADR 0042, "SVG from the server, interaction on top"): every bar
-// comparison (#473), Study table (#475) and time line (#474). Only the
-// diagram is drawn here.
-import type {
-  BarsVisual,
-  Calculation,
-  DiagramVisual,
-  Evidence,
-  StudyTableVisual,
-  TimelineVisual,
-  Visual,
-} from '@tem-estudo/content'
+// comparison (#473), Study table (#475), time line (#474) and stacked bar
+// comparison (#476). Only the diagram is drawn here.
+import type { Calculation, DiagramVisual, Evidence } from '@tem-estudo/content'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { VisualDiagram } from '#/ui/visual-diagram'
@@ -66,13 +58,9 @@ export interface DiagramView extends Common {
 
 export type VisualView = DiagramView
 
-/** A Visual drawn here, as HTML: a bar comparison and a time line are
- * always the chart library's, and a Study table the library's or a
- * `ChartTable` (`chart-view.ts`). */
-export type HtmlVisual = Exclude<
-  Visual,
-  BarsVisual | StudyTableVisual | TimelineVisual
->
+/** A Visual drawn here, as HTML: every other kind is the chart library's,
+ * or a `ChartTable` (`chart-view.ts`). */
+export type HtmlVisual = DiagramVisual
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
@@ -205,15 +193,12 @@ export function visualView(
   cite: Cite,
   scope: string,
 ): VisualView {
-  const common = {
+  return {
     id: visual.id,
     domId: `visual-${scope}-${visual.id}`,
     title: visual.title,
     note: visual.note ?? null,
-  }
-  switch (visual.kind) {
-    case 'diagram':
-      return { ...common, ...diagramView(visual, cite) }
+    ...diagramView(visual, cite),
   }
 }
 

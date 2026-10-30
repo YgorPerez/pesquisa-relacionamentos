@@ -118,7 +118,7 @@ export const BARS: ChartView = {
   sources: [{ n: 1, anchor: 'ficha-0', title: 'Rosenfeld (2019)' }],
 }
 
-const years = (first: number, last: number, written: number[]) =>
+const years =(first: number, last: number, written: number[]) =>
   Array.from({ length: last - first + 1 }, (_, i) => first + i).map(
     (value) => ({ value, text: written.includes(value) ? `${value}` : '' }),
   )
@@ -183,4 +183,45 @@ export const LINE_MIXED: ChartView = {
       highlight: true,
     }),
   ],
+}
+
+const REGRET = [
+  'Contentes',
+  'Neutros',
+  'Um pouco arrependidos',
+  'Muito arrependidos',
+]
+const GALPERIN = { n: 1, anchor: 'ficha-0', title: 'Galperin (2013)' }
+const GROUPS = [
+  ['Mulheres heterossexuais', [27, 26, 27, 20], 'woman', 'men'],
+  ['Homens heterossexuais', [52, 25, 15, 7], 'man', 'women'],
+] as const
+
+/** Two stacked bars of four parts each: the women's covers women who seek
+ * men, the men's men who seek women. */
+export const STACKED: ChartView = {
+  kind: 'stacked',
+  domId: 'visual-exemplo-empilhadas',
+  title: 'Como se sentiram com a última transa casual',
+  note: null,
+  ticks: [0, 25, 50, 75, 100].map((value) => ({ value, text: `${value}%` })),
+  points: GROUPS.flatMap(([label, values, gender, seeks], bar) =>
+    values.map((value, part) =>
+      study(`${bar}-${part}`, label, value, `${value}%`, {
+        detail: REGRET[part] ?? null,
+        number: { text: `${value}%`, own: null, sources: [GALPERIN] },
+        country: { slug: 'eua', name: 'EUA' },
+        covers: [{ genders: [gender], seeks: [seeks] }],
+        stack: {
+          bar: `${bar}`,
+          part,
+          start: values.slice(0, part).reduce((a, b) => a + b, 0),
+        },
+      }),
+    ),
+  ),
+  definitions: [],
+  ownLines: [],
+  sources: [GALPERIN],
+  segments: REGRET,
 }
