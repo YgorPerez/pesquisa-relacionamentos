@@ -40,7 +40,7 @@ O relatório do NCHS descreve o uso de camisinha no sexo vaginal entre mulheres 
 | Mulheres, nenhuma transa com camisinha no ano: com cônjuge ou quem mora junto; com namorado firme | 72,4%; 31,7% | Tabela 1, p. 9 (coluna "None of the time") | "72.4 (1.2) 31.7 (2.4)" |
 | Homens, camisinha em todas as transas do ano: com cônjuge, noiva ou quem mora junto; com namorada firme | 8,9%; 35,9% | Tabela 1, p. 10 (coluna "Every time") | "8.9 (0.6) 35.9 (1.9)" |
 | Homens, nenhuma transa com camisinha no ano: com cônjuge ou quem mora junto; com namorada firme | 64,5%; 17,1% | Tabela 1, p. 10 (coluna "None of the time") | "64.5 (1.2) 17.1 (1.5)" |
-| O recorte por tipo de parceiro das mulheres só existe em 2013–2015 | Só 2013–2015 | Tabela 1, nota 3 | "Available for women in 2013–2015 only" |
+| Anos em que há o recorte por tipo de parceiro das mulheres | Só 2013–2015 | Tabela 1, nota 3 | "Available for women in 2013–2015 only" |
 | Diferença por tipo de parceiro em "todas as transas": significativa nos homens, não nas mulheres | Homens com parceira casual usam mais que com namorada firme; nas mulheres o padrão não aparece | p. 4 | "This pattern was not seen for women aged 15–44." |
 | Camisinha em 100% das transas das últimas quatro semanas, mulheres: parceiro casual; cônjuge ou quem mora junto | 42,8%; 12,4% | Tabela 2, p. 11 (coluna "Always (100%)") | "12.4 (0.9) 33.1 (2.2) 1,167 100.0 47.2 (4.4) 10.1 (2.2) 42.8 (4.4)" |
 | Idem, homens: parceira casual; cônjuge ou quem mora junto | 59,7%; 13,8% | Tabela 2, p. 12 (coluna "Always (100%)") | "13.8 (0.8) 44.1 (2.0) 3,984 100.0 21.4 (2.1) 18.9 (2.3) 59.7 (2.6)" |
