@@ -28,12 +28,12 @@ Num site de namoro criado para o experimento, os participantes foram sorteados p
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra efetiva após exclusões | 99 participantes | p. 11, Participants and Recruitment | "N = 99" |
-| Satisfação com a pessoa escolhida uma semana depois: quem escolheu entre 24 perfis contra quem escolheu entre 6 | Menor com mais perfis; d de Cohen = 0,41; p < 0,05 | p. 14, Results, teste de efeitos simples da hipótese de quantidade de opções | "p < .05, Cohen’s d = .41" |
-| Satisfação uma semana depois: quem podia trocar a escolha contra quem não podia | Sem diferença significativa; p = 0,74 | p. 14, Results, efeito principal de reversibilidade | "p = .74" |
-| Quem escolheu entre 24 perfis e podia trocar: quantos trocaram de fato | 13% | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
+| Quantas pessoas | 99 pessoas entraram na conta, depois das exclusões | p. 11, Participants and Recruitment | "N = 99" |
+| Satisfação uma semana depois, por número de perfis | Quem escolheu entre muitos perfis ficou menos satisfeito com a pessoa escolhida que quem escolheu entre poucos, uma diferença entre pequena e média (d = 0,41; p < 0,05) | p. 14, Results, teste de efeitos simples da hipótese de quantidade de opções | "p < .05, Cohen’s d = .41" |
+| Satisfação uma semana depois, por poder trocar | Quem podia trocar a escolha e quem não podia ficaram parecidos (p = 0,74) | p. 14, Results, efeito principal de reversibilidade | "p = .74" |
+| Quantos trocaram de fato | Entre os que escolheram entre muitos perfis e podiam trocar, 13% trocaram | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
 
-A diferença de satisfação entre os conjuntos não foi [[significativa]] logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
+"Muitos" são 24 perfis e "poucos" são 6. "d" mede o tamanho da diferença entre dois grupos: 0,2 é pequena e 0,5 é média. "p" diz o quanto a diferença poderia ser só acaso: abaixo de 0,05 costuma contar como pouco provável, e 0,74 não indica diferença nenhuma. A diferença de satisfação entre os conjuntos não foi [[significativa]] logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
 
 ## Definições
 

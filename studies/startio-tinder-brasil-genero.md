@@ -26,10 +26,10 @@ A Start.io, uma rede de anúncios em apps de celular, publica para cada segmento
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Usuários do Tinder no Brasil, por gênero | 83,1% homens; 16,9% mulheres | Página de audiência, 2º gráfico ("Gender") | "Male (83.1%) Female (16.9%)" |
-| Tamanho estimado da audiência | 5.356.451 aparelhos | Página de audiência, quadro "Geolocation stat", 4ª linha | "Audience size 5,356,451" |
-| Usuários de 18 a 24 anos | 39,8% | Página de audiência, "overview", 2ª frase | "Based on mobile apps and various device data signals, of the Tinder users in Brazil, 39.8% are in the 18-24 age group." |
-| Data da atualização | julho de 2026 | Página de audiência, rodapé dos 4 gráficos | "Updated: 07-2026" |
+| Gênero de quem usa o Tinder no Brasil | Pela estimativa da Start.io, 83,1% são homens e 16,9% são mulheres | Página de audiência, 2º gráfico ("Gender") | "Male (83.1%) Female (16.9%)" |
+| Tamanho da audiência | A estimativa é de 5.356.451 aparelhos | Página de audiência, quadro "Geolocation stat", 4ª linha | "Audience size 5,356,451" |
+| Jovens | 39,8% de quem usa o Tinder no Brasil têm de 18 a 24 anos, estimados a partir de apps e sinais dos aparelhos | Página de audiência, "overview", 2ª frase | "Based on mobile apps and various device data signals, of the Tinder users in Brazil, 39.8% are in the 18-24 age group." |
+| Data dos números | A página foi atualizada em julho de 2026 | Página de audiência, rodapé dos 4 gráficos | "Updated: 07-2026" |
 
 ## Limitações
 

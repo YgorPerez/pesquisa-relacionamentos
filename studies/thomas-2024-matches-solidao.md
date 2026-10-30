@@ -29,16 +29,16 @@ As participantes mandaram uma foto, achando que outras pessoas a avaliariam, e d
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Universitárias em um app de teste, com chance sorteada de receber match | 125 universitárias; chance alta (27/31) ou baixa (3/31) de match | Resumo | "In an experiment with 125 undergraduate women, we manipulated dating app feedback: When accepting a profile, participants had either a high (27/31) or a low chance (3/31) of receiving matches." |
-| Solidão: grupo de poucos matches contra o de muitos | Sem efeito (b = 3,26; p = 0,109) | Results, Effects on state loneliness | "we did not find a main effect of condition on participants' state loneliness ( b = 3.26, p = .109; H1 )" |
-| Medo de ficar solteira: mesma comparação | Sem efeito (b = 0,01; p = 0,945) | Results, Effects on fear of being single | "we did not find any effects of the condition on this variable ( b = 0.01, p = .945; H2 )" |
-| Solidão, só entre quem aceitou 7 perfis ou mais: mesma comparação | Mais solidão com poucos matches | Results | "the effect of the high chance of matches condition became significant for women who accepted seven or more profiles" |
-| Sobrecarga de escolha: mesma comparação | Mais sobrecarga com muitos matches (b = −0,19 no grupo de poucos) | Results, Effects on partner choice overload | "Young women in the low chance of matches (i.e. ostracism) condition experienced a lower level of partner choice overload compared to young women in the high matches condition ( b = −0.19, p = .034; H3 )" |
-| Sobrecarga de escolha em quem aceitou mais perfis | Mais sobrecarga (b = 0,08) | Results, Effects on partner choice overload | "Participants who accepted many profiles reported significantly more partner choice overload ( b = 0.08, p = .003)." |
-| Perfis aceitos (de 31), média | 5,73 | Method, Procedure | "The number of profiles accepted ranged from 0 to 18 ( M = 5.73, SD = 3.51)" |
-| Menor diferença entre os dois grupos que o estudo conseguia detectar | Detectava só diferenças a partir de d = 0,45 | Method, Participants | "we would have been able to detect a group difference of the size d = .45" |
+| Como foi o experimento | 125 universitárias usaram um app de teste; ao aceitar um perfil, um grupo tinha chance alta de match (27 em 31) e o outro, chance baixa (3 em 31) | Resumo | "In an experiment with 125 undergraduate women, we manipulated dating app feedback: When accepting a profile, participants had either a high (27/31) or a low chance (3/31) of receiving matches." |
+| Solidão | O grupo de poucos matches ficou um pouco acima do de muitos, mas a diferença pode ser acaso (b = 3,26; p = 0,109) | Results, Effects on state loneliness | "we did not find a main effect of condition on participants' state loneliness ( b = 3.26, p = .109; H1 )" |
+| Medo de ficar solteira | Os dois grupos ficaram iguais (b = 0,01; p = 0,945) | Results, Effects on fear of being single | "we did not find any effects of the condition on this variable ( b = 0.01, p = .945; H2 )" |
+| Solidão, entre quem aceitou mais perfis | Entre as que aceitaram sete perfis ou mais, o grupo de poucos matches sentiu mais solidão que o de muitos | Results | "the effect of the high chance of matches condition became significant for women who accepted seven or more profiles" |
+| Sobrecarga de escolha | O grupo de poucos matches sentiu menos sobrecarga para escolher parceiro que o de muitos (b = −0,19) | Results, Effects on partner choice overload | "Young women in the low chance of matches (i.e. ostracism) condition experienced a lower level of partner choice overload compared to young women in the high matches condition ( b = −0.19, p = .034; H3 )" |
+| Sobrecarga, por perfis aceitos | Quem aceitou muitos perfis sentiu mais sobrecarga (b = 0,08) | Results, Effects on partner choice overload | "Participants who accepted many profiles reported significantly more partner choice overload ( b = 0.08, p = .003)." |
+| Perfis aceitos | Cada participante aceitou em média 5,73 perfis, e o número foi de 0 a 18 | Method, Procedure | "The number of profiles accepted ranged from 0 to 18 ( M = 5.73, SD = 3.51)" |
+| O que o estudo conseguia detectar | Com esse número de pessoas, só diferenças a partir de um tamanho médio apareceriam com segurança (d = 0,45) | Method, Participants | "we would have been able to detect a group difference of the size d = .45" |
 
-"b" é a diferença estimada entre os grupos, na escala de cada medida (solidão de 0 a 100; medo de ficar solteira e sobrecarga de 1 a 5), com controle de idade e de estar ou não namorando.
+"b" é a diferença estimada entre os grupos, na escala de cada medida (solidão de 0 a 100; medo de ficar solteira e sobrecarga de 1 a 5), levando em conta a idade e estar ou não namorando. "p" diz o quanto a diferença poderia ser só acaso: abaixo de 0,05 costuma contar como pouco provável. "d" mede o tamanho de uma diferença entre dois grupos. Cada participante via 31 perfis.
 
 ## Limitações
 

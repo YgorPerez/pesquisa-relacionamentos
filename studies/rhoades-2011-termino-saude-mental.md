@@ -29,16 +29,16 @@ Adultos que namoravam no início foram acompanhados por 20 meses, com questioná
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Não casados de 18 a 35 anos que tiveram ao menos um término em 20 meses | 36,5% | Resumo | "Among unmarried 18 to 35-year olds ( N = 1295), 36.5% had one or more break-ups over a 20-month period." |
-| A mesma pessoa antes e depois do término | Mais sofrimento psicológico e menos satisfação com a vida | Resumo | "Experiencing a break-up was associated with an increase in psychological distress and a decline in life satisfaction (from pre- to post-dissolution)." |
-| Tamanho da mudança | d = 0,24 no sofrimento e na satisfação com a vida (pequeno) | Results, Tests of Hypotheses | "d =.24 for life satisfaction and .24 for psychological distress, suggesting that these are small, but not trivial, within-subjects effects" |
-| Términos em que o sofrimento psicológico ou a satisfação com a vida piorou mais de meio desvio-padrão | 43,4% | Results, Tests of Hypotheses | "Overall, in 43.4% of break-ups, there was a decline in well-being (as measured by either psychological distress or life satisfaction) that was greater than .5 standard deviations." |
-| Términos com melhora do sofrimento | 19,6% tiveram queda de mais de meio desvio-padrão | Results, Tests of Hypotheses | "19.6% of the cases reported a decrease in psychological distress that was greater than .5 standard deviations" |
-| Diferença entre homens e mulheres | Nenhuma | Results, Tests of Hypotheses | "Follow-up tests showed no significant moderation by gender" |
-| Ter sido deixado (o outro queria terminar mais) | Não mudou o tamanho da piora | Discussion | "we found no significant associations between a desire to break-up and the magnitude of change in these outcomes" |
-| Ter morado junto e ter planos de casar | Queda maior na satisfação com a vida | Resumo | "having been cohabiting and having had plans for marriage were associated with larger declines in life satisfaction" |
-| Já estar namorando outra pessoa | Queda menor na satisfação com a vida | Resumo | "having begun to date someone new was associated with smaller declines" |
-| Duração da relação, morar junto, planos de casar, filho em comum e contato com o ex: efeito no sofrimento psicológico | Nenhum mudou o sofrimento | Results | "none were significant predictors of psychological distress following a break-up" |
+| Quantos tiveram um término | Entre não casados de 18 a 35 anos, 36,5% tiveram ao menos um término em 20 meses | Resumo | "Among unmarried 18 to 35-year olds ( N = 1295), 36.5% had one or more break-ups over a 20-month period." |
+| Antes e depois do término | Depois do término, a mesma pessoa teve mais sofrimento psicológico e menos satisfação com a vida que antes | Resumo | "Experiencing a break-up was associated with an increase in psychological distress and a decline in life satisfaction (from pre- to post-dissolution)." |
+| Tamanho da mudança | Pequena, mas não desprezível, no sofrimento e na satisfação com a vida (d = 0,24 nos dois) | Results, Tests of Hypotheses | "d =.24 for life satisfaction and .24 for psychological distress, suggesting that these are small, but not trivial, within-subjects effects" |
+| Términos com piora maior | Em 43,4% dos términos, o sofrimento psicológico ou a satisfação com a vida piorou mais de meio desvio-padrão | Results, Tests of Hypotheses | "Overall, in 43.4% of break-ups, there was a decline in well-being (as measured by either psychological distress or life satisfaction) that was greater than .5 standard deviations." |
+| Términos com melhora | Em 19,6% dos casos, o sofrimento psicológico caiu mais de meio desvio-padrão | Results, Tests of Hypotheses | "19.6% of the cases reported a decrease in psychological distress that was greater than .5 standard deviations" |
+| Homens e mulheres | A piora não mudou de forma clara entre homens e mulheres | Results, Tests of Hypotheses | "Follow-up tests showed no significant moderation by gender" |
+| Quem queria mais o término | Não apareceu ligação clara entre quem queria mais terminar e o tamanho da mudança; o estudo não mediu quem de fato terminou | Discussion | "we found no significant associations between a desire to break-up and the magnitude of change in these outcomes" |
+| Morar junto e ter planos de casar | Quem morava junto e quem tinha planos de casar teve queda maior na satisfação com a vida | Resumo | "having been cohabiting and having had plans for marriage were associated with larger declines in life satisfaction" |
+| Já estar saindo com outra pessoa | Quem tinha começado a sair com alguém novo teve queda menor na satisfação com a vida | Resumo | "having begun to date someone new was associated with smaller declines" |
+| Sofrimento psicológico e a relação | Duração da relação, morar junto, planos de casar, filho em comum e contato com o ex não andaram junto com o sofrimento depois do término | Results | "none were significant predictors of psychological distress following a break-up" |
 
 "d" é a mudança média em desvios-padrão, comparando a mesma pessoa antes e depois do término; 0,2 é pequeno, 0,5 é médio. Uma média pequena esconde trajetórias opostas: perto de metade dos términos trouxe uma piora média ou maior, e uma parte trouxe melhora.
 

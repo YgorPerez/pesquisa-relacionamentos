@@ -27,12 +27,12 @@ Quantos brasileiros com smartphone já saíram com alguém que conheceram em app
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Já saiu com alguém conhecido em app, 16–29 anos | 29% | 1º parágrafo | "29% dos jovens brasileiros entre 16 e 29 anos de idade que têm smartphone já saíram com alguém que conheceram através de apps de relacionamento" |
-| Idem, 30–49 anos e 50 anos ou mais; total | 25%; 14%; média de 23% | 2º parágrafo | "O percentual é menor no grupo entre 30 e 49 anos (25%) e na faixa com 50 anos ou mais (14%). Na média, 23% dos brasileiros com smartphone já se encontraram com gente por meio desse tipo de app." |
-| Diferença por gênero, renda ou região | Nenhuma significativa | 3º parágrafo | "A pesquisa não encontrou variação significativa por gênero, renda familiar mensal ou região do Brasil." |
-| App mais usado, entre quem já teve encontro por app | Tinder 43%; Badoo 5%; Bumble 3%; Grindr 3% | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "43% dos brasileiros que já se encontraram com alguém por meio desse tipo de aplicativo citaram o Tinder como aquele que mais usam. Depois vieram Badoo (5%), Bumble (3%) e Grindr (3%)." |
-| Não lembram o nome do app que mais usam | 28% | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "E 28% dos entrevistados disseram que não lembravam o nome do app de relacionamento que mais usam." |
-| Metodologia | 2.019 entrevistados, de 12 a 27 de março de 2025; margem de erro de 2,2 p.p. | 5º parágrafo | "A pesquisa foi feita entre 12 e 27 de março de 2025 com 2.019 brasileiros que acessam a Internet e possuem smartphone. A margem de erro é de 2,2 pontos percentuais." |
+| Encontro por app, entre jovens | 29% das pessoas de 16 a 29 anos com smartphone já saíram com alguém que conheceram em app de relacionamento | 1º parágrafo | "29% dos jovens brasileiros entre 16 e 29 anos de idade que têm smartphone já saíram com alguém que conheceram através de apps de relacionamento" |
+| Encontro por app, nas outras idades | 25% de 30 a 49 anos e 14% com 50 anos ou mais; na média, 23% dos brasileiros com smartphone | 2º parágrafo | "O percentual é menor no grupo entre 30 e 49 anos (25%) e na faixa com 50 anos ou mais (14%). Na média, 23% dos brasileiros com smartphone já se encontraram com gente por meio desse tipo de app." |
+| Gênero, renda e região | A pesquisa não encontrou diferença clara por gênero, renda da família ou região | 3º parágrafo | "A pesquisa não encontrou variação significativa por gênero, renda familiar mensal ou região do Brasil." |
+| App mais usado | Entre quem já teve encontro por app, 43% citaram o Tinder como o que mais usam, depois Badoo (5%), Bumble (3%) e Grindr (3%) | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "43% dos brasileiros que já se encontraram com alguém por meio desse tipo de aplicativo citaram o Tinder como aquele que mais usam. Depois vieram Badoo (5%), Bumble (3%) e Grindr (3%)." |
+| Nome do app | 28% dos entrevistados disseram não lembrar o nome do app que mais usam | 4º parágrafo (seção "Tinder lidera entre apps de relacionamento") | "E 28% dos entrevistados disseram que não lembravam o nome do app de relacionamento que mais usam." |
+| Como foi a pesquisa | Foram ouvidos 2.019 brasileiros com internet e smartphone, de 12 a 27 de março de 2025; a margem de erro é de 2,2 pontos percentuais | 5º parágrafo | "A pesquisa foi feita entre 12 e 27 de março de 2025 com 2.019 brasileiros que acessam a Internet e possuem smartphone. A margem de erro é de 2,2 pontos percentuais." |
 
 ## Limitações
 

@@ -28,17 +28,17 @@ O Cyberball é um jogo de passar bola na tela. O participante acha que joga com 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Estudos e participantes | 120 estudos, 11.869 pessoas | Resumo | "We examined 120 Cyberball studies (N = 11,869)" |
-| Excluídos contra incluídos no jogo, logo após a exclusão | d = −1,36 (grande) | Results, Simple ostracism effect | "The analysis yielded an estimated average effect of d = -1.36, p < .001, 95% CI [-1.54, -1.18]." |
-| Excluídos contra incluídos, na última medida | Cerca de 0,73 desvio-padrão pior, em média 4,85 minutos depois | Results, Simple ostracism effect | "long after ostracism has occurred (Mtime = 4.85 minutes), ostracized participants on average scored around -0.73 standard deviation units lower" |
-| A diferença entre excluídos e incluídos é menor na última medida que na primeira, mas os minutos passados não explicam a queda | De −1,36 para −0,76 | Discussion | "the ostracism effect decreased from the first (d = -1.36) to the last measure (d = -.76)" |
-| Gênero | Proporção de homens não mudou o efeito | Discussion, Does gender of participants matter? | "proportions of males and females did not significantly predict the mean effect size" |
-| Idade | Não mudou o efeito | Discussion, Does age of participants matter? | "we failed to find moderation of ostracism effects by mean age of the study samples" |
-| País | Sem diferença entre EUA e outros países ocidentais | Discussion, Does culture or country matter? | "there is no systematic difference in the ostracism response for Western countries and the United States" |
-| Quanto os resultados variam de um estudo para outro, além do acaso (I²) | I² = 92,99% | Results, Simple ostracism effect | "I2 = 92.99%" |
-| Efeito em comportamentos com os outros (ajudar, agredir) | Menor que nos sentimentos sobre si | Discussion, Does type of dependent variable matter? | "psychological effects of ostracism are large, but that this effect might be smaller for interpersonal behaviors" |
+| Quantos estudos e pessoas | 120 estudos com o Cyberball, um jogo virtual de exclusão, com 11.869 pessoas | Resumo | "We examined 120 Cyberball studies (N = 11,869)" |
+| Logo depois da exclusão | Quem foi excluído do jogo ficou pior que quem foi incluído, uma diferença grande (d = −1,36) | Results, Simple ostracism effect | "The analysis yielded an estimated average effect of d = -1.36, p < .001, 95% CI [-1.54, -1.18]." |
+| Na última medida | Em média 4,85 minutos depois, os excluídos ainda estavam cerca de 0,73 desvio-padrão abaixo dos incluídos | Results, Simple ostracism effect | "long after ostracism has occurred (Mtime = 4.85 minutes), ostracized participants on average scored around -0.73 standard deviation units lower" |
+| Da primeira à última medida | A diferença entre excluídos e incluídos diminuiu, mas os minutos passados não explicam a queda (d de −1,36 para −0,76) | Discussion | "the ostracism effect decreased from the first (d = -1.36) to the last measure (d = -.76)" |
+| Gênero | A parte de homens e de mulheres em cada estudo não mudou de forma clara o tamanho da diferença | Discussion, Does gender of participants matter? | "proportions of males and females did not significantly predict the mean effect size" |
+| Idade | A idade média dos participantes de cada estudo não mudou de forma clara o tamanho da diferença | Discussion, Does age of participants matter? | "we failed to find moderation of ostracism effects by mean age of the study samples" |
+| País | Não houve diferença sistemática entre os Estados Unidos e outros países ocidentais | Discussion, Does culture or country matter? | "there is no systematic difference in the ostracism response for Western countries and the United States" |
+| De estudo para estudo | Os resultados mudam muito de um estudo para outro, mais do que o acaso explicaria (I² = 92,99%) | Results, Simple ostracism effect | "I2 = 92.99%" |
+| Comportamentos com os outros | A diferença é grande no que a pessoa sente e pode ser menor em comportamentos como ajudar ou agredir | Discussion, Does type of dependent variable matter? | "psychological effects of ostracism are large, but that this effect might be smaller for interpersonal behaviors" |
 
-"d" é a diferença entre excluídos e incluídos em desvios-padrão; 0,8 já é considerado grande. O sinal negativo quer dizer pior nos excluídos.
+"d" é a diferença entre excluídos e incluídos em desvios-padrão; 0,8 já é considerado grande. O sinal negativo quer dizer pior nos excluídos. I² diz quanto da variação entre estudos não parece acaso: quanto mais perto de 100%, mais os estudos discordam.
 
 ## Limitações
 
