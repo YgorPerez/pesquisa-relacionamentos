@@ -352,7 +352,8 @@ export default function VisualChartPlot({
       margin: {
         top: layout.label - layout.row / 2 + 16,
         left: 12,
-        right: stacked ? 12 : VALUE_ROOM,
+        // Stacked bars end at 100%: room for that tick's text only.
+        right: stacked ? 20 : VALUE_ROOM,
       },
       theme: THEME,
     })
