@@ -1,8 +1,11 @@
 /** The words of a chart drawn by the library (`visual-chart.tsx`) and of
- * its tap detail. */
+ * its card. */
 export const CHART_COPY = {
   you: 'você',
   close: 'Fechar',
+  openFactSheet: (title: string) => `Abrir Ficha: ${title}`,
+  pinByPointer: 'Clique para fixar e abrir a Ficha',
+  pinByKey: 'Enter para fixar e abrir a Ficha',
   hint: 'Toque numa barra ou num ponto para ver o número exato e a Ficha.',
   calculation: (expression: string, value: string) =>
     `Conta nossa: ${expression} = ${value}`,

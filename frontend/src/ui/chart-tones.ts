@@ -14,5 +14,12 @@ export const MUTED = 'var(--color-tinta-2)'
 export const MARKER = 'var(--color-rosa-mito)'
 /** The "você" tag's yellow. */
 export const YOU = 'var(--color-amarelo-voce)'
-/** The opacity of a mark the chosen country dims. */
+/** The opacity of a mark that is not lit: the chosen country or the active
+ * row dims it. */
 export const DIMMED = 0.22
+/** The verde-água behind the active row, a mark that leads to its Fact sheet
+ * (#499), at this opacity over the page. */
+export const ACTIVE = 'var(--color-agua-fonte)'
+export const ACTIVE_OPACITY = 0.32
+/** A time line's guide and the row's outline. */
+export const ACTIVE_LINE = 'var(--color-agua-tinta)'

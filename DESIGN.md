@@ -158,8 +158,8 @@ Papel e tinta fazem quase todo o trabalho; a cor entra como tinta de risografia,
 
 ### Tertiary
 
-- **Verde-água risografia "caminho até a fonte"** (agua-fonte): o fundo da referência em hover e o preenchimento do círculo da Ficha (30%). Só o que leva à fonte.
-- **Verde-água de tinta** (agua-tinta): o mesmo papel para texto e traço. O anel e o número das referências, a numeração das Fichas, setas, círculo, as notas de margem, o visto de "lido no original", o sublinhado do título da Ficha.
+- **Verde-água risografia "caminho até a fonte"** (agua-fonte): o fundo da referência em hover, o preenchimento do círculo da Ficha (30%) e a linha de um gráfico sob o mouse (32%), porque a marca leva à Ficha. Só o que leva à fonte.
+- **Verde-água de tinta** (agua-tinta): o mesmo papel para texto e traço. O anel e o número das referências, a numeração das Fichas, setas, círculo, as notas de margem, o visto de "lido no original", o sublinhado do título da Ficha, a guia da linha do tempo, o contorno do cartão fixado.
 
 ### Neutral
 
@@ -283,6 +283,10 @@ Três retângulos desenhados à mão, levemente tortos, contorno em tinta. Preen
 O número da referência fica dentro de um anel desenhado à mão (SVG, traço de 1,8px em verde-água de tinta) de 26 por 25px sobre folha, com o número em verde-água de tinta, cerca de 0,3em de espaço antes e área de toque ampliada; no hover o fundo vira verde-água. Ao tocar, o texto que o número cita ganha esse mesmo fundo verde-água claro, do anel anterior do parágrafo (ou do começo dele) até o anel, e abre ao lado do anel um popover com o cartão da Ficha da lista do fim e "abrir Ficha". Anéis lado a lado marcam o mesmo trecho. Num Visual, a figura inteira ganha contorno e fundo verde-água claro. No desktop, o hover ou o foco do teclado marcam o trecho sem abrir o popover. A marca sai quando o popover fecha ou o ponteiro sai. Sem JS, o número leva à Ficha na lista do fim.
 
 A primeira proposta era uma seta traçada do número até a Ficha. Ela foi trocada por círculo e seta curta porque uma seta do tamanho da página não se lê num celular.
+
+### Cartão do gráfico
+
+Um cartão só por página, para todo gráfico e tabela de Estudos; o diagrama fica de fora. Com o mouse, em qualquer ponto da linha (título e medida inclusive): cursor de mão, verde-água claro atrás da linha, as outras apagadas, e o cartão ao lado da marca, sem botões, dizendo como fixar. Na linha do tempo o cursor é a mira, e uma guia tracejada em verde-água de tinta e o cartão pulam para o ano mais próximo, em qualquer ponto do desenho. Um clique, um toque ou Enter fixa o cartão, com contorno em verde-água de tinta, o link "Abrir Ficha" e "Fechar". Ele fecha com Esc, um clique fora, o botão ou a mesma marca de novo. Fica ao lado da marca quando a tela tem lugar e, no celular, embaixo dela, e cabe em 360px. Contorno de 2px, sem sombra (The Halftone Rule). As setas levam o cartão de marca em marca, sem fixar, e Tab entra no cartão fixado. Sem JS, o SVG fica como está: sem cursor de mão e sem dica.
 
 ### Perfil: destacar sem esconder
 

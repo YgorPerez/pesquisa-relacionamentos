@@ -2,7 +2,7 @@
 // definitions and the tap detail. In Storybook the plot mounts after the
 // library arrives, as on a page reached by a link inside the site.
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, within } from 'storybook/test'
+import { expect, fireEvent, userEvent, waitFor, within } from 'storybook/test'
 import { DefinitionGlyph } from './definition-glyph'
 import { VisualChart } from './visual-chart'
 import {
@@ -32,6 +32,34 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The card hangs from the page's end, out of the story's canvas. */
+const cardElement = () =>
+  document.querySelector<HTMLElement>('[data-slot="detalhe-do-grafico"]')
+const shownCard = () =>
+  waitFor(() => {
+    const card = cardElement()
+    if (!card) throw new Error('no card')
+    return card
+  })
+const pinnedCard = () =>
+  waitFor(() => {
+    const card = document.querySelector<HTMLElement>(
+      '[data-slot="detalhe-do-grafico"][data-fixado]',
+    )
+    if (!card) throw new Error('no pinned card')
+    return card
+  })
+/** A mouse move at this fraction of the drawing's width and height. */
+const hoverAt = (chart: Element, x: number, y: number) => {
+  const box = chart.getBoundingClientRect()
+  return fireEvent.pointerMove(chart, {
+    pointerType: 'mouse',
+    bubbles: true,
+    clientX: box.left + box.width * x,
+    clientY: box.top + box.height * y,
+  })
+}
+
 /** One dot per Study, two definitions, Brazil ringed. */
 export const Dots: Story = {}
 
@@ -52,26 +80,46 @@ export const LineWithProfile: Story = {
   args: { chart: LINE, profile: { gender: 'mulher' } },
 }
 
-/** Enter on the time line opens its first point: the value, the year, the
- * country and the Fact sheet. */
+/** Enter on the time line pins its first point: the value, the year, the
+ * country and the Fact sheet; the guide stands on that year. */
 export const LineTapDetail: Story = {
   args: { chart: LINE },
   play: async ({ canvasElement }) => {
-    const page = within(canvasElement)
-    const chart = await page.findByRole(
+    const chart = await within(canvasElement).findByRole(
       'img',
       { name: LINE.title },
       { timeout: 10_000 },
     )
     chart.focus()
     await userEvent.keyboard('{Enter}')
-    const detail = await page.findByRole('button', { name: 'Fechar' })
-    const box = within(detail.closest('[data-slot="detalhe-do-grafico"]')!)
+    const box = within(await pinnedCard())
     await expect(box.getByText('2004')).toBeInTheDocument()
     await expect(box.getByText('13,5%')).toBeInTheDocument()
     await expect(
-      box.getByRole('link', { name: /^Ficha \d: / }),
+      box.getByRole('link', { name: /^Abrir Ficha: / }),
     ).toBeInTheDocument()
+    await expect(chart.querySelector('[data-ts-key="guide"]')).not.toBeNull()
+    await userEvent.keyboard('{Escape}')
+  },
+}
+
+/** The mouse anywhere over the plot, far from any dot: the guide and the
+ * card snap to the nearest year, and leaving takes both away. */
+export const LineHover: Story = {
+  args: { chart: LINE },
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: LINE.title },
+      { timeout: 10_000 },
+    )
+    await hoverAt(chart, 0.5, 0.1)
+    const card = await shownCard()
+    await expect(within(card).getByText('2014')).toBeInTheDocument()
+    await expect(within(card).queryByRole('link')).toBeNull()
+    await expect(chart.querySelector('[data-ts-key="guide"]')).not.toBeNull()
+    await userEvent.unhover(chart)
+    await waitFor(() => expect(cardElement()).toBeNull())
   },
 }
 
@@ -91,28 +139,90 @@ export const CountryChosen: Story = { args: { country: 'eua' } }
 /** A Profile of 30: "você" on the two Studies that cover it. */
 export const WithProfile: Story = { args: { profile: { age: 30 } } }
 
-/** Enter on the chart opens the first point's exact value, what its Study
- * measured (the definition its shape stands for) and its Fact sheet's
- * ring; "Fechar" closes it. */
+/** Enter on the chart pins the first point's exact value, what its Study
+ * measured (the definition its shape stands for) and the way to its Fact
+ * sheet; "Fechar" closes it. */
 export const TapDetail: Story = {
   play: async ({ canvasElement }) => {
-    const page = within(canvasElement)
-    const chart = await page.findByRole(
+    const chart = await within(canvasElement).findByRole(
       'img',
       { name: DOTS.title },
       { timeout: 10_000 },
     )
     chart.focus()
     await userEvent.keyboard('{Enter}')
-    const close = await page.findByRole('button', { name: 'Fechar' })
-    const box = within(close.closest('[data-slot="detalhe-do-grafico"]')!)
+    const box = within(await pinnedCard())
     await expect(box.getByText('Mede')).toBeInTheDocument()
     await expect(box.getByText(DOTS.definitions[0]!.legend)).toBeInTheDocument()
     await expect(
-      page.getByRole('link', { name: /^Ficha \d: / }),
+      box.getByRole('link', { name: /^Abrir Ficha: / }),
     ).toBeInTheDocument()
-    await userEvent.click(close)
-    await expect(page.queryByRole('button', { name: 'Fechar' })).toBeNull()
+    await userEvent.click(box.getByRole('button', { name: 'Fechar' }))
+    await waitFor(() => expect(cardElement()).toBeNull())
+  },
+}
+
+/** The mouse on a row's title, above its mark: the row lights, the others
+ * dim and the card shows without buttons. A click pins it with the Fact
+ * sheet's link, it holds while the mouse moves on, and a click outside closes
+ * it. */
+export const HoverAndPin: Story = {
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: DOTS.title },
+      { timeout: 10_000 },
+    )
+    // The second of three rows, on its title's line.
+    const y = 0.42
+    await hoverAt(chart, 0.2, y)
+    const card = await shownCard()
+    await expect(within(card).getByText('Rosenfeld (2019)')).toBeInTheDocument()
+    await expect(within(card).queryByRole('button')).toBeNull()
+    await expect(
+      chart.querySelector('[data-ts-key="active-row"]'),
+    ).not.toBeNull()
+
+    const box = chart.getBoundingClientRect()
+    await fireEvent.click(chart, {
+      clientX: box.left + box.width * 0.2,
+      clientY: box.top + box.height * y,
+    })
+    const pinned = within(await pinnedCard())
+    await expect(pinned.getByRole('link')).toHaveTextContent(
+      'Abrir Ficha: Rosenfeld (2019)',
+    )
+    await hoverAt(chart, 0.2, 0.05)
+    await expect(pinned.getByText('Rosenfeld (2019)')).toBeInTheDocument()
+
+    // The mouse leaves for the click outside.
+    await fireEvent.mouseLeave(chart.parentElement!)
+    await userEvent.click(document.body)
+    await waitFor(() => expect(cardElement()).toBeNull())
+  },
+}
+
+/** The arrows move the card along the rows, unpinned; Enter pins; Esc
+ * closes. */
+export const KeyboardCard: Story = {
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: DOTS.title },
+      { timeout: 10_000 },
+    )
+    chart.focus()
+    await userEvent.keyboard('{ArrowDown}')
+    const card = await waitFor(async () => {
+      const shown = await shownCard()
+      await expect(shown).toHaveTextContent('Rosenfeld (2019)')
+      return shown
+    })
+    await expect(within(card).queryByRole('button')).toBeNull()
+    await userEvent.keyboard('{Enter}')
+    await pinnedCard()
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(cardElement()).toBeNull())
   },
 }
 
@@ -135,16 +245,13 @@ export const StackedTap: Story = {
     )
     chart.focus()
     await userEvent.keyboard('{Enter}')
-    const detail = await page.findByText('Contentes', {
-      selector: '[data-slot="detalhe-do-grafico"] span',
-    })
-    await expect(detail).toBeInTheDocument()
+    await expect(await pinnedCard()).toHaveTextContent('Contentes')
     await userEvent.keyboard('{ArrowRight}{Enter}')
-    await expect(
-      await page.findByText('Neutros', {
-        selector: '[data-slot="detalhe-do-grafico"] span',
-      }),
-    ).toBeInTheDocument()
+    await waitFor(async () =>
+      expect(await pinnedCard()).toHaveTextContent('Neutros'),
+    )
+    await userEvent.keyboard('{Escape}')
+    await page.findByRole('img', { name: STACKED.title })
   },
 }
 
@@ -155,20 +262,25 @@ export const Plot: StoryObj = {
       chart={DOTS}
       country={null}
       profile={null}
+      active={null}
+      onHover={() => {}}
       onSelect={() => {}}
     />
   ),
 }
 
-/** The tap detail of our own calculation, with its definition and "você". */
+/** The words of a pinned card of our own calculation, with its definition
+ * and "você". */
 export const Detail: StoryObj = {
   render: () => (
-    <VisualDetail
-      point={{ ...DOTS.points[1]!, number: BARS.points[1]!.number }}
-      definitions={DOTS.definitions}
-      you
-      onClose={() => {}}
-    />
+    <div className="w-75 text-nota leading-nota">
+      <VisualDetail
+        point={{ ...DOTS.points[1]!, number: BARS.points[1]!.number }}
+        definitions={DOTS.definitions}
+        you
+        onClose={() => {}}
+      />
+    </div>
   ),
 }
 
