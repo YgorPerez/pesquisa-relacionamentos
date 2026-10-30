@@ -48,8 +48,15 @@ const THEME = {
 /** Letters per line of a bar's label (13px) and of a measure (12px), which
  * fit a 350px phone. */
 const LABEL_LINE = 40
-/** Where a range's words go, under its line. */
-const RANGE_WORDS = 19
+/** A row with a range (#472) draws its average on the row's line, like any
+ * dot, and the range on a line of its own under it (`line`), so Brazil's
+ * ring, a few points from the average on a phone, never covers its dot.
+ * The countries' words go under the range (`words`), and the row grows by
+ * `extra`, which keeps them as far from the next title as a plain row's
+ * value is. */
+const SPREAD = { line: 22, words: 46, extra: 46 } as const
+/** A row plot's margins over and under its rows, together. */
+const ROWS_MARGIN = 40
 const MEASURE_LINE = 56
 /** The value after the mark: room for the longest at the right end, and
  * never less than `VALUE_ROOM`. */
@@ -132,13 +139,13 @@ function valueRoom(chart: ChartView, dx: number) {
   const plot = INITIAL_WIDTH - LEFT - VALUE_ROOM
   return Math.max(
     VALUE_ROOM,
-    ...chart.points.map((p) => {
-      // A row with a range writes "média N%" after the range's top (#472).
-      const at = Math.max(p.value, ...(p.range ?? []).map((q) => q.value))
-      return Math.ceil(
-        dx + writtenValue(p).length * VALUE.wideLetter - (1 - at / top) * plot,
-      )
-    }),
+    ...chart.points.map((p) =>
+      Math.ceil(
+        dx +
+          writtenValue(p).length * VALUE.wideLetter -
+          (1 - p.value / top) * plot,
+      ),
+    ),
   )
 }
 
@@ -156,6 +163,13 @@ function layoutOf(chart: ChartView): Layout {
     ? LAYOUT.wrappedBars
     : LAYOUT.bars
 }
+/** The chart's host. A tap or click focuses the library's SVG (it takes
+ * the keys), and the browser rings a focused SVG even when the focus came
+ * from the pointer, which framed the plot in black after a tap and never
+ * without JS. Only the keyboard's focus keeps the ring (`styles.css`). */
+const HOST_CLASS =
+  'font-body text-tinta [&_svg:focus:not(:focus-visible)]:outline-none'
+
 /** What the server lays out before the browser measures the column. */
 const INITIAL_WIDTH = 350
 /** The plot's left margin, where the labels start. */
@@ -224,10 +238,24 @@ const spreadWords = (r: Row) =>
         .map((q) => `${q.country?.name ?? q.label} ${q.number.text}`)
         .join(', ')
 
-/** A row's range: a line from its smallest point to its largest, through
- * the row's dot, and a tick on each point, which takes the tap like a
- * dot. */
-function rangeMarks(rows: Row[]) {
+/** Where a dot chart's rows sit, from the plot's top: a row with a range is
+ * `SPREAD.extra` taller than the others. */
+function rowPlaces(rows: Row[], row: number) {
+  const centers = new Map<string, number>()
+  let height = 0
+  for (const r of rows) {
+    centers.set(bandOf(r), height + row / 2)
+    height += row + (r.spread.length > 0 ? SPREAD.extra : 0)
+  }
+  return { center: (band: string) => centers.get(band) ?? 0, height }
+}
+type Places = ReturnType<typeof rowPlaces>
+
+/** A row's range, on its own line under the row's dot: a line from its
+ * smallest point to its largest, and a tick on each point, which takes the
+ * tap like a dot. */
+function rangeMarks(rows: Row[], places: Places) {
+  const line = (band: string) => places.center(band) + SPREAD.line
   const ranged = rows.filter((r) => r.spread.length > 0)
   if (ranged.length === 0) return []
   const ticks = ranged.flatMap((r) => r.spread)
@@ -240,7 +268,7 @@ function rangeMarks(rows: Row[]) {
           tickX(these, {
             id: `mark-range-${dimmed ? 'dimmed' : 'lit'}`,
             x: 'value',
-            y: (q) => q.at,
+            y: (q) => line(q.at),
             key: 'key',
             // A group each: on a row's line, the tap takes the nearest
             // tick or dot, not the first one drawn (`focusNearestY`).
@@ -257,8 +285,8 @@ function rangeMarks(rows: Row[]) {
       id: 'range',
       x1: (r) => Math.min(...r.spread.map((q) => q.value)),
       x2: end,
-      y1: 'key',
-      y2: 'key',
+      y1: (r) => line(r.key),
+      y2: (r) => line(r.key),
       key: (r) => `range-${r.key}`,
       stroke: INK,
       strokeWidth: 2,
@@ -274,12 +302,16 @@ function rangeMarks(rows: Row[]) {
  * anywhere on a row reaches its mark. */
 const onlyMarks = <P extends { markId: string }>(points: readonly P[]) =>
   points.filter((p) => p.markId.startsWith('mark'))
-const MARK_FOCUS: ChartFocusStrategy<Row, number, string> = {
+const MARK_FOCUS: ChartFocusStrategy<Row, number, RowY> = {
   resolve: (points, context) =>
     focusNearestY.resolve(onlyMarks(points), context),
   group: (points, context) => focusNearestY.group(onlyMarks(points), context),
   navigation: (points) => focusNearestY.navigation(onlyMarks(points)),
 }
+
+/** Where a row sits on the y axis: its band, or on a dot chart its center
+ * in pixels (`rowPlaces`). */
+type RowY = string | number
 
 /** The row a point sits on: its own, or its stacked bar's. */
 const bandOf = (r: ChartPoint) => r.stack?.bar ?? r.key
@@ -290,7 +322,7 @@ const bands = (rows: ReadonlyArray<ChartPoint>) => [
 /** On stacked bars a tap falls inside a part: the nearest bar, then the
  * part whose right end is the first past the finger (the library places a
  * bar's point at that end). The keys go through the parts bar by bar. */
-const STACK_FOCUS: ChartFocusStrategy<Row, number, string> = {
+const STACK_FOCUS: ChartFocusStrategy<Row, number, RowY> = {
   resolve: (points, context) => {
     const marks = onlyMarks(points)
     const [near] = focusNearestY.resolve(marks, context)
@@ -320,7 +352,7 @@ function stackedMarks(
 ) {
   const parts = chart.segments?.length ?? 1
   const start = (r: Row) => r.stack?.start ?? 0
-  const marks: ChartMark<Row, number, string>[] = []
+  const marks: ChartMark<Row, number, RowY>[] = []
   for (const dimmed of [false, true])
     for (let part = 0; part < parts; part++) {
       const these = rows.filter(
@@ -387,8 +419,13 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
 
 /** The marks of one kind, one per look: a definition's shape (dots only),
  * dimmed or not. */
-function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
-  const marks: ChartMark<Row, number, string>[] = []
+function pointMarks(
+  chart: ChartView,
+  rows: Row[],
+  hatch: string,
+  y: (r: Row) => RowY,
+) {
+  const marks: ChartMark<Row, number, RowY>[] = []
   for (const dimmed of [false, true]) {
     const some = rows.filter((r) => r.dimmed === dimmed)
     if (some.length === 0) continue
@@ -398,7 +435,7 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
         barX(some, {
           id: `mark-${dimmed ? 'dimmed' : 'lit'}`,
           x: 'value',
-          y: 'key',
+          y,
           key: 'key',
           maxThickness: 16,
           radius: 2,
@@ -416,7 +453,7 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
       const options = {
         id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
         x: 'value',
-        y: 'key',
+        y,
         key: 'key',
         fillOpacity,
         strokeOpacity: fillOpacity,
@@ -452,8 +489,9 @@ function rowWords(
   const right = new Map<string, number>()
   for (const point of points) {
     const datum = point.datum as Row | SpreadRow | undefined
-    if (!datum || !point.markId.startsWith('mark')) continue
-    const row = 'at' in datum ? datum.at : bandOf(datum)
+    // A range's ticks are on their own line, under the row's (`SPREAD`).
+    if (!datum || !point.markId.startsWith('mark') || 'at' in datum) continue
+    const row = bandOf(datum)
     right.set(row, Math.max(right.get(row) ?? 0, point.x))
   }
   return (row) => ({
@@ -717,7 +755,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
       height={above + (scaled ? LINE.plot : LINE.flatPlot) + LINE.axis}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
-      className="font-body text-tinta"
+      className={HOST_CLASS}
       onSelect={(point) => onSelect(point?.datum ?? null)}
     />
   )
@@ -740,27 +778,36 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     [chart, country, profile],
   )
   const layout = layoutOf(chart)
+  // A dot chart places its rows in pixels, so a row with a range can be
+  // taller; bars keep the library's bands.
+  const places = useMemo(
+    () => (layout === LAYOUT.dots ? rowPlaces(rows, layout.row) : null),
+    [rows, layout],
+  )
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
     const tone = (r: Row) => (r.dimmed ? MUTED : INK)
+    const y = (r: Row): RowY =>
+      places ? places.center(bandOf(r)) : bandOf(r)
     // The texts' own copies of the rows: the focus ring marks every point
     // whose datum is the focused one, and it belongs on the mark only.
     const words = rows.map((r) => ({ ...r }))
     const stacked = layout === LAYOUT.stacked
+    const marginTop = (layout.label[0] ?? 0) - layout.row / 2 + 16
     // Stacked bars write their values inside the parts, not after the mark.
     const stackMarks = stacked
       ? stackedMarks(chart, rows, words, layout.label[0] ?? 0)
       : null
     return defineChart({
       marks: stackMarks ?? [
-        ...rangeMarks(rows),
-        ...pointMarks(chart, rows, hatch),
+        ...(places ? rangeMarks(rows, places) : []),
+        ...pointMarks(chart, rows, hatch, y),
         ...layout.label.map((dy, line) =>
           text(words, {
             id: line === 0 ? 'label' : `label-${line}`,
             x: () => 0,
-            y: 'key',
+            y,
             // A key of its own: the focus ring marks only the bar or dot.
             key: (r) => `label-${line}-${r.key}`,
             text: (r) => labelLines(layout, r.label)[line] ?? null,
@@ -775,7 +822,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
           text(words, {
             id: `measure-${line}`,
             x: () => 0,
-            y: 'key',
+            y,
             key: (r) => `measure-${line}-${r.key}`,
             text: (r) => lines(r.detail, MEASURE_LINE)[line] ?? null,
             anchor: 'start',
@@ -784,22 +831,27 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
             fill: tone,
           }),
         ),
-        text(words, {
-          id: 'range-words',
-          x: () => 0,
-          y: 'key',
-          key: (r) => `range-words-${r.key}`,
-          text: spreadWords,
-          anchor: 'start',
-          dy: RANGE_WORDS,
-          fontSize: SMALL.fontSize,
-          fill: tone,
-        }),
+        ...(places
+          ? [
+              text(words, {
+                id: 'range-words',
+                x: () => 0,
+                y,
+                key: (r) => `range-words-${r.key}`,
+                text: spreadWords,
+                anchor: 'start',
+                dy: SPREAD.words,
+                fontSize: SMALL.fontSize,
+                fill: tone,
+              }),
+            ]
+          : []),
         text(words, {
           id: 'value',
-          // After the range's top, when the row has one: the dot is inside.
-          x: end,
-          y: 'key',
+          // After the dot, also on a row with a range: the range is on its
+          // own line under it.
+          x: 'value',
+          y,
           key: (r) => `value-${r.key}`,
           text: writtenValue,
           anchor: 'start',
@@ -823,24 +875,29 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
           },
         },
         y: {
-          scale: scaleBand<string>()
-            .domain(bands(rows))
-            .paddingInner(0)
-            .paddingOuter(0),
+          // Top down: a row's pixel center from the plot's top.
+          scale: places
+            ? scaleLinear().domain([places.height, 0])
+            : scaleBand<string>()
+                .domain(bands(rows))
+                .paddingInner(0)
+                .paddingOuter(0),
           axis: false,
         },
       },
       focus: stacked ? STACK_FOCUS : MARK_FOCUS,
-      // The sides are fixed: a long label must not squeeze the scale.
+      // The sides are fixed: a long label must not squeeze the scale. On a
+      // dot chart the bottom is too, so its pixels are the plot's.
       margin: {
-        top: (layout.label[0] ?? 0) - layout.row / 2 + 16,
+        top: marginTop,
         left: LEFT,
         // Stacked bars end at 100%: room for that tick's text only.
         right: stacked ? 20 : valueRoom(chart, layout.valueDx),
+        ...(places && { bottom: ROWS_MARGIN - marginTop }),
       },
       theme: THEME,
     })
-  }, [chart, rows, hatch, layout])
+  }, [chart, rows, hatch, layout, places])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
@@ -868,10 +925,12 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       definition={definition}
       renderSvg={renderSvg}
       initialWidth={INITIAL_WIDTH}
-      height={bands(rows).length * layout.row + 40}
+      height={
+        (places?.height ?? bands(rows).length * layout.row) + ROWS_MARGIN
+      }
       ariaLabel={chart.title}
       idPrefix={chart.domId}
-      className="font-body text-tinta"
+      className={HOST_CLASS}
       onSelect={(point) => onSelect(point?.datum ?? null)}
     />
   )
