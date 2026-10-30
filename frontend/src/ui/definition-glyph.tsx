@@ -23,7 +23,11 @@ export function DefinitionGlyph({ shape }: { shape: number }) {
           strokeWidth="1.8"
         />
       ) : (
-        <path d={HEXAGON} className={`${fill} stroke-tinta`} strokeWidth="1.8" />
+        <path
+          d={HEXAGON}
+          className={`${fill} stroke-tinta`}
+          strokeWidth="1.8"
+        />
       )}
     </svg>
   )

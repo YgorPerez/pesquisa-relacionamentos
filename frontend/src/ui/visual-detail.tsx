@@ -74,7 +74,10 @@ export function VisualDetail({
       )}
       <div className="mt-xs flex flex-wrap items-center justify-between gap-sm">
         <p className="m-0">
-          <SourceRefs sources={point.number.sources} glued={CHART_COPY.sources} />
+          <SourceRefs
+            sources={point.number.sources}
+            glued={CHART_COPY.sources}
+          />
         </p>
         <SiteButton variant="light" onClick={onClose}>
           {CHART_COPY.close}

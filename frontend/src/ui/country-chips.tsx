@@ -25,10 +25,7 @@ export function CountryChips({
         {CHART_COPY.chips}
       </p>
       <div className="flex flex-wrap gap-xs">
-        <Toggle
-          pressed={chosen === null}
-          onPressedChange={() => choose(null)}
-        >
+        <Toggle pressed={chosen === null} onPressedChange={() => choose(null)}>
           {CHART_COPY.allCountries}
         </Toggle>
         {countries.map((country) => (

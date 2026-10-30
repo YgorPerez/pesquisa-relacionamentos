@@ -143,7 +143,6 @@ function GuidePage() {
         {guide.elsewhere.length > 0 && <OtherTopics />}
 
         <GuideShare />
-
       </Column>
       <PageSelection factSheets={guide.factSheets} page="guide" />
       <TermPopover terms={guide.terms} />

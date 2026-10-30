@@ -244,7 +244,11 @@ export default function VisualChartPlot({
       },
       focus: MARK_FOCUS,
       // The sides are fixed: a long label must not squeeze the scale.
-      margin: { top: layout.label - layout.row / 2 + 16, left: 12, right: VALUE_ROOM },
+      margin: {
+        top: layout.label - layout.row / 2 + 16,
+        left: 12,
+        right: VALUE_ROOM,
+      },
       theme: THEME,
     })
   }, [chart, rows, hatch, layout])

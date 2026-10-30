@@ -441,7 +441,13 @@ function textBlocks(
       const chart = id === undefined ? undefined : drawing.charts.get(id)
       if (chart) return [{ key: `chart-${id}`, kind: 'chart', visual: chart }]
       return text.trim()
-        ? [{ key: `text-${n}-${index}`, kind: 'text', html: prose(text, drawing) }]
+        ? [
+            {
+              key: `text-${n}-${index}`,
+              kind: 'text',
+              html: prose(text, drawing),
+            },
+          ]
         : []
     })
 }

@@ -56,7 +56,10 @@ export interface ChartView {
   readonly title: string
   readonly note: string | null
   /** The value axis, from 0 to its last tick. */
-  readonly ticks: ReadonlyArray<{ readonly value: number; readonly text: string }>
+  readonly ticks: ReadonlyArray<{
+    readonly value: number
+    readonly text: string
+  }>
   readonly points: ReadonlyArray<ChartPoint>
   readonly definitions: ReadonlyArray<{
     readonly id: string
@@ -108,8 +111,7 @@ function pointFacts(
     return found ? [found] : []
   })
   const only = factSheets.length === 1 ? factSheets[0]?.countries : undefined
-  const name =
-    datum.country ?? (only?.length === 1 ? (only[0] ?? null) : null)
+  const name = datum.country ?? (only?.length === 1 ? (only[0] ?? null) : null)
   const where = name ? country(name) : null
   const index = definitions.findIndex((d) => d.id === datum.definition)
   return {
@@ -200,7 +202,11 @@ export function chartView(
     return {
       kind: 'dots',
       ...common,
-      ticks: ticksOf(Math.max(...visual.rows.map((r) => r.value)), undefined, unit),
+      ticks: ticksOf(
+        Math.max(...visual.rows.map((r) => r.value)),
+        undefined,
+        unit,
+      ),
       points,
       definitions: definitions.map(({ id, legend }) => ({ id, legend })),
       ownLines: [],

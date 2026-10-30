@@ -18,8 +18,9 @@ it('serves every bar and dot with its exact value before JavaScript', () => {
   const bars = page(
     renderToString(<VisualChart chart={BARS} country={null} profile={null} />),
   )
-  expect(bars.querySelectorAll('svg[role="img"] rect[data-ts-key]').length)
-    .toBeGreaterThanOrEqual(2)
+  expect(
+    bars.querySelectorAll('svg[role="img"] rect[data-ts-key]').length,
+  ).toBeGreaterThanOrEqual(2)
   const barText = bars.querySelector('svg[role="img"]')?.textContent ?? ''
   expect(barText).toContain('39%')
   expect(barText).toContain('61%')
@@ -49,9 +50,7 @@ it('marks the key value in pink and rings Brazil, for everyone', () => {
 
 it('lights the chosen country and dims the others', () => {
   const dots = page(
-    renderToString(
-      <VisualChart chart={DOTS} country="eua" profile={null} />,
-    ),
+    renderToString(<VisualChart chart={DOTS} country="eua" profile={null} />),
   )
   const values = [...dots.querySelectorAll('svg[role="img"] text')].filter(
     (t) => /%$/.test(t.textContent ?? '') && t.textContent !== '0%',
