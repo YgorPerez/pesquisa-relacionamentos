@@ -299,10 +299,10 @@
 
 /* ---------- 3. the loop that circles the Verbete ----------
  * The Glossário's Verbete the reader came to from a text (#358):
- * `.verbete-alvo`. */
+ * `.verbete-alvo` is on the block around the drawings, not on them (#492). */
 
 @layer components {
-  .verbete-alvo.laco {
+  .verbete-alvo .laco {
     position: absolute;
     inset: -10px;
     z-index: -1;
@@ -312,8 +312,8 @@
     pointer-events: none;
   }
 
-  .verbete-alvo.laco path,
-  .verbete-alvo.seta-laco path {
+  .verbete-alvo .laco path,
+  .verbete-alvo .seta-laco path {
     fill: none;
     stroke: var(--color-agua-tinta);
     stroke-width: 2.4;
@@ -323,12 +323,12 @@
     stroke-dashoffset: 1;
   }
 
-  .verbete-alvo.laco path {
+  .verbete-alvo .laco path {
     fill: color-mix(in srgb, var(--color-agua-fonte) 30%, transparent);
     animation: desenha-traco 0.9s var(--ease-sai) forwards;
   }
 
-  .verbete-alvo.seta-laco {
+  .verbete-alvo .seta-laco {
     position: absolute;
     left: -14px;
     top: -26px;
@@ -336,7 +336,7 @@
     pointer-events: none;
   }
 
-  .verbete-alvo.seta-laco path {
+  .verbete-alvo .seta-laco path {
     animation: desenha-traco 0.5s var(--ease-sai) 0.7s forwards;
   }
 
@@ -347,8 +347,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .verbete-alvo.laco path,
-    .verbete-alvo.seta-laco path {
+    .verbete-alvo .laco path,
+    .verbete-alvo .seta-laco path {
       animation: none;
       stroke-dashoffset: 0;
     }

@@ -37,6 +37,15 @@ test('from a text, the Verbete is circled and "voltar ao texto" goes back to the
     '0px',
   )
   await expect(page.locator('svg.laco')).toHaveCount(1)
+  // The loop's rules reach the drawings (#492): unstyled, the loop sits in
+  // the flow, 300×150 and filled black, and the arrow is a black tick.
+  for (const drawing of ['svg.laco', 'svg.seta-laco']) {
+    await expect(entry.locator(drawing)).toHaveCSS('position', 'absolute')
+    await expect(entry.locator(`${drawing} path`)).not.toHaveCSS(
+      'fill',
+      'rgb(0, 0, 0)',
+    )
+  }
 
   const back = entry.getByRole('button', { name: 'voltar ao texto' })
   expect((await back.boundingBox())?.height).toBeGreaterThanOrEqual(44)
