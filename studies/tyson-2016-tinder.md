@@ -49,7 +49,7 @@ Os autores criaram 14 perfis no Tinder, deram like em todo mundo que aparecia e 
 | Questionário: deram nota 4 ou 5 a usar o app para sexo casual de uma noite, mulheres | 15% | §VI | "compared to just 15% of women" |
 | Idem, homens | 49% | §VI | "49% of male respondents rated" |
 | Questionário: estimam que 10% ou menos dos matches viram encontro | 73% | §VI | "73% of respondents estimated that 10% or fewer of their matches result in a real-world meet-up" |
-| Questionário: dão like casualmente na maioria dos perfis, homens (nenhuma mulher) | 33% no texto | §VI | "Whereas 33% of men report using this strategy regularly, no women report ever using this." |
+| Questionário: dão like casualmente na maioria dos perfis, homens (nenhuma mulher) | 33% | §VI | "Whereas 33% of men report using this strategy regularly, no women report ever using this." |
 
 ## Limitações
 
