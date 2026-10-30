@@ -1,0 +1,308 @@
+<!doctype html>
+<!-- PROTOTYPE, throwaway: chart interaction with the Guide's real numbers.
+     Answers one question: does it now feel clickable? Not production code. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protótipo: gráficos interativos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&family=Kalam&display=swap">
+<style>
+:root{--papel:#f5f8f8;--folha:#fcfdfd;--tinta:#1a1c1c;--tinta2:#414948;--rosa:#e7a3b6;--agua:#95cfc5;--aguat:#0d6359;--agua-clara:rgba(149,207,197,.32)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:16px/1.45 'Atkinson Hyperlegible',system-ui,sans-serif;padding-bottom:96px}
+main{max-width:620px;margin:0 auto;padding:16px}
+h1,h2{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.015em;line-height:1.15}
+h1{font-size:25px;margin:.2em 0}
+h2{font-size:21px;margin:0 0 10px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border:1.5px solid var(--tinta);padding:1px 6px;border-radius:3px;background:var(--folha)}
+.lead{color:var(--tinta2);margin:.4em 0 1em}
+figure{margin:0 0 40px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 28px;font-size:14px}
+.chips span{color:var(--tinta2);width:100%}
+button{font:inherit;color:inherit}
+.chip,.key{background:var(--folha);border:1.5px solid var(--tinta);border-radius:999px;padding:5px 11px;cursor:pointer;min-height:36px;transition:transform .12s,background .12s}
+.chip[aria-pressed=true]{background:var(--tinta);color:var(--folha)}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;font-size:14px}
+.key{display:inline-flex;align-items:center;gap:6px;text-align:left;border-radius:8px;line-height:1.2}
+.key[aria-pressed=true]{background:var(--agua);}
+@media(max-width:600px){#state{font-size:10.5px;padding:5px 8px}}
+@media(hover:hover){.chip:hover,.key:hover{transform:translateY(-1px);background:var(--agua-clara)}.key[aria-pressed=true]:hover{background:var(--agua)}.chip[aria-pressed=true]:hover{background:var(--tinta)}}
+.glyph{width:14px;height:14px;flex:none}
+
+.plot{position:relative;background-image:repeating-linear-gradient(to right,#d4d9d9 0 1px,transparent 1px 20%);background-size:calc(100% - 72px) 100%;background-repeat:no-repeat;background-position:8px 0}
+.row{position:relative;display:block;width:100%;padding:7px 8px 8px;border-radius:7px;cursor:pointer;outline-offset:1px;transition:opacity .16s,background .16s,box-shadow .16s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.row .lab{display:block;font-size:13.5px;line-height:1.25}
+.row .study{display:block;font-weight:700;font-size:14px}
+.row .measure{display:block;font-size:12.5px;line-height:1.25;color:var(--tinta2)}
+.track{position:relative;height:24px;margin:5px 56px 0 0}
+.bar{position:absolute;left:0;top:4px;height:16px;background:var(--tinta);border-radius:4px;transition:height .14s,top .14s}
+.dot{position:absolute;top:12px;transform:translate(-50%,-50%);transition:transform .14s;display:flex}
+.dot svg{width:15px;height:15px}
+.val{position:absolute;top:2px;font-weight:700;font-size:14px;white-space:nowrap;margin-left:9px;transition:transform .14s}
+.val.key-number{background:var(--rosa);padding:0 4px;border-radius:2px}
+.dot + .val{margin-left:14px}
+.row.dim{opacity:.28}
+.row.off{opacity:.16}
+.row.active{background:var(--agua-clara);box-shadow:inset 0 0 0 1.5px var(--aguat);opacity:1}
+.row.active .bar{top:2px;height:20px}
+.row.active .dot{transform:translate(-50%,-50%) scale(1.3)}
+.row:focus-visible,.pt:focus-visible{outline:3px solid var(--tinta)}
+.spread{position:relative;height:30px;margin:2px 56px 0 0}
+.spread .line{position:absolute;top:14px;height:2px;background:var(--tinta)}
+.pt{position:absolute;top:0;width:38px;height:30px;margin-left:-19px;border:0;background:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.pt i{display:block;width:3px;height:15px;background:var(--tinta);border-radius:2px;transition:transform .14s}
+.pt.br i{width:15px;height:15px;border:2.5px solid var(--tinta);background:var(--papel);border-radius:50%}
+.pt.active i{transform:scale(1.35);background:var(--agua)}
+.spread-words{display:block;font-size:12.5px;color:var(--tinta2);margin-top:2px}
+.scale{display:flex;justify-content:space-between;margin:2px 64px 0 8px;font-size:11.5px;color:var(--tinta2)}
+
+.linewrap{position:relative;cursor:crosshair;touch-action:pan-y;-webkit-tap-highlight-color:transparent;border-radius:7px;outline-offset:2px}
+.linewrap:focus-visible{outline:3px solid var(--tinta)}
+.linewrap svg{display:block;width:100%;height:auto;overflow:visible}
+#guide{transition:opacity .1s}
+.lpt{transition:r .14s}
+
+.hint{display:inline-flex;align-items:center;gap:6px;margin:10px 0 0;font-size:13.5px;font-weight:700;color:var(--aguat);background:var(--agua-clara);border-radius:999px;padding:3px 11px 3px 8px}
+.hint svg{width:16px;height:16px}
+.note{font-family:Kalam,cursive;color:var(--aguat);font-size:16px;margin:10px 0 0;line-height:1.3}
+.none{font-size:14px;margin:6px 0 0;font-weight:700}
+
+.pulse{animation:pulse 1s ease-out 2}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(13,99,89,.55)}100%{box-shadow:0 0 0 18px rgba(13,99,89,0)}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}*{transition:none!important}}
+
+#card{position:absolute;z-index:20;width:min(300px,calc(100vw - 16px));background:var(--folha);border:1.5px solid var(--tinta);border-radius:8px;box-shadow:4px 4px 0 rgba(26,28,28,.2);padding:11px 13px;font-size:14px;line-height:1.35;pointer-events:none}
+#card[hidden]{display:none}
+#card.pinned{pointer-events:auto;border-color:var(--aguat);box-shadow:4px 4px 0 var(--agua)}
+#card b.t{display:block;font-size:14.5px}
+#card em{display:block;color:var(--tinta2);font-size:13px}
+#card .n{font:700 22px 'Bricolage Grotesque',system-ui,sans-serif;display:block;margin:3px 0}
+#card dl{display:grid;grid-template-columns:auto 1fr;gap:1px 9px;margin:0}
+#card dt{color:var(--tinta2)}#card dd{margin:0}
+#card .acts{display:flex;justify-content:space-between;align-items:center;margin-top:9px;gap:8px}
+#card a{color:var(--aguat);font-weight:700}
+#card .x{background:var(--folha);border:1.5px solid var(--tinta);border-radius:6px;padding:5px 11px;cursor:pointer;min-height:36px}
+#card .more{display:block;margin-top:6px;font-size:12.5px;color:var(--aguat);font-weight:700}
+
+#state{position:fixed;left:0;right:0;bottom:0;background:var(--tinta);color:var(--folha);font:12px/1.35 ui-monospace,monospace;padding:7px 12px;z-index:30;display:flex;gap:10px;align-items:center;justify-content:space-between}
+#state div{min-width:0;overflow-wrap:anywhere}
+#state button{flex:none;background:var(--folha);color:var(--tinta);border:0;border-radius:4px;padding:6px 8px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<main>
+<span class="tag">PROTÓTIPO, dados reais do Guia</span>
+<h1>Dá vontade de clicar?</h1>
+<p class="lead">Mexa nos três gráficos abaixo, com mouse, com o dedo ou com as setas do teclado. A faixa preta embaixo mostra o que o gráfico está registrando.</p>
+
+<div class="chips" id="chips"><span>Destacar um país nos gráficos</span></div>
+
+<figure id="c-bars"><h2>Como os casais héteros dos EUA se conheceram, em 1995 e em 2017</h2><div class="plot"></div><div class="scale"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></div><p class="hint"></p><p class="note">↖ um casal pode entrar em mais de um caminho, como online e amigos</p></figure>
+
+<figure id="c-dots"><h2>Quantos casais se conheceram online, conforme o estudo</h2><div class="legend"></div><div class="plot"></div><div class="scale"><span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span></div><p class="none" hidden>Nenhum estudo deste gráfico atende aos dois filtros.</p><p class="hint"></p><p class="note">↖ contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor</p></figure>
+
+<figure id="c-line"><h2>Casamentos em que um dos dois já tinha sido casado</h2><div class="linewrap" tabindex="0" role="group" aria-label="Linha no tempo, use as setas"></div><p class="hint"></p></figure>
+</main>
+
+<div id="card" hidden></div>
+<div id="state"><div id="state-text"></div><button id="replay">Repetir pulso</button></div>
+
+<script>
+const GLYPHS=[
+ '<svg class="glyph" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#1a1c1c"/></svg>',
+ '<svg class="glyph" viewBox="0 0 14 14"><path d="M7 .5 12.7 3.8v6.4L7 13.5 1.3 10.2V3.8Z" fill="#1a1c1c"/></svg>',
+ '<svg class="glyph" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.2" fill="#fcfdfd" stroke="#1a1c1c" stroke-width="1.8"/></svg>',
+ '<svg class="glyph" viewBox="0 0 14 14"><path d="M7 1.3 12 4.2v5.6L7 12.7 2 9.8V4.2Z" fill="#fcfdfd" stroke="#1a1c1c" stroke-width="1.8"/></svg>'];
+const DEFS=[
+ {id:'recentes-qualquer-meio',legend:'casais recentes, qualquer meio online'},
+ {id:'todos-qualquer-meio',legend:'todos os casais, qualquer meio online'},
+ {id:'recentes-so-site',legend:'casais recentes, só site ou app de namoro'},
+ {id:'todos-so-site',legend:'todos os casais, só site ou app de namoro'}];
+const RF='Rosenfeld, Thomas & Hausen (2019)';
+const BARS=[['Online, 1995',2,1995],['Online, 2017',39,2017,1],['Por amigos, 1995',33,1995],['Por amigos, 2017',20,2017],['No trabalho, 1995',19,1995],['No trabalho, 2017',11,2017],['Em bar ou restaurante, 1995',19,1995],['Em bar ou restaurante, 2017',27,2017]]
+ .map(([label,value,year,key])=>({label,value,year,key,country:['EUA'],ficha:RF}));
+const STUDIES=[
+ {study:RF,measure:'Casais héteros formados em 2017, qualquer meio online',value:39,year:2017,def:0,country:['EUA'],ficha:RF},
+ {study:'Kowal et al. (2025)',measure:'Relações iniciadas de 2010 em diante, em painéis online',value:21,year:2024,def:0,country:[],ficha:'Kowal et al. (2025)'},
+ {study:'Kowal et al. (2025)',measure:'Média de 50 países, todas as pessoas com parceiro, em painéis online',value:16,year:2024,def:1,country:['Gana','Brasil','Polônia'],ficha:'Kowal et al. (2025)',prefix:'média ',
+  range:[{label:'Gana, a menor fatia',value:7,country:['Gana'],c:'Gana'},{label:'Brasil, conta nossa (23 de 119 pessoas, sem peso)',value:19.3,country:['Brasil'],c:'Brasil',br:1,calc:'23 ÷ 119 = 19,3%'},{label:'Polônia, a maior fatia',value:33,country:['Polônia'],c:'Polônia'}]},
+ {study:'Lampard (2020)',measure:'Casais que passaram a morar juntos de 2008 a 2012',value:10.9,year:2012,def:0,country:['Reino Unido'],ficha:'Lampard (2020)'},
+ {study:'Pew Research Center (2023 e 2020)',measure:'Todos os adultos com parceiro em 2022, só site ou app de namoro',value:10,year:2022,def:3,country:['EUA'],ficha:'Pew Research Center (2023 e 2020)'},
+ {study:'Bergström (2016)',measure:'Parceiro atual conhecido de 2005 a 2013, só site de encontro (o estudo diz "menos de")',value:9,year:2013,def:2,country:['França'],ficha:'Bergström (2016)'}];
+const IBGE='IBGE (2024), Registro Civil';
+const LINE=[2004,2014,2024].map((year,i)=>({year,value:[13.5,23.4,31.1][i],label:'Pelo menos um divorciado ou viúvo',country:['Brasil'],ficha:IBGE,key:i===2}));
+const COUNTRIES=['Todos','Brasil','EUA','França','Reino Unido','Gana','Polônia'];
+
+const fmt=v=>String(v).replace('.',',')+'%';
+const s={hover:null,pinned:null,country:'Todos',legend:null,legendPreview:null,lastEvent:'nenhum'};
+const $=(q,r=document)=>r.querySelector(q);
+
+// Build the rows.
+const targets=[];
+function makeTarget(el,chart,data){const t={el,chart,data};targets.push(t);el._t=t;wire(el,t);return t}
+function wire(el,t){
+  el.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!s.pinned){s.hover=t;render()}});
+  el.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&s.hover===t){
+    // Leaving a range point for its row keeps the row's preview.
+    s.hover=e.relatedTarget&&e.relatedTarget.closest&&e.relatedTarget.closest('.row')?._t||null;render()}});
+  el.addEventListener('focus',()=>{if(!s.pinned&&el.matches(':focus-visible')){s.hover=t;render()}});
+  el.addEventListener('blur',()=>{if(s.hover===t){s.hover=null;render()}});
+  el.addEventListener('click',e=>{e.stopPropagation();pin(t)});
+  el.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();pin(t)}
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();e.stopPropagation();
+      const list=targets.filter(x=>x.chart===t.chart);const i=list.indexOf(t)+(e.key==='ArrowDown'?1:-1);
+      if(list[i]){if(s.pinned)s.pinned=null;list[i].el.focus()}}
+  });
+}
+function pin(t){
+  if(s.pinned===t){s.pinned=null;s.hover=null}
+  else{s.pinned=t;s.hover=null;s.lastEvent='chart-open: '+t.chart}
+  render();
+}
+const barsPlot=$('#c-bars .plot');
+BARS.forEach(b=>{
+  const r=document.createElement('div');r.className='row';r.tabIndex=0;r.setAttribute('role','button');
+  r.innerHTML=`<span class="lab">${b.label}</span><div class="track"><div class="bar" style="width:${b.value}%"></div><span class="val ${b.key?'key-number':''}" style="left:${b.value}%">${fmt(b.value)}</span></div>`;
+  barsPlot.append(r);makeTarget(r,'como-se-conheceram',{title:b.label,value:fmt(b.value),rows:[['País','EUA'],['Ano',b.year]],ficha:b.ficha,_c:b.country});
+});
+const dotsPlot=$('#c-dots .plot');
+STUDIES.forEach(d=>{
+  const r=document.createElement('div');r.className='row';r.tabIndex=0;r.setAttribute('role','button');r.dataset.def=d.def;
+  r.innerHTML=`<span class="study">${d.study}</span><span class="measure">${d.measure}</span><div class="track"><span class="dot" style="left:${d.value}%">${GLYPHS[d.def]}</span><span class="val" style="left:${d.value}%">${d.prefix||''}${fmt(d.value)}</span></div>`;
+  const rows=[['País',d.country.length>1?'50 países':d.country[0]||'50 países'],['Ano',d.year],['Mede',DEFS[d.def].legend]];
+  const data={title:d.study,sub:d.measure,value:(d.prefix||'')+fmt(d.value),rows,ficha:d.ficha,_c:d.country};
+  dotsPlot.append(r);makeTarget(r,'fatia-online-por-estudo',data);
+  if(d.range){
+    const lo=d.range[0].value,hi=d.range[d.range.length-1].value;
+    const sp=document.createElement('div');sp.className='spread';
+    sp.innerHTML=`<div class="line" style="left:${lo}%;width:${hi-lo}%"></div>`;
+    r.append(sp);
+    d.range.forEach(p=>{
+      const b=document.createElement('button');b.className='pt'+(p.br?' br':'');b.style.left=p.value+'%';b.setAttribute('aria-label',p.label+': '+fmt(p.value));b.innerHTML='<i></i>';
+      sp.append(b);
+      const rr=[['País',p.c],['Mede',DEFS[d.def].legend]];if(p.calc)rr.splice(1,0,['Conta nossa',p.calc]);
+      makeTarget(b,'fatia-online-por-estudo',{title:p.label,sub:d.study,value:fmt(p.value),rows:rr,ficha:d.ficha,_c:p.country,_row:r,_def:d.def});
+    });
+    const w=document.createElement('span');w.className='spread-words';w.textContent='Gana 7%, Brasil 19,3%, Polônia 33%';r.append(w);
+  }
+});
+// Legend.
+DEFS.forEach((d,i)=>{
+  const k=document.createElement('button');k.className='key';k.setAttribute('aria-pressed','false');k.innerHTML=GLYPHS[i]+d.legend;
+  k.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){s.legendPreview=i;render()}});
+  k.addEventListener('pointerleave',()=>{s.legendPreview=null;render()});
+  k.addEventListener('click',e=>{e.stopPropagation();s.legend=s.legend===i?null:i;s.pinned=null;render()});
+  $('#c-dots .legend').append(k);
+});
+// Country chips.
+COUNTRIES.forEach(c=>{
+  const b=document.createElement('button');b.className='chip';b.textContent=c;
+  b.addEventListener('click',e=>{e.stopPropagation();s.country=c;s.pinned=null;render()});
+  $('#chips').append(b);
+});
+// The time line: anywhere in the plot snaps to the nearest year.
+const W=560,H=230,L=34,R=60,T=26,B=30,MAX=40;
+const X=y=>L+(y-2004)/20*(W-L-R),Y=v=>H-B-v/MAX*(H-T-B);
+const wrap=$('.linewrap');
+wrap.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+ ${[0,10,20,30,40].map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#d4d9d9"/><text x="${L-6}" y="${Y(v)+4}" font-size="12" text-anchor="end" fill="#414948">${v}%</text>`).join('')}
+ <line id="guide" y1="${T-8}" y2="${H-B}" stroke="#0d6359" stroke-width="2" stroke-dasharray="4 3" opacity="0"/>
+ <polyline points="${LINE.map(p=>X(p.year)+','+Y(p.value)).join(' ')}" fill="none" stroke="#1a1c1c" stroke-width="3" stroke-linejoin="round"/>
+ ${LINE.map(p=>`<rect class="lhl" data-y="${p.year}" x="${X(p.year)-24}" y="${Y(p.value)-40}" width="62" height="22" rx="3" fill="${p.key?'#e7a3b6':'none'}"/>
+ <text x="${X(p.year)+(p.year===2004?22:7)}" y="${Y(p.value)-24}" font-size="15" font-weight="700" text-anchor="middle">${fmt(p.value)}</text>
+ <circle class="lpt" data-y="${p.year}" cx="${X(p.year)}" cy="${Y(p.value)}" r="7" fill="#1a1c1c" stroke="#f5f8f8" stroke-width="2"/>
+ <text x="${X(p.year)}" y="${H-8}" font-size="13" text-anchor="middle" fill="#414948">${p.year}</text>`).join('')}
+</svg>`;
+const lineTargets=LINE.map(p=>{
+  const el=wrap.querySelector(`.lpt[data-y="${p.year}"]`);
+  const t={el,chart:'casamentos-recasados',isLine:true,point:p,data:{title:String(p.year),sub:p.label,value:fmt(p.value),rows:[['País','Brasil'],['Ano',p.year]],ficha:p.ficha,_c:p.country}};
+  return t});
+const nearest=e=>{const r=wrap.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*W;return lineTargets.reduce((a,t)=>Math.abs(X(t.point.year)-x)<Math.abs(X(a.point.year)-x)?t:a)};
+wrap.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&!s.pinned){const t=nearest(e);if(s.hover!==t){s.hover=t;render()}}});
+wrap.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&s.hover?.isLine){s.hover=null;render()}});
+wrap.addEventListener('click',e=>{e.stopPropagation();pin(nearest(e))});
+let lineIdx=2;
+wrap.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();lineIdx=Math.max(0,Math.min(2,lineIdx+(e.key==='ArrowRight'?1:-1)));if(s.pinned)s.pinned=lineTargets[lineIdx];else s.hover=lineTargets[lineIdx];render()}
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();pin(lineTargets[lineIdx])}});
+wrap.addEventListener('focus',()=>{if(wrap.matches(':focus-visible')&&!s.pinned){s.hover=lineTargets[lineIdx];render()}});
+wrap.addEventListener('blur',()=>{if(s.hover?.isLine){s.hover=null;render()}});
+
+// Hints.
+const mouse=matchMedia('(hover:hover)').matches;
+const ICON='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="8" cy="8" r="2.4" fill="currentColor"/><circle cx="8" cy="8" r="6.2"/></svg>';
+document.querySelectorAll('.hint').forEach(h=>h.innerHTML=ICON+(mouse?'Passe o mouse ou clique para ver o número e a Ficha':'Toque para ver o número e a Ficha'));
+
+// Dismissal.
+document.addEventListener('click',e=>{if(!e.target.closest('#card')&&s.pinned){s.pinned=null;render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){s.pinned=null;s.hover=null;render()}});
+addEventListener('resize',()=>render());
+
+// One pass over everything.
+function matches(t,legend){
+  const d=t.data;
+  const okC=s.country==='Todos'||d._c.includes(s.country);
+  const def=t.el.dataset?.def??d._def;
+  const okL=legend==null||t.chart!=='fatia-online-por-estudo'||Number(def)===legend;
+  return okC&&okL;
+}
+function render(){
+  const a=s.pinned||s.hover;
+  const legend=s.legendPreview??s.legend;
+  const activeRow=a&&(a.data._row||a.el);
+  targets.forEach(t=>{
+    const isPt=t.el.classList.contains('pt');
+    if(isPt){t.el.classList.toggle('active',a===t);return}
+    const off=!matches(t,legend);
+    t.el.classList.toggle('off',off);
+    t.el.classList.toggle('active',t.el===activeRow);
+    t.el.classList.toggle('dim',!!a&&a.chart===t.chart&&t.el!==activeRow&&!off);
+  });
+  // The time line.
+  const g=$('#guide');
+  if(a?.isLine){g.setAttribute('x1',X(a.point.year));g.setAttribute('x2',X(a.point.year));g.setAttribute('opacity',1)}else g.setAttribute('opacity',0);
+  lineTargets.forEach(t=>{t.el.setAttribute('r',a===t?10:7);t.el.setAttribute('fill',a===t?'#0d6359':'#1a1c1c')});
+  const lineOff=s.country!=='Todos'&&s.country!=='Brasil';
+  wrap.style.opacity=lineOff?.2:1;
+  // Chips and legend.
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.textContent===s.country));
+  document.querySelectorAll('.key').forEach((k,i)=>k.setAttribute('aria-pressed',s.legend===i));
+  const dots=targets.filter(t=>t.chart==='fatia-online-por-estudo');
+  $('#c-dots .none').hidden=dots.some(t=>!t.el.classList.contains('pt')&&!t.el.classList.contains('off'));
+  drawCard(a);
+  $('#state-text').textContent=`mouse: ${s.hover?s.hover.data.title:'-'} | fixado: ${s.pinned?s.pinned.data.title:'-'} | país: ${s.country} | legenda: ${s.legend==null?'-':DEFS[s.legend].legend} | último evento: ${s.lastEvent}`;
+}
+function drawCard(a){
+  const c=$('#card');
+  if(!a){c.hidden=true;return}
+  const d=a.data,pinned=a===s.pinned;
+  c.hidden=false;c.classList.toggle('pinned',pinned);
+  c.innerHTML=`<b class="t">${d.title}</b>${d.sub?`<em>${d.sub}</em>`:''}<span class="n">${d.value}</span><dl>${d.rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`+
+    (pinned?`<div class="acts"><a href="#" id="ficha">Abrir Ficha: ${d.ficha}</a><button class="x" id="x">Fechar</button></div>`:`<span class="more">${mouse?'Clique para fixar e abrir a Ficha':''}</span>`);
+  if(pinned){
+    $('#x').onclick=e=>{e.stopPropagation();s.pinned=null;render()};
+    $('#ficha').onclick=e=>{e.preventDefault();e.stopPropagation();s.lastEvent='abriria a Ficha: '+d.ficha;render()};
+  }
+  // Beside the mark when there is room, else under it, else over it.
+  const mark=a.el.querySelector?.('.bar,.dot,i')||a.el;
+  const m=mark.getBoundingClientRect(),r=(a.data._row?a.el:a.el).getBoundingClientRect?.()||m;
+  const cw=c.offsetWidth,ch=c.offsetHeight,vw=document.documentElement.clientWidth,vh=innerHeight,barH=$('#state').offsetHeight+8;
+  let x,y;
+  const valueRoom=a.isLine?44:a.el.classList.contains('pt')?14:66;
+  if(m.right+valueRoom+cw<vw-8){x=m.right+valueRoom;y=m.top+m.height/2-ch/2}
+  else if(m.bottom+ch+12<vh-barH){x=Math.min(m.left,vw-cw-8);y=m.bottom+8}
+  else{x=Math.min(m.left,vw-cw-8);y=m.top-ch-8}
+  y=Math.max(8,Math.min(y,vh-ch-barH));x=Math.max(8,x);
+  c.style.left=x+scrollX+'px';c.style.top=y+scrollY+'px';
+}
+
+// The invitation: the first chart seen pulses once in this visit.
+function pulse(){const el=barsPlot.querySelectorAll('.row')[1];el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')}
+new IntersectionObserver((es,o)=>{if(es.some(e=>e.isIntersecting)){o.disconnect();setTimeout(pulse,350)}},{threshold:.5}).observe(barsPlot);
+$('#replay').onclick=e=>{e.stopPropagation();barsPlot.scrollIntoView({block:'center'});setTimeout(pulse,350)};
+render();
+</script>
+</body>
+</html>
