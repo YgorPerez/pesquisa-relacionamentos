@@ -24,5 +24,8 @@ describe('EVENTS', () => {
     expect(EVENTS.neighborSite('pew')).toBe('neighbor-site/pew')
     expect(EVENTS.selection('copy')).toBe('selection/copy')
     expect(EVENTS.selection('link')).toBe('selection/link')
+    expect(EVENTS.chartCard('visual-app-ou-presencial-idade')).toBe(
+      'chart-card/visual-app-ou-presencial-idade',
+    )
   })
 })

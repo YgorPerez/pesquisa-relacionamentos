@@ -8,7 +8,7 @@ import {
 } from '@tem-estudo/rules/requirements'
 import { reads } from '#/content/reads'
 import type { PrioritiesView } from '#/content/priorities-view'
-import { useCountOpenedFactSheets } from '#/analytics/counting'
+import { useCountOpenedFactSheets } from '#/analytics/page-counting'
 import { useChosenCountry } from '#/state/country'
 import { useProfile } from '#/state/profile'
 import { CountryChips } from '#/ui/country-chips'
