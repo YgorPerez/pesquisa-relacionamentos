@@ -86,6 +86,36 @@ it('tags "você" on the Studies that cover the Profile', () => {
   expect(young.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
 })
 
+it('leaves room on the right for a long value with a word unit', () => {
+  const people = (value: number) => ({
+    value,
+    number: {
+      ...DOTS.points[0]!.number,
+      text: `${value.toLocaleString('pt-BR')} pessoas`,
+    },
+  })
+  const chart = {
+    ...DOTS,
+    ticks: [0, 2, 4, 6, 8].map((m) => ({
+      value: m * 1_000_000,
+      text: `${m}.000.000`,
+    })),
+    points: [
+      { ...DOTS.points[0]!, ...people(7_804_840) },
+      { ...DOTS.points[1]!, ...people(747_507) },
+    ],
+  }
+  const svg = page(
+    renderToString(<VisualChart chart={chart} country={null} profile={null} />),
+  ).querySelector('svg[role="img"]')
+  const width = Number(svg?.getAttribute('viewBox')?.split(' ')[2])
+  const value = [...(svg?.querySelectorAll('text') ?? [])].find(
+    (t) => t.textContent === '7.804.840 pessoas',
+  )
+  // 14px bold letters are about 8px wide.
+  expect(Number(value?.getAttribute('x')) + 17 * 8).toBeLessThanOrEqual(width)
+})
+
 it('shows the definitions as a legend of shapes', () => {
   const dots = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),

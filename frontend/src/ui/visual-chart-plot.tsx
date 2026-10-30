@@ -49,8 +49,12 @@ const LAYOUT = {
 /** Letters per line of a measure, which fits a 350px phone. */
 const MEASURE_LINE = 56
 const DIMMED = 0.22
-/** Room for the value after the longest mark. */
+/** Room for the value after the longest mark: at least a "100%", and more
+ * for a value with a word unit ("7.804.840 pessoas"), at about 8px a
+ * letter of the 14px bold value. */
 const VALUE_ROOM = 56
+const valueRoom = (rows: ReadonlyArray<Row>) =>
+  Math.max(VALUE_ROOM, ...rows.map((r) => r.number.text.length * 8 + VALUE_DX))
 
 /** A measure in lines of up to `MEASURE_LINE` letters, two at most; the
  * rest is in the tap detail and the list a screen reader reads. */
@@ -247,7 +251,7 @@ export default function VisualChartPlot({
       margin: {
         top: layout.label - layout.row / 2 + 16,
         left: 12,
-        right: VALUE_ROOM,
+        right: valueRoom(rows),
       },
       theme: THEME,
     })

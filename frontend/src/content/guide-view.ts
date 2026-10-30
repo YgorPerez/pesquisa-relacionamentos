@@ -36,13 +36,21 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
-import { renderVisuals, type Cite, type RenderedVisual } from './visuals-view'
+import {
+  renderVisuals,
+  type Cite,
+  type HandDrawnVisual,
+  type RenderedVisual,
+} from './visuals-view'
 import {
   chartCountries,
+  chartTable,
   chartView,
   LIBRARY_VISUALS,
   type ChartCountry,
+  type ChartTable,
   type ChartView,
+  type GuideChart,
 } from './chart-view'
 import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
 import { pageTerms, withTermLinks, type TermView } from './terms-view'
@@ -269,6 +277,7 @@ export interface MythView {
 export type ChapterBlock = { readonly key: string } & (
   | { readonly kind: 'text'; readonly html: SafeHtml }
   | { readonly kind: 'chart'; readonly visual: ChartView }
+  | { readonly kind: 'table'; readonly table: ChartTable }
   | { readonly kind: 'question'; readonly question: QuestionView }
   | { readonly kind: 'tip'; readonly tip: GuideTip }
   | { readonly kind: 'myth'; readonly myth: MythView }
@@ -409,7 +418,7 @@ interface Drawing {
   readonly numbers: Numbering
   readonly visuals: ReadonlyMap<string, RenderedVisual>
   /** The Visuals the chart library draws, by id, out of `visuals`. */
-  readonly charts: ReadonlyMap<string, ChartView>
+  readonly charts: ReadonlyMap<string, GuideChart>
   /** The Verbetes the page marked, as it is drawn. */
   readonly used: Set<string>
 }
@@ -439,6 +448,8 @@ function textBlocks(
     .flatMap((text, index): ChapterBlock[] => {
       const id = /^\{\{visual:([a-z0-9-]+)\}\}$/.exec(text)?.[1]
       const chart = id === undefined ? undefined : drawing.charts.get(id)
+      if (chart?.kind === 'table')
+        return [{ key: `chart-${id}`, kind: 'table', table: chart }]
       if (chart) return [{ key: `chart-${id}`, kind: 'chart', visual: chart }]
       return text.trim()
         ? [
@@ -510,8 +521,15 @@ export function guideView(topic: Topic, library: Library): GuideView {
   }
   const charts = new Map(
     topic.visuals.flatMap((visual) => {
-      if (!LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)) return []
-      const chart = chartView(visual, library, cite, topic.slug)
+      // Every Study table: dots of one unit, or a table of mixed ones (#475).
+      if (
+        visual.kind !== 'study-table' &&
+        !LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)
+      )
+        return []
+      const chart: GuideChart | null =
+        chartView(visual, library, cite, topic.slug) ??
+        chartTable(visual, library, cite, topic.slug)
       return chart ? [[visual.id, chart] as const] : []
     }),
   )
@@ -520,8 +538,10 @@ export function guideView(topic: Topic, library: Library): GuideView {
     library,
     numbers,
     visuals: renderVisuals(
-      topic.visuals.filter((v) => !charts.has(v.id)),
-      library,
+      topic.visuals.filter(
+        (v): v is HandDrawnVisual =>
+          v.kind !== 'study-table' && !charts.has(v.id),
+      ),
       cite,
       topic.slug,
     ),

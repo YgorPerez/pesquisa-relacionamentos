@@ -12,10 +12,11 @@ import type {
   MythView,
   QuestionView,
 } from '#/content/guide-view'
-import type { ChartView } from '#/content/chart-view'
+import type { ChartTable, ChartView } from '#/content/chart-view'
 import { useChosenCountry } from '#/state/country'
 import { useProfile } from '#/state/profile'
 import { VisualChart } from './visual-chart'
+import { VisualChartTable } from './visual-chart-table'
 import { useProfileInGuide } from '#/state/profile-in-guide'
 import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
@@ -314,6 +315,16 @@ function ChartBlock({ chart }: { chart: ChartView }) {
   return <VisualChart chart={chart} country={country} profile={useProfile()} />
 }
 
+/** A Study table of mixed units, with the same country and Profile. */
+function TableBlock({ table }: { table: ChartTable }) {
+  const country = useChosenCountry(
+    table.rows.flatMap((r) => (r.point.country ? [r.point.country.slug] : [])),
+  )
+  return (
+    <VisualChartTable table={table} country={country} profile={useProfile()} />
+  )
+}
+
 /** One piece of a Chapter: its prose, a chart, an answer (with what follows
  * it), a Tip or a Myth. */
 function Block({
@@ -330,6 +341,8 @@ function Block({
   switch (block.kind) {
     case 'chart':
       return <ChartBlock chart={block.visual} />
+    case 'table':
+      return <TableBlock table={block.table} />
     case 'text':
       return <Html className="prosa" html={block.html} quote={chapter} />
     case 'question':

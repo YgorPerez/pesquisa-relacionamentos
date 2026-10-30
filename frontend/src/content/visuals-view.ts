@@ -3,24 +3,21 @@
 // `{{visual:<id>}}` line of the body (`view.ts`). The page gets finished SVG
 // and HTML: no chart code goes to the browser, and the Visual reads without
 // JS (#182). The Visuals the chart library draws go through `chart-view.ts`
-// instead (ADR 0042, "SVG from the server, interaction on top").
+// instead (ADR 0042, "SVG from the server, interaction on top"), and so do
+// all Study tables (#475).
 import type {
   BarsVisual,
   Calculation,
   DiagramVisual,
   Evidence,
-  FactSheet,
-  Library,
   StudyTableVisual,
   TimelineVisual,
   Visual,
 } from '@tem-estudo/content'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { DESIGN_NAME } from '#/ui/badges.copy'
 import { VisualBars } from '#/ui/visual-bars'
 import { VisualDiagram } from '#/ui/visual-diagram'
-import { VisualStudyTable } from '#/ui/visual-study-table'
 import { VisualTimeline } from '#/ui/visual-timeline'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 
@@ -81,17 +78,6 @@ export interface TimelineView extends Common {
   }>
 }
 
-export interface StudyTableView extends Common {
-  readonly kind: 'study-table'
-  readonly rows: ReadonlyArray<{
-    readonly study: SourceRef
-    /** "Brasil · 2019 · 2.400 pessoas · transversal". */
-    readonly context: string
-    readonly measure: string
-    readonly number: NumberView
-  }>
-}
-
 export interface DiagramView extends Common {
   readonly kind: 'diagram'
   readonly nodes: ReadonlyArray<{ readonly id: string; readonly label: string }>
@@ -105,7 +91,11 @@ export interface DiagramView extends Common {
   }>
 }
 
-export type VisualView = BarsView | TimelineView | StudyTableView | DiagramView
+export type VisualView = BarsView | TimelineView | DiagramView
+
+/** The Visuals still drawn by hand here: a Study table is always the chart
+ * library's or a `ChartTable` (`chart-view.ts`). */
+export type HandDrawnVisual = Exclude<Visual, StudyTableVisual>
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
@@ -259,52 +249,6 @@ function timelineView(visual: TimelineVisual, cite: Cite): Own<TimelineView> {
   }
 }
 
-const numberFormat = new Intl.NumberFormat('pt-BR')
-
-/** The Fact sheet's place, year, sample and design, short. */
-function studyContext(factSheet: FactSheet | undefined): string {
-  if (!factSheet) return ''
-  const design = DESIGN_NAME[factSheet.design].replace(/ \(.*\)$/, '')
-  return [
-    factSheet.countries.length > 2
-      ? VISUAL_COPY.countries(factSheet.countries.length)
-      : factSheet.countries.join(', '),
-    factSheet.period,
-    factSheet.sample.n
-      ? VISUAL_COPY.people(numberFormat.format(factSheet.sample.n))
-      : '',
-    design,
-  ]
-    .filter(Boolean)
-    .join(' · ')
-}
-
-function studyTableView(
-  visual: StudyTableVisual,
-  library: Library,
-  cite: Cite,
-): Own<StudyTableView> {
-  const rows = visual.rows.flatMap((row) => {
-    const study = cite(row.fact_sheet)
-    if (!study) return []
-    return [
-      {
-        study,
-        context: studyContext(
-          library.factSheets.find((f) => f.slug === row.fact_sheet),
-        ),
-        measure: row.measure,
-        number: numberView(row, row.unit, cite),
-      },
-    ]
-  })
-  return {
-    kind: 'study-table',
-    rows,
-    sources: allSources(rows.map((r) => r.number)),
-  }
-}
-
 function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
   const position = (id: string) => visual.nodes.findIndex((n) => n.id === id)
   const arrows = visual.arrows.map((arrow) => ({
@@ -325,8 +269,7 @@ function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
 /** `scope` is the Topic's slug, which keeps the figure's id apart from the
  * page's other ids. */
 export function visualView(
-  visual: Visual,
-  library: Library,
+  visual: HandDrawnVisual,
   cite: Cite,
   scope: string,
 ): VisualView {
@@ -341,8 +284,6 @@ export function visualView(
       return { ...common, ...barsView(visual, cite) }
     case 'timeline':
       return { ...common, ...timelineView(visual, cite) }
-    case 'study-table':
-      return { ...common, ...studyTableView(visual, library, cite) }
     case 'diagram':
       return { ...common, ...diagramView(visual, cite) }
   }
@@ -359,24 +300,21 @@ function render(view: VisualView): RenderedVisual {
       ? createElement(VisualBars, { visual: view })
       : view.kind === 'timeline'
         ? createElement(VisualTimeline, { visual: view })
-        : view.kind === 'study-table'
-          ? createElement(VisualStudyTable, { visual: view })
-          : createElement(VisualDiagram, { visual: view })
+        : createElement(VisualDiagram, { visual: view })
   return renderToStaticMarkup(element) as RenderedVisual
 }
 
 /** Each Visual of the Question drawn, by id, for `html()` to put in place of
  * its `{{visual:<id>}}` line. */
 export function renderVisuals(
-  visuals: ReadonlyArray<Visual>,
-  library: Library,
+  visuals: ReadonlyArray<HandDrawnVisual>,
   cite: Cite,
   scope: string,
 ): ReadonlyMap<string, RenderedVisual> {
   return new Map(
     visuals.map((visual) => [
       visual.id,
-      render(visualView(visual, library, cite, scope)),
+      render(visualView(visual, cite, scope)),
     ]),
   )
 }

@@ -1,19 +1,13 @@
-// The four Visuals (#182), over the fixture Question's data
+// The Visuals still drawn by hand (#182; the Study table is
+// `visual-chart-table.stories.tsx`), over the fixture Question's data
 // (`visual.example.ts`), as the server draws them in the Question's body.
 // `prosa` puts them in the body's Markdown, as on the page.
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { VisualBars } from './visual-bars'
 import { VisualDiagram } from './visual-diagram'
 import { VisualFrame } from './visual-frame'
-import { VisualStudyTable } from './visual-study-table'
 import { VisualTimeline } from './visual-timeline'
-import {
-  BARS,
-  DIAGRAM,
-  DIAGRAM_EVERY_STROKE,
-  STUDY_TABLE,
-  TIMELINE,
-} from './visual.example'
+import { BARS, DIAGRAM, DIAGRAM_EVERY_STROKE, TIMELINE } from './visual.example'
 
 const meta = {
   parameters: { layout: 'padded' },
@@ -38,10 +32,6 @@ export const Bars: Story = {
 
 export const Timeline: Story = {
   render: () => <VisualTimeline visual={TIMELINE} />,
-}
-
-export const StudyTable: Story = {
-  render: () => <VisualStudyTable visual={STUDY_TABLE} />,
 }
 
 /** Two associations (dashed) and our inference (dotted, with "?"). */
