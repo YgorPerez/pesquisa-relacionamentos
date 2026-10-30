@@ -4,7 +4,8 @@
 // with the library) is its own chunk, fetched the first time a chart comes
 // near the screen or is touched (`wantPlot`). Until then React leaves the
 // server's SVG in place, inside a Suspense boundary that has not hydrated
-// yet. The Guide's JS stays within ADR 0033's budget.
+// yet. So the library's chunk is not part of the page's initial load (the
+// Guide's JS budget is #484).
 import { createElement, lazy, type ComponentProps } from 'react'
 
 type PlotModule = typeof import('./visual-chart-plot')
