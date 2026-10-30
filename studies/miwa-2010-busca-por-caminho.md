@@ -28,26 +28,26 @@ Na segunda onda de um painel nacional japonês, os solteiros marcaram o que tinh
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Respostas na primeira onda (2007) e taxa de resposta | 4.800; 36% | Seção 2 | "回収票数は 4800（有効回収率 36%）であった" |
-| Responderam de novo um ano depois | 3.965 de 4.800 | Seção 2 | "第 1 回調査の回答者 4800 名のうち，3965 名から有効回収票を得た" |
-| Solteiros sem parceiro em 2007 na análise de resultado | 1.192 | Figura 3, legenda | "図3 この1年に交際開始したきっかけと結婚活動の結果（N=1192）" |
-| Solteiros que não fizeram nenhuma atividade de busca no ano | cerca de seis em cada dez | Seção 3, Figura 1 | "「活動をしなかった」人の割合が 6 割にのぼ" |
-| Quanto cada atividade foi feita no ano, entre os solteiros da segunda onda (média de cada item, na ordem da tabela: apresentação de amigos, _goukon_, colegas ou chefes, pais ou irmãos, outros parentes, _omiai_, festa de _omiai_, serviço matrimonial, aula ou clube, rua ou viagem, hobby ou curso, internet e celular, outros) | 21,5%, 16,7%, 8,4%, 3,8%, 1,4%, 2,0%, 2,3%, 1,8%, 4,4%, 2,2%, 6,0%, 4,1% e 1,4% | Seção 3, Tabela 2, coluna da média | "21.5% 16.7% 8.4% 3.8% 1.4% 2.0% 2.3% 1.8% 4.4% 2.2% 6.0% 4.1% 1.4%" |
-| Formas de começar namoro mais comuns no ano, entre quem estava sem parceiro: apresentação de amigos e trabalho | pouco mais de 3% cada | Seção 5 | "それぞれ 3 パーセント強を占める友人・知 人の紹介と，職場での出会いであった" |
-| Namoros novos que vieram de alguma atividade de busca | cerca de quatro em cada dez | Seção 5 | "新たに成立したカップルのうちおよそ 4 割もが何らかの結婚活動によ る結果としてもたらされたものであった" |
-| Chance de começar namoro no ano para quem fez a atividade, comparada a quem não fez, sem ajuste: rede de amigos (amigos, _goukon_, colegas) contra aula, clube, hobby e rua | cerca de 1,4 contra cerca de 1,8 | Seção 5, Figura 3 | "前者に属する 3 項目ではオッズ比がだいたい 1.4 程 度になっているが，後者の 3 項目では 1.8 ほどの値である" |
-| A mesma chance, sem ajuste: apresentação por outros parentes e por pais ou irmãos | 1,97 e 1,70 | Seção 5, Figura 3 | "オッズ比はそれぞれ 1.97，1.70 となっており" |
-| A mesma chance, sem ajuste: apresentação por amigos ou conhecidos | 1,48 | Seção 5, Figura 3 | "友人からの紹介のオッズ比 1.48" |
-| Chance de começar namoro de quem fez alguma atividade, comparada a quem não fez, sem ajuste, em média | cerca de 1,5 vez | Seção 5 | "平均的にみておよそ 1.5 倍" |
-| Chance de começar namoro com apresentação por parentes, antes e depois de igualar os grupos em características pessoais (ajuste por propensão) | 1,97 → 1,66 | Seção 5, Figura 3 | "1.97 と最も高かっ た「親族の紹介」のオッズ比も，調整後には 1.66 にまで減少している" |
-| Efeito da apresentação por amigos, depois de igualar os grupos em características pessoais | praticamente nenhum | Seção 5 | "自体が持つ効果はほとんどないに等しい" |
-| Efeitos de aula, clube, hobby e rua depois de igualar os grupos, os únicos que ficaram com algum tamanho | sem [[significância estatística]] | Seção 5 | "統計的有意ではなく，効果の存在を裏付ける強い証拠は得られなかった" |
-| Chances de começar namoro depois de igualar os grupos, no geral | ficam menores | Seção 5, Figura 3 | "全体的に，オッズ比が縮小していることに気付く" |
-| Atividades com menos resultado sem ajuste | festa de _omiai_ e serviço matrimonial | Seção 5 | "成果の得られにくい結婚活動は，お見合いパーティーと結婚仲介サービスである" |
-| Namoros por apresentação de amigos que vieram de quem fazia essa atividade para conhecer alguém | cerca de seis em cada dez | Seção 5, Figura 3 | "友人・知人の紹介 のタテ棒のうち，およそ 6 割が灰色で塗られている" |
-| Namoros de aula, hobby e internet que vieram de quem fazia essa atividade para conhecer alguém | cerca de metade | Seção 5, Figura 3 | "でほぼ半々ずつを占めあう" |
+| Quantos responderam em 2007 | 4.800 pessoas, 36% das procuradas | Seção 2 | "回収票数は 4800（有効回収率 36%）であった" |
+| Quantos responderam de novo um ano depois | 3.965 das 4.800 pessoas | Seção 2 | "第 1 回調査の回答者 4800 名のうち，3965 名から有効回収票を得た" |
+| Solteiros sem parceiro em 2007, na conta de começar namoro | 1.192 pessoas | Figura 3, legenda | "図3 この1年に交際開始したきっかけと結婚活動の結果（N=1192）" |
+| Solteiros que não procuraram ninguém no ano | Cerca de seis em cada dez não fizeram nenhuma atividade de busca | Seção 3, Figura 1 | "「活動をしなかった」人の割合が 6 割にのぼ" |
+| O que os solteiros fizeram no ano, na segunda rodada | Apresentação de amigos 21,5%; _goukon_ 16,7%; colegas ou chefes 8,4%; pais ou irmãos 3,8%; outros parentes 1,4%; _omiai_ 2,0%; festa de _omiai_ 2,3%; serviço matrimonial 1,8%; aula ou clube 4,4%; rua ou viagem 2,2%; hobby ou curso 6,0%; internet e celular 4,1%; outros 1,4% | Seção 3, Tabela 2, coluna da média | "21.5% 16.7% 8.4% 3.8% 1.4% 2.0% 2.3% 1.8% 4.4% 2.2% 6.0% 4.1% 1.4%" |
+| Formas mais comuns de começar namoro no ano | Entre quem estava sem parceiro, apresentação de amigos e trabalho, com pouco mais de 3% cada | Seção 5 | "それぞれ 3 パーセント強を占める友人・知 人の紹介と，職場での出会いであった" |
+| Namoros novos que vieram de alguma busca | Cerca de quatro em cada dez | Seção 5 | "新たに成立したカップルのうちおよそ 4 割もが何らかの結婚活動によ る結果としてもたらされたものであった" |
+| Começar namoro: rede de amigos e lugares do dia a dia | Quem fez a atividade teve mais chance que quem não fez, sem levar mais nada em conta (razão de chances de cerca de 1,4 com amigos, _goukon_ e colegas; cerca de 1,8 com aula, clube, hobby e rua) | Seção 5, Figura 3 | "前者に属する 3 項目ではオッズ比がだいたい 1.4 程 度になっているが，後者の 3 項目では 1.8 ほどの値である" |
+| Começar namoro: apresentação por parentes | Sem levar mais nada em conta, mais chance que quem não fez (razão de chances de 1,97 com outros parentes e 1,70 com pais ou irmãos) | Seção 5, Figura 3 | "オッズ比はそれぞれ 1.97，1.70 となっており" |
+| Começar namoro: apresentação por amigos ou conhecidos | Sem levar mais nada em conta, mais chance que quem não fez (razão de chances de 1,48) | Seção 5, Figura 3 | "友人からの紹介のオッズ比 1.48" |
+| Começar namoro: alguma atividade, em média | Sem levar mais nada em conta, cerca de 1,5 vez a chance de quem não fez | Seção 5 | "平均的にみておよそ 1.5 倍" |
+| Apresentação por parentes, em grupos parecidos | Igualando os grupos em características pessoais, a vantagem ficou menor (razão de chances de 1,97 antes e 1,66 depois) | Seção 5, Figura 3 | "1.97 と最も高かっ た「親族の紹介」のオッズ比も，調整後には 1.66 にまで減少している" |
+| Apresentação por amigos, em grupos parecidos | Igualando os grupos, a própria apresentação quase não fez diferença | Seção 5 | "自体が持つ効果はほとんどないに等しい" |
+| Aula, clube, hobby e rua, em grupos parecidos | Foram os únicos que ficaram com algum tamanho, mas a diferença pode ser acaso, e não há prova forte de que façam diferença | Seção 5 | "統計的有意ではなく，効果の存在を裏付ける強い証拠は得られなかった" |
+| Chances em grupos parecidos, no geral | Ficaram menores que sem igualar os grupos | Seção 5, Figura 3 | "全体的に，オッズ比が縮小していることに気付く" |
+| Atividades com menos resultado | Festa de _omiai_ e serviço matrimonial, sem levar mais nada em conta | Seção 5 | "成果の得られにくい結婚活動は，お見合いパーティーと結婚仲介サービスである" |
+| Namoros por apresentação de amigos | Cerca de seis em cada dez vieram de quem fazia isso para conhecer alguém | Seção 5, Figura 3 | "友人・知人の紹介 のタテ棒のうち，およそ 6 割が灰色で塗られている" |
+| Namoros de aula, hobby e internet | Cerca de metade veio de quem fazia isso para conhecer alguém | Seção 5, Figura 3 | "でほぼ半々ずつを占めあう" |
 
-A Figura 3 traz, para cada uma das 12 atividades, a razão de chances sem ajuste (linha pontilhada) e com ajuste por escore de propensão (linha cheia), e em barras a parcela dos 1.192 que começou namoro por cada via no ano. A extração de texto separa os valores dos rótulos, então só entram nesta Ficha os valores que o texto repete, nas linhas acima.
+A razão de chances compara a chance de começar namoro de quem fez a atividade com a de quem não fez: acima de 1, mais chance. "Igualar os grupos" é o ajuste por escore de propensão, que compara pessoas parecidas em características pessoais. "Pode ser acaso" quer dizer que o resultado não teve [[significância estatística]]. O artigo põe o _goukon_ entre as atividades feitas por amigos e conhecidos, e o _omiai_ entre as apresentações formais. A Figura 3 traz, para cada uma das 12 atividades, a razão de chances sem ajuste (linha pontilhada) e com ajuste (linha cheia), e em barras a parcela dos 1.192 que começou namoro por cada via no ano. A extração de texto separa os valores dos rótulos, então só entram nesta Ficha os valores que o texto repete, nas linhas acima.
 
 ## Limitações
 

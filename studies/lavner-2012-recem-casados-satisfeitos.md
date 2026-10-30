@@ -29,22 +29,24 @@ Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram o
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Casais satisfeitos analisados | 136 | Resumo | "We identified 136 couples reporting stably high levels of relationship satisfaction in the first 4 years of marriage." |
-| Divórcios em dez anos entre os satisfeitos | quinze por cento (21 casais) | Resultados, §1 | "Fifteen percent of couples ( n = 21) divorced over ten years" |
-| Divórcio nos grupos menos satisfeitos do mesmo estudo | 40% a 60% em dez anos | Método, Selecting stably satisfied newlyweds | "ten-year divorce rates ranged between 40–60%" |
-| Satisfação nos 4 primeiros anos, divorciados vs. casados | sem diferença consistente: 14 de 16 comparações não significativas | Resultados, §1 | "14 of the 16 comparisons were nonsignificant" |
-| Compromisso médio da esposa, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | 0,19 vs. 0,33; d = −0,17, sem diferença | Tabela 3 | "Average commitment (W) 115 0.19 0.80 21 0.33 0.78 −0.73 −0.17" |
-| Compromisso médio de maridos e esposas em três medições: casais que seguiram casados vs. os que se divorciaram | sem diferença | Resultados, §3 | "No differences were found between groups for husbands' or wives' average commitment over three assessments" |
-| Comunicação negativa observada | maior nos casais que se divorciaram | Resultados, §3 | "observed negative affect, skills, and support, along with husbands' self-reported verbal aggression, all distinguished couples who did and did not divorce" |
-| Habilidades negativas na conversa sobre um problema do casal, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | −0,26 vs. 0,36; t = −3,18 | Tabela 3 | "T1 negative skills (J) 115 −0.26 0.78 21 0.36 1.03 −3.18" |
-| Tamanho dessa diferença em habilidades negativas, em desvios-padrão (d) | d = −0,76 | Tabela 3 | "−0.76 T1 negative support (J)" |
-| Agressão verbal relatada pelo marido, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | −0,21 vs. 0,43; t = −2,82 | Tabela 3 | "T1 verbal aggression (H) 114 −0.21 0.90 20 0.43 1.16 −2.82" |
-| Tamanho dessa diferença em agressão verbal, em desvios-padrão (d) | d = −0,69 | Tabela 3 | "−0.69 T1 verbal aggression (W)" |
-| Comportamentos positivos observados | sem diferença | Resultados, §3 | "No differences were found in observed joint positive affect, skills, or support." |
-| Personalidade e estresse | sem diferença confiável | Resultados, §3 | "Personality, average acute stress, and average chronic stress did not reliably differentiate between groups" |
-| Comunicação negativa controlando compromisso, personalidade ou estresse | seguiu significativa em sete de nove testes | Resultados, último § | "In seven of out of nine cases, the negative behavioral variables remained significant" |
-| Pais divorciados do marido | 35% nos que se divorciaram vs. 14% nos que ficaram casados | Resultados, §2 | "35% parental divorce in the eventual divorce group, versus 14% in the non-divorce group" |
-| Idade do marido no início | 25,48 anos nos que se divorciaram vs. 27,74 nos que ficaram casados | Resultados, §2 | "were 25.48 ( SD = 3.31) and 24.90 ( SD = 3.06), respectively, compared to mean ages of 27.74" |
+| Quantos casais o estudo olhou | 136 casais de recém-casados com satisfação alta e estável nos 4 primeiros anos de casamento | Resumo | "We identified 136 couples reporting stably high levels of relationship satisfaction in the first 4 years of marriage." |
+| Divórcios entre os satisfeitos | Quinze por cento desses casais (21) se divorciaram em dez anos | Resultados, §1 | "Fifteen percent of couples ( n = 21) divorced over ten years" |
+| Divórcios entre os menos satisfeitos | Nos dois grupos do mesmo estudo que começaram com pouca satisfação ou a perderam depressa, de 40% a 60% se divorciaram em dez anos | Método, Selecting stably satisfied newlyweds | "ten-year divorce rates ranged between 40–60%" |
+| Satisfação nos primeiros anos | Quem depois se divorciou e quem seguiu casado não ficaram diferentes de forma consistente nos quatro primeiros anos: em 14 de 16 comparações, a diferença pode ser acaso | Resultados, §1 | "14 of the 16 comparisons were nonsignificant" |
+| Compromisso da esposa | Não houve diferença entre as esposas dos casais que seguiram casados e as dos que se divorciaram (pontuação de 0,19 e 0,33; d = −0,17) | Tabela 3 | "Average commitment (W) 115 0.19 0.80 21 0.33 0.78 −0.73 −0.17" |
+| Compromisso de maridos e esposas | Na média de três medições, não houve diferença entre os casais que seguiram casados e os que se divorciaram | Resultados, §3 | "No differences were found between groups for husbands' or wives' average commitment over three assessments" |
+| Comportamento negativo nas conversas | Observadores viram mais emoção negativa, mais atitudes negativas ao tentar resolver um problema e mais apoio negativo nos casais que depois se divorciaram; esses maridos também contaram mais agressão verbal | Resultados, §3 | "observed negative affect, skills, and support, along with husbands' self-reported verbal aggression, all distinguished couples who did and did not divorce" |
+| Atitudes negativas ao discutir um problema do casal | Os casais que depois se divorciaram tiveram mais que os que seguiram casados (pontuação de 0,36 e −0,26; t = −3,18) | Tabela 3 | "T1 negative skills (J) 115 −0.26 0.78 21 0.36 1.03 −3.18" |
+| Tamanho da diferença nessas atitudes | Uma diferença entre média e grande (d = −0,76) | Tabela 3 | "−0.76 T1 negative support (J)" |
+| Agressão verbal, contada pelo marido | Os maridos dos casais que depois se divorciaram contaram mais que os dos que seguiram casados (pontuação de 0,43 e −0,21; t = −2,82) | Tabela 3 | "T1 verbal aggression (H) 114 −0.21 0.90 20 0.43 1.16 −2.82" |
+| Tamanho da diferença na agressão verbal | Uma diferença entre média e grande (d = −0,69) | Tabela 3 | "−0.69 T1 verbal aggression (W)" |
+| Comportamento positivo nas conversas | Observadores não viram diferença na emoção positiva, nas atitudes positivas nem no apoio positivo entre os casais que seguiram casados e os que se divorciaram | Resultados, §3 | "No differences were found in observed joint positive affect, skills, or support." |
+| Personalidade e estresse | Não separaram com segurança os casais que seguiram casados dos que se divorciaram | Resultados, §3 | "Personality, average acute stress, and average chronic stress did not reliably differentiate between groups" |
+| Comportamento negativo, levando em conta o resto | Levando em conta compromisso, personalidade ou estresse, ele seguiu separando os dois grupos em sete de nove testes | Resultados, último § | "In seven of out of nine cases, the negative behavioral variables remained significant" |
+| Pais do marido divorciados | Aconteceu em 35% dos casais que se divorciaram e em 14% dos que seguiram casados | Resultados, §2 | "35% parental divorce in the eventual divorce group, versus 14% in the non-divorce group" |
+| Idade do marido no começo do estudo | Em média, 25,48 anos nos casais que se divorciaram e 27,74 nos que seguiram casados | Resultados, §2 | "were 25.48 ( SD = 3.31) and 24.90 ( SD = 3.06), respectively, compared to mean ages of 27.74" |
+
+"Pontuação" é a nota padronizada do estudo: 0 é a média do grupo, e acima de zero é mais que a média. "t" é a conta que testa a diferença entre os dois grupos. "d" mede o tamanho dessa diferença: 0,2 é pequena, 0,5 é média e 0,8 é grande; o sinal só diz qual grupo ficou acima. "Atitudes negativas" são o que o estudo chama de habilidades negativas, como discordar, culpar e desqualificar. "Apoio negativo" é, por exemplo, desanimar o outro ou mandar que resolva sozinho, numa conversa sobre algo que a pessoa queria mudar em si.
 
 ## Definições
 

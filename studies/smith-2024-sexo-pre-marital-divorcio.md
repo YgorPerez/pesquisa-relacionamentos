@@ -28,23 +28,23 @@ Os autores acompanharam, com modelos de história de eventos em tempo discreto (
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Pessoas na análise | 7.030 pessoas já casadas (6.989 em casamento de sexo diferente, 41 do mesmo sexo) | Data and Methods | "This leaves an analytic sample of 7030 respondents who had been in either opposite-sex ( N = 6989) or same-sex ( N = 41) marriages." |
-| Entrevistados na quarta rodada da pesquisa (onda IV) | 15.701 pessoas de 24 a 32 anos, taxa de resposta de 80,3% | Data and Methods | "Wave IV took place in 2008–2009 and consisted of 15,701 respondents ages 24–32, with a response rate of 80.3%." |
-| Tiveram parceiros antes do casamento além do cônjuge | Oitenta e quatro por cento | Results | "Eighty-four percent of respondents reported having premarital, nonspousal sexual partners." |
-| Casamentos desfeitos até a onda IV | Cerca de 21% | Results | "approximately 21% had a marriage which ended in divorce" |
-| Algum parceiro antes do casamento além do cônjuge, sem controles | Chance de divórcio 2,61 vezes a de quem não teve | Tabela 3, Modelo 1 | "2.61 (0.12) ***" |
-| O mesmo, com todos os controles, inclusive os da adolescência | 2,52 vezes | Tabela 3, Modelo 3 | "2.52 (0.13) ***" |
-| Religião, valores e crenças na adolescência | Não explicam a associação | Results | "We thus find no evidence that the link between premarital sex and divorce is due to selectivity based on early-life religiosity or beliefs and values." |
-| Distribuição dos parceiros até a onda III (subamostra que casou mais tarde) | Cerca de um quarto sem parceiros, 57% de um a oito, 19% com nove ou mais | Results | "about a quarter reported one or zero sexual partners as of Wave III, over half (57%) reported between one and eight partners, and 19% reported 9 or more" |
-| De 1 a 8 parceiros, sem controles | Chance de divórcio 1,50 vez a do grupo sem parceiros | Tabela 4, Modelo 1 | "1.50 (0.20) *" |
-| De 1 a 8 parceiros, com todos os controles | 1,64 vez (64% maior) | Results | "in the full model the odds of divorce for those with one to eight partners are 64% higher than those with no premarital partners (ORs = 1.50—1.64)" |
-| 9 ou mais parceiros, sem controles | 2,65 vezes | Tabela 4, Modelo 1 | "2.65 (0.20) ***" |
-| 9 ou mais parceiros, com todos os controles | 3,20 vezes | Tabela 4, Modelo 3 | "3.20 (0.24) ***" |
-| O que acontece com a associação de 9 ou mais parceiros ao incluir os controles | A associação fica mais forte, não mais fraca | Results | "Notably, this effect becomes stronger as controls are added to the model" |
-| Homens e mulheres | Sem diferença em nenhum modelo | Results | "we do not any evidence of sex differences in the link between premarital sex and divorce risk in any model for either sample" |
-| Outras características que o estudo não mediu podem explicar a associação? | Não dá para descartar | Discussion | "our analysis does not rule out the possibility that unmeasured variables might be driving selection" |
+| Quem entrou na conta | 7.030 pessoas que já tinham casado: 6.989 com alguém do outro sexo e 41 com alguém do mesmo sexo | Data and Methods | "This leaves an analytic sample of 7030 respondents who had been in either opposite-sex ( N = 6989) or same-sex ( N = 41) marriages." |
+| Quarta rodada da pesquisa | Responderam 15.701 pessoas de 24 a 32 anos, 80,3% das procuradas | Data and Methods | "Wave IV took place in 2008–2009 and consisted of 15,701 respondents ages 24–32, with a response rate of 80.3%." |
+| Parceiros antes de casar | Oitenta e quatro por cento tiveram parceiros sexuais antes do casamento, além do futuro cônjuge | Results | "Eighty-four percent of respondents reported having premarital, nonspousal sexual partners." |
+| Divórcios até a quarta rodada | Cerca de 21% das pessoas que já tinham casado tiveram um casamento terminado em divórcio | Results | "approximately 21% had a marriage which ended in divorce" |
+| Ter tido algum parceiro antes de casar, além do futuro cônjuge | Sem levar mais nada em conta, a chance de divórcio foi 2,61 vezes a de quem não teve | Tabela 3, Modelo 1 | "2.61 (0.12) ***" |
+| Ter tido algum parceiro, levando em conta o resto | Levando em conta tudo o que o estudo mediu, inclusive a adolescência, a chance foi 2,52 vezes a de quem não teve | Tabela 3, Modelo 3 | "2.52 (0.13) ***" |
+| Religião, valores e crenças na adolescência | O estudo não achou sinal de que eles expliquem essa ligação | Results | "We thus find no evidence that the link between premarital sex and divorce is due to selectivity based on early-life religiosity or beliefs and values." |
+| Quantos parceiros, em quem casou mais tarde | Até a terceira rodada, descontando um parceiro que pode ser o futuro cônjuge, cerca de um quarto ficou sem parceiros, mais da metade (57%) com um a oito e 19% com nove ou mais | Results | "about a quarter reported one or zero sexual partners as of Wave III, over half (57%) reported between one and eight partners, and 19% reported 9 or more" |
+| De 1 a 8 parceiros | Sem levar mais nada em conta, a chance de divórcio foi 1,50 vez a do grupo sem parceiros antes de casar | Tabela 4, Modelo 1 | "1.50 (0.20) *" |
+| De 1 a 8 parceiros, levando em conta o resto | A chance foi 1,64 vez a desse grupo, ou seja, 64% maior | Results | "in the full model the odds of divorce for those with one to eight partners are 64% higher than those with no premarital partners (ORs = 1.50—1.64)" |
+| 9 ou mais parceiros | Sem levar mais nada em conta, a chance foi 2,65 vezes a do grupo sem parceiros antes de casar | Tabela 4, Modelo 1 | "2.65 (0.20) ***" |
+| 9 ou mais parceiros, levando em conta o resto | A chance foi 3,20 vezes a desse grupo | Tabela 4, Modelo 3 | "3.20 (0.24) ***" |
+| O que muda em 9 ou mais parceiros, levando em conta o resto | A ligação fica mais forte, não mais fraca | Results | "Notably, this effect becomes stronger as controls are added to the model" |
+| Homens e mulheres | A ligação não foi diferente entre eles em nenhuma das contas | Results | "we do not any evidence of sex differences in the link between premarital sex and divorce risk in any model for either sample" |
+| O que o estudo não mediu | Os autores dizem que não dá para descartar que características fora da conta expliquem a ligação | Discussion | "our analysis does not rule out the possibility that unmeasured variables might be driving selection" |
 
-As razões de chance vêm dos modelos de tempo discreto e se leem como razão de risco mensal de terminar o primeiro casamento. "0 parceiros" na subamostra quer dizer até um parceiro até a onda III (18 a 26 anos), já que os autores descontam um, que pode ser o futuro cônjuge. Os autores escolheram os cortes 1–8 e 9+ porque o risco sobe com um parceiro, fica estável até oito e sobe de novo com nove (Tabela A2).
+A chance de divórcio vem de razões de chances e se lê como o risco, mês a mês, de terminar o primeiro casamento; não é a probabilidade de se divorciar. As linhas de 1 a 8 e de 9 ou mais olham só quem casou mais tarde. Nelas, "sem parceiros" quer dizer até um parceiro até a terceira rodada (18 a 26 anos), já que os autores descontam um, que pode ser o futuro cônjuge. Eles escolheram esses cortes porque o risco sobe com um parceiro, fica estável até oito e sobe de novo com nove (Tabela A2).
 
 ## Limitações
 
