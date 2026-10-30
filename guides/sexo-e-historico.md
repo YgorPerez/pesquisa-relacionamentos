@@ -474,11 +474,13 @@ visuals:
       - label: Mulheres heterossexuais
         values: [27, 26, 27, 20]
         fact_sheet: galperin-2013-arrependimento-sexual
-        applies_to: { genders: [woman], seeks: [men], ages: { min: 18, max: 65 } }
+        applies_to:
+          { genders: [woman], seeks: [men], ages: { min: 18, max: 65 } }
       - label: Homens heterossexuais
         values: [52, 25, 15, 7]
         fact_sheet: galperin-2013-arrependimento-sexual
-        applies_to: { genders: [man], seeks: [women], ages: { min: 18, max: 65 } }
+        applies_to:
+          { genders: [man], seeks: [women], ages: { min: 18, max: 65 } }
     note: na linha dos homens, as partes somam 99% por causa do arredondamento
   - id: por-que-um-momento-so-engana
     kind: diagram
