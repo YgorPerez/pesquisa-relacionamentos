@@ -177,14 +177,18 @@ export default function VisualChartPlot({
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
     const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
+    // The texts' own copies of the rows: the focus ring marks every point
+    // whose datum is the focused one, and it belongs on the mark only.
+    const words = rows.map((r) => ({ ...r }))
     return defineChart({
       marks: [
         ...pointMarks(chart, rows, hatch),
-        text(rows, {
+        text(words, {
           id: 'rotulo',
           x: () => 0,
           y: 'key',
-          key: 'key',
+          // A key of its own: the focus ring marks only the bar or dot.
+          key: (r) => `rotulo-${r.key}`,
           text: 'label',
           anchor: 'start',
           dy: -layout.label,
@@ -193,11 +197,11 @@ export default function VisualChartPlot({
           fill: tone,
         }),
         ...layout.measure.map((dy, line) =>
-          text(rows, {
+          text(words, {
             id: `medida-${line}`,
             x: () => 0,
             y: 'key',
-            key: 'key',
+            key: (r) => `medida-${line}-${r.key}`,
             text: (r) => measureLines(r.detail)[line] ?? null,
             anchor: 'start',
             dy: -dy,
@@ -205,11 +209,11 @@ export default function VisualChartPlot({
             fill: tone,
           }),
         ),
-        text(rows, {
+        text(words, {
           id: 'valor',
           x: 'value',
           y: 'key',
-          key: 'key',
+          key: (r) => `valor-${r.key}`,
           text: (r) => r.number.text,
           anchor: 'start',
           dx: VALUE_DX,
@@ -251,9 +255,8 @@ export default function VisualChartPlot({
       const seen = new Set<string>()
       const marks: OverlayMark[] = []
       for (const point of scene.points) {
-        const row = byKey.get(point.key.split(':').pop() ?? '')
         const datum = point.datum as Row | undefined
-        const found = row ?? (datum && byKey.get(datum.key))
+        const found = datum && byKey.get(datum.key)
         if (!point.markId.startsWith('marca') || !found || seen.has(found.key))
           continue
         seen.add(found.key)
