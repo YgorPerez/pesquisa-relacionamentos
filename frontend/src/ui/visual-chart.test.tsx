@@ -4,12 +4,17 @@
 // applied. The tap is in the story (`visual-chart.stories.tsx`), in a real
 // browser, where the library measures and listens.
 import { renderToString } from 'react-dom/server'
-import { beforeAll, expect, it } from 'vite-plus/test'
+import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
 import { BARS, DOTS } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
 
-beforeAll(() => preloadPlot())
+// Rendered as the server renders: with the plot already loaded.
+beforeAll(async () => {
+  vi.stubEnv('SSR', true)
+  await preloadPlot()
+})
+afterAll(() => vi.unstubAllEnvs())
 
 const page = (html: string) =>
   new DOMParser().parseFromString(html, 'text/html')
@@ -53,7 +58,7 @@ it('lights the chosen country and dims the others', () => {
     renderToString(<VisualChart chart={DOTS} country="eua" profile={null} />),
   )
   const values = [...dots.querySelectorAll('svg[role="img"] text')].filter(
-    (t) => /%$/.test(t.textContent ?? '') && t.textContent !== '0%',
+    (t) => (t.textContent ?? '').endsWith('%') && t.textContent !== '0%',
   )
   const dimmed = (text: string) =>
     values

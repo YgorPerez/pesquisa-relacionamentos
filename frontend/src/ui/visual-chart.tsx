@@ -20,7 +20,7 @@ import {
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { DefinitionGlyph } from './definition-glyph'
-import { LazyPlot, wantPlot } from './visual-chart-loader'
+import { Plot, wantPlot } from './visual-chart-loader'
 import { CHART_COPY } from './visual-chart.copy'
 import { VisualDetail } from './visual-detail'
 import { VisualFrame } from './visual-frame'
@@ -40,7 +40,7 @@ const Island = memo(function Island({
 }) {
   return (
     <Suspense fallback={null}>
-      <LazyPlot
+      <Plot
         chart={chart}
         country={country}
         profile={profile}

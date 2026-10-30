@@ -5,7 +5,7 @@
 // near the screen or is touched (`wantPlot`). Until then React leaves the
 // server's SVG in place, inside a Suspense boundary that has not hydrated
 // yet. The Guide's JS stays within ADR 0033's budget.
-import { lazy } from 'react'
+import { createElement, lazy, type ComponentProps } from 'react'
 
 type PlotModule = typeof import('./visual-chart-plot')
 
@@ -17,8 +17,7 @@ const loadPlot = () =>
   })
 
 /** The server loads the plot before its first request (`server.ts`), so
- * `LazyPlot` resolves at once there and the SVG goes in the HTML, never a
- * fallback streamed later. */
+ * the SVG goes in the HTML, never a fallback streamed later. */
 export const preloadPlot = (): Promise<void> => loadPlot().then(() => undefined)
 
 let want = () => {}
@@ -30,16 +29,13 @@ const wanted = new Promise<void>((resolve) => {
  * the first call fetches. */
 export const wantPlot = () => want()
 
-/** A thenable already resolved, which `lazy` reads without suspending. */
-const ready = (plot: PlotModule): Promise<PlotModule> =>
-  ({
-    then: (done: (value: PlotModule) => unknown) => done(plot),
-  }) as unknown as Promise<PlotModule>
+/** The browser's plot: the same component, once the library arrived. */
+const LazyPlot = lazy(() => wanted.then(loadPlot))
 
-export const LazyPlot = lazy(() =>
-  loaded
-    ? ready(loaded)
-    : import.meta.env.SSR
-      ? loadPlot()
-      : wanted.then(loadPlot),
-)
+/** The plot inside the chart's Suspense boundary. The server renders the
+ * one it preloaded, so nothing suspends there; the browser always goes
+ * through `LazyPlot`, so the element type never changes between renders. */
+export function Plot(props: ComponentProps<PlotModule['default']>) {
+  const server = import.meta.env.SSR ? loaded?.default : undefined
+  return createElement(server ?? LazyPlot, props)
+}
