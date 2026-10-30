@@ -37,11 +37,11 @@ Inquérito domiciliar com um morador selecionado por domicílio. Para o Grupo po
 | Recusou-se a responder | 2,3% | Tabela 1.1.1, linha Recusou-se a responder | "Recusou-se a responder 2,3 2,1 2,5 2,3 2,0 2,6 2,3 2,0 2,5" |
 | Homossexuais ou bissexuais, 18 a 29 anos | 4,8% (IC 4,2–5,5) | Tabela 1.2.1, linha 18 a 29 | "18 a 29 100,0 - - 89,8 88,9 90,6 4,8 4,2 5,5 5,3 4,7 6,0" |
 | Homossexuais ou bissexuais, 60 anos ou mais | 0,2% (IC 0,2–0,3) | Tabela 1.2.1, linha 60 ou mais | "60 ou mais 100,0 - - 97,2 96,8 97,6 0,2 0,2 0,3 2,5 2,2 2,9" |
-| Altura usada | Altura final, em cm | Dicionário de variáveis, P00404 | "Altura - Final (em cm)" |
-| Altura medida | Só numa subamostra em 2019 | Nota técnica 01/2021, p. 1 | "Em 2019, entretanto, a aferição dessas medidas ocorreu em uma subamostra dos moradores selecionados de 15 anos ou mais de idade." |
-| Pergunta de tabaco | Uso atual de qualquer produto do tabaco | Dicionário de variáveis, P050 | "Atualmente, o(a) Sr(a) fuma algum produto do tabaco?" |
+| Medida de altura usada | Altura final, em cm | Dicionário de variáveis, P00404 | "Altura - Final (em cm)" |
+| Quem teve a altura medida, entre os moradores selecionados de 15 anos ou mais | Em 2019, só uma parte deles | Nota técnica 01/2021, p. 1 | "Em 2019, entretanto, a aferição dessas medidas ocorreu em uma subamostra dos moradores selecionados de 15 anos ou mais de idade." |
+| O que a pergunta sobre tabaco mede | Uso atual de qualquer produto do tabaco | Dicionário de variáveis, P050 | "Atualmente, o(a) Sr(a) fuma algum produto do tabaco?" |
 
-As tabelas trazem, por linha, Total, Homem e Mulher (Tabela 1.1.1) ou Total, Heterossexual, Homossexual ou Bissexual e Recusou ou não sabia (Tabela 1.2.1), cada um com o percentual e os limites inferior e superior. O pipeline do Grupo possível reproduz a Tabela 1.1.1 por sexo a partir do microdado, na casa decimal publicada.
+As tabelas trazem, por linha, Total, Homem e Mulher (Tabela 1.1.1) ou Total, Heterossexual, Homossexual ou Bissexual e Recusou ou não sabia (Tabela 1.2.1), cada um com o percentual e os limites inferior e superior. Esses limites são o IC (intervalo de confiança) das linhas acima. O pipeline do Grupo possível reproduz a Tabela 1.1.1 por sexo a partir do microdado, na casa decimal publicada.
 
 Fonte local: `sources/ibge-2019-pns.txt`, com o texto das Tabelas 1.1.1 e 1.2.1, das linhas do dicionário e da página 1 da nota técnica, cada um sob a URL de onde saiu. O microdado fica no cache do pipeline, fora do repositório.
 

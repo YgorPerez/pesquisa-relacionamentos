@@ -40,8 +40,8 @@ O tema Nupcialidade do Censo pergunta a quem tem 10 anos ou mais se vive com cô
 | Pessoas de 10 anos ou mais que viviam em união (de qualquer tipo), 2010 → 2022 | 50,1% → 51,3% | Apresentação, p. 8 | "49,5 50,1 51,3" | |
 | União consensual entre quem vivia em união, 20 a 24 anos, 2022 | 75,6% | SIDRA 10187, 20 a 24 anos | "2022":"3655409" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions total 20-24` |
 | União consensual entre quem vivia em união, 20 a 24 anos, 2010 | 66,7% | SIDRA 3484, 20 a 24 anos | "2010":"3931263" | `scripts/calculations/ibge-2022-censo-unioes.ts 2010 unions total 20-24` |
-| A mesma medida, homens de 20 a 24 anos, 2022 | 79,1% | SIDRA 10187, Homens, 20 a 24 anos | "2022":"1518043" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions men 20-24` |
-| A mesma medida, mulheres de 20 a 24 anos, 2022 | 73,3% | SIDRA 10187, Mulheres, 20 a 24 anos | "2022":"2137366" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions women 20-24` |
+| União consensual entre os homens de 20 a 24 anos que viviam em união, 2022 | 79,1% | SIDRA 10187, Homens, 20 a 24 anos | "2022":"1518043" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions men 20-24` |
+| União consensual entre as mulheres de 20 a 24 anos que viviam em união, 2022 | 73,3% | SIDRA 10187, Mulheres, 20 a 24 anos | "2022":"2137366" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions women 20-24` |
 | União consensual entre quem vivia em união, 25 a 29 anos, 2022 | 62,2% | SIDRA 10187, 25 a 29 anos | "2022":"5069257" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 unions total 25-29` |
 | União consensual entre quem vivia em união, 25 a 29 anos, 2010 | 53,9% | SIDRA 3484, 25 a 29 anos | "2010":"5167823" | `scripts/calculations/ibge-2022-censo-unioes.ts 2010 unions total 25-29` |
 | União consensual entre todos os homens de 25 a 29 anos, 2022 | 31,6% | SIDRA 10187 e 10185, Homens, 25 a 29 anos | "2022":"2395860" | `scripts/calculations/ibge-2022-censo-unioes.ts 2022 people men 25-29` |

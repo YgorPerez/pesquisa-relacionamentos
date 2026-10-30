@@ -32,16 +32,16 @@ No primeiro ano de casamento (1986), cada cônjuge descreveu a última discordâ
 | Taxa de participação | 66% dos contatados | Método, Participants | "A total of 66% of those contacted participated." |
 | Divorciados ou separados no ano 16 | 46%; 49% seguiam casados | Método, Marital status | "By Year 16, 46% of the couples had divorced or separated from their original spouse whereas 49% had remained married." |
 | Comportamento destrutivo no ano 1 | maior taxa de divórcio para maridos e esposas | Resultados, Divorce as a Function of Year 1 Conflict Behaviors | "husbands and wives who reported destructive conflict behaviors in Year 1 had higher divorce rates" |
-| Razão de risco do comportamento destrutivo do marido (por ponto na escala de 1 a 4), modelo 1 com controles | 4,28 | Tabela 3 | "Conflict behaviors Destructive Husband 4.28" |
-| ... da esposa | 1,51 | Tabela 3 | "Wife 1.51" |
+| Risco de divórcio a cada ponto a mais de comportamento destrutivo do marido, numa escala de 1 a 4, com controles (razão de risco; acima de 1 indica mais divórcio, abaixo de 1, menos) | 4,28 | Tabela 3 | "Conflict behaviors Destructive Husband 4.28" |
+| Risco de divórcio a cada ponto a mais de comportamento destrutivo da esposa, na mesma escala (razão de risco) | 1,51 | Tabela 3 | "Wife 1.51" |
 | Sair para esfriar a cabeça | maior risco só quando o marido faz (razão de risco 1,23) | Resultados e Tabela 3 | "Leaving withdrawal Husband 1.23" |
-| Construtivo da esposa, sozinho | mais divórcio (razão de risco 1,62), contra a hipótese dos autores | Resultados e Tabela 3 | "Wife 1.62" |
-| Os dois construtivos | menos divórcio (interação 0,65) | Tabela 3, modelo 2 | "Hus. constructive X wife constructive .65 *" |
+| Comportamento construtivo da esposa (como conversa calma e escuta), sem olhar a combinação com o do marido | mais divórcio (razão de risco 1,62), contra a hipótese dos autores | Resultados e Tabela 3 | "Wife 1.62" |
+| Marido e esposa, os dois com comportamento construtivo | menos divórcio (interação 0,65) | Tabela 3, modelo 2 | "Hus. constructive X wife constructive .65 *" |
 | Marido construtivo e esposa sai da conversa | mais divórcio (interação 1,30) | Tabela 3, modelo 4 | "Hus. constructive X wife leave 1.30" |
 | Esposa construtiva e marido sai da conversa | mais divórcio (interação 1,33) | Tabela 3, modelo 4 | "Wife constructive X hus. leave 1.33" |
 | Leitura dos autores sobre o padrão "um tenta resolver, o outro sai" | parecido com o padrão de cobrança e retraimento | Resultados | "If either husband or wife used greater constructive behaviors and their partner used greater leaving withdrawal, they had higher divorce rates." |
 | Marido sai e esposa se fecha | mais divórcio (interação 1,21) | Tabela 3, modelo 3 | "Husband leave X wife quiet 1.21 *" |
-| O conflito acima dos fatores sociodemográficos | melhora significativa do modelo | Resultados | "conflict behaviors were significant predictors of divorce over and above race, sociodemographics, and life course covariates" |
+| Os comportamentos no conflito preveem divórcio além de raça, fatores sociodemográficos e fase da vida? | sim, melhora significativa do modelo | Resultados | "conflict behaviors were significant predictors of divorce over and above race, sociodemographics, and life course covariates" |
 | Mudança ao longo dos anos entre quem continuou casado | esposas reduziram o comportamento destrutivo; maridos ficaram iguais | Resumo | "Wives' destructive and withdrawal behaviors decreased over time, whereas husbands' conflict behaviors remained stable." |
 | Quem não relatou discordância no ano 1 | 29% dos maridos e 21% das esposas não relataram nenhuma | Método, Analysis Strategy | "did not report a conflict in Year 1 (29% of husbands and 21% of wives)" |
 

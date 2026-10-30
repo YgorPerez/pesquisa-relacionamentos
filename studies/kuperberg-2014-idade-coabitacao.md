@@ -34,9 +34,9 @@ HR é a razão entre taxas instantâneas de dissolução ao longo do casamento, 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Idade média ao começar a morar junto: coabitação pré-marital e casamento direto, respectivamente | 22,4 e 23,1 anos | Resultados, comentário da Tabela 1 | "22.4 and 23.1" |
-| Coabitação pré-marital e dissolução, com controles demográficos e idade ao casar | HR = 1,37; p < 0,001 | Resultados após a Tabela 3, modelo com idade ao casar | "1.37, significant at the p < .001 level." |
-| Coabitação pré-marital e dissolução, com controles demográficos e idade ao começar a morar junto | HR = 1,09; associação não significativa | Resultados após a Tabela 3, modelo com idade ao iniciar a convivência | "hazard ratio of 1.09, which was not statistically significant." |
+| Idade média ao começar a morar junto: quem morou junto antes de casar e quem casou direto, nessa ordem | 22,4 e 23,1 anos | Resultados, comentário da Tabela 1 | "22.4 and 23.1" |
+| Risco de separação de quem morou junto antes de casar, comparado a quem casou direto, levando em conta dados demográficos e a idade ao casar | HR = 1,37; p < 0,001 | Resultados após a Tabela 3, modelo com idade ao casar | "1.37, significant at the p < .001 level." |
+| Risco de separação de quem morou junto antes de casar, comparado a quem casou direto, levando em conta dados demográficos e a idade ao começar a morar junto | HR = 1,09; associação não significativa | Resultados após a Tabela 3, modelo com idade ao iniciar a convivência | "hazard ratio of 1.09, which was not statistically significant." |
 
 ## Limitações
 
