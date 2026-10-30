@@ -13,6 +13,7 @@ import type {
   QuestionView,
 } from '#/content/guide-view'
 import { useProfile } from '#/state/profile'
+import { VisualChart } from './visual-chart'
 import { useProfileInGuide } from '#/state/profile-in-guide'
 import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
@@ -317,6 +318,8 @@ function Block({
 }) {
   const profile = useProfile()
   switch (block.kind) {
+    case 'chart':
+      return <VisualChart visual={block.visual} />
     case 'text':
       return <Html className="prosa" html={block.html} quote={chapter} />
     case 'question':

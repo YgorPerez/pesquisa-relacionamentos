@@ -36,7 +36,8 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
-import { renderVisuals, type RenderedVisual } from './visuals-view'
+import { renderVisuals, visualView, type RenderedVisual } from './visuals-view'
+import type { ChartView } from '#/ui/visual-chart'
 import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
 import { pageTerms, withTermLinks, type TermView } from './terms-view'
 
@@ -261,6 +262,7 @@ export interface MythView {
  * pieces, for the list React draws. */
 export type ChapterBlock = { readonly key: string } & (
   | { readonly kind: 'text'; readonly html: SafeHtml }
+  | { readonly kind: 'chart'; readonly visual: ChartView }
   | { readonly kind: 'question'; readonly question: QuestionView }
   | { readonly kind: 'tip'; readonly tip: GuideTip }
   | { readonly kind: 'myth'; readonly myth: MythView }
@@ -421,13 +423,31 @@ function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
     blocks: chapter.parts.flatMap((part, n): ChapterBlock[] => {
       switch (part.kind) {
         case 'text':
-          return [
-            {
-              key: `text-${n}`,
-              kind: 'text',
-              html: prose(part.markdown, drawing),
-            },
-          ]
+          return part.markdown.split(/(\{\{visual:[a-z0-9-]+\}\})/g).flatMap((text, index): ChapterBlock[] => {
+            const id = /^\{\{visual:([^}]+)\}\}$/.exec(text)?.[1]
+            const raw = topic.visuals.find(v => v.id === id)
+            const firstBar = topic.visuals.find(v => v.id === 'como-se-conheceram-1995-2017')
+            const firstTable = topic.visuals.find(v => v.id === 'fatia-online-por-estudo')
+            if (raw && (raw === firstBar || raw === firstTable)) {
+              const view = visualView(raw, library, slug => {
+                const ref = numbers.get(slug)
+                return ref && { ...ref, anchor: anchor(slug) }
+              }, topic.slug)
+              if (raw.kind === 'bars' && view.kind === 'bars') return [{
+                key: `chart-${id}`, kind: 'chart', visual: {
+                  kind: 'bars', id: view.domId, title: view.title, note: view.note,
+                  rows: view.bars.map((bar, i) => ({ id: String(i), label: bar.label, value: raw.bars[i]!.value, number: bar.number })),
+                },
+              }]
+              if (raw.kind === 'study-table' && view.kind === 'study-table' && new Set(raw.rows.map(r => r.unit)).size === 1) return [{
+                key: `chart-${id}`, kind: 'chart', visual: {
+                  kind: 'dots', id: view.domId, title: view.title, note: view.note,
+                  rows: view.rows.map((row, i) => ({ id: String(i), label: `${row.study.title}: ${row.measure}`, value: raw.rows[i]!.value, number: row.number })),
+                },
+              }]
+            }
+            return text.trim() ? [{ key: `text-${n}-${index}`, kind: 'text', html: prose(text, drawing) }] : []
+          })
         case 'question': {
           const question = questionBySlug(library, part.slug)
           return question
