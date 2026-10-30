@@ -31,7 +31,7 @@ São preferências declaradas, respondidas num papel, e não escolhas: ninguém 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Quantos responderam | 10.047 pessoas, em 37 grupos de 33 países | Resumo | "Predictions were tested in data from 37 samples drawn from 33 countries located on six continents and five islands (total N = 10,047)" |
-| Perspectivas financeiras do parceiro | As mulheres deram mais valor a elas que os homens em 36 dos 37 grupos | Seção 3.1 | "In 36 of 37 samples, the predicted sex difference emerged" |
+| Perspectivas financeiras do parceiro | As mulheres deram mais valor a elas que os homens em 36 dos 37 grupos; na Espanha, a direção foi a mesma, mas a diferença pode ser acaso | Seção 3.1 | "In 36 of 37 samples, the predicted sex difference emerged" |
 | Ambição e dedicação ao trabalho | As mulheres deram mais valor a elas que os homens em trinta e quatro dos 37 grupos (92%), a direção prevista | Seção 3.1 | "Thirty-four of the 37 samples (92%) for ambitionindustriousness were in the predicted direction" |
 | Boa aparência | Os homens deram mais valor a ela que as mulheres nos 37 grupos; em 34, é improvável que a diferença seja acaso | Seção 3.4 | "All 37 samples show sex differences in the predicted direction, with 34 significant beyond the .05 level" |
 | Homens e idade da parceira | Preferem parceira mais nova em todos os 37 grupos | Seção 3.2 | "In each of the 37 samples, males prefer mates who are younger" |

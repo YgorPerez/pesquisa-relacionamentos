@@ -27,7 +27,7 @@ Com as mulheres da NSFG de 2002 a 2013, Wolfinger conta quantos parceiros sexuai
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Um só parceiro antes de casar | Quarenta e três por cento das mulheres nos anos 1970 e 21% na primeira década deste século | p. 1 | "Forty-three percent of women had just one premarital sex partner in the 1970s. By the aughts, this was down to 21 percent." |
-| Depois da primeira década deste século | A proporção de um só parceiro e a outra tendência citada no texto mudaram pouco | p. 1 | "Neither of these two trends changed much after the first decade of the twenty-first century." |
+| Depois da primeira década deste século | A proporção de um só parceiro e uma outra tendência, que o texto não nomeia, mudaram pouco | p. 1 | "Neither of these two trends changed much after the first decade of the twenty-first century." |
 | No máximo um parceiro, casadas nos anos 1970 | Quase dois terços das mulheres que casaram nessa década | p. 1 | "almost two-thirds of them had at most one sex partner prior to getting married" |
 | No máximo um parceiro, casadas nos anos 1980 | Pouco mais da metade das mulheres | p. 1 | "Even in the 1980s, slightly over half of women had a maximum of one sex partner before walking down the aisle." |
 | Virgens ao casar, anos 2010 | Só 5% das mulheres que casavam | p. 1 | "By the 2010s, only 5 percent of new brides were virgins." |

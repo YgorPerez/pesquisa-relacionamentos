@@ -31,20 +31,20 @@ Dentro do aparelho de ressonância, cada participante alternou, em blocos de 30 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Quantos entraram | 10 mulheres e 5 homens no aparelho de ressonância | Resumo | "used functional magnetic resonance imaging to study 10 women and 5 men" |
-| Quem saiu | 2 dos dezessete recrutados saíram porque se mexeram no aparelho | Métodos | "Seventeen participants were recruited, but 2 were dropped from the study because they moved" |
+| Quem saiu | 2 dos dezessete recrutados foram retirados do estudo porque se mexeram no aparelho | Métodos | "Seventeen participants were recruited, but 2 were dropped from the study because they moved" |
 | Idade | Em média 19,8 anos, de 18 a 21 | Métodos, Participants | "The average age was 19.8 ! 1.0 (SD) yr (range, 18 –21 yr)" |
 | Duração do relacionamento antes do fim | Em média 21 meses, de 4 a 48 | Métodos, Participants | "the average length of relationship before breaking up was 21 mo (range, 4 – 48 mo)" |
 | Tempo desde a rejeição | Em média 63 dias | Métodos, Participants | "the average time since initial rejection was 63 days" |
 | Nota de paixão (Passionate Love Scale) | A média foi 8,0 numa escala de 1 a 9 | Métodos, Participants | "was 8.0 ! 0.6 (on a 1–9 scale)" |
 | Tempo pensando em quem rejeitou | Na entrevista, disseram pensar na pessoa em mais de 85% do tempo acordado | Métodos, Participants | "they thought about their rejecter "85% of their waking hours" |
 | Sessão de fotos e conta regressiva | Durou 720 s (12 min) no aparelho, com a sequência repetida seis vezes | Métodos, Experimental design | "the total stimulus protocol was 720 s (12 min)" |
-| Regiões escolhidas de antemão | A área tegmental ventral, o estriado ventral, os córtices orbitofrontal e pré-frontal, o cíngulo e a ínsula ficaram mais ativos com a foto de quem rejeitou (P < 0,05, com correção FDR) | Resultados, Tabela 1 | "showed significant group effects (P ! 0.05, FDR correction)" |
+| Regiões escolhidas de antemão | A área tegmental ventral, o estriado ventral, os córtices orbitofrontal e pré-frontal, o cíngulo e a ínsula ficaram mais ativos com a foto de quem rejeitou que com a foto de um conhecido neutro (P < 0,05, com correção FDR) | Resultados, Tabela 1 | "showed significant group effects (P ! 0.05, FDR correction)" |
 | Cérebro inteiro | Olhando o cérebro todo, com o ajuste para muitos testes ao mesmo tempo, nenhuma ativação ficou fora do acaso | Métodos | "There were no significant activations when we analyzed the whole brain corrected for multiple comparisons." |
 | Rejeitados e felizes no amor (Aron et al. 2005) | Os rejeitados tiveram mais atividade no núcleo accumbens direito e no putâmen/pálido ventral que os felizes no amor do outro estudo (P < 0,01, sem correção) | Resultados | "than did those who were happily-in-love (P $ 0.01)" |
 | Nota de paixão e atividade no cérebro | Quanto maior a nota de paixão, mais atividade no núcleo caudado (r = 0,61) e na área septo/fórnix (r = 0,46) | Resultados, Tabela 2 | "caudate nucleus (r % 0.61, P % 0.01) and septum/fornix area (r % 0.46" |
 | A mesma ligação em quem estava feliz no amor | No estudo com pessoas felizes no amor, ficou parecida (r = 0,60 no núcleo caudado e 0,54 na área septo/fórnix) | Resultados | "(caudate: r % 0.60, septum/fornix: r % 0.54)" |
 | Critério para as ligações contarem | Os autores aceitaram P < 0,01, sem o ajuste para muitos testes ao mesmo tempo | Métodos | "we accepted P ! 0.01, uncorrected for multiple comparisons" |
-| Conta regressiva diferente antes de cada foto | Foi de 20 s antes de uma foto e 40 s antes da outra, o que pode ter distorcido o resultado | Métodos, Stimuli | "(20 vs. 40 s)" |
+| Conta regressiva diferente antes de cada foto | Foi de 20 s antes de uma foto e 40 s antes da outra, o que pode ter distorcido o resultado, embora os autores achem que isso pesou pouco | Métodos, Stimuli | "(20 vs. 40 s)" |
 
 "r" mede quanto duas coisas andam juntas, e "P" é a chance de um resultado assim aparecer só por acaso. "Correção" (FDR ou para comparações múltiplas) é o ajuste para quando se fazem muitos testes ao mesmo tempo; sem ele, fica mais fácil achar um resultado por acaso.
 

@@ -34,9 +34,9 @@ Os participantes jogavam, dentro do aparelho de ressonância, o CyberBall, um jo
 | Pré-frontal e cingulado | Quanto mais ativo o pré-frontal ventral direito, menos ativo o cingulado anterior (r = −0,81) | p. 291, Fig. 2C | "relative to inclusion (r ⫽ – 0.81, P ⬍ 0.005)" |
 | Caminho do pré-frontal até o desconforto | A ligação entre o pré-frontal e o desconforto passa pela atividade do cingulado anterior (teste de Sobel, Z = 3,16) | p. 291 | "Sobel test, Z ⫽ 3.16, P ⬍ 0.005" |
 | Pré-frontal, levando em conta o cingulado | Levando em conta a atividade do cingulado, a ligação do pré-frontal com o desconforto pode ser acaso (β = −0,17; P > 0,5) | p. 291 | "no longer significant (␤ ⫽ – 0.17, P ⬎ 0.5)" |
-| Só assistir | Assistir aos outros jogarem, sem saber que era exclusão, também ativou o cingulado anterior (t = 4,34) | p. 291 | "t ⫽ 4.34, I ⫽ 0.78, P ⬍ 0.005" |
+| Só assistir | Ao só assistir aos outros jogarem, sem achar que estava sendo excluída, a pessoa teve o cingulado anterior mais ativo que ao jogar junto (t = 4,34) | p. 291 | "t ⫽ 4.34, I ⫽ 0.78, P ⬍ 0.005" |
 | Duração da exclusão explícita | Cerca de 45 passes sem receber a bola | p. 291 | "(⬃45 throws)" |
-| Quando uma região contou como ativa | Com P não corrigido de 0,005 e grupos de pelo menos 10 voxels, os pontos do mapa do cérebro | Nota 23 | "uncorrected P value of 0.005 and a cluster size threshold of 10" |
+| Quando uma região contou como ativa | Só contou um grupo de pelo menos 10 voxels, os pontos do mapa do cérebro, cada um com P abaixo de 0,005 | Nota 23 | "uncorrected P value of 0.005 and a cluster size threshold of 10" |
 
 "r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. t e Z medem o quanto o resultado se afasta do acaso, β é o peso de uma coisa na conta e "P" é a chance de um resultado assim aparecer só por acaso.
 Na exclusão implícita, o pré-frontal ventral direito não apareceu "even at a P ⫽ .05 significance level" (p. 291). Os autores leem isso como sinal de que o cingulado registrou a exclusão, mas a regulação só veio quando ela era explícita. O desconforto não foi medido depois dessa sessão, para não desfazer a desculpa da conexão.
