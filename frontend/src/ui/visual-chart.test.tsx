@@ -3,11 +3,10 @@
 // marker, Brazil's ring, the "você" tag) and the country filter already
 // applied. The tap is in the story (`visual-chart.stories.tsx`), in a real
 // browser, where the library measures and listens.
-import { render, screen, within } from '@testing-library/react'
+import { within } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
-import { CHART_COPY } from './visual-chart.copy'
 import {
   BARS,
   DOTS,
@@ -517,14 +516,4 @@ it("draws a time line's guide at the active year and no dimmed year", () => {
   const guide = html.querySelector('[data-ts-key="guide"]')
   expect(guide?.getAttribute('x1')).toBe(dot?.getAttribute('cx'))
   expect(dimmedValues(html)).not.toContain('13,5%')
-})
-
-it('tells how to open a number only once the chart can take the tap', () => {
-  // Without JavaScript a tap opens nothing: the server does not say it.
-  const served = page(
-    renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
-  )
-  expect(served.body.textContent).not.toContain(CHART_COPY.hint)
-  render(<VisualChart chart={DOTS} country={null} profile={null} />)
-  expect(screen.getAllByText(CHART_COPY.hint)).toHaveLength(1)
 })

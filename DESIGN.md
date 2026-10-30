@@ -288,6 +288,8 @@ A primeira proposta era uma seta traçada do número até a Ficha. Ela foi troca
 
 Um cartão só por página, para todo gráfico e tabela de Estudos; o diagrama fica de fora. Com o mouse, em qualquer ponto da linha (título e medida inclusive): cursor de mão, verde-água claro atrás da linha, as outras apagadas, e o cartão ao lado da marca, sem botões, dizendo como fixar. Na linha do tempo o cursor é a mira, e uma guia tracejada em verde-água de tinta e o cartão pulam para o ano mais próximo, em qualquer ponto do desenho. Um clique, um toque ou Enter fixa o cartão, com contorno em verde-água de tinta, o link "Abrir Ficha" e "Fechar". Ele fecha com Esc, um clique fora, o botão ou a mesma marca de novo. Fica ao lado da marca quando a tela tem lugar e, no celular, embaixo dela, e cabe em 360px. Contorno de 2px, sem sombra (The Halftone Rule). As setas levam o cartão de marca em marca, sem fixar, e Tab entra no cartão fixado. Sem JS, o SVG fica como está: sem cursor de mão e sem dica.
 
+Sob cada gráfico e tabela de Estudos, uma etiqueta com o ícone de toque, em negrito verde-água de tinta sobre verde-água claro, porque leva à Ficha. O texto depende do aparelho: "Passe o mouse ou clique para ver o número e a Ficha" com mouse, "Toque para ver o número e a Ficha" no toque. O primeiro gráfico visto numa visita chama uma vez: um anel verde-água se espalha duas vezes em volta da marca do número-chave (sem ele, da primeira), em 2 segundos. Em prefers-reduced-motion o anel não aparece e a etiqueta fica.
+
 ### Perfil: destacar sem esconder
 
 Nada some quando o leitor informa o Perfil, e a nota "Vale para:" de cada achado fica sempre.
