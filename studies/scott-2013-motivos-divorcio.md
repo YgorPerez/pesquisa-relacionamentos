@@ -28,7 +28,7 @@ Pessoas que fizeram um curso pré-marital (PREP) quando noivas e depois se divor
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra | 52 divorciados que fizeram o PREP antes de casar | Resumo | "interviews of 52 divorced individuals who received the Prevention and Relationship Enhancement Program (PREP) while engaged to be married" |
+| Pessoas entrevistadas | 52 divorciados que fizeram o PREP, um programa de preparo para o relacionamento, quando estavam noivos | Resumo | "interviews of 52 divorced individuals who received the Prevention and Relationship Enhancement Program (PREP) while engaged to be married" |
 | Motivos mais citados | falta de compromisso 75,0%; infidelidade 59,6%; conflito e brigas demais 57,7% | Resultados, Reasons for Divorce | "lack of commitment (75.0%), infidelity (59.6%), and too much conflict and arguing (57.7%)" |
 | Motivos seguintes | casar jovem demais 45,1%; problemas financeiros 36,7%; abuso de substâncias 34,6%; violência doméstica 23,5% | Resultados, Reasons for Divorce | "followed by marrying too young (45.1%), financial problems (36.7%), substance abuse (34.6%), and domestic violence (23.5%)" |
 | Falta de compromisso em pelo menos um dos dois do ex-casal | 94,4% dos casais | Resultados, Commitment | "reported by 75% of individuals and by at least one person in 94.4% of couples" |
@@ -43,7 +43,7 @@ Pessoas que fizeram um curso pré-marital (PREP) quando noivas e depois se divor
 | Quem pediu o divórcio | a mulher em 63,5%; o homem em 25% | Resultados, Who is to Blame? | "63.5% of participants indicated that the woman filed for divorce and only 25% participants indicated that the man filed" |
 | Queriam ter visto os "sinais de alerta" antes de casar | 30,8% | Resultados, Learning more about one's partner | "30.8% of participants specifically mentioned that they wished they had recognized “red flags” to leave the relationship" |
 | Já estavam presos ao casamento (noivado, data, convites) durante o curso | 25,0% | Resultados, Participating in the program before constraints to marry | "Twenty-five percent (25.0%) of participants specifically reported that they were influenced by constraints" |
-| Concordância entre codificadores | kappa médio 0,71; mediana 0,80 | Método, Analytic Approach | "The average Cohen’s Kappa (per code) was .71 ( SD = .28) and the median was .80." |
+| Quanto os codificadores das entrevistas concordaram entre si (kappa de Cohen) | kappa médio 0,71; mediana 0,80 | Método, Analytic Approach | "The average Cohen’s Kappa (per code) was .71 ( SD = .28) and the median was .80." |
 
 ## Limitações
 

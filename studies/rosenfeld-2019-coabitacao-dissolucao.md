@@ -32,10 +32,10 @@ OR é a razão de chances de dissolução em um ano, comparando quem coabitou co
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Associação entre coabitar com o futuro marido e dissolução, reunindo as durações do casamento, com controles e IC de 95% | OR = 1,31; IC: 1,25–1,38 | p. 30, Tabela 1, modelo 2 | "1.31 (1.25, 1.38)" |
+| Chance de o casamento acabar para quem coabitou com o futuro marido, comparada a quem não coabitou, juntando todas as durações de casamento, com controles e IC de 95% | OR = 1,31; IC: 1,25–1,38 | p. 30, Tabela 1, modelo 2 | "1.31 (1.25, 1.38)" |
 | Taxa bruta de dissolução no primeiro ano entre quem não coabitou com o futuro marido | 4,1% | p. 18, texto referente à Figura 3 | "breakup rate of 4.1%" |
 | Taxa bruta de dissolução no primeiro ano entre quem coabitou com o futuro marido | 3,9% | p. 18, texto referente à Figura 3 | "had breakup rate of 3.9%" |
-| Duração em que a sobrevivência conjugal acumulada passa a ser significativamente maior entre quem não coabitou, na análise conjunta | 5 anos | p. 20, análise de Kaplan–Meier e Figuras de apêndice 1 e 2 | "at marital duration of 5 years" |
+| Tempo de casamento a partir do qual a parcela de casais ainda casados passa a ser significativamente maior entre quem não coabitou, comparada a quem coabitou, nos dados combinados | 5 anos | p. 20, análise de Kaplan–Meier e Figuras de apêndice 1 e 2 | "at marital duration of 5 years" |
 
 As duas taxas brutas do primeiro ano são descritivas. A diferença não era estatisticamente [[significativa]] aos doze meses; era significativa até os seis meses. Nos modelos ajustados da Tabela 2, a coabitação se associa a menor dissolução no ano-calendário do casamento, e a maior dissolução depois. Esse intervalo do modelo não corresponde necessariamente aos primeiros doze meses completos da Figura 3.
 

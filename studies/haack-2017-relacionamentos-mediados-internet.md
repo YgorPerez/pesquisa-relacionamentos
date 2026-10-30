@@ -30,14 +30,14 @@ As autoras compararam pessoas numa relação amorosa mantida só pela internet, 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra inicial e grupo RAMI | 276 respondentes; 43 numa relação mediada pela internet | p. 36, Participantes | "A amostra inicial foi composta por 276 usuários de internet; destes, 43 participantes estavam em uma rami." |
+| Usuários de internet na amostra inicial, e quantos estavam numa relação só pela internet (RAMI) | 276 respondentes; 43 numa relação só pela internet | p. 36, Participantes | "A amostra inicial foi composta por 276 usuários de internet; destes, 43 participantes estavam em uma rami." |
 | Participantes | 42 homens e 44 mulheres, de 18 a 55 anos (média 29,5) | p. 36, Participantes | "a amostra 42 homens e 44 mulheres com idades que variaram de 18 a 55 anos (m=29.5, dp=8.1)" |
-| Tempo médio de relação | RAMI 8,37 meses; RAP 11,93 meses | p. 36, Participantes | "O tempo médio dos rami foi de 8.37 meses (dp=14.27) e dos rap foi de 11.93 meses (dp=14.39)." |
-| Tempo diário de internet para contato social | RAMI 4 h 11 min; RAP 2 h 41 min | p. 40, Discussão | "a média diária de acesso a redes sociais e afins foi de 2 horas e 41 minutos, para usuários em rap, e 4 horas e 11 minutos, para usuários em rami" |
-| Pessoas em RAMI que pretendiam encontrar o parceiro pessoalmente | 85% | p. 39, Resultados | "questionados se pretendiam se encontrar pessoalmente com o parceiro, 85% responderam que sim" |
-| Variáveis que mais separaram os grupos, a favor das RAP | compromisso (0,37), paixão (0,33), intimidade (0,30), satisfação (0,19) | p. 39, Resultados | "o que correspondeu a: decisão/compromisso (.37), paixão (.33), intimidade (.30) e satisfação geral com o relacionamento (.19)" |
-| Variáveis que caracterizaram as RAMI | mais tempo diário de internet (−0,29), mais tempo de internet para contato social (−0,28), mais problemas conjugais no GRIMS (−0,27) | p. 39, Resultados | "tempo geral de uso diário de internet (-.29), tempo diário de uso de internet direcionado para manter contato social (-.28) e problemas conjugais medidos pelo Grims (-.27)" |
-| Classificação correta pela função discriminante | 76,7% | Tabela 4, nota | "Nota: Porcentagem de classificação correta dos casos 76.7%." |
+| Tempo médio de relação: só pela internet (RAMI) e presencial (RAP) | RAMI 8,37 meses; RAP 11,93 meses | p. 36, Participantes | "O tempo médio dos rami foi de 8.37 meses (dp=14.27) e dos rap foi de 11.93 meses (dp=14.39)." |
+| Tempo diário de internet para contato social: só pela internet (RAMI) e presencial (RAP) | RAMI 4 h 11 min; RAP 2 h 41 min | p. 40, Discussão | "a média diária de acesso a redes sociais e afins foi de 2 horas e 41 minutos, para usuários em rap, e 4 horas e 11 minutos, para usuários em rami" |
+| Pessoas em relação só pela internet (RAMI) que pretendiam encontrar o parceiro pessoalmente | 85% | p. 39, Resultados | "questionados se pretendiam se encontrar pessoalmente com o parceiro, 85% responderam que sim" |
+| O que mais separou os dois grupos, a favor das relações presenciais (RAP), com o peso de cada item na análise | compromisso (0,37), paixão (0,33), intimidade (0,30), satisfação (0,19) | p. 39, Resultados | "o que correspondeu a: decisão/compromisso (.37), paixão (.33), intimidade (.30) e satisfação geral com o relacionamento (.19)" |
+| O que marcou as relações só pela internet (RAMI), com o peso de cada item na análise | mais tempo diário de internet (−0,29), mais tempo de internet para contato social (−0,28), mais problemas conjugais no GRIMS (−0,27) | p. 39, Resultados | "tempo geral de uso diário de internet (-.29), tempo diário de uso de internet direcionado para manter contato social (-.28) e problemas conjugais medidos pelo Grims (-.27)" |
+| Casos que a análise (função discriminante) pôs no grupo certo | 76,7% | Tabela 4, nota | "Nota: Porcentagem de classificação correta dos casos 76.7%." |
 
 As cargas da função discriminante só dizem quais variáveis separam os grupos e em que direção. O artigo não informa as médias de amor e satisfação de cada grupo.
 

@@ -33,13 +33,13 @@ Entre 172 casais recém-casados acompanhados por 10 anos, os autores separaram o
 | Divórcios em dez anos entre os satisfeitos | quinze por cento (21 casais) | Resultados, §1 | "Fifteen percent of couples ( n = 21) divorced over ten years" |
 | Divórcio nos grupos menos satisfeitos do mesmo estudo | 40% a 60% em dez anos | Método, Selecting stably satisfied newlyweds | "ten-year divorce rates ranged between 40–60%" |
 | Satisfação nos 4 primeiros anos, divorciados vs. casados | sem diferença consistente: 14 de 16 comparações não significativas | Resultados, §1 | "14 of the 16 comparisons were nonsignificant" |
-| Compromisso médio da esposa (escore z), casados vs. divorciados | 0,19 vs. 0,33; d = −0,17, sem diferença | Tabela 3 | "Average commitment (W) 115 0.19 0.80 21 0.33 0.78 −0.73 −0.17" |
-| Compromisso | não separou os grupos | Resultados, §3 | "No differences were found between groups for husbands' or wives' average commitment over three assessments" |
+| Compromisso médio da esposa, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | 0,19 vs. 0,33; d = −0,17, sem diferença | Tabela 3 | "Average commitment (W) 115 0.19 0.80 21 0.33 0.78 −0.73 −0.17" |
+| Compromisso médio de maridos e esposas em três medições: casais que seguiram casados vs. os que se divorciaram | sem diferença | Resultados, §3 | "No differences were found between groups for husbands' or wives' average commitment over three assessments" |
 | Comunicação negativa observada | maior nos casais que se divorciaram | Resultados, §3 | "observed negative affect, skills, and support, along with husbands' self-reported verbal aggression, all distinguished couples who did and did not divorce" |
-| Habilidades negativas na conversa de problema (escore z), casados vs. divorciados | −0,26 vs. 0,36; t = −3,18 | Tabela 3 | "T1 negative skills (J) 115 −0.26 0.78 21 0.36 1.03 −3.18" |
-| ... tamanho de efeito (d, última coluna da linha de habilidades negativas) | d = −0,76 | Tabela 3 | "−0.76 T1 negative support (J)" |
-| Agressão verbal relatada pelo marido (escore z), casados vs. divorciados | −0,21 vs. 0,43; t = −2,82 | Tabela 3 | "T1 verbal aggression (H) 114 −0.21 0.90 20 0.43 1.16 −2.82" |
-| ... tamanho de efeito (d) | d = −0,69 | Tabela 3 | "−0.69 T1 verbal aggression (W)" |
+| Habilidades negativas na conversa sobre um problema do casal, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | −0,26 vs. 0,36; t = −3,18 | Tabela 3 | "T1 negative skills (J) 115 −0.26 0.78 21 0.36 1.03 −3.18" |
+| Tamanho dessa diferença em habilidades negativas, em desvios-padrão (d) | d = −0,76 | Tabela 3 | "−0.76 T1 negative support (J)" |
+| Agressão verbal relatada pelo marido, em pontuação padronizada (escore z): casais que seguiram casados vs. os que se divorciaram | −0,21 vs. 0,43; t = −2,82 | Tabela 3 | "T1 verbal aggression (H) 114 −0.21 0.90 20 0.43 1.16 −2.82" |
+| Tamanho dessa diferença em agressão verbal, em desvios-padrão (d) | d = −0,69 | Tabela 3 | "−0.69 T1 verbal aggression (W)" |
 | Comportamentos positivos observados | sem diferença | Resultados, §3 | "No differences were found in observed joint positive affect, skills, or support." |
 | Personalidade e estresse | sem diferença confiável | Resultados, §3 | "Personality, average acute stress, and average chronic stress did not reliably differentiate between groups" |
 | Comunicação negativa controlando compromisso, personalidade ou estresse | seguiu significativa em sete de nove testes | Resultados, último § | "In seven of out of nine cases, the negative behavioral variables remained significant" |

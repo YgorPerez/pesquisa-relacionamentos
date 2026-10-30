@@ -38,7 +38,7 @@ Quantas pessoas relataram à [[Federal Trade Commission]] (FTC) um golpe românt
 | Desculpa mais comum para não se encontrar | Estar numa base militar distante | p. 1 | "Claiming to be on a faraway military base is the most popular excuse" |
 | Criptomoeda e transferência bancária | Mais de 60% das perdas de 2022 | p. 2 | "together, they accounted for more than 60% of reported losses to romance scams in 2022" |
 | Quem perdeu dinheiro com cartão-presente | 24% | p. 2 | "24% of people who reported losing money to a romance scam in 2022 said it was taken using gift cards" |
-| Sextorsão, queixas | Mais de oito vezes desde 2019 | p. 2 | "these reports have increased more than eightfold since 2019" |
+| Quanto cresceram as queixas de sextorsão | Mais de oito vezes desde 2019 | p. 2 | "these reports have increased more than eightfold since 2019" |
 | Sextorsão, 18 a 29 anos vs. 30 ou mais | Mais de seis vezes a chance de relatar, ajustada pela população | p. 2 | "People aged 18-29 were over six times as likely to report sextortion than people 30 and over." |
 | Fração das fraudes que chega a uma queixa | 4,8%, num estudo citado pela FTC | p. 3, nota 1 | "study showed only 4.8% of people who experienced mass-market consumer fraud complained to a Better Business Bureau or a government entity" |
 | Conselho da FTC sobre dinheiro | Ninguém legítimo pede criptomoeda, cartão-presente ou transferência | p. 2 | "Nobody legit will ever ask you to help—or insist that you invest— by sending cryptocurrency, giving the numbers on a gift card, or by wiring money." |

@@ -31,8 +31,8 @@ A pesquisa não pergunta como a pessoa conheceu o parceiro atual. Até onde as b
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Desenho da amostra | Pontos de fluxo, com cotas de sexo e idade e sorteio aleatório | p. 1 do PDF, Metodologia | "A pesquisa do Datafolha é um levantamento por amostragem com abordagem em pontos de fluxo populacional com cotas sexo e idade e sorteio aleatório" |
-| Tamanho e campo | 1.888 entrevistas em 125 municípios, de 9 a 11 de setembro de 2009 | p. 1 do PDF, Metodologia | "Nesse levantamento realizado entre os dias 09 e 11 de setembro de 2009, foram realizadas 1888 entrevistas em 125 municípios" |
+| Como os entrevistados foram escolhidos | Abordados em pontos de grande circulação de pessoas, com cotas de sexo e idade e sorteio aleatório | p. 1 do PDF, Metodologia | "A pesquisa do Datafolha é um levantamento por amostragem com abordagem em pontos de fluxo populacional com cotas sexo e idade e sorteio aleatório" |
+| Quantas entrevistas, onde e quando | 1.888 entrevistas em 125 municípios, de 9 a 11 de setembro de 2009 | p. 1 do PDF, Metodologia | "Nesse levantamento realizado entre os dias 09 e 11 de setembro de 2009, foram realizadas 1888 entrevistas em 125 municípios" |
 | Já conheceu alguém pela internet (total; homens; mulheres) | 19%; 22%; 16% | p. 134 do PDF, P.26, colunas Total e Sexo | "CONHECEU ALGUÉM PELA INTERNET 19 22 16" |
 | Conheceu alguém pela internet e foi se encontrar com a pessoa (total; homens; mulheres) | 8%; 10%; 6% | p. 134 do PDF, P.26, colunas Total e Sexo | "Sim, foi se encontrar com a pessoa 8 10 6" |
 | Nunca conheceu ninguém pela internet | 78% | p. 134 do PDF, P.26, coluna Total | "NUNCA CONHECEU NINGUÉM PELA INTERNET 78" |

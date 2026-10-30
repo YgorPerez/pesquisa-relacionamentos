@@ -34,15 +34,15 @@ Duas coisas. Primeiro, com os históricos conjugais da CPS de 1990, a proporçã
 | Por escolaridade, Tabela 1 (5, 10, 15, 20 e 30 anos) | sem ensino médio: 26, 39, 47, 53, 60%; faculdade: 11, 20, 25, 28, 36% | Tabela 1 | "Not HS Grad 26 39 47 53 60 High School Grad 23 35 43 47 53 Some College 20 32 38 45 51 College Graduate 11 20 25 28 36" |
 | Por idade ao casar | mais de 60% antes dos 20 (cerca de dois terços antes dos 18); cerca de 40% depois dos 22 | Resultados, p. 249 | "over 60 percent of marriages formed before age 20 break up (the proportion is about two-thirds for marriages under age 18) compared to about 40 percent of those begun over age 22" |
 | Por raça | 70% dos casamentos de mulheres negras; 47% de brancas | Conclusão, p. 256 | "We estimate that 70 percent of black women's first marriages will end in divorce, as will 47 percent of white women's marriages." |
-| Fim do casamento em 5 anos, com e sem filho antes de casar (NSFG, coortes 1980–86 e 1987–94) | sem filho: 18% e 15%; com filho: 31% e 32% | Tabela 2 | "No Child Before 18 15 26 24 Child Before 31 32" |
-| ... sem e com coabitação antes do casamento | sem: 20% e 16%; com: 24% e 28% | Tabela 2 | "No Cohabit Before 20 16 Cohabit Before Marriage 24 28" |
-| Risco relativo de um filho antes do casamento, sem controles | 1,89 | Tabela 3 | "Child Before 1.89 9.26" |
-| ... com os outros fatores controlados (modelo 1) | 2,03 | Tabela 3 | "2.03 9.41" |
-| Risco relativo de ter coabitado antes, sem controles | 1,40 | Tabela 3 | "Cohabited Before 1.40 4.96" |
-| ... com controles (modelo 1) | 1,38 | Tabela 3 | "1.38 4.45" |
-| Risco relativo de casar com 20–23 anos, contra 15–19, sem controles | 0,52 | Tabela 3 | "Age at Marriage (15-19) 20-23 0.52 8.35" |
-| ... 24–30 anos, sem controles | 0,41 | Tabela 3 | "24-30 0.41 10.15" |
-| Sem diploma do ensino médio, contra faculdade, sem controles | 2,52 | Tabela 3 | "No Diploma 2.52 8.77" |
+| Casamentos que terminaram em 5 anos, sem e com filho antes de casar (NSFG, casamentos de 1980–86 e de 1987–94) | sem filho: 18% e 15%; com filho: 31% e 32% | Tabela 2 | "No Child Before 18 15 26 24 Child Before 31 32" |
+| Casamentos que terminaram em 5 anos, sem e com coabitação antes de casar (mesmos períodos) | sem: 20% e 16%; com: 24% e 28% | Tabela 2 | "No Cohabit Before 20 16 Cohabit Before Marriage 24 28" |
+| Risco de o primeiro casamento terminar para quem teve filho antes de casar, comparado a quem não teve, sem controles (risco relativo) | 1,89 | Tabela 3 | "Child Before 1.89 9.26" |
+| A mesma comparação, com os outros fatores controlados (modelo 1) | 2,03 | Tabela 3 | "2.03 9.41" |
+| Risco de o primeiro casamento terminar para quem coabitou antes, comparado a quem não coabitou, sem controles (risco relativo) | 1,40 | Tabela 3 | "Cohabited Before 1.40 4.96" |
+| A mesma comparação, com controles (modelo 1) | 1,38 | Tabela 3 | "1.38 4.45" |
+| Risco de o primeiro casamento terminar para quem casou com 20–23 anos, comparado a quem casou com 15–19, sem controles (risco relativo) | 0,52 | Tabela 3 | "Age at Marriage (15-19) 20-23 0.52 8.35" |
+| O mesmo para quem casou com 24–30 anos, comparado a quem casou com 15–19, sem controles | 0,41 | Tabela 3 | "24-30 0.41 10.15" |
+| Risco de o primeiro casamento terminar para quem não tem diploma do ensino médio, comparado a quem tem faculdade, sem controles (risco relativo) | 2,52 | Tabela 3 | "No Diploma 2.52 8.77" |
 | Tendência: o divórcio parou de subir | sem tendência no risco, diferenças grandes e significativas | Resultados, p. 252 | "there was no trend in the likelihood of divorce, but that all of the differentials in the risk of divorce are large and statistically significant" |
 | Tendência por escolaridade: faculdade | o divórcio caiu entre quem tem faculdade e a diferença por escolaridade cresceu | Conclusão, p. 256 | "the educational disparity in divorce has increased, as women with a college degree have experienced a decline in the risk of divorce" |
 | Tendência por escolaridade: sem ensino médio | o divórcio subiu entre quem não terminou o ensino médio | Resultados, p. 253 | "not having completed high school indicates divorce rates increased among those with the least education" |

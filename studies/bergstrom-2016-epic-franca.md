@@ -33,7 +33,7 @@ A pesquisa Épic perguntou a uma amostra aleatória de franceses de 26 a 65 anos
 | Já se inscreveram num site de encontro em 2013 (26 a 65 anos) | 14% | p. 1 e Tabela 1 | "en 2013, 14 % des 26-65 ans se sont déjà inscrits sur ce type de site" |
 | Idem, estimativa para 18 a 65 anos (a Épic não entrevistou menores de 26) | 16% a 18% | p. 1 e Tabela 1 | "16 % à 18 % des 18-65 ans se seraient déjà inscrits" |
 | Sondagem por painel online com cotas, 2014 (18 a 69 anos) | 34%, o dobro da amostra aleatória | Encadré 2 | "C'est le cas d'un sondage réalisé en 2014 qui évalue le taux d'usage en France à 34 % (chez les 18 à 69 ans)" |
-| Usuários que não contam com facilidade que se inscreveram | 28% não contam; 21% depende da pessoa | p. 2 | "Les autres affirment le contraire (28 %) ou déclarent que cela dépend des personnes (21 %)" |
+| Usuários de sites que não contam com facilidade às pessoas próximas que se inscreveram | 28% não contam; 21% dizem que depende da pessoa | p. 2 | "Les autres affirment le contraire (28 %) ou déclarent que cela dépend des personnes (21 %)" |
 | Já usaram site: executivos e profissões intelectuais contra operários | 13% contra 6% na CSF; 16% contra 13% sete anos depois | p. 2 e Figura 1 | "étaient deux fois plus nombreux que les ouvriers à avoir utilisé ce genre de site (13 % versus 6 %). Sept ans plus tard, l'écart s'est réduit (16 % contre 13 %)" |
 | Já se inscreveram, 26 a 30 anos | homens 36%, mulheres 23% | p. 2 e Figura 2 | "36 % des hommes déclarent s'être déjà inscrits sur un site contre 23 % des femmes" |
 | Entre quem usou, já pagou assinatura | homens 45%, mulheres 18% | p. 3 | "45 % des hommes déclarent avoir déjà souscrit un abonnement contre 18 % des femmes" |

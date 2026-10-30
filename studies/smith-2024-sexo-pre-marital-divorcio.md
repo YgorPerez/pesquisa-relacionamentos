@@ -28,8 +28,8 @@ Os autores acompanharam, com modelos de história de eventos em tempo discreto (
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra analítica | 7.030 pessoas já casadas (6.989 em casamento de sexo diferente, 41 do mesmo sexo) | Data and Methods | "This leaves an analytic sample of 7030 respondents who had been in either opposite-sex ( N = 6989) or same-sex ( N = 41) marriages." |
-| Onda IV | 15.701 pessoas de 24 a 32 anos, resposta de 80,3% | Data and Methods | "Wave IV took place in 2008–2009 and consisted of 15,701 respondents ages 24–32, with a response rate of 80.3%." |
+| Pessoas na análise | 7.030 pessoas já casadas (6.989 em casamento de sexo diferente, 41 do mesmo sexo) | Data and Methods | "This leaves an analytic sample of 7030 respondents who had been in either opposite-sex ( N = 6989) or same-sex ( N = 41) marriages." |
+| Entrevistados na quarta rodada da pesquisa (onda IV) | 15.701 pessoas de 24 a 32 anos, taxa de resposta de 80,3% | Data and Methods | "Wave IV took place in 2008–2009 and consisted of 15,701 respondents ages 24–32, with a response rate of 80.3%." |
 | Tiveram parceiros antes do casamento além do cônjuge | Oitenta e quatro por cento | Results | "Eighty-four percent of respondents reported having premarital, nonspousal sexual partners." |
 | Casamentos desfeitos até a onda IV | Cerca de 21% | Results | "approximately 21% had a marriage which ended in divorce" |
 | Algum parceiro antes do casamento além do cônjuge, sem controles | Chance de divórcio 2,61 vezes a de quem não teve | Tabela 3, Modelo 1 | "2.61 (0.12) ***" |
@@ -40,9 +40,9 @@ Os autores acompanharam, com modelos de história de eventos em tempo discreto (
 | De 1 a 8 parceiros, com todos os controles | 1,64 vez (64% maior) | Results | "in the full model the odds of divorce for those with one to eight partners are 64% higher than those with no premarital partners (ORs = 1.50—1.64)" |
 | 9 ou mais parceiros, sem controles | 2,65 vezes | Tabela 4, Modelo 1 | "2.65 (0.20) ***" |
 | 9 ou mais parceiros, com todos os controles | 3,20 vezes | Tabela 4, Modelo 3 | "3.20 (0.24) ***" |
-| Efeito dos controles para 9 ou mais | A associação fica mais forte, não mais fraca | Results | "Notably, this effect becomes stronger as controls are added to the model" |
+| O que acontece com a associação de 9 ou mais parceiros ao incluir os controles | A associação fica mais forte, não mais fraca | Results | "Notably, this effect becomes stronger as controls are added to the model" |
 | Homens e mulheres | Sem diferença em nenhum modelo | Results | "we do not any evidence of sex differences in the link between premarital sex and divorce risk in any model for either sample" |
-| Seleção não medida | Não descartada | Discussion | "our analysis does not rule out the possibility that unmeasured variables might be driving selection" |
+| Outras características que o estudo não mediu podem explicar a associação? | Não dá para descartar | Discussion | "our analysis does not rule out the possibility that unmeasured variables might be driving selection" |
 
 As razões de chance vêm dos modelos de tempo discreto e se leem como razão de risco mensal de terminar o primeiro casamento. "0 parceiros" na subamostra quer dizer até um parceiro até a onda III (18 a 26 anos), já que os autores descontam um, que pode ser o futuro cônjuge. Os autores escolheram os cortes 1–8 e 9+ porque o risco sobe com um parceiro, fica estável até oito e sobe de novo com nove (Tabela A2).
 
