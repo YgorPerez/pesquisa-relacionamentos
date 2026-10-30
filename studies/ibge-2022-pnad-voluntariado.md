@@ -29,7 +29,7 @@ Na quinta visita ao domicílio, a PNAD Contínua pergunta se cada morador de 14 
 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
-| O que conta como trabalho voluntário | Trabalho sem nenhum pagamento em dinheiro ou benefícios, por pelo menos uma hora na semana pesquisada, para produzir bens ou serviços para outras pessoas | Informativo, p. 11 | "realizado por pelo menos uma hora na semana de referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros" | |
+| O que conta como trabalho voluntário | Trabalho não obrigatório e sem nenhum pagamento em dinheiro ou benefícios, por pelo menos uma hora na semana pesquisada, para produzir bens ou serviços para quem não mora na casa nem é parente | Informativo, p. 11 | "realizado por pelo menos uma hora na semana de referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros" | |
 | Quantos fizeram trabalho voluntário | Em 2022, 7,3 milhões de pessoas de 14 anos ou mais fizeram trabalho voluntário na semana pesquisada, 4,2% das pessoas dessa idade | Informativo, p. 11 | "Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade realizaram trabalho voluntário na semana de referência da pesquisa, o que corresponde a uma taxa de realização de 4,2%" | |
 | Quantos fizeram, por sexo, de 14 anos ou mais | Fizeram trabalho voluntário 4,9% das mulheres e 3,5% dos homens | Informativo, p. 12, gráfico por características | "Sexo Homem 3,5 Mulher 4,9" | |
 | Mulheres entre os voluntários | 60,3% dos voluntários eram mulheres | SIDRA 7080, variável 10238, Mulheres, 2022 | "2022":"60.3" | |

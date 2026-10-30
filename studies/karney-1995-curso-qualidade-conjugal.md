@@ -37,7 +37,7 @@ Do conjunto sai o modelo de vulnerabilidade, estresse e adaptação: o que cada 
 | Estudos pequenos | Dos 112 estudos que informam o tamanho final, 33% têm 100 participantes ou menos | p. 9 | "of the 112 studies reporting final sample sizes, 33% have 100 participants or less" |
 | Perda de participantes | Nos estudos que informam a perda, em média 31% dos participantes iniciais ficam fora da análise final | p. 9 | "Seventy-eight studies provide data on subject attrition. Among these studies, an average of 31% of each initial sample is not included in final longitudinal analyses." |
 | Estudos que tiram quem se divorciou | 36 estudos excluem de propósito da análise final os casais que se divorciaram | p. 16 | "36 studies that deliberately exclude divorcing couples from final analyses" |
-| Dados só do que a pessoa conta | 77% dos estudos colheram dados apenas com questionários em que a própria pessoa responde | p. 16 | "Eighty-nine studies (77%) gathered data solely through self-report measures." |
+| Dados só do que a pessoa conta | 77% dos estudos colheram dados apenas do que a própria pessoa relatou | p. 16 | "Eighty-nine studies (77%) gathered data solely through self-report measures." |
 | Só duas medições | 64 estudos, 56%, avaliam os casamentos apenas duas vezes | p. 16 | "in more than half of the studies (64, or 56%), marriages are assessed only two times" |
 | Acompanhamento de até 5 anos | 70 dos 115 estudos, 61%, seguem os casamentos por 5 anos ou menos | p. 17 | "70 of the 115 studies (61%) follow marriages for 5 years or less" |
 | Satisfação da esposa e estabilidade | Esposas mais satisfeitas tiveram casamentos mais estáveis (r = 0,42; 2 estudos) | Figura 1, esposas | ".42 marital satisfaction (2)" |

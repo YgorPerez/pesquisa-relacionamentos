@@ -29,7 +29,7 @@ Fonte local: `sources/private/sharabi-2024-online-dating-effect.txt`, extraída 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Onde os casais se conheceram | 455 pessoas (49,3%) conheceram o cônjuge online e 468 (50,7%), fora da internet | p. 4, seção 3.1 | "participants who met their spouse in online dating (n =455, 49.3%) and offline (n =468, 50.7%)." |
+| Os dois grupos do estudo | A amostra foi montada para ter os dois grupos: 455 pessoas (49,3%) que conheceram o cônjuge online e 468 (50,7%) que conheceram fora da internet | p. 4, seção 3.1 | "participants who met their spouse in online dating (n =455, 49.3%) and offline (n =468, 50.7%)." |
 | Satisfação no casamento | Quem conheceu o cônjuge online estava menos satisfeito que quem conheceu fora da internet, levando em conta gênero, raça e orientação sexual (b = −0,20; p < 0,001) | p. 5, seção 4.2.1 | "online dating was negatively associated with satisfaction (b = −.20, p < .001)" |
 | Estabilidade do casamento | Segundo a própria pessoa, o casamento era menos estável em quem conheceu o cônjuge online que em quem conheceu fora da internet, levando em conta os mesmos fatores (b = −0,40; p < 0,001) | p. 5, seção 4.2.1 | "stability (b = −0.40, p <.001)" |
 | Satisfação: app contra site de namoro | Entre quem se conheceu online, quem conheceu o cônjuge em app estava menos satisfeito que quem conheceu em site, mas a diferença pode ser acaso (b = −0,13; p = 0,06) | p. 5, nota de rodapé 1 à seção 4.2.1 | "Meeting on a mobile dating app was not associated with satisfaction (b = −0.13, p =.06)" |
