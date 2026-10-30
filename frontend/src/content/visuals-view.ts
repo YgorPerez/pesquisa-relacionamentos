@@ -109,14 +109,17 @@ export type VisualView = BarsView | TimelineView | StudyTableView | DiagramView
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
 /** A number in pt-BR, with the decimals it was written with. */
-function formatNumber(value: number, decimals = decimalsOf(value)): string {
+export function formatNumber(
+  value: number,
+  decimals = decimalsOf(value),
+): string {
   return new Intl.NumberFormat('pt-BR', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(value)
 }
 
-const withUnit = (value: number, unit: string) =>
+export const withUnit = (value: number, unit: string) =>
   unit === '%' ? `${formatNumber(value)}%` : `${formatNumber(value)} ${unit}`
 
 const OPERATOR: Record<
@@ -149,7 +152,7 @@ function refsOf(slugs: ReadonlyArray<string>, cite: Cite): SourceRef[] {
   return refs.sort((a, b) => a.n - b.n)
 }
 
-function numberView(
+export function numberView(
   datum: {
     value: number
     fact_sheet?: string | undefined
@@ -171,7 +174,7 @@ function numberView(
 }
 
 /** The references of every part, once each, in the page's order. */
-const allSources = (
+export const allSources = (
   parts: ReadonlyArray<{ sources: ReadonlyArray<SourceRef> }>,
 ): SourceRef[] =>
   [
@@ -182,7 +185,11 @@ const allSources = (
 
 /** The axis's round steps: 1, 2, 2.5 or 5 times a power of ten, so that it
  * has at most five intervals. */
-function axisTicks(largest: number, max: number | undefined, unit: string) {
+export function axisTicks(
+  largest: number,
+  max: number | undefined,
+  unit: string,
+) {
   const top = max ?? (unit === '%' && largest <= 100 ? 100 : largest)
   const magnitude = 10 ** Math.floor(Math.log10(top / 5 || 1))
   const step =

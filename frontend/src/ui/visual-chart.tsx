@@ -1,123 +1,141 @@
-import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
-import type { NumberView } from '#/content/visuals-view'
-import { SourceRefs, VisualFrame } from './visual-frame'
+// A Visual drawn by the chart library (#470, ADR 0042): "SVG from the
+// server, interaction on top". The server sends the figure with the
+// library's complete SVG, so it reads without JS. The browser hydrates the
+// frame at once but leaves the SVG alone until a chart nears the screen;
+// then the library arrives (`visual-chart-loader.ts`) and adopts it, and a
+// tap, a click or Enter on a mark opens the exact value below
+// (`visual-detail.tsx`). The chosen country and the Profile reach the plot
+// through `useDeferredValue`: a change before the library came is a
+// transition, which keeps the server's SVG on screen instead of a
+// fallback.
+import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
+import type { Profile } from '@tem-estudo/rules/profile'
+import {
+  memo,
+  Suspense,
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import type { ChartPoint, ChartView } from '#/content/chart-view'
+import { DefinitionGlyph } from './definition-glyph'
+import { LazyPlot, wantPlot } from './visual-chart-loader'
 import { CHART_COPY } from './visual-chart.copy'
+import { VisualDetail } from './visual-detail'
+import { VisualFrame } from './visual-frame'
 
-export interface ChartRow {
-  readonly id: string
-  readonly label: string
-  readonly value: number
-  readonly number: NumberView
-}
-
-export interface ChartView {
-  readonly kind: 'bars' | 'dots'
-  readonly id: string
-  readonly title: string
-  readonly note: string | null
-  readonly rows: ReadonlyArray<ChartRow>
-}
-
-type PlotModule = typeof import('./visual-chart-plot')
-let loaded: PlotModule | undefined
-const loadPlot = () =>
-  import('./visual-chart-plot').then((m) => {
-    loaded = m
-    return m
-  })
-/** The server loads the library before its first render (`server.ts`), so the
- * lazy piece resolves at once there and the SVG goes in the HTML. */
-export const preloadPlot = () => loadPlot().then(() => undefined)
-
-let want: () => void = () => {}
-const wanted = new Promise<void>((resolve) => {
-  want = resolve
-})
-
-const Plot = lazy(() =>
-  loaded
-    ? { then: (done: (m: PlotModule) => void) => done(loaded!) }
-    : import.meta.env.SSR
-      ? loadPlot()
-      : wanted.then(loadPlot),
-) as PlotModule['default']
-
+/** The plot's Suspense boundary, memoized: a render of the frame (a tap)
+ * must not reach a boundary that has not hydrated yet. */
 const Island = memo(function Island({
-  visual,
+  chart,
+  country,
+  profile,
   onSelect,
 }: {
-  visual: ChartView
-  onSelect: (row: ChartRow | null) => void
+  chart: ChartView
+  country: string | null
+  profile: Profile | null
+  onSelect: (point: ChartPoint | null) => void
 }) {
   return (
     <Suspense fallback={null}>
-      <Plot visual={visual} onSelect={onSelect} />
+      <LazyPlot
+        chart={chart}
+        country={country}
+        profile={profile}
+        onSelect={onSelect}
+      />
     </Suspense>
   )
 })
 
-export const VisualChart = memo(function VisualChart({
-  visual,
+export function VisualChart({
+  chart,
+  country,
+  profile,
 }: {
-  visual: ChartView
+  chart: ChartView
+  /** The Guide's chosen country (`?pais=`), or `null`. */
+  country: string | null
+  profile: Profile | null
 }) {
-  const [selected, setSelected] = useState<ChartRow | null>(null)
+  const [selected, setSelected] = useState<ChartPoint | null>(null)
   const host = useRef<HTMLDivElement>(null)
+  const deferredCountry = useDeferredValue(country)
+  const deferredProfile = useDeferredValue(profile)
   useEffect(() => {
     const element = host.current
-    if (!element) return
+    if (!element || typeof IntersectionObserver === 'undefined') {
+      wantPlot()
+      return
+    }
+    // Half a screen ahead, so the library is there when the chart is.
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) want()
+        if (entries.some((e) => e.isIntersecting)) wantPlot()
       },
       { rootMargin: '50% 0px' },
     )
     observer.observe(element)
     return () => observer.disconnect()
   }, [])
+  useEffect(() => {
+    // A country or a Profile chosen before the chart came near.
+    if (country !== null || profile !== null) wantPlot()
+  }, [country, profile])
+
   return (
-    <VisualFrame domId={visual.id} title={visual.title} note={visual.note}>
+    <VisualFrame
+      domId={chart.domId}
+      title={chart.title}
+      note={chart.note}
+      ownLines={chart.ownLines}
+      sources={chart.sources}
+    >
+      {chart.definitions.length > 0 && (
+        <p className="m-0 mb-xs flex flex-wrap gap-x-sm gap-y-1 text-nota leading-nota">
+          <span className="text-tinta-2">{CHART_COPY.legend}</span>
+          {chart.definitions.map((d, i) => (
+            <span key={d.id}>
+              <DefinitionGlyph shape={i} /> {d.legend}
+            </span>
+          ))}
+        </p>
+      )}
       <div
         ref={host}
-        onPointerDown={() => want()}
-        onFocus={() => want()}
+        data-slot="grafico"
+        onPointerDown={wantPlot}
+        onFocus={wantPlot}
       >
-        <Island visual={visual} onSelect={setSelected} />
+        <Island
+          chart={chart}
+          country={deferredCountry}
+          profile={deferredProfile}
+          onSelect={setSelected}
+        />
       </div>
-      <ol className="m-0 list-none p-0">
-        {visual.rows.map((row) => (
-          <li key={row.id}>
-            <button
-              type="button"
-              className="min-h-toque w-full text-left font-label text-label"
-              onClick={() => setSelected(row)}
-            >
-              {row.label}: {row.number.text}
-            </button>
+      {/* The SVG is an image to a screen reader: the exact values are
+          here. */}
+      <ul className="sr-only">
+        {chart.points.map((p) => (
+          <li key={p.key}>
+            {p.label}
+            {p.detail && `, ${p.detail}`}: {p.number.text}
           </li>
         ))}
-      </ol>
-      {selected && (
-        <div role="status" className="mt-xs text-nota">
-          {selected.label}: {selected.number.text}
-          {selected.number.own && (
-            <p>
-              {CHART_COPY.calculation(
-                selected.number.own,
-                selected.number.text,
-              )}
-            </p>
-          )}
-          <SourceRefs sources={selected.number.sources} />
-          <button
-            type="button"
-            className="min-h-toque ml-sm"
-            onClick={() => setSelected(null)}
-          >
-            {CHART_COPY.close}
-          </button>
-        </div>
-      )}
+      </ul>
+      <div aria-live="polite">
+        {selected && (
+          <VisualDetail
+            point={selected}
+            definitions={chart.definitions}
+            you={appliesToYou(profile, selected.covers)?.covered === true}
+            onClose={() => setSelected(null)}
+          />
+        )}
+      </div>
     </VisualFrame>
   )
-})
+}

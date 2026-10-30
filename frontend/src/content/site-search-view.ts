@@ -124,8 +124,9 @@ function blockPassages(block: ChapterBlock, place: Place): Passage[] {
           html: escape(
             [
               block.visual.title,
-              ...block.visual.rows.map(
-                (row) => `${row.label}: ${row.number.text}`,
+              ...block.visual.points.map(
+                (point) =>
+                  `${point.label}${point.detail ? ` (${point.detail})` : ''}: ${point.number.text}`,
               ),
               block.visual.note ?? '',
             ].join(' '),

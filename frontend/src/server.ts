@@ -3,7 +3,7 @@ import { redirects } from '@tem-estudo/content/search'
 import library from 'virtual:library'
 import { withRedirects } from '#/platform/redirects'
 import { withRequestLog } from '#/platform/request-log'
-import { preloadPlot } from '#/ui/visual-chart'
+import { preloadPlot } from '#/ui/visual-chart-loader'
 
 // The TanStack Start server, with each request logged without the query and
 // every response with `Referrer-Policy: strict-origin` (ADR 0001,

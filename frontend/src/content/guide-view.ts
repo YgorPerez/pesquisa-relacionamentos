@@ -36,8 +36,14 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
-import { renderVisuals, visualView, type RenderedVisual } from './visuals-view'
-import type { ChartView } from '#/ui/visual-chart'
+import { renderVisuals, type Cite, type RenderedVisual } from './visuals-view'
+import {
+  chartCountries,
+  chartView,
+  LIBRARY_VISUALS,
+  type ChartCountry,
+  type ChartView,
+} from './chart-view'
 import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
 import { pageTerms, withTermLinks, type TermView } from './terms-view'
 
@@ -297,6 +303,9 @@ export interface GuideView {
   readonly youMarks: Readonly<Record<string, ReadonlyArray<Coverage>>>
   /** The Questions of other Topics. */
   readonly elsewhere: ReadonlyArray<QuestionSummary>
+  /** The countries the page's charts carry, for its one row of country
+   * chips (`?pais=`, #470); empty when no chart has a country. */
+  readonly countries: ReadonlyArray<ChartCountry>
   /** The Verbetes the page marks, by slug, for their popover. */
   readonly terms: Readonly<Record<string, TermView>>
   /** Search and Open Graph title and description (#15). */
@@ -399,6 +408,8 @@ interface Drawing {
   readonly library: Library
   readonly numbers: Numbering
   readonly visuals: ReadonlyMap<string, RenderedVisual>
+  /** The Visuals the chart library draws, by id, out of `visuals`. */
+  readonly charts: ReadonlyMap<string, ChartView>
   /** The Verbetes the page marked, as it is drawn. */
   readonly used: Set<string>
 }
@@ -415,6 +426,26 @@ const prose = (
     ),
   )
 
+/** A text part of a Chapter: its prose, cut where the line of a Visual the
+ * library draws stands, so the chart joins the page's React tree (and its
+ * hydration) instead of the prose's HTML. */
+function textBlocks(
+  markdown: string,
+  n: number,
+  drawing: Drawing,
+): ChapterBlock[] {
+  return markdown
+    .split(/^(\{\{visual:[a-z0-9-]+\}\})$/m)
+    .flatMap((text, index): ChapterBlock[] => {
+      const id = /^\{\{visual:([a-z0-9-]+)\}\}$/.exec(text)?.[1]
+      const chart = id === undefined ? undefined : drawing.charts.get(id)
+      if (chart) return [{ key: `chart-${id}`, kind: 'chart', visual: chart }]
+      return text.trim()
+        ? [{ key: `text-${n}-${index}`, kind: 'text', html: prose(text, drawing) }]
+        : []
+    })
+}
+
 function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
   const { topic, library, numbers, used } = drawing
   return {
@@ -423,80 +454,7 @@ function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
     blocks: chapter.parts.flatMap((part, n): ChapterBlock[] => {
       switch (part.kind) {
         case 'text':
-          return part.markdown
-            .split(/(\{\{visual:[a-z0-9-]+\}\})/g)
-            .flatMap((text, index): ChapterBlock[] => {
-              const id = /^\{\{visual:([^}]+)\}\}$/.exec(text)?.[1]
-              const raw = topic.visuals.find((v) => v.id === id)
-              const firstBar = topic.visuals.find(
-                (v) => v.id === 'como-se-conheceram-1995-2017',
-              )
-              const firstTable = topic.visuals.find(
-                (v) => v.id === 'fatia-online-por-estudo',
-              )
-              if (raw && (raw === firstBar || raw === firstTable)) {
-                const view = visualView(
-                  raw,
-                  library,
-                  (slug) => {
-                    const ref = numbers.get(slug)
-                    return ref && { ...ref, anchor: anchor(slug) }
-                  },
-                  topic.slug,
-                )
-                if (raw.kind === 'bars' && view.kind === 'bars')
-                  return [
-                    {
-                      key: `chart-${id}`,
-                      kind: 'chart',
-                      visual: {
-                        kind: 'bars',
-                        id: view.domId,
-                        title: view.title,
-                        note: view.note,
-                        rows: view.bars.map((bar, i) => ({
-                          id: String(i),
-                          label: bar.label,
-                          value: raw.bars[i]!.value,
-                          number: bar.number,
-                        })),
-                      },
-                    },
-                  ]
-                if (
-                  raw.kind === 'study-table' &&
-                  view.kind === 'study-table' &&
-                  new Set(raw.rows.map((r) => r.unit)).size === 1
-                )
-                  return [
-                    {
-                      key: `chart-${id}`,
-                      kind: 'chart',
-                      visual: {
-                        kind: 'dots',
-                        id: view.domId,
-                        title: view.title,
-                        note: view.note,
-                        rows: view.rows.map((row, i) => ({
-                          id: String(i),
-                          label: `${row.study.title}: ${row.measure}`,
-                          value: raw.rows[i]!.value,
-                          number: row.number,
-                        })),
-                      },
-                    },
-                  ]
-              }
-              return text.trim()
-                ? [
-                    {
-                      key: `text-${n}-${index}`,
-                      kind: 'text',
-                      html: prose(text, drawing),
-                    },
-                  ]
-                : []
-            })
+          return textBlocks(part.markdown, n, drawing)
         case 'question': {
           const question = questionBySlug(library, part.slug)
           return question
@@ -540,19 +498,28 @@ function elsewhere(topic: Topic, library: Library): QuestionSummary[] {
 
 export function guideView(topic: Topic, library: Library): GuideView {
   const numbers = numberFactSheets(topic.citedFactSheets, library)
+  const cite: Cite = (slug) => {
+    const factSheet = numbers.get(slug)
+    return factSheet && { ...factSheet, anchor: anchor(slug) }
+  }
+  const charts = new Map(
+    topic.visuals.flatMap((visual) => {
+      if (!LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)) return []
+      const chart = chartView(visual, library, cite, topic.slug)
+      return chart ? [[visual.id, chart] as const] : []
+    }),
+  )
   const drawing: Drawing = {
     topic,
     library,
     numbers,
     visuals: renderVisuals(
-      topic.visuals,
+      topic.visuals.filter((v) => !charts.has(v.id)),
       library,
-      (slug) => {
-        const factSheet = numbers.get(slug)
-        return factSheet && { ...factSheet, anchor: anchor(slug) }
-      },
+      cite,
       topic.slug,
     ),
+    charts,
     used: new Set(),
   }
   const questions = topicQuestions(library, topic.slug)
@@ -575,6 +542,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
       topic.findings.map((f) => [f.id, f.covers] as const),
     ),
     elsewhere: elsewhere(topic, library),
+    countries: chartCountries([...charts.values()]),
     // Last: every block above is drawn and has named its Verbetes.
     terms: pageTerms(drawing.used, library),
     search: topicSearch(topic),
