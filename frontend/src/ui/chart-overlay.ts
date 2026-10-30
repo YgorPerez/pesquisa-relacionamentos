@@ -4,6 +4,7 @@
 // sends it inside the complete SVG and the browser's updates reconcile it
 // with the rest. Each mark is a variant of `OverlayMark`, never drawn by
 // hand at the call.
+import { TAG, VALUE, VALUE_DX } from './chart-text'
 import { INK, MARKER, YOU } from './chart-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
@@ -19,6 +20,10 @@ export interface OverlayMark {
   readonly highlight: boolean
   readonly brazil: boolean
   readonly you: boolean
+  /** How far the row's label runs on the line the "você" tag shares, from
+   * the left edge, and where the value written on the mark's line ends. */
+  readonly labelEnd?: number
+  readonly valueEnd?: number
   /** On a time line the value sits centered this far above its dot, and
    * the "você" tag above the value, instead of after the mark and on the
    * row's label line. */
@@ -28,11 +33,9 @@ export interface OverlayMark {
   readonly tick?: boolean
 }
 
-/** The value label's offset after the mark and its rough letter width, the
- * same numbers `visual-chart-plot.tsx` gives the library's `text` mark. */
-export const VALUE_DX = 10
-const LETTER = 7.4
 const LABEL_HEIGHT = 20
+/** The room the tag keeps from any text beside it. */
+const GAP = 6
 
 const escape = (text: string) =>
   text.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`)
@@ -43,7 +46,7 @@ function marker(x: number, y: number, width: number) {
   const h = LABEL_HEIGHT
   const top = y - h / 2
   const right = x + width
-  return `<path data-ts-key="marcador" d="M${x - 2} ${top + 2}C${x + width * 0.3} ${top} ${x + width * 0.7} ${top + 1} ${right + 2} ${top}l1 ${h / 2 - 1}-1 ${h / 2 + 1}C${x + width * 0.6} ${top + h + 1} ${x + width * 0.3} ${top + h} ${x - 3} ${top + h + 1}l-1-${h / 2}z" fill="${MARKER}"/>`
+  return `<path data-ts-key="marker" d="M${x - 2} ${top + 2}C${x + width * 0.3} ${top} ${x + width * 0.7} ${top + 1} ${right + 2} ${top}l1 ${h / 2 - 1}-1 ${h / 2 + 1}C${x + width * 0.6} ${top + h + 1} ${x + width * 0.3} ${top + h} ${x - 3} ${top + h + 1}l-1-${h / 2}z" fill="${MARKER}"/>`
 }
 
 /** The hand ring of the references, around Brazil's mark: the stroke runs
@@ -53,28 +56,58 @@ function ring(x: number, y: number, narrow = false) {
   // Around a tick, half as wide and a little taller.
   const w = narrow ? 6 : r
   const h = narrow ? 13 : r
-  return `<path data-ts-key="brasil" d="M${x + w} ${y - 2}C${x + w} ${y - h} ${x - w + 1} ${y - h - 1} ${x - w} ${y}C${x - w + 1} ${y + h} ${x + w} ${y + h + 1} ${x + w + 1} ${y - 4}" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`
+  return `<path data-ts-key="brazil" d="M${x + w} ${y - 2}C${x + w} ${y - h} ${x - w + 1} ${y - h - 1} ${x - w} ${y}C${x - w + 1} ${y + h} ${x + w} ${y + h + 1} ${x + w + 1} ${y - 4}" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`
 }
 
-/** The "você" tag, yellow like every "vale para você", at the right edge of
- * the plot on the row's label line. */
-const tagWidth = () => CHART_COPY.you.length * LETTER + 10
+/** The "você" tag, yellow like every "vale para você", its right edge at
+ * `right`. It sits a little above the line at `y` and is shorter than a
+ * row's lines are apart, so it never reaches the words of the line below
+ * (a row's value, or a Study's measure). */
+const TAG_WIDTH = CHART_COPY.you.length * TAG.letter + 10
+const TAG_HEIGHT = 16
+const TAG_LIFT = 2
 
 function you(right: number, y: number) {
   const text = CHART_COPY.you
-  const width = tagWidth()
-  return `<g data-ts-key="voce"><rect x="${right - width}" y="${y - 9}" width="${width}" height="18" rx="4" fill="${YOU}"/><text x="${right - 5}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="12" font-weight="700" fill="${INK}">${escape(text)}</text></g>`
+  const middle = y - TAG_LIFT
+  return `<g data-ts-key="you"><rect x="${right - TAG_WIDTH}" y="${middle - TAG_HEIGHT / 2}" width="${TAG_WIDTH}" height="${TAG_HEIGHT}" rx="4" fill="${YOU}"/><text x="${right - 5}" y="${middle}" text-anchor="end" dominant-baseline="central" font-size="${TAG.fontSize}" font-weight="${TAG.fontWeight}" fill="${INK}">${escape(text)}</text></g>`
+}
+
+/** Where a row's tag goes: at the right edge of the drawing, on the label's
+ * line, which is empty past the label. A label that runs into it moves the
+ * tag to the mark's line, when the value leaves it room there. */
+function rowTag(m: OverlayMark, labelOffset: number, right: number) {
+  const clear = right - TAG_WIDTH - GAP
+  if ((m.labelEnd ?? 0) <= clear || (m.valueEnd ?? Infinity) > clear)
+    return you(right, m.y - labelOffset)
+  return you(right, m.y)
+}
+
+/** A time line's tag: centered over the value above its dot, inside the
+ * plot, so it never covers the value axis's words on the left. */
+function lineTag(m: OverlayMark, valueAbove: number, plot: Bounds) {
+  const right = Math.min(
+    Math.max(m.x + TAG_WIDTH / 2, plot.left + TAG_WIDTH),
+    plot.right,
+  )
+  return you(right, m.y - valueAbove - LABEL_HEIGHT - 2)
+}
+
+interface Bounds {
+  /** The plot's left edge, where the value axis's words end. */
+  readonly left: number
+  /** The drawing's right edge. */
+  readonly right: number
 }
 
 /** The layer under the library's marks (the marker, so the value stays on
- * top of it) and the one over them (the ring and the tag). `labelY` is
- * where a row's label line is, from its mark's `y`; `right` is the plot's
- * right edge. */
+ * top of it) and the one over them (the ring and the tag). `labelOffset` is
+ * how far above its mark a row's label line is. */
 export function overlayLayers(
   marks: ReadonlyArray<OverlayMark>,
-  { labelOffset, right }: { labelOffset: number; right: number },
+  { labelOffset, ...bounds }: Bounds & { labelOffset: number },
 ): { under: string; over: string } {
-  const valueWidth = (m: OverlayMark) => m.valueText.length * LETTER + 6
+  const valueWidth = (m: OverlayMark) => m.valueText.length * VALUE.letter + 6
   const under = marks
     .filter((m) => m.highlight)
     .map((m) => {
@@ -84,7 +117,7 @@ export function overlayLayers(
           : // The library centers the value's line `valueAbove` over the
             // dot.
             marker(m.x - valueWidth(m) / 2, m.y - m.valueAbove, valueWidth(m))
-      return `<g data-ts-key="sob-${escape(m.key)}">${drawn}</g>`
+      return `<g data-ts-key="under-${escape(m.key)}">${drawn}</g>`
     })
   const over = marks
     .filter((m) => m.brazil || m.you)
@@ -92,13 +125,13 @@ export function overlayLayers(
       const tag = !m.you
         ? ''
         : m.valueAbove === undefined
-          ? you(right, m.y - labelOffset)
-          : you(m.x + tagWidth() / 2, m.y - m.valueAbove - LABEL_HEIGHT - 2)
-      return `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y, m.tick) : ''}${tag}</g>`
+          ? rowTag(m, labelOffset, bounds.right)
+          : lineTag(m, m.valueAbove, bounds)
+      return `<g data-ts-key="over-${escape(m.key)}">${m.brazil ? ring(m.x, m.y, m.tick) : ''}${tag}</g>`
     })
   return {
-    under: `<g class="sobreposicao-sob" data-ts-key="sobreposicao-sob" aria-hidden="true">${under.join('')}</g>`,
-    over: `<g class="sobreposicao" data-ts-key="sobreposicao" aria-hidden="true">${over.join('')}</g>`,
+    under: `<g class="overlay-under" data-ts-key="overlay-under" aria-hidden="true">${under.join('')}</g>`,
+    over: `<g class="overlay" data-ts-key="overlay" aria-hidden="true">${over.join('')}</g>`,
   }
 }
 

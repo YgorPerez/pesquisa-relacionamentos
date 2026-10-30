@@ -27,12 +27,8 @@ import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
 import { useCallback, useMemo } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
-import {
-  overlayLayers,
-  VALUE_DX,
-  withOverlay,
-  type OverlayMark,
-} from './chart-overlay'
+import { overlayLayers, withOverlay, type OverlayMark } from './chart-overlay'
+import { LABEL, SMALL, VALUE, VALUE_DX } from './chart-text'
 import { DIMMED, INK, MUTED, PAPER } from './chart-tones'
 import { partTone } from './stack-tones'
 import { CHART_COPY } from './visual-chart.copy'
@@ -44,28 +40,57 @@ const THEME = {
   background: 'transparent',
   palette: [INK],
 }
-/** A row: the label above, the mark below it, each line's distance above
- * the mark in `label`. A bar's label longer than `LABEL_LINE` takes two
- * lines; a dot row has the Study's measure too, in up to two lines under
- * its title. */
-const LAYOUT = {
-  bars: { row: 50, label: [15], measure: [] },
-  wrappedBars: { row: 66, label: [31, 15], measure: [] },
-  dots: { row: 80, label: [42], measure: [28, 15] },
-  stacked: { row: 60, label: [21], measure: [] },
-} as const
 /** Letters per line of a bar's label (13px) and of a measure (12px), which
  * fit a 350px phone. */
 const LABEL_LINE = 40
 /** Where a range's words go, under its line. */
 const RANGE_WORDS = 19
 const MEASURE_LINE = 56
-/** The value after the mark (14px, bold): room for the longest at the
- * right end, and never less than `VALUE_ROOM`. */
+/** The value after the mark: room for the longest at the right end, and
+ * never less than `VALUE_ROOM`. */
 const VALUE_ROOM = 56
-const VALUE_LETTER = 8.2
-/** A dot's value starts past Brazil's ring (12px from the dot's center). */
-const DOT_VALUE_DX = 16
+
+/** A row of each kind: the label above, the mark below it, each line's
+ * distance above the mark in `label`. A bar's label longer than
+ * `LABEL_LINE` takes two lines (`wrap`); a dot row has the Study's title in
+ * bold and its measure in up to two lines under it, and its value starts
+ * past Brazil's ring (12px from the dot's center). Stacked bars write their
+ * values inside the parts, so `valueDx` is theirs only for the room. */
+const LAYOUT = {
+  bars: {
+    row: 50,
+    label: [15],
+    measure: [],
+    wrap: LABEL_LINE,
+    bold: false,
+    valueDx: VALUE_DX,
+  },
+  wrappedBars: {
+    row: 66,
+    label: [31, 15],
+    measure: [],
+    wrap: LABEL_LINE,
+    bold: false,
+    valueDx: VALUE_DX,
+  },
+  dots: {
+    row: 80,
+    label: [42],
+    measure: [28, 15],
+    wrap: null,
+    bold: true,
+    valueDx: 16,
+  },
+  stacked: {
+    row: 60,
+    label: [21],
+    measure: [],
+    wrap: null,
+    bold: false,
+    valueDx: VALUE_DX,
+  },
+} as const
+type Layout = (typeof LAYOUT)[keyof typeof LAYOUT]
 
 /** A text in lines of up to `letters` letters, two at most; the rest is in
  * the tap detail and the list a screen reader reads. */
@@ -83,8 +108,15 @@ function lines(text: string | null, letters: number): string[] {
 }
 
 /** The label's lines: a dot's Study title is short and stays on one. */
-const labelLines = (chart: ChartView, label: string) =>
-  chart.kind === 'bars' ? lines(label, LABEL_LINE) : [label]
+const labelLines = (layout: Layout, label: string) =>
+  layout.wrap === null ? [label] : lines(label, layout.wrap)
+
+/** How far a row's last label line runs, from the drawing's left edge:
+ * the "você" tag shares that line. */
+const labelEnd = (layout: Layout, label: string) =>
+  LEFT +
+  (labelLines(layout, label).at(-1)?.length ?? 0) *
+    (layout.bold ? LABEL.boldLetter : LABEL.letter)
 
 /** The right margin: the value after each mark fits on a 350px phone, the
  * narrowest plot, where a mark short of the top leaves part of the room
@@ -92,23 +124,27 @@ const labelLines = (chart: ChartView, label: string) =>
  * than "39%". */
 function valueRoom(chart: ChartView, dx: number) {
   const top = chart.ticks[chart.ticks.length - 1]?.value || 1
-  const plot = INITIAL_WIDTH - 12 - VALUE_ROOM
+  const plot = INITIAL_WIDTH - LEFT - VALUE_ROOM
   return Math.max(
     VALUE_ROOM,
     ...chart.points.map((p) => {
       // A row with a range writes "média N%" after the range's top (#472).
       const at = Math.max(p.value, ...(p.range ?? []).map((q) => q.value))
-      const written = p.range
-        ? CHART_COPY.rangeValue(p.number.text)
-        : p.number.text
       return Math.ceil(
-        dx + written.length * VALUE_LETTER - (1 - at / top) * plot,
+        dx + writtenValue(p).length * VALUE.wideLetter - (1 - at / top) * plot,
       )
     }),
   )
 }
 
-function layoutOf(chart: ChartView) {
+/** The value written after a row's mark: a row with a range gives its
+ * average after the range. */
+const writtenValue = (p: ChartPoint) =>
+  p.range && p.range.length > 0
+    ? CHART_COPY.rangeValue(p.number.text)
+    : p.number.text
+
+function layoutOf(chart: ChartView): Layout {
   if (chart.kind === 'dots') return LAYOUT.dots
   if (chart.kind === 'stacked') return LAYOUT.stacked
   return chart.points.some((p) => p.label.length > LABEL_LINE)
@@ -117,6 +153,8 @@ function layoutOf(chart: ChartView) {
 }
 /** What the server lays out before the browser measures the column. */
 const INITIAL_WIDTH = 350
+/** The plot's left margin, where the labels start. */
+const LEFT = 12
 
 interface Row extends ChartPoint {
   readonly dimmed: boolean
@@ -195,7 +233,7 @@ function rangeMarks(rows: Row[]) {
       ? []
       : [
           tickX(these, {
-            id: `marca-faixa-${dimmed ? 'apagada' : 'acesa'}`,
+            id: `mark-range-${dimmed ? 'dimmed' : 'lit'}`,
             x: 'value',
             y: (q) => q.at,
             key: 'key',
@@ -211,12 +249,12 @@ function rangeMarks(rows: Row[]) {
   })
   return [
     link(ranged, {
-      id: 'faixa',
+      id: 'range',
       x1: (r) => Math.min(...r.spread.map((q) => q.value)),
       x2: end,
       y1: 'key',
       y2: 'key',
-      key: (r) => `faixa-${r.key}`,
+      key: (r) => `range-${r.key}`,
       stroke: INK,
       strokeWidth: 2,
       strokeOpacity: (r) => (r.dimmed ? DIMMED : 1),
@@ -230,7 +268,7 @@ function rangeMarks(rows: Row[]) {
  * and value texts of a row are its words, not points of their own. A tap
  * anywhere on a row reaches its mark. */
 const onlyMarks = <P extends { markId: string }>(points: readonly P[]) =>
-  points.filter((p) => p.markId.startsWith('marca'))
+  points.filter((p) => p.markId.startsWith('mark'))
 const MARK_FOCUS: ChartFocusStrategy<Row, number, string> = {
   resolve: (points, context) =>
     focusNearestY.resolve(onlyMarks(points), context),
@@ -287,7 +325,7 @@ function stackedMarks(
       const fade = dimmed ? DIMMED : 1
       marks.push(
         barX(these, {
-          id: `marca-${dimmed ? 'apagada' : 'acesa'}-${part}`,
+          id: `mark-${dimmed ? 'dimmed' : 'lit'}-${part}`,
           x1: start,
           x2: (r) => start(r) + r.value,
           y: bandOf,
@@ -313,28 +351,28 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
     text(
       words.filter((r) => r.stack?.part === 0),
       {
-        id: 'rotulo',
+        id: 'label',
         x: () => 0,
         y: bandOf,
-        key: (r) => `rotulo-${r.key}`,
+        key: (r) => `label-${r.key}`,
         text: 'label',
         anchor: 'start',
         dy: -labelOffset,
-        fontSize: 13,
+        fontSize: LABEL.fontSize,
         fill: (r) => (r.dimmed ? MUTED : INK),
       },
     ),
     text(
       words.filter((r) => r.value >= SMALLEST_WRITTEN_PART),
       {
-        id: 'valor',
+        id: 'value',
         x: (r) => start(r) + r.value / 2,
         y: bandOf,
-        key: (r) => `valor-${r.key}`,
+        key: (r) => `value-${r.key}`,
         text: (r) => r.number.text,
         anchor: 'middle',
-        fontSize: 12,
-        fontWeight: 700,
+        fontSize: SMALL.fontSize,
+        fontWeight: VALUE.fontWeight,
         fill: (r) =>
           r.dimmed ? INK : partTone(r.stack?.part ?? 0, parts).text,
       },
@@ -353,7 +391,7 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
     if (chart.kind === 'bars') {
       marks.push(
         barX(some, {
-          id: `marca-${dimmed ? 'apagada' : 'acesa'}`,
+          id: `mark-${dimmed ? 'dimmed' : 'lit'}`,
           x: 'value',
           y: 'key',
           key: 'key',
@@ -371,7 +409,7 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
       const these = some.filter((r) => (r.definition ?? 0) === shape)
       if (these.length === 0) continue
       const options = {
-        id: `marca-${dimmed ? 'apagada' : 'acesa'}-${shape}`,
+        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
         x: 'value',
         y: 'key',
         key: 'key',
@@ -392,28 +430,58 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
   return marks
 }
 
+type ScenePoint = {
+  readonly markId: string
+  readonly datum: unknown
+  readonly x: number
+  readonly y: number
+}
+
+/** Where the words of a row run, for the "você" tag to keep clear of them:
+ * its last label line, and the value after its mark (or after its range).
+ * Stacked bars write their values inside the parts: none after them. */
+function rowWords(
+  points: ReadonlyArray<ScenePoint>,
+  layout: Layout,
+): (row: Row) => Pick<OverlayMark, 'labelEnd' | 'valueEnd'> {
+  const right = new Map<string, number>()
+  for (const point of points) {
+    const datum = point.datum as Row | SpreadRow | undefined
+    if (!datum || !point.markId.startsWith('mark')) continue
+    const row = 'at' in datum ? datum.at : bandOf(datum)
+    right.set(row, Math.max(right.get(row) ?? 0, point.x))
+  }
+  return (row) => ({
+    labelEnd: labelEnd(layout, row.label),
+    ...(layout === LAYOUT.stacked
+      ? {}
+      : {
+          valueEnd:
+            (right.get(bandOf(row)) ?? 0) +
+            layout.valueDx +
+            writtenValue(row).length * VALUE.wideLetter,
+        }),
+  })
+}
+
 /** Our layer's marks: where each bar or dot of a row landed in the scene. */
 function overlayMarks(
-  points: ReadonlyArray<{
-    readonly markId: string
-    readonly datum: unknown
-    readonly x: number
-    readonly y: number
-  }>,
+  points: ReadonlyArray<ScenePoint>,
   rows: Row[],
-  valueAbove?: number,
+  { valueAbove, layout }: { valueAbove?: number; layout?: Layout } = {},
 ): OverlayMark[] {
   // A range's ticks (#472) are marks of their own, keyed by their point.
   const byKey = new Map(
     rows.flatMap((r) => [r, ...r.spread]).map((r) => [r.key, r]),
   )
+  const words = layout && rowWords(points, layout)
   const seen = new Set<string>()
   const marks: OverlayMark[] = []
   for (const point of points) {
     const datum = point.datum as Row | undefined
     const found = datum && byKey.get(datum.key)
     // One ring or tag per row: a stacked bar's parts share theirs (#476).
-    if (!point.markId.startsWith('marca') || !found || seen.has(bandOf(found)))
+    if (!point.markId.startsWith('mark') || !found || seen.has(bandOf(found)))
       continue
     seen.add(bandOf(found))
     marks.push({
@@ -424,8 +492,9 @@ function overlayMarks(
       highlight: found.highlight,
       brazil: found.brazil,
       you: found.you,
-      tick: point.markId.startsWith('marca-faixa'),
+      tick: point.markId.startsWith('mark-range'),
       ...(valueAbove === undefined ? {} : { valueAbove }),
+      ...words?.(found),
     })
   }
   return marks
@@ -474,7 +543,7 @@ function lineMarks(chart: ChartView, rows: Row[]) {
   if (scaled && rows.length > 1)
     marks.push(
       lineY(rows, {
-        id: 'linha',
+        id: 'line',
         x: 'year',
         y,
         stroke: INK,
@@ -485,15 +554,15 @@ function lineMarks(chart: ChartView, rows: Row[]) {
   marks.push(...lineDots(chart, rows, y))
   marks.push(
     text(words, {
-      id: 'valor',
+      id: 'value',
       x: 'year',
       y,
-      key: (r) => `valor-${r.key}`,
+      key: (r) => `value-${r.key}`,
       text: (r) => r.number.text,
       anchor: 'middle',
       dy: -LINE.valueAbove,
-      fontSize: 14,
-      fontWeight: 700,
+      fontSize: VALUE.fontSize,
+      fontWeight: VALUE.fontWeight,
       fill: tone,
     }),
   )
@@ -514,7 +583,7 @@ function lineDots(chart: ChartView, rows: Row[], y: (r: Row) => number) {
       const opacity = dimmed ? DIMMED : 1
       const hollow = shape >= 2
       const options = {
-        id: `marca-${dimmed ? 'apagada' : 'acesa'}-${shape}`,
+        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
         x: 'year',
         y,
         key: 'key',
@@ -554,6 +623,26 @@ function yearScale(years: NonNullable<ChartView['years']>) {
   }
 }
 
+/** A time line's SVG with our layer: the tags above the values, inside the
+ * plot. */
+function lineSvg(
+  scene: Parameters<typeof renderChartSvg>[0],
+  options: Parameters<typeof renderChartSvg>[1],
+  rows: Row[],
+) {
+  return withOverlay(
+    renderChartSvg(scene, options),
+    overlayLayers(
+      overlayMarks(scene.points, rows, { valueAbove: LINE.valueAbove }),
+      {
+        labelOffset: 0,
+        left: scene.chart.x,
+        right: scene.chart.x + scene.chart.width,
+      },
+    ),
+  )
+}
+
 function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
@@ -587,14 +676,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   }, [chart, rows, scaled])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
-    (scene, options) =>
-      withOverlay(
-        renderChartSvg(scene, options),
-        overlayLayers(overlayMarks(scene.points, rows, LINE.valueAbove), {
-          labelOffset: 0,
-          right: scene.chart.x + scene.chart.width,
-        }),
-      ),
+    (scene, options) => lineSvg(scene, options, rows),
     [rows],
   )
 
@@ -623,13 +705,12 @@ export default function VisualChartPlot(props: PlotProps) {
 }
 
 function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
-  const hatch = `${chart.domId}-hachura`
+  const hatch = `${chart.domId}-hatch`
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
     [chart, country, profile],
   )
   const layout = layoutOf(chart)
-  const valueDx = chart.kind === 'dots' ? DOT_VALUE_DX : VALUE_DX
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
@@ -637,7 +718,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     // The texts' own copies of the rows: the focus ring marks every point
     // whose datum is the focused one, and it belongs on the mark only.
     const words = rows.map((r) => ({ ...r }))
-    const stacked = chart.kind === 'stacked'
+    const stacked = layout === LAYOUT.stacked
     // Stacked bars write their values inside the parts, not after the mark.
     const stackMarks = stacked
       ? stackedMarks(chart, rows, words, layout.label[0] ?? 0)
@@ -648,57 +729,54 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
         ...pointMarks(chart, rows, hatch),
         ...layout.label.map((dy, line) =>
           text(words, {
-            id: line === 0 ? 'rotulo' : `rotulo-${line}`,
+            id: line === 0 ? 'label' : `label-${line}`,
             x: () => 0,
             y: 'key',
             // A key of its own: the focus ring marks only the bar or dot.
-            key: (r) => `rotulo-${line}-${r.key}`,
-            text: (r) => labelLines(chart, r.label)[line] ?? null,
+            key: (r) => `label-${line}-${r.key}`,
+            text: (r) => labelLines(layout, r.label)[line] ?? null,
             anchor: 'start',
             dy: -dy,
-            fontSize: 13,
-            fontWeight: chart.kind === 'dots' ? 700 : 400,
+            fontSize: LABEL.fontSize,
+            fontWeight: layout.bold ? 700 : 400,
             fill: tone,
           }),
         ),
         ...layout.measure.map((dy, line) =>
           text(words, {
-            id: `medida-${line}`,
+            id: `measure-${line}`,
             x: () => 0,
             y: 'key',
-            key: (r) => `medida-${line}-${r.key}`,
+            key: (r) => `measure-${line}-${r.key}`,
             text: (r) => lines(r.detail, MEASURE_LINE)[line] ?? null,
             anchor: 'start',
             dy: -dy,
-            fontSize: 12,
+            fontSize: SMALL.fontSize,
             fill: tone,
           }),
         ),
         text(words, {
-          id: 'faixa-texto',
+          id: 'range-words',
           x: () => 0,
           y: 'key',
-          key: (r) => `faixa-texto-${r.key}`,
+          key: (r) => `range-words-${r.key}`,
           text: spreadWords,
           anchor: 'start',
           dy: RANGE_WORDS,
-          fontSize: 12,
+          fontSize: SMALL.fontSize,
           fill: tone,
         }),
         text(words, {
-          id: 'valor',
+          id: 'value',
           // After the range's top, when the row has one: the dot is inside.
           x: end,
           y: 'key',
-          key: (r) => `valor-${r.key}`,
-          text: (r) =>
-            r.spread.length > 0
-              ? CHART_COPY.rangeValue(r.number.text)
-              : r.number.text,
+          key: (r) => `value-${r.key}`,
+          text: writtenValue,
           anchor: 'start',
-          dx: valueDx,
-          fontSize: 14,
-          fontWeight: 700,
+          dx: layout.valueDx,
+          fontSize: VALUE.fontSize,
+          fontWeight: VALUE.fontWeight,
           fill: tone,
         }),
       ],
@@ -727,26 +805,28 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       // The sides are fixed: a long label must not squeeze the scale.
       margin: {
         top: (layout.label[0] ?? 0) - layout.row / 2 + 16,
-        left: 12,
+        left: LEFT,
         // Stacked bars end at 100%: room for that tick's text only.
-        right: stacked ? 20 : valueRoom(chart, valueDx),
+        right: stacked ? 20 : valueRoom(chart, layout.valueDx),
       },
       theme: THEME,
     })
-  }, [chart, rows, hatch, layout, valueDx])
+  }, [chart, rows, hatch, layout])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
-      const marks = overlayMarks(scene.points, rows)
+      const marks = overlayMarks(scene.points, rows, { layout })
       const defs = rows.some((r) => r.own)
         ? `<defs><pattern id="${hatch}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width="2.2"/></pattern></defs>`
         : ''
       return withOverlay(
         renderChartSvg(scene, options),
         overlayLayers(marks, {
-          // The "você" tag goes on the label's line next to the mark.
+          // The "você" tag goes on the label's line, at the drawing's right
+          // edge: past the plot, that line has no words.
           labelOffset: layout.label[layout.label.length - 1] ?? 0,
-          right: scene.chart.x + scene.chart.width,
+          left: scene.chart.x,
+          right: scene.width,
         }),
         defs,
       )

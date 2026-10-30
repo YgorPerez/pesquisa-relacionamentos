@@ -91,8 +91,9 @@ export const CountryChosen: Story = { args: { country: 'eua' } }
 /** A Profile of 30: "você" on the two Studies that cover it. */
 export const WithProfile: Story = { args: { profile: { age: 30 } } }
 
-/** Enter on the chart opens the first point's exact value and its Fact
- * sheet's ring; "Fechar" closes it. */
+/** Enter on the chart opens the first point's exact value, what its Study
+ * measured (the definition its shape stands for) and its Fact sheet's
+ * ring; "Fechar" closes it. */
 export const TapDetail: Story = {
   play: async ({ canvasElement }) => {
     const page = within(canvasElement)
@@ -104,6 +105,9 @@ export const TapDetail: Story = {
     chart.focus()
     await userEvent.keyboard('{Enter}')
     const close = await page.findByRole('button', { name: 'Fechar' })
+    const box = within(close.closest('[data-slot="detalhe-do-grafico"]')!)
+    await expect(box.getByText('Mede')).toBeInTheDocument()
+    await expect(box.getByText(DOTS.definitions[0]!.legend)).toBeInTheDocument()
     await expect(
       page.getByRole('link', { name: /^Ficha \d: / }),
     ).toBeInTheDocument()

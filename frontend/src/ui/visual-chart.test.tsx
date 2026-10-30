@@ -3,9 +3,11 @@
 // marker, Brazil's ring, the "você" tag) and the country filter already
 // applied. The tap is in the story (`visual-chart.stories.tsx`), in a real
 // browser, where the library measures and listens.
+import { render, screen, within } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
+import { CHART_COPY } from './visual-chart.copy'
 import {
   BARS,
   DOTS,
@@ -25,6 +27,12 @@ afterAll(() => vi.unstubAllEnvs())
 
 const page = (html: string) =>
   new DOMParser().parseFromString(html, 'text/html')
+
+/** The list of every value a screen reader reads under the chart, on a
+ * chart without a time line's labels (the parsed page has no styles to
+ * tell what is hidden). */
+const valueList = (html: Document) =>
+  within(html.body).getAllByRole('list', { hidden: true })[0]!
 
 it('serves every bar and dot with its exact value before JavaScript', () => {
   const bars = page(
@@ -52,12 +60,12 @@ it('marks the key value in pink and rings Brazil, for everyone', () => {
   const bars = page(
     renderToString(<VisualChart chart={BARS} country={null} profile={null} />),
   )
-  expect(bars.querySelectorAll('[data-ts-key="marcador"]').length).toBe(1)
+  expect(bars.querySelectorAll('[data-ts-key="marker"]').length).toBe(1)
   const dots = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
   )
-  expect(dots.querySelectorAll('[data-ts-key="brasil"]').length).toBe(1)
-  expect(dots.querySelector('[data-ts-key="voce"]')).toBeNull()
+  expect(dots.querySelectorAll('[data-ts-key="brazil"]').length).toBe(1)
+  expect(dots.querySelector('[data-ts-key="you"]')).toBeNull()
 })
 
 it('lights the chosen country and dims the others', () => {
@@ -84,13 +92,13 @@ it('tags "você" on the Studies that cover the Profile', () => {
     ),
   )
   // Silva covers 18–35 and Rosenfeld 26–65; Bergström did not split.
-  expect(dots.querySelectorAll('[data-ts-key="voce"]').length).toBe(2)
+  expect(dots.querySelectorAll('[data-ts-key="you"]').length).toBe(2)
   const young = page(
     renderToString(
       <VisualChart chart={DOTS} country={null} profile={{ age: 20 }} />,
     ),
   )
-  expect(young.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
+  expect(young.querySelectorAll('[data-ts-key="you"]').length).toBe(1)
 })
 
 it("wraps a bar's long label in two lines that fit a phone, and leaves the rest to the tap and the list", () => {
@@ -192,8 +200,8 @@ it('serves a time line with each value over its year, a written year only where 
     expect(texts).toContain(value)
   expect(texts).not.toContain('2005')
   // The pink marker on 2024, and Brazil ringed at every point.
-  expect(line.querySelectorAll('[data-ts-key="marcador"]').length).toBe(1)
-  expect(line.querySelectorAll('[data-ts-key="brasil"]').length).toBe(3)
+  expect(line.querySelectorAll('[data-ts-key="marker"]').length).toBe(1)
+  expect(line.querySelectorAll('[data-ts-key="brazil"]').length).toBe(3)
   // What each point measured, with its year, for a screen reader and
   // without JS.
   expect(line.body.textContent).toContain(
@@ -223,7 +231,7 @@ it('dims the other country on a time line, and tags "você" where the Profile is
       />,
     ),
   )
-  expect(line.querySelectorAll('[data-ts-key="voce"]').length).toBe(3)
+  expect(line.querySelectorAll('[data-ts-key="you"]').length).toBe(3)
 })
 
 it("draws a Study's spread across countries, with Brazil ringed inside it", () => {
@@ -235,11 +243,9 @@ it("draws a Study's spread across countries, with Brazil ringed inside it", () =
   for (const words of ['Gana 7%', 'Brasil 19,3%', 'Polônia 33%'])
     expect(svg?.textContent).toContain(words)
   expect(svg?.textContent).toContain('média 16%')
-  expect(html.querySelectorAll('[data-ts-key="brasil"]').length).toBe(1)
+  expect(html.querySelectorAll('[data-ts-key="brazil"]').length).toBe(1)
   // A screen reader hears every point of the spread too.
-  expect(html.querySelector('ul.sr-only')?.textContent).toContain(
-    'Polônia: 33%',
-  )
+  expect(valueList(html).textContent).toContain('Polônia: 33%')
 })
 
 it("lights a Study whose spread has the chosen country, and dims the spread's other countries", () => {
@@ -256,7 +262,7 @@ it("lights a Study whose spread has the chosen country, and dims the spread's ot
   expect(dimmed('39%')).toBe(true)
   // The ticks: Ghana's lit, Brazil's and Poland's dimmed.
   const ticks = [
-    ...html.querySelectorAll('svg[role="img"] [data-ts-key^="marca-faixa"]'),
+    ...html.querySelectorAll('svg[role="img"] [data-ts-key^="mark-range"]'),
   ]
   expect(ticks.length).toBeGreaterThan(0)
   const opacities = [...html.querySelectorAll('svg[role="img"] line')]
@@ -284,7 +290,7 @@ it('serves each part of a stacked bar with its value inside, and the parts as a 
   expect(legend?.textContent).toContain('Contentes')
   expect(legend?.textContent).toContain('Muito arrependidos')
   // The list a screen reader reads names each part of each bar.
-  expect(stacked.querySelector('ul.sr-only')?.textContent).toContain(
+  expect(valueList(stacked).textContent).toContain(
     'Homens heterossexuais, Muito arrependidos: 7%',
   )
 })
@@ -299,7 +305,7 @@ it('tags "você" once, on the bar whose group is the Profile', () => {
       />,
     ),
   )
-  expect(woman.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
+  expect(woman.querySelectorAll('[data-ts-key="you"]').length).toBe(1)
   const none = page(
     renderToString(
       <VisualChart
@@ -309,13 +315,73 @@ it('tags "você" once, on the bar whose group is the Profile', () => {
       />,
     ),
   )
-  expect(none.querySelector('[data-ts-key="voce"]')).toBeNull()
+  expect(none.querySelector('[data-ts-key="you"]')).toBeNull()
 })
 
-it('shows the definitions as a legend of shapes', () => {
+/** The "você" tags' boxes in a chart's SVG. */
+const tags = (html: Document) =>
+  [...html.querySelectorAll('[data-ts-key="you"] rect')].map((rect) => ({
+    left: Number(rect.getAttribute('x')),
+    top: Number(rect.getAttribute('y')),
+  }))
+
+it('keeps the "você" tag clear of a long Study title on a phone\'s width', () => {
+  // Past the plot's right edge on a 350px drawing.
+  const title = 'Pew Research Center (2023, 2020 e 2019)'
   const dots = page(
+    renderToString(
+      <VisualChart
+        chart={{
+          ...DOTS,
+          points: DOTS.points.map((p) => ({ ...p, label: title })),
+        }}
+        country={null}
+        profile={{ age: 30 }}
+      />,
+    ),
+  )
+  const labels = [...dots.querySelectorAll('svg[role="img"] text')].filter(
+    (t) => t.textContent === title,
+  )
+  expect(tags(dots)).toHaveLength(2)
+  // Each tag sits on its row's title line, past where the title ends: a
+  // 13px bold title runs about 6.5px a letter.
+  const ends = tags(dots).map((tag) => {
+    const label = labels.find(
+      (t) => Math.abs(Number(t.getAttribute('y')) - (tag.top + 10)) < 3,
+    )
+    return {
+      tag: tag.left,
+      title: Number(label?.getAttribute('x')) + title.length * 6.5,
+    }
+  })
+  for (const { tag, title: end } of ends) expect(tag).toBeGreaterThan(end)
+})
+
+it('keeps a time line\'s "você" tags clear of the value axis\'s words', () => {
+  const line = page(
+    renderToString(
+      <VisualChart
+        chart={LINE}
+        country={null}
+        profile={{ gender: 'mulher' }}
+      />,
+    ),
+  )
+  const axis = [...line.querySelectorAll('svg[role="img"] text')].filter((t) =>
+    LINE.ticks.some((tick) => tick.text === t.textContent),
+  )
+  const axisEnd = Math.max(...axis.map((t) => Number(t.getAttribute('x'))))
+  expect(tags(line)).toHaveLength(3)
+  for (const tag of tags(line)) expect(tag.left).toBeGreaterThan(axisEnd)
+})
+
+it('tells how to open a number only once the chart can take the tap', () => {
+  // Without JavaScript a tap opens nothing: the server does not say it.
+  const served = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
   )
-  expect(dots.body.textContent).toContain('só sites e aplicativos')
-  expect(dots.body.textContent).toContain('qualquer canal online')
+  expect(served.body.textContent).not.toContain(CHART_COPY.hint)
+  render(<VisualChart chart={DOTS} country={null} profile={null} />)
+  expect(screen.getAllByText(CHART_COPY.hint)).toHaveLength(1)
 })
