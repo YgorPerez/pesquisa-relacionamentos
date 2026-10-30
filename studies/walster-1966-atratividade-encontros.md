@@ -31,16 +31,18 @@ A hipótese era que cada um preferiria alguém do seu próprio nível de atrativ
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Participantes | 376 homens e 376 mulheres | Procedimento | "Subjects were 376 men and 376 women who purchased tickets to a Friday night dance" |
-| Correlação entre a aparência da mulher e quanto o par gostou dela | r = 0,44 | p. 514 | "the correlation between a woman's average physical attractiveness rating and her male partner's liking for her is .44" |
-| Correlação entre a aparência da mulher e o homem querer sair de novo com ela | r = 0,39 | p. 514 | "her attractiveness and whether or not he wants to continue to date her is .39" |
-| Correlação entre a aparência do homem e quanto a parceira gostou dele e quis sair de novo | r = 0,36 e r = 0,31 | p. 514 | "partner's liking for him and desire to date him are .36 and .31, respectively" |
-| Correlação entre a beleza que cada um viu no par e quanto gostou dele | r = 0,78 (homens) e r = 0,69 (mulheres) | p. 514 | "evaluation of the date's physical attractiveness is .78 for male subjects and .69 for female subjects" |
-| Quanto o homem gostou e quanto a mulher gostou dele: sem relação | r = 0,03 | p. 514 | "likes him is virtually zero: r — .03" |
-| Tendência a tentar sair com alguém do próprio nível de beleza (teste F) | F = 0,07, sem efeito | p. 513 | "The interaction F which is necessary to demonstrate such a tendency is very small (F= .07)" |
-| Os mais bonitos esperavam e julgavam o par com mais rigor, mas o efeito é pequeno | r de 0,07 a 0,20 | p. 512 | "correlations for the above variables range from only .07 to .20" |
+| Quem participou | 376 homens e 376 mulheres que compraram ingresso para um baile de sexta à noite | Procedimento | "Subjects were 376 men and 376 women who purchased tickets to a Friday night dance" |
+| Aparência da mulher e quanto o par gostou dela | Quanto mais atraente a mulher, na nota média que recebeu, mais o par disse gostar dela (r = 0,44) | p. 514 | "the correlation between a woman's average physical attractiveness rating and her male partner's liking for her is .44" |
+| Aparência da mulher e querer sair de novo | Quanto mais atraente a mulher, mais o homem quis sair com ela outra vez (r = 0,39) | p. 514 | "her attractiveness and whether or not he wants to continue to date her is .39" |
+| Aparência do homem e a reação da parceira | Quanto mais atraente o homem, mais a parceira disse gostar dele e quis sair com ele de novo (r = 0,36 e r = 0,31) | p. 514 | "partner's liking for him and desire to date him are .36 and .31, respectively" |
+| A beleza que cada um viu no par | Quanto mais bonito cada um achou o par, mais gostou dele (r = 0,78 nos homens e r = 0,69 nas mulheres) | p. 514 | "evaluation of the date's physical attractiveness is .78 for male subjects and .69 for female subjects" |
+| Gostar e ser gostado | Quanto o homem disse gostar da parceira quase não teve ligação com quanto ela gostou dele (r = 0,03) | p. 514 | "likes him is virtually zero: r — .03" |
+| Sair com alguém do próprio nível de beleza | As pessoas não mostraram tendência clara a tentar sair com quem tinha beleza parecida com a sua (F = 0,07) | p. 513 | "The interaction F which is necessary to demonstrate such a tendency is very small (F= .07)" |
+| Rigor de quem é mais atraente | Os mais atraentes esperavam mais do par e o julgaram com mais rigor, mas a ligação foi fraca (r de 0,07 a 0,20) | p. 512 | "correlations for the above variables range from only .07 to .20" |
 
-Nota escolar, teste de aptidão e os testes de personalidade quase não previram quanto o par gostou de alguém. As correlações ficaram perto de zero, e nenhuma medida intelectual teve relação significativa com o quanto o par gostou da pessoa (p. 515). Os autores esperavam que a aparência pesasse menos para os homens serem queridos do que para as mulheres, e não foi o que aconteceu: "it appears that it is just as important a determinant" (p. 514).
+O r mostra quanto duas coisas andam juntas: 0 é nada, e quanto mais perto de 1, mais. O F é o resultado de um teste: perto de zero, nada aparece.
+
+Nota escolar, teste de aptidão e os testes de personalidade quase não previram quanto o par gostou de alguém. As ligações ficaram perto de zero, e nenhuma medida intelectual teve ligação clara com o quanto o par gostou da pessoa (p. 515). Os autores esperavam que a aparência pesasse menos para os homens serem queridos do que para as mulheres, e não foi o que aconteceu: "it appears that it is just as important a determinant" (p. 514).
 
 ### A Dica "Aparência pesa no primeiro contato; cuidados pessoais, roupa e exercício estão no seu controle"
 

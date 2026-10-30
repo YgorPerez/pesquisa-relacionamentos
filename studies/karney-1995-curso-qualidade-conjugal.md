@@ -30,34 +30,34 @@ Do conjunto sai o modelo de vulnerabilidade, estresse e adaptação: o que cada 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Estudos e casamentos revisados | 115 estudos longitudinais, mais de 45.000 casamentos | Resumo, p. 3 | "the methods and findings of 115 longitudinal studies—representing over 45,000 marriages—are summarized" |
-| Amostras independentes | Cerca de 68 | p. 9 | "we estimate that 68 independent samples are represented in Table 2" |
-| Composição das amostras | 75% sobretudo de brancos de classe média; 17% representativas de casados no país; 8% de populações negras e brancas | p. 9 | "Of the 68 samples, 8% specifically draw from Black and White populations and an additional 17% are nationally representative of married people. The remaining 75% of the samples are comprised primarily of middle-class Caucasians" |
-| Amostras sorteadas em âmbito nacional | 18% das 68 | p. 9 | "Only 18% of the 68 samples were recruited through nationally representative random sampling." |
-| Estudos com amostra pequena | 33% com 100 participantes ou menos (de 112 que informam o tamanho final) | p. 9 | "of the 112 studies reporting final sample sizes, 33% have 100 participants or less" |
-| Perda de participantes | Em média 31% da amostra inicial fica fora da análise final, nos estudos que informam a perda | p. 9 | "Seventy-eight studies provide data on subject attrition. Among these studies, an average of 31% of each initial sample is not included in final longitudinal analyses." |
-| Estudos que excluem quem se divorciou | 36 | p. 16 | "36 studies that deliberately exclude divorcing couples from final analyses" |
-| Só autorrelato | 77% dos estudos | p. 16 | "Eighty-nine studies (77%) gathered data solely through self-report measures." |
-| Só duas medições | 64 estudos (56%) | p. 16 | "in more than half of the studies (64, or 56%), marriages are assessed only two times" |
-| Acompanhamento de até 5 anos | 70 dos 115 estudos (61%) | p. 17 | "70 of the 115 studies (61%) follow marriages for 5 years or less" |
-| Esposas mais satisfeitas, casamentos mais estáveis | r = 0,42 (2 estudos) | Figura 1, esposas | ".42 marital satisfaction (2)" |
-| Mais satisfação, no casamento e no sexo, e casamento mais estável: do menor ao maior resultado | r de 0,06 a 0,42 | p. 20 | "aggregate rs for marital and sexual satisfaction range from .06 to .42" |
-| Mais comportamento negativo do marido ou da esposa, casamento menos estável | r = −0,37 (marido) e −0,34 (esposa), 2 estudos cada | Figura 1, casais | "-.34 W negative behavior (2) -.37 H negative behavior (2)" |
-| Mais comportamento negativo do casal, casamento menos estável | r = −0,17 (4 estudos) | Figura 1, casais | "-.17 couple negative behavior (4)" |
-| Mais comportamento positivo do marido, casamento mais estável | r = 0,46 (2 estudos) | Figura 1, casais | ".46 H positive behavior (2)" |
-| Mais comportamento negativo do marido, menos satisfação dele | r = −0,21 (5 estudos) | Figura 2, maridos | "-.21 H negative behavior (5)" |
-| Mais comportamento negativo da esposa, menos satisfação dela | r = −0,25 (6 estudos) | Figura 2, esposas | "-.25 W negative behavior (6)" |
-| Mais comportamento positivo do casal, mais satisfação do casal | r = 0,33 (4 estudos) | Figura 2, casais | ".33 couple positive behavior (4)" |
-| Mais estresse, casamento menos estável | r = −0,14 (3 estudos) | Figura 1, casais | "-.14 stress (3)" |
-| Mais estresse, esposa menos satisfeita | r = −0,21 (5 estudos) | Figura 2, esposas | "-.21 stress (5)" |
-| Esposas que tiveram infância infeliz, menos satisfeitas no casamento | r = −0,21 (4 estudos) | Figura 2, esposas | "-.21 unhappy childhood (4)" |
-| Atitudes mais parecidas entre os dois, casamento mais estável | r = 0,28 (3 estudos) | Figura 1, casais | ".28 attitude homogamy (3)" |
-| Esposas que casaram mais velhas, casamento mais estável | r = 0,16 (3 estudos) | Figura 1, esposas | ".16 age at marriage (3)" |
-| Esposas que moraram junto antes de casar, casamento menos estável | r = −0,12 (2 estudos) | Figura 1, esposas | "-.12 premarital cohabitation (2)" |
-| Maridos que moraram junto antes de casar, casamento menos estável | r = −0,14 (2 estudos) | Figura 1, maridos | "-.14 premarital cohabitation (2)" |
-| Comportamento negativo, os 14 estudos | Os efeitos variaram muito, mas mais comportamento negativo sempre previu casamento menos estável | p. 22 | "using all 14 longitudinal studies of negative interaction" |
+| O que a revisão juntou | 115 estudos que acompanharam casamentos ao longo do tempo, com mais de 45.000 casamentos | Resumo, p. 3 | "the methods and findings of 115 longitudinal studies—representing over 45,000 marriages—are summarized" |
+| Grupos de pessoas diferentes | Os autores estimam que os estudos usaram 68 grupos independentes de pessoas | p. 9 | "we estimate that 68 independent samples are represented in Table 2" |
+| Quem estava nesses grupos | Dos 68 grupos, 75% eram sobretudo de brancos de classe média, 17% representavam os casados do país e 8% vinham de populações negras e brancas | p. 9 | "Of the 68 samples, 8% specifically draw from Black and White populations and an additional 17% are nationally representative of married people. The remaining 75% of the samples are comprised primarily of middle-class Caucasians" |
+| Grupos sorteados no país inteiro | Só 18% dos 68 grupos foram recrutados por sorteio representativo do país | p. 9 | "Only 18% of the 68 samples were recruited through nationally representative random sampling." |
+| Estudos pequenos | Dos 112 estudos que informam o tamanho final, 33% têm 100 participantes ou menos | p. 9 | "of the 112 studies reporting final sample sizes, 33% have 100 participants or less" |
+| Perda de participantes | Nos estudos que informam a perda, em média 31% dos participantes iniciais ficam fora da análise final | p. 9 | "Seventy-eight studies provide data on subject attrition. Among these studies, an average of 31% of each initial sample is not included in final longitudinal analyses." |
+| Estudos que tiram quem se divorciou | 36 estudos excluem de propósito da análise final os casais que se divorciaram | p. 16 | "36 studies that deliberately exclude divorcing couples from final analyses" |
+| Dados só do que a pessoa conta | 77% dos estudos colheram dados apenas com questionários em que a própria pessoa responde | p. 16 | "Eighty-nine studies (77%) gathered data solely through self-report measures." |
+| Só duas medições | 64 estudos, 56%, avaliam os casamentos apenas duas vezes | p. 16 | "in more than half of the studies (64, or 56%), marriages are assessed only two times" |
+| Acompanhamento de até 5 anos | 70 dos 115 estudos, 61%, seguem os casamentos por 5 anos ou menos | p. 17 | "70 of the 115 studies (61%) follow marriages for 5 years or less" |
+| Satisfação da esposa e estabilidade | Esposas mais satisfeitas tiveram casamentos mais estáveis (r = 0,42; 2 estudos) | Figura 1, esposas | ".42 marital satisfaction (2)" |
+| Satisfação e estabilidade, todos os resultados | Mais satisfação, no casamento e no sexo, andou junto com casamento mais estável, numa ligação que os autores não consideram muito grande (r de 0,06 a 0,42) | p. 20 | "aggregate rs for marital and sexual satisfaction range from .06 to .42" |
+| Comportamento negativo de cada um e estabilidade | Quanto mais comportamento negativo do marido ou da esposa, menos estável o casamento (r = −0,37 no marido e −0,34 na esposa; 2 estudos cada) | Figura 1, casais | "-.34 W negative behavior (2) -.37 H negative behavior (2)" |
+| Comportamento negativo do casal e estabilidade | Quanto mais comportamento negativo do casal, menos estável o casamento (r = −0,17; 4 estudos) | Figura 1, casais | "-.17 couple negative behavior (4)" |
+| Comportamento positivo do marido e estabilidade | Quanto mais comportamento positivo do marido, mais estável o casamento (r = 0,46; 2 estudos) | Figura 1, casais | ".46 H positive behavior (2)" |
+| Comportamento negativo do marido e satisfação dele | Quanto mais comportamento negativo do marido, menos satisfeito ele ficou (r = −0,21; 5 estudos) | Figura 2, maridos | "-.21 H negative behavior (5)" |
+| Comportamento negativo da esposa e satisfação dela | Quanto mais comportamento negativo da esposa, menos satisfeita ela ficou (r = −0,25; 6 estudos) | Figura 2, esposas | "-.25 W negative behavior (6)" |
+| Comportamento positivo do casal e satisfação | Quanto mais comportamento positivo do casal, mais satisfeito o casal (r = 0,33; 4 estudos) | Figura 2, casais | ".33 couple positive behavior (4)" |
+| Estresse e estabilidade | Quanto mais estresse, menos estável o casamento (r = −0,14; 3 estudos) | Figura 1, casais | "-.14 stress (3)" |
+| Estresse e satisfação da esposa | Quanto mais estresse, menos satisfeita a esposa (r = −0,21) | Figura 2, esposas | "-.21 stress (5)" |
+| Infância infeliz e satisfação da esposa | Esposas que tiveram infância infeliz ficaram menos satisfeitas no casamento (r = −0,21; 4 estudos) | Figura 2, esposas | "-.21 unhappy childhood (4)" |
+| Atitudes parecidas e estabilidade | Quanto mais parecidas as atitudes dos dois, mais estável o casamento (r = 0,28; 3 estudos) | Figura 1, casais | ".28 attitude homogamy (3)" |
+| Idade da esposa ao casar e estabilidade | Esposas que casaram mais velhas tiveram casamentos mais estáveis (r = 0,16; 3 estudos) | Figura 1, esposas | ".16 age at marriage (3)" |
+| Morar junto antes de casar, esposas | Esposas que moraram junto antes de casar tiveram casamentos menos estáveis (r = −0,12; 2 estudos) | Figura 1, esposas | "-.12 premarital cohabitation (2)" |
+| Morar junto antes de casar, maridos | Maridos que moraram junto antes de casar tiveram casamentos menos estáveis (r = −0,14; 2 estudos) | Figura 1, maridos | "-.14 premarital cohabitation (2)" |
+| Comportamento negativo, os 14 estudos | Os resultados variaram muito em tamanho e direção, e os autores pedem cautela com as médias. Mesmo assim, sem exceção, mais comportamento negativo de maridos e esposas previu casamento menos estável | p. 22 | "using all 14 longitudinal studies of negative interaction" |
 
-Estabilidade é o casamento continuar, sem separação nem divórcio. O r mede a força da ligação: 0 é nenhuma, e quanto mais longe de 0, mais forte. As correlações das Figuras 1 e 2 têm sinal positivo quando a variável prevê mais estabilidade ou satisfação. O número entre parênteses é a quantidade de estudos agregados. A camada de texto do PDF é um OCR e embaralha parte das figuras: ficaram fora as estimativas cujo rótulo saiu ilegível (como as de neuroticismo), e as que entraram foram conferidas na imagem da página.
+Estabilidade é o casamento continuar, sem separação nem divórcio. O r mede a força da ligação: 0 é nenhuma, e quanto mais longe de 0, mais forte. As correlações das Figuras 1 e 2 têm sinal positivo quando a variável prevê mais estabilidade ou satisfação. O número entre parênteses é a quantidade de estudos agregados. A camada de texto do PDF é um OCR e embaralha parte das figuras: ficaram fora as estimativas cujo rótulo saiu ilegível (como as de neuroticismo), e as que entraram foram conferidas na imagem da página. Em "Estresse e satisfação da esposa", o Trecho vem do OCR, que lê 5 estudos; a imagem da Figura 2 mostra 2, e por isso a linha não diz quantos.
 
 ## Limitações
 

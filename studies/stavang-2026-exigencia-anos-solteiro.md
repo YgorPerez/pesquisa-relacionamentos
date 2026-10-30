@@ -30,34 +30,34 @@ Depois disseram quantos anos e meses passaram, somando a vida toda, em relaçõe
 
 ## Achados
 
-Os coeficientes b são do modelo de equações estruturais: quantos anos a mais ou a menos por unidade do fator latente de exigência, não por ponto da escala de 0 a 10. O artigo não diz em que unidade os fatores foram fixados.
-
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Responderam ao questionário | 1.182, em dezembro de 2023 | 2.1, p. 4 | "A total of 1182 respondents completed the survey (online, December 2023)" |
-| Amostra analisada | 1.136 (606 mulheres e 530 homens) | 2.1, p. 4 | "yielded a final analytic sample of 606 women and 530 men (N = 1136)" |
-| Idade | 18 a 60 anos, média de 39,1 | 2.1, p. 4 | "Participants were aged 18–60 years (M = 39.1, SD = 12)" |
-| Média das 16 exigências comparada à que se esperaria na população | acima, por cerca de um desvio-padrão: d = 1,28 nas mulheres, d = 0,82 nos homens | 3, p. 7 | "(women: Cohen's d = +1.28; men: Cohen's d = +0.82)" |
-| Quem exige, na média dos traços, o equivalente a 2 desvios-padrão acima do esperado na população | 36% das mulheres, 26% dos homens | 3, p. 7 | "36% of women and 26% of men set standards that would correspond to two standard deviations above average" |
-| Lealdade: aceitam parceiro abaixo da média | 2% das mulheres, 4% dos homens | 3, p. 7 | "Only 2% of women and 4% of men accepted a below-average partner in loyalty" |
-| Lealdade: exigem 8 a 10 | 62% das mulheres, 51% dos homens | 3, p. 7 | "On loyalty, 62% of women and 51% of men required their partner to score on the most upper end (8–10)" |
-| Inteligência: escolheram 5 de 10 como mínimo | 44% das mulheres, 48% dos homens | 3, p. 7 | "44% of women and 48% of men selected 5 out of 10 as their minimum standard for intelligence" |
-| Atratividade do rosto: exigem acima da média, menos os que aceitam abaixo | 12 pontos percentuais a mais nas mulheres, 37 nos homens | 3, p. 7 | "12% more required an above-average than a below-average partner (95% CI [6.0, 18.1]), as did 37% more among men" |
-| Atratividade do corpo, mulheres | 35% aceitam abaixo da média, 23% exigem acima | 4, p. 10 | "one below average (35%) than required an above-average partner (23%)" |
-| Altura mínima exigida pelas mulheres (mediana) | 170 cm, 9 cm abaixo da média dos homens noruegueses (179 cm) | 3, p. 7 | "was 170 cm (IQR 168–175), 9 cm below the Norwegian male average of 179 cm" |
-| Mulheres que exigem 1,80 m ou mais | 15% | 3, p. 7 | "Only 15% of women set a minimum at or above the male population mean (≥ 180 cm)" |
-| Altura mínima exigida pelos homens (mediana) | 155 cm, 11 cm abaixo da média das mulheres (166 cm) | 3, p. 7 | "was 155 cm (IQR 150–160), 11 cm below the female average of 166 cm" |
-| Mulheres: mais exigência geral e anos em relações com compromisso ou anos solteira | sem efeito: b = −0,18 (p = 0,70) e b = −0,27 (p = 0,56) | 3.2, p. 8 | "global pickiness for women did not predict years in committed relationships (b = − 0.18, p = .70) or years single (b = − 0.27, p = .56)" |
-| Mulheres: mais exigência geral, mais anos em relações sem compromisso | b = 0,40 (p = 0,036) | 3.2, p. 8 | "committed relationships (b = 0.40, p = .036)" |
-| Mulheres: mais exigência geral, mais relações sem compromisso e mais parceiros sexuais | b = 0,78 e b = 0,70 (p < 0,001) | 3.2, p. 8 | "number of uncommitted relationships (b = 0.78, p < .001) and sexual partners (b = 0.70, p < .001)" |
-| Homens: mais exigência geral, mais anos em relações com compromisso | b = 1,58 (p = 0,024) | 3.2, p. 8 | "For men, global pickiness predicted more years in committed relationships (b = 1.58, p = .024)" |
-| Homens: mais exigência geral, menos anos solteiro | b = −1,71 (p = 0,015) | 3.2, p. 8 | "fewer years spent single (b = − 1.71, p = .015)" |
-| Homens: mais exigência com a aparência, menos anos em relações com compromisso | b = −0,41 (p = 0,038) | 3.2, p. 8 | "For men, pickiness for physical attractiveness predicted fewer years in committed relationships (b = − 0.41, p = .038)" |
-| Homens: mais exigência com a aparência, menos relações com compromisso | b = −0,12 (p = 0,011) | 3.2, p. 8 | "fewer committed relationships (b = − 0.12, p = .011)" |
-| Homens: mais exigência com a aparência, mais anos solteiro | b = 0,41 (p = 0,041) | 3.2, p. 8 | "and more years single (b = 0.41, p = .041)" |
-| Exigência geral e relações sem compromisso que a pessoa queria que virassem namoro | b = 0,29 nas mulheres, b = 0,41 nos homens | 3.2, p. 9 | "for both women (b = 0.29, p = .001) and men (b = 0.41, p = .001)" |
-| Mulheres: exigência geral e estar solteira por se interessar por quem não quer compromisso | b = 0,18 (p = 0,039) | 3.2, p. 9 | "It also predicted women's reports of being single due to interest in partners unwilling to commit (b = 0.18, p = .039)" |
-| Exigência geral e dizer que tem dificuldade de atrair alguém | menos: b = −0,17 nas mulheres, b = −0,33 nos homens | 3.2, p. 9 | "pickiness predicted fewer reports of attraction difficulties for women (b = − 0.17, p = .038) and men (b = − 0.33, p = .005)" |
+| Quantos responderam | 1.182 pessoas completaram o questionário online, em dezembro de 2023 | 2.1, p. 4 | "A total of 1182 respondents completed the survey (online, December 2023)" |
+| Quantos entraram na conta | 1.136 pessoas: 606 mulheres e 530 homens | 2.1, p. 4 | "yielded a final analytic sample of 606 women and 530 men (N = 1136)" |
+| Idade | De 18 a 60 anos, com média de 39,1 | 2.1, p. 4 | "Participants were aged 18–60 years (M = 39.1, SD = 12)" |
+| Média das 16 exigências | Ficou acima do que se esperaria na população, por cerca de um desvio-padrão (d = 1,28 nas mulheres e 0,82 nos homens) | 3, p. 7 | "(women: Cohen's d = +1.28; men: Cohen's d = +0.82)" |
+| Quem exige muito acima da média | 36% das mulheres e 26% dos homens têm exigências que correspondem a dois desvios-padrão acima da média esperada | 3, p. 7 | "36% of women and 26% of men set standards that would correspond to two standard deviations above average" |
+| Lealdade abaixo da média | Só 2% das mulheres e 4% dos homens aceitaram um parceiro abaixo da média | 3, p. 7 | "Only 2% of women and 4% of men accepted a below-average partner in loyalty" |
+| Lealdade no topo da escala | 62% das mulheres e 51% dos homens exigiram nota de 8 a 10 | 3, p. 7 | "On loyalty, 62% of women and 51% of men required their partner to score on the most upper end (8–10)" |
+| Mínimo de inteligência | 44% das mulheres e 48% dos homens escolheram 5 de 10 como mínimo | 3, p. 7 | "44% of women and 48% of men selected 5 out of 10 as their minimum standard for intelligence" |
+| Beleza do rosto | Mais gente exigiu acima da média do que aceitou abaixo dela: a diferença foi de 12 pontos percentuais nas mulheres e de 37 nos homens | 3, p. 7 | "12% more required an above-average than a below-average partner (95% CI [6.0, 18.1]), as did 37% more among men" |
+| Beleza do corpo, mulheres | 35% aceitaram um parceiro abaixo da média e 23% exigiram acima dela | 4, p. 10 | "one below average (35%) than required an above-average partner (23%)" |
+| Altura mínima que as mulheres pedem | A mediana foi de 170 cm, 9 cm abaixo da média dos homens noruegueses, de 179 cm | 3, p. 7 | "was 170 cm (IQR 168–175), 9 cm below the Norwegian male average of 179 cm" |
+| Mulheres que pedem 1,80 m ou mais | Só 15% das mulheres puseram o mínimo em 180 cm ou mais, a média dos homens | 3, p. 7 | "Only 15% of women set a minimum at or above the male population mean (≥ 180 cm)" |
+| Altura mínima que os homens pedem | A mediana foi de 155 cm, 11 cm abaixo da média das mulheres, de 166 cm | 3, p. 7 | "was 155 cm (IQR 150–160), 11 cm below the female average of 166 cm" |
+| Exigência geral das mulheres e anos em relação séria ou solteira | Exigir mais não previu quantos anos elas passaram em relações com compromisso nem solteiras (b = −0,18, p = 0,70; b = −0,27, p = 0,56) | 3.2, p. 8 | "global pickiness for women did not predict years in committed relationships (b = − 0.18, p = .70) or years single (b = − 0.27, p = .56)" |
+| Exigência geral das mulheres e anos em relações sem compromisso | As que exigiam mais passaram mais anos em relações sem compromisso (b = 0,40; p = 0,036) | 3.2, p. 8 | "committed relationships (b = 0.40, p = .036)" |
+| Exigência geral das mulheres, relações sem compromisso e parceiros sexuais | As que exigiam mais tiveram mais relações sem compromisso e mais parceiros sexuais (b = 0,78 e b = 0,70; p < 0,001) | 3.2, p. 8 | "number of uncommitted relationships (b = 0.78, p < .001) and sexual partners (b = 0.70, p < .001)" |
+| Exigência geral dos homens e anos em relação com compromisso | Os que exigiam mais passaram mais anos em relações com compromisso (b = 1,58; p = 0,024) | 3.2, p. 8 | "For men, global pickiness predicted more years in committed relationships (b = 1.58, p = .024)" |
+| Exigência geral dos homens e anos solteiro | Os que exigiam mais passaram menos anos solteiros (b = −1,71; p = 0,015) | 3.2, p. 8 | "fewer years spent single (b = − 1.71, p = .015)" |
+| Exigência dos homens com a aparência e anos em relação com compromisso | Os que exigiam mais beleza passaram menos anos em relações com compromisso (b = −0,41; p = 0,038) | 3.2, p. 8 | "For men, pickiness for physical attractiveness predicted fewer years in committed relationships (b = − 0.41, p = .038)" |
+| Exigência dos homens com a aparência e relações com compromisso | Os que exigiam mais beleza tiveram menos relações com compromisso (b = −0,12; p = 0,011) | 3.2, p. 8 | "fewer committed relationships (b = − 0.12, p = .011)" |
+| Exigência dos homens com a aparência e anos solteiro | Os que exigiam mais beleza passaram mais anos solteiros (b = 0,41; p = 0,041) | 3.2, p. 8 | "and more years single (b = 0.41, p = .041)" |
+| Exigência geral e relações que não viraram compromisso | Quem exigia mais relatou mais relações sem compromisso que gostaria que tivessem virado compromisso (b = 0,29 nas mulheres e 0,41 nos homens) | 3.2, p. 9 | "for both women (b = 0.29, p = .001) and men (b = 0.41, p = .001)" |
+| Exigência geral das mulheres e interesse em quem não quer compromisso | As que exigiam mais disseram mais vezes que estavam solteiras por se interessar por quem não quer compromisso (b = 0,18; p = 0,039) | 3.2, p. 9 | "It also predicted women's reports of being single due to interest in partners unwilling to commit (b = 0.18, p = .039)" |
+| Exigência geral e dificuldade de atrair alguém | Quem exigia mais disse menos vezes que tem dificuldade de atrair alguém (b = −0,17 nas mulheres e −0,33 nos homens) | 3.2, p. 9 | "pickiness predicted fewer reports of attraction difficulties for women (b = − 0.17, p = .038) and men (b = − 0.33, p = .005)" |
+
+"Exigência geral" é o que há em comum entre todas as exigências da pessoa, calculado pelo estudo, e não um ponto da escala de 0 a 10. O b é o coeficiente da conta: quanto o resultado (anos ou quantidade de relações, por exemplo) sobe ou desce para cada unidade dessa exigência geral. O artigo não diz em que unidade ela foi fixada, então não dá para ler o b como "anos por ponto". O p indica quão fácil seria um resultado assim aparecer só por acaso: quanto menor, mais difícil. O d mede o tamanho de uma diferença em desvios-padrão: 0 é nenhuma, e quanto mais longe de 0, maior. Os dados vêm de um questionário só, então "previu" quer dizer que as coisas andam juntas, não que uma causa a outra.
 
 ## Limitações
 

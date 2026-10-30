@@ -29,26 +29,26 @@ Na quinta visita ao domicílio, a PNAD Contínua pergunta se cada morador de 14 
 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
-| Definição de trabalho voluntário | Sem remuneração, por pelo menos uma hora na semana, para terceiros | Informativo, p. 11 | "realizado por pelo menos uma hora na semana de referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros" | |
-| Pessoas de 14 anos ou mais que fizeram trabalho voluntário na semana pesquisada, em 2022, e a parcela que elas são dessa população | 7,3 milhões; taxa de 4,2% | Informativo, p. 11 | "Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade realizaram trabalho voluntário na semana de referência da pesquisa, o que corresponde a uma taxa de realização de 4,2%" | |
-| Parcela de cada sexo, de 14 anos ou mais, que fez trabalho voluntário | Mulheres 4,9%, homens 3,5% | Informativo, p. 12, gráfico por características | "Sexo Homem 3,5 Mulher 4,9" | |
-| Mulheres entre os voluntários | 60,3% | SIDRA 7080, variável 10238, Mulheres, 2022 | "2022":"60.3" | |
-| Homens entre os voluntários | 39,7% | SIDRA 7080, variável 10238, Homens, 2022 | "2022":"39.7" | |
-| Parcela das mulheres de 25 a 49 anos que fez trabalho voluntário | 5,3% | SIDRA 7096, Mulheres, 25 a 49 anos, 2022 | "2022":"5.3" | |
-| Parcela dos homens de 25 a 49 anos que fez trabalho voluntário | 3,8% | SIDRA 7096, Homens, 25 a 49 anos, 2022 | "2022":"3.8" | |
-| Parcela das mulheres de 14 a 24 anos que fez trabalho voluntário | 2,9% | SIDRA 7096, Mulheres, 14 a 24 anos, 2022 | "2022":"2.9" | |
-| Parcela dos homens de 14 a 24 anos que fez trabalho voluntário | 2,1% | SIDRA 7096, Homens, 14 a 24 anos, 2022 | "2022":"2.1" | |
-| Voluntárias de 25 a 49 anos | 2.188 mil | SIDRA 7081, variável 10236, Mulheres, 25 a 49 anos, 2022 | "2022":"2188" | |
-| Voluntários de 25 a 49 anos, os dois sexos | 3.694 mil | SIDRA 7081, variável 10236, Total, 25 a 49 anos, 2022 | "2022":"3694" | |
-| Mulheres entre os voluntários de 25 a 49 anos | 59,2% | SIDRA 7081: 2.188 mil mulheres de 3.694 mil voluntários (linhas acima) | "2022":"2188" | `scripts/calculations/ibge-2022-pnad-voluntariado.ts 7081 25 a 49 anos` |
-| Voluntariado por empresa, organização ou instituição | 86,4% dos voluntários | Informativo, p. 11 | "Em 2022, 86,4% das pessoas que realizaram trabalho voluntário o fizeram por meio de empresa, organização ou instituição" | |
-| Voluntárias por empresa, organização ou instituição | 3.828 mil | SIDRA 7085, variável 10236, Mulheres, Empresa, organização ou instituição, 2022 | "2022":"3828" | |
-| Voluntários por empresa, organização ou instituição, os dois sexos | 6.291 mil | SIDRA 7085, variável 10236, Total, Empresa, organização ou instituição, 2022 | "2022":"6291" | |
-| Mulheres entre os voluntários de organização | 60,8% | SIDRA 7085: 3.828 mil mulheres de 6.291 mil (linhas acima) | "2022":"3828" | `scripts/calculations/ibge-2022-pnad-voluntariado.ts 7085 Empresa, organização ou instituição` |
-| Voluntários que atuaram por congregação religiosa, sindicato, condomínio, partido, escola, hospital ou asilo (a mesma pessoa pode atuar em mais de um lugar) | 76,6% | Informativo, p. 11 | "76,6% o fizeram por meio de congregação religiosa, sindicato, condomínio" | |
-| Voluntários que atuaram por associação de moradores ou esportiva, ONG, grupo de apoio ou outra organização | 12,6% | Informativo, p. 12 | "12,6% o realizaram por meio de associação de moradores, associação esportiva, ONG, grupo de apoio ou outra organização" | |
-| Com que frequência os voluntários atuaram | 42,3% quatro ou mais vezes por mês | Informativo, p. 12 | "42,3% o fizeram quatro ou mais vezes por mês" | |
-| Horas por semana dedicadas pelos voluntários | 6,6 em média | Informativo, p. 12 | "ficou estável em 6,6 horas semanais, em média" | |
+| O que conta como trabalho voluntário | Trabalho sem nenhum pagamento em dinheiro ou benefícios, por pelo menos uma hora na semana pesquisada, para produzir bens ou serviços para outras pessoas | Informativo, p. 11 | "realizado por pelo menos uma hora na semana de referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros" | |
+| Quantos fizeram trabalho voluntário | Em 2022, 7,3 milhões de pessoas de 14 anos ou mais fizeram trabalho voluntário na semana pesquisada, 4,2% das pessoas dessa idade | Informativo, p. 11 | "Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade realizaram trabalho voluntário na semana de referência da pesquisa, o que corresponde a uma taxa de realização de 4,2%" | |
+| Quantos fizeram, por sexo, de 14 anos ou mais | Fizeram trabalho voluntário 4,9% das mulheres e 3,5% dos homens | Informativo, p. 12, gráfico por características | "Sexo Homem 3,5 Mulher 4,9" | |
+| Mulheres entre os voluntários | 60,3% dos voluntários eram mulheres | SIDRA 7080, variável 10238, Mulheres, 2022 | "2022":"60.3" | |
+| Homens entre os voluntários | 39,7% dos voluntários eram homens | SIDRA 7080, variável 10238, Homens, 2022 | "2022":"39.7" | |
+| Mulheres de 25 a 49 anos | 5,3% das mulheres dessa idade fizeram trabalho voluntário | SIDRA 7096, Mulheres, 25 a 49 anos, 2022 | "2022":"5.3" | |
+| Homens de 25 a 49 anos | 3,8% dos homens dessa idade fizeram trabalho voluntário | SIDRA 7096, Homens, 25 a 49 anos, 2022 | "2022":"3.8" | |
+| Mulheres de 14 a 24 anos | 2,9% das mulheres dessa idade fizeram trabalho voluntário | SIDRA 7096, Mulheres, 14 a 24 anos, 2022 | "2022":"2.9" | |
+| Homens de 14 a 24 anos | 2,1% dos homens dessa idade fizeram trabalho voluntário | SIDRA 7096, Homens, 14 a 24 anos, 2022 | "2022":"2.1" | |
+| Voluntárias de 25 a 49 anos | 2.188 mil mulheres dessa idade fizeram trabalho voluntário | SIDRA 7081, variável 10236, Mulheres, 25 a 49 anos, 2022 | "2022":"2188" | |
+| Voluntários de 25 a 49 anos, os dois sexos | 3.694 mil pessoas dessa idade fizeram trabalho voluntário | SIDRA 7081, variável 10236, Total, 25 a 49 anos, 2022 | "2022":"3694" | |
+| Mulheres entre os voluntários de 25 a 49 anos | 59,2% dos voluntários dessa idade eram mulheres | SIDRA 7081: 2.188 mil mulheres de 3.694 mil voluntários (linhas acima) | "2022":"2188" | `scripts/calculations/ibge-2022-pnad-voluntariado.ts 7081 25 a 49 anos` |
+| Voluntariado por meio de uma organização | 86,4% dos voluntários atuaram por meio de empresa, organização ou instituição | Informativo, p. 11 | "Em 2022, 86,4% das pessoas que realizaram trabalho voluntário o fizeram por meio de empresa, organização ou instituição" | |
+| Voluntárias por meio de uma organização | 3.828 mil mulheres atuaram por meio de empresa, organização ou instituição | SIDRA 7085, variável 10236, Mulheres, Empresa, organização ou instituição, 2022 | "2022":"3828" | |
+| Voluntários por meio de uma organização, os dois sexos | 6.291 mil pessoas atuaram por meio de empresa, organização ou instituição | SIDRA 7085, variável 10236, Total, Empresa, organização ou instituição, 2022 | "2022":"6291" | |
+| Mulheres entre os voluntários de organização | 60,8% de quem atuou por meio de uma organização eram mulheres | SIDRA 7085: 3.828 mil mulheres de 6.291 mil (linhas acima) | "2022":"3828" | `scripts/calculations/ibge-2022-pnad-voluntariado.ts 7085 Empresa, organização ou instituição` |
+| Congregação religiosa, sindicato, condomínio, partido, escola, hospital ou asilo | 76,6% dos voluntários atuaram por meio de um desses lugares; a mesma pessoa pode atuar em mais de um | Informativo, p. 11 | "76,6% o fizeram por meio de congregação religiosa, sindicato, condomínio" | |
+| Associação de moradores ou esportiva, ONG, grupo de apoio ou outra organização | 12,6% dos voluntários atuaram por meio de um desses lugares; a mesma pessoa pode atuar em mais de um | Informativo, p. 12 | "12,6% o realizaram por meio de associação de moradores, associação esportiva, ONG, grupo de apoio ou outra organização" | |
+| Com que frequência os voluntários atuaram | 42,3% dos voluntários atuaram quatro ou mais vezes por mês | Informativo, p. 12 | "42,3% o fizeram quatro ou mais vezes por mês" | |
+| Horas por semana dos voluntários | Os voluntários dedicaram em média 6,6 horas por semana | Informativo, p. 12 | "ficou estável em 6,6 horas semanais, em média" | |
 
 Os trechos do SIDRA são a célula da resposta da API. Fonte local: `sources/ibge-2022-pnad-voluntariado.txt`, com o texto das páginas 1, 11 e 12 do informativo e as quatro respostas do SIDRA, cada uma sob a URL de onde saiu.
 

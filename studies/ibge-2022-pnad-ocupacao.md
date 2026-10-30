@@ -30,15 +30,15 @@ Inquérito domiciliar trimestral que pergunta a cada morador de 14 anos ou mais 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Código de diretores e gerentes na classificação de ocupações da pesquisa; é o primeiro grupo que o Grupo possível conta como escritório | Grupamento 1 | Dicionário de variáveis, VD4011 | "1	Diretores e gerentes" |
-| Código de profissionais das ciências e intelectuais na mesma classificação | Grupamento 2 | Dicionário de variáveis, VD4011 | "2	Profissionais das ciências e intelectuais" |
-| Código de técnicos e profissionais de nível médio na mesma classificação | Grupamento 3 | Dicionário de variáveis, VD4011 | "3	Técnicos e profissionais de nível médio" |
-| Código dos trabalhadores de apoio administrativo na mesma classificação | Grupamento 4 | Dicionário de variáveis, VD4011 | "4	Trabalhadores de apoio administrativo" |
-| Pessoas de 14 anos ou mais com trabalho no Brasil, 3º trimestre de 2022 | 97.435 mil | SIDRA 5435, variável 4090, Total, 3º tri 2022 | {"202203":"97435"} |
-| Dessas pessoas, as que trabalhavam como diretores e gerentes | 3.444 mil | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"3444"} |
-| As que trabalhavam como profissionais das ciências e intelectuais | 11.658 mil | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"11658"} |
-| As que trabalhavam como técnicos e profissionais de nível médio | 8.104 mil | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"8104"} |
-| As que trabalhavam em apoio administrativo | 8.016 mil | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"8016"} |
+| Código de diretores e gerentes | Na classificação de ocupações da pesquisa, são o grupamento 1, o primeiro grupo que o Grupo possível conta como escritório | Dicionário de variáveis, VD4011 | "1	Diretores e gerentes" |
+| Código de profissionais das ciências e intelectuais | Na mesma classificação, são o grupamento 2 | Dicionário de variáveis, VD4011 | "2	Profissionais das ciências e intelectuais" |
+| Código de técnicos e profissionais de nível médio | Na mesma classificação, são o grupamento 3 | Dicionário de variáveis, VD4011 | "3	Técnicos e profissionais de nível médio" |
+| Código dos trabalhadores de apoio administrativo | Na mesma classificação, são o grupamento 4 | Dicionário de variáveis, VD4011 | "4	Trabalhadores de apoio administrativo" |
+| Pessoas de 14 anos ou mais com trabalho no Brasil, 3º trimestre de 2022 | 97.435 mil pessoas tinham trabalho | SIDRA 5435, variável 4090, Total, 3º tri 2022 | {"202203":"97435"} |
+| Diretores e gerentes | 3.444 mil dessas pessoas tinham esse trabalho principal | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"3444"} |
+| Profissionais das ciências e intelectuais | 11.658 mil dessas pessoas tinham esse trabalho principal | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"11658"} |
+| Técnicos e profissionais de nível médio | 8.104 mil dessas pessoas tinham esse trabalho principal | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"8104"} |
+| Trabalhadores de apoio administrativo | 8.016 mil dessas pessoas tinham esse trabalho principal | SIDRA 5435, variável 4090, 3º tri 2022 | {"202203":"8016"} |
 
 O pipeline do Grupo possível soma os pesos do microdado por grupamento e reproduz cada um dos 11 valores da tabela 5435 e o total, no milhar publicado; se um não bate, ele não escreve o arquivo.
 
