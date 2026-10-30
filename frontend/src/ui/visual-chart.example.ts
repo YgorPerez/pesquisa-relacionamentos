@@ -14,7 +14,9 @@ const study = (
   number: {
     text,
     own: null,
-    sources: [{ n: Number(key) + 1, anchor: `ficha-${key}`, title: label }],
+    sources: [
+      { n: Number.parseInt(key) + 1, anchor: `ficha-${key}`, title: label },
+    ],
   },
   country: null,
   year: null,
@@ -60,6 +62,36 @@ export const DOTS: ChartView = {
   ],
   ownLines: [],
   sources: [],
+}
+
+const country = (slug: string, name: string) => ({
+  country: { slug, name },
+  brazil: slug === 'brasil',
+})
+
+/** A Study of 50 countries as its average, with the spread from Ghana to
+ * Poland and Brazil inside it, next to a Study of one country. */
+export const RANGE: ChartView = {
+  ...DOTS,
+  domId: 'visual-exemplo-faixa',
+  points: [
+    study('0', 'Rosenfeld (2019)', 39, '39%', country('eua', 'EUA')),
+    study('1', 'Kowal et al. (2025)', 16, '16%', {
+      detail: 'Média de 50 países, todas as pessoas com parceiro',
+      range: [
+        study('1-0', 'Gana', 7, '7%', country('gana', 'Gana')),
+        study(
+          '1-1',
+          'Brasil, conta nossa (23 de 119 pessoas, sem peso)',
+          19.3,
+          '19,3%',
+          country('brasil', 'Brasil'),
+        ),
+        study('1-2', 'Polônia', 33, '33%', country('polonia', 'Polônia')),
+      ],
+    }),
+  ],
+  definitions: [],
 }
 
 /** Two bars, the second highlighted and our own calculation. */

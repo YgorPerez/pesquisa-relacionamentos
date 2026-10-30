@@ -110,6 +110,16 @@ export const TimelineVisual = Schema.Struct({
   note: Schema.optional(Text),
 })
 
+/** How a Study's number spreads across the places it pooled (#472): Kowal's
+ * average of 50 countries, from Ghana's 7% to Poland's 33%, with Brazil
+ * inside. The chart draws a line from the smallest point to the largest,
+ * through the row's own value, in the row's unit. */
+const RangePoint = Schema.Struct({
+  label: Text,
+  ...sourced,
+  country: point.country,
+})
+
 export const StudyTableVisual = Schema.Struct({
   id: Slug,
   kind: Schema.Literal('study-table'),
@@ -121,6 +131,7 @@ export const StudyTableVisual = Schema.Struct({
       value: Schema.Finite,
       unit: Text,
       ...point,
+      range: Schema.optional(Schema.Array(RangePoint)),
     }),
   ),
   definitions: Schema.optional(Definitions),
@@ -550,9 +561,23 @@ export function visualProblems(
         case 'study-table': {
           if (visual.rows.length < 2)
             err('a table of Studies has two or more rows', `${at}.rows`)
-          visual.rows.forEach((row, j) =>
-            fromFactSheet(row.value, row.fact_sheet, `${at}.rows.${j}.value`),
-          )
+          visual.rows.forEach((row, j) => {
+            fromFactSheet(row.value, row.fact_sheet, `${at}.rows.${j}.value`)
+            if (!row.range) return
+            const field = `${at}.rows.${j}.range`
+            if (row.range.length < 2)
+              return err('a range has two or more points', field)
+            row.range.forEach((p, k) =>
+              sourcedNumber(p, row.unit, `${field}.${k}`),
+            )
+            const values = row.range.map((p) => p.value)
+            const [low, high] = [Math.min(...values), Math.max(...values)]
+            if (row.value < low || row.value > high)
+              err(
+                `the value ${row.value} is outside its range, from ${low} to ${high}`,
+                `${at}.rows.${j}.value`,
+              )
+          })
           break
         }
         case 'diagram': {

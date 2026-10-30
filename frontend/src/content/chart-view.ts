@@ -55,6 +55,10 @@ export interface ChartPoint {
   readonly brazil: boolean
   /** Who the Fact sheets behind the number cover, for the "você" mark. */
   readonly covers: ReadonlyArray<Coverage>
+  /** A dot row's spread across the places its Study pooled (#472): a line
+   * from the smallest of these points to the largest, each one tappable,
+   * with the row's year and definition. */
+  readonly range?: ReadonlyArray<ChartPoint>
 }
 
 export interface ChartView {
@@ -161,8 +165,14 @@ const ticksOf = (largest: number, max: number | undefined, unit: string) => {
  * country's survey: a ring on every Brazilian point would mark nothing, so
  * it stays only when the chart also has a point of another country. */
 function ringApart(points: ChartPoint[]): ChartPoint[] {
-  const apart = points.some((p) => p.country && !p.brazil)
-  return apart ? points : points.map((p) => ({ ...p, brazil: false }))
+  const apart = points
+    .flatMap((p) => [p, ...(p.range ?? [])])
+    .some((p) => p.country && !p.brazil)
+  if (apart) return points
+  const plain = (p: ChartPoint) => ({ ...p, brazil: false })
+  return points.map((p) =>
+    p.range ? { ...plain(p), range: p.range.map(plain) } : plain(p),
+  )
 }
 
 /** A tick per year, one every five past 30 years; only the years of the
@@ -234,14 +244,21 @@ export function chartView(
       kind: 'dots',
       ...common,
       ticks: ticksOf(
-        Math.max(...visual.rows.map((r) => r.value)),
+        Math.max(
+          ...visual.rows.flatMap((r) => [
+            r.value,
+            ...(r.range ?? []).map((p) => p.value),
+          ]),
+        ),
         undefined,
         unit,
       ),
       points,
       definitions: definitions.map(({ id, legend }) => ({ id, legend })),
       ownLines: [],
-      sources: allSources(points.map((p) => p.number)),
+      sources: allSources(
+        points.flatMap((p) => [p, ...(p.range ?? [])]).map((p) => p.number),
+      ),
     }
   }
   if (visual.kind === 'timeline') {
@@ -294,6 +311,19 @@ function studyPoints(
   return visual.rows.flatMap((row, i): ChartPoint[] => {
     const study = cite(row.fact_sheet)
     if (!study) return []
+    const facts = pointFacts(row, library, definitions)
+    // A Study's range across countries (#472), in the row's unit.
+    const range = row.range?.map((p, k): ChartPoint => ({
+      key: `${i}-${k}`,
+      label: p.label,
+      detail: row.measure,
+      value: p.value,
+      number: numberView(p, row.unit, cite),
+      highlight: false,
+      ...pointFacts(p, library, definitions),
+      year: facts.year,
+      definition: facts.definition,
+    }))
     return [
       {
         key: `${i}`,
@@ -303,7 +333,8 @@ function studyPoints(
         value: row.value,
         number: numberView(row, row.unit, cite),
         highlight: false,
-        ...pointFacts(row, library, definitions),
+        ...facts,
+        ...(range && { range }),
       },
     ]
   })
@@ -365,7 +396,9 @@ export function chartCountries(
   charts: ReadonlyArray<GuideChart>,
 ): ChartCountry[] {
   const found = new Map<string, ChartCountry>()
-  for (const point of charts.flatMap(pointsOf))
+  for (const point of charts
+    .flatMap(pointsOf)
+    .flatMap((p) => [p, ...(p.range ?? [])]))
     if (point.country) found.set(point.country.slug, point.country)
   return [...found.values()].sort((a, b) =>
     a.slug === BRAZIL

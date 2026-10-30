@@ -148,6 +148,15 @@ export function VisualChart({
             {chart.kind === 'line' && `${p.year} · `}
             {p.label}
             {p.detail && `, ${p.detail}`}: {p.number.text}
+            {p.range && (
+              <ul>
+                {p.range.map((q) => (
+                  <li key={q.key}>
+                    {q.label}: {q.number.text}
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>

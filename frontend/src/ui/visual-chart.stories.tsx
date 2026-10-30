@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DefinitionGlyph } from './definition-glyph'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS, LINE, LINE_MIXED } from './visual-chart.example'
+import { BARS, DOTS, LINE, LINE_MIXED, RANGE } from './visual-chart.example'
 import VisualChartPlot from './visual-chart-plot'
 import { VisualDetail } from './visual-detail'
 
@@ -66,6 +66,16 @@ export const LineTapDetail: Story = {
       box.getByRole('link', { name: /^Ficha \d: / }),
     ).toBeInTheDocument()
   },
+}
+
+/** A Study of 50 countries: its average on a line from Ghana to Poland,
+ * Brazil ringed inside it. */
+export const Range: Story = { args: { chart: RANGE } }
+
+/** `?pais=gana`: the Study whose range has Ghana lit, the range's other
+ * countries and the other Studies dimmed. */
+export const RangeCountryChosen: Story = {
+  args: { chart: RANGE, country: 'gana' },
 }
 
 /** `?pais=eua`: the United States lit, the others dimmed. */

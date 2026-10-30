@@ -333,3 +333,58 @@ it('puts a time line of mixed units on the year axis alone, without a value scal
   expect(view?.ticks).toEqual([])
   expect(view?.points.map((p) => p.number.text)).toEqual(['0,1 ponto', '18%'])
 })
+
+it("draws a Study's spread across countries as points of its row, which the chips list", () => {
+  const visual = table(['costa-2018-satisfacao', 'silva-2020-apps-brasil'], {
+    definitions: [{ id: 'todos', legend: 'todos os casais' }],
+  } as Partial<Visual>)
+  if (visual.kind !== 'study-table') throw new Error('a table')
+  const at = (label: string, value: number, country: string) => ({
+    label,
+    value,
+    fact_sheet: 'silva-2020-apps-brasil',
+    country,
+  })
+  const view = chartView(
+    {
+      ...visual,
+      rows: [
+        { ...visual.rows[0]!, definition: 'todos' },
+        {
+          ...visual.rows[1]!,
+          year: 2020,
+          definition: 'todos',
+          range: [
+            at('Gana', 7, 'Gana'),
+            at('Brasil, conta nossa', 19.3, 'Brasil'),
+            at('Polônia', 33, 'Polônia'),
+          ],
+        },
+      ],
+    },
+    library(),
+    cite,
+    'tema',
+  )
+  expect(view?.points[0]?.range).toBeUndefined()
+  expect(view?.points[1]?.range).toMatchObject([
+    { label: 'Gana', number: { text: '7%' }, country: { slug: 'gana' } },
+    {
+      label: 'Brasil, conta nossa',
+      value: 19.3,
+      number: { text: '19,3%' },
+      country: { slug: 'brasil' },
+      brazil: true,
+      // What the row measures: its year and its definition.
+      year: 2020,
+      definition: 0,
+    },
+    { label: 'Polônia', country: { slug: 'polonia' }, brazil: false },
+  ])
+  expect(chartCountries([view!]).map((c) => c.slug)).toEqual([
+    'brasil',
+    'eua',
+    'gana',
+    'polonia',
+  ])
+})

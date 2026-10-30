@@ -12,7 +12,9 @@ import {
   dot,
   hexagon,
   lineY,
+  link,
   text,
+  tickX,
   type ChartFocusStrategy,
   type ChartMark,
 } from '@tanstack/charts'
@@ -31,6 +33,7 @@ import {
   withOverlay,
   type OverlayMark,
 } from './chart-overlay'
+import { CHART_COPY } from './visual-chart.copy'
 
 const INK = 'var(--color-tinta)'
 const PAPER = 'var(--color-folha)'
@@ -53,6 +56,8 @@ const LAYOUT = {
 /** Letters per line of a bar's label (13px) and of a measure (12px), which
  * fit a 350px phone. */
 const LABEL_LINE = 40
+/** Where a range's words go, under its line. */
+const RANGE_WORDS = 19
 const MEASURE_LINE = 56
 const DIMMED = 0.22
 /** The value after the mark (14px, bold): room for the longest at the
@@ -90,13 +95,16 @@ function valueRoom(chart: ChartView, dx: number) {
   const plot = INITIAL_WIDTH - 12 - VALUE_ROOM
   return Math.max(
     VALUE_ROOM,
-    ...chart.points.map((p) =>
-      Math.ceil(
-        dx +
-          p.number.text.length * VALUE_LETTER -
-          (1 - p.value / top) * plot,
-      ),
-    ),
+    ...chart.points.map((p) => {
+      // A row with a range writes "média N%" after the range's top (#472).
+      const at = Math.max(p.value, ...(p.range ?? []).map((q) => q.value))
+      const written = p.range
+        ? CHART_COPY.rangeValue(p.number.text)
+        : p.number.text
+      return Math.ceil(
+        dx + written.length * VALUE_LETTER - (1 - at / top) * plot,
+      )
+    }),
   )
 }
 
@@ -113,24 +121,108 @@ interface Row extends ChartPoint {
   readonly dimmed: boolean
   readonly you: boolean
   readonly own: boolean
+  /** The points of its range (#472), on its own line. */
+  readonly spread: ReadonlyArray<SpreadRow>
 }
 
+/** A point of a row's range: a tick on the row's line (`at`). */
+interface SpreadRow extends Row {
+  readonly at: string
+}
+
+const of = (p: ChartPoint, country: string | null) =>
+  p.country?.slug === country
+
 /** The point's state on the chart: the chosen country lights its points
- * and dims the others, on a chart that has it. */
+ * and dims the others, on a chart that has it. A row whose range has the
+ * country stays lit, and so does that point of its range. */
 function rowsOf(
   chart: ChartView,
   country: string | null,
   profile: Profile | null,
 ): Row[] {
   const lit =
-    country !== null && chart.points.some((p) => p.country?.slug === country)
-  return chart.points.map((p) => ({
+    country !== null &&
+    chart.points.some(
+      (p) => of(p, country) || p.range?.some((q) => of(q, country)),
+    )
+  const base = (p: ChartPoint, dimmed: boolean) => ({
     ...p,
-    dimmed: lit && p.country?.slug !== country,
+    dimmed,
     you:
       p.covers.length > 0 && appliesToYou(profile, p.covers)?.covered === true,
     own: p.number.own !== null,
-  }))
+  })
+  return chart.points.map((p) => {
+    const range = p.range ?? []
+    return {
+      ...base(p, lit && !of(p, country) && !range.some((q) => of(q, country))),
+      spread: range.map((q) => ({
+        ...base(q, lit && !of(q, country)),
+        // The row's "você" tag is enough.
+        you: false,
+        spread: [],
+        at: p.key,
+      })),
+    }
+  })
+}
+
+/** The right end of a row's drawing: its mark, or its range's top. */
+const end = (r: Row) => Math.max(r.value, ...r.spread.map((q) => q.value))
+
+/** The words under a row with a range: each point's country (or label) and
+ * value, in order. */
+const spreadWords = (r: Row) =>
+  r.spread.length === 0
+    ? null
+    : r.spread
+        .map((q) => `${q.country?.name ?? q.label} ${q.number.text}`)
+        .join(', ')
+
+/** A row's range: a line from its smallest point to its largest, through
+ * the row's dot, and a tick on each point, which takes the tap like a
+ * dot. */
+function rangeMarks(rows: Row[]) {
+  const ranged = rows.filter((r) => r.spread.length > 0)
+  if (ranged.length === 0) return []
+  const ticks = ranged.flatMap((r) => r.spread)
+  // A tick's opacity is one number per mark: one mark lit, one dimmed.
+  const tickMarks = [false, true].flatMap((dimmed) => {
+    const these = ticks.filter((q) => q.dimmed === dimmed)
+    return these.length === 0
+      ? []
+      : [
+          tickX(these, {
+            id: `marca-faixa-${dimmed ? 'apagada' : 'acesa'}`,
+            x: 'value',
+            y: (q) => q.at,
+            key: 'key',
+            // A group each: on a row's line, the tap takes the nearest
+            // tick or dot, not the first one drawn (`focusNearestY`).
+            z: 'key',
+            stroke: INK,
+            strokeWidth: 2.5,
+            strokeOpacity: dimmed ? DIMMED : 1,
+            length: 16,
+          }),
+        ]
+  })
+  return [
+    link(ranged, {
+      id: 'faixa',
+      x1: (r) => Math.min(...r.spread.map((q) => q.value)),
+      x2: end,
+      y1: 'key',
+      y2: 'key',
+      key: (r) => `faixa-${r.key}`,
+      stroke: INK,
+      strokeWidth: 2,
+      strokeOpacity: (r) => (r.dimmed ? DIMMED : 1),
+      lineCap: 'butt',
+    }),
+    ...tickMarks,
+  ]
 }
 
 /** Only the bars and dots take the focus and the tap: the label, measure
@@ -206,7 +298,10 @@ function overlayMarks(
   rows: Row[],
   valueAbove?: number,
 ): OverlayMark[] {
-  const byKey = new Map(rows.map((r) => [r.key, r]))
+  // A range's ticks (#472) are marks of their own, keyed by their point.
+  const byKey = new Map(
+    rows.flatMap((r) => [r, ...r.spread]).map((r) => [r.key, r]),
+  )
   const seen = new Set<string>()
   const marks: OverlayMark[] = []
   for (const point of points) {
@@ -223,6 +318,7 @@ function overlayMarks(
       highlight: found.highlight,
       brazil: found.brazil,
       you: found.you,
+      tick: point.markId.startsWith('marca-faixa'),
       ...(valueAbove === undefined ? {} : { valueAbove }),
     })
   }
@@ -425,6 +521,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     const words = rows.map((r) => ({ ...r }))
     return defineChart({
       marks: [
+        ...rangeMarks(rows),
         ...pointMarks(chart, rows, hatch),
         ...layout.label.map((dy, line) =>
           text(words, {
@@ -455,11 +552,26 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
           }),
         ),
         text(words, {
+          id: 'faixa-texto',
+          x: () => 0,
+          y: 'key',
+          key: (r) => `faixa-texto-${r.key}`,
+          text: spreadWords,
+          anchor: 'start',
+          dy: RANGE_WORDS,
+          fontSize: 12,
+          fill: tone,
+        }),
+        text(words, {
           id: 'valor',
-          x: 'value',
+          // After the range's top, when the row has one: the dot is inside.
+          x: end,
           y: 'key',
           key: (r) => `valor-${r.key}`,
-          text: (r) => r.number.text,
+          text: (r) =>
+            r.spread.length > 0
+              ? CHART_COPY.rangeValue(r.number.text)
+              : r.number.text,
           anchor: 'start',
           dx: valueDx,
           fontSize: 14,
