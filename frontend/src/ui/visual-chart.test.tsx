@@ -248,6 +248,43 @@ it("draws a Study's spread across countries, with Brazil ringed inside it", () =
   expect(valueList(html).textContent).toContain('Polônia: 33%')
 })
 
+it("keeps a Study's average clear of Brazil's ring, and its countries' words a row's gap from the next title", () => {
+  const next = { ...RANGE.points[0]!, key: '2', label: 'Lampard (2020)' }
+  const html = page(
+    renderToString(
+      <VisualChart
+        chart={{ ...RANGE, points: [...RANGE.points, next] }}
+        country={null}
+        profile={null}
+      />,
+    ),
+  )
+  const svg = html.querySelector('svg[role="img"]')!
+  const texts = [...svg.querySelectorAll('text')]
+  const y = (words: string) =>
+    Number(texts.find((t) => t.textContent?.includes(words))?.getAttribute('y'))
+  const dot = (value: string) =>
+    Number(
+      [...svg.querySelectorAll('circle')]
+        .find((c) => Math.abs(Number(c.getAttribute('cx')) - x(value)) < 1)
+        ?.getAttribute('cy'),
+    )
+  // A value's words start 16px after its dot's center.
+  const x = (value: string) =>
+    Number(
+      texts.find((t) => t.textContent?.endsWith(value))?.getAttribute('x'),
+    ) - 16
+  // The ring's path starts 2px over its center and reaches 14px above it.
+  const ring = svg.querySelector('[data-ts-key="brazil"]')?.getAttribute('d')
+  const ringCenter = Number(/^M[\d.]+ ([\d.]+)/.exec(ring ?? '')?.[1]) + 2
+  // The average's dot (6px, its stroke 1px more) ends before the ring
+  // starts.
+  expect(ringCenter - 14).toBeGreaterThan(dot('média 16%') + 7)
+  // Under a plain row, its value's line is this far from the next title.
+  const gap = y('Kowal et al. (2025)') - dot('39%')
+  expect(y('Lampard (2020)') - y('Gana 7%')).toBeGreaterThanOrEqual(gap)
+})
+
 it("lights a Study whose spread has the chosen country, and dims the spread's other countries", () => {
   const html = page(
     renderToString(<VisualChart chart={RANGE} country="gana" profile={null} />),
@@ -374,6 +411,44 @@ it('keeps a time line\'s "você" tags clear of the value axis\'s words', () => {
   const axisEnd = Math.max(...axis.map((t) => Number(t.getAttribute('x'))))
   expect(tags(line)).toHaveLength(3)
   for (const tag of tags(line)) expect(tag.left).toBeGreaterThan(axisEnd)
+})
+
+it('starts a time line right above its highest words, with room for a value\'s "você" tag', () => {
+  // The divorce line: the values near the top of the scale.
+  const near = {
+    ...LINE,
+    ticks: [0, 5, 10, 15, 20].map((value) => ({ value, text: `${value}` })),
+    points: LINE.points.slice(1).map((p, i) => ({
+      ...p,
+      value: [16, 13.8][i]!,
+      covers: i === 0 ? [] : p.covers,
+    })),
+  }
+  /** How far below the drawing's top its highest word starts: a value
+   * (14px, centered on its line) or a "você" tag. */
+  const drawn = (profile: { gender: 'mulher' } | null) => {
+    const html = page(
+      renderToString(
+        <VisualChart chart={near} country={null} profile={profile} />,
+      ),
+    )
+    const values = [...html.querySelectorAll('svg[role="img"] text')]
+      .filter((t) => t.getAttribute('font-size') === '14')
+      .map((t) => Number(t.getAttribute('y')) - 8)
+    return {
+      headroom: Math.min(...values, ...tags(html).map((tag) => tag.top)),
+      dots: [...html.querySelectorAll('svg[role="img"] circle')].map((c) =>
+        c.getAttribute('cy'),
+      ),
+    }
+  }
+  const mine = drawn({ gender: 'mulher' })
+  expect(mine.headroom).toBeGreaterThanOrEqual(0)
+  expect(mine.headroom).toBeLessThan(10)
+  // The point whose Study may cover the Profile keeps its tag's room
+  // without one, so the plot does not move when a Profile is saved.
+  expect(drawn(null).dots).toEqual(mine.dots)
+  expect(drawn(null).headroom).toBeLessThan(20)
 })
 
 it('tells how to open a number only once the chart can take the tap', () => {

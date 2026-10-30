@@ -83,6 +83,9 @@ function rowTag(m: OverlayMark, labelOffset: number, right: number) {
   return you(right, m.y)
 }
 
+/** How far a time line's tag sits above the value's line. */
+const LINE_TAG_ABOVE = LABEL_HEIGHT + 2
+
 /** A time line's tag: centered over the value above its dot, inside the
  * plot, so it never covers the value axis's words on the left. */
 function lineTag(m: OverlayMark, valueAbove: number, plot: Bounds) {
@@ -90,8 +93,15 @@ function lineTag(m: OverlayMark, valueAbove: number, plot: Bounds) {
     Math.max(m.x + TAG_WIDTH / 2, plot.left + TAG_WIDTH),
     plot.right,
   )
-  return you(right, m.y - valueAbove - LABEL_HEIGHT - 2)
+  return you(right, m.y - valueAbove - LINE_TAG_ABOVE)
 }
+
+/** How far above a time line's dot its highest word reaches: the value
+ * with its pink marker, or the "você" tag over it. */
+export const lineWordsAbove = (valueAbove: number, tag: boolean) =>
+  tag
+    ? valueAbove + LINE_TAG_ABOVE + TAG_LIFT + TAG_HEIGHT / 2
+    : valueAbove + LABEL_HEIGHT / 2 + 1
 
 interface Bounds {
   /** The plot's left edge, where the value axis's words end. */
