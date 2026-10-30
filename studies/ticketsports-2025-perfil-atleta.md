@@ -26,13 +26,13 @@ Relatório comercial sobre inscrições pela Ticket Sports em 2025, com perfil d
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Participação feminina geral divulgada pela plataforma | 52,4% | p. 8, Gênero | "alcançando 52,4% do total de inscritos" |
-| Participação masculina geral divulgada pela plataforma | 47,5% | p. 8, gráfico, linha masculina, última coluna | "47,5%" |
-| Homens e mulheres entre os inscritos por grupos esportivos | Masculino 45,6%; feminino 54,4% | p. 28, Grupos esportivos, Gênero | "Masculino 45,6% Feminino 54,4%" |
-| Inscrições vendidas através de grupos | 145.525 | p. 24, Quantidade de inscrições vendidas | "145.525" |
-| Corrida de rua nas modalidades mais vendidas, conjunto da plataforma | 89,9% | p. 15, Modalidades mais vendidas, coluna do ano de referência | "89,9% Corrida de Rua" |
-| Corrida de rua nas modalidades mais vendidas para grupos | 94,4% | p. 25, Grupos esportivos | "Corrida de rua 94,4%" |
-| Corrida de rua na receita da plataforma | 75,3% | p. 16, Modalidade x receita | "Corrida de rua 75,3%" |
+| Mulheres entre os inscritos | Segundo a plataforma, 52,4% do total de inscritos eram mulheres | p. 8, Gênero | "alcançando 52,4% do total de inscritos" |
+| Homens entre os inscritos | Segundo a plataforma, 47,5% eram homens | p. 8, gráfico, linha masculina, última coluna | "47,5%" |
+| Homens e mulheres nos grupos esportivos | Entre os inscritos por grupos esportivos, 45,6% eram homens e 54,4%, mulheres | p. 28, Grupos esportivos, Gênero | "Masculino 45,6% Feminino 54,4%" |
+| Inscrições vendidas por grupos | 145.525 inscrições foram vendidas por meio de grupos | p. 24, Quantidade de inscrições vendidas | "145.525" |
+| Corrida de rua nas vendas da plataforma, 2025 | 89,9% do que a plataforma vendeu por modalidade foi corrida de rua | p. 15, Modalidades mais vendidas, coluna do ano de referência | "89,9% Corrida de Rua" |
+| Corrida de rua nas vendas para grupos | 94,4% do que foi vendido para grupos, por modalidade, foi corrida de rua | p. 25, Grupos esportivos | "Corrida de rua 94,4%" |
+| Corrida de rua na receita da plataforma | 75,3% da receita da plataforma veio de corrida de rua | p. 16, Modalidade x receita | "Corrida de rua 75,3%" |
 
 Fonte local integral: `sources/private/ticketsports-2025-perfil-atleta.pdf`. [PDF da própria Ticket Sports](https://d335luupugsy2.cloudfront.net/cms/files/48637/1768256633148Perfil_do_atleta-Ticket-Sports_2025-2026_v2.pdf), disponível no atributo público `data-asset-action` da página de download. Não foi necessário preencher o formulário. Os rótulos dos gráficos por gênero foram conferidos também na imagem das páginas.
 

@@ -29,26 +29,26 @@ Uma pesquisa telefônica de 1996, com números sorteados em todo os EUA, pergunt
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Entrevistas completas | 908 | p. 662, Procedimentos | "failed to match screening criteria, and 908 respondents completed the interview" |
-| Qualificados que recusaram a entrevista | 412 | p. 662, Procedimentos | "Of those screened 412 refused participation after qualifying" |
-| Casados na amostra | 86,7% | p. 662, Participantes | "The sample was made up of 86.7%married" |
-| Mulheres e homens na amostra | 56,3% mulheres; 43,7% homens | p. 662, Participantes | "56.3%were female and 43.7%were male" |
-| Já divorciados | 23% | p. 663, Participantes | "Of the total sample, 23% were previously divorced" |
-| Mais interação negativa, mais potencial de divórcio: mulheres casadas (413) | r = 0,50 | p. 665, Hipótese 1 | "with divorce potential: r = .50" |
-| Mais interação negativa, mais potencial de divórcio: homens casados | r = 0,54 (336 homens) | p. 665, Hipótese 1 | "r = .54 (336), p < .001" |
-| Mais interação negativa, menos satisfação e menos compromisso: mulheres | −0,54 com satisfação; −0,48 com compromisso | p. 665, Hipótese 1 | "negative interaction correlated as expected with satisfaction (-.54), commitment (-.48)" |
-| Quem diz que o homem ou a mulher do casal é quem mais se retira da discussão relata mais interação negativa que quem diz que nenhum dos dois se retira | Tamanho de efeito 0,60 | p. 666, Hipótese 2 | "respectively; effect size = .60" |
-| Quem diz que o homem ou a mulher do casal é quem mais se retira relata menos positividade (satisfação, sexo, amizade, diversão) que quem diz que nenhum se retira | Tamanho de efeito 0,42 | p. 667, Hipótese 2 | "respectively, effect size = .42" |
-| Quem se retira na discussão, segundo as mulheres | 42,9% o homem; 26,4% a mulher | p. 667, Hipótese 3 | "42.9% said the male tends to withdraw, 26.4% the female" |
-| Quem se retira na discussão, segundo os homens: a mulher e os dois | 25,6% a mulher; 17,6% os dois | p. 667, Hipótese 3 | "25.6% female, 17.6% both" |
-| Dinheiro como assunto que mais gera brigas entre brancos, negros e hispânicos | 32%, 33% e 38% | p. 668, Hipótese 4 | "number one argument starter (32%, 33%, and 38%respectively)" |
-| Quem briga mais por dinheiro relata mais interação negativa que quem briga mais pelos filhos | Tamanho de efeito 0,33 | p. 669, Hipótese 5 | "argument starter (p < .05, effect size = .33)" |
-| Assunto das brigas (dinheiro, filhos, outros) e potencial de divórcio | Sem diferença: F = 2,24, não significativo | p. 669, Hipótese 5 | "differences: F (2, 569) = 2.24, ns" |
-| Casados com mais compromisso pensam menos em como seria namorar ou casar com outra pessoa | r = −0,44 (mulheres); r = −0,35 (homens) | p. 670, Hipótese 6 | "alternative monitoring for females (r = -.44) and males (r = -.35)" |
-| Compromisso médio por gênero, casados (sem diferença significativa) | Homens 17,94; mulheres 17,62 | p. 670, Hipótese 7 | "males (M = 17.94, SD = 2.24) and females (M = 17.62, SD = 2.60)" |
-| Homens pensam um pouco mais que as mulheres em como seria namorar ou casar com outra pessoa | Tamanho de efeito 0,14 | p. 670, Hipótese 7 | "with an effect size of only .14" |
+| Quantos responderam | 908 pessoas completaram a entrevista | p. 662, Procedimentos | "failed to match screening criteria, and 908 respondents completed the interview" |
+| Quantos recusaram | 412 pessoas se encaixavam nos critérios e recusaram participar | p. 662, Procedimentos | "Of those screened 412 refused participation after qualifying" |
+| Casados | 86,7% dos entrevistados eram casados | p. 662, Participantes | "The sample was made up of 86.7%married" |
+| Mulheres e homens | 56,3% dos entrevistados eram mulheres e 43,7%, homens | p. 662, Participantes | "56.3%were female and 43.7%were male" |
+| Quem já tinha se divorciado | 23% dos entrevistados | p. 663, Participantes | "Of the total sample, 23% were previously divorced" |
+| Interação negativa e divórcio, 413 mulheres casadas | Quanto mais interação negativa, mais elas pensavam ou falavam em divórcio (r = 0,50) | p. 665, Hipótese 1 | "with divorce potential: r = .50" |
+| Interação negativa e divórcio, homens casados | Quanto mais interação negativa, mais eles pensavam ou falavam em divórcio (r = 0,54; 336 homens) | p. 665, Hipótese 1 | "r = .54 (336), p < .001" |
+| Interação negativa, satisfação e compromisso, mulheres | Quanto mais interação negativa, menos satisfação (r = −0,54) e menos compromisso (r = −0,48) | p. 665, Hipótese 1 | "negative interaction correlated as expected with satisfaction (-.54), commitment (-.48)" |
+| Retirar-se da discussão e interação negativa | Quem disse que o homem ou a mulher costuma se retirar da discussão relatou mais interação negativa que quem disse que nenhum dos dois se retira (tamanho de efeito = 0,60) | p. 666, Hipótese 2 | "respectively; effect size = .60" |
+| Retirar-se da discussão e o lado bom da relação | Quem disse que o homem ou a mulher costuma se retirar relatou menos satisfação, sexo, amizade e diversão, juntos, que quem disse que nenhum dos dois se retira (tamanho de efeito = 0,42) | p. 667, Hipótese 2 | "respectively, effect size = .42" |
+| Quem se retira, segundo as mulheres | 42,9% disseram que é o homem e 26,4%, que é a mulher | p. 667, Hipótese 3 | "42.9% said the male tends to withdraw, 26.4% the female" |
+| Quem se retira, segundo os homens | 25,6% disseram que é a mulher e 17,6%, que são os dois | p. 667, Hipótese 3 | "25.6% female, 17.6% both" |
+| Dinheiro como motivo número um de briga | Foi o assunto mais citado nos três grupos: 32% entre brancos, 33% entre negros e 38% entre hispânicos | p. 668, Hipótese 4 | "number one argument starter (32%, 33%, and 38%respectively)" |
+| Brigar por dinheiro ou pelos filhos | Entre quem tem filhos em casa, quem disse que as brigas começam mais por dinheiro relatou mais interação negativa que quem disse que começam mais pelos filhos (tamanho de efeito = 0,33) | p. 669, Hipótese 5 | "argument starter (p < .05, effect size = .33)" |
+| Assunto das brigas e divórcio | Entre quem tem filhos em casa, pensar ou falar em divórcio não mudou conforme o assunto (dinheiro, filhos ou outros): a diferença pode ser acaso (F = 2,24) | p. 669, Hipótese 5 | "differences: F (2, 569) = 2.24, ns" |
+| Compromisso e pensar em outra pessoa | Casados com mais compromisso pensavam menos em como seria namorar ou casar com outra pessoa (r = −0,44 nas mulheres e −0,35 nos homens) | p. 670, Hipótese 6 | "alternative monitoring for females (r = -.44) and males (r = -.35)" |
+| Compromisso de homens e mulheres casados | Os homens ficaram um pouco acima na média, 17,94 contra 17,62, mas a diferença pode ser acaso | p. 670, Hipótese 7 | "males (M = 17.94, SD = 2.24) and females (M = 17.62, SD = 2.60)" |
+| Pensar em outra pessoa, homens e mulheres | Os homens pensaram um pouco mais que as mulheres em como seria namorar ou casar com outra pessoa, uma diferença pequena (tamanho de efeito = 0,14) | p. 670, Hipótese 7 | "with an effect size of only .14" |
 
-Interação negativa é uma escala de oito itens, como discussões pequenas que viram brigas feias, com acusações e críticas. Potencial de divórcio é pensar ou falar em divórcio. O r mede a força da ligação: 0 é nenhuma, e quanto mais longe de 0, mais forte.
+Interação negativa é uma escala de oito itens, como discussões pequenas que viram brigas feias, com acusações e críticas. Potencial de divórcio é pensar ou falar em divórcio. O r mede a força da ligação: 0 é nenhuma, e quanto mais longe de 0, mais forte. O tamanho de efeito mostra o tamanho de uma diferença entre grupos: quanto maior, maior a diferença. O F é o resultado do teste que compara os grupos.
 
 Como o casal discute pesou mais que o assunto da briga. A interação negativa andou junto com mais conversa e pensamento sobre divórcio nos dois gêneros. Com interação negativa e positividade global na mesma regressão (Tabela 1), a interação negativa explicou cerca de quatro vezes mais variância única no potencial de divórcio que a positividade entre os homens; entre as mulheres, foi o contrário: a positividade explicou o dobro. A camada de texto do PDF embaralha a Tabela 1, por isso esses números ficaram fora dos Achados.
 

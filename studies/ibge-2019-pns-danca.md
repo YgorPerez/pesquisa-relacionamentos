@@ -31,11 +31,13 @@ Calculamos a parcela de mulheres e de homens **entre esses praticantes de dança
 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
-| Mulheres entre quem declarou dança como exercício mais frequente | 88,4%; IC de 95%: 83,4% a 93,4% | Microdados, P036, C006, V00291; agregados por V0024 e UPA_PNS | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
-| Homens entre quem declarou dança como exercício mais frequente | 11,6%; IC de 95%: 6,6% a 16,6% | Mesmos microdados e desenho | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
-| Pessoas entrevistadas que declararam a dança como exercício mais frequente, contadas sem os pesos da pesquisa | 625; 557 mulheres e 68 homens | Extração dos microdados, P036 e C006 | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
+| Mulheres entre quem dança como exercício | Entre as pessoas que citaram a dança como o exercício que praticam ou praticavam com mais frequência, 88,4% eram mulheres (IC de 95%: 83,4% a 93,4%) | Microdados, P036, C006, V00291; agregados por V0024 e UPA_PNS | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
+| Homens entre quem dança como exercício | Nesse mesmo grupo, 11,6% eram homens (IC de 95%: 6,6% a 16,6%) | Mesmos microdados e desenho | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
+| Quantos entrevistados citaram a dança | 625 pessoas: 557 mulheres e 68 homens, contados um a um, sem o ajuste que a pesquisa faz para representar a população | Extração dos microdados, P036 e C006 | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
 
 Fonte local: `sources/ibge-2019-pns-danca.txt`, com transcrição das entradas do dicionário e do método oficial. Os insumos numéricos estão em `sources/ibge-2019-pns-danca-psu.csv`, agregados reproduzíveis dos microdados oficiais, e não uma tabela publicada pelo IBGE. O script tem um modo `extract` que verifica o checksum do arquivo bruto e reconstrói esses agregados.
+
+O IC de 95% é o intervalo de confiança: a faixa em que o número provavelmente está, já que a pesquisa ouviu só uma parte da população.
 
 O erro padrão da parcela feminina é de 2,538 pontos percentuais. Usamos linearização de Taylor da razão de totais ponderados, com estratos V0024 e conglomerados UPA_PNS, mantendo todas as unidades dos respondentes selecionados, inclusive as sem praticantes de dança. Há 8.027 UPAs em 574 estratos; nenhum estrato tem uma única UPA. O IC bilateral usa a aproximação normal de Wald e amostragem com reposição no primeiro estágio, sem correção de população finita. Não recalculamos a incerteza da calibração dos pesos.
 
