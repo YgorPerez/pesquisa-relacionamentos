@@ -623,6 +623,26 @@ function yearScale(years: NonNullable<ChartView['years']>) {
   }
 }
 
+/** A time line's SVG with our layer: the tags above the values, inside the
+ * plot. */
+function lineSvg(
+  scene: Parameters<typeof renderChartSvg>[0],
+  options: Parameters<typeof renderChartSvg>[1],
+  rows: Row[],
+) {
+  return withOverlay(
+    renderChartSvg(scene, options),
+    overlayLayers(
+      overlayMarks(scene.points, rows, { valueAbove: LINE.valueAbove }),
+      {
+        labelOffset: 0,
+        left: scene.chart.x,
+        right: scene.chart.x + scene.chart.width,
+      },
+    ),
+  )
+}
+
 function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
@@ -656,18 +676,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   }, [chart, rows, scaled])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
-    (scene, options) =>
-      withOverlay(
-        renderChartSvg(scene, options),
-        overlayLayers(
-          overlayMarks(scene.points, rows, { valueAbove: LINE.valueAbove }),
-          {
-            labelOffset: 0,
-            left: scene.chart.x,
-            right: scene.chart.x + scene.chart.width,
-          },
-        ),
-      ),
+    (scene, options) => lineSvg(scene, options, rows),
     [rows],
   )
 

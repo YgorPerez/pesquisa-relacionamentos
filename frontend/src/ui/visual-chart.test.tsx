@@ -344,17 +344,18 @@ it('keeps the "você" tag clear of a long Study title on a phone\'s width', () =
     (t) => t.textContent === title,
   )
   expect(tags(dots)).toHaveLength(2)
-  for (const tag of tags(dots)) {
-    // The label on the tag's line: a 13px bold title runs about 6.5px a
-    // letter.
+  // Each tag sits on its row's title line, past where the title ends: a
+  // 13px bold title runs about 6.5px a letter.
+  const ends = tags(dots).map((tag) => {
     const label = labels.find(
       (t) => Math.abs(Number(t.getAttribute('y')) - (tag.top + 10)) < 3,
     )
-    if (label)
-      expect(tag.left).toBeGreaterThan(
-        Number(label.getAttribute('x')) + title.length * 6.5,
-      )
-  }
+    return {
+      tag: tag.left,
+      title: Number(label?.getAttribute('x')) + title.length * 6.5,
+    }
+  })
+  for (const { tag, title: end } of ends) expect(tag).toBeGreaterThan(end)
 })
 
 it('keeps a time line\'s "você" tags clear of the value axis\'s words', () => {
