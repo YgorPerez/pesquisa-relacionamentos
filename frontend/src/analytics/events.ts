@@ -40,6 +40,7 @@ export type AnalyticsEvent =
   | `neighbor-site/${string}`
   | 'search/no-result'
   | `selection/${SelectionAction}`
+  | `chart-card/${string}`
 
 // Since #194 (2026-10-26) the Guide has one "Ajudou?" and its key is the
 // Topic's slug (`helped/yes/onde-conhecer-pessoas`); the per-Question series
@@ -71,4 +72,9 @@ export const EVENTS = {
   /** An action of the popover on selected text (#332): its name only,
    * never the text nor the page. */
   selection: (action: SelectionAction): AnalyticsEvent => `selection/${action}`,
+  /** A chart's card pinned (#502): one series per chart, by its `domId`
+   * (`visual-<topic>-<visual id>`), so renaming a Visual's id starts a new
+   * series. Never the point: which row a reader opens may say something
+   * about them. */
+  chartCard: (chart: string): AnalyticsEvent => `chart-card/${chart}`,
 } as const

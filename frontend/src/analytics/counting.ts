@@ -1,6 +1,6 @@
 // The usage count (#21, #35; ADR 0001): visits by path and the `helped/…`,
-// `fact-sheet/…`, `calculator/…`, `continue-reading/…` and
-// `neighbor-site/…` events. None carries the Profile, nor
+// `fact-sheet/…`, `calculator/…`, `continue-reading/…`, `neighbor-site/…`
+// and `chart-card/…` events. None carries the Profile, nor
 // whether it was filled in: the caller only passes the event name.
 //
 // It does not count when the browser asks (GPC or Do Not Track) nor when the

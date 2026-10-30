@@ -4,6 +4,8 @@
 // card is open at a time across the page, and a chart re-renders only when
 // the card is its own.
 import { useEffect, useRef, useSyncExternalStore } from 'react'
+import { countEvent } from '#/analytics/counting'
+import { EVENTS } from '#/analytics/events'
 import type { ChartPoint } from '#/content/chart-point'
 
 /** A mark in the drawing's pixels: where it ends, and the point it draws. */
@@ -73,11 +75,16 @@ function dismiss() {
 }
 
 /** Pins a card, replacing any other; the same mark again unpins it. The one
- * place a card gets pinned: count a pinned card here (#502). */
+ * place a card gets pinned, so the one place it counts (#502): each pin, under
+ * its chart. */
 export function pinCard(target: CardTarget) {
   closed = null
-  if (state.pinned && isSame(state.target, target)) dismiss()
-  else set({ target, pinned: true })
+  if (state.pinned && isSame(state.target, target)) {
+    dismiss()
+    return
+  }
+  set({ target, pinned: true })
+  countEvent(EVENTS.chartCard(target.chart))
 }
 
 export function closeCard() {
