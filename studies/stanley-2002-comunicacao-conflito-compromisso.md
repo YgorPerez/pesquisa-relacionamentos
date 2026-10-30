@@ -37,8 +37,8 @@ Uma pesquisa telefônica de 1996, com números sorteados em todo os EUA, pergunt
 | Mais interação negativa, mais potencial de divórcio: mulheres casadas (413) | r = 0,50 | p. 665, Hipótese 1 | "with divorce potential: r = .50" |
 | Mais interação negativa, mais potencial de divórcio: homens casados | r = 0,54 (336 homens) | p. 665, Hipótese 1 | "r = .54 (336), p < .001" |
 | Mais interação negativa, menos satisfação e menos compromisso: mulheres | −0,54 com satisfação; −0,48 com compromisso | p. 665, Hipótese 1 | "negative interaction correlated as expected with satisfaction (-.54), commitment (-.48)" |
-| Quem diz que ele ou ela se retira da discussão relata mais interação negativa que quem diz que nenhum dos dois se retira | Tamanho de efeito 0,60 | p. 666, Hipótese 2 | "respectively; effect size = .60" |
-| Quem diz que ele ou ela se retira relata menos positividade (satisfação, sexo, amizade, diversão) que quem diz que nenhum se retira | Tamanho de efeito 0,42 | p. 667, Hipótese 2 | "respectively, effect size = .42" |
+| Quem diz que o homem ou a mulher do casal é quem mais se retira da discussão relata mais interação negativa que quem diz que nenhum dos dois se retira | Tamanho de efeito 0,60 | p. 666, Hipótese 2 | "respectively; effect size = .60" |
+| Quem diz que o homem ou a mulher do casal é quem mais se retira relata menos positividade (satisfação, sexo, amizade, diversão) que quem diz que nenhum se retira | Tamanho de efeito 0,42 | p. 667, Hipótese 2 | "respectively, effect size = .42" |
 | Quem se retira na discussão, segundo as mulheres | 42,9% o homem; 26,4% a mulher | p. 667, Hipótese 3 | "42.9% said the male tends to withdraw, 26.4% the female" |
 | Quem se retira na discussão, segundo os homens: a mulher e os dois | 25,6% a mulher; 17,6% os dois | p. 667, Hipótese 3 | "25.6% female, 17.6% both" |
 | Dinheiro como assunto que mais gera brigas entre brancos, negros e hispânicos | 32%, 33% e 38% | p. 668, Hipótese 4 | "number one argument starter (32%, 33%, and 38%respectively)" |

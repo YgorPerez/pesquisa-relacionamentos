@@ -30,7 +30,7 @@ Na quinta visita ao domicílio, a PNAD Contínua pergunta se cada morador de 14 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
 | Definição de trabalho voluntário | Sem remuneração, por pelo menos uma hora na semana, para terceiros | Informativo, p. 11 | "realizado por pelo menos uma hora na semana de referência, sem receber nenhuma remuneração em dinheiro ou benefícios, com o objetivo de produzir bens ou serviços para terceiros" | |
-| Pessoas de 14 anos ou mais que fizeram trabalho voluntário em 2022, e a parcela que elas são dessa população | 7,3 milhões; taxa de 4,2% | Informativo, p. 11 | "Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade realizaram trabalho voluntário na semana de referência da pesquisa, o que corresponde a uma taxa de realização de 4,2%" | |
+| Pessoas de 14 anos ou mais que fizeram trabalho voluntário na semana pesquisada, em 2022, e a parcela que elas são dessa população | 7,3 milhões; taxa de 4,2% | Informativo, p. 11 | "Em 2022, 7,3 milhões de pessoas de 14 anos ou mais de idade realizaram trabalho voluntário na semana de referência da pesquisa, o que corresponde a uma taxa de realização de 4,2%" | |
 | Parcela de cada sexo, de 14 anos ou mais, que fez trabalho voluntário | Mulheres 4,9%, homens 3,5% | Informativo, p. 12, gráfico por características | "Sexo Homem 3,5 Mulher 4,9" | |
 | Mulheres entre os voluntários | 60,3% | SIDRA 7080, variável 10238, Mulheres, 2022 | "2022":"60.3" | |
 | Homens entre os voluntários | 39,7% | SIDRA 7080, variável 10238, Homens, 2022 | "2022":"39.7" | |
