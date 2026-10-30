@@ -135,7 +135,15 @@ export function useCloseCardOn(chart: string, lit: string | null) {
     last.current = lit
     closeCardOf(chart)
   }, [chart, lit])
-  useEffect(() => () => closeCardOf(chart), [chart])
+  useEffect(
+    () => () => {
+      closeCardOf(chart)
+      // Gone, it will not say the pointer or the focus left: back on the page,
+      // its mark must not count as just closed.
+      hoverCard(null, chart)
+    },
+    [chart],
+  )
 }
 
 const subscribe = (listener: () => void) => {
