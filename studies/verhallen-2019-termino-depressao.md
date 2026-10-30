@@ -29,15 +29,15 @@ Os autores compararam jovens que tinham terminado uma relação nos últimos sei
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Depressão, término vs. namorando | Mais alta no grupo do término (p = 0,001) | Resumo | "group-level depression scores were elevated compared to individuals in a relationship (p = .001)" |
+| Nota de depressão: quem passou por um término vs. quem namora | Mais alta no grupo do término (p = 0,001) | Resumo | "group-level depression scores were elevated compared to individuals in a relationship (p = .001)" |
 | Grupo do término com sintomas de depressão leve, moderada ou grave | 26,8% | Results, Severity of depression symptoms | "In total, 26.8% reported symptoms corresponding to mild, moderate or severe depression." |
 | Grupo namorando com sintomas de depressão | 2,2% (leve) | Results, Severity of depression symptoms | "2.2% had depression symptoms corresponding to mild depression" |
-| Mediana do grupo do término | 9, dentro da faixa sem depressão | Results, Severity of depression symptoms | "MDI scores ranged between 1 and 45 (Mdn = 9.00, IQR = 7.00–21.00) in the heartbreak group" |
+| Nota de depressão típica (mediana) de quem passou por um término | 9, dentro da faixa sem depressão | Results, Severity of depression symptoms | "MDI scores ranged between 1 and 45 (Mdn = 9.00, IQR = 7.00–21.00) in the heartbreak group" |
 | Quem foi deixado pelo outro | 42,3% | Results, Study population | "In 42.3% of the subjects, the ex-partner decided to break up" |
 | Ainda pensam no ex todo dia | 70,4% | Results, Study population | "70.4% reported to still think about their ex-partner on a daily basis" |
-| Sentir-se rejeitado e depressão | Rejeição, traição e raiva formam o componente "perda súbita", correlacionado com a depressão (rs = 0,57) | Results, Association between the components and depression scores | "Positive correlations between the component scores belonging to the two extracted components and depression scores were prevalent (rs = .57, p < .001" |
-| Homens vs. mulheres após o término | Mediana 7 nos homens, 15,5 nas mulheres | Results, Severity of depression symptoms | "between heartbroken males (Mdn = 7.00, IQR = 4.50–14.00) and heartbroken females (Mdn = 15.50, IQR = 7.75–25.00)" |
-| Homens vs. mulheres namorando | Sem diferença | Results, Severity of depression symptoms | "No gender differences were found (U = 213.50, Z = -1.13, p = .260, r = -.17)" |
+| Em quem passou por um término: sentir-se rejeitado e nota de depressão | Rejeição, traição e raiva andam juntas num conjunto que os autores chamam de "perda súbita"; nota maior nele vem com mais depressão (rs = 0,57) | Results, Association between the components and depression scores | "Positive correlations between the component scores belonging to the two extracted components and depression scores were prevalent (rs = .57, p < .001" |
+| Nota de depressão típica depois do término: homens vs. mulheres | Mediana 7 nos homens, 15,5 nas mulheres | Results, Severity of depression symptoms | "between heartbroken males (Mdn = 7.00, IQR = 4.50–14.00) and heartbroken females (Mdn = 15.50, IQR = 7.75–25.00)" |
+| Nota de depressão de quem namora: homens vs. mulheres | Sem diferença | Results, Severity of depression symptoms | "No gender differences were found (U = 213.50, Z = -1.13, p = .260, r = -.17)" |
 
 "rs" é a correlação de Spearman, de −1 a 1; 0,57 é uma correlação forte. A mediana e a faixa do MDI vão de 0 a 50.
 

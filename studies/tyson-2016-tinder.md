@@ -27,12 +27,12 @@ Os autores criaram 14 perfis no Tinder, deram like em todo mundo que aparecia e 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Perfis de teste | 14 | §III.A | "Table I presents an overview of the 14 curated profiles we created." |
-| Perfis coletados | 230 mil de homens, 250 mil de mulheres | §III.A | "In total, we collected 230k male profiles, and 250k female profiles." |
-| Taxa de match dos perfis masculinos (stock), sobre os likes dados | 0,6% | §IV | "but only match with a small minority (0.6%)" |
-| Taxa de match dos perfis femininos (stock) | 10,5% | §IV | "a far higher matching rate (10.5%)" |
+| Perfis de teste criados pelos pesquisadores | 14 | §III.A | "Table I presents an overview of the 14 curated profiles we created." |
+| Perfis de outros usuários coletados pelos pesquisadores | 230 mil de homens, 250 mil de mulheres | §III.A | "In total, we collected 230k male profiles, and 250k female profiles." |
+| Perfis de teste masculinos com foto de banco de imagens: parte dos likes dados que virou match | 0,6% | §IV | "but only match with a small minority (0.6%)" |
+| Mesma conta, perfis de teste femininos com foto de banco de imagens | 10,5% | §IV | "a far higher matching rate (10.5%)" |
 | Matches dos perfis masculinos que vieram de outros homens | 86% | §IV | "86% of all the matches our male profiles receive come from other men" |
-| Matches que mandaram mensagem: mulheres vs. homens | 21% vs. 7% | §IV | "21% of female matches send a message, whereas only 7% of male matches send a message" |
+| Quem deu match com os perfis de teste e mandou mensagem: mulheres vs. homens | 21% vs. 7% | §IV | "21% of female matches send a message, whereas only 7% of male matches send a message" |
 | Matches recebidos de homens, somando todos os perfis | 8.248 | §IV | "Overall, we received 8248 male matches" |
 | Idem, de mulheres | 532 | §IV | "we garnered only 532 female matches" |
 | Mensagens enviadas até 5 minutos depois do match: homens vs. mulheres | 63% vs. 18% | §IV | "63% of messages sent by men occur within 5 minutes of the match taking place. This is only 18% for women" |
@@ -40,7 +40,7 @@ Os autores criaram 14 perfis no Tinder, deram like em todo mundo que aparecia e 
 | Tamanho mediano da mensagem: homens vs. mulheres | 12 vs. 122 caracteres | §IV | "The median message length sent by men is only 12 characters, compared to 122 from women." |
 | Perfil masculino real, 1 vs. 3 fotos, matches em 4 horas | 44 vs. 238 | §V.B | "only 44 matches were made, whereas this increased to 238 with three pictures" |
 | Perfil feminino real, de 1 para 3 fotos | 37% mais matches | §V.B | "a 37% increase is seen in matches" |
-| Perfis masculinos stock, matches de mulheres sem e com bio | média de 16 para 69 | §V.C | "an average of 16 matches from women; this increases four-fold to 69 with a bio" |
+| Perfis de teste masculinos com foto de banco de imagens: matches de mulheres sem e com texto de apresentação (bio) | média de 16 para 69 | §V.C | "an average of 16 matches from women; this increases four-fold to 69 with a bio" |
 | Contas sem bio, entre os perfis coletados | 36% | §V.C | "36% of accounts have no bio" |
 | Mulheres sem bio | 42% | §V.C | "42% of whom have blank bios" |
 | Homens sem bio | 30% | §V.C | "male profiles with blank bios (30%)" |

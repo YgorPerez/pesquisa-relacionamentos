@@ -39,8 +39,8 @@ Os autores ordenaram os usuários de um site de namoro por "desejabilidade", cal
 | Taxa média de resposta das mulheres às mensagens de homens | Menos de 20% | Métodos, Network analysis, §2 | "their average reply rate is less than 20%" |
 | Quem mira mais alto manda mais ou menos mensagens | Menos mensagens | Resultados, "Men and women both reach up the desirability ladder", §6 | "The number of initial contacts an individual makes falls off rapidly with increasing gap" |
 | Tamanho da mensagem a parceiros mais desejáveis | Mais longa, até o dobro | Resultados, "Messaging strategies vary with mate seekers' aspirations", §1 | "Both men and women tend to write substantially longer messages to more desirable partners, up to twice as long in some cases." |
-| Retorno de mensagens mais longas | Só para mulheres e para homens em Seattle | Fig. 4 | "longer messages are positively associated with response rates only for women and men in Seattle" |
-| Efeito geral de escrever mais ou mais positivo | Pequeno | Resultados, "Messaging strategies vary with mate seekers' aspirations", §4 | "the variation in payoff for different strategies is fairly small" |
+| Mensagem mais longa recebe mais resposta? | Só para mulheres e para homens em Seattle | Fig. 4 | "longer messages are positively associated with response rates only for women and men in Seattle" |
+| Diferença de resultado entre as formas de escrever, como escrever mais ou de forma mais positiva | Pequeno | Resultados, "Messaging strategies vary with mate seekers' aspirations", §4 | "the variation in payoff for different strategies is fairly small" |
 | Usuário mais popular | Mulher de 30 anos em Nova York, 1.504 mensagens no mês | Resultados, §1 | "a 30-year-old woman living in New York, received 1504 messages during the period of observation" |
 | Desejabilidade e idade, mulheres | Cai dos 18 aos 60 anos | Resultados, §3 | "The average woman’s desirability drops from the time she is 18 until she is 60." |
 | Desejabilidade e idade, homens | Pico por volta dos 50 anos | Resultados, §3 | "For men, desirability peaks around 50 and then declines." |

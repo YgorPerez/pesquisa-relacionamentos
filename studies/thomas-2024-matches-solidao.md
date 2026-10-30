@@ -29,14 +29,14 @@ As participantes mandaram uma foto, achando que outras pessoas a avaliariam, e d
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Desenho | 125 universitárias; chance alta (27/31) ou baixa (3/31) de match | Resumo | "In an experiment with 125 undergraduate women, we manipulated dating app feedback: When accepting a profile, participants had either a high (27/31) or a low chance (3/31) of receiving matches." |
-| Poucos matches e solidão, efeito geral | Sem efeito (b = 3,26; p = 0,109) | Results, Effects on state loneliness | "we did not find a main effect of condition on participants' state loneliness ( b = 3.26, p = .109; H1 )" |
-| Poucos matches e medo de ficar solteira | Sem efeito (b = 0,01; p = 0,945) | Results, Effects on fear of being single | "we did not find any effects of the condition on this variable ( b = 0.01, p = .945; H2 )" |
-| Poucos matches e solidão, em quem aceitou 7 perfis ou mais | Mais solidão com poucos matches | Results | "the effect of the high chance of matches condition became significant for women who accepted seven or more profiles" |
-| Muitos matches e sobrecarga de escolha | Mais sobrecarga com muitos matches (b = −0,19 no grupo de poucos) | Results, Effects on partner choice overload | "Young women in the low chance of matches (i.e. ostracism) condition experienced a lower level of partner choice overload compared to young women in the high matches condition ( b = −0.19, p = .034; H3 )" |
-| Aceitar mais perfis e sobrecarga | Mais sobrecarga (b = 0,08) | Results, Effects on partner choice overload | "Participants who accepted many profiles reported significantly more partner choice overload ( b = 0.08, p = .003)." |
+| Universitárias em um app de teste, com chance sorteada de receber match | 125 universitárias; chance alta (27/31) ou baixa (3/31) de match | Resumo | "In an experiment with 125 undergraduate women, we manipulated dating app feedback: When accepting a profile, participants had either a high (27/31) or a low chance (3/31) of receiving matches." |
+| Solidão: grupo de poucos matches contra o de muitos | Sem efeito (b = 3,26; p = 0,109) | Results, Effects on state loneliness | "we did not find a main effect of condition on participants' state loneliness ( b = 3.26, p = .109; H1 )" |
+| Medo de ficar solteira: mesma comparação | Sem efeito (b = 0,01; p = 0,945) | Results, Effects on fear of being single | "we did not find any effects of the condition on this variable ( b = 0.01, p = .945; H2 )" |
+| Solidão, só entre quem aceitou 7 perfis ou mais: mesma comparação | Mais solidão com poucos matches | Results | "the effect of the high chance of matches condition became significant for women who accepted seven or more profiles" |
+| Sobrecarga de escolha: mesma comparação | Mais sobrecarga com muitos matches (b = −0,19 no grupo de poucos) | Results, Effects on partner choice overload | "Young women in the low chance of matches (i.e. ostracism) condition experienced a lower level of partner choice overload compared to young women in the high matches condition ( b = −0.19, p = .034; H3 )" |
+| Sobrecarga de escolha em quem aceitou mais perfis | Mais sobrecarga (b = 0,08) | Results, Effects on partner choice overload | "Participants who accepted many profiles reported significantly more partner choice overload ( b = 0.08, p = .003)." |
 | Perfis aceitos (de 31), média | 5,73 | Method, Procedure | "The number of profiles accepted ranged from 0 to 18 ( M = 5.73, SD = 3.51)" |
-| Poder estatístico | Detectava só diferenças a partir de d = 0,45 | Method, Participants | "we would have been able to detect a group difference of the size d = .45" |
+| Menor diferença entre os dois grupos que o estudo conseguia detectar | Detectava só diferenças a partir de d = 0,45 | Method, Participants | "we would have been able to detect a group difference of the size d = .45" |
 
 "b" é a diferença estimada entre os grupos, na escala de cada medida (solidão de 0 a 100; medo de ficar solteira e sobrecarga de 1 a 5), com controle de idade e de estar ou não namorando.
 

@@ -38,24 +38,24 @@ Com a situação amorosa (numa relação ou casado, solteiro sem querer, solteir
 | Amostra grega: tamanho e parte do recrutamento | 1.092 pessoas, parte delas recrutada por alunos em troca de crédito na disciplina | p. 3, 2.1.1 Greek sample | "undergraduate students recruited participants from their social networks and from cafés and malls in return for course credit. Here, 1092 participants" |
 | Amostra russa: painel comercial pago | 818 pessoas | p. 3, 2.1.2 Russian sample | "received monetary compensation for their participation. In this case, 818 participants" |
 | Amostra ucraniana: tamanho e idade média de mulheres e homens | 386 pessoas; 21,8 e 23,6 anos | p. 3, 2.1.3 Ukrainian sample | "Here, 386 participants (250 women, 130 men, and six participants who indicated their sex as “other”) took part. The mean age of women was 21.8 years (SD = 11.8) and the mean age of men was 23.6 years" |
-| Itens candidatos da MRCI, gerados por três modelos de linguagem | 28 | p. 3, 2.2.1 | "to generate 28 candidate items" |
-| Consistência interna da MRCI (alfa de Cronbach) | 0,82 | p. 4, 2.2.1 | "(Cronbach's alpha = 0.82)" |
-| MRCI e satisfação com a relação, entre quem tem parceiro (rho de Spearman) | 0,42 | p. 5, 3.1.1 Validity | "relationship satisfaction [r(1329) = 0.42" |
-| MRCI e número de relações passadas de menos de seis meses (rho de Spearman) | −0,17 | p. 5, 3.1.1 Validity | "intimate relationships lasting less than six months [r(2245) = − 0.17" |
+| Frases iniciais da MRCI, a escala de capacidade de manter uma relação, geradas por três modelos de linguagem | 28 | p. 3, 2.2.1 | "to generate 28 candidate items" |
+| Quanto as frases da MRCI concordam entre si (alfa de Cronbach; mais perto de 1, mais concordam) | 0,82 | p. 4, 2.2.1 | "(Cronbach's alpha = 0.82)" |
+| Entre quem tem parceiro: nota na MRCI e satisfação com a relação (correlação; positiva, as duas sobem juntas) | 0,42 | p. 5, 3.1.1 Validity | "relationship satisfaction [r(1329) = 0.42" |
+| Nota na MRCI e número de relações passadas de menos de seis meses (correlação; negativa, nota maior vem com menos relações curtas) | −0,17 | p. 5, 3.1.1 Validity | "intimate relationships lasting less than six months [r(2245) = − 0.17" |
 | Quem tem capacidade "fraca" (média abaixo de 3 na escala de 1 a 5) | 23,7% | p. 5, 3.1.2 | "For the pooled sample, 23.7% indicated a poor capacity" |
 | Capacidade "fraca", mulheres e homens | 20,7%; 27,6% | p. 6, Tabela 2, colunas Women e Men | "20.7 23.1 17.7 20.8 27.6" |
 | Nota média da MRCI: total, mulheres e homens | 3,48 (DP 0,81); 3,58; 3,34 | p. 6, Tabela 2, colunas Total, Women e Men, linha Pooled sample | "3.48 (0.81) 3.49 (0.84) 3.51 (0.82) 3.36 (0.68) 3.58 (0.84) 3.54 (0.86) 3.72 (0.85) 3.43 (0.72) 3.34 (0.75)" |
-| Solteiro sem querer contra numa relação: queda nas chances por ponto da MRCI (razão de chance 0,17) | 83% | p. 5, 3.2 | "with an 83% [(1–0.17) x 100] reduction in the odds of being involun" |
-| Solteiro entre relações e solteiro por escolha: queda nas chances por ponto da MRCI | 68%; 63% | p. 5, 3.2 | "corresponding figures being 68% for between-relationships singlehood and 63% for voluntary singlehood" |
-| Variação da situação amorosa explicada pelo modelo, com sexo, idade e amostra (R² de Nagelkerke) | 0,273 | p. 6, Tabela 3, nota 2 | "the Nagelkerke was 0.273" |
+| A cada ponto a mais na MRCI: queda na chance de estar solteiro sem querer, em vez de numa relação (razão de chance 0,17) | 83% | p. 5, 3.2 | "with an 83% [(1–0.17) x 100] reduction in the odds of being involun" |
+| A mesma queda, para solteiro entre relações e para solteiro por escolha | 68%; 63% | p. 5, 3.2 | "corresponding figures being 68% for between-relationships singlehood and 63% for voluntary singlehood" |
+| Quanto da situação amorosa o modelo explica com MRCI, sexo, idade e amostra (R² de Nagelkerke, de 0 a 1) | 0,273 | p. 6, Tabela 3, nota 2 | "the Nagelkerke was 0.273" |
 | Anos solteiro, por ponto a mais da MRCI | 1,22 ano a menos | p. 5, 3.2 | "crease in this capacity was associated with 1.22 fewer years of being" |
 | Anos na relação atual, por ponto a mais da MRCI | 0,91 ano a mais | p. 5, 3.2 | "associated with a 0.91-year increase in the length of an existing intimate relationship" |
-| Anos solteiro, amostra russa: valor-p do efeito da MRCI, que o texto conta como significativo | 0,052 | p. 6, Tabela 4, coluna p-value, linha Russian | "0.052 0.239 0.115 0.860" |
-| Traços da TIRMI e MRCI (rho de Spearman) | −0,41 | p. 6, 3.3 | "the total mean score of the TIRMI and mate-retention capacity [r(2255) = − 0.41" |
-| Variância compartilhada entre TIRMI e MRCI | 16,8% | p. 6, 3.3 | "ance between the two variables was 16.8% (r squared times 100)" |
-| Efeito indireto da TIRMI, pela MRCI, nas chances de estar solteiro (razão de chance por ponto) | 1,88 | p. 6, 3.3 | "a one-unit increase in this dimension was associated with a 1.88" |
-| O mesmo, nas chances de estar solteiro sem querer | 2,59 | p. 6–7, 3.3 | "associated with a 2.59 times increase in the odds of being involuntarily single" |
-| Fator "personalidade difícil": efeito direto nas chances de estar solteiro, no sentido contrário ao previsto | 0,61 | p. 7, Tabela 6, coluna c’, linha Poor personality traits | "(1.08–1.49) 0.61" |
+| Anos solteiro, amostra russa: p do efeito da MRCI. O texto o conta como significativo, embora passe do limite usual de 0,05 | 0,052 | p. 6, Tabela 4, coluna p-value, linha Russian | "0.052 0.239 0.115 0.860" |
+| Traços que atrapalham manter uma relação (escala TIRMI) e nota na MRCI (correlação; negativa, mais desses traços vêm com nota menor) | −0,41 | p. 6, 3.3 | "the total mean score of the TIRMI and mate-retention capacity [r(2255) = − 0.41" |
+| Parte da variação que a TIRMI e a MRCI têm em comum | 16,8% | p. 6, 3.3 | "ance between the two variables was 16.8% (r squared times 100)" |
+| A cada ponto a mais na TIRMI: quantas vezes a chance de estar solteiro, em vez de numa relação, se multiplica pela via de uma MRCI menor (razão de chance, efeito indireto) | 1,88 | p. 6, 3.3 | "a one-unit increase in this dimension was associated with a 1.88" |
+| O mesmo, para a chance de estar solteiro sem querer | 2,59 | p. 6–7, 3.3 | "associated with a 2.59 times increase in the odds of being involuntarily single" |
+| A cada ponto a mais em "personalidade difícil", um dos fatores da TIRMI: chance de estar solteiro, sem passar pela MRCI. Contra o previsto, a chance cai (razão de chance, efeito direto) | 0,61 | p. 7, Tabela 6, coluna c’, linha Poor personality traits | "(1.08–1.49) 0.61" |
 
 Os Trechos que citam as Tabelas 2, 4 e 6 são colunas: o texto extraído do PDF lê cada tabela coluna por coluna. Na Tabela 2, a coluna Women da porcentagem vem depois da coluna total (23,7; 23,7; 23,8; 23,6) e lista as amostras na ordem total, grega, russa e ucraniana; o 27,6 abre a coluna Men. Na coluna das médias, o 3,48 é a linha do total, e 3,58 e 3,34 abrem as colunas de mulheres e homens. Na Tabela 4, a coluna p-value dos anos solteiro lista total, mulheres, homens, por amostra; o 0,052 é a linha Russian. Na Tabela 6, o Trecho do 0,61 começa no intervalo da célula de cima (trabalho acima da relação, 1,27, de 1,08 a 1,49), e os asteriscos de [[significância]] que seguem cada valor ficam fora, porque a tabela do Markdown não os reproduz.
 
