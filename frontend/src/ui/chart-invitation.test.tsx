@@ -40,7 +40,16 @@ function device({ mouse = true, lessMotion = false } = {}) {
 
 /** The screen: what `seen` puts in view, chart by chart. */
 function screenWithObserver() {
-  const observers: { element: Element; report: () => void }[] = []
+  const observers: {
+    element: Element
+    report: (isIntersecting: boolean) => void
+  }[] = []
+  const report = (figure: Element, isIntersecting: boolean) => {
+    act(() => {
+      for (const o of observers)
+        if (figure.contains(o.element)) o.report(isIntersecting)
+    })
+  }
   vi.stubGlobal(
     'IntersectionObserver',
     class {
@@ -48,9 +57,9 @@ function screenWithObserver() {
       observe(element: Element) {
         observers.push({
           element,
-          report: () =>
+          report: (isIntersecting: boolean) =>
             this.callback(
-              [{ isIntersecting: true } as IntersectionObserverEntry],
+              [{ isIntersecting } as IntersectionObserverEntry],
               this as unknown as IntersectionObserver,
             ),
         })
@@ -59,11 +68,8 @@ function screenWithObserver() {
     },
   )
   return {
-    seen: (figure: Element) => {
-      act(() => {
-        for (const o of observers) if (figure.contains(o.element)) o.report()
-      })
-    },
+    seen: (figure: Element) => report(figure, true),
+    left: (figure: Element) => report(figure, false),
   }
 }
 
@@ -125,6 +131,22 @@ it('pulses only the first chart seen, and only once in a visit', async () => {
   seen(figureOf(BARS))
   await act(() => preloadPlot())
   expect(pulse()).toBeNull()
+})
+
+it('saves the pulse for the chart the reader stops at, not one scrolled past', async () => {
+  device()
+  const { seen, left } = screenWithObserver()
+  render(
+    <>
+      <VisualChart chart={BARS} country={null} profile={null} />
+      <VisualChart chart={DOTS} country={null} profile={null} />
+    </>,
+  )
+  seen(figureOf(BARS))
+  left(figureOf(BARS))
+  seen(figureOf(DOTS))
+  await waitFor(() => expect(pulse(figureOf(DOTS))).not.toBeNull())
+  expect(pulse(figureOf(BARS))).toBeNull()
 })
 
 it('pulses a Study table when it is the first chart seen', async () => {

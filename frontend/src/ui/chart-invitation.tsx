@@ -98,14 +98,16 @@ function ringAround(host: HTMLElement, mark: string): Box | null {
   }
 }
 
-/** Runs `seen` the first time `element` reaches the middle of the screen, and
- * gives back how to stop waiting. */
-function whenFirstSeen(element: HTMLElement, seen: () => void) {
+/** Says whenever `element` enters or leaves the middle of the screen, and
+ * gives back how to stop. */
+function watchMiddle(
+  element: HTMLElement,
+  onChange: (inView: boolean) => void,
+) {
   const observer = new IntersectionObserver(
     (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return
-      observer.disconnect()
-      seen()
+      const last = entries[entries.length - 1]
+      if (last) onChange(last.isIntersecting)
     },
     { rootMargin: MIDDLE_OF_THE_SCREEN },
   )
@@ -138,18 +140,26 @@ export function ChartPulse({
     )
       return
     let timer: ReturnType<typeof setTimeout> | undefined
-    let gone = false
-    const stopWaiting = whenFirstSeen(element, () => {
-      if (!claimPulse()) return
+    let inView = false
+    const stopWatching = watchMiddle(element, (now) => {
+      inView = now
+      clearTimeout(timer)
+      if (!now) return
       void Promise.resolve(ready?.()).then(() => {
-        if (gone) return
-        timer = setTimeout(() => setBox(ringAround(element, mark)), SETTLE_MS)
+        if (!inView) return
+        clearTimeout(timer)
+        // Only a chart still there counts: a link or a smooth scroll runs
+        // past the charts above its target.
+        timer = setTimeout(() => {
+          stopWatching()
+          if (claimPulse()) setBox(ringAround(element, mark))
+        }, SETTLE_MS)
       })
     })
     return () => {
-      gone = true
+      inView = false
       clearTimeout(timer)
-      stopWaiting()
+      stopWatching()
     }
   }, [host, mark, ready])
 
