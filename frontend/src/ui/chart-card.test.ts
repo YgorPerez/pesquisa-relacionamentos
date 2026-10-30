@@ -14,7 +14,9 @@ import {
 
 // The way out to GoatCounter; the event's name is in `events.test.ts` and the
 // send in `analytics.e2e.ts`.
-vi.mock('#/analytics/chart-counting', () => ({ countPinnedCard: vi.fn() }))
+vi.mock('#/analytics/chart-counting', () => ({
+  countPinnedCard: vi.fn<(chart: string) => void>(),
+}))
 
 afterEach(() => {
   closeCard()
