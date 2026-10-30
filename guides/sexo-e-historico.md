@@ -532,7 +532,7 @@ visuals:
         value: 67
         fact_sheet: armstrong-2012-orgasmo-ficadas-namoro
     highlight: Primeira ficada com o parceiro
-    note: mulheres heterossexuais, com parceiro homem; as ficadas incluem as que não passaram do beijo
+    note: mulheres heterossexuais, com parceiro homem; as ficadas incluem as que ficaram em beijo e toque não genital
   - id: mais-de-dez-parceiros-brasil
     kind: bars
     title: Brasileiros que já transaram e tiveram mais de dez parceiros na vida, em 2008
@@ -768,7 +768,7 @@ O prazer, por sua vez, é desigual. As mulheres relataram bem menos prazer na ú
 
 {{visual:orgasmo-ficada-namoro}}
 
-Esses dois lados não são a mesma coisa. As ficadas incluem as que não passaram do beijo, 34% das últimas ficadas, e o sexo no namoro conta só o que foi além dele. Na comparação só com transa, a probabilidade prevista de orgasmo foi de 24% na ficada e de 75% no namoro [@armstrong-2012-orgasmo-ficadas-namoro].
+Esses dois lados não são a mesma coisa. As ficadas incluem as que ficaram em beijo e toque não genital, 34% das últimas ficadas, e o sexo no namoro conta só o que foi além do beijo. Contando só os eventos com transa, 42% das últimas ficadas e 74% do último sexo no namoro tiveram orgasmo [@armstrong-2012-orgasmo-ficadas-namoro].
 
 A taxa sobe quando a ficada se repete com o mesmo parceiro. Receber sexo oral subiu a probabilidade prevista de orgasmo na ficada de 11% para 20% [@armstrong-2012-orgasmo-ficadas-namoro]. O que se faz na cama, levado para a ficada, explica menos da metade da diferença entre ficada e namoro. E o prazer conta para o arrependimento: ter gostado do sexo veio com menos arrependimento, com efeito mais forte nas mulheres [@kennair-2018-arrependimento-sexo-casual]. Parte do arrependimento maior delas pode vir de um sexo pior para elas; é inferência nossa, porque o estudo não testou isso.
 
