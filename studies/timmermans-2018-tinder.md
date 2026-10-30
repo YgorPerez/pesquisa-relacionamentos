@@ -28,7 +28,7 @@ Um questionário perguntou a usuários atuais do Tinder na Bélgica sobre seus m
 
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
-| Frequência de deslizar para a direita e matches | Associação positiva não confirmada no modelo ajustado | Resultados, p. 14 do PDF; Tabela 1, modelo 1 | "Contrary to our expectations, the number of swipes did not influence the number of matches." |  |
+| Frequência de deslizar para a direita e matches | Deslizar mais não veio com mais matches no modelo ajustado | Resultados, p. 14 do PDF; Tabela 1, modelo 1 | "Contrary to our expectations, the number of swipes did not influence the number of matches." |  |
 | Matches declarados por gênero | Mais frequentes entre mulheres nesta amostra | Discussão, p. 17 do PDF | "Women in our sample were significantly more likely to have matches than men" |  |
 | Início de conversas por gênero | Mulheres iniciavam menos conversas e recebiam mais primeiras mensagens | Discussão, p. 17 do PDF | "women were less likely to start messages but more likely to receive messages compared to men." |  |
 | Relato de ao menos um encontro sexual de uma noite com alguém do Tinder, entre quem teve encontro presencial | Vinte e três por cento | Medidas, comportamento presencial, p. 13 do PDF | "Twenty-three percent of those with offline Tinder meetings reported to have had at least one one-night stand" |  |
@@ -40,7 +40,7 @@ Um questionário perguntou a usuários atuais do Tinder na Bélgica sobre seus m
 | Número de relações sexuais casuais com gente do Tinder, por motivo de relação | 16% maior entre quem pontuava baixo no motivo de relação | Resultados, p. 16 do PDF; Tabela 2, modelo 6 | "were 16% higher for users with low scores on relationship motive" |  |
 | Número de relacionamentos com compromisso com gente do Tinder, por motivo de relação | Sem associação | Discussão, p. 21 do PDF; Tabela 2, modelo 7 | "having a relationship motive was not associated with reporting a higher number of committed relationships" |  |
 | Número de encontros presenciais com gente do Tinder, por motivo de relação, entre virgens e entre quem já tinha experiência sexual | 41% maior entre virgens; sem aumento entre quem já tinha experiência sexual | Resultados, p. 16 do PDF; Tabela 2, modelo 4 | "The odds of having offline Tinder meetings are 41% higher for virgins with a relationship motive, but not for those with sexual experience and a relationship motive." |  |
-| Interação entre experiência sexual e motivo de relação, no número de encontros presenciais | B = −0,34; Exp(B) = 0,71 | Tabela 2, modelo 4, linha "Sexual Experience × Relationship Motive", p. 31 do PDF | "Relationship Motive -.34" | `scripts/calculations/timmermans-2018-tinder.ts` |
+| Quanto já ter experiência sexual reduz o efeito do motivo de relação no número de encontros presenciais | B = −0,34; Exp(B) = 0,71 | Tabela 2, modelo 4, linha "Sexual Experience × Relationship Motive", p. 31 do PDF | "Relationship Motive -.34" | `scripts/calculations/timmermans-2018-tinder.ts` |
 
 Os percentuais finais descrevem participantes que relataram encontro presencial, não a porcentagem de cada encontro que virou sexo ou relacionamento. As categorias podem se sobrepor e não devem ser somadas. O estudo mede matches, que exigem interesse recíproco, e não curtidas recebidas. A associação positiva esperada entre deslizar e matches não apareceu; isso não demonstra que deslizar mais nunca ajude uma pessoa.
 

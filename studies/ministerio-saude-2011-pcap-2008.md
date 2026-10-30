@@ -29,7 +29,7 @@ A PCAP é o inquérito do Ministério da Saúde sobre conhecimento, atitudes e p
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Tamanho planejado da amostra | 8.000 pessoas de 15 a 64 anos | p. 10, Amostragem | "em 8.000 indivíduos de 15 a 64 anos" |
-| Seleção do entrevistado | Um morador por domicílio, com equiprobabilidade dentro do estrato | p. 10, Amostragem | "apenas um morador foi selecionado para a entrevista, com equiprobabilidade" |
+| Seleção do entrevistado | Um morador por domicílio, todos com a mesma chance dentro do estrato | p. 10, Amostragem | "apenas um morador foi selecionado para a entrevista, com equiprobabilidade" |
 | Perguntas sobre parceiros na vida (autopreenchimento) | Mais de um; se sim, mais de dez | Anexo B, questões 2 e 3 | "Você já teve mais do que 10 parceiros sexuais em toda sua vida?" |
 | Campo | Novembro de 2008 | p. 11, Trabalho de campo | "O trabalho de campo foi realizado durante o mês de novembro de 2008" |
 | Sexualmente ativos com mais de um parceiro e com mais de dez parceiros na vida | 64%; 25,3% | p. 42, Análise descritiva | "64% dos indivíduos sexualmente ativos tiveram mais de um parceiro na vida e 25,3% mais de 10 parceiros na vida" |
