@@ -255,6 +255,27 @@ test.describe('usage count', () => {
   })
 })
 
+test("a chart's card counts when pinned, not on hover nor on the click that unpins", async ({
+  page,
+}) => {
+  const { hits } = recordHits(page)
+  await open(page, GUIDE)
+  const event = 'chart-card/visual-onde-conhecer-pessoas-estudos-lado-a-lado'
+  const pins = () => hits.filter((hit) => hit.p === event)
+  const row = page
+    .locator('#visual-onde-conhecer-pessoas-estudos-lado-a-lado tbody tr')
+    .first()
+
+  await row.hover()
+  await row.click()
+  await expect.poll(() => pins().length).toBe(1)
+  expect(pins()[0]).toMatchObject({ e: 'true' })
+
+  await row.click()
+  await row.click()
+  await expect.poll(() => pins().length).toBe(2)
+})
+
 test('the privacy page says what stays on the device, in the link, in the log and in analytics', async ({
   page,
 }) => {
