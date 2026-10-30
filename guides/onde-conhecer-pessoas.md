@@ -691,17 +691,17 @@ Quem procura alguém costuma ter três dúvidas, nesta ordem: onde procurar, se 
 
 ## O online virou o caminho mais comum, não o da maioria
 
-A pesquisa de [[Stanford]] perguntou a casais americanos como eles se conheceram e montou a série pelo ano do encontro. Em 1995, 2% dos casais héteros tinham se conhecido online. Em 2017, 39% [@rosenfeld-2019-disintermediating-friends]. O online cresceu no espaço que era dos amigos e do trabalho: os amigos caíram de 33% para 20%, e o trabalho, de 19% para 11%. Por volta de 2013, o online passou os amigos, e de 2010 a 2017 os apps de celular responderam por pelo menos metade da alta [@rosenfeld-2019-disintermediating-friends].
+A pesquisa de [[Stanford]] perguntou a casais americanos como eles se conheceram e montou a série pelo ano do encontro. O online cresceu até se tornar o caminho mais comum entre casais héteros formados em 2017 [@rosenfeld-2019-disintermediating-friends]. Amigos e trabalho, por sua vez, passaram a apresentar menos casais [@rosenfeld-2019-disintermediating-friends]. Por volta de 2013, o online passou os amigos, e de 2010 a 2017 os apps de celular responderam por pelo menos metade da alta [@rosenfeld-2019-disintermediating-friends].
 
 {{visual:como-se-conheceram-1995-2017}}
 
-Bar e restaurante subiram de 19% para 27%, mas não porque as pessoas passaram a se conhecer mais no bar. A alta vem toda de casais que se conheceram online e marcaram o primeiro encontro num bar [@rosenfeld-2019-disintermediating-friends]. O que mudou de verdade foi quem apresenta o casal. Entre os casais que se conheceram online, os apresentados por um amigo eram 11,2% em 2009 e 3,7% em 2017 [@rosenfeld-2019-disintermediating-friends]. A rede de amigos pesa menos do que pesava para a geração anterior, e mesmo assim ainda junta um em cada cinco casais novos nos EUA.
+Bar e restaurante também ganharam espaço, mas não porque as pessoas passaram a se conhecer mais no bar. A alta vem toda de casais que se conheceram online e marcaram o primeiro encontro num bar [@rosenfeld-2019-disintermediating-friends]. O que mudou de verdade foi quem apresenta o casal. Entre os casais que se conheceram online, os apresentados por um amigo eram 11,2% em 2009 e 3,7% em 2017 [@rosenfeld-2019-disintermediating-friends]. A rede de amigos pesa menos do que pesava para a geração anterior, e mesmo assim ainda é um dos principais caminhos nos EUA [@rosenfeld-2019-disintermediating-friends].
 
 {{myth:maioria-por-app}}
 
 Outra pesquisa americana dá um número bem menor, e as duas estão certas. Os 39% contam só os casais héteros que se formaram em 2017. O [[Pew]] contou todos os adultos com parceiro em 2022, inclusive quem casou décadas atrás, antes de existir site de namoro, e chegou a 10% [@pew-2023-2020-online-dating]. {{you:jovens-por-app}} Entre os adultos com parceiro com menos de 30 anos, cujos casais são mais recentes, a fatia sobe para 20% [@pew-2023-2020-online-dating]. A pergunta também muda: o Pew pergunta só por site ou app de namoro, e o "online" de Stanford junta site, app, rede social, jogo e chat [@rosenfeld-2019-disintermediating-friends].
 
-Na Europa, as [[amostras sorteadas]] ficam perto dos 10%. No Reino Unido, 10,9% dos casais que passaram a morar juntos de 2008 a 2012 se conheceram online [@lampard-2020-natsal-reino-unido], e na França, menos de 9% de quem conheceu o parceiro atual de 2005 a 2013 o conheceu num site de encontro [@bergstrom-2016-epic-franca]. São dados de antes dos apps. Um estudo de 50 países fica no meio, com 16% das pessoas com parceiro e 21% nas relações que começaram de 2010 em diante [@kowal-2025-50-paises]. A amostra dele veio de [[painéis online]], e painel online tende a exagerar o uso de internet: na França, deu 34% de uso de sites, contra 16% a 18% numa amostra sorteada [@bergstrom-2016-epic-franca].
+Na Europa, as [[amostras sorteadas]] ficam perto dos 10%. No Reino Unido, essa foi a ordem de grandeza entre os casais que passaram a morar juntos de 2008 a 2012 [@lampard-2020-natsal-reino-unido], e na França, menos de 9% de quem conheceu o parceiro atual de 2005 a 2013 o conheceu num site de encontro [@bergstrom-2016-epic-franca]. São dados de antes dos apps. Um estudo de 50 países fica no meio, e a fatia online sobe nas relações que começaram de 2010 em diante [@kowal-2025-50-paises]. A amostra dele veio de [[painéis online]], e painel online tende a exagerar o uso de internet: na França, deu 34% de uso de sites, contra 16% a 18% numa amostra sorteada [@bergstrom-2016-epic-franca].
 
 {{visual:fatia-online-por-estudo}}
 
@@ -709,7 +709,7 @@ Qual número usar depende do que você quer saber. Para saber como começam os c
 
 {{myth:metade-a-dois-tercos-online}}
 
-{{brazil}} Aqui, não achamos pesquisa com amostra sorteada que pergunte onde o casal atual se conheceu, e o registro civil não guarda essa informação [@ibge-2024-registro-civil]. Os números que existem vêm de painéis online. Num painel de 2017, 23% de quem estava num relacionamento conheceu o parceiro pela internet, 17% em sites e redes sociais e 6% em apps de paquera [@opinionbox-2017-relacionamentos-brasil]. No recorte brasileiro do estudo de 50 países, 23 de 119 pessoas com parceiro o conheceram online, 19,3% numa conta nossa, sem peso e com poucos casos; o Brasil ficou em 15º entre os 50 países [@kowal-2025-50-paises].
+{{brazil}} Aqui, não achamos pesquisa com amostra sorteada que pergunte onde o casal atual se conheceu, e o registro civil não guarda essa informação [@ibge-2024-registro-civil]. Os números que existem vêm de painéis online. Num painel de 2017, 23% de quem estava num relacionamento conheceu o parceiro pela internet, 17% em sites e redes sociais e 6% em apps de paquera [@opinionbox-2017-relacionamentos-brasil]. No recorte brasileiro do estudo de 50 países, a fatia que conheceu o parceiro online ficou perto de um quinto numa conta nossa, sem peso e com poucos casos [@kowal-2025-50-paises].
 
 {{myth:casamentos-brasil-quase-vinte-por-cento}}
 
@@ -717,7 +717,7 @@ Qual número usar depende do que você quer saber. Para saber como começam os c
 
 {{brazil}} A única amostra nacional que achamos, do [[Datafolha]], é de 2009 e mede outra coisa: 19% das pessoas de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido encontrar a pessoa [@datafolha-2009-sexualidade-brasileiros]. Do que se mediu fora, o que deve valer aqui é a direção, não o tamanho: o online pesa mais entre os casais que se formam agora do que no total. Nenhum estudo brasileiro testou isso.
 
-Quem você procura muda a conta mais que o país. Na França, uma pessoa em cada três que conheceu um parceiro do mesmo sexo entre 2005 e 2013 o conheceu num site [@bergstrom-2016-epic-franca]. Nos EUA, 24% dos adultos lésbicas, gays e bissexuais com parceiro o conheceram em site ou app, contra 9% dos héteros [@pew-2023-2020-online-dating], e os 39% de Stanford valem só para casais héteros, porque a versão publicada não dá o número dos casais do mesmo sexo [@rosenfeld-2019-disintermediating-friends]. O gênero, no estudo de 50 países, não mudou a chance de ter conhecido o parceiro online [@kowal-2025-50-paises].
+Quem você procura muda a conta mais que o país. Na França, uma pessoa em cada três que conheceu um parceiro do mesmo sexo entre 2005 e 2013 o conheceu num site [@bergstrom-2016-epic-franca]. Nos EUA, adultos lésbicas, gays e bissexuais com parceiro o conheceram em site ou app com mais frequência que os héteros [@pew-2023-2020-online-dating], e os 39% de Stanford valem só para casais héteros, porque a versão publicada não dá o número dos casais do mesmo sexo [@rosenfeld-2019-disintermediating-friends]. O gênero, no estudo de 50 países, não mudou a chance de ter conhecido o parceiro online [@kowal-2025-50-paises].
 
 {{question:onde-os-casais-se-conhecem}}
 
@@ -727,11 +727,11 @@ Saber onde os casais se conheceram não diz onde você tem mais chance. Para iss
 
 O que existe dá duas pistas. A primeira é que a maioria dos casais começa fora do app, mesmo entre os jovens. Nos EUA, só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro [@pew-2023-2020-online-dating]. No Reino Unido, amigos e família eram o lugar onde mais casais se conheciam, 25,8% dos que passaram a morar juntos de 2008 a 2012 [@lampard-2020-natsal-reino-unido]. Esses caminhos têm uma coisa em comum: você reencontra as mesmas pessoas várias vezes.
 
-A segunda pista é que, dentro do app, a disputa é desigual. Num site de namoro em quatro cidades dos EUA, os homens mandaram mais de 80% das primeiras mensagens, e as mulheres responderam a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com 0,6% de quem curtiram, e os de mulher, com 10,5% [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real. Num questionário com usuários do Tinder na Bélgica, as mulheres também relataram mais matches que os homens [@timmermans-2018-tinder]. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas [@timmermans-2018-tinder].
+A segunda pista é que, dentro do app, a disputa é desigual. Num site de namoro em quatro cidades dos EUA, os homens mandaram mais de 80% das primeiras mensagens, e as mulheres responderam a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com uma fatia muito menor de quem curtiram do que os de mulher [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real. Num questionário com usuários do Tinder na Bélgica, as mulheres também relataram mais matches que os homens [@timmermans-2018-tinder]. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas [@timmermans-2018-tinder].
 
 {{visual:match-no-tinder}}
 
-Os usuários contam a mesma coisa pelo outro lado. Nos EUA, 64% dos homens que usaram app no último ano se sentiram inseguros por receber poucas mensagens, e 54% das mulheres se sentiram sobrecarregadas por receber mensagens demais [@pew-2023-2020-online-dating]. {{you:usuarias-conteudo-sexual}} Entre as usuárias com menos de 50 anos, 56% receberam mensagem ou imagem sexual que não pediram [@pew-2023-2020-online-dating].
+Os usuários contam a mesma coisa pelo outro lado. Nos EUA, entre quem usou app no último ano, os homens se sentiram mais inseguros por receber poucas mensagens, e as mulheres, mais sobrecarregadas por receber mensagens demais [@pew-2023-2020-online-dating]. {{you:usuarias-conteudo-sexual}} Entre as usuárias com menos de 50 anos, 56% receberam mensagem ou imagem sexual que não pediram [@pew-2023-2020-online-dating].
 
 {{visual:mensagens-de-menos-e-de-mais}}
 
@@ -739,7 +739,7 @@ Na prática, um homem hétero que conta só com o app tende a mandar muita mensa
 
 {{question:app-ou-presencial}}
 
-{{brazil}} Não achamos estudo brasileiro sobre a chance em cada caminho, só dois indícios sobre o app. Entre brasileiros com smartphone, 29% dos que têm de 16 a 29 anos já saíram com alguém que conheceram em app, contra 14% dos que têm 50 anos ou mais [@mobiletime-2025-apps-relacionamento-brasil]. É ter saído com alguém, não namorado, e a amostra é de um [[painel online]].
+{{brazil}} Não achamos estudo brasileiro sobre a chance em cada caminho, só dois indícios sobre o app. Entre brasileiros com smartphone, os mais jovens saíram com alguém que conheceram em app com mais frequência que os mais velhos [@mobiletime-2025-apps-relacionamento-brasil]. É ter saído com alguém, não namorado, e a amostra é de um [[painel online]].
 
 {{visual:encontro-por-app-por-idade}}
 
@@ -759,13 +759,13 @@ Um estudo americano chegou mais perto de testar a causa. No lançamento, o Tinde
 
 {{myth:app-acabou-com-o-namoro}}
 
-O app rende mais para quem tem poucos parceiros possíveis por perto. Antes dos apps de celular, gays, lésbicas e héteros de meia-idade eram os que mais dependiam da internet para achar alguém, e os héteros jovens estavam entre os que menos conheciam o parceiro online [@rosenfeld-2012-searching-for-a-mate]. {{you:casais-do-mesmo-sexo-online}} Dos casais do mesmo sexo formados na década antes de 2009, 41% se conheceram online, contra 17% dos casais héteros [@rosenfeld-2012-searching-for-a-mate]. A diferença continua com os apps, e a experiência também é melhor: 61% dos usuários lésbicas, gays e bissexuais contam uma experiência positiva, contra 53% dos héteros [@pew-2023-2020-online-dating].
+O app rende mais para quem tem poucos parceiros possíveis por perto. Antes dos apps de celular, gays, lésbicas e héteros de meia-idade eram os que mais dependiam da internet para achar alguém, e os héteros jovens estavam entre os que menos conheciam o parceiro online [@rosenfeld-2012-searching-for-a-mate]. {{you:casais-do-mesmo-sexo-online}} Entre os casais formados na década antes de 2009, os do mesmo sexo se conheceram online com mais frequência que os héteros [@rosenfeld-2012-searching-for-a-mate]. A diferença continua com os apps, e a experiência também é melhor: 61% dos usuários lésbicas, gays e bissexuais contam uma experiência positiva, contra 53% dos héteros [@pew-2023-2020-online-dating].
 
 {{visual:quem-conheceu-online}}
 
 Dentro do app, as pessoas miram um pouco acima de si. Num site de namoro dos EUA, homens e mulheres escreveram, em média, para pessoas cerca de 25% mais "desejáveis" que eles, e quanto maior a distância, menor a chance de resposta [@bruch-2018-aspirational-pursuit].
 
-O custo mais comum é o assédio. Entre os americanos que já usaram, 38% receberam mensagem ou imagem sexual sem pedir, 30% continuaram sendo procurados depois de dizer não, 24% foram xingados e 6% foram ameaçados de agressão [@pew-2023-2020-online-dating]. Pelo menos uma das quatro coisas aconteceu com 48% dos usuários e com 64% dos usuários lésbicas, gays e bissexuais. {{you:usuarias-assedio}} Entre as usuárias com menos de 50 anos, foram 66% [@pew-2023-2020-online-dating].
+O custo mais comum é o assédio. Entre os americanos que já usaram, 38% receberam mensagem ou imagem sexual sem pedir, 30% continuaram sendo procurados depois de dizer não, 24% foram xingados e 6% foram ameaçados de agressão [@pew-2023-2020-online-dating]. Pelo menos uma das quatro coisas aconteceu com quase metade dos usuários, e foi mais comum entre lésbicas, gays e bissexuais. {{you:usuarias-assedio}} Entre as usuárias com menos de 50 anos, a maioria sofreu assédio [@pew-2023-2020-online-dating].
 
 {{visual:assedio-no-app}}
 
@@ -790,7 +790,7 @@ Então vale? Para a maioria das pessoas que querem conhecer alguém, sim, desde 
 
 ## Começar no app não deixa a relação mais frágil
 
-Digamos que deu certo e você conheceu alguém no app. A relação sai mais frágil por ter começado ali? Nos EUA, um painel acompanhou os mesmos casais por seis anos. Com o mesmo perfil, os que se conheceram online a partir de 1995 terminaram 7,0% ao ano, contra 7,3% dos outros, uma diferença que a estatística não distingue de zero [@rosenfeld-2017-marriage-choice-couplehood]. Esses casais se conheceram antes do Tinder. Com os dados de 2017, que já pegam os apps, como o casal se conheceu também não mudou o risco de término [@rosenfeld-2019-disintermediating-friends].
+Digamos que deu certo e você conheceu alguém no app. A relação sai mais frágil por ter começado ali? Nos EUA, um painel acompanhou os mesmos casais por seis anos. Com o mesmo perfil, a taxa de término por ano dos que se conheceram online a partir de 1995 não diferiu estatisticamente da dos outros [@rosenfeld-2017-marriage-choice-couplehood]. Esses casais se conheceram antes do Tinder. Com os dados de 2017, que já pegam os apps, como o casal se conheceu também não mudou o risco de término [@rosenfeld-2019-disintermediating-friends].
 
 Um número do mesmo estudo assusta à primeira vista. Sem nenhum controle, os casais online tinham 2,46 vezes a chance de terminar [@rosenfeld-2017-marriage-choice-couplehood]. Só que eles estavam juntos havia 4,4 anos em média, contra 19,1 dos outros, e casal novo termina mais que casal antigo, de qualquer jeito que tenha se conhecido. Com o tempo de relação levado em conta, a diferença deixou de ser [[significativa]]. É o cuidado que vale para qualquer manchete do tipo "casais de app terminam mais".
 
@@ -802,7 +802,7 @@ A explicação mais provável não é o app, é quem o escolhe. O número americ
 
 {{visual:por-que-online-casa-mais}}
 
-Na [[satisfação]] com a relação, os estudos apontam para lados opostos: em 50 países, quem se conheceu online deu nota um pouco menor, 4,20 contra 4,28 numa escala de 1 a 5 [@kowal-2025-50-paises]. Nos EUA, numa pesquisa encomendada pela eHarmony, quem casou de 2005 a 2012 e se conheceu online deu nota um pouco maior, 5,64 contra 5,48 de 1 a 7, e se separou um pouco menos [@cacioppo-2013-satisfacao-por-local]. Em 2009, a nota dos casais online era igual à média, 4,48 contra 4,47 [@rosenfeld-2012-searching-for-a-mate], e na Suíça não houve diferença clara entre quem conheceu o parceiro por app e quem o conheceu fora da internet [@potarca-2020-suica-apps].
+Na [[satisfação]] com a relação, os estudos apontam para lados opostos: em 50 países, quem se conheceu online deu nota um pouco menor [@kowal-2025-50-paises]. Nos EUA, numa pesquisa encomendada pela eHarmony, quem casou de 2005 a 2012 e se conheceu online deu nota um pouco maior e se separou um pouco menos [@cacioppo-2013-satisfacao-por-local]. Em 2009, a nota dos casais online era igual à média [@rosenfeld-2012-searching-for-a-mate], e na Suíça não houve diferença clara entre quem conheceu o parceiro por app e quem o conheceu fora da internet [@potarca-2020-suica-apps].
 
 Os resultados convivem por três motivos. As diferenças são pequenas: no estudo de 50 países, 0,08 ponto numa escala de 1 a 5, embora o artigo publique um efeito maior que as próprias médias não sustentam [@kowal-2025-50-paises]. Os estudos de satisfação olham um momento só e só veem quem continua junto, porque quem se separou insatisfeito sai da conta [@potarca-2020-suica-apps]. E cada um compara populações diferentes, de casais casados nos EUA a [[painéis online]] em 50 países. Os estudos que acompanham os mesmos casais por anos têm o desenho melhor, e neles o online não sai pior.
 
@@ -810,7 +810,7 @@ Os resultados convivem por três motivos. As diferenças são pequenas: no estud
 
 {{question:o-lugar-muda-a-relacao}}
 
-Entre os lugares fora da internet, a separação não variou na pesquisa da eHarmony, e a satisfação variou pouco, de 5,31 para quem se conheceu num encontro às cegas a 5,67 para quem cresceu junto, de 1 a 7 [@cacioppo-2013-satisfacao-por-local]. Os casais da escola, do local de culto e de eventos sociais ficaram no alto; os de bar, do trabalho e do encontro às cegas, embaixo. Os próprios autores chamam os efeitos de pequenos.
+Entre os lugares fora da internet, a separação não variou na pesquisa da eHarmony, e a satisfação variou pouco entre os lugares [@cacioppo-2013-satisfacao-por-local]. Os casais da escola, do local de culto e de eventos sociais ficaram no alto; os de bar, do trabalho e do encontro às cegas, embaixo. Os próprios autores chamam os efeitos de pequenos.
 
 {{visual:satisfacao-por-lugar}}
 
@@ -824,21 +824,21 @@ Quase nada disso separa por Perfil. No estudo de 50 países, a pequena diferenç
 
 Para quem o namoro anda, a pergunta seguinte costuma ser quando casar. Aqui, ao contrário do resto do Guia, os dados são brasileiros, do [[IBGE]], e contam todo mundo: o registro civil conta os casamentos, e o Censo, quem mora junto.
 
-{{brazil}} {{you:homens-ao-casar}} Em 2024, os homens solteiros que se casaram no civil com uma mulher tinham em média 31,5 anos. {{you:mulheres-ao-casar}} As mulheres solteiras que se casaram com um homem tinham 29,3 [@ibge-2024-registro-civil]. Em 2004, eram 27,8 e 24,9 anos [@ibge-2024-registro-civil]. {{you:mesmo-sexo-ao-casar}} Nos casamentos entre pessoas do mesmo sexo, a idade média dos solteiros foi de 34,7 anos entre os homens e de 32,5 entre as mulheres [@ibge-2024-registro-civil].
+{{brazil}} {{you:homens-ao-casar}} Em 2024, os homens solteiros que se casaram no civil com uma mulher eram, em média, mais velhos que elas. {{you:mulheres-ao-casar}} Tanto as mulheres quanto os homens se casaram mais tarde que em 2004 [@ibge-2024-registro-civil]. {{you:mesmo-sexo-ao-casar}} Nos casamentos entre pessoas do mesmo sexo, a idade média dos solteiros foi ainda maior, entre homens e entre mulheres [@ibge-2024-registro-civil].
 
 {{visual:idade-media-ao-casar}}
 
-{{brazil}} O casamento civil chega bem depois de morar junto. A primeira união, com ou sem papel, sai em média aos 26,3 anos para os homens e aos 23,6 para as mulheres [@ibge-2022-censo-unioes]. {{you:uniao-sem-casamento}} Entre os jovens, morar junto sem casar é a regra: 75,6% das pessoas de 20 a 24 anos que viviam com alguém estavam em união sem casamento, e 62,2% das de 25 a 29 [@ibge-2022-censo-unioes]. Entre os casais do mesmo sexo, 77,6% [@ibge-2022-censo-unioes]. Por isso a idade ao casar não é a idade em que o casal começa a vida junto: quem morou junto antes entra como solteiro no registro civil [@ibge-2024-registro-civil].
+{{brazil}} O casamento civil chega bem depois de morar junto. A primeira união, com ou sem papel, começa mais cedo para homens e mulheres [@ibge-2022-censo-unioes]. {{you:uniao-sem-casamento}} Entre os jovens, morar junto sem casar é a regra: 75,6% das pessoas de 20 a 24 anos que viviam com alguém estavam em união sem casamento, e 62,2% das de 25 a 29 [@ibge-2022-censo-unioes]. Entre os casais do mesmo sexo, 77,6% [@ibge-2022-censo-unioes]. Por isso a idade ao casar não é a idade em que o casal começa a vida junto: quem morou junto antes entra como solteiro no registro civil [@ibge-2024-registro-civil].
 
 {{visual:uniao-e-casamento}}
 
-{{brazil}} Casar mais velho também ficou comum. Das mulheres que se casaram com homens em 2024, contando quem casava de novo, 25,3% tinham 40 anos ou mais; em 2004 eram 8,5% [@ibge-2024-registro-civil]. Parte disso é segundo casamento: em 31,1% dos casamentos de 2024, pelo menos um dos dois já tinha sido casado, contra 13,5% em 2004. E casa-se menos, 948.925 casamentos civis em 2024 contra uma média de 1.076.280 por ano de 2015 a 2019 [@ibge-2024-registro-civil].
+{{brazil}} Casar mais velho também ficou comum. Das mulheres que se casaram com homens em 2024, contando quem casava de novo, 25,3% tinham 40 anos ou mais; em 2004 eram 8,5% [@ibge-2024-registro-civil]. Parte disso é segundo casamento: ficou mais comum pelo menos um dos dois já ter sido casado. E casa-se menos, 948.925 casamentos civis em 2024 contra uma média de 1.076.280 por ano de 2015 a 2019 [@ibge-2024-registro-civil].
 
 {{visual:segundo-casamento}}
 
 {{question:com-que-idade-se-casa}}
 
-Casar mais tarde é um problema? Pelo que se mediu, não. Nos EUA, entre mulheres brancas, a chance de a separação vir até o quinto ano caiu de 31% para quem casou antes dos 20 anos a 9% para quem casou aos 30 a 32, e mal subiu depois, 11% aos 33 ou mais [@lehrer-2013-idade-casamento]. É associação, não causa, e o estudo não ouviu homens. {{brazil}} O único dado brasileiro que achamos é dos anos 1990: entre mulheres de 15 a 49 anos, o risco de uma união terminar era maior entre as muito jovens e as mais velhas, e menor por volta dos 25 anos [@leone-2007-dissolucao-brasil]. Não achamos estudo brasileiro recente sobre idade ao casar e divórcio. A Pergunta [Casar cedo aumenta a chance de divórcio?](/manter-a-relacao#casar-cedo-e-divorcio) trata disso com mais estudos.
+Casar mais tarde é um problema? Pelo que se mediu, não. Nos EUA, entre mulheres brancas, a chance de a separação vir até o quinto ano caiu até a faixa de 30 a 32 anos, sem aumento estatisticamente claro depois [@lehrer-2013-idade-casamento]. É associação, não causa, e o estudo não ouviu homens. {{brazil}} O único dado brasileiro que achamos é dos anos 1990: entre mulheres de 15 a 49 anos, o risco de uma união terminar era maior entre as muito jovens e as mais velhas, e menor por volta dos 25 anos [@leone-2007-dissolucao-brasil]. Não achamos estudo brasileiro recente sobre idade ao casar e divórcio. A Pergunta [Casar cedo aumenta a chance de divórcio?](/manter-a-relacao#casar-cedo-e-divorcio) trata disso com mais estudos.
 
 {{visual:separacao-por-idade-ao-casar}}
 
