@@ -405,7 +405,7 @@ findings:
 myths:
   - id: mulher-sempre-se-arrepende
     claim: Mulher sempre se arrepende de sexo casual.
-    why_not: 'Não: elas se arrependem mais que os homens, mas cerca de metade não se arrepende. Entre as heterossexuais de um questionário com mais de 24 mil adultos, 27% ficaram contentes com a última transa casual e 26% neutras. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter gostado do sexo veio com menos arrependimento.'
+    why_not: 'Não: elas se arrependem mais que os homens, mas cerca de metade não se arrepende, como mostra o gráfico. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter gostado do sexo veio com menos arrependimento.'
     fact_sheets:
       [
         galperin-2013-arrependimento-sexual,
