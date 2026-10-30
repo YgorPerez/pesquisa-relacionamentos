@@ -771,7 +771,7 @@ Quem você procura muda a conta mais que o país. Na França, uma pessoa em cada
 
 ## Ninguém mediu a sua chance em cada caminho
 
-Saber onde os casais se conheceram não diz onde você tem mais chance. Para isso seria preciso contar também quem tentou cada caminho e não achou ninguém. O único estudo que lemos que chegou perto é o painel japonês, de antes dos apps de celular e com poucos casos por atividade [@miwa-2010-busca-por-caminho]. Ninguém comparou uma hora no app com uma hora numa aula de dança.
+Saber onde os casais se conheceram não diz onde você tem mais chance. Para isso seria preciso contar também quem tentou cada caminho e não achou ninguém. O único estudo que lemos que chegou perto é um painel japonês que acompanhou solteiros por um ano, de antes dos apps de celular e com poucos casos por atividade [@miwa-2010-busca-por-caminho]. Ninguém comparou uma hora no app com uma hora numa aula de dança.
 
 O que existe dá duas pistas. A primeira é que a maioria dos casais começa fora do app, mesmo entre os jovens. Nos EUA, só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro [@pew-2023-2020-online-dating]. No Reino Unido, amigos e família eram o lugar onde mais casais se conheciam, 25,8% dos que passaram a morar juntos de 2008 a 2012 [@lampard-2020-natsal-reino-unido]. Esses caminhos têm uma coisa em comum: você reencontra as mesmas pessoas várias vezes.
 
