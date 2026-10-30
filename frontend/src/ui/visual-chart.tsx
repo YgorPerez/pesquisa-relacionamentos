@@ -1,8 +1,4 @@
-import { barX, defineChart, dot } from '@tanstack/charts'
-import { scaleBand } from '@tanstack/charts/scales/band'
-import { scaleLinear } from '@tanstack/charts/scales/linear'
-import { Chart } from '@tanstack/react-charts'
-import { useMemo, useState } from 'react'
+import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import type { NumberView } from '#/content/visuals-view'
 import { SourceRefs, VisualFrame } from './visual-frame'
 import { CHART_COPY } from './visual-chart.copy'
@@ -22,56 +18,72 @@ export interface ChartView {
   readonly rows: ReadonlyArray<ChartRow>
 }
 
-const THEME = {
-  foreground: 'var(--color-tinta)',
-  muted: 'var(--color-tinta-2)',
-  grid: 'var(--color-tinta-2)',
-  background: 'transparent',
-  palette: ['var(--color-tinta)'],
-}
+type PlotModule = typeof import('./visual-chart-plot')
+let loaded: PlotModule | undefined
+const loadPlot = () =>
+  import('./visual-chart-plot').then((m) => {
+    loaded = m
+    return m
+  })
+/** The server loads the library before its first render (`server.ts`), so the
+ * lazy piece resolves at once there and the SVG goes in the HTML. */
+export const preloadPlot = () => loadPlot().then(() => undefined)
 
-/** The first two migrated charts exercise the library before the rollout. */
-export function VisualChart({ visual }: { visual: ChartView }) {
-  const [selected, setSelected] = useState<ChartRow | null>(null)
-  const definition = useMemo(
-    () =>
-      defineChart({
-        marks:
-          visual.kind === 'bars'
-            ? [
-                barX(visual.rows, {
-                  x: 'value',
-                  y: 'id',
-                  key: 'id',
-                  maxThickness: 18,
-                }),
-              ]
-            : [dot(visual.rows, { x: 'value', y: 'id', key: 'id', r: 5 })],
-        scales: {
-          x: { scale: () => scaleLinear().domain([0, 100]), grid: true },
-          y: {
-            scale: () =>
-              scaleBand<string>()
-                .domain(visual.rows.map((row) => row.id))
-                .padding(0.3),
-            axis: false,
-          },
-        },
-        theme: THEME,
-      }),
-    [visual],
+let want: () => void = () => {}
+const wanted = new Promise<void>((resolve) => {
+  want = resolve
+})
+
+const Plot = lazy(() =>
+  loaded
+    ? { then: (done: (m: PlotModule) => void) => done(loaded!) }
+    : import.meta.env.SSR
+      ? loadPlot()
+      : wanted.then(loadPlot),
+) as PlotModule['default']
+
+const Island = memo(function Island({
+  visual,
+  onSelect,
+}: {
+  visual: ChartView
+  onSelect: (row: ChartRow | null) => void
+}) {
+  return (
+    <Suspense fallback={null}>
+      <Plot visual={visual} onSelect={onSelect} />
+    </Suspense>
   )
+})
+
+export const VisualChart = memo(function VisualChart({
+  visual,
+}: {
+  visual: ChartView
+}) {
+  const [selected, setSelected] = useState<ChartRow | null>(null)
+  const host = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const element = host.current
+    if (!element) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) want()
+      },
+      { rootMargin: '50% 0px' },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
   return (
     <VisualFrame domId={visual.id} title={visual.title} note={visual.note}>
-      <Chart
-        definition={definition}
-        initialWidth={350}
-        height={visual.rows.length * 44 + 40}
-        ariaLabel={visual.title}
-        idPrefix={visual.id}
-        className="font-body text-tinta"
-        onSelect={(point) => setSelected(point?.datum ?? null)}
-      />
+      <div
+        ref={host}
+        onPointerDown={() => want()}
+        onFocus={() => want()}
+      >
+        <Island visual={visual} onSelect={setSelected} />
+      </div>
       <ol className="m-0 list-none p-0">
         {visual.rows.map((row) => (
           <li key={row.id}>
@@ -108,4 +120,4 @@ export function VisualChart({ visual }: { visual: ChartView }) {
       )}
     </VisualFrame>
   )
-}
+})

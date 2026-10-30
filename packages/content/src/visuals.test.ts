@@ -130,6 +130,68 @@ describe('a Visual that passes', () => {
   })
 })
 
+/** A dot row per Study (#471): each point names its country, year and
+ * definition, out of the Visual's closed list. */
+const DOTS = (
+  first = 'year: 2019, definition: apps',
+  second = 'definition: online',
+) =>
+  `  - id: lado-a-lado
+    kind: study-table
+    title: Lado a lado
+    definitions:
+      - { id: apps, legend: só aplicativos }
+      - { id: online, legend: qualquer canal online }
+    rows:
+      - { fact_sheet: silva-2020-apps-brasil, measure: Por app, value: 18, unit: '%', country: Brasil, ${first} }
+      - { fact_sheet: silva-2020-apps-brasil, measure: Jovens, value: 24, unit: '%', country: Estados Unidos, ${second} }`
+
+describe('a point of a Visual', () => {
+  it('names its country, year and one of the Visual’s definitions', () => {
+    const result = withVisuals(DOTS(), '{{visual:lado-a-lado}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      definitions: [{ id: 'apps' }, { id: 'online' }],
+      rows: [
+        { country: 'Brasil', year: 2019, definition: 'apps' },
+        { country: 'Estados Unidos', definition: 'online' },
+      ],
+    })
+  })
+
+  it('cannot name a definition outside the closed list', () => {
+    const result = withVisuals(
+      DOTS(undefined, 'definition: casais'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1.definition: "casais" is not one of the Visual's definitions (apps, online)`,
+    ])
+  })
+
+  it('names a definition when the Visual has a list of them', () => {
+    const result = withVisuals(
+      DOTS(undefined, 'year: 2019'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1: the Visual has definitions, so each point names one`,
+    ])
+  })
+
+  it('carries a year the Fact sheet has', () => {
+    const result = withVisuals(
+      DOTS('year: 1987, definition: apps'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.0.year: the number 1987 is not in the fact sheet "silva-2020-apps-brasil"; write it in the Visual as the fact sheet has it`,
+    ])
+  })
+})
+
 describe('the build rejects', () => {
   it('a number that is not in the cited Fact sheet', () => {
     const result = withVisuals(BARS.replace('value: 24', 'value: 25'), PLACED)
