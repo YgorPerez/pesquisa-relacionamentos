@@ -167,7 +167,12 @@ it.each([
 )
 
 it("a Visual's label rests on the rings of its figure", async () => {
-  const panel = await whereFrom('/onde-conhecer-pessoas', '18 a 24 anos')
+  // The diagram's: a chart the library draws (#470) has its words in the
+  // SVG, which is not quotable text.
+  const panel = await whereFrom(
+    '/onde-conhecer-pessoas',
+    'O lugar onde o casal',
+  )
   expect(panel.getByText(CITES.one)).toBeVisible()
-  expect(titles(panel)).toEqual([SILVA])
+  expect(titles(panel)).toEqual([SILVA, COSTA])
 })

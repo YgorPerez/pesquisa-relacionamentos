@@ -86,6 +86,46 @@ it('tags "você" on the Studies that cover the Profile', () => {
   expect(young.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
 })
 
+it("wraps a bar's long label in two lines that fit a phone, and leaves the rest to the tap and the list", () => {
+  const long = (label: string) => ({ ...BARS.points[0]!, label })
+  const bars = page(
+    renderToString(
+      <VisualChart
+        chart={{
+          ...BARS,
+          points: [
+            long(
+              'Homens que se sentiram inseguros por receber poucas mensagens',
+            ),
+            {
+              ...long(
+                'Términos com piora média ou maior, no sofrimento ou na satisfação com a vida',
+              ),
+              key: '1',
+            },
+          ],
+        }}
+        country={null}
+        profile={null}
+      />,
+    ),
+  )
+  const texts = [...bars.querySelectorAll('svg[role="img"] text')].map(
+    (t) => t.textContent ?? '',
+  )
+  expect(texts).toContain('Homens que se sentiram inseguros por')
+  expect(texts).toContain('receber poucas mensagens')
+  expect(texts).toContain('Términos com piora média ou maior, no')
+  expect(texts.filter((t) => t.startsWith('sofrimento ou'))).toEqual([
+    'sofrimento ou na satisfação com a vida',
+  ])
+  expect(Math.max(...texts.map((t) => t.length))).toBeLessThanOrEqual(40)
+  // The whole label is still read, in the list under the chart.
+  expect(bars.body.textContent).toContain(
+    'Términos com piora média ou maior, no sofrimento ou na satisfação com a vida',
+  )
+})
+
 it('shows the definitions as a legend of shapes', () => {
   const dots = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),

@@ -71,11 +71,10 @@ export interface ChartView {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-/** The Visuals the library draws, by `<topic>/<id>`. #471 moved one bar
- * comparison and one Study table; #472–#475 move the rest, and then the
- * rule becomes the kind alone. */
+/** The Visuals the library draws besides every bar comparison, by
+ * `<topic>/<id>`. #471 moved one Study table; #472–#475 move the rest, and
+ * then the rule becomes the kind alone. */
 export const LIBRARY_VISUALS: ReadonlySet<string> = new Set([
-  'onde-conhecer-pessoas/como-se-conheceram-1995-2017',
   'onde-conhecer-pessoas/fatia-online-por-estudo',
 ])
 
@@ -148,7 +147,7 @@ export function chartView(
   }
   if (visual.kind === 'bars') {
     const definitions = visual.definitions ?? []
-    const points = visual.bars.map((bar, i): ChartPoint => {
+    const all = visual.bars.map((bar, i): ChartPoint => {
       const number = numberView(bar, visual.unit, cite)
       return {
         key: `${i}`,
@@ -160,6 +159,10 @@ export function chartView(
         ...pointFacts(bar, library, definitions),
       }
     })
+    // Most comparisons split one country's survey: a ring on every bar
+    // would mark nothing. Brazil's ring sets it apart from other countries.
+    const apart = all.some((p) => p.country && !p.brazil)
+    const points = apart ? all : all.map((p) => ({ ...p, brazil: false }))
     return {
       kind: 'bars',
       ...common,

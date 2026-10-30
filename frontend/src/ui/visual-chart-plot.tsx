@@ -40,31 +40,68 @@ const THEME = {
   background: 'transparent',
   palette: [INK],
 }
-/** A row: the label line above, the mark below it. A dot row has the
- * Study's measure too, in up to two lines under its title. */
+/** A row: the label above, the mark below it, each line's distance above
+ * the mark in `label`. A bar's label longer than `LABEL_LINE` takes two
+ * lines; a dot row has the Study's measure too, in up to two lines under
+ * its title. */
 const LAYOUT = {
-  bars: { row: 50, label: 15, measure: [] },
-  dots: { row: 80, label: 42, measure: [28, 15] },
+  bars: { row: 50, label: [15], measure: [] },
+  wrappedBars: { row: 66, label: [31, 15], measure: [] },
+  dots: { row: 80, label: [42], measure: [28, 15] },
 } as const
-/** Letters per line of a measure, which fits a 350px phone. */
+/** Letters per line of a bar's label (13px) and of a measure (12px), which
+ * fit a 350px phone. */
+const LABEL_LINE = 40
 const MEASURE_LINE = 56
 const DIMMED = 0.22
-/** Room for the value after the longest mark. */
+/** The value after the mark (14px, bold): room for the longest at the
+ * right end, and never less than `VALUE_ROOM`. */
 const VALUE_ROOM = 56
+const VALUE_LETTER = 8.2
 
-/** A measure in lines of up to `MEASURE_LINE` letters, two at most; the
- * rest is in the tap detail and the list a screen reader reads. */
-function measureLines(text: string | null): string[] {
-  const lines: string[] = []
+/** A text in lines of up to `letters` letters, two at most; the rest is in
+ * the tap detail and the list a screen reader reads. */
+function lines(text: string | null, letters: number): string[] {
+  const out: string[] = []
   for (const word of (text ?? '').split(/\s+/).filter(Boolean)) {
-    const last = lines[lines.length - 1]
-    if (last !== undefined && `${last} ${word}`.length <= MEASURE_LINE)
-      lines[lines.length - 1] = `${last} ${word}`
-    else lines.push(word)
+    const last = out[out.length - 1]
+    if (last !== undefined && `${last} ${word}`.length <= letters)
+      out[out.length - 1] = `${last} ${word}`
+    else out.push(word)
   }
-  return lines.length > 2
-    ? [lines[0] ?? '', `${(lines[1] ?? '').slice(0, MEASURE_LINE - 1)}…`]
-    : lines
+  return out.length > 2
+    ? [out[0] ?? '', `${(out[1] ?? '').slice(0, letters - 1)}…`]
+    : out
+}
+
+/** The label's lines: a dot's Study title is short and stays on one. */
+const labelLines = (chart: ChartView, label: string) =>
+  chart.kind === 'bars' ? lines(label, LABEL_LINE) : [label]
+
+/** The right margin: the value after each mark fits on a 350px phone, the
+ * narrowest plot, where a mark short of the top leaves part of the room
+ * its value needs. "14,14 parceiros" after a mark near the top needs more
+ * than "39%". */
+function valueRoom(chart: ChartView) {
+  const top = chart.ticks[chart.ticks.length - 1]?.value || 1
+  const plot = INITIAL_WIDTH - 12 - VALUE_ROOM
+  return Math.max(
+    VALUE_ROOM,
+    ...chart.points.map((p) =>
+      Math.ceil(
+        VALUE_DX +
+          p.number.text.length * VALUE_LETTER -
+          (1 - p.value / top) * plot,
+      ),
+    ),
+  )
+}
+
+function layoutOf(chart: ChartView) {
+  if (chart.kind === 'dots') return LAYOUT.dots
+  return chart.points.some((p) => p.label.length > LABEL_LINE)
+    ? LAYOUT.wrappedBars
+    : LAYOUT.bars
 }
 /** What the server lays out before the browser measures the column. */
 const INITIAL_WIDTH = 350
@@ -172,7 +209,7 @@ export default function VisualChartPlot({
     () => rowsOf(chart, country, profile),
     [chart, country, profile],
   )
-  const layout = LAYOUT[chart.kind]
+  const layout = layoutOf(chart)
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
@@ -183,26 +220,28 @@ export default function VisualChartPlot({
     return defineChart({
       marks: [
         ...pointMarks(chart, rows, hatch),
-        text(words, {
-          id: 'rotulo',
-          x: () => 0,
-          y: 'key',
-          // A key of its own: the focus ring marks only the bar or dot.
-          key: (r) => `rotulo-${r.key}`,
-          text: 'label',
-          anchor: 'start',
-          dy: -layout.label,
-          fontSize: 13,
-          fontWeight: chart.kind === 'dots' ? 700 : 400,
-          fill: tone,
-        }),
+        ...layout.label.map((dy, line) =>
+          text(words, {
+            id: line === 0 ? 'rotulo' : `rotulo-${line}`,
+            x: () => 0,
+            y: 'key',
+            // A key of its own: the focus ring marks only the bar or dot.
+            key: (r) => `rotulo-${line}-${r.key}`,
+            text: (r) => labelLines(chart, r.label)[line] ?? null,
+            anchor: 'start',
+            dy: -dy,
+            fontSize: 13,
+            fontWeight: chart.kind === 'dots' ? 700 : 400,
+            fill: tone,
+          }),
+        ),
         ...layout.measure.map((dy, line) =>
           text(words, {
             id: `medida-${line}`,
             x: () => 0,
             y: 'key',
             key: (r) => `medida-${line}-${r.key}`,
-            text: (r) => measureLines(r.detail)[line] ?? null,
+            text: (r) => lines(r.detail, MEASURE_LINE)[line] ?? null,
             anchor: 'start',
             dy: -dy,
             fontSize: 12,
@@ -245,9 +284,9 @@ export default function VisualChartPlot({
       focus: MARK_FOCUS,
       // The sides are fixed: a long label must not squeeze the scale.
       margin: {
-        top: layout.label - layout.row / 2 + 16,
+        top: (layout.label[0] ?? 0) - layout.row / 2 + 16,
         left: 12,
-        right: VALUE_ROOM,
+        right: valueRoom(chart),
       },
       theme: THEME,
     })
@@ -280,7 +319,8 @@ export default function VisualChartPlot({
       return withOverlay(
         renderChartSvg(scene, options),
         overlayLayers(marks, {
-          labelOffset: layout.label,
+          // The "você" tag goes on the label's line next to the mark.
+          labelOffset: layout.label[layout.label.length - 1] ?? 0,
           right: scene.chart.x + scene.chart.width,
         }),
         defs,

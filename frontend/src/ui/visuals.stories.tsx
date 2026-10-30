@@ -1,14 +1,13 @@
-// The four Visuals (#182), over the fixture Question's data
-// (`visual.example.ts`), as the server draws them in the Question's body.
-// `prosa` puts them in the body's Markdown, as on the page.
+// The Visuals the server draws as HTML (#182), over the fixture Question's
+// data (`visual.example.ts`), as they sit in the Question's body. `prosa`
+// puts them in the body's Markdown, as on the page. The bar comparison is
+// the chart library's (`visual-chart.stories.tsx`).
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { VisualBars } from './visual-bars'
 import { VisualDiagram } from './visual-diagram'
 import { VisualFrame } from './visual-frame'
 import { VisualStudyTable } from './visual-study-table'
 import { VisualTimeline } from './visual-timeline'
 import {
-  BARS,
   DIAGRAM,
   DIAGRAM_EVERY_STROKE,
   STUDY_TABLE,
@@ -29,12 +28,6 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
-
-/** Bars on one axis from zero, the highlighted value marked in pink, and a
- * hatched bar for our own calculation. */
-export const Bars: Story = {
-  render: () => <VisualBars visual={BARS} />,
-}
 
 export const Timeline: Story = {
   render: () => <VisualTimeline visual={TIMELINE} />,
@@ -59,10 +52,10 @@ export const Frame: Story = {
   render: () => (
     <VisualFrame
       domId="visual-moldura"
-      title={BARS.title}
+      title={DIAGRAM.title}
       note="a nota de margem aponta para o desenho"
       ownLines={[]}
-      sources={BARS.sources}
+      sources={DIAGRAM.sources}
     >
       <p>O desenho do Visual entra aqui.</p>
     </VisualFrame>

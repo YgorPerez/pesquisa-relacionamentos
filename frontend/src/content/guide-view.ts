@@ -36,7 +36,12 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
-import { renderVisuals, type Cite, type RenderedVisual } from './visuals-view'
+import {
+  renderVisuals,
+  type Cite,
+  type HtmlVisual,
+  type RenderedVisual,
+} from './visuals-view'
 import {
   chartCountries,
   chartView,
@@ -510,7 +515,11 @@ export function guideView(topic: Topic, library: Library): GuideView {
   }
   const charts = new Map(
     topic.visuals.flatMap((visual) => {
-      if (!LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)) return []
+      if (
+        visual.kind !== 'bars' &&
+        !LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)
+      )
+        return []
       const chart = chartView(visual, library, cite, topic.slug)
       return chart ? [[visual.id, chart] as const] : []
     }),
@@ -520,7 +529,9 @@ export function guideView(topic: Topic, library: Library): GuideView {
     library,
     numbers,
     visuals: renderVisuals(
-      topic.visuals.filter((v) => !charts.has(v.id)),
+      topic.visuals.filter(
+        (v): v is HtmlVisual => v.kind !== 'bars' && !charts.has(v.id),
+      ),
       library,
       cite,
       topic.slug,
