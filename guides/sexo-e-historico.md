@@ -68,7 +68,7 @@ questions:
       ]
   - slug: mais-parceiros-faz-mal
     question: Transar com mais pessoas antes de assumir uma relação ==faz mal==?
-    answer: Não há prova de que faça. Ninguém pode sortear quem vai transar com mais gente, então os estudos mostram o que anda junto, não o que causa o quê. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Os três estudos são dos EUA; no Brasil, não achamos estudo sobre isso.
+    answer: Não há prova de que faça. Os pesquisadores observaram a vida sexual das pessoas, sem sortear quem teria sexo casual ou mais parceiros. Por isso, os estudos mostram o que anda junto, sem provar o que causa o quê. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Os três estudos são dos EUA; no Brasil, não achamos estudo sobre isso.
     confidence: moderate
     findings:
       [
@@ -305,7 +305,7 @@ findings:
     fact_sheets: [datafolha-2009-sexualidade-brasileiros]
     applies_to: { ages: { min: 18, max: 24 } }
   - id: antes-de-casar-valor-tipico
-    text: Em 418 americanos que se casaram nos cinco anos depois de entrar num estudo, recrutados em 2007 e 2008, o valor típico foi de 5 parceiros sexuais além do cônjuge antes do casamento, e a média, 8,78. Só 23% tinham transado apenas com quem casaram. Eles foram recrutados por telefone a partir de uma lista comprada, não sorteados entre os americanos, e por isso os números não valem para o país todo.
+    text: Em 418 americanos que se casaram nos cinco anos depois de entrar num estudo, recrutados em 2007 e 2008, o valor típico foi de 5 parceiros sexuais além do cônjuge antes do casamento, e a média, 8,78. Só 23% tinham transado apenas com quem casaram. Eles foram recrutados por telefone a partir de uma lista comprada, não sorteados entre os americanos. Quem não estava nessa lista ficou de fora, então os números não podem ser generalizados para o país todo.
     fact_sheets: [rhoades-2014-before-i-do]
   - id: antes-de-casar-morou-junto
     text: No mesmo estudo, 39% já tinham morado junto com outra pessoa antes do cônjuge.
