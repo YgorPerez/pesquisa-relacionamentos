@@ -7,11 +7,13 @@ import { useEffect, useRef, useSyncExternalStore } from 'react'
 import { countPinnedCard } from '#/analytics/chart-counting'
 import type { ChartPoint } from '#/content/chart-point'
 
-/** A mark in the drawing's pixels: where it ends, and the point it draws. */
+/** A mark of the drawing, and the point it draws. */
 export interface ChartMarkAt {
   readonly point: ChartPoint
-  readonly x: number
-  readonly y: number
+  /** Where it ends now, in the drawing's pixels: a new width moves it. */
+  readonly place: () => { readonly x: number; readonly y: number }
+  /** See `CardTarget.refocus`. */
+  readonly refocus: () => void
 }
 
 export interface CardTarget {
@@ -22,6 +24,8 @@ export interface CardTarget {
   readonly anchor: () => DOMRect
   /** Whose hover it is: the card says how to pin it. */
   readonly via: 'pointer' | 'keyboard'
+  /** Gives the focus back to the mark, for a keyboard that was in the card. */
+  readonly refocus: () => void
 }
 
 export interface CardState {
@@ -34,6 +38,8 @@ let state = NONE
 let closed: CardTarget | null = null
 /** What the pointer or the focus is on, pinned card or not. */
 let under: CardTarget | null = null
+/** The focus is on its way back to a closed mark (`closeCardBackToMark`). */
+let returning = false
 const listeners = new Set<() => void>()
 
 function set(next: CardState) {
@@ -53,6 +59,7 @@ export const currentCard = () => state
 export function hoverCard(target: CardTarget): void
 export function hoverCard(target: null, from: string): void
 export function hoverCard(target: CardTarget | null, from?: string) {
+  if (returning) return
   if (target) under = target
   else if (under?.chart === from) under = null
   if (state.pinned) return
@@ -90,6 +97,29 @@ export function closeCard() {
   if (state !== NONE) dismiss()
 }
 
+/** Closes the card from inside it, for a keyboard: the focus goes back to its
+ * mark, and no card opens for what the focus reports on the way (the library
+ * reports its first mark to a focus that arrives). The mark counts as just
+ * closed, so the arrows go on from it. */
+export function closeCardBackToMark(target: CardTarget) {
+  closed = target
+  under = target
+  set(NONE)
+  returning = true
+  try {
+    target.refocus()
+  } finally {
+    returning = false
+  }
+}
+
+/** The mark may have moved (a new width): a new target, so the card reads its
+ * place again. */
+export function cardMoved(chart: string) {
+  if (state.target?.chart === chart)
+    set({ ...state, target: { ...state.target } })
+}
+
 /** Closes the card if it is chart `chart`'s: the chart left the page, or
  * what it lights changed. */
 export function closeCardOf(chart: string) {
@@ -122,7 +152,7 @@ export const useChartCard = (chart: string) =>
   )
 
 /** The card's element id. */
-export const cardId = (chart: string) => `${chart}-cartao`
+export const cardId = (chart: string) => `${chart}-card`
 
 /** Tab from the mark goes to the pinned card: it hangs from the page's end,
  * and the keyboard would not reach it otherwise. Gives back whether it did. */

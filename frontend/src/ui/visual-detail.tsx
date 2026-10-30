@@ -7,11 +7,17 @@
 import { Popover } from '@base-ui/react/popover'
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import type { ReactNode, RefObject } from 'react'
+import { useSyncExternalStore, type ReactNode, type RefObject } from 'react'
 import type { ChartPoint } from '#/content/chart-point'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
-import { cardId, closeCard, type CardState } from './chart-card'
+import {
+  cardId,
+  closeCard,
+  closeCardBackToMark,
+  type CardState,
+  type CardTarget,
+} from './chart-card'
 import { DefinitionGlyph } from './definition-glyph'
 import { SmallLink } from './section'
 import { CHART_COPY } from './visual-chart.copy'
@@ -129,22 +135,29 @@ export function VisualDetail({
 }
 
 /** How the card closes: a keyboard that was in it goes back to the mark. A
- * mouse's click (`detail` above 0) stays out of it: focusing the chart would
- * show its first point's card under a pointer that is elsewhere. */
-function closeFrom(
-  chart: string,
-  host: HTMLElement | null,
-  click?: { readonly detail: number },
-) {
+ * mouse's click (`detail` above 0) stays out of it: the focus has no place to
+ * go back to under a pointer that is elsewhere. */
+function closeFrom(target: CardTarget, click?: { readonly detail: number }) {
   const inside = document
-    .getElementById(cardId(chart))
+    .getElementById(cardId(target.chart))
     ?.contains(document.activeElement)
-  const mark = host?.querySelector<HTMLElement>(
-    'svg, button[aria-expanded="true"]',
-  )
-  closeCard()
-  if (inside && !click?.detail) mark?.focus()
+  if (inside && !click?.detail) closeCardBackToMark(target)
+  else closeCard()
 }
+
+const onResize = (notify: () => void) => {
+  window.addEventListener('resize', notify)
+  return () => window.removeEventListener('resize', notify)
+}
+
+/** The side the card takes, asked again when the screen changes (a window
+ * resized, a phone turned). */
+const useCardSide = (anchor: (() => DOMRect) | undefined) =>
+  useSyncExternalStore(
+    onResize,
+    () => (anchor && roomBeside(anchor) ? 'right' : 'bottom'),
+    () => 'bottom' as const,
+  )
 
 /** The one card, beside the mark it belongs to. `host` holds the chart's
  * marks: a click there is the chart's own, which pins or unpins, and not a
@@ -161,9 +174,10 @@ export function ChartCard({
   profile: Profile | null
 }) {
   const { target, pinned } = card
+  const side = useCardSide(target?.anchor)
   if (!target) return null
   const close = (click?: { readonly detail: number }) =>
-    closeFrom(target.chart, host.current, click)
+    closeFrom(target, click)
   const hint =
     target.via === 'keyboard' ? CHART_COPY.pinByKey : CHART_COPY.pinByPointer
   return (
@@ -187,7 +201,7 @@ export function ChartCard({
             getBoundingClientRect: target.anchor,
             ...(host.current ? { contextElement: host.current } : {}),
           }}
-          side={roomBeside(target.anchor) ? 'right' : 'bottom'}
+          side={side}
           sideOffset={8}
           collisionPadding={8}
           className={cn('z-20', !pinned && 'pointer-events-none')}
@@ -198,8 +212,8 @@ export function ChartCard({
             initialFocus={false}
             finalFocus={false}
             data-slot="detalhe-do-grafico"
-            data-fixado={pinned || undefined}
-            className="w-75 max-w-(--available-width) rounded-mao-2 border-2 border-tinta bg-folha p-sm text-nota leading-nota text-tinta outline-none data-fixado:border-agua-tinta"
+            data-pinned={pinned || undefined}
+            className="w-75 max-w-(--available-width) rounded-mao-2 border-2 border-tinta bg-folha p-sm text-nota leading-nota text-tinta outline-none data-pinned:border-agua-tinta"
           >
             <VisualDetail
               point={target.point}

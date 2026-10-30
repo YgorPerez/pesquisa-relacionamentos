@@ -5,6 +5,7 @@ import { countPinnedCard } from '#/analytics/chart-counting'
 import { DOTS } from './visual-chart.example'
 import {
   closeCard,
+  closeCardBackToMark,
   closeCardOf,
   currentCard,
   hoverCard,
@@ -31,6 +32,7 @@ const target = (chart: string, point = first!): CardTarget => ({
   point,
   anchor: () => new DOMRect(),
   via: 'pointer',
+  refocus: () => {},
 })
 
 it('shows the hovered point and hides it when the pointer leaves', () => {
@@ -85,6 +87,28 @@ it('shows the same point again when the pointer left it while it was pinned', ()
   closeCard()
   hoverCard(target('a'))
   expect(currentCard().target?.chart).toBe('a')
+})
+
+it('opens no card while the focus goes back to a closed mark, and the arrows open the next', () => {
+  const closing = {
+    ...target('a'),
+    // The library, given the focus, reports its first mark and then the one
+    // it is told to resume from.
+    refocus: () => {
+      hoverCard(target('a', second))
+      hoverCard(target('a'))
+    },
+  }
+  pinCard(closing)
+  // Tab into the card took the focus off the chart.
+  hoverCard(null, 'a')
+  closeCardBackToMark(closing)
+  expect(currentCard().target).toBeNull()
+  // The library says again which point it has: still closed.
+  hoverCard(target('a'))
+  expect(currentCard().target).toBeNull()
+  hoverCard(target('a', second))
+  expect(currentCard().target?.point.key).toBe(second!.key)
 })
 
 it("closes a chart's card only from that chart", () => {

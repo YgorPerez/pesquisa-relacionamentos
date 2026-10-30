@@ -14,7 +14,6 @@ export const CHART_COPY = {
   year: 'Ano',
   definition: 'Mede',
   youCovered: 'Este estudo tem dado para o seu Perfil.',
-  sources: 'Ficha:',
   legend: 'Cada forma é uma definição:',
   parts: 'Partes de cada barra',
   noMatch: 'Nenhum estudo deste gráfico atende aos dois filtros.',

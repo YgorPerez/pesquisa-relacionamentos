@@ -1,5 +1,10 @@
 import { Toggle as TogglePrimitive } from '@base-ui/react/toggle'
+import type { ReactNode } from 'react'
 import { cn } from '@/platform/cn'
+
+/** The chip's box and letters, with or without its outline. */
+const BOX =
+  'inline-flex min-h-toque items-center gap-2 border-(length:--traco-controle) px-3.5 py-2 font-label text-nota leading-tight font-bold'
 
 /** The DESIGN.md `chip`: paper with a hand outline, yellow when pressed.
  * Unavailable (`aria-disabled`, which keeps the focus and says why), the
@@ -10,7 +15,8 @@ function Toggle({ className, ...props }: TogglePrimitive.Props) {
     <TogglePrimitive
       data-slot="toggle"
       className={cn(
-        'inline-flex min-h-toque cursor-pointer items-center gap-2 rounded-mao border-(length:--traco-controle) border-tinta bg-papel px-3.5 py-2 text-left font-label text-nota leading-tight font-bold text-tinta sem-realce-no-toque aria-disabled:cursor-not-allowed aria-disabled:fio-tracejado aria-disabled:text-tinta-2 aria-pressed:bg-amarelo-voce',
+        BOX,
+        'cursor-pointer rounded-mao border-tinta bg-papel text-left text-tinta sem-realce-no-toque aria-disabled:cursor-not-allowed aria-disabled:fio-tracejado aria-disabled:text-tinta-2 aria-pressed:bg-amarelo-voce',
         className,
       )}
       {...props}
@@ -18,4 +24,10 @@ function Toggle({ className, ...props }: TogglePrimitive.Props) {
   )
 }
 
-export { Toggle }
+/** A chip's words before the page's JS: the same box with no outline, so
+ * nothing moves when the `Toggle` replaces them. */
+function ToggleWords({ children }: { children: ReactNode }) {
+  return <span className={cn(BOX, 'border-transparent')}>{children}</span>
+}
+
+export { Toggle, ToggleWords }

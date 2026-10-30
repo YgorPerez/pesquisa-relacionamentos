@@ -31,6 +31,11 @@ const buttonVariants = cva('min-h-toque cursor-pointer', {
         NO_BOX,
         'px-0 py-1 text-label leading-body underline decoration-(length:--traco-etiqueta) underline-offset-4',
       ],
+      // A big number that opens its detail, in a table's cell: dotted under.
+      number: [
+        NO_BOX,
+        'rounded-mao-2 p-0 text-right font-title text-grande leading-tight font-bold underline decoration-dotted decoration-2 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
+      ],
       // Only a drawn icon, in a 44px square: the × of "Continuar lendo".
       icon: [
         NO_BOX,
