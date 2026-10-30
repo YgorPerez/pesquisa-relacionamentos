@@ -51,9 +51,7 @@ it('draws each placed Visual on the server as SVG, where its line was', () => {
   const page = chaptersHtml()
   expect(page).not.toContain('{{visual')
   const figures = [...page.matchAll(/<figure id="([^"]+)"/g)].map((m) => m[1])
-  expect(figures).toEqual([
-    'visual-onde-conhecer-pessoas-app-e-satisfacao',
-  ])
+  expect(figures).toEqual(['visual-onde-conhecer-pessoas-app-e-satisfacao'])
   expect(page.match(/<svg/g)?.length).toBeGreaterThanOrEqual(1)
   expect(page).toContain(
     '<a class="ref" href="#ficha-silva-2020-apps-brasil" aria-label="Ficha',

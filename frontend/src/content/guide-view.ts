@@ -535,9 +535,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
     library,
     numbers,
     visuals: renderVisuals(
-      topic.visuals.filter(
-        (v): v is HtmlVisual => v.kind === 'diagram',
-      ),
+      topic.visuals.filter((v): v is HtmlVisual => v.kind === 'diagram'),
       cite,
       topic.slug,
     ),

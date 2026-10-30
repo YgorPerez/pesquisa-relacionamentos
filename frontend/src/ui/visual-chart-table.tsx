@@ -35,6 +35,83 @@ function Context({ context, brazil }: { context: string; brazil: boolean }) {
   )
 }
 
+function TableHead() {
+  return (
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          className="w-2/3 border-b-0 pb-1.5 text-left font-label text-label"
+        >
+          {VISUAL_COPY.study}
+        </th>
+        <th
+          scope="col"
+          className="border-b-0 pb-1.5 text-right font-label text-label"
+        >
+          {VISUAL_COPY.result}
+        </th>
+      </tr>
+    </thead>
+  )
+}
+
+/** A Study's row: its title, context and measure, and its number, which
+ * opens the detail under the table. */
+function StudyRow({
+  point,
+  context,
+  dimmed,
+  you,
+  open,
+  detailId,
+  onToggle,
+}: {
+  point: ChartTable['rows'][number]['point']
+  context: string
+  dimmed: boolean
+  you: boolean
+  open: boolean
+  detailId: string
+  onToggle: () => void
+}) {
+  const study = point.number.sources[0]
+  return (
+    <tr
+      data-apagada={dimmed || undefined}
+      className="transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40"
+    >
+      <th scope="row" className={`${CELL} pr-sm text-left font-normal`}>
+        <span className="block font-bold">
+          {you && <span className="selo-voce-texto">{CHART_COPY.you}</span>}
+          {study ? (
+            <SourceRefs sources={[study]} after={study.title} />
+          ) : (
+            point.label
+          )}
+        </span>
+        <Context context={context} brazil={point.brazil} />
+        <span className="block italic">{point.detail}</span>
+      </th>
+      <td className={`${CELL} text-right`}>
+        <button
+          type="button"
+          aria-label={CHART_TABLE_COPY.openDetail(point.number.text)}
+          aria-expanded={open}
+          aria-controls={detailId}
+          onClick={onToggle}
+          className={cn(
+            'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
+          )}
+        >
+          {point.number.text}
+        </button>
+      </td>
+    </tr>
+  )
+}
+
 export function VisualChartTable({
   table,
   country,
@@ -57,74 +134,25 @@ export function VisualChartTable({
         aria-labelledby={`${table.domId}-titulo`}
         className="m-0 table w-full table-fixed border-collapse text-nota leading-nota"
       >
-        <thead>
-          <tr>
-            <th
-              scope="col"
-              className="w-2/3 border-b-0 pb-1.5 text-left font-label text-label"
-            >
-              {VISUAL_COPY.study}
-            </th>
-            <th
-              scope="col"
-              className="border-b-0 pb-1.5 text-right font-label text-label"
-            >
-              {VISUAL_COPY.result}
-            </th>
-          </tr>
-        </thead>
+        <TableHead />
         <tbody>
-          {table.rows.map(({ point, context }) => {
-            const dimmed = lit && point.country?.slug !== country
-            const you =
-              point.covers.length > 0 &&
-              appliesToYou(profile, point.covers)?.covered === true
-            const study = point.number.sources[0]
-            return (
-              <tr
-                key={point.key}
-                data-apagada={dimmed || undefined}
-                className="transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40"
-              >
-                <th
-                  scope="row"
-                  className={`${CELL} pr-sm text-left font-normal`}
-                >
-                  <span className="block font-bold">
-                    {you && (
-                      <span className="selo-voce-texto">{CHART_COPY.you}</span>
-                    )}
-                    {study ? (
-                      <SourceRefs sources={[study]} after={study.title} />
-                    ) : (
-                      point.label
-                    )}
-                  </span>
-                  <Context context={context} brazil={point.brazil} />
-                  <span className="block italic">{point.detail}</span>
-                </th>
-                <td className={`${CELL} text-right`}>
-                  <button
-                    type="button"
-                    aria-label={CHART_TABLE_COPY.openDetail(point.number.text)}
-                    aria-expanded={selected === point.key}
-                    aria-controls={detailId}
-                    onClick={() =>
-                      setSelected((now) =>
-                        now === point.key ? null : point.key,
-                      )
-                    }
-                    className={cn(
-                      'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
-                      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
-                    )}
-                  >
-                    {point.number.text}
-                  </button>
-                </td>
-              </tr>
-            )
-          })}
+          {table.rows.map(({ point, context }) => (
+            <StudyRow
+              key={point.key}
+              point={point}
+              context={context}
+              dimmed={lit && point.country?.slug !== country}
+              you={
+                point.covers.length > 0 &&
+                appliesToYou(profile, point.covers)?.covered === true
+              }
+              open={selected === point.key}
+              detailId={detailId}
+              onToggle={() =>
+                setSelected((now) => (now === point.key ? null : point.key))
+              }
+            />
+          ))}
         </tbody>
       </table>
       <div id={detailId} aria-live="polite">

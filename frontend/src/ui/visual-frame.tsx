@@ -61,15 +61,6 @@ export function VisualListItem({ children }: { children: ReactNode }) {
   )
 }
 
-/** The "conta nossa" tag next to a number we computed. */
-export function OwnTag() {
-  return (
-    <span className="font-body text-nota leading-nota font-normal text-tinta-2 italic">
-      {VISUAL_COPY.own}
-    </span>
-  )
-}
-
 export function VisualFrame({
   domId,
   title,

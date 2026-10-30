@@ -189,11 +189,12 @@ function ringApart(points: ChartPoint[]): ChartPoint[] {
 function yearTicks(years: ReadonlyArray<number>) {
   const first = Math.min(...years)
   const span = Math.max(...years) - first
+  const written = new Set(years)
   return Array.from({ length: span + 1 }, (_, i) => first + i)
-    .filter((year) => span <= 30 || year % 5 === 0 || years.includes(year))
+    .filter((year) => span <= 30 || year % 5 === 0 || written.has(year))
     .map((value) => ({
       value,
-      text: years.includes(value) ? String(value) : '',
+      text: written.has(value) ? String(value) : '',
     }))
 }
 

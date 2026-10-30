@@ -118,10 +118,12 @@ export const BARS: ChartView = {
   sources: [{ n: 1, anchor: 'ficha-0', title: 'Rosenfeld (2019)' }],
 }
 
-const years =(first: number, last: number, written: number[]) =>
-  Array.from({ length: last - first + 1 }, (_, i) => first + i).map(
-    (value) => ({ value, text: written.includes(value) ? `${value}` : '' }),
+const years = (first: number, last: number, written: number[]) => {
+  const shown = new Set(written)
+  return Array.from({ length: last - first + 1 }, (_, i) => first + i).map(
+    (value) => ({ value, text: shown.has(value) ? `${value}` : '' }),
   )
+}
 
 /** A time line of one unit, Brazil's every year, the last one highlighted:
  * the remarriages of the Guide on where to meet people. */

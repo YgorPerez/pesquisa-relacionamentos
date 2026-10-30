@@ -303,7 +303,15 @@ function stackedMarks(
         }),
       )
     }
-  marks.push(
+  marks.push(...stackedTexts(words, labelOffset, parts))
+  return marks
+}
+
+/** Stacked bars' words: the bar's label above it and each part's value
+ * inside it. */
+function stackedTexts(words: Row[], labelOffset: number, parts: number) {
+  const start = (r: Row) => r.stack?.start ?? 0
+  return [
     text(
       words.filter((r) => r.stack?.part === 0),
       {
@@ -333,8 +341,7 @@ function stackedMarks(
           r.dimmed ? INK : partTone(r.stack?.part ?? 0, parts).text,
       },
     ),
-  )
-  return marks
+  ]
 }
 
 /** The marks of one kind, one per look: a definition's shape (dots only),
@@ -465,7 +472,6 @@ function lineMarks(chart: ChartView, rows: Row[]) {
   // belongs on the dot only.
   const words = rows.map((r) => ({ ...r }))
   const anyDimmed = rows.some((r) => r.dimmed)
-  const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
   const marks: ChartMark<Row, number, number>[] = []
   if (scaled && rows.length > 1)
     marks.push(
@@ -478,6 +484,29 @@ function lineMarks(chart: ChartView, rows: Row[]) {
         strokeOpacity: anyDimmed ? DIMMED : 1,
       }),
     )
+  marks.push(...lineDots(chart, rows, y))
+  marks.push(
+    text(words, {
+      id: 'valor',
+      x: 'year',
+      y,
+      key: (r) => `valor-${r.key}`,
+      text: (r) => r.number.text,
+      anchor: 'middle',
+      dy: -LINE.valueAbove,
+      fontSize: 14,
+      fontWeight: 700,
+      fill: tone,
+    }),
+  )
+  return marks
+}
+
+/** A time line's dots, one mark per look: a definition's shape, dimmed or
+ * not. */
+function lineDots(chart: ChartView, rows: Row[], y: (r: Row) => number) {
+  const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
+  const marks: ChartMark<Row, number, number>[] = []
   for (const dimmed of [false, true])
     for (let shape = 0; shape < shapes; shape++) {
       const these = rows.filter(
@@ -502,21 +531,29 @@ function lineMarks(chart: ChartView, rows: Row[]) {
           : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
       )
     }
-  marks.push(
-    text(words, {
-      id: 'valor',
-      x: 'year',
-      y,
-      key: (r) => `valor-${r.key}`,
-      text: (r) => r.number.text,
-      anchor: 'middle',
-      dy: -LINE.valueAbove,
-      fontSize: 14,
-      fontWeight: 700,
-      fill: tone,
-    }),
-  )
   return marks
+}
+
+/** A time line's x scale: the years, with a margin of years on each side,
+ * so the values centered over the first and last dots clear the value axis
+ * and the edge. */
+function yearScale(years: NonNullable<ChartView['years']>) {
+  const first = years[0]?.value ?? 0
+  const last = years[years.length - 1]?.value ?? first
+  const written = new Map(years.map((t) => [t.value, t.text]))
+  return {
+    scale: scaleLinear().domain([
+      first - Math.max((last - first) * 0.12, 1),
+      last + Math.max((last - first) * 0.12, 1),
+    ]),
+    axis: {
+      ticks: {
+        values: years.map((t) => t.value),
+        format: (value: number) => written.get(value) ?? '',
+      },
+      tickLabels: { thin: false },
+    },
+  }
 }
 
 function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
@@ -527,28 +564,10 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   const scaled = chart.ticks.length > 0
   const definition = useMemo(() => {
     const top = chart.ticks[chart.ticks.length - 1]?.value ?? 1
-    const years = chart.years ?? []
-    const first = years[0]?.value ?? 0
-    const last = years[years.length - 1]?.value ?? first
     return defineChart({
       marks: lineMarks(chart, rows),
       scales: {
-        x: {
-          // A margin of years on each side, so the values centered over
-          // the first and last dots clear the value axis and the edge.
-          scale: scaleLinear().domain([
-            first - Math.max((last - first) * 0.12, 1),
-            last + Math.max((last - first) * 0.12, 1),
-          ]),
-          axis: {
-            ticks: {
-              values: years.map((t) => t.value),
-              format: (value: number) =>
-                years.find((t) => t.value === value)?.text ?? '',
-            },
-            tickLabels: { thin: false },
-          },
-        },
+        x: yearScale(chart.years ?? []),
         y: {
           scale: scaleLinear().domain([0, top]),
           grid: scaled ? { strokeOpacity: 0.25 } : false,

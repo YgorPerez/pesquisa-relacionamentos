@@ -6,7 +6,6 @@
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it } from 'vite-plus/test'
-import { openScreen } from '#/platform/screens/open-screen'
 import { openVisual } from '#/platform/screens/visual'
 import { saveProfile } from '#/state/profile'
 
@@ -63,8 +62,7 @@ it('opens the exact value, the country and the Fact sheet on a tap of the number
 })
 
 it('dims the rows of other countries when the link picks one the table has', async () => {
-  openScreen('/onde-conhecer-pessoas?pais=eua')
-  const table = await screen.findByRole('table', { name: TITLE })
+  const table = await openVisual(TITLE, 'table', '?pais=eua')
   const [silva, costa] = studyRows(table)
   expect(silva).toHaveAttribute('data-apagada')
   expect(costa).not.toHaveAttribute('data-apagada')
