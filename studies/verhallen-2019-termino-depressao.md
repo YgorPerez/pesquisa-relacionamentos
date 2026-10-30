@@ -29,17 +29,17 @@ Os autores compararam jovens que tinham terminado uma relação nos últimos sei
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Nota de depressão: quem passou por um término vs. quem namora | Mais alta no grupo do término (p = 0,001) | Resumo | "group-level depression scores were elevated compared to individuals in a relationship (p = .001)" |
-| Grupo do término com sintomas de depressão leve, moderada ou grave | 26,8% | Results, Severity of depression symptoms | "In total, 26.8% reported symptoms corresponding to mild, moderate or severe depression." |
-| Grupo namorando com sintomas de depressão | 2,2% (leve) | Results, Severity of depression symptoms | "2.2% had depression symptoms corresponding to mild depression" |
-| Nota de depressão típica (mediana) de quem passou por um término | 9, dentro da faixa sem depressão | Results, Severity of depression symptoms | "MDI scores ranged between 1 and 45 (Mdn = 9.00, IQR = 7.00–21.00) in the heartbreak group" |
-| Quem foi deixado pelo outro | 42,3% | Results, Study population | "In 42.3% of the subjects, the ex-partner decided to break up" |
-| Ainda pensam no ex todo dia | 70,4% | Results, Study population | "70.4% reported to still think about their ex-partner on a daily basis" |
-| Em quem passou por um término: sentir-se rejeitado e nota de depressão | Rejeição, traição e raiva andam juntas num conjunto que os autores chamam de "perda súbita"; nota maior nele vem com mais depressão (rs = 0,57) | Results, Association between the components and depression scores | "Positive correlations between the component scores belonging to the two extracted components and depression scores were prevalent (rs = .57, p < .001" |
-| Nota de depressão típica depois do término: homens vs. mulheres | Mediana 7 nos homens, 15,5 nas mulheres | Results, Severity of depression symptoms | "between heartbroken males (Mdn = 7.00, IQR = 4.50–14.00) and heartbroken females (Mdn = 15.50, IQR = 7.75–25.00)" |
-| Nota de depressão de quem namora: homens vs. mulheres | Sem diferença | Results, Severity of depression symptoms | "No gender differences were found (U = 213.50, Z = -1.13, p = .260, r = -.17)" |
+| Nota de depressão | Quem passou por um término teve nota mais alta que quem estava num relacionamento (p = 0,001) | Resumo | "group-level depression scores were elevated compared to individuals in a relationship (p = .001)" |
+| Sintomas de depressão depois do término | 26,8% relataram sintomas de depressão leve, moderada ou grave | Results, Severity of depression symptoms | "In total, 26.8% reported symptoms corresponding to mild, moderate or severe depression." |
+| Sintomas de depressão num relacionamento | 2,2% tiveram sintomas, todos de depressão leve | Results, Severity of depression symptoms | "2.2% had depression symptoms corresponding to mild depression" |
+| Nota típica depois do término | A mediana foi 9, dentro da faixa sem depressão | Results, Severity of depression symptoms | "MDI scores ranged between 1 and 45 (Mdn = 9.00, IQR = 7.00–21.00) in the heartbreak group" |
+| Quem decidiu terminar | Em 42,3% dos casos, foi o ex quem decidiu | Results, Study population | "In 42.3% of the subjects, the ex-partner decided to break up" |
+| Pensar no ex | 70,4% disseram que ainda pensavam no ex todo dia | Results, Study population | "70.4% reported to still think about their ex-partner on a daily basis" |
+| Perda súbita e depressão | Depois do término, rejeição, traição e raiva andaram juntas num conjunto que os autores chamam de "perda súbita"; nota maior nele andou junto com mais depressão (rs = 0,57) | Results, Association between the components and depression scores | "Positive correlations between the component scores belonging to the two extracted components and depression scores were prevalent (rs = .57, p < .001" |
+| Nota típica depois do término, por gênero | As mulheres tiveram nota típica mais alta que os homens (mediana de 15,5 contra 7) | Results, Severity of depression symptoms | "between heartbroken males (Mdn = 7.00, IQR = 4.50–14.00) and heartbroken females (Mdn = 15.50, IQR = 7.75–25.00)" |
+| Nota num relacionamento, por gênero | Não apareceu diferença clara entre homens e mulheres | Results, Severity of depression symptoms | "No gender differences were found (U = 213.50, Z = -1.13, p = .260, r = -.17)" |
 
-"rs" é a correlação de Spearman, de −1 a 1; 0,57 é uma correlação forte. A mediana e a faixa do MDI vão de 0 a 50.
+"rs" mede quanto duas coisas andam juntas, de −1 a 1; 0,57 é uma ligação forte. "p" diz o quanto a diferença poderia ser só acaso: quanto menor, menos provável. A nota de depressão é a do questionário MDI, que vai de 0 a 50. A mediana é o valor do meio: metade das pessoas fica abaixo dela.
 
 ## Limitações
 

@@ -28,17 +28,17 @@ Depois de cada encontro de 4 minutos num speed dating, cada pessoa deu notas de 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Eventos | sete sessões de speed dating com universitários | Method (p. 317) | "We conducted seven speed-dating sessions for 1561 undergraduate students" |
-| Quem deseja uma pessoa mais do que deseja as outras é desejado de volta por ela? | sim, r = 0,14 | Results (p. 318) | "dyadic reciprocity was positive, r 5 .14" |
-| Esse desejo e a química que a pessoa desejada sente | mais química, r = 0,20 | Results (p. 318) | "a participant's unique romantic desire for a partner positively predicted the partner's experience of unique chemistry with the participant, r 5 .20" |
-| Quem deseja todo mundo é desejado de volta? | não, o contrário: r = −0,41 | Results (p. 318) | "generalized reciprocity was negative, r 5 .41" |
-| Desejar todo mundo e a química que os outros sentem com essa pessoa | menos química, r = −0,32 | Results (p. 318) | "a participant's tendency to desire everyone negatively predicted partners' reports of chemistry with that participant, r 5 .32" |
-| Diferença entre homens e mulheres | nenhuma | Results (p. 318) | "None of these correlations differed by participants' sex" |
-| Segunda amostra (eventos comerciais) | 608 pessoas, idade média de 40,1 anos; "conclusões parecidas", sem números | Results (p. 318) | "similar conclusions were suggested by participants' yes/no decisions within a separate sample (N 5 608, mean age 5 40.1 years)" |
-| O efeito se explica pela beleza de quem deseja todo mundo? | não | Nota 2 (p. 318) | "This negative effect of generalized romantic desire remained robust after controlling for participants' coder-rated physical attractiveness." |
-| Parecer pouco seletivo explica por que quem deseja todo mundo é menos desejado? | em parte, sem atingir significância a 5% (p = 0,065) | Results (p. 318) | "partially mediated (Baron & Kenny, 1986) by perceived unselectivity, Sobel z 5 1.85, p 5 .065" |
+| Eventos | Sete sessões de speed dating com universitários | Method (p. 317) | "We conducted seven speed-dating sessions for 1561 undergraduate students" |
+| Desejar alguém em especial | Quem desejou uma pessoa mais do que desejou as outras tendeu a ser desejado de volta por ela, uma ligação pequena (r = 0,14) | Results (p. 318) | "dyadic reciprocity was positive, r 5 .14" |
+| Desejo especial e química | A pessoa desejada em especial sentiu mais química com quem a desejou (r = 0,20) | Results (p. 318) | "a participant's unique romantic desire for a partner positively predicted the partner's experience of unique chemistry with the participant, r 5 .20" |
+| Desejar todo mundo | Quem tendeu a desejar todo mundo foi menos desejado de volta (r = −0,41) | Results (p. 318) | "generalized reciprocity was negative, r 5 .41" |
+| Desejar todo mundo e química | Os outros sentiram menos química com quem tendeu a desejar todo mundo (r = −0,32) | Results (p. 318) | "a participant's tendency to desire everyone negatively predicted partners' reports of chemistry with that participant, r 5 .32" |
+| Homens e mulheres | Nenhuma dessas ligações mudou entre homens e mulheres | Results (p. 318) | "None of these correlations differed by participants' sex" |
+| Eventos comerciais | Em outro grupo, de 608 pessoas com idade média de 40,1 anos, as decisões de sim ou não sugeriram conclusões parecidas; o artigo não dá os números | Results (p. 318) | "similar conclusions were suggested by participants' yes/no decisions within a separate sample (N 5 608, mean age 5 40.1 years)" |
+| Beleza de quem deseja todo mundo | A ligação negativa continuou levando em conta a beleza da pessoa, avaliada por observadores | Nota 2 (p. 318) | "This negative effect of generalized romantic desire remained robust after controlling for participants' coder-rated physical attractiveness." |
+| Parecer pouco seletivo | Pode explicar em parte por que quem deseja todo mundo é menos desejado, mas o resultado pode ser acaso (p = 0,065) | Results (p. 318) | "partially mediated (Baron & Kenny, 1986) by perceived unselectivity, Sobel z 5 1.85, p 5 .065" |
 
-O PDF sai do `pdftotext` com o sinal de igual como "5" e sem o sinal de menos: "r 5 .41" é r = −0,41 no artigo (a Tabela 1 e o texto dizem que a correlação é negativa). "1561" é 156 seguido da nota de rodapé 1. Os Trechos copiam o texto extraído como ele sai.
+"r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos, e negativo quer dizer que uma sobe quando a outra desce. "p" diz o quanto o resultado poderia ser só acaso: abaixo de 0,05 costuma contar como pouco provável. O PDF sai do `pdftotext` com o sinal de igual como "5" e sem o sinal de menos: "r 5 .41" é r = −0,41 no artigo (a Tabela 1 e o texto dizem que a correlação é negativa). "1561" é 156 seguido da nota de rodapé 1. Os Trechos copiam o texto extraído como ele sai.
 
 ## Limitações
 

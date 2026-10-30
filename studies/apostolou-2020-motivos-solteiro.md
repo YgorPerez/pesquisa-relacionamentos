@@ -28,19 +28,19 @@ Pediu a 648 solteiros americanos que dessem nota de 1 (discordo totalmente) a 5 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra final | 648 solteiros, 307 mulheres | p. 1, resumo | "A final sample of 648 American singles (307 of them women) rated 92 possible reasons for singlehood." |
-| Em quantos grupos os 92 motivos para estar solteiro se dividiram | 18 grupos de motivos (fatores), em quatro grandes áreas (domínios) | p. 1, resumo | "These reasons were classified into 18 broad factors and four general domains." |
-| Nota média do fator "I am too picky" ("sou exigente demais"; escala de 1 a 5), 1º lugar entre os 18 | 3,17 (DP 1,05) | p. 8, Tabela 2, coluna Overall | "3.17 (1.05)" |
-| Nota média do fator "I am too picky", mulheres | 3,38 (DP 1,05) | p. 8, Tabela 2, coluna Women | "3.38 (1.05)" |
-| Nota média do fator "I am too picky", homens | 2,99 (DP 1,01) | p. 8, Tabela 2, coluna Men | "2.99 (1.01)" |
-| Nota média do fator "I am not good at flirting" ("não sei flertar"), 3º lugar | 2,83 (DP 1,05) | p. 8, Tabela 2, coluna Overall | "2.83 (1.05)" |
-| Deram 4 ou 5 a pelo menos um item de "I am too picky": total, mulheres, homens | 75,2%; 82,1%; 68,9% | p. 9, Tabela 4 | "I am too picky 75.2% 82.1% 68.9%" |
-| Deram 4 ou 5 a pelo menos um item de "I am not good at flirting": total, mulheres, homens | 89%; 91,5%; 86,8% | p. 9, Tabela 4 | "I am not good at flirting 89% 91.5% 86.8%" |
-| Parte da variação na nota de "I am too picky" que vem do sexo (η²p) | 0,034 | p. 8, Tabela 2, coluna Sex η2p | "0.034 0.086 0.077 0.046 0.134" |
-| A nota de "I am too picky" muda com a idade? | não, p = 0,665 | p. 8, Tabela 2, coluna Age p-value | "0.665 < 0.001(+) < 0.001(−) 0.023" |
-| Limite de p para um resultado contar como significativo, mais rígido porque foram 18 testes de sexo e idade (correção de Bonferroni) | 0,003 | p. 7, Significant Sex and Age Effects | "we applied Bonferroni correction in which the alpha was set to 0.003 (0.05/18)" |
+| Quantas pessoas | 648 solteiros dos Estados Unidos, 307 deles mulheres | p. 1, resumo | "A final sample of 648 American singles (307 of them women) rated 92 possible reasons for singlehood." |
+| Como os motivos se agruparam | Os motivos para estar solteiro formaram 18 grupos, em quatro grandes áreas | p. 1, resumo | "These reasons were classified into 18 broad factors and four general domains." |
+| "Sou exigente demais", nota média | Foi o grupo de motivos com a maior nota média: 3,17 (DP 1,05) | p. 8, Tabela 2, coluna Overall | "3.17 (1.05)" |
+| "Sou exigente demais", mulheres | A nota média delas foi 3,38 (DP 1,05) | p. 8, Tabela 2, coluna Women | "3.38 (1.05)" |
+| "Sou exigente demais", homens | A nota média deles foi 2,99 (DP 1,01) | p. 8, Tabela 2, coluna Men | "2.99 (1.01)" |
+| "Não sei flertar", nota média | Ficou em terceiro lugar, com 2,83 (DP 1,05) | p. 8, Tabela 2, coluna Overall | "2.83 (1.05)" |
+| "Sou exigente demais", nota alta | 75,2% deram nota alta a pelo menos uma frase desse grupo: 82,1% das mulheres e 68,9% dos homens | p. 9, Tabela 4 | "I am too picky 75.2% 82.1% 68.9%" |
+| "Não sei flertar", nota alta | 89% deram nota alta a pelo menos uma frase desse grupo: 91,5% das mulheres e 86,8% dos homens | p. 9, Tabela 4 | "I am not good at flirting 89% 91.5% 86.8%" |
+| "Sou exigente demais", por sexo | O sexo responde por pouco das diferenças de nota (η²p = 0,034) | p. 8, Tabela 2, coluna Sex η2p | "0.034 0.086 0.077 0.046 0.134" |
+| "Sou exigente demais", por idade | A nota não mudou de forma clara com a idade (p = 0,665) | p. 8, Tabela 2, coluna Age p-value | "0.665 < 0.001(+) < 0.001(−) 0.023" |
+| Limite para um resultado contar | Como foram 18 testes de sexo e idade, os autores usaram um limite mais rígido: p abaixo de 0,003 | p. 7, Significant Sex and Age Effects | "we applied Bonferroni correction in which the alpha was set to 0.003 (0.05/18)" |
 
-Pela média, "I am too picky" ficou em primeiro entre os 18 fatores. Pela proporção de quem deu 4 ou 5 a algum item, ficou em quinto, atrás de flertar mal, querer liberdade, medo de se machucar e outras prioridades (Tabela 4). As mulheres deram notas mais altas que os homens nesse fator (p < 0,001 na Tabela 2), com efeito pequeno: o sexo explica cerca de 3% da variação. A idade não fez diferença (p = 0,665). Os Trechos das duas últimas linhas da Tabela 2 são colunas, que o texto extraído lê de cima para baixo; "I am too picky" é a primeira linha.
+Cada motivo recebeu nota de 1 a 5, e "nota alta" é 4 ou 5. DP (desvio-padrão) mede quanto as notas se espalham em torno da média. "Sou exigente demais" é o fator "I am too picky" e "não sei flertar", "I am not good at flirting". Pela média, "sou exigente demais" ficou em primeiro entre os 18 grupos. Pela parte de quem deu nota alta a alguma frase, ficou em quinto, atrás de flertar mal, querer liberdade, medo de se machucar e outras prioridades (Tabela 4). As mulheres deram notas mais altas que os homens nesse grupo (p < 0,001 na Tabela 2), com diferença pequena: η²p mostra que o sexo responde por cerca de 3% da variação. "p" diz o quanto o resultado poderia ser só acaso: 0,665 não indica diferença. Os Trechos das duas últimas linhas da Tabela 2 são colunas, que o texto extraído lê de cima para baixo; "I am too picky" é a primeira linha.
 
 ## Limitações
 
