@@ -128,6 +128,10 @@ function blockPassages(block: ChapterBlock, place: Place): Passage[] {
                 (point) =>
                   `${point.label}${point.detail ? ` (${point.detail})` : ''}: ${point.number.text}`,
               ),
+              // A Study's range across countries (#472): Gana, Polônia.
+              ...block.visual.points.flatMap((point) =>
+                (point.range ?? []).map((p) => `${p.label}: ${p.number.text}`),
+              ),
               block.visual.note ?? '',
             ].join(' '),
           ),

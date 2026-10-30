@@ -50,7 +50,7 @@ const LAYOUT = {
   dots: { row: 80, label: 42, measure: [28, 15] },
 } as const
 /** Where a range's words go, under its line. */
-const RANGE_WORDS = 22
+const RANGE_WORDS = 19
 /** Letters per line of a measure, which fits a 350px phone. */
 const MEASURE_LINE = 56
 const DIMMED = 0.22
@@ -155,6 +155,9 @@ function rangeMarks(rows: Row[]) {
             x: 'value',
             y: (q) => q.at,
             key: 'key',
+            // A group each: on a row's line, the tap takes the nearest
+            // tick or dot, not the first one drawn (`focusNearestY`).
+            z: 'key',
             stroke: INK,
             strokeWidth: 2.5,
             strokeOpacity: dimmed ? DIMMED : 1,
@@ -376,6 +379,7 @@ export default function VisualChartPlot({
           highlight: found.highlight,
           brazil: found.brazil,
           you: found.you,
+          tick: point.markId.startsWith('marca-faixa'),
         })
       }
       const defs = rows.some((r) => r.own)

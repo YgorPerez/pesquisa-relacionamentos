@@ -309,7 +309,9 @@ function useYouMarks(marks: GuideView['youMarks']) {
 /** A chart with the Guide's chosen country and the saved Profile. */
 function ChartBlock({ chart }: { chart: ChartView }) {
   const country = useChosenCountry(
-    chart.points.flatMap((p) => (p.country ? [p.country.slug] : [])),
+    chart.points
+      .flatMap((p) => [p, ...(p.range ?? [])])
+      .flatMap((p) => (p.country ? [p.country.slug] : [])),
   )
   return <VisualChart chart={chart} country={country} profile={useProfile()} />
 }

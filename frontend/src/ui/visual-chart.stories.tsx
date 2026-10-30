@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DefinitionGlyph } from './definition-glyph'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, RANGE } from './visual-chart.example'
 import VisualChartPlot from './visual-chart-plot'
 import { VisualDetail } from './visual-detail'
 
@@ -30,6 +30,16 @@ export const Dots: Story = {}
 
 /** Bars, the key value in pink and our own calculation hatched. */
 export const Bars: Story = { args: { chart: BARS } }
+
+/** A Study of 50 countries: its average on a line from Ghana to Poland,
+ * Brazil ringed inside it. */
+export const Range: Story = { args: { chart: RANGE } }
+
+/** `?pais=gana`: the Study whose range has Ghana lit, the range's other
+ * countries and the other Studies dimmed. */
+export const RangeCountryChosen: Story = {
+  args: { chart: RANGE, country: 'gana' },
+}
 
 /** `?pais=eua`: the United States lit, the others dimmed. */
 export const CountryChosen: Story = { args: { country: 'eua' } }

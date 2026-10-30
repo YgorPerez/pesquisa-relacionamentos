@@ -18,6 +18,9 @@ export interface OverlayMark {
   readonly highlight: boolean
   readonly brazil: boolean
   readonly you: boolean
+  /** A tick of a range (#472), whose ring is narrow: the range's dot may
+   * sit a few pixels away. */
+  readonly tick?: boolean
 }
 
 /** The value label's offset after the mark and its rough letter width, the
@@ -40,9 +43,12 @@ function marker(x: number, y: number, width: number) {
 
 /** The hand ring of the references, around Brazil's mark: the stroke runs
  * a little past where it started. */
-function ring(x: number, y: number) {
+function ring(x: number, y: number, narrow = false) {
   const r = 11
-  return `<path data-ts-key="brasil" d="M${x + r} ${y - 2}C${x + r} ${y - r} ${x - r + 1} ${y - r - 1} ${x - r} ${y}C${x - r + 1} ${y + r} ${x + r} ${y + r + 1} ${x + r + 1} ${y - 4}" fill="none" stroke="var(--color-tinta)" stroke-width="1.8" stroke-linecap="round"/>`
+  // Around a tick, half as wide and a little taller.
+  const w = narrow ? 6 : r
+  const h = narrow ? 13 : r
+  return `<path data-ts-key="brasil" d="M${x + w} ${y - 2}C${x + w} ${y - h} ${x - w + 1} ${y - h - 1} ${x - w} ${y}C${x - w + 1} ${y + h} ${x + w} ${y + h + 1} ${x + w + 1} ${y - 4}" fill="none" stroke="var(--color-tinta)" stroke-width="1.8" stroke-linecap="round"/>`
 }
 
 /** The "você" tag, yellow like every "vale para você", at the right edge of
@@ -71,7 +77,7 @@ export function overlayLayers(
     .filter((m) => m.brazil || m.you)
     .map(
       (m) =>
-        `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y) : ''}${m.you ? you(right, m.y - labelOffset) : ''}</g>`,
+        `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y, m.tick) : ''}${m.you ? you(right, m.y - labelOffset) : ''}</g>`,
     )
   return {
     under: `<g class="sobreposicao-sob" data-ts-key="sobreposicao-sob" aria-hidden="true">${under.join('')}</g>`,
