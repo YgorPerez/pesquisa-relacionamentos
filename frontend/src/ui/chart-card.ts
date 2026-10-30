@@ -6,6 +6,13 @@
 import { useSyncExternalStore } from 'react'
 import type { ChartPoint } from '#/content/chart-view'
 
+/** A mark in the drawing's pixels: where it ends, and the point it draws. */
+export interface ChartMarkAt {
+  readonly point: ChartPoint
+  readonly x: number
+  readonly y: number
+}
+
 export interface CardTarget {
   /** The chart's `domId`. */
   readonly chart: string

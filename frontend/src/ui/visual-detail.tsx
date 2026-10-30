@@ -21,6 +21,14 @@ type Definitions = ReadonlyArray<{ readonly legend: string }>
 /** A Fact sheet's slug out of its anchor in the page's list. */
 const slugOfAnchor = (anchor: string) => anchor.replace(/^ficha-/, '')
 
+/** The card's width and the air around it, in pixels (`w-75`). */
+const CARD_ROOM = 300 + 16
+
+/** Beside the mark when the screen has room, as on a desktop; under it on a
+ * phone, where beside it would mean over the page's top. */
+const roomBeside = (anchor: () => DOMRect) =>
+  document.documentElement.clientWidth - anchor().right >= CARD_ROOM
+
 /** The card's words, in either state. */
 export function VisualDetail({
   point,
@@ -159,7 +167,7 @@ export function ChartCard({
             getBoundingClientRect: target.anchor,
             ...(host.current ? { contextElement: host.current } : {}),
           }}
-          side="right"
+          side={roomBeside(target.anchor) ? 'right' : 'bottom'}
           sideOffset={8}
           collisionPadding={8}
           className={cn('z-20', !pinned && 'pointer-events-none')}

@@ -27,8 +27,9 @@ import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
 import { useCallback, useMemo } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
+import type { ChartMarkAt } from './chart-card'
 import {
-  activeRow,
+  activeRow as activeRowLayer,
   lineWordsAbove,
   overlayLayers,
   withOverlay,
@@ -170,7 +171,7 @@ function layoutOf(chart: ChartView): Layout {
  * from the pointer, which framed the plot in black after a tap and never
  * without JS. Only the keyboard's focus keeps the ring (`styles.css`). */
 const HOST_CLASS =
-  'font-body text-tinta [&_svg:focus:not(:focus-visible)]:outline-none'
+  'font-body text-tinta [-webkit-tap-highlight-color:transparent] [&_svg:focus:not(:focus-visible)]:outline-none'
 
 /** What the server lays out before the browser measures the column. */
 const INITIAL_WIDTH = 350
@@ -179,6 +180,9 @@ const LEFT = 12
 
 interface Row extends ChartPoint {
   readonly dimmed: boolean
+  /** The row has the card. Its drawing reads this off the scene, so the
+   * renderer stays one and keeps the SVG, and the focus in it. */
+  readonly active: boolean
   readonly you: boolean
   readonly own: boolean
   /** The points of its range (#472), on its own line. */
@@ -217,11 +221,15 @@ function rowsOf(
       (p) => of(p, country) || p.range?.some((q) => of(q, country)),
     )
   const activeRow = rowOfKey(chart.points, active)
-  const outOfActive = (p: ChartPoint) =>
-    activeRow !== undefined && bandOf(p) !== bandOf(activeRow)
+  const inActive = (p: ChartPoint) =>
+    activeRow !== undefined && bandOf(p) === bandOf(activeRow)
+  // A time line has one line, no rows to dim: the guide says which year.
+  const dimsRows = chart.kind !== 'line' && activeRow !== undefined
+  const outOfActive = (p: ChartPoint) => dimsRows && !inActive(p)
   const base = (p: ChartPoint, dimmed: boolean) => ({
     ...p,
     dimmed,
+    active: false,
     you:
       p.covers.length > 0 && appliesToYou(profile, p.covers)?.covered === true,
     own: p.number.own !== null,
@@ -231,7 +239,8 @@ function rowsOf(
     const otherCountry =
       lit && !of(p, country) && !range.some((q) => of(q, country))
     return {
-      ...base(p, activeRow ? outOfActive(p) : otherCountry),
+      ...base(p, dimsRows ? outOfActive(p) : otherCountry),
+      active: inActive(p),
       spread: range.map((q) => ({
         ...base(q, outOfActive(p) || (lit && !of(q, country))),
         // The row's "você" tag is enough.
@@ -527,19 +536,14 @@ function rowWords(
 /** Our layer's marks: where each bar or dot of a row landed in the scene. */
 function overlayMarks(
   points: ReadonlyArray<ScenePoint>,
-  rows: Row[],
   { valueAbove, layout }: { valueAbove?: number; layout?: Layout } = {},
 ): OverlayMark[] {
-  // A range's ticks (#472) are marks of their own, keyed by their point.
-  const byKey = new Map(
-    rows.flatMap((r) => [r, ...r.spread]).map((r) => [r.key, r]),
-  )
   const words = layout && rowWords(points, layout)
   const seen = new Set<string>()
   const marks: OverlayMark[] = []
   for (const point of points) {
-    const datum = point.datum as Row | undefined
-    const found = datum && byKey.get(datum.key)
+    // A range's ticks (#472) are marks of their own.
+    const found = point.datum as Row | undefined
     // One ring or tag per row: a stacked bar's parts share theirs (#476).
     if (!point.markId.startsWith('mark') || !found || seen.has(bandOf(found)))
       continue
@@ -567,10 +571,17 @@ interface PlotProps {
   profile: Profile | null
   /** The key of the point that has the card (`chart-card.ts`). */
   active: string | null
-  /** The pointer or the keyboard's focus reached a point, or left. */
-  onHover: (point: ChartPoint | null) => void
-  onSelect: (point: ChartPoint | null) => void
+  /** The pointer or the keyboard's focus reached a mark, or left. */
+  onHover: (mark: ChartMarkAt | null) => void
+  onSelect: (mark: ChartMarkAt | null) => void
 }
+
+/** The library's point as the card needs it: where the mark ends in the
+ * drawing's pixels, which are the page's. */
+const markAt = (
+  point: { datum: Row; x: number; y: number } | null,
+): ChartMarkAt | null =>
+  point && { point: point.datum, x: point.x, y: point.y }
 
 /** A mark's row reaches any point of its height: the pointer finds the
  * nearest row, or the nearest year, wherever it is in the drawing. */
@@ -718,17 +729,14 @@ function yearScale(years: NonNullable<ChartView['years']>) {
 function lineSvg(
   scene: Parameters<typeof renderChartSvg>[0],
   options: Parameters<typeof renderChartSvg>[1],
-  rows: Row[],
-  active: string | null,
 ) {
   const point = scene.points.find(
-    (p) =>
-      p.markId.startsWith('mark') && (p.datum as Row | undefined)?.key === active,
+    (p) => p.markId.startsWith('mark') && (p.datum as Row | undefined)?.active,
   )
   return withOverlay(
     renderChartSvg(scene, options),
     overlayLayers(
-      overlayMarks(scene.points, rows, { valueAbove: LINE.valueAbove }),
+      overlayMarks(scene.points, { valueAbove: LINE.valueAbove }),
       {
         labelOffset: 0,
         left: scene.chart.x,
@@ -756,8 +764,8 @@ function LinePlot({
   onSelect,
 }: PlotProps) {
   const rows = useMemo(
-    () => rowsOf(chart, country, profile),
-    [chart, country, profile],
+    () => rowsOf(chart, country, profile, active),
+    [chart, country, profile, active],
   )
   const scaled = chart.ticks.length > 0
   const above = lineTop(chart)
@@ -789,22 +797,17 @@ function LinePlot({
     })
   }, [chart, rows, scaled, above])
 
-  const renderSvg = useCallback<typeof renderChartSvg>(
-    (scene, options) => lineSvg(scene, options, rows, active),
-    [rows, active],
-  )
-
   return (
     <Chart
       definition={definition}
-      renderSvg={renderSvg}
+      renderSvg={lineSvg}
       initialWidth={INITIAL_WIDTH}
       height={above + (scaled ? LINE.plot : LINE.flatPlot) + LINE.axis}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
-      onFocusChange={(point) => onHover(point?.datum ?? null)}
-      onSelect={(point) => onSelect(point?.datum ?? null)}
+      onFocusChange={(point) => onHover(markAt(point))}
+      onSelect={(point) => onSelect(markAt(point))}
     />
   )
 }
@@ -958,22 +961,18 @@ function RowPlot({
     })
   }, [chart, rows, hatch, layout, places])
 
+  // One renderer for the chart's life: a new one replaces the whole SVG, and
+  // the keyboard's focus with it. What changes comes through the scene.
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
-      const marks = overlayMarks(scene.points, rows, { layout })
-      const defs = rows.some((r) => r.own)
+      const marks = overlayMarks(scene.points, { layout })
+      const datums = scene.points
+        .filter((p) => p.markId.startsWith('mark'))
+        .map((p) => ({ datum: p.datum as Row, y: p.y }))
+      const defs = datums.some((d) => d.datum.own)
         ? `<defs><pattern id="${hatch}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width="2.2"/></pattern></defs>`
         : ''
-      const row = rowOfKey(chart.points, active)
-      const center = row
-        ? scene.points.find(
-            (p) =>
-              p.markId.startsWith('mark') &&
-              (p.datum as Row | undefined) !== undefined &&
-              bandOf(p.datum as Row) === bandOf(row) &&
-              !('at' in (p.datum as Row)),
-          )?.y
-        : undefined
+      const row = datums.find((d) => d.datum.active)
       const reach = (layout.label[0] ?? 0) + ACTIVE_ROW_PAD.above
       return withOverlay(
         renderChartSvg(scene, options),
@@ -985,18 +984,18 @@ function RowPlot({
           right: scene.width,
         }),
         defs,
-        center === undefined
-          ? ''
-          : activeRow(
-              center - reach,
+        row
+          ? activeRowLayer(
+              row.y - reach,
               reach +
                 ACTIVE_ROW_PAD.below +
-                (row?.range?.length ? SPREAD.extra : 0),
+                (row.datum.spread.length > 0 ? SPREAD.extra : 0),
               scene.width,
-            ),
+            )
+          : '',
       )
     },
-    [rows, hatch, layout, chart.points, active],
+    [hatch, layout],
   )
 
   return (
@@ -1008,8 +1007,8 @@ function RowPlot({
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
-      onFocusChange={(point) => onHover(point?.datum ?? null)}
-      onSelect={(point) => onSelect(point?.datum ?? null)}
+      onFocusChange={(point) => onHover(markAt(point))}
+      onSelect={(point) => onSelect(markAt(point))}
     />
   )
 }

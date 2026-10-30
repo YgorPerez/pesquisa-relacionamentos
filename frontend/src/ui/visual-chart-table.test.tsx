@@ -97,15 +97,12 @@ it('closes a pinned card with Esc and with a click outside', async () => {
   expect(card()).toBeNull()
 })
 
-it('shows a number focused by the keyboard, pins with Enter, and Tab goes into the card', async () => {
+it('pins a number with Enter, and Tab goes into the card', async () => {
   const user = userEvent.setup()
   const table = await openVisual(TITLE, 'table')
   const [, costa] = studyRows(table)
   const number = within(costa!).getByRole('button', { name: /0,1 ponto/ })
   number.focus()
-  await user.keyboard('{Shift>}{Tab}{/Shift}{Tab}')
-  expect(number).toHaveFocus()
-  expect(within(card()!).queryByRole('button')).toBeNull()
   await user.keyboard('{Enter}')
   const link = within(card()!).getByRole('link')
   await user.keyboard('{Tab}')

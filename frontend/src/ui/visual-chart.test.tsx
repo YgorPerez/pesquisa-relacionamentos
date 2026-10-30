@@ -496,13 +496,11 @@ it('dims the other bars of a stacked chart, not the other parts of the active on
   const [part, sibling] = STACKED.points
   const other = STACKED.points.find((p) => p.stack?.bar !== part!.stack?.bar)!
   const html = drawnWith(STACKED, part!.key)
-  const opacity = (key: string) =>
-    Number(
-      html
-        .querySelector(`rect[data-ts-key="${key}"]`)
-        ?.getAttribute('fill-opacity') ?? 1,
-    )
-  expect(opacity(other.key)).toBeLessThan(opacity(sibling!.key))
+  // The library ends a mark's key in the point's own.
+  const mark = (key: string) =>
+    html.querySelector(`rect[data-ts-key$=":${key.length}:${key}"]`)
+  expect(mark(other.key)?.getAttribute('data-ts-key')).toContain('dimmed')
+  expect(mark(sibling!.key)?.getAttribute('data-ts-key')).toContain('lit')
 })
 
 it("draws a time line's guide at the active year and no dimmed year", () => {

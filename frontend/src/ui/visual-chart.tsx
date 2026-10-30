@@ -31,6 +31,7 @@ import {
   useChartCard,
   useInteractive,
   type CardTarget,
+  type ChartMarkAt,
 } from './chart-card'
 import { INK } from './chart-tones'
 import { DefinitionGlyph } from './definition-glyph'
@@ -55,8 +56,8 @@ const Island = memo(function Island({
   country: string | null
   profile: Profile | null
   active: string | null
-  onHover: (point: ChartPoint | null) => void
-  onSelect: (point: ChartPoint | null) => void
+  onHover: (mark: ChartMarkAt | null) => void
+  onSelect: (mark: ChartMarkAt | null) => void
 }) {
   return (
     <Suspense fallback={null}>
@@ -76,13 +77,13 @@ const Island = memo(function Island({
  * time line's value that sticks out, nothing over stacked bars' own. */
 const WORDS_PAST_MARK = { bars: 66, dots: 66, line: 24, stacked: 0 } as const
 
-/** A mark's box and the words after it, read when the card is placed: the
- * drawing is redrawn under it (a resize, the dimming). */
+/** Where the mark ends and the words after it, on the page, read when the
+ * card is placed: the page scrolls under it. */
 const markBox =
-  (host: HTMLElement | null, key: string, past: number) => (): DOMRect => {
-    const mark = host?.querySelector(`[data-ts-key="${CSS.escape(key)}"]`)
-    const box = (mark ?? host)?.getBoundingClientRect() ?? new DOMRect()
-    return new DOMRect(box.x, box.y, box.width + past, box.height)
+  (host: HTMLElement | null, { x, y }: ChartMarkAt, past: number) =>
+  (): DOMRect => {
+    const box = host?.querySelector('svg')?.getBoundingClientRect()
+    return new DOMRect((box?.x ?? 0) + x, (box?.y ?? 0) + y - 8, past, 16)
   }
 
 /** What a time line's numbers measure, which its plot does not write: one
@@ -144,25 +145,25 @@ export function VisualChart({
   const interactive = useInteractive()
 
   const targetOf = useCallback(
-    (point: ChartPoint): CardTarget => ({
+    (mark: ChartMarkAt): CardTarget => ({
       chart: chartId,
-      point,
-      anchor: markBox(host.current, point.key, WORDS_PAST_MARK[chart.kind]),
+      point: mark.point,
+      anchor: markBox(host.current, mark, WORDS_PAST_MARK[chart.kind]),
       via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
     }),
     [chartId, chart.kind],
   )
   const onHover = useCallback(
-    (point: ChartPoint | null) => {
+    (mark: ChartMarkAt | null) => {
       if (input.current === 'touch') return
-      if (point) hoverCard(targetOf(point))
+      if (mark) hoverCard(targetOf(mark))
       else hoverCard(null, chartId)
     },
     [chartId, targetOf],
   )
   const onSelect = useCallback(
-    (point: ChartPoint | null) => {
-      if (point) pinCard(targetOf(point))
+    (mark: ChartMarkAt | null) => {
+      if (mark) pinCard(targetOf(mark))
       else closeCard()
     },
     [targetOf],
@@ -251,8 +252,9 @@ export function VisualChart({
         )}
         onPointerEnter={wantPlot}
         onPointerDown={wantPlot}
-        onFocus={(event) => {
-          wantPlot()
+        onFocus={wantPlot}
+        onFocusCapture={(event) => {
+          // Ahead of the library's own listener, which shows the first mark.
           if (event.target.matches(':focus-visible'))
             input.current = 'keyboard'
         }}
