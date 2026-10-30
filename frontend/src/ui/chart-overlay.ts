@@ -5,7 +5,14 @@
 // with the rest. Each mark is a variant of `OverlayMark`, never drawn by
 // hand at the call.
 import { TAG, VALUE, VALUE_DX } from './chart-text'
-import { INK, MARKER, YOU } from './chart-tones'
+import {
+  ACTIVE,
+  ACTIVE_LINE,
+  ACTIVE_OPACITY,
+  INK,
+  MARKER,
+  YOU,
+} from './chart-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
 /** Where a point's mark ends on the chart, in scene pixels, and what our
@@ -110,6 +117,16 @@ interface Bounds {
   readonly right: number
 }
 
+/** The verde-água behind the row that has the card (#499): under the marks
+ * and the words, across the whole drawing. */
+export const activeRow = (top: number, height: number, width: number) =>
+  `<rect data-ts-key="active-row" x="0" y="${top}" width="${width}" height="${height}" rx="4" fill="${ACTIVE}" fill-opacity="${ACTIVE_OPACITY}"/>`
+
+/** A time line's guide at the year that has the card (#499), with a halo
+ * behind its dot that keeps the dot's shape readable. */
+export const yearGuide = (x: number, y: number, top: number, bottom: number) =>
+  `<line data-ts-key="guide" x1="${x}" x2="${x}" y1="${top}" y2="${bottom}" stroke="${ACTIVE_LINE}" stroke-width="2" stroke-dasharray="4 3"/><circle data-ts-key="guide-halo" cx="${x}" cy="${y}" r="12" fill="${ACTIVE}"/>`
+
 /** The layer under the library's marks (the marker, so the value stays on
  * top of it) and the one over them (the ring and the tag). `labelOffset` is
  * how far above its mark a row's label line is. */
@@ -146,14 +163,16 @@ export function overlayLayers(
 }
 
 /** The library's SVG with our two layers: the lower one right after the
- * opening tag and its `<desc>`/`<defs>`, the upper one at the end. */
+ * opening tag and its `<desc>`/`<defs>`, the upper one at the end. `behind`
+ * goes under the lower one: the active row or the time line's guide. */
 export function withOverlay(
   svg: string,
   layers: { under: string; over: string },
   defs = '',
+  behind = '',
 ): string {
   const open = svg.indexOf('>') + 1
   const end = svg.lastIndexOf('</svg>')
   if (open <= 0 || end < 0) return svg
-  return `${svg.slice(0, open)}${defs}${layers.under}${svg.slice(open, end)}${layers.over}${svg.slice(end)}`
+  return `${svg.slice(0, open)}${defs}${behind}${layers.under}${svg.slice(open, end)}${layers.over}${svg.slice(end)}`
 }

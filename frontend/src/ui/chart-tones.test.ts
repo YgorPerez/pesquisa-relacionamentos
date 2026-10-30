@@ -8,7 +8,16 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
-import { DIMMED, INK, MARKER, MUTED, PAPER, YOU } from './chart-tones'
+import {
+  ACTIVE,
+  ACTIVE_OPACITY,
+  DIMMED,
+  INK,
+  MARKER,
+  MUTED,
+  PAPER,
+  YOU,
+} from './chart-tones'
 import { partTone } from './stack-tones'
 
 const AA = 4.5
@@ -55,6 +64,15 @@ describe('the text of a library chart', () => {
     ['the "você" tag on its yellow', INK, YOU],
   ])('reads at AA: %s', (_, text, under) => {
     expect(contrast(rgb(text), rgb(under))).toBeGreaterThanOrEqual(AA)
+  })
+
+  it('reads at AA on the verde-água behind the active row', () => {
+    const paper = rgb(PAPER)
+    const band = rgb(ACTIVE).map(
+      (c, i) => ACTIVE_OPACITY * c + (1 - ACTIVE_OPACITY) * paper[i]!,
+    ) as [number, number, number]
+    expect(contrast(rgb(INK), band)).toBeGreaterThanOrEqual(AA)
+    expect(contrast(rgb(MUTED), band)).toBeGreaterThanOrEqual(AA)
   })
 
   // Stacked bars write each part's value inside it (12px bold); a dimmed

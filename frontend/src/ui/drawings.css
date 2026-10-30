@@ -393,3 +393,27 @@
 ::highlight(citacao) {
   background-color: var(--color-agua-fonte);
 }
+
+/* A tap on a chart lights its row and pins the card (`chart-card.ts`): the
+ * browser's blue flash over the whole drawing would say the opposite. No
+ * theme token names this property. */
+.ts-chart-host {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The invitation on the first chart a visit sees (`chart-invitation.tsx`), a
+ * ring that spreads and fades; the component leaves it out when the reader
+ * asked for less motion. */
+.chart-pulse {
+  animation: chart-pulse 1s ease-out 2;
+}
+
+@keyframes chart-pulse {
+  from {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--color-agua-tinta) 55%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 18px transparent;
+  }
+}

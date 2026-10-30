@@ -17,6 +17,8 @@ import {
   tickX,
   type ChartFocusStrategy,
   type ChartMark,
+  type ChartPoint as LibraryPoint,
+  type ChartRenderContext,
 } from '@tanstack/charts'
 import { focusNearestX, focusNearestY } from '@tanstack/charts/focus'
 import { scaleBand } from '@tanstack/charts/scales/band'
@@ -25,16 +27,32 @@ import { renderChartSvg } from '@tanstack/charts/svg'
 import { Chart } from '@tanstack/react-charts'
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
+import { cardMoved, type ChartMarkAt } from './chart-card'
 import {
+  litByCountry,
+  ofCountry,
+  ofLegend,
+  reachesCountry,
+} from './chart-filters'
+import {
+  activeRow as activeRowLayer,
   lineWordsAbove,
   overlayLayers,
   withOverlay,
+  yearGuide,
   type OverlayMark,
 } from './chart-overlay'
 import { LABEL, SMALL, VALUE, VALUE_DX } from './chart-text'
-import { DIMMED, INK, MUTED, PAPER } from './chart-tones'
+import {
+  ACTIVE_LINE,
+  DIMMED,
+  FILTERED_OUT,
+  INK,
+  MUTED,
+  PAPER,
+} from './chart-tones'
 import { partTone } from './stack-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
@@ -176,7 +194,13 @@ const INITIAL_WIDTH = 350
 const LEFT = 12
 
 interface Row extends ChartPoint {
+  /** A filter left it out, or another row has the card. */
   readonly dimmed: boolean
+  /** A filter left it out, whoever has the card (`FILTERED_OUT`). */
+  readonly off: boolean
+  /** The row has the card. Its drawing reads this off the scene, so the
+   * renderer stays one and keeps the SVG, and the focus in it. */
+  readonly active: boolean
   readonly you: boolean
   readonly own: boolean
   /** The points of its range (#472), on its own line. */
@@ -186,41 +210,72 @@ interface Row extends ChartPoint {
 /** A point of a row's range: a tick on the row's line (`at`). */
 interface SpreadRow extends Row {
   readonly at: string
+  /** This end of the range has the card, not only its row. */
+  readonly hasCard: boolean
 }
 
-const of = (p: ChartPoint, country: string | null) =>
-  p.country?.slug === country
+/** The row point `key` belongs to: its own, its stacked bar's or, for a
+ * point of a range, its Study's. */
+const rowOfKey = (points: ReadonlyArray<ChartPoint>, key: string | null) =>
+  key === null
+    ? undefined
+    : points.find((p) => p.key === key || p.range?.some((q) => q.key === key))
 
-/** The point's state on the chart: the chosen country lights its points
- * and dims the others, on a chart that has it. A row whose range has the
- * country stays lit, and so does that point of its range. */
+/** How much of a mark shows, by its state on the chart. */
+const fadeOf = (row: Pick<Row, 'dimmed' | 'off'>) =>
+  row.off ? FILTERED_OUT : row.dimmed ? DIMMED : 1
+
+/** The point's state on the chart. The one place a mark is dimmed: the
+ * chosen country lights its points and leaves out the others, on a chart that
+ * has it, a row whose range has the country stays lit and so does that point
+ * of its range; the legend's key (#501) leaves out the rest as well, so only
+ * what answers to both stays lit. That holds under the card: while a row has
+ * it (`active`), the other rows dim too, and a row left out stays left out
+ * even with the card. */
 function rowsOf(
   chart: ChartView,
   country: string | null,
   profile: Profile | null,
+  active: string | null,
+  legend: number | null,
 ): Row[] {
-  const lit =
-    country !== null &&
-    chart.points.some(
-      (p) => of(p, country) || p.range?.some((q) => of(q, country)),
-    )
-  const base = (p: ChartPoint, dimmed: boolean) => ({
+  const lit = litByCountry(chart.points, country)
+  const activeRow = rowOfKey(chart.points, active)
+  const inActive = (p: ChartPoint) =>
+    activeRow !== undefined && bandOf(p) === bandOf(activeRow)
+  // A time line has one line, no rows to dim: the guide says which year.
+  const dimsRows = chart.kind !== 'line' && activeRow !== undefined
+  const outOfActive = (p: ChartPoint) => dimsRows && !inActive(p)
+  const base = (p: ChartPoint, off: boolean, dimmed: boolean) => ({
     ...p,
-    dimmed,
+    off,
+    dimmed: off || dimmed,
+    active: false,
     you:
       p.covers.length > 0 && appliesToYou(profile, p.covers)?.covered === true,
     own: p.number.own !== null,
   })
   return chart.points.map((p) => {
     const range = p.range ?? []
+    const offLegend = !ofLegend(p, legend)
     return {
-      ...base(p, lit && !of(p, country) && !range.some((q) => of(q, country))),
+      ...base(
+        p,
+        offLegend || (lit && !reachesCountry(p, country)),
+        outOfActive(p),
+      ),
+      active: inActive(p),
       spread: range.map((q) => ({
-        ...base(q, lit && !of(q, country)),
+        ...base(
+          q,
+          offLegend || (lit && !ofCountry(q, country)),
+          outOfActive(p),
+        ),
         // The row's "você" tag is enough.
         you: false,
         spread: [],
         at: p.key,
+        hasCard: q.key === active,
       })),
     }
   })
@@ -258,28 +313,23 @@ function rangeMarks(rows: Row[], places: Places) {
   const line = (band: string) => places.center(band) + SPREAD.line
   const ranged = rows.filter((r) => r.spread.length > 0)
   if (ranged.length === 0) return []
-  const ticks = ranged.flatMap((r) => r.spread)
-  // A tick's opacity is one number per mark: one mark lit, one dimmed.
-  const tickMarks = [false, true].flatMap((dimmed) => {
-    const these = ticks.filter((q) => q.dimmed === dimmed)
-    return these.length === 0
-      ? []
-      : [
-          tickX(these, {
-            id: `mark-range-${dimmed ? 'dimmed' : 'lit'}`,
-            x: 'value',
-            y: (q) => line(q.at),
-            key: 'key',
-            // A group each: on a row's line, the tap takes the nearest
-            // tick or dot, not the first one drawn (`focusNearestY`).
-            z: 'key',
-            stroke: INK,
-            strokeWidth: 2.5,
-            strokeOpacity: dimmed ? DIMMED : 1,
-            length: 16,
-          }),
-        ]
-  })
+  const tickMarks = ranged
+    .flatMap((r) => r.spread)
+    .map((q) =>
+      tickX([q], {
+        id: `mark-range-${q.key}`,
+        x: 'value',
+        y: (t) => line(t.at),
+        key: 'key',
+        // A group each: on a row's line, the tap takes the nearest
+        // tick or dot, not the first one drawn (`focusNearestY`).
+        z: 'key',
+        stroke: q.hasCard ? ACTIVE_LINE : INK,
+        strokeWidth: q.hasCard ? 4 : 2.5,
+        strokeOpacity: fadeOf(q),
+        length: q.hasCard ? 22 : 16,
+      }),
+    )
   return [
     link(ranged, {
       id: 'range',
@@ -290,7 +340,7 @@ function rangeMarks(rows: Row[], places: Places) {
       key: (r) => `range-${r.key}`,
       stroke: INK,
       strokeWidth: 2,
-      strokeOpacity: (r) => (r.dimmed ? DIMMED : 1),
+      strokeOpacity: fadeOf,
       lineCap: 'butt',
     }),
     ...tickMarks,
@@ -306,7 +356,9 @@ const MARK_FOCUS: ChartFocusStrategy<Row, number, RowY> = {
   resolve: (points, context) =>
     focusNearestY.resolve(onlyMarks(points), context),
   group: (points, context) => focusNearestY.group(onlyMarks(points), context),
-  navigation: (points) => focusNearestY.navigation(onlyMarks(points)),
+  // Down the rows, as they read; a range's ticks from the left.
+  navigation: (points) =>
+    [...onlyMarks(points)].sort((a, b) => a.y - b.y || a.x - b.x),
 }
 
 /** Where a row sits on the y axis: its band, or on a dot chart its center
@@ -352,30 +404,22 @@ function stackedMarks(
 ) {
   const parts = chart.segments?.length ?? 1
   const start = (r: Row) => r.stack?.start ?? 0
-  const marks: ChartMark<Row, number, RowY>[] = []
-  for (const dimmed of [false, true])
-    for (let part = 0; part < parts; part++) {
-      const these = rows.filter(
-        (r) => r.dimmed === dimmed && r.stack?.part === part,
-      )
-      if (these.length === 0) continue
-      const fade = dimmed ? DIMMED : 1
-      marks.push(
-        barX(these, {
-          id: `mark-${dimmed ? 'dimmed' : 'lit'}-${part}`,
-          x1: start,
-          x2: (r) => start(r) + r.value,
-          y: bandOf,
-          key: 'key',
-          maxThickness: 26,
-          fill: INK,
-          fillOpacity: partTone(part, parts).opacity * fade,
-          stroke: INK,
-          strokeWidth: 1,
-          strokeOpacity: fade,
-        }),
-      )
-    }
+  const marks: ChartMark<Row, number, RowY>[] = rows.map((r) => {
+    const fade = fadeOf(r)
+    return barX([r], {
+      id: `mark-${r.key}`,
+      x1: start,
+      x2: (d) => start(d) + d.value,
+      y: bandOf,
+      key: 'key',
+      maxThickness: 26,
+      fill: INK,
+      fillOpacity: partTone(r.stack?.part ?? 0, parts).opacity * fade,
+      stroke: INK,
+      strokeWidth: 1,
+      strokeOpacity: fade,
+    })
+  })
   marks.push(...stackedTexts(words, labelOffset, parts))
   return marks
 }
@@ -384,6 +428,8 @@ function stackedMarks(
  * inside it. */
 function stackedTexts(words: Row[], labelOffset: number, parts: number) {
   const start = (r: Row) => r.stack?.start ?? 0
+  // A bar's name dims with the whole bar: a legend's key leaves one part lit.
+  const litBars = new Set(words.filter((r) => !r.dimmed).map(bandOf))
   return [
     text(
       words.filter((r) => r.stack?.part === 0),
@@ -396,7 +442,7 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
         anchor: 'start',
         dy: -labelOffset,
         fontSize: LABEL.fontSize,
-        fill: (r) => (r.dimmed ? MUTED : INK),
+        fill: (r) => (litBars.has(bandOf(r)) ? INK : MUTED),
       },
     ),
     text(
@@ -417,59 +463,55 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
   ]
 }
 
-/** The marks of one kind, one per look: a definition's shape (dots only),
- * dimmed or not. */
+/** A point's mark in its definition's shape: filled circle, filled hexagon,
+ * hollow circle, hollow hexagon. */
+function shapeMark<Y extends RowY>(
+  row: Row,
+  place: { id: string; x: 'value' | 'year'; y: (r: Row) => Y },
+) {
+  const fade = fadeOf(row)
+  const shape = row.definition ?? 0
+  const options = {
+    ...place,
+    key: 'key',
+    fillOpacity: fade,
+    strokeOpacity: fade,
+    stroke: INK,
+    strokeWidth: 2,
+    fill: shape >= 2 ? PAPER : INK,
+  } as const
+  return shape % 2 === 0
+    ? dot([row], { ...options, r: 6 })
+    : hexagon([row], { ...options, r: 7 })
+}
+
+/** A row's mark. One mark per point, because a mark's opacity is one number,
+ * and its id stays the same dimmed or lit: the library keys a point by its
+ * mark's id, so a new id would lose the keyboard's place when the card moves
+ * and the rows dim. */
 function pointMarks(
   chart: ChartView,
   rows: Row[],
   hatch: string,
   y: (r: Row) => RowY,
 ) {
-  const marks: ChartMark<Row, number, RowY>[] = []
-  for (const dimmed of [false, true]) {
-    const some = rows.filter((r) => r.dimmed === dimmed)
-    if (some.length === 0) continue
-    const fillOpacity = dimmed ? DIMMED : 1
-    if (chart.kind === 'bars') {
-      marks.push(
-        barX(some, {
-          id: `mark-${dimmed ? 'dimmed' : 'lit'}`,
-          x: 'value',
-          y,
-          key: 'key',
-          maxThickness: 16,
-          radius: 2,
-          fill: (r) => (r.own ? `url(#${hatch})` : INK),
-          stroke: (r) => (r.own ? INK : 'none'),
-          fillOpacity,
-        }),
-      )
-      continue
-    }
-    const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
-    for (let shape = 0; shape < shapes; shape++) {
-      const these = some.filter((r) => (r.definition ?? 0) === shape)
-      if (these.length === 0) continue
-      const options = {
-        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
+  return rows.map((row): ChartMark<Row, number, RowY> => {
+    const fade = fadeOf(row)
+    const id = `mark-${row.key}`
+    if (chart.kind === 'bars')
+      return barX([row], {
+        id,
         x: 'value',
         y,
         key: 'key',
-        fillOpacity,
-        strokeOpacity: fillOpacity,
-        stroke: INK,
-        strokeWidth: 2,
-      } as const
-      // Filled circle, filled hexagon, hollow circle, hollow hexagon.
-      const hollow = shape >= 2
-      marks.push(
-        shape % 2 === 0
-          ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
-          : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
-      )
-    }
-  }
-  return marks
+        maxThickness: 16,
+        radius: 2,
+        fill: row.own ? `url(#${hatch})` : INK,
+        stroke: row.own ? INK : 'none',
+        fillOpacity: fade,
+      })
+    return shapeMark(row, { id, x: 'value', y })
+  })
 }
 
 type ScenePoint = {
@@ -510,19 +552,14 @@ function rowWords(
 /** Our layer's marks: where each bar or dot of a row landed in the scene. */
 function overlayMarks(
   points: ReadonlyArray<ScenePoint>,
-  rows: Row[],
   { valueAbove, layout }: { valueAbove?: number; layout?: Layout } = {},
 ): OverlayMark[] {
-  // A range's ticks (#472) are marks of their own, keyed by their point.
-  const byKey = new Map(
-    rows.flatMap((r) => [r, ...r.spread]).map((r) => [r.key, r]),
-  )
   const words = layout && rowWords(points, layout)
   const seen = new Set<string>()
   const marks: OverlayMark[] = []
   for (const point of points) {
-    const datum = point.datum as Row | undefined
-    const found = datum && byKey.get(datum.key)
+    // A range's ticks (#472) are marks of their own.
+    const found = point.datum as Row | undefined
     // One ring or tag per row: a stacked bar's parts share theirs (#476).
     if (!point.markId.startsWith('mark') || !found || seen.has(bandOf(found)))
       continue
@@ -548,8 +585,71 @@ interface PlotProps {
   /** The `?pais=` country, already checked against the Guide's. */
   country: string | null
   profile: Profile | null
-  onSelect: (point: ChartPoint | null) => void
+  /** The key of the point that has the card (`chart-card.ts`). */
+  active: string | null
+  /** The legend's key that is lit (`chart-filters.ts`). */
+  legend: number | null
+  /** The pointer or the keyboard's focus reached a mark, or left. */
+  onHover: (mark: ChartMarkAt | null) => void
+  onSelect: (mark: ChartMarkAt | null) => void
 }
+
+/** The chart's props that tell the card about its marks, each as the card
+ * needs it. The latest drawing is kept: a mark's place in the drawing's
+ * pixels, which are the page's, changes with its width, and the point the
+ * focus goes back to is looked up in it. */
+function useMarkReports<Y extends RowY>({
+  chart,
+  onHover,
+  onSelect,
+}: Pick<PlotProps, 'chart' | 'onHover' | 'onSelect'>) {
+  const chartId = chart.domId
+  const drawn = useRef<ChartRenderContext<Row, number, Y> | null>(null)
+  const onRender = useCallback(
+    (context: ChartRenderContext<Row, number, Y>) => {
+      const moved =
+        drawn.current !== null &&
+        drawn.current.scene.width !== context.scene.width
+      drawn.current = context
+      if (moved) cardMoved(chartId)
+    },
+    [chartId],
+  )
+  const markAt = (point: LibraryPoint<Row, number, Y>): ChartMarkAt => {
+    const latest = () =>
+      drawn.current?.scene.points.find(
+        (p) => p.markId === point.markId && p.key === point.key,
+      ) ?? point
+    return {
+      point: point.datum,
+      place: latest,
+      refocus: () => {
+        const context = drawn.current
+        if (!context) return
+        // A focus that arrives starts at the first mark, unless told where.
+        context.svg.focus()
+        context.interaction.setControlledFocus(latest())
+        // Told where, the library does not clear it when the focus leaves.
+        context.svg.addEventListener(
+          'focusout',
+          () => context.interaction.setControlledFocus(null),
+          { once: true },
+        )
+      },
+    }
+  }
+  return {
+    onRender,
+    onFocusChange: (point: LibraryPoint<Row, number, Y> | null) =>
+      onHover(point && markAt(point)),
+    onSelect: (point: LibraryPoint<Row, number, Y> | null) =>
+      onSelect(point && markAt(point)),
+  }
+}
+
+/** A mark's row reaches any point of its height: the pointer finds the
+ * nearest row, or the nearest year, wherever it is in the drawing. */
+const ANYWHERE = Number.POSITIVE_INFINITY
 
 /** A time line: one dot per number at its year, joined by a line when the
  * numbers share a unit, the value written above each dot and a tick per
@@ -616,7 +716,7 @@ function lineMarks(chart: ChartView, rows: Row[]) {
         strokeOpacity: anyDimmed ? DIMMED : 1,
       }),
     )
-  marks.push(...lineDots(chart, rows, y))
+  marks.push(...lineDots(rows, y))
   marks.push(
     text(words, {
       id: 'value',
@@ -634,36 +734,11 @@ function lineMarks(chart: ChartView, rows: Row[]) {
   return marks
 }
 
-/** A time line's dots, one mark per look: a definition's shape, dimmed or
- * not. */
-function lineDots(chart: ChartView, rows: Row[], y: (r: Row) => number) {
-  const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
-  const marks: ChartMark<Row, number, number>[] = []
-  for (const dimmed of [false, true])
-    for (let shape = 0; shape < shapes; shape++) {
-      const these = rows.filter(
-        (r) => r.dimmed === dimmed && (r.definition ?? 0) === shape,
-      )
-      if (these.length === 0) continue
-      const opacity = dimmed ? DIMMED : 1
-      const hollow = shape >= 2
-      const options = {
-        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
-        x: 'year',
-        y,
-        key: 'key',
-        fillOpacity: opacity,
-        strokeOpacity: opacity,
-        stroke: INK,
-        strokeWidth: 2,
-      } as const
-      marks.push(
-        shape % 2 === 0
-          ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
-          : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
-      )
-    }
-  return marks
+/** A time line's dots, one mark per point, as in `pointMarks`. */
+function lineDots(rows: Row[], y: (r: Row) => number) {
+  return rows.map((row): ChartMark<Row, number, number> => {
+    return shapeMark(row, { id: `mark-${row.key}`, x: 'year', y })
+  })
 }
 
 /** A time line's x scale: the years, with a margin of years on each side,
@@ -693,26 +768,43 @@ function yearScale(years: NonNullable<ChartView['years']>) {
 function lineSvg(
   scene: Parameters<typeof renderChartSvg>[0],
   options: Parameters<typeof renderChartSvg>[1],
-  rows: Row[],
 ) {
+  const point = scene.points.find(
+    (p) => p.markId.startsWith('mark') && (p.datum as Row | undefined)?.active,
+  )
   return withOverlay(
     renderChartSvg(scene, options),
-    overlayLayers(
-      overlayMarks(scene.points, rows, { valueAbove: LINE.valueAbove }),
-      {
-        labelOffset: 0,
-        left: scene.chart.x,
-        right: scene.chart.x + scene.chart.width,
-      },
-    ),
+    overlayLayers(overlayMarks(scene.points, { valueAbove: LINE.valueAbove }), {
+      labelOffset: 0,
+      left: scene.chart.x,
+      right: scene.chart.x + scene.chart.width,
+    }),
+    '',
+    point
+      ? yearGuide(
+          point.x,
+          point.y,
+          scene.chart.y,
+          scene.chart.y + scene.chart.height,
+        )
+      : '',
   )
 }
 
-function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
+function LinePlot({
+  chart,
+  country,
+  profile,
+  active,
+  legend,
+  onHover,
+  onSelect,
+}: PlotProps) {
   const rows = useMemo(
-    () => rowsOf(chart, country, profile),
-    [chart, country, profile],
+    () => rowsOf(chart, country, profile, active, legend),
+    [chart, country, profile, active, legend],
   )
+  const reports = useMarkReports<number>({ chart, onHover, onSelect })
   const scaled = chart.ticks.length > 0
   const above = lineTop(chart)
   const definition = useMemo(() => {
@@ -736,27 +828,23 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
         },
       },
       focus: LINE_FOCUS,
+      maxFocusDistance: ANYWHERE,
       // Both fixed, so the plot is exactly `LINE.plot` tall.
       margin: { top: above, bottom: LINE.axis },
       theme: THEME,
     })
   }, [chart, rows, scaled, above])
 
-  const renderSvg = useCallback<typeof renderChartSvg>(
-    (scene, options) => lineSvg(scene, options, rows),
-    [rows],
-  )
-
   return (
     <Chart
       definition={definition}
-      renderSvg={renderSvg}
+      renderSvg={lineSvg}
       initialWidth={INITIAL_WIDTH}
       height={above + (scaled ? LINE.plot : LINE.flatPlot) + LINE.axis}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
-      onSelect={(point) => onSelect(point?.datum ?? null)}
+      {...reports}
     />
   )
 }
@@ -771,11 +859,24 @@ export default function VisualChartPlot(props: PlotProps) {
   )
 }
 
-function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
+/** How far the active row's verde-água reaches past its mark and its top
+ * label line's baseline. */
+const ACTIVE_ROW_PAD = { above: 11, below: 14 } as const
+
+function RowPlot({
+  chart,
+  country,
+  profile,
+  active,
+  legend,
+  onHover,
+  onSelect,
+}: PlotProps) {
+  const reports = useMarkReports<RowY>({ chart, onHover, onSelect })
   const hatch = `${chart.domId}-hatch`
   const rows = useMemo(
-    () => rowsOf(chart, country, profile),
-    [chart, country, profile],
+    () => rowsOf(chart, country, profile, active, legend),
+    [chart, country, profile, active, legend],
   )
   const layout = layoutOf(chart)
   // A dot chart places its rows in pixels, so a row with a range can be
@@ -885,6 +986,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
         },
       },
       focus: stacked ? STACK_FOCUS : MARK_FOCUS,
+      maxFocusDistance: ANYWHERE,
       // The sides are fixed: a long label must not squeeze the scale. On a
       // dot chart the bottom is too, so its pixels are the plot's.
       margin: {
@@ -898,12 +1000,19 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     })
   }, [chart, rows, hatch, layout, places])
 
+  // One renderer for the chart's life: a new one replaces the whole SVG, and
+  // the keyboard's focus with it. What changes comes through the scene.
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
-      const marks = overlayMarks(scene.points, rows, { layout })
-      const defs = rows.some((r) => r.own)
+      const marks = overlayMarks(scene.points, { layout })
+      const datums = scene.points
+        .filter((p) => p.markId.startsWith('mark'))
+        .map((p) => ({ datum: p.datum as Row, y: p.y }))
+      const defs = datums.some((d) => d.datum.own)
         ? `<defs><pattern id="${hatch}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width="2.2"/></pattern></defs>`
         : ''
+      const row = datums.find((d) => d.datum.active)
+      const reach = (layout.label[0] ?? 0) + ACTIVE_ROW_PAD.above
       return withOverlay(
         renderChartSvg(scene, options),
         overlayLayers(marks, {
@@ -914,9 +1023,18 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
           right: scene.width,
         }),
         defs,
+        row
+          ? activeRowLayer(
+              row.y - reach,
+              reach +
+                ACTIVE_ROW_PAD.below +
+                (row.datum.spread.length > 0 ? SPREAD.extra : 0),
+              scene.width,
+            )
+          : '',
       )
     },
-    [rows, hatch, layout],
+    [hatch, layout],
   )
 
   return (
@@ -928,7 +1046,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
-      onSelect={(point) => onSelect(point?.datum ?? null)}
+      {...reports}
     />
   )
 }

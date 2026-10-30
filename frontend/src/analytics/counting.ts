@@ -1,6 +1,6 @@
 // The usage count (#21, #35; ADR 0001): visits by path and the `helped/…`,
-// `fact-sheet/…`, `calculator/…`, `continue-reading/…` and
-// `neighbor-site/…` events. None carries the Profile, nor
+// `fact-sheet/…`, `calculator/…`, `continue-reading/…`, `neighbor-site/…`
+// and `chart-card/…` events. None carries the Profile, nor
 // whether it was filled in: the caller only passes the event name.
 //
 // It does not count when the browser asks (GPC or Do Not Track) nor when the
@@ -8,8 +8,7 @@
 // cases the sender (`goatcounter.ts`) is not even imported. The preference
 // lives in localStorage and nothing in the link reads it, so opening a link
 // does not undo it.
-import { useEffect, useSyncExternalStore } from 'react'
-import { useRouterState } from '@tanstack/react-router'
+import { useSyncExternalStore } from 'react'
 import { PREFIX, stored } from '#/state/stored'
 import { EVENTS, type AnalyticsEvent, type CountedCalculator } from './events'
 
@@ -81,8 +80,15 @@ function sendHit(path: string, event: boolean) {
   })
 }
 
+/** A page the router showed, by its path. */
+export const countVisit = (path: string) => sendHit(path, false)
+
 /** An event with no values, from `EVENTS` (`events.ts`). */
 export const countEvent = (event: AnalyticsEvent) => sendHit(event, true)
+
+/** A Fact sheet opened from the Guide of `topic`. */
+export const countFactSheetOpened = (topic: string, factSheet: string) =>
+  countEvent(EVENTS.factSheetOpened(topic, factSheet))
 
 /** The same event once per visit (the tab's session). */
 function countOncePerVisit(event: AnalyticsEvent) {
@@ -99,35 +105,3 @@ function countOncePerVisit(event: AnalyticsEvent) {
 /** The visitor used the calculator: counts once per visit. */
 export const countCalculatorUse = (calculator: CountedCalculator) =>
   countOncePerVisit(EVENTS.calculator(calculator))
-
-/** Counts each page the router shows, by the path without query. At the
- * root. Only a path change counts: turning the switch back on does not send
- * the current page, and the count resumes on the next one. */
-export function useCountVisits() {
-  const path = useRouterState({
-    select: (s) => s.resolvedLocation?.pathname,
-  })
-  useEffect(() => {
-    if (path) sendHit(path, false)
-  }, [path])
-}
-
-/** In the Guide: tapping a Fact sheet (the title in the list, a link in the
- * text or one in a reference ring's popover) counts
- * `fact-sheet/<topic>/<fact sheet>`. The ring itself only opens the popover,
- * and does not count. One listener for the page. */
-export function useCountOpenedFactSheets(topic: string) {
-  useEffect(() => {
-    const onClick = (event: MouseEvent) => {
-      const link = (event.target as Element | null)?.closest?.(
-        'main a[href^="/estudos/"], [data-slot="ficha-referencia"] a[href^="/estudos/"]',
-      )
-      const factSheet = link
-        ?.getAttribute('href')
-        ?.match(/^\/estudos\/([a-z0-9-]+)$/)?.[1]
-      if (factSheet) countEvent(EVENTS.factSheetOpened(topic, factSheet))
-    }
-    document.addEventListener('click', onClick, true)
-    return () => document.removeEventListener('click', onClick, true)
-  }, [topic])
-}

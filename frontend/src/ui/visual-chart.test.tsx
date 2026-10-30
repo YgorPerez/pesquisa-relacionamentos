@@ -3,9 +3,16 @@
 // marker, Brazil's ring, the "você" tag) and the country filter already
 // applied. The tap is in the story (`visual-chart.stories.tsx`), in a real
 // browser, where the library measures and listens.
-import { render, screen, within } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
+import { partTone } from './stack-tones'
 import { VisualChart } from './visual-chart'
 import { CHART_COPY } from './visual-chart.copy'
 import {
@@ -17,6 +24,7 @@ import {
   STACKED,
 } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
+import VisualChartPlot from './visual-chart-plot'
 
 // Rendered as the server renders: with the plot already loaded.
 beforeAll(async () => {
@@ -304,7 +312,7 @@ it("lights a Study whose spread has the chosen country, and dims the spread's ot
   expect(ticks.length).toBeGreaterThan(0)
   const opacities = [...html.querySelectorAll('svg[role="img"] line')]
     .map((l) => l.getAttribute('stroke-opacity'))
-    .filter((o) => o === '0.22')
+    .filter((o) => o === '0.16')
   expect(opacities.length).toBe(2)
 })
 
@@ -451,12 +459,220 @@ it('starts a time line right above its highest words, with room for a value\'s "
   expect(drawn(null).headroom).toBeLessThan(20)
 })
 
-it('tells how to open a number only once the chart can take the tap', () => {
-  // Without JavaScript a tap opens nothing: the server does not say it.
+/** The plot as it draws while `active` has the card (#499). */
+const drawnWith = (chart: typeof DOTS, active: string | null) =>
+  page(
+    renderToString(
+      <VisualChartPlot
+        chart={chart}
+        country={null}
+        profile={null}
+        active={active}
+        legend={null}
+        onHover={() => {}}
+        onSelect={() => {}}
+      />,
+    ),
+  )
+const dimmedValues = (html: Document) =>
+  [...html.querySelectorAll('svg[role="img"] text')]
+    .filter((t) => t.getAttribute('fill')?.includes('tinta-2'))
+    .map((t) => t.textContent)
+
+it('lights the active row behind its words and dims the other rows', () => {
+  expect(
+    drawnWith(DOTS, null).querySelector('[data-ts-key="active-row"]'),
+  ).toBeNull()
+  const html = drawnWith(DOTS, DOTS.points[0]!.key)
+  expect(html.querySelector('[data-ts-key="active-row"]')).not.toBeNull()
+  const dimmed = dimmedValues(html)
+  expect(dimmed).toContain('39%')
+  expect(dimmed).toContain('9%')
+  expect(dimmed).not.toContain('18%')
+})
+
+it("keeps a Study's row lit while one point of its range is active", () => {
+  const point = RANGE.points.find((p) => p.range)!
+  const html = drawnWith(RANGE, point.range![0]!.key)
+  const dimmed = dimmedValues(html)
+  expect(dimmed).not.toContain(`média ${point.number.text}`)
+  expect(dimmed).toContain('39%')
+})
+
+it('dims the other bars of a stacked chart, not the other parts of the active one', () => {
+  const part = STACKED.points[0]!
+  const other = STACKED.points.find((p) => p.stack?.bar !== part.stack?.bar)!
+  const html = drawnWith(STACKED, part.key)
+  // The library ends a mark's key in the point's own.
+  const opacity = (key: string) =>
+    html
+      .querySelector(`rect[data-ts-key$=":${key.length}:${key}"]`)
+      ?.getAttribute('fill-opacity')
+  // The same part of each bar: only the dimming sets them apart.
+  expect(Number(opacity(other.key))).toBeLessThan(Number(opacity(part.key)))
+})
+
+it("draws a time line's guide at the active year and no dimmed year", () => {
+  expect(
+    drawnWith(LINE, null).querySelector('[data-ts-key="guide"]'),
+  ).toBeNull()
+  const html = drawnWith(LINE, LINE.points[1]!.key)
+  const dot = [
+    ...html.querySelectorAll(
+      'svg[role="img"] circle:not([data-ts-key="guide-halo"])',
+    ),
+  ][1]
+  const guide = html.querySelector('[data-ts-key="guide"]')
+  expect(guide?.getAttribute('x1')).toBe(dot?.getAttribute('cx'))
+  expect(dimmedValues(html)).not.toContain('13,5%')
+})
+
+/** Whether a value's words are drawn dimmed. */
+const isDimmed = (root: ParentNode, words: string) =>
+  [...root.querySelectorAll('svg[role="img"] text')]
+    .find((t) => t.textContent === words)
+    ?.getAttribute('fill')
+    ?.includes('tinta-2')
+const legendKey = (name: string) => screen.getByRole('button', { name })
+
+it('serves the legend as plain words, with nothing to press before JavaScript', () => {
   const served = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
   )
-  expect(served.body.textContent).not.toContain(CHART_COPY.hint)
-  render(<VisualChart chart={DOTS} country={null} profile={null} />)
-  expect(screen.getAllByText(CHART_COPY.hint)).toHaveLength(1)
+  expect(served.body.textContent).toContain('só sites e aplicativos')
+  expect(served.querySelector('button')).toBeNull()
+})
+
+it('lights the marks of the pressed key, and pressing it again lets them go', async () => {
+  const { container } = render(
+    <VisualChart chart={DOTS} country={null} profile={null} />,
+  )
+  fireEvent.click(legendKey('só sites e aplicativos'))
+  await waitFor(() => expect(isDimmed(container, '39%')).toBe(true))
+  expect(isDimmed(container, '18%')).toBe(false)
+  expect(legendKey('só sites e aplicativos')).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
+
+  fireEvent.click(legendKey('só sites e aplicativos'))
+  await waitFor(() => expect(isDimmed(container, '39%')).toBe(false))
+})
+
+it('keeps lit only what matches both the legend and the country', async () => {
+  const { container } = render(
+    <VisualChart chart={DOTS} country="brasil" profile={null} />,
+  )
+  fireEvent.click(legendKey('só sites e aplicativos'))
+  await waitFor(() => expect(isDimmed(container, '9%')).toBe(true))
+  expect(isDimmed(container, '18%')).toBe(false)
+  expect(isDimmed(container, '39%')).toBe(true)
+  expect(screen.getByRole('status')).toBeEmptyDOMElement()
+})
+
+it('says so when the legend and the country match nothing', async () => {
+  const { container } = render(
+    <VisualChart chart={DOTS} country="eua" profile={null} />,
+  )
+  expect(screen.getByRole('status')).toBeEmptyDOMElement()
+  fireEvent.click(legendKey('só sites e aplicativos'))
+  await waitFor(() =>
+    expect(screen.getByRole('status')).toHaveTextContent(CHART_COPY.noMatch),
+  )
+  await waitFor(() => expect(isDimmed(container, '39%')).toBe(true))
+  expect(isDimmed(container, '18%')).toBe(true)
+})
+
+it('leaves the legend alone when the chart does not have the country', async () => {
+  const { container } = render(
+    <VisualChart chart={DOTS} country="gana" profile={null} />,
+  )
+  fireEvent.click(legendKey('qualquer canal online'))
+  await waitFor(() => expect(isDimmed(container, '18%')).toBe(true))
+  expect(isDimmed(container, '39%')).toBe(false)
+  expect(screen.getByRole('status')).toBeEmptyDOMElement()
+})
+
+it('marks only the end of a range that has the card, with its Study still lit', () => {
+  const study = RANGE.points.find((p) => p.range)!
+  const lit = (active: string) =>
+    [
+      ...drawnWith(RANGE, active).querySelectorAll(
+        'svg[role="img"] line[stroke*="agua-tinta"]',
+      ),
+    ].length
+  expect(lit(study.key)).toBe(0)
+  expect(lit(study.range![0]!.key)).toBe(1)
+  expect(lit(study.range![2]!.key)).toBe(1)
+})
+
+it("dims the other parts of every stacked bar for a part's key, and keeps each bar's name lit", async () => {
+  const { container } = render(
+    <VisualChart chart={STACKED} country={null} profile={null} />,
+  )
+  fireEvent.click(legendKey('Muito arrependidos'))
+  const part = (key: string) =>
+    container.querySelector(`rect[data-ts-key$=":${key.length}:${key}"]`)
+  await waitFor(() =>
+    expect(Number(part('1-0')?.getAttribute('fill-opacity'))).toBeLessThan(
+      Number(partTone(0, 4).opacity),
+    ),
+  )
+  expect(Number(part('1-3')?.getAttribute('fill-opacity'))).toBe(
+    partTone(3, 4).opacity,
+  )
+  expect(isDimmed(container, 'Homens heterossexuais')).toBe(false)
+})
+
+/** The plot with the filters on and `active` holding the card. */
+const drawnFiltered = (
+  country: string | null,
+  active: string | null,
+  legend: number | null = null,
+) =>
+  page(
+    renderToString(
+      <VisualChartPlot
+        chart={DOTS}
+        country={country}
+        profile={null}
+        active={active}
+        legend={legend}
+        onHover={() => {}}
+        onSelect={() => {}}
+      />,
+    ),
+  )
+/** The opacity of each row's dot or hexagon. */
+const markOpacities = (html: Document) =>
+  [
+    ...html.querySelectorAll(
+      'svg[role="img"] circle[fill-opacity], svg[role="img"] path[fill-opacity]',
+    ),
+  ].map((m) => Number(m.getAttribute('fill-opacity')))
+
+it('keeps a row the country filtered out dim while it has the card', () => {
+  const filteredOut = DOTS.points.find((p) => p.country?.slug !== 'eua')!
+  expect(dimmedValues(drawnFiltered('eua', filteredOut.key))).toContain(
+    filteredOut.number.text,
+  )
+})
+
+it('keeps a row the legend filtered out dim while it has the card', () => {
+  const filteredOut = DOTS.points.find((p) => p.definition !== 0)!
+  expect(dimmedValues(drawnFiltered(null, filteredOut.key, 0))).toContain(
+    filteredOut.number.text,
+  )
+})
+
+it('fades what the filter left out more than what the card dims, so a match still shows under a card', () => {
+  const matching = DOTS.points.find((p) => p.country?.slug === 'eua')!
+  const other = DOTS.points.find((p) => p.key !== matching.key)!
+  // The card on a row the filter left out: the row that matches is dimmed by
+  // the card, and is still more present than the rows left out.
+  const opacities = markOpacities(drawnFiltered('eua', other.key))
+  expect(new Set(opacities).size).toBe(2)
+  expect(Math.min(...opacities)).toBeLessThan(0.2)
+  expect(Math.max(...opacities)).toBeGreaterThan(0.2)
+  expect(Math.max(...opacities)).toBeLessThan(1)
 })
