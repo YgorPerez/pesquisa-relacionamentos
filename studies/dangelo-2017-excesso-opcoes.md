@@ -29,9 +29,9 @@ Num site de namoro criado para o experimento, os participantes foram sorteados p
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Amostra efetiva após exclusões | 99 participantes | p. 11, Participants and Recruitment | "N = 99" |
-| Satisfação uma semana depois: conjunto grande versus pequeno | Menor no conjunto grande; d de Cohen = 0,41; p < 0,05 | p. 14, Results, teste de efeitos simples da hipótese de quantidade de opções | "p < .05, Cohen’s d = .41" |
-| Efeito isolado de poder trocar a escolha sobre a satisfação uma semana depois | Não significativo; p = 0,74 | p. 14, Results, efeito principal de reversibilidade | "p = .74" |
-| Troca efetiva da escolha entre quem podia trocar, no conjunto grande | 13% | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
+| Satisfação com a pessoa escolhida uma semana depois: quem escolheu entre 24 perfis contra quem escolheu entre 6 | Menor com mais perfis; d de Cohen = 0,41; p < 0,05 | p. 14, Results, teste de efeitos simples da hipótese de quantidade de opções | "p < .05, Cohen’s d = .41" |
+| Satisfação uma semana depois: quem podia trocar a escolha contra quem não podia | Sem diferença significativa; p = 0,74 | p. 14, Results, efeito principal de reversibilidade | "p = .74" |
+| Quem escolheu entre 24 perfis e podia trocar: quantos trocaram de fato | 13% | p. 16, Results, hipótese sobre troca efetiva | "13% of the daters in the large choice set condition did." |
 
 A diferença de satisfação entre os conjuntos não foi [[significativa]] logo após a escolha. No retorno, ninguém do conjunto pequeno que podia trocar escolheu outra pessoa. Os contrastes planejados também apontaram menor satisfação e maior queda durante a semana no grupo que tinha muitas opções e podia trocar, comparado aos demais grupos reunidos. Esse contraste não equivale a demonstrar uma interação convencional entre quantidade de opções e reversibilidade.
 

@@ -30,8 +30,8 @@ Duas pesquisas com adultos americanos sobre apps e sites de namoro: quem já uso
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Amostra de 2023 | 6.034 adultos, julho de 2022 | Relatório 2023, p. 2 | "This survey was conducted among 6,034 U.S. adults from July 5-17, 2022." |
-| Resposta acumulada, 2023 | 3% desde o recrutamento | Relatório 2023, p. 54, Metodologia | "The cumulative response rate accounting for nonresponse to the recruitment surveys and attrition is 3%." |
-| Resposta na onda, 2023 | 6.034 de 7.374 sorteados (84%) | Relatório 2023, p. 54, Metodologia | "A total of 6,034 panelists responded out of 7,374 who were sampled, for a response rate of 84%." |
+| Pesquisa de 2023: parte dos convidados ao painel que chegou a responder, somando todas as etapas | 3% desde o recrutamento | Relatório 2023, p. 54, Metodologia | "The cumulative response rate accounting for nonresponse to the recruitment surveys and attrition is 3%." |
+| Pesquisa de 2023: membros do painel sorteados que responderam | 6.034 de 7.374 sorteados (84%) | Relatório 2023, p. 54, Metodologia | "A total of 6,034 panelists responded out of 7,374 who were sampled, for a response rate of 84%." |
 | Já usaram site ou app de namoro | 30%, sem mudança desde a pesquisa anterior do Pew | Relatório 2023, p. 5 | "The overall share of Americans who report using any type of dating site or app – 30% – is unchanged" |
 | Já usaram, menores de 30 anos | 53% | Relatório 2023, p. 6 | "Some 53% of adults under 30 have ever used a dating site or app" |
 | Já usaram, LGB vs. heterossexuais | 51% vs. 28% | Relatório 2023, p. 18 | "51% of lesbian, gay or bisexual (LGB) Americans say they have ever used a dating site or app, compared with 28% of those who are straight." |
@@ -57,7 +57,7 @@ Duas pesquisas com adultos americanos sobre apps e sites de namoro: quem já uso
 | Adultos que acham os apps um jeito seguro de conhecer gente | 48% sim, 49% não | Relatório 2023, p. 7 | "About half (48%) say dating sites and apps are a very or somewhat safe way to meet people, while 49% say they are not at all or not too safe" |
 | Usuários que acham que não é seguro, mulheres vs. homens | 41% vs. 23% | Relatório 2023, p. 16 | "women are far more likely than men to say these platforms are not a safe way to meet people (41% vs. 23%)" |
 | Amostra de 2020 | 4.860 adultos, outubro de 2019 | Relatório 2020, p. 2 | "These findings are based on a survey conducted Oct. 16 to 28, 2019, among 4,860 U.S. adults." |
-| Resposta acumulada, 2020 | 5,3% | Relatório 2020, p. 40, Metodologia | "cumulative response rate accounting for nonresponse to the recruitment surveys and attrition is 5.3%" |
+| Pesquisa de 2020: parte dos convidados ao painel que chegou a responder, somando todas as etapas | 5,3% | Relatório 2020, p. 40, Metodologia | "cumulative response rate accounting for nonresponse to the recruitment surveys and attrition is 5.3%" |
 | Usuários dos últimos cinco anos que acham que não receberam mensagens suficientes: homens | 57% (só 6% acham que receberam demais) | Relatório 2020, p. 23 | "Some 57% of men who have online dated in the past five years report that they did not receive enough messages, while just 6% state they received too many messages." |
 | Idem, mulheres que acham que receberam demais vs. homens | 30% vs. 6% | Relatório 2020, p. 23 | "five times as likely as men to report they were sent too many messages (30% vs. 6%)" |
 | Idem, mulheres que acham que não receberam o suficiente | 24% | Relatório 2020, p. 23 | "say they did not receive enough messages (24%" |

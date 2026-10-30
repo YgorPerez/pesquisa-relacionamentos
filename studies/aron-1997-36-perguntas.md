@@ -27,7 +27,7 @@ Duplas de desconhecidos passaram 45 minutos fazendo, em turnos, perguntas e tare
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Proximidade com as perguntas que se aprofundam contra conversa trivial | 4,06 contra 3,25 | Estudo 1, Results and Discussion (p. 366) | "Means on the closeness composite were 4.06 for the closeness condition and 3.25 for the small-talk condition." |
-| Tamanho do efeito | d = 0,88 | Estudo 1, Results and Discussion (p. 366) | "This difference corresponds to an effect size (d) of .88 standard deviations" |
+| Tamanho dessa diferença, em desvios-padrão (0,8 já é grande) | d = 0,88 | Estudo 1, Results and Discussion (p. 366) | "This difference corresponds to an effect size (d) of .88 standard deviations" |
 | Estudos preliminares: duplas só de mulheres contra só de homens | nenhuma diferença | Estudo 1, Method (p. 365) | "our preliminary studies had found no differences between all-women and all-men pairings" |
 | Estudos preliminares: diferença entre os sexos na proximidade | nenhuma, nem dentro das duplas mistas nem entre duplas só de mulheres e só de homens | Nota 1 (p. 375) | "there were no significant or near-significant sex differences or sex interactions in closeness" |
 | Estudo 1: duplas mistas contra só de mulheres | sem diferença significativa | Estudo 1, Results and Discussion (p. 366) | "nor did the main effect for cross-sex versus all-women reach or approach significance." |

@@ -27,11 +27,11 @@ Pessoas que tinham levado um fora recente ficaram na ressonância em dois tipos 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Acerto dos classificadores em pessoas fora do treino | 92% para dor, 80% para rejeição | Resumo | "FMRI pattern classiﬁers discriminate pain and rejection from their respective control conditions in out-of-sample individuals with 92% and 80% accuracy." |
-| Um padrão reconhece o outro? | Não: acerto no nível do acaso | Resumo | "The rejection classiﬁer performs at chance on pain, and vice versa." |
+| Programas treinados com imagens do cérebro: acerto em pessoas fora do treino, ao separar calor doloroso de calor leve e a foto do ex da foto de um amigo | 92% para dor, 80% para rejeição | Resumo | "FMRI pattern classiﬁers discriminate pain and rejection from their respective control conditions in out-of-sample individuals with 92% and 80% accuracy." |
+| O programa treinado em rejeição reconhece a dor, e o treinado em dor reconhece a rejeição? | Não: acerto no nível do acaso | Resumo | "The rejection classiﬁer performs at chance on pain, and vice versa." |
 | Dentro do cingulado anterior dorsal (dACC) | Padrões de dor e de rejeição não se correlacionam | Resumo | "Painand rejection-related representations are uncorrelated within regions thought to encode pain affect (for example, dorsal anterior cingulate)" |
-| Palavras de dor ao descrever o ex | 9,7% das palavras de emoção negativa; 23% dos participantes usaram alguma | Results, Behavioural results | "9.7% of all negative emotion words provided by participants were pain-related words (for example, painful, hurt and so on), with 23% of participants using at least one pain-related word" |
-| Tristeza ao descrever o ex | 40,3% das palavras de emoção negativa; 85% dos participantes | Results, Behavioural results | "sadness (for example, sad, cry; 40.3% of negative emotion words used, and 85% of participants)" |
+| Palavras de dor ao descrever o que sentiram vendo a foto do ex | 9,7% das palavras de emoção negativa; 23% dos participantes usaram alguma | Results, Behavioural results | "9.7% of all negative emotion words provided by participants were pain-related words (for example, painful, hurt and so on), with 23% of participants using at least one pain-related word" |
+| Palavras de tristeza, na mesma descrição | 40,3% das palavras de emoção negativa; 85% dos participantes | Results, Behavioural results | "sadness (for example, sad, cry; 40.3% of negative emotion words used, and 85% of participants)" |
 | Conclusão | Rejeição não "pega emprestado" o circuito da dor | Resumo | "Rather than co-opting pain circuitry, rejection involves distinct affective representations in humans." |
 
 ## Limitações

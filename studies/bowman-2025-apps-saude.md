@@ -32,11 +32,11 @@ A síntese é narrativa, sem [[meta-análise]] nem estimativa conjunta do tamanh
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Estudos incluídos | 45 estudos | p. 3, seção 3 | "a total of 45 studies were included in the review" |
-| Desenhos dos estudos, segundo a seção de características | 40 transversais (88,9%), 4 longitudinais (8,9%) e 1 experimental (2,2%) | p. 3, seção 3.1 | "The studies were cross-sectional (n = 40; 88.9%), longitudinal (n = 4; 8.9%), and experimental (n = 1; 2.2%)." |
-| Tamanho das amostras individuais | De 13 a 5.253 participantes; mediana de 322 | p. 3, seção 3.1 | "The sample sizes ranged from 13 to 5253 participants, with the median sample size being 322." |
-| Estudos de imagem corporal com associação adversa | 86,4% dos 22 estudos (19 estudos) | p. 4, seção 3.3.1 | "Across all included studies that examined body image (n = 22), 86.4% (n = 19) reported adverse relationships between dating app use and body image" |
-| Estudos de saúde mental e bem-estar com associação adversa | 48,3% dos 29 estudos (14 estudos) | p. 4, seção 3.3.2 | "Across all included studies that measured mental health and wellbeing (n = 29), 48.3% (n = 14) reported correlations between dating app use and adverse mental health and wellbeing outcomes" |
-| Estudos com pontuação de qualidade de pelo menos 80% no MMAT | 34 estudos (75,6%) | p. 4, seção 3.4 | "34 studies (75.6%) scoring 80% or higher using the MMAT" |
+| Tipos de estudo, segundo a seção de características | 40 transversais, que medem uma vez só (88,9%); 4 longitudinais, que acompanham as pessoas no tempo (8,9%); 1 experimental (2,2%) | p. 3, seção 3.1 | "The studies were cross-sectional (n = 40; 88.9%), longitudinal (n = 4; 8.9%), and experimental (n = 1; 2.2%)." |
+| Participantes em cada estudo | De 13 a 5.253 participantes; mediana de 322 | p. 3, seção 3.1 | "The sample sizes ranged from 13 to 5253 participants, with the median sample size being 322." |
+| Estudos sobre imagem corporal que ligaram o uso de apps a uma imagem pior do próprio corpo | 86,4% dos 22 estudos (19 estudos) | p. 4, seção 3.3.1 | "Across all included studies that examined body image (n = 22), 86.4% (n = 19) reported adverse relationships between dating app use and body image" |
+| Estudos sobre saúde mental e bem-estar que ligaram o uso de apps a resultados piores | 48,3% dos 29 estudos (14 estudos) | p. 4, seção 3.3.2 | "Across all included studies that measured mental health and wellbeing (n = 29), 48.3% (n = 14) reported correlations between dating app use and adverse mental health and wellbeing outcomes" |
+| Estudos que tiraram pelo menos 80% na avaliação de qualidade (MMAT) | 34 estudos (75,6%) | p. 4, seção 3.4 | "34 studies (75.6%) scoring 80% or higher using the MMAT" |
 | Estudos focados em homens de minorias sexuais | 16 estudos (35,6%) | p. 3, seção 3.1 | "sexual minority men (n = 16; 35.6%)" |
 
 Esses percentuais descrevem a parcela de estudos com achados adversos em cada grupo de desfechos. Não medem a parcela de usuários que adoece, a probabilidade de sofrer dano ou o tamanho de uma diferença. Um mesmo estudo pode examinar imagem corporal e saúde mental, e ter resultados distintos conforme o desfecho. As tabelas de resultados também incluem associações favoráveis e resultados sem [[significância estatística]].

@@ -27,10 +27,10 @@ Em chats de 15 minutos entre desconhecidos que deviam "se conhecer", os autores 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Amostra do Estudo 1 | 398 pessoas, 199 duplas | Estudo 1, Participants (p. 433) | "These exclusions left a sample of 398 participants (194 male, 204 female), or 199 dyads, for our analyses." |
-| Manipulação | pedir pelo menos nove perguntas contra no máximo quatro | Estudo 1, Design and procedure (p. 434) | "In the many-questions condition, one participant in each dyad was told that he or she needed to ask "at least nine questions."" |
+| O que o Estudo 1 mandou uma pessoa de cada dupla fazer | pelo menos nove perguntas, ou no máximo quatro | Estudo 1, Design and procedure (p. 434) | "In the many-questions condition, one participant in each dyad was told that he or she needed to ask "at least nine questions."" |
 | Gosto pelo parceiro que perguntou muito contra pouco (escala de 1 a 7) | 5,79 contra 5,31 | Estudo 1, Liking (p. 434) | "participants paired with high question-askers liked their partners more (M ⫽ 5.79, SD ⫽ 1.21) than did participants paired with low question-askers (M ⫽ 5.31, SD ⫽ 1.48)" |
-| Tamanho do efeito no Estudo 1 | d = 0,35 | Estudo 1, Liking (p. 434) | "t(197) ⫽ 2.47, p ⫽ .014; Cohen's d ⫽ .35" |
-| Replicação com as duas pessoas sorteadas (Estudo 2A) | 6,02 contra 5,79; d = 0,27 | Estudo 2A, Liking (p. 436) | "participants liked high question-askers (M ⫽ 6.02, SD ⫽ .74) more than low question-askers (M ⫽ 5.79, SD ⫽ .97; HLM: ␤ ⫽ .28, SE ⫽ .09), t(306) ⫽ 3.13, p ⫽ .001, Cohen's d ⫽ .27" |
+| Tamanho dessa diferença no Estudo 1, em desvios-padrão | d = 0,35 | Estudo 1, Liking (p. 434) | "t(197) ⫽ 2.47, p ⫽ .014; Cohen's d ⫽ .35" |
+| Estudo 2A: gosto por quem perguntou muito contra pouco, agora com as duas pessoas da dupla sorteadas para perguntar muito ou pouco | 6,02 contra 5,79; d = 0,27 | Estudo 2A, Liking (p. 436) | "participants liked high question-askers (M ⫽ 6.02, SD ⫽ .74) more than low question-askers (M ⫽ 5.79, SD ⫽ .97; HLM: ␤ ⫽ .28, SE ⫽ .09), t(306) ⫽ 3.13, p ⫽ .001, Cohen's d ⫽ .27" |
 | Quem perguntava previa esse efeito? | não | Estudo 1, Predicted liking (p. 434) | "This (null) result suggests that individuals do not anticipate that a higher rate of question asking will lead to an increase in liking." |
 | Observadores de fora gostaram mais de quem perguntou muito? | não | Estudo 2, Discussion (p. 438) | "third-party observers did not like high question-askers more than low question-askers." |
 | Parte das perguntas que eram de continuidade (Estudos 1 e 2A) | 40,51% | Classification Results (p. 438–439) | "Follow-up questions were the most common, comprising 40.51% of all questions" |
