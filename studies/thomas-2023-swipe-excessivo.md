@@ -33,16 +33,16 @@ Um questionário online, aplicado uma vez, perguntou a jovens alemães que já u
 | Amostra | 464 de 840 respondentes já tinham usado apps de namoro | Seção 3.1 | "Out of 840 participants, 376 reported no experience, while 464 responded to have ever used dating applications." |
 | Gênero | 46,6% homens; 52,6% mulheres | Seção 3.1 | "46.6 % participants identified as male, 52.6 % identified as female" |
 | Frequência de uso e swipe excessivo | Quem usa mais tem mais swipe excessivo (b = 0,17; p < 0,001) | Seção 4 | "we found a positive effect of dating app use frequency on excessive swiping (b = 0.17, p < .001" |
-| Swipe excessivo e comparação para cima | b = 0,17; p = 0,004 | Seção 4 | "a direct positive effect of excessive swiping on upward social comparison (H2a; b = 0.17, p = .004" |
-| Swipe excessivo e medo de ficar solteiro | b = 0,15; p = 0,014 | Seção 4 | "on fear of being single (H2b; b = 0.15, p = .014" |
-| Swipe excessivo e sobrecarga de opções | b = 0,36; p < 0,001 | Seção 4 | "partner choice overload (H2c; b = 0.36, p < .001" |
-| Efeito indireto do uso na comparação, via swipe excessivo | b = 0,03 | Seção 4 | "an indirect effect of participants’ dating app use on social upward comparison (H3a; b = 0.03" |
+| Quem tem mais swipe excessivo se compara mais com quem parece estar melhor | b = 0,17; p = 0,004 | Seção 4 | "a direct positive effect of excessive swiping on upward social comparison (H2a; b = 0.17, p = .004" |
+| Quem tem mais swipe excessivo tem mais medo de ficar solteiro | b = 0,15; p = 0,014 | Seção 4 | "on fear of being single (H2b; b = 0.15, p = .014" |
+| Quem tem mais swipe excessivo se sente mais sobrecarregado ao escolher parceiro | b = 0,36; p < 0,001 | Seção 4 | "partner choice overload (H2c; b = 0.36, p < .001" |
+| Usar mais o app anda com mais comparação, por meio do swipe excessivo (efeito indireto) | b = 0,03 | Seção 4 | "an indirect effect of participants’ dating app use on social upward comparison (H3a; b = 0.03" |
 | Frequência de uso, descontado o swipe excessivo | Sem relação com nenhum dos três desfechos | Seção 5 | "with excessive swiping in the model, frequent dating app use was unrelated to any of the adverse outcomes" |
-| Modo avaliativo como moderador do medo de ficar solteiro | Não significativo (b = 0,11; p = 0,051) | Seção 4 | "fear of being single (H4b; b = 0.11, p = .051" |
+| Avaliar os perfis com olhar crítico muda a ligação entre swipe excessivo e medo de ficar solteiro | Não significativo (b = 0,11; p = 0,051) | Seção 4 | "fear of being single (H4b; b = 0.11, p = .051" |
 | Namorando ou solteiro | Sem diferença em swipe excessivo e nos desfechos | Seção 5 | "Partnered individuals swiped as excessively and suffered as much from adverse outcomes as single individuals." |
 | Usuários antigos que não usam mais | 91; tirá-los não mudou os resultados | Seção 3.2.1 | "Excluding participants who have ever used dating apps but indicated currently not to use them (n = 91) did not change any results significantly." |
 
-"b" é o coeficiente não padronizado: quanto o desfecho (escala de 1 a 5) muda para cada ponto a mais na escala de swipe excessivo (também de 1 a 5) ou na de frequência de uso (de 1 a 10).
+Swipe excessivo é deslizar de forma compulsiva e ficar com a cabeça nisso. "b" é o coeficiente não padronizado: quanto o desfecho (escala de 1 a 5) muda para cada ponto a mais na escala de swipe excessivo (também de 1 a 5) ou na de frequência de uso (de 1 a 10).
 
 ## Limitações
 

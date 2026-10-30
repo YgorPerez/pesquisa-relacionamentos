@@ -37,8 +37,8 @@ Os coeficientes b são do modelo de equações estruturais: quantos anos a mais 
 | Responderam ao questionário | 1.182, em dezembro de 2023 | 2.1, p. 4 | "A total of 1182 respondents completed the survey (online, December 2023)" |
 | Amostra analisada | 1.136 (606 mulheres e 530 homens) | 2.1, p. 4 | "yielded a final analytic sample of 606 women and 530 men (N = 1136)" |
 | Idade | 18 a 60 anos, média de 39,1 | 2.1, p. 4 | "Participants were aged 18–60 years (M = 39.1, SD = 12)" |
-| Média das 16 exigências comparada à da população | acima, por cerca de um desvio-padrão: d = 1,28 nas mulheres, d = 0,82 nos homens | 3, p. 7 | "(women: Cohen's d = +1.28; men: Cohen's d = +0.82)" |
-| Exigência média equivalente a 2 desvios-padrão acima da média | 36% das mulheres, 26% dos homens | 3, p. 7 | "36% of women and 26% of men set standards that would correspond to two standard deviations above average" |
+| Média das 16 exigências comparada à que se esperaria na população | acima, por cerca de um desvio-padrão: d = 1,28 nas mulheres, d = 0,82 nos homens | 3, p. 7 | "(women: Cohen's d = +1.28; men: Cohen's d = +0.82)" |
+| Quem exige, na média dos traços, o equivalente a 2 desvios-padrão acima do esperado na população | 36% das mulheres, 26% dos homens | 3, p. 7 | "36% of women and 26% of men set standards that would correspond to two standard deviations above average" |
 | Lealdade: aceitam parceiro abaixo da média | 2% das mulheres, 4% dos homens | 3, p. 7 | "Only 2% of women and 4% of men accepted a below-average partner in loyalty" |
 | Lealdade: exigem 8 a 10 | 62% das mulheres, 51% dos homens | 3, p. 7 | "On loyalty, 62% of women and 51% of men required their partner to score on the most upper end (8–10)" |
 | Inteligência: escolheram 5 de 10 como mínimo | 44% das mulheres, 48% dos homens | 3, p. 7 | "44% of women and 48% of men selected 5 out of 10 as their minimum standard for intelligence" |
@@ -47,14 +47,14 @@ Os coeficientes b são do modelo de equações estruturais: quantos anos a mais 
 | Altura mínima exigida pelas mulheres (mediana) | 170 cm, 9 cm abaixo da média dos homens noruegueses (179 cm) | 3, p. 7 | "was 170 cm (IQR 168–175), 9 cm below the Norwegian male average of 179 cm" |
 | Mulheres que exigem 1,80 m ou mais | 15% | 3, p. 7 | "Only 15% of women set a minimum at or above the male population mean (≥ 180 cm)" |
 | Altura mínima exigida pelos homens (mediana) | 155 cm, 11 cm abaixo da média das mulheres (166 cm) | 3, p. 7 | "was 155 cm (IQR 150–160), 11 cm below the female average of 166 cm" |
-| Mulheres: exigência geral e anos com compromisso e solteira | sem efeito: b = −0,18 (p = 0,70) e b = −0,27 (p = 0,56) | 3.2, p. 8 | "global pickiness for women did not predict years in committed relationships (b = − 0.18, p = .70) or years single (b = − 0.27, p = .56)" |
-| Mulheres: exigência geral e anos sem compromisso | b = 0,40 (p = 0,036) | 3.2, p. 8 | "committed relationships (b = 0.40, p = .036)" |
-| Mulheres: exigência geral, número de relações sem compromisso e de parceiros sexuais | b = 0,78 e b = 0,70 (p < 0,001) | 3.2, p. 8 | "number of uncommitted relationships (b = 0.78, p < .001) and sexual partners (b = 0.70, p < .001)" |
-| Homens: exigência geral e anos com compromisso | b = 1,58 (p = 0,024) | 3.2, p. 8 | "For men, global pickiness predicted more years in committed relationships (b = 1.58, p = .024)" |
-| Homens: exigência geral e anos solteiro | b = −1,71 (p = 0,015) | 3.2, p. 8 | "fewer years spent single (b = − 1.71, p = .015)" |
-| Homens: exigência com aparência e anos com compromisso | b = −0,41 (p = 0,038) | 3.2, p. 8 | "For men, pickiness for physical attractiveness predicted fewer years in committed relationships (b = − 0.41, p = .038)" |
-| Homens: exigência com aparência e número de relações com compromisso | b = −0,12 (p = 0,011) | 3.2, p. 8 | "fewer committed relationships (b = − 0.12, p = .011)" |
-| Homens: exigência com aparência e anos solteiro | b = 0,41 (p = 0,041) | 3.2, p. 8 | "and more years single (b = 0.41, p = .041)" |
+| Mulheres: mais exigência geral e anos em relações com compromisso ou anos solteira | sem efeito: b = −0,18 (p = 0,70) e b = −0,27 (p = 0,56) | 3.2, p. 8 | "global pickiness for women did not predict years in committed relationships (b = − 0.18, p = .70) or years single (b = − 0.27, p = .56)" |
+| Mulheres: mais exigência geral, mais anos em relações sem compromisso | b = 0,40 (p = 0,036) | 3.2, p. 8 | "committed relationships (b = 0.40, p = .036)" |
+| Mulheres: mais exigência geral, mais relações sem compromisso e mais parceiros sexuais | b = 0,78 e b = 0,70 (p < 0,001) | 3.2, p. 8 | "number of uncommitted relationships (b = 0.78, p < .001) and sexual partners (b = 0.70, p < .001)" |
+| Homens: mais exigência geral, mais anos em relações com compromisso | b = 1,58 (p = 0,024) | 3.2, p. 8 | "For men, global pickiness predicted more years in committed relationships (b = 1.58, p = .024)" |
+| Homens: mais exigência geral, menos anos solteiro | b = −1,71 (p = 0,015) | 3.2, p. 8 | "fewer years spent single (b = − 1.71, p = .015)" |
+| Homens: mais exigência com a aparência, menos anos em relações com compromisso | b = −0,41 (p = 0,038) | 3.2, p. 8 | "For men, pickiness for physical attractiveness predicted fewer years in committed relationships (b = − 0.41, p = .038)" |
+| Homens: mais exigência com a aparência, menos relações com compromisso | b = −0,12 (p = 0,011) | 3.2, p. 8 | "fewer committed relationships (b = − 0.12, p = .011)" |
+| Homens: mais exigência com a aparência, mais anos solteiro | b = 0,41 (p = 0,041) | 3.2, p. 8 | "and more years single (b = 0.41, p = .041)" |
 | Exigência geral e relações sem compromisso que a pessoa queria que virassem namoro | b = 0,29 nas mulheres, b = 0,41 nos homens | 3.2, p. 9 | "for both women (b = 0.29, p = .001) and men (b = 0.41, p = .001)" |
 | Mulheres: exigência geral e estar solteira por se interessar por quem não quer compromisso | b = 0,18 (p = 0,039) | 3.2, p. 9 | "It also predicted women's reports of being single due to interest in partners unwilling to commit (b = 0.18, p = .039)" |
 | Exigência geral e dizer que tem dificuldade de atrair alguém | menos: b = −0,17 nas mulheres, b = −0,33 nos homens | 3.2, p. 9 | "pickiness predicted fewer reports of attraction difficulties for women (b = − 0.17, p = .038) and men (b = − 0.33, p = .005)" |

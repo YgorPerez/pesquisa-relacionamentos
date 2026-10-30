@@ -37,7 +37,7 @@ A hipótese era que cada um preferiria alguém do seu próprio nível de atrativ
 | Correlação entre a aparência do homem e quanto a parceira gostou dele e quis sair de novo | r = 0,36 e r = 0,31 | p. 514 | "partner's liking for him and desire to date him are .36 and .31, respectively" |
 | Correlação entre a beleza que cada um viu no par e quanto gostou dele | r = 0,78 (homens) e r = 0,69 (mulheres) | p. 514 | "evaluation of the date's physical attractiveness is .78 for male subjects and .69 for female subjects" |
 | Quanto o homem gostou e quanto a mulher gostou dele: sem relação | r = 0,03 | p. 514 | "likes him is virtually zero: r — .03" |
-| Preferência por alguém do próprio nível de beleza na hora de convidar para sair | F = 0,07, sem efeito | p. 513 | "The interaction F which is necessary to demonstrate such a tendency is very small (F= .07)" |
+| Tendência a tentar sair com alguém do próprio nível de beleza (teste F) | F = 0,07, sem efeito | p. 513 | "The interaction F which is necessary to demonstrate such a tendency is very small (F= .07)" |
 | Os mais bonitos esperavam e julgavam o par com mais rigor, mas o efeito é pequeno | r de 0,07 a 0,20 | p. 512 | "correlations for the above variables range from only .07 to .20" |
 
 Nota escolar, teste de aptidão e os testes de personalidade quase não previram quanto o par gostou de alguém. As correlações ficaram perto de zero, e nenhuma medida intelectual teve relação significativa com o quanto o par gostou da pessoa (p. 515). Os autores esperavam que a aparência pesasse menos para os homens serem queridos do que para as mulheres, e não foi o que aconteceu: "it appears that it is just as important a determinant" (p. 514).

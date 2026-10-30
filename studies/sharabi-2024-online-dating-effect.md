@@ -30,12 +30,12 @@ Fonte local: `sources/private/sharabi-2024-online-dating-effect.txt`, extraída 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Grupos da amostra | Online: n = 455 (49,3%); offline: n = 468 (50,7%) | p. 4, seção 3.1 | "participants who met their spouse in online dating (n =455, 49.3%) and offline (n =468, 50.7%)." |
-| Satisfação, online vs. offline, com controles | Menor online: b = −0,20; p < 0,001 | p. 5, seção 4.2.1 | "online dating was negatively associated with satisfaction (b = −.20, p < .001)" |
-| Estabilidade autorrelatada, online vs. offline, com controles | Menor online: b = −0,40; p < 0,001 | p. 5, seção 4.2.1 | "stability (b = −0.40, p <.001)" |
-| Satisfação, apps vs. sites de namoro | Sem diferença estatisticamente significativa: b = −0,13; p = 0,06 | p. 5, nota de rodapé 1 à seção 4.2.1 | "Meeting on a mobile dating app was not associated with satisfaction (b = −0.13, p =.06)" |
-| Estabilidade autorrelatada, apps vs. sites de namoro | Menor nos apps: b = −0,26; p < 0,01 | p. 5, nota de rodapé 1 à seção 4.2.1 | "negatively associated with stability (b = −0.26, p <.01)" |
+| Satisfação no casamento de quem conheceu o cônjuge online contra quem conheceu offline, descontados gênero, raça e orientação sexual | Menor online: b = −0,20; p < 0,001 | p. 5, seção 4.2.1 | "online dating was negatively associated with satisfaction (b = −.20, p < .001)" |
+| Estabilidade do casamento, segundo a própria pessoa, de quem conheceu o cônjuge online contra quem conheceu offline, descontados os mesmos fatores | Menor online: b = −0,40; p < 0,001 | p. 5, seção 4.2.1 | "stability (b = −0.40, p <.001)" |
+| Entre quem se conheceu online: satisfação de quem conheceu o cônjuge em app contra quem conheceu em site de namoro | Sem diferença estatisticamente significativa: b = −0,13; p = 0,06 | p. 5, nota de rodapé 1 à seção 4.2.1 | "Meeting on a mobile dating app was not associated with satisfaction (b = −0.13, p =.06)" |
+| Entre quem se conheceu online: estabilidade, segundo a própria pessoa, de quem conheceu o cônjuge em app contra quem conheceu em site de namoro | Menor nos apps: b = −0,26; p < 0,01 | p. 5, nota de rodapé 1 à seção 4.2.1 | "negatively associated with stability (b = −0.26, p <.01)" |
 | Qualidade conjugal nos dois grupos | Satisfação e estabilidade relativamente altas | p. 6, seção 5.2 | "mean levels of satisfaction and stability were still quite high regardless of how couples met." |
-| Marginalização e aprovação da rede | Associação indireta com menor satisfação e estabilidade entre quem se conheceu online | p. 5, seção 4.2.2 | "participants who met in online dating reported lower satisfaction and stability due, in part, to societal marginalization of their relationships, which was associated with reductions in network approval relative to those who met offline." |
+| Sentir que a sociedade desaprova a relação e ter menos aprovação de amigos e família | Associação indireta com menor satisfação e estabilidade entre quem se conheceu online | p. 5, seção 4.2.2 | "participants who met in online dating reported lower satisfaction and stability due, in part, to societal marginalization of their relationships, which was associated with reductions in network approval relative to those who met offline." |
 
 Os coeficientes são diferenças nas escalas, não percentuais de divórcio. A ausência de significância para satisfação entre apps e sites não demonstra equivalência. A análise adicional agrupa plataformas; não permite ordenar Tinder, Bumble ou outros serviços individualmente.
 

@@ -35,13 +35,13 @@ Primeiro, uma série de modelos probit acrescentou os fatores que poderiam expli
 | Amostra dos cinco primeiros anos | 2.746 mulheres brancas casadas de 1965 a 1983 | Tabela 3, nota a | "aThe sample is limited to white women who first got married between 1965 and 1983 (n = 2,746)" |
 | Amostra do sexto ao décimo ano | 1.562 mulheres casadas de 1965 a 1978 | Tabela 3, nota b | "bThe sample is limited to white women who first got married between 1965 and 1978 and remained married for at least five years (n = 1,562)" |
 | Casar virgem ficou mais raro que entre as brancas casadas de 1960 a 1965 | Menos de 15% das brancas casadas de 1980 a 1985 | p. 846 | "white women marrying between 1960 and 1965 were virgins as compared with less than 15% of those marrying between 1980 and 1985" |
-| Proporção que casou virgem, total de 1965 a 1983 | Brancas 0,28; negras 0,08 | Tabela 1 | "Total .28 2,746 .08 925" |
+| Mulheres que casaram virgens de 1965 a 1983, por raça (0,28 quer dizer 28%) | Brancas 0,28; negras 0,08 | Tabela 1 | "Total .28 2,746 .08 925" |
 | Separadas ou divorciadas, brancas casadas de 1965 a 1985 | 25% das virgens contra 35% das não virgens | p. 847 | "at marriage (25% vs. 35%)" |
-| Separadas ou divorciadas do primeiro marido, total por raça | Brancas: 0,26 das virgens contra 0,38; negras: 0,48 contra 0,51 (diferença sem teste significativo) | Tabela 2 | "Total .26 .38 .48 .51" |
-| Coeficiente probit de casar virgem nos cinco primeiros anos, modelo 1 (só coorte, residência urbana e diferença de idade) | −0,567 | Tabela 3 | "at marriage? - Yes -.567" |
-| Com o probit bivariado, o efeito de casar virgem deixa de ser significativo | Cinco primeiros anos: −0,511 (erro padrão 0,514); quinquênio seguinte: −0,274 | Tabela 4 | "Yes -.511 -.274 (.514)" |
-| Correlação entre os erros das duas equações (rho), pequena e não significativa | −0,054 e −0,079 | Tabela 4 | "Rho 2,746 -.054 (p < .86) 1,562 -.079 (p < .88)" |
-| Casar mais velha reduz o risco de separação nos cinco primeiros anos (modelo 2) | Coeficiente −0,080 por ano | Tabela 3 | "Age at marriage -.080" |
+| Separadas ou divorciadas do primeiro marido, virgens ao casar contra não virgens, por raça (0,26 quer dizer 26%) | Brancas: 0,26 das virgens contra 0,38; negras: 0,48 contra 0,51 (diferença sem teste significativo) | Tabela 2 | "Total .26 .38 .48 .51" |
+| Risco de separação nos cinco primeiros anos de quem casou virgem, comparada a quem não casou virgem, levando em conta só coorte, residência urbana e diferença de idade (modelo 1). Coeficiente, não porcentagem: negativo quer dizer risco menor | −0,567 | Tabela 3 | "at marriage? - Yes -.567" |
+| Depois de contar os fatores não medidos que pesam tanto em casar virgem quanto em se separar (probit bivariado), casar virgem deixa de reduzir o risco de modo significativo | Cinco primeiros anos: −0,511 (erro padrão 0,514); quinquênio seguinte: −0,274 | Tabela 4 | "Yes -.511 -.274 (.514)" |
+| Quanto os fatores não medidos de casar virgem e de se separar andam juntos (rho, a correlação entre os erros das duas equações): pouco, e sem significância | −0,054 e −0,079 | Tabela 4 | "Rho 2,746 -.054 (p < .86) 1,562 -.079 (p < .88)" |
+| Quem casou mais velha teve menos risco de separação nos cinco primeiros anos (modelo 2) | Coeficiente −0,080 por ano | Tabela 3 | "Age at marriage -.080" |
 | Divórcios de 1987 que aconteceram antes dos dez anos de casamento | 64% | Nota 5 | "An estimated 64% of all divorcing couples in 1987 had been married for less than ten years at the time of the divorce decree" |
 
 Na Tabela 3, o coeficiente de casar virgem fica em −0,567, −0,614 e −0,601 nos cinco primeiros anos (modelos 1 a 3, cada um com mais controles) e em −0,419, −0,410 e −0,402 no quinquênio seguinte, todos com p < 0,001 (\*\*\*). Os Trechos param antes desses asteriscos, que a tabela do Markdown não reproduz.

@@ -33,7 +33,7 @@ Calculamos a parcela de mulheres e de homens **entre esses praticantes de dança
 |---|---|---|---|---|
 | Mulheres entre quem declarou dança como exercício mais frequente | 88,4%; IC de 95%: 83,4% a 93,4% | Microdados, P036, C006, V00291; agregados por V0024 e UPA_PNS | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
 | Homens entre quem declarou dança como exercício mais frequente | 11,6%; IC de 95%: 6,6% a 16,6% | Mesmos microdados e desenho | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
-| Respondentes no subgrupo da dança, sem ponderação | 625; 557 mulheres e 68 homens | Extração dos microdados, P036 e C006 | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
+| Pessoas entrevistadas que declararam a dança como exercício mais frequente, contadas sem os pesos da pesquisa | 625; 557 mulheres e 68 homens | Extração dos microdados, P036 e C006 | "16 Dança (com o objetivo de praticar atividade física)" | `scripts/calculations/ibge-2019-pns-danca.py` |
 
 Fonte local: `sources/ibge-2019-pns-danca.txt`, com transcrição das entradas do dicionário e do método oficial. Os insumos numéricos estão em `sources/ibge-2019-pns-danca-psu.csv`, agregados reproduzíveis dos microdados oficiais, e não uma tabela publicada pelo IBGE. O script tem um modo `extract` que verifica o checksum do arquivo bruto e reconstrói esses agregados.
 

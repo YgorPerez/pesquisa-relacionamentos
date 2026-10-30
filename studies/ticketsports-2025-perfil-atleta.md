@@ -28,7 +28,7 @@ Relatório comercial sobre inscrições pela Ticket Sports em 2025, com perfil d
 |---|---|---|---|
 | Participação feminina geral divulgada pela plataforma | 52,4% | p. 8, Gênero | "alcançando 52,4% do total de inscritos" |
 | Participação masculina geral divulgada pela plataforma | 47,5% | p. 8, gráfico, linha masculina, última coluna | "47,5%" |
-| Participação por gênero nas inscrições através de grupos, na ordem do gráfico | Masculino 45,6%; feminino 54,4% | p. 28, Grupos esportivos, Gênero | "Masculino 45,6% Feminino 54,4%" |
+| Homens e mulheres entre os inscritos por grupos esportivos | Masculino 45,6%; feminino 54,4% | p. 28, Grupos esportivos, Gênero | "Masculino 45,6% Feminino 54,4%" |
 | Inscrições vendidas através de grupos | 145.525 | p. 24, Quantidade de inscrições vendidas | "145.525" |
 | Corrida de rua nas modalidades mais vendidas, conjunto da plataforma | 89,9% | p. 15, Modalidades mais vendidas, coluna do ano de referência | "89,9% Corrida de Rua" |
 | Corrida de rua nas modalidades mais vendidas para grupos | 94,4% | p. 25, Grupos esportivos | "Corrida de rua 94,4%" |
