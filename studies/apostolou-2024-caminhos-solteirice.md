@@ -39,7 +39,7 @@ Reanalisou os dados de Apostolou e Michaelidou (2023) com mediação serial (PRO
 | Mulheres: quem se acha mais bonita se vê com mais valor como parceira, tem mais autoestima e é mais exigente. Esse caminho e os anos solteira | 0,03 ano por ponto (IC 0,00 a 0,07) | p. 11, Mediation 2 | "good looks – mate value – self-esteem – choosiness – years single was significant at the 5% level [0.03 (CI95: 0.00 – 0.07)]" |
 | Mulheres: quem se vê com mais valor como parceira tem mais autoestima e flerta melhor. Esse caminho, como os autores o leem (significativo só na comparação de qualquer solteirice com estar numa relação, pela Tabela 1) | 2% a mais de chance de estar numa relação, por ponto de valor de parceiro | p. 10, Mediation 1 | "one unit increase in mate value was associated with a 2% [(1.02-1)" |
 | Mulheres: quem se acha mais bonita se vê com mais valor como parceira, tem mais autoestima e flerta melhor. Esse caminho, como os autores o leem | 2% a mais de chance de estar numa relação do que solteira sem querer, por ponto de aparência | p. 11, Mediation 2 | "one unit increases in self-perceived looks was associated with a 2% increase in the probability to be in an intimate relationship than involuntarily single" |
-| Homens, solteiro sem querer: efeito direto do valor de parceiro (razão de chance) | 1,97 | p. 11, Tabela 1, Mediation 1, coluna Men Involuntarily (1ª linha) | "0.99 (0.97 – 1.00) 1.97" |
+| Homens: cada ponto a mais de valor de parceiro, sem passar por autoestima, flerte ou exigência: chance de estar numa relação, em vez de solteiro sem querer (razão de chance) | 1,97 | p. 11, Tabela 1, Mediation 1, coluna Men Involuntarily (1ª linha) | "0.99 (0.97 – 1.00) 1.97" |
 
 IC é o intervalo de confiança, a margem de incerteza da estimativa.
 

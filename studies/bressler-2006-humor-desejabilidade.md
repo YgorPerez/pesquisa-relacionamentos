@@ -33,7 +33,7 @@ Cada participante via duas fotos de pessoas do mesmo sexo e de atratividade pare
 | Homens avaliando mulheres: sem preferência pela engraçada | t = 0,36; p = 0,72 | Seção 3.2 | "men evaluating women: t(58)=0.36, p =.72" |
 | Engraçados foram vistos como mais sociáveis (divertidos, simpáticos, populares) | 2,48 escolhas, acima do acaso | Seção 3.3 | "Humorous individuals were chosen as socially adept (average of fun, friendly, and popular) more often than expected by chance [2.48F0.05" |
 | Engraçados foram escolhidos como inteligentes abaixo do acaso | 1,73 escolhas | Seção 3.3 | "less likely to be chosen as intelligent [1.73F0.07" |
-| Nota média das frases sem graça contra a das engraçadas, nos outros traços, para conferir que as sem graça não eram piores | 4,10 contra 3,98, sem diferença | Seção 3.4 | "nonhumorous statements: 4.10F0.05; humorous statements: 3.98F0.09" |
+| Nota média das frases sem graça contra a das engraçadas, na média de 13 traços de personalidade, para conferir que as sem graça não eram piores | 4,10 contra 3,98, sem diferença | Seção 3.4 | "nonhumorous statements: 4.10F0.05; humorous statements: 3.98F0.09" |
 
 t mede o quanto o resultado se afasta do acaso: quanto maior, mais longe.
 
