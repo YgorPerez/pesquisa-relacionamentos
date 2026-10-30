@@ -50,6 +50,30 @@ const sourced = {
   calculation: Schema.optional(Calculation),
 }
 
+/** What a point of a chart may say about itself (#470): the country its
+ * number is from, in Portuguese as the page writes it ("Brasil", "Estados
+ * Unidos"), which the country filter (`?pais=`) and Brazil's highlight read;
+ * the year, a number the Fact sheet has too; and which of the Visual's
+ * definitions it measures. */
+const point = {
+  country: Schema.optional(Text),
+  year: Schema.optional(Schema.Int),
+  definition: Schema.optional(Slug),
+}
+
+/** The closed list of what the points of one Visual measure, when Studies
+ * define the thing differently ("qualquer canal online", "só
+ * aplicativos"). Each gets its own mark shape, in the list's order, and the
+ * legend explains it. */
+export const MAX_DEFINITIONS = 4
+const Definitions = Schema.Array(
+  Schema.Struct({ id: Slug, legend: Text }),
+).check(
+  Schema.isMaxLength(MAX_DEFINITIONS, {
+    message: `at most ${MAX_DEFINITIONS} definitions, one per mark shape`,
+  }),
+)
+
 export const BarsVisual = Schema.Struct({
   id: Slug,
   kind: Schema.Literal('bars'),
@@ -59,7 +83,8 @@ export const BarsVisual = Schema.Struct({
   /** The top of the axis; without it, the smallest round number above the
    * largest bar (100 for `%`). */
   max: Schema.optional(Schema.Finite),
-  bars: Schema.Array(Schema.Struct({ label: Text, ...sourced })),
+  bars: Schema.Array(Schema.Struct({ label: Text, ...sourced, ...point })),
+  definitions: Schema.optional(Definitions),
   /** The label of the bar the hand-drawn highlight marks. */
   highlight: Schema.optional(Text),
   note: Schema.optional(Text),
@@ -75,8 +100,11 @@ export const TimelineVisual = Schema.Struct({
       label: Text,
       unit: Text,
       ...sourced,
+      country: point.country,
+      definition: point.definition,
     }),
   ),
+  definitions: Schema.optional(Definitions),
   /** The year the hand-drawn highlight marks. */
   highlight: Schema.optional(Schema.Int),
   note: Schema.optional(Text),
@@ -92,8 +120,10 @@ export const StudyTableVisual = Schema.Struct({
       measure: Text,
       value: Schema.Finite,
       unit: Text,
+      ...point,
     }),
   ),
+  definitions: Schema.optional(Definitions),
   note: Schema.optional(Text),
 })
 
@@ -432,8 +462,45 @@ export function visualProblems(
         )
     }
 
+    /** Each point names one of the Visual's definitions when it has them,
+     * and a year comes from the point's Fact sheet. */
+    const pointChecks = (
+      definitions: ReadonlyArray<{ id: string }> | undefined,
+      points: ReadonlyArray<{
+        definition?: string | undefined
+        year?: number | undefined
+        fact_sheet?: string | undefined
+      }>,
+      field: string,
+      withYear: boolean,
+    ) => {
+      const ids = definitions?.map((d) => d.id) ?? []
+      if (new Set(ids).size !== ids.length)
+        err('two definitions have the same id', `${field}.definitions`)
+      points.forEach((p, j) => {
+        const at = `${field}.${j}`
+        if (p.definition !== undefined && !ids.includes(p.definition))
+          err(
+            ids.length === 0
+              ? `"${p.definition}" names a definition, and the Visual has no \`definitions\``
+              : `"${p.definition}" is not one of the Visual's definitions (${ids.join(', ')})`,
+            `${at}.definition`,
+          )
+        else if (p.definition === undefined && ids.length > 0)
+          err('the Visual has definitions, so each point names one', at)
+        if (withYear && p.year !== undefined && p.fact_sheet)
+          fromFactSheet(p.year, p.fact_sheet, `${at}.year`)
+      })
+    }
+
     guide.visuals?.forEach((visual, i) => {
       const at = `visuals.${i}`
+      if (visual.kind === 'bars')
+        pointChecks(visual.definitions, visual.bars, `${at}.bars`, true)
+      if (visual.kind === 'timeline')
+        pointChecks(visual.definitions, visual.events, `${at}.events`, false)
+      if (visual.kind === 'study-table')
+        pointChecks(visual.definitions, visual.rows, `${at}.rows`, true)
       switch (visual.kind) {
         case 'bars': {
           if (visual.bars.length < 2)

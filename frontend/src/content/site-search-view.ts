@@ -117,6 +117,22 @@ const escape = (text: string) => text.replace(/[&<>"]/g, (c) => ESCAPES[c] ?? c)
  * Question is its own heading and anchor. */
 function blockPassages(block: ChapterBlock, place: Place): Passage[] {
   switch (block.kind) {
+    case 'chart':
+      return [
+        {
+          ...place,
+          html: escape(
+            [
+              block.visual.title,
+              ...block.visual.points.map(
+                (point) =>
+                  `${point.label}${point.detail ? ` (${point.detail})` : ''}: ${point.number.text}`,
+              ),
+              block.visual.note ?? '',
+            ].join(' '),
+          ),
+        },
+      ]
     case 'text':
       return [{ ...place, html: block.html }]
     case 'tip':
