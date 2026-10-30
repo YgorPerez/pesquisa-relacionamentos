@@ -4,6 +4,7 @@
 // sends it inside the complete SVG and the browser's updates reconcile it
 // with the rest. Each mark is a variant of `OverlayMark`, never drawn by
 // hand at the call.
+import { INK, MARKER, YOU } from './chart-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
 /** Where a point's mark ends on the chart, in scene pixels, and what our
@@ -42,7 +43,7 @@ function marker(x: number, y: number, width: number) {
   const h = LABEL_HEIGHT
   const top = y - h / 2
   const right = x + width
-  return `<path data-ts-key="marcador" d="M${x - 2} ${top + 2}C${x + width * 0.3} ${top} ${x + width * 0.7} ${top + 1} ${right + 2} ${top}l1 ${h / 2 - 1}-1 ${h / 2 + 1}C${x + width * 0.6} ${top + h + 1} ${x + width * 0.3} ${top + h} ${x - 3} ${top + h + 1}l-1-${h / 2}z" fill="var(--color-rosa-mito)"/>`
+  return `<path data-ts-key="marcador" d="M${x - 2} ${top + 2}C${x + width * 0.3} ${top} ${x + width * 0.7} ${top + 1} ${right + 2} ${top}l1 ${h / 2 - 1}-1 ${h / 2 + 1}C${x + width * 0.6} ${top + h + 1} ${x + width * 0.3} ${top + h} ${x - 3} ${top + h + 1}l-1-${h / 2}z" fill="${MARKER}"/>`
 }
 
 /** The hand ring of the references, around Brazil's mark: the stroke runs
@@ -52,7 +53,7 @@ function ring(x: number, y: number, narrow = false) {
   // Around a tick, half as wide and a little taller.
   const w = narrow ? 6 : r
   const h = narrow ? 13 : r
-  return `<path data-ts-key="brasil" d="M${x + w} ${y - 2}C${x + w} ${y - h} ${x - w + 1} ${y - h - 1} ${x - w} ${y}C${x - w + 1} ${y + h} ${x + w} ${y + h + 1} ${x + w + 1} ${y - 4}" fill="none" stroke="var(--color-tinta)" stroke-width="1.8" stroke-linecap="round"/>`
+  return `<path data-ts-key="brasil" d="M${x + w} ${y - 2}C${x + w} ${y - h} ${x - w + 1} ${y - h - 1} ${x - w} ${y}C${x - w + 1} ${y + h} ${x + w} ${y + h + 1} ${x + w + 1} ${y - 4}" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`
 }
 
 /** The "você" tag, yellow like every "vale para você", at the right edge of
@@ -62,7 +63,7 @@ const tagWidth = () => CHART_COPY.you.length * LETTER + 10
 function you(right: number, y: number) {
   const text = CHART_COPY.you
   const width = tagWidth()
-  return `<g data-ts-key="voce"><rect x="${right - width}" y="${y - 9}" width="${width}" height="18" rx="4" fill="var(--color-amarelo-voce)"/><text x="${right - 5}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="12" font-weight="700" fill="var(--color-tinta)">${escape(text)}</text></g>`
+  return `<g data-ts-key="voce"><rect x="${right - width}" y="${y - 9}" width="${width}" height="18" rx="4" fill="${YOU}"/><text x="${right - 5}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="12" font-weight="700" fill="${INK}">${escape(text)}</text></g>`
 }
 
 /** The layer under the library's marks (the marker, so the value stays on

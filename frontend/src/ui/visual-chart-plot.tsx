@@ -33,15 +33,14 @@ import {
   withOverlay,
   type OverlayMark,
 } from './chart-overlay'
+import { DIMMED, INK, MUTED, PAPER } from './chart-tones'
 import { partTone } from './stack-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
-const INK = 'var(--color-tinta)'
-const PAPER = 'var(--color-folha)'
 const THEME = {
   foreground: INK,
-  muted: 'var(--color-tinta-2)',
-  grid: 'var(--color-tinta-2)',
+  muted: MUTED,
+  grid: MUTED,
   background: 'transparent',
   palette: [INK],
 }
@@ -61,7 +60,6 @@ const LABEL_LINE = 40
 /** Where a range's words go, under its line. */
 const RANGE_WORDS = 19
 const MEASURE_LINE = 56
-const DIMMED = 0.22
 /** The value after the mark (14px, bold): room for the longest at the
  * right end, and never less than `VALUE_ROOM`. */
 const VALUE_ROOM = 56
@@ -323,7 +321,7 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
         anchor: 'start',
         dy: -labelOffset,
         fontSize: 13,
-        fill: (r) => (r.dimmed ? 'var(--color-tinta-2)' : INK),
+        fill: (r) => (r.dimmed ? MUTED : INK),
       },
     ),
     text(
@@ -467,7 +465,7 @@ const LINE_FOCUS: ChartFocusStrategy<Row, number, number> = {
 function lineMarks(chart: ChartView, rows: Row[]) {
   const scaled = chart.ticks.length > 0
   const y = (r: Row) => (scaled ? r.value : 0)
-  const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
+  const tone = (r: Row) => (r.dimmed ? MUTED : INK)
   // The value's own copies of the rows, as in `RowPlot`: the focus ring
   // belongs on the dot only.
   const words = rows.map((r) => ({ ...r }))
@@ -635,7 +633,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
-    const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
+    const tone = (r: Row) => (r.dimmed ? MUTED : INK)
     // The texts' own copies of the rows: the focus ring marks every point
     // whose datum is the focused one, and it belongs on the mark only.
     const words = rows.map((r) => ({ ...r }))

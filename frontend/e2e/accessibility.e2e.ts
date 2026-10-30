@@ -92,8 +92,37 @@ async function violations(page: Page, overlays?: string): Promise<string[]> {
   return [
     ...lines(violations),
     ...lines(contrast.violations, 'without halftone, '),
-    ...lines(contrast.incomplete, 'without halftone, unmeasured, '),
+    ...lines(
+      await withoutChartText(page, contrast.incomplete),
+      'without halftone, unmeasured, ',
+    ),
   ]
+}
+
+/** The text a library chart writes inside its SVG (`figure svg[role="img"]`)
+ * is left out of the unmeasured contrast, and only there: axe cannot measure
+ * the contrast of text inside an SVG (the SVG counts as an image under it).
+ * The user decided this on 2026-10-30 for spec #470; the colours of that
+ * text are checked by `src/ui/chart-tones.test.ts` instead. */
+async function withoutChartText(page: Page, results: Result): Promise<Result> {
+  const inChart = await page.evaluate(
+    (targets) =>
+      targets.map((selectors) =>
+        selectors.map(
+          (selector) =>
+            document
+              .querySelector(selector)
+              ?.matches('figure svg[role="img"] text') ?? false,
+        ),
+      ),
+    results.map((r) => r.nodes.map((n) => n.target.join(' '))),
+  )
+  return results
+    .map((r, i) => ({
+      ...r,
+      nodes: r.nodes.filter((_, k) => !inChart[i]?.[k]),
+    }))
+    .filter((r) => r.nodes.length > 0)
 }
 
 for (const { name, path, profile } of PAGES) {
