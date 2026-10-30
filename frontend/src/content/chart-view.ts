@@ -147,7 +147,7 @@ export function chartView(
   }
   if (visual.kind === 'bars') {
     const definitions = visual.definitions ?? []
-    const points = visual.bars.map((bar, i): ChartPoint => {
+    const all = visual.bars.map((bar, i): ChartPoint => {
       const number = numberView(bar, visual.unit, cite)
       return {
         key: `${i}`,
@@ -159,6 +159,10 @@ export function chartView(
         ...pointFacts(bar, library, definitions),
       }
     })
+    // Most comparisons split one country's survey: a ring on every bar
+    // would mark nothing. Brazil's ring sets it apart from other countries.
+    const apart = all.some((p) => p.country && !p.brazil)
+    const points = apart ? all : all.map((p) => ({ ...p, brazil: false }))
     return {
       kind: 'bars',
       ...common,

@@ -136,6 +136,37 @@ it('draws bars with the highlighted one marked, and lists the countries of every
   ])
 })
 
+it('rings Brazil on a bar comparison only when it sets Brazil apart from other countries', () => {
+  const bars = (second: string): Visual => ({
+    id: 'barras',
+    kind: 'bars',
+    title: 'Barras',
+    unit: '%',
+    bars: [
+      { label: 'A', value: 18, fact_sheet: 'silva-2020-apps-brasil' },
+      { label: 'B', value: 24, fact_sheet: second },
+    ],
+  })
+  const onlyBrazil = chartView(
+    bars('silva-2020-apps-brasil'),
+    library(),
+    cite,
+    'tema',
+  )
+  expect(onlyBrazil?.points.map((p) => p.brazil)).toEqual([false, false])
+  expect(onlyBrazil?.points.map((p) => p.country?.slug)).toEqual([
+    'brasil',
+    'brasil',
+  ])
+  const mixed = chartView(
+    bars('costa-2018-satisfacao'),
+    library(),
+    cite,
+    'tema',
+  )
+  expect(mixed?.points.map((p) => p.brazil)).toEqual([true, false])
+})
+
 it('lets the axis top replace a round tick that would print on top of it, and puts a word unit only there', () => {
   const view = chartView(
     {
