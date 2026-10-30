@@ -219,6 +219,70 @@ const LINE_FOCUS: ChartFocusStrategy<Row, number, number> = {
   navigation: (points) => focusNearestX.navigation(onlyMarks(points)),
 }
 
+/** A time line's marks: the line, a dot per number in its definition's
+ * shape, and the value above each dot. */
+function lineMarks(chart: ChartView, rows: Row[]) {
+  const scaled = chart.ticks.length > 0
+  const y = (r: Row) => (scaled ? r.value : 0)
+  const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
+  // The value's own copies of the rows, as in `RowPlot`: the focus ring
+  // belongs on the dot only.
+  const words = rows.map((r) => ({ ...r }))
+  const anyDimmed = rows.some((r) => r.dimmed)
+  const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
+  const marks: ChartMark<Row, number, number>[] = []
+  if (scaled && rows.length > 1)
+    marks.push(
+      lineY(rows, {
+        id: 'linha',
+        x: 'year',
+        y,
+        stroke: INK,
+        strokeWidth: 2,
+        strokeOpacity: anyDimmed ? DIMMED : 1,
+      }),
+    )
+  for (const dimmed of [false, true])
+    for (let shape = 0; shape < shapes; shape++) {
+      const these = rows.filter(
+        (r) => r.dimmed === dimmed && (r.definition ?? 0) === shape,
+      )
+      if (these.length === 0) continue
+      const opacity = dimmed ? DIMMED : 1
+      const hollow = shape >= 2
+      const options = {
+        id: `marca-${dimmed ? 'apagada' : 'acesa'}-${shape}`,
+        x: 'year',
+        y,
+        key: 'key',
+        fillOpacity: opacity,
+        strokeOpacity: opacity,
+        stroke: INK,
+        strokeWidth: 2,
+      } as const
+      marks.push(
+        shape % 2 === 0
+          ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
+          : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
+      )
+    }
+  marks.push(
+    text(words, {
+      id: 'valor',
+      x: 'year',
+      y,
+      key: (r) => `valor-${r.key}`,
+      text: (r) => r.number.text,
+      anchor: 'middle',
+      dy: -LINE.valueAbove,
+      fontSize: 14,
+      fontWeight: 700,
+      fill: tone,
+    }),
+  )
+  return marks
+}
+
 function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
@@ -230,63 +294,8 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
     const years = chart.years ?? []
     const first = years[0]?.value ?? 0
     const last = years[years.length - 1]?.value ?? first
-    const y = (r: Row) => (scaled ? r.value : 0)
-    const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
-    const words = rows.map((r) => ({ ...r }))
-    const anyDimmed = rows.some((r) => r.dimmed)
-    const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
-    const marks: ChartMark<Row, number, number>[] = []
-    if (scaled && rows.length > 1)
-      marks.push(
-        lineY(rows, {
-          id: 'linha',
-          x: 'year',
-          y,
-          stroke: INK,
-          strokeWidth: 2,
-          strokeOpacity: anyDimmed ? DIMMED : 1,
-        }),
-      )
-    for (const dimmed of [false, true])
-      for (let shape = 0; shape < shapes; shape++) {
-        const these = rows.filter(
-          (r) => r.dimmed === dimmed && (r.definition ?? 0) === shape,
-        )
-        if (these.length === 0) continue
-        const opacity = dimmed ? DIMMED : 1
-        const hollow = shape >= 2
-        const options = {
-          id: `marca-${dimmed ? 'apagada' : 'acesa'}-${shape}`,
-          x: 'year',
-          y,
-          key: 'key',
-          fillOpacity: opacity,
-          strokeOpacity: opacity,
-          stroke: INK,
-          strokeWidth: 2,
-        } as const
-        marks.push(
-          shape % 2 === 0
-            ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
-            : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
-        )
-      }
-    marks.push(
-      text(words, {
-        id: 'valor',
-        x: 'year',
-        y,
-        key: (r) => `valor-${r.key}`,
-        text: (r) => r.number.text,
-        anchor: 'middle',
-        dy: -LINE.valueAbove,
-        fontSize: 14,
-        fontWeight: 700,
-        fill: tone,
-      }),
-    )
     return defineChart({
-      marks,
+      marks: lineMarks(chart, rows),
       scales: {
         x: {
           // A margin of years on each side, so the values centered over
