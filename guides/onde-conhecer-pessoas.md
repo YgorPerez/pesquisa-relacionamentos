@@ -238,7 +238,7 @@ findings:
     text: Em 2009, quem tinha se conhecido online dava à relação a mesma nota que a média dos casais, 4,48 contra 4,47 numa escala de 1 a 5. Um ano depois, entre os casais formados na década anterior, 15,6% dos que se conheceram online tinham terminado, contra 17,8% dos outros, uma diferença sem significância.
     fact_sheets: [rosenfeld-2012-searching-for-a-mate]
   - id: site-casou-mais-rapido
-    text: Quem se conheceu num site de namoro casou mais rápido. Metade desses casais casou em 3 a 4 anos de relação; entre os que se conheceram fora da internet, levou mais de 10. Foram só 13 casamentos, e o autor diz que isso pode vir de quem já queria casar ter escolhido o site.
+    text: Quem se conheceu num site de namoro casou mais rápido. Entre os casais que continuaram juntos, metade dos que se conheceram no site casou em 3 a 4 anos de relação; entre os que se conheceram fora da internet, levou mais de 10. Foram só 13 casamentos, e o autor diz que isso pode vir de quem já queria casar ter escolhido o site.
     fact_sheets: [rosenfeld-2017-marriage-choice-couplehood]
   - id: alemanha-casaram-mais
     text: Num painel que acompanhou casais de 18 a 48 anos, os casais que começaram online casaram mais. Valeu para os homens de qualquer escolaridade e, com mais força, para as mulheres com ensino superior. A diferença diminuiu quando a autora levou em conta se o casal pensava parecido sobre casamento.
@@ -844,7 +844,7 @@ Um número do mesmo estudo assusta à primeira vista. Sem nenhum controle, os ca
 
 {{myth:relacao-de-app-dura-menos}}
 
-No casamento, os casais online saem na frente. Na Alemanha, eles casaram mais, entre os homens de qualquer escolaridade e, com mais força, entre as mulheres com ensino superior [@potarca-2021-alemanha-pairfam]. Nos EUA, metade dos casais que se conheceram num site de namoro casou em 3 a 4 anos de relação; entre os de fora da internet, levou mais de 10 [@rosenfeld-2017-marriage-choice-couplehood].
+No casamento, os casais online saem na frente. Na Alemanha, eles casaram mais, entre os homens de qualquer escolaridade e, com mais força, entre as mulheres com ensino superior [@potarca-2021-alemanha-pairfam]. Nos EUA, entre os casais que continuaram juntos, metade dos que se conheceram num site de namoro casou em 3 a 4 anos de relação; entre os de fora da internet, levou mais de 10 [@rosenfeld-2017-marriage-choice-couplehood].
 
 A explicação mais provável não é o app, é quem o escolhe. O número americano vem de só 13 casamentos, e o autor diz que não consegue descartar que quem já queria casar tenha escolhido o site [@rosenfeld-2017-marriage-choice-couplehood]. Na Alemanha, a vantagem do online diminuiu quando a autora levou em conta se o casal pensava parecido sobre casamento; entre os homens com ensino superior, o efeito caiu de 58% para 42,1% [@potarca-2021-alemanha-pairfam].
 
