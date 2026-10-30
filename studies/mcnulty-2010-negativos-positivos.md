@@ -35,12 +35,12 @@ Cada casal teve duas conversas de 10 minutos, gravadas em vídeo, para tentar re
 | Efeito médio do comportamento negativo na mudança da satisfação | nenhum, quando não se separa pela gravidade dos problemas | Resultados, Table 6 | "on average, negative behaviors were unrelated to changes in relationship satisfaction over time" |
 | Culpar, mandar e rejeitar com problemas pequenos | queda mais forte na satisfação | Resumo | "predicted steeper declines in their own marital satisfaction when exhibited in the context of relationships facing only minor problems" |
 | Os mesmos comportamentos com problemas graves | satisfação mais estável | Resumo | "those same behaviors predicted more stable satisfaction in relationships facing more severe problems" |
-| Por qual caminho | o comportamento direto piorou problemas pequenos e melhorou problemas graves | Discussão | "direct negative behaviors tended to exert their effects on satisfaction by making minor problems worse but severe problems better" |
+| Como o comportamento negativo direto (culpar, mandar, rejeitar) mexe com a satisfação | o comportamento direto piorou problemas pequenos e melhorou problemas graves | Discussão | "direct negative behaviors tended to exert their effects on satisfaction by making minor problems worse but severe problems better" |
 | Negativo indireto (sarcasmo, pergunta hostil, fugir da responsabilidade) | satisfação mais baixa e estável, qualquer que fosse a gravidade | Resumo | "indirect negative communications were associated with stably lower levels of satisfaction regardless of problem severity" |
 | Crítica ao caráter (rejeitar) vs. crítica ao comportamento (culpar, mandar) | sem diferença significativa | Discussão | "we found no evidence that behavior-focused negative statements were more beneficial to relationships facing severe problems than character-focused negative statements" |
 | Diferença entre maridos e esposas | a maioria dos efeitos igual; alguns só nas esposas | Discussão | "Though the majority of these interactive effects did not vary across husbands and wives, a few emerged only among wives." |
-| Retenção nas análises | 100% no estudo 1 e 87% no estudo 2 | Strengths and Limitations | "analyses in the current study were able to use data from 100% (Study 1) and 87% (Study 2) of the initial samples" |
-| Confiabilidade mais baixa da codificação | ICC 0,65 (indireto, estudo 1; rejeitar, estudo 2) e 0,61 (mandar, estudo 2) | Método, Observed Negative Behavior | "in Study 1, ICC for Indirect Negatives = .65; in Study 2, ICC for Rejections = .65 and ICC for Commands = .61" |
+| Parte da amostra inicial que entrou nas análises | 100% no estudo 1 e 87% no estudo 2 | Strengths and Limitations | "analyses in the current study were able to use data from 100% (Study 1) and 87% (Study 2) of the initial samples" |
+| Menor concordância entre dois codificadores das conversas (coeficiente ICC) | ICC 0,65 (indireto, estudo 1; rejeitar, estudo 2) e 0,61 (mandar, estudo 2) | Método, Observed Negative Behavior | "in Study 1, ICC for Indirect Negatives = .65; in Study 2, ICC for Rejections = .65 and ICC for Commands = .61" |
 
 ## Definições
 

@@ -28,7 +28,7 @@ Questionário online, de uns 40 minutos, respondido em separado pelas duas pesso
 | Medida | Valor | Onde | Trecho | Cálculo |
 |---|---|---|---|---|
 | Tamanho da amostra | 25.200 pessoas; 2.438 no Brasil (a última linha da tabela) | Tabela 1.1, p. 5 | "2,638 2,970 2,552 3,515 2,673 1,491 297 603 1,124 794 309 278 241 508 317 368 2,084 2,438" | `scripts/calculations/hogan-2011-me-myspouse.ts` |
-| Peso | Nenhum, nesta análise preliminar | Seção 1.4, p. 4 | "The sample was not weighted in this preliminary analysis." |  |
+| Pesos estatísticos aplicados à amostra | Nenhum, nesta análise preliminar | Seção 1.4, p. 4 | "The sample was not weighted in this preliminary analysis." |  |
 | Para quem os resultados valem | Casais que moram juntos e têm internet, não a população | Apêndice A, p. 35 | "we are generalizing to a specific population: Internet-connected cohabiting couples, and not to a population at large" |  |
 | Experiência com namoro online | Pouco mais de um terço já teve; 15% estão numa relação que começou online | Resumo; seção 2.1, p. 10 | "slightly over a third of the sample has some experience with online dating, while 15 percent are currently in a relationship that started online" |  |
 | Relações que começaram online, pelo ano de início | Mais de 30% das que começaram em 2009 | Seção 2.2, p. 10; Figura 2.2 | "By 2009, over 30 percent of Internet-enabled couples appear to have met through online dating." |  |

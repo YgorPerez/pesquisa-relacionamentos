@@ -28,16 +28,16 @@ Um questionário online, respondido por usuários do Tinder recrutados num [[pai
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Aprovação social e tristeza, com os outros preditores no modelo | β = 0,070, sem [[significância estatística]]; busca de relação: β = 0,192 | Tabela 3, coluna Sadness | "0.056 (0.062) 0.070 0.141 (0.043) 0.192**" |
-| Aprovação social e ansiedade, com os outros preditores no modelo | β = 0,114, sem significância; busca de relação: β = 0,176 | Tabela 3, coluna Anxiety | "0.094 (0.063) 0.114 0.134 (0.044) 0.176**" |
-| Hipóteses de entretenimento, aprovação e motivo sexual | Não sustentadas | Resultados, p. 10 | "Nevertheless, H2, H3 and H5 could not be supported." |
-| Busca de relação e alegria | β = 0,106 | Tabela 3, coluna Joviality | "0.075 (0.032) 0.106*" |
-| Uso compulsivo e tristeza | β = 0,446 | Tabela 3, coluna Sadness | "0.493 (0.076) 0.446***" |
-| Uso compulsivo e ansiedade | β = 0,376 | Tabela 3, coluna Anxiety | "0.427 (0.078) 0.376***" |
-| Sensação de sucesso no app e tristeza | β = −0,222 | Tabela 3, coluna Sadness | "−0.251 (0.086) −0.222**" |
-| Correlação simples da aprovação com a tristeza | r = 0,16 | Tabela 2, linha 9, coluna 3 | ".16**" |
-| Correlação simples da aprovação com a ansiedade | r = 0,24 | Tabela 2, linha 10, coluna 3 | ".24**" |
-| Correlação da aprovação com o uso compulsivo | r = 0,52 | Tabela 2, linha 3, coluna 1 | ".52**" |
+| Usar o Tinder por aprovação social ou para buscar relação e sentir tristeza depois, com os outros fatores no modelo | β = 0,070, sem [[significância estatística]]; busca de relação: β = 0,192 | Tabela 3, coluna Sadness | "0.056 (0.062) 0.070 0.141 (0.043) 0.192**" |
+| Usar o Tinder por aprovação social ou para buscar relação e sentir ansiedade depois, com os outros fatores no modelo | β = 0,114, sem significância; busca de relação: β = 0,176 | Tabela 3, coluna Anxiety | "0.094 (0.063) 0.114 0.134 (0.044) 0.176**" |
+| Hipóteses de que usar o Tinder por entretenimento anda com mais bem-estar, e por aprovação ou por sexo, com menos | Não sustentadas | Resultados, p. 10 | "Nevertheless, H2, H3 and H5 could not be supported." |
+| Usar o Tinder para buscar relação e sentir mais alegria depois | β = 0,106 | Tabela 3, coluna Joviality | "0.075 (0.032) 0.106*" |
+| Usar o Tinder de forma compulsiva e sentir mais tristeza depois | β = 0,446 | Tabela 3, coluna Sadness | "0.493 (0.076) 0.446***" |
+| Usar o Tinder de forma compulsiva e sentir mais ansiedade depois | β = 0,376 | Tabela 3, coluna Anxiety | "0.427 (0.078) 0.376***" |
+| Sentir que tem sucesso no app e sentir menos tristeza depois | β = −0,222 | Tabela 3, coluna Sadness | "−0.251 (0.086) −0.222**" |
+| Usar o Tinder por aprovação social e sentir tristeza, olhando só esse par (correlação simples) | r = 0,16 | Tabela 2, linha 9, coluna 3 | ".16**" |
+| Usar o Tinder por aprovação social e sentir ansiedade, olhando só esse par (correlação simples) | r = 0,24 | Tabela 2, linha 10, coluna 3 | ".24**" |
+| Quem usa o Tinder por aprovação social também tende a usar de forma compulsiva (correlação) | r = 0,52 | Tabela 2, linha 3, coluna 1 | ".52**" |
 
 Os β são coeficientes padronizados. Os Trechos da Tabela 2 são uma célula cada, porque a extração do PDF separa as colunas. Sozinha, a aprovação anda com mais tristeza e ansiedade, mas ela se correlaciona 0,52 com o uso compulsivo, e no modelo com tudo junto não sobra efeito dela sobre esses dois desfechos. Com o p sem correção, a aprovação previu um pouco mais de alegria (β = 0,141); depois da correção por FDR, não. Quem usa o app para achar relação relatou um pouco mais de alegria e, com coeficientes maiores, mais tristeza e ansiedade.
 

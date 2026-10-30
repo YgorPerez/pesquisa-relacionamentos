@@ -30,7 +30,7 @@ Nos dois primeiros resultados, a referência é quem começou a morar junto sem 
 |---|---|---|---|
 | Primeiro casamento: morar junto só depois do noivado, comparado a começar sem estar noivo | OR = 0,55; EP do coeficiente = 0,24; significativo pelo critério convencional | Tabela 4, linha Cohabitation after engagement; asterisco indica significância | "0.24 0.55" |
 | Primeiro casamento: morar junto só depois de casar, comparado a começar sem estar noivo | OR = 0,70; B = −0,36; EP = 0,21; evidência marginal | Tabela 4, linha No cohabitation until marriage; cruz indica o limiar marginal | "No cohabitation until marriage −0.36 † 0.21 0.70" |
-| Interação negativa no primeiro casamento: médias ajustadas de quem começou sem noivado, após noivar e após casar, nessa ordem | 6,67; 5,95; 5,86; d = 0,31 na comparação entre começar sem noivado e após noivar | Tabela 2, Adjusted Results: First Marriages, Negative interaction; o contraste tem asterisco de significância | "6.67 5.95 5.86 .31" |
+| Brigas e críticas no primeiro casamento (interação negativa), média com controles: quem começou a morar junto sem noivado, após noivar e após casar, nessa ordem | 6,67; 5,95; 5,86; d = 0,31 na comparação entre começar sem noivado e após noivar | Tabela 2, Adjusted Results: First Marriages, Negative interaction; o contraste tem asterisco de significância | "6.67 5.95 5.86 .31" |
 
 ## Limitações
 

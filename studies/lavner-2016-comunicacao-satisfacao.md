@@ -29,25 +29,25 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Casais que completaram o estudo | 431 | Método, Sampling, p. 5 | "658 of those couples agreed to participate in the study, with 431 couples actually completing the study" |
-| Resposta à triagem, entre 3.793 casais contatados | 1.522 (40%) | Método, Sampling, p. 5 | "1,522 (40%) responded to the mailing and agreed to be screened for eligibility" |
+| Casais que responderam à carta e aceitaram a triagem, entre 3.793 contatados | 1.522 (40%) | Método, Sampling, p. 5 | "1,522 (40%) responded to the mailing and agreed to be screened for eligibility" |
 | Composição étnica | 12% negros, 12% brancos, 76% hispânicos | Método, Participants, p. 5 | "Twelve percent of couples were African American, 12% were Caucasian, and 76% were Hispanic" |
 | Duração do casamento na primeira onda | 4,8 meses em média | Método, Participants, p. 5 | "marriages averaged 4.8 months in duration" |
-| No mesmo momento | casais mais satisfeitos se comunicam melhor (mais positivos, menos negativos, mais eficazes) | Resumo | "Cross-sectionally, relatively satisfied couples engaged in more positive, less negative, and more effective communication." |
-| Satisfação prevendo positividade, nas defasagens de 9 meses | significativa em 6 de 12 | Resultados, Positivity, p. 8 | "Satisfaction was a significant predictor of positivity at 6 of the 12 lags" |
-| ... mediana do β padronizado | 0,10 | Resultados, Positivity, p. 8 | "across all lags = .10). Effects were found across all three lags" |
-| Positividade prevendo satisfação | significativa em 2 de 12 | Resultados, Positivity, p. 8 | "Positivity was a significant predictor of communication at 2 of the 12 lags" |
-| ... mediana do β padronizado | 0,02 | Resultados, Positivity, p. 8 | "across all lags = .02): husbands" |
-| Satisfação prevendo negatividade | significativa em 5 de 12 | Resultados, Negativity, p. 9 | "Satisfaction was a significant predictor of negativity at 5 of the 12 lags" |
-| ... mediana do β padronizado | 0,09 | Resultados, Negativity, p. 9 | "across all lags = .09). Effects were found at the first two lags" |
-| Negatividade prevendo satisfação | significativa em 4 de 12 | Resultados, Negativity, p. 9 | "Negativity was a significant predictor of satisfaction at 4 of the 12 lags" |
-| ... mediana do β padronizado em todas as defasagens; efeitos só nas duas primeiras | 0,06 | Resultados, Negativity, p. 9 | "across all lags = .06), with effects found at the first two lags" |
-| Eficácia prevendo satisfação, em 12 defasagens | uma vez só | Resultados, Effectiveness, p. 9 | "Effectiveness was a significant predictor of satisfaction only once" |
-| Da primeira à quarta onda (cerca de dois anos e meio): satisfação prevendo comunicação | 6 de 12 efeitos | Resultados, Wave 1 to Wave 4, p. 9 | "Initial satisfaction reliably predicted subsequent communication in 6 of 12 possible effects" |
-| ... mediana do β padronizado | 0,10 | Resultados, Wave 1 to Wave 4, p. 9 | "= .10), with significant results found for all three communication behaviors" |
-| Da primeira à quarta onda: comunicação prevendo satisfação | nenhum dos 12 testes | Resultados, Wave 1 to Wave 4, p. 9 | "communication did not predict subsequent satisfaction in any of the 12 possible tests" |
-| ... mediana do β padronizado | 0,01 | Resultados, Wave 1 to Wave 4, p. 9 | "= .01). However, the relative magnitude" |
-| Total de efeitos comunicação → satisfação nas defasagens de 9 meses | 7 de 36 significativos | Discussão, p. 10 | "Of the 36 crosslagged effects using the 9-month lags, only 7 were significant for communication-tosatisfaction" |
-| Comparação direta do tamanho dos dois sentidos | sem diferença em 85% dos casos | Discussão, p. 10 | "the effects did not differ significantly in 85% of cases" |
+| Satisfação e comunicação medidas no mesmo momento | casais mais satisfeitos se comunicam melhor (mais positivos, menos negativos, mais eficazes) | Resumo | "Cross-sectionally, relatively satisfied couples engaged in more positive, less negative, and more effective communication." |
+| A satisfação numa medição prevê a positividade da conversa na medição seguinte, uns 9 meses depois? | em 6 de 12 testes, de forma significativa | Resultados, Positivity, p. 8 | "Satisfaction was a significant predictor of positivity at 6 of the 12 lags" |
+| Tamanho típico desse efeito nos 12 testes (mediana do β padronizado, sem o sinal) | 0,10 | Resultados, Positivity, p. 8 | "across all lags = .10). Effects were found across all three lags" |
+| No sentido inverso, a positividade da conversa prevê a satisfação na medição seguinte? | em 2 de 12 testes, de forma significativa | Resultados, Positivity, p. 8 | "Positivity was a significant predictor of communication at 2 of the 12 lags" |
+| Tamanho típico desse efeito nos 12 testes (mediana do β padronizado, sem o sinal) | 0,02 | Resultados, Positivity, p. 8 | "across all lags = .02): husbands" |
+| A satisfação numa medição prevê a negatividade da conversa na medição seguinte? | em 5 de 12 testes, de forma significativa | Resultados, Negativity, p. 9 | "Satisfaction was a significant predictor of negativity at 5 of the 12 lags" |
+| Tamanho típico desse efeito nos 12 testes (mediana do β padronizado, sem o sinal) | 0,09 | Resultados, Negativity, p. 9 | "across all lags = .09). Effects were found at the first two lags" |
+| No sentido inverso, a negatividade da conversa prevê a satisfação na medição seguinte? | em 4 de 12 testes, de forma significativa | Resultados, Negativity, p. 9 | "Negativity was a significant predictor of satisfaction at 4 of the 12 lags" |
+| Tamanho típico desse efeito nos 12 testes (mediana do β padronizado, sem o sinal); efeitos só nos dois primeiros intervalos | 0,06 | Resultados, Negativity, p. 9 | "across all lags = .06), with effects found at the first two lags" |
+| A eficácia da conversa prevê a satisfação na medição seguinte, em 12 testes? | uma vez só | Resultados, Effectiveness, p. 9 | "Effectiveness was a significant predictor of satisfaction only once" |
+| Da primeira à quarta medição (cerca de dois anos e meio), a satisfação inicial prevê a comunicação? | 6 de 12 efeitos | Resultados, Wave 1 to Wave 4, p. 9 | "Initial satisfaction reliably predicted subsequent communication in 6 of 12 possible effects" |
+| Tamanho típico desse efeito (mediana do β padronizado, sem o sinal) | 0,10 | Resultados, Wave 1 to Wave 4, p. 9 | "= .10), with significant results found for all three communication behaviors" |
+| Da primeira à quarta medição, a comunicação inicial prevê a satisfação? | nenhum dos 12 testes | Resultados, Wave 1 to Wave 4, p. 9 | "communication did not predict subsequent satisfaction in any of the 12 possible tests" |
+| Tamanho típico desse efeito (mediana do β padronizado, sem o sinal) | 0,01 | Resultados, Wave 1 to Wave 4, p. 9 | "= .01). However, the relative magnitude" |
+| Efeitos da comunicação sobre a satisfação, somando todos os testes em intervalos de 9 meses | 7 de 36 significativos | Discussão, p. 10 | "Of the 36 crosslagged effects using the 9-month lags, only 7 were significant for communication-tosatisfaction" |
+| Comparação direta do tamanho dos dois sentidos: satisfação prevendo comunicação e comunicação prevendo satisfação | sem diferença em 85% dos casos | Discussão, p. 10 | "the effects did not differ significantly in 85% of cases" |
 | Conclusão dos autores | os dois sentidos são fracos e inconsistentes | Discussão, p. 10 | "satisfaction is a more consistent and stronger predictor of communication than the reverse, but overall both effects are fairly inconsistent and similar in magnitude" |
 
 ## Definições

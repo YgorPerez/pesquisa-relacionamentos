@@ -32,19 +32,19 @@ Se a idade da mulher no primeiro casamento muda o risco de separação, e se ess
 |---|---|---|---|
 | Amostra | 3.184 mulheres brancas não hispânicas que já casaram | Resumo | "We used data on non-Hispanic white women from the 2006–2010 National Surveys of Family Growth (NSFG) (N = 3,184)." |
 | Casamentos aos 27 anos ou mais | 26% | Métodos, p. 525 | "26% of the marriages took place at age 27 or later" |
-| Probabilidade de separação até o quinto ano, por idade ao casar (painel I) | 0,31 antes dos 20; cai até 0,09 aos 30–32 | Resultados, p. 530 | "the fifth-year dissolution probability is .31 for women who entered first marriage before age 20, and declines steadily to .09 for those who did so at age 30–32" |
-| Casar aos 33 ou mais (sem diferença significativa da faixa anterior) | sobe a 0,11 | Resultados, p. 530 | "The probability rises slightly to .11 for ages 33 and older" |
-| Razão de risco, casar com 20 anos ou menos vs. 21–23 (painel I) | 1,47 | Tabela 2 | "1.47 0.31 Panel II" |
-| Razão de risco, casar aos 30–32 vs. 21–23 (painel I) | 0,38 | Tabela 2 | "0.38 0.09 -0.96(0.20)" |
-| A curva em U nos dados dos anos 1960 | Becker, Landes e Michael (1977) acharam indícios dela | Introdução, p. 523 | "Using data from the 1960s, Becker, Landes, and Michael (1977) found evidence of a U-shaped relationship between age at first marriage and the probability of divorce" |
+| Probabilidade de separação até o quinto ano, por idade da mulher ao casar, controlando só a origem familiar dela (painel I) | 0,31 antes dos 20; cai até 0,09 aos 30–32 | Resultados, p. 530 | "the fifth-year dissolution probability is .31 for women who entered first marriage before age 20, and declines steadily to .09 for those who did so at age 30–32" |
+| Mesma probabilidade para quem casou aos 33 ou mais (sem diferença significativa da faixa anterior) | sobe a 0,11 | Resultados, p. 530 | "The probability rises slightly to .11 for ages 33 and older" |
+| Risco de separação de quem casou com 20 anos ou menos, comparado a quem casou com 21–23 (painel I) | razão de risco 1,47 | Tabela 2 | "1.47 0.31 Panel II" |
+| Risco de separação de quem casou aos 30–32, comparado a quem casou com 21–23 (painel I) | razão de risco 0,38 | Tabela 2 | "0.38 0.09 -0.96(0.20)" |
+| Curva em U (separação mais comum em quem casa muito cedo e em quem casa muito tarde) nos dados dos anos 1960 | Becker, Landes e Michael (1977) acharam indícios dela | Introdução, p. 523 | "Using data from the 1960s, Becker, Landes, and Michael (1977) found evidence of a U-shaped relationship between age at first marriage and the probability of divorce" |
 | A curva em U nos ciclos do NSFG (1995, 2002–2003 e 2006–2010) | não aparece em nenhum | Resultados, seção 3.2, p. 531 | "the absence of a U-shape in all cycles indicates that the unions they form tend to be solid" |
 | A curva em U, 2006–2010 | não aparece; o risco cai até o começo da casa dos trinta e se estabiliza | Discussão, p. 533 | "the Ushape postulated by Becker, Landes, and Michael (1977) is not there" |
 | Diferença entre casar aos 24–26 e aos 30–32 | 6 pontos percentuais na probabilidade de separação até o quinto ano | Discussão, p. 533 | "the difference in the estimated fifth-year dissolution probabilities for marriages contracted at ages 24–26 versus 30–32 is also sizeable: 6 percentage points" |
 | Quem casa tarde faz escolhas "fora do padrão" | marido já casado, diferença de idade; mesmo assim, uniões sólidas | Resumo | "women who delay marriage disproportionately make unconventional matches, which are generally associated with high marital instability. We also found, however, that their unions are very solid." |
 | Probabilidade de separação até o quinto ano com marido já casado antes, casal típico da amostra toda (painel II) | 0,24 contra 0,20 | Resultados, p. 532 | "the fifth-year dissolution probability is .24 if the husband had been married before, compared to .20 if he had not" |
 | ... casal típico de quem casou aos 27–29 com faculdade (painel III) | 0,09 contra 0,06 | Resultados, p. 532 | "the fifth-year dissolution probability is .09 if the husband had been married before, compared to .06 if he had not" |
-| Faculdade completa (16 anos de estudo ou mais) ao casar, painel II | razão de risco 0,59 | Tabela 2 | "0.59 0.12 -0.59(0.21)" |
-| Filho de união anterior, painel II | razão de risco 1,31 | Tabela 2 | "1.31 0.25 0.75(0.21)" |
+| Risco de separação de quem tinha faculdade completa (16 anos de estudo ou mais) ao casar, comparado a quem tinha de 12 a 15 anos de estudo (painel II) | razão de risco 0,59 | Tabela 2 | "0.59 0.12 -0.59(0.21)" |
+| Risco de separação de quem já tinha filho de união anterior ao casar, comparado a quem não tinha (painel II) | razão de risco 1,31 | Tabela 2 | "1.31 0.25 0.75(0.21)" |
 | Casos com 33 anos ou mais ao casar | 159 | Limitações, p. 534 | "a relatively small number of cases in the 33 years and older age at marriage category (n=159)" |
 
 As razões de risco 0,59 e 1,31 aparecem na tabela logo depois dos coeficientes −0,53 e 0,27 (exp(−0,53) ≈ 0,59; exp(0,27) ≈ 1,31); o Trecho dessas linhas começa na razão de risco porque os asteriscos de [[significância]] logo antes dela não podem entrar num Trecho. A probabilidade de separação até o quinto ano vem como proporção (0,31 = 31%).
