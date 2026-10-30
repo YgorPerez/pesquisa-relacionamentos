@@ -6,7 +6,7 @@
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, LINE, LINE_MIXED } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
 
 // Rendered as the server renders: with the plot already loaded.
@@ -170,6 +170,53 @@ it("writes a dot's value clear of Brazil's ring", () => {
   expect(Number(value?.getAttribute('x'))).toBeGreaterThan(
     Number(dot?.getAttribute('cx')) + 12,
   )
+})
+
+it('serves a time line with each value over its year, a written year only where there is a number', () => {
+  const line = page(
+    renderToString(<VisualChart chart={LINE} country={null} profile={null} />),
+  )
+  const svg = line.querySelector('svg[role="img"]')
+  expect(svg?.querySelectorAll('circle').length).toBe(3)
+  const texts = [...(svg?.querySelectorAll('text') ?? [])].map(
+    (t) => t.textContent,
+  )
+  for (const value of ['13,5%', '23,4%', '31,1%', '2004', '2014', '2024'])
+    expect(texts).toContain(value)
+  expect(texts).not.toContain('2005')
+  // The pink marker on 2024, and Brazil ringed at every point.
+  expect(line.querySelectorAll('[data-ts-key="marcador"]').length).toBe(1)
+  expect(line.querySelectorAll('[data-ts-key="brasil"]').length).toBe(3)
+  // What each point measured, with its year, for a screen reader and
+  // without JS.
+  expect(line.body.textContent).toContain(
+    '2024 · Pelo menos um divorciado ou viúvo: 31,1%',
+  )
+})
+
+it('dims the other country on a time line, and tags "você" where the Profile is covered', () => {
+  const mixed = page(
+    renderToString(
+      <VisualChart chart={LINE_MIXED} country="eua" profile={null} />,
+    ),
+  )
+  const fill = (text: string) =>
+    [...mixed.querySelectorAll('svg[role="img"] text')]
+      .find((t) => t.textContent === text)
+      ?.getAttribute('fill')
+  expect(fill('0,1 ponto')).not.toContain('tinta-2')
+  expect(fill('18%')).toContain('tinta-2')
+
+  const line = page(
+    renderToString(
+      <VisualChart
+        chart={LINE}
+        country={null}
+        profile={{ gender: 'mulher' }}
+      />,
+    ),
+  )
+  expect(line.querySelectorAll('[data-ts-key="voce"]').length).toBe(3)
 })
 
 it('shows the definitions as a legend of shapes', () => {

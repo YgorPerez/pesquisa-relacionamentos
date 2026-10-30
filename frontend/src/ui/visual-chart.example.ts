@@ -85,3 +85,70 @@ export const BARS: ChartView = {
   ownLines: ['Por outro caminho: conta nossa, 100 − 39 = 61%'],
   sources: [{ n: 1, anchor: 'ficha-0', title: 'Rosenfeld (2019)' }],
 }
+
+const years = (first: number, last: number, written: number[]) =>
+  Array.from({ length: last - first + 1 }, (_, i) => first + i).map(
+    (value) => ({ value, text: written.includes(value) ? `${value}` : '' }),
+  )
+
+/** A time line of one unit, Brazil's every year, the last one highlighted:
+ * the remarriages of the Guide on where to meet people. */
+export const LINE: ChartView = {
+  kind: 'line',
+  domId: 'visual-exemplo-linha',
+  title: 'Casamentos em que um dos dois já tinha sido casado',
+  note: null,
+  ticks: [0, 20, 40, 60, 80, 100].map((value) => ({
+    value,
+    text: `${value}%`,
+  })),
+  years: years(2004, 2024, [2004, 2014, 2024]),
+  points: (
+    [
+      [2004, 13.5, '13,5%'],
+      [2014, 23.4, '23,4%'],
+      [2024, 31.1, '31,1%'],
+    ] as const
+  ).map(([year, value, text], i) =>
+    study(`${i}`, 'Pelo menos um divorciado ou viúvo', value, text, {
+      detail: null,
+      year,
+      country: { slug: 'brasil', name: 'Brasil' },
+      brazil: true,
+      highlight: year === 2024,
+      covers: [{ genders: ['man', 'woman'] }],
+      number: {
+        text,
+        own: null,
+        sources: [{ n: 1, anchor: 'ficha-ibge', title: 'IBGE (2025)' }],
+      },
+    }),
+  ),
+  definitions: [],
+  ownLines: [],
+  sources: [{ n: 1, anchor: 'ficha-ibge', title: 'IBGE (2025)' }],
+}
+
+/** A time line of two units, one finding of the United States and one of
+ * Brazil: the points sit on the years alone, with no value scale. */
+export const LINE_MIXED: ChartView = {
+  ...LINE,
+  domId: 'visual-exemplo-linha-mista',
+  title: 'Dois retratos, dois países',
+  ticks: [],
+  years: years(2017, 2019, [2017, 2019]),
+  points: [
+    study('0', 'Nos EUA, diferença de satisfação', 0.1, '0,1 ponto', {
+      detail: null,
+      year: 2017,
+      country: { slug: 'eua', name: 'EUA' },
+    }),
+    study('1', 'No Brasil, conheceram o parceiro por app', 18, '18%', {
+      detail: null,
+      year: 2019,
+      country: { slug: 'brasil', name: 'Brasil' },
+      brazil: true,
+      highlight: true,
+    }),
+  ],
+}

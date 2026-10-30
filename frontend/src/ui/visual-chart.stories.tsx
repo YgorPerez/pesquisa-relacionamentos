@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DefinitionGlyph } from './definition-glyph'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, LINE, LINE_MIXED } from './visual-chart.example'
 import VisualChartPlot from './visual-chart-plot'
 import { VisualDetail } from './visual-detail'
 
@@ -30,6 +30,43 @@ export const Dots: Story = {}
 
 /** Bars, the key value in pink and our own calculation hatched. */
 export const Bars: Story = { args: { chart: BARS } }
+
+/** A time line of one unit: the line over the years, 2024 in pink, Brazil
+ * ringed at every point. */
+export const Line: Story = { args: { chart: LINE } }
+
+/** A time line of two units: the points on the years alone, each year's
+ * label under it. */
+export const LineMixedUnits: Story = { args: { chart: LINE_MIXED } }
+
+/** A time line with a Profile: "você" above each value its Fact sheet
+ * covers. */
+export const LineWithProfile: Story = {
+  args: { chart: LINE, profile: { gender: 'mulher' } },
+}
+
+/** Enter on the time line opens its first point: the value, the year, the
+ * country and the Fact sheet. */
+export const LineTapDetail: Story = {
+  args: { chart: LINE },
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement)
+    const chart = await page.findByRole(
+      'img',
+      { name: LINE.title },
+      { timeout: 10_000 },
+    )
+    chart.focus()
+    await userEvent.keyboard('{Enter}')
+    const detail = await page.findByRole('button', { name: 'Fechar' })
+    const box = within(detail.closest('[data-slot="detalhe-do-grafico"]')!)
+    await expect(box.getByText('2004')).toBeInTheDocument()
+    await expect(box.getByText('13,5%')).toBeInTheDocument()
+    await expect(
+      box.getByRole('link', { name: /^Ficha \d: / }),
+    ).toBeInTheDocument()
+  },
+}
 
 /** `?pais=eua`: the United States lit, the others dimmed. */
 export const CountryChosen: Story = { args: { country: 'eua' } }

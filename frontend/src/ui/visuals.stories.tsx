@@ -1,13 +1,12 @@
 // The Visuals the server draws as HTML (#182), over the fixture Question's
 // data (`visual.example.ts`), as they sit in the Question's body. `prosa`
-// puts them in the body's Markdown, as on the page. The bar comparison is
-// the chart library's (`visual-chart.stories.tsx`), and a Study table of
-// mixed units is `visual-chart-table.stories.tsx`.
+// puts them in the body's Markdown, as on the page. Bars, time lines and
+// Study tables are the chart library's (`visual-chart.stories.tsx`), and a
+// Study table of mixed units is `visual-chart-table.stories.tsx`.
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { VisualDiagram } from './visual-diagram'
 import { VisualFrame } from './visual-frame'
-import { VisualTimeline } from './visual-timeline'
-import { DIAGRAM, DIAGRAM_EVERY_STROKE, TIMELINE } from './visual.example'
+import { DIAGRAM, DIAGRAM_EVERY_STROKE } from './visual.example'
 
 const meta = {
   parameters: { layout: 'padded' },
@@ -23,10 +22,6 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
-
-export const Timeline: Story = {
-  render: () => <VisualTimeline visual={TIMELINE} />,
-}
 
 /** Two associations (dashed) and our inference (dotted, with "?"). */
 export const Diagram: Story = {

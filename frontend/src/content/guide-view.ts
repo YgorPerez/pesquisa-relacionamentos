@@ -520,9 +520,9 @@ export function guideView(topic: Topic, library: Library): GuideView {
   }
   const charts = new Map(
     topic.visuals.flatMap((visual) => {
-      // Every bar comparison (#473) and every Study table: dots of one
-      // unit, or a table of mixed ones (#475).
-      if (visual.kind !== 'bars' && visual.kind !== 'study-table') return []
+      // Every Visual but the diagram: bars (#473), time lines (#474), and
+      // Study tables as dots of one unit or a table of mixed ones (#475).
+      if (visual.kind === 'diagram') return []
       const chart: GuideChart | null =
         chartView(visual, library, cite, topic.slug) ??
         chartTable(visual, library, cite, topic.slug)
@@ -535,8 +535,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
     numbers,
     visuals: renderVisuals(
       topic.visuals.filter(
-        (v): v is HtmlVisual =>
-          v.kind !== 'bars' && v.kind !== 'study-table' && !charts.has(v.id),
+        (v): v is HtmlVisual => v.kind === 'diagram',
       ),
       cite,
       topic.slug,

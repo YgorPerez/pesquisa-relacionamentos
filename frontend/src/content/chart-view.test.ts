@@ -275,3 +275,61 @@ it("gives a bar the year it names and the country it sets over its Fact sheet's"
     [null, 'Gana'],
   ])
 })
+
+const timeline = (
+  events: ReadonlyArray<{ year: number; value: number; unit: string }>,
+): Visual => ({
+  id: 'linha',
+  kind: 'timeline',
+  title: 'Linha',
+  events: events.map((e, i) => ({
+    ...e,
+    label: `Medida ${i}`,
+    fact_sheet: i % 2 ? 'costa-2018-satisfacao' : 'silva-2020-apps-brasil',
+  })),
+  highlight: 2024,
+})
+
+it('draws a time line of one unit as a line over the years, each point with its year, country and value', () => {
+  const view = chartView(
+    timeline([
+      { year: 2004, value: 13.5, unit: '%' },
+      { year: 2014, value: 23.4, unit: '%' },
+      { year: 2024, value: 31.1, unit: '%' },
+    ]),
+    library(),
+    cite,
+    'tema',
+  )
+  expect(view).toMatchObject({
+    kind: 'line',
+    points: [
+      { year: 2004, value: 13.5, number: { text: '13,5%' }, brazil: true },
+      { year: 2014, value: 23.4, country: { slug: 'eua' } },
+      { year: 2024, number: { text: '31,1%' }, highlight: true },
+    ],
+  })
+  expect(view?.ticks.at(-1)).toEqual({ value: 100, text: '100%' })
+  // A tick for every year; only the years with a number are written.
+  expect(view?.years).toHaveLength(21)
+  expect(view?.years?.filter((y) => y.text).map((y) => y.text)).toEqual([
+    '2004',
+    '2014',
+    '2024',
+  ])
+})
+
+it('puts a time line of mixed units on the year axis alone, without a value scale', () => {
+  const view = chartView(
+    timeline([
+      { year: 2017, value: 0.1, unit: 'ponto' },
+      { year: 2019, value: 18, unit: '%' },
+    ]),
+    library(),
+    cite,
+    'tema',
+  )
+  expect(view?.kind).toBe('line')
+  expect(view?.ticks).toEqual([])
+  expect(view?.points.map((p) => p.number.text)).toEqual(['0,1 ponto', '18%'])
+})

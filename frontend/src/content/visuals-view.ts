@@ -4,7 +4,8 @@
 // and HTML: no chart code goes to the browser, and the Visual reads without
 // JS (#182). The Visuals the chart library draws go through `chart-view.ts`
 // instead (ADR 0042, "SVG from the server, interaction on top"): every bar
-// comparison (#473) and every Study table (#475).
+// comparison (#473), Study table (#475) and time line (#474). Only the
+// diagram is drawn here.
 import type {
   BarsVisual,
   Calculation,
@@ -17,7 +18,6 @@ import type {
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { VisualDiagram } from '#/ui/visual-diagram'
-import { VisualTimeline } from '#/ui/visual-timeline'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 
 /** A reference to a cited Fact sheet: its number on the page, the anchor of
@@ -51,19 +51,6 @@ interface Common {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-export interface TimelineView extends Common {
-  readonly kind: 'timeline'
-  readonly years: ReadonlyArray<number>
-  readonly events: ReadonlyArray<{
-    readonly year: number
-    /** Where the year falls, from 0 (the first) to 1 (the last). */
-    readonly at: number
-    readonly label: string
-    readonly number: NumberView
-    readonly highlight: boolean
-  }>
-}
-
 export interface DiagramView extends Common {
   readonly kind: 'diagram'
   readonly nodes: ReadonlyArray<{ readonly id: string; readonly label: string }>
@@ -77,12 +64,15 @@ export interface DiagramView extends Common {
   }>
 }
 
-export type VisualView = TimelineView | DiagramView
+export type VisualView = DiagramView
 
-/** A Visual drawn here, as HTML: a bar comparison is always the chart
- * library's, and a Study table the library's or a `ChartTable`
- * (`chart-view.ts`). */
-export type HtmlVisual = Exclude<Visual, BarsVisual | StudyTableVisual>
+/** A Visual drawn here, as HTML: a bar comparison and a time line are
+ * always the chart library's, and a Study table the library's or a
+ * `ChartTable` (`chart-view.ts`). */
+export type HtmlVisual = Exclude<
+  Visual,
+  BarsVisual | StudyTableVisual | TimelineVisual
+>
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
@@ -191,25 +181,6 @@ export function axisTicks(
 /** A kind's own part of the view; `visualView` adds the common one. */
 type Own<V extends VisualView> = Omit<V, Exclude<keyof Common, 'sources'>>
 
-function timelineView(visual: TimelineVisual, cite: Cite): Own<TimelineView> {
-  const years = visual.events.map((e) => e.year)
-  const first = Math.min(...years)
-  const span = Math.max(...years) - first || 1
-  const events = visual.events.map((event) => ({
-    year: event.year,
-    at: (event.year - first) / span,
-    label: event.label,
-    number: numberView(event, event.unit, cite),
-    highlight: event.year === visual.highlight,
-  }))
-  return {
-    kind: 'timeline',
-    years: Array.from({ length: span + 1 }, (_, i) => first + i),
-    events,
-    sources: allSources(events.map((e) => e.number)),
-  }
-}
-
 function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
   const position = (id: string) => visual.nodes.findIndex((n) => n.id === id)
   const arrows = visual.arrows.map((arrow) => ({
@@ -241,8 +212,6 @@ export function visualView(
     note: visual.note ?? null,
   }
   switch (visual.kind) {
-    case 'timeline':
-      return { ...common, ...timelineView(visual, cite) }
     case 'diagram':
       return { ...common, ...diagramView(visual, cite) }
   }
@@ -254,11 +223,9 @@ export function visualView(
 export type RenderedVisual = string & { readonly __rendered: unique symbol }
 
 function render(view: VisualView): RenderedVisual {
-  const element =
-    view.kind === 'timeline'
-      ? createElement(VisualTimeline, { visual: view })
-      : createElement(VisualDiagram, { visual: view })
-  return renderToStaticMarkup(element) as RenderedVisual
+  return renderToStaticMarkup(
+    createElement(VisualDiagram, { visual: view }),
+  ) as RenderedVisual
 }
 
 /** Each Visual of the Question drawn, by id, for `html()` to put in place of

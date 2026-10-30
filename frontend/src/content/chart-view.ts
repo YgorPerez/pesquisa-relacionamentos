@@ -7,7 +7,7 @@
 // A bar comparison draws bars; a Study table whose numbers share one unit
 // draws one dot per Study. A table that mixes units stays a table
 // (`ChartTable`) whose rows are the same points, so they take the tap and
-// the country filter too.
+// the country filter too. A time line draws a line over the years.
 import type {
   FactSheet,
   Library,
@@ -58,13 +58,20 @@ export interface ChartPoint {
 }
 
 export interface ChartView {
-  readonly kind: 'bars' | 'dots'
+  readonly kind: 'bars' | 'dots' | 'line'
   /** The figure's id on the page. */
   readonly domId: string
   readonly title: string
   readonly note: string | null
-  /** The value axis, from 0 to its last tick. */
+  /** The value axis, from 0 to its last tick. A time line of mixed units
+   * has none: its points sit on the year axis alone. */
   readonly ticks: ReadonlyArray<{
+    readonly value: number
+    readonly text: string
+  }>
+  /** A time line's year axis: a tick per year, the years of its points
+   * written. */
+  readonly years?: ReadonlyArray<{
     readonly value: number
     readonly text: string
   }>
@@ -158,8 +165,21 @@ function ringApart(points: ChartPoint[]): ChartPoint[] {
   return apart ? points : points.map((p) => ({ ...p, brazil: false }))
 }
 
+/** A tick per year, one every five past 30 years; only the years of the
+ * points are written, so the axis fits a phone. */
+function yearTicks(years: ReadonlyArray<number>) {
+  const first = Math.min(...years)
+  const span = Math.max(...years) - first
+  return Array.from({ length: span + 1 }, (_, i) => first + i)
+    .filter((year) => span <= 30 || year % 5 === 0 || years.includes(year))
+    .map((value) => ({
+      value,
+      text: years.includes(value) ? String(value) : '',
+    }))
+}
+
 /** The chart of a Visual, or `null` when the library does not draw it (a
- * time line or a diagram, or a Study table of mixed units). */
+ * diagram, or a Study table of mixed units). */
 export function chartView(
   visual: Visual,
   library: Library,
@@ -221,6 +241,43 @@ export function chartView(
       points,
       definitions: definitions.map(({ id, legend }) => ({ id, legend })),
       ownLines: [],
+      sources: allSources(points.map((p) => p.number)),
+    }
+  }
+  if (visual.kind === 'timeline') {
+    const units = new Set(visual.events.map((e) => e.unit))
+    const [unit] = units
+    const definitions = visual.definitions ?? []
+    const points = ringApart(
+      visual.events.map((event, i): ChartPoint => ({
+        key: `${i}`,
+        label: event.label,
+        detail: null,
+        value: event.value,
+        number: numberView(event, event.unit, cite),
+        highlight: event.year === visual.highlight,
+        ...pointFacts(event, library, definitions),
+      })),
+    )
+    return {
+      kind: 'line',
+      ...common,
+      ticks:
+        units.size === 1 && unit !== undefined
+          ? ticksOf(
+              Math.max(...visual.events.map((e) => e.value)),
+              undefined,
+              unit,
+            )
+          : [],
+      years: yearTicks(visual.events.map((e) => e.year)),
+      points,
+      definitions: definitions.map(({ id, legend }) => ({ id, legend })),
+      ownLines: points.flatMap((p) =>
+        p.number.own
+          ? [VISUAL_COPY.ownLine(String(p.year), p.number.own, p.number.text)]
+          : [],
+      ),
       sources: allSources(points.map((p) => p.number)),
     }
   }

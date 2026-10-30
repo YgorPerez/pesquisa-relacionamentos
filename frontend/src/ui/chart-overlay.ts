@@ -18,6 +18,10 @@ export interface OverlayMark {
   readonly highlight: boolean
   readonly brazil: boolean
   readonly you: boolean
+  /** On a time line the value sits centered this far above its dot, and
+   * the "você" tag above the value, instead of after the mark and on the
+   * row's label line. */
+  readonly valueAbove?: number
 }
 
 /** The value label's offset after the mark and its rough letter width, the
@@ -47,9 +51,11 @@ function ring(x: number, y: number) {
 
 /** The "você" tag, yellow like every "vale para você", at the right edge of
  * the plot on the row's label line. */
+const tagWidth = () => CHART_COPY.you.length * LETTER + 10
+
 function you(right: number, y: number) {
   const text = CHART_COPY.you
-  const width = text.length * LETTER + 10
+  const width = tagWidth()
   return `<g data-ts-key="voce"><rect x="${right - width}" y="${y - 9}" width="${width}" height="18" rx="4" fill="var(--color-amarelo-voce)"/><text x="${right - 5}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="12" font-weight="700" fill="var(--color-tinta)">${escape(text)}</text></g>`
 }
 
@@ -61,18 +67,28 @@ export function overlayLayers(
   marks: ReadonlyArray<OverlayMark>,
   { labelOffset, right }: { labelOffset: number; right: number },
 ): { under: string; over: string } {
+  const valueWidth = (m: OverlayMark) => m.valueText.length * LETTER + 6
   const under = marks
     .filter((m) => m.highlight)
-    .map(
-      (m) =>
-        `<g data-ts-key="sob-${escape(m.key)}">${marker(m.x + VALUE_DX - 3, m.y, m.valueText.length * LETTER + 6)}</g>`,
-    )
+    .map((m) => {
+      const drawn =
+        m.valueAbove === undefined
+          ? marker(m.x + VALUE_DX - 3, m.y, valueWidth(m))
+          : // The library centers the value's line `valueAbove` over the
+            // dot.
+            marker(m.x - valueWidth(m) / 2, m.y - m.valueAbove, valueWidth(m))
+      return `<g data-ts-key="sob-${escape(m.key)}">${drawn}</g>`
+    })
   const over = marks
     .filter((m) => m.brazil || m.you)
-    .map(
-      (m) =>
-        `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y) : ''}${m.you ? you(right, m.y - labelOffset) : ''}</g>`,
-    )
+    .map((m) => {
+      const tag = !m.you
+        ? ''
+        : m.valueAbove === undefined
+          ? you(right, m.y - labelOffset)
+          : you(m.x + tagWidth() / 2, m.y - m.valueAbove - LABEL_HEIGHT - 2)
+      return `<g data-ts-key="sobre-${escape(m.key)}">${m.brazil ? ring(m.x, m.y) : ''}${tag}</g>`
+    })
   return {
     under: `<g class="sobreposicao-sob" data-ts-key="sobreposicao-sob" aria-hidden="true">${under.join('')}</g>`,
     over: `<g class="sobreposicao" data-ts-key="sobreposicao" aria-hidden="true">${over.join('')}</g>`,

@@ -1,10 +1,9 @@
 // The Visuals reach the page as finished HTML: the server draws the SVG in
 // place of each `{{visual:<id>}}` line, so they read without JS (#182). Over
 // the e2e fixture, whose Guide of `onde-conhecer-pessoas` places one of each
-// kind in its Chapters; its bar comparison and its Study table are
-// `chart-view.ts`'s, and leave the prose before this draws it. That the
-// rings lead to the page's list is in the screen tests
-// (`ui/visual-*.test.tsx`).
+// kind in its Chapters; all but its diagram are `chart-view.ts`'s, and
+// leave the prose before this draws it. That the rings lead to the page's
+// list is in the screen tests (`ui/visual-*.test.tsx`).
 import { fileURLToPath } from 'node:url'
 import { formatProblems, loadLibrary } from '@tem-estudo/content'
 import { topicBySlug } from '@tem-estudo/content/queries'
@@ -22,7 +21,7 @@ function chaptersHtml() {
   const topic = topicBySlug(result.library, 'onde-conhecer-pessoas')
   if (!topic) throw new Error('the fixture has no onde-conhecer-pessoas')
   const handDrawn = topic.visuals.filter(
-    (v): v is HtmlVisual => v.kind !== 'bars' && v.kind !== 'study-table',
+    (v): v is HtmlVisual => v.kind === 'diagram',
   )
   const visuals = renderVisuals(
     handDrawn,
@@ -53,10 +52,9 @@ it('draws each placed Visual on the server as SVG, where its line was', () => {
   expect(page).not.toContain('{{visual')
   const figures = [...page.matchAll(/<figure id="([^"]+)"/g)].map((m) => m[1])
   expect(figures).toEqual([
-    'visual-onde-conhecer-pessoas-dois-retratos',
     'visual-onde-conhecer-pessoas-app-e-satisfacao',
   ])
-  expect(page.match(/<svg/g)?.length).toBeGreaterThanOrEqual(2)
+  expect(page.match(/<svg/g)?.length).toBeGreaterThanOrEqual(1)
   expect(page).toContain(
     '<a class="ref" href="#ficha-silva-2020-apps-brasil" aria-label="Ficha',
   )
