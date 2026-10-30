@@ -44,7 +44,7 @@ Os autores ordenaram os usuários de um site de namoro por "desejabilidade", cal
 | Quem recebeu mais mensagens | Uma mulher de 30 anos em Nova York, com 1.504 mensagens no período | Resultados, §1 | "a 30-year-old woman living in New York, received 1504 messages during the period of observation" |
 | Idade e posição no ranking, mulheres | A posição média cai dos 18 aos 60 anos | Resultados, §3 | "The average woman’s desirability drops from the time she is 18 until she is 60." |
 | Idade e posição no ranking, homens | A posição chega ao máximo por volta dos 50 anos e depois cai | Resultados, §3 | "For men, desirability peaks around 50 and then declines." |
-| Quem ficou de fora | Usuários gays e bissexuais, cerca de 14% do site | Métodos, Data, §3 | "about 14% of the overall user base of the site" |
+| Quem ficou de fora | Entre outros, usuários gays e bissexuais, cerca de 14% do site | Métodos, Data, §3 | "about 14% of the overall user base of the site" |
 
 "Desejável" e "ranking" são medidas do estudo, calculadas com o PageRank: a pessoa sobe quando é procurada por gente que também é desejável. Não é uma nota de beleza, e os autores não dizem que os usuários escolhem desse jeito.
 

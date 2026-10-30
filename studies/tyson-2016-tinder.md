@@ -31,7 +31,7 @@ Os autores criaram 14 perfis no Tinder, deram like em todo mundo que aparecia e 
 | Perfis de outros usuários | Os pesquisadores coletaram 230 mil perfis de homens e 250 mil de mulheres | §III.A | "In total, we collected 230k male profiles, and 250k female profiles." |
 | Likes que viraram match, perfis masculinos | Nos perfis de teste masculinos com foto de banco de imagens, só 0,6% dos likes dados viraram match | §IV | "but only match with a small minority (0.6%)" |
 | Likes que viraram match, perfis femininos | Nos perfis de teste femininos com foto de banco de imagens, 10,5% dos likes dados viraram match | §IV | "a far higher matching rate (10.5%)" |
-| De quem vinham os matches dos perfis masculinos | 86% vieram de outros homens | §IV | "86% of all the matches our male profiles receive come from other men" |
+| De quem vinham os matches dos perfis masculinos | Em média, 86% vieram de outros homens | §IV | "86% of all the matches our male profiles receive come from other men" |
 | Quem mandou mensagem depois do match | Entre quem deu match com os perfis de teste, 21% das mulheres e 7% dos homens mandaram mensagem | §IV | "21% of female matches send a message, whereas only 7% of male matches send a message" |
 | Matches vindos de homens | Somando todos os perfis de teste, foram 8.248 | §IV | "Overall, we received 8248 male matches" |
 | Matches vindos de mulheres | Somando todos os perfis de teste, foram só 532 | §IV | "we garnered only 532 female matches" |
@@ -49,9 +49,9 @@ Os autores criaram 14 perfis no Tinder, deram like em todo mundo que aparecia e 
 | Sexo de uma noite, mulheres | 15% deram nota alta à frase "uso o Tinder para sexo de uma noite" | §VI | "compared to just 15% of women" |
 | Sexo de uma noite, homens | 49% deram nota alta à mesma frase | §VI | "49% of male respondents rated" |
 | Matches que viram encontro | 73% das pessoas estimam que 10% ou menos dos matches viram encontro ao vivo | §VI | "73% of respondents estimated that 10% or fewer of their matches result in a real-world meet-up" |
-| Curtir quase todo mundo | 33% dos homens dizem fazer isso com frequência, e nenhuma mulher diz ter feito | §VI | "Whereas 33% of men report using this strategy regularly, no women report ever using this." |
+| Curtir a maioria dos perfis | 33% dos homens dizem fazer isso com frequência, e nenhuma mulher diz ter feito | §VI | "Whereas 33% of men report using this strategy regularly, no women report ever using this." |
 
-Os números de "Quantos perfis dizem curtir" em diante vêm de um questionário com poucas pessoas. "Nota alta" é 4 ou 5.
+Os números de "Quantos perfis dizem curtir" em diante vêm de um questionário respondido por quem quis, o que pode distorcer os resultados; os autores o usam sobretudo para guiar a discussão. "Nota alta" é 4 ou 5.
 
 ## Limitações
 

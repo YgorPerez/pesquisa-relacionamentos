@@ -28,7 +28,7 @@ As linhas comparam quanto cada coisa mudou depois do lançamento do Tinder entre
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Parceiros sexuais no último ano | Depois do lançamento, o número subiu mais entre os membros que entre os não membros (β = 0,224; EP = 0,029) | p. 84, tabela 2, coluna 2 | "0.224 (0.029)" |
+| Parceiros sexuais no último ano | Depois do lançamento do Tinder, o número subiu mais entre membros de fraternidades e sororidades que entre os outros alunos (β = 0,224; EP = 0,029) | p. 84, tabela 2, coluna 2 | "0.224 (0.029)" |
 | Sexo no último mês | A parte que fez sexo subiu mais entre os membros (β = 0,029; EP = 0,004) | p. 84, tabela 2, coluna 4 | "0.029 (0.004)" |
 | Morar com o parceiro | Membros e não membros mudaram de forma parecida, e a pequena diferença pode ser acaso (β = −0,003; EP = 0,002) | p. 88, tabela 4, coluna 1 | "−0.003 (0.002)" |
 | Estar em um relacionamento | Membros e não membros mudaram de forma parecida, e a pequena diferença pode ser acaso (β = 0,004; EP = 0,004) | p. 88, tabela 4, coluna 2 | "0.004 (0.004)" |

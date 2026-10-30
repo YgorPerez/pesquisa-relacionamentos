@@ -38,7 +38,7 @@ Adultos que namoravam no início foram acompanhados por 20 meses, com questioná
 | Quem queria mais o término | Não apareceu ligação clara entre quem queria mais terminar e o tamanho da mudança; o estudo não mediu quem de fato terminou | Discussion | "we found no significant associations between a desire to break-up and the magnitude of change in these outcomes" |
 | Morar junto e ter planos de casar | Quem morava junto e quem tinha planos de casar teve queda maior na satisfação com a vida | Resumo | "having been cohabiting and having had plans for marriage were associated with larger declines in life satisfaction" |
 | Já estar saindo com outra pessoa | Quem tinha começado a sair com alguém novo teve queda menor na satisfação com a vida | Resumo | "having begun to date someone new was associated with smaller declines" |
-| Sofrimento psicológico e a relação | Duração da relação, morar junto, planos de casar, filho em comum e contato com o ex não andaram junto com o sofrimento depois do término | Results | "none were significant predictors of psychological distress following a break-up" |
+| Sofrimento psicológico e a relação | Duração da relação, morar junto, planos de casar, filho em comum e contato com o ex não andaram junto de forma clara com o sofrimento depois do término | Results | "none were significant predictors of psychological distress following a break-up" |
 
 "d" é a mudança média em desvios-padrão, comparando a mesma pessoa antes e depois do término; 0,2 é pequeno, 0,5 é médio. Uma média pequena esconde trajetórias opostas: perto de metade dos términos trouxe uma piora média ou maior, e uma parte trouxe melhora.
 
