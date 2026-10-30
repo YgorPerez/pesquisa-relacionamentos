@@ -435,11 +435,11 @@ O app de namoro entrega rejeição em quantidade. Numa noite, você recusa dezen
 
 A maior síntese que achamos é uma [[meta-análise]] de 2026. Ela juntou 27 estudos, com 21.263 pessoas, que comparam quem usa app de deslizar, como Tinder, Bumble, Grindr e Hinge, com quem não usa [@cela-2026-meta-analise-apps]. Os usuários estavam um pouco pior. Na média de todas as medidas, a diferença foi de 0,28 desvio-padrão, o que a estatística chama de efeito pequeno: os dois grupos se sobrepõem muito, e o usuário típico fica só um pouco abaixo do não usuário típico. Os estudos também variam muito entre si, e em todas as medidas a faixa de resultados esperados para um estudo novo inclui zero, ou seja, em alguns contextos a diferença pode nem existir [@cela-2026-meta-analise-apps].
 
-A diferença não é igual em tudo. Foi maior no uso compulsivo, do app ou de sexo, com 0,44, e na preocupação com o corpo e a alimentação, com 0,32. Em depressão, ansiedade e estresse, ficou em 0,25. Em bem-estar, que junta [[satisfação]] com a vida e solidão, ficou em 0,10, uma diferença que a estatística não distingue de zero [@cela-2026-meta-analise-apps]. O número maior vem de só 6 estudos, com sinal de viés de publicação.
+A diferença não é igual em tudo. Foi maior no uso compulsivo, do app ou de sexo, e na preocupação com o corpo e a alimentação. Em bem-estar, que junta [[satisfação]] com a vida e solidão, a diferença foi menor e a estatística não a distingue de zero [@cela-2026-meta-analise-apps]. O número maior vem de só 6 estudos, com sinal de viés de publicação.
 
 {{visual:diferenca-por-medida}}
 
-Outra revisão, com 45 estudos, encontrou associações adversas em 86,4% dos 22 estudos sobre imagem corporal e em 48,3% dos 29 sobre saúde mental e bem-estar [@bowman-2025-apps-saude]. São percentuais de estudos, não de usuários [@bowman-2025-apps-saude]. A contagem não pesa quão grande ou preciso foi cada resultado, e um mesmo estudo podia entrar nos dois grupos [@bowman-2025-apps-saude]. A maioria dos estudos mediu um momento só, então a revisão também não diz se o app causa o problema [@bowman-2025-apps-saude].
+Outra revisão, com 45 estudos, encontrou associações adversas com mais frequência nos 22 estudos sobre imagem corporal do que nos 29 sobre saúde mental e bem-estar [@bowman-2025-apps-saude]. São percentuais de estudos, não de usuários [@bowman-2025-apps-saude]. A contagem não pesa quão grande ou preciso foi cada resultado, e um mesmo estudo podia entrar nos dois grupos [@bowman-2025-apps-saude]. A maioria dos estudos mediu um momento só, então a revisão também não diz se o app causa o problema [@bowman-2025-apps-saude].
 
 {{visual:estudos-com-associacoes-adversas}}
 
@@ -455,7 +455,7 @@ No mesmo período, em comparação com os demais estudantes, os membros das orga
 
 {{myth:app-causa-depressao}}
 
-Perguntados, os próprios usuários se dividem. Na Austrália, mais usuários e ex-usuários disseram que o app melhorou a autoestima (40,4%) do que piorou (28,7%) [@holtzhausen-2020-apps-saude-mental]. Nos EUA, entre quem usou no último ano, 32% disseram que o app os deixou mais confiantes, e 25%, mais inseguros. Mas 45% saíram da experiência mais frustrados do que esperançosos, contra 28% que saíram mais esperançosos [@pew-2023-2020-online-dating]. Pelo que contam, o app não derruba a autoestima da maioria, mas frustra muita gente.
+Perguntados, os próprios usuários se dividem. Na Austrália, mais usuários e ex-usuários disseram que o app melhorou a autoestima do que piorou [@holtzhausen-2020-apps-saude-mental]. Nos EUA, entre quem usou no último ano, mais gente disse que o app a deixou mais confiante do que insegura. Já a frustração foi mais comum que a esperança [@pew-2023-2020-online-dating]. Pelo que contam, o app não derruba a autoestima da maioria, mas frustra muita gente.
 
 {{visual:o-que-os-usuarios-contam}}
 
@@ -487,7 +487,7 @@ Os estudos com fotos mediram escolhas, satisfação com as opções e otimismo, 
 
 ## Quando o app fica em silêncio
 
-Deslizar é o lado de quem escolhe. O outro lado é esperar, e a espera não é igual para todos. Nos EUA, entre quem usou site ou app de namoro no último ano, os homens se queixam de silêncio e as mulheres, de excesso. {{you:homens-inseguros}} Entre os homens, 64% se sentiram inseguros por receber poucas mensagens, contra 40% das mulheres. {{you:mulheres-sobrecarregadas}} Entre as mulheres, 54% se sentiram sobrecarregadas por mensagens demais, contra 25% dos homens [@pew-2023-2020-online-dating].
+Deslizar é o lado de quem escolhe. O outro lado é esperar, e a espera não é igual para todos. Nos EUA, entre quem usou site ou app de namoro no último ano, os homens se queixam de silêncio e as mulheres, de excesso. {{you:homens-inseguros}} Os homens se sentiram mais inseguros por receber poucas mensagens. {{you:mulheres-sobrecarregadas}} As mulheres se sentiram mais sobrecarregadas por mensagens demais [@pew-2023-2020-online-dating].
 
 {{visual:mensagens-de-menos-e-demais}}
 
@@ -509,7 +509,7 @@ Do silêncio do app para a rejeição de verdade, a pergunta deixa de ser se faz
 
 No jogo de passar bola, o baque diminuiu em poucos minutos. Na última medida, uns cinco minutos depois em média, os excluídos ainda estavam cerca de 0,73 desvio-padrão abaixo dos incluídos, pouco mais da metade do efeito de logo depois [@hartgerink-2015-ostracismo-cyberball]. Os autores não testaram essa queda diretamente. É exclusão de laboratório, por estranhos, e não rejeição romântica.
 
-Um término é outra história, e foi medido de outro jeito. Nos EUA, um painel acompanhou 1.295 adultos de 18 a 35 anos que namoravam, com um questionário a cada quatro meses, e 36,5% terminaram ao menos uma vez em 20 meses [@rhoades-2011-termino-saude-mental]. {{you:termino-piora-um-pouco}} Comparando cada um consigo mesmo, depois do término o sofrimento psicológico subiu e a [[satisfação]] com a vida caiu, os dois em 0,24 desvio-padrão, uma mudança pequena. A média esconde caminhos opostos. Em 43,4% dos términos, a piora foi média ou maior; em 19,6%, o sofrimento caiu na mesma medida [@rhoades-2011-termino-saude-mental]. A conta é por término, não por pessoa. Com quatro meses entre um questionário e outro, o estudo não diz quanto tempo a piora dura [@rhoades-2011-termino-saude-mental].
+Um término é outra história, e foi medido de outro jeito. Nos EUA, um painel acompanhou 1.295 adultos de 18 a 35 anos que namoravam, com um questionário a cada quatro meses, e 36,5% terminaram ao menos uma vez em 20 meses [@rhoades-2011-termino-saude-mental]. {{you:termino-piora-um-pouco}} Comparando cada um consigo mesmo, depois do término o sofrimento psicológico subiu e a [[satisfação]] com a vida caiu, os dois em 0,24 desvio-padrão, uma mudança pequena. A média esconde caminhos opostos. A piora média ou maior foi mais comum, mas houve também términos em que o sofrimento caiu na mesma medida [@rhoades-2011-termino-saude-mental]. A conta é por término, não por pessoa. Com quatro meses entre um questionário e outro, o estudo não diz quanto tempo a piora dura [@rhoades-2011-termino-saude-mental].
 
 {{visual:termino-piora-ou-melhora}}
 
@@ -519,7 +519,7 @@ Ter sido deixado não fez diferença clara no tamanho da piora, e homens e mulhe
 
 Muita gente diz que a rejeição dói como uma dor física. A ideia veio de estudos de ressonância antigos e pequenos com o jogo de passar bola [@cacioppo-2013-rejeicao-neuroimagem], e os estudos seguintes não a confirmaram. Uma [[meta-análise]] com 244 pessoas excluídas no jogo não achou ativada a região tida como centro da dor física, só um ponto isolado dela, e a parte com 64 pessoas revivendo um término que não queriam também não mostrou com clareza o circuito da dor [@cacioppo-2013-rejeicao-neuroimagem]. Outro estudo treinou classificadores no padrão cerebral de cada experiência e os testou em pessoas fora do treino. O padrão da dor não reconheceu a rejeição, e o da rejeição não reconheceu a dor [@woo-2014-dor-fisica-rejeicao].
 
-Os estudos mais novos têm o desenho melhor: a meta-análise junta mais gente que os estudos antigos, e os classificadores foram testados em quem não estava no treino. Ainda assim, um ponto da região se ativou, e não achar sinal não prova que ela fique de fora. O estudo que lançou a ideia tem texto fechado e não o lemos. Quem passa pela rejeição a descreve mais como tristeza do que como dor. Falando do ex, pessoas que tinham levado um fora recente usaram palavras de tristeza em 40,3% das palavras de emoção negativa, e de dor em 9,7% [@woo-2014-dor-fisica-rejeicao].
+Os estudos mais novos têm o desenho melhor: a meta-análise junta mais gente que os estudos antigos, e os classificadores foram testados em quem não estava no treino. Ainda assim, um ponto da região se ativou, e não achar sinal não prova que ela fique de fora. O estudo que lançou a ideia tem texto fechado e não o lemos. Quem passa pela rejeição a descreve mais como tristeza do que como dor. Falando do ex, pessoas que tinham levado um fora recente usaram mais palavras de tristeza do que de dor entre as palavras de emoção negativa [@woo-2014-dor-fisica-rejeicao].
 
 {{visual:palavras-para-o-ex}}
 
