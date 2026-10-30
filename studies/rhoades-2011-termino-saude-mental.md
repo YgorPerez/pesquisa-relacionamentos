@@ -29,16 +29,16 @@ Adultos que namoravam no início foram acompanhados por 20 meses, com questioná
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Quem terminou em 20 meses | 36,5% | Resumo | "Among unmarried 18 to 35-year olds ( N = 1295), 36.5% had one or more break-ups over a 20-month period." |
-| Depois do término, na mesma pessoa | Mais sofrimento psicológico e menos satisfação com a vida | Resumo | "Experiencing a break-up was associated with an increase in psychological distress and a decline in life satisfaction (from pre- to post-dissolution)." |
+| Não casados de 18 a 35 anos que tiveram ao menos um término em 20 meses | 36,5% | Resumo | "Among unmarried 18 to 35-year olds ( N = 1295), 36.5% had one or more break-ups over a 20-month period." |
+| A mesma pessoa antes e depois do término | Mais sofrimento psicológico e menos satisfação com a vida | Resumo | "Experiencing a break-up was associated with an increase in psychological distress and a decline in life satisfaction (from pre- to post-dissolution)." |
 | Tamanho da mudança | d = 0,24 no sofrimento e na satisfação com a vida (pequeno) | Results, Tests of Hypotheses | "d =.24 for life satisfaction and .24 for psychological distress, suggesting that these are small, but not trivial, within-subjects effects" |
-| Términos com piora de pelo menos meio desvio-padrão | 43,4% | Results, Tests of Hypotheses | "Overall, in 43.4% of break-ups, there was a decline in well-being (as measured by either psychological distress or life satisfaction) that was greater than .5 standard deviations." |
+| Términos em que o sofrimento psicológico ou a satisfação com a vida piorou mais de meio desvio-padrão | 43,4% | Results, Tests of Hypotheses | "Overall, in 43.4% of break-ups, there was a decline in well-being (as measured by either psychological distress or life satisfaction) that was greater than .5 standard deviations." |
 | Términos com melhora do sofrimento | 19,6% tiveram queda de mais de meio desvio-padrão | Results, Tests of Hypotheses | "19.6% of the cases reported a decrease in psychological distress that was greater than .5 standard deviations" |
 | Diferença entre homens e mulheres | Nenhuma | Results, Tests of Hypotheses | "Follow-up tests showed no significant moderation by gender" |
 | Ter sido deixado (o outro queria terminar mais) | Não mudou o tamanho da piora | Discussion | "we found no significant associations between a desire to break-up and the magnitude of change in these outcomes" |
 | Ter morado junto e ter planos de casar | Queda maior na satisfação com a vida | Resumo | "having been cohabiting and having had plans for marriage were associated with larger declines in life satisfaction" |
 | Já estar namorando outra pessoa | Queda menor na satisfação com a vida | Resumo | "having begun to date someone new was associated with smaller declines" |
-| Fatores e sofrimento psicológico | Nenhum mudou o sofrimento | Results | "none were significant predictors of psychological distress following a break-up" |
+| Duração da relação, morar junto, planos de casar, filho em comum e contato com o ex: efeito no sofrimento psicológico | Nenhum mudou o sofrimento | Results | "none were significant predictors of psychological distress following a break-up" |
 
 "d" é a mudança média em desvios-padrão, comparando a mesma pessoa antes e depois do término; 0,2 é pequeno, 0,5 é médio. Uma média pequena esconde trajetórias opostas: perto de metade dos términos trouxe uma piora média ou maior, e uma parte trouxe melhora.
 

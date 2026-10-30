@@ -32,20 +32,20 @@ Os autores juntaram os estudos que comparam quem usa apps de namoro de deslizar 
 | Estudos e pessoas | 27 estudos, 21.263 pessoas | Resumo | "compared dating app users vs non-users across 27 studies (N = 21,263)" |
 | Mulheres na amostra somada | 67% | Results, Study characteristics | "Women constituted 67% of the sample (n = 14,329)" |
 | Idade média | 23,2 anos | Results, Study characteristics | "Mean participant age was 23.2 years (range: 18–35)" |
-| Desenho dos estudos incluídos | Quase todos transversais | Results, Study characteristics | "Study designs were predominantly cross-sectional, with a smaller subset using longitudinal, experimental, or crossover methods." |
-| Efeito geral (modelo multinível, 87 estimativas) | g = 0,28, pior nos usuários | Results, Multi-level analysis | "The pooled effect was g = 0.28, SE = 0.07, 95% CI [0.14, 0.42], p < .001" |
-| Efeito geral sem outliers | g cai de 0,27 para 0,21 | Results, Sensitivity analysis | "In the multilevel model, the pooled effect decreased from 0.27 to 0.21" |
-| Sofrimento emocional (depressão, ansiedade, estresse) | g = 0,25 (13 estudos) | Results, Cluster-level analysis | "The emotional distress cluster (k = 13) showed a pooled effect of g = 0.25" |
-| Bem-estar e satisfação com a vida | g = 0,10, não significativo | Results, Cluster-level analysis | "produced a non-significant pooled effect: g = 0.10, 95% CI [–0.02, 0.22], p = .12" |
-| Avaliação da aparência (autoestima, satisfação com o corpo) | g = 0,28 (11 estudos) | Results, Cluster-level analysis | "The appearance evaluation cluster (k = 11) yielded a pooled effect of Hedges' g = 0.28" |
-| Corpo e transtornos alimentares | g = 0,32 (10 estudos) | Results, Cluster-level analysis | "The body-related and eating disorder cluster (k = 10) showed a pooled effect of g = 0.32" |
-| Uso compulsivo e desregulação | g = 0,44, o maior (6 estudos) | Results, Cluster-level analysis | "The behavioral dysregulations cluster (k = 6) showed the strongest pooled effect: g = 0.44" |
-| Sensibilidade à rejeição e medo de avaliação | g = 0,28 (5 estudos) | Results, Cluster-level analysis | "The interpersonal sensitivity cluster (k = 5) had a pooled effect of g = 0.28" |
-| Heterogeneidade do sofrimento emocional | I² = 85,5% | Results, Cluster-level analysis | "Heterogeneity was substantial (I² = 85.5%, τ² = 0.033)" |
+| Tipo dos estudos incluídos | Quase todos transversais, que medem uma vez só | Results, Study characteristics | "Study designs were predominantly cross-sectional, with a smaller subset using longitudinal, experimental, or crossover methods." |
+| Usuários de apps contra não usuários: diferença média somando todos os desfechos (87 estimativas) | g = 0,28, pior nos usuários | Results, Multi-level analysis | "The pooled effect was g = 0.28, SE = 0.07, 95% CI [0.14, 0.42], p < .001" |
+| Mesma comparação, sem os resultados muito fora do padrão e os estudos que mais pesavam | g cai de 0,27 para 0,21 | Results, Sensitivity analysis | "In the multilevel model, the pooled effect decreased from 0.27 to 0.21" |
+| Mesma comparação: sofrimento emocional (depressão, ansiedade, estresse) | g = 0,25 (13 estudos) | Results, Cluster-level analysis | "The emotional distress cluster (k = 13) showed a pooled effect of g = 0.25" |
+| Mesma comparação: bem-estar e satisfação com a vida | g = 0,10, não significativo | Results, Cluster-level analysis | "produced a non-significant pooled effect: g = 0.10, 95% CI [–0.02, 0.22], p = .12" |
+| Mesma comparação: avaliação da aparência (autoestima, satisfação com o corpo) | g = 0,28 (11 estudos) | Results, Cluster-level analysis | "The appearance evaluation cluster (k = 11) yielded a pooled effect of Hedges' g = 0.28" |
+| Mesma comparação: corpo e transtornos alimentares | g = 0,32 (10 estudos) | Results, Cluster-level analysis | "The body-related and eating disorder cluster (k = 10) showed a pooled effect of g = 0.32" |
+| Mesma comparação: uso compulsivo e perda de controle do comportamento | g = 0,44, o maior (6 estudos) | Results, Cluster-level analysis | "The behavioral dysregulations cluster (k = 6) showed the strongest pooled effect: g = 0.44" |
+| Mesma comparação: sensibilidade à rejeição e medo de avaliação | g = 0,28 (5 estudos) | Results, Cluster-level analysis | "The interpersonal sensitivity cluster (k = 5) had a pooled effect of g = 0.28" |
+| Quanto os resultados sobre sofrimento emocional variam de um estudo para outro, além do acaso (I²) | I² = 85,5% | Results, Cluster-level analysis | "Heterogeneity was substantial (I² = 85.5%, τ² = 0.033)" |
 | Quem é mais vulnerável na aparência e no corpo | Mulheres em geral e homens de minoria sexual (gays e bissexuais) | Results, Appearance evaluation (Cluster III) | "dating app users, particularly women and sexual minority men, exhibited more negative appearance-related evaluations than non-users" |
 | Idade e proporção de mulheres nos estudos (testadas só nos grupos com 10 estudos ou mais e no modelo multinível) | Não mudaram o tamanho do efeito | Results, Moderator analysis | "No other moderator effects reached significance, including in the multilevel model" |
-| Estudos mais recentes | Efeito maior no sofrimento emocional (β = 0,25) | Results, Moderator analysis | "publication year was a positive moderator in the emotional distress cluster (β = 0.25" |
-| Viés de publicação no uso compulsivo | Assimetria; g ajustado de 0,44 para 0,48 | Results, Publication bias | "slightly higher adjusted effect size (from g = 0.44 to g = 0.48)" |
+| Quanto mais recente o estudo, maior a diferença entre usuários e não usuários? | Sim, no sofrimento emocional (β = 0,25) | Results, Moderator analysis | "publication year was a positive moderator in the emotional distress cluster (β = 0.25" |
+| Sinal de estudos que ficaram sem publicar (viés de publicação), em uso compulsivo | Há sinal; a correção sobe o g de 0,44 para 0,48 | Results, Publication bias | "slightly higher adjusted effect size (from g = 0.44 to g = 0.48)" |
 
 O g de Hedges é a diferença entre usuários e não usuários em desvios-padrão: 0,2 é pequeno, 0,5 é médio. Um g de 0,28 quer dizer que o usuário médio está um pouco pior que o não usuário médio, com muita sobreposição entre os dois grupos.
 

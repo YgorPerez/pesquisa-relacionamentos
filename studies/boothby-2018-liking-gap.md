@@ -27,16 +27,16 @@ Desconhecidos conversaram (de 5 minutos a 45 minutos) e depois cada um disse qua
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Estudo 1a: quanto gostou do outro contra quanto acha que o outro gostou (escala de 1 a 7) | 5,82 contra 5,17 | Estudo 1a, Results (p. 1744) | "liking their conversation partner (actual: M = 5.82, 95% CI = [5.49, 6.14]) significantly more than they perceived their conversation partner to like them (perceived: M = 5.17, 95% CI = [4.85, 5.49])" |
-| Quem é mais tímido erra mais? | sim | Estudo 1a, Personality moderators (p. 1744) | "The shyer participants were, the greater their liking gap was." |
-| Estudo 1b: o sinal de gostar estava visível para observadores | sim; quem conversou não o usou | Estudo 1b, Results (p. 1746) | "participants did signal that they liked one another, but participants neglected this information when estimating how much their conversation partners liked them." |
-| Estudo 2 (conversa livre): diferença entre gostar e achar que gostaram | b = −0,57 | Estudo 2, Results (p. 1747) | "rating type was a significant predictor of liking, b = −0.57, SE = 0.07" |
+| A distância entre gostar e achar que gostaram é maior em quem é mais tímido? | sim | Estudo 1a, Personality moderators (p. 1744) | "The shyer participants were, the greater their liking gap was." |
+| Estudo 1b: observadores de fora viam os sinais de que um gostava do outro? | sim; quem conversou não os usou | Estudo 1b, Results (p. 1746) | "participants did signal that they liked one another, but participants neglected this information when estimating how much their conversation partners liked them." |
+| Estudo 2 (conversa livre): quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro | menos; b = −0,57 | Estudo 2, Results (p. 1747) | "rating type was a significant predictor of liking, b = −0.57, SE = 0.07" |
 | Estudo 3: duração das conversas | de 2 a 45 minutos | Estudo 3, Results (p. 1748) | "Overall, participants' conversations lasted anywhere from 2 min to 45 min" |
-| Estudo 3: diferença no gostar | b = −0,38 | Estudo 3, Results (p. 1748) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.38" |
-| Estudo 3: diferença em quanto curtiu a conversa | b = −0,52 | Estudo 3, Results (p. 1748) | "rating type was a significant predictor of enjoyment, b = −0.52" |
-| Estudo 3: o erro some em conversas longas? | não | Estudo 3, Results (p. 1748) | "the liking gap persisted no matter the length of the conversation." |
+| Estudo 3: quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro | menos; b = −0,38 | Estudo 3, Results (p. 1748) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.38" |
+| Estudo 3: quanto acha que o outro curtiu a conversa, comparado a quanto a pessoa curtiu | menos; b = −0,52 | Estudo 3, Results (p. 1748) | "rating type was a significant predictor of enjoyment, b = −0.52" |
+| Estudo 3: a distância no gostar some em conversas longas? | não | Estudo 3, Results (p. 1748) | "the liking gap persisted no matter the length of the conversation." |
 | Estudo 4 (oficinas no Reino Unido): quão interessante achou o outro contra quão interessante acha que pareceu (escala de 1 a 5) | 4,30 contra 3,61 | Estudo 4, Results (p. 1750) | "(actual: M = 4.30, 95% CI = [4.15, 4.44]) than they thought their conversation partner had found them (perceived: M = 3.61" |
-| Estudo 5 (colegas de alojamento): diferença no ano todo | b = −0,36 | Estudo 5, Results (p. 1752) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.36" |
-| Estudo 5: o erro na última medida (maio) | sumiu | Estudo 5, Results (p. 1752) | "Rating type was not a significant predictor of liking at the final time point, Time 5 (p = .87)." |
+| Estudo 5 (colegas de alojamento): quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro, no ano todo | menos; b = −0,36 | Estudo 5, Results (p. 1752) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.36" |
+| Estudo 5: essa distância na última medida (maio) | sumiu | Estudo 5, Results (p. 1752) | "Rating type was not a significant predictor of liking at the final time point, Time 5 (p = .87)." |
 
 ## Limitações
 
