@@ -464,7 +464,7 @@ Um estudo maior refez o teste em 43 países, com 10.358 pessoas [@eastwick-2024-
 
 A lista pessoal não é inútil, só soma pouco. Ela acrescentou um efeito de 0,09 a 0,13 além dos traços que todo mundo quer, e pesou mais nos traços que o estudo chama de desejabilidade média, que nem todo mundo põe no alto da lista, como religiosidade (β = 0,13) e extroversão (β = 0,07) [@eastwick-2024-preferencias-43-paises]. Nos traços que quase todo mundo deseja, como calor humano e confiabilidade, o encaixe traço a traço não chegou a ser diferente de zero.
 
-A lista também erra por desconhecer o próprio dono. No ranking do que as pessoas disseram querer, "bom de cama" ficou em 12º entre 35 atributos; no que de fato pesou, ficou em 1º [@eastwick-2024-preferencias-43-paises]. Atraente, corpo bonito, sexy e cheiroso também subiram, e confiante, bom ouvinte, paciente e calmo caíram. {{you:homens-subestimam-aparencia}} Os homens põem a aparência umas 6 posições abaixo de onde ela pesa. {{you:mulheres-subestimam-aparencia}} As mulheres, 13 posições abaixo [@eastwick-2024-preferencias-43-paises].
+A lista também erra por desconhecer o próprio dono. No ranking do que as pessoas disseram querer, "bom de cama" ficou em 12º entre 35 atributos; no que de fato pesou, ficou em 1º [@eastwick-2024-preferencias-43-paises]. Atraente, corpo bonito, sexy e cheiroso também subiram, e confiante, bom ouvinte, paciente e calmo caíram. {{you:homens-subestimam-aparencia}} Os homens subestimam o peso da aparência no que dizem querer. {{you:mulheres-subestimam-aparencia}} Entre as mulheres, essa distância é ainda maior [@eastwick-2024-preferencias-43-paises].
 
 {{visual:o-que-se-diz-e-o-que-pesa}}
 
@@ -480,7 +480,7 @@ Isso não quer dizer que nenhuma preferência importe. O estudo testou as respos
 
 ## A aparência pesa no começo, e a renda quase nada
 
-Para aparência e renda, há uma [[meta-análise]]. Ela juntou 97 amostras, com 29.414 pessoas, sobre aparência e 56 amostras sobre renda, sempre com gente que se conheceu pessoalmente, de um primeiro encontro a um casamento [@eastwick-2014-meta-analise-preferencias]. A aparência teve uma associação de moderada a forte com o interesse, r ≈ 0,40, e a renda, uma associação pequena, r ≈ 0,10. Homens e mulheres ficaram praticamente iguais nas duas.
+Para aparência e renda, há uma [[meta-análise]]. Ela juntou 97 amostras, com 29.414 pessoas, sobre aparência e 56 amostras sobre renda, sempre com gente que se conheceu pessoalmente, de um primeiro encontro a um casamento [@eastwick-2014-meta-analise-preferencias]. A aparência teve uma associação de moderada a forte com o interesse, e a renda, uma associação pequena [@eastwick-2014-meta-analise-preferencias]. Homens e mulheres ficaram praticamente iguais nas duas.
 
 {{visual:aparencia-e-renda}}
 
@@ -508,13 +508,13 @@ A personalidade deu no mesmo. Na Alemanha, em 2015, 397 solteiros de 18 a 28 ano
 
 A exceção já apareceu no primeiro Capítulo: em religiosidade, bater com o que a pessoa quer pesou mais que a média [@eastwick-2024-preferencias-43-paises].
 
-Para ficar casado, a semelhança em escolaridade passou a contar. Nos EUA, duas pesquisas nacionais acompanharam casamentos formados de 1950 a 2004 [@schwartz-2014-homogamia-educacional]. Nos casamentos de 2000 a 2004, os casais com a mesma escolaridade tiveram risco de separação 0,78 vez o dos casais em que o marido estudou mais, ou seja, 22% menor. Nos anos 1950, essa diferença não existia. O que mudou de verdade foi a esposa estudar mais: nos casamentos de 1950 a 1954, esses casais se separavam 1,51 vez mais; nos de 2000 a 2004, a desvantagem sumiu. É uma virada grande, porque, entre os casais de escolaridade diferente que casaram de 2005 a 2009, em mais de 60% a esposa estudou mais.
+Para ficar casado, a semelhança em escolaridade passou a contar. Nos EUA, duas pesquisas nacionais acompanharam casamentos formados de 1950 a 2004 [@schwartz-2014-homogamia-educacional]. Nos casamentos de 2000 a 2004, os casais com a mesma escolaridade se separaram menos que aqueles em que o marido estudou mais [@schwartz-2014-homogamia-educacional]. Nos anos 1950, essa diferença não existia. O que mudou de verdade foi a esposa estudar mais: nos casamentos de 1950 a 1954, esses casais se separavam mais; nos de 2000 a 2004, a desvantagem sumiu [@schwartz-2014-homogamia-educacional]. É uma virada grande, porque, entre os casais de escolaridade diferente que casaram de 2005 a 2009, em mais de 60% a esposa estudou mais.
 
 {{visual:escolaridade-e-separacao}}
 
 Os autores leem isso como sinal de casamentos mais iguais, mas avisam que a mudança em quem casa com quem pode explicar parte da tendência [@schwartz-2014-homogamia-educacional]. O estudo não separa uma coisa da outra.
 
-Religião em comum andou junto com casamentos mais estáveis. Num estudo com 3.060 primeiros casamentos americanos feitos de 1960 em diante, a chance de o casamento de um casal de referência ter acabado até o quinto ano ia de 0,13 a 0,27 quando os dois tinham a mesma religião, e de 0,24 a 0,42 quando tinham religiões diferentes, sem contar quem não tinha religião [@lehrer-1993-religiao-estabilidade]. Um católico com um protestante do grupo que o estudo chama de "ecumênico" chegava a 0,38; dois católicos, a 0,20. Dos fatores que o estudo controlou, só a idade ao casar mexia tanto na chance.
+Religião em comum andou junto com casamentos mais estáveis. Num estudo com 3.060 primeiros casamentos americanos feitos de 1960 em diante, a chance de o casamento de um casal de referência ter acabado até o quinto ano foi menor quando os dois tinham a mesma religião, sem contar quem não tinha religião [@lehrer-1993-religiao-estabilidade]. Dos fatores que o estudo controlou, só a idade ao casar mexia tanto na chance.
 
 {{visual:religiao-e-fim-do-casamento}}
 
@@ -530,7 +530,7 @@ Sobre diferença de idade, só achamos um estudo, e fraco. Num questionário onl
 
 ## O que mais prevê uma boa relação não está na lista
 
-Sobra a pergunta de fundo: o que prevê uma boa relação. O maior estudo que lemos sobre isso juntou 43 pesquisas que acompanharam 11.196 casais, de 29 laboratórios, e testou 2.413 medidas para ver quais previam a [[satisfação]] com a relação [@joel-2020-machine-learning-43-datasets]. A forma como a própria pessoa via a relação explicou 45% das diferenças de satisfação no começo dos estudos. Os traços dela mesma explicaram 19%. Os traços do parceiro, quem ele é, explicaram 5%.
+Sobra a pergunta de fundo: o que prevê uma boa relação. O maior estudo que lemos sobre isso juntou 43 pesquisas que acompanharam 11.196 casais, de 29 laboratórios, e testou 2.413 medidas para ver quais previam a [[satisfação]] com a relação [@joel-2020-machine-learning-43-datasets]. A forma como a própria pessoa via a relação explicou muito mais das diferenças de satisfação no começo dos estudos do que os traços dela ou do parceiro [@joel-2020-machine-learning-43-datasets].
 
 {{visual:o-que-explica-a-satisfacao}}
 
@@ -554,13 +554,13 @@ Das quatro coisas que a Dica manda olhar, as brigas têm estudo próprio. A Perg
 
 Se a lista prevê pouco, vale saber quanto ela custa. Nenhum estudo que lemos diz quantos Requisitos é demais, nem testou se ter menos leva a uma relação melhor ou pior. O que dá para medir é quantas pessoas sobram depois de cada filtro.
 
-{{brazil}} {{you:homens-sem-companheiro}} Em 2022, 3.939.138 homens de 25 a 29 anos não moravam com companheiro(a), 51,9% dos homens dessa idade [@ibge-2022-censo-amostra]. {{you:mulheres-sem-companheiro}} Entre as mulheres, eram 3.309.733, 42,4%. Num estado só, o grupo já encolhe: no estado de São Paulo, 747.507 mulheres dessa idade não moravam com companheiro(a). Cada Requisito a mais, como escolaridade, renda ou altura, corta de novo.
+{{brazil}} {{you:homens-sem-companheiro}} Em 2022, pouco mais da metade dos homens de 25 a 29 anos não morava com companheiro(a) [@ibge-2022-censo-amostra]. {{you:mulheres-sem-companheiro}} Entre as mulheres, a fatia era menor [@ibge-2022-censo-amostra]. Num estado só, como São Paulo, o grupo já encolhe bastante [@ibge-2022-censo-amostra]. Cada Requisito a mais, como escolaridade, renda ou altura, corta de novo.
 
 {{visual:quem-nao-mora-com-alguem}}
 
 {{brazil}} O número é um teto. O Censo só registra a união de quem mora com o cônjuge, então quem namora, ou tem companheiro(a) em outra casa, entra como "não vivia em união" [@ibge-2022-censo-amostra] [@ibge-2022-censo-unioes]. E não ter casado não quer dizer estar livre: entre os brasileiros de 25 a 29 anos, 31,6% dos homens e 34,3% das mulheres moravam com alguém em união sem casamento [@ibge-2022-censo-unioes].
 
-{{brazil}} A orientação sexual muda muito a conta, e depende da idade. O Censo não pergunta orientação nem identidade de gênero e registra só o sexo atribuído ao nascer [@ibge-2022-censo-amostra]. Pela Pesquisa Nacional de Saúde de 2019, 4,8% das pessoas de 18 a 29 anos se declararam homossexuais ou bissexuais, contra 0,2% das que têm 60 anos ou mais [@ibge-2019-pns]. Entre todos os adultos, 1,2% se declararam homossexuais e 0,7%, bissexuais; 1,1% não souberam e 2,3% não quiseram responder. A pergunta é nova e provavelmente respondida a menos.
+{{brazil}} A orientação sexual muda muito a conta, e depende da idade. O Censo não pergunta orientação nem identidade de gênero e registra só o sexo atribuído ao nascer [@ibge-2022-censo-amostra]. Pela Pesquisa Nacional de Saúde de 2019, a parcela que se declarou homossexual ou bissexual foi maior entre os adultos mais jovens [@ibge-2019-pns]. Entre todos os adultos, 1,2% se declararam homossexuais e 0,7%, bissexuais; 1,1% não souberam e 2,3% não quiseram responder. A pergunta é nova e provavelmente respondida a menos.
 
 {{visual:homo-ou-bi-por-idade}}
 

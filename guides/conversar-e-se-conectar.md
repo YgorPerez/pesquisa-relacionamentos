@@ -231,7 +231,7 @@ Uma conversa com alguém que você acabou de conhecer tem três momentos em que 
 
 ## Puxar conversa costuma ser melhor do que parece
 
-A maioria das pessoas prefere não falar com um desconhecido. Num levantamento online nos EUA, a maioria disse que evitaria a conversa em qualquer lugar perguntado: 93% numa sala de espera, 76% no trem, 68% no avião e 51% no táxi [@epley-2014-conversar-com-estranhos].
+A maioria das pessoas prefere não falar com um desconhecido. Num levantamento online nos EUA, evitar a conversa foi a preferência em todos os lugares perguntados, sobretudo na sala de espera [@epley-2014-conversar-com-estranhos].
 
 {{visual:evitar-desconhecidos}}
 
@@ -243,7 +243,7 @@ Eram conversas de trajeto, de 10 a 20 minutos em média, sem nenhum clima de paq
 
 ## Pergunte, e pergunte sobre o que a pessoa disse
 
-Depois de puxar a conversa, vem a dúvida do que dizer. O melhor teste que achamos sobre isso foi feito em chats de texto de 15 minutos entre desconhecidos, nos EUA, que deviam só "se conhecer". Os pesquisadores sortearam um dos dois para fazer pelo menos nove perguntas, ou no máximo quatro. O parceiro de quem perguntou muito gostou mais dele, 5,79 contra 5,31 numa escala de 1 a 7 [@huang-2017-perguntas-de-continuidade]. Num segundo experimento, com as duas pessoas da dupla sorteadas, o resultado se repetiu, 6,02 contra 5,79.
+Depois de puxar a conversa, vem a dúvida do que dizer. O melhor teste que achamos sobre isso foi feito em chats de texto de 15 minutos entre desconhecidos, nos EUA, que deviam só "se conhecer". Os pesquisadores sortearam um dos dois para fazer pelo menos nove perguntas, ou no máximo quatro. O parceiro de quem perguntou muito gostou mais dele [@huang-2017-perguntas-de-continuidade]. Num segundo experimento, com as duas pessoas da dupla sorteadas, o resultado se repetiu [@huang-2017-perguntas-de-continuidade].
 
 {{visual:perguntar-mais}}
 
@@ -265,7 +265,7 @@ Os autores do estudo das perguntas supõem que haja um limite, porque perguntar 
 
 O estudo ficou famoso como "as 36 perguntas". Em aulas de psicologia nos EUA, duplas de alunos que não se conheciam passaram 45 minutos se revezando em perguntas e tarefas que ficavam mais pessoais a cada 15 minutos. Outras duplas ficaram em perguntas de conversa trivial. As duplas das perguntas que se aprofundavam se sentiram bem mais próximas, 4,06 contra 3,25 numa escala de proximidade [@aron-1997-36-perguntas]. A proximidade que elas contaram ficou acima da que 30% de outros alunos parecidos davam à relação mais próxima da vida deles.
 
-É um efeito grande, o maior entre os experimentos com sorteio deste Guia. Ficou em 0,88 desvio-padrão, contra 0,35 no de perguntar mais [@aron-1997-36-perguntas] [@huang-2017-perguntas-de-continuidade].
+É um efeito grande, o maior entre os experimentos com sorteio deste Guia, acima do efeito de perguntar mais [@aron-1997-36-perguntas] [@huang-2017-perguntas-de-continuidade].
 
 {{visual:tamanho-de-cada-efeito}}
 
@@ -287,7 +287,7 @@ Então as perguntas servem, desde que o objetivo seja aproximar, e não fazer al
 
 ## Depois, a conversa parece pior do que foi
 
-A conversa acabou, e começa o balanço. Em cinco estudos, desconhecidos conversaram e depois cada um disse quanto gostou do outro e quanto acha que o outro gostou dele. Dois dos estudos juntaram pessoas do mesmo sexo e outro, duplas mistas, sem interesse romântico declarado. Como as duas notas falam das mesmas conversas, na média deveriam ser iguais. Não foram. Num dos estudos, as pessoas gostaram do outro 5,82, numa escala de 1 a 7, e acharam que o outro tinha gostado delas 5,17 [@boothby-2018-liking-gap].
+A conversa acabou, e começa o balanço. Em cinco estudos, desconhecidos conversaram e depois cada um disse quanto gostou do outro e quanto acha que o outro gostou dele. Dois dos estudos juntaram pessoas do mesmo sexo e outro, duplas mistas, sem interesse romântico declarado. Como as duas notas falam das mesmas conversas, na média deveriam ser iguais. Não foram. As pessoas subestimaram o quanto o outro tinha gostado delas [@boothby-2018-liking-gap].
 
 {{visual:gostou-e-achou-que-gostaram}}
 
