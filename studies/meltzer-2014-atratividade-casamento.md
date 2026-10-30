@@ -39,7 +39,7 @@ Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no
 | De um estudo para outro | Esses resultados não diferiram entre os quatro estudos (p > 0,25) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "None of these effects differed across the four studies (all p s > .25)." |
 | Maridos contra esposas, no começo | A aparência do cônjuge andou mais junto com a satisfação inicial nos maridos que nas esposas (χ²(1) = 3,86; p = 0,046) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "wives' attractiveness and husbands' initial marital satisfaction was stronger than the nonsignificant association between husbands' attractiveness and wives' initial marital satisfaction, χ 2 (1) = 3.86, p = .046" |
 
-"r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. "χ²" e "p" testam se a diferença pode ser acaso: quanto menor o p, menos provável. O coeficiente é o que a Tabela 3 do artigo chama de β. Pelo tamanho do erro-padrão, não é padronizado: não o compare com o β de outras Fichas. O tamanho do efeito é o r.
+"r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. Na Tabela 3, ele vem sem sinal: dá só o tamanho, e a direção vem do sinal do coeficiente. "χ²" e "p" testam se a diferença pode ser acaso: quanto menor o p, menos provável. O coeficiente é o que a Tabela 3 do artigo chama de β. Pelo tamanho do erro-padrão, não é padronizado: não o compare com o β de outras Fichas. O tamanho do efeito é o r.
 
 ## Definições
 

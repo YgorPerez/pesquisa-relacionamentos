@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Como a composição religiosa do casal (mesma religião, religiões diferentes, sem religião) se relaciona com o fim do primeiro casamento. As religiões foram agrupadas em sete categorias (protestantes "ecumênicos", protestantes "exclusivistas", católicos, judeus, mórmons, outras e sem religião). Um modelo de riscos proporcionais de Cox estima o risco de separação, divórcio ou viuvez, controlando idade da esposa ao casar, escolaridade dos dois, casamento anterior, família de origem, emprego da mãe, filho antes do casamento e coabitação com outra pessoa. Os autores traduzem os coeficientes na probabilidade de o casamento ter acabado até o quinto ano, para um casal de referência da coorte dos anos 1980.
+Como a composição religiosa do casal (mesma religião, religiões diferentes, sem religião) se relaciona com o fim do primeiro casamento. As religiões foram agrupadas em sete categorias (protestantes "ecumênicos", protestantes "exclusivistas", católicos, judeus, mórmons, outras e sem religião). Um modelo de riscos proporcionais de Cox estima o risco de separação ou divórcio (quem ficou viúvo sai da conta na data da viuvez, sem contar como fim), controlando idade da esposa ao casar, escolaridade dos dois, casamento anterior, família de origem, emprego da mãe, filho antes do casamento e coabitação com outra pessoa. Os autores traduzem os coeficientes na probabilidade de o casamento ter acabado até o quinto ano, para um casal de referência da coorte dos anos 1980.
 
 ## Achados
 

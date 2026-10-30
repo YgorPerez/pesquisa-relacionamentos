@@ -34,7 +34,7 @@ Os localizadores usam a paginação do manuscrito, que está no cabeçalho de ca
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Quantos entraram na conta | 763 pessoas responderam às duas rodadas | Method, Analysis sample, p. 12 | "This left a total sample of N = 763 participants that completed both T1 and T2" |
+| Quantos entraram na conta | 763 pessoas que responderam às duas rodadas cumpriam os critérios e entraram na conta | Method, Analysis sample, p. 12 | "This left a total sample of N = 763 participants that completed both T1 and T2" |
 | Quantos voltaram | Das 1543 pessoas da primeira rodada, 64% (995) também responderam à segunda, cinco meses depois | Method, Analysis sample, p. 12 | "Out of the n = 1543 participants who completed the first assessment, 64 % (n = 995) also finished the second assessment (T2) five months later." |
 | Mulheres e homens | 519 mulheres (68%) e 244 homens (32%) | Method, Analysis sample, p. 12 | "Of these participants, 519 were female (68%) and 244 male (32%)." |
 | Universitários | 73% (555) disseram que eram universitários | Method, Analysis sample, p. 12 | "555 participants (73%) stated their current occupation as being university students." |
