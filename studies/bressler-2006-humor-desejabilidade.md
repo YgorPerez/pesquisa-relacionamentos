@@ -28,12 +28,14 @@ Cada participante via duas fotos de pessoas do mesmo sexo e de atratividade pare
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Participantes | 105 mulheres e 105 homens | Seção 2.1 | "Two hundred ten McMaster University undergraduate Psychology students (105 women and 105 men" |
-| Média de escolhas da pessoa com frases engraçadas como a mais engraçada, nas quatro séries (acaso: duas) | 2,98, acima do acaso | Seção 3.1 | "mean number of times chosenFS.E.=2.98F0.06" |
+| Vezes em que a pessoa com frases engraçadas foi escolhida como a mais engraçada, em média, nas quatro séries (por acaso, seriam duas) | 2,98, acima do acaso | Seção 3.1 | "mean number of times chosenFS.E.=2.98F0.06" |
 | Só mulheres avaliando homens escolheram o engraçado como parceiro mais desejável acima do acaso | t = 5,79 | Seção 3.2 | "Only women viewing men chose the humorous individual as the more desirable relationship partner more often than expected by chance [one-sample t test, t(60)=5.79" |
 | Homens avaliando mulheres: sem preferência pela engraçada | t = 0,36; p = 0,72 | Seção 3.2 | "men evaluating women: t(58)=0.36, p =.72" |
 | Engraçados foram vistos como mais sociáveis (divertidos, simpáticos, populares) | 2,48 escolhas, acima do acaso | Seção 3.3 | "Humorous individuals were chosen as socially adept (average of fun, friendly, and popular) more often than expected by chance [2.48F0.05" |
 | Engraçados foram escolhidos como inteligentes abaixo do acaso | 1,73 escolhas | Seção 3.3 | "less likely to be chosen as intelligent [1.73F0.07" |
-| As frases sem graça não eram piores nos outros traços | 4,10 contra 3,98, sem diferença | Seção 3.4 | "nonhumorous statements: 4.10F0.05; humorous statements: 3.98F0.09" |
+| Nota média das frases sem graça contra a das engraçadas, nos outros traços, para conferir que as sem graça não eram piores | 4,10 contra 3,98, sem diferença | Seção 3.4 | "nonhumorous statements: 4.10F0.05; humorous statements: 3.98F0.09" |
+
+t mede o quanto o resultado se afasta do acaso: quanto maior, mais longe.
 
 Os autores resumem: o humor pode aumentar a desejabilidade como parceiro, "but this effect is most likely to occur when men use humor and are evaluated by women" (Discussão). As mulheres escolheram o homem engraçado mesmo vendo-o, em média, como menos honesto e menos inteligente.
 

@@ -29,22 +29,22 @@ Os autores perguntaram a universitários cuja amizade colorida mais recente já 
 |---|---|---|---|
 | Amostra final | 308 universitários (119 homens e 189 mulheres) | p. 1445, Participants | "The final sample included 308 participants, 119 men and 189 women" |
 | Recrutados no total | 979 | p. 1445, Participants | "A total of 979 undergraduates at a large university in the south east of the United States" |
-| Continuaram amigos depois do fim | 81,5% | p. 1447, Discussion | "We found that the majority of friendships (81.5 %) continued after the FWB relationship ended." |
-| Deixaram de ser amigos | 18,5% | p. 1446, Results | "In this sample, 18.5 % of young adults reported" |
-| Amigos, mas menos próximos | 31,5% | p. 1446, Results | "31.5 % of young adults reported continuing the friendship" |
-| Tão próximos quanto antes | 35,4% | p. 1446, Results | "35.4 % of young adults reported being just as close with their most recent FWB partner" |
-| Mais próximos que antes | 14,6% | p. 1446, Results | "14.6 % of young adults reported that their relationship with their most recent FWB partner was even closer" |
-| Amizade igual ou melhor, por gênero | 53% dos homens e 48% das mulheres | p. 1447, Discussion | "Notably, 53 % of men and 48 % of women reported that their friendship was unaffected" |
+| Continuaram amigos depois que a amizade colorida acabou | 81,5% | p. 1447, Discussion | "We found that the majority of friendships (81.5 %) continued after the FWB relationship ended." |
+| Deixaram de ser amigos da pessoa da amizade colorida mais recente | 18,5% | p. 1446, Results | "In this sample, 18.5 % of young adults reported" |
+| Seguiram amigos, mas menos próximos do que antes da intimidade física | 31,5% | p. 1446, Results | "31.5 % of young adults reported continuing the friendship" |
+| Seguiram tão próximos quanto antes da intimidade física | 35,4% | p. 1446, Results | "35.4 % of young adults reported being just as close with their most recent FWB partner" |
+| Ficaram mais próximos do que antes da intimidade física | 14,6% | p. 1446, Results | "14.6 % of young adults reported that their relationship with their most recent FWB partner was even closer" |
+| Disseram que a amizade ficou igual ou melhor | 53% dos homens e 48% das mulheres | p. 1447, Discussion | "Notably, 53 % of men and 48 % of women reported that their friendship was unaffected" |
 | Deixaram de ser amigos, por gênero | 18% dos homens e 19% das mulheres | p. 1447, Discussion | "only 18 % of men and 19 % of women reported no longer being friends with their former FWB partner" |
-| Diferença entre homens e mulheres | Sem diferença significativa | p. 1446, Results | "men and women did not significantly differ in their friendship status" |
-| Sensação de ter sido enganado, quem deixou de ser amigo | Maior que nos outros grupos (d de 0,56 a 1,06) | p. 1446, Results | "perceiving more deception from their most recent FWB partner as compared to the other groups (ds ranged from 0.56 to 1.06)" |
-| Sensação de ter sido enganado, menos próximos | Maior que nos que ficaram mais próximos (d = 0,57) | p. 1446, Results | "also reported more deception from their FWB partner as compared to young adults who were still friends and even closer (d = 0.57)" |
-| Sensação de ter sido enganado (escala de um a cinco), não são mais amigos e menos próximos | Médias de 2,51 e 1,98 | p. 1447, Tabela 2 | "Deception 2.51 (1.12) 1.98 (0.84)" |
-| Sensação de ter sido enganado, tão próximos e mais próximos | Médias de 1,81 e 1,55 | p. 1447, Tabela 2 | "1.81 (0.87) 1.55 (0.54)" |
-| Relação mais sexo que amizade, quem deixou de ser amigo | Mais sexo que os grupos menos próximos e tão próximos (d de 0,50 a 0,96) | p. 1446, Results | "more physically intimate (than friends) as compared to the other groups (ds ranged from 0.50 to 0.96)" |
-| Amigos em comum, quem deixou de ser amigo | Menos amigos em comum que o grupo menos próximo (d = 0,50) | p. 1446, Results | "as compared to young adults in the not as close (d = 0.50)" |
-| Solidão, quem deixou de ser amigo | Mais solidão que os outros grupos (d de 0,45 a 0,59) | p. 1446–1447, Results | "other groups (ds ranged from 0.45 to 0.59)" |
-| Sintomas depressivos, quem deixou de ser amigo | Padrão parecido; contra os tão próximos, só marginal (p = 0,06) | p. 1447, Results | "marginally significant at p = .06 (ds ranged from 0.29 to 0.51)" |
+| Homens e mulheres diferem em como a amizade ficou? | Sem diferença significativa | p. 1446, Results | "men and women did not significantly differ in their friendship status" |
+| Quem deixou de ser amigo se sentiu mais enganado do que os outros grupos | d de 0,56 a 1,06 | p. 1446, Results | "perceiving more deception from their most recent FWB partner as compared to the other groups (ds ranged from 0.56 to 1.06)" |
+| Quem ficou menos próximo se sentiu mais enganado do que quem ficou mais próximo | d = 0,57 | p. 1446, Results | "also reported more deception from their FWB partner as compared to young adults who were still friends and even closer (d = 0.57)" |
+| Nota média de se sentir enganado, de um a cinco: quem deixou de ser amigo e quem ficou menos próximo | Médias de 2,51 e 1,98 | p. 1447, Tabela 2 | "Deception 2.51 (1.12) 1.98 (0.84)" |
+| A mesma nota: quem ficou tão próximo e quem ficou mais próximo | Médias de 1,81 e 1,55 | p. 1447, Tabela 2 | "1.81 (0.87) 1.55 (0.54)" |
+| Quem deixou de ser amigo descreveu a relação como mais física do que de amizade, comparado a quem ficou menos próximo ou tão próximo | d de 0,50 a 0,96 | p. 1446, Results | "more physically intimate (than friends) as compared to the other groups (ds ranged from 0.50 to 0.96)" |
+| Quem deixou de ser amigo tinha menos amigos em comum com a pessoa do que quem ficou menos próximo | d = 0,50 | p. 1446, Results | "as compared to young adults in the not as close (d = 0.50)" |
+| Quem deixou de ser amigo sentia mais solidão do que os outros grupos | d de 0,45 a 0,59 | p. 1446–1447, Results | "other groups (ds ranged from 0.45 to 0.59)" |
+| Sintomas de depressão de quem deixou de ser amigo, comparados aos dos outros grupos | Mesmo padrão da solidão; contra os tão próximos, a diferença só chegou perto de ser significativa (p = 0,06) | p. 1447, Results | "marginally significant at p = .06 (ds ranged from 0.29 to 0.51)" |
 | Amizade colorida que vira namoro | Cerca de 20%, número de estudos anteriores, não deste | p. 1447, Discussion | "approximately 20 % of young adults report that their FWB relationship transitioned into a committed romantic relationship" |
 
 "d" é a diferença entre os grupos em desvios-padrão; 0,5 é médio e 0,8 é grande. Os grupos têm 57 (não são mais amigos), 97 (menos próximos), 109 (tão próximos) e 45 (mais próximos) pessoas.

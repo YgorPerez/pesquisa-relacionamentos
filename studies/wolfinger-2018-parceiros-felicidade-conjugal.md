@@ -28,15 +28,15 @@ Wolfinger cruzou o número de parceiros sexuais na vida, perguntado no General S
 |---|---|---|---|
 | Casados que dizem ter casamento muito feliz | 64% (só cerca de 3% dizem não muito feliz) | Texto, antes da Tabela 1 | "Overall, 64% of respondents report very happy marriages (only about 3% say their marriages" |
 | Mulheres que só transaram com o cônjuge | 65% com casamento muito feliz, a maior proporção | Texto, Tabela 1 | "are, at 65%, most likely to report very happy marriages" |
-| Mulheres com 6 a 10 parceiros na vida | 52%, a menor proporção (modelo básico) | Texto, Tabela 1 | "The lowest odds of marital happiness, 52% in the baseline model" |
-| Mulheres com 11 ou mais parceiros | 57% | Texto, Tabela 1 | "11 or more lovers are a bit more likely to report happy marriages at 57 percent." |
+| Mulheres com 6 a 10 parceiros na vida: casamento muito feliz | 52%, a menor proporção (modelo básico) | Texto, Tabela 1 | "The lowest odds of marital happiness, 52% in the baseline model" |
+| Mulheres com 11 ou mais parceiros: casamento muito feliz | 57% | Texto, Tabela 1 | "11 or more lovers are a bit more likely to report happy marriages at 57 percent." |
 | Homens com um parceiro só vs. dois ou mais | 71% vs. 65% com casamento muito feliz | Texto, Tabela 2 | "71% of men with one partner are very happy in their relationship. This drops to 65% for men who report two or more sex partners." |
-| Efeito dos controles (casamento anterior, escolaridade, renda, religião) | Quase nenhum | Texto, Tabela 1 | "None of these variables has an appreciable effect on the relationship between sexual background and marital happiness." |
-| Homens com dois parceiros vs. mais de dois | Sem diferença significativa | Texto, Figura 1 | "statistically significant differences in marital quality between men who have two partners and more than two." |
+| Quanto casamento anterior, escolaridade, renda e religião mudam a ligação entre parceiros e felicidade | Quase nenhum | Texto, Tabela 1 | "None of these variables has an appreciable effect on the relationship between sexual background and marital happiness." |
+| Qualidade do casamento de homens com dois parceiros vs. mais de dois | Sem diferença significativa | Texto, Figura 1 | "statistically significant differences in marital quality between men who have two partners and more than two." |
 | Casados não muito felizes, 21 ou mais parceiros na vida | 5,3%, quase o dobro de quem teve menos | Texto, depois da Tabela 3 | "people with 21 or more partners lifetime are almost twice as likely to be unhappily married as are people with fewer partners: 5.3%" |
 | Casados não muito felizes, 20 parceiros ou menos | 2,8% | Texto, depois da Tabela 3 | "compared to 2.8% of those with 20 or fewer partners" |
 | Um parceiro só na vida vs. outros, homens e mulheres juntos, com todos os controles | 7% mais chance de casamento muito feliz | Texto, conclusão | "spouses reporting only one lifetime sexual partner are 7% more likely to be happy than are those with other partners in their past" |
-| Idade ao casar | Não muda o resultado | Texto, Tabela 3 | "Overall, Table 3 suggests that adding marriage age to the analysis makes essentially no difference" |
+| Quanto a idade ao casar muda a ligação entre parceiros e felicidade | Quase nada | Texto, Tabela 3 | "Overall, Table 3 suggests that adding marriage age to the analysis makes essentially no difference" |
 
 As tabelas do post estão em imagem e não entram na conferência automática. Lidas na imagem: entre as mulheres, de 64% (um parceiro) a 51% (6 a 10 parceiros) depois de todos os controles; entre os homens, de 72% (um parceiro) a 59% (5 parceiros, 11 a 20 ou 21 ou mais) com todos os controles, e todas as faixas acima de um parceiro diferem significativamente de um parceiro. O texto diz 65% para as mulheres com um parceiro no modelo básico; a imagem da Tabela 1 mostra 64% no modelo básico e 65% nos modelos com controles.
 
