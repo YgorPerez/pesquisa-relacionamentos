@@ -28,11 +28,11 @@ No painel Marital Instability Over the Life Course, quem se divorciou entre duas
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Painel de partida | 2.033 pessoas casadas | p. 610 | "The final sample consisted of 2,033 married persons (not couples)" |
-| Quem do painel se divorciou | 274 pessoas, de 1980 a 1997 | p. 610 | "Between 1980 and 1997, 274 individuals reported that their marriage ended in divorce" |
+| Pessoas casadas no começo do estudo | 2.033 pessoas casadas | p. 610 | "The final sample consisted of 2,033 married persons (not couples)" |
+| Pessoas do estudo que se divorciaram | 274 pessoas, de 1980 a 1997 | p. 610 | "Between 1980 and 1997, 274 individuals reported that their marriage ended in divorce" |
 | Amostra analisada | 208 divorciados com a entrevista completa depois do divórcio | p. 610 | "is based on the 208 individuals for whom we had complete interview data following divorce" |
-| Entrevistas que sobraram do painel original nas ondas seguintes | 78%, 66%, 59% e 53% | p. 610 | "resulting in subsequent interviews with 78%, 66%, 59%, and 53% of the original sample" |
-| Concordância entre os dois autores ao codificar 40% dos casos (83) | Kappa 0,90 | p. 611 | "random selection of 40% (n = 83) of the cases and obtained a Kappa (reliability) value of 0.90" |
+| Parte da amostra original que ainda respondeu em cada nova rodada de entrevistas | 78%, 66%, 59% e 53% | p. 610 | "resulting in subsequent interviews with 78%, 66%, 59%, and 53% of the original sample" |
+| Concordância entre os dois autores ao classificar os motivos em 40% dos casos (83) | Kappa 0,90 | p. 611 | "random selection of 40% (n = 83) of the cases and obtained a Kappa (reliability) value of 0.90" |
 | Perfil da amostra | 63% mulheres, 91% brancos, cerca de 13 anos de estudo | p. 613 | "the sample was 63% women, 91% White, and had about 13 years of education" |
 | Idade e duração do casamento no divórcio | Idade mediana 45 anos; duração mediana 16 anos | p. 613 | "The median age at divorce was 45, and the median duration of marriage prior to divorce was 16 years" |
 | Os quatro motivos mais citados, em % das pessoas | Infidelidade 21,6%; incompatibilidade 19,2%; álcool ou drogas 10,6%; distanciamento 9,6% | Tabela 3, coluna "% Cases" | "21.6 19.2 10.6 9.6" |
@@ -41,18 +41,18 @@ No painel Marital Instability Over the Life Course, quem se divorciou entre duas
 | Quem levou a culpa, em % das respostas | Ex-cônjuge 33%; a própria pessoa 5%; a relação 27%; fatores externos 9%; indeterminado 26% | p. 618 | "33% of responses referred to the partner as the cause of the divorce, 5% referred to the self, 27% referred to the relationship, 9% referred to external causes, and 26% were too ambiguous to classify" |
 | Culparam o ex-cônjuge, mulheres contra homens | 40% contra 21% | p. 619 | "refer to their former spouses as having caused the divorce (40% vs. 21%)" |
 | Culparam a si mesmos, mulheres contra homens | 1,5% contra 10% | p. 619 | "themselves as having caused the divorce (1.5% vs. 10%)" |
-| Diferença entre os sexos no lugar da culpa | χ² = 14,94, gl = 4, p < 0,01 | p. 619 | "The overall gender difference was significant (χ2 = 14.94, df = 4, p < .01)" |
+| Homens e mulheres diferem em quem culpam? | Sim: χ² = 14,94, gl = 4, p < 0,01 | p. 619 | "The overall gender difference was significant (χ2 = 14.94, df = 4, p < .01)" |
 | Quem citou infidelidade se ajustou pior ao divórcio e ficou mais apegado ao ex | r = −0,23 (ajuste geral) e r = 0,21 (apego), p < 0,01 | p. 618 | "Individuals who reported infidelity scored lower on the general adjustment to divorce scale (r = –0.23, p < .01) and higher on the attachment to former spouse scale (r = 0.21, p < .01)" |
-| Ajuste geral ao divórcio (escala de 1 a 3) pelo lugar da culpa | Ex-cônjuge 2,30; si mesmo 2,22; relação 2,47; fatores externos 2,10; indeterminado 2,48 | Tabela 5 | "2.30 2.22 2.47 2.10 2.48" |
+| Nota de ajuste ao divórcio, de 1 a 3, conforme quem a pessoa culpou (nota alta é melhor ajuste) | Ex-cônjuge 2,30; si mesmo 2,22; relação 2,47; fatores externos 2,10; indeterminado 2,48 | Tabela 5 | "2.30 2.22 2.47 2.10 2.48" |
 | Segundo homens e mulheres, quem mais quis o divórcio foi a esposa | 53% dos ex-maridos e 70% das ex-esposas | p. 620 | "the majority of ex-husbands (53%), along with the majority of ex-wives (70%), reported that the wife had wanted the divorce more" |
-| Ajuste geral de quem quis mais o divórcio contra os outros | 2,49 contra 2,11 (t = 4,34; p < 0,001) | p. 621 | "scored higher on general divorce adjustment (2.49 vs. 2.11, t = 4.34, p < .001)" |
-| Apego ao ex de quem quis mais o divórcio contra os outros (nota alta é menos apego) | 1,83 contra 2,12 (t = 3,20; p < 0,01) | p. 621 | "scored lower on attachment to the former spouse (1.83 vs. 2.12, t = 3.20, p < .01)" |
+| Nota de ajuste ao divórcio: quem quis o divórcio mais que o cônjuge, contra os demais | 2,49 contra 2,11 (t = 4,34; p < 0,001) | p. 621 | "scored higher on general divorce adjustment (2.49 vs. 2.11, t = 4.34, p < .001)" |
+| Nota de apego ao ex, de 1 a 3: quem quis o divórcio mais que o cônjuge, contra os demais (nota alta é mais apego) | 1,83 contra 2,12 (t = 3,20; p < 0,01) | p. 621 | "scored lower on attachment to the former spouse (1.83 vs. 2.12, t = 3.20, p < .01)" |
 
 Infidelidade foi o motivo mais citado, à frente de incompatibilidade, álcool ou drogas, distanciamento, problemas de personalidade, falta de comunicação e abuso físico ou psicológico; os outros motivos ficaram com menos de 5% das pessoas cada (Tabela 3). As mulheres citaram mais a infidelidade, a bebida ou as drogas e o abuso, quase sempre do ex-marido. Os homens citaram mais a falta de comunicação e disseram mais vezes que não sabiam o motivo; nenhum homem citou abuso e nenhuma mulher disse que não sabia.
 
 Pelas correlações da Tabela 4, mais escolaridade veio com mais incompatibilidade como motivo, e mais renda antes do divórcio, com mais problemas de personalidade e menos abuso. Os autores leem isso como diferença de classe: quem tem mais recursos fala da relação, quem tem menos fala de comportamento do outro. Quem casou mais jovem citou mais álcool ou drogas e distanciamento; o distanciamento também cresceu com a duração do casamento, e a incompatibilidade e a personalidade diminuíram com ela. Ao contrário de estudos anteriores, infidelidade não foi mais comum nos casamentos longos. Quem era mais religioso citou mais infidelidade e menos incompatibilidade. Os autores aceitam correlações com p < 0,10 por causa da amostra pequena, e numa regressão logística as ligações entre abuso e filhos e entre drogas e sexo do respondente deixam de ser significativas.
 
-Nos dois sexos, as pessoas culparam mais o ex-cônjuge do que a si mesmas, e as mulheres mais que os homens. A previsão da teoria da atribuição não se confirmou: quem culpou a relação teve o melhor ajuste e o menor apego ao ex, e quem culpou a si mesmo ou fatores externos se saiu pior (Tabela 5). Querer o divórcio mais que o cônjuge veio com ajuste melhor.
+Nos dois sexos, as pessoas culparam mais o ex-cônjuge do que a si mesmas, e as mulheres mais que os homens. A previsão da teoria da atribuição não se confirmou: quem culpou a relação teve o melhor ajuste e o menor apego ao ex, e quem culpou a si mesmo ou fatores externos se saiu pior (Tabela 5). Querer o divórcio mais que o cônjuge veio com ajuste melhor. A p. 614 diz que nota alta de apego é menos apego, mas o resto do artigo só fecha ao contrário: quem culpou a si mesmo tem a nota mais alta (2,28) e é descrito como o mais apegado; quem culpou a relação tem a mais baixa (1,76) e é descrito como o menos apegado; e a escala se correlaciona com o ajuste geral em −0,44. Por isso, aqui, nota alta é mais apego.
 
 ## Limitações
 

@@ -30,24 +30,24 @@ Se ter tido mais parceiros sexuais fora do casamento diminui a chance de casar. 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra do NSFG | 29.905 mulheres, com peso amostral | Seção 4.1 | "The sample size is 29,905, and the data are weighted to make them nationally representative." |
-| Amostra do NLSY97 | 8.975 pessoas: 4.598 homens e 4.377 mulheres | Seção 4.2 | "The overall sample size for these data is 8,975, including 4,598 men and 4,377 women." |
-| Casadas até os 40 (NSFG): 10 ou mais parceiros vs. um só | 67% vs. 95%, quase 30 pontos de diferença | Seção 5.1.1, Figura 1 | "67% vs. 95%, almost a 30-percentage point gap" |
+| Amostra do NSFG, pesquisa dos EUA | 29.905 mulheres, com pesos para representar o país | Seção 4.1 | "The sample size is 29,905, and the data are weighted to make them nationally representative." |
+| Amostra do NLSY97, que acompanhou adolescentes dos EUA ao longo dos anos | 8.975 pessoas: 4.598 homens e 4.377 mulheres | Seção 4.2 | "The overall sample size for these data is 8,975, including 4,598 men and 4,377 women." |
+| Casadas até os 40 (NSFG): 10 ou mais parceiros sexuais fora do casamento vs. um só | 67% vs. 95%, quase 30 pontos de diferença | Seção 5.1.1, Figura 1 | "67% vs. 95%, almost a 30-percentage point gap" |
 | Casadas até os 40 com 6 a 9 parceiros (NSFG) | 76% | Seção 5.1.1, Figura 1 | "About three-fourths (76%) of women with between six and nine male partners are married by 40." |
 | Casadas até os 40 entre as que nunca tinham feito sexo (NSFG) | 87% | Seção 5.1.1 | "Somewhat fewer (87%) women who had not yet had sex eventually got married." |
 | Casadas aos 25 (NSFG): um parceiro vs. seis ou mais | 69% vs. menos de 30% | Seção 5.1.1 | "At age 25, for instance, 69% of women reporting a single non-marital sex partner have entered marriage, while less than 30% of those with six or more partners have married." |
 | Casadas até os 40 com muitos parceiros (NSFG) | 68% (10 a 19), 62% (20 a 29), 57% (30 ou mais) | Seção 5.1.1, Figura 2 | "That percentage falls to 68% for women with 10 to 19 partners, 62% for 20 to 29 partners, and 57% for women with 30 or more" |
 | Idade ao casar (NSFG) | Quem teve mais de três parceiros casa só um par de anos mais tarde | Seção 5.1.2, Figura 3 | "Women who have had more than three non-marital sex partners tend to be just a couple of years older when they get married" |
-| Correlação dos erros no probit bivariado (NSFG) | ρ = 0,02 e −0,04, não significativos | Seção 5.1.4, Tabela 2 | "The rho parameter estimates are quite small (.02 in one model, -.04 in the other) and lack statistical significance." |
+| Teste de fatores não medidos: algo oculto explica ao mesmo tempo o número de parceiros e a idade ao casar? (NSFG) | Nada indica: ρ = 0,02 e −0,04, não significativos | Seção 5.1.4, Tabela 2 | "The rho parameter estimates are quite small (.02 in one model, -.04 in the other) and lack statistical significance." |
 | Parceiros na vida toda vs. parceiros do último ano (NLSY97) | O total da vida deixa de prever casamento quando entra o número do último ano | Seção 5.2.1, Tabela 3 | "Put simply, recent sexual behavior, not complete sexual biographies, is what matters for marriage rates." |
 | Chance de casar no ano, qualquer número diferente de um parceiro no último ano (NLSY97) | De 66% a 86% menor que com um parceiro só | Seção 5.2.1 | "Respondents who have anything aside from a single non-marital sex partner have between 66% and 86% lower odds of marriage." |
 | Homens sem parceiro no último ano (NLSY97) | −84% na chance de casar, vs. um parceiro | Tabela 4 | "0 -84%" |
-| Homens com dois parceiros no último ano (NLSY97) | −72% | Tabela 4 | "2 -72%" |
-| Homens com cinco ou mais parceiros no último ano (NLSY97) | −68% | Tabela 4 | "5+ -68%" |
-| Mulheres com dois parceiros no último ano (NLSY97) | −74% | Tabela 4 | "-74%" |
-| Homens vs. mulheres | Efeitos grandes e parecidos nos dois sexos | Seção 5.2.1 | "show that the effects are uniformly large, and similar for men and women." |
-| Controles (NLSY97) | Escolaridade, filho fora do casamento, coabitação e religião quase não mudam o efeito dos parceiros do ano | Seção 5.2.1, Tabela 3, Modelos 4 a 7 | "No measured variable can account for the relationship between annual non-marital sex partners and marriage." |
-| Parceiros medidos um ano antes (NLSY97) | Mesmo resultado | Nota 11 | "We repeated the analysis with sex variables lagged a year and the results were substantively identical." |
+| Homens com dois parceiros no último ano: chance de casar, comparada à de um parceiro (NLSY97) | −72% | Tabela 4 | "2 -72%" |
+| Homens com cinco ou mais parceiros no último ano: chance de casar, comparada à de um parceiro (NLSY97) | −68% | Tabela 4 | "5+ -68%" |
+| Mulheres com dois parceiros no último ano: chance de casar, comparada à de um parceiro (NLSY97) | −74% | Tabela 4 | "-74%" |
+| Queda na chance de casar, em homens e em mulheres | Efeitos grandes e parecidos nos dois sexos | Seção 5.2.1 | "show that the effects are uniformly large, and similar for men and women." |
+| Outras diferenças entre as pessoas (NLSY97) | Escolaridade, filho fora do casamento, coabitação e religião quase não mudam o efeito dos parceiros do ano | Seção 5.2.1, Tabela 3, Modelos 4 a 7 | "No measured variable can account for the relationship between annual non-marital sex partners and marriage." |
+| O mesmo teste, com os parceiros medidos um ano antes (NLSY97) | Mesmo resultado | Nota 11 | "We repeated the analysis with sex variables lagged a year and the results were substantively identical." |
 | Intenção declarada de casar (NLSY97, 2000 e 2001) | Prevê casamento, mas quase não muda a relação entre parceiros e casamento | Nota 20 | "Each had a positive and statistically significant effect on marriage chances, but virtually no impact on the relationship between premarital sex partners and marriage." |
 | Quantos passam anos com muitos parceiros (NLSY97) | 51% dos homens e 72% das mulheres nunca tiveram um ano com cinco ou mais parceiros | Tabela 5 | "0 51% 72%" |
 | Anos com cinco ou mais parceiros, homens (NLSY97) | Mais de 75% tiveram dois anos assim ou menos; menos de 3%, dez anos ou mais | Seção 5.2.2, Tabela 5 | "More than 75% of men report two or fewer years of 5+ partners; less than 3% report ten or more years of five-partner behavior." |

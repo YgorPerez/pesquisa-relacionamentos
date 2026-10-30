@@ -35,16 +35,18 @@ Dentro do aparelho de ressonância, cada participante alternou, em blocos de 30 
 | Idade | 19,8 anos em média (18 a 21) | Métodos, Participants | "The average age was 19.8 ! 1.0 (SD) yr (range, 18 –21 yr)" |
 | Duração do relacionamento antes do fim | 21 meses em média (4 a 48) | Métodos, Participants | "the average length of relationship before breaking up was 21 mo (range, 4 – 48 mo)" |
 | Tempo desde a rejeição | 63 dias em média | Métodos, Participants | "the average time since initial rejection was 63 days" |
-| Paixão na Passionate Love Scale | 8,0 numa escala de 1 a 9 | Métodos, Participants | "was 8.0 ! 0.6 (on a 1–9 scale)" |
+| Nota média de paixão (Passionate Love Scale) | 8,0 numa escala de 1 a 9 | Métodos, Participants | "was 8.0 ! 0.6 (on a 1–9 scale)" |
 | Tempo acordado pensando em quem rejeitou, segundo a entrevista | mais de 85% | Métodos, Participants | "they thought about their rejecter "85% of their waking hours" |
-| Duração do protocolo | 720 s (12 min), sequência repetida seis vezes | Métodos, Experimental design | "the total stimulus protocol was 720 s (12 min)" |
+| Duração da sessão de fotos e conta regressiva no aparelho | 720 s (12 min), sequência repetida seis vezes | Métodos, Experimental design | "the total stimulus protocol was 720 s (12 min)" |
 | Regiões escolhidas de antemão (área tegmental ventral, estriado ventral, córtex orbitofrontal e pré-frontal, cíngulo, ínsula) mais ativas com a foto de quem rejeitou | P < 0,05 com correção FDR | Resultados, Tabela 1 | "showed significant group effects (P ! 0.05, FDR correction)" |
-| Análise do cérebro inteiro com correção para comparações múltiplas | nenhuma ativação significativa | Métodos | "There were no significant activations when we analyzed the whole brain corrected for multiple comparisons." |
+| Análise do cérebro inteiro, com o ajuste para muitos testes ao mesmo tempo | nenhuma ativação significativa | Métodos | "There were no significant activations when we analyzed the whole brain corrected for multiple comparisons." |
 | Rejeitados contra felizes no amor (Aron et al. 2005): mais atividade no núcleo accumbens direito e no putâmen/pálido ventral | P < 0,01 sem correção | Resultados | "than did those who were happily-in-love (P $ 0.01)" |
-| Correlação da paixão (PLS) com a atividade do núcleo caudado e da área septo/fórnix | r = 0,61 e r = 0,46 | Resultados, Tabela 2 | "caudate nucleus (r % 0.61, P % 0.01) and septum/fornix area (r % 0.46" |
+| Quanto maior a nota de paixão, mais atividade no núcleo caudado e na área septo/fórnix | r = 0,61 e r = 0,46 | Resultados, Tabela 2 | "caudate nucleus (r % 0.61, P % 0.01) and septum/fornix area (r % 0.46" |
 | As mesmas correlações no estudo com pessoas felizes no amor | r = 0,60 e r = 0,54 | Resultados | "(caudate: r % 0.60, septum/fornix: r % 0.54)" |
-| Limiar das correlações | P < 0,01 sem correção para comparações múltiplas | Métodos | "we accepted P ! 0.01, uncorrected for multiple comparisons" |
-| Tempo diferente de conta regressiva antes de cada foto, um possível fator de confusão | 20 s contra 40 s | Métodos, Stimuli | "(20 vs. 40 s)" |
+| Critério para as correlações contarem como significativas | P < 0,01 sem correção para comparações múltiplas | Métodos | "we accepted P ! 0.01, uncorrected for multiple comparisons" |
+| Tempo diferente de conta regressiva antes de cada foto, o que pode ter distorcido o resultado | 20 s contra 40 s | Métodos, Stimuli | "(20 vs. 40 s)" |
+
+"Correção" (FDR ou para comparações múltiplas) é o ajuste para quando se fazem muitos testes ao mesmo tempo; sem ele, fica mais fácil achar um resultado por acaso.
 
 Na extração do PDF, alguns sinais saíram trocados: "!" ocupa o lugar de "<" e de "±", "$" o de "<", "%" o de "=" e o aspas antes de "85%" o de ">". Os Valores seguem o sinal que o contexto pede.
 

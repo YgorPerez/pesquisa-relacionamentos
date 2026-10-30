@@ -27,9 +27,9 @@ Reanalisou a amostra de Cacioppo 2013, separando encontros por rede social, site
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Média marginal ajustada de satisfação, rede social | 5,66; erro-padrão 0,05 | Results, p. 2 da versão do autor | "SNS (M = 5.66, SE = 0.05)" |
-| Média marginal ajustada de satisfação, site de namoro | 5,65; erro-padrão 0,12 | Results, p. 2 da versão do autor | "(M = 5.65, SE = 0.12)" |
-| Divórcio ou separação, rede social versus outros meios online | Sem diferença detectada no modelo ajustado | Results, p. 2 da versão do autor | "no more or less likely to be divorced or separated" |
+| Satisfação média no casamento de quem conheceu o cônjuge numa rede social, descontadas outras diferenças | 5,66; erro-padrão 0,05 | Results, p. 2 da versão do autor | "SNS (M = 5.66, SE = 0.05)" |
+| Satisfação média no casamento de quem conheceu o cônjuge num site de namoro, descontadas outras diferenças | 5,65; erro-padrão 0,12 | Results, p. 2 da versão do autor | "(M = 5.65, SE = 0.12)" |
+| Divórcio ou separação: quem conheceu o cônjuge numa rede social, comparado a quem conheceu por outros meios online | Sem diferença detectada no modelo ajustado | Results, p. 2 da versão do autor | "no more or less likely to be divorced or separated" |
 
 O autor não detectou diferença de satisfação entre rede social e site de namoro. Comunicação individual reúne e-mail, mensagem instantânea e mensagem em blog. Comunidade online reúne sala de bate-papo, grupo de discussão, mundo virtual, jogo multiplayer e comunidade. O teste de divórcio compara redes sociais com os demais encontros online em conjunto; não fornece uma estimativa isolada para rede social contra site de namoro.
 

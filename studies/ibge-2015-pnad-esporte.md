@@ -32,7 +32,7 @@ Suplemento da PNAD 2015 que perguntou a uma pessoa de 15 anos ou mais por domic�
 |---|---|---|---|---|
 | Pessoas entrevistadas no suplemento | 71 142, de 15 anos ou mais | p. 24 do PDF, Tamanho da amostra | "Para o tema suplementar Práticas de Esporte e Atividade Física, foram investigadas 71 142 pessoas de 15 anos ou mais de idade." | |
 | Quem respondia | A própria pessoa sorteada | p. 19 do PDF, Plano amostral | "Uma característica importante dessa investigação é a necessidade de entrevistar a própria pessoa selecionada para a pesquisa" | |
-| Esporte ou atividade física | Classificação da própria pessoa | p. 25 do PDF | "não foi estabelecida uma diferenciação entre esporte e atividade física, ficando a cargo da pessoa investigada a classificação da atividade por ela realizada" | |
+| Quem decidia se a prática era esporte ou atividade física | A própria pessoa | p. 25 do PDF | "não foi estabelecida uma diferenciação entre esporte e atividade física, ficando a cargo da pessoa investigada a classificação da atividade por ela realizada" | |
 | Praticantes de esporte ou atividade física, por sexo | 53,9% homens, 46,1% mulheres | p. 26 do PDF | "observou-se que 46,1% eram mulheres e 53,9%, homens" | |
 | Praticantes de esporte, por sexo | 63,2% homens, 36,8% mulheres | Tabela 5, linha Total | "Total 100,0 63,2 36,8" | |
 | Praticantes de atividade física, por sexo | 44,3% homens, 55,7% mulheres | Tabela 13, linha Total | "Total 100,0 44,3 55,7" | |
