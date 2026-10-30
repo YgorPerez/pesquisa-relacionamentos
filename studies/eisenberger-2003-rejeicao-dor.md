@@ -25,19 +25,20 @@ Os participantes jogavam, dentro do aparelho de ressonância, o CyberBall, um jo
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Os participantes se sentiram ignorados e excluídos na exclusão explícita | t = 5,33; P < 0,05 | p. 291 | "participants felt ignored and excluded during ESE (t ⫽ 5.33, P ⬍ 0.05)" |
-| Córtex cingulado anterior dorsal mais ativo na exclusão explícita que na inclusão | t = 3,36; r = 0,71; P < 0,005 | p. 291, Fig. 1A | "was more active during ESE than during inclusion (t ⫽ 3.36, r ⫽ 0.71, P ⬍ 0.005)" |
-| Quanto mais ativo o cingulado anterior, mais desconforto a pessoa relatou | r = 0,88 e r = 0,75, em dois pontos da região | p. 291, Fig. 2A | "r ⫽ 0.88, P ⬍ 0.005; x ⫽ – 4, y ⫽ 31, z ⫽ 41, r ⫽ 0.75" |
-| Ínsula anterior também mais ativa, mas sem relação com o desconforto | r = 0,78 | p. 291 | "4.07, r ⫽ 0.78, P ⬍ 0.005); however, it was not associated with self-reported distress" |
-| Duas regiões do córtex pré-frontal ventral direito mais ativas na exclusão explícita | r = 0,79 e r = 0,83 | p. 291, Fig. 1B | "t ⫽ 4.26, r ⫽ 0.79, P ⬍ 0.005; x ⫽ 37, y ⫽ 50, z ⫽ 1, t ⫽ 4.96, r ⫽ 0.83" |
-| Quanto mais ativo o pré-frontal ventral direito, menos desconforto a pessoa relatou | r = −0,68 | p. 291, Fig. 2B | "r ⫽ – 0.68, P ⬍ 0.005" |
-| Quanto mais ativo o pré-frontal ventral direito, menos ativo o cingulado anterior | r = −0,81 | p. 291, Fig. 2C | "relative to inclusion (r ⫽ – 0.81, P ⬍ 0.005)" |
-| A ligação entre o pré-frontal e o desconforto passa pela atividade do cingulado anterior | teste de Sobel, Z = 3,16 | p. 291 | "Sobel test, Z ⫽ 3.16, P ⬍ 0.005" |
-| Descontada a atividade do cingulado, a ligação do pré-frontal com o desconforto deixa de ser significativa | β = −0,17; P > 0,5 | p. 291 | "no longer significant (␤ ⫽ – 0.17, P ⬎ 0.5)" |
-| Só assistir, sem saber que era exclusão, também ativou o cingulado anterior | t = 4,34 | p. 291 | "t ⫽ 4.34, I ⫽ 0.78, P ⬍ 0.005" |
-| Duração da exclusão explícita | cerca de 45 passes sem receber a bola | p. 291 | "(⬃45 throws)" |
-| Critério para uma região contar como ativa no mapa do cérebro | P não corrigido de 0,005 e grupos de pelo menos 10 voxels | Nota 23 | "uncorrected P value of 0.005 and a cluster size threshold of 10" |
+| Sentir-se excluído | Os participantes se sentiram ignorados e excluídos quando foram deixados de fora de propósito (t = 5,33; P < 0,05) | p. 291 | "participants felt ignored and excluded during ESE (t ⫽ 5.33, P ⬍ 0.05)" |
+| Cingulado anterior na exclusão | O córtex cingulado anterior dorsal ficou mais ativo na exclusão explícita que na inclusão (t = 3,36; r = 0,71; P < 0,005) | p. 291, Fig. 1A | "was more active during ESE than during inclusion (t ⫽ 3.36, r ⫽ 0.71, P ⬍ 0.005)" |
+| Cingulado anterior e desconforto | Quanto mais ativo o cingulado anterior, mais desconforto a pessoa relatou (r = 0,88 e 0,75, em dois pontos da região) | p. 291, Fig. 2A | "r ⫽ 0.88, P ⬍ 0.005; x ⫽ – 4, y ⫽ 31, z ⫽ 41, r ⫽ 0.75" |
+| Ínsula anterior | Também ficou mais ativa na exclusão (r = 0,78), mas não andou junto com o desconforto relatado | p. 291 | "4.07, r ⫽ 0.78, P ⬍ 0.005); however, it was not associated with self-reported distress" |
+| Pré-frontal ventral direito na exclusão | Duas regiões dele ficaram mais ativas na exclusão explícita (r = 0,79 e 0,83) | p. 291, Fig. 1B | "t ⫽ 4.26, r ⫽ 0.79, P ⬍ 0.005; x ⫽ 37, y ⫽ 50, z ⫽ 1, t ⫽ 4.96, r ⫽ 0.83" |
+| Pré-frontal e desconforto | Quanto mais ativo o pré-frontal ventral direito, menos desconforto a pessoa relatou (r = −0,68) | p. 291, Fig. 2B | "r ⫽ – 0.68, P ⬍ 0.005" |
+| Pré-frontal e cingulado | Quanto mais ativo o pré-frontal ventral direito, menos ativo o cingulado anterior (r = −0,81) | p. 291, Fig. 2C | "relative to inclusion (r ⫽ – 0.81, P ⬍ 0.005)" |
+| Caminho do pré-frontal até o desconforto | A ligação entre o pré-frontal e o desconforto passa pela atividade do cingulado anterior (teste de Sobel, Z = 3,16) | p. 291 | "Sobel test, Z ⫽ 3.16, P ⬍ 0.005" |
+| Pré-frontal, levando em conta o cingulado | Levando em conta a atividade do cingulado, a ligação do pré-frontal com o desconforto pode ser acaso (β = −0,17; P > 0,5) | p. 291 | "no longer significant (␤ ⫽ – 0.17, P ⬎ 0.5)" |
+| Só assistir | Ao só assistir aos outros jogarem, sem achar que estava sendo excluída, a pessoa teve o cingulado anterior mais ativo que ao jogar junto (t = 4,34) | p. 291 | "t ⫽ 4.34, I ⫽ 0.78, P ⬍ 0.005" |
+| Duração da exclusão explícita | Cerca de 45 passes sem receber a bola | p. 291 | "(⬃45 throws)" |
+| Quando uma região contou como ativa | Só contou um grupo de pelo menos 10 voxels, os pontos do mapa do cérebro, cada um com P abaixo de 0,005 | Nota 23 | "uncorrected P value of 0.005 and a cluster size threshold of 10" |
 
+"r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. t e Z medem o quanto o resultado se afasta do acaso, β é o peso de uma coisa na conta e "P" é a chance de um resultado assim aparecer só por acaso.
 Na exclusão implícita, o pré-frontal ventral direito não apareceu "even at a P ⫽ .05 significance level" (p. 291). Os autores leem isso como sinal de que o cingulado registrou a exclusão, mas a regulação só veio quando ela era explícita. O desconforto não foi medido depois dessa sessão, para não desfazer a desculpa da conexão.
 
 A conclusão dos autores é que a experiência e a regulação da dor social e da dor física "share a common neuroanatomical basis" (p. 291). Eles descartam que o cingulado reflita só atenção por dois motivos: a atividade acompanhou o desconforto relatado, e ela foi maior em só assistir do que em jogar, que pede mais atenção (p. 292).

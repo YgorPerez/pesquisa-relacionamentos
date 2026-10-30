@@ -28,16 +28,16 @@ O que homens e mulheres querem dizer com "bom senso de humor" num parceiro. Um q
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Participantes | 74 mulheres e 55 homens | Seção 2.1 | "One hundred twenty-nine McMaster University undergraduate students (74 women and 55 men" |
-| Consistência das perguntas sobre senso de humor, receptividade ao humor e produção de humor | alfa de 0,63 (senso de humor), 0,65 (receptividade), 0,54 (produção) | Seção 2.2.1 | "(six items; Cronbach's a=.63), (2) the importance of a relationship partner's receptivity to the participant's own humor (four items; Cronbach's a=.65), and (3) the importance of a relationship partner's production of humor (four items; Cronbach's a=.54)" |
-| Mulheres valorizam que o parceiro produza humor | t = 8,40 | Seção 3.1 | "only women valued their partner's ability to produce humor [women, t(73)=8.40" |
-| Homens não valorizam que a parceira produza humor | t = 0,70; p = 1 | Seção 3.1 | "men, t(54)=0.70, p=1]" |
-| Homens valorizam mais que a parceira seja receptiva ao humor deles do que que ela produza humor | t = 5,07 | Seção 3.1 | "whereas men valued a partner's receptivity to their own humor more than a partner's production of humor [t(54)=5.07" |
-| Para um encontro, mulheres preferem quem faz rir, acima do acaso | t = 3,94 | Seção 3.2 | "Women's preference for humor producers was significantly different from chance for dates [one-sample t tests: t(73)=3.94" |
-| Para relação longa, mulheres preferem quem faz rir | t = 2,72; p = 0,04 | Seção 3.2 | "long-term relationships [t(73)=2.72, p=.04]" |
-| Para um encontro, homens preferem quem ri das suas piadas | t = 4,90 (sinal negativo no original) | Seção 3.2 | "sample t tests: t(54)=ÿ4.90" |
+| Quantos participaram | 74 mulheres e 55 homens, universitários do Canadá | Seção 2.1 | "One hundred twenty-nine McMaster University undergraduate students (74 women and 55 men" |
+| Perguntas sobre humor | As perguntas de cada escala concordaram entre si de forma modesta: senso de humor (alfa = 0,63), receptividade ao humor (alfa = 0,65) e produção de humor (alfa = 0,54) | Seção 2.2.1 | "(six items; Cronbach's a=.63), (2) the importance of a relationship partner's receptivity to the participant's own humor (four items; Cronbach's a=.65), and (3) the importance of a relationship partner's production of humor (four items; Cronbach's a=.54)" |
+| Mulheres e parceiro que faz humor | As mulheres dizem valorizar que o parceiro faça humor (t = 8,40) | Seção 3.1 | "only women valued their partner's ability to produce humor [women, t(73)=8.40" |
+| Homens e parceira que faz humor | Os homens não dizem valorizar isso: o resultado pode ser acaso (t = 0,70; p = 1) | Seção 3.1 | "men, t(54)=0.70, p=1]" |
+| Homens: rir ou fazer rir | Os homens valorizam mais que a parceira seja receptiva ao humor deles do que ela fazer humor (t = 5,07) | Seção 3.1 | "whereas men valued a partner's receptivity to their own humor more than a partner's production of humor [t(54)=5.07" |
+| Mulheres, para um encontro | Preferem quem faz rir, acima do acaso (t = 3,94) | Seção 3.2 | "Women's preference for humor producers was significantly different from chance for dates [one-sample t tests: t(73)=3.94" |
+| Mulheres, para uma relação longa | Preferem quem faz rir, acima do acaso (t = 2,72; p = 0,04) | Seção 3.2 | "long-term relationships [t(73)=2.72, p=.04]" |
+| Homens, para um encontro | Preferem quem ri das piadas deles, acima do acaso (t = 4,90, com sinal negativo no original) | Seção 3.2 | "sample t tests: t(54)=ÿ4.90" |
 
-t mede o quanto o resultado se afasta do ponto de comparação: quanto maior, mais longe.
+t mede o quanto o resultado se afasta do ponto de comparação: quanto maior, mais longe. "p" é a chance de um resultado assim aparecer só por acaso. O alfa mede quanto as perguntas de uma escala concordam entre si: quanto mais perto de 1, mais.
 
 Os autores concluem que, para os homens, "bom senso de humor" numa parceira quer dizer que ela aprecia o humor deles, não que ela seja engraçada (Discussão). As preferências só passaram do acaso em encontros e relações longas; em uma noite e relação curta, não.
 

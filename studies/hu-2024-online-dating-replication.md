@@ -31,22 +31,22 @@ A Fonte local é a versão que os autores submeteram à revista, como diz a prim
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Coleta | Pew, de 16 a 28 de outubro de 2019 | p. 5, Procedure | "collected by the Pew Research Center between October 16 and October 28, 2019" |
-| Pessoas que responderam à pesquisa | 4.860 (81,7% dos panelistas ativos) | p. 5, Procedure | "A total of 4,860 panelists completed the survey (response rate: 81.7% among active panelists)." |
-| Amostra analisada | 2.787 pessoas em relação | p. 6, Sample Profile | "The criteria led to a final sample of 2787 participants." |
-| Onde se conheceram | 2.410 fora da internet; 377 online | p. 6, Measurement | "0 = Meeting offline [n = 2410], 1 = Meeting in online dating [n = 377]" |
-| Tipo de relação | 1.882 casados; 905 não casados | p. 6, Measurement | "0 = In a marital relationship [n = 1882], 1 = In a non-marital relationship [n = 905]" |
-| Nota média de como vai a relação, de 1 a 4 | 3,50 (DP 0,64) | p. 6–7, Measurement | "higher score indicates higher relationship success (M = 3.50, SD = .64)" |
-| Casados que se conheceram online, comparados aos que se conheceram fora da internet | Um pouco menos de sucesso, marginal (b = −0,10; p = 0,065) | p. 8, Results | "though the difference was marginally significant (b = -.10, SE = .05, p = .065" |
-| Em relação sem casamento, quem conheceu o par online, comparado a quem o conheceu fora da internet | Sem diferença (b = 0,04; p = 0,499) | p. 8, Results | "meeting venue was not related to relationship success (b = .04, SE = .05, p = .499" |
-| Essa diferença depende de falar da relação nas redes? | Sim, de forma significativa (b = 0,24; p = 0,003) | p. 8, Results | "the interaction between meeting venue and relationship talk on social media was significant (b = .24, SE = .08, p = .003" |
-| Casados que não falam da relação nas redes: online contra fora da internet | Online com menos sucesso (b = −0,24; p < 0,001) | p. 8, Results | "less relationship success compared to meeting one's partner offline (b = -.24, SE = .07, p < .001" |
-| Casados que falam da relação nas redes: online contra fora da internet | Sem diferença (b = 0,00; p = 0,969) | p. 8, Results | "relationship success did not differ by meeting venue (b = .00, SE = .08, p = .969" |
-| Em relação sem casamento, quem não fala da relação nas redes: online contra fora da internet | Sem diferença (b = −0,10; p = 0,164) | p. 8, Results | "the association between meeting venue and relationship success was not significant (b = -.10, SE = .07, p = .164" |
-| Em relação sem casamento, quem fala da relação nas redes: online contra fora da internet | Online com mais sucesso (b = 0,14; p = 0,045) | p. 8, Results | "more relationship success compared to meeting one's partner offline (b = .14, SE = .07, p = .045" |
-| Pesos do Pew, que ajustam a amostra à população | Não usados | p. 7, Data Analysis | "We did not use the weights provided by the Pew Research Center" |
+| Quando se coletaram os dados | O Pew Research Center coletou de 16 a 28 de outubro de 2019 | p. 5, Procedure | "collected by the Pew Research Center between October 16 and October 28, 2019" |
+| Quantos responderam | 4.860 pessoas, 81,7% dos participantes ativos do painel | p. 5, Procedure | "A total of 4,860 panelists completed the survey (response rate: 81.7% among active panelists)." |
+| Quantos entraram na conta | 2.787 pessoas em uma relação | p. 6, Sample Profile | "The criteria led to a final sample of 2787 participants." |
+| Onde se conheceram | 2.410 fora da internet e 377 em namoro online | p. 6, Measurement | "0 = Meeting offline [n = 2410], 1 = Meeting in online dating [n = 377]" |
+| Tipo de relação | 1.882 casados e 905 não casados | p. 6, Measurement | "0 = In a marital relationship [n = 1882], 1 = In a non-marital relationship [n = 905]" |
+| Nota de como vai a relação, de 1 a 4 | A média foi 3,50 (DP = 0,64) | p. 6–7, Measurement | "higher score indicates higher relationship success (M = 3.50, SD = .64)" |
+| Casados | Quem se conheceu online deu nota um pouco menor à relação que quem se conheceu fora da internet, mas a diferença pode ser acaso (b = −0,10; p = 0,065) | p. 8, Results | "though the difference was marginally significant (b = -.10, SE = .05, p = .065" |
+| Não casados | Quem conheceu o par online e quem o conheceu fora da internet deram nota parecida à relação (b = 0,04; p = 0,499) | p. 8, Results | "meeting venue was not related to relationship success (b = .04, SE = .05, p = .499" |
+| Falar da relação nas redes | A diferença entre se conhecer online ou fora muda conforme a pessoa fale ou não da relação nas redes (b = 0,24; p = 0,003) | p. 8, Results | "the interaction between meeting venue and relationship talk on social media was significant (b = .24, SE = .08, p = .003" |
+| Casados que não falam da relação nas redes | Quem se conheceu online deu nota menor à relação que quem se conheceu fora da internet (b = −0,24; p < 0,001) | p. 8, Results | "less relationship success compared to meeting one's partner offline (b = -.24, SE = .07, p < .001" |
+| Casados que falam da relação nas redes | A nota não mudou conforme onde se conheceram (b = 0,00; p = 0,969) | p. 8, Results | "relationship success did not differ by meeting venue (b = .00, SE = .08, p = .969" |
+| Não casados que não falam da relação nas redes | A diferença conforme onde se conheceram pode ser acaso (b = −0,10; p = 0,164) | p. 8, Results | "the association between meeting venue and relationship success was not significant (b = -.10, SE = .07, p = .164" |
+| Não casados que falam da relação nas redes | Quem conheceu o par online deu nota maior à relação que quem o conheceu fora da internet (b = 0,14; p = 0,045) | p. 8, Results | "more relationship success compared to meeting one's partner offline (b = .14, SE = .07, p = .045" |
+| Pesos do Pew, que ajustam os dados à população | Os autores não os usaram | p. 7, Data Analysis | "We did not use the weights provided by the Pew Research Center" |
 
-"b" é a diferença estimada na escala de 1 a 4 entre quem se conheceu online e quem se conheceu fora, com os controles. "Marginal" é uma diferença que chegou perto de ser significativa, sem chegar.
+"b" é a diferença estimada na escala de 1 a 4 entre quem se conheceu online e quem se conheceu fora, levando em conta o que o estudo controlou. "p" é a chance de um resultado assim aparecer só por acaso; o costume é aceitar abaixo de 0,05. DP é o desvio-padrão, que mede o quanto as pessoas se afastam da média. A nota vem da pergunta sobre como vão as coisas na relação, que os autores chamam de sucesso da relação.
 
 ## Limitações
 

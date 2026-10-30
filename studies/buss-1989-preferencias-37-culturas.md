@@ -30,19 +30,19 @@ São preferências declaradas, respondidas num papel, e não escolhas: ninguém 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra | 37 amostras, 10.047 pessoas | Resumo | "Predictions were tested in data from 37 samples drawn from 33 countries located on six continents and five islands (total N = 10,047)" |
-| Mulheres valorizam mais as perspectivas financeiras do parceiro | 36 de 37 amostras | Seção 3.1 | "In 36 of 37 samples, the predicted sex difference emerged" |
-| Mulheres valorizam mais ambição e dedicação ao trabalho | 92% das 37 amostras na direção prevista | Seção 3.1 | "Thirty-four of the 37 samples (92%) for ambitionindustriousness were in the predicted direction" |
-| Homens valorizam mais a boa aparência | 37 de 37 na direção prevista, 34 significativas | Seção 3.4 | "All 37 samples show sex differences in the predicted direction, with 34 significant beyond the .05 level" |
-| Homens preferem parceira mais nova | 37 de 37 amostras | Seção 3.2 | "In each of the 37 samples, males prefer mates who are younger" |
-| Idade preferida da parceira, deduzida pelo autor | 24,83 anos | Seção 3.2 | "males in these samples prefer to marry females who are approximately 24.83 years old" |
-| Mulheres preferem parceiro mais velho | 3,42 anos mais velho; os homens, 2,66 anos mais nova | Seção 3.2 | "females appear to prefer a larger age difference (3.42 years older) than do males (2.66 years younger)" |
-| Diferença de idade preferida contra a real nos casamentos | 3,04 anos preferidos, 2,99 reais | Seção 3.3 | "yields a mean preferred age difference of 3.04 years, which corresponds closely to the actual age difference of 2.99 years between spouses" |
-| Homens valorizam mais a castidade | Só 23 amostras (62%) | Seção 3.5 | "only 23 (62%) of the samples show significant sex differences in the predicted direction" |
-| Tamanho da diferença entre homens e mulheres em cada traço (correlação média: 0,10 é pequena, 0,30 é média, 0,50 é grande) | Finanças 0,34; ambição 0,20; aparência 0,30; idade 0,71; castidade 0,19 | Resposta do autor, "Magnitude of effect" | "good financial prospect (.34), ambition-industriousness (.20), good looks (.30), relative age difference preferred (.71), and chastity (.19)" |
-| Gentileza e inteligência ficaram acima de dinheiro e aparência para os dois sexos | Entre as quatro mais bem ordenadas nas 37 sociedades | Resposta do autor, "Is there a species-typical or sex-typical human nature?" | "these characteristics were among the four most highly ranked in all 37 societies" |
+| Quantos responderam | 10.047 pessoas, em 37 grupos de 33 países | Resumo | "Predictions were tested in data from 37 samples drawn from 33 countries located on six continents and five islands (total N = 10,047)" |
+| Perspectivas financeiras do parceiro | As mulheres deram mais valor a elas que os homens em 36 dos 37 grupos; na Espanha, a direção foi a mesma, mas a diferença pode ser acaso | Seção 3.1 | "In 36 of 37 samples, the predicted sex difference emerged" |
+| Ambição e dedicação ao trabalho | As mulheres deram mais valor a elas que os homens em trinta e quatro dos 37 grupos (92%), a direção prevista | Seção 3.1 | "Thirty-four of the 37 samples (92%) for ambitionindustriousness were in the predicted direction" |
+| Boa aparência | Os homens deram mais valor a ela que as mulheres nos 37 grupos; em 34, é improvável que a diferença seja acaso | Seção 3.4 | "All 37 samples show sex differences in the predicted direction, with 34 significant beyond the .05 level" |
+| Homens e idade da parceira | Preferem parceira mais nova em todos os 37 grupos | Seção 3.2 | "In each of the 37 samples, males prefer mates who are younger" |
+| Idade preferida da parceira | O autor deduz que os homens preferem casar com mulheres de cerca de 24,83 anos | Seção 3.2 | "males in these samples prefer to marry females who are approximately 24.83 years old" |
+| Diferença de idade preferida | As mulheres preferem parceiro 3,42 anos mais velho; os homens, parceira 2,66 anos mais nova | Seção 3.2 | "females appear to prefer a larger age difference (3.42 years older) than do males (2.66 years younger)" |
+| Idade preferida e idade real nos casamentos | A diferença preferida, de 3,04 anos, fica perto da real entre cônjuges, de 2,99 anos | Seção 3.3 | "yields a mean preferred age difference of 3.04 years, which corresponds closely to the actual age difference of 2.99 years between spouses" |
+| Castidade | Os homens deram mais valor a ela que as mulheres, de forma improvável de ser acaso, em só 23 grupos (62%) | Seção 3.5 | "only 23 (62%) of the samples show significant sex differences in the predicted direction" |
+| Tamanho da diferença entre homens e mulheres | Foi grande na diferença de idade preferida (0,71), média em finanças (0,34) e aparência (0,30) e de pequena a média em ambição (0,20) e castidade (0,19) | Resposta do autor, "Magnitude of effect" | "good financial prospect (.34), ambition-industriousness (.20), good looks (.30), relative age difference preferred (.71), and chastity (.19)" |
+| Gentileza e inteligência | Ficaram entre as quatro características mais bem colocadas nas 37 sociedades, para os dois sexos, acima de dinheiro e aparência | Resposta do autor, "Is there a species-typical or sex-typical human nature?" | "these characteristics were among the four most highly ranked in all 37 societies" |
 
-O próprio autor faz a ressalva principal: "male and female preference distributions overlap considerably, in spite of mean differences" (Seção 4.1). A diferença entre os sexos é de média; muitos homens e muitas mulheres respondem igual.
+Os números do tamanho da diferença são correlações médias: 0,10 é pequena, 0,30 é média e 0,50 é grande. O próprio autor faz a ressalva principal: "male and female preference distributions overlap considerably, in spite of mean differences" (Seção 4.1). A diferença entre os sexos é de média; muitos homens e muitas mulheres respondem igual.
 
 A castidade foi a característica que mais variou entre os países. China, Índia, Indonésia, Irã, Taiwan e os árabes palestinos de Israel a valorizaram muito; Suécia, Noruega, Finlândia, Holanda, Alemanha Ocidental e França a acharam irrelevante (Seção 3.5).
 

@@ -26,17 +26,17 @@ Com as mulheres da NSFG de 2002 a 2013, Wolfinger conta quantos parceiros sexuai
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Mulheres com um só parceiro antes de casar, por década do casamento | Quarenta e três por cento nos anos 1970; 21% na primeira década deste século | p. 1 | "Forty-three percent of women had just one premarital sex partner in the 1970s. By the aughts, this was down to 21 percent." |
-| Mudança nessa proporção depois dos anos 2000 | Pouca | p. 1 | "Neither of these two trends changed much after the first decade of the twenty-first century." |
-| Casadas nos anos 1970 com no máximo um parceiro antes | Quase dois terços | p. 1 | "almost two-thirds of them had at most one sex partner prior to getting married" |
-| Casadas nos anos 1980 com no máximo um parceiro antes | Pouco mais da metade | p. 1 | "Even in the 1980s, slightly over half of women had a maximum of one sex partner before walking down the aisle." |
-| Mulheres virgens ao casar, anos 2010 | 5% | p. 1 | "By the 2010s, only 5 percent of new brides were virgins." |
-| Mulheres com dez parceiros ou mais antes de casar | 2% (anos 1970), 14% (2000), 18% (2010) | p. 1 | "the number of future wives who had ten or more sex partners increased from 2 percent in the 1970s to 14 percent in the 2000s, and then to 18 percent in the 2010s" |
-| Dados sobre homens | A pesquisa usada, a NSFG, não os tem completos | p. 1 | "the NSFG doesn't have full data on men's premarital sexual behavior" |
-| Divórcio em cinco anos, casadas nos anos 2000 com dez parceiros ou mais | 33%, a taxa mais alta | p. 2 | "The highest five-year divorce rates of all are associated with marrying in the 2000s and having ten or more premarital sex partners: 33 percent." |
-| Divórcio em cinco anos das virgens ao casar | Onze por cento (anos 1980), 8% (1990), 6% (2000) | p. 2 | "Eleven percent of virgin marriages (on the part of the woman, at least) in the 1980s dissolved within five years. This number fell to 8 percent in the 1990s, then fell again to 6 percent in the 2000s." |
-| Divórcio em cinco anos, casadas nos anos 2000: dez parceiros ou mais contra dois | 33% contra 30%, diferença sem significância | p. 3 | "the 33 percent divorce figure for women with ten or partners who married in the 2000s is not statistically significantly higher than the 30 percent five-year divorce rate for women who had two partners" |
-| Quanto as diferenças sociais e demográficas explicam da ligação entre parceiros e divórcio | No máximo um quarto | p. 4 | "At best, these differences account for about one quarter of the observed association between sex partners and divorce." |
+| Um só parceiro antes de casar | Quarenta e três por cento das mulheres nos anos 1970 e 21% na primeira década deste século | p. 1 | "Forty-three percent of women had just one premarital sex partner in the 1970s. By the aughts, this was down to 21 percent." |
+| Depois da primeira década deste século | A proporção de um só parceiro e uma outra tendência, que o texto não nomeia, mudaram pouco | p. 1 | "Neither of these two trends changed much after the first decade of the twenty-first century." |
+| No máximo um parceiro, casadas nos anos 1970 | Quase dois terços das mulheres que casaram nessa década | p. 1 | "almost two-thirds of them had at most one sex partner prior to getting married" |
+| No máximo um parceiro, casadas nos anos 1980 | Pouco mais da metade das mulheres | p. 1 | "Even in the 1980s, slightly over half of women had a maximum of one sex partner before walking down the aisle." |
+| Virgens ao casar, anos 2010 | Só 5% das mulheres que casavam | p. 1 | "By the 2010s, only 5 percent of new brides were virgins." |
+| Dez parceiros ou mais antes de casar | Subiu de 2% das mulheres nos anos 1970 para 14% nos anos 2000 e 18% nos anos 2010 | p. 1 | "the number of future wives who had ten or more sex partners increased from 2 percent in the 1970s to 14 percent in the 2000s, and then to 18 percent in the 2010s" |
+| Dados sobre homens | A pesquisa usada, a NSFG, não tem dados completos sobre a vida sexual deles antes do casamento | p. 1 | "the NSFG doesn't have full data on men's premarital sexual behavior" |
+| Divórcio em cinco anos: dez parceiros ou mais | Das que casaram nos anos 2000 com dez parceiros ou mais antes, 33% se divorciaram em cinco anos, a taxa mais alta | p. 2 | "The highest five-year divorce rates of all are associated with marrying in the 2000s and having ten or more premarital sex partners: 33 percent." |
+| Divórcio em cinco anos: virgens ao casar | Onze por cento nos casamentos dos anos 1980, 8% nos de 1990 e 6% nos de 2000 | p. 2 | "Eleven percent of virgin marriages (on the part of the woman, at least) in the 1980s dissolved within five years. This number fell to 8 percent in the 1990s, then fell again to 6 percent in the 2000s." |
+| Divórcio em cinco anos: dez parceiros ou mais contra dois | Nos casamentos dos anos 2000, 33% contra 30%, uma diferença que pode ser acaso | p. 3 | "the 33 percent divorce figure for women with ten or partners who married in the 2000s is not statistically significantly higher than the 30 percent five-year divorce rate for women who had two partners" |
+| Diferenças sociais e demográficas | Explicam no máximo cerca de um quarto da ligação entre número de parceiros e divórcio | p. 4 | "At best, these differences account for about one quarter of the observed association between sex partners and divorce." |
 
 O gráfico da distribuição de parceiros por década não está na versão de impressão; os números da tabela são os que o texto dá.
 
