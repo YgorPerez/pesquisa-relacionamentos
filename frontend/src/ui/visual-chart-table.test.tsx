@@ -67,11 +67,11 @@ it('shows the card on hover without its buttons, and lights the row', async () =
   within(card()!).getByText('0,1 ponto')
   expect(within(card()!).queryByRole('button')).toBeNull()
   expect(within(card()!).queryByRole('link')).toBeNull()
-  expect(silva).toHaveAttribute('data-apagada')
-  expect(costa).not.toHaveAttribute('data-apagada')
+  expect(silva).toHaveAttribute('data-dimmed')
+  expect(costa).not.toHaveAttribute('data-dimmed')
   await user.unhover(costa!)
   expect(card()).toBeNull()
-  expect(silva).not.toHaveAttribute('data-apagada')
+  expect(silva).not.toHaveAttribute('data-dimmed')
 })
 
 it('pins from anywhere on the row, and the same row unpins', async () => {
@@ -109,9 +109,66 @@ it('pins a number with Enter, and Tab goes into the card', async () => {
   expect(link).toHaveFocus()
 })
 
+it('leaves no card open when Esc or a keyboard press of "Fechar" closes it from inside, with the focus back on the number', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [, costa] = studyRows(table)
+  const number = within(costa!).getByRole('button', { name: /0,1 ponto/ })
+  number.focus()
+  await user.keyboard('{Enter}{Tab}')
+  await user.keyboard('{Escape}')
+  expect(card()).toBeNull()
+  expect(number).toHaveFocus()
+
+  await user.keyboard('{Enter}{Tab}{Tab}')
+  expect(within(card()!).getByRole('button', { name: 'Fechar' })).toHaveFocus()
+  await user.keyboard('{Enter}')
+  expect(card()).toBeNull()
+  expect(number).toHaveFocus()
+})
+
+it('moves the focus and the card with the arrows, Enter pins, and an arrow leaves the pin', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [silva, costa] = studyRows(table)
+  const first = within(silva!).getByRole('button', { name: /18%/ })
+  const second = within(costa!).getByRole('button', { name: /0,1 ponto/ })
+  first.focus()
+  await user.keyboard('{ArrowDown}')
+  expect(second).toHaveFocus()
+  within(card()!).getByText('Diferença de satisfação, online vs. presencial')
+  // The last row stays the last, and the card stays unpinned.
+  await user.keyboard('{ArrowDown}')
+  expect(second).toHaveFocus()
+  expect(within(card()!).queryByRole('button')).toBeNull()
+  await user.keyboard('{Enter}')
+  within(card()!).getByRole('button', { name: 'Fechar' })
+  await user.keyboard('{ArrowUp}')
+  expect(first).toHaveFocus()
+  within(card()!).getByText('18%')
+  expect(within(card()!).queryByRole('button')).toBeNull()
+})
+
 it('dims the rows of other countries when the link picks one the table has', async () => {
   const table = await openVisual(TITLE, 'table', '?pais=eua')
   const [silva, costa] = studyRows(table)
+  expect(silva).toHaveAttribute('data-apagada')
+  expect(costa).not.toHaveAttribute('data-apagada')
+})
+
+it('keeps a row the country filtered out dim while it has the card, and the row that matches lit', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table', '?pais=eua')
+  const [silva, costa] = studyRows(table)
+  await user.hover(silva!)
+  within(card()!).getByText('18%')
+  expect(silva).toHaveAttribute('data-apagada')
+  // The row that answers to the filter dims for the card, less than one it
+  // left out: two states.
+  expect(costa).not.toHaveAttribute('data-apagada')
+  expect(costa).toHaveAttribute('data-dimmed')
+  await user.click(silva!)
+  within(card()!).getByRole('button', { name: 'Fechar' })
   expect(silva).toHaveAttribute('data-apagada')
   expect(costa).not.toHaveAttribute('data-apagada')
 })

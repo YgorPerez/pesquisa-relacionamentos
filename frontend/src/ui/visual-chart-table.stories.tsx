@@ -33,6 +33,37 @@ export const WithProfile: Story = {
   args: { profile: { gender: 'homem', seeks: 'homens', age: 30 } },
 }
 
+/** The screen turns narrow with a card pinned: the card asks again which side
+ * it takes. */
+export const PinnedCardAsksItsSideAgain: Story = {
+  play: async ({ canvasElement }) => {
+    const number = within(canvasElement).getByRole('button', { name: /^18%/ })
+    const root = document.documentElement
+    const screenWidth = (width: number) =>
+      Object.defineProperty(root, 'clientWidth', {
+        configurable: true,
+        get: () => width,
+      })
+    const right = number.getBoundingClientRect().right
+    try {
+      screenWidth(right + 400)
+      await userEvent.click(number)
+      const side = () =>
+        document
+          .querySelector('[data-slot="detalhe-do-grafico"]')
+          ?.getAttribute('data-side')
+      // Beside the number: the real screen may flip it to its other side.
+      await waitFor(() => expect(side()).toMatch(/^(right|left)$/))
+      screenWidth(right + 100)
+      window.dispatchEvent(new Event('resize'))
+      await waitFor(() => expect(side()).toBe('bottom'))
+    } finally {
+      Reflect.deleteProperty(root, 'clientWidth')
+      await userEvent.keyboard('{Escape}')
+    }
+  },
+}
+
 /** A tap on a number pins its card, with the exact value and the Fact sheet;
  * "Fechar" closes it. The card hangs from the page's end. */
 export const TapDetail: Story = {

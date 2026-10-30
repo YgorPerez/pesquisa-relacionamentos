@@ -44,7 +44,7 @@ const shownCard = () =>
 const pinnedCard = () =>
   waitFor(() => {
     const card = document.querySelector<HTMLElement>(
-      '[data-slot="detalhe-do-grafico"][data-fixado]',
+      '[data-slot="detalhe-do-grafico"][data-pinned]',
     )
     if (!card) throw new Error('no pinned card')
     return card
@@ -300,6 +300,79 @@ export const KeyboardCard: Story = {
     await pinnedCard()
     await userEvent.keyboard('{Escape}')
     await waitFor(() => expect(cardElement()).toBeNull())
+  },
+}
+
+/** From inside the pinned card, Esc and "Fechar" by keyboard leave no card:
+ * the focus goes back to the chart, and the arrows go on from the closed mark,
+ * not from the chart's first. */
+export const KeyboardCloseFromCard: Story = {
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: DOTS.title },
+      { timeout: 10_000 },
+    )
+    const noCardStays = async () => {
+      await expect(chart).toHaveFocus()
+      // Past the frame the library's focus report would land in.
+      await new Promise(requestAnimationFrame)
+      await new Promise(requestAnimationFrame)
+      await expect(cardElement()).toBeNull()
+    }
+    chart.focus()
+    await userEvent.keyboard('{ArrowDown}')
+    await waitFor(async () =>
+      expect(await shownCard()).toHaveTextContent('Rosenfeld (2019)'),
+    )
+    await userEvent.keyboard('{Enter}')
+    await pinnedCard()
+    await userEvent.keyboard('{Tab}')
+    await expect(within(await pinnedCard()).getByRole('link')).toHaveFocus()
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(cardElement()).toBeNull())
+    await noCardStays()
+
+    await userEvent.keyboard('{ArrowDown}')
+    await waitFor(async () =>
+      expect(await shownCard()).toHaveTextContent('Bergström'),
+    )
+    await userEvent.keyboard('{Enter}')
+    const pinned = within(await pinnedCard())
+    await userEvent.keyboard('{Tab}{Tab}')
+    await expect(pinned.getByRole('button', { name: 'Fechar' })).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
+    await waitFor(() => expect(cardElement()).toBeNull())
+    await noCardStays()
+  },
+}
+
+/** The drawing narrows, as when a phone turns: the pinned card follows its
+ * mark. */
+export const PinnedCardFollowsItsMark: Story = {
+  render: (args) => (
+    <div data-testid="column" className="w-90">
+      <VisualChart {...args} />
+    </div>
+  ),
+  args: { chart: BARS },
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: BARS.title },
+      { timeout: 10_000 },
+    )
+    const box = chart.getBoundingClientRect()
+    await fireEvent.click(chart, {
+      clientX: box.left + box.width * 0.2,
+      clientY: box.top + box.height * 0.5,
+    })
+    const card = await pinnedCard()
+    const left = () => card.getBoundingClientRect().left
+    const wide = left()
+    within(canvasElement).getByTestId('column').style.width = '180px'
+    await waitFor(() => expect(left()).toBeLessThan(wide - 20))
+    await userEvent.keyboard('{Escape}')
   },
 }
 

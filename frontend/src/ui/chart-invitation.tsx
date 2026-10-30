@@ -8,7 +8,7 @@ import {
   useSyncExternalStore,
   type RefObject,
 } from 'react'
-import { PREFIX } from '#/state/stored'
+import { claimPulse } from '#/state/chart-pulse'
 import { CHART_INVITATION_COPY } from './chart-invitation.copy'
 
 const HAS_MOUSE = '(hover: hover)'
@@ -35,7 +35,7 @@ export function ChartHint() {
   )
   if (mouse === null) return null
   return (
-    <p className="m-0 mt-xs flex w-fit items-center gap-1.5 rounded-full bg-agua-fonte/30 py-0.5 pr-2.5 pl-2 text-nota leading-nota font-bold text-agua-tinta">
+    <p className="m-0 mt-xs flex w-fit items-center gap-1.5 rounded-pill bg-agua-fonte/30 py-0.5 pr-2.5 pl-2 text-nota leading-nota font-bold text-agua-tinta">
       <svg
         width="16"
         height="16"
@@ -52,22 +52,6 @@ export function ChartHint() {
       {mouse ? CHART_INVITATION_COPY.mouse : CHART_INVITATION_COPY.touch}
     </p>
   )
-}
-
-const PULSED = `${PREFIX}chart-pulsed`
-let pulsedWithoutStorage = false
-
-/** True for the first chart that asks in this visit (the tab's session). */
-function claimPulse() {
-  try {
-    if (sessionStorage.getItem(PULSED)) return false
-    sessionStorage.setItem(PULSED, '1')
-    return true
-  } catch {
-    if (pulsedWithoutStorage) return false
-    pulsedWithoutStorage = true
-    return true
-  }
 }
 
 /** A beat after the chart comes into view, so the eye has landed on it. */

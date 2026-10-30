@@ -312,7 +312,7 @@ it("lights a Study whose spread has the chosen country, and dims the spread's ot
   expect(ticks.length).toBeGreaterThan(0)
   const opacities = [...html.querySelectorAll('svg[role="img"] line')]
     .map((l) => l.getAttribute('stroke-opacity'))
-    .filter((o) => o === '0.22')
+    .filter((o) => o === '0.16')
   expect(opacities.length).toBe(2)
 })
 
@@ -622,4 +622,57 @@ it("dims the other parts of every stacked bar for a part's key, and keeps each b
     partTone(3, 4).opacity,
   )
   expect(isDimmed(container, 'Homens heterossexuais')).toBe(false)
+})
+
+/** The plot with the filters on and `active` holding the card. */
+const drawnFiltered = (
+  country: string | null,
+  active: string | null,
+  legend: number | null = null,
+) =>
+  page(
+    renderToString(
+      <VisualChartPlot
+        chart={DOTS}
+        country={country}
+        profile={null}
+        active={active}
+        legend={legend}
+        onHover={() => {}}
+        onSelect={() => {}}
+      />,
+    ),
+  )
+/** The opacity of each row's dot or hexagon. */
+const markOpacities = (html: Document) =>
+  [
+    ...html.querySelectorAll(
+      'svg[role="img"] circle[fill-opacity], svg[role="img"] path[fill-opacity]',
+    ),
+  ].map((m) => Number(m.getAttribute('fill-opacity')))
+
+it('keeps a row the country filtered out dim while it has the card', () => {
+  const filteredOut = DOTS.points.find((p) => p.country?.slug !== 'eua')!
+  expect(dimmedValues(drawnFiltered('eua', filteredOut.key))).toContain(
+    filteredOut.number.text,
+  )
+})
+
+it('keeps a row the legend filtered out dim while it has the card', () => {
+  const filteredOut = DOTS.points.find((p) => p.definition !== 0)!
+  expect(dimmedValues(drawnFiltered(null, filteredOut.key, 0))).toContain(
+    filteredOut.number.text,
+  )
+})
+
+it('fades what the filter left out more than what the card dims, so a match still shows under a card', () => {
+  const matching = DOTS.points.find((p) => p.country?.slug === 'eua')!
+  const other = DOTS.points.find((p) => p.key !== matching.key)!
+  // The card on a row the filter left out: the row that matches is dimmed by
+  // the card, and is still more present than the rows left out.
+  const opacities = markOpacities(drawnFiltered('eua', other.key))
+  expect(new Set(opacities).size).toBe(2)
+  expect(Math.min(...opacities)).toBeLessThan(0.2)
+  expect(Math.max(...opacities)).toBeGreaterThan(0.2)
+  expect(Math.max(...opacities)).toBeLessThan(1)
 })

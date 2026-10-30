@@ -6,13 +6,16 @@
 // pins the chart's card (`chart-card.ts`, `visual-detail.tsx`), the Guide's
 // country lights its rows and dims the others, Brazil's row is marked for
 // everyone, and the saved Profile tags the Studies that cover it. No library:
-// the server's table is the whole drawing, and the tap is a plain button.
+// the server's table is the whole drawing, and the tap is a plain button, its
+// keys the plots' (arrows, Home, End and Enter).
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
 import { useRef, type RefObject } from 'react'
 import type { ChartTable } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
+import { Button } from '@/ui/shadcn/button'
 import {
+  closeCard,
   useCloseCardOn,
   enterCard,
   hoverCard,
@@ -21,6 +24,7 @@ import {
   useInteractive,
   type CardTarget,
 } from './chart-card'
+import { litByCountry, reachesCountry } from './chart-filters'
 import { ChartHint, ChartPulse } from './chart-invitation'
 import { CHART_TABLE_COPY } from './visual-chart-table.copy'
 import { CHART_COPY } from './visual-chart.copy'
@@ -81,25 +85,62 @@ function StudyNumber({
   buttonRef: RefObject<HTMLButtonElement | null>
   onKeyboard: () => void
 }) {
+  // A press focuses it too, and the press pins: only another way in shows the
+  // card on focus. The arrows' focus has to count, and it is not a key's own.
+  const pressed = useRef(false)
   return (
-    <button
+    <Button
       ref={buttonRef}
-      type="button"
+      variant="number"
+      data-slot="study-number"
       aria-label={CHART_TABLE_COPY.openDetail(text)}
       aria-expanded={pinned}
       aria-haspopup="dialog"
-      onFocus={(event) => {
-        if (event.target.matches(':focus-visible')) onKeyboard()
+      onPointerDown={() => {
+        pressed.current = true
       }}
-      onBlur={() => hoverCard(null, chart)}
-      className={cn(
-        'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
-      )}
+      onFocus={() => {
+        if (!pressed.current) onKeyboard()
+      }}
+      onBlur={() => {
+        pressed.current = false
+        hoverCard(null, chart)
+      }}
+      onKeyDown={(event) => {
+        const next = numberAfter(event.currentTarget, event.key)
+        if (next === undefined) return
+        // The arrows' card is unpinned, as on a plot: only Enter pins.
+        event.preventDefault()
+        if (next === event.currentTarget) return
+        if (pinned) closeCard()
+        next.focus()
+      }}
     >
       {text}
-    </button>
+    </Button>
   )
+}
+
+/** Where a key moves the focus from a Study's number, as a plot's marks do:
+ * the arrows stop at the ends, Home and End go to them. `undefined` for any
+ * other key. */
+function numberAfter(from: HTMLElement, key: string) {
+  const numbers = [
+    ...(from
+      .closest('tbody')
+      ?.querySelectorAll<HTMLElement>('[data-slot="study-number"]') ?? []),
+  ]
+  const at = numbers.indexOf(from)
+  const last = numbers.length - 1
+  const index = {
+    ArrowDown: Math.min(at + 1, last),
+    ArrowRight: Math.min(at + 1, last),
+    ArrowUp: Math.max(at - 1, 0),
+    ArrowLeft: Math.max(at - 1, 0),
+    Home: 0,
+    End: last,
+  }[key]
+  return index === undefined ? undefined : numbers[index]
 }
 
 /** A Study's row: its title, context and measure, and its number. The whole
@@ -110,6 +151,7 @@ function StudyRow({
   chart,
   point,
   context,
+  off,
   dimmed,
   you,
   active,
@@ -119,6 +161,9 @@ function StudyRow({
   chart: string
   point: ChartTable['rows'][number]['point']
   context: string
+  /** The Guide's country left it out, whoever has the card. */
+  off: boolean
+  /** Another row has the card. */
   dimmed: boolean
   you: boolean
   active: boolean
@@ -132,11 +177,13 @@ function StudyRow({
     point,
     anchor: () => number.current?.getBoundingClientRect() ?? new DOMRect(),
     via,
+    refocus: () => number.current?.focus(),
   })
   return (
     <tr
-      data-apagada={dimmed || undefined}
-      data-ativa={active || undefined}
+      data-apagada={off || undefined}
+      data-dimmed={(dimmed && !off) || undefined}
+      data-active={active || undefined}
       onPointerEnter={(event) => {
         if (event.pointerType !== 'touch') hoverCard(target('pointer'))
       }}
@@ -158,7 +205,7 @@ function StudyRow({
           event.preventDefault()
       }}
       className={cn(
-        'transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40 data-ativa:bg-agua-fonte/30',
+        'transition-opacity data-active:bg-agua-fonte/32 data-apagada:text-tinta-2 data-apagada:opacity-40 data-dimmed:text-tinta-2 data-dimmed:opacity-60',
         interactive && 'cursor-pointer',
       )}
     >
@@ -201,9 +248,10 @@ export function VisualChartTable({
   const host = useRef<HTMLTableElement>(null)
   const frame = useRef<HTMLDivElement>(null)
   const interactive = useInteractive()
-  const lit =
-    country !== null &&
-    table.rows.some((r) => r.point.country?.slug === country)
+  const lit = litByCountry(
+    table.rows.map((r) => r.point),
+    country,
+  )
   const active = card.target?.point.key ?? null
   useCloseCardOn(table.domId, country)
   return (
@@ -222,11 +270,8 @@ export function VisualChartTable({
                 chart={table.domId}
                 point={point}
                 context={context}
-                dimmed={
-                  active === null
-                    ? lit && point.country?.slug !== country
-                    : active !== point.key
-                }
+                off={lit && !reachesCountry(point, country)}
+                dimmed={active !== null && active !== point.key}
                 you={
                   point.covers.length > 0 &&
                   appliesToYou(profile, point.covers)?.covered === true

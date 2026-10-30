@@ -108,6 +108,8 @@
   --radius-mao-2: 3px 7px 4px 6px / 6px 4px 7px 3px;
   --radius-bolota: 50% 47% 52% 48%;
   --radius-redondo: 50%;
+  /* The tap label under a chart, as in the approved prototype (#498). */
+  --radius-pill: 999px;
   /* The switch track and the bar legend's swatch. */
   --radius-trilho: 13px 12px 13px 12px;
   --radius-amostra: 3px;

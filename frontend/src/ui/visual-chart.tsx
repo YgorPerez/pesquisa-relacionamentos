@@ -25,7 +25,7 @@ import {
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
-import { Toggle } from '@/ui/shadcn/toggle'
+import { Toggle, ToggleWords } from '@/ui/shadcn/toggle'
 import {
   closeCard,
   useCloseCardOn,
@@ -96,9 +96,10 @@ const pastMark = (chart: ChartView, point: ChartPoint) =>
 /** Where the mark ends and the words after it, on the page, read when the
  * card is placed: the page scrolls under it. */
 const markBox =
-  (host: HTMLElement | null, { x, y }: ChartMarkAt, past: number) =>
+  (host: HTMLElement | null, { place }: ChartMarkAt, past: number) =>
   (): DOMRect => {
     const box = host?.querySelector('svg')?.getBoundingClientRect()
+    const { x, y } = place()
     return new DOMRect((box?.x ?? 0) + x, (box?.y ?? 0) + y - 8, past, 16)
   }
 
@@ -124,11 +125,6 @@ function LineLabels({ points }: { points: ReadonlyArray<ChartPoint> }) {
     </div>
   )
 }
-
-/** A legend's key before the page's JS: the words in the box of the chip that
- * replaces them (`Toggle`), so the legend does not move when it arrives. */
-const KEY_WORDS =
-  'inline-flex min-h-toque items-center gap-2 border-(length:--traco-controle) border-transparent px-3.5 py-2 font-label text-nota leading-tight font-bold'
 
 /** The chart's own legend: which key is pressed and which the mouse is over.
  * It stays in the chart, not in the link (#497). */
@@ -181,16 +177,14 @@ function Legend({
             pressed={legend.pressed === key}
             onPressedChange={() => legend.press(key)}
             onPointerEnter={(event) => {
-              if (event.pointerType === 'mouse') legend.setPreview(key)
+              if (event.pointerType !== 'touch') legend.setPreview(key)
             }}
             onPointerLeave={() => legend.setPreview(null)}
           >
             {content}
           </Toggle>
         ) : (
-          <span key={id} className={KEY_WORDS}>
-            {content}
-          </span>
+          <ToggleWords key={id}>{content}</ToggleWords>
         ),
       )}
     </div>
@@ -322,6 +316,7 @@ function useChartMarks(chart: ChartView, host: RefObject<HTMLElement | null>) {
       point: mark.point,
       anchor: markBox(host.current, mark, pastMark(chart, mark.point)),
       via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
+      refocus: mark.refocus,
     }),
     [chartId, chart, host],
   )
@@ -387,7 +382,8 @@ export function VisualChart({
   const deferredLegend = useDeferredValue(legend.preview ?? legend.pressed)
   // What the card points at may go dark or leave with the page. A preview
   // lasts as long as the mouse is on a key: a pinned card outlives it.
-  useCloseCardOn(chart.domId, `${deferredCountry}|${legend.pressed}`)
+  const heldFilters = `${deferredCountry}|${legend.pressed}`
+  useCloseCardOn(chart.domId, heldFilters)
   useWantPlot(
     host,
     country !== null ||
