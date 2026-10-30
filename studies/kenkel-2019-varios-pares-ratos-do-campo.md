@@ -25,17 +25,17 @@ O laboratório de C. Sue Carter, uma das pesquisadoras que montaram o modelo do 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Grupos de machos que trocaram de par, testados | Depois do 1º, do 5º e do 10º par | Resumo | "Stud males were tested for behavioral and neurobiological e ffects of repeated pair-bonding after the 1st, 5th, and 10th pairing." |
-| Tamanho dos grupos no teste de preferência | 13, 25 e 15 machos; 7 velhos | 2.2 Partner Preference Test | "Sample sizes were as follows: 1st pairing: n = 13; 5th pairing: n = 25; 10th pairing: n = 15; Aged: n = 7." |
-| Preferência pela parceira em todos os grupos | Sim, inclusive no 10º par | Results | "male prairie voles retain the ability to form selective partner preferences with novel females up to at least 10 pairing experiences" |
-| Conclusão dos autores | Os machos continuam formando casal depois de desfazer vários | Discussion | "Our results show that male prairie voles retain the ability to form new pair-bonds in the face of repeated pair-bond dissolution." |
-| Comportamento depressivo e cuidado com os filhotes | Sem efeito da idade nem do número de pares | Resumo | "There were no effects of age nor number of lifetime pairings on depressive-like behavior or paternal behavior toward pups." |
-| Machos mais velhos, comparados aos mais novos, no teste de preferência | Os mais velhos passaram menos tempo junto da fêmea estranha | Results | "There was a main effect of age (F 1,56 = 4.91, η 2 = 0.029, p = 0.03)" |
-| Receptores de ocitocina e vasopressina | Em grande parte iguais entre os grupos | Discussion | "Within the brain, the densities of OTR and V1aR were largely similar across groups" |
+| Quando os machos foram testados | Depois do 1º, do 5º e do 10º par | Resumo | "Stud males were tested for behavioral and neurobiological e ffects of repeated pair-bonding after the 1st, 5th, and 10th pairing." |
+| Tamanho dos grupos no teste de preferência | 13 machos no 1º par, 25 no 5º, 15 no 10º e 7 velhos | 2.2 Partner Preference Test | "Sample sizes were as follows: 1st pairing: n = 13; 5th pairing: n = 25; 10th pairing: n = 15; Aged: n = 7." |
+| Preferência pela parceira | Os machos seguiram preferindo a nova parceira a uma fêmea estranha, até pelo menos o 10º par | Results | "male prairie voles retain the ability to form selective partner preferences with novel females up to at least 10 pairing experiences" |
+| Conclusão dos autores | Os machos continuam capazes de formar novos pares depois de ter vários desfeitos | Discussion | "Our results show that male prairie voles retain the ability to form new pair-bonds in the face of repeated pair-bond dissolution." |
+| Comportamento depressivo e cuidado com os filhotes | Não mudaram com a idade nem com o número de pares | Resumo | "There were no effects of age nor number of lifetime pairings on depressive-like behavior or paternal behavior toward pups." |
+| Idade e a fêmea estranha | Os dois grupos mais velhos, o do décimo par e o de machos velhos, passaram menos tempo junto da fêmea estranha | Results | "There was a main effect of age (F 1,56 = 4.91, η 2 = 0.029, p = 0.03)" |
+| Receptores de ocitocina e vasopressina | A quantidade no cérebro foi, em grande parte, parecida entre os grupos | Discussion | "Within the brain, the densities of OTR and V1aR were largely similar across groups" |
 | A exceção entre os receptores | Machos com um par só tinham mais receptor de ocitocina no tálamo paraventricular e no núcleo do leito da estria terminal | Discussion | "males with a single pairing experience had higher OTR densities in the paraventricular thalamus and bed nucleus of the stria terminalis" |
-| Mudanças nos receptores e o comportamento dos machos | As mudanças ligadas ao número de pares não acompanharam o comportamento | Discussion | "the neurobiological changes associated with the number of lifetime pairings did not match the observed patterns in behavior" |
-| Ratos-do-campo adultos que formam outro casal na natureza | Só 19%, depois de desfeito o par anterior | Discussion | "In the wild, only 19% of adult prairie voles acquire a new pair-mate following dissolution of a previous pair-bond" |
-| Leitura para humanos | Vários vínculos seguidos provavelmente não afetam o seguinte, se a neurobiologia for parecida | Discussion | "repeated pair-bonding is unlikely to affect the formation of subsequent bonds if the neurobiology of pair-bonding is similar between humans and prairie voles" |
+| Receptores e comportamento | As mudanças no cérebro ligadas ao número de pares não acompanharam o comportamento dos machos | Discussion | "the neurobiological changes associated with the number of lifetime pairings did not match the observed patterns in behavior" |
+| Novo par na natureza | Só 19% dos ratos-do-campo adultos formam outro par depois de desfeito o anterior | Discussion | "In the wild, only 19% of adult prairie voles acquire a new pair-mate following dissolution of a previous pair-bond" |
+| Leitura para humanos | Vários vínculos seguidos provavelmente não afetam o seguinte, se o cérebro funcionar de modo parecido nas duas espécies | Discussion | "repeated pair-bonding is unlikely to affect the formation of subsequent bonds if the neurobiology of pair-bonding is similar between humans and prairie voles" |
 
 O teste de cada grupo foi feito com a fêmea do par em questão: o grupo do 10º par formou preferência pela décima parceira, depois de nove pares desfeitos.
 

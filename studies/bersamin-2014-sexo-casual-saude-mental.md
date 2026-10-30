@@ -29,19 +29,19 @@ Num questionário único, os autores perguntaram quantas vezes, nos últimos 30 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Alunos na amostra | 3.907 solteiros heterossexuais de 18 a 25 anos, de 30 instituições | Resumo | "A multiethnic sample of single, heterosexual, emerging-adult college students (N = 3,907) ages 18 to 25, from 30 institutions across the United States" |
-| Composição por sexo | 32% homens, 68% mulheres | Method, Participants and Procedures | "reducing the sample to n = 3,907 (mean age = 19.58 years, SD = 1.51 years; 32% men, 68% women)" |
-| Fez sexo casual no último mês, todos | 11% | Results | "A total of 11% of the sample reported having engaged in casual sex in the 30 days prior to assessment." |
-| Fez sexo casual no último mês, por sexo | 18,6% dos homens e 7,4% das mulheres | Resumo | "A greater proportion of men (18.6%) compared to women (7.4%) reported having had casual sex in the month prior to assessment." |
-| Sexo casual e bem-estar (modelo, controlando nível socioeconômico) | β = −0,20, menos bem-estar | Results | "casual sex was significantly and negatively associated with the well-being latent variable (ß = −.20, p < .001), controlling for SES" |
-| Sexo casual e sofrimento psicológico | β = 0,16, mais sofrimento | Results | "Casual sex was also positively associated with a psychological distress latent variable (ß = .16, p < .001)." |
-| Diferença entre homens e mulheres | Nenhuma: a relação foi igual nos dois sexos | Resumo | "Gender did not moderate these associations." |
-| Bem-estar psicológico (escala de Ryff), média de quem fez vs. quem não fez | 71,49 vs. 80,19 | Tabela 2 | "Psychological well-being 71.49 (12.34) 80.19 (10.58)" |
-| Ansiedade geral, média de quem fez vs. quem não fez | 49,17 vs. 40,37 | Tabela 2 | "General anxiety 49.17 (16.73) 40.37 (15.83)" |
-| Depressão (CES-D), média de quem fez vs. quem não fez | 59,93 vs. 53,96 | Tabela 2 | "Depression 59.93 (13.66) 53.96 (12.05)" |
-| Ansiedade social, média de quem fez vs. quem não fez | 52,87 vs. 50,16, a menor diferença | Tabela 2 | "Social anxiety 52.87 (15.12) 50.16 (14.19)" |
+| Quantos alunos | 3.907 universitários solteiros e heterossexuais, de 18 a 25 anos, de 30 instituições | Resumo | "A multiethnic sample of single, heterosexual, emerging-adult college students (N = 3,907) ages 18 to 25, from 30 institutions across the United States" |
+| Homens e mulheres | 32% homens e 68% mulheres | Method, Participants and Procedures | "reducing the sample to n = 3,907 (mean age = 19.58 years, SD = 1.51 years; 32% men, 68% women)" |
+| Sexo casual no último mês | 11% dos alunos disseram ter feito nos 30 dias anteriores | Results | "A total of 11% of the sample reported having engaged in casual sex in the 30 days prior to assessment." |
+| Sexo casual no último mês, por sexo | 18,6% dos homens e 7,4% das mulheres disseram ter feito | Resumo | "A greater proportion of men (18.6%) compared to women (7.4%) reported having had casual sex in the month prior to assessment." |
+| Sexo casual e bem-estar | Levando em conta o nível socioeconômico, quem fez sexo casual teve menos bem-estar (β = −0,20) | Results | "casual sex was significantly and negatively associated with the well-being latent variable (ß = −.20, p < .001), controlling for SES" |
+| Sexo casual e sofrimento psicológico | Quem fez sexo casual teve mais sofrimento psicológico (β = 0,16) | Results | "Casual sex was also positively associated with a psychological distress latent variable (ß = .16, p < .001)." |
+| Diferença entre homens e mulheres | Essas ligações não mudaram entre um sexo e outro | Resumo | "Gender did not moderate these associations." |
+| Bem-estar psicológico | Média menor em quem fez sexo casual (71,49) que em quem não fez (80,19) | Tabela 2 | "Psychological well-being 71.49 (12.34) 80.19 (10.58)" |
+| Ansiedade geral | Média maior em quem fez sexo casual (49,17) que em quem não fez (40,37) | Tabela 2 | "General anxiety 49.17 (16.73) 40.37 (15.83)" |
+| Depressão | Média maior em quem fez sexo casual (59,93) que em quem não fez (53,96) | Tabela 2 | "Depression 59.93 (13.66) 53.96 (12.05)" |
+| Ansiedade social | Média maior em quem fez sexo casual (52,87) que em quem não fez (50,16), a menor diferença entre as medidas | Tabela 2 | "Social anxiety 52.87 (15.12) 50.16 (14.19)" |
 
-Na Tabela 2, o d de Cohen dessas diferenças vai de 0,19 (ansiedade social) a 0,76 (bem-estar psicológico); depressão e ansiedade geral ficam perto de 0,5. São comparações simples de médias, sem os controles do modelo.
+O β mede a força da ligação numa conta que junta várias medidas: quanto mais longe de zero, mais forte; negativo quer dizer menos, positivo quer dizer mais. As linhas de média são comparações simples, sem levar em conta outros fatores. Na Tabela 2, o tamanho dessas diferenças em desvios-padrão (o d de Cohen) vai de 0,19 (ansiedade social) a 0,76 (bem-estar psicológico); depressão e ansiedade geral ficam perto de 0,5.
 
 ## Definições
 

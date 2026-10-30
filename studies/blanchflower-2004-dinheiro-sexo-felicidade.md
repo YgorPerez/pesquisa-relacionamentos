@@ -27,21 +27,21 @@ Os autores juntaram as rodadas de 1988 a 2002 do General Social Survey, que perg
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Amostra | Cerca de 16.000 adultos sorteados | Resumo | "It uses recent data on a random sample of 16,000 adult Americans." |
-| Número de parceiros no último ano que maximiza a felicidade | 1 | Resumo | "The happiness-maximizing number of sexual partners in the previous year is calculated to be 1." |
-| Felicidade de quem teve um parceiro só no último ano, todos (logit ordenado, com a frequência de sexo e os controles) | Coeficiente 0,263 (t = 4,65), mais feliz, significativo | Tabela 3, coluna 1, linha Single partner | ".263 (4.65)" |
-| Felicidade de quem teve um parceiro só no último ano, homens | Coeficiente 0,165 (t = 2,09), mais feliz | Tabela 3, coluna 2 | ".165 (2.09)" |
-| Felicidade de quem teve um parceiro só no último ano, mulheres | Coeficiente 0,362 (t = 4,36), mais feliz | Tabela 3, coluna 3 | ".362 (4.36)" |
-| Felicidade de quem teve um parceiro só no último ano, menores de 40 anos | Coeficiente 0,240 (t = 3,18), mais feliz | Tabela 3, coluna 4 | ".240 (3.18)" |
-| Felicidade de quem teve um parceiro só no último ano, na escala de 1 a 3 (MQO) | +0,077 ponto de felicidade (t = 4,69) | Tabela 2, coluna 1 | ".077 (4.69)" |
-| Sexo quatro ou mais vezes por semana, mesma escala (MQO) | +0,115 ponto, comparado a nenhum sexo no ano | Tabela 2, coluna 1 | ".115 (3.94)" |
-| Felicidade de quem já pagou por sexo | Coeficiente −0,330 (t = 4,47), menos feliz | Tabela 4, coluna 1 | "-.330 (4.47)" |
-| Felicidade de quem já transou fora do casamento (entre quem já casou) | Coeficiente −0,210 (t = 3,32), menos feliz | Tabela 4, coluna 2 | "-.210 (3.32)" |
-| Menores de 40 com até um parceiro no último ano | 84% das mulheres e 70% dos homens | p. 7 | "among the under-40s 84% of US women and 70% of US men had at most one sexual partner in the previous year" |
-| Menores de 40 com três ou mais parceiros no último ano | 11% | p. 7 | "only 11% of under-40 Americans reported themselves as having 3 or more sexual partners in the previous year" |
+| Quantas pessoas | Cerca de 16.000 adultos americanos sorteados | Resumo | "It uses recent data on a random sample of 16,000 adult Americans." |
+| Número de parceiros e felicidade | O número de parceiros no último ano que vem com mais felicidade é 1 | Resumo | "The happiness-maximizing number of sexual partners in the previous year is calculated to be 1." |
+| Um parceiro só no último ano | Quem teve um parceiro só foi mais feliz, levando em conta a frequência de sexo e outros fatores (coeficiente = 0,263; t = 4,65) | Tabela 3, coluna 1, linha Single partner | ".263 (4.65)" |
+| Um parceiro só, nos homens | Os que tiveram um parceiro só no último ano foram mais felizes (coeficiente = 0,165; t = 2,09) | Tabela 3, coluna 2 | ".165 (2.09)" |
+| Um parceiro só, nas mulheres | As que tiveram um parceiro só no último ano foram mais felizes (coeficiente = 0,362; t = 4,36) | Tabela 3, coluna 3 | ".362 (4.36)" |
+| Um parceiro só, nos menores de 40 anos | Os que tiveram um parceiro só no último ano foram mais felizes (coeficiente = 0,240; t = 3,18) | Tabela 3, coluna 4 | ".240 (3.18)" |
+| Um parceiro só, na nota de felicidade de 1 a 3 | Quem teve um parceiro só no último ano ficou 0,077 ponto acima (t = 4,69) | Tabela 2, coluna 1 | ".077 (4.69)" |
+| Sexo quatro ou mais vezes por semana, na mesma nota | Quem fez ficou 0,115 ponto acima de quem não fez sexo no ano | Tabela 2, coluna 1 | ".115 (3.94)" |
+| Já pagou por sexo | Quem já pagou foi menos feliz (coeficiente = −0,330; t = 4,47) | Tabela 4, coluna 1 | "-.330 (4.47)" |
+| Sexo fora do casamento | Entre quem já casou, quem já transou fora do casamento foi menos feliz (coeficiente = −0,210; t = 3,32) | Tabela 4, coluna 2 | "-.210 (3.32)" |
+| Menores de 40 com até um parceiro | 84% das mulheres e 70% dos homens tiveram no máximo um parceiro no último ano | p. 7 | "among the under-40s 84% of US women and 70% of US men had at most one sexual partner in the previous year" |
+| Menores de 40 com três ou mais parceiros | 11% relataram isso no último ano | p. 7 | "only 11% of under-40 Americans reported themselves as having 3 or more sexual partners in the previous year" |
 | Aviso dos autores | Cada pessoa respondeu uma vez só: não dá para saber se o sexo traz felicidade ou se é o contrário | Resumo | "Our conclusions are based on pooled cross-section equations in which it is not possible to correct for the endogeneity of sexual activity." |
 
-O indicador "um parceiro só" vale 1 para quem teve exatamente um parceiro nos 12 meses anteriores. Como a mesma equação já separa quem não transou no ano (a categoria de referência da frequência), o coeficiente compara, na prática, um parceiro com dois ou mais, para a mesma frequência de sexo e o mesmo estado civil. Um coeficiente de logit ordenado não é uma porcentagem: indica a direção e a força relativa dentro da mesma tabela. Na escala de MQO, 0,077 ponto é cerca de dois terços do ganho associado a transar quatro ou mais vezes por semana (0,115).
+"Um parceiro só" é quem teve exatamente um parceiro nos 12 meses anteriores. Como a mesma conta já separa quem não transou no ano, a comparação é, na prática, entre um parceiro e dois ou mais, para a mesma frequência de sexo e o mesmo estado civil. O coeficiente não é uma porcentagem: dá a direção e a força relativa dentro da mesma tabela. O "t" diz quanto o resultado se afasta do que o acaso daria: quanto maior, menos provável que seja acaso. Na nota de felicidade de 1 a 3, 0,077 ponto é cerca de dois terços dos 0,115 ponto de quem transa quatro ou mais vezes por semana.
 
 ## Limitações
 
