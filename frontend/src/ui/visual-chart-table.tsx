@@ -9,7 +9,7 @@
 // the server's table is the whole drawing, and the tap is a plain button.
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import { useRef } from 'react'
+import { useRef, type RefObject } from 'react'
 import type { ChartTable } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
 import {
@@ -65,6 +65,42 @@ function TableHead() {
   )
 }
 
+/** A Study's number: the way into its card for a keyboard and a screen
+ * reader. */
+function StudyNumber({
+  chart,
+  text,
+  pinned,
+  buttonRef,
+  onKeyboard,
+}: {
+  chart: string
+  text: string
+  pinned: boolean
+  buttonRef: RefObject<HTMLButtonElement | null>
+  onKeyboard: () => void
+}) {
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      aria-label={CHART_TABLE_COPY.openDetail(text)}
+      aria-expanded={pinned}
+      aria-haspopup="dialog"
+      onFocus={(event) => {
+        if (event.target.matches(':focus-visible')) onKeyboard()
+      }}
+      onBlur={() => hoverCard(null, chart)}
+      className={cn(
+        'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
+      )}
+    >
+      {text}
+    </button>
+  )
+}
+
 /** A Study's row: its title, context and measure, and its number. The whole
  * row is a target: a mouse over it shows its card, a click pins it, and its
  * number is the way in for a keyboard and a screen reader. The rings in its
@@ -110,6 +146,16 @@ function StudyRow({
         if (event.target instanceof Element && event.target.closest('a')) return
         pinCard(target('pointer'))
       }}
+      onKeyDown={(event) => {
+        // From the number: Tab goes on into the pinned card.
+        if (
+          pinned &&
+          event.key === 'Tab' &&
+          !event.shiftKey &&
+          enterCard(chart)
+        )
+          event.preventDefault()
+      }}
       className={cn(
         'transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40 data-ativa:bg-agua-fonte/30',
         interactive && 'cursor-pointer',
@@ -128,33 +174,13 @@ function StudyRow({
         <span className="block italic">{point.detail}</span>
       </th>
       <td className={`${CELL} text-right`}>
-        <button
-          ref={number}
-          type="button"
-          aria-label={CHART_TABLE_COPY.openDetail(point.number.text)}
-          aria-expanded={pinned}
-          aria-haspopup="dialog"
-          onFocus={(event) => {
-            if (event.target.matches(':focus-visible'))
-              hoverCard(target('keyboard'))
-          }}
-          onBlur={() => hoverCard(null, chart)}
-          onKeyDown={(event) => {
-            if (
-              pinned &&
-              event.key === 'Tab' &&
-              !event.shiftKey &&
-              enterCard(chart)
-            )
-              event.preventDefault()
-          }}
-          className={cn(
-            'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
-          )}
-        >
-          {point.number.text}
-        </button>
+        <StudyNumber
+          chart={chart}
+          text={point.number.text}
+          pinned={pinned}
+          buttonRef={number}
+          onKeyboard={() => hoverCard(target('keyboard'))}
+        />
       </td>
     </tr>
   )

@@ -7,8 +7,8 @@
 import { Popover } from '@base-ui/react/popover'
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import type { RefObject } from 'react'
-import type { ChartPoint } from '#/content/chart-view'
+import type { ReactNode, RefObject } from 'react'
+import type { ChartPoint } from '#/content/chart-point'
 import { cn } from '@/platform/cn'
 import { SiteButton } from './button'
 import { cardId, closeCard, type CardState } from './chart-card'
@@ -28,6 +28,43 @@ const CARD_ROOM = 300 + 16
  * phone, where beside it would mean over the page's top. */
 const roomBeside = (anchor: () => DOMRect) =>
   document.documentElement.clientWidth - anchor().right >= CARD_ROOM
+
+/** One line of the card's list, with its name. */
+function Fact({ name, children }: { name: string; children: ReactNode }) {
+  return (
+    <>
+      <dt className="text-tinta-2">{name}</dt>
+      <dd className="m-0">{children}</dd>
+    </>
+  )
+}
+
+/** The way to the Fact sheet and "Fechar", on a pinned card. */
+function PinnedActions({
+  point,
+  onClose,
+}: {
+  point: ChartPoint
+  onClose: (click: { readonly detail: number }) => void
+}) {
+  return (
+    <div className="mt-1 flex flex-col items-start">
+      {point.number.sources.map((source) => (
+        <SmallLink
+          key={source.anchor}
+          to="/estudos/$slug"
+          params={{ slug: slugOfAnchor(source.anchor) }}
+          className="text-agua-tinta"
+        >
+          {CHART_COPY.openFactSheet(source.title)}
+        </SmallLink>
+      ))}
+      <SiteButton variant="light" onClick={onClose} className="self-end">
+        {CHART_COPY.close}
+      </SiteButton>
+    </div>
+  )
+}
 
 /** The card's words, in either state. */
 export function VisualDetail({
@@ -68,24 +105,15 @@ export function VisualDetail({
       )}
       <dl className="m-0 mt-1 grid grid-cols-[auto_1fr] gap-x-2">
         {point.country && (
-          <>
-            <dt className="text-tinta-2">{CHART_COPY.country}</dt>
-            <dd className="m-0">{point.country.name}</dd>
-          </>
+          <Fact name={CHART_COPY.country}>{point.country.name}</Fact>
         )}
         {point.year !== null && (
-          <>
-            <dt className="text-tinta-2">{CHART_COPY.year}</dt>
-            <dd className="m-0">{point.year}</dd>
-          </>
+          <Fact name={CHART_COPY.year}>{point.year}</Fact>
         )}
         {definition && point.definition !== null && (
-          <>
-            <dt className="text-tinta-2">{CHART_COPY.definition}</dt>
-            <dd className="m-0">
-              <DefinitionGlyph shape={point.definition} /> {definition.legend}
-            </dd>
-          </>
+          <Fact name={CHART_COPY.definition}>
+            <DefinitionGlyph shape={point.definition} /> {definition.legend}
+          </Fact>
         )}
       </dl>
       {you && (
@@ -95,25 +123,27 @@ export function VisualDetail({
         </p>
       )}
       {hint && <p className="m-0 mt-1 font-bold text-agua-tinta">{hint}</p>}
-      {onClose && (
-        <div className="mt-1 flex flex-col items-start">
-          {point.number.sources.map((source) => (
-            <SmallLink
-              key={source.anchor}
-              to="/estudos/$slug"
-              params={{ slug: slugOfAnchor(source.anchor) }}
-              className="text-agua-tinta"
-            >
-              {CHART_COPY.openFactSheet(source.title)}
-            </SmallLink>
-          ))}
-          <SiteButton variant="light" onClick={onClose} className="self-end">
-            {CHART_COPY.close}
-          </SiteButton>
-        </div>
-      )}
+      {onClose && <PinnedActions point={point} onClose={onClose} />}
     </>
   )
+}
+
+/** How the card closes: a keyboard that was in it goes back to the mark. A
+ * mouse's click (`detail` above 0) stays out of it: focusing the chart would
+ * show its first point's card under a pointer that is elsewhere. */
+function closeFrom(
+  chart: string,
+  host: HTMLElement | null,
+  click?: { readonly detail: number },
+) {
+  const inside = document
+    .getElementById(cardId(chart))
+    ?.contains(document.activeElement)
+  const mark = host?.querySelector<HTMLElement>(
+    'svg, button[aria-expanded="true"]',
+  )
+  closeCard()
+  if (inside && !click?.detail) mark?.focus()
 }
 
 /** The one card, beside the mark it belongs to. `host` holds the chart's
@@ -132,18 +162,8 @@ export function ChartCard({
 }) {
   const { target, pinned } = card
   if (!target) return null
-  const close = (click?: { readonly detail: number }) => {
-    const id = cardId(target.chart)
-    const inside = document.getElementById(id)?.contains(document.activeElement)
-    const mark = host.current?.querySelector<HTMLElement>(
-      'svg, button[aria-expanded="true"]',
-    )
-    closeCard()
-    // A keyboard was in the card, which is gone: back to the mark. A mouse's
-    // click (`detail` above 0) stays out of it: focusing the chart would show
-    // its first point's card under a pointer that is elsewhere.
-    if (inside && !click?.detail) mark?.focus()
-  }
+  const close = (click?: { readonly detail: number }) =>
+    closeFrom(target.chart, host.current, click)
   const hint =
     target.via === 'keyboard' ? CHART_COPY.pinByKey : CHART_COPY.pinByPointer
   return (

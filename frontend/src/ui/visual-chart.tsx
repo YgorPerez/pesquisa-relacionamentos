@@ -16,9 +16,11 @@ import {
   useDeferredValue,
   useEffect,
   useRef,
+  type FocusEvent,
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
+  type RefObject,
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
@@ -124,93 +126,10 @@ function Legend({ slot, children }: { slot?: string; children: ReactNode }) {
 
 const ARROWS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 
-export function VisualChart({
-  chart,
-  country,
-  profile,
-}: {
-  chart: ChartView
-  /** The Guide's chosen country (`?pais=`), or `null`. */
-  country: string | null
-  profile: Profile | null
-}) {
-  const chartId = chart.domId
-  const card = useChartCard(chartId)
-  const host = useRef<HTMLDivElement>(null)
-  /** What moved last: a finger's move is not a hover, and the card tells a
-   * keyboard how to pin. */
-  const input = useRef<'mouse' | 'touch' | 'keyboard'>('mouse')
-  const deferredCountry = useDeferredValue(country)
-  const deferredProfile = useDeferredValue(profile)
-  const interactive = useInteractive()
-
-  const targetOf = useCallback(
-    (mark: ChartMarkAt): CardTarget => ({
-      chart: chartId,
-      point: mark.point,
-      anchor: markBox(host.current, mark, WORDS_PAST_MARK[chart.kind]),
-      via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
-    }),
-    [chartId, chart.kind],
-  )
-  const onHover = useCallback(
-    (mark: ChartMarkAt | null) => {
-      if (input.current === 'touch') return
-      if (mark) hoverCard(targetOf(mark))
-      else hoverCard(null, chartId)
-    },
-    [chartId, targetOf],
-  )
-  const onSelect = useCallback(
-    (mark: ChartMarkAt | null) => {
-      if (mark) pinCard(targetOf(mark))
-      else closeCard()
-    },
-    [targetOf],
-  )
-  const onPointer = (event: PointerEvent) => {
-    input.current = event.pointerType === 'touch' ? 'touch' : 'mouse'
-  }
-  const onKey = (event: KeyboardEvent) => {
-    input.current = 'keyboard'
-    if (!card.pinned) return
-    // The card follows the arrows, unpinned: only Enter pins.
-    if (ARROWS.has(event.key)) closeCard()
-    if (event.key === 'Tab' && !event.shiftKey && enterCard(chartId))
-      event.preventDefault()
-  }
-
-  // What the card points at may go dark or leave with the page.
-  useCloseCardOn(chartId, deferredCountry)
-  useEffect(() => {
-    const element = host.current
-    if (!element || typeof IntersectionObserver === 'undefined') {
-      wantPlot()
-      return
-    }
-    // Half a screen ahead, so the library is there when the chart is.
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) wantPlot()
-      },
-      { rootMargin: '50% 0px' },
-    )
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
-  useEffect(() => {
-    // A country or a Profile chosen before the chart came near.
-    if (country !== null || profile !== null) wantPlot()
-  }, [country, profile])
-
+/** The keys over the plot: the definitions' shapes, the stacked bars' parts. */
+function ChartKeys({ chart }: { chart: ChartView }) {
   return (
-    <VisualFrame
-      domId={chart.domId}
-      title={chart.title}
-      note={chart.note}
-      ownLines={chart.ownLines}
-      sources={chart.sources}
-    >
+    <>
       {chart.definitions.length > 0 && (
         <Legend>
           <span className="text-tinta-2">{CHART_COPY.legend}</span>
@@ -242,6 +161,147 @@ export function VisualChart({
           ))}
         </Legend>
       )}
+    </>
+  )
+}
+
+/** Every exact value, for a screen reader: the SVG is an image to it. */
+function ValueList({ chart }: { chart: ChartView }) {
+  return (
+    <ul className="sr-only">
+      {chart.points.map((p) => (
+        <li key={p.key}>
+          {chart.kind === 'line' && `${p.year} · `}
+          {p.label}
+          {p.detail && `, ${p.detail}`}: {p.number.text}
+          {p.range && (
+            <ul>
+              {p.range.map((q) => (
+                <li key={q.key}>
+                  {q.label}: {q.number.text}
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** Asks for the library once `host` nears the screen, or as soon as a country
+ * or a Profile was chosen. */
+function useWantPlot(host: RefObject<HTMLElement | null>, chosen: boolean) {
+  useEffect(() => {
+    const element = host.current
+    if (!element || typeof IntersectionObserver === 'undefined') {
+      wantPlot()
+      return
+    }
+    // Half a screen ahead, so the library is there when the chart is.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) wantPlot()
+      },
+      { rootMargin: '50% 0px' },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [host])
+  useEffect(() => {
+    if (chosen) wantPlot()
+  }, [chosen])
+}
+
+/** A chart's marks and its card: what the plot reports and what the plot's
+ * host listens to. */
+function useChartMarks(chart: ChartView, host: RefObject<HTMLElement | null>) {
+  const chartId = chart.domId
+  const card = useChartCard(chartId)
+  /** What moved last: a finger's move is not a hover, and the card tells a
+   * keyboard how to pin. */
+  const input = useRef<'mouse' | 'touch' | 'keyboard'>('mouse')
+
+  const targetOf = useCallback(
+    (mark: ChartMarkAt): CardTarget => ({
+      chart: chartId,
+      point: mark.point,
+      anchor: markBox(host.current, mark, WORDS_PAST_MARK[chart.kind]),
+      via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
+    }),
+    [chartId, chart.kind, host],
+  )
+  const onHover = useCallback(
+    (mark: ChartMarkAt | null) => {
+      if (input.current === 'touch') return
+      if (mark) hoverCard(targetOf(mark))
+      else hoverCard(null, chartId)
+    },
+    [chartId, targetOf],
+  )
+  const onSelect = useCallback(
+    (mark: ChartMarkAt | null) => {
+      if (mark) pinCard(targetOf(mark))
+      else closeCard()
+    },
+    [targetOf],
+  )
+  const onPointer = (event: PointerEvent) => {
+    input.current = event.pointerType === 'touch' ? 'touch' : 'mouse'
+  }
+  const onKey = (event: KeyboardEvent) => {
+    input.current = 'keyboard'
+    if (!card.pinned) return
+    // The card follows the arrows, unpinned: only Enter pins.
+    if (ARROWS.has(event.key)) closeCard()
+    if (event.key === 'Tab' && !event.shiftKey && enterCard(chartId))
+      event.preventDefault()
+  }
+  const onFocusCapture = (event: FocusEvent<HTMLElement>) => {
+    // Ahead of the library's own listener, which shows the first mark.
+    if (event.target.matches(':focus-visible')) input.current = 'keyboard'
+  }
+  return {
+    card,
+    onHover,
+    onSelect,
+    hostEvents: {
+      onFocusCapture,
+      onPointerMoveCapture: onPointer,
+      onPointerDownCapture: onPointer,
+      onKeyDownCapture: onKey,
+    },
+  }
+}
+
+export function VisualChart({
+  chart,
+  country,
+  profile,
+}: {
+  chart: ChartView
+  /** The Guide's chosen country (`?pais=`), or `null`. */
+  country: string | null
+  profile: Profile | null
+}) {
+  const host = useRef<HTMLDivElement>(null)
+  const { card, onHover, onSelect, hostEvents } = useChartMarks(chart, host)
+  const deferredCountry = useDeferredValue(country)
+  const deferredProfile = useDeferredValue(profile)
+  const interactive = useInteractive()
+  // What the card points at may go dark or leave with the page.
+  useCloseCardOn(chart.domId, deferredCountry)
+  useWantPlot(host, country !== null || profile !== null)
+
+  return (
+    <VisualFrame
+      domId={chart.domId}
+      title={chart.title}
+      note={chart.note}
+      ownLines={chart.ownLines}
+      sources={chart.sources}
+    >
+      <ChartKeys chart={chart} />
       <div
         ref={host}
         data-slot="grafico"
@@ -253,13 +313,7 @@ export function VisualChart({
         onPointerEnter={wantPlot}
         onPointerDown={wantPlot}
         onFocus={wantPlot}
-        onFocusCapture={(event) => {
-          // Ahead of the library's own listener, which shows the first mark.
-          if (event.target.matches(':focus-visible')) input.current = 'keyboard'
-        }}
-        onPointerMoveCapture={onPointer}
-        onPointerDownCapture={onPointer}
-        onKeyDownCapture={onKey}
+        {...hostEvents}
       >
         <Island
           chart={chart}
@@ -278,24 +332,7 @@ export function VisualChart({
           {CHART_COPY.hint}
         </p>
       )}
-      <ul className="sr-only">
-        {chart.points.map((p) => (
-          <li key={p.key}>
-            {chart.kind === 'line' && `${p.year} · `}
-            {p.label}
-            {p.detail && `, ${p.detail}`}: {p.number.text}
-            {p.range && (
-              <ul>
-                {p.range.map((q) => (
-                  <li key={q.key}>
-                    {q.label}: {q.number.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
+      <ValueList chart={chart} />
       {/* The arrows' card, said aloud: the focus stays on the chart. */}
       <div aria-live="polite" className="sr-only">
         {card.target &&

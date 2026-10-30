@@ -4,7 +4,7 @@
 // card is open at a time across the page, and a chart re-renders only when
 // the card is its own.
 import { useEffect, useRef, useSyncExternalStore } from 'react'
-import type { ChartPoint } from '#/content/chart-view'
+import type { ChartPoint } from '#/content/chart-point'
 
 /** A mark in the drawing's pixels: where it ends, and the point it draws. */
 export interface ChartMarkAt {

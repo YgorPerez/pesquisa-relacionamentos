@@ -18,7 +18,6 @@ import {
 } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
 import VisualChartPlot from './visual-chart-plot'
-import type { ChartView } from '#/content/chart-view'
 
 // Rendered as the server renders: with the plot already loaded.
 beforeAll(async () => {
@@ -454,7 +453,7 @@ it('starts a time line right above its highest words, with room for a value\'s "
 })
 
 /** The plot as it draws while `active` has the card (#499). */
-const drawnWith = (chart: ChartView, active: string | null) =>
+const drawnWith = (chart: typeof DOTS, active: string | null) =>
   page(
     renderToString(
       <VisualChartPlot
