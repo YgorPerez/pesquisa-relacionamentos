@@ -214,8 +214,8 @@ function WhatItMeasured() {
   )
 }
 
-/** The Findings, each with the number, the measure and the original's
- * Excerpt, and their notes below. */
+/** The Findings, each with the measure as its title, the result and the
+ * original's Excerpt, and their notes below. */
 function Findings() {
   const { findings, findingsNotesHtml: notesHtml } = useFactSheet()
   return (
@@ -225,18 +225,18 @@ function Findings() {
         {findings.map((finding) => (
           <li
             key={`${finding.measure}|${finding.value}|${finding.locator}`}
-            className="grid grid-cols-[minmax(64px,max-content)_1fr] gap-sm border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5 estreito:grid-cols-1 estreito:gap-0.5"
+            className="border-t-(length:--traco-etiqueta) fio-pontilhado border-tinta py-4 first:border-t-0 first:pt-0.5"
           >
             <Html
-              className="max-w-38 font-title text-title leading-title font-bold tracking-normal wrap-anywhere estreito:max-w-none"
-              html={finding.value}
+              className="font-title leading-title font-bold tracking-normal wrap-anywhere"
+              html={finding.measure}
               quote="achados"
             />
-            <div>
+            <div className="mt-0.5">
               <Html
                 as="span"
                 className="block"
-                html={finding.measure}
+                html={finding.value}
                 quote="achados"
               />
               {finding.excerpt ? (
