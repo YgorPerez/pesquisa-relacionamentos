@@ -42,8 +42,8 @@ Os casamentos civis registrados nos Cartórios de Registro Civil de Pessoas Natu
 | Mulheres com 40 anos ou mais entre as que casaram com homem | Foram 8,5% em 2004 e 25,3% em 2024 | Informativo, p. 7 | "Em 2004, 8,5% das mulheres que se casaram tinham 40 anos ou mais de idade. Em 2024, 25,3%" | |
 | Homens com 40 anos ou mais entre os que casaram com mulher | Foram 13,2% em 2004 e 31,3% em 2024 | Informativo, p. 7 | "entre 2004 (13,2%) e 2024 (31,3%)" | |
 | Casamentos com pelo menos um cônjuge divorciado ou viúvo | Foram 13,5% em 2004, 23,4% em 2014 e 31,1% em 2024 | Informativo, p. 7 | "variou de 13,5%, em 2004, a 23,4%, em 2014, alcançando, em 2024, 31,1%" | |
-| Divórcios, 2024 | 428.301 divórcios | SIDRA 1695, Brasil | "2023":"440827","2024":"428301" | |
-| Divórcios em relação a 2023 | Queda de 2,8% | Informativo, p. 7 | "o que representa uma redução de 2,8% em relação ao total contabilizado em 2023" | |
+| Divórcios entre pessoas de sexos diferentes, 2024 | 428.301 divórcios | SIDRA 1695, Brasil | "2023":"440827","2024":"428301" | |
+| Divórcios entre pessoas de sexos diferentes, em relação a 2023 | Queda de 2,8% | Informativo, p. 7 | "o que representa uma redução de 2,8% em relação ao total contabilizado em 2023" | |
 | Divórcios judiciais, 2024 | 81,8% dos divórcios foram judiciais, em primeira instância | Informativo, p. 7 | "Os divórcios judiciais concedidos em primeira instância corresponderam a 81,8% dos divórcios" | |
 | Divórcios por casamento, sexos diferentes, 2024 | Cerca de 45,7 divórcios a cada 100 casamentos registrados | Informativo, p. 7 | "a cada 100 casamentos entre pessoas de sexos diferentes que foram registrados, ocorreram cerca de 45,7 divórcios" | |
 | Taxa geral de divórcios, 2024 | Cerca de 2,7 divórcios por mil pessoas de 20 anos ou mais | Informativo, p. 7 | "1 000 pessoas de 20 anos ou mais de idade foi de aproximadamente 2,7‰ em 2024" | |
