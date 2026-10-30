@@ -24,13 +24,13 @@ Se morar junto antes do noivado se associa à qualidade do casamento e ao divór
 
 ## Achados
 
-Nos dois primeiros resultados, a comparação é com quem começou a morar junto sem estar noivo. A razão de chances compara a chance de divórcio em um ano de casamento, levando em conta outras características: abaixo de 1, menos chance. Ela não é a probabilidade de se divorciar ao longo da vida. "EP" é o erro-padrão, a incerteza da conta, e "B" é a mesma conta antes de virar razão de chances. "d" mede o tamanho da diferença entre dois grupos: 0,2 é pequena e 0,5 é média.
+Nos dois primeiros resultados, a comparação é com quem começou a morar junto sem estar noivo. A razão de chances compara a chance de divórcio em um ano de casamento, levando em conta outras características: abaixo de 1, menos chance. Ela não é a probabilidade de se divorciar ao longo da vida. "EP" é o erro-padrão, a incerteza da conta, e "B" é a mesma conta antes de virar razão de chances. "d" mede o tamanho da diferença entre dois grupos: pelo critério do artigo, menos de 0,2 é fraca, de 0,2 a 0,39 é moderada e 0,4 ou mais é forte.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Morar junto só depois do noivado, no primeiro casamento | Menos chance de divórcio que quem começou sem estar noivo, e a diferença não parece acaso (razão de chances de 0,55; EP = 0,24) | Tabela 4, linha Cohabitation after engagement; asterisco indica significância | "0.24 0.55" |
 | Morar junto só depois de casar, no primeiro casamento | Menos chance de divórcio que quem começou sem estar noivo, mas a diferença pode ser acaso (razão de chances de 0,70; B = −0,36; EP = 0,21) | Tabela 4, linha No cohabitation until marriage; cruz indica o limiar marginal | "No cohabitation until marriage −0.36 † 0.21 0.70" |
-| Brigas e críticas no primeiro casamento (interação negativa) | Levando em conta o resto, a média foi 6,67 em quem começou a morar junto sem noivado, 5,95 em quem começou após noivar e 5,86 em quem começou após casar; entre os dois primeiros grupos, uma diferença pequena (d = 0,31) | Tabela 2, Adjusted Results: First Marriages, Negative interaction; o contraste tem asterisco de significância | "6.67 5.95 5.86 .31" |
+| Conflito no primeiro casamento (interação negativa) | Levando em conta o resto, a média foi 6,67 em quem começou a morar junto sem noivado, 5,95 em quem começou após noivar e 5,86 em quem começou após casar; entre os dois primeiros grupos, uma diferença moderada pelo critério do artigo (d = 0,31) | Tabela 2, Adjusted Results: First Marriages, Negative interaction; o contraste tem asterisco de significância | "6.67 5.95 5.86 .31" |
 
 ## Limitações
 
