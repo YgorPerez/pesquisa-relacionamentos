@@ -146,9 +146,7 @@ export const RangeEnds: Story = {
     // The range's line, on the second row; the scale runs to 100%.
     const y = 0.74
     await hoverAt(chart, 0.05, y)
-    await waitFor(() =>
-      expect(cardElement()).toHaveAccessibleName('Gana: 7%'),
-    )
+    await waitFor(() => expect(cardElement()).toHaveAccessibleName('Gana: 7%'))
     await hoverAt(chart, 0.42, y)
     await waitFor(() =>
       expect(cardElement()).toHaveAccessibleName('Polônia: 33%'),
