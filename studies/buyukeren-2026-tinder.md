@@ -24,23 +24,23 @@ Um experimento natural comparou membros de fraternidades e sororidades, que rece
 
 ## Achados
 
-As primeiras linhas são diferenças de mudança entre membros e não membros de fraternidades e sororidades, com controles. β é o coeficiente do modelo e EP, o erro-padrão, agrupado por instituição. Nos desfechos de sim ou não, β está na escala de probabilidade (0,01 é um ponto percentual); no índice de saúde mental, na escala padronizada. Os trechos numéricos são células das tabelas, com o EP entre parênteses.
+As linhas comparam quanto cada coisa mudou depois do lançamento do Tinder entre membros de fraternidades e sororidades e os outros alunos da mesma faculdade, levando em conta características dos alunos. β é essa diferença de mudança. EP é a margem de imprecisão dela (erro-padrão), agrupada por instituição. Nas perguntas de sim ou não, 0,01 em β é um ponto percentual; no índice de saúde mental, β vem em desvios-padrão do índice. Os trechos numéricos são células das tabelas, com o EP entre parênteses.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Depois do lançamento do Tinder, membros de fraternidades e sororidades contra não membros: número de parceiros sexuais no último ano | β = 0,224 parceiro; EP = 0,029 | p. 84, tabela 2, coluna 2 | "0.224 (0.029)" |
-| Mesma comparação: ter feito sexo no último mês | β = 0,029; EP = 0,004 | p. 84, tabela 2, coluna 4 | "0.029 (0.004)" |
-| Mesma comparação: morar com o parceiro | β = −0,003; EP = 0,002; sem mudança estatisticamente significativa | p. 88, tabela 4, coluna 1 | "−0.003 (0.002)" |
-| Mesma comparação: estar em um relacionamento | β = 0,004; EP = 0,004; sem mudança estatisticamente significativa | p. 88, tabela 4, coluna 2 | "0.004 (0.004)" |
-| Mesma comparação: relacionamento abusivo no último ano | β = 0,000; EP = 0,002; sem mudança estatisticamente significativa | p. 88, tabela 4, coluna 3 | "0.000 (0.002)" |
-| Mesma comparação: relatar ter sofrido agressão sexual no último ano | β = 0,019; EP = 0,002 | p. 89, tabela 5, coluna 2 | "0.019 (0.002)" |
-| Mesma comparação: diagnóstico ou tratamento de clamídia no último ano | β = 0,006; EP = 0,001 | p. 89, tabela 5, coluna 4 | "0.006 (0.001)" |
-| Mesma comparação: ter feito teste de HIV alguma vez | β = 0,016; EP = 0,003 | p. 89, tabela 5, coluna 6 | "0.016 (0.003)" |
-| Mesma comparação: índice de saúde mental ruim no último mês, todos (número negativo é melhora) | β = −0,033; EP = 0,007; melhora média | p. 92, tabela 6, painel A, coluna 9 | "−0.033 (0.007)" |
-| Mesmo índice, homens | β = −0,025; EP = 0,012 | p. 92, tabela 6, painel B, coluna 9 | "−0.025 (0.012)" |
-| Mesmo índice, mulheres | β = −0,037; EP = 0,009 | p. 92, tabela 6, painel C, coluna 9 | "−0.037 (0.009)" |
-| Depois do lançamento, faculdades comparadas pela proporção de membros dessas organizações: morar com o parceiro | β = 0,044; EP = 0,012; aumento significativo | p. 100, tabela 8, coluna 3 | "0.044 (0.012)" |
-| Mesma comparação entre faculdades: saúde mental ruim | β = −0,010; EP = 0,064; sem mudança estatisticamente significativa | p. 100, tabela 8, coluna 4 | "−0.010 (0.064)" |
+| Parceiros sexuais no último ano | Depois do lançamento do Tinder, o número subiu mais entre membros de fraternidades e sororidades que entre os outros alunos (β = 0,224; EP = 0,029) | p. 84, tabela 2, coluna 2 | "0.224 (0.029)" |
+| Sexo no último mês | A parte que fez sexo subiu mais entre os membros (β = 0,029; EP = 0,004) | p. 84, tabela 2, coluna 4 | "0.029 (0.004)" |
+| Morar com o parceiro | Membros e não membros mudaram de forma parecida, e a pequena diferença pode ser acaso (β = −0,003; EP = 0,002) | p. 88, tabela 4, coluna 1 | "−0.003 (0.002)" |
+| Estar em um relacionamento | Membros e não membros mudaram de forma parecida, e a pequena diferença pode ser acaso (β = 0,004; EP = 0,004) | p. 88, tabela 4, coluna 2 | "0.004 (0.004)" |
+| Relacionamento abusivo no último ano | Membros e não membros mudaram de forma parecida (β = 0,000; EP = 0,002) | p. 88, tabela 4, coluna 3 | "0.000 (0.002)" |
+| Agressão sexual no último ano | A parte que relatou ter sofrido agressão subiu mais entre os membros (β = 0,019; EP = 0,002) | p. 89, tabela 5, coluna 2 | "0.019 (0.002)" |
+| Clamídia no último ano | A parte com diagnóstico ou tratamento subiu mais entre os membros (β = 0,006; EP = 0,001) | p. 89, tabela 5, coluna 4 | "0.006 (0.001)" |
+| Teste de HIV | A parte que já fez o teste alguma vez subiu mais entre os membros (β = 0,016; EP = 0,003) | p. 89, tabela 5, coluna 6 | "0.016 (0.003)" |
+| Saúde mental ruim no último mês | O índice de saúde mental ruim caiu mais entre os membros, em média, o que indica melhora (β = −0,033; EP = 0,007) | p. 92, tabela 6, painel A, coluna 9 | "−0.033 (0.007)" |
+| Saúde mental ruim, homens | O índice caiu mais entre os membros que entre os outros homens (β = −0,025; EP = 0,012) | p. 92, tabela 6, painel B, coluna 9 | "−0.025 (0.012)" |
+| Saúde mental ruim, mulheres | O índice caiu mais entre as integrantes dessas organizações que entre as outras mulheres (β = −0,037; EP = 0,009) | p. 92, tabela 6, painel C, coluna 9 | "−0.037 (0.009)" |
+| Morar com o parceiro, entre faculdades | Depois do lançamento, isso subiu mais nas faculdades com mais membros dessas organizações (β = 0,044; EP = 0,012) | p. 100, tabela 8, coluna 3 | "0.044 (0.012)" |
+| Saúde mental ruim, entre faculdades | Faculdades com mais e com menos membros mudaram de forma parecida, e a diferença pode ser acaso (β = −0,010; EP = 0,064) | p. 100, tabela 8, coluna 4 | "−0.010 (0.064)" |
 
 Na análise por instituição, β acompanha a interação entre a proporção de membros dessas organizações e o período após o lançamento. A escala desse tratamento é diferente da comparação individual; os coeficientes não são diretamente comparáveis.
 

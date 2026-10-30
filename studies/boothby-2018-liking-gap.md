@@ -26,17 +26,19 @@ Desconhecidos conversaram (de 5 minutos a 45 minutos) e depois cada um disse qua
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Estudo 1a: quanto gostou do outro contra quanto acha que o outro gostou (escala de 1 a 7) | 5,82 contra 5,17 | Estudo 1a, Results (p. 1744) | "liking their conversation partner (actual: M = 5.82, 95% CI = [5.49, 6.14]) significantly more than they perceived their conversation partner to like them (perceived: M = 5.17, 95% CI = [4.85, 5.49])" |
-| A distância entre gostar e achar que gostaram é maior em quem é mais tímido? | sim | Estudo 1a, Personality moderators (p. 1744) | "The shyer participants were, the greater their liking gap was." |
-| Estudo 1b: observadores de fora viam os sinais de que um gostava do outro? | sim; quem conversou não os usou | Estudo 1b, Results (p. 1746) | "participants did signal that they liked one another, but participants neglected this information when estimating how much their conversation partners liked them." |
-| Estudo 2 (conversa livre): quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro | menos; b = −0,57 | Estudo 2, Results (p. 1747) | "rating type was a significant predictor of liking, b = −0.57, SE = 0.07" |
-| Estudo 3: duração das conversas | de 2 a 45 minutos | Estudo 3, Results (p. 1748) | "Overall, participants' conversations lasted anywhere from 2 min to 45 min" |
-| Estudo 3: quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro | menos; b = −0,38 | Estudo 3, Results (p. 1748) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.38" |
-| Estudo 3: quanto acha que o outro curtiu a conversa, comparado a quanto a pessoa curtiu | menos; b = −0,52 | Estudo 3, Results (p. 1748) | "rating type was a significant predictor of enjoyment, b = −0.52" |
-| Estudo 3: a distância no gostar some em conversas longas? | não | Estudo 3, Results (p. 1748) | "the liking gap persisted no matter the length of the conversation." |
-| Estudo 4 (oficinas no Reino Unido): quão interessante achou o outro contra quão interessante acha que pareceu (escala de 1 a 5) | 4,30 contra 3,61 | Estudo 4, Results (p. 1750) | "(actual: M = 4.30, 95% CI = [4.15, 4.44]) than they thought their conversation partner had found them (perceived: M = 3.61" |
-| Estudo 5 (colegas de alojamento): quanto acha que o outro gostou dela, comparado a quanto a pessoa gostou do outro, no ano todo | menos; b = −0,36 | Estudo 5, Results (p. 1752) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.36" |
-| Estudo 5: essa distância na última medida (maio) | sumiu | Estudo 5, Results (p. 1752) | "Rating type was not a significant predictor of liking at the final time point, Time 5 (p = .87)." |
+| Gostar e achar que gostaram, Estudo 1a | As pessoas gostaram do parceiro de conversa mais do que acharam que ele gostou delas (5,82 contra 5,17) | Estudo 1a, Results (p. 1744) | "liking their conversation partner (actual: M = 5.82, 95% CI = [5.49, 6.14]) significantly more than they perceived their conversation partner to like them (perceived: M = 5.17, 95% CI = [4.85, 5.49])" |
+| Timidez | Quanto mais tímida a pessoa, maior a distância entre gostar e achar que gostaram dela | Estudo 1a, Personality moderators (p. 1744) | "The shyer participants were, the greater their liking gap was." |
+| Sinais de que gostou, Estudo 1b | As pessoas davam sinais de que gostavam uma da outra, mas quem conversou não usou esses sinais ao estimar quanto o outro gostou | Estudo 1b, Results (p. 1746) | "participants did signal that they liked one another, but participants neglected this information when estimating how much their conversation partners liked them." |
+| Gostar e achar que gostaram, Estudo 2 | Numa conversa livre, as pessoas acharam que o outro gostou delas menos do que elas gostaram dele (b = −0,57) | Estudo 2, Results (p. 1747) | "rating type was a significant predictor of liking, b = −0.57, SE = 0.07" |
+| Duração das conversas, Estudo 3 | As conversas duraram de 2 a 45 minutos | Estudo 3, Results (p. 1748) | "Overall, participants' conversations lasted anywhere from 2 min to 45 min" |
+| Gostar e achar que gostaram, Estudo 3 | As pessoas acharam que o outro gostou delas menos do que elas gostaram dele (b = −0,38) | Estudo 3, Results (p. 1748) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.38" |
+| Curtir a conversa, Estudo 3 | As pessoas acharam que o outro curtiu a conversa menos do que elas curtiram (b = −0,52) | Estudo 3, Results (p. 1748) | "rating type was a significant predictor of enjoyment, b = −0.52" |
+| Conversas longas, Estudo 3 | A distância entre gostar e achar que gostaram continuou, qualquer que fosse a duração da conversa | Estudo 3, Results (p. 1748) | "the liking gap persisted no matter the length of the conversation." |
+| Achar o outro interessante, Estudo 4 | Em oficinas no Reino Unido, as pessoas acharam o parceiro mais interessante do que acharam que pareceram a ele (4,30 contra 3,61) | Estudo 4, Results (p. 1750) | "(actual: M = 4.30, 95% CI = [4.15, 4.44]) than they thought their conversation partner had found them (perceived: M = 3.61" |
+| Colegas de alojamento, Estudo 5 | No ano todo, as pessoas acharam que o colega gostou delas menos do que elas gostaram dele (b = −0,36) | Estudo 5, Results (p. 1752) | "rating type (actual or perceived) was a significant predictor of liking, b = −0.36" |
+| Colegas de alojamento, em maio | Na última medida do ano, a distância não apareceu mais (p = 0,87) | Estudo 5, Results (p. 1752) | "Rating type was not a significant predictor of liking at the final time point, Time 5 (p = .87)." |
+
+As notas de gostar vão de 1 a 7 e as de interesse, de 1 a 5. "b" é a diferença entre as duas notas, na escala da medida: negativo quer dizer que a pessoa achou que o outro gostou menos do que ela gostou. "p" diz o quanto a diferença poderia ser só acaso: 0,87 não indica diferença.
 
 ## Limitações
 

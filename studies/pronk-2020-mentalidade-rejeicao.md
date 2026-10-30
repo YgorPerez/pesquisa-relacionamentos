@@ -29,18 +29,18 @@ Em três estudos, solteiros heterossexuais avaliaram uma sequência de fotos num
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Queda na chance de aceitar, do primeiro ao último perfil | 27% em média, nos três estudos | Resumo | "cumulating on average in a decrease of 27% in chance on acceptance from the first to the last partner option" |
-| Queda no Estudo 1 | 29% | Study 1, Results | "As compared to the first picture, the chance on acceptance on average decreased with 29% over the task." |
-| Quando a queda acontece (Estudo 1) | Íngreme nas primeiras 13 fotos, depois estável | Study 1, Existence of Break Points | "Across genders, the decrease in acceptance was steep between Photos 1 and 13 and became relatively flat thereafter." |
-| Homens aceitam mais que mulheres, Estudo 1 | 34% mais | Study 1, Results | "with men accepting on average 34% more pictures" |
-| Homens aceitam mais, Estudo 2 | 25% mais | Study 2, Results | "with men accepting on average 25% more potential partners compared to" |
-| Homens aceitam mais, Estudo 3 | 19% mais | Study 3, Results | "with men accepting on average 19% more potential" |
-| Chance de match das mulheres ao longo da tarefa (Estudo 2, parceiros reais) | Caiu 70% | Study 2, Results | "lowering it by a total of 70%" |
-| Chance de match dos homens (Estudo 2) | Sem queda significativa | Study 2, Results | "This effect was not significant for men" |
-| Por que a rejeição aumenta ao longo da tarefa (Estudo 3) | Menos satisfação com as fotos e menos confiança no próprio sucesso | Study 3, Discussion | "decrease in satisfaction with the pictures and a decrease in perceptions of their own dating success, which in turn accounted for the increasing tendency to reject potential partners" |
-| Quem rejeita mais fica mais satisfeito com quem aceitou? | Não: fica menos satisfeito | Additional Analyses Across All Studies | "people who were more rejecting were more likely to be less satisfied with the smaller number of partner options they did accept" |
-| O que explica a queda | O número de rejeições já feitas, não só o de perfis vistos | Additional Analyses Across All Studies | "Results indicated that it was the cumulative rejection of profiles that increased the likelihood of rejecting a following partner" |
-| O que os autores sugerem | Limitar a busca, ou ao menos o número de rejeições (sugestão, não testada) | General Discussion | "people may benefit from restricting their search (or at least the amount of rejections during this search)" |
+| Chance de aceitar, nos três estudos | Em média, caiu 27% do primeiro ao último perfil | Resumo | "cumulating on average in a decrease of 27% in chance on acceptance from the first to the last partner option" |
+| Chance de aceitar, no Estudo 1 | Em média, caiu 29% ao longo da tarefa, em relação à primeira foto | Study 1, Results | "As compared to the first picture, the chance on acceptance on average decreased with 29% over the task." |
+| Quando a queda acontece | No Estudo 1, foi forte da primeira à 13ª foto e quase parou depois | Study 1, Existence of Break Points | "Across genders, the decrease in acceptance was steep between Photos 1 and 13 and became relatively flat thereafter." |
+| Homens e mulheres, Estudo 1 | Os homens aceitaram em média 34% mais fotos que as mulheres | Study 1, Results | "with men accepting on average 34% more pictures" |
+| Homens e mulheres, Estudo 2 | Os homens aceitaram em média 25% mais possíveis parceiros que as mulheres | Study 2, Results | "with men accepting on average 25% more potential partners compared to" |
+| Homens e mulheres, Estudo 3 | Os homens aceitaram em média 19% mais possíveis parceiros que as mulheres | Study 3, Results | "with men accepting on average 19% more potential" |
+| Chance de match, mulheres, Estudo 2 | Com parceiros reais, caiu 70% no total ao longo da tarefa | Study 2, Results | "lowering it by a total of 70%" |
+| Chance de match, homens, Estudo 2 | Não apareceu queda clara | Study 2, Results | "This effect was not significant for men" |
+| Por que a rejeição aumenta, Estudo 3 | A satisfação com as fotos e a percepção do próprio sucesso caíram ao longo da tarefa, e isso respondeu pelo aumento da rejeição | Study 3, Discussion | "decrease in satisfaction with the pictures and a decrease in perceptions of their own dating success, which in turn accounted for the increasing tendency to reject potential partners" |
+| Satisfação de quem rejeita mais | Quem rejeitou mais tendeu a ficar menos satisfeito com as poucas opções que aceitou | Additional Analyses Across All Studies | "people who were more rejecting were more likely to be less satisfied with the smaller number of partner options they did accept" |
+| O que mais pesa na queda | Quanto mais rejeições a pessoa já tinha feito, maior a chance de rejeitar o perfil seguinte; não é só o número de perfis vistos | Additional Analyses Across All Studies | "Results indicated that it was the cumulative rejection of profiles that increased the likelihood of rejecting a following partner" |
+| O que os autores sugerem | Limitar a busca, ou ao menos o número de rejeições; é uma sugestão, não foi testada | General Discussion | "people may benefit from restricting their search (or at least the amount of rejections during this search)" |
 
 ## Definições
 
