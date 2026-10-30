@@ -503,7 +503,7 @@ related:
   ]
 ---
 
-Quem está numa relação e pensa no futuro dela costuma se perguntar se ela vai durar, e se as brigas querem dizer alguma coisa. Este Guia vai do que se sabe antes do casamento começar ao que acontece dentro dele: o ponto de partida, a idade ao casar, o jeito de brigar e, por fim, se estar bem hoje protege. O começo diz muito: os fatores medidos nas maiores amostras, pesquisas nacionais dos EUA, já existem no dia do casamento [@raley-2003-plato-divorcio]. Dentro do casamento, a maioria dos casais discorda, e o que veio com mais divórcio foi o jeito de brigar [@birditt-2010-conflito-divorcio]. Nenhum desses estudos é experimento: eles mostram o que anda junto com a separação, não o que a causa. Quase todos são de casais homem-mulher casados nos EUA. Onde há dado do Brasil, o texto marca, e onde não há, diz.
+Quem está numa relação e pensa no futuro dela costuma se perguntar se ela vai durar, e se as brigas querem dizer alguma coisa. Este Guia vai do que se sabe antes do casamento começar ao que acontece dentro dele: o ponto de partida, a idade ao casar, o jeito de brigar e, por fim, se estar bem hoje protege. O começo diz muito: os fatores medidos nas maiores amostras, pesquisas nacionais dos EUA, já existem no dia do casamento [@raley-2003-plato-divorcio]. Dentro do casamento, a maioria dos casais discorda, e o que veio com mais divórcio foi o jeito de brigar [@birditt-2010-conflito-divorcio]. Nesses estudos, os pesquisadores observaram a idade ao casar e o jeito de brigar, sem sortear quem faria o quê. Por isso, eles mostram o que anda junto com a separação, sem provar o que a causa. Quase todos são de casais homem-mulher casados nos EUA. Onde há dado do Brasil, o texto marca, e onde não há, diz.
 
 ## O começo já diz muito
 

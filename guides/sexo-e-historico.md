@@ -68,7 +68,7 @@ questions:
       ]
   - slug: mais-parceiros-faz-mal
     question: Transar com mais pessoas antes de assumir uma relação ==faz mal==?
-    answer: Não há prova de que faça, e nenhum estudo é experimento. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Os três estudos são dos EUA; no Brasil, não achamos estudo sobre isso.
+    answer: Não há prova de que faça. Os pesquisadores observaram a vida sexual das pessoas, sem sortear quem teria sexo casual ou mais parceiros. Por isso, os estudos mostram o que anda junto, sem provar o que causa o quê. Ficar não mudou o bem-estar médio de universitários em um ano, mas quem ficou por pressão ou bebida terminou o ano pior [@vrangalova-2015-sexo-casual-bem-estar]. Um ano com vários parceiros veio com menos chance de casar naquele ano, sem marca visível até perto dos 30 [@wolfinger-2023-parceiros-sexuais-casamento]. Mais parceiros antes do casamento veio com ==até 3,2 vezes a chance de divórcio==, sem que se saiba quanto disso é causa [@smith-2024-sexo-pre-marital-divorcio]. Os três estudos são dos EUA; no Brasil, não achamos estudo sobre isso.
     confidence: moderate
     findings:
       [
@@ -270,7 +270,7 @@ findings:
     applies_to:
       { genders: [man], couple: different-sex, ages: { min: 18, max: 40 } }
   - id: estabilidade-percebida
-    text: Num questionário online com 2.035 casados, que não representa a população, mais parceiros andaram junto com uma estabilidade percebida um pouco menor e quase nenhuma diferença na satisfação com o casamento.
+    text: Num questionário online, 2.035 casados se ofereceram para responder, em vez de serem sorteados, e eram mais escolarizados e mais brancos que a população. Entre eles, mais parceiros andaram junto com uma estabilidade percebida um pouco menor e quase nenhuma diferença na satisfação com o casamento.
     fact_sheets: [busby-2010-compatibility-or-restraint]
   - id: casamento-muito-feliz
     text: Entre casados americanos, 71% dos homens com uma pessoa só na vida diziam ter um casamento muito feliz, contra 65% dos que tiveram duas ou mais. Entre as mulheres, 65% das que só transaram com o cônjuge e 52% das que tiveram de 6 a 10 parceiros. A análise saiu num blog, sem revisão por pares.
@@ -305,7 +305,7 @@ findings:
     fact_sheets: [datafolha-2009-sexualidade-brasileiros]
     applies_to: { ages: { min: 18, max: 24 } }
   - id: antes-de-casar-valor-tipico
-    text: Em 418 americanos que se casaram nos cinco anos depois de entrar num estudo, recrutados em 2007 e 2008, o valor típico foi de 5 parceiros sexuais além do cônjuge antes do casamento, e a média, 8,78. Só 23% tinham transado apenas com quem casaram. A amostra não representa o país.
+    text: Em 418 americanos que se casaram nos cinco anos depois de entrar num estudo, recrutados em 2007 e 2008, o valor típico foi de 5 parceiros sexuais além do cônjuge antes do casamento, e a média, 8,78. Só 23% tinham transado apenas com quem casaram. Eles foram recrutados por telefone a partir de uma lista comprada, não sorteados entre os americanos. Quem não estava nessa lista ficou de fora, então os números não podem ser generalizados para o país todo.
     fact_sheets: [rhoades-2014-before-i-do]
   - id: antes-de-casar-morou-junto
     text: No mesmo estudo, 39% já tinham morado junto com outra pessoa antes do cônjuge.
@@ -798,7 +798,7 @@ No divórcio, a associação é maior. Num painel nacional, entre americanos que
 
 {{visual:por-que-mais-parceiros-e-divorcio}}
 
-Na qualidade do casamento, as fontes são fracas e as diferenças, pequenas. Num relatório sem revisão por pares com 418 recém-casados, dez parceiros anteriores a mais vieram com uns 0,4 ponto a menos numa escala de 0 a 21, conta nossa [@rhoades-2014-before-i-do]. {{you:qualidade-mulheres}} A associação apareceu nas mulheres, com cerca de 0,06 ponto por parceiro. {{you:qualidade-homens}} Nos homens, não apareceu, mas eram só 148. Num questionário com 2.035 casados, que não representa a população, mais parceiros andaram junto com uma estabilidade percebida um pouco menor e quase nenhuma diferença na [[satisfação]] [@busby-2010-compatibility-or-restraint]. Num post de blog, os homens com uma pessoa só na vida diziam ter um casamento muito feliz com mais frequência que os que tiveram duas ou mais; entre as mulheres, a fatia também foi maior entre as que só transaram com o cônjuge do que entre as que tiveram de 6 a 10 parceiros [@wolfinger-2018-parceiros-felicidade-conjugal]. Duas dessas três fontes saíram de centros que defendem o casamento.
+Na qualidade do casamento, as fontes são fracas e as diferenças, pequenas. Num relatório sem revisão por pares com 418 recém-casados, dez parceiros anteriores a mais vieram com uns 0,4 ponto a menos numa escala de 0 a 21, conta nossa [@rhoades-2014-before-i-do]. {{you:qualidade-mulheres}} A associação apareceu nas mulheres, com cerca de 0,06 ponto por parceiro. {{you:qualidade-homens}} Nos homens, não apareceu, mas eram só 148. Num questionário online, 2.035 casados se ofereceram para responder, em vez de serem sorteados como numa [[pesquisa representativa]], e eram mais escolarizados e mais brancos que a população [@busby-2010-compatibility-or-restraint]. Entre eles, mais parceiros andaram junto com uma estabilidade percebida um pouco menor e quase nenhuma diferença na [[satisfação]] [@busby-2010-compatibility-or-restraint]. Num post de blog, os homens com uma pessoa só na vida diziam ter um casamento muito feliz com mais frequência que os que tiveram duas ou mais; entre as mulheres, a fatia também foi maior entre as que só transaram com o cônjuge do que entre as que tiveram de 6 a 10 parceiros [@wolfinger-2018-parceiros-felicidade-conjugal]. Duas dessas três fontes saíram de centros que defendem o casamento.
 
 {{visual:parceiros-e-desfechos}}
 
