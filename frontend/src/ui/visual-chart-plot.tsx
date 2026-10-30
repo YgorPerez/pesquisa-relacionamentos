@@ -27,7 +27,12 @@ import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
 import { useCallback, useMemo } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
-import { overlayLayers, withOverlay, type OverlayMark } from './chart-overlay'
+import {
+  lineWordsAbove,
+  overlayLayers,
+  withOverlay,
+  type OverlayMark,
+} from './chart-overlay'
 import { LABEL, SMALL, VALUE, VALUE_DX } from './chart-text'
 import { DIMMED, INK, MUTED, PAPER } from './chart-tones'
 import { partTone } from './stack-tones'
@@ -512,15 +517,37 @@ interface PlotProps {
  * numbers share a unit, the value written above each dot and a tick per
  * year on the axis, the years with a number written. */
 const LINE = {
-  height: 220,
+  /** The plot's height, between its top line and the year axis. */
+  plot: 150,
   /** Without a value scale, the dots sit on the year axis. */
-  flatHeight: 110,
+  flatPlot: 40,
+  /** Under the plot: the year axis and its words. */
+  axis: 22,
+  /** Over the plot, at least: half of the top tick's words. */
+  minTop: 8,
   /** How far the value's line sits above its dot, clear of Brazil's
    * ring. */
   valueAbove: 22,
-  /** Room above the values for the "você" tag. */
-  top: 48,
 } as const
+
+/** The room over a time line's plot: what its highest words need, and no
+ * more (#470: no empty band under the title). A point whose Study may
+ * cover a Profile keeps room for its "você" tag even without one, so the
+ * plot stays put when a Profile is saved. */
+function lineTop(chart: ChartView) {
+  const scaled = chart.ticks.length > 0
+  const top = chart.ticks[chart.ticks.length - 1]?.value || 1
+  const plot = scaled ? LINE.plot : LINE.flatPlot
+  return Math.ceil(
+    Math.max(
+      LINE.minTop,
+      ...chart.points.map((p) => {
+        const below = scaled ? (1 - p.value / top) * plot : plot
+        return lineWordsAbove(LINE.valueAbove, p.covers.length > 0) - below
+      }),
+    ),
+  )
+}
 
 const LINE_FOCUS: ChartFocusStrategy<Row, number, number> = {
   resolve: (points, context) =>
@@ -649,6 +676,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
     [chart, country, profile],
   )
   const scaled = chart.ticks.length > 0
+  const above = lineTop(chart)
   const definition = useMemo(() => {
     const top = chart.ticks[chart.ticks.length - 1]?.value ?? 1
     return defineChart({
@@ -670,10 +698,11 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
         },
       },
       focus: LINE_FOCUS,
-      margin: { top: LINE.top },
+      // Both fixed, so the plot is exactly `LINE.plot` tall.
+      margin: { top: above, bottom: LINE.axis },
       theme: THEME,
     })
-  }, [chart, rows, scaled])
+  }, [chart, rows, scaled, above])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => lineSvg(scene, options, rows),
@@ -685,7 +714,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
       definition={definition}
       renderSvg={renderSvg}
       initialWidth={INITIAL_WIDTH}
-      height={scaled ? LINE.height : LINE.flatHeight}
+      height={above + (scaled ? LINE.plot : LINE.flatPlot) + LINE.axis}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className="font-body text-tinta"

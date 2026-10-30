@@ -376,6 +376,44 @@ it('keeps a time line\'s "você" tags clear of the value axis\'s words', () => {
   for (const tag of tags(line)) expect(tag.left).toBeGreaterThan(axisEnd)
 })
 
+it("starts a time line right above its highest words, with room for a value's \"você\" tag", () => {
+  // The divorce line: the values near the top of the scale.
+  const near = {
+    ...LINE,
+    ticks: [0, 5, 10, 15, 20].map((value) => ({ value, text: `${value}` })),
+    points: LINE.points.slice(1).map((p, i) => ({
+      ...p,
+      value: [16, 13.8][i]!,
+      covers: i === 0 ? [] : p.covers,
+    })),
+  }
+  /** How far below the drawing's top its highest word starts: a value
+   * (14px, centered on its line) or a "você" tag. */
+  const drawn = (profile: { gender: 'mulher' } | null) => {
+    const html = page(
+      renderToString(
+        <VisualChart chart={near} country={null} profile={profile} />,
+      ),
+    )
+    const values = [...html.querySelectorAll('svg[role="img"] text')]
+      .filter((t) => t.getAttribute('font-size') === '14')
+      .map((t) => Number(t.getAttribute('y')) - 8)
+    return {
+      headroom: Math.min(...values, ...tags(html).map((tag) => tag.top)),
+      dots: [...html.querySelectorAll('svg[role="img"] circle')].map((c) =>
+        c.getAttribute('cy'),
+      ),
+    }
+  }
+  const mine = drawn({ gender: 'mulher' })
+  expect(mine.headroom).toBeGreaterThanOrEqual(0)
+  expect(mine.headroom).toBeLessThan(10)
+  // The point whose Study may cover the Profile keeps its tag's room
+  // without one, so the plot does not move when a Profile is saved.
+  expect(drawn(null).dots).toEqual(mine.dots)
+  expect(drawn(null).headroom).toBeLessThan(20)
+})
+
 it('tells how to open a number only once the chart can take the tap', () => {
   // Without JavaScript a tap opens nothing: the server does not say it.
   const served = page(
