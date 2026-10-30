@@ -135,3 +135,60 @@ it('draws bars with the highlighted one marked, and lists the countries of every
     { slug: 'eua', name: 'EUA' },
   ])
 })
+
+it('lets the axis top replace a round tick that would print on top of it, and puts a word unit only there', () => {
+  const view = chartView(
+    {
+      id: 'escala-de-sete',
+      kind: 'bars',
+      title: 'Uma escala de 1 a 7',
+      unit: 'pontos',
+      max: 7,
+      bars: [
+        { label: 'Um', value: 5.6, fact_sheet: 'silva-2020-apps-brasil' },
+        { label: 'Outro', value: 5.3, fact_sheet: 'silva-2020-apps-brasil' },
+      ],
+    },
+    library(),
+    cite,
+    'tema',
+  )
+  expect(view?.ticks.map((t) => [t.value, t.text])).toEqual([
+    [0, '0'],
+    [2, '2'],
+    [4, '4'],
+    [7, '7 pontos'],
+  ])
+})
+
+it("gives a bar the year it names and the country it sets over its Fact sheet's", () => {
+  const view = chartView(
+    {
+      id: 'anos',
+      kind: 'bars',
+      title: 'Anos',
+      unit: '%',
+      bars: [
+        {
+          label: 'Em 2020',
+          value: 18,
+          fact_sheet: 'silva-2020-apps-brasil',
+          year: 2020,
+        },
+        {
+          label: 'Em Gana',
+          value: 24,
+          fact_sheet: 'costa-2018-satisfacao',
+          country: 'Gana',
+        },
+      ],
+    },
+    library(),
+    cite,
+    'tema',
+  )
+  expect(view?.points.map((p) => [p.year, p.country?.name])).toEqual([
+    [2020, 'Brasil'],
+    [null, 'Gana'],
+  ])
+})

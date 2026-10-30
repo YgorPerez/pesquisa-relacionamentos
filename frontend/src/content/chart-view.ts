@@ -71,11 +71,10 @@ export interface ChartView {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-/** The Visuals the library draws, by `<topic>/<id>`. #471 moved one bar
- * comparison and one Study table; #472–#475 move the rest, and then the
- * rule becomes the kind alone. */
+/** The Visuals the library draws besides every bar comparison, by
+ * `<topic>/<id>`. #471 moved one Study table; #472–#475 move the rest, and
+ * then the rule becomes the kind alone. */
 export const LIBRARY_VISUALS: ReadonlySet<string> = new Set([
-  'onde-conhecer-pessoas/como-se-conheceram-1995-2017',
   'onde-conhecer-pessoas/fatia-online-por-estudo',
 ])
 

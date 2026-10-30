@@ -1,15 +1,15 @@
 // The example Visuals for the stories, built by the real view
 // (`content/visuals-view.ts`) over the e2e fixture, which Storybook loads
 // through `virtual:library`: the Guide of `onde-conhecer-pessoas` has one
-// of each kind.
-import type { Visual } from '@tem-estudo/content'
+// of each kind. Its bar comparison is the chart library's
+// (`visual-chart.example.ts`).
 import { topicBySlug } from '@tem-estudo/content/queries'
 import library from 'virtual:library'
 import { GUIDE } from './guide.example'
 import {
   visualView,
-  type BarsView,
   type DiagramView,
+  type HtmlVisual,
   type StudyTableView,
   type TimelineView,
   type VisualView,
@@ -23,7 +23,7 @@ if (!guide?.visuals.length)
 /** The Guide's numbered Fact sheets, which the Visual's rings use. */
 const { factSheets } = GUIDE
 
-const view = (visual: Visual): VisualView =>
+const view = (visual: HtmlVisual): VisualView =>
   visualView(
     visual,
     library,
@@ -34,12 +34,13 @@ const view = (visual: Visual): VisualView =>
 function ofKind<K extends VisualView['kind']>(
   kind: K,
 ): Extract<VisualView, { kind: K }> {
-  const visual = guide?.visuals.find((v) => v.kind === kind)
+  const visual = guide?.visuals.find(
+    (v): v is HtmlVisual => v.kind === kind,
+  )
   if (!visual) throw new Error(`the fixture has no ${kind} Visual`)
   return view(visual) as Extract<VisualView, { kind: K }>
 }
 
-export const BARS: BarsView = ofKind('bars')
 export const TIMELINE: TimelineView = ofKind('timeline')
 export const STUDY_TABLE: StudyTableView = ofKind('study-table')
 export const DIAGRAM: DiagramView = ofKind('diagram')
