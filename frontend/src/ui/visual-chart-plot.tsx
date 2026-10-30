@@ -29,6 +29,12 @@ import { useCallback, useMemo } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import type { ChartMarkAt } from './chart-card'
 import {
+  litByCountry,
+  ofCountry,
+  ofLegend,
+  reachesCountry,
+} from './chart-filters'
+import {
   activeRow as activeRowLayer,
   lineWordsAbove,
   overlayLayers,
@@ -37,7 +43,7 @@ import {
   type OverlayMark,
 } from './chart-overlay'
 import { LABEL, SMALL, VALUE, VALUE_DX } from './chart-text'
-import { DIMMED, INK, MUTED, PAPER } from './chart-tones'
+import { ACTIVE_LINE, DIMMED, INK, MUTED, PAPER } from './chart-tones'
 import { partTone } from './stack-tones'
 import { CHART_COPY } from './visual-chart.copy'
 
@@ -192,10 +198,9 @@ interface Row extends ChartPoint {
 /** A point of a row's range: a tick on the row's line (`at`). */
 interface SpreadRow extends Row {
   readonly at: string
+  /** This end of the range has the card, not only its row. */
+  readonly hasCard: boolean
 }
-
-const of = (p: ChartPoint, country: string | null) =>
-  p.country?.slug === country
 
 /** The row point `key` belongs to: its own, its stacked bar's or, for a
  * point of a range, its Study's. */
@@ -207,19 +212,17 @@ const rowOfKey = (points: ReadonlyArray<ChartPoint>, key: string | null) =>
 /** The point's state on the chart. The one place a mark is dimmed: the
  * chosen country lights its points and dims the others, on a chart that has
  * it, a row whose range has the country stays lit and so does that point of
- * its range; while a row has the card (`active`), only that row is lit. A
- * new reason to dim (the legend, #501) is one more condition here. */
+ * its range; the legend's key (#501) dims the rest as well, so only what
+ * answers to both stays lit; while a row has the card (`active`), only that
+ * row is lit. */
 function rowsOf(
   chart: ChartView,
   country: string | null,
   profile: Profile | null,
-  active: string | null = null,
+  active: string | null,
+  legend: number | null,
 ): Row[] {
-  const lit =
-    country !== null &&
-    chart.points.some(
-      (p) => of(p, country) || p.range?.some((q) => of(q, country)),
-    )
+  const lit = litByCountry(chart.points, country)
   const activeRow = rowOfKey(chart.points, active)
   const inActive = (p: ChartPoint) =>
     activeRow !== undefined && bandOf(p) === bandOf(activeRow)
@@ -236,17 +239,22 @@ function rowsOf(
   })
   return chart.points.map((p) => {
     const range = p.range ?? []
-    const otherCountry =
-      lit && !of(p, country) && !range.some((q) => of(q, country))
+    const filteredOut =
+      (lit && !reachesCountry(p, country)) || !ofLegend(p, legend)
+    const offLegend = !ofLegend(p, legend) && !inActive(p)
     return {
-      ...base(p, dimsRows ? outOfActive(p) : otherCountry),
+      ...base(p, dimsRows ? outOfActive(p) : filteredOut),
       active: inActive(p),
       spread: range.map((q) => ({
-        ...base(q, outOfActive(p) || (lit && !of(q, country))),
+        ...base(
+          q,
+          outOfActive(p) || offLegend || (lit && !ofCountry(q, country)),
+        ),
         // The row's "você" tag is enough.
         you: false,
         spread: [],
         at: p.key,
+        hasCard: q.key === active,
       })),
     }
   })
@@ -295,10 +303,10 @@ function rangeMarks(rows: Row[], places: Places) {
         // A group each: on a row's line, the tap takes the nearest
         // tick or dot, not the first one drawn (`focusNearestY`).
         z: 'key',
-        stroke: INK,
-        strokeWidth: 2.5,
+        stroke: q.hasCard ? ACTIVE_LINE : INK,
+        strokeWidth: q.hasCard ? 4 : 2.5,
         strokeOpacity: q.dimmed ? DIMMED : 1,
-        length: 16,
+        length: q.hasCard ? 22 : 16,
       }),
     )
   return [
@@ -399,6 +407,8 @@ function stackedMarks(
  * inside it. */
 function stackedTexts(words: Row[], labelOffset: number, parts: number) {
   const start = (r: Row) => r.stack?.start ?? 0
+  // A bar's name dims with the whole bar: a legend's key leaves one part lit.
+  const litBars = new Set(words.filter((r) => !r.dimmed).map(bandOf))
   return [
     text(
       words.filter((r) => r.stack?.part === 0),
@@ -411,7 +421,7 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
         anchor: 'start',
         dy: -labelOffset,
         fontSize: LABEL.fontSize,
-        fill: (r) => (r.dimmed ? MUTED : INK),
+        fill: (r) => (litBars.has(bandOf(r)) ? INK : MUTED),
       },
     ),
     text(
@@ -549,6 +559,8 @@ interface PlotProps {
   profile: Profile | null
   /** The key of the point that has the card (`chart-card.ts`). */
   active: string | null
+  /** The legend's key that is lit (`chart-filters.ts`). */
+  legend: number | null
   /** The pointer or the keyboard's focus reached a mark, or left. */
   onHover: (mark: ChartMarkAt | null) => void
   onSelect: (mark: ChartMarkAt | null) => void
@@ -724,12 +736,13 @@ function LinePlot({
   country,
   profile,
   active,
+  legend,
   onHover,
   onSelect,
 }: PlotProps) {
   const rows = useMemo(
-    () => rowsOf(chart, country, profile, active),
-    [chart, country, profile, active],
+    () => rowsOf(chart, country, profile, active, legend),
+    [chart, country, profile, active, legend],
   )
   const scaled = chart.ticks.length > 0
   const above = lineTop(chart)
@@ -795,13 +808,14 @@ function RowPlot({
   country,
   profile,
   active,
+  legend,
   onHover,
   onSelect,
 }: PlotProps) {
   const hatch = `${chart.domId}-hatch`
   const rows = useMemo(
-    () => rowsOf(chart, country, profile, active),
-    [chart, country, profile, active],
+    () => rowsOf(chart, country, profile, active, legend),
+    [chart, country, profile, active, legend],
   )
   const layout = layoutOf(chart)
   // A dot chart places its rows in pixels, so a row with a range can be
