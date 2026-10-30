@@ -126,6 +126,52 @@ it("wraps a bar's long label in two lines that fit a phone, and leaves the rest 
   )
 })
 
+it('leaves room on the right for a long value with a word unit', () => {
+  const people = (value: number) => ({
+    value,
+    number: {
+      ...DOTS.points[0]!.number,
+      text: `${value.toLocaleString('pt-BR')} pessoas`,
+    },
+  })
+  const chart = {
+    ...DOTS,
+    ticks: [0, 2, 4, 6, 8].map((m) => ({
+      value: m * 1_000_000,
+      text: `${m}.000.000`,
+    })),
+    points: [
+      { ...DOTS.points[0]!, ...people(7_804_840) },
+      { ...DOTS.points[1]!, ...people(747_507) },
+    ],
+  }
+  const svg = page(
+    renderToString(<VisualChart chart={chart} country={null} profile={null} />),
+  ).querySelector('svg[role="img"]')
+  const width = Number(svg?.getAttribute('viewBox')?.split(' ')[2])
+  const value = [...(svg?.querySelectorAll('text') ?? [])].find(
+    (t) => t.textContent === '7.804.840 pessoas',
+  )
+  // 14px bold letters are 7px wide or a little more.
+  expect(Number(value?.getAttribute('x')) + 17 * 7.5).toBeLessThanOrEqual(width)
+})
+
+// Whether a chart of Brazil only rings its points is `chartView`'s rule
+// (#473), in `content/chart-view.test.ts`.
+it("writes a dot's value clear of Brazil's ring", () => {
+  const dots = page(
+    renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
+  )
+  const dot = dots.querySelector('svg[role="img"] circle')
+  const value = [...dots.querySelectorAll('svg[role="img"] text')].find(
+    (t) => t.textContent === '18%',
+  )
+  // The ring reaches 12px from the dot's center.
+  expect(Number(value?.getAttribute('x'))).toBeGreaterThan(
+    Number(dot?.getAttribute('cx')) + 12,
+  )
+})
+
 it('shows the definitions as a legend of shapes', () => {
   const dots = page(
     renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),

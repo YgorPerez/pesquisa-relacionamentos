@@ -5,7 +5,7 @@
 import { fileURLToPath } from 'node:url'
 import { formatProblems, loadLibrary, type Visual } from '@tem-estudo/content'
 import { expect, it } from 'vite-plus/test'
-import { chartCountries, chartView } from './chart-view'
+import { chartCountries, chartTable, chartView } from './chart-view'
 
 const FIXTURE = fileURLToPath(new URL('../../e2e/library', import.meta.url))
 
@@ -74,6 +74,45 @@ it('leaves a Study table that mixes units as a table', () => {
     rows: [visual.rows[0]!, { ...visual.rows[1]!, unit: 'ponto' }],
   }
   expect(chartView(mixed, library(), cite, 'tema')).toBeNull()
+})
+
+it('gives each row of a mixed-unit table its point, in its own unit, under the Study context', () => {
+  const visual = table(['silva-2020-apps-brasil', 'costa-2018-satisfacao'])
+  if (visual.kind !== 'study-table') throw new Error('a table')
+  const mixed = {
+    ...visual,
+    rows: [visual.rows[0]!, { ...visual.rows[1]!, value: 0.1, unit: 'ponto' }],
+  }
+  const view = chartTable(mixed, library(), cite, 'tema')
+  expect(view).toMatchObject({
+    kind: 'table',
+    domId: 'visual-tema-lado-a-lado',
+    rows: [
+      {
+        context: expect.stringMatching(/^Brasil · 2019 · 2\.400 pessoas/),
+        point: {
+          label: 'Silva (2020)',
+          detail: 'Medida 0',
+          number: { text: '18%' },
+          brazil: true,
+        },
+      },
+      {
+        context: expect.stringMatching(/^EUA · 2017/),
+        point: {
+          label: 'Costa (2018)',
+          number: { text: '0,1 ponto' },
+          country: { slug: 'eua', name: 'EUA' },
+        },
+      },
+    ],
+  })
+  expect(chartCountries([view!])).toEqual([
+    { slug: 'brasil', name: 'Brasil' },
+    { slug: 'eua', name: 'EUA' },
+  ])
+  // A table of one unit is the dot chart's.
+  expect(chartTable(visual, library(), cite, 'tema')).toBeNull()
 })
 
 it("takes the point's own country and its definition's place in the list", () => {
@@ -165,6 +204,19 @@ it('rings Brazil on a bar comparison only when it sets Brazil apart from other c
     'tema',
   )
   expect(mixed?.points.map((p) => p.brazil)).toEqual([true, false])
+})
+
+// #475 dropped the ring on a dot chart of Brazil only; #473's rule above
+// covers it, for dots too.
+it('rings no dot when every point of the chart is from Brazil', () => {
+  const dots = chartView(
+    table(['silva-2020-apps-brasil', 'silva-2020-apps-brasil']),
+    library(),
+    cite,
+    'tema',
+  )
+  expect(dots?.kind).toBe('dots')
+  expect(dots?.points.map((p) => p.brazil)).toEqual([false, false])
 })
 
 it('lets the axis top replace a round tick that would print on top of it, and puts a word unit only there', () => {

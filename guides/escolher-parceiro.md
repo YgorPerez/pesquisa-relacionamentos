@@ -403,22 +403,27 @@ visuals:
         measure: Homens de 25 a 29 anos, no Brasil
         value: 7593659
         unit: pessoas
+        year: 2022
       - fact_sheet: ibge-2022-censo-amostra
         measure: Desses, os que não moravam com companheiro(a)
         value: 3939138
         unit: pessoas
+        year: 2022
       - fact_sheet: ibge-2022-censo-amostra
         measure: Mulheres de 25 a 29 anos, no Brasil
         value: 7804840
         unit: pessoas
+        year: 2022
       - fact_sheet: ibge-2022-censo-amostra
         measure: Dessas, as que não moravam com companheiro(a)
         value: 3309733
         unit: pessoas
+        year: 2022
       - fact_sheet: ibge-2022-censo-amostra
         measure: Mulheres que não moravam com companheiro(a), só no estado de São Paulo
         value: 747507
         unit: pessoas
+        year: 2022
     note: quem namora sem morar junto entra como quem não mora com companheiro(a)
   - id: homo-ou-bi-por-idade
     kind: bars

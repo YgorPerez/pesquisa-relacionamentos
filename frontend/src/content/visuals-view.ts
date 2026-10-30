@@ -4,23 +4,19 @@
 // and HTML: no chart code goes to the browser, and the Visual reads without
 // JS (#182). The Visuals the chart library draws go through `chart-view.ts`
 // instead (ADR 0042, "SVG from the server, interaction on top"): every bar
-// comparison (#473), and the Study tables `LIBRARY_VISUALS` names.
+// comparison (#473) and every Study table (#475).
 import type {
   BarsVisual,
   Calculation,
   DiagramVisual,
   Evidence,
-  FactSheet,
-  Library,
   StudyTableVisual,
   TimelineVisual,
   Visual,
 } from '@tem-estudo/content'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { DESIGN_NAME } from '#/ui/badges.copy'
 import { VisualDiagram } from '#/ui/visual-diagram'
-import { VisualStudyTable } from '#/ui/visual-study-table'
 import { VisualTimeline } from '#/ui/visual-timeline'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 
@@ -68,17 +64,6 @@ export interface TimelineView extends Common {
   }>
 }
 
-export interface StudyTableView extends Common {
-  readonly kind: 'study-table'
-  readonly rows: ReadonlyArray<{
-    readonly study: SourceRef
-    /** "Brasil · 2019 · 2.400 pessoas · transversal". */
-    readonly context: string
-    readonly measure: string
-    readonly number: NumberView
-  }>
-}
-
 export interface DiagramView extends Common {
   readonly kind: 'diagram'
   readonly nodes: ReadonlyArray<{ readonly id: string; readonly label: string }>
@@ -92,11 +77,12 @@ export interface DiagramView extends Common {
   }>
 }
 
-export type VisualView = TimelineView | StudyTableView | DiagramView
+export type VisualView = TimelineView | DiagramView
 
 /** A Visual drawn here, as HTML: a bar comparison is always the chart
- * library's (`chart-view.ts`). */
-export type HtmlVisual = Exclude<Visual, BarsVisual>
+ * library's, and a Study table the library's or a `ChartTable`
+ * (`chart-view.ts`). */
+export type HtmlVisual = Exclude<Visual, BarsVisual | StudyTableVisual>
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
@@ -224,52 +210,6 @@ function timelineView(visual: TimelineVisual, cite: Cite): Own<TimelineView> {
   }
 }
 
-const numberFormat = new Intl.NumberFormat('pt-BR')
-
-/** The Fact sheet's place, year, sample and design, short. */
-function studyContext(factSheet: FactSheet | undefined): string {
-  if (!factSheet) return ''
-  const design = DESIGN_NAME[factSheet.design].replace(/ \(.*\)$/, '')
-  return [
-    factSheet.countries.length > 2
-      ? VISUAL_COPY.countries(factSheet.countries.length)
-      : factSheet.countries.join(', '),
-    factSheet.period,
-    factSheet.sample.n
-      ? VISUAL_COPY.people(numberFormat.format(factSheet.sample.n))
-      : '',
-    design,
-  ]
-    .filter(Boolean)
-    .join(' · ')
-}
-
-function studyTableView(
-  visual: StudyTableVisual,
-  library: Library,
-  cite: Cite,
-): Own<StudyTableView> {
-  const rows = visual.rows.flatMap((row) => {
-    const study = cite(row.fact_sheet)
-    if (!study) return []
-    return [
-      {
-        study,
-        context: studyContext(
-          library.factSheets.find((f) => f.slug === row.fact_sheet),
-        ),
-        measure: row.measure,
-        number: numberView(row, row.unit, cite),
-      },
-    ]
-  })
-  return {
-    kind: 'study-table',
-    rows,
-    sources: allSources(rows.map((r) => r.number)),
-  }
-}
-
 function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
   const position = (id: string) => visual.nodes.findIndex((n) => n.id === id)
   const arrows = visual.arrows.map((arrow) => ({
@@ -291,7 +231,6 @@ function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
  * page's other ids. */
 export function visualView(
   visual: HtmlVisual,
-  library: Library,
   cite: Cite,
   scope: string,
 ): VisualView {
@@ -304,8 +243,6 @@ export function visualView(
   switch (visual.kind) {
     case 'timeline':
       return { ...common, ...timelineView(visual, cite) }
-    case 'study-table':
-      return { ...common, ...studyTableView(visual, library, cite) }
     case 'diagram':
       return { ...common, ...diagramView(visual, cite) }
   }
@@ -320,9 +257,7 @@ function render(view: VisualView): RenderedVisual {
   const element =
     view.kind === 'timeline'
       ? createElement(VisualTimeline, { visual: view })
-      : view.kind === 'study-table'
-        ? createElement(VisualStudyTable, { visual: view })
-        : createElement(VisualDiagram, { visual: view })
+      : createElement(VisualDiagram, { visual: view })
   return renderToStaticMarkup(element) as RenderedVisual
 }
 
@@ -330,14 +265,13 @@ function render(view: VisualView): RenderedVisual {
  * its `{{visual:<id>}}` line. */
 export function renderVisuals(
   visuals: ReadonlyArray<HtmlVisual>,
-  library: Library,
   cite: Cite,
   scope: string,
 ): ReadonlyMap<string, RenderedVisual> {
   return new Map(
     visuals.map((visual) => [
       visual.id,
-      render(visualView(visual, library, cite, scope)),
+      render(visualView(visual, cite, scope)),
     ]),
   )
 }

@@ -30,6 +30,7 @@ import {
   type FragmentPlace,
   type Line,
 } from './text-fragment'
+import { pointsOf } from './chart-view'
 import { factSheetView } from './view'
 
 export type SearchKind = 'guide' | 'tip' | 'fact-sheet'
@@ -118,21 +119,24 @@ const escape = (text: string) => text.replace(/[&<>"]/g, (c) => ESCAPES[c] ?? c)
 function blockPassages(block: ChapterBlock, place: Place): Passage[] {
   switch (block.kind) {
     case 'chart':
+    case 'table': {
+      const chart = block.kind === 'chart' ? block.visual : block.table
       return [
         {
           ...place,
           html: escape(
             [
-              block.visual.title,
-              ...block.visual.points.map(
+              chart.title,
+              ...pointsOf(chart).map(
                 (point) =>
                   `${point.label}${point.detail ? ` (${point.detail})` : ''}: ${point.number.text}`,
               ),
-              block.visual.note ?? '',
+              chart.note ?? '',
             ].join(' '),
           ),
         },
       ]
+    }
     case 'text':
       return [{ ...place, html: block.html }]
     case 'tip':

@@ -2,7 +2,8 @@
 // (`content/visuals-view.ts`) over the e2e fixture, which Storybook loads
 // through `virtual:library`: the Guide of `onde-conhecer-pessoas` has one
 // of each kind. Its bar comparison is the chart library's
-// (`visual-chart.example.ts`).
+// (`visual-chart.example.ts`) and its Study table is `chart-view.ts`'s
+// (`guide.example.ts`).
 import { topicBySlug } from '@tem-estudo/content/queries'
 import library from 'virtual:library'
 import { GUIDE } from './guide.example'
@@ -10,7 +11,6 @@ import {
   visualView,
   type DiagramView,
   type HtmlVisual,
-  type StudyTableView,
   type TimelineView,
   type VisualView,
 } from '#/content/visuals-view'
@@ -24,12 +24,7 @@ if (!guide?.visuals.length)
 const { factSheets } = GUIDE
 
 const view = (visual: HtmlVisual): VisualView =>
-  visualView(
-    visual,
-    library,
-    (slug) => factSheets.find((f) => f.slug === slug),
-    SLUG,
-  )
+  visualView(visual, (slug) => factSheets.find((f) => f.slug === slug), SLUG)
 
 function ofKind<K extends VisualView['kind']>(
   kind: K,
@@ -40,7 +35,6 @@ function ofKind<K extends VisualView['kind']>(
 }
 
 export const TIMELINE: TimelineView = ofKind('timeline')
-export const STUDY_TABLE: StudyTableView = ofKind('study-table')
 export const DIAGRAM: DiagramView = ofKind('diagram')
 
 /** The diagram with one arrow of each stroke: the fixture has no

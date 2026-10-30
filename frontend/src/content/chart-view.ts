@@ -5,10 +5,18 @@
 // function as JSON.
 //
 // A bar comparison draws bars; a Study table whose numbers share one unit
-// draws one dot per Study. A table that mixes units stays a table.
-import type { Library, Visual } from '@tem-estudo/content'
+// draws one dot per Study. A table that mixes units stays a table
+// (`ChartTable`) whose rows are the same points, so they take the tap and
+// the country filter too.
+import type {
+  FactSheet,
+  Library,
+  StudyTableVisual,
+  Visual,
+} from '@tem-estudo/content'
 import type { Coverage } from '@tem-estudo/rules/applies-to-you'
 import { BRAZIL, countrySlug } from '@tem-estudo/rules/country'
+import { DESIGN_NAME } from '#/ui/badges.copy'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 import {
   allSources,
@@ -71,12 +79,22 @@ export interface ChartView {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-/** The Visuals the library draws besides every bar comparison, by
- * `<topic>/<id>`. #471 moved one Study table; #472–#475 move the rest, and
- * then the rule becomes the kind alone. */
-export const LIBRARY_VISUALS: ReadonlySet<string> = new Set([
-  'onde-conhecer-pessoas/fatia-online-por-estudo',
-])
+/** A Study table whose numbers do not share a unit: still a table, one row
+ * per Study, each row a point the tap opens. */
+export interface ChartTable {
+  readonly kind: 'table'
+  readonly domId: string
+  readonly title: string
+  readonly note: string | null
+  readonly rows: ReadonlyArray<{
+    /** "Brasil · 2019 · 2.400 pessoas · transversal". */
+    readonly context: string
+    readonly point: ChartPoint
+  }>
+}
+
+/** What a Guide draws through this module, in its React tree. */
+export type GuideChart = ChartView | ChartTable
 
 const country = (name: string): ChartCountry => ({
   slug: countrySlug(name),
@@ -132,6 +150,14 @@ const ticksOf = (largest: number, max: number | undefined, unit: string) => {
   }))
 }
 
+/** Brazil's ring sets it apart from other countries. Most charts split one
+ * country's survey: a ring on every Brazilian point would mark nothing, so
+ * it stays only when the chart also has a point of another country. */
+function ringApart(points: ChartPoint[]): ChartPoint[] {
+  const apart = points.some((p) => p.country && !p.brazil)
+  return apart ? points : points.map((p) => ({ ...p, brazil: false }))
+}
+
 /** The chart of a Visual, or `null` when the library does not draw it (a
  * time line or a diagram, or a Study table of mixed units). */
 export function chartView(
@@ -159,10 +185,7 @@ export function chartView(
         ...pointFacts(bar, library, definitions),
       }
     })
-    // Most comparisons split one country's survey: a ring on every bar
-    // would mark nothing. Brazil's ring sets it apart from other countries.
-    const apart = all.some((p) => p.country && !p.brazil)
-    const points = apart ? all : all.map((p) => ({ ...p, brazil: false }))
+    const points = ringApart(all)
     return {
       kind: 'bars',
       ...common,
@@ -186,22 +209,7 @@ export function chartView(
     const [unit] = units
     if (units.size !== 1 || unit === undefined) return null
     const definitions = visual.definitions ?? []
-    const points = visual.rows.flatMap((row, i): ChartPoint[] => {
-      const study = cite(row.fact_sheet)
-      if (!study) return []
-      return [
-        {
-          key: `${i}`,
-          // "Kowal et al. (2025)", without the Fact sheet's subtitle.
-          label: study.title.replace(/:.*$/, ''),
-          detail: row.measure,
-          value: row.value,
-          number: numberView(row, unit, cite),
-          highlight: false,
-          ...pointFacts(row, library, definitions),
-        },
-      ]
-    })
+    const points = ringApart(studyPoints(visual, library, cite))
     return {
       kind: 'dots',
       ...common,
@@ -219,13 +227,88 @@ export function chartView(
   return null
 }
 
+/** One point per row of a Study table, each number in its own unit. */
+function studyPoints(
+  visual: StudyTableVisual,
+  library: Library,
+  cite: Cite,
+): ChartPoint[] {
+  const definitions = visual.definitions ?? []
+  return visual.rows.flatMap((row, i): ChartPoint[] => {
+    const study = cite(row.fact_sheet)
+    if (!study) return []
+    return [
+      {
+        key: `${i}`,
+        // "Kowal et al. (2025)", without the Fact sheet's subtitle.
+        label: study.title.replace(/:.*$/, ''),
+        detail: row.measure,
+        value: row.value,
+        number: numberView(row, row.unit, cite),
+        highlight: false,
+        ...pointFacts(row, library, definitions),
+      },
+    ]
+  })
+}
+
+const peopleFormat = new Intl.NumberFormat('pt-BR')
+
+/** The Fact sheet's place, year, sample and design, short. */
+function studyContext(factSheet: FactSheet | undefined): string {
+  if (!factSheet) return ''
+  const design = DESIGN_NAME[factSheet.design].replace(/ \(.*\)$/, '')
+  return [
+    factSheet.countries.length > 2
+      ? VISUAL_COPY.countries(factSheet.countries.length)
+      : factSheet.countries.join(', '),
+    factSheet.period,
+    factSheet.sample.n
+      ? VISUAL_COPY.people(peopleFormat.format(factSheet.sample.n))
+      : '',
+    design,
+  ]
+    .filter(Boolean)
+    .join(' · ')
+}
+
+/** A Study table of mixed units as a table of points, or `null` when it is
+ * not a Study table or `chartView` draws it as dots (one unit). */
+export function chartTable(
+  visual: Visual,
+  library: Library,
+  cite: Cite,
+  scope: string,
+): ChartTable | null {
+  if (visual.kind !== 'study-table') return null
+  if (new Set(visual.rows.map((r) => r.unit)).size === 1) return null
+  return {
+    kind: 'table',
+    domId: `visual-${scope}-${visual.id}`,
+    title: visual.title,
+    note: visual.note ?? null,
+    rows: studyPoints(visual, library, cite).map((point) => ({
+      context: studyContext(
+        library.factSheets.find(
+          (f) => f.slug === visual.rows[Number(point.key)]?.fact_sheet,
+        ),
+      ),
+      point,
+    })),
+  }
+}
+
+/** The points of a chart, or of a table's rows. */
+export const pointsOf = (chart: GuideChart): ReadonlyArray<ChartPoint> =>
+  chart.kind === 'table' ? chart.rows.map((r) => r.point) : chart.points
+
 /** The countries the charts carry, once each: Brazil first, then the
  * others in alphabetical order. The Guide's chips list these. */
 export function chartCountries(
-  charts: ReadonlyArray<ChartView>,
+  charts: ReadonlyArray<GuideChart>,
 ): ChartCountry[] {
   const found = new Map<string, ChartCountry>()
-  for (const point of charts.flatMap((c) => c.points))
+  for (const point of charts.flatMap(pointsOf))
     if (point.country) found.set(point.country.slug, point.country)
   return [...found.values()].sort((a, b) =>
     a.slug === BRAZIL

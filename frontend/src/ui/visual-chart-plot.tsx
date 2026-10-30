@@ -58,6 +58,8 @@ const DIMMED = 0.22
  * right end, and never less than `VALUE_ROOM`. */
 const VALUE_ROOM = 56
 const VALUE_LETTER = 8.2
+/** A dot's value starts past Brazil's ring (12px from the dot's center). */
+const DOT_VALUE_DX = 16
 
 /** A text in lines of up to `letters` letters, two at most; the rest is in
  * the tap detail and the list a screen reader reads. */
@@ -82,14 +84,14 @@ const labelLines = (chart: ChartView, label: string) =>
  * narrowest plot, where a mark short of the top leaves part of the room
  * its value needs. "14,14 parceiros" after a mark near the top needs more
  * than "39%". */
-function valueRoom(chart: ChartView) {
+function valueRoom(chart: ChartView, dx: number) {
   const top = chart.ticks[chart.ticks.length - 1]?.value || 1
   const plot = INITIAL_WIDTH - 12 - VALUE_ROOM
   return Math.max(
     VALUE_ROOM,
     ...chart.points.map((p) =>
       Math.ceil(
-        VALUE_DX +
+        dx +
           p.number.text.length * VALUE_LETTER -
           (1 - p.value / top) * plot,
       ),
@@ -210,6 +212,7 @@ export default function VisualChartPlot({
     [chart, country, profile],
   )
   const layout = layoutOf(chart)
+  const valueDx = chart.kind === 'dots' ? DOT_VALUE_DX : VALUE_DX
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
@@ -255,7 +258,7 @@ export default function VisualChartPlot({
           key: (r) => `valor-${r.key}`,
           text: (r) => r.number.text,
           anchor: 'start',
-          dx: VALUE_DX,
+          dx: valueDx,
           fontSize: 14,
           fontWeight: 700,
           fill: tone,
@@ -286,11 +289,11 @@ export default function VisualChartPlot({
       margin: {
         top: (layout.label[0] ?? 0) - layout.row / 2 + 16,
         left: 12,
-        right: valueRoom(chart),
+        right: valueRoom(chart, valueDx),
       },
       theme: THEME,
     })
-  }, [chart, rows, hatch, layout])
+  }, [chart, rows, hatch, layout, valueDx])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
