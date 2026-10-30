@@ -6,7 +6,16 @@
 // the list goes and leaves its text (`<script>`, `<style>`, `<iframe>` and the
 // like go with their content), an attribute off the list goes, and a link
 // only carries an `href` that is http(s), an anchor or a relative path.
-import { escapeAttrValue, FilterXSS, friendlyAttrValue } from 'xss'
+import xss from 'xss'
+import type * as Xss from 'xss'
+
+// `xss` is CommonJS and sets `escapeAttrValue` and `friendlyAttrValue` in a
+// loop, which Node's scan of its exports misses: a named import of them
+// broke every page on the dev server, whose SSR imports it through Node. Its
+// `module.exports` carries them all, though its typings call it only the
+// `filterXSS` function.
+const { escapeAttrValue, FilterXSS, friendlyAttrValue } =
+  xss as unknown as typeof Xss
 
 const TAGS: Record<string, ReadonlyArray<string>> = {
   p: [],
