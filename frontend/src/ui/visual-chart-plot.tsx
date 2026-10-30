@@ -788,8 +788,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
     const tone = (r: Row) => (r.dimmed ? MUTED : INK)
-    const y = (r: Row): RowY =>
-      places ? places.center(bandOf(r)) : bandOf(r)
+    const y = (r: Row): RowY => (places ? places.center(bandOf(r)) : bandOf(r))
     // The texts' own copies of the rows: the focus ring marks every point
     // whose datum is the focused one, and it belongs on the mark only.
     const words = rows.map((r) => ({ ...r }))
@@ -925,9 +924,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       definition={definition}
       renderSvg={renderSvg}
       initialWidth={INITIAL_WIDTH}
-      height={
-        (places?.height ?? bands(rows).length * layout.row) + ROWS_MARGIN
-      }
+      height={(places?.height ?? bands(rows).length * layout.row) + ROWS_MARGIN}
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}

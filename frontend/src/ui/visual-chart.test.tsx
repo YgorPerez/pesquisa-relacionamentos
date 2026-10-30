@@ -262,9 +262,7 @@ it("keeps a Study's average clear of Brazil's ring, and its countries' words a r
   const svg = html.querySelector('svg[role="img"]')!
   const texts = [...svg.querySelectorAll('text')]
   const y = (words: string) =>
-    Number(
-      texts.find((t) => t.textContent?.includes(words))?.getAttribute('y'),
-    )
+    Number(texts.find((t) => t.textContent?.includes(words))?.getAttribute('y'))
   const dot = (value: string) =>
     Number(
       [...svg.querySelectorAll('circle')]
@@ -415,7 +413,7 @@ it('keeps a time line\'s "você" tags clear of the value axis\'s words', () => {
   for (const tag of tags(line)) expect(tag.left).toBeGreaterThan(axisEnd)
 })
 
-it("starts a time line right above its highest words, with room for a value's \"você\" tag", () => {
+it('starts a time line right above its highest words, with room for a value\'s "você" tag', () => {
   // The divorce line: the values near the top of the scale.
   const near = {
     ...LINE,
