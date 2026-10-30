@@ -3,7 +3,7 @@
 // from the Fact sheet, next to the number it found. A tap on the number
 // opens the same detail as a chart's mark; the Guide's country lights its
 // rows; the saved Profile tags the Studies that cover it.
-import { screen, within } from '@testing-library/react'
+import { within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, it } from 'vite-plus/test'
 import { openVisual } from '#/platform/screens/visual'
@@ -37,7 +37,10 @@ it('shows one row per Study, its context taken from the Fact sheet, and its resu
   ])
 })
 
-it('opens the exact value, the country and the Fact sheet on a tap of the number, and closes it', async () => {
+const card = () =>
+  document.querySelector<HTMLElement>('[data-slot="detalhe-do-grafico"]')
+
+it('pins the exact value, the country and the Fact sheet on a tap of the number, and closes it', async () => {
   const user = userEvent.setup()
   const table = await openVisual(TITLE, 'table')
   const [, costa] = studyRows(table)
@@ -45,20 +48,68 @@ it('opens the exact value, the country and the Fact sheet on a tap of the number
   expect(number).toHaveAttribute('aria-expanded', 'false')
   await user.click(number)
   expect(number).toHaveAttribute('aria-expanded', 'true')
-  const figure = screen.getByRole('figure', { name: TITLE })
-  const detail = figure.querySelector<HTMLElement>(
-    '[data-slot="detalhe-do-grafico"]',
-  )
-  expect(detail).not.toBeNull()
-  const inDetail = within(detail!)
-  inDetail.getByText('Diferença de satisfação, online vs. presencial')
-  inDetail.getByText('EUA')
+  const inCard = within(card()!)
+  inCard.getByText('Diferença de satisfação, online vs. presencial')
+  inCard.getByText('EUA')
   expect(
-    inDetail.getByRole('link', { name: /^Ficha \d+: Costa/ }),
-  ).toHaveAttribute('href', '#ficha-costa-2018-satisfacao')
-  await user.click(inDetail.getByRole('button', { name: 'Fechar' }))
-  expect(figure.querySelector('[data-slot="detalhe-do-grafico"]')).toBeNull()
+    inCard.getByRole('link', { name: /Abrir Ficha: Costa/ }),
+  ).toHaveAttribute('href', '/estudos/costa-2018-satisfacao')
+  await user.click(inCard.getByRole('button', { name: 'Fechar' }))
+  expect(card()).toBeNull()
   expect(number).toHaveAttribute('aria-expanded', 'false')
+})
+
+it('shows the card on hover without its buttons, and lights the row', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [silva, costa] = studyRows(table)
+  await user.hover(costa!)
+  within(card()!).getByText('0,1 ponto')
+  expect(within(card()!).queryByRole('button')).toBeNull()
+  expect(within(card()!).queryByRole('link')).toBeNull()
+  expect(silva).toHaveAttribute('data-apagada')
+  expect(costa).not.toHaveAttribute('data-apagada')
+  await user.unhover(costa!)
+  expect(card()).toBeNull()
+  expect(silva).not.toHaveAttribute('data-apagada')
+})
+
+it('pins from anywhere on the row, and the same row unpins', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [, costa] = studyRows(table)
+  const context = within(costa!).getByText(/transversal/)
+  await user.click(context)
+  within(card()!).getByRole('button', { name: 'Fechar' })
+  await user.click(context)
+  expect(card()).toBeNull()
+})
+
+it('closes a pinned card with Esc and with a click outside', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [, costa] = studyRows(table)
+  await user.click(within(costa!).getByRole('button', { name: /0,1 ponto/ }))
+  await user.keyboard('{Escape}')
+  expect(card()).toBeNull()
+  await user.click(within(costa!).getByRole('button', { name: /0,1 ponto/ }))
+  await user.click(document.body)
+  expect(card()).toBeNull()
+})
+
+it('shows a number focused by the keyboard, pins with Enter, and Tab goes into the card', async () => {
+  const user = userEvent.setup()
+  const table = await openVisual(TITLE, 'table')
+  const [, costa] = studyRows(table)
+  const number = within(costa!).getByRole('button', { name: /0,1 ponto/ })
+  number.focus()
+  await user.keyboard('{Shift>}{Tab}{/Shift}{Tab}')
+  expect(number).toHaveFocus()
+  expect(within(card()!).queryByRole('button')).toBeNull()
+  await user.keyboard('{Enter}')
+  const link = within(card()!).getByRole('link')
+  await user.keyboard('{Tab}')
+  expect(link).toHaveFocus()
 })
 
 it('dims the rows of other countries when the link picks one the table has', async () => {

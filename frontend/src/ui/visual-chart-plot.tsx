@@ -28,9 +28,11 @@ import type { Profile } from '@tem-estudo/rules/profile'
 import { useCallback, useMemo } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import {
+  activeRow,
   lineWordsAbove,
   overlayLayers,
   withOverlay,
+  yearGuide,
   type OverlayMark,
 } from './chart-overlay'
 import { LABEL, SMALL, VALUE, VALUE_DX } from './chart-text'
@@ -191,19 +193,32 @@ interface SpreadRow extends Row {
 const of = (p: ChartPoint, country: string | null) =>
   p.country?.slug === country
 
-/** The point's state on the chart: the chosen country lights its points
- * and dims the others, on a chart that has it. A row whose range has the
- * country stays lit, and so does that point of its range. */
+/** The row point `key` belongs to: its own, its stacked bar's or, for a
+ * point of a range, its Study's. */
+const rowOfKey = (points: ReadonlyArray<ChartPoint>, key: string | null) =>
+  key === null
+    ? undefined
+    : points.find((p) => p.key === key || p.range?.some((q) => q.key === key))
+
+/** The point's state on the chart. The one place a mark is dimmed: the
+ * chosen country lights its points and dims the others, on a chart that has
+ * it, a row whose range has the country stays lit and so does that point of
+ * its range; while a row has the card (`active`), only that row is lit. A
+ * new reason to dim (the legend, #501) is one more condition here. */
 function rowsOf(
   chart: ChartView,
   country: string | null,
   profile: Profile | null,
+  active: string | null = null,
 ): Row[] {
   const lit =
     country !== null &&
     chart.points.some(
       (p) => of(p, country) || p.range?.some((q) => of(q, country)),
     )
+  const activeRow = rowOfKey(chart.points, active)
+  const outOfActive = (p: ChartPoint) =>
+    activeRow !== undefined && bandOf(p) !== bandOf(activeRow)
   const base = (p: ChartPoint, dimmed: boolean) => ({
     ...p,
     dimmed,
@@ -213,10 +228,12 @@ function rowsOf(
   })
   return chart.points.map((p) => {
     const range = p.range ?? []
+    const otherCountry =
+      lit && !of(p, country) && !range.some((q) => of(q, country))
     return {
-      ...base(p, lit && !of(p, country) && !range.some((q) => of(q, country))),
+      ...base(p, activeRow ? outOfActive(p) : otherCountry),
       spread: range.map((q) => ({
-        ...base(q, lit && !of(q, country)),
+        ...base(q, outOfActive(p) || (lit && !of(q, country))),
         // The row's "você" tag is enough.
         you: false,
         spread: [],
@@ -548,8 +565,16 @@ interface PlotProps {
   /** The `?pais=` country, already checked against the Guide's. */
   country: string | null
   profile: Profile | null
+  /** The key of the point that has the card (`chart-card.ts`). */
+  active: string | null
+  /** The pointer or the keyboard's focus reached a point, or left. */
+  onHover: (point: ChartPoint | null) => void
   onSelect: (point: ChartPoint | null) => void
 }
+
+/** A mark's row reaches any point of its height: the pointer finds the
+ * nearest row, or the nearest year, wherever it is in the drawing. */
+const ANYWHERE = Number.POSITIVE_INFINITY
 
 /** A time line: one dot per number at its year, joined by a line when the
  * numbers share a unit, the value written above each dot and a tick per
@@ -694,7 +719,12 @@ function lineSvg(
   scene: Parameters<typeof renderChartSvg>[0],
   options: Parameters<typeof renderChartSvg>[1],
   rows: Row[],
+  active: string | null,
 ) {
+  const point = scene.points.find(
+    (p) =>
+      p.markId.startsWith('mark') && (p.datum as Row | undefined)?.key === active,
+  )
   return withOverlay(
     renderChartSvg(scene, options),
     overlayLayers(
@@ -705,10 +735,26 @@ function lineSvg(
         right: scene.chart.x + scene.chart.width,
       },
     ),
+    '',
+    point
+      ? yearGuide(
+          point.x,
+          point.y,
+          scene.chart.y,
+          scene.chart.y + scene.chart.height,
+        )
+      : '',
   )
 }
 
-function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
+function LinePlot({
+  chart,
+  country,
+  profile,
+  active,
+  onHover,
+  onSelect,
+}: PlotProps) {
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
     [chart, country, profile],
@@ -736,6 +782,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
         },
       },
       focus: LINE_FOCUS,
+      maxFocusDistance: ANYWHERE,
       // Both fixed, so the plot is exactly `LINE.plot` tall.
       margin: { top: above, bottom: LINE.axis },
       theme: THEME,
@@ -743,8 +790,8 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
   }, [chart, rows, scaled, above])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
-    (scene, options) => lineSvg(scene, options, rows),
-    [rows],
+    (scene, options) => lineSvg(scene, options, rows, active),
+    [rows, active],
   )
 
   return (
@@ -756,6 +803,7 @@ function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
+      onFocusChange={(point) => onHover(point?.datum ?? null)}
       onSelect={(point) => onSelect(point?.datum ?? null)}
     />
   )
@@ -771,11 +819,22 @@ export default function VisualChartPlot(props: PlotProps) {
   )
 }
 
-function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
+/** How far the active row's verde-água reaches past its mark and its top
+ * label line's baseline. */
+const ACTIVE_ROW_PAD = { above: 11, below: 14 } as const
+
+function RowPlot({
+  chart,
+  country,
+  profile,
+  active,
+  onHover,
+  onSelect,
+}: PlotProps) {
   const hatch = `${chart.domId}-hatch`
   const rows = useMemo(
-    () => rowsOf(chart, country, profile),
-    [chart, country, profile],
+    () => rowsOf(chart, country, profile, active),
+    [chart, country, profile, active],
   )
   const layout = layoutOf(chart)
   // A dot chart places its rows in pixels, so a row with a range can be
@@ -885,6 +944,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
         },
       },
       focus: stacked ? STACK_FOCUS : MARK_FOCUS,
+      maxFocusDistance: ANYWHERE,
       // The sides are fixed: a long label must not squeeze the scale. On a
       // dot chart the bottom is too, so its pixels are the plot's.
       margin: {
@@ -904,6 +964,17 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       const defs = rows.some((r) => r.own)
         ? `<defs><pattern id="${hatch}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width="2.2"/></pattern></defs>`
         : ''
+      const row = rowOfKey(chart.points, active)
+      const center = row
+        ? scene.points.find(
+            (p) =>
+              p.markId.startsWith('mark') &&
+              (p.datum as Row | undefined) !== undefined &&
+              bandOf(p.datum as Row) === bandOf(row) &&
+              !('at' in (p.datum as Row)),
+          )?.y
+        : undefined
+      const reach = (layout.label[0] ?? 0) + ACTIVE_ROW_PAD.above
       return withOverlay(
         renderChartSvg(scene, options),
         overlayLayers(marks, {
@@ -914,9 +985,18 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
           right: scene.width,
         }),
         defs,
+        center === undefined
+          ? ''
+          : activeRow(
+              center - reach,
+              reach +
+                ACTIVE_ROW_PAD.below +
+                (row?.range?.length ? SPREAD.extra : 0),
+              scene.width,
+            ),
       )
     },
-    [rows, hatch, layout],
+    [rows, hatch, layout, chart.points, active],
   )
 
   return (
@@ -928,6 +1008,7 @@ function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
       ariaLabel={chart.title}
       idPrefix={chart.domId}
       className={HOST_CLASS}
+      onFocusChange={(point) => onHover(point?.datum ?? null)}
       onSelect={(point) => onSelect(point?.datum ?? null)}
     />
   )

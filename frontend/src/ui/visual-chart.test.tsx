@@ -17,6 +17,8 @@ import {
   STACKED,
 } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
+import VisualChartPlot from './visual-chart-plot'
+import type { ChartView } from '#/content/chart-view'
 
 // Rendered as the server renders: with the plot already loaded.
 beforeAll(async () => {
@@ -449,6 +451,71 @@ it('starts a time line right above its highest words, with room for a value\'s "
   // without one, so the plot does not move when a Profile is saved.
   expect(drawn(null).dots).toEqual(mine.dots)
   expect(drawn(null).headroom).toBeLessThan(20)
+})
+
+/** The plot as it draws while `active` has the card (#499). */
+const drawnWith = (chart: ChartView, active: string | null) =>
+  page(
+    renderToString(
+      <VisualChartPlot
+        chart={chart}
+        country={null}
+        profile={null}
+        active={active}
+        onHover={() => {}}
+        onSelect={() => {}}
+      />,
+    ),
+  )
+const dimmedValues = (html: Document) =>
+  [...html.querySelectorAll('svg[role="img"] text')]
+    .filter((t) => t.getAttribute('fill')?.includes('tinta-2'))
+    .map((t) => t.textContent)
+
+it('lights the active row behind its words and dims the other rows', () => {
+  expect(
+    drawnWith(DOTS, null).querySelector('[data-ts-key="active-row"]'),
+  ).toBeNull()
+  const html = drawnWith(DOTS, DOTS.points[0]!.key)
+  expect(html.querySelector('[data-ts-key="active-row"]')).not.toBeNull()
+  const dimmed = dimmedValues(html)
+  expect(dimmed).toContain('39%')
+  expect(dimmed).toContain('9%')
+  expect(dimmed).not.toContain('18%')
+})
+
+it("keeps a Study's row lit while one point of its range is active", () => {
+  const point = RANGE.points.find((p) => p.range)!
+  const html = drawnWith(RANGE, point.range![0]!.key)
+  const dimmed = dimmedValues(html)
+  expect(dimmed).not.toContain(`média ${point.number.text}`)
+  expect(dimmed).toContain('39%')
+})
+
+it('dims the other bars of a stacked chart, not the other parts of the active one', () => {
+  const [part, sibling] = STACKED.points
+  const other = STACKED.points.find((p) => p.stack?.bar !== part!.stack?.bar)!
+  const html = drawnWith(STACKED, part!.key)
+  const opacity = (key: string) =>
+    Number(
+      html
+        .querySelector(`rect[data-ts-key="${key}"]`)
+        ?.getAttribute('fill-opacity') ?? 1,
+    )
+  expect(opacity(other.key)).toBeLessThan(opacity(sibling!.key))
+})
+
+it("draws a time line's guide at the active year and no dimmed year", () => {
+  expect(drawnWith(LINE, null).querySelector('[data-ts-key="guide"]')).toBeNull()
+  const html = drawnWith(LINE, LINE.points[1]!.key)
+  const dot = [
+    ...html.querySelectorAll(
+      'svg[role="img"] circle:not([data-ts-key="guide-halo"])',
+    ),
+  ][1]
+  const guide = html.querySelector('[data-ts-key="guide"]')
+  expect(guide?.getAttribute('x1')).toBe(dot?.getAttribute('cx'))
+  expect(dimmedValues(html)).not.toContain('13,5%')
 })
 
 it('tells how to open a number only once the chart can take the tap', () => {

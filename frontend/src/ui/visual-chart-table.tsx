@@ -2,19 +2,28 @@
 // one row per Study, with where, when, how many and how it was done next to
 // its number, because one scale cannot hold a % and a "vezes". Two columns,
 // so it fits a 360px phone without scrolling sideways; a real table, so it
-// reads as one. Its rows are a chart's points all the same: the number opens
-// the tap detail (`visual-detail.tsx`), the Guide's country lights its rows
-// and dims the others, Brazil's row is marked for everyone, and the saved
-// Profile tags the Studies that cover it. No library: the server's table is
-// the whole drawing, and the tap is a plain button.
+// reads as one. Its rows are a chart's points all the same: each shows and
+// pins the chart's card (`chart-card.ts`, `visual-detail.tsx`), the Guide's
+// country lights its rows and dims the others, Brazil's row is marked for
+// everyone, and the saved Profile tags the Studies that cover it. No library:
+// the server's table is the whole drawing, and the tap is a plain button.
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import { useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ChartTable } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
+import {
+  closeCardOf,
+  enterCard,
+  hoverCard,
+  pinCard,
+  useChartCard,
+  useInteractive,
+  type CardTarget,
+} from './chart-card'
 import { CHART_TABLE_COPY } from './visual-chart-table.copy'
 import { CHART_COPY } from './visual-chart.copy'
-import { VisualDetail } from './visual-detail'
+import { ChartCard } from './visual-detail'
 import { SourceRefs, VisualFrame } from './visual-frame'
 import { VISUAL_COPY } from './visual.copy'
 
@@ -56,30 +65,56 @@ function TableHead() {
   )
 }
 
-/** A Study's row: its title, context and measure, and its number, which
- * opens the detail under the table. */
+/** A Study's row: its title, context and measure, and its number. The whole
+ * row is a target: a mouse over it shows its card, a click pins it, and its
+ * number is the way in for a keyboard and a screen reader. The rings in its
+ * title keep their own tap. */
 function StudyRow({
+  chart,
   point,
   context,
   dimmed,
   you,
-  open,
-  detailId,
-  onToggle,
+  active,
+  pinned,
+  interactive,
 }: {
+  chart: string
   point: ChartTable['rows'][number]['point']
   context: string
   dimmed: boolean
   you: boolean
-  open: boolean
-  detailId: string
-  onToggle: () => void
+  active: boolean
+  pinned: boolean
+  interactive: boolean
 }) {
   const study = point.number.sources[0]
+  const number = useRef<HTMLButtonElement>(null)
+  const target = (via: CardTarget['via']): CardTarget => ({
+    chart,
+    point,
+    anchor: () =>
+      number.current?.getBoundingClientRect() ?? new DOMRect(),
+    via,
+  })
   return (
     <tr
       data-apagada={dimmed || undefined}
-      className="transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40"
+      data-ativa={active || undefined}
+      onPointerEnter={(event) => {
+        if (event.pointerType !== 'touch') hoverCard(target('pointer'))
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType !== 'touch') hoverCard(null, chart)
+      }}
+      onClick={(event) => {
+        if (event.target instanceof Element && event.target.closest('a')) return
+        pinCard(target('pointer'))
+      }}
+      className={cn(
+        'transition-opacity data-apagada:text-tinta-2 data-apagada:opacity-40 data-ativa:bg-agua-fonte/30',
+        interactive && 'cursor-pointer',
+      )}
     >
       <th scope="row" className={`${CELL} pr-sm text-left font-normal`}>
         <span className="block font-bold">
@@ -95,11 +130,25 @@ function StudyRow({
       </th>
       <td className={`${CELL} text-right`}>
         <button
+          ref={number}
           type="button"
           aria-label={CHART_TABLE_COPY.openDetail(point.number.text)}
-          aria-expanded={open}
-          aria-controls={detailId}
-          onClick={onToggle}
+          aria-expanded={pinned}
+          aria-haspopup="dialog"
+          onFocus={(event) => {
+            if (event.target.matches(':focus-visible'))
+              hoverCard(target('keyboard'))
+          }}
+          onBlur={() => hoverCard(null, chart)}
+          onKeyDown={(event) => {
+            if (
+              pinned &&
+              event.key === 'Tab' &&
+              !event.shiftKey &&
+              enterCard(chart)
+            )
+              event.preventDefault()
+          }}
           className={cn(
             'cursor-pointer rounded-mao-2 border-0 bg-transparent p-0 text-right font-title text-grande leading-tight font-bold text-current underline decoration-dotted decoration-2 underline-offset-4',
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta',
@@ -122,15 +171,18 @@ export function VisualChartTable({
   country: string | null
   profile: Profile | null
 }) {
-  const [selected, setSelected] = useState<string | null>(null)
+  const card = useChartCard(table.domId)
+  const host = useRef<HTMLTableElement>(null)
+  const interactive = useInteractive()
   const lit =
     country !== null &&
     table.rows.some((r) => r.point.country?.slug === country)
-  const open = table.rows.find((r) => r.point.key === selected)?.point
-  const detailId = `${table.domId}-detalhe`
+  const active = card.target?.point.key ?? null
+  useEffect(() => () => closeCardOf(table.domId), [table.domId, country])
   return (
     <VisualFrame domId={table.domId} title={table.title} note={table.note}>
       <table
+        ref={host}
         aria-labelledby={`${table.domId}-titulo`}
         className="m-0 table w-full table-fixed border-collapse text-nota leading-nota"
       >
@@ -139,32 +191,26 @@ export function VisualChartTable({
           {table.rows.map(({ point, context }) => (
             <StudyRow
               key={point.key}
+              chart={table.domId}
               point={point}
               context={context}
-              dimmed={lit && point.country?.slug !== country}
+              dimmed={
+                active === null
+                  ? lit && point.country?.slug !== country
+                  : active !== point.key
+              }
               you={
                 point.covers.length > 0 &&
                 appliesToYou(profile, point.covers)?.covered === true
               }
-              open={selected === point.key}
-              detailId={detailId}
-              onToggle={() =>
-                setSelected((now) => (now === point.key ? null : point.key))
-              }
+              active={active === point.key}
+              pinned={card.pinned && active === point.key}
+              interactive={interactive}
             />
           ))}
         </tbody>
       </table>
-      <div id={detailId} aria-live="polite">
-        {open && (
-          <VisualDetail
-            point={open}
-            definitions={[]}
-            you={appliesToYou(profile, open.covers)?.covered === true}
-            onClose={() => setSelected(null)}
-          />
-        )}
-      </div>
+      <ChartCard card={card} host={host} definitions={[]} profile={profile} />
     </VisualFrame>
   )
 }

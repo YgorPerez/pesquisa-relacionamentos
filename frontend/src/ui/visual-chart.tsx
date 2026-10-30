@@ -2,44 +2,60 @@
 // server, interaction on top". The server sends the figure with the
 // library's complete SVG, so it reads without JS. The browser hydrates the
 // frame at once but leaves the SVG alone until a chart nears the screen;
-// then the library arrives (`visual-chart-loader.ts`) and adopts it, and a
-// tap, a click or Enter on a mark opens the exact value below
-// (`visual-detail.tsx`). The chosen country and the Profile reach the plot
-// through `useDeferredValue`: a change before the library came is a
-// transition, which keeps the server's SVG on screen instead of a
-// fallback.
-import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
+// then the library arrives (`visual-chart-loader.ts`) and adopts it. Hover
+// or the keyboard's focus on a row shows its card, and a click, a tap or
+// Enter pins it (`chart-card.ts`, `visual-detail.tsx`). The chosen country
+// and the Profile reach the plot through `useDeferredValue`: a change before
+// the library came is a transition, which keeps the server's SVG on screen
+// instead of a fallback.
 import type { Profile } from '@tem-estudo/rules/profile'
 import {
   memo,
   Suspense,
+  useCallback,
   useDeferredValue,
   useEffect,
   useRef,
-  useState,
-  useSyncExternalStore,
+  type KeyboardEvent,
+  type PointerEvent,
   type ReactNode,
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
+import { cn } from '@/platform/cn'
+import {
+  closeCard,
+  closeCardOf,
+  enterCard,
+  hoverCard,
+  pinCard,
+  useChartCard,
+  useInteractive,
+  type CardTarget,
+} from './chart-card'
 import { INK } from './chart-tones'
 import { DefinitionGlyph } from './definition-glyph'
 import { partTone } from './stack-tones'
 import { Plot, wantPlot } from './visual-chart-loader'
 import { CHART_COPY } from './visual-chart.copy'
-import { VisualDetail } from './visual-detail'
+import { ChartCard } from './visual-detail'
 import { VisualFrame } from './visual-frame'
 
-/** The plot's Suspense boundary, memoized: a render of the frame (a tap)
- * must not reach a boundary that has not hydrated yet. */
+/** The plot's Suspense boundary, memoized: a render of the frame must not
+ * reach a boundary that has not hydrated yet. The card reaches it only once
+ * the plot is there, since only the plot starts one. */
 const Island = memo(function Island({
   chart,
   country,
   profile,
+  active,
+  onHover,
   onSelect,
 }: {
   chart: ChartView
   country: string | null
   profile: Profile | null
+  active: string | null
+  onHover: (point: ChartPoint | null) => void
   onSelect: (point: ChartPoint | null) => void
 }) {
   return (
@@ -48,11 +64,26 @@ const Island = memo(function Island({
         chart={chart}
         country={country}
         profile={profile}
+        active={active}
+        onHover={onHover}
         onSelect={onSelect}
       />
     </Suspense>
   )
 })
+
+/** How far past its mark the card keeps clear: a row's value, the half of a
+ * time line's value that sticks out, nothing over stacked bars' own. */
+const WORDS_PAST_MARK = { bars: 66, dots: 66, line: 24, stacked: 0 } as const
+
+/** A mark's box and the words after it, read when the card is placed: the
+ * drawing is redrawn under it (a resize, the dimming). */
+const markBox =
+  (host: HTMLElement | null, key: string, past: number) => (): DOMRect => {
+    const mark = host?.querySelector(`[data-ts-key="${CSS.escape(key)}"]`)
+    const box = (mark ?? host)?.getBoundingClientRect() ?? new DOMRect()
+    return new DOMRect(box.x, box.y, box.width + past, box.height)
+  }
 
 /** What a time line's numbers measure, which its plot does not write: one
  * line when every point measures the same thing, else each year's. The
@@ -90,15 +121,7 @@ function Legend({ slot, children }: { slot?: string; children: ReactNode }) {
   )
 }
 
-const stayPut = () => () => {}
-/** True once the page's JavaScript runs, so a tap can open a number:
- * false on the server and while React hydrates, so both agree. */
-const useInteractive = () =>
-  useSyncExternalStore(
-    stayPut,
-    () => true,
-    () => false,
-  )
+const ARROWS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 
 export function VisualChart({
   chart,
@@ -110,11 +133,54 @@ export function VisualChart({
   country: string | null
   profile: Profile | null
 }) {
-  const [selected, setSelected] = useState<ChartPoint | null>(null)
+  const chartId = chart.domId
+  const card = useChartCard(chartId)
   const host = useRef<HTMLDivElement>(null)
+  /** What moved last: a finger's move is not a hover, and the card tells a
+   * keyboard how to pin. */
+  const input = useRef<'mouse' | 'touch' | 'keyboard'>('mouse')
   const deferredCountry = useDeferredValue(country)
   const deferredProfile = useDeferredValue(profile)
   const interactive = useInteractive()
+
+  const targetOf = useCallback(
+    (point: ChartPoint): CardTarget => ({
+      chart: chartId,
+      point,
+      anchor: markBox(host.current, point.key, WORDS_PAST_MARK[chart.kind]),
+      via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
+    }),
+    [chartId, chart.kind],
+  )
+  const onHover = useCallback(
+    (point: ChartPoint | null) => {
+      if (input.current === 'touch') return
+      if (point) hoverCard(targetOf(point))
+      else hoverCard(null, chartId)
+    },
+    [chartId, targetOf],
+  )
+  const onSelect = useCallback(
+    (point: ChartPoint | null) => {
+      if (point) pinCard(targetOf(point))
+      else closeCard()
+    },
+    [targetOf],
+  )
+  const onPointer = (event: PointerEvent) => {
+    input.current = event.pointerType === 'touch' ? 'touch' : 'mouse'
+  }
+  const onKey = (event: KeyboardEvent) => {
+    input.current = 'keyboard'
+    if (!card.pinned) return
+    // The card follows the arrows, unpinned: only Enter pins.
+    if (ARROWS.has(event.key)) closeCard()
+    if (event.key === 'Tab' && !event.shiftKey && enterCard(chartId))
+      event.preventDefault()
+  }
+
+  // What the card points at may go dark or leave with the page.
+  useEffect(() => () => closeCardOf(chartId), [chartId, deferredCountry])
   useEffect(() => {
     const element = host.current
     if (!element || typeof IntersectionObserver === 'undefined') {
@@ -178,14 +244,29 @@ export function VisualChart({
       <div
         ref={host}
         data-slot="grafico"
+        className={cn(
+          // Only once a click can open something: without JS, a plain SVG.
+          interactive &&
+            (chart.kind === 'line' ? 'cursor-crosshair' : 'cursor-pointer'),
+        )}
+        onPointerEnter={wantPlot}
         onPointerDown={wantPlot}
-        onFocus={wantPlot}
+        onFocus={(event) => {
+          wantPlot()
+          if (event.target.matches(':focus-visible'))
+            input.current = 'keyboard'
+        }}
+        onPointerMoveCapture={onPointer}
+        onPointerDownCapture={onPointer}
+        onKeyDownCapture={onKey}
       >
         <Island
           chart={chart}
           country={deferredCountry}
           profile={deferredProfile}
-          onSelect={setSelected}
+          active={card.target?.point.key ?? null}
+          onHover={onHover}
+          onSelect={onSelect}
         />
       </div>
       {/* The SVG is an image to a screen reader: the exact values are
@@ -214,16 +295,17 @@ export function VisualChart({
           </li>
         ))}
       </ul>
-      <div aria-live="polite">
-        {selected && (
-          <VisualDetail
-            point={selected}
-            definitions={chart.definitions}
-            you={appliesToYou(profile, selected.covers)?.covered === true}
-            onClose={() => setSelected(null)}
-          />
-        )}
+      {/* The arrows' card, said aloud: the focus stays on the chart. */}
+      <div aria-live="polite" className="sr-only">
+        {card.target &&
+          `${card.target.point.label}: ${card.target.point.number.text}`}
       </div>
+      <ChartCard
+        card={card}
+        host={host}
+        definitions={chart.definitions}
+        profile={profile}
+      />
     </VisualFrame>
   )
 }
