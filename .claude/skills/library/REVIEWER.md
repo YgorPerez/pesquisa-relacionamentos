@@ -12,7 +12,7 @@ O revisor é outra sessão, nunca a que escreveu o PR. Ele faz o merge sozinho d
 
 5. **Limitações e conflito.** `## Limitações` traz as que o artigo declara e as óbvias do desenho (autorrelato, transversal, painel com cotas). `conflict` diz quem financiou e os vínculos dos autores, conferidos na seção de financiamento da Fonte local.
 
-6. **Sentido.** O script confere o número, não o que ele quer dizer. Abra a Fonte local no Onde de cada linha e veja se a Medida descreve o que o Trecho mede, com a mesma população e o mesmo período. `countries`, `period`, `sample` e `covers` batem com os métodos.
+6. **Sentido.** O script confere o número, não o que ele quer dizer. Abra a Fonte local no Onde de cada linha e veja se a Medida descreve o que o Trecho mede, com a mesma população e o mesmo período. Quem nunca leu o artigo entende a linha sozinha, e uma comparação diz com quem compara, o mesmo grupo que a Fonte usa. `countries`, `period`, `sample` e `covers` batem com os métodos.
 
 7. **Guias e Relatórios.** Num PR de Guia, toda frase factual da prosa cita uma Ficha e diz o que a Ficha diz: "maioria" quando a Ficha diz 39% barra o merge. O mesmo vale para o Relatório que cita o estudo de uma Ficha nova: link da Ficha, e país, amostra e números como a Ficha os dá.
 
