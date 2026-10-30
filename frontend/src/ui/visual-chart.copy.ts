@@ -17,6 +17,8 @@ export const CHART_COPY = {
   youCovered: 'Este estudo tem dado para o seu Perfil.',
   sources: 'Ficha:',
   legend: 'Cada forma é uma definição:',
+  parts: 'Partes de cada barra',
+  noMatch: 'Nenhum estudo deste gráfico atende aos dois filtros.',
   chips: 'Destacar um país nos gráficos',
   allCountries: 'Todos',
 }

@@ -16,6 +16,7 @@ import {
   useDeferredValue,
   useEffect,
   useRef,
+  useState,
   type FocusEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -24,6 +25,7 @@ import {
 } from 'react'
 import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
+import { Toggle } from '@/ui/shadcn/toggle'
 import {
   closeCard,
   useCloseCardOn,
@@ -35,6 +37,7 @@ import {
   type CardTarget,
   type ChartMarkAt,
 } from './chart-card'
+import { matchesNothing } from './chart-filters'
 import { INK } from './chart-tones'
 import { DefinitionGlyph } from './definition-glyph'
 import { partTone } from './stack-tones'
@@ -51,6 +54,7 @@ const Island = memo(function Island({
   country,
   profile,
   active,
+  legend,
   onHover,
   onSelect,
 }: {
@@ -58,6 +62,7 @@ const Island = memo(function Island({
   country: string | null
   profile: Profile | null
   active: string | null
+  legend: number | null
   onHover: (mark: ChartMarkAt | null) => void
   onSelect: (mark: ChartMarkAt | null) => void
 }) {
@@ -68,6 +73,7 @@ const Island = memo(function Island({
         country={country}
         profile={profile}
         active={active}
+        legend={legend}
         onHover={onHover}
         onSelect={onSelect}
       />
@@ -78,6 +84,11 @@ const Island = memo(function Island({
 /** How far past its mark the card keeps clear: a row's value, the half of a
  * time line's value that sticks out, nothing over stacked bars' own. */
 const WORDS_PAST_MARK = { bars: 66, dots: 66, line: 24, stacked: 0 } as const
+/** A range's end has no value after it, only the next end's tick. */
+const PAST_RANGE_END = 14
+
+const isRangeEnd = (chart: ChartView, point: ChartPoint) =>
+  chart.points.some((p) => p.range?.some((q) => q.key === point.key))
 
 /** Where the mark ends and the words after it, on the page, read when the
  * card is placed: the page scrolls under it. */
@@ -111,55 +122,141 @@ function LineLabels({ points }: { points: ReadonlyArray<ChartPoint> }) {
   )
 }
 
+/** A legend's key, in either state: the same box with words or with a button,
+ * so the legend does not move when the page's JS arrives. */
+const KEY_BOX = 'gap-1 px-2.5 py-1 font-body font-normal'
+
+/** The chart's own legend: which key is pressed and which the mouse is over.
+ * It stays in the chart, not in the link (#497). */
+function useLegend() {
+  const [pressed, setPressed] = useState<number | null>(null)
+  const [preview, setPreview] = useState<number | null>(null)
+  return {
+    pressed,
+    preview,
+    press: (key: number) => {
+      setPressed(pressed === key ? null : key)
+      // Under the pointer, a key let go would stay lit by the preview.
+      setPreview(null)
+    },
+    setPreview,
+  }
+}
+type LegendState = ReturnType<typeof useLegend>
+
 /** A line of keys above the plot: the definitions' shapes, or the stacked
- * bars' parts. */
-function Legend({ slot, children }: { slot?: string; children: ReactNode }) {
+ * bars' parts. Each lights its marks on hover and on a press, once the page's
+ * JS runs; before that, the plain words. */
+function Legend({
+  slot,
+  label,
+  lead,
+  keys,
+  legend,
+  interactive,
+}: {
+  slot?: string
+  label: string
+  lead?: string
+  keys: ReadonlyArray<{ readonly id: string; readonly content: ReactNode }>
+  legend: LegendState
+  interactive: boolean
+}) {
   return (
-    <p
-      className="m-0 mb-xs flex flex-wrap gap-x-sm gap-y-1 text-nota leading-nota"
+    <div
+      role="group"
+      aria-label={label}
+      className="mb-xs flex flex-wrap items-center gap-x-xs gap-y-1 text-nota leading-nota"
       data-slot={slot}
     >
-      {children}
-    </p>
+      {lead && <p className="m-0 w-full text-tinta-2">{lead}</p>}
+      {keys.map(({ id, content }, key) =>
+        interactive ? (
+          <Toggle
+            key={id}
+            pressed={legend.pressed === key}
+            onPressedChange={() => legend.press(key)}
+            onPointerEnter={(event) => {
+              if (event.pointerType === 'mouse') legend.setPreview(key)
+            }}
+            onPointerLeave={() => legend.setPreview(null)}
+            className={KEY_BOX}
+          >
+            {content}
+          </Toggle>
+        ) : (
+          <span
+            key={id}
+            className={cn(
+              KEY_BOX,
+              'inline-flex min-h-toque items-center border-(length:--traco-controle) border-transparent text-nota leading-tight',
+            )}
+          >
+            {content}
+          </span>
+        ),
+      )}
+    </div>
   )
 }
 
 const ARROWS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 
 /** The keys over the plot: the definitions' shapes, the stacked bars' parts. */
-function ChartKeys({ chart }: { chart: ChartView }) {
+function ChartKeys({
+  chart,
+  legend,
+  interactive,
+}: {
+  chart: ChartView
+  legend: LegendState
+  interactive: boolean
+}) {
   return (
     <>
       {chart.definitions.length > 0 && (
-        <Legend>
-          <span className="text-tinta-2">{CHART_COPY.legend}</span>
-          {chart.definitions.map((d, i) => (
-            <span key={d.id}>
-              <DefinitionGlyph shape={i} /> {d.legend}
-            </span>
-          ))}
-        </Legend>
+        <Legend
+          label={CHART_COPY.legend}
+          lead={CHART_COPY.legend}
+          legend={legend}
+          interactive={interactive}
+          keys={chart.definitions.map((d, i) => ({
+            id: d.id,
+            content: (
+              <>
+                <DefinitionGlyph shape={i} /> {d.legend}
+              </>
+            ),
+          }))}
+        />
       )}
       {chart.segments && (
-        <Legend slot="partes">
-          {chart.segments.map((segment, i, all) => (
-            <span key={segment} className="inline-flex items-center gap-1">
-              <svg width="14" height="14" aria-hidden="true">
-                <rect
-                  x="0.5"
-                  y="0.5"
-                  width="13"
-                  height="13"
-                  rx="2"
-                  fill={INK}
-                  fillOpacity={partTone(i, all.length).opacity}
-                  stroke={INK}
-                />
-              </svg>
-              {segment}
-            </span>
-          ))}
-        </Legend>
+        <Legend
+          slot="partes"
+          label={CHART_COPY.parts}
+          legend={legend}
+          interactive={interactive}
+          keys={chart.segments.map((segment, i, all) => ({
+            id: segment,
+            content: (
+              <>
+                <svg width="14" height="14" aria-hidden="true">
+                  <rect
+                    x="0.5"
+                    y="0.5"
+                    width="13"
+                    height="13"
+                    rx="2"
+                    fill={INK}
+                    fillOpacity={partTone(i, all.length).opacity}
+                    stroke={INK}
+                  />
+                </svg>
+                {segment}
+              </>
+            ),
+          }))}
+        />
       )}
     </>
   )
@@ -226,10 +323,16 @@ function useChartMarks(chart: ChartView, host: RefObject<HTMLElement | null>) {
     (mark: ChartMarkAt): CardTarget => ({
       chart: chartId,
       point: mark.point,
-      anchor: markBox(host.current, mark, WORDS_PAST_MARK[chart.kind]),
+      anchor: markBox(
+        host.current,
+        mark,
+        isRangeEnd(chart, mark.point)
+          ? PAST_RANGE_END
+          : WORDS_PAST_MARK[chart.kind],
+      ),
       via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
     }),
-    [chartId, chart.kind, host],
+    [chartId, chart, host],
   )
   const onHover = useCallback(
     (mark: ChartMarkAt | null) => {
@@ -289,9 +392,18 @@ export function VisualChart({
   const deferredCountry = useDeferredValue(country)
   const deferredProfile = useDeferredValue(profile)
   const interactive = useInteractive()
-  // What the card points at may go dark or leave with the page.
-  useCloseCardOn(chart.domId, deferredCountry)
-  useWantPlot(host, country !== null || profile !== null)
+  const legend = useLegend()
+  const deferredLegend = useDeferredValue(legend.preview ?? legend.pressed)
+  // What the card points at may go dark or leave with the page. A preview
+  // lasts as long as the mouse is on a key: a pinned card outlives it.
+  useCloseCardOn(chart.domId, `${deferredCountry}|${legend.pressed}`)
+  useWantPlot(
+    host,
+    country !== null ||
+      profile !== null ||
+      legend.pressed !== null ||
+      legend.preview !== null,
+  )
 
   return (
     <VisualFrame
@@ -301,7 +413,7 @@ export function VisualChart({
       ownLines={chart.ownLines}
       sources={chart.sources}
     >
-      <ChartKeys chart={chart} />
+      <ChartKeys chart={chart} legend={legend} interactive={interactive} />
       <div
         ref={host}
         data-slot="grafico"
@@ -319,10 +431,21 @@ export function VisualChart({
           chart={chart}
           country={deferredCountry}
           profile={deferredProfile}
-          active={card.target?.point.key ?? null}
+          // A pinned card's row would hide what the mouse on a key previews.
+          active={
+            legend.preview === null ? (card.target?.point.key ?? null) : null
+          }
+          legend={deferredLegend}
           onHover={onHover}
           onSelect={onSelect}
         />
+      </div>
+      <div role="status">
+        {matchesNothing(chart.points, deferredCountry, deferredLegend) && (
+          <p className="m-0 mt-xs text-nota leading-nota font-bold">
+            {CHART_COPY.noMatch}
+          </p>
+        )}
       </div>
       {/* The SVG is an image to a screen reader: the exact values are
           here. */}

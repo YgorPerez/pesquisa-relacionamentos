@@ -133,6 +133,85 @@ export const RangeCountryChosen: Story = {
   args: { chart: RANGE, country: 'gana' },
 }
 
+/** Each end of a range answers on its own: the pointer on the range's line
+ * gets the tick nearest to it, in a card beside that tick. */
+export const RangeEnds: Story = {
+  args: { chart: RANGE },
+  play: async ({ canvasElement }) => {
+    const chart = await within(canvasElement).findByRole(
+      'img',
+      { name: RANGE.title },
+      { timeout: 10_000 },
+    )
+    // The range's line, on the second row; the scale runs to 100%.
+    const y = 0.74
+    await hoverAt(chart, 0.05, y)
+    await waitFor(() =>
+      expect(cardElement()).toHaveAccessibleName('Gana: 7%'),
+    )
+    await hoverAt(chart, 0.42, y)
+    await waitFor(() =>
+      expect(cardElement()).toHaveAccessibleName('Polônia: 33%'),
+    )
+    await expect(
+      chart.querySelectorAll('line[stroke*="agua-tinta"]'),
+    ).toHaveLength(1)
+  },
+}
+
+/** The legend: the mouse on a key previews it, a press holds it, and a press
+ * closes the card that was pinned. */
+export const LegendKeys: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const chart = await canvas.findByRole(
+      'img',
+      { name: DOTS.title },
+      { timeout: 10_000 },
+    )
+    const key = canvas.getByRole('button', { name: /qualquer canal/ })
+    const dimmed = () =>
+      [...chart.querySelectorAll('text')]
+        .find((t) => t.textContent === '18%')
+        ?.getAttribute('fill')
+        ?.includes('tinta-2')
+
+    await userEvent.hover(key)
+    await waitFor(() => expect(dimmed()).toBe(true))
+    await userEvent.unhover(key)
+    await waitFor(() => expect(dimmed()).toBe(false))
+
+    const box = chart.getBoundingClientRect()
+    await fireEvent.click(chart, {
+      clientX: box.left + box.width * 0.2,
+      clientY: box.top + box.height * 0.42,
+    })
+    await pinnedCard()
+    await userEvent.click(key)
+    await waitFor(() => expect(cardElement()).toBeNull())
+    await waitFor(() => expect(dimmed()).toBe(true))
+    // A press holds with the pointer gone, and a second one lets go.
+    await userEvent.unhover(key)
+    await expect(dimmed()).toBe(true)
+    await userEvent.click(key)
+    await waitFor(() => expect(dimmed()).toBe(false))
+  },
+}
+
+/** Both filters on, and no Study answers to both. */
+export const LegendAndCountryMatchNothing: Story = {
+  args: { country: 'eua' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(
+      await canvas.findByRole('button', { name: /só sites/ }),
+    )
+    await expect(await canvas.findByRole('status')).toHaveTextContent(
+      'Nenhum estudo',
+    )
+  },
+}
+
 /** `?pais=eua`: the United States lit, the others dimmed. */
 export const CountryChosen: Story = { args: { country: 'eua' } }
 
@@ -263,6 +342,7 @@ export const Plot: StoryObj = {
       country={null}
       profile={null}
       active={null}
+      legend={null}
       onHover={() => {}}
       onSelect={() => {}}
     />
