@@ -547,12 +547,15 @@ visuals:
       - label: 2008, entre todos os que já transaram
         value: 25.3
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
       - label: 2013, como o relatório calculou (só quem teve mais de um)
         value: 43.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: 2013, entre todos os que já transaram (conta nossa)
         value: 30.4
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
     highlight: 2013, entre todos os que já transaram (conta nossa)
     note: na mesma base, a alta de cinco anos é de uns cinco pontos
   - id: media-e-mediana
@@ -661,15 +664,19 @@ visuals:
       - label: Com parceiro casual, 2013
         value: 54.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: Com parceiro fixo, 2013
         value: 19.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: Homens com parceiro casual, 2008
         value: 51
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
       - label: Mulheres com parceiro casual, 2008
         value: 34.6
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
     highlight: Com parceiro casual, 2013
     note: entre quem fez sexo com esse tipo de parceiro no último ano
   - id: sifilis-por-idade
@@ -680,15 +687,19 @@ visuals:
       - label: Todas as idades, 2021
         value: 82.8
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2021
       - label: Todas as idades, 2024
         value: 120.8
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
       - label: 20 a 29 anos, 2024
         value: 286.1
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
       - label: 30 a 39 anos, 2024
         value: 184.6
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
     highlight: 20 a 29 anos, 2024
     note: casos diagnosticados e notificados, não todas as infecções
 takeaways: [pelos-seus-motivos-e-sobrio, prevencao-combinada]

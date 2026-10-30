@@ -207,9 +207,11 @@ visuals:
       - label: Quanto gostou do outro
         value: 5.82
         fact_sheet: boothby-2018-liking-gap
+        country: EUA
       - label: Quanto achou que o outro gostou
         value: 5.17
         fact_sheet: boothby-2018-liking-gap
+        country: EUA
     highlight: Quanto achou que o outro gostou
     note: 36 desconhecidos em duplas do mesmo sexo, nos EUA; em média, as duas notas deveriam ser iguais
 takeaways:

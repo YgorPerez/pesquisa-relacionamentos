@@ -329,27 +329,35 @@ visuals:
       - label: Online, 1995
         value: 2
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Online, 2017
         value: 39
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: Por amigos, 1995
         value: 33
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Por amigos, 2017
         value: 20
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: No trabalho, 1995
         value: 19
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: No trabalho, 2017
         value: 11
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: Em bar ou restaurante, 1995
         value: 19
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Em bar ou restaurante, 2017
         value: 27
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
     highlight: Online, 2017
     note: um casal pode entrar em mais de um caminho, como online e amigos
   - id: fatia-online-por-estudo
@@ -459,9 +467,11 @@ visuals:
       - label: Lésbicas, gays e bissexuais com parceiro, em 2022
         value: 24
         fact_sheet: pew-2023-2020-online-dating
+        year: 2022
       - label: Héteros com parceiro, em 2022
         value: 9
         fact_sheet: pew-2023-2020-online-dating
+        year: 2022
       - label: Casais do mesmo sexo formados na década antes de 2009
         value: 41
         fact_sheet: rosenfeld-2012-searching-for-a-mate
@@ -591,21 +601,27 @@ visuals:
       - label: Homens, 2004
         value: 27.8
         fact_sheet: ibge-2024-registro-civil
+        year: 2004
       - label: Homens, 2014
         value: 29.8
         fact_sheet: ibge-2024-registro-civil
+        year: 2014
       - label: Homens, 2024
         value: 31.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Mulheres, 2004
         value: 24.9
         fact_sheet: ibge-2024-registro-civil
+        year: 2004
       - label: Mulheres, 2014
         value: 27.1
         fact_sheet: ibge-2024-registro-civil
+        year: 2014
       - label: Mulheres, 2024
         value: 29.3
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
     highlight: Homens, 2024
     note: a idade subiu a cada década, para homens e para mulheres
   - id: uniao-e-casamento
@@ -617,21 +633,27 @@ visuals:
       - label: Primeira união, homens (2022)
         value: 26.3
         fact_sheet: ibge-2022-censo-unioes
+        year: 2022
       - label: Primeira união, mulheres (2022)
         value: 23.6
         fact_sheet: ibge-2022-censo-unioes
+        year: 2022
       - label: Casamento civil, homens com mulher (2024)
         value: 31.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, mulheres com homem (2024)
         value: 29.3
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, dois homens (2024)
         value: 34.7
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, duas mulheres (2024)
         value: 32.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
     note: a primeira união vem do Censo de 2022, e o casamento, do registro civil de 2024
   - id: segundo-casamento
     kind: timeline
