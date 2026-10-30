@@ -2,7 +2,8 @@
 // drawn here, on the server, into the HTML that takes the place of each
 // `{{visual:<id>}}` line of the body (`view.ts`). The page gets finished SVG
 // and HTML: no chart code goes to the browser, and the Visual reads without
-// JS (#182).
+// JS (#182). The Visuals the chart library draws go through `chart-view.ts`
+// instead (ADR 0042, "SVG from the server, interaction on top").
 import type {
   BarsVisual,
   Calculation,
