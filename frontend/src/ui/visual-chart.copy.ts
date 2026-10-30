@@ -6,6 +6,8 @@ export const CHART_COPY = {
   hint: 'Toque numa barra ou num ponto para ver o número exato e a Ficha.',
   calculation: (expression: string, value: string) =>
     `Conta nossa: ${expression} = ${value}`,
+  /** A Study's number next to its range across countries. */
+  rangeValue: (value: string) => `média ${value}`,
   country: 'País',
   year: 'Ano',
   definition: 'Mede',

@@ -192,6 +192,67 @@ describe('a point of a Visual', () => {
   })
 })
 
+/** A Study's number with its spread across countries (#472): Kowal's
+ * average of 50 countries, from Ghana to Poland, with Brazil inside. */
+const RANGE = (
+  value = 18,
+  range = ['18, country: Brasil', '24, country: Gana'],
+) =>
+  `  - id: lado-a-lado
+    kind: study-table
+    title: Lado a lado
+    rows:
+      - { fact_sheet: silva-2020-apps-brasil, measure: Por app, value: 18, unit: '%' }
+      - fact_sheet: silva-2020-apps-brasil
+        measure: Média dos países
+        value: ${value}
+        unit: '%'
+        range:
+${range.map((point, i) => `          - { label: Ponto ${i}, fact_sheet: silva-2020-apps-brasil, value: ${point} }`).join('\n')}`
+
+describe('a range of a Study table row', () => {
+  it('carries labelled points with their countries', () => {
+    const result = withVisuals(RANGE(), '{{visual:lado-a-lado}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      rows: [
+        {},
+        {
+          range: [
+            { label: 'Ponto 0', value: 18, country: 'Brasil' },
+            { label: 'Ponto 1', value: 24, country: 'Gana' },
+          ],
+        },
+      ],
+    })
+  })
+
+  it('takes its numbers from the Fact sheet', () => {
+    const result = withVisuals(
+      RANGE(18, ['18', '25']),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1.range.1.fact_sheet: the number 25 is not in the fact sheet "silva-2020-apps-brasil"; write it in the Visual as the fact sheet has it`,
+    ])
+  })
+
+  it('has two points or more, and the row’s value inside it', () => {
+    expect(
+      errorsOf(withVisuals(RANGE(18, ['18']), '{{visual:lado-a-lado}}')),
+    ).toEqual([
+      `${GUIDE}: visuals.0.rows.1.range: a range has two or more points`,
+    ])
+    expect(
+      errorsOf(withVisuals(RANGE(24, ['18', '18']), '{{visual:lado-a-lado}}')),
+    ).toEqual([
+      `${GUIDE}: visuals.0.rows.1.value: the value 24 is outside its range, from 18 to 18`,
+    ])
+  })
+})
+
 describe('the build rejects', () => {
   it('a number that is not in the cited Fact sheet', () => {
     const result = withVisuals(BARS.replace('value: 24', 'value: 25'), PLACED)

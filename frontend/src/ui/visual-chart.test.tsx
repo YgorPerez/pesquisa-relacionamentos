@@ -6,7 +6,7 @@
 import { renderToString } from 'react-dom/server'
 import { afterAll, beforeAll, expect, it, vi } from 'vite-plus/test'
 import { VisualChart } from './visual-chart'
-import { BARS, DOTS } from './visual-chart.example'
+import { BARS, DOTS, RANGE } from './visual-chart.example'
 import { preloadPlot } from './visual-chart-loader'
 
 // Rendered as the server renders: with the plot already loaded.
@@ -84,6 +84,45 @@ it('tags "você" on the Studies that cover the Profile', () => {
     ),
   )
   expect(young.querySelectorAll('[data-ts-key="voce"]').length).toBe(1)
+})
+
+it("draws a Study's spread across countries, with Brazil ringed inside it", () => {
+  const html = page(
+    renderToString(<VisualChart chart={RANGE} country={null} profile={null} />),
+  )
+  const svg = html.querySelector('svg[role="img"]')
+  // Each end and Brazil, named with their values under the row.
+  for (const words of ['Gana 7%', 'Brasil 19,3%', 'Polônia 33%'])
+    expect(svg?.textContent).toContain(words)
+  expect(svg?.textContent).toContain('média 16%')
+  expect(html.querySelectorAll('[data-ts-key="brasil"]').length).toBe(1)
+  // A screen reader hears every point of the spread too.
+  expect(html.querySelector('ul.sr-only')?.textContent).toContain(
+    'Polônia: 33%',
+  )
+})
+
+it("lights a Study whose spread has the chosen country, and dims the spread's other countries", () => {
+  const html = page(
+    renderToString(<VisualChart chart={RANGE} country="gana" profile={null} />),
+  )
+  const texts = [...html.querySelectorAll('svg[role="img"] text')]
+  const dimmed = (words: string) =>
+    texts
+      .find((t) => t.textContent?.includes(words))
+      ?.getAttribute('fill')
+      ?.includes('tinta-2')
+  expect(dimmed('média 16%')).toBe(false)
+  expect(dimmed('39%')).toBe(true)
+  // The ticks: Ghana's lit, Brazil's and Poland's dimmed.
+  const ticks = [
+    ...html.querySelectorAll('svg[role="img"] [data-ts-key^="marca-faixa"]'),
+  ]
+  expect(ticks.length).toBeGreaterThan(0)
+  const opacities = [...html.querySelectorAll('svg[role="img"] line')]
+    .map((l) => l.getAttribute('stroke-opacity'))
+    .filter((o) => o === '0.22')
+  expect(opacities.length).toBe(2)
 })
 
 it('shows the definitions as a legend of shapes', () => {

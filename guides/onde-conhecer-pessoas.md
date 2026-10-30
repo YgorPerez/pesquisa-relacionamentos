@@ -355,51 +355,66 @@ visuals:
   - id: fatia-online-por-estudo
     kind: study-table
     title: Quantos casais se conheceram online, conforme o estudo
+    definitions:
+      - id: recentes-qualquer-meio
+        legend: casais recentes, qualquer meio online
+      - id: todos-qualquer-meio
+        legend: todos os casais, qualquer meio online
+      - id: recentes-so-site
+        legend: casais recentes, só site ou app de namoro
+      - id: todos-so-site
+        legend: todos os casais, só site ou app de namoro
     rows:
       - fact_sheet: rosenfeld-2019-disintermediating-friends
         measure: Casais héteros formados em 2017, qualquer meio online
         value: 39
         unit: '%'
+        year: 2017
+        definition: recentes-qualquer-meio
       - fact_sheet: kowal-2025-50-paises
         measure: Relações iniciadas de 2010 em diante, em painéis online
         value: 21
         unit: '%'
+        year: 2024
+        definition: recentes-qualquer-meio
       - fact_sheet: kowal-2025-50-paises
-        measure: Todas as pessoas com parceiro, em painéis online
+        measure: Média de 50 países, todas as pessoas com parceiro, em painéis online
         value: 16
         unit: '%'
+        year: 2024
+        definition: todos-qualquer-meio
+        range:
+          - label: Gana, a menor fatia
+            value: 7
+            fact_sheet: kowal-2025-50-paises
+            country: Gana
+          - label: Brasil, conta nossa (23 de 119 pessoas, sem peso)
+            value: 19.3
+            fact_sheet: kowal-2025-50-paises
+            country: Brasil
+          - label: Polônia, a maior fatia
+            value: 33
+            fact_sheet: kowal-2025-50-paises
+            country: Polônia
       - fact_sheet: lampard-2020-natsal-reino-unido
         measure: Casais que passaram a morar juntos de 2008 a 2012
         value: 10.9
         unit: '%'
+        year: 2012
+        definition: recentes-qualquer-meio
       - fact_sheet: pew-2023-2020-online-dating
         measure: Todos os adultos com parceiro em 2022, só site ou app de namoro
         value: 10
         unit: '%'
+        year: 2022
+        definition: todos-so-site
       - fact_sheet: bergstrom-2016-epic-franca
         measure: Parceiro atual conhecido de 2005 a 2013, só site de encontro (o estudo diz "menos de")
         value: 9
         unit: '%'
-    note: contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor
-  - id: online-por-pais
-    kind: bars
-    title: Pessoas com parceiro que o conheceram online, em 2024
-    unit: '%'
-    bars:
-      - label: Gana, a menor fatia
-        value: 7
-        fact_sheet: kowal-2025-50-paises
-      - label: Média dos 50 países
-        value: 16
-        fact_sheet: kowal-2025-50-paises
-      - label: Brasil (23 de 119 pessoas, sem peso)
-        value: 19.3
-        fact_sheet: kowal-2025-50-paises
-      - label: Polônia, a maior fatia
-        value: 33
-        fact_sheet: kowal-2025-50-paises
-    highlight: Brasil (23 de 119 pessoas, sem peso)
-    note: a pesquisa foi respondida pela internet, então só contou quem usa internet, e isso tende a aumentar a fatia online
+        year: 2013
+        definition: recentes-so-site
+    note: contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor. O estudo de 50 países foi respondido pela internet, então só contou quem usa internet, e isso tende a aumentar a fatia online
   - id: mensagens-de-menos-e-de-mais
     kind: bars
     title: Como homens e mulheres vivem as mensagens no app, nos EUA
@@ -712,8 +727,6 @@ Qual número usar depende do que você quer saber. Para saber como começam os c
 {{brazil}} Aqui, não achamos pesquisa com amostra sorteada que pergunte onde o casal atual se conheceu, e o registro civil não guarda essa informação [@ibge-2024-registro-civil]. Os números que existem vêm de painéis online. Num painel de 2017, 23% de quem estava num relacionamento conheceu o parceiro pela internet, 17% em sites e redes sociais e 6% em apps de paquera [@opinionbox-2017-relacionamentos-brasil]. No recorte brasileiro do estudo de 50 países, a fatia que conheceu o parceiro online ficou perto de um quinto numa conta nossa, sem peso e com poucos casos [@kowal-2025-50-paises].
 
 {{myth:casamentos-brasil-quase-vinte-por-cento}}
-
-{{visual:online-por-pais}}
 
 {{brazil}} A única amostra nacional que achamos, do [[Datafolha]], é de 2009 e mede outra coisa: 19% das pessoas de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido encontrar a pessoa [@datafolha-2009-sexualidade-brasileiros]. Do que se mediu fora, o que deve valer aqui é a direção, não o tamanho: o online pesa mais entre os casais que se formam agora do que no total. Nenhum estudo brasileiro testou isso.
 

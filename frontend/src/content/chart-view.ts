@@ -47,6 +47,10 @@ export interface ChartPoint {
   readonly brazil: boolean
   /** Who the Fact sheets behind the number cover, for the "você" mark. */
   readonly covers: ReadonlyArray<Coverage>
+  /** A dot row's spread across the places its Study pooled (#472): a line
+   * from the smallest of these points to the largest, each one tappable,
+   * with the row's year and definition. */
+  readonly range?: ReadonlyArray<ChartPoint>
 }
 
 export interface ChartView {
@@ -186,6 +190,18 @@ export function chartView(
     const points = visual.rows.flatMap((row, i): ChartPoint[] => {
       const study = cite(row.fact_sheet)
       if (!study) return []
+      const facts = pointFacts(row, library, definitions)
+      const range = row.range?.map((p, k): ChartPoint => ({
+        key: `${i}-${k}`,
+        label: p.label,
+        detail: row.measure,
+        value: p.value,
+        number: numberView(p, unit, cite),
+        highlight: false,
+        ...pointFacts(p, library, definitions),
+        year: facts.year,
+        definition: facts.definition,
+      }))
       return [
         {
           key: `${i}`,
@@ -195,7 +211,8 @@ export function chartView(
           value: row.value,
           number: numberView(row, unit, cite),
           highlight: false,
-          ...pointFacts(row, library, definitions),
+          ...facts,
+          ...(range && { range }),
         },
       ]
     })
@@ -203,14 +220,21 @@ export function chartView(
       kind: 'dots',
       ...common,
       ticks: ticksOf(
-        Math.max(...visual.rows.map((r) => r.value)),
+        Math.max(
+          ...visual.rows.flatMap((r) => [
+            r.value,
+            ...(r.range ?? []).map((p) => p.value),
+          ]),
+        ),
         undefined,
         unit,
       ),
       points,
       definitions: definitions.map(({ id, legend }) => ({ id, legend })),
       ownLines: [],
-      sources: allSources(points.map((p) => p.number)),
+      sources: allSources(
+        points.flatMap((p) => [p, ...(p.range ?? [])]).map((p) => p.number),
+      ),
     }
   }
   return null
@@ -222,7 +246,9 @@ export function chartCountries(
   charts: ReadonlyArray<ChartView>,
 ): ChartCountry[] {
   const found = new Map<string, ChartCountry>()
-  for (const point of charts.flatMap((c) => c.points))
+  for (const point of charts.flatMap((c) =>
+    c.points.flatMap((p) => [p, ...(p.range ?? [])]),
+  ))
     if (point.country) found.set(point.country.slug, point.country)
   return [...found.values()].sort((a, b) =>
     a.slug === BRAZIL
