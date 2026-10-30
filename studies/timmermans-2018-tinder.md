@@ -44,7 +44,7 @@ Um questionário perguntou a usuários atuais do Tinder na Bélgica sobre seus m
 
 Os percentuais finais descrevem participantes que relataram encontro presencial, não a porcentagem de cada encontro que virou sexo ou relacionamento. As categorias podem se sobrepor e não devem ser somadas. O estudo mede matches, que exigem interesse recíproco, e não curtidas recebidas. A associação positiva esperada entre deslizar e matches não apareceu; isso não demonstra que deslizar mais nunca ajude uma pessoa.
 
-Os motivos foram medidos em três escalas de 1 a 7: relação, sexo e socializar. Os percentuais por motivo dizem quanto o número esperado de encontros ou relações cresce a cada ponto a mais na escala, com os outros fatores na mesma conta. Não são a porcentagem de usuários com aquele motivo que teve o encontro ou a relação. O B é o peso do fator na conta, e o Exp(B) o mesmo peso como multiplicador: 1 é igual, abaixo de 1 é menos. Os autores concluem que o Tinder "might not be that successful in gratifying a relationship need".
+Os motivos foram medidos em três escalas: relação, sexo e socializar. Os percentuais por motivo dizem quanto o número esperado de encontros ou relações cresce a cada ponto a mais na escala, com os outros fatores na mesma conta. Não são a porcentagem de usuários com aquele motivo que teve o encontro ou a relação. O B é o peso do fator na conta, e o Exp(B) o mesmo peso como multiplicador: 1 é igual, abaixo de 1 é menos. Os autores concluem que o Tinder "might not be that successful in gratifying a relationship need".
 
 ## Limitações
 

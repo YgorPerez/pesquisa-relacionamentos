@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Universitários heterossexuais da Noruega e dos EUA responderam a um questionário de quatro páginas sobre a última transa casual. Disseram se ficaram contentes, neutros, um pouco ou muito arrependidos, a mesma pergunta de Galperin et al. (2013). Deram nota de 1 a 5 a seis possíveis causas: prazer (prazer em geral, orgasmo e importância do orgasmo), preocupação (gravidez, infecção sexual e reputação), nojo (o sexo foi nojento, anti-higiênico, errado ou imoral), competência sexual do parceiro, pressão (sentiu-se pressionado ou obrigado) e iniciativa (foi quem tomou a iniciativa). Regressões logísticas ordinais testaram cada causa sozinha e todas juntas, e se o efeito mudava por sexo e por país.
+Universitários heterossexuais da Noruega e dos EUA responderam a um questionário de quatro páginas sobre a última transa casual. Disseram se ficaram contentes, neutros, em parte ou muito arrependidos, a mesma pergunta de Galperin et al. (2013). Deram nota de 1 a 5 a seis possíveis causas: prazer (prazer em geral, orgasmo e importância do orgasmo), preocupação (gravidez, infecção sexual e reputação), nojo (o sexo foi nojento, anti-higiênico, errado ou imoral), competência sexual do parceiro, pressão (sentiu-se pressionado ou obrigado) e iniciativa (foi quem tomou a iniciativa). Regressões logísticas ordinais testaram cada causa sozinha e todas juntas, e se o efeito mudava por sexo e por país.
 
 ## Achados
 
@@ -40,7 +40,7 @@ Universitários heterossexuais da Noruega e dos EUA responderam a um questionár
 | Preocupação e arrependimento, olhada sozinha | Mais preocupação veio com mais arrependimento, igual nos dois sexos e nos dois países (razão de chances = 2,16) | p. 63, 3.2 | "(Z = 9.85, p < .001, OR = 2.16)" |
 | Nojo e arrependimento, olhado sozinho | Mais nojo veio com mais arrependimento, de forma mais forte nas mulheres (razão de chances = 3,42) | p. 63, 3.2 | "(Z = 14.53, p < .001, OR = 3.42)" |
 | Parceiro competente e arrependimento, olhado sozinho | Um parceiro mais competente veio com menos arrependimento, de forma mais forte nas mulheres (razão de chances = 0,51) | p. 63, 3.2 | "(Z = −9.72, p < .001, OR = 0.51)" |
-| Pressão e arrependimento, olhada sozinha | Mais pressão veio com mais arrependimento (razão de chances = 2,15) | p. 64, 3.2 | "(Z = 10.73, p < .001, OR = 2.15)" |
+| Pressão e arrependimento, olhada sozinha | Mais pressão veio com mais arrependimento, um pouco mais forte nas mulheres (razão de chances = 2,15) | p. 64, 3.2 | "(Z = 10.73, p < .001, OR = 2.15)" |
 | Tomar a iniciativa e arrependimento, olhada sozinha | Ter tomado a iniciativa veio com menos arrependimento, só nas mulheres (razão de chances = 0,61) | p. 64, 3.2 | "(Z = −7.20, p < .001, OR = 0.61)" |
 | Tomar a iniciativa e arrependimento, por sexo | A ligação apareceu só nas mulheres | p. 64, 3.2 | "moderated by sex and affected female participants only" |
 | Nojo, com todos os fatores na mesma conta | Foi o fator mais forte: mais nojo veio com mais arrependimento (razão de chances = 2,34) | p. 64, 3.3 | "disgust (Z = 8.01, p < .001, OR = 2.34) was clearly the strongest predictor of casual sex regret" |

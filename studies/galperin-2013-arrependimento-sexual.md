@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Três estudos testaram duas hipóteses da psicologia evolucionista: mulheres se arrependem mais de ter feito sexo casual, e homens se arrependem mais de ter deixado passar uma chance. No estudo 1, universitários leram cenários iguais para os dois sexos (uma transa de uma noite com alguém que nunca mais viram, uma chance de sexo perdida) e deram nota de 1 a 9 ao arrependimento que sentiriam. No estudo 2, adultos do craigslist marcaram numa lista de 88 itens os arrependimentos sexuais que já tiveram. No estudo 3, o principal, adultos de um questionário do msnbc.com disseram como se sentem sobre a última vez que fizeram sexo casual e a última vez que recusaram sexo casual: contentes, neutros, um pouco arrependidos ou muito arrependidos. A pergunta não definia "sexo casual".
+Três estudos testaram duas hipóteses da psicologia evolucionista: mulheres se arrependem mais de ter feito sexo casual, e homens se arrependem mais de ter deixado passar uma chance. No estudo 1, universitários leram cenários iguais para os dois sexos (uma transa de uma noite com alguém que nunca mais viram, uma chance de sexo perdida) e deram nota de 1 a 9 ao arrependimento que sentiriam. No estudo 2, adultos do craigslist marcaram numa lista de 88 itens os arrependimentos sexuais que já tiveram. No estudo 3, o principal, adultos de um questionário do msnbc.com disseram como se sentem sobre a última vez que fizeram sexo casual e a última vez que recusaram sexo casual: contentes, neutros, em parte arrependidos ou muito arrependidos. A pergunta não definia "sexo casual".
 
 ## Achados
 
