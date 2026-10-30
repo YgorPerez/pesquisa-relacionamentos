@@ -29,24 +29,24 @@ Duas coisas. Primeiro, com os históricos conjugais da CPS de 1990, a proporçã
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Primeiros casamentos que terminam | cerca de metade | Resultados, p. 249 | "we find that for all first marriages about half will dissolve" |
-| Por escolaridade, em 30 anos | sessenta por cento sem ensino médio completo; pouco mais de um terço entre quem tem faculdade | Resultados, p. 249 | "Sixty percent of first marriages disrupt among women who did not complete high school compared to slightly over one-third among college graduates." |
-| Por escolaridade, Tabela 1 (5, 10, 15, 20 e 30 anos) | sem ensino médio: 26, 39, 47, 53, 60%; faculdade: 11, 20, 25, 28, 36% | Tabela 1 | "Not HS Grad 26 39 47 53 60 High School Grad 23 35 43 47 53 Some College 20 32 38 45 51 College Graduate 11 20 25 28 36" |
-| Por idade ao casar | mais de 60% antes dos 20 (cerca de dois terços antes dos 18); cerca de 40% depois dos 22 | Resultados, p. 249 | "over 60 percent of marriages formed before age 20 break up (the proportion is about two-thirds for marriages under age 18) compared to about 40 percent of those begun over age 22" |
-| Por raça | 70% dos casamentos de mulheres negras; 47% de brancas | Conclusão, p. 256 | "We estimate that 70 percent of black women's first marriages will end in divorce, as will 47 percent of white women's marriages." |
-| Casamentos que terminaram em 5 anos, sem e com filho antes de casar (NSFG, casamentos de 1980–86 e de 1987–94) | sem filho: 18% e 15%; com filho: 31% e 32% | Tabela 2 | "No Child Before 18 15 26 24 Child Before 31 32" |
-| Casamentos que terminaram em 5 anos, sem e com coabitação antes de casar (mesmos períodos) | sem: 20% e 16%; com: 24% e 28% | Tabela 2 | "No Cohabit Before 20 16 Cohabit Before Marriage 24 28" |
-| Risco de o primeiro casamento terminar para quem teve filho antes de casar, comparado a quem não teve, sem controles (risco relativo) | 1,89 | Tabela 3 | "Child Before 1.89 9.26" |
-| A mesma comparação, com os outros fatores controlados (modelo 1) | 2,03 | Tabela 3 | "2.03 9.41" |
-| Risco de o primeiro casamento terminar para quem coabitou antes, comparado a quem não coabitou, sem controles (risco relativo) | 1,40 | Tabela 3 | "Cohabited Before 1.40 4.96" |
-| A mesma comparação, com controles (modelo 1) | 1,38 | Tabela 3 | "1.38 4.45" |
-| Risco de o primeiro casamento terminar para quem casou com 20–23 anos, comparado a quem casou com 15–19, sem controles (risco relativo) | 0,52 | Tabela 3 | "Age at Marriage (15-19) 20-23 0.52 8.35" |
-| O mesmo para quem casou com 24–30 anos, comparado a quem casou com 15–19, sem controles | 0,41 | Tabela 3 | "24-30 0.41 10.15" |
-| Risco de o primeiro casamento terminar para quem não tem diploma do ensino médio, comparado a quem tem faculdade, sem controles (risco relativo) | 2,52 | Tabela 3 | "No Diploma 2.52 8.77" |
-| Tendência: o divórcio parou de subir | sem tendência no risco, diferenças grandes e significativas | Resultados, p. 252 | "there was no trend in the likelihood of divorce, but that all of the differentials in the risk of divorce are large and statistically significant" |
-| Tendência por escolaridade: faculdade | o divórcio caiu entre quem tem faculdade e a diferença por escolaridade cresceu | Conclusão, p. 256 | "the educational disparity in divorce has increased, as women with a college degree have experienced a decline in the risk of divorce" |
-| Tendência por escolaridade: sem ensino médio | o divórcio subiu entre quem não terminou o ensino médio | Resultados, p. 253 | "not having completed high school indicates divorce rates increased among those with the least education" |
-| Uniões de mulheres negras (casamento ou coabitação) terminando em 5 anos | de 40% para 55% | Resultados, p. 252 | "from 40 percent for the 1980-86 cohort to 55 percent for 1987-94 cohort" |
+| Quantos primeiros casamentos terminam | Pela estimativa do estudo, cerca de metade | Resultados, p. 249 | "we find that for all first marriages about half will dissolve" |
+| Estudo da mulher, em 30 anos | Terminam sessenta por cento dos primeiros casamentos das que não concluíram o ensino médio e pouco mais de um terço dos das que têm faculdade | Resultados, p. 249 | "Sixty percent of first marriages disrupt among women who did not complete high school compared to slightly over one-third among college graduates." |
+| Estudo da mulher, em 5, 10, 15, 20 e 30 anos | Sem ensino médio completo, terminaram 26%, 39%, 47%, 53% e 60% dos primeiros casamentos; com faculdade, 11%, 20%, 25%, 28% e 36% | Tabela 1 | "Not HS Grad 26 39 47 53 60 High School Grad 23 35 43 47 53 Some College 20 32 38 45 51 College Graduate 11 20 25 28 36" |
+| Idade ao casar | Terminam mais de 60% dos casamentos feitos antes dos 20 anos (cerca de dois terços antes dos 18) e cerca de 40% dos feitos depois dos 22 | Resultados, p. 249 | "over 60 percent of marriages formed before age 20 break up (the proportion is about two-thirds for marriages under age 18) compared to about 40 percent of those begun over age 22" |
+| Raça da mulher | Os autores estimam que 70% dos primeiros casamentos de mulheres negras acabem em divórcio, e 47% dos de mulheres brancas | Conclusão, p. 256 | "We estimate that 70 percent of black women's first marriages will end in divorce, as will 47 percent of white women's marriages." |
+| Filho antes de casar: fim em 5 anos, casamentos de 1980–86 e de 1987–94 | Sem filho antes, terminaram 18% e 15%; com filho antes, 31% e 32% | Tabela 2 | "No Child Before 18 15 26 24 Child Before 31 32" |
+| Morar junto antes de casar: fim em 5 anos, nos mesmos períodos | Sem morar junto antes, terminaram 20% e 16%; morando junto antes, 24% e 28% | Tabela 2 | "No Cohabit Before 20 16 Cohabit Before Marriage 24 28" |
+| Risco com filho antes de casar | Mais risco de o primeiro casamento terminar que quem não teve, sem levar mais nada em conta (risco relativo de 1,89) | Tabela 3 | "Child Before 1.89 9.26" |
+| Risco com filho antes de casar, levando em conta o resto | A diferença segue, levando em conta os outros fatores do estudo (risco relativo de 2,03) | Tabela 3 | "2.03 9.41" |
+| Risco morando junto antes de casar | Mais risco de o primeiro casamento terminar que quem não morou, sem levar mais nada em conta (risco relativo de 1,40) | Tabela 3 | "Cohabited Before 1.40 4.96" |
+| Risco morando junto antes, levando em conta o resto | A diferença segue, levando em conta os outros fatores do estudo (risco relativo de 1,38) | Tabela 3 | "1.38 4.45" |
+| Casar com 20–23 anos, comparado a 15–19 | Menos risco de o primeiro casamento terminar, sem levar mais nada em conta (risco relativo de 0,52) | Tabela 3 | "Age at Marriage (15-19) 20-23 0.52 8.35" |
+| Casar com 24–30 anos, comparado a 15–19 | Menos risco de o primeiro casamento terminar, sem levar mais nada em conta (risco relativo de 0,41) | Tabela 3 | "24-30 0.41 10.15" |
+| Sem diploma do ensino médio, comparado a quem tem faculdade | Mais risco de o primeiro casamento terminar, sem levar mais nada em conta (risco relativo de 2,52) | Tabela 3 | "No Diploma 2.52 8.77" |
+| O divórcio ao longo do tempo | No geral, o risco não subiu nem caiu, e as diferenças entre os grupos foram grandes e não parecem acaso | Resultados, p. 252 | "there was no trend in the likelihood of divorce, but that all of the differentials in the risk of divorce are large and statistically significant" |
+| O divórcio ao longo do tempo, com faculdade | O risco caiu entre as mulheres com faculdade, e a diferença por estudo cresceu | Conclusão, p. 256 | "the educational disparity in divorce has increased, as women with a college degree have experienced a decline in the risk of divorce" |
+| O divórcio ao longo do tempo, sem ensino médio | O divórcio subiu entre quem não terminou o ensino médio | Resultados, p. 253 | "not having completed high school indicates divorce rates increased among those with the least education" |
+| Primeiras uniões de mulheres negras (casamento ou morar junto), em 5 anos | A parte que terminou subiu de 40%, nas uniões de 1980–86, para 55%, nas de 1987–94 | Resultados, p. 252 | "from 40 percent for the 1980-86 cohort to 55 percent for 1987-94 cohort" |
 
 ## Limitações
 

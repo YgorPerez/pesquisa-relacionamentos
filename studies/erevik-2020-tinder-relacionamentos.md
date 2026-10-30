@@ -29,14 +29,14 @@ Comparou estudantes solteiros que declararam usar Tinder com os que não usavam,
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Solteiros da primeira pesquisa que responderam à segunda | 45,8% | p. 3, Procedures and Sample | "The T2 response rate for those who reported to be single at T1 was 45.8%." |
-| Pessoas na análise sobre começar um relacionamento | 2.385 pessoas | p. 6, nota da Tabela 3 | "Binary logistic regression analyses, n = 2385." |
-| Chance de estar num relacionamento na segunda pesquisa: quem usava Tinder comparado a quem não usava, sem ajuste | OR = 1,31; IC de 1,06 a 1,62 | p. 6, Tabela 3, Crude analysis, linha Tinder use | "1.31 (1.06–1.62)" |
-| A mesma comparação, com ajuste por personalidade | OR = 1,18; IC de 0,95 a 1,47 | p. 6, Tabela 3, Adjusted for personality, linha Tinder use | "1.18 (0.95–1.47)" |
-| A mesma comparação, com ajuste por uso de álcool e drogas ilícitas | OR = 1,13; IC de 0,90 a 1,42 | p. 6, Tabela 3, Adjusted for substance use, linha Tinder use | "1.13 (0.90–1.42)" |
-| A mesma comparação, com ajuste por todas as características medidas | OR = 1,08; IC de 0,85 a 1,35 | p. 6, Tabela 3, Fully adjusted, linha Tinder use | "1.08 (0.85–1.35)" |
+| Quem voltou a responder | 45,8% dos solteiros da primeira pesquisa responderam à segunda | p. 3, Procedures and Sample | "The T2 response rate for those who reported to be single at T1 was 45.8%." |
+| Quantos entraram na conta sobre começar um relacionamento | 2.385 pessoas | p. 6, nota da Tabela 3 | "Binary logistic regression analyses, n = 2385." |
+| Usar Tinder e estar num relacionamento na segunda pesquisa | Sem levar mais nada em conta, quem usava teve mais chance que quem não usava (razão de chances de 1,31; provavelmente entre 1,06 e 1,62) | p. 6, Tabela 3, Crude analysis, linha Tinder use | "1.31 (1.06–1.62)" |
+| O mesmo, levando em conta a personalidade | A diferença pode ser acaso (razão de chances de 1,18; provavelmente entre 0,95 e 1,47) | p. 6, Tabela 3, Adjusted for personality, linha Tinder use | "1.18 (0.95–1.47)" |
+| O mesmo, levando em conta álcool e drogas ilícitas | A diferença pode ser acaso (razão de chances de 1,13; provavelmente entre 0,90 e 1,42) | p. 6, Tabela 3, Adjusted for substance use, linha Tinder use | "1.13 (0.90–1.42)" |
+| O mesmo, levando em conta tudo o que foi medido | A diferença pode ser acaso (razão de chances de 1,08; provavelmente entre 0,85 e 1,35) | p. 6, Tabela 3, Fully adjusted, linha Tinder use | "1.08 (0.85–1.35)" |
 
-OR é a razão de chances de estar em um relacionamento no seguimento, comparando usuários com não usuários; os intervalos de confiança são de 95%. A associação bruta foi positiva e [[significativa]], e permaneceu assim com ajustes separados por características demográficas ou saúde mental. Ela deixou de ser significativa com o ajuste por personalidade, por uso de substâncias ou por todas as características juntas. Isso é compatível com diferenças entre quem usa e quem não usa Tinder; não prova que o app aumente a formação de relacionamentos nem que seu efeito seja zero.
+A razão de chances compara a chance de estar num relacionamento na segunda pesquisa, entre quem usava Tinder e quem não usava: acima de 1, mais chance. "Provavelmente entre" é o intervalo de confiança de 95%; se ele inclui 1, a diferença pode ser acaso. Sem levar mais nada em conta, a ligação foi [[significativa]], e continuou assim levando em conta características demográficas ou saúde mental, cada uma por vez. Ela passou a poder ser acaso levando em conta a personalidade, o uso de álcool e drogas ou tudo junto. Isso combina com diferenças entre quem usa e quem não usa Tinder; não prova que o app ajude a começar relacionamentos nem que não tenha efeito nenhum.
 
 ## Limitações
 

@@ -28,18 +28,18 @@ Se morar com o futuro marido antes do primeiro casamento se associa à dissoluç
 
 ## Achados
 
-OR é a razão de chances de dissolução em um ano, comparando quem coabitou com o futuro marido a quem não coabitou com ele. Não é a probabilidade de divórcio ao longo da vida. Os localizadores abaixo são as páginas numeradas do manuscrito, não as páginas da revista.
+A razão de chances compara a chance de o casamento acabar em um ano entre quem morou com o futuro marido e quem não morou: acima de 1, mais chance. Não é a probabilidade de divórcio ao longo da vida. Os localizadores abaixo são as páginas numeradas do manuscrito, não as páginas da revista.
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Chance de o casamento acabar para quem coabitou com o futuro marido, comparada a quem não coabitou, juntando todas as durações de casamento, com controles e IC de 95% | OR = 1,31; IC: 1,25–1,38 | p. 30, Tabela 1, modelo 2 | "1.31 (1.25, 1.38)" |
-| Taxa bruta de dissolução no primeiro ano entre quem não coabitou com o futuro marido | 4,1% | p. 18, texto referente à Figura 3 | "breakup rate of 4.1%" |
-| Taxa bruta de dissolução no primeiro ano entre quem coabitou com o futuro marido | 3,9% | p. 18, texto referente à Figura 3 | "had breakup rate of 3.9%" |
-| Tempo de casamento a partir do qual a parcela de casais ainda casados passa a ser significativamente maior entre quem não coabitou, comparada a quem coabitou, nos dados combinados | 5 anos | p. 20, análise de Kaplan–Meier e Figuras de apêndice 1 e 2 | "at marital duration of 5 years" |
+| Morar com o futuro marido, em qualquer tempo de casamento | Quem morou teve mais chance de o casamento acabar que quem não morou, levando em conta o resto (razão de chances de 1,31; provavelmente entre 1,25 e 1,38) | p. 30, Tabela 1, modelo 2 | "1.31 (1.25, 1.38)" |
+| Primeiro ano, sem morar junto antes | 4,1% dos casais se separaram, sem levar mais nada em conta | p. 18, texto referente à Figura 3 | "breakup rate of 4.1%" |
+| Primeiro ano, morando junto antes | 3,9% dos casais se separaram, sem levar mais nada em conta | p. 18, texto referente à Figura 3 | "had breakup rate of 3.9%" |
+| Quando a diferença vira | Com 5 anos de casamento, a parte de casais ainda casados já era maior entre quem não morou junto antes, e a diferença não parece acaso | p. 20, análise de Kaplan–Meier e Figuras de apêndice 1 e 2 | "at marital duration of 5 years" |
 
-As duas taxas brutas do primeiro ano são descritivas. A diferença não era estatisticamente [[significativa]] aos doze meses; era significativa até os seis meses. Nos modelos ajustados da Tabela 2, a coabitação se associa a menor dissolução no ano-calendário do casamento, e a maior dissolução depois. Esse intervalo do modelo não corresponde necessariamente aos primeiros doze meses completos da Figura 3.
+A diferença entre as duas taxas do primeiro ano não era [[significativa]] aos doze meses, ou seja, podia ser acaso; até os seis meses, era. Levando em conta o resto (Tabela 2), morar junto antes anda junto com menos separação no ano-calendário do casamento e com mais separação depois. Esse período da conta não é necessariamente igual aos doze primeiros meses da Figura 3. "Provavelmente entre" é o intervalo de confiança de 95%.
 
-Os autores não encontraram evidência consistente de que a associação tenha desaparecido nas coortes mais recentes. A conclusão depende de distinguir duração do casamento de ano em que ele começou e de como se escolhe entre modelos. Ao incluir a coabitação com outros homens antes do casamento, a associação com ter coabitado com o futuro marido diminui; as duas experiências não devem ser tratadas como uma só.
+Os autores não encontraram sinal consistente de que a ligação tenha sumido nos casamentos mais recentes. A conclusão depende de separar o tempo de casamento do ano em que ele começou e de como se escolhe a conta. Ao incluir ter morado com outros homens antes de casar, a ligação com ter morado com o futuro marido diminui; as duas experiências não devem ser tratadas como uma só.
 
 ## Limitações
 

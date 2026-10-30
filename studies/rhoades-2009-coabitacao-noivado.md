@@ -30,15 +30,15 @@ Quem morou junto antes de noivar relatou menor satisfação, dedicação e confi
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Já houve sugestão séria de divórcio, entre quem morou junto antes do noivado | 18,7% | Results, parágrafo sobre divorce potential | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
-| Já houve sugestão séria de divórcio, entre quem só morou junto ao casar | 10,2%; diferença significativa em relação ao grupo anterior | Results, mesmo parágrafo | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
-| Já houve sugestão séria de divórcio, entre quem morou junto depois do noivado | 12,3%; diferença não significativa em relação a morar junto antes do noivado | Results, comparação before versus after engagement | "those who cohabited before engagement were not significantly more likely to have ever suggested divorce than those who cohabited after engagement (12.3%," |
-| Diferença em comunicação negativa entre quem morou junto antes do noivado e quem só morou junto ao casar, sem controles | d = 0,33 | Tabela 1, Negative communication, coluna Before vs. not until marriage, valor fora dos parênteses | "Negative communication 1.46 (.45) 1.39 (.34) 1.33 (.36) .18 (.13) .33" |
-| Mesma comparação, com controles | d = 0,25 | Tabela 1, mesma célula, valor entre parênteses; nota da tabela | "(.25" |
+| Sugerir divórcio, quando morou junto antes do noivado | 18,7% disseram que eles ou o cônjuge já tinham sugerido o divórcio a sério | Results, parágrafo sobre divorce potential | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
+| Sugerir divórcio, quando só morou junto ao casar | 10,2% disseram o mesmo, menos que quem morou junto antes do noivado, e a diferença não parece acaso | Results, mesmo parágrafo | "with those who cohabited before engagement being significantly more likely to have ever suggested divorce (18.7%) than those who did not live together premaritally (10.2%," |
+| Sugerir divórcio, quando morou junto depois do noivado | 12,3% disseram o mesmo; a diferença para quem morou junto antes do noivado pode ser acaso | Results, comparação before versus after engagement | "those who cohabited before engagement were not significantly more likely to have ever suggested divorce than those who cohabited after engagement (12.3%," |
+| Comunicação negativa | Quem morou junto antes do noivado relatou mais que quem só morou junto ao casar, uma diferença pequena (d = 0,33) | Tabela 1, Negative communication, coluna Before vs. not until marriage, valor fora dos parênteses | "Negative communication 1.46 (.45) 1.39 (.34) 1.33 (.36) .18 (.13) .33" |
+| Comunicação negativa, levando em conta o resto | A diferença fica um pouco menor, ainda pequena (d = 0,25) | Tabela 1, mesma célula, valor entre parênteses; nota da tabela | "(.25" |
 
-O d expressa a diferença entre grupos em desvios-padrão; positivo aqui indica mais comunicação negativa em quem morou junto antes de noivar. Os controles foram duração do casamento, religiosidade e escolaridade. Idade e renda foram comparadas entre os grupos, mas não entraram como covariáveis nessas análises porque não diferiram significativamente.
+"d" mede o tamanho da diferença entre dois grupos: 0,2 é pequena e 0,5 é média. "Levando em conta o resto" quer dizer a duração do casamento, a religiosidade e o estudo. Idade e renda foram comparadas entre os grupos, mas ficaram fora dessas contas porque a diferença podia ser acaso.
 
-Depois dos controles, a associação com ter sugerido divórcio permaneceu na comparação antes do noivado versus só ao casar. O teste geral para dedicação deixou de ser significativo. Na subamostra que só morou junto com o atual cônjuge, permaneceram as diferenças ajustadas em comunicação negativa e sugestão de divórcio, mas não em satisfação, dedicação ou confiança.
+Levando em conta esses fatores, a ligação com ter sugerido divórcio continuou na comparação entre morar junto antes do noivado e só ao casar. A diferença geral em dedicação passou a poder ser acaso. Entre quem só morou junto com o atual cônjuge, as diferenças continuaram em comunicação negativa e em sugerir divórcio, mas não em satisfação, dedicação ou confiança.
 
 ## Definições
 
