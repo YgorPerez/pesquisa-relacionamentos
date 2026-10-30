@@ -93,8 +93,7 @@ function StudyRow({
   const target = (via: CardTarget['via']): CardTarget => ({
     chart,
     point,
-    anchor: () =>
-      number.current?.getBoundingClientRect() ?? new DOMRect(),
+    anchor: () => number.current?.getBoundingClientRect() ?? new DOMRect(),
     via,
   })
   return (

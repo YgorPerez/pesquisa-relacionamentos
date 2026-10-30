@@ -30,6 +30,7 @@ export interface CardState {
 
 const NONE: CardState = { target: null, pinned: false }
 let state = NONE
+let closed: CardTarget | null = null
 const listeners = new Set<() => void>()
 
 function set(next: CardState) {
@@ -43,31 +44,45 @@ const isSame = (a: CardTarget | null, b: CardTarget) =>
 export const currentCard = () => state
 
 /** Hover or the keyboard's focus reached a point, or left chart `from`. A
- * pinned card ignores both. */
+ * pinned card ignores both, and so does a card just closed, on its own point:
+ * the library says again which point it has each time it redraws, and only
+ * leaving that point opens the way back. */
 export function hoverCard(target: CardTarget): void
 export function hoverCard(target: null, from: string): void
 export function hoverCard(target: CardTarget | null, from?: string) {
   if (state.pinned) return
   if (target) {
+    if (closed && isSame(closed, target)) return
+    closed = null
     if (!isSame(state.target, target)) set({ target, pinned: false })
-  } else if (state.target?.chart === from) set(NONE)
+  } else {
+    if (closed?.chart === from) closed = null
+    if (state.target?.chart === from) set(NONE)
+  }
+}
+
+/** Takes the card away, remembering the point it was on. */
+function dismiss() {
+  closed = state.target
+  set(NONE)
 }
 
 /** Pins a card, replacing any other; the same mark again unpins it. The one
  * place a card gets pinned: count a pinned card here (#502). */
 export function pinCard(target: CardTarget) {
-  if (state.pinned && isSame(state.target, target)) set(NONE)
+  closed = null
+  if (state.pinned && isSame(state.target, target)) dismiss()
   else set({ target, pinned: true })
 }
 
 export function closeCard() {
-  if (state !== NONE) set(NONE)
+  if (state !== NONE) dismiss()
 }
 
 /** Closes the card if it is chart `chart`'s: the chart left the page, or
  * what it lights changed. */
 export function closeCardOf(chart: string) {
-  if (state.target?.chart === chart) set(NONE)
+  if (state.target?.chart === chart) dismiss()
 }
 
 const subscribe = (listener: () => void) => {

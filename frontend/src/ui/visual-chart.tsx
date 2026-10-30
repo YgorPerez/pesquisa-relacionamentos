@@ -255,8 +255,7 @@ export function VisualChart({
         onFocus={wantPlot}
         onFocusCapture={(event) => {
           // Ahead of the library's own listener, which shows the first mark.
-          if (event.target.matches(':focus-visible'))
-            input.current = 'keyboard'
+          if (event.target.matches(':focus-visible')) input.current = 'keyboard'
         }}
         onPointerMoveCapture={onPointer}
         onPointerDownCapture={onPointer}

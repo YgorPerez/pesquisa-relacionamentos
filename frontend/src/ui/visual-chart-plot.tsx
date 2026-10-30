@@ -284,28 +284,23 @@ function rangeMarks(rows: Row[], places: Places) {
   const line = (band: string) => places.center(band) + SPREAD.line
   const ranged = rows.filter((r) => r.spread.length > 0)
   if (ranged.length === 0) return []
-  const ticks = ranged.flatMap((r) => r.spread)
-  // A tick's opacity is one number per mark: one mark lit, one dimmed.
-  const tickMarks = [false, true].flatMap((dimmed) => {
-    const these = ticks.filter((q) => q.dimmed === dimmed)
-    return these.length === 0
-      ? []
-      : [
-          tickX(these, {
-            id: `mark-range-${dimmed ? 'dimmed' : 'lit'}`,
-            x: 'value',
-            y: (q) => line(q.at),
-            key: 'key',
-            // A group each: on a row's line, the tap takes the nearest
-            // tick or dot, not the first one drawn (`focusNearestY`).
-            z: 'key',
-            stroke: INK,
-            strokeWidth: 2.5,
-            strokeOpacity: dimmed ? DIMMED : 1,
-            length: 16,
-          }),
-        ]
-  })
+  const tickMarks = ranged
+    .flatMap((r) => r.spread)
+    .map((q) =>
+      tickX([q], {
+        id: `mark-range-${q.key}`,
+        x: 'value',
+        y: (t) => line(t.at),
+        key: 'key',
+        // A group each: on a row's line, the tap takes the nearest
+        // tick or dot, not the first one drawn (`focusNearestY`).
+        z: 'key',
+        stroke: INK,
+        strokeWidth: 2.5,
+        strokeOpacity: q.dimmed ? DIMMED : 1,
+        length: 16,
+      }),
+    )
   return [
     link(ranged, {
       id: 'range',
@@ -332,7 +327,9 @@ const MARK_FOCUS: ChartFocusStrategy<Row, number, RowY> = {
   resolve: (points, context) =>
     focusNearestY.resolve(onlyMarks(points), context),
   group: (points, context) => focusNearestY.group(onlyMarks(points), context),
-  navigation: (points) => focusNearestY.navigation(onlyMarks(points)),
+  // Down the rows, as they read; a range's ticks from the left.
+  navigation: (points) =>
+    [...onlyMarks(points)].sort((a, b) => a.y - b.y || a.x - b.x),
 }
 
 /** Where a row sits on the y axis: its band, or on a dot chart its center
@@ -378,30 +375,22 @@ function stackedMarks(
 ) {
   const parts = chart.segments?.length ?? 1
   const start = (r: Row) => r.stack?.start ?? 0
-  const marks: ChartMark<Row, number, RowY>[] = []
-  for (const dimmed of [false, true])
-    for (let part = 0; part < parts; part++) {
-      const these = rows.filter(
-        (r) => r.dimmed === dimmed && r.stack?.part === part,
-      )
-      if (these.length === 0) continue
-      const fade = dimmed ? DIMMED : 1
-      marks.push(
-        barX(these, {
-          id: `mark-${dimmed ? 'dimmed' : 'lit'}-${part}`,
-          x1: start,
-          x2: (r) => start(r) + r.value,
-          y: bandOf,
-          key: 'key',
-          maxThickness: 26,
-          fill: INK,
-          fillOpacity: partTone(part, parts).opacity * fade,
-          stroke: INK,
-          strokeWidth: 1,
-          strokeOpacity: fade,
-        }),
-      )
-    }
+  const marks: ChartMark<Row, number, RowY>[] = rows.map((r) => {
+    const fade = r.dimmed ? DIMMED : 1
+    return barX([r], {
+      id: `mark-${r.key}`,
+      x1: start,
+      x2: (d) => start(d) + d.value,
+      y: bandOf,
+      key: 'key',
+      maxThickness: 26,
+      fill: INK,
+      fillOpacity: partTone(r.stack?.part ?? 0, parts).opacity * fade,
+      stroke: INK,
+      strokeWidth: 1,
+      strokeOpacity: fade,
+    })
+  })
   marks.push(...stackedTexts(words, labelOffset, parts))
   return marks
 }
@@ -443,59 +432,48 @@ function stackedTexts(words: Row[], labelOffset: number, parts: number) {
   ]
 }
 
-/** The marks of one kind, one per look: a definition's shape (dots only),
- * dimmed or not. */
+/** A row's mark. One mark per point, because a mark's opacity is one number,
+ * and its id stays the same dimmed or lit: the library keys a point by its
+ * mark's id, so a new id would lose the keyboard's place when the card moves
+ * and the rows dim. */
 function pointMarks(
   chart: ChartView,
   rows: Row[],
   hatch: string,
   y: (r: Row) => RowY,
 ) {
-  const marks: ChartMark<Row, number, RowY>[] = []
-  for (const dimmed of [false, true]) {
-    const some = rows.filter((r) => r.dimmed === dimmed)
-    if (some.length === 0) continue
-    const fillOpacity = dimmed ? DIMMED : 1
-    if (chart.kind === 'bars') {
-      marks.push(
-        barX(some, {
-          id: `mark-${dimmed ? 'dimmed' : 'lit'}`,
-          x: 'value',
-          y,
-          key: 'key',
-          maxThickness: 16,
-          radius: 2,
-          fill: (r) => (r.own ? `url(#${hatch})` : INK),
-          stroke: (r) => (r.own ? INK : 'none'),
-          fillOpacity,
-        }),
-      )
-      continue
-    }
-    const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
-    for (let shape = 0; shape < shapes; shape++) {
-      const these = some.filter((r) => (r.definition ?? 0) === shape)
-      if (these.length === 0) continue
-      const options = {
-        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
+  return rows.map((row): ChartMark<Row, number, RowY> => {
+    const fade = row.dimmed ? DIMMED : 1
+    const id = `mark-${row.key}`
+    if (chart.kind === 'bars')
+      return barX([row], {
+        id,
         x: 'value',
         y,
         key: 'key',
-        fillOpacity,
-        strokeOpacity: fillOpacity,
-        stroke: INK,
-        strokeWidth: 2,
-      } as const
-      // Filled circle, filled hexagon, hollow circle, hollow hexagon.
-      const hollow = shape >= 2
-      marks.push(
-        shape % 2 === 0
-          ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
-          : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
-      )
-    }
-  }
-  return marks
+        maxThickness: 16,
+        radius: 2,
+        fill: row.own ? `url(#${hatch})` : INK,
+        stroke: row.own ? INK : 'none',
+        fillOpacity: fade,
+      })
+    const shape = row.definition ?? 0
+    const options = {
+      id,
+      x: 'value',
+      y,
+      key: 'key',
+      fillOpacity: fade,
+      strokeOpacity: fade,
+      stroke: INK,
+      strokeWidth: 2,
+    } as const
+    // Filled circle, filled hexagon, hollow circle, hollow hexagon.
+    const fill = shape >= 2 ? PAPER : INK
+    return shape % 2 === 0
+      ? dot([row], { ...options, r: 6, fill })
+      : hexagon([row], { ...options, r: 7, fill })
+  })
 }
 
 type ScenePoint = {
@@ -580,8 +558,7 @@ interface PlotProps {
  * drawing's pixels, which are the page's. */
 const markAt = (
   point: { datum: Row; x: number; y: number } | null,
-): ChartMarkAt | null =>
-  point && { point: point.datum, x: point.x, y: point.y }
+): ChartMarkAt | null => point && { point: point.datum, x: point.x, y: point.y }
 
 /** A mark's row reaches any point of its height: the pointer finds the
  * nearest row, or the nearest year, wherever it is in the drawing. */
@@ -652,7 +629,7 @@ function lineMarks(chart: ChartView, rows: Row[]) {
         strokeOpacity: anyDimmed ? DIMMED : 1,
       }),
     )
-  marks.push(...lineDots(chart, rows, y))
+  marks.push(...lineDots(rows, y))
   marks.push(
     text(words, {
       id: 'value',
@@ -670,36 +647,26 @@ function lineMarks(chart: ChartView, rows: Row[]) {
   return marks
 }
 
-/** A time line's dots, one mark per look: a definition's shape, dimmed or
- * not. */
-function lineDots(chart: ChartView, rows: Row[], y: (r: Row) => number) {
-  const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
-  const marks: ChartMark<Row, number, number>[] = []
-  for (const dimmed of [false, true])
-    for (let shape = 0; shape < shapes; shape++) {
-      const these = rows.filter(
-        (r) => r.dimmed === dimmed && (r.definition ?? 0) === shape,
-      )
-      if (these.length === 0) continue
-      const opacity = dimmed ? DIMMED : 1
-      const hollow = shape >= 2
-      const options = {
-        id: `mark-${dimmed ? 'dimmed' : 'lit'}-${shape}`,
-        x: 'year',
-        y,
-        key: 'key',
-        fillOpacity: opacity,
-        strokeOpacity: opacity,
-        stroke: INK,
-        strokeWidth: 2,
-      } as const
-      marks.push(
-        shape % 2 === 0
-          ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
-          : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
-      )
-    }
-  return marks
+/** A time line's dots, one mark per point, as in `pointMarks`. */
+function lineDots(rows: Row[], y: (r: Row) => number) {
+  return rows.map((row): ChartMark<Row, number, number> => {
+    const fade = row.dimmed ? DIMMED : 1
+    const shape = row.definition ?? 0
+    const options = {
+      id: `mark-${row.key}`,
+      x: 'year',
+      y,
+      key: 'key',
+      fillOpacity: fade,
+      strokeOpacity: fade,
+      stroke: INK,
+      strokeWidth: 2,
+    } as const
+    const fill = shape >= 2 ? PAPER : INK
+    return shape % 2 === 0
+      ? dot([row], { ...options, r: 6, fill })
+      : hexagon([row], { ...options, r: 7, fill })
+  })
 }
 
 /** A time line's x scale: the years, with a margin of years on each side,
@@ -735,14 +702,11 @@ function lineSvg(
   )
   return withOverlay(
     renderChartSvg(scene, options),
-    overlayLayers(
-      overlayMarks(scene.points, { valueAbove: LINE.valueAbove }),
-      {
-        labelOffset: 0,
-        left: scene.chart.x,
-        right: scene.chart.x + scene.chart.width,
-      },
-    ),
+    overlayLayers(overlayMarks(scene.points, { valueAbove: LINE.valueAbove }), {
+      labelOffset: 0,
+      left: scene.chart.x,
+      right: scene.chart.x + scene.chart.width,
+    }),
     '',
     point
       ? yearGuide(

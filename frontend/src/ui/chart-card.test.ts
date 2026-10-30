@@ -52,6 +52,19 @@ it('replaces a pinned card with the next pin, and unpins on the same mark', () =
   expect(currentCard()).toMatchObject({ target: null, pinned: false })
 })
 
+it('stays closed on the same point until the pointer or the focus leaves it', () => {
+  pinCard(target('a'))
+  closeCard()
+  hoverCard(target('a'))
+  expect(currentCard().target).toBeNull()
+  hoverCard(null, 'a')
+  hoverCard(target('a'))
+  expect(currentCard().target?.chart).toBe('a')
+  closeCard()
+  hoverCard(target('a', second))
+  expect(currentCard().target?.point.key).toBe(second!.key)
+})
+
 it("closes a chart's card only from that chart", () => {
   pinCard(target('a'))
   closeCardOf('b')

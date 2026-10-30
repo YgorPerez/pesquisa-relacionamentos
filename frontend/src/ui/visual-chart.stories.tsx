@@ -179,9 +179,15 @@ export const HoverAndPin: Story = {
     const card = await shownCard()
     await expect(within(card).getByText('Rosenfeld (2019)')).toBeInTheDocument()
     await expect(within(card).queryByRole('button')).toBeNull()
-    await expect(chart.querySelector('[data-ts-key="active-row"]')).not.toBeNull()
+    await expect(
+      chart.querySelector('[data-ts-key="active-row"]'),
+    ).not.toBeNull()
 
-    await userEvent.click(chart)
+    const box = chart.getBoundingClientRect()
+    fireEvent.click(chart, {
+      clientX: box.left + box.width * 0.2,
+      clientY: box.top + box.height * y,
+    })
     const pinned = within(await pinnedCard())
     await expect(pinned.getByRole('link')).toHaveTextContent(
       'Abrir Ficha: Rosenfeld (2019)',
@@ -189,6 +195,8 @@ export const HoverAndPin: Story = {
     await hoverAt(chart, 0.2, 0.05)
     await expect(pinned.getByText('Rosenfeld (2019)')).toBeInTheDocument()
 
+    // The mouse leaves for the click outside.
+    fireEvent.mouseLeave(chart.parentElement!)
     await userEvent.click(document.body)
     await waitFor(() => expect(cardElement()).toBeNull())
   },
