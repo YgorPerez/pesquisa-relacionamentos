@@ -35,10 +35,10 @@ Com o calendário mês a mês da DHS brasileira de 1996, que registra uniões, g
 | Segunda união em diante | Quem estava na segunda união ou numa posterior teve mais risco de separar que quem estava na primeira (coeficientes de 2,077, 2,607 e 2,712) | Tabela 3 | "Two or more unions 2.077 (0.111) 2.607 (0.157) 2.712" |
 | Segunda união, nas palavras das autoras | Elas também concluem que, da segunda união em diante, a chance de separar é maior | Seção 5 | "women who are in their second or higher order union have a higher probability of splitting up with their partners" |
 | Anos de estudo | Cada ano completo a mais de estudo veio com mais risco de separar (coeficientes de 0,068, 0,093 e 0,102) | Tabela 3 | "Education 0.068 (0.011) 0.093 (0.014) 0.102" |
-| Morar na cidade | Quem morava em área urbana teve mais risco de separar que quem morava em área rural (coeficientes de 0,718, 0,844 e 0,844) | Tabela 3 | "Urban 0.718 (0.126) 0.844 (0.149) 0.844" |
+| Morar na cidade | Quem morava em área urbana na data da entrevista teve mais risco de separar que quem morava em área rural (coeficientes de 0,718, 0,844 e 0,844) | Tabela 3 | "Urban 0.718 (0.126) 0.844 (0.149) 0.844" |
 | Estudo e cidade, nas palavras das autoras | Mais estudo e morar na cidade andam junto com mais risco de a união acabar | Seção 5 | "education and urban residence are both positively associated with the risk of dissolution" |
 | Primeira relação sexual antes dos 18 anos | Quem teve a primeira relação antes dessa idade teve mais risco de a união acabar | Seção 5 | "Women that had their first sexual intercourse before the age of 18 show a higher risk of union dissolution." |
-| Estar grávida e ter filhos | Quem estava grávida e quem tinha filhos tiveram mais risco de separar que as outras mulheres (coeficientes: grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069; o Trecho intercala as duas linhas) | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
+| Gravidez e filhos | Quem estava grávida e quem tinha filhos tiveram mais risco de separar que as mulheres sem filhos e não grávidas (coeficientes: grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069; a citação abaixo intercala as duas linhas) | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
 | Gravidez, nas palavras das autoras | Durante a gestação, o risco de a união acabar é maior | Seção 5 | "During pregnancy there is a higher risk of union dissolution." |
 | Filhos, nas palavras das autoras | Casais com filhos tiveram mais risco de a união acabar, ao contrário do que estudos anteriores acharam | Seção 5 | "Despite previous findings, our model shows a higher risk of dissolution for couples that have children." |
 | Primeiro filho fora do casamento | Não apareceu diferença clara no risco de a união acabar depois, entre quem teve o primeiro filho fora do casamento e quem não teve | Seção 5 | "whether the first birth took place 'out of wedlock' has no significant impact on the risk of future union dissolution" |
@@ -46,7 +46,7 @@ Com o calendário mês a mês da DHS brasileira de 1996, que registra uniões, g
 | Tendência a separar e a engravidar | Mulheres com mais tendência a separar, por fatores que o estudo não mediu, também tendem a engravidar mais rápido (correlação = 0,659) | Seção 5 | "the joint estimation revealed a positive correlation between ε d and ε c of 0.659" |
 | Morar junto sem casar, no Brasil | Nessas uniões, os parceiros se chamam de marido e mulher | Seção 2 | "the partners in Brazilian consensual unions describe themselves as husband and wife" |
 
-Os coeficientes são a conta do estudo, em logaritmo do risco: acima de zero indica mais risco, e eles não são percentuais. Cada trio vem de três jeitos de fazer a conta: só com o que foi medido, somando as diferenças não medidas entre as mulheres e calculando junto o risco de engravidar.
+Os coeficientes são a conta do estudo, em logaritmo do risco: acima de zero indica mais risco, e eles não são percentuais. Cada trio vem de três jeitos de fazer a conta: só com o que foi medido, somando as diferenças não medidas entre as mulheres e calculando junto o risco de engravidar. A correlação mostra quanto duas tendências andam juntas: quanto mais longe de zero, mais.
 
 ## Limitações
 
