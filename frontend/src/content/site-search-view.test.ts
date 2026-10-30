@@ -65,7 +65,9 @@ describe('searchSite', () => {
     const hits = searchSite(library, '18 a 24 anos').groups.flatMap((g) =>
       g.hits.map(shown),
     )
-    expect(hits).toContain('[18 a 24 anos] 24%')
+    expect(hits).toContain(
+      'Quem conheceu o parceiro por app, no Brasil 18 a 35 anos: 18% [18 a 24 anos]: 24% Por outro caminho (18 a 35 anos): 82% entre os mais novos, a fatia sobe',
+    )
     expect(hits.some((hit) => /anos\]?\d/.test(hit))).toBe(false)
   })
 

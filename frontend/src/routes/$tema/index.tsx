@@ -9,7 +9,9 @@ import {
 import { reads } from '#/content/reads'
 import type { PrioritiesView } from '#/content/priorities-view'
 import { useCountOpenedFactSheets } from '#/analytics/counting'
+import { useChosenCountry } from '#/state/country'
 import { useProfile } from '#/state/profile'
+import { CountryChips } from '#/ui/country-chips'
 import { usePriorities } from '#/state/priorities'
 import { usePossibleGroup, useSavedRequirements } from '#/state/possible-group'
 import { CitedFactSheets, Html } from '#/ui/guide'
@@ -43,6 +45,10 @@ import { Column, Display, Sheet, Lead } from '#/ui/sheet'
 // se sabe", "Para ler além daqui" (when the Topic has Readings, #179), one
 // list of Fact sheets, one "Ajudou?" and the Questions of other Topics. The reading bar sits on top of all that (#195).
 export const Route = createFileRoute('/$tema/')({
+  // The country the charts light up (`state/country.ts`, #470); the page
+  // checks it against its charts' countries.
+  validateSearch: (search: Record<string, unknown>): { pais?: string } =>
+    typeof search['pais'] === 'string' ? { pais: search['pais'] } : {},
   // The `loaderData` carries only what the `head` uses; the Guide goes
   // through the `queryClient`.
   loader: async ({ context, params }) => {
@@ -106,6 +112,9 @@ function GuidePage() {
         <GuideContents chapters={guide.chapters} />
         <GuideSummary questions={guide.summary} />
         <YourProfile />
+        {guide.countries.length > 0 && (
+          <CountryChips countries={guide.countries} />
+        )}
         <Html
           className="prosa mt-secao text-lead"
           slot="abertura"
@@ -133,15 +142,30 @@ function GuidePage() {
         <WasItHelpful guide={guide.topic} />
         {guide.elsewhere.length > 0 && <OtherTopics />}
 
-        <Share
-          untitled
-          sentence="O link leva só o endereço do Guia, sem o seu Perfil."
-        />
+        <GuideShare />
       </Column>
       <PageSelection factSheets={guide.factSheets} page="guide" />
       <TermPopover terms={guide.terms} />
       <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />
     </Sheet>
+  )
+}
+
+/** "Copiar link": the Guide's address, with the chosen country when there
+ * is one (`?pais=`), never the Profile. */
+function GuideShare() {
+  const { countries } = useGuide()
+  const country = useChosenCountry(countries.map((c) => c.slug))
+  return (
+    <Share
+      untitled
+      {...(country && { query: `pais=${country}` })}
+      sentence={
+        country
+          ? 'O link leva o endereço do Guia e o país destacado, sem o seu Perfil.'
+          : 'O link leva só o endereço do Guia, sem o seu Perfil.'
+      }
+    />
   )
 }
 

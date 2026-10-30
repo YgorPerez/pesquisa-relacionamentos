@@ -36,7 +36,21 @@ import {
   factSheetSummary,
   type FactSheetSummary,
 } from './view'
-import { renderVisuals, type RenderedVisual } from './visuals-view'
+import {
+  renderVisuals,
+  type Cite,
+  type HtmlVisual,
+  type RenderedVisual,
+} from './visuals-view'
+import {
+  chartCountries,
+  chartTable,
+  chartView,
+  type ChartCountry,
+  type ChartTable,
+  type ChartView,
+  type GuideChart,
+} from './chart-view'
 import { topicReadingViews, type ReadingView } from './neighbor-sites-view'
 import { pageTerms, withTermLinks, type TermView } from './terms-view'
 
@@ -261,6 +275,8 @@ export interface MythView {
  * pieces, for the list React draws. */
 export type ChapterBlock = { readonly key: string } & (
   | { readonly kind: 'text'; readonly html: SafeHtml }
+  | { readonly kind: 'chart'; readonly visual: ChartView }
+  | { readonly kind: 'table'; readonly table: ChartTable }
   | { readonly kind: 'question'; readonly question: QuestionView }
   | { readonly kind: 'tip'; readonly tip: GuideTip }
   | { readonly kind: 'myth'; readonly myth: MythView }
@@ -295,6 +311,9 @@ export interface GuideView {
   readonly youMarks: Readonly<Record<string, ReadonlyArray<Coverage>>>
   /** The Questions of other Topics. */
   readonly elsewhere: ReadonlyArray<QuestionSummary>
+  /** The countries the page's charts carry, for its one row of country
+   * chips (`?pais=`, #470); empty when no chart has a country. */
+  readonly countries: ReadonlyArray<ChartCountry>
   /** The Verbetes the page marks, by slug, for their popover. */
   readonly terms: Readonly<Record<string, TermView>>
   /** Search and Open Graph title and description (#15). */
@@ -397,6 +416,8 @@ interface Drawing {
   readonly library: Library
   readonly numbers: Numbering
   readonly visuals: ReadonlyMap<string, RenderedVisual>
+  /** The Visuals the chart library draws, by id, out of `visuals`. */
+  readonly charts: ReadonlyMap<string, GuideChart>
   /** The Verbetes the page marked, as it is drawn. */
   readonly used: Set<string>
 }
@@ -413,6 +434,34 @@ const prose = (
     ),
   )
 
+/** A text part of a Chapter: its prose, cut where the line of a Visual the
+ * library draws stands, so the chart joins the page's React tree (and its
+ * hydration) instead of the prose's HTML. */
+function textBlocks(
+  markdown: string,
+  n: number,
+  drawing: Drawing,
+): ChapterBlock[] {
+  return markdown
+    .split(/^(\{\{visual:[a-z0-9-]+\}\})$/m)
+    .flatMap((text, index): ChapterBlock[] => {
+      const id = /^\{\{visual:([a-z0-9-]+)\}\}$/.exec(text)?.[1]
+      const chart = id === undefined ? undefined : drawing.charts.get(id)
+      if (chart?.kind === 'table')
+        return [{ key: `chart-${id}`, kind: 'table', table: chart }]
+      if (chart) return [{ key: `chart-${id}`, kind: 'chart', visual: chart }]
+      return text.trim()
+        ? [
+            {
+              key: `text-${n}-${index}`,
+              kind: 'text',
+              html: prose(text, drawing),
+            },
+          ]
+        : []
+    })
+}
+
 function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
   const { topic, library, numbers, used } = drawing
   return {
@@ -421,13 +470,7 @@ function chapterView(chapter: Chapter, drawing: Drawing): ChapterView {
     blocks: chapter.parts.flatMap((part, n): ChapterBlock[] => {
       switch (part.kind) {
         case 'text':
-          return [
-            {
-              key: `text-${n}`,
-              kind: 'text',
-              html: prose(part.markdown, drawing),
-            },
-          ]
+          return textBlocks(part.markdown, n, drawing)
         case 'question': {
           const question = questionBySlug(library, part.slug)
           return question
@@ -471,19 +514,32 @@ function elsewhere(topic: Topic, library: Library): QuestionSummary[] {
 
 export function guideView(topic: Topic, library: Library): GuideView {
   const numbers = numberFactSheets(topic.citedFactSheets, library)
+  const cite: Cite = (slug) => {
+    const factSheet = numbers.get(slug)
+    return factSheet && { ...factSheet, anchor: anchor(slug) }
+  }
+  const charts = new Map(
+    topic.visuals.flatMap((visual) => {
+      // Every Visual but the diagram: bars (#473), time lines (#474),
+      // Study tables as dots of one unit or a table of mixed ones (#475),
+      // and stacked bars (#476).
+      if (visual.kind === 'diagram') return []
+      const chart: GuideChart | null =
+        chartView(visual, library, cite, topic.slug) ??
+        chartTable(visual, library, cite, topic.slug)
+      return chart ? [[visual.id, chart] as const] : []
+    }),
+  )
   const drawing: Drawing = {
     topic,
     library,
     numbers,
     visuals: renderVisuals(
-      topic.visuals,
-      library,
-      (slug) => {
-        const factSheet = numbers.get(slug)
-        return factSheet && { ...factSheet, anchor: anchor(slug) }
-      },
+      topic.visuals.filter((v): v is HtmlVisual => v.kind === 'diagram'),
+      cite,
       topic.slug,
     ),
+    charts,
     used: new Set(),
   }
   const questions = topicQuestions(library, topic.slug)
@@ -506,6 +562,7 @@ export function guideView(topic: Topic, library: Library): GuideView {
       topic.findings.map((f) => [f.id, f.covers] as const),
     ),
     elsewhere: elsewhere(topic, library),
+    countries: chartCountries([...charts.values()]),
     // Last: every block above is drawn and has named its Verbetes.
     terms: pageTerms(drawing.used, library),
     search: topicSearch(topic),

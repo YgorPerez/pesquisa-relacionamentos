@@ -2,25 +2,14 @@
 // drawn here, on the server, into the HTML that takes the place of each
 // `{{visual:<id>}}` line of the body (`view.ts`). The page gets finished SVG
 // and HTML: no chart code goes to the browser, and the Visual reads without
-// JS (#182).
-import type {
-  BarsVisual,
-  Calculation,
-  DiagramVisual,
-  Evidence,
-  FactSheet,
-  Library,
-  StudyTableVisual,
-  TimelineVisual,
-  Visual,
-} from '@tem-estudo/content'
+// JS (#182). The Visuals the chart library draws go through `chart-view.ts`
+// instead (ADR 0042, "SVG from the server, interaction on top"): every bar
+// comparison (#473), Study table (#475), time line (#474) and stacked bar
+// comparison (#476). Only the diagram is drawn here.
+import type { Calculation, DiagramVisual, Evidence } from '@tem-estudo/content'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { DESIGN_NAME } from '#/ui/badges.copy'
-import { VisualBars } from '#/ui/visual-bars'
 import { VisualDiagram } from '#/ui/visual-diagram'
-import { VisualStudyTable } from '#/ui/visual-study-table'
-import { VisualTimeline } from '#/ui/visual-timeline'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 
 /** A reference to a cited Fact sheet: its number on the page, the anchor of
@@ -54,43 +43,6 @@ interface Common {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-export interface BarsView extends Common {
-  readonly kind: 'bars'
-  /** The axis, from 0 to the last tick, in the visual's unit. */
-  readonly ticks: ReadonlyArray<{ readonly at: number; readonly text: string }>
-  readonly bars: ReadonlyArray<{
-    readonly label: string
-    /** Where the bar ends, from 0 to 1 of the axis. */
-    readonly share: number
-    readonly number: NumberView
-    readonly highlight: boolean
-  }>
-}
-
-export interface TimelineView extends Common {
-  readonly kind: 'timeline'
-  readonly years: ReadonlyArray<number>
-  readonly events: ReadonlyArray<{
-    readonly year: number
-    /** Where the year falls, from 0 (the first) to 1 (the last). */
-    readonly at: number
-    readonly label: string
-    readonly number: NumberView
-    readonly highlight: boolean
-  }>
-}
-
-export interface StudyTableView extends Common {
-  readonly kind: 'study-table'
-  readonly rows: ReadonlyArray<{
-    readonly study: SourceRef
-    /** "Brasil · 2019 · 2.400 pessoas · transversal". */
-    readonly context: string
-    readonly measure: string
-    readonly number: NumberView
-  }>
-}
-
 export interface DiagramView extends Common {
   readonly kind: 'diagram'
   readonly nodes: ReadonlyArray<{ readonly id: string; readonly label: string }>
@@ -104,19 +56,26 @@ export interface DiagramView extends Common {
   }>
 }
 
-export type VisualView = BarsView | TimelineView | StudyTableView | DiagramView
+export type VisualView = DiagramView
+
+/** A Visual drawn here, as HTML: every other kind is the chart library's,
+ * or a `ChartTable` (`chart-view.ts`). */
+export type HtmlVisual = DiagramVisual
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
 /** A number in pt-BR, with the decimals it was written with. */
-function formatNumber(value: number, decimals = decimalsOf(value)): string {
+export function formatNumber(
+  value: number,
+  decimals = decimalsOf(value),
+): string {
   return new Intl.NumberFormat('pt-BR', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(value)
 }
 
-const withUnit = (value: number, unit: string) =>
+export const withUnit = (value: number, unit: string) =>
   unit === '%' ? `${formatNumber(value)}%` : `${formatNumber(value)} ${unit}`
 
 const OPERATOR: Record<
@@ -149,7 +108,7 @@ function refsOf(slugs: ReadonlyArray<string>, cite: Cite): SourceRef[] {
   return refs.sort((a, b) => a.n - b.n)
 }
 
-function numberView(
+export function numberView(
   datum: {
     value: number
     fact_sheet?: string | undefined
@@ -171,7 +130,7 @@ function numberView(
 }
 
 /** The references of every part, once each, in the page's order. */
-const allSources = (
+export const allSources = (
   parts: ReadonlyArray<{ sources: ReadonlyArray<SourceRef> }>,
 ): SourceRef[] =>
   [
@@ -182,7 +141,11 @@ const allSources = (
 
 /** The axis's round steps: 1, 2, 2.5 or 5 times a power of ten, so that it
  * has at most five intervals. */
-function axisTicks(largest: number, max: number | undefined, unit: string) {
+export function axisTicks(
+  largest: number,
+  max: number | undefined,
+  unit: string,
+) {
   const top = max ?? (unit === '%' && largest <= 100 ? 100 : largest)
   const magnitude = 10 ** Math.floor(Math.log10(top / 5 || 1))
   const step =
@@ -206,97 +169,6 @@ function axisTicks(largest: number, max: number | undefined, unit: string) {
 /** A kind's own part of the view; `visualView` adds the common one. */
 type Own<V extends VisualView> = Omit<V, Exclude<keyof Common, 'sources'>>
 
-function barsView(visual: BarsVisual, cite: Cite): Own<BarsView> {
-  const largest = Math.max(...visual.bars.map((b) => b.value))
-  const ticks = axisTicks(largest, visual.max, visual.unit)
-  const end = ticks[ticks.length - 1] || 1
-  const bars = visual.bars.map((bar) => ({
-    label: bar.label,
-    share: bar.value / end,
-    number: numberView(bar, visual.unit, cite),
-    highlight: bar.label === visual.highlight,
-  }))
-  return {
-    kind: 'bars',
-    // A word unit ("pontos", "anos") goes only on the last tick, so the
-    // axis does not crowd on a phone.
-    ticks: ticks.map((at, i) => ({
-      at: at / end,
-      text:
-        visual.unit === '%' || i === ticks.length - 1
-          ? withUnit(at, visual.unit)
-          : formatNumber(at),
-    })),
-    bars,
-    sources: allSources(bars.map((b) => b.number)),
-  }
-}
-
-function timelineView(visual: TimelineVisual, cite: Cite): Own<TimelineView> {
-  const years = visual.events.map((e) => e.year)
-  const first = Math.min(...years)
-  const span = Math.max(...years) - first || 1
-  const events = visual.events.map((event) => ({
-    year: event.year,
-    at: (event.year - first) / span,
-    label: event.label,
-    number: numberView(event, event.unit, cite),
-    highlight: event.year === visual.highlight,
-  }))
-  return {
-    kind: 'timeline',
-    years: Array.from({ length: span + 1 }, (_, i) => first + i),
-    events,
-    sources: allSources(events.map((e) => e.number)),
-  }
-}
-
-const numberFormat = new Intl.NumberFormat('pt-BR')
-
-/** The Fact sheet's place, year, sample and design, short. */
-function studyContext(factSheet: FactSheet | undefined): string {
-  if (!factSheet) return ''
-  const design = DESIGN_NAME[factSheet.design].replace(/ \(.*\)$/, '')
-  return [
-    factSheet.countries.length > 2
-      ? VISUAL_COPY.countries(factSheet.countries.length)
-      : factSheet.countries.join(', '),
-    factSheet.period,
-    factSheet.sample.n
-      ? VISUAL_COPY.people(numberFormat.format(factSheet.sample.n))
-      : '',
-    design,
-  ]
-    .filter(Boolean)
-    .join(' · ')
-}
-
-function studyTableView(
-  visual: StudyTableVisual,
-  library: Library,
-  cite: Cite,
-): Own<StudyTableView> {
-  const rows = visual.rows.flatMap((row) => {
-    const study = cite(row.fact_sheet)
-    if (!study) return []
-    return [
-      {
-        study,
-        context: studyContext(
-          library.factSheets.find((f) => f.slug === row.fact_sheet),
-        ),
-        measure: row.measure,
-        number: numberView(row, row.unit, cite),
-      },
-    ]
-  })
-  return {
-    kind: 'study-table',
-    rows,
-    sources: allSources(rows.map((r) => r.number)),
-  }
-}
-
 function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
   const position = (id: string) => visual.nodes.findIndex((n) => n.id === id)
   const arrows = visual.arrows.map((arrow) => ({
@@ -317,26 +189,16 @@ function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
 /** `scope` is the Topic's slug, which keeps the figure's id apart from the
  * page's other ids. */
 export function visualView(
-  visual: Visual,
-  library: Library,
+  visual: HtmlVisual,
   cite: Cite,
   scope: string,
 ): VisualView {
-  const common = {
+  return {
     id: visual.id,
     domId: `visual-${scope}-${visual.id}`,
     title: visual.title,
     note: visual.note ?? null,
-  }
-  switch (visual.kind) {
-    case 'bars':
-      return { ...common, ...barsView(visual, cite) }
-    case 'timeline':
-      return { ...common, ...timelineView(visual, cite) }
-    case 'study-table':
-      return { ...common, ...studyTableView(visual, library, cite) }
-    case 'diagram':
-      return { ...common, ...diagramView(visual, cite) }
+    ...diagramView(visual, cite),
   }
 }
 
@@ -346,29 +208,22 @@ export function visualView(
 export type RenderedVisual = string & { readonly __rendered: unique symbol }
 
 function render(view: VisualView): RenderedVisual {
-  const element =
-    view.kind === 'bars'
-      ? createElement(VisualBars, { visual: view })
-      : view.kind === 'timeline'
-        ? createElement(VisualTimeline, { visual: view })
-        : view.kind === 'study-table'
-          ? createElement(VisualStudyTable, { visual: view })
-          : createElement(VisualDiagram, { visual: view })
-  return renderToStaticMarkup(element) as RenderedVisual
+  return renderToStaticMarkup(
+    createElement(VisualDiagram, { visual: view }),
+  ) as RenderedVisual
 }
 
 /** Each Visual of the Question drawn, by id, for `html()` to put in place of
  * its `{{visual:<id>}}` line. */
 export function renderVisuals(
-  visuals: ReadonlyArray<Visual>,
-  library: Library,
+  visuals: ReadonlyArray<HtmlVisual>,
   cite: Cite,
   scope: string,
 ): ReadonlyMap<string, RenderedVisual> {
   return new Map(
     visuals.map((visual) => [
       visual.id,
-      render(visualView(visual, library, cite, scope)),
+      render(visualView(visual, cite, scope)),
     ]),
   )
 }

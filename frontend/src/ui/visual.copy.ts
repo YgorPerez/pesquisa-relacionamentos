@@ -4,8 +4,6 @@ import type { Evidence } from '@tem-estudo/content'
 
 export const VISUAL_COPY = {
   sources: 'Fontes:',
-  /** The tag of a number we computed from the Fact sheets' numbers. */
-  own: 'conta nossa',
   ownLine: (label: string, expression: string, result: string) =>
     `Conta nossa, ${label}: ${expression} = ${result}.`,
   mean: (inputs: ReadonlyArray<string>) =>

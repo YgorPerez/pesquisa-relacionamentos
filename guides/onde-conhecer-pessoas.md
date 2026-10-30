@@ -329,77 +329,100 @@ visuals:
       - label: Online, 1995
         value: 2
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Online, 2017
         value: 39
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: Por amigos, 1995
         value: 33
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Por amigos, 2017
         value: 20
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: No trabalho, 1995
         value: 19
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: No trabalho, 2017
         value: 11
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
       - label: Em bar ou restaurante, 1995
         value: 19
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 1995
       - label: Em bar ou restaurante, 2017
         value: 27
         fact_sheet: rosenfeld-2019-disintermediating-friends
+        year: 2017
     highlight: Online, 2017
     note: um casal pode entrar em mais de um caminho, como online e amigos
   - id: fatia-online-por-estudo
     kind: study-table
     title: Quantos casais se conheceram online, conforme o estudo
+    definitions:
+      - id: recentes-qualquer-meio
+        legend: casais recentes, qualquer meio online
+      - id: todos-qualquer-meio
+        legend: todos os casais, qualquer meio online
+      - id: recentes-so-site
+        legend: casais recentes, só site ou app de namoro
+      - id: todos-so-site
+        legend: todos os casais, só site ou app de namoro
     rows:
       - fact_sheet: rosenfeld-2019-disintermediating-friends
         measure: Casais héteros formados em 2017, qualquer meio online
         value: 39
         unit: '%'
+        year: 2017
+        definition: recentes-qualquer-meio
       - fact_sheet: kowal-2025-50-paises
         measure: Relações iniciadas de 2010 em diante, em painéis online
         value: 21
         unit: '%'
+        year: 2024
+        definition: recentes-qualquer-meio
       - fact_sheet: kowal-2025-50-paises
-        measure: Todas as pessoas com parceiro, em painéis online
+        measure: Média de 50 países, todas as pessoas com parceiro, em painéis online
         value: 16
         unit: '%'
+        year: 2024
+        definition: todos-qualquer-meio
+        range:
+          - label: Gana, a menor fatia
+            value: 7
+            fact_sheet: kowal-2025-50-paises
+            country: Gana
+          - label: Brasil, conta nossa (23 de 119 pessoas, sem peso)
+            value: 19.3
+            fact_sheet: kowal-2025-50-paises
+            country: Brasil
+          - label: Polônia, a maior fatia
+            value: 33
+            fact_sheet: kowal-2025-50-paises
+            country: Polônia
       - fact_sheet: lampard-2020-natsal-reino-unido
         measure: Casais que passaram a morar juntos de 2008 a 2012
         value: 10.9
         unit: '%'
+        year: 2012
+        definition: recentes-qualquer-meio
       - fact_sheet: pew-2023-2020-online-dating
         measure: Todos os adultos com parceiro em 2022, só site ou app de namoro
         value: 10
         unit: '%'
+        year: 2022
+        definition: todos-so-site
       - fact_sheet: bergstrom-2016-epic-franca
         measure: Parceiro atual conhecido de 2005 a 2013, só site de encontro (o estudo diz "menos de")
         value: 9
         unit: '%'
-    note: contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor
-  - id: online-por-pais
-    kind: bars
-    title: Pessoas com parceiro que o conheceram online, em 2024
-    unit: '%'
-    bars:
-      - label: Gana, a menor fatia
-        value: 7
-        fact_sheet: kowal-2025-50-paises
-      - label: Média dos 50 países
-        value: 16
-        fact_sheet: kowal-2025-50-paises
-      - label: Brasil (23 de 119 pessoas, sem peso)
-        value: 19.3
-        fact_sheet: kowal-2025-50-paises
-      - label: Polônia, a maior fatia
-        value: 33
-        fact_sheet: kowal-2025-50-paises
-    highlight: Brasil (23 de 119 pessoas, sem peso)
-    note: a pesquisa foi respondida pela internet, então só contou quem usa internet, e isso tende a aumentar a fatia online
+        year: 2013
+        definition: recentes-so-site
+    note: contar só os casais que se formaram há pouco dá o número maior; contar todos os casais, inclusive os de décadas atrás, dá o menor. O estudo de 50 países foi respondido pela internet, então só contou quem usa internet, e isso tende a aumentar a fatia online
   - id: mensagens-de-menos-e-de-mais
     kind: bars
     title: Como homens e mulheres vivem as mensagens no app, nos EUA
@@ -459,9 +482,11 @@ visuals:
       - label: Lésbicas, gays e bissexuais com parceiro, em 2022
         value: 24
         fact_sheet: pew-2023-2020-online-dating
+        year: 2022
       - label: Héteros com parceiro, em 2022
         value: 9
         fact_sheet: pew-2023-2020-online-dating
+        year: 2022
       - label: Casais do mesmo sexo formados na década antes de 2009
         value: 41
         fact_sheet: rosenfeld-2012-searching-for-a-mate
@@ -591,21 +616,27 @@ visuals:
       - label: Homens, 2004
         value: 27.8
         fact_sheet: ibge-2024-registro-civil
+        year: 2004
       - label: Homens, 2014
         value: 29.8
         fact_sheet: ibge-2024-registro-civil
+        year: 2014
       - label: Homens, 2024
         value: 31.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Mulheres, 2004
         value: 24.9
         fact_sheet: ibge-2024-registro-civil
+        year: 2004
       - label: Mulheres, 2014
         value: 27.1
         fact_sheet: ibge-2024-registro-civil
+        year: 2014
       - label: Mulheres, 2024
         value: 29.3
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
     highlight: Homens, 2024
     note: a idade subiu a cada década, para homens e para mulheres
   - id: uniao-e-casamento
@@ -617,21 +648,27 @@ visuals:
       - label: Primeira união, homens (2022)
         value: 26.3
         fact_sheet: ibge-2022-censo-unioes
+        year: 2022
       - label: Primeira união, mulheres (2022)
         value: 23.6
         fact_sheet: ibge-2022-censo-unioes
+        year: 2022
       - label: Casamento civil, homens com mulher (2024)
         value: 31.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, mulheres com homem (2024)
         value: 29.3
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, dois homens (2024)
         value: 34.7
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
       - label: Casamento civil, duas mulheres (2024)
         value: 32.5
         fact_sheet: ibge-2024-registro-civil
+        year: 2024
     note: a primeira união vem do Censo de 2022, e o casamento, do registro civil de 2024
   - id: segundo-casamento
     kind: timeline
@@ -712,8 +749,6 @@ Qual número usar depende do que você quer saber. Para saber como começam os c
 {{brazil}} Aqui, não achamos pesquisa com amostra sorteada que pergunte onde o casal atual se conheceu, e o registro civil não guarda essa informação [@ibge-2024-registro-civil]. Os números que existem vêm de painéis online. Num painel de 2017, 23% de quem estava num relacionamento conheceu o parceiro pela internet, 17% em sites e redes sociais e 6% em apps de paquera [@opinionbox-2017-relacionamentos-brasil]. No recorte brasileiro do estudo de 50 países, a fatia que conheceu o parceiro online ficou perto de um quinto numa conta nossa, sem peso e com poucos casos [@kowal-2025-50-paises].
 
 {{myth:casamentos-brasil-quase-vinte-por-cento}}
-
-{{visual:online-por-pais}}
 
 {{brazil}} A única amostra nacional que achamos, do [[Datafolha]], é de 2009 e mede outra coisa: 19% das pessoas de 18 a 60 anos já tinham conhecido alguém pela internet, e 8% tinham ido encontrar a pessoa [@datafolha-2009-sexualidade-brasileiros]. Do que se mediu fora, o que deve valer aqui é a direção, não o tamanho: o online pesa mais entre os casais que se formam agora do que no total. Nenhum estudo brasileiro testou isso.
 

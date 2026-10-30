@@ -17,6 +17,7 @@ import {
 import userEvent from '@testing-library/user-event'
 import { expect, it, vi } from 'vite-plus/test'
 import { openScreen } from '#/platform/screens/open-screen'
+import { openVisual } from '#/platform/screens/visual'
 import { paragraphText } from '#/state/reading'
 import { CONTINUE_READING } from './continue-reading.copy'
 import { MYTH_LABEL, MYTH_LINE } from './guide-sections.copy'
@@ -26,6 +27,7 @@ import {
   FURTHER_READING,
   FURTHER_READING_LINE,
 } from './readings.copy'
+import { VISUAL_COPY } from './visual.copy'
 
 const follows = (a: Element, b: Element) =>
   (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
@@ -335,6 +337,34 @@ it('the Guide ends its text with "Para ler além daqui", after "O que não se sa
   expect(
     within(block).getByRole('link', { name: ALL_NEIGHBOR_SITES }),
   ).toHaveAttribute('href', '/sites-vizinhos')
+})
+
+it("reads the Guide's bar comparison as each bar's label and number, with our own calculation's line, and leads from its ring to the page's list (#473)", async () => {
+  const figure = await openVisual('Quem conheceu o parceiro por app, no Brasil')
+  expect(
+    within(figure)
+      .getAllByRole('listitem')
+      .map((item) => item.textContent),
+  ).toEqual([
+    '18 a 35 anos: 18%',
+    '18 a 24 anos: 24%',
+    'Por outro caminho (18 a 35 anos): 82%',
+  ])
+  expect(figure).toHaveTextContent(
+    VISUAL_COPY.ownLine('Por outro caminho (18 a 35 anos)', '100 − 18', '82%'),
+  )
+  expect(figure).toHaveTextContent('entre os mais novos, a fatia sobe')
+  const [reference] = within(figure).getAllByRole('link', {
+    name: /^Ficha \d+: Silva e Souza \(2020\)/,
+  })
+  const target = document.getElementById(
+    reference!.getAttribute('href')!.replace(/^#/, ''),
+  )
+  expect(
+    within(screen.getByRole('region', { name: 'Fichas citadas' }))
+      .getAllByRole('listitem')
+      .includes(target!.closest('li')!),
+  ).toBe(true)
 })
 
 it('a Guide whose Topic has no Reading has no "Para ler além daqui"', async () => {

@@ -1,7 +1,13 @@
 import { resolve } from 'node:path'
 import { loadLibrary } from '@tem-estudo/content'
+import { topicBySlug } from '@tem-estudo/content/queries'
 import { describe, expect, it } from 'vite-plus/test'
-import { keyNumberFactSheets, tipView, withoutMarks } from './guide-view'
+import {
+  guideView,
+  keyNumberFactSheets,
+  tipView,
+  withoutMarks,
+} from './guide-view'
 import { html, inlineHtml } from './view'
 
 describe("a Tip's page (#360)", () => {
@@ -67,5 +73,40 @@ describe('fichasDoNumeroChave', () => {
         'Foram ==18%== no total. Fonte depois [@silva-2020].',
       ),
     ).toBeNull()
+  })
+})
+
+describe("a Guide's bar comparison (#473)", () => {
+  it('reaches its Chapter as a chart the library draws, with the same numbers and its country', () => {
+    const result = loadLibrary(
+      resolve(import.meta.dirname, '../../e2e/library'),
+    )
+    if (!result.ok) throw new Error('invalid e2e fixture')
+    const topic = topicBySlug(result.library, 'onde-conhecer-pessoas')
+    if (!topic) throw new Error('the fixture has no onde-conhecer-pessoas')
+    const view = guideView(topic, result.library)
+    const blocks = view.chapters.flatMap((c) => c.blocks)
+    const chart = blocks.find(
+      (b) =>
+        b.kind === 'chart' &&
+        b.visual.domId === 'visual-onde-conhecer-pessoas-app-por-idade',
+    )
+    if (chart?.kind !== 'chart') throw new Error('the bars are not a chart')
+    expect(chart.visual.kind).toBe('bars')
+    expect(
+      chart.visual.points.map((p) => [p.label, p.number.text, p.number.own]),
+    ).toEqual([
+      ['18 a 35 anos', '18%', null],
+      ['18 a 24 anos', '24%', null],
+      ['Por outro caminho (18 a 35 anos)', '82%', '100 − 18'],
+    ])
+    expect(chart.visual.points.map((p) => p.country?.slug)).toEqual([
+      'brasil',
+      'brasil',
+      'brasil',
+    ])
+    expect(view.countries.map((c) => c.slug)).toContain('brasil')
+    const texts = blocks.flatMap((b) => (b.kind === 'text' ? [b.html] : []))
+    expect(texts.join('')).not.toContain('app-por-idade')
   })
 })

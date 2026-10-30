@@ -1,6 +1,7 @@
 // A Guide's Visuals (#182): data in the frontmatter, placed in the body by
-// a line of its own, `{{visual:<id>}}`, and drawn as SVG on the server. Four
-// kinds: bar comparison, time line, table of Studies, relation diagram.
+// a line of its own, `{{visual:<id>}}`, and drawn as SVG on the server. Five
+// kinds: bar comparison, stacked bars, time line, table of Studies, relation
+// diagram.
 //
 // Every number names where it comes from: a ✅/🟡 Fact sheet whose text has
 // that number, or an own calculation ("conta nossa") over such numbers, which
@@ -8,6 +9,7 @@
 // too. The checks against the Fact sheets live in `visualProblems`, the ones
 // inside one file in `visualPlacementProblems`.
 import { Schema } from 'effect'
+import { Coverage } from './coverage.ts'
 import type { FactSheet } from './fact-sheet.ts'
 import { problem, type Problem } from './problems.ts'
 
@@ -50,6 +52,30 @@ const sourced = {
   calculation: Schema.optional(Calculation),
 }
 
+/** What a point of a chart may say about itself (#470): the country its
+ * number is from, in Portuguese as the page writes it ("Brasil", "Estados
+ * Unidos"), which the country filter (`?pais=`) and Brazil's highlight read;
+ * the year, a number the Fact sheet has too; and which of the Visual's
+ * definitions it measures. */
+const point = {
+  country: Schema.optional(Text),
+  year: Schema.optional(Schema.Int),
+  definition: Schema.optional(Slug),
+}
+
+/** The closed list of what the points of one Visual measure, when Studies
+ * define the thing differently ("qualquer canal online", "só
+ * aplicativos"). Each gets its own mark shape, in the list's order, and the
+ * legend explains it. */
+export const MAX_DEFINITIONS = 4
+const Definitions = Schema.Array(
+  Schema.Struct({ id: Slug, legend: Text }),
+).check(
+  Schema.isMaxLength(MAX_DEFINITIONS, {
+    message: `at most ${MAX_DEFINITIONS} definitions, one per mark shape`,
+  }),
+)
+
 export const BarsVisual = Schema.Struct({
   id: Slug,
   kind: Schema.Literal('bars'),
@@ -59,9 +85,34 @@ export const BarsVisual = Schema.Struct({
   /** The top of the axis; without it, the smallest round number above the
    * largest bar (100 for `%`). */
   max: Schema.optional(Schema.Finite),
-  bars: Schema.Array(Schema.Struct({ label: Text, ...sourced })),
+  bars: Schema.Array(Schema.Struct({ label: Text, ...sourced, ...point })),
+  definitions: Schema.optional(Definitions),
   /** The label of the bar the hand-drawn highlight marks. */
   highlight: Schema.optional(Text),
+  note: Schema.optional(Text),
+})
+
+/** Bars split into parts that add up to 100% (#476), one bar per group:
+ * how many gave each answer of a question, in the order of `segments`,
+ * from the left. A bar is about one group of the Fact sheet's sample, so
+ * its `applies_to` says who, as a finding's does, for the "você" mark. */
+export const StackedBarsVisual = Schema.Struct({
+  id: Slug,
+  kind: Schema.Literal('stacked-bars'),
+  title: Text,
+  /** What each part is ("Contentes", "Neutros"), from the left. */
+  segments: Schema.Array(Text),
+  bars: Schema.Array(
+    Schema.Struct({
+      label: Text,
+      /** One percentage per segment, as the Fact sheet has it. */
+      values: Schema.Array(Schema.Finite),
+      fact_sheet: Slug,
+      applies_to: Schema.optional(Coverage),
+      country: point.country,
+      year: point.year,
+    }),
+  ),
   note: Schema.optional(Text),
 })
 
@@ -75,11 +126,24 @@ export const TimelineVisual = Schema.Struct({
       label: Text,
       unit: Text,
       ...sourced,
+      country: point.country,
+      definition: point.definition,
     }),
   ),
+  definitions: Schema.optional(Definitions),
   /** The year the hand-drawn highlight marks. */
   highlight: Schema.optional(Schema.Int),
   note: Schema.optional(Text),
+})
+
+/** How a Study's number spreads across the places it pooled (#472): Kowal's
+ * average of 50 countries, from Ghana's 7% to Poland's 33%, with Brazil
+ * inside. The chart draws a line from the smallest point to the largest,
+ * through the row's own value, in the row's unit. */
+const RangePoint = Schema.Struct({
+  label: Text,
+  ...sourced,
+  country: point.country,
 })
 
 export const StudyTableVisual = Schema.Struct({
@@ -92,8 +156,11 @@ export const StudyTableVisual = Schema.Struct({
       measure: Text,
       value: Schema.Finite,
       unit: Text,
+      ...point,
+      range: Schema.optional(Schema.Array(RangePoint)),
     }),
   ),
+  definitions: Schema.optional(Definitions),
   note: Schema.optional(Text),
 })
 
@@ -121,20 +188,28 @@ export const DiagramVisual = Schema.Struct({
   note: Schema.optional(Text),
 })
 
-export const KINDS = ['bars', 'timeline', 'study-table', 'diagram'] as const
+export const KINDS = [
+  'bars',
+  'stacked-bars',
+  'timeline',
+  'study-table',
+  'diagram',
+] as const
 
 export const Visual = Schema.Union([
   BarsVisual,
+  StackedBarsVisual,
   TimelineVisual,
   StudyTableVisual,
   DiagramVisual,
 ]).annotate({
   // Effect picks the member by `kind`; with an unknown `kind` it would list
-  // the four structs.
+  // the structs.
   message: `\`kind\` is one of ${KINDS.join(' | ')}`,
 })
 export type Visual = typeof Visual.Type
 export type BarsVisual = typeof BarsVisual.Type
+export type StackedBarsVisual = typeof StackedBarsVisual.Type
 export type TimelineVisual = typeof TimelineVisual.Type
 export type StudyTableVisual = typeof StudyTableVisual.Type
 export type DiagramVisual = typeof DiagramVisual.Type
@@ -432,8 +507,45 @@ export function visualProblems(
         )
     }
 
+    /** Each point names one of the Visual's definitions when it has them,
+     * and a year comes from the point's Fact sheet. */
+    const pointChecks = (
+      definitions: ReadonlyArray<{ id: string }> | undefined,
+      points: ReadonlyArray<{
+        definition?: string | undefined
+        year?: number | undefined
+        fact_sheet?: string | undefined
+      }>,
+      field: string,
+      withYear: boolean,
+    ) => {
+      const ids = definitions?.map((d) => d.id) ?? []
+      if (new Set(ids).size !== ids.length)
+        err('two definitions have the same id', `${field}.definitions`)
+      points.forEach((p, j) => {
+        const at = `${field}.${j}`
+        if (p.definition !== undefined && !ids.includes(p.definition))
+          err(
+            ids.length === 0
+              ? `"${p.definition}" names a definition, and the Visual has no \`definitions\``
+              : `"${p.definition}" is not one of the Visual's definitions (${ids.join(', ')})`,
+            `${at}.definition`,
+          )
+        else if (p.definition === undefined && ids.length > 0)
+          err('the Visual has definitions, so each point names one', at)
+        if (withYear && p.year !== undefined && p.fact_sheet)
+          fromFactSheet(p.year, p.fact_sheet, `${at}.year`)
+      })
+    }
+
     guide.visuals?.forEach((visual, i) => {
       const at = `visuals.${i}`
+      if (visual.kind === 'bars')
+        pointChecks(visual.definitions, visual.bars, `${at}.bars`, true)
+      if (visual.kind === 'timeline')
+        pointChecks(visual.definitions, visual.events, `${at}.events`, false)
+      if (visual.kind === 'study-table')
+        pointChecks(visual.definitions, visual.rows, `${at}.rows`, true)
       switch (visual.kind) {
         case 'bars': {
           if (visual.bars.length < 2)
@@ -454,6 +566,40 @@ export function visualProblems(
             !visual.bars.some((b) => b.label === visual.highlight)
           )
             err(`no bar is labelled "${visual.highlight}"`, `${at}.highlight`)
+          break
+        }
+        case 'stacked-bars': {
+          const parts = visual.segments.length
+          if (parts < 2)
+            err('a stacked bar has two or more parts', `${at}.segments`)
+          if (visual.bars.length === 0)
+            err('a stacked bar comparison has at least one bar', `${at}.bars`)
+          visual.bars.forEach((bar, j) => {
+            const field = `${at}.bars.${j}`
+            if (bar.values.length !== parts)
+              return err(
+                `the bar has ${bar.values.length} parts, and \`segments\` names ${parts}`,
+                `${field}.values`,
+              )
+            bar.values.forEach((value, k) =>
+              fromFactSheet(value, bar.fact_sheet, `${field}.values.${k}`),
+            )
+            if (bar.year !== undefined)
+              fromFactSheet(bar.year, bar.fact_sheet, `${field}.year`)
+            if (bar.values.some((v) => v < 0))
+              err('a part does not go below zero', `${field}.values`)
+            // Each part is rounded, so the sum may miss 100 by half a point
+            // per part.
+            const sum = roundTo(
+              bar.values.reduce((a, b) => a + b, 0),
+              2,
+            )
+            if (Math.abs(sum - 100) > parts / 2)
+              err(
+                `the parts add up to ${sum}%; a stacked bar adds up to 100%, give or take the rounding`,
+                `${field}.values`,
+              )
+          })
           break
         }
         case 'timeline': {
@@ -483,9 +629,23 @@ export function visualProblems(
         case 'study-table': {
           if (visual.rows.length < 2)
             err('a table of Studies has two or more rows', `${at}.rows`)
-          visual.rows.forEach((row, j) =>
-            fromFactSheet(row.value, row.fact_sheet, `${at}.rows.${j}.value`),
-          )
+          visual.rows.forEach((row, j) => {
+            fromFactSheet(row.value, row.fact_sheet, `${at}.rows.${j}.value`)
+            if (!row.range) return
+            const field = `${at}.rows.${j}.range`
+            if (row.range.length < 2)
+              return err('a range has two or more points', field)
+            row.range.forEach((p, k) =>
+              sourcedNumber(p, row.unit, `${field}.${k}`),
+            )
+            const values = row.range.map((p) => p.value)
+            const [low, high] = [Math.min(...values), Math.max(...values)]
+            if (row.value < low || row.value > high)
+              err(
+                `the value ${row.value} is outside its range, from ${low} to ${high}`,
+                `${at}.rows.${j}.value`,
+              )
+          })
           break
         }
         case 'diagram': {

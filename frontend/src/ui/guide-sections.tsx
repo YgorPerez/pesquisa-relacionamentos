@@ -12,7 +12,11 @@ import type {
   MythView,
   QuestionView,
 } from '#/content/guide-view'
+import type { ChartTable, ChartView } from '#/content/chart-view'
+import { useChosenCountry } from '#/state/country'
 import { useProfile } from '#/state/profile'
+import { VisualChart } from './visual-chart'
+import { VisualChartTable } from './visual-chart-table'
 import { useProfileInGuide } from '#/state/profile-in-guide'
 import { cn } from '@/platform/cn'
 import { Html, ShortConfidence } from './guide'
@@ -303,8 +307,28 @@ function useYouMarks(marks: GuideView['youMarks']) {
   return box
 }
 
-/** One piece of a Chapter: its prose, an answer (with what follows it), a
- * Tip or a Myth. */
+/** A chart with the Guide's chosen country and the saved Profile. */
+function ChartBlock({ chart }: { chart: ChartView }) {
+  const country = useChosenCountry(
+    chart.points
+      .flatMap((p) => [p, ...(p.range ?? [])])
+      .flatMap((p) => (p.country ? [p.country.slug] : [])),
+  )
+  return <VisualChart chart={chart} country={country} profile={useProfile()} />
+}
+
+/** A Study table of mixed units, with the same country and Profile. */
+function TableBlock({ table }: { table: ChartTable }) {
+  const country = useChosenCountry(
+    table.rows.flatMap((r) => (r.point.country ? [r.point.country.slug] : [])),
+  )
+  return (
+    <VisualChartTable table={table} country={country} profile={useProfile()} />
+  )
+}
+
+/** One piece of a Chapter: its prose, a chart, an answer (with what follows
+ * it), a Tip or a Myth. */
 function Block({
   block,
   chapter,
@@ -317,6 +341,10 @@ function Block({
 }) {
   const profile = useProfile()
   switch (block.kind) {
+    case 'chart':
+      return <ChartBlock chart={block.visual} />
+    case 'table':
+      return <TableBlock table={block.table} />
     case 'text':
       return <Html className="prosa" html={block.html} quote={chapter} />
     case 'question':

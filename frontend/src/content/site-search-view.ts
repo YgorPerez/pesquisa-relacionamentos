@@ -30,6 +30,7 @@ import {
   type FragmentPlace,
   type Line,
 } from './text-fragment'
+import { pointsOf } from './chart-view'
 import { factSheetView } from './view'
 
 export type SearchKind = 'guide' | 'tip' | 'fact-sheet'
@@ -117,6 +118,29 @@ const escape = (text: string) => text.replace(/[&<>"]/g, (c) => ESCAPES[c] ?? c)
  * Question is its own heading and anchor. */
 function blockPassages(block: ChapterBlock, place: Place): Passage[] {
   switch (block.kind) {
+    case 'chart':
+    case 'table': {
+      const chart = block.kind === 'chart' ? block.visual : block.table
+      return [
+        {
+          ...place,
+          html: escape(
+            [
+              chart.title,
+              ...pointsOf(chart).map(
+                (point) =>
+                  `${point.label}${point.detail ? ` (${point.detail})` : ''}: ${point.number.text}`,
+              ),
+              // A Study's range across countries (#472): Gana, Polônia.
+              ...pointsOf(chart).flatMap((point) =>
+                (point.range ?? []).map((p) => `${p.label}: ${p.number.text}`),
+              ),
+              chart.note ?? '',
+            ].join(' '),
+          ),
+        },
+      ]
+    }
     case 'text':
       return [{ ...place, html: block.html }]
     case 'tip':

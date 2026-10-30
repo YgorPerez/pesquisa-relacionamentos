@@ -130,6 +130,193 @@ describe('a Visual that passes', () => {
   })
 })
 
+/** A dot row per Study (#471): each point names its country, year and
+ * definition, out of the Visual's closed list. */
+const DOTS = (
+  first = 'year: 2019, definition: apps',
+  second = 'definition: online',
+) =>
+  `  - id: lado-a-lado
+    kind: study-table
+    title: Lado a lado
+    definitions:
+      - { id: apps, legend: só aplicativos }
+      - { id: online, legend: qualquer canal online }
+    rows:
+      - { fact_sheet: silva-2020-apps-brasil, measure: Por app, value: 18, unit: '%', country: Brasil, ${first} }
+      - { fact_sheet: silva-2020-apps-brasil, measure: Jovens, value: 24, unit: '%', country: Estados Unidos, ${second} }`
+
+describe('a point of a Visual', () => {
+  it('names its country, year and one of the Visual’s definitions', () => {
+    const result = withVisuals(DOTS(), '{{visual:lado-a-lado}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      definitions: [{ id: 'apps' }, { id: 'online' }],
+      rows: [
+        { country: 'Brasil', year: 2019, definition: 'apps' },
+        { country: 'Estados Unidos', definition: 'online' },
+      ],
+    })
+  })
+
+  it('cannot name a definition outside the closed list', () => {
+    const result = withVisuals(
+      DOTS(undefined, 'definition: casais'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1.definition: "casais" is not one of the Visual's definitions (apps, online)`,
+    ])
+  })
+
+  it('names a definition when the Visual has a list of them', () => {
+    const result = withVisuals(
+      DOTS(undefined, 'year: 2019'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1: the Visual has definitions, so each point names one`,
+    ])
+  })
+
+  it('carries a year the Fact sheet has', () => {
+    const result = withVisuals(
+      DOTS('year: 1987, definition: apps'),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.0.year: the number 1987 is not in the fact sheet "silva-2020-apps-brasil"; write it in the Visual as the fact sheet has it`,
+    ])
+  })
+})
+
+/** A Study's number with its spread across countries (#472): Kowal's
+ * average of 50 countries, from Ghana to Poland, with Brazil inside. */
+const RANGE = (
+  value = 18,
+  range = ['18, country: Brasil', '24, country: Gana'],
+) =>
+  `  - id: lado-a-lado
+    kind: study-table
+    title: Lado a lado
+    rows:
+      - { fact_sheet: silva-2020-apps-brasil, measure: Por app, value: 18, unit: '%' }
+      - fact_sheet: silva-2020-apps-brasil
+        measure: Média dos países
+        value: ${value}
+        unit: '%'
+        range:
+${range.map((point, i) => `          - { label: Ponto ${i}, fact_sheet: silva-2020-apps-brasil, value: ${point} }`).join('\n')}`
+
+describe('a range of a Study table row', () => {
+  it('carries labelled points with their countries', () => {
+    const result = withVisuals(RANGE(), '{{visual:lado-a-lado}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      rows: [
+        {},
+        {
+          range: [
+            { label: 'Ponto 0', value: 18, country: 'Brasil' },
+            { label: 'Ponto 1', value: 24, country: 'Gana' },
+          ],
+        },
+      ],
+    })
+  })
+
+  it('takes its numbers from the Fact sheet', () => {
+    const result = withVisuals(
+      RANGE(18, ['18', '25']),
+      '{{visual:lado-a-lado}}',
+    )
+    expect(errorsOf(result)).toEqual([
+      `${GUIDE}: visuals.0.rows.1.range.1.fact_sheet: the number 25 is not in the fact sheet "silva-2020-apps-brasil"; write it in the Visual as the fact sheet has it`,
+    ])
+  })
+
+  it('has two points or more, and the row’s value inside it', () => {
+    expect(
+      errorsOf(withVisuals(RANGE(18, ['18']), '{{visual:lado-a-lado}}')),
+    ).toEqual([
+      `${GUIDE}: visuals.0.rows.1.range: a range has two or more points`,
+    ])
+    expect(
+      errorsOf(withVisuals(RANGE(24, ['18', '18']), '{{visual:lado-a-lado}}')),
+    ).toEqual([
+      `${GUIDE}: visuals.0.rows.1.value: the value 24 is outside its range, from 18 to 18`,
+    ])
+  })
+})
+
+/** Bars split into parts that add up to 100% (#476): each bar's answers, in
+ * the order of `segments`, with who the bar is about. */
+const STACKED = (
+  first = '[18, 24, 35, 24]',
+  segments = '[Contentes, Neutros, Um pouco, Muito]',
+) =>
+  `  - id: partes
+    kind: stacked-bars
+    title: Partes
+    segments: ${segments}
+    bars:
+      - label: Mulheres
+        values: ${first}
+        fact_sheet: silva-2020-apps-brasil
+        applies_to: { genders: [woman] }
+      - label: Homens
+        values: [24, 18, 24, 35]
+        fact_sheet: silva-2020-apps-brasil
+        country: Brasil`
+
+describe('a stacked bar comparison', () => {
+  it('splits each bar into the parts of `segments`, with who it is about', () => {
+    const result = withVisuals(STACKED(), '{{visual:partes}}')
+    if (!result.ok) throw new Error(formatProblems(result.errors))
+    expect(
+      topicBySlug(result.library, 'onde-conhecer')?.visuals[0],
+    ).toMatchObject({
+      kind: 'stacked-bars',
+      segments: ['Contentes', 'Neutros', 'Um pouco', 'Muito'],
+      bars: [
+        { values: [18, 24, 35, 24], applies_to: { genders: ['woman'] } },
+        { values: [24, 18, 24, 35], country: 'Brasil' },
+      ],
+    })
+  })
+
+  it.each([
+    [
+      'a bar with more or fewer parts than `segments`',
+      STACKED('[18, 24, 35]'),
+      'visuals.0.bars.0.values: the bar has 3 parts, and `segments` names 4',
+    ],
+    [
+      'a part the Fact sheet does not have',
+      STACKED('[18, 24, 35, 25]'),
+      'visuals.0.bars.0.values.3: the number 25 is not in the fact sheet "silva-2020-apps-brasil"',
+    ],
+    [
+      'parts that do not add up to 100%, rounding aside',
+      STACKED('[18, 18, 24, 24]'),
+      'visuals.0.bars.0.values: the parts add up to 84%; a stacked bar adds up to 100%, give or take the rounding',
+    ],
+    [
+      'a single part',
+      STACKED('[18]', '[Todos]'),
+      'visuals.0.segments: a stacked bar has two or more parts',
+    ],
+  ])('rejects %s', (_, yaml, message) => {
+    expect(errorsOf(withVisuals(yaml, '{{visual:partes}}'))).toContainEqual(
+      expect.stringContaining(message),
+    )
+  })
+})
+
 describe('the build rejects', () => {
   it('a number that is not in the cited Fact sheet', () => {
     const result = withVisuals(BARS.replace('value: 24', 'value: 25'), PLACED)
@@ -234,7 +421,7 @@ describe('the build rejects', () => {
     const result = withVisuals(BARS.replace('kind: bars', 'kind: pie'), PLACED)
     expect(errorsOf(result)).toEqual([
       expect.stringContaining(
-        `${GUIDE}: visuals.0: \`kind\` is one of bars | timeline | study-table | diagram`,
+        `${GUIDE}: visuals.0: \`kind\` is one of bars | stacked-bars | timeline | study-table | diagram`,
       ),
     ])
   })

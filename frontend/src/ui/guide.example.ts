@@ -30,6 +30,10 @@ function block<K extends ChapterBlock['kind']>(
 /** The fixture's Tip, as a Chapter places it. */
 export const TIP = block('tip').tip
 
+/** The fixture's Study table of mixed units, Brazil's and the United
+ * States' Studies. */
+export const STUDY_TABLE = block('table').table
+
 /** The fixture's Myth, as a Chapter places it. */
 export const MYTH = block('myth').myth
 

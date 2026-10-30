@@ -465,7 +465,23 @@ visuals:
         value: 16
         fact_sheet: galperin-2013-arrependimento-sexual
     highlight: Mulheres, da última transa casual
-    note: questionário online com mais de 24 mil adultos, que não representa o país
+    note: mais de 24 mil voluntários de um questionário online, e não pessoas sorteadas entre os americanos
+  - id: sentimento-ultima-transa-casual
+    kind: stacked-bars
+    title: Como heterossexuais americanos se sentem sobre a última transa casual
+    segments: [Contentes, Neutros, Um pouco arrependidos, Muito arrependidos]
+    bars:
+      - label: Mulheres heterossexuais
+        values: [27, 26, 27, 20]
+        fact_sheet: galperin-2013-arrependimento-sexual
+        applies_to:
+          { genders: [woman], seeks: [men], ages: { min: 18, max: 65 } }
+      - label: Homens heterossexuais
+        values: [52, 25, 15, 7]
+        fact_sheet: galperin-2013-arrependimento-sexual
+        applies_to:
+          { genders: [man], seeks: [women], ages: { min: 18, max: 65 } }
+    note: na linha dos homens, as partes somam 99% por causa do arredondamento
   - id: por-que-um-momento-so-engana
     kind: diagram
     title: Por que estudos de um momento só acham saúde mental pior
@@ -547,12 +563,15 @@ visuals:
       - label: 2008, entre todos os que já transaram
         value: 25.3
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
       - label: 2013, como o relatório calculou (só quem teve mais de um)
         value: 43.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: 2013, entre todos os que já transaram (conta nossa)
         value: 30.4
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
     highlight: 2013, entre todos os que já transaram (conta nossa)
     note: na mesma base, a alta de cinco anos é de uns cinco pontos
   - id: media-e-mediana
@@ -661,15 +680,19 @@ visuals:
       - label: Com parceiro casual, 2013
         value: 54.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: Com parceiro fixo, 2013
         value: 19.9
         fact_sheet: ministerio-saude-2016-pcap-2013
+        year: 2013
       - label: Homens com parceiro casual, 2008
         value: 51
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
       - label: Mulheres com parceiro casual, 2008
         value: 34.6
         fact_sheet: ministerio-saude-2011-pcap-2008
+        year: 2008
     highlight: Com parceiro casual, 2013
     note: entre quem fez sexo com esse tipo de parceiro no último ano
   - id: sifilis-por-idade
@@ -680,15 +703,19 @@ visuals:
       - label: Todas as idades, 2021
         value: 82.8
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2021
       - label: Todas as idades, 2024
         value: 120.8
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
       - label: 20 a 29 anos, 2024
         value: 286.1
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
       - label: 30 a 39 anos, 2024
         value: 184.6
         fact_sheet: ministerio-saude-2025-sifilis
+        year: 2024
     highlight: 20 a 29 anos, 2024
     note: casos diagnosticados e notificados, não todas as infecções
 takeaways: [pelos-seus-motivos-e-sobrio, prevencao-combinada]
@@ -711,7 +738,11 @@ O arrependimento não se divide por igual. Num questionário online com mais de 
 
 {{visual:arrependimento-por-sexo}}
 
-Mais arrependimento não quer dizer arrependimento sempre. {{you:arrependimento-mulheres-hetero}} Entre as mulheres heterossexuais do questionário americano, 27% ficaram contentes com a última transa casual, 26% neutras, 27% um pouco arrependidas e 20% muito. {{you:arrependimento-homens-hetero}} Entre os homens heterossexuais, 52% ficaram contentes e 7% muito arrependidos [@galperin-2013-arrependimento-sexual]. {{you:lesbicas-arrependem-menos}} Lésbicas e mulheres bissexuais se arrependeram menos que as heterossexuais; entre os homens, a orientação não mudou nada.
+Mais arrependimento não quer dizer arrependimento sempre. {{you:arrependimento-mulheres-hetero}} Entre as mulheres heterossexuais do questionário americano, cerca de metade ficou contente ou neutra com a última transa casual. {{you:arrependimento-homens-hetero}} Entre os homens heterossexuais, mais da metade ficou contente [@galperin-2013-arrependimento-sexual].
+
+{{visual:sentimento-ultima-transa-casual}}
+
+Quem respondeu clicou num anúncio do site msnbc.com, em vez de ser sorteado como numa [[pesquisa representativa]] [@galperin-2013-arrependimento-sexual]. {{you:lesbicas-arrependem-menos}} Lésbicas e mulheres bissexuais se arrependeram menos que as heterossexuais; entre os homens, a orientação não mudou nada.
 
 {{myth:mulher-sempre-se-arrepende}}
 
