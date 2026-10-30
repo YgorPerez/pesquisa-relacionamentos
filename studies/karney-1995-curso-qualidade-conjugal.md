@@ -40,24 +40,24 @@ Do conjunto sai o modelo de vulnerabilidade, estresse e adaptação: o que cada 
 | Só autorrelato | 77% dos estudos | p. 16 | "Eighty-nine studies (77%) gathered data solely through self-report measures." |
 | Só duas medições | 64 estudos (56%) | p. 16 | "in more than half of the studies (64, or 56%), marriages are assessed only two times" |
 | Acompanhamento de até 5 anos | 70 dos 115 estudos (61%) | p. 17 | "70 of the 115 studies (61%) follow marriages for 5 years or less" |
-| Satisfação da esposa e estabilidade | r = 0,42 (2 estudos) | Figura 1, esposas | ".42 marital satisfaction (2)" |
-| Satisfação (do casamento e sexual) e estabilidade, faixa | r de 0,06 a 0,42 | p. 20 | "aggregate rs for marital and sexual satisfaction range from .06 to .42" |
-| Comportamento negativo do marido e da esposa e estabilidade do casal | r = −0,37 (marido) e −0,34 (esposa), 2 estudos cada | Figura 1, casais | "-.34 W negative behavior (2) -.37 H negative behavior (2)" |
-| Comportamento negativo do casal e estabilidade | r = −0,17 (4 estudos) | Figura 1, casais | "-.17 couple negative behavior (4)" |
-| Comportamento positivo do marido e estabilidade do casal | r = 0,46 (2 estudos) | Figura 1, casais | ".46 H positive behavior (2)" |
-| Comportamento negativo do marido e satisfação dele | r = −0,21 (5 estudos) | Figura 2, maridos | "-.21 H negative behavior (5)" |
-| Comportamento negativo da esposa e satisfação dela | r = −0,25 (6 estudos) | Figura 2, esposas | "-.25 W negative behavior (6)" |
-| Comportamento positivo do casal e satisfação do casal | r = 0,33 (4 estudos) | Figura 2, casais | ".33 couple positive behavior (4)" |
-| Estresse e estabilidade do casal | r = −0,14 (3 estudos) | Figura 1, casais | "-.14 stress (3)" |
-| Estresse e satisfação da esposa | r = −0,21 (5 estudos) | Figura 2, esposas | "-.21 stress (5)" |
-| Infância infeliz e satisfação da esposa | r = −0,21 (4 estudos) | Figura 2, esposas | "-.21 unhappy childhood (4)" |
-| Semelhança de atitudes e estabilidade do casal | r = 0,28 (3 estudos) | Figura 1, casais | ".28 attitude homogamy (3)" |
-| Idade ao casar e estabilidade da esposa | r = 0,16 (3 estudos) | Figura 1, esposas | ".16 age at marriage (3)" |
-| Morar junto antes de casar e estabilidade da esposa | r = −0,12 (2 estudos) | Figura 1, esposas | "-.12 premarital cohabitation (2)" |
-| Morar junto antes de casar e estabilidade do marido | r = −0,14 (2 estudos) | Figura 1, maridos | "-.14 premarital cohabitation (2)" |
+| Esposas mais satisfeitas, casamentos mais estáveis | r = 0,42 (2 estudos) | Figura 1, esposas | ".42 marital satisfaction (2)" |
+| Mais satisfação, no casamento e no sexo, e casamento mais estável: do menor ao maior resultado | r de 0,06 a 0,42 | p. 20 | "aggregate rs for marital and sexual satisfaction range from .06 to .42" |
+| Mais comportamento negativo do marido ou da esposa, casamento menos estável | r = −0,37 (marido) e −0,34 (esposa), 2 estudos cada | Figura 1, casais | "-.34 W negative behavior (2) -.37 H negative behavior (2)" |
+| Mais comportamento negativo do casal, casamento menos estável | r = −0,17 (4 estudos) | Figura 1, casais | "-.17 couple negative behavior (4)" |
+| Mais comportamento positivo do marido, casamento mais estável | r = 0,46 (2 estudos) | Figura 1, casais | ".46 H positive behavior (2)" |
+| Mais comportamento negativo do marido, menos satisfação dele | r = −0,21 (5 estudos) | Figura 2, maridos | "-.21 H negative behavior (5)" |
+| Mais comportamento negativo da esposa, menos satisfação dela | r = −0,25 (6 estudos) | Figura 2, esposas | "-.25 W negative behavior (6)" |
+| Mais comportamento positivo do casal, mais satisfação do casal | r = 0,33 (4 estudos) | Figura 2, casais | ".33 couple positive behavior (4)" |
+| Mais estresse, casamento menos estável | r = −0,14 (3 estudos) | Figura 1, casais | "-.14 stress (3)" |
+| Mais estresse, esposa menos satisfeita | r = −0,21 (5 estudos) | Figura 2, esposas | "-.21 stress (5)" |
+| Esposas que tiveram infância infeliz, menos satisfeitas no casamento | r = −0,21 (4 estudos) | Figura 2, esposas | "-.21 unhappy childhood (4)" |
+| Atitudes mais parecidas entre os dois, casamento mais estável | r = 0,28 (3 estudos) | Figura 1, casais | ".28 attitude homogamy (3)" |
+| Esposas que casaram mais velhas, casamento mais estável | r = 0,16 (3 estudos) | Figura 1, esposas | ".16 age at marriage (3)" |
+| Esposas que moraram junto antes de casar, casamento menos estável | r = −0,12 (2 estudos) | Figura 1, esposas | "-.12 premarital cohabitation (2)" |
+| Maridos que moraram junto antes de casar, casamento menos estável | r = −0,14 (2 estudos) | Figura 1, maridos | "-.14 premarital cohabitation (2)" |
 | Comportamento negativo, os 14 estudos | Os efeitos variaram muito, mas mais comportamento negativo sempre previu casamento menos estável | p. 22 | "using all 14 longitudinal studies of negative interaction" |
 
-As correlações das Figuras 1 e 2 têm sinal positivo quando a variável prevê mais estabilidade ou satisfação. O número entre parênteses é a quantidade de estudos agregados. A camada de texto do PDF é um OCR e embaralha parte das figuras: ficaram fora as estimativas cujo rótulo saiu ilegível (como as de neuroticismo), e as que entraram foram conferidas na imagem da página.
+Estabilidade é o casamento continuar, sem separação nem divórcio. O r mede a força da ligação: 0 é nenhuma, e quanto mais longe de 0, mais forte. As correlações das Figuras 1 e 2 têm sinal positivo quando a variável prevê mais estabilidade ou satisfação. O número entre parênteses é a quantidade de estudos agregados. A camada de texto do PDF é um OCR e embaralha parte das figuras: ficaram fora as estimativas cujo rótulo saiu ilegível (como as de neuroticismo), e as que entraram foram conferidas na imagem da página.
 
 ## Limitações
 
