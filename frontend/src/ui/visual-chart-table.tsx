@@ -21,6 +21,7 @@ import {
   useInteractive,
   type CardTarget,
 } from './chart-card'
+import { ChartHint, ChartPulse } from './chart-invitation'
 import { CHART_TABLE_COPY } from './visual-chart-table.copy'
 import { CHART_COPY } from './visual-chart.copy'
 import { ChartCard } from './visual-detail'
@@ -198,6 +199,7 @@ export function VisualChartTable({
 }) {
   const card = useChartCard(table.domId)
   const host = useRef<HTMLTableElement>(null)
+  const frame = useRef<HTMLDivElement>(null)
   const interactive = useInteractive()
   const lit =
     country !== null &&
@@ -206,35 +208,39 @@ export function VisualChartTable({
   useCloseCardOn(table.domId, country)
   return (
     <VisualFrame domId={table.domId} title={table.title} note={table.note}>
-      <table
-        ref={host}
-        aria-labelledby={`${table.domId}-titulo`}
-        className="m-0 table w-full table-fixed border-collapse text-nota leading-nota"
-      >
-        <TableHead />
-        <tbody>
-          {table.rows.map(({ point, context }) => (
-            <StudyRow
-              key={point.key}
-              chart={table.domId}
-              point={point}
-              context={context}
-              dimmed={
-                active === null
-                  ? lit && point.country?.slug !== country
-                  : active !== point.key
-              }
-              you={
-                point.covers.length > 0 &&
-                appliesToYou(profile, point.covers)?.covered === true
-              }
-              active={active === point.key}
-              pinned={card.pinned && active === point.key}
-              interactive={interactive}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div ref={frame} className="relative">
+        <table
+          ref={host}
+          aria-labelledby={`${table.domId}-titulo`}
+          className="m-0 table w-full table-fixed border-collapse text-nota leading-nota"
+        >
+          <TableHead />
+          <tbody>
+            {table.rows.map(({ point, context }) => (
+              <StudyRow
+                key={point.key}
+                chart={table.domId}
+                point={point}
+                context={context}
+                dimmed={
+                  active === null
+                    ? lit && point.country?.slug !== country
+                    : active !== point.key
+                }
+                you={
+                  point.covers.length > 0 &&
+                  appliesToYou(profile, point.covers)?.covered === true
+                }
+                active={active === point.key}
+                pinned={card.pinned && active === point.key}
+                interactive={interactive}
+              />
+            ))}
+          </tbody>
+        </table>
+        <ChartPulse host={frame} mark="tbody tr" />
+      </div>
+      <ChartHint />
       <ChartCard card={card} host={host} definitions={[]} profile={profile} />
     </VisualFrame>
   )

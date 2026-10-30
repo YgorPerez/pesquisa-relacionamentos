@@ -6,7 +6,6 @@ export const CHART_COPY = {
   openFactSheet: (title: string) => `Abrir Ficha: ${title}`,
   pinByPointer: 'Clique para fixar e abrir a Ficha',
   pinByKey: 'Enter para fixar e abrir a Ficha',
-  hint: 'Toque numa barra ou num ponto para ver o número exato e a Ficha.',
   calculation: (expression: string, value: string) =>
     `Conta nossa: ${expression} = ${value}`,
   /** A Study's number next to its range across countries. */

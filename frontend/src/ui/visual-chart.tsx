@@ -38,10 +38,11 @@ import {
   type ChartMarkAt,
 } from './chart-card'
 import { matchesNothing } from './chart-filters'
+import { ChartHint, ChartPulse } from './chart-invitation'
 import { INK } from './chart-tones'
 import { DefinitionGlyph } from './definition-glyph'
 import { partTone } from './stack-tones'
-import { Plot, wantPlot } from './visual-chart-loader'
+import { Plot, preloadPlot, wantPlot } from './visual-chart-loader'
 import { CHART_COPY } from './visual-chart.copy'
 import { ChartCard } from './visual-detail'
 import { VisualFrame } from './visual-frame'
@@ -408,6 +409,7 @@ export function VisualChart({
         ref={host}
         data-slot="grafico"
         className={cn(
+          'relative',
           // Only once a click can open something: without JS, a plain SVG.
           interactive &&
             (chart.kind === 'line' ? 'cursor-crosshair' : 'cursor-pointer'),
@@ -429,6 +431,11 @@ export function VisualChart({
           onHover={onHover}
           onSelect={onSelect}
         />
+        <ChartPulse
+          host={host}
+          mark={`[data-ts-key="mark-${(chart.points.find((p) => p.highlight) ?? chart.points[0])?.key}"]`}
+          ready={preloadPlot}
+        />
       </div>
       <div role="status">
         {matchesNothing(chart.points, deferredCountry, deferredLegend) && (
@@ -440,11 +447,7 @@ export function VisualChart({
       {/* The SVG is an image to a screen reader: the exact values are
           here. */}
       {chart.kind === 'line' && <LineLabels points={chart.points} />}
-      {interactive && (
-        <p className="m-0 mt-xs text-nota leading-nota text-tinta-2">
-          {CHART_COPY.hint}
-        </p>
-      )}
+      <ChartHint />
       <ValueList chart={chart} />
       {/* The arrows' card, said aloud: the focus stays on the chart. */}
       <div aria-live="polite" className="sr-only">

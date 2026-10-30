@@ -527,16 +527,6 @@ it("draws a time line's guide at the active year and no dimmed year", () => {
   expect(dimmedValues(html)).not.toContain('13,5%')
 })
 
-it('tells how to open a number only once the chart can take the tap', () => {
-  // Without JavaScript a tap opens nothing: the server does not say it.
-  const served = page(
-    renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
-  )
-  expect(served.body.textContent).not.toContain(CHART_COPY.hint)
-  render(<VisualChart chart={DOTS} country={null} profile={null} />)
-  expect(screen.getAllByText(CHART_COPY.hint)).toHaveLength(1)
-})
-
 /** Whether a value's words are drawn dimmed. */
 const isDimmed = (root: ParentNode, words: string) =>
   [...root.querySelectorAll('svg[role="img"] text')]

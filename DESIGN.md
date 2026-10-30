@@ -290,6 +290,8 @@ Um cartão só por página, para todo gráfico e tabela de Estudos; o diagrama f
 
 Cada ponta de uma faixa de países tem o seu cartão, e o traço dela engrossa em verde-água de tinta. A legenda são chips: o mouse sobre um acende as marcas dele, e um toque o deixa aceso (amarelo, como os chips de país, porque filtra e não leva à Ficha). Vale só naquele gráfico e combina com o país: fica aceso o que atende aos dois, e um par sem resultado diz isso em negrito sob o gráfico. Sem JS, a legenda é só texto.
 
+Sob cada gráfico e tabela de Estudos, uma etiqueta com o ícone de toque, em negrito verde-água de tinta sobre verde-água claro, porque leva à Ficha. O texto depende do aparelho: "Passe o mouse ou clique para ver o número e a Ficha" com mouse, "Toque para ver o número e a Ficha" no toque. O primeiro gráfico visto numa visita chama uma vez: um anel verde-água se espalha duas vezes em volta da marca do número-chave (sem ele, da primeira), em 2 segundos. Em prefers-reduced-motion o anel não aparece e a etiqueta fica.
+
 ### Perfil: destacar sem esconder
 
 Nada some quando o leitor informa o Perfil, e a nota "Vale para:" de cada achado fica sempre.
