@@ -35,15 +35,15 @@ Os localizadores usam a paginação impressa do artigo; a Fonte local tem uma fo
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Participantes e pares avaliados | 397 participantes e 940 pares | Method, Participants, p. 6 | "the final sample consisted of 397 participants (200 women; Mage = 22.87, SDage = 2.62) who formed 940 speed-dating dyads." |
-| Estudantes na amostra | 91% | Method, Participants, p. 6 | "Most participants were students (91%) from a variety of different majors" |
-| Duração de cada encontro | 3 minutos | Method, Procedures, p. 7 | "took 3 min, during which the daters were alone in the room and free to choose what to say or do." |
-| Semelhança de personalidade e atração romântica inicial, medida de dois jeitos: comparando o que cada um diz de si, ou o que a pessoa diz de si com como ela vê o outro | Não se encontrou associação | Discussion, p. 18 | "Neither actual nor perceptual similarity was related to initial romantic attraction." |
-| Verificações com outras medidas de personalidade e de qualidade do encontro | Também não encontraram evidência de associação com semelhança | Discussion, No Evidence of Similarity Effects on Initial Romantic Attraction, p. 18 | "The lack of evidence of similarity effects was consistent across all Big Five traits, both perspectives on similarity (actual vs. perceptual), and all robustness analyses." |
+| Quantos participaram | 397 pessoas, que formaram 940 pares de speed dating | Method, Participants, p. 6 | "the final sample consisted of 397 participants (200 women; Mage = 22.87, SDage = 2.62) who formed 940 speed-dating dyads." |
+| Estudantes | A maioria, 91%, era de estudantes | Method, Participants, p. 6 | "Most participants were students (91%) from a variety of different majors" |
+| Duração de cada encontro | Cada encontro durou 3 minutos | Method, Procedures, p. 7 | "took 3 min, during which the daters were alone in the room and free to choose what to say or do." |
+| Personalidade parecida e atração | Não apareceu ligação com a atração no primeiro encontro, nem comparando o que cada um diz de si, nem comparando o que a pessoa diz de si com como ela vê o outro | Discussion, p. 18 | "Neither actual nor perceptual similarity was related to initial romantic attraction." |
+| Outras formas de conferir | Também não apareceu sinal de ligação em nenhum dos cinco grandes traços de personalidade, nem nas verificações com outras medidas | Discussion, No Evidence of Similarity Effects on Initial Romantic Attraction, p. 18 | "The lack of evidence of similarity effects was consistent across all Big Five traits, both perspectives on similarity (actual vs. perceptual), and all robustness analyses." |
 
-Na análise principal, acrescentar os termos necessários para testar semelhança não melhorou significativamente o ajuste do modelo para nenhum traço autorrelatado, no limiar adotado pelos autores. Para a extroversão percebida, o modelo mais amplo teve melhor ajuste, mas a superfície não apresentou o padrão exigido para uma associação de semelhança: perceber o parceiro como mais extrovertido se associou à atração, independentemente de ele se parecer com quem o avaliava (Método, p. 12; Resultados, pp. 14 e 16–17).
+Na análise principal, pôr a semelhança na conta não melhorou a previsão da atração, no limiar adotado pelos autores, para nenhum traço que cada um relatou sobre si. Para a extroversão como a pessoa a via no outro, a conta mais ampla previu melhor, mas sem o padrão exigido para uma ligação de semelhança: ver o parceiro como mais extrovertido andou junto com mais atração, fosse ele parecido ou não com quem o avaliava (Método, p. 12; Resultados, pp. 14 e 16–17).
 
-Não encontrar essa associação não equivale a estimar um efeito exatamente nulo. Tampouco significa que a personalidade de cada participante não tenha relação com atração; o artigo encontrou associações com traços próprios e do parceiro, em análises exploratórias.
+Não encontrar essa ligação não quer dizer que ela seja exatamente zero. Tampouco quer dizer que a personalidade de cada participante não tenha ligação com a atração: o artigo achou ligações com traços da própria pessoa e do parceiro, em análises exploratórias.
 
 ## Limitações
 

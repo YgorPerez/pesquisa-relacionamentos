@@ -29,9 +29,9 @@ Os autores separaram a tendência geral a desejar outras pessoas, a tendência g
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Quanto os modelos principais explicam da tendência geral de cada pessoa a desejar seus pares de speed dating | aproximadamente 5% a 18% | Random forests results, p. 6; Tabela 2 | "5% to 18% of the variance in actor desire" |
-| Quanto os modelos principais explicam da tendência geral de cada pessoa a ser desejada por seus pares de speed dating | aproximadamente 18% a 27% | Random forests results, p. 6; Tabela 2 | "18% to 27% of the variance in partner desire" |
-| Quanto do interesse específico por um par os modelos previram numa segunda amostra de speed dating (B), depois de treinados na primeira (A) | menos de 0,1%, no melhor caso | Training and testing analyses, p. 7; Tabela 3 | "less than 0.1%" |
+| Tendência geral a desejar os outros | O questionário de antes dos encontros explicou de cerca de 5% a 18% das diferenças entre as pessoas | Random forests results, p. 6; Tabela 2 | "5% to 18% of the variance in actor desire" |
+| Tendência geral a ser desejado | O questionário de antes dos encontros explicou de cerca de 18% a 27% das diferenças entre as pessoas | Random forests results, p. 6; Tabela 2 | "18% to 27% of the variance in partner desire" |
+| Interesse específico por um par | Treinadas num grupo de speed dating e testadas noutro, as contas previram, no melhor caso, menos de 0,1% desse interesse | Training and testing analyses, p. 7; Tabela 3 | "less than 0.1%" |
 
 O resultado quase nulo diz respeito ao interesse específico pelo par, descontadas as tendências gerais. Vários modelos tiveram erro maior que prever a média para todos os pares. Já as avaliações da interação, coletadas depois de cada encontro junto com a medida de desejo, permitiram prever parte desse interesse específico. Isso não é uma previsão feita antes de as pessoas se conhecerem.
 

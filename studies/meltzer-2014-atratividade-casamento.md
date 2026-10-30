@@ -28,18 +28,18 @@ Se a atratividade do rosto do cônjuge prevê quão satisfeita a pessoa está no
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Casais nos estudos 1 e 2 (norte da Flórida) | 82 e 169 | Method, Participants, §1 | "were 82 newlywed couples and participants in Study 2 were 169 newlywed couples, both recruited from a Northern Florida community" |
-| Casais nos estudos 3 (Ohio) e 4 (Tennessee) | 72 e 135 | Method, Participants, §1 | "participants in Study 3 were 72 newlywed couples recruited from a Northern Ohio community surrounding a regional campus of a major state university; and participants in Study 4 were 135 newlywed couples" |
-| Queda média da satisfação a cada medição | maridos −0,53; esposas −0,62 | Results, Describing the Trajectory, §3 | "for husbands, π = −0.53, SE = 0.05, t (453) = −10.17, p < .001; for wives, π = −0.62" |
-| Quanto mais atraente a esposa, mais satisfeito o marido no começo do casamento | coeficiente = 0,36; r = 0,10 (significativo) | Tabela 3 | "Wives' Physical Attractiveness 0.36 0.17 .10" |
-| Atratividade do marido e satisfação da esposa no começo do casamento | coeficiente = −0,21; r = 0,05 (não significativo) | Tabela 3 | "Attractiveness −0.17 0.21 .04 −0.21 0.21 .05" |
-| Atratividade da esposa e mudança na satisfação do marido nos quatro primeiros anos | coeficiente = 0,03; r = 0,03 (não significativo) | Tabela 3 | "Wives' Physical Attractiveness 0.03 0.04 .03 0.12 0.05 .11 *" |
-| Atratividade do marido e mudança na satisfação da esposa nos quatro primeiros anos | coeficiente = −0,01; r = 0,01 (não significativo) | Tabela 3 | "Husbands' Physical Attractiveness 0.04 0.05 .03 −0.01 0.06 .01" |
-| Quanto mais atraente a esposa, menor a queda da satisfação dela mesma nos quatro primeiros anos | coeficiente = 0,12; r = 0,11 | Tabela 3 | "Wives' Physical Attractiveness 0.03 0.04 .03 0.12 0.05 .11 *" |
-| O efeito difere entre os quatro estudos? | não (p > 0,25) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "None of these effects differed across the four studies (all p s > .25)." |
-| A atratividade do cônjuge pesa mais na satisfação inicial dos maridos que na das esposas? | sim: χ²(1) = 3,86; p = 0,046 | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "wives' attractiveness and husbands' initial marital satisfaction was stronger than the nonsignificant association between husbands' attractiveness and wives' initial marital satisfaction, χ 2 (1) = 3.86, p = .046" |
+| Casais nos estudos 1 e 2 | 82 e 169 casais recém-casados, no norte da Flórida | Method, Participants, §1 | "were 82 newlywed couples and participants in Study 2 were 169 newlywed couples, both recruited from a Northern Florida community" |
+| Casais nos estudos 3 e 4 | 72 casais recém-casados em Ohio e 135 no Tennessee | Method, Participants, §1 | "participants in Study 3 were 72 newlywed couples recruited from a Northern Ohio community surrounding a regional campus of a major state university; and participants in Study 4 were 135 newlywed couples" |
+| Queda da satisfação | Em média, a satisfação caiu a cada medição, nos maridos e nas esposas (−0,53 e −0,62) | Results, Describing the Trajectory, §3 | "for husbands, π = −0.53, SE = 0.05, t (453) = −10.17, p < .001; for wives, π = −0.62" |
+| Aparência da esposa e satisfação do marido, no começo | Quanto mais atraente a esposa, mais satisfeito o marido no começo do casamento, uma ligação pequena (coeficiente = 0,36; r = 0,10) | Tabela 3 | "Wives' Physical Attractiveness 0.36 0.17 .10" |
+| Aparência do marido e satisfação da esposa, no começo | Não apareceu ligação clara (coeficiente = −0,21; r = 0,05) | Tabela 3 | "Attractiveness −0.17 0.21 .04 −0.21 0.21 .05" |
+| Aparência da esposa e satisfação do marido, com o tempo | Não apareceu ligação clara com a mudança da satisfação dele nos quatro primeiros anos (coeficiente = 0,03; r = 0,03) | Tabela 3 | "Wives' Physical Attractiveness 0.03 0.04 .03 0.12 0.05 .11 *" |
+| Aparência do marido e satisfação da esposa, com o tempo | Não apareceu ligação clara com a mudança da satisfação dela nos quatro primeiros anos (coeficiente = −0,01; r = 0,01) | Tabela 3 | "Husbands' Physical Attractiveness 0.04 0.05 .03 −0.01 0.06 .01" |
+| Aparência da esposa e a satisfação dela, com o tempo | Quanto mais atraente a esposa, menos caiu a satisfação dela mesma nos quatro primeiros anos, uma ligação pequena (coeficiente = 0,12; r = 0,11) | Tabela 3 | "Wives' Physical Attractiveness 0.03 0.04 .03 0.12 0.05 .11 *" |
+| De um estudo para outro | Esses resultados não diferiram entre os quatro estudos (p > 0,25) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "None of these effects differed across the four studies (all p s > .25)." |
+| Maridos contra esposas, no começo | A aparência do cônjuge andou mais junto com a satisfação inicial nos maridos que nas esposas (χ²(1) = 3,86; p = 0,046) | Results, "Does Partner Physical Attractiveness Differentially Predict…", §2 | "wives' attractiveness and husbands' initial marital satisfaction was stronger than the nonsignificant association between husbands' attractiveness and wives' initial marital satisfaction, χ 2 (1) = 3.86, p = .046" |
 
-O coeficiente é o que a Tabela 3 do artigo chama de β. Pelo tamanho do erro-padrão, não é padronizado: não o compare com o β de outras Fichas. O tamanho do efeito é o r.
+"r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. Na Tabela 3, ele vem sem sinal: dá só o tamanho, e a direção vem do sinal do coeficiente. "χ²" e "p" testam se a diferença pode ser acaso: quanto menor o p, menos provável. O coeficiente é o que a Tabela 3 do artigo chama de β. Pelo tamanho do erro-padrão, não é padronizado: não o compare com o β de outras Fichas. O tamanho do efeito é o r.
 
 ## Definições
 
