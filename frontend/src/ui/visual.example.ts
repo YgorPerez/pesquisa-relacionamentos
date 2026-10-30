@@ -34,9 +34,7 @@ const view = (visual: HtmlVisual): VisualView =>
 function ofKind<K extends VisualView['kind']>(
   kind: K,
 ): Extract<VisualView, { kind: K }> {
-  const visual = guide?.visuals.find(
-    (v): v is HtmlVisual => v.kind === kind,
-  )
+  const visual = guide?.visuals.find((v): v is HtmlVisual => v.kind === kind)
   if (!visual) throw new Error(`the fixture has no ${kind} Visual`)
   return view(visual) as Extract<VisualView, { kind: K }>
 }
