@@ -124,9 +124,10 @@ function LineLabels({ points }: { points: ReadonlyArray<ChartPoint> }) {
   )
 }
 
-/** A legend's key, in either state: the same box with words or with a button,
- * so the legend does not move when the page's JS arrives. */
-const KEY_BOX = 'gap-1 px-2.5 py-1 font-body font-normal'
+/** A legend's key before the page's JS: the words in the box of the chip that
+ * replaces them (`Toggle`), so the legend does not move when it arrives. */
+const KEY_WORDS =
+  'inline-flex min-h-toque items-center gap-2 border-(length:--traco-controle) border-transparent px-3.5 py-2 font-label text-nota leading-tight font-bold'
 
 /** The chart's own legend: which key is pressed and which the mouse is over.
  * It stays in the chart, not in the link (#497). */
@@ -182,18 +183,11 @@ function Legend({
               if (event.pointerType === 'mouse') legend.setPreview(key)
             }}
             onPointerLeave={() => legend.setPreview(null)}
-            className={KEY_BOX}
           >
             {content}
           </Toggle>
         ) : (
-          <span
-            key={id}
-            className={cn(
-              KEY_BOX,
-              'inline-flex min-h-toque items-center border-(length:--traco-controle) border-transparent text-nota leading-tight',
-            )}
-          >
+          <span key={id} className={KEY_WORDS}>
             {content}
           </span>
         ),
