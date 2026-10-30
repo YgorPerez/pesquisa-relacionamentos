@@ -112,8 +112,36 @@ it('leaves room on the right for a long value with a word unit', () => {
   const value = [...(svg?.querySelectorAll('text') ?? [])].find(
     (t) => t.textContent === '7.804.840 pessoas',
   )
-  // 14px bold letters are about 8px wide.
-  expect(Number(value?.getAttribute('x')) + 17 * 8).toBeLessThanOrEqual(width)
+  // 14px bold letters are 7px wide or a little more.
+  expect(Number(value?.getAttribute('x')) + 17 * 7.5).toBeLessThanOrEqual(width)
+})
+
+it("writes a dot's value clear of Brazil's ring, and rings nothing when every point is Brazil's", () => {
+  const dots = page(
+    renderToString(<VisualChart chart={DOTS} country={null} profile={null} />),
+  )
+  const dot = dots.querySelector('svg[role="img"] circle')
+  const value = [...dots.querySelectorAll('svg[role="img"] text')].find(
+    (t) => t.textContent === '18%',
+  )
+  // The ring reaches 12px from the dot's center.
+  expect(Number(value?.getAttribute('x'))).toBeGreaterThan(
+    Number(dot?.getAttribute('cx')) + 12,
+  )
+  const brazil = { country: { slug: 'brasil', name: 'Brasil' }, brazil: true }
+  const allBrazil = page(
+    renderToString(
+      <VisualChart
+        chart={{
+          ...DOTS,
+          points: DOTS.points.map((p) => ({ ...p, ...brazil })),
+        }}
+        country={null}
+        profile={null}
+      />,
+    ),
+  )
+  expect(allBrazil.querySelector('[data-ts-key="brasil"]')).toBeNull()
 })
 
 it('shows the definitions as a legend of shapes', () => {

@@ -49,12 +49,17 @@ const LAYOUT = {
 /** Letters per line of a measure, which fits a 350px phone. */
 const MEASURE_LINE = 56
 const DIMMED = 0.22
+/** A dot's value starts past Brazil's ring (12px from the dot's center). */
+const DOT_VALUE_DX = 16
 /** Room for the value after the longest mark: at least a "100%", and more
- * for a value with a word unit ("7.804.840 pessoas"), at about 8px a
+ * for a value with a word unit ("7.804.840 pessoas"), at about 7.6px a
  * letter of the 14px bold value. */
 const VALUE_ROOM = 56
-const valueRoom = (rows: ReadonlyArray<Row>) =>
-  Math.max(VALUE_ROOM, ...rows.map((r) => r.number.text.length * 8 + VALUE_DX))
+const valueRoom = (rows: ReadonlyArray<Row>, dx: number) =>
+  Math.max(
+    VALUE_ROOM,
+    ...rows.map((r) => Math.ceil(r.number.text.length * 7.6) + dx),
+  )
 
 /** A measure in lines of up to `MEASURE_LINE` letters, two at most; the
  * rest is in the tap detail and the list a screen reader reads. */
@@ -177,6 +182,7 @@ export default function VisualChartPlot({
     [chart, country, profile],
   )
   const layout = LAYOUT[chart.kind]
+  const valueDx = chart.kind === 'dots' ? DOT_VALUE_DX : VALUE_DX
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
@@ -220,7 +226,7 @@ export default function VisualChartPlot({
           key: (r) => `valor-${r.key}`,
           text: (r) => r.number.text,
           anchor: 'start',
-          dx: VALUE_DX,
+          dx: valueDx,
           fontSize: 14,
           fontWeight: 700,
           fill: tone,
@@ -251,15 +257,18 @@ export default function VisualChartPlot({
       margin: {
         top: layout.label - layout.row / 2 + 16,
         left: 12,
-        right: valueRoom(rows),
+        right: valueRoom(rows, valueDx),
       },
       theme: THEME,
     })
-  }, [chart, rows, hatch, layout])
+  }, [chart, rows, hatch, layout, valueDx])
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
       const byKey = new Map(rows.map((r) => [r.key, r]))
+      // Brazil's ring sets it apart; on a chart of Brazil only, it would
+      // ring every point and set nothing apart.
+      const ringBrazil = !rows.every((r) => r.brazil)
       const seen = new Set<string>()
       const marks: OverlayMark[] = []
       for (const point of scene.points) {
@@ -274,7 +283,7 @@ export default function VisualChartPlot({
           y: point.y,
           valueText: found.number.text,
           highlight: found.highlight,
-          brazil: found.brazil,
+          brazil: ringBrazil && found.brazil,
           you: found.you,
         })
       }
