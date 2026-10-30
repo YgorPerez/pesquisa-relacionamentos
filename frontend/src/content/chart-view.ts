@@ -5,7 +5,8 @@
 // function as JSON.
 //
 // A bar comparison draws bars; a Study table whose numbers share one unit
-// draws one dot per Study. A table that mixes units stays a table.
+// draws one dot per Study. A table that mixes units stays a table. A time
+// line draws a line over the years.
 import type { Library, Visual } from '@tem-estudo/content'
 import type { Coverage } from '@tem-estudo/rules/applies-to-you'
 import { BRAZIL, countrySlug } from '@tem-estudo/rules/country'
@@ -50,13 +51,20 @@ export interface ChartPoint {
 }
 
 export interface ChartView {
-  readonly kind: 'bars' | 'dots'
+  readonly kind: 'bars' | 'dots' | 'line'
   /** The figure's id on the page. */
   readonly domId: string
   readonly title: string
   readonly note: string | null
-  /** The value axis, from 0 to its last tick. */
+  /** The value axis, from 0 to its last tick. A time line of mixed units
+   * has none: its points sit on the year axis alone. */
   readonly ticks: ReadonlyArray<{
+    readonly value: number
+    readonly text: string
+  }>
+  /** A time line's year axis: a tick per year, the years of its points
+   * written. */
+  readonly years?: ReadonlyArray<{
     readonly value: number
     readonly text: string
   }>
@@ -71,9 +79,9 @@ export interface ChartView {
   readonly sources: ReadonlyArray<SourceRef>
 }
 
-/** The Visuals the library draws, by `<topic>/<id>`. #471 moved one bar
- * comparison and one Study table; #472–#475 move the rest, and then the
- * rule becomes the kind alone. */
+/** The Visuals the library draws, by `<topic>/<id>`, besides every time
+ * line. #471 moved one bar comparison and one Study table; #472–#475 move
+ * the rest, and then the rule becomes the kind alone. */
 export const LIBRARY_VISUALS: ReadonlySet<string> = new Set([
   'onde-conhecer-pessoas/como-se-conheceram-1995-2017',
   'onde-conhecer-pessoas/fatia-online-por-estudo',
@@ -133,8 +141,21 @@ const ticksOf = (largest: number, max: number | undefined, unit: string) => {
   }))
 }
 
+/** A tick per year, one every five past 30 years; only the years of the
+ * points are written, so the axis fits a phone. */
+function yearTicks(years: ReadonlyArray<number>) {
+  const first = Math.min(...years)
+  const span = Math.max(...years) - first
+  return Array.from({ length: span + 1 }, (_, i) => first + i)
+    .filter((year) => span <= 30 || year % 5 === 0 || years.includes(year))
+    .map((value) => ({
+      value,
+      text: years.includes(value) ? String(value) : '',
+    }))
+}
+
 /** The chart of a Visual, or `null` when the library does not draw it (a
- * time line or a diagram, or a Study table of mixed units). */
+ * diagram, or a Study table of mixed units). */
 export function chartView(
   visual: Visual,
   library: Library,
@@ -210,6 +231,41 @@ export function chartView(
       points,
       definitions: definitions.map(({ id, legend }) => ({ id, legend })),
       ownLines: [],
+      sources: allSources(points.map((p) => p.number)),
+    }
+  }
+  if (visual.kind === 'timeline') {
+    const units = new Set(visual.events.map((e) => e.unit))
+    const [unit] = units
+    const definitions = visual.definitions ?? []
+    const points = visual.events.map((event, i): ChartPoint => ({
+      key: `${i}`,
+      label: event.label,
+      detail: null,
+      value: event.value,
+      number: numberView(event, event.unit, cite),
+      highlight: event.year === visual.highlight,
+      ...pointFacts(event, library, definitions),
+    }))
+    return {
+      kind: 'line',
+      ...common,
+      ticks:
+        units.size === 1 && unit !== undefined
+          ? ticksOf(
+              Math.max(...visual.events.map((e) => e.value)),
+              undefined,
+              unit,
+            )
+          : [],
+      years: yearTicks(visual.events.map((e) => e.year)),
+      points,
+      definitions: definitions.map(({ id, legend }) => ({ id, legend })),
+      ownLines: points.flatMap((p) =>
+        p.number.own
+          ? [VISUAL_COPY.ownLine(String(p.year), p.number.own, p.number.text)]
+          : [],
+      ),
       sources: allSources(points.map((p) => p.number)),
     }
   }

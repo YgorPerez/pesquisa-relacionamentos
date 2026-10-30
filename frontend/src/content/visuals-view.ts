@@ -21,7 +21,6 @@ import { DESIGN_NAME } from '#/ui/badges.copy'
 import { VisualBars } from '#/ui/visual-bars'
 import { VisualDiagram } from '#/ui/visual-diagram'
 import { VisualStudyTable } from '#/ui/visual-study-table'
-import { VisualTimeline } from '#/ui/visual-timeline'
 import { VISUAL_COPY } from '#/ui/visual.copy'
 
 /** A reference to a cited Fact sheet: its number on the page, the anchor of
@@ -68,19 +67,6 @@ export interface BarsView extends Common {
   }>
 }
 
-export interface TimelineView extends Common {
-  readonly kind: 'timeline'
-  readonly years: ReadonlyArray<number>
-  readonly events: ReadonlyArray<{
-    readonly year: number
-    /** Where the year falls, from 0 (the first) to 1 (the last). */
-    readonly at: number
-    readonly label: string
-    readonly number: NumberView
-    readonly highlight: boolean
-  }>
-}
-
 export interface StudyTableView extends Common {
   readonly kind: 'study-table'
   readonly rows: ReadonlyArray<{
@@ -105,7 +91,11 @@ export interface DiagramView extends Common {
   }>
 }
 
-export type VisualView = BarsView | TimelineView | StudyTableView | DiagramView
+export type VisualView = BarsView | StudyTableView | DiagramView
+
+/** The kinds still drawn here; a time line is the library's
+ * (`chart-view.ts`). */
+export type HandDrawn = Exclude<Visual, TimelineVisual>
 
 const decimalsOf = (value: number) => String(value).split('.')[1]?.length ?? 0
 
@@ -240,25 +230,6 @@ function barsView(visual: BarsVisual, cite: Cite): Own<BarsView> {
   }
 }
 
-function timelineView(visual: TimelineVisual, cite: Cite): Own<TimelineView> {
-  const years = visual.events.map((e) => e.year)
-  const first = Math.min(...years)
-  const span = Math.max(...years) - first || 1
-  const events = visual.events.map((event) => ({
-    year: event.year,
-    at: (event.year - first) / span,
-    label: event.label,
-    number: numberView(event, event.unit, cite),
-    highlight: event.year === visual.highlight,
-  }))
-  return {
-    kind: 'timeline',
-    years: Array.from({ length: span + 1 }, (_, i) => first + i),
-    events,
-    sources: allSources(events.map((e) => e.number)),
-  }
-}
-
 const numberFormat = new Intl.NumberFormat('pt-BR')
 
 /** The Fact sheet's place, year, sample and design, short. */
@@ -325,7 +296,7 @@ function diagramView(visual: DiagramVisual, cite: Cite): Own<DiagramView> {
 /** `scope` is the Topic's slug, which keeps the figure's id apart from the
  * page's other ids. */
 export function visualView(
-  visual: Visual,
+  visual: HandDrawn,
   library: Library,
   cite: Cite,
   scope: string,
@@ -339,8 +310,6 @@ export function visualView(
   switch (visual.kind) {
     case 'bars':
       return { ...common, ...barsView(visual, cite) }
-    case 'timeline':
-      return { ...common, ...timelineView(visual, cite) }
     case 'study-table':
       return { ...common, ...studyTableView(visual, library, cite) }
     case 'diagram':
@@ -357,16 +326,14 @@ function render(view: VisualView): RenderedVisual {
   const element =
     view.kind === 'bars'
       ? createElement(VisualBars, { visual: view })
-      : view.kind === 'timeline'
-        ? createElement(VisualTimeline, { visual: view })
-        : view.kind === 'study-table'
-          ? createElement(VisualStudyTable, { visual: view })
-          : createElement(VisualDiagram, { visual: view })
+      : view.kind === 'study-table'
+        ? createElement(VisualStudyTable, { visual: view })
+        : createElement(VisualDiagram, { visual: view })
   return renderToStaticMarkup(element) as RenderedVisual
 }
 
 /** Each Visual of the Question drawn, by id, for `html()` to put in place of
- * its `{{visual:<id>}}` line. */
+ * its `{{visual:<id>}}` line. A time line is the library's, never here. */
 export function renderVisuals(
   visuals: ReadonlyArray<Visual>,
   library: Library,
@@ -374,9 +341,10 @@ export function renderVisuals(
   scope: string,
 ): ReadonlyMap<string, RenderedVisual> {
   return new Map(
-    visuals.map((visual) => [
-      visual.id,
-      render(visualView(visual, library, cite, scope)),
-    ]),
+    visuals.flatMap((visual) =>
+      visual.kind === 'timeline'
+        ? []
+        : [[visual.id, render(visualView(visual, library, cite, scope))]],
+    ),
   )
 }

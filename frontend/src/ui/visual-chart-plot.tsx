@@ -11,11 +11,12 @@ import {
   defineChart,
   dot,
   hexagon,
+  lineY,
   text,
   type ChartFocusStrategy,
   type ChartMark,
 } from '@tanstack/charts'
-import { focusNearestY } from '@tanstack/charts/focus'
+import { focusNearestX, focusNearestY } from '@tanstack/charts/focus'
 import { scaleBand } from '@tanstack/charts/scales/band'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { renderChartSvg } from '@tanstack/charts/svg'
@@ -155,24 +156,214 @@ function pointMarks(chart: ChartView, rows: Row[], hatch: string) {
   return marks
 }
 
-export default function VisualChartPlot({
-  chart,
-  country,
-  profile,
-  onSelect,
-}: {
+/** Our layer's marks: where each bar or dot of a row landed in the scene. */
+function overlayMarks(
+  points: ReadonlyArray<{
+    readonly markId: string
+    readonly datum: unknown
+    readonly x: number
+    readonly y: number
+  }>,
+  rows: Row[],
+  valueAbove?: number,
+): OverlayMark[] {
+  const byKey = new Map(rows.map((r) => [r.key, r]))
+  const seen = new Set<string>()
+  const marks: OverlayMark[] = []
+  for (const point of points) {
+    const datum = point.datum as Row | undefined
+    const found = datum && byKey.get(datum.key)
+    if (!point.markId.startsWith('marca') || !found || seen.has(found.key))
+      continue
+    seen.add(found.key)
+    marks.push({
+      key: found.key,
+      x: point.x,
+      y: point.y,
+      valueText: found.number.text,
+      highlight: found.highlight,
+      brazil: found.brazil,
+      you: found.you,
+      ...(valueAbove === undefined ? {} : { valueAbove }),
+    })
+  }
+  return marks
+}
+
+interface PlotProps {
   chart: ChartView
   /** The `?pais=` country, already checked against the Guide's. */
   country: string | null
   profile: Profile | null
   onSelect: (point: ChartPoint | null) => void
-}) {
+}
+
+/** A time line: one dot per number at its year, joined by a line when the
+ * numbers share a unit, the value written above each dot and a tick per
+ * year on the axis, the years with a number written. */
+const LINE = {
+  height: 220,
+  /** Without a value scale, the dots sit on the year axis. */
+  flatHeight: 110,
+  /** The value's baseline above its dot. */
+  valueAbove: 16,
+  /** Room above the values for the "você" tag. */
+  top: 48,
+} as const
+
+const LINE_FOCUS: ChartFocusStrategy<Row, number, number> = {
+  resolve: (points, context) =>
+    focusNearestX.resolve(onlyMarks(points), context),
+  group: (points, context) => focusNearestX.group(onlyMarks(points), context),
+  navigation: (points) => focusNearestX.navigation(onlyMarks(points)),
+}
+
+function LinePlot({ chart, country, profile, onSelect }: PlotProps) {
+  const rows = useMemo(
+    () => rowsOf(chart, country, profile),
+    [chart, country, profile],
+  )
+  const scaled = chart.ticks.length > 0
+  const definition = useMemo(() => {
+    const top = chart.ticks[chart.ticks.length - 1]?.value ?? 1
+    const years = chart.years ?? []
+    const first = years[0]?.value ?? 0
+    const last = years[years.length - 1]?.value ?? first
+    const y = (r: Row) => (scaled ? r.value : 0)
+    const tone = (r: Row) => (r.dimmed ? 'var(--color-tinta-2)' : INK)
+    const words = rows.map((r) => ({ ...r }))
+    const anyDimmed = rows.some((r) => r.dimmed)
+    const shapes = chart.definitions.length > 0 ? chart.definitions.length : 1
+    const marks: ChartMark<Row, number, number>[] = []
+    if (scaled && rows.length > 1)
+      marks.push(
+        lineY(rows, {
+          id: 'linha',
+          x: 'year',
+          y,
+          stroke: INK,
+          strokeWidth: 2,
+          strokeOpacity: anyDimmed ? DIMMED : 1,
+        }),
+      )
+    for (const dimmed of [false, true])
+      for (let shape = 0; shape < shapes; shape++) {
+        const these = rows.filter(
+          (r) => r.dimmed === dimmed && (r.definition ?? 0) === shape,
+        )
+        if (these.length === 0) continue
+        const opacity = dimmed ? DIMMED : 1
+        const hollow = shape >= 2
+        const options = {
+          id: `marca-${dimmed ? 'apagada' : 'acesa'}-${shape}`,
+          x: 'year',
+          y,
+          key: 'key',
+          fillOpacity: opacity,
+          strokeOpacity: opacity,
+          stroke: INK,
+          strokeWidth: 2,
+        } as const
+        marks.push(
+          shape % 2 === 0
+            ? dot(these, { ...options, r: 6, fill: hollow ? PAPER : INK })
+            : hexagon(these, { ...options, r: 7, fill: hollow ? PAPER : INK }),
+        )
+      }
+    marks.push(
+      text(words, {
+        id: 'valor',
+        x: 'year',
+        y,
+        key: (r) => `valor-${r.key}`,
+        text: (r) => r.number.text,
+        anchor: 'middle',
+        dy: -LINE.valueAbove,
+        fontSize: 14,
+        fontWeight: 700,
+        fill: tone,
+      }),
+    )
+    return defineChart({
+      marks,
+      scales: {
+        x: {
+          // One year alone still needs a span to sit in.
+          scale: scaleLinear().domain(
+            first === last ? [first - 1, last + 1] : [first, last],
+          ),
+          axis: {
+            ticks: {
+              values: years.map((t) => t.value),
+              format: (value: number) =>
+                years.find((t) => t.value === value)?.text ?? '',
+            },
+            tickLabels: { thin: false },
+          },
+        },
+        y: {
+          scale: scaleLinear().domain([0, top]),
+          grid: scaled ? { strokeOpacity: 0.25 } : false,
+          axis: scaled
+            ? {
+                ticks: {
+                  values: chart.ticks.map((t) => t.value),
+                  format: (value: number) =>
+                    chart.ticks.find((t) => t.value === value)?.text ?? '',
+                },
+              }
+            : false,
+        },
+      },
+      focus: LINE_FOCUS,
+      margin: { top: LINE.top },
+      theme: THEME,
+    })
+  }, [chart, rows, scaled])
+
+  const renderSvg = useCallback<typeof renderChartSvg>(
+    (scene, options) =>
+      withOverlay(
+        renderChartSvg(scene, options),
+        overlayLayers(overlayMarks(scene.points, rows, LINE.valueAbove), {
+          labelOffset: 0,
+          right: scene.chart.x + scene.chart.width,
+        }),
+      ),
+    [rows],
+  )
+
+  return (
+    <Chart
+      definition={definition}
+      renderSvg={renderSvg}
+      initialWidth={INITIAL_WIDTH}
+      height={scaled ? LINE.height : LINE.flatHeight}
+      ariaLabel={chart.title}
+      idPrefix={chart.domId}
+      className="font-body text-tinta"
+      onSelect={(point) => onSelect(point?.datum ?? null)}
+    />
+  )
+}
+
+/** A time line draws a line over the years; bars and dots, one row per
+ * point. */
+export default function VisualChartPlot(props: PlotProps) {
+  return props.chart.kind === 'line' ? (
+    <LinePlot {...props} />
+  ) : (
+    <RowPlot {...props} />
+  )
+}
+
+function RowPlot({ chart, country, profile, onSelect }: PlotProps) {
   const hatch = `${chart.domId}-hachura`
   const rows = useMemo(
     () => rowsOf(chart, country, profile),
     [chart, country, profile],
   )
-  const layout = LAYOUT[chart.kind]
+  const layout = LAYOUT[chart.kind === 'bars' ? 'bars' : 'dots']
   const definition = useMemo(() => {
     const ticks = chart.ticks
     const top = ticks[ticks.length - 1]?.value ?? 1
@@ -255,25 +446,7 @@ export default function VisualChartPlot({
 
   const renderSvg = useCallback<typeof renderChartSvg>(
     (scene, options) => {
-      const byKey = new Map(rows.map((r) => [r.key, r]))
-      const seen = new Set<string>()
-      const marks: OverlayMark[] = []
-      for (const point of scene.points) {
-        const datum = point.datum as Row | undefined
-        const found = datum && byKey.get(datum.key)
-        if (!point.markId.startsWith('marca') || !found || seen.has(found.key))
-          continue
-        seen.add(found.key)
-        marks.push({
-          key: found.key,
-          x: point.x,
-          y: point.y,
-          valueText: found.number.text,
-          highlight: found.highlight,
-          brazil: found.brazil,
-          you: found.you,
-        })
-      }
+      const marks = overlayMarks(scene.points, rows)
       const defs = rows.some((r) => r.own)
         ? `<defs><pattern id="${hatch}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${INK}" stroke-width="2.2"/></pattern></defs>`
         : ''

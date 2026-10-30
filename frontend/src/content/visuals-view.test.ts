@@ -28,9 +28,19 @@ function chaptersHtml() {
     },
     topic.slug,
   )
+  // A time line is the chart library's (`chart-view.ts`): `guide-view.ts`
+  // takes its line out of the prose before this HTML.
+  const charts = topic.visuals.filter((v) => v.kind === 'timeline')
+  const withoutCharts = (markdown: string) =>
+    charts.reduce(
+      (text, chart) => text.replace(`{{visual:${chart.id}}}`, ''),
+      markdown,
+    )
   return topic.chapters
     .flatMap((c) => c.parts)
-    .map((p) => (p.kind === 'text' ? html(p.markdown, visuals) : ''))
+    .map((p) =>
+      p.kind === 'text' ? html(withoutCharts(p.markdown), visuals) : '',
+    )
     .join('')
 }
 
@@ -40,7 +50,6 @@ it('draws each placed Visual on the server, as SVG or a table, where its line wa
   const figures = [...page.matchAll(/<figure id="([^"]+)"/g)].map((m) => m[1])
   expect(figures).toEqual([
     'visual-onde-conhecer-pessoas-app-por-idade',
-    'visual-onde-conhecer-pessoas-dois-retratos',
     'visual-onde-conhecer-pessoas-estudos-lado-a-lado',
     'visual-onde-conhecer-pessoas-app-e-satisfacao',
   ])

@@ -510,7 +510,11 @@ export function guideView(topic: Topic, library: Library): GuideView {
   }
   const charts = new Map(
     topic.visuals.flatMap((visual) => {
-      if (!LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)) return []
+      if (
+        visual.kind !== 'timeline' &&
+        !LIBRARY_VISUALS.has(`${topic.slug}/${visual.id}`)
+      )
+        return []
       const chart = chartView(visual, library, cite, topic.slug)
       return chart ? [[visual.id, chart] as const] : []
     }),

@@ -50,6 +50,29 @@ const Island = memo(function Island({
   )
 })
 
+/** What a time line's numbers measure, which its plot does not write: one
+ * line when every point measures the same thing, else each year's. The
+ * list under it says it again, with the values, to a screen reader. */
+function LineLabels({ points }: { points: ReadonlyArray<ChartPoint> }) {
+  const labels = new Set(points.map((p) => p.label))
+  const [only] = labels
+  return (
+    <div aria-hidden="true" className="mt-xs text-nota leading-nota">
+      {labels.size === 1 ? (
+        <p className="m-0">{only}</p>
+      ) : (
+        <ol className="m-0 list-none p-0">
+          {points.map((p) => (
+            <li key={p.key}>
+              <strong>{p.year}</strong> · {p.label}
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  )
+}
+
 export function VisualChart({
   chart,
   country,
@@ -118,9 +141,11 @@ export function VisualChart({
       </div>
       {/* The SVG is an image to a screen reader: the exact values are
           here. */}
+      {chart.kind === 'line' && <LineLabels points={chart.points} />}
       <ul className="sr-only">
         {chart.points.map((p) => (
           <li key={p.key}>
+            {chart.kind === 'line' && `${p.year} · `}
             {p.label}
             {p.detail && `, ${p.detail}`}: {p.number.text}
           </li>

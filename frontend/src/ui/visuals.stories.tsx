@@ -1,4 +1,4 @@
-// The four Visuals (#182), over the fixture Question's data
+// The Visuals drawn by hand (#182), over the fixture Question's data
 // (`visual.example.ts`), as the server draws them in the Question's body.
 // `prosa` puts them in the body's Markdown, as on the page.
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -6,13 +6,11 @@ import { VisualBars } from './visual-bars'
 import { VisualDiagram } from './visual-diagram'
 import { VisualFrame } from './visual-frame'
 import { VisualStudyTable } from './visual-study-table'
-import { VisualTimeline } from './visual-timeline'
 import {
   BARS,
   DIAGRAM,
   DIAGRAM_EVERY_STROKE,
   STUDY_TABLE,
-  TIMELINE,
 } from './visual.example'
 
 const meta = {
@@ -34,10 +32,6 @@ type Story = StoryObj<typeof meta>
  * hatched bar for our own calculation. */
 export const Bars: Story = {
   render: () => <VisualBars visual={BARS} />,
-}
-
-export const Timeline: Story = {
-  render: () => <VisualTimeline visual={TIMELINE} />,
 }
 
 export const StudyTable: Story = {
