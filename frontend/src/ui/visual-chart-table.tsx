@@ -9,11 +9,11 @@
 // the server's table is the whole drawing, and the tap is a plain button.
 import { appliesToYou } from '@tem-estudo/rules/applies-to-you'
 import type { Profile } from '@tem-estudo/rules/profile'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import type { ChartTable } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
 import {
-  closeCardOf,
+  useCloseCardOn,
   enterCard,
   hoverCard,
   pinCard,
@@ -177,7 +177,7 @@ export function VisualChartTable({
     country !== null &&
     table.rows.some((r) => r.point.country?.slug === country)
   const active = card.target?.point.key ?? null
-  useEffect(() => () => closeCardOf(table.domId), [table.domId, country])
+  useCloseCardOn(table.domId, country)
   return (
     <VisualFrame domId={table.domId} title={table.title} note={table.note}>
       <table

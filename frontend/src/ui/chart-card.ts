@@ -3,7 +3,7 @@
 // card holds until it is closed. It lives outside any one chart because one
 // card is open at a time across the page, and a chart re-renders only when
 // the card is its own.
-import { useSyncExternalStore } from 'react'
+import { useEffect, useRef, useSyncExternalStore } from 'react'
 import type { ChartPoint } from '#/content/chart-view'
 
 /** A mark in the drawing's pixels: where it ends, and the point it draws. */
@@ -31,6 +31,8 @@ export interface CardState {
 const NONE: CardState = { target: null, pinned: false }
 let state = NONE
 let closed: CardTarget | null = null
+/** What the pointer or the focus is on, pinned card or not. */
+let under: CardTarget | null = null
 const listeners = new Set<() => void>()
 
 function set(next: CardState) {
@@ -50,6 +52,8 @@ export const currentCard = () => state
 export function hoverCard(target: CardTarget): void
 export function hoverCard(target: null, from: string): void
 export function hoverCard(target: CardTarget | null, from?: string) {
+  if (target) under = target
+  else if (under?.chart === from) under = null
   if (state.pinned) return
   if (target) {
     if (closed && isSame(closed, target)) return
@@ -61,9 +65,10 @@ export function hoverCard(target: CardTarget | null, from?: string) {
   }
 }
 
-/** Takes the card away, remembering the point it was on. */
+/** Takes the card away, remembering its point while the pointer or the focus
+ * is still on it. */
 function dismiss() {
-  closed = state.target
+  closed = under && isSame(state.target, under) ? under : null
   set(NONE)
 }
 
@@ -83,6 +88,18 @@ export function closeCard() {
  * what it lights changed. */
 export function closeCardOf(chart: string) {
   if (state.target?.chart === chart) dismiss()
+}
+
+/** Closes chart `chart`'s card when what it lights changes (the country, and
+ * the legend in #501) and when the chart leaves the page. */
+export function useCloseCardOn(chart: string, lit: string | null) {
+  const last = useRef(lit)
+  useEffect(() => {
+    if (last.current === lit) return
+    last.current = lit
+    closeCardOf(chart)
+  }, [chart, lit])
+  useEffect(() => () => closeCardOf(chart), [chart])
 }
 
 const subscribe = (listener: () => void) => {

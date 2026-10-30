@@ -184,7 +184,7 @@ export const HoverAndPin: Story = {
     ).not.toBeNull()
 
     const box = chart.getBoundingClientRect()
-    fireEvent.click(chart, {
+    await fireEvent.click(chart, {
       clientX: box.left + box.width * 0.2,
       clientY: box.top + box.height * y,
     })
@@ -196,7 +196,7 @@ export const HoverAndPin: Story = {
     await expect(pinned.getByText('Rosenfeld (2019)')).toBeInTheDocument()
 
     // The mouse leaves for the click outside.
-    fireEvent.mouseLeave(chart.parentElement!)
+    await fireEvent.mouseLeave(chart.parentElement!)
     await userEvent.click(document.body)
     await waitFor(() => expect(cardElement()).toBeNull())
   },
@@ -213,10 +213,10 @@ export const KeyboardCard: Story = {
     )
     chart.focus()
     await userEvent.keyboard('{ArrowDown}')
-    const card = await waitFor(() => {
-      const shown = cardElement()
-      expect(shown).toHaveTextContent('Rosenfeld (2019)')
-      return shown!
+    const card = await waitFor(async () => {
+      const shown = await shownCard()
+      await expect(shown).toHaveTextContent('Rosenfeld (2019)')
+      return shown
     })
     await expect(within(card).queryByRole('button')).toBeNull()
     await userEvent.keyboard('{Enter}')

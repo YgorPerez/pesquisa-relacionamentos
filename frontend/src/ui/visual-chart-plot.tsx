@@ -171,7 +171,7 @@ function layoutOf(chart: ChartView): Layout {
  * from the pointer, which framed the plot in black after a tap and never
  * without JS. Only the keyboard's focus keeps the ring (`styles.css`). */
 const HOST_CLASS =
-  'font-body text-tinta [-webkit-tap-highlight-color:transparent] [&_svg:focus:not(:focus-visible)]:outline-none'
+  'font-body text-tinta [&_svg:focus:not(:focus-visible)]:outline-none'
 
 /** What the server lays out before the browser measures the column. */
 const INITIAL_WIDTH = 350

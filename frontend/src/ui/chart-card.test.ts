@@ -11,7 +11,11 @@ import {
   type CardTarget,
 } from './chart-card'
 
-afterEach(closeCard)
+afterEach(() => {
+  closeCard()
+  hoverCard(null, 'a')
+  hoverCard(null, 'b')
+})
 
 const [first, second] = DOTS.points
 const target = (chart: string, point = first!): CardTarget => ({
@@ -53,6 +57,7 @@ it('replaces a pinned card with the next pin, and unpins on the same mark', () =
 })
 
 it('stays closed on the same point until the pointer or the focus leaves it', () => {
+  hoverCard(target('a'))
   pinCard(target('a'))
   closeCard()
   hoverCard(target('a'))
@@ -63,6 +68,15 @@ it('stays closed on the same point until the pointer or the focus leaves it', ()
   closeCard()
   hoverCard(target('a', second))
   expect(currentCard().target?.point.key).toBe(second!.key)
+})
+
+it('shows the same point again when the pointer left it while it was pinned', () => {
+  hoverCard(target('a'))
+  pinCard(target('a'))
+  hoverCard(null, 'a')
+  closeCard()
+  hoverCard(target('a'))
+  expect(currentCard().target?.chart).toBe('a')
 })
 
 it("closes a chart's card only from that chart", () => {

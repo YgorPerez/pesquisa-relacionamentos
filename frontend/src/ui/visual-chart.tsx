@@ -24,7 +24,7 @@ import type { ChartPoint, ChartView } from '#/content/chart-view'
 import { cn } from '@/platform/cn'
 import {
   closeCard,
-  closeCardOf,
+  useCloseCardOn,
   enterCard,
   hoverCard,
   pinCard,
@@ -181,7 +181,7 @@ export function VisualChart({
   }
 
   // What the card points at may go dark or leave with the page.
-  useEffect(() => () => closeCardOf(chartId), [chartId, deferredCountry])
+  useCloseCardOn(chartId, deferredCountry)
   useEffect(() => {
     const element = host.current
     if (!element || typeof IntersectionObserver === 'undefined') {
