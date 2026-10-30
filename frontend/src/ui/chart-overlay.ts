@@ -60,12 +60,17 @@ function ring(x: number, y: number, narrow = false) {
 }
 
 /** The "você" tag, yellow like every "vale para você", its right edge at
- * `right`. */
+ * `right`. It sits a little above the line at `y` and is shorter than a
+ * row's lines are apart, so it never reaches the words of the line below
+ * (a row's value, or a Study's measure). */
 const TAG_WIDTH = CHART_COPY.you.length * TAG.letter + 10
+const TAG_HEIGHT = 16
+const TAG_LIFT = 2
 
 function you(right: number, y: number) {
   const text = CHART_COPY.you
-  return `<g data-ts-key="you"><rect x="${right - TAG_WIDTH}" y="${y - 9}" width="${TAG_WIDTH}" height="18" rx="4" fill="${YOU}"/><text x="${right - 5}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="${TAG.fontSize}" font-weight="${TAG.fontWeight}" fill="${INK}">${escape(text)}</text></g>`
+  const middle = y - TAG_LIFT
+  return `<g data-ts-key="you"><rect x="${right - TAG_WIDTH}" y="${middle - TAG_HEIGHT / 2}" width="${TAG_WIDTH}" height="${TAG_HEIGHT}" rx="4" fill="${YOU}"/><text x="${right - 5}" y="${middle}" text-anchor="end" dominant-baseline="central" font-size="${TAG.fontSize}" font-weight="${TAG.fontWeight}" fill="${INK}">${escape(text)}</text></g>`
 }
 
 /** Where a row's tag goes: at the right edge of the drawing, on the label's

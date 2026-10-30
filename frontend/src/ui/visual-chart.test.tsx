@@ -348,7 +348,7 @@ it('keeps the "você" tag clear of a long Study title on a phone\'s width', () =
     // The label on the tag's line: a 13px bold title runs about 6.5px a
     // letter.
     const label = labels.find(
-      (t) => Math.abs(Number(t.getAttribute('y')) - (tag.top + 9)) < 2,
+      (t) => Math.abs(Number(t.getAttribute('y')) - (tag.top + 10)) < 3,
     )
     if (label)
       expect(tag.left).toBeGreaterThan(
