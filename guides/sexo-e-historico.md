@@ -124,11 +124,11 @@ findings:
     text: Num questionário online com mais de 24 mil adultos americanos, 46% das mulheres e 23% dos homens se arrependeram da última transa casual. Com a última vez que recusaram sexo casual foi o contrário, 43% dos homens e 16% das mulheres.
     fact_sheets: [galperin-2013-arrependimento-sexual]
   - id: arrependimento-mulheres-hetero
-    text: Entre as mulheres heterossexuais desse questionário, 27% ficaram contentes com a última transa casual, 26% neutras, 27% um pouco arrependidas e 20% muito arrependidas.
+    text: Entre as mulheres heterossexuais desse questionário, 27% ficaram contentes com a última transa casual, 26% neutras, 27% em parte arrependidas e 20% muito arrependidas.
     fact_sheets: [galperin-2013-arrependimento-sexual]
     applies_to: { genders: [woman], seeks: [men] }
   - id: arrependimento-homens-hetero
-    text: Entre os homens heterossexuais, 52% ficaram contentes, 25% neutros, 15% um pouco arrependidos e 7% muito arrependidos.
+    text: Entre os homens heterossexuais, 52% ficaram contentes, 25% neutros, 15% em parte arrependidos e 7% muito arrependidos.
     fact_sheets: [galperin-2013-arrependimento-sexual]
     applies_to: { genders: [man], seeks: [women] }
   - id: lesbicas-arrependem-menos
@@ -136,10 +136,10 @@ findings:
     fact_sheets: [galperin-2013-arrependimento-sexual]
     applies_to: { genders: [woman], seeks: [women] }
   - id: arrependimento-noruega-eua
-    text: Com universitários da Noruega e dos EUA, se arrependeram um pouco ou muito da última transa casual 41% e 50% das mulheres, contra 26% e 35% dos homens. O nível e a diferença entre os sexos foram os mesmos nos dois países.
+    text: Com universitários da Noruega e dos EUA, se arrependeram em parte ou muito da última transa casual 41% e 50% das mulheres, contra 26% e 35% dos homens. O nível e a diferença entre os sexos foram os mesmos nos dois países.
     fact_sheets: [kennair-2018-arrependimento-sexo-casual]
   - id: nojo-e-prazer
-    text: Nesses universitários, o nojo foi o que mais previu arrependimento (razão de chances de 2,34), seguido da preocupação depois da transa (1,40). Ter gostado do sexo e achado o parceiro competente previu menos arrependimento (0,65).
+    text: Nesses universitários, o nojo foi o que mais previu arrependimento (razão de chances de 2,34), seguido da preocupação depois da transa (1,40). Ter sentido prazer e achado o parceiro competente previu menos arrependimento (0,65).
     fact_sheets: [kennair-2018-arrependimento-sexo-casual]
   - id: pressao-sozinha
     text: Ter se sentido pressionado previu mais arrependimento quando olhado sozinho (razão de chances de 2,15), mas não acrescentou nada quando o nojo, a preocupação e o prazer entraram na conta.
@@ -159,7 +159,7 @@ findings:
     fact_sheets: [vrangalova-2015-sexo-casual-bem-estar]
     applies_to: { genders: [man] }
   - id: calouras-depressao
-    text: Em calouras acompanhadas mês a mês durante um ano, os meses com ficada foram também meses com mais sintomas de depressão. Mas ficar não previu depressão nos meses seguintes, nem a depressão previu ficadas.
+    text: Em calouras acompanhadas durante um ano, quem teve ficada com sexo num período de quatro meses teve mais chance de depressão em nível clínico nesse período. Mas ficar não previu depressão no período seguinte, nem a depressão previu ficadas.
     fact_sheets: [fielder-2014-ficadas-saude-calouras]
     applies_to: { genders: [woman], ages: { min: 18, max: 21 } }
   - id: um-momento-so
@@ -387,7 +387,7 @@ findings:
     fact_sheets: [ministerio-saude-2022-pcdt-ist]
     applies_to: { genders: [man], seeks: [men] }
   - id: teste-semestral-outros-grupos
-    text: O teste de HIV e sífilis a cada seis meses vale também para profissionais do sexo, travestis e transexuais, quem faz uso abusivo de álcool e outras drogas, e quem faz sexo anal receptivo (passivo) sem camisinha. Quem se encaixa em mais de um grupo segue o que for mais representativo do seu caso.
+    text: O teste de HIV e sífilis a cada seis meses vale também para profissionais do sexo, travestis e transexuais, quem faz uso abusivo de álcool e outras drogas, e quem faz sexo anal receptivo (passivo) sem camisinha. Quem tem 30 anos ou mais e pertence a outro subgrupo segue o que for mais representativo do seu caso.
     fact_sheets: [ministerio-saude-2022-pcdt-ist]
   - id: sifilis-no-brasil
     text: Em 2024, o Brasil notificou 256.830 casos de sífilis adquirida, 120,8 por 100 mil habitantes. Em 2021, eram 82,8 por 100 mil.
@@ -405,7 +405,7 @@ findings:
 myths:
   - id: mulher-sempre-se-arrepende
     claim: Mulher sempre se arrepende de sexo casual.
-    why_not: 'Não: elas se arrependem mais que os homens, mas cerca de metade não se arrepende, como mostra o gráfico. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter gostado do sexo veio com menos arrependimento.'
+    why_not: 'Não: elas se arrependem mais que os homens, mas cerca de metade não se arrepende, como mostra o gráfico. Lésbicas e bissexuais se arrependem menos, e ter tomado a iniciativa e ter sentido prazer veio com menos arrependimento.'
     fact_sheets:
       [
         galperin-2013-arrependimento-sexual,
@@ -413,7 +413,7 @@ myths:
       ]
   - id: sexo-casual-causa-depressao
     claim: Sexo casual causa depressão.
-    why_not: 'Não na média: os estudos que seguem as pessoas no tempo não acharam isso. Em um ano de universidade, ficar não mudou a depressão de quem ficou, e em calouras acompanhadas mês a mês, ficar não previu depressão nos meses seguintes. A associação que aparece nos estudos de um momento só pode vir de antes, porque em cinco estudos a depressão ou a autoestima baixa vieram antes do sexo casual. O que piorou o bem-estar foi o motivo, como pressão ou bebida.'
+    why_not: 'Não na média: os estudos que seguem as pessoas no tempo não acharam isso. Em um ano de universidade, ficar não mudou a depressão de quem ficou, e em calouras acompanhadas durante um ano, ficar não previu depressão no período seguinte de quatro meses. A associação que aparece nos estudos de um momento só pode vir de antes, porque em cinco estudos a depressão ou a autoestima baixa vieram antes do sexo casual. O que piorou o bem-estar foi o motivo, como pressão ou bebida.'
     fact_sheets:
       [
         vrangalova-2015-sexo-casual-bem-estar,
@@ -469,7 +469,7 @@ visuals:
   - id: sentimento-ultima-transa-casual
     kind: stacked-bars
     title: Como heterossexuais americanos se sentem sobre a última transa casual
-    segments: [Contentes, Neutros, Um pouco arrependidos, Muito arrependidos]
+    segments: [Contentes, Neutros, Em parte arrependidos, Muito arrependidos]
     bars:
       - label: Mulheres heterossexuais
         values: [27, 26, 27, 20]
@@ -746,7 +746,7 @@ Quem respondeu clicou num anúncio do site msnbc.com, em vez de ser sorteado com
 
 {{myth:mulher-sempre-se-arrepende}}
 
-Com a saúde mental, a resposta depende de como o estudo mede. Num estudo com 3.907 universitários solteiros, quem fez sexo casual no último mês tinha menos bem-estar e mais ansiedade e depressão [@bersamin-2014-sexo-casual-saude-mental]. Só que ele mediu tudo de uma vez e não sabe o que veio antes. Os estudos que seguem as mesmas pessoas contam outra história. Num ano de universidade, quem ficou com alguém terminou o ano com a mesma depressão, a mesma autoestima e os mesmos sintomas físicos de quem não ficou, levando em conta como cada um estava no começo [@vrangalova-2015-sexo-casual-bem-estar]. {{you:calouras-depressao}} Em calouras acompanhadas mês a mês, os meses com ficada também tiveram mais sintomas de depressão, mas ficar não previu depressão nos meses seguintes [@fielder-2014-ficadas-saude-calouras].
+Com a saúde mental, a resposta depende de como o estudo mede. Num estudo com 3.907 universitários solteiros, quem fez sexo casual no último mês tinha menos bem-estar e mais ansiedade e depressão [@bersamin-2014-sexo-casual-saude-mental]. Só que ele mediu tudo de uma vez e não sabe o que veio antes. Os estudos que seguem as mesmas pessoas contam outra história. Num ano de universidade, quem ficou com alguém terminou o ano com a mesma depressão, a mesma autoestima e os mesmos sintomas físicos de quem não ficou, levando em conta como cada um estava no começo [@vrangalova-2015-sexo-casual-bem-estar]. {{you:calouras-depressao}} Em calouras acompanhadas durante um ano, quem teve ficada com sexo num período de quatro meses teve mais chance de depressão em nível clínico nesse período, mas ficar não previu depressão no período seguinte [@fielder-2014-ficadas-saude-calouras].
 
 A revisão de 71 estudos fecha a conta: piora de curto prazo, dentro de um ano, para algumas pessoas, e pouca evidência de dano duradouro. Em cinco estudos, a depressão ou a autoestima baixa vieram antes do sexo casual [@wesche-2021-desfechos-emocionais-sexo-casual]. Parte do que os estudos de um momento só acham é isso: quem já estava pior entra mais em sexo casual.
 
@@ -762,7 +762,7 @@ O gosto de cada um também conta. Na mesma universidade, quem gosta de sexo sem 
 
 ## Prazer, bebida e expectativa pesam no que fica depois
 
-Se o motivo pesa, o que acontece na transa pesa também. Nos universitários da Noruega e dos EUA, o nojo foi o que mais previu arrependimento, com razão de chances de 2,34 (acima de 1, mais chance; abaixo, menos). Depois vieram a preocupação depois da transa (1,40) e, do lado bom, ter gostado do sexo e achado o parceiro competente (0,65) [@kennair-2018-arrependimento-sexo-casual]. A pressão previu arrependimento quando olhada sozinha (2,15), mas não acrescentou nada quando o nojo, a preocupação e o prazer entraram na conta. {{you:iniciativa-mulheres}} Ter tomado a iniciativa veio com menos arrependimento nas mulheres; nos homens, quase não fez diferença.
+Se o motivo pesa, o que acontece na transa pesa também. Nos universitários da Noruega e dos EUA, o nojo foi o que mais previu arrependimento, com razão de chances de 2,34 (acima de 1, mais chance; abaixo, menos). Depois vieram a preocupação depois da transa (1,40) e, do lado bom, ter sentido prazer e achado o parceiro competente (0,65) [@kennair-2018-arrependimento-sexo-casual]. A pressão previu arrependimento quando olhada sozinha (2,15), mas não acrescentou nada quando o nojo, a preocupação e o prazer entraram na conta. {{you:iniciativa-mulheres}} Ter tomado a iniciativa veio com menos arrependimento nas mulheres; nos homens, quase não fez diferença.
 
 O prazer, por sua vez, é desigual. As mulheres relataram bem menos prazer na última transa casual que os homens, uma diferença de um desvio-padrão, a mesma nos dois países [@kennair-2018-arrependimento-sexo-casual]. {{you:orgasmo-universitarias}} Universitárias heterossexuais americanas chegaram ao orgasmo muito menos na primeira ficada com um parceiro do que no sexo num namoro. Disseram ter gostado muito de 50% das ficadas e de 81% do sexo no namoro [@armstrong-2012-orgasmo-ficadas-namoro].
 
@@ -770,7 +770,7 @@ O prazer, por sua vez, é desigual. As mulheres relataram bem menos prazer na ú
 
 Esses dois lados não são a mesma coisa. As ficadas incluem as que ficaram em beijo e toque não genital, 34% das últimas ficadas, e o sexo no namoro conta só o que foi além do beijo. Contando só os eventos com transa, 42% das últimas ficadas e 74% do último sexo no namoro tiveram orgasmo [@armstrong-2012-orgasmo-ficadas-namoro].
 
-A taxa sobe quando a ficada se repete com o mesmo parceiro. Receber sexo oral subiu a probabilidade prevista de orgasmo na ficada de 11% para 20% [@armstrong-2012-orgasmo-ficadas-namoro]. O que se faz na cama, levado para a ficada, explica menos da metade da diferença entre ficada e namoro. E o prazer conta para o arrependimento: ter gostado do sexo veio com menos arrependimento, com efeito mais forte nas mulheres [@kennair-2018-arrependimento-sexo-casual]. Parte do arrependimento maior delas pode vir de um sexo pior para elas; é inferência nossa, porque o estudo não testou isso.
+A taxa sobe quando a ficada se repete com o mesmo parceiro. Receber sexo oral subiu a probabilidade prevista de orgasmo na ficada de 11% para 20% [@armstrong-2012-orgasmo-ficadas-namoro]. O que se faz na cama, levado para a ficada, explica menos da metade da diferença entre ficada e namoro. E o prazer conta para o arrependimento: sentir mais prazer veio com menos arrependimento, com efeito mais forte nas mulheres [@kennair-2018-arrependimento-sexo-casual]. Parte do arrependimento maior delas pode vir de um sexo pior para elas; é inferência nossa, porque o estudo não testou isso.
 
 A bebida aparece em vários dos piores desfechos. Beber logo antes veio com mais arrependimento e mais sentimento ruim, em homens e mulheres [@wesche-2021-desfechos-emocionais-sexo-casual], e transar bêbado está entre os motivos que pioraram o bem-estar no ano de universidade [@vrangalova-2015-sexo-casual-bem-estar]. {{you:calouras-violencia}} Entre as calouras acompanhadas, 24% sofreram ao menos um episódio de violência sexual no primeiro ano, e ficar andou junto com a violência no mesmo período [@fielder-2014-ficadas-saude-calouras]. Isso não quer dizer que a culpa seja de quem ficou. {{brazil}} Não achamos dado brasileiro sobre prazer, bebida ou violência no sexo casual. Entre a Noruega e os EUA, nenhum dos fatores do arrependimento mudou de um país para o outro [@kennair-2018-arrependimento-sexo-casual], o que sugere que o peso do prazer e do nojo não depende muito do país. É inferência nossa; ninguém testou isso no Brasil.
 
