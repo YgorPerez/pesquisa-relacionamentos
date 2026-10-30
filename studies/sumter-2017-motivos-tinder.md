@@ -30,18 +30,18 @@ Um questionário online perguntou a jovens holandeses de 18 a 30 anos que já ti
 |---|---|---|---|
 | Quem já tinha usado o Tinder, na amostra inicial de 266 | 61,3% (n = 163) | Método, 3.1 | "Of the initial sample 61.3% had used Tinder at least once (n = 163)" |
 | Já saiu com alguém do app; já teve sexo de uma noite com alguém do app | 45,5% e 18,6% | Resultados, 4.1 | "Almost half (45.5%) had gone on a real life date following a Tinder match and 18.6% had a one-night stand following a Tinder match." |
-| Variância explicada pelos seis motivos | 48,78% | Resultados, 4.2 | "These six factors explained 48.78% of the variance." |
+| Quanto da variação nas respostas às frases de motivo os seis motivos explicam | 48,78% | Resultados, 4.2 | "These six factors explained 48.78% of the variance." |
 | Média do motivo amor (escala de 1 a 5) | 2,24 | Tabela 2 | "Love – M = 2.24, SD =1.01, α = .88" |
 | Média do motivo sexo casual (escala de 1 a 5) | 1,88 | Tabela 2 | "Casual Sex – M = 1.88" |
-| Média do motivo validação da autoestima (escala de 1 a 5) e consistência | 2,22; α = 0,87 | Tabela 2 | "Self-Worth Validation – M = 2.22, SD = 0.87, α = .87" |
+| Média do motivo validação da autoestima (escala de 1 a 5) e consistência interna da escala (α) | 2,22; α = 0,87 | Tabela 2 | "Self-Worth Validation – M = 2.22, SD = 0.87, α = .87" |
 | Motivo sexo casual, mulheres e homens | 1,42 e 2,33; diferença [[significativa]] | Tabela 4 | "Casual Sex 1.42 (0.62) 2.33 (0.99)**" |
 | Motivo validação da autoestima, mulheres e homens | 2,16 e 2,29, sem diferença | Tabela 4 | "Self-Worth Validation 2.16 (0.88) 2.29 (0.86)" |
-| Modelo da frequência de uso (seis motivos, idade e gênero) | R² = 0,18; R² ajustado = 0,10; F(8, 84) = 2,227 | Resultados, 4.4 | "R2= .18, Adjusted R2 = .10, F(8, 84) = 2.227, p = .033" |
-| Validação da autoestima e frequência de uso, no modelo com os seis motivos | β = 0,45 (p = 0,018); único motivo significativo | Resultados, 4.4 | "Self-Worth Validation was the only motivation that significantly related to a higher Tinder Use (β = .45, p = .018)" |
-| Motivo amor e ter saído com alguém do app (razão de chances) | 1,66 (p = 0,006) | Tabela 5 | "Love 0.70 0.26 7.19 .006 1.66" |
-| Motivo facilidade de comunicação e ter saído com alguém do app (razão de chances) | 0,47 (p = 0,05) | Tabela 5 | "Ease of Communication -0.76 0.37 4.27 .05 0.47" |
-| Validação da autoestima e ter saído com alguém do app (razão de chances); e sexo de uma noite | 0,95 (p = 0,85); 0,33 (p = 0,03) | Tabela 5 | "Self-Worth Validation -0.05 0.29 0.03 .85 0.95 -1.12 0.53 4.58 .03 0.33" |
-| Motivo sexo casual e sexo de uma noite com alguém do app (razão de chances) | 4,31 (p = 0,002) | Tabela 5 | "Casual Sex 0.51 0.30 2.81 .08 2.01 1.46 0.47 9.89 .002 4.31" |
+| Quanto da frequência de uso do Tinder os seis motivos, a idade e o gênero explicam juntos | R² = 0,18; R² ajustado = 0,10; F(8, 84) = 2,227 | Resultados, 4.4 | "R2= .18, Adjusted R2 = .10, F(8, 84) = 2.227, p = .033" |
+| Validação da autoestima e frequência de uso, no modelo com os seis motivos | β = 0,45 (p = 0,018): usa mais; único motivo significativo | Resultados, 4.4 | "Self-Worth Validation was the only motivation that significantly related to a higher Tinder Use (β = .45, p = .018)" |
+| Mais pontos no motivo amor e mais chance de ter saído com alguém do app (razão de chances) | 1,66 (p = 0,006) | Tabela 5 | "Love 0.70 0.26 7.19 .006 1.66" |
+| Mais pontos no motivo facilidade de comunicação e menos chance de ter saído com alguém do app (razão de chances) | 0,47 (p = 0,05) | Tabela 5 | "Ease of Communication -0.76 0.37 4.27 .05 0.47" |
+| Mais pontos no motivo validação da autoestima: ter saído com alguém do app, sem efeito; sexo de uma noite, menos chance (razões de chances) | 0,95 (p = 0,85); 0,33 (p = 0,03) | Tabela 5 | "Self-Worth Validation -0.05 0.29 0.03 .85 0.95 -1.12 0.53 4.58 .03 0.33" |
+| Mais pontos no motivo sexo casual e mais chance de sexo de uma noite com alguém do app (razão de chances) | 4,31 (p = 0,002) | Tabela 5 | "Casual Sex 0.51 0.30 2.81 .08 2.01 1.46 0.47 9.89 .002 4.31" |
 
 Na frequência de uso, a correlação simples também foi positiva com amor, sexo casual e emoção; no modelo com os seis motivos juntos, só a validação ficou significativa. As razões de chances são por ponto na escala de 1 a 5 do motivo e vêm de regressões logísticas com 5.000 reamostragens, controladas por idade e gênero. Os desfechos são "já aconteceu alguma vez", sem contar quantos encontros houve nem se algum virou namoro.
 

@@ -34,22 +34,22 @@ Universitários heterossexuais da Noruega e dos EUA responderam a um questionár
 | País e diferença entre os sexos | Mesmo nível de arrependimento nos dois países e a mesma diferença entre os sexos | p. 63, 3.2 | "Level of regret did not differ across nations, and the sex effect was equally strong in both nations." |
 | Prazer na última transa casual, mulheres vs. homens | Bem menor nas mulheres (d = 0,99 na Noruega e 1,00 nos EUA) | p. 63, 3.1 | "The sex difference in gratification was strong in both Norway (d = 0.99) and US (d = 1.00)" |
 | Preocupação depois da transa, mulheres vs. homens | Maior nas mulheres (d = −0,39 na Noruega e −0,54 nos EUA) | p. 63, 3.1 | "The sex difference for worry was similar in Norway (d = −0.39) and the US (d = −0.54)." |
-| Competência do parceiro, mulheres vs. homens | Mulheres acharam o parceiro menos competente (d = 0,39 na Noruega e 0,28 nos EUA) | p. 63, 3.1 | "competent than did men in both samples (Norway: d = 0.39; US: d = 0.28)" |
-| Pressão, mulheres vs. homens | Um pouco maior nas mulheres (d = −0,29 na Noruega e −0,27 nos EUA) | p. 63, 3.1 | "slightly more pressured during their most recent casual sex encounter (Norway: d = −0.29; US: d = −0.27)" |
-| Prazer, sozinho | Menos arrependimento (razão de chances 0,50), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = −9.49, p < .001, OR = 0.50)" |
-| Preocupação, sozinha | Mais arrependimento (razão de chances 2,16), igual por sexo e país | p. 63, 3.2 | "(Z = 9.85, p < .001, OR = 2.16)" |
-| Nojo, sozinho | Mais arrependimento (razão de chances 3,42), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = 14.53, p < .001, OR = 3.42)" |
-| Parceiro competente, sozinho | Menos arrependimento (razão de chances 0,51), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = −9.72, p < .001, OR = 0.51)" |
-| Pressão, sozinha | Mais arrependimento (razão de chances 2,15) | p. 64, 3.2 | "(Z = 10.73, p < .001, OR = 2.15)" |
-| Iniciativa, sozinha | Menos arrependimento (razão de chances 0,61), só nas mulheres | p. 64, 3.2 | "(Z = −7.20, p < .001, OR = 0.61)" |
-| Iniciativa por sexo | Efeito só nas mulheres | p. 64, 3.2 | "moderated by sex and affected female participants only" |
-| Todas juntas: nojo | Mais arrependimento (razão de chances 2,34), o preditor mais forte | p. 64, 3.3 | "disgust (Z = 8.01, p < .001, OR = 2.34) was clearly the strongest predictor of casual sex regret" |
-| Todas juntas: prazer e competência do parceiro (uma variável só) e preocupação | Razão de chances 0,65 e 1,40 | p. 64, 3.3 | "OR = 0.65), worry (Z = 3.78, p < .001, OR = 1.40), and initiative" |
-| Todas juntas: iniciativa | Menos arrependimento (razão de chances 0,78) | p. 64, 3.3 | "(Z = −3.38, p < .001, OR = 0.78). Being subject to pressure did not" |
-| Todas juntas: pressão | Sem efeito além das outras | p. 64, 3.3 | "Being subject to pressure did not affect casual sex regret over and above the effect of the other variables." |
-| Quanto o modelo explica | 40% (pseudo R² = 0,402) | p. 64, 3.3 | "Overall, the predictors accounted for 40% of the variance in casual sex regret (Pseudo R2 = 0.402)." |
-| Iniciativa no modelo completo, por sexo | Menos arrependimento nas mulheres; quase nada nos homens | p. 64, 3.3 | "initiative were highly associated with lower levels of casual sex regret for women, while this effect was nearly absent for men." |
-| País como moderador | Nenhum efeito mudou por país | p. 64, 3.3 | "Importantly, none of the reported effects were moderated by nation in the multivariate model." |
+| Competência do parceiro na última transa casual, mulheres vs. homens | Mulheres acharam o parceiro menos competente (d = 0,39 na Noruega e 0,28 nos EUA) | p. 63, 3.1 | "competent than did men in both samples (Norway: d = 0.39; US: d = 0.28)" |
+| Pressão sentida na última transa casual, mulheres vs. homens | Um pouco maior nas mulheres (d = −0,29 na Noruega e −0,27 nos EUA) | p. 63, 3.1 | "slightly more pressured during their most recent casual sex encounter (Norway: d = −0.29; US: d = −0.27)" |
+| Prazer e arrependimento, testado sem os outros fatores | Menos arrependimento (razão de chances 0,50), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = −9.49, p < .001, OR = 0.50)" |
+| Preocupação e arrependimento, testada sem os outros fatores | Mais arrependimento (razão de chances 2,16), igual por sexo e país | p. 63, 3.2 | "(Z = 9.85, p < .001, OR = 2.16)" |
+| Nojo e arrependimento, testado sem os outros fatores | Mais arrependimento (razão de chances 3,42), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = 14.53, p < .001, OR = 3.42)" |
+| Parceiro competente e arrependimento, testado sem os outros fatores | Menos arrependimento (razão de chances 0,51), efeito mais forte nas mulheres | p. 63, 3.2 | "(Z = −9.72, p < .001, OR = 0.51)" |
+| Pressão e arrependimento, testada sem os outros fatores | Mais arrependimento (razão de chances 2,15) | p. 64, 3.2 | "(Z = 10.73, p < .001, OR = 2.15)" |
+| Tomar a iniciativa e arrependimento, testada sem os outros fatores | Menos arrependimento (razão de chances 0,61), só nas mulheres | p. 64, 3.2 | "(Z = −7.20, p < .001, OR = 0.61)" |
+| Tomar a iniciativa e arrependimento, por sexo | Efeito só nas mulheres | p. 64, 3.2 | "moderated by sex and affected female participants only" |
+| Nojo e arrependimento, com todos os fatores no mesmo modelo | Mais arrependimento (razão de chances 2,34), o preditor mais forte | p. 64, 3.3 | "disgust (Z = 8.01, p < .001, OR = 2.34) was clearly the strongest predictor of casual sex regret" |
+| Prazer e competência do parceiro (uma variável só) e preocupação, com todos os fatores no mesmo modelo | Razão de chances 0,65 (menos arrependimento) e 1,40 (mais arrependimento) | p. 64, 3.3 | "OR = 0.65), worry (Z = 3.78, p < .001, OR = 1.40), and initiative" |
+| Tomar a iniciativa e arrependimento, com todos os fatores no mesmo modelo | Menos arrependimento (razão de chances 0,78) | p. 64, 3.3 | "(Z = −3.38, p < .001, OR = 0.78). Being subject to pressure did not" |
+| Pressão e arrependimento, com todos os fatores no mesmo modelo | Sem efeito além das outras | p. 64, 3.3 | "Being subject to pressure did not affect casual sex regret over and above the effect of the other variables." |
+| Quanto do arrependimento os fatores explicam juntos | 40% (pseudo R² = 0,402) | p. 64, 3.3 | "Overall, the predictors accounted for 40% of the variance in casual sex regret (Pseudo R2 = 0.402)." |
+| Tomar a iniciativa e arrependimento, com todos os fatores no mesmo modelo, por sexo | Menos arrependimento nas mulheres; quase nada nos homens | p. 64, 3.3 | "initiative were highly associated with lower levels of casual sex regret for women, while this effect was nearly absent for men." |
+| Diferença entre Noruega e EUA no efeito de cada fator, no modelo completo | Nenhum efeito mudou por país | p. 64, 3.3 | "Importantly, none of the reported effects were moderated by nation in the multivariate model." |
 | Nojo moral e arrependimento, por sexo | Ligação mais forte nas mulheres (r = 0,55) que nos homens (r = 0,40) | p. 64, 3.3 | "stronger for women (r = 0.55) than for men (r = 0.40)" |
 
 Razão de chances acima de 1 quer dizer mais chance de estar num nível mais alto de arrependimento a cada ponto a mais na escala de 1 a 5; abaixo de 1, menos chance. "d" é a diferença entre os sexos em desvios-padrão; o sinal negativo indica que as mulheres pontuaram mais. O artigo não dá o orgasmo em separado: ele entra na escala de prazer, junto com o prazer em geral e a importância do orgasmo.
