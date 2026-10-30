@@ -26,19 +26,19 @@ covers: {}
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Prevenção Combinada | Ações biomédicas, comportamentais e estruturais, juntas | p. 20 (p. 22 do PDF), seção 2.1.1 | "sua definição está relacionada à combinação de três tipos de intervenções: biomédica, comportamental e estrutural (marcos legais)" |
-| Nenhuma medida basta sozinha | Nenhuma intervenção isolada reduz o suficiente as novas infecções | p. 21 (p. 23 do PDF), seção 2.1.1 | "Nenhuma intervenção de prevenção isolada se mostrou eficaz o suficiente para reduzir novas infecções." |
-| Preservativo | Estratégia fundamental, com limitações | p. 22 (p. 24 do PDF), seção 2.1.2 | "por mais que os preservativos sejam uma estratégia fundamental a ser sempre estimulada, o seu uso possui limitações" |
-| Vacinas | Hepatite A, hepatite B e HPV | p. 22 (p. 24 do PDF), seção 2.1.2 | "Imunizar para HAV, HBV e HPV;" |
+| Prevenção Combinada | Juntar três tipos de ação: biomédica, de comportamento e estrutural, como as leis | p. 20 (p. 22 do PDF), seção 2.1.1 | "sua definição está relacionada à combinação de três tipos de intervenções: biomédica, comportamental e estrutural (marcos legais)" |
+| Nenhuma medida basta sozinha | Nenhuma ação isolada se mostrou eficaz o suficiente para reduzir novas infecções | p. 21 (p. 23 do PDF), seção 2.1.1 | "Nenhuma intervenção de prevenção isolada se mostrou eficaz o suficiente para reduzir novas infecções." |
+| Preservativo | É uma estratégia fundamental, a ser sempre estimulada, mas tem limitações | p. 22 (p. 24 do PDF), seção 2.1.2 | "por mais que os preservativos sejam uma estratégia fundamental a ser sempre estimulada, o seu uso possui limitações" |
+| Vacinas | Vacinar contra hepatite A, hepatite B e HPV | p. 22 (p. 24 do PDF), seção 2.1.2 | "Imunizar para HAV, HBV e HPV;" |
 | Testagem | Testar com regularidade para HIV e outras IST | p. 22 (p. 24 do PDF), seção 2.1.2 | "Testar regularmente para HIV e outras IST;" |
-| PrEP | Profilaxia pré-exposição ao HIV, quando indicada | p. 22 (p. 24 do PDF), seção 2.1.2 | "Realizar profilaxia pré-exposição – PrEP, quando indicado;" |
-| PEP | Profilaxia pós-exposição, quando indicada | p. 22 (p. 24 do PDF), seção 2.1.2 | "Realizar profilaxia pós-exposição – PEP, quando indicado." |
-| Status sorológico da parceria | Conhecer o status de HIV da parceria | p. 22 (p. 24 do PDF), seção 2.1.2 | "Conhecer o status sorológico para HIV da(s) parceria(s) sexual(is);" |
-| Eficácia do preservativo | Reduz o risco de HIV e outras IST, além de evitar gravidez | p. 23 (p. 25 do PDF), seção 2.1.3 | "como um método eficaz para a redução do risco de transmissão do HIV e de outras IST, além de evitar gravidez" |
-| Principais fatores de risco | Sexo sem preservativo e idade mais baixa | p. 27 (p. 29 do PDF), seção 2.4 | "Os dois principais fatores de risco para IST são práticas sexuais sem uso de preservativos e idade mais baixa" |
-| Testagem anual para jovens | Rastreamento anual de quem tem até 30 anos e vida sexual ativa | p. 27 (p. 29 do PDF), seção 2.4 e Quadro 5 | "foram incluídas no rastreamento anual as pessoas de até 30 anos de idade com vida sexualmente ativa" |
-| Quem pertence a mais de um subgrupo | Vale a frequência do subgrupo mais representativo | p. 27 (p. 29 do PDF), seção 2.4 | "Caso a pessoa de 30 anos ou mais pertença a algum outro subgrupo populacional, deve-se optar pelo que for mais representativo." |
-| Testagem semestral de HIV e sífilis | Gays e HSH, profissionais do sexo, travestis e transexuais, pessoas com uso abusivo de álcool e outras drogas, e pessoas com prática sexual anal receptiva (passiva) sem preservativo | p. 28 (p. 30 do PDF), Quadro 5 (conclusão) | "Gays e HSH Profissionais do sexo Semestral" |
+| PrEP | Fazer a profilaxia pré-exposição, quando indicada | p. 22 (p. 24 do PDF), seção 2.1.2 | "Realizar profilaxia pré-exposição – PrEP, quando indicado;" |
+| PEP | Fazer a profilaxia pós-exposição, quando indicada | p. 22 (p. 24 do PDF), seção 2.1.2 | "Realizar profilaxia pós-exposição – PEP, quando indicado." |
+| HIV da parceria | Saber se a parceria tem HIV | p. 22 (p. 24 do PDF), seção 2.1.2 | "Conhecer o status sorológico para HIV da(s) parceria(s) sexual(is);" |
+| Eficácia do preservativo | Reduz o risco de transmissão do HIV e de outras IST, além de evitar gravidez | p. 23 (p. 25 do PDF), seção 2.1.3 | "como um método eficaz para a redução do risco de transmissão do HIV e de outras IST, além de evitar gravidez" |
+| Principais fatores de risco | Os dois principais são sexo sem preservativo e idade mais baixa | p. 27 (p. 29 do PDF), seção 2.4 | "Os dois principais fatores de risco para IST são práticas sexuais sem uso de preservativos e idade mais baixa" |
+| Testagem anual para jovens | Quem tem até 30 anos e vida sexual ativa entra na testagem de todo ano | p. 27 (p. 29 do PDF), seção 2.4 e Quadro 5 | "foram incluídas no rastreamento anual as pessoas de até 30 anos de idade com vida sexualmente ativa" |
+| Quem tem 30 anos ou mais e está em outro subgrupo | Vale o que for mais representativo para a pessoa | p. 27 (p. 29 do PDF), seção 2.4 | "Caso a pessoa de 30 anos ou mais pertença a algum outro subgrupo populacional, deve-se optar pelo que for mais representativo." |
+| Testagem de HIV e sífilis a cada seis meses | Vale para gays e HSH, profissionais do sexo, travestis e transexuais, pessoas com uso abusivo de álcool e outras drogas, e pessoas com prática sexual anal receptiva (passiva) sem preservativo | p. 28 (p. 30 do PDF), Quadro 5 (conclusão) | "Gays e HSH Profissionais do sexo Semestral" |
 
 No Quadro 5, a linha "Adolescentes e jovens (≤30 anos)" põe HIV e sífilis como anuais; clamídia e gonococo seguem a frequência de outro subgrupo ou prática sexual da pessoa. Na conclusão do quadro (p. 28), uma célula "Semestral" cobre as colunas de HIV e de sífilis para as linhas "Gays e HSH", "Profissionais do sexo", "Travestis/transexuais" e "Pessoas que fazem uso abusivo de álcool e outras drogas", e outra cobre as mesmas colunas na linha "Pessoas com prática sexual anal receptiva (passiva) sem uso de preservativos". A extração de texto do PDF desfaz a tabela, por isso o Trecho fica com o começo da célula; o resto se confere na página. HSH quer dizer homens que fazem sexo com homens.
 

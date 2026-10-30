@@ -28,15 +28,15 @@ A página de estatísticas-chave da NSFG traz, numa tabulação especial do NCHS
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Mediana de parceiros do sexo oposto na vida, 25 a 49 anos | Mulheres 4,3; homens 6,3 | Tabela de medianas, 2015–2019 | "Women 4.3 (0.10) Men 6.3 (0.39)" |
-| Um parceiro só na vida | Mulheres 17,7%; homens 11,2% | Tabela de distribuição, 2015–2019 | "1 partner 17.7 (0.90) 11.2 (0.86)" |
-| De 2 a 4 parceiros | Mulheres 29,2%; homens 22,3% | Tabela de distribuição | "2-4 partners 29.2 (0.75) 22.3 (0.78)" |
-| De 5 a 9 parceiros | Mulheres 28,6%; homens 25,8% | Tabela de distribuição | "5-9 partners 28.6 (0.85) 25.8 (0.88)" |
-| De 10 a 14 parceiros | Mulheres 11,6%; homens 12,5% | Tabela de distribuição | "10-14 partners 11.6 (0.57) 12.5 (0.61)" |
-| 15 parceiros ou mais | Mulheres 12,9%; homens 28,3% | Tabela de distribuição | "15 or more partners 12.9 (0.71) 28.3 (0.93)" |
-| Como a contagem foi colhida | No ACASI, entre quem já fez sexo vaginal, oral ou anal com alguém do sexo oposto | Nota das tabelas | "Based on ACASI variables for numbers of opposite-sex partners." |
+| Parceiros do outro sexo na vida, de 25 a 49 anos | Mediana de 4,3 nas mulheres e 6,3 nos homens | Tabela de medianas, 2015–2019 | "Women 4.3 (0.10) Men 6.3 (0.39)" |
+| Um parceiro só na vida | 17,7% das mulheres e 11,2% dos homens | Tabela de distribuição, 2015–2019 | "1 partner 17.7 (0.90) 11.2 (0.86)" |
+| De 2 a 4 parceiros | 29,2% das mulheres e 22,3% dos homens | Tabela de distribuição | "2-4 partners 29.2 (0.75) 22.3 (0.78)" |
+| De 5 a 9 parceiros | 28,6% das mulheres e 25,8% dos homens | Tabela de distribuição | "5-9 partners 28.6 (0.85) 25.8 (0.88)" |
+| De 10 a 14 parceiros | 11,6% das mulheres e 12,5% dos homens | Tabela de distribuição | "10-14 partners 11.6 (0.57) 12.5 (0.61)" |
+| 15 parceiros ou mais | 12,9% das mulheres e 28,3% dos homens | Tabela de distribuição | "15 or more partners 12.9 (0.71) 28.3 (0.93)" |
+| Como a contagem foi colhida | A própria pessoa respondeu no computador, com áudio (ACASI), entre quem já fez sexo vaginal, oral ou anal com alguém do outro sexo | Nota das tabelas | "Based on ACASI variables for numbers of opposite-sex partners." |
 
-Entre parênteses, na tabela original, vai o erro-padrão.
+A mediana é o valor do meio: metade das pessoas relatou menos, metade relatou mais. No Trecho, entre parênteses, vai o erro-padrão, que diz quanto a estimativa pode variar.
 
 Fonte local: `sources/nchs-2021-nsfg-parceiros-na-vida.html`, a cópia do Internet Archive de 30 de julho de 2026. O site do CDC recusou o download direto.
 
