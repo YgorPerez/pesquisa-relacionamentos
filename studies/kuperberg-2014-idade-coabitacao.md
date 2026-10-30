@@ -30,13 +30,13 @@ O desfecho reúne separação e divórcio; viuvez encerra a observação sem con
 
 ## Achados
 
-HR é a razão entre taxas instantâneas de dissolução ao longo do casamento, comparando quem coabitou antes com quem casou diretamente. Não é a probabilidade de divórcio ao longo da vida. Os dois resultados ajustados abaixo usam os mesmos controles demográficos; muda a idade usada no ajuste.
-
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Idade média ao começar a morar junto: quem morou junto antes de casar e quem casou direto, nessa ordem | 22,4 e 23,1 anos | Resultados, comentário da Tabela 1 | "22.4 and 23.1" |
-| Risco de separação de quem morou junto antes de casar, comparado a quem casou direto, levando em conta dados demográficos e a idade ao casar | HR = 1,37; p < 0,001 | Resultados após a Tabela 3, modelo com idade ao casar | "1.37, significant at the p < .001 level." |
-| Risco de separação de quem morou junto antes de casar, comparado a quem casou direto, levando em conta dados demográficos e a idade ao começar a morar junto | HR = 1,09; associação não significativa | Resultados após a Tabela 3, modelo com idade ao iniciar a convivência | "hazard ratio of 1.09, which was not statistically significant." |
+| Idade ao começar a morar junto | Quem morou junto antes de casar começou, em média, aos 22,4 anos; quem casou direto, aos 23,1 | Resultados, comentário da Tabela 1 | "22.4 and 23.1" |
+| Morar junto antes, levando em conta a idade ao casar | Quem morou junto antes de casar teve mais risco de separação que quem casou direto (HR = 1,37; p < 0,001) | Resultados após a Tabela 3, modelo com idade ao casar | "1.37, significant at the p < .001 level." |
+| Morar junto antes, levando em conta a idade ao começar | Não apareceu diferença clara entre quem morou junto antes de casar e quem casou direto (HR = 1,09) | Resultados após a Tabela 3, modelo com idade ao iniciar a convivência | "hazard ratio of 1.09, which was not statistically significant." |
+
+"HR" compara a velocidade com que os casamentos terminam ao longo do tempo, entre quem morou junto antes e quem casou direto: acima de 1 é mais risco. Não é a chance de divórcio ao longo da vida. "p" vem do teste de significância: quanto menor, menos provável que seja só acaso. Os dois resultados levam em conta os mesmos dados demográficos; só muda a idade usada na conta.
 
 ## Limitações
 
