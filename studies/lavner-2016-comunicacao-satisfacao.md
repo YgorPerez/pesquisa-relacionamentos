@@ -46,7 +46,7 @@ Em quatro visitas, a cada 9 meses nos três primeiros anos de casamento, os casa
 | Tamanho típico desse efeito (mediana do β padronizado, sem o sinal) | 0,10 | Resultados, Wave 1 to Wave 4, p. 9 | "= .10), with significant results found for all three communication behaviors" |
 | Da primeira à quarta medição, a comunicação inicial prevê a satisfação? | nenhum dos 12 testes | Resultados, Wave 1 to Wave 4, p. 9 | "communication did not predict subsequent satisfaction in any of the 12 possible tests" |
 | Tamanho típico desse efeito (mediana do β padronizado, sem o sinal) | 0,01 | Resultados, Wave 1 to Wave 4, p. 9 | "= .01). However, the relative magnitude" |
-| Efeitos da comunicação sobre a satisfação, somando todos os testes em intervalos de 9 meses | 7 de 36 significativos | Discussão, p. 10 | "Of the 36 crosslagged effects using the 9-month lags, only 7 were significant for communication-tosatisfaction" |
+| A comunicação prevendo a satisfação na medição seguinte, somando todos os testes em intervalos de 9 meses | 7 de 36 significativos | Discussão, p. 10 | "Of the 36 crosslagged effects using the 9-month lags, only 7 were significant for communication-tosatisfaction" |
 | Comparação direta do tamanho dos dois sentidos: satisfação prevendo comunicação e comunicação prevendo satisfação | sem diferença em 85% dos casos | Discussão, p. 10 | "the effects did not differ significantly in 85% of cases" |
 | Conclusão dos autores | os dois sentidos são fracos e inconsistentes | Discussão, p. 10 | "satisfaction is a more consistent and stronger predictor of communication than the reverse, but overall both effects are fairly inconsistent and similar in magnitude" |
 

@@ -39,9 +39,9 @@ Os autores perguntaram a pessoas com parceiro, em 50 países, se conheceram o pa
 | Tempo de relação de quem conheceu o parceiro online, comparado a quem conheceu fora da internet, em relações de 2010 em diante | Relações mais curtas (log-odds −0,097, p < 0,001) | p. 5, Results | "be in shorter romantic relationships (log odds = -0.097, SE = 0.011, 95 %CI [-0.118,-0.076], p < 0.001)" | |
 | Gênero e idade de quem conheceu o parceiro online, comparados a quem conheceu fora da internet, em relações de 2010 em diante | Sem associação significativa | p. 5, Results | "No significant associations were found with gender or age." | |
 | Satisfação com a relação, de 1 a 5, na média estimada pelo modelo: quem conheceu fora da internet vs. online | Offline 4,28 vs. online 4,20 | p. 5, Results | "The estimated marginal means (EMM) for relationship satisfaction were: offline = 4.28, SE = 0.03, online EMM = 4.20" | |
-| Quanto quem conheceu fora da internet supera quem conheceu online em satisfação e intimidade, em desvios-padrão, como publicado | d = 0,43 e d = 0,35 | p. 5, Results | "(d = 0.43, 95 %CI[0.36,0.50], d = 0.35, 95 %CI[0.28,0.43]" | |
-| A mesma diferença em paixão, como publicada | d = 0,37 | p. 6, Results | "0.37, 95 %CI[0.30,0.44], respectively)" | |
-| A mesma diferença em compromisso, como publicada | d = 0,51, moderada | p. 6, Results | "moderate for Commitment (d = 0.51, 95 %CI[0.44,0.58])" | |
+| Tamanho da diferença a favor de quem conheceu fora da internet, em satisfação e intimidade, no d publicado pelo artigo (ver nota abaixo) | d = 0,43 e d = 0,35 | p. 5, Results | "(d = 0.43, 95 %CI[0.36,0.50], d = 0.35, 95 %CI[0.28,0.43]" | |
+| O mesmo d publicado, em paixão | d = 0,37 | p. 6, Results | "0.37, 95 %CI[0.30,0.44], respectively)" | |
+| O mesmo d publicado, em compromisso | d = 0,51, moderada | p. 6, Results | "moderate for Commitment (d = 0.51, 95 %CI[0.44,0.58])" | |
 | Quanto quem conheceu fora da internet supera quem conheceu online, em desvios-padrão, sem controles, nos dados públicos, relações de 2010 em diante (cálculo próprio) | Satisfação 0,11; intimidade 0,09; paixão 0,10; compromisso 0,12 | p. 10, Data availability (dados no OSF) | "Data has been made publicly available at the OSF: https://osf.io/uzf37." | `scripts/calculations/kowal-2025-50-paises.py gap` |
 | Refazendo a análise com pesos que aproximam os grupos em idade, gênero, nível socioeconômico e tempo de relação (escore de propensão) | Mesmo padrão: offline com mais satisfação e amor | p. 6–7, Results | "Re-running the analyses with weights from the propensity score analysis yielded the same pattern of results" | |
 | Idade a partir da qual a diferença em satisfação e amor fica mais marcada | Por volta de 33 anos | p. 7, Results | "differences in relationship satisfaction and love intensity were most pronounced among individuals older than approximately 33 years" | |
@@ -53,7 +53,7 @@ Os autores perguntaram a pessoas com parceiro, em 50 países, se conheceram o pa
 | Brasil: relações iniciadas em 2010 ou depois que começaram online (cálculo próprio) | 21 de 73 (29%) | p. 4, 2.4 Statistical analyses | "we calculated the year each participant's romantic relationship began by subtracting their reported relationship length from 2024" | `scripts/calculations/kowal-2025-50-paises.py since2010 Brazil` |
 | Brasil: posição entre os 50 países na fatia online (cálculo próprio) | 15º de 50 (19,3%) | p. 10, Data availability (dados no OSF) | "Data has been made publicly available at the OSF: https://osf.io/uzf37." | `scripts/calculations/kowal-2025-50-paises.py rank Brazil` |
 
-As linhas de cálculo próprio leem o arquivo público `Dataset_Relationship_Formation.csv` do OSF. São médias e proporções simples, sem peso, sem os controles do artigo e sem teste estatístico; não são números publicados pelos autores.
+As linhas de cálculo próprio leem o arquivo público `Dataset_Relationship_Formation.csv` do OSF. São médias e proporções simples, sem peso, sem os controles do artigo e sem teste estatístico; não são números publicados pelos autores. Não dá para ler os d publicados como a versão com controles da conta própria: o artigo não diz como os calculou, e eles não batem com as médias estimadas, que diferem de 0,06 a 0,08 ponto na escala de 1 a 5 (ver Limitações).
 
 ## Definições
 
