@@ -87,8 +87,10 @@ const WORDS_PAST_MARK = { bars: 66, dots: 66, line: 24, stacked: 0 } as const
 /** A range's end has no value after it, only the next end's tick. */
 const PAST_RANGE_END = 14
 
-const isRangeEnd = (chart: ChartView, point: ChartPoint) =>
+const pastMark = (chart: ChartView, point: ChartPoint) =>
   chart.points.some((p) => p.range?.some((q) => q.key === point.key))
+    ? PAST_RANGE_END
+    : WORDS_PAST_MARK[chart.kind]
 
 /** Where the mark ends and the words after it, on the page, read when the
  * card is placed: the page scrolls under it. */
@@ -323,13 +325,7 @@ function useChartMarks(chart: ChartView, host: RefObject<HTMLElement | null>) {
     (mark: ChartMarkAt): CardTarget => ({
       chart: chartId,
       point: mark.point,
-      anchor: markBox(
-        host.current,
-        mark,
-        isRangeEnd(chart, mark.point)
-          ? PAST_RANGE_END
-          : WORDS_PAST_MARK[chart.kind],
-      ),
+      anchor: markBox(host.current, mark, pastMark(chart, mark.point)),
       via: input.current === 'keyboard' ? 'keyboard' : 'pointer',
     }),
     [chartId, chart, host],
