@@ -39,7 +39,7 @@ Os autores juntaram as rodadas de 1988 a 2002 do General Social Survey, que perg
 | Felicidade de quem já transou fora do casamento (entre quem já casou) | Coeficiente −0,210 (t = 3,32), menos feliz | Tabela 4, coluna 2 | "-.210 (3.32)" |
 | Menores de 40 com até um parceiro no último ano | 84% das mulheres e 70% dos homens | p. 7 | "among the under-40s 84% of US women and 70% of US men had at most one sexual partner in the previous year" |
 | Menores de 40 com três ou mais parceiros no último ano | 11% | p. 7 | "only 11% of under-40 Americans reported themselves as having 3 or more sexual partners in the previous year" |
-| Aviso dos autores | Dados de um só momento: não dá para saber se o sexo traz felicidade ou se é o contrário | Resumo | "Our conclusions are based on pooled cross-section equations in which it is not possible to correct for the endogeneity of sexual activity." |
+| Aviso dos autores | Cada pessoa respondeu uma vez só: não dá para saber se o sexo traz felicidade ou se é o contrário | Resumo | "Our conclusions are based on pooled cross-section equations in which it is not possible to correct for the endogeneity of sexual activity." |
 
 O indicador "um parceiro só" vale 1 para quem teve exatamente um parceiro nos 12 meses anteriores. Como a mesma equação já separa quem não transou no ano (a categoria de referência da frequência), o coeficiente compara, na prática, um parceiro com dois ou mais, para a mesma frequência de sexo e o mesmo estado civil. Um coeficiente de logit ordenado não é uma porcentagem: indica a direção e a força relativa dentro da mesma tabela. Na escala de MQO, 0,077 ponto é cerca de dois terços do ganho associado a transar quatro ou mais vezes por semana (0,115).
 

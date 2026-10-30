@@ -25,7 +25,7 @@ O laboratório de C. Sue Carter, uma das pesquisadoras que montaram o modelo do 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Grupos de machos testados | Depois do 1º, do 5º e do 10º par | Resumo | "Stud males were tested for behavioral and neurobiological e ffects of repeated pair-bonding after the 1st, 5th, and 10th pairing." |
+| Grupos de machos que trocaram de par, testados | Depois do 1º, do 5º e do 10º par | Resumo | "Stud males were tested for behavioral and neurobiological e ffects of repeated pair-bonding after the 1st, 5th, and 10th pairing." |
 | Tamanho dos grupos no teste de preferência | 13, 25 e 15 machos; 7 velhos | 2.2 Partner Preference Test | "Sample sizes were as follows: 1st pairing: n = 13; 5th pairing: n = 25; 10th pairing: n = 15; Aged: n = 7." |
 | Preferência pela parceira em todos os grupos | Sim, inclusive no 10º par | Results | "male prairie voles retain the ability to form selective partner preferences with novel females up to at least 10 pairing experiences" |
 | Conclusão dos autores | Os machos continuam formando casal depois de desfazer vários | Discussion | "Our results show that male prairie voles retain the ability to form new pair-bonds in the face of repeated pair-bond dissolution." |

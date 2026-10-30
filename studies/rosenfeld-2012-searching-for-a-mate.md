@@ -50,7 +50,7 @@ Como os casais americanos se conheceram, de 1940 a 2009, e como a internet mudou
 | Adultos de 30 a 49 anos com parceiro nos EUA, 1995 a 2009 (CPS) | Estável entre 72% e 73% | Partnership Rate, p. 30 | "The CPS data showed partnership rate stable between 72% and 73%" |
 | Idade e conhecer o parceiro online, heterossexuais | Os mais jovens não são os que mais conhecem online | Age and Meeting Online, p. 25 | "the youngest respondents were not the most likely to meet their partners online" |
 | Jovens adultos heterossexuais | Entre os que menos conhecem o parceiro online | Discussion, p. 32 | "Young heterosexual adults, who we presume to be among the most technologically savvy people in society, are among the least likely to meet partners online" |
-| Quem mais depende da internet para achar parceiro | Gays, lésbicas e heterossexuais de meia-idade, grupos com poucos parceiros possíveis por perto (mercados "finos") | Discussion, p. 33 | "Gays, lesbians, and middle-aged heterosexuals all face thin dating markets, and these are the groups that are most likely to rely on the Internet to find their partners" |
+| Quem mais depende da internet para achar parceiro | Gays, lésbicas e heterossexuais de meia-idade, grupos em que é difícil achar parceiros possíveis (mercados "finos") | Discussion, p. 33 | "Gays, lesbians, and middle-aged heterosexuals all face thin dating markets, and these are the groups that are most likely to rely on the Internet to find their partners" |
 
 ## Definições
 

@@ -44,7 +44,7 @@ As duas ondas da [[HCMST]] perguntaram, em texto livre, como a pessoa e o parcei
 | Quanto da alta de casais online veio de apps de celular | Pelo menos metade da alta de online de 2010 a 2017 | Results, §3 | "meeting through phone apps was responsible for at least half of the growth in meeting online from 2010 to 2017" |
 | Casais online que eram desconhecidos, 2009 vs. 2017 | 81% vs. 89,5% | Tabela 2 | "Previously strangers 81% 89.5%" |
 | Casais online apresentados por alguém, 2009 vs. 2017 | 11,2% vs. 3,7% | Tabela 2 | "Mediated by friend 11.2% 3.7%" |
-| Casais online nas linhas de desconhecidos e apresentados, pesquisas de 2009 e 2017 | 179 e 323 | Tabela 2 | "N 179 323" |
+| Casais online na Tabela 2, somando desconhecidos, apresentados e reencontrados, pesquisas de 2009 e 2017 | 179 e 323 | Tabela 2 | "N 179 323" |
 | Como o casal se conheceu e o risco de terminar | Sem efeito significativo, com a década do encontro controlada | Nota de rodapé # | "how couples met had no significant effect on the hazard of breakup once decade of meeting was controlled for" |
 | A única diferença ligada a como se conheceram | Quem se conheceu online casa mais rápido | Nota de rodapé ∥ | "Heterosexual couples who met online transition to marriage faster" |
 | Respostas sobre como se conheceram, HCMST 2009 | 2.495 | Data and Methods, §1 | "There were 2,495 answers from subjects with heterosexual partners" |
