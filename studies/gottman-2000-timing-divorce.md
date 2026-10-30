@@ -30,20 +30,20 @@ Em 1983, 79 casais tiveram no laboratório duas conversas de 15 minutos gravadas
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Os quatro cavaleiros | Códigos-resumo do RCISS na conversa de conflito | Métodos, p. 740 | "The four summary codes that emerge from the RCISS are criticism, defensiveness, contempt, and stonewalling." |
+| O que são os quatro cavaleiros nesta pesquisa | Crítica, defensividade, desprezo e *stonewalling*: códigos-resumo do RCISS, o sistema de pontuação da conversa de conflito | Métodos, p. 740 | "The four summary codes that emerge from the RCISS are criticism, defensiveness, contempt, and stonewalling." |
 | Concordância entre codificadores (RCISS) | kappa = 0,72 | Métodos, p. 739 | "Using Cohen's kappa, reliability for all RCISS subcodes taken together was .72." |
 | Casais divorciados em 14 anos | 22 de 79 (27,8%) | Métodos, p. 739 | "Of the original set of 79 couples, 22 (27.8%) had divorced after 14 years." |
 | Divórcio precoce | nove casais, em média 7,4 anos após o casamento | Métodos, p. 739 | "Nine couples divorced an average of 7.4 years following their marriage (SD = 1.7 years)." |
 | Divórcio tardio | 13 casais, em média 13,9 anos após o casamento | Métodos, p. 739 | "13 couples divorced an average of 13.9 years following their marriage (SD = 5.1 years)." |
-| Divórcio precoce: satisfação + quatro cavaleiros | 83,5% classificados corretamente (correlação canônica 0,52) | Resultados, p. 740 | "The canonical correlation was .52, with X2 (12) = 22.36, p < .05, with correct classification 83.5%." |
+| Prever quem se divorciou cedo e quem continuou casado, pela satisfação e pelos quatro cavaleiros | 83,5% classificados corretamente (correlação canônica 0,52) | Resultados, p. 740 | "The canonical correlation was .52, with X2 (12) = 22.36, p < .05, with correct classification 83.5%." |
 | Divórcio precoce: afeto positivo não separou os grupos | só a satisfação da esposa diferiu | Resultados, p. 740 | "These findings mean that stable and divorcing couples did not differ in positive affect, but they did differ in marital satisfaction Time 1." |
-| Divórcio precoce: só os códigos de interação (quatro cavaleiros + saldo positivo menos negativo) | 83,5% de acerto | Resultados, p. 741 | "the canonical correlation was .51, with X2 (10) = 21.26, p < .05, with 83.5% accuracy in prediction." |
+| Prever quem se divorciou cedo e quem continuou casado, só pelos códigos da conversa (quatro cavaleiros e saldo de positivo menos negativo) | 83,5% de acerto | Resultados, p. 741 | "the canonical correlation was .51, with X2 (10) = 21.26, p < .05, with 83.5% accuracy in prediction." |
 | Códigos que pesaram no divórcio precoce | Marido: defensividade, desprezo e *stonewalling*; esposa: crítica, desprezo e defensividade | Resultados, p. 742 | "the negative codes that contributed to this prediction were the husband's defensiveness, contempt, and stonewalling, and the wife's criticism, contempt, and defensiveness." |
-| Divórcio tardio: quatro cavaleiros | Nenhum código de interação foi significativo; a satisfação e a ideia de separação fizeram o trabalho | Resultados, p. 741 | "The univariate F ratios showed that the noninteractive variables did all the work in prediction." |
-| Divórcio tardio: só o afeto positivo das duas conversas | 75% de acerto | Resultados, p. 742 | "with 75.0% accuracy in prediction. This means that the positive SPAFF codes were able to predict later divorcing on their own." |
-| Só entre os divorciados: precoce vs. tardio pelos quatro cavaleiros | 95% de acerto | Resultados, p. 742 | "The canonical correlation was .85, with X2 (8) = 18.03, P = .0210, with a 95% accuracy in discrimination." |
-| Desprezo do marido, precoce vs. tardio | média 0,12 vs. 0,02 | Resultados, p. 742 | "earlier divorcing couples' M = .12, later divorcing couples' M = .02" |
-| Modelo completo do resumo | 93% de acerto | Resumo, p. 737 | "The model predicted divorce with 93% accuracy." |
+| Divórcio tardio: os quatro cavaleiros ajudaram a prever? | Não: nenhum código da conversa foi significativo; a previsão veio da satisfação e da ideia de separação | Resultados, p. 741 | "The univariate F ratios showed that the noninteractive variables did all the work in prediction." |
+| Prever o divórcio tardio só pelo afeto positivo nas duas conversas | 75% de acerto | Resultados, p. 742 | "with 75.0% accuracy in prediction. This means that the positive SPAFF codes were able to predict later divorcing on their own." |
+| Só entre os divorciados: distinguir quem se divorciou cedo de quem se divorciou tarde, pelos quatro cavaleiros | 95% de acerto | Resultados, p. 742 | "The canonical correlation was .85, with X2 (8) = 18.03, P = .0210, with a 95% accuracy in discrimination." |
+| Desprezo do marido na conversa de conflito: casais que se divorciaram cedo contra os que se divorciaram tarde | média 0,12 vs. 0,02 | Resultados, p. 742 | "earlier divorcing couples' M = .12, later divorcing couples' M = .02" |
+| Prever o divórcio com o modelo completo citado no resumo do artigo | 93% de acerto | Resumo, p. 737 | "The model predicted divorce with 93% accuracy." |
 
 O resumo dá 93% para um modelo com [[satisfação]], ideia de separação e afeto nas duas conversas. Os Resultados não trazem esse número: as taxas que aparecem lá são 83,5%, 88,5%, 86,2%, 75% e 95%.
 

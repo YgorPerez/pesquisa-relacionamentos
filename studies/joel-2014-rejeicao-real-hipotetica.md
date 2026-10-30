@@ -31,13 +31,13 @@ No Estudo 1, o pretendente vinha com a foto de uma pessoa pouco atraente. No Est
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Estudo 1: aceitaram trocar contato com o pretendente pouco atraente, condição hipotética | 16% (10 de 61) | Study 1, Results, p. 2235 | "Only 10 of the 61 participants in the hypothetical condition chose to exchange contact information with the unattractive potential date (16%)" |
-| Estudo 1: aceitaram trocar contato, condição real | 37% (26 de 71) | Study 1, Results, p. 2235 | "26 of the 71 participants in the real condition chose to exchange contact information (37%)" |
-| Estudo 1: diferença entre as condições | χ²(1) = 6,77; p = 0,009; n = 132 | Study 1, Results, p. 2235 | "χ2(1, N = 132) = 6.77, p = .009" |
-| Estudo 1: rejeitaram o pretendente, hipotético contra real | 84% contra 63% | Study 1, Discussion, p. 2236 | "the large majority (84%) anticipated that they would reject that individual. However, when participants were presented with this dilemma in what they believed to be a real situation, only 63% actually rejected" |
-| Estudo 2: aceitaram trocar contato com o pretendente que tinha traços eliminatórios, condição hipotética | 46% (24 de 52) | Study 2, Results, p. 2238 | "24 of the 52 participants in the hypothetical condition chose to exchange contact information with the potential date (46%)" |
-| Estudo 2: aceitaram trocar contato, condição real | 74% (35 participantes) | Study 2, Results, p. 2238 | "35 of the participants in the real condition chose to exchange contact information (74%)" |
-| Estudo 2: diferença entre as condições | χ²(1) = 8,22; p = 0,004; n = 99 | Study 2, Results, p. 2238 | "χ2(1, N = 99) = 8.22, p = .004" |
+| Estudo 1: aceitaram trocar contato com o pretendente pouco atraente, entre quem só imaginou a situação | 16% (10 de 61) | Study 1, Results, p. 2235 | "Only 10 of the 61 participants in the hypothetical condition chose to exchange contact information with the unattractive potential date (16%)" |
+| Estudo 1: aceitaram trocar contato com o mesmo pretendente, entre quem acreditou que a situação era real | 37% (26 de 71) | Study 1, Results, p. 2235 | "26 of the 71 participants in the real condition chose to exchange contact information (37%)" |
+| Estudo 1: teste da diferença entre os dois grupos | significativa: χ²(1) = 6,77; p = 0,009; n = 132 | Study 1, Results, p. 2235 | "χ2(1, N = 132) = 6.77, p = .009" |
+| Estudo 1: rejeitaram o pretendente, quem imaginou a situação contra quem acreditou que era real | 84% contra 63% | Study 1, Discussion, p. 2236 | "the large majority (84%) anticipated that they would reject that individual. However, when participants were presented with this dilemma in what they believed to be a real situation, only 63% actually rejected" |
+| Estudo 2: aceitaram trocar contato com o pretendente que tinha traços eliminatórios, entre quem só imaginou a situação | 46% (24 de 52) | Study 2, Results, p. 2238 | "24 of the 52 participants in the hypothetical condition chose to exchange contact information with the potential date (46%)" |
+| Estudo 2: aceitaram trocar contato com esse tipo de pretendente, entre quem acreditou que a situação era real | 74% (35 participantes) | Study 2, Results, p. 2238 | "35 of the participants in the real condition chose to exchange contact information (74%)" |
+| Estudo 2: teste da diferença entre os dois grupos | significativa: χ²(1) = 8,22; p = 0,004; n = 99 | Study 2, Results, p. 2238 | "χ2(1, N = 99) = 8.22, p = .004" |
 
 Nos dois estudos, quem acreditava na situação real relatou mais vontade de não magoar o pretendente do que quem só a imaginava (Tabelas 1 e 3), e essa vontade explicou parte da diferença entre as condições. No Estudo 1, essa mediação foi [[significativa]], e o interesse genuíno no encontro também pesou, de forma marginal. No Estudo 2, a mediação pelos motivos voltados ao outro foi só marginal, e o interesse genuíno não mudou entre as condições.
 

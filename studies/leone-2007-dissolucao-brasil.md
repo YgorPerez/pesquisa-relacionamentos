@@ -31,19 +31,19 @@ Com o calendário mês a mês da DHS brasileira de 1996, que registra uniões, g
 |---|---|---|---|
 | Amostra da DHS de 1996 | mais de 12.000 mulheres de 15 a 49 anos | Seção 3.1 | "The 1996 BDHS interviewed a representative sample of more than 12,000 eligible women aged between 15 and 49 years." |
 | Mulheres na análise | 7.517 de 8.663 elegíveis | Seção 3.1 | "Out of 8,663 eligible women of the initial sample (that were not sterilised and that had experienced sex), 7,517 women were selected" |
-| Mulheres com mais de uma união excluídas por falta de datas | 46% (557) só no grupo que começou a última união antes do calendário | Seção 3.2 | "(557 women, 46 per cent of the women that experience more than one union)" |
-| Segunda união ou mais: coeficiente (log do risco) nos três modelos | 2,077; 2,607; 2,712 | Tabela 3 | "Two or more unions 2.077 (0.111) 2.607 (0.157) 2.712" |
+| Mulheres com mais de uma união excluídas por falta de datas | 46% (557) só no grupo que começou a última união antes do período coberto pela pesquisa | Seção 3.2 | "(557 women, 46 per cent of the women that experience more than one union)" |
+| Mulheres na segunda união ou mais: risco de separar, em coeficiente (log do risco; acima de zero indica mais risco), nos três modelos | 2,077; 2,607; 2,712 | Tabela 3 | "Two or more unions 2.077 (0.111) 2.607 (0.157) 2.712" |
 | Leitura das autoras sobre a segunda união | risco maior de separar | Seção 5 | "women who are in their second or higher order union have a higher probability of splitting up with their partners" |
-| Escolaridade, por ano completo (log do risco) | 0,068; 0,093; 0,102 | Tabela 3 | "Education 0.068 (0.011) 0.093 (0.014) 0.102" |
-| Residência urbana (log do risco) | 0,718; 0,844; 0,844 | Tabela 3 | "Urban 0.718 (0.126) 0.844 (0.149) 0.844" |
-| Escolaridade e cidade | as duas associadas a mais dissolução | Seção 5 | "education and urban residence are both positively associated with the risk of dissolution" |
+| Cada ano completo de estudo: risco de separar, em coeficiente (log do risco; acima de zero indica mais risco) | 0,068; 0,093; 0,102 | Tabela 3 | "Education 0.068 (0.011) 0.093 (0.014) 0.102" |
+| Morar em área urbana: risco de separar, em coeficiente (log do risco; acima de zero indica mais risco) | 0,718; 0,844; 0,844 | Tabela 3 | "Urban 0.718 (0.126) 0.844 (0.149) 0.844" |
+| Mais estudo e morar em área urbana | as duas associadas a mais dissolução | Seção 5 | "education and urban residence are both positively associated with the risk of dissolution" |
 | Primeira relação sexual antes dos 18 anos | risco maior de dissolução | Seção 5 | "Women that had their first sexual intercourse before the age of 18 show a higher risk of union dissolution." |
-| Grávida e com filhos: coeficientes (log do risco) nos três modelos (efeitos fixos, efeito aleatório, conjunto); o Trecho intercala as duas linhas | grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069 | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
+| Estar grávida e ter filhos: risco de separar, em coeficiente (log do risco; acima de zero indica mais risco), nos três modelos (efeitos fixos, efeito aleatório, conjunto); o Trecho intercala as duas linhas | grávida 1,008, 1,377 e 0,962; com filhos 0,914, 1,394 e 1,069 | Tabela 3 | "Pregnant With children 1.008 (0.117) 0.914 (0.092) 1.377 (0.130) 1.394 (0.121) 0.962 (0.141) 1.069" |
 | Gravidez | risco maior de separar durante a gestação | Seção 5 | "During pregnancy there is a higher risk of union dissolution." |
 | Filhos | risco maior de dissolução para quem tem filhos, ao contrário de estudos anteriores | Seção 5 | "Despite previous findings, our model shows a higher risk of dissolution for couples that have children." |
 | Primeiro filho fora do casamento | sem efeito significativo | Seção 5 | "whether the first birth took place 'out of wedlock' has no significant impact on the risk of future union dissolution" |
-| Idade da mulher, com a heterogeneidade controlada | risco maior nas muito jovens e nas mais velhas, menor por volta dos 25 anos | Seção 5 | "higher risks of dissolution are found among very young women and older women, with the lowest risks at ages about 25 years" |
-| Correlação entre a propensão a separar e a de engravidar | 0,659 | Seção 5 | "the joint estimation revealed a positive correlation between ε d and ε c of 0.659" |
+| Risco de separar conforme a idade da mulher, descontadas as diferenças não medidas entre as mulheres | risco maior nas muito jovens e nas mais velhas, menor por volta dos 25 anos | Seção 5 | "higher risks of dissolution are found among very young women and older women, with the lowest risks at ages about 25 years" |
+| Mulheres com tendência a separar, por fatores não medidos, também tendem a engravidar mais rápido: correlação entre as duas tendências | 0,659 | Seção 5 | "the joint estimation revealed a positive correlation between ε d and ε c of 0.659" |
 | Uniões consensuais no Brasil | os parceiros se chamam de marido e mulher | Seção 2 | "the partners in Brazilian consensual unions describe themselves as husband and wife" |
 
 ## Limitações
