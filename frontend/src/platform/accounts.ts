@@ -1,6 +1,6 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import type { MethodNotice } from '#/content/method-notice'
+import type { AccountMethods, MethodNotice } from '#/content/method-notice'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
@@ -13,7 +13,9 @@ import {
   consumeGoogleLink,
   emailLink,
   linkGoogle,
+  removeMethod,
   requestEmailLink,
+  storedMethods,
 } from './login-methods'
 import {
   deliverPasswordReset,
@@ -330,7 +332,9 @@ class AccountService {
           400,
           'Não foi possível entrar. Volte à conta e tente de novo.',
         )
-      return link ? this.finishLink(request, link, sub) : this.session(request, sub)
+      return link
+        ? this.finishLink(request, link, sub)
+        : this.session(request, sub)
     } catch {
       // Provider responses, codes, tokens and identity must never reach logs.
       return response(
@@ -451,10 +455,59 @@ class AccountService {
       return this.linkGoogle(request, account)
     if (url.pathname === '/auth/add-email' && request.method === 'POST')
       return this.addEmail(request, account)
+    if (url.pathname === '/auth/remove-method' && request.method === 'POST')
+      return this.removeMethod(request, account)
     return response(404, 'Página não encontrada.')
   }
   private sessionHash(request: Request) {
     return hash(this.readCookie(request, this.sessionName) ?? '')
+  }
+  private isCurator(account: Account) {
+    return (
+      account.googleSub !== null &&
+      account.googleSub === this.options.curatorSub
+    )
+  }
+  /** What the account page may know: the reader's own address, no subject. */
+  methods(account: Account): AccountMethods {
+    const db = this.database()
+    try {
+      const { email, pendingEmail } = storedMethods(db, account.id, this.now())
+      return {
+        google: account.googleSub !== null,
+        email,
+        pendingEmail,
+        canLinkGoogle: account.googleSub === null && this.configured(),
+        canChangePassword: email !== null && this.emailConfigured(),
+        canAddEmail: email === null && this.mailConfigured(),
+        curator: this.isCurator(account),
+      }
+    } finally {
+      db.close()
+    }
+  }
+  /** `CURATOR_GOOGLE_SUB` names the curator, so removing Google leaves the desk:
+   * the form asks for that to be said, and the server holds it to it. */
+  private async removeMethod(request: Request, account: Account) {
+    const form = await readForm(request)
+    if (form instanceof Response) return form
+    const method = form.get('method')
+    if (method !== 'google' && method !== 'email')
+      return response(400, 'Método desconhecido.')
+    if (
+      method === 'google' &&
+      this.isCurator(account) &&
+      form.get('lose-curator') !== 'on'
+    )
+      return noticeRedirect('perde-curadoria')
+    const db = this.database()
+    try {
+      return noticeRedirect(
+        removeMethod(db, account.id, this.sessionHash(request), method),
+      )
+    } finally {
+      db.close()
+    }
   }
   private async addEmail(request: Request, account: Account) {
     const form = await readForm(request)
@@ -488,7 +541,10 @@ class AccountService {
     try {
       const link = emailLink(db, token, this.now())
       if (!link)
-        return emailConfirmationPage({ message: EMAIL_CONFIRMATION.invalid }, 400)
+        return emailConfirmationPage(
+          { message: EMAIL_CONFIRMATION.invalid },
+          400,
+        )
       if (link.accountId !== account?.id)
         return emailConfirmationPage(
           { message: EMAIL_CONFIRMATION.otherAccount },
@@ -631,13 +687,7 @@ class AccountService {
     try {
       const db = this.database()
       try {
-        await deliverPasswordReset(
-          db,
-          request,
-          email,
-          this.mail(),
-          this.now(),
-        )
+        await deliverPasswordReset(db, request, email, this.mail(), this.now())
       } finally {
         db.close()
       }
@@ -688,6 +738,7 @@ function accountsFromEnvironment() {
     emailRateLimitKey: env.EMAIL_RATE_LIMIT_KEY,
     resendApiKey: env.RESEND_API_KEY,
     emailFrom: env.EMAIL_FROM,
+    curatorSub: env.CURATOR_GOOGLE_SUB,
   })
 }
 /** A POST from this site's own pages. */
@@ -703,6 +754,10 @@ export function getCurrentAccount(request: Request): Account | null {
 export function deletionNoticeCookie(request: Request) {
   return accountsFromEnvironment().deletionNoticeCookie(request)
 }
+/** See `AccountService.methods`. */
+export function getAccountMethods(account: Account) {
+  return accountsFromEnvironment().methods(account)
+}
 export function handleAccountRequest(request: Request) {
   return accountsFromEnvironment().handle(request)
 }
@@ -716,6 +771,11 @@ export function pruneEmailRateLimits() {
       Date.now(),
     )
     db.prepare('DELETE FROM password_resets WHERE expires_at <= ?').run(
+      Date.now(),
+    )
+    // A link's address and hashed password wait here no longer than this hour.
+    db.prepare('DELETE FROM email_links WHERE expires_at <= ?').run(Date.now())
+    db.prepare('DELETE FROM google_link_attempts WHERE expires_at <= ?').run(
       Date.now(),
     )
   } finally {

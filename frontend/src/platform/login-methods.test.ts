@@ -9,6 +9,7 @@ import { once } from 'node:events'
 import { DatabaseSync } from 'node:sqlite'
 import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
 import { createAccounts } from './accounts'
+import { createPublicComments } from './public-comments'
 
 const CURATOR = 'curator-subject'
 const OLD = 'old password'
@@ -56,6 +57,8 @@ beforeEach(async () => {
     )
   })
   resend = createServer(async (request, response) => {
+    // Tools on this machine probe any port that opens; only the app posts here.
+    if (request.method !== 'POST') return response.end()
     let body = ''
     for await (const chunk of request) body += String(chunk)
     mails.push(JSON.parse(body) as Mail)
@@ -117,9 +120,10 @@ const register = async (over: Record<string, string> = {}) =>
 const login = (email: string, password: string) =>
   send('login', { email, password })
 const noticeOf = (response: Response) =>
-  new URL(response.headers.get('location')!, 'https://example.org').searchParams.get(
-    'metodo',
-  )
+  new URL(
+    response.headers.get('location')!,
+    'https://example.org',
+  ).searchParams.get('metodo')
 
 test('changing the password asks for the current one and ends only the other sessions', async () => {
   const here = await register()
@@ -148,9 +152,9 @@ test('a new password keeps the rules of sign-up, and a pending reset link dies w
   const here = await register()
   await send('forgot', { email: registration.email })
   await expect.poll(() => mails.length).toBe(1)
-  const token = new URL(mails[0]!.text.match(/https:\/\/\S+/)![0]).searchParams.get(
-    'token',
-  )!
+  const token = new URL(
+    mails[0]!.text.match(/https:\/\/\S+/)![0],
+  ).searchParams.get('token')!
   const short = await send(
     'change-password',
     { current: OLD, password: 'short' },
@@ -158,16 +162,18 @@ test('a new password keeps the rules of sign-up, and a pending reset link dies w
   )
   expect(noticeOf(short)).toBe('senha-curta')
   await send('change-password', { current: OLD, password: NEW }, here)
-  expect((await send('reset', { token, password: 'third password' })).status).toBe(
-    400,
-  )
+  expect(
+    (await send('reset', { token, password: 'third password' })).status,
+  ).toBe(400)
 })
 
 /** A Google account of its own, through the real login. */
 async function googleLogin(sub: string) {
   subject = sub
   const start = await open('/auth/google')
-  const state = new URL(start.headers.get('location')!).searchParams.get('state')
+  const state = new URL(start.headers.get('location')!).searchParams.get(
+    'state',
+  )
   return signedIn(
     await open(
       `/auth/callback?code=code&state=${state}`,
@@ -239,9 +245,9 @@ test('the callback of a link belongs to the session that started it', async () =
   expect(who(reader)?.googleSub).toBeNull()
   expect(who(stranger)?.googleSub).toBeNull()
   // The attempt was consumed: the same callback does not work a second time.
-  expect((await open(attempt.callback, `${reader}; ${attempt.oauth}`)).status).toBe(
-    400,
-  )
+  expect(
+    (await open(attempt.callback, `${reader}; ${attempt.oauth}`)).status,
+  ).toBe(400)
 })
 
 test('a reader who logged out on the way to Google gets neither a link nor a session', async () => {
@@ -257,16 +263,16 @@ test('a reader who logged out on the way to Google gets neither a link nor a ses
   const anonymous = await open(withoutCookie.callback, withoutCookie.oauth)
   expect(noticeOf(anonymous)).toBe('google-falhou')
   expect(cookieOf(anonymous)).toBeUndefined()
-  expect(databaseRows('SELECT 1 FROM accounts WHERE google_sub IS NOT NULL')).toEqual(
-    [],
-  )
+  expect(
+    databaseRows('SELECT 1 FROM accounts WHERE google_sub IS NOT NULL'),
+  ).toEqual([])
 })
 
 test('another site cannot start a link, a link attempt dies in ten minutes, and it is no login', async () => {
   const here = await register()
-  expect(
-    (await send('link-google', {}, here, 'https://evil.org')).status,
-  ).toBe(403)
+  expect((await send('link-google', {}, here, 'https://evil.org')).status).toBe(
+    403,
+  )
   expect((await send('link-google', {})).status).toBe(401)
   const attempt = await startLink(here)
   const asLogin = await open(attempt.callback, attempt.oauth)
@@ -285,14 +291,16 @@ async function askEmail(email = 'added@example.org', sub = 'google-reader') {
   const asked = await send('add-email', { email, password: NEW }, here)
   expect(noticeOf(asked)).toBe('email-enviado')
   const link = confirmationLink(mails.at(-1)!)
-  return { here, token: link.searchParams.get('token')!, path: link.pathname + link.search }
+  return {
+    here,
+    token: link.searchParams.get('token')!,
+    path: link.pathname + link.search,
+  }
 }
 
 test('a Google account adds an email: nothing joins until the link is opened and confirmed by the same account', async () => {
   const other = await googleLogin('google-reader')
-  const { here, path: page, token } = await askEmail(
-    ' ADDED@example.org ',
-  )
+  const { here, path: page, token } = await askEmail(' ADDED@example.org ')
   expect(who(other)).not.toBeNull()
   expect(mails[0]!.to).toBe('added@example.org')
   expect((await login('added@example.org', NEW)).status).toBe(400)
@@ -316,4 +324,240 @@ test('a Google account adds an email: nothing joins until the link is opened and
     who(here)?.id,
   )
   expect(databaseRows('SELECT 1 FROM email_links')).toEqual([])
+})
+
+test('the link does nothing for a mail scanner, a stranger, or another account, and stays good for its owner', async () => {
+  const { here, path: page, token } = await askEmail()
+  const stranger = await register()
+  for (const cookie of ['', stranger]) {
+    const shown = await open(page, cookie)
+    expect(shown.status).toBe(403)
+    expect(await shown.text()).not.toContain('added@example.org')
+    expect((await send('confirm-email', { token }, cookie)).status).toBe(403)
+  }
+  expect(
+    databaseRows(
+      "SELECT 1 FROM email_credentials WHERE email = 'added@example.org'",
+    ),
+  ).toEqual([])
+  expect(noticeOf(await send('confirm-email', { token }, here))).toBe(
+    'email-ligado',
+  )
+})
+
+test('the link is single use, dies in 30 minutes, a new request replaces it, and another site cannot confirm', async () => {
+  const first = await askEmail()
+  const second = await send(
+    'add-email',
+    { email: 'typo-fixed@example.org', password: NEW },
+    first.here,
+  )
+  expect(noticeOf(second)).toBe('email-enviado')
+  expect((await open(first.path, first.here)).status).toBe(400)
+  const token = confirmationLink(mails.at(-1)!).searchParams.get('token')!
+  expect(
+    (await send('confirm-email', { token }, first.here, 'https://evil.org'))
+      .status,
+  ).toBe(403)
+  now += 30 * 60_000
+  expect((await send('confirm-email', { token }, first.here)).status).toBe(400)
+  expect(databaseRows('SELECT 1 FROM email_credentials')).toEqual([])
+  const fresh = await send(
+    'add-email',
+    { email: 'typo-fixed@example.org', password: NEW },
+    first.here,
+  )
+  expect(noticeOf(fresh)).toBe('email-enviado')
+  const live = confirmationLink(mails.at(-1)!).searchParams.get('token')!
+  const results = await Promise.all([
+    send('confirm-email', { token: live }, first.here),
+    send('confirm-email', { token: live }, first.here),
+  ])
+  expect(results.map((result) => result.status).sort()).toEqual([303, 400])
+  expect(
+    (await send('confirm-email', { token: live }, first.here)).status,
+  ).toBe(400)
+})
+
+test('an email that already has its own account is refused, and nothing is sent to it', async () => {
+  await register()
+  const here = await googleLogin('google-reader')
+  const refused = await send(
+    'add-email',
+    { email: registration.email, password: NEW },
+    here,
+  )
+  expect(noticeOf(refused)).toBe('email-em-uso')
+  expect(mails).toEqual([])
+  expect(who(here)?.googleSub).toBe('google-reader')
+})
+
+test('an email taken between the request and the link: the unique address decides and the reader hears why', async () => {
+  const { here, token } = await askEmail('contested@example.org')
+  const rival = await register({ email: 'contested@example.org' })
+  const late = await send('confirm-email', { token }, here)
+  expect(noticeOf(late)).toBe('email-em-uso')
+  expect(who(here)?.googleSub).toBe('google-reader')
+  expect(who(signedIn(await login('contested@example.org', OLD)))?.id).toBe(
+    who(rival)?.id,
+  )
+  expect((await send('confirm-email', { token }, here)).status).toBe(400)
+})
+
+test('adding an email takes a valid address and password, is limited, and tells when the mail did not go', async () => {
+  const here = await googleLogin('google-reader')
+  const add = (email: string, password = NEW) =>
+    send('add-email', { email, password }, here)
+  expect(noticeOf(await add('not-an-email'))).toBe('email-invalido')
+  expect(noticeOf(await add('reader@example.org', 'short'))).toBe(
+    'email-invalido',
+  )
+  mailFails = true
+  expect(noticeOf(await add('reader@example.org'))).toBe('email-nao-enviado')
+  expect(databaseRows('SELECT 1 FROM email_links')).toEqual([])
+  mailFails = false
+  for (let attempt = 0; attempt < 9; attempt++) await add('reader@example.org')
+  expect(noticeOf(await add('reader@example.org'))).toBe('muitas-tentativas')
+  expect(mails).toHaveLength(10)
+})
+
+/** One account with both methods, signed in twice. */
+async function bothMethods(over: Record<string, string> = {}) {
+  const here = await register(over)
+  const attempt = await startLink(here)
+  subject = 'google-of-the-reader'
+  await open(attempt.callback, `${here}; ${attempt.oauth}`)
+  const email = over['email'] ?? registration.email
+  return { here, other: signedIn(await login(email, OLD)) }
+}
+
+test('removing Google keeps the email, ends the other sessions, and frees nothing else', async () => {
+  const { here, other } = await bothMethods()
+  const removed = await send('remove-method', { method: 'google' }, here)
+  expect(noticeOf(removed)).toBe('metodo-removido')
+  expect(who(here)).toMatchObject({ googleSub: null, nickname: 'Leitora' })
+  expect(who(other)).toBeNull()
+  expect((await login(registration.email, OLD)).status).toBe(303)
+})
+
+test('removing the email keeps Google, and its address and pending reset go with it', async () => {
+  const { here, other } = await bothMethods()
+  await send('forgot', { email: registration.email })
+  await expect.poll(() => mails.length).toBe(1)
+  const removed = await send('remove-method', { method: 'email' }, here)
+  expect(noticeOf(removed)).toBe('metodo-removido')
+  expect(who(other)).toBeNull()
+  expect(who(here)?.googleSub).toBe('google-of-the-reader')
+  expect((await login(registration.email, OLD)).status).toBe(400)
+  expect(databaseRows('SELECT 1 FROM email_credentials')).toEqual([])
+  expect(databaseRows('SELECT 1 FROM password_resets')).toEqual([])
+  const reused = await send('register', { ...registration, nickname: 'Outra' })
+  expect(reused.status).toBe(303)
+})
+
+test('the last method never goes, also when two sessions remove the two methods at once', async () => {
+  const email = await register()
+  const refused = await send('remove-method', { method: 'email' }, email)
+  expect(noticeOf(refused)).toBe('ultimo-metodo')
+  expect((await login(registration.email, OLD)).status).toBe(303)
+  expect(
+    noticeOf(await send('remove-method', { method: 'google' }, email)),
+  ).toBe('ultimo-metodo')
+  const google = await googleLogin('only-google')
+  expect(
+    noticeOf(await send('remove-method', { method: 'google' }, google)),
+  ).toBe('ultimo-metodo')
+  expect(who(google)?.googleSub).toBe('only-google')
+
+  const { here, other } = await bothMethods({
+    email: 'both@example.org',
+    nickname: 'Ambas',
+  })
+  const results = await Promise.all([
+    send('remove-method', { method: 'google' }, here),
+    send('remove-method', { method: 'email' }, other),
+  ])
+  expect(results.map(noticeOf).sort()).toEqual([
+    'metodo-removido',
+    'ultimo-metodo',
+  ])
+  const left = databaseRows(
+    `SELECT id FROM accounts a WHERE a.nickname = 'Ambas' AND (a.google_sub IS NOT NULL OR EXISTS (SELECT 1 FROM email_credentials c WHERE c.account_id = a.id))`,
+  )
+  expect(left).toHaveLength(1)
+})
+
+test('a method name outside the two is refused', async () => {
+  const here = await register()
+  expect(
+    (await send('remove-method', { method: 'password' }, here)).status,
+  ).toBe(400)
+})
+
+const desk = (cookie: string) =>
+  createPublicComments({
+    databasePath: path,
+    current: (request) => accounts.current(request),
+    curator: () => CURATOR,
+  }).curatorDesk(
+    new Request('https://example.org/curadoria', { headers: { cookie } }),
+  )
+
+test('the curator desk opens from any method of the curator account, and leaves with its Google subject', async () => {
+  const { here: google } = await askEmail('curator@example.org', CURATOR)
+  const token = confirmationLink(mails.at(-1)!).searchParams.get('token')!
+  await send('confirm-email', { token }, google)
+  const password = signedIn(await login('curator@example.org', NEW))
+  expect(desk(google)).not.toBeNull()
+  expect(desk(password)).not.toBeNull()
+
+  const unchecked = await send('remove-method', { method: 'google' }, password)
+  expect(noticeOf(unchecked)).toBe('perde-curadoria')
+  expect(desk(password)).not.toBeNull()
+
+  const removed = await send(
+    'remove-method',
+    { method: 'google', 'lose-curator': 'on' },
+    password,
+  )
+  expect(noticeOf(removed)).toBe('metodo-removido')
+  expect(who(password)).toMatchObject({ googleSub: null })
+  expect(desk(password)).toBeNull()
+})
+
+test('the page learns the methods, never the subject, and only what this server can do', async () => {
+  const { here, token } = await askEmail('pending@example.org', CURATOR)
+  const account = who(here)!
+  expect(accounts.methods(account)).toEqual({
+    google: true,
+    email: null,
+    pendingEmail: 'pending@example.org',
+    canLinkGoogle: false,
+    canChangePassword: false,
+    canAddEmail: true,
+    curator: true,
+  })
+  now += 30 * 60_000
+  expect(accounts.methods(account).pendingEmail).toBeNull()
+  await send('confirm-email', { token }, here)
+  const reader = who(await register())!
+  expect(accounts.methods(reader)).toEqual({
+    google: false,
+    email: registration.email,
+    pendingEmail: null,
+    canLinkGoogle: true,
+    canChangePassword: true,
+    canAddEmail: false,
+    curator: false,
+  })
+  const emailOnly = createAccounts({
+    databasePath: path,
+    origin: 'https://example.org',
+    emailRateLimitKey: 'test-key',
+  })
+  expect(emailOnly.methods(reader)).toMatchObject({
+    canLinkGoogle: false,
+    canAddEmail: false,
+    canChangePassword: true,
+  })
 })

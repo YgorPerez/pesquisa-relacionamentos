@@ -38,7 +38,8 @@ localhost for development. POSTs must carry the configured origin.
 server-only account lookup. It returns the account id, Google subject and
 nickname. A null nickname means the reader has not completed onboarding; public
 actions must require a nickname. Never return the subject to the browser.
-The account loader projects only the nickname and disables response caching.
+The account loader projects only the nickname and, for `/conta`, the reader's own
+methods without the subject, and disables response caching.
 
 `googleSub` is nullable. `email_credentials` holds a unique normalized email
 (trimmed, lowercased) in plain text and a salted scrypt hash, and cascades on
@@ -58,6 +59,33 @@ periods. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
 is used. The deploy binds app ports to loopback, so visitors cannot bypass
 Nginx to choose that final address. Missing or invalid addresses share a bucket.
 The email is used only for login and recovery, not shown in the curator desk.
+
+A signed-in reader links and removes methods in `/conta`
+(`platform/login-methods.ts`); accounts never merge. Linking Google starts by POST
+and lives in `google_link_attempts`, a table logins and the previous image do not
+read, so the callback of a link can never start a session. The attempt is bound to
+the hash of the session that began it, and only that session, still alive, finishes
+it. The unique subject refuses a Google that has its own account.
+
+Adding an email takes a password, and the address and its scrypt hash wait in
+`email_links`, one row per account, for 30 minutes, under a SHA-256 hash of a
+256-bit token. A new request replaces the row. Opening the link only shows a page,
+because mail scanners open links too. Its form spends the token, and only for the
+account that asked, signed in at that moment. If the address found an account
+since the request, the unique email decides, the link is spent and the reader hears
+why. If the mail does not leave, the row goes and the reader is told.
+
+Adding or removing a method and changing the password end the account's other
+sessions and keep this one. Removing a method checks in one statement that another
+remains, so two removals at once leave one. Removing the email or changing the
+password also voids a live reset link. Changing the password requires the current
+one, under the login limit.
+
+The session resolves to the account, so `/curadoria` opens from any method of the
+account holding `CURATOR_GOOGLE_SUB`. The subject still names the curator: removing
+Google leaves the desk. `/conta` warns about that and the server requires
+`lose-curator`, so it cannot happen by accident. Linking the same Google restores
+it. A Google login after the removal opens a new account, which is then the curator's.
 
 The first nickname records the time of the adult declaration and rules acceptance
 and the rules version. Age is self-declared. Accounts do not send the device's

@@ -170,6 +170,61 @@ export function confirmEmailLink(
   })
 }
 
+/** The check and the removal are one statement: two removals at once cannot each
+ * count on the method the other is taking. */
+export function removeMethod(
+  db: DatabaseSync,
+  accountId: number,
+  sessionHash: string,
+  method: 'google' | 'email',
+): MethodNotice {
+  // Zeroes the address, so it does not live on in the file's free pages.
+  db.exec('PRAGMA secure_delete = ON')
+  return transaction(db, () => {
+    const removed =
+      method === 'google'
+        ? db
+            .prepare(
+              `UPDATE accounts SET google_sub = NULL WHERE id = ? AND google_sub IS NOT NULL
+              AND EXISTS (SELECT 1 FROM email_credentials WHERE account_id = accounts.id)`,
+            )
+            .run(accountId)
+        : db
+            .prepare(
+              `DELETE FROM email_credentials WHERE account_id = ?
+              AND EXISTS (SELECT 1 FROM accounts WHERE id = account_id AND google_sub IS NOT NULL)`,
+            )
+            .run(accountId)
+    if (!removed.changes) return 'ultimo-metodo'
+    endOtherSessions(db, accountId, sessionHash)
+    if (method === 'email')
+      db.prepare('DELETE FROM password_resets WHERE account_id = ?').run(
+        accountId,
+      )
+    return 'metodo-removido'
+  })
+}
+
+/** What `/conta` shows about this account's methods. */
+export function storedMethods(
+  db: DatabaseSync,
+  accountId: number,
+  now: number,
+) {
+  const email = db
+    .prepare('SELECT email FROM email_credentials WHERE account_id = ?')
+    .get(accountId)?.email
+  const pending = db
+    .prepare(
+      'SELECT email FROM email_links WHERE account_id = ? AND expires_at > ?',
+    )
+    .get(accountId, now)?.email
+  return {
+    email: typeof email === 'string' ? email : null,
+    pendingEmail: typeof pending === 'string' ? pending : null,
+  }
+}
+
 export async function changePassword(
   db: DatabaseSync,
   request: Request,

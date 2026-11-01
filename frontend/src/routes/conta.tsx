@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { readAccountPage } from '#/content/account'
+import { isMethodNotice, type MethodNotice } from '#/content/method-notice'
 import {
   NICKNAME_INVALID,
   NICKNAME_TAKEN,
@@ -10,10 +11,13 @@ import { AccountPage } from '#/ui/account'
 export const Route = createFileRoute('/conta')({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { recusa?: NicknameRefusal } =>
-    search['recusa'] === NICKNAME_INVALID || search['recusa'] === NICKNAME_TAKEN
+  ): { recusa?: NicknameRefusal; metodo?: MethodNotice } => ({
+    ...(search['recusa'] === NICKNAME_INVALID ||
+    search['recusa'] === NICKNAME_TAKEN
       ? { recusa: search['recusa'] }
-      : {},
+      : {}),
+    ...(isMethodNotice(search['metodo']) ? { metodo: search['metodo'] } : {}),
+  }),
   loader: () => readAccountPage(),
   head: () => ({
     meta: [
@@ -24,9 +28,15 @@ export const Route = createFileRoute('/conta')({
   component: Account,
 })
 function Account() {
-  const { account, deleted } = Route.useLoaderData()
-  const { recusa } = Route.useSearch()
+  const { account, methods, deleted } = Route.useLoaderData()
+  const { recusa, metodo } = Route.useSearch()
   return (
-    <AccountPage account={account} deleted={deleted} nicknameRefusal={recusa} />
+    <AccountPage
+      account={account}
+      deleted={deleted}
+      nicknameRefusal={recusa}
+      methods={methods}
+      methodNotice={metodo}
+    />
   )
 }

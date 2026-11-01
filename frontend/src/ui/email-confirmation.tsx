@@ -27,9 +27,15 @@ export function EmailConfirmation({
             <Lead>{EMAIL_CONFIRMATION.explanation(email)}</Lead>
             <Section>
               <p>{EMAIL_CONFIRMATION.note}</p>
-              <form action="/auth/confirm-email" method="post" className="mt-md">
+              <form
+                action="/auth/confirm-email"
+                method="post"
+                className="mt-md"
+              >
                 <input type="hidden" name="token" value={token} />
-                <SiteButton type="submit">{EMAIL_CONFIRMATION.submit}</SiteButton>
+                <SiteButton type="submit">
+                  {EMAIL_CONFIRMATION.submit}
+                </SiteButton>
               </form>
             </Section>
           </>
