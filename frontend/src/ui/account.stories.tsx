@@ -19,6 +19,9 @@ export const SyncActive: Story = {
 export const SyncDeclined: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'declined' },
 }
+export const SyncFailed: Story = {
+  args: { account: { nickname: 'Leitora' }, syncStatus: 'failed' },
+}
 export const SyncDevice: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'device' },
 }

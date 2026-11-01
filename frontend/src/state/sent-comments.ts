@@ -1,15 +1,17 @@
 // The Comentários sent from this browser (#347, spec #346): each one the
 // server took, with the number of the issue it opened in the private sources
-// repo (ADR 0043). They live only in this browser, like the Grifos: the
-// reader finds them again in "Seus trechos" (`/trechos`), and nobody else
-// sees them. A comment sent before this store existed is not here.
+// repo (ADR 0043). They live in this browser, like the Grifos, and reach the
+// account only after the reader agrees to sync (ADR 0046). The reader finds
+// them again in "Seus trechos" (`/trechos`). A comment sent before this store
+// existed is not here.
 //
 // The quote is kept as a Grifo keeps it (`highlight-record.ts`), so its page
 // looks for it the same way and marks it `changed` when it is gone. "Tirar
 // da lista" forgets the record here; the issue stays. The edit key the send
-// replied with stays here too, and only here (#442).
+// replied with stays here too (#442), and syncs with the rest of the record.
 import { useSyncExternalStore } from 'react'
 import { markedFound } from './highlight-record'
+import { notifyRemoved } from './storage-events'
 import type { IssueStatus } from '#/content/comment-status'
 import type { EditInput, EditReply } from '#/content/comment-issue'
 
@@ -88,7 +90,9 @@ export async function editSentComment(
 /** "Tirar da lista": forgets the entry on this device. */
 export function removeSentComment(id: string) {
   const saved = readSentComments()
-  if (saved.some((c) => c.id === id)) save(saved.filter((c) => c.id !== id))
+  if (!saved.some((c) => c.id === id)) return
+  notifyRemoved('comment', id)
+  save(saved.filter((c) => c.id !== id))
 }
 
 /** After the page at `path` looked for its comments' quotes: the ones in

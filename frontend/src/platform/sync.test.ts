@@ -58,6 +58,74 @@ test('only completed sessions may read or write; consent is needed before any da
   expect(await (await call(1)).json()).toMatchObject({ consent: false })
 })
 
+test('declining can later become accepting, but accepting is not undone by a stale refusal', async () => {
+  await call(1, { consent: false })
+  expect(await (await call(1, { consent: true })).json()).toMatchObject({
+    consent: true,
+    data: {},
+  })
+  expect(await (await call(1, { consent: false })).json()).toMatchObject({
+    consent: true,
+  })
+})
+
+test('a removal stays, without the removed text, and an older copy does not revive it', async () => {
+  await call(1, { consent: true })
+  const note = 'note:a'
+  await call(1, {
+    accountId: 1,
+    data: { [note]: { at: 10, value: { text: 'íntima' } } },
+  })
+  await call(1, { accountId: 1, data: { [note]: { at: 20, value: null } } })
+  const reply = await call(1, {
+    accountId: 1,
+    data: { [note]: { at: 15, value: { text: 'íntima' } } },
+  })
+  expect(await reply.json()).toMatchObject({
+    data: { [note]: { at: 20, value: null } },
+  })
+  const db = openDatabase()
+  const row = db.prepare('SELECT data FROM account_sync').get()
+  db.close()
+  expect(String(row?.data)).not.toContain('íntima')
+})
+
+test('a time from the future is held to the server clock, so a later edit wins', async () => {
+  await call(1, { consent: true })
+  vi.useFakeTimers({ toFake: ['Date'], now: 1_000 })
+  const year = 365 * 24 * 60 * 60 * 1000
+  await call(1, {
+    accountId: 1,
+    data: { profile: { at: 1_000 + year, value: { age: 24 } } },
+  })
+  vi.setSystemTime(2_000)
+  const reply = await call(1, {
+    accountId: 1,
+    data: { profile: { at: 2_000, value: { age: 42 } } },
+  })
+  vi.useRealTimers()
+  expect(await reply.json()).toMatchObject({
+    data: { profile: { at: 2_000, value: { age: 42 } } },
+  })
+})
+
+test('an account that would pass the storage limit is refused and keeps what it had', async () => {
+  await call(1, { consent: true })
+  const notes = (from: number) =>
+    Object.fromEntries(
+      Array.from({ length: 3000 }, (_, i) => [
+        `note:${from + i}`,
+        { at: 1, value: { text: 'x'.repeat(500) } },
+      ]),
+    )
+  expect((await call(1, { accountId: 1, data: notes(0) })).status).toBe(200)
+  expect((await call(1, { accountId: 1, data: notes(3000) })).status).toBe(200)
+  expect((await call(1, { accountId: 1, data: notes(6000) })).status).toBe(200)
+  expect((await call(1, { accountId: 1, data: notes(9000) })).status).toBe(413)
+  const { data } = (await (await call(1)).json()) as { data: object }
+  expect(Object.keys(data)).toHaveLength(9000)
+})
+
 test('account scoped merge survives stale devices, retries, empty uploads and account deletion', async () => {
   await call(1, { consent: true })
   const latest = { profile: { at: 20, value: { age: 42 } } }

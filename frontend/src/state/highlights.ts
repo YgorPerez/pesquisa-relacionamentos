@@ -1,6 +1,7 @@
 // The reader's Grifos and their Notas (#334, GLOSSARY): stretches of a
-// Guide, a Fact sheet or a Tip marked to see again. They live only in this
-// browser, like the Profile: never synced, never sent, never counted.
+// Guide, a Fact sheet or a Tip marked to see again. They live in this browser,
+// like the Profile, and reach the account only after the reader agrees to
+// sync (`sync-device.ts`, ADR 0046). They are never counted.
 //
 // A Grifo keeps the quote as the page's text had it (`exact`) and a little
 // text on each side (`prefix`, `suffix`), the way a W3C TextQuoteSelector
@@ -12,6 +13,7 @@
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
 import { markedFound, sameQuote, type Highlight } from './highlight-record'
+import { notifyRemoved } from './storage-events'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
 export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>
@@ -71,7 +73,9 @@ export function setNote(id: string, note: string) {
 /** "Tirar grifo": forgets the Grifo and its Nota. */
 export function removeHighlight(id: string) {
   const saved = readHighlights()
-  if (saved.some((h) => h.id === id)) save(saved.filter((h) => h.id !== id))
+  if (!saved.some((h) => h.id === id)) return
+  notifyRemoved('highlight', id)
+  save(saved.filter((h) => h.id !== id))
 }
 
 /** After the page at `path` looked for its Grifos: the ones in `found` were

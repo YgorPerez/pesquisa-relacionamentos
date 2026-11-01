@@ -24,3 +24,20 @@ export function followStoredWrites(
 export function notifyStoredWrite(key: string, value: unknown) {
   for (const listener of writeListeners) listener(key, value, writeSource)
 }
+
+const removalListeners = new Set<(kind: RemovedKind, id: string) => void>()
+export type RemovedKind = 'highlight' | 'comment'
+
+/** The reader removed this item. A list without it is not enough to say so:
+ * a list can also be short because it was never complete on this device. */
+export function notifyRemoved(kind: RemovedKind, id: string) {
+  for (const listener of removalListeners) listener(kind, id)
+}
+export function followRemovals(
+  listener: (kind: RemovedKind, id: string) => void,
+) {
+  removalListeners.add(listener)
+  return () => {
+    removalListeners.delete(listener)
+  }
+}

@@ -1,6 +1,11 @@
 import { useSyncExternalStore } from 'react'
 import { followStoredWrites } from './storage-events'
-import { applySyncData, deviceSyncData, syncBinding } from './sync-device'
+import {
+  applySyncData,
+  deviceSyncData,
+  releaseLinkFields,
+  syncBinding,
+} from './sync-device'
 import { readSyncData } from './sync-data'
 
 export type SyncStatus =
@@ -72,12 +77,13 @@ async function exchange() {
     return
   }
   const binding = state.accountId
-  const result = await request({ accountId: binding, data: deviceSyncData() })
+  const sent = deviceSyncData()
+  const result = await request({ accountId: binding, data: sent })
   if (!result || result.accountId !== binding || syncBinding.read() !== binding)
     return
   const data = readSyncData(result.data)
   if (!data) throw new Error('Invalid sync response')
-  applySyncData(data)
+  applySyncData(data, sent)
   setStatus('active')
 }
 export function refreshSync(): Promise<void> {
@@ -109,9 +115,28 @@ export async function decideSync(accept: boolean) {
   }
 }
 
-/** Runs only in the browser. Anonymous requests don't open the database. */
+/** This device stops exchanging. What the account holds stays there until the
+ * account is deleted, and this device keeps its own data. */
+export function stopDeviceSync() {
+  syncBinding.write(null)
+  setStatus('device')
+}
+
+/** "Voltar aos dados da conta", then a fresh look at what the account has. */
+export function returnToAccountData() {
+  releaseLinkFields()
+  return refreshSync()
+}
+
+const refreshIfJoined = () => {
+  if (syncBinding.read() !== null) void refreshSync()
+}
+
+/** Runs only in the browser. A device that never joined asks nothing here, so
+ * reading without an account makes no new request; `/conta` asks when it opens
+ * for someone signed in. */
 export function startAccountSync() {
-  void refreshSync()
+  refreshIfJoined()
   const stop = followStoredWrites((key, _value, source) => {
     if (
       source === 'local' &&
@@ -126,14 +151,11 @@ export function startAccountSync() {
     )
       void refreshSync()
   })
-  const refresh = () => {
-    void refreshSync()
-  }
-  window.addEventListener('online', refresh)
-  window.addEventListener('focus', refresh)
+  window.addEventListener('online', refreshIfJoined)
+  window.addEventListener('focus', refreshIfJoined)
   return () => {
     stop()
-    window.removeEventListener('online', refresh)
-    window.removeEventListener('focus', refresh)
+    window.removeEventListener('online', refreshIfJoined)
+    window.removeEventListener('focus', refreshIfJoined)
   }
 }

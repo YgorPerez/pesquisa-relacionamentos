@@ -1,58 +1,97 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   decideSync,
   refreshSync,
+  returnToAccountData,
+  stopDeviceSync,
   useSyncStatus,
   type SyncStatus,
 } from '#/state/account-sync'
+import { useLinkFields } from '#/state/sync-device'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
 import { Checkbox } from './shadcn/checkbox'
 import { Section, Headline } from './section'
-import { ACCOUNT_INTRO, ACCOUNT_RULES, SYNC_EXPLANATION } from './account.copy'
+import {
+  ACCOUNT_INTRO,
+  ACCOUNT_RULES,
+  SYNC_ACTIVE,
+  SYNC_DECLINED,
+  SYNC_DEVICE,
+  SYNC_EXPLANATION,
+  SYNC_FAILED,
+  SYNC_LINK,
+  SYNC_STOP_NOTE,
+} from './account.copy'
+
+function SyncChoice({
+  status,
+  decide,
+}: {
+  status: 'ask' | 'device' | 'declined'
+  decide: (accept: boolean) => void
+}) {
+  return (
+    <>
+      {status === 'declined' && <p>{SYNC_DECLINED}</p>}
+      <p>{SYNC_EXPLANATION}</p>
+      {status === 'device' && <p>{SYNC_DEVICE}</p>}
+      <div className="mt-md flex flex-wrap gap-sm">
+        <SiteButton onClick={() => decide(true)}>
+          Juntar e sincronizar
+        </SiteButton>
+        {status === 'ask' && (
+          <SiteButton variant="light" onClick={() => decide(false)}>
+            Manter só neste aparelho
+          </SiteButton>
+        )}
+      </div>
+    </>
+  )
+}
+
+function SyncActive({ linkFields }: { linkFields: boolean }) {
+  return (
+    <>
+      <p>{SYNC_ACTIVE}</p>
+      {linkFields && (
+        <>
+          <p>{SYNC_LINK}</p>
+          <SiteButton
+            variant="light"
+            onClick={() => {
+              void returnToAccountData()
+            }}
+          >
+            Voltar aos dados da conta
+          </SiteButton>
+        </>
+      )}
+      <p className="mt-md text-nota text-tinta-2">{SYNC_STOP_NOTE}</p>
+      <SiteButton variant="light" onClick={stopDeviceSync}>
+        Parar neste aparelho
+      </SiteButton>
+    </>
+  )
+}
 
 function SyncSettings({
   status,
   decide,
+  linkFields,
 }: {
   status: SyncStatus
   decide: (accept: boolean) => void
+  linkFields: boolean
 }) {
   if (status === 'loading' || status === 'anonymous') return null
   return (
     <Section aria-labelledby="account-sync">
       <Headline id="account-sync">Seus dados nos seus aparelhos</Headline>
-      {status === 'ask' || status === 'device' ? (
+      {status === 'failed' ? (
         <>
-          <p>{SYNC_EXPLANATION}</p>
-          {status === 'device' && (
-            <p>
-              Esta conta já permite sincronizar. Junte os dados deste aparelho
-              para começar aqui.
-            </p>
-          )}
-          <div className="mt-md flex flex-wrap gap-sm">
-            <SiteButton onClick={() => decide(true)}>
-              Juntar e sincronizar
-            </SiteButton>
-            {status === 'ask' && (
-              <SiteButton variant="light" onClick={() => decide(false)}>
-                Manter só neste aparelho
-              </SiteButton>
-            )}
-          </div>
-        </>
-      ) : status === 'declined' ? (
-        <p>
-          Você escolheu manter seus dados só no aparelho. Eles não são enviados
-          à conta.
-        </p>
-      ) : status === 'failed' ? (
-        <>
-          <p>
-            Não foi possível sincronizar. Seus dados continuam neste aparelho.
-          </p>
+          <p>{SYNC_FAILED}</p>
           <SiteButton
             variant="light"
             onClick={() => {
@@ -62,11 +101,10 @@ function SyncSettings({
             Tentar de novo
           </SiteButton>
         </>
+      ) : status === 'active' ? (
+        <SyncActive linkFields={linkFields} />
       ) : (
-        <p>
-          A sincronização está ligada neste aparelho. Dados recebidos por link
-          ficam só aqui até você editá-los.
-        </p>
+        <SyncChoice status={status} decide={decide} />
       )}
     </Section>
   )
@@ -153,6 +191,11 @@ export function AccountPage({
   onSyncDecision?: (accept: boolean) => void
 }) {
   const currentSyncStatus = useSyncStatus()
+  const linkFields = useLinkFields()
+  const signedIn = Boolean(account?.nickname)
+  useEffect(() => {
+    if (signedIn && !syncStatus) void refreshSync()
+  }, [signedIn, syncStatus])
   return (
     <Sheet>
       <Column>
@@ -174,6 +217,7 @@ export function AccountPage({
           <SyncSettings
             status={syncStatus ?? currentSyncStatus}
             decide={onSyncDecision}
+            linkFields={Boolean(linkFields?.length)}
           />
         )}
         <p className="mt-lg text-nota text-tinta-2">
