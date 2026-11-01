@@ -14,7 +14,7 @@ export const SyncConsent: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'ask' },
 }
 // A signed-in story always passes `syncStatus`: without it the page calls
-// `/api/sync`, and the answer updates React during a later story.
+// `/api/sync`, which Storybook does not have.
 export const SyncActive: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'active' },
 }
