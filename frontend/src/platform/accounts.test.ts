@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync, readdirSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { expect, test as base } from 'vite-plus/test'
+import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
 import { createAccounts } from './accounts'
 import { createServer } from 'node:http'
 import { once } from 'node:events'
@@ -99,20 +99,15 @@ async function setup() {
     },
   }
 }
-const test = base.extend<{ app: Awaited<ReturnType<typeof setup>> }>({
-  app: async ({}, use) => {
-    const app = await setup()
-    try {
-      await use(app)
-    } finally {
-      app.close()
-    }
-  },
+let app: Awaited<ReturnType<typeof setup>>
+beforeEach(async () => {
+  app = await setup()
+})
+afterEach(() => {
+  app.close()
 })
 
-test('Google login requires browser state and a single-use callback', async ({
-  app,
-}) => {
+test('Google login requires browser state and a single-use callback', async () => {
   const attempt = await app.start()
   expect(attempt.location.searchParams.get('scope')).toBe('openid')
   expect(attempt.location.searchParams.get('code_challenge_method')).toBe(
@@ -148,9 +143,7 @@ test('Google login requires browser state and a single-use callback', async ({
   expect(app.authorizations).toEqual(['Bearer access'])
 })
 
-test('first nickname requires same-origin consent and cannot be replaced', async ({
-  app,
-}) => {
+test('first nickname requires same-origin consent and cannot be replaced', async () => {
   const cookie = cookieOf(await app.login(), '__Host-session')
   expect(
     (
@@ -181,9 +174,7 @@ test('first nickname requires same-origin consent and cannot be replaced', async
   ).toBe(409)
 })
 
-test('logout revokes the session and returning Google identity retains the nickname only', async ({
-  app,
-}) => {
+test('logout revokes the session and returning Google identity retains the nickname only', async () => {
   const cookie = cookieOf(await app.login(), '__Host-session')
   await app.accounts.handle(request('/auth/nickname', cookie, accepted()))
   expect(
@@ -205,7 +196,7 @@ test('logout revokes the session and returning Google identity retains the nickn
   }
 })
 
-test('sessions and unused OAuth attempts expire', async ({ app }) => {
+test('sessions and unused OAuth attempts expire', async () => {
   const cookie = cookieOf(await app.login(), '__Host-session')
   app.advance(31 * 24 * 60 * 60 * 1000)
   expect(app.accounts.current(request('/', cookie))).toBeNull()
@@ -217,12 +208,9 @@ test('sessions and unused OAuth attempts expire', async ({ app }) => {
   ).toBe(400)
 })
 
-base(
-  'anonymous reads need neither OAuth configuration nor a database',
-  async () => {
-    const accounts = createAccounts({})
-    expect(accounts.current(request('/'))).toBeNull()
-    expect(await accounts.handle(request('/guide'))).toBeNull()
-    expect((await accounts.handle(request('/auth/google')))?.status).toBe(503)
-  },
-)
+test('anonymous reads need neither OAuth configuration nor a database', async () => {
+  const accounts = createAccounts({})
+  expect(accounts.current(request('/'))).toBeNull()
+  expect(await accounts.handle(request('/guide'))).toBeNull()
+  expect((await accounts.handle(request('/auth/google')))?.status).toBe(503)
+})

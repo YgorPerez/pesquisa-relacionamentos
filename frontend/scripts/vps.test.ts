@@ -40,235 +40,253 @@ function aVps() {
   }
 }
 
-describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
-  it('loads a separately provisioned OAuth runtime file on publish and rollback', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    writeFileSync(
-      join(vps.paths.folder, 'google-oauth.env'),
-      'APP_ORIGIN=https://example.org\nGOOGLE_CLIENT_ID=fake\nGOOGLE_CLIENT_SECRET=fake\n',
-      { mode: 0o600 },
-    )
-    vps.publish(SHA_2)
-    expect(vps.containerEnv('temestudo-app')).toContain('GOOGLE_CLIENT_ID=fake')
-    vps.rollback()
-    expect(vps.containerEnv('temestudo-app')).toContain('GOOGLE_CLIENT_ID=fake')
-  })
-  it('keeps database rows through publish, failed swap and rollback', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    const db = openDatabase(vps.databasePath('temestudo-app'))
-    db.exec('CREATE TABLE example (value TEXT)')
-    db.prepare('INSERT INTO example VALUES (?)').run('survives swaps')
-    db.close()
-    vps.publish(SHA_2)
-    vps.breakWith('nginx-refuses')
-    expect(() => vps.publish(SHA_3)).toThrow('nginx -t refused')
-    vps.fix('nginx-refuses')
-    vps.rollback()
-    const restored = openDatabase(vps.databasePath('temestudo-app'))
-    expect(restored.prepare('SELECT value FROM example').get()).toEqual({
-      value: 'survives swaps',
+describe.skipIf(process.platform === 'win32')(
+  'the deploy on the VPS',
+  // Each swap executes real shell processes; several swaps exceed Vitest's
+  // default five-second deadline on a shared machine, even with fake services.
+  { timeout: 30_000 },
+  () => {
+    it('loads a separately provisioned OAuth runtime file on publish and rollback', () => {
+      const vps = aVps()
+      vps.publish(SHA_1, 'comment_token_for_tests')
+      writeFileSync(
+        join(vps.paths.folder, 'google-oauth.env'),
+        'APP_ORIGIN=https://example.org\nGOOGLE_CLIENT_ID=fake\nGOOGLE_CLIENT_SECRET=fake\n',
+        { mode: 0o600 },
+      )
+      vps.publish(SHA_2)
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'GOOGLE_CLIENT_ID=fake',
+      )
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'COMMENT_GITHUB_TOKEN=comment_token_for_tests',
+      )
+      vps.rollback()
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'GOOGLE_CLIENT_ID=fake',
+      )
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'COMMENT_GITHUB_TOKEN=comment_token_for_tests',
+      )
     })
-    restored.close()
-  })
-  it('the first deploy starts the app on the first port and installs the vhost', () => {
-    const vps = aVps()
-
-    vps.publish(SHA_1)
-
-    expect(vps.live()).toEqual({
-      include: proxyTo(3011),
-      app: {
-        image: `temestudo-app:sha-${SHA_1}`,
-        port: '3011',
-        running: true,
-      },
+    it('keeps database rows through publish, failed swap and rollback', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      const db = openDatabase(vps.databasePath('temestudo-app'))
+      db.exec('CREATE TABLE example (value TEXT)')
+      db.prepare('INSERT INTO example VALUES (?)').run('survives swaps')
+      db.close()
+      vps.publish(SHA_2)
+      vps.breakWith('nginx-refuses')
+      expect(() => vps.publish(SHA_3)).toThrow('nginx -t refused')
+      vps.fix('nginx-refuses')
+      vps.rollback()
+      const restored = openDatabase(vps.databasePath('temestudo-app'))
+      expect(restored.prepare('SELECT value FROM example').get()).toEqual({
+        value: 'survives swaps',
+      })
+      restored.close()
     })
-    expect(vps.containers().sort()).toEqual([
-      'temestudo-app',
-      'temestudo-stats',
-    ])
-    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
-    const { sitesEnabled } = vps.paths
-    expect(vps.read(join(sitesEnabled, 'temestudo.conf'))).not.toBeNull()
-    expect(vps.read(join(sitesEnabled, 'default'))).toBeNull()
-    expect(vps.read(join(vps.paths.folder, 'no-ar'))).toBe(`${SHA_1}\n`)
-    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBeNull()
-  })
+    it('the first deploy starts the app on the first port and installs the vhost', () => {
+      const vps = aVps()
 
-  it('the log says how long each step took, and the total', () => {
-    const vps = aVps()
+      vps.publish(SHA_1)
 
-    vps.publish(SHA_1)
-
-    const times = vps.log.filter((l) => /took|Total/.test(l))
-    expect(times.map((l) => l.replace(/[\d.]+ s/, 'N s'))).toEqual([
-      'Upload took N s.',
-      'Image took N s.',
-      'Database backup schedule took N s.',
-      'GoatCounter took N s.',
-      'Swap took N s.',
-      'Total: N s.',
-    ])
-  })
-
-  it('the next deploy starts on the other port, reloads Nginx and stops the old one', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    vps.calls()
-
-    vps.publish(SHA_2)
-
-    expect(vps.live()).toEqual({
-      include: proxyTo(3031),
-      app: {
-        image: `temestudo-app:sha-${SHA_2}`,
-        port: '3031',
-        running: true,
-      },
+      expect(vps.live()).toEqual({
+        include: proxyTo(3011),
+        app: {
+          image: `temestudo-app:sha-${SHA_1}`,
+          port: '3011',
+          running: true,
+        },
+      })
+      expect(vps.containers().sort()).toEqual([
+        'temestudo-app',
+        'temestudo-stats',
+      ])
+      expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
+      const { sitesEnabled } = vps.paths
+      expect(vps.read(join(sitesEnabled, 'temestudo.conf'))).not.toBeNull()
+      expect(vps.read(join(sitesEnabled, 'default'))).toBeNull()
+      expect(vps.read(join(vps.paths.folder, 'no-ar'))).toBe(`${SHA_1}\n`)
+      expect(vps.read(join(vps.paths.folder, 'anterior'))).toBeNull()
     })
-    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_1}\n`)
-    const calls = vps.calls()
-    const reload = calls.indexOf('systemctl reload nginx')
-    const stop = calls.indexOf('docker stop --timeout 30 temestudo-app')
-    expect(reload).toBeGreaterThan(-1)
-    // The old one only stops after Nginx already passes to the new one.
-    expect(stop).toBeGreaterThan(reload)
-    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
-  })
 
-  it('the third deploy goes back to the first port and deletes the images before the previous one', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    vps.publish(SHA_2)
+    it('the log says how long each step took, and the total', () => {
+      const vps = aVps()
 
-    vps.publish(SHA_3)
+      vps.publish(SHA_1)
 
-    expect(vps.live().include).toBe(proxyTo(3011))
-    expect(vps.images()).toEqual([
-      'arp242/goatcounter:2.7.0',
-      `temestudo-app:sha-${SHA_2}`,
-      `temestudo-app:sha-${SHA_3}`,
-    ])
-  })
-
-  it('rolling back without a SHA swaps to the previous deploy, without touching the vhost', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    vps.publish(SHA_2)
-
-    vps.rollback()
-
-    expect(vps.live()).toEqual({
-      include: proxyTo(3011),
-      app: {
-        image: `temestudo-app:sha-${SHA_1}`,
-        port: '3011',
-        running: true,
-      },
+      const times = vps.log.filter((l) => /took|Total/.test(l))
+      expect(times.map((l) => l.replace(/[\d.]+ s/, 'N s'))).toEqual([
+        'Upload took N s.',
+        'Image took N s.',
+        'Database backup schedule took N s.',
+        'GoatCounter took N s.',
+        'Swap took N s.',
+        'Total: N s.',
+      ])
     })
-    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
-    expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_2}\n`)
-    expect(vps.log).toContain(`Rolling back to sha-${SHA_1}.`)
-  })
 
-  it('the comment token reaches the app through a file only root reads, and stays for the next deploy and the rollback', () => {
-    const vps = aVps()
-    const envFile = join(vps.paths.folder, 'app.env')
+    it('the next deploy starts on the other port, reloads Nginx and stops the old one', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      vps.calls()
 
-    vps.publish(SHA_1)
-    expect(vps.containerEnv('temestudo-app')).toBeNull()
+      vps.publish(SHA_2)
 
-    // Letters and `_`, as the deploy accepts, but no GitHub token's shape:
-    // a secret scanner reads tests too.
-    vps.publish(SHA_2, 'comment_token_for_tests')
-    expect(vps.containerEnv('temestudo-app')).toBe(
-      'COMMENT_GITHUB_TOKEN=comment_token_for_tests\n',
-    )
-    expect(statSync(envFile).mode & 0o777).toBe(0o600)
-    expect(vps.log.join('\n')).not.toContain('comment_token_for_tests')
+      expect(vps.live()).toEqual({
+        include: proxyTo(3031),
+        app: {
+          image: `temestudo-app:sha-${SHA_2}`,
+          port: '3031',
+          running: true,
+        },
+      })
+      expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_1}\n`)
+      const calls = vps.calls()
+      const reload = calls.indexOf('systemctl reload nginx')
+      const stop = calls.indexOf('docker stop --timeout 30 temestudo-app')
+      expect(reload).toBeGreaterThan(-1)
+      // The old one only stops after Nginx already passes to the new one.
+      expect(stop).toBeGreaterThan(reload)
+      expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
+    })
 
-    vps.publish(SHA_3)
-    expect(vps.containerEnv('temestudo-app')).toContain(
-      'comment_token_for_tests',
-    )
-    vps.rollback()
-    expect(vps.containerEnv('temestudo-app')).toContain(
-      'comment_token_for_tests',
-    )
-  })
+    it('the third deploy goes back to the first port and deletes the images before the previous one', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      vps.publish(SHA_2)
 
-  it('a token that could break out of the script stops the deploy before the VPS', () => {
-    const vps = aVps()
-    expect(() => vps.publish(SHA_1, "x'; rm -rf / #")).toThrow(
-      'COMMENT_GITHUB_TOKEN is not a GitHub token.',
-    )
-    expect(vps.live()).toEqual({ include: null, app: null })
-  })
+      vps.publish(SHA_3)
 
-  it('rolling back to a SHA the VPS did not keep leaves what is live alone', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    const before = vps.live()
+      expect(vps.live().include).toBe(proxyTo(3011))
+      expect(vps.images()).toEqual([
+        'arp242/goatcounter:2.7.0',
+        `temestudo-app:sha-${SHA_2}`,
+        `temestudo-app:sha-${SHA_3}`,
+      ])
+    })
 
-    expect(() => vps.rollback('deadbee')).toThrow(
-      'The VPS does not have the image temestudo-app:sha-deadbee.',
-    )
-    expect(vps.live()).toEqual(before)
-  })
+    it('rolling back without a SHA swaps to the previous deploy, without touching the vhost', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      vps.publish(SHA_2)
 
-  it('rolling back with no previous deploy asks for the SHA', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
+      vps.rollback()
 
-    expect(() => vps.rollback()).toThrow('give the SHA')
-  })
+      expect(vps.live()).toEqual({
+        include: proxyTo(3011),
+        app: {
+          image: `temestudo-app:sha-${SHA_1}`,
+          port: '3011',
+          running: true,
+        },
+      })
+      expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_2}\n`)
+      expect(vps.read(join(vps.paths.folder, 'anterior'))).toBe(`${SHA_2}\n`)
+      expect(vps.log).toContain(`Rolling back to sha-${SHA_1}.`)
+    })
 
-  it('a new container that does not answer goes, and the old one stays live', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    const before = vps.live()
-    vps.calls()
-    vps.breakWith('app-does-not-answer')
+    it('the comment token reaches the app through a file only root reads, and stays for the next deploy and the rollback', () => {
+      const vps = aVps()
+      const envFile = join(vps.paths.folder, 'app.env')
 
-    expect(() => vps.publish(SHA_2)).toThrow(
-      /The new app did not answer on \/ at port 3031.*the log of temestudo-app-novo/s,
-    )
-    expect(vps.live()).toEqual(before)
-    expect(vps.containers()).not.toContain('temestudo-app-novo')
-    expect(vps.calls()).not.toContain('systemctl reload nginx')
-    expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
-  })
+      vps.publish(SHA_1)
+      expect(vps.containerEnv('temestudo-app')).toBeNull()
 
-  it('an nginx -t that refuses undoes the new configuration, and the old one stays live', () => {
-    const vps = aVps()
-    vps.publish(SHA_1)
-    const before = vps.live()
-    vps.calls()
-    vps.breakWith('nginx-refuses')
+      // Letters and `_`, as the deploy accepts, but no GitHub token's shape:
+      // a secret scanner reads tests too.
+      vps.publish(SHA_2, 'comment_token_for_tests')
+      expect(vps.containerEnv('temestudo-app')).toBe(
+        'COMMENT_GITHUB_TOKEN=comment_token_for_tests\n',
+      )
+      expect(statSync(envFile).mode & 0o777).toBe(0o600)
+      expect(vps.log.join('\n')).not.toContain('comment_token_for_tests')
 
-    expect(() => vps.publish(SHA_2)).toThrow(
-      /unknown directive.*nginx -t refused the new configuration/s,
-    )
-    expect(vps.live()).toEqual(before)
-    expect(vps.containers()).not.toContain('temestudo-app-novo')
-    expect(vps.calls()).not.toContain('systemctl reload nginx')
-    for (const [name, target] of vps.paths.config)
-      expect(vps.read(target)).toBe(`${name} ${SHA_1}\n`)
-  })
+      vps.publish(SHA_3)
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'comment_token_for_tests',
+      )
+      vps.rollback()
+      expect(vps.containerEnv('temestudo-app')).toContain(
+        'comment_token_for_tests',
+      )
+    })
 
-  it('an nginx -t that refuses the first deploy leaves no vhost at all', () => {
-    const vps = aVps()
-    vps.breakWith('nginx-refuses')
+    it('a token that could break out of the script stops the deploy before the VPS', () => {
+      const vps = aVps()
+      expect(() => vps.publish(SHA_1, "x'; rm -rf / #")).toThrow(
+        'COMMENT_GITHUB_TOKEN is not a GitHub token.',
+      )
+      expect(vps.live()).toEqual({ include: null, app: null })
+    })
 
-    expect(() => vps.publish(SHA_1)).toThrow(/nginx -t refused/)
-    expect(vps.live()).toEqual({ include: null, app: null })
-    for (const [, target] of vps.paths.config)
-      expect(vps.read(target)).toBeNull()
-    expect(vps.read(join(vps.paths.sitesEnabled, 'temestudo.conf'))).toBeNull()
-  })
-})
+    it('rolling back to a SHA the VPS did not keep leaves what is live alone', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      const before = vps.live()
+
+      expect(() => vps.rollback('deadbee')).toThrow(
+        'The VPS does not have the image temestudo-app:sha-deadbee.',
+      )
+      expect(vps.live()).toEqual(before)
+    })
+
+    it('rolling back with no previous deploy asks for the SHA', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+
+      expect(() => vps.rollback()).toThrow('give the SHA')
+    })
+
+    it('a new container that does not answer goes, and the old one stays live', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      const before = vps.live()
+      vps.calls()
+      vps.breakWith('app-does-not-answer')
+
+      expect(() => vps.publish(SHA_2)).toThrow(
+        /The new app did not answer on \/ at port 3031.*the log of temestudo-app-novo/s,
+      )
+      expect(vps.live()).toEqual(before)
+      expect(vps.containers()).not.toContain('temestudo-app-novo')
+      expect(vps.calls()).not.toContain('systemctl reload nginx')
+      expect(vps.read(vps.paths.vhost)).toBe(`temestudo.conf ${SHA_1}\n`)
+    })
+
+    it('an nginx -t that refuses undoes the new configuration, and the old one stays live', () => {
+      const vps = aVps()
+      vps.publish(SHA_1)
+      const before = vps.live()
+      vps.calls()
+      vps.breakWith('nginx-refuses')
+
+      expect(() => vps.publish(SHA_2)).toThrow(
+        /unknown directive.*nginx -t refused the new configuration/s,
+      )
+      expect(vps.live()).toEqual(before)
+      expect(vps.containers()).not.toContain('temestudo-app-novo')
+      expect(vps.calls()).not.toContain('systemctl reload nginx')
+      for (const [name, target] of vps.paths.config)
+        expect(vps.read(target)).toBe(`${name} ${SHA_1}\n`)
+    })
+
+    it('an nginx -t that refuses the first deploy leaves no vhost at all', () => {
+      const vps = aVps()
+      vps.breakWith('nginx-refuses')
+
+      expect(() => vps.publish(SHA_1)).toThrow(/nginx -t refused/)
+      expect(vps.live()).toEqual({ include: null, app: null })
+      for (const [, target] of vps.paths.config)
+        expect(vps.read(target)).toBeNull()
+      expect(
+        vps.read(join(vps.paths.sitesEnabled, 'temestudo.conf')),
+      ).toBeNull()
+    })
+  },
+)
 
 describe.skipIf(process.platform === 'win32')(
   'GoatCounter in the deploy',
