@@ -161,7 +161,7 @@ test('IP throttling uses the last Nginx hop and expires, while email throttling 
     expect(
       (
         await post(
-          'login',
+          'register',
           { email: `reader${n}@example.org`, password: 'bad' },
           { 'x-forwarded-for': `203.0.113.${n}, 198.51.100.1` },
         )
@@ -180,7 +180,7 @@ test('IP throttling uses the last Nginx hop and expires, while email throttling 
       (
         await post(
           'login',
-          { email: ' READER@EXAMPLE.ORG ', password: 'bad' },
+          { email: ' READER@EXAMPLE.ORG ', password: 'x'.repeat(1025) },
           { 'x-forwarded-for': `198.51.100.${n + 2}` },
         )
       )?.status,

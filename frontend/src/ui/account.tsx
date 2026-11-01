@@ -180,6 +180,7 @@ function EmailForm({ register = false }: { register?: boolean }) {
           {register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin}
           <Input
             id={`${prefix}-email`}
+            className="w-full"
             name="email"
             type="email"
             maxLength={254}
@@ -196,6 +197,7 @@ function EmailForm({ register = false }: { register?: boolean }) {
             : EMAIL_ACCOUNT.passwordLogin}
           <Input
             id={`${prefix}-password`}
+            className="w-full"
             name="password"
             type="password"
             minLength={register ? 8 : undefined}
@@ -224,6 +226,7 @@ function EmailRegistration() {
         {ACCOUNT.nickname}
         <Input
           id="register-nickname"
+          className="w-full"
           name="nickname"
           minLength={2}
           maxLength={40}
