@@ -17,7 +17,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { saveRequirements } from './possible-group'
 import { saveProfile, savedProfile } from './profile'
 import { savePriorities } from './priorities'
-import { withStorageSource } from './stored'
+import { withStorageSource } from './storage-events'
 
 /** Saves on the device, in place of the saved one, the state the link
  * brought. */

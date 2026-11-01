@@ -1,9 +1,9 @@
 import { readProfile } from '@tem-estudo/rules/profile'
 import { readRequirements } from '@tem-estudo/rules/requirements'
 import { readPriorities } from '@tem-estudo/rules/priorities'
-import { validateHighlights } from './highlights'
-import { validateSentComments } from './sent-comments'
-import { isQuoteRecord } from './highlight-record'
+import { validateHighlights } from './highlight-storage'
+import { validateSentComments } from './sent-comment-storage'
+import { isQuoteRecord } from './json-record'
 
 export interface SyncEntry {
   readonly at: number
@@ -11,10 +11,16 @@ export interface SyncEntry {
 }
 export type SyncData = Readonly<Record<string, SyncEntry>>
 
-export function validateSyncValue(key: string, value: unknown): unknown {
+function validateSyncValue(key: string, value: unknown): unknown {
   if (key === 'profile') return readProfile(value)
   if (key === 'requirements') return readRequirements(value)
   if (key === 'priorities') return readPriorities(value)
+  if (
+    key.startsWith('note:') &&
+    isQuoteRecord(value) &&
+    typeof value.text === 'string'
+  )
+    return { text: value.text.slice(0, 500) }
   if (key.startsWith('highlight:')) {
     const item = validateHighlights([value])?.[0]
     return item && key === `highlight:${item.id}` ? item : null

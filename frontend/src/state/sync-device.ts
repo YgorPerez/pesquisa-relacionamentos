@@ -1,9 +1,10 @@
-import { savedProfile } from './profile'
+import { savedProfile } from './profile-storage'
 import { savedRequirements } from './possible-group'
 import { savedPriorities } from './priorities'
-import { highlights, validateHighlights } from './highlights'
-import { comments, validateSentComments } from './sent-comments'
-import { followStoredWrites, stored, withStorageSource } from './stored'
+import { highlights, validateHighlights } from './highlight-storage'
+import { comments, validateSentComments } from './sent-comment-storage'
+import { stored } from './stored'
+import { followStoredWrites, withStorageSource } from './storage-events'
 import { mergeSyncData, readSyncData, type SyncData } from './sync-data'
 
 const journal = stored('sync-journal', readSyncData)
@@ -47,12 +48,15 @@ followStoredWrites((key, value, source) => {
       key === 'highlights'
         ? validateHighlights(value)
         : validateSentComments(value)
-    for (const item of entries ?? [])
+    for (const item of entries ?? []) {
+      if ('note' in item)
+        record(`note:${item.id}`, { text: item.note }, Date.now())
       record(
         `${key === 'highlights' ? 'highlight' : 'comment'}:${item.id}`,
-        item,
+        'note' in item ? { ...item, note: '' } : item,
         Date.now(),
       )
+    }
   }
 })
 
@@ -69,14 +73,21 @@ export function deviceSyncData(): SyncData {
     ['highlight', highlights.read()],
     ['comment', comments.read()],
   ] as const)
-    for (const item of items ?? [])
+    for (const item of items ?? []) {
+      if ('note' in item && !journal.read()?.[`note:${item.id}`])
+        record(`note:${item.id}`, { text: item.note }, item.at)
       if (!journal.read()?.[`${prefix}:${item.id}`])
-        record(`${prefix}:${item.id}`, item, item.at)
+        record(
+          `${prefix}:${item.id}`,
+          'note' in item ? { ...item, note: '' } : item,
+          item.at,
+        )
+    }
   return journal.read() ?? {}
 }
 
 export function applySyncData(remote: SyncData) {
-  const merged = mergeSyncData(journal.read() ?? {}, remote)
+  const merged = mergeSyncData(remote, journal.read() ?? {})
   const blocked = new Set(protectedFields.read() ?? [])
   withStorageSource('sync', () => {
     journal.write(merged)
@@ -92,12 +103,18 @@ export function applySyncData(remote: SyncData) {
       savedPriorities.write(
         merged.priorities.value as ReturnType<typeof savedPriorities.read>,
       )
+    const syncedHighlights = validateHighlights(
+      Object.entries(merged)
+        .filter(([key]) => key.startsWith('highlight:'))
+        .map(([, entry]) => entry.value),
+    )
     highlights.write(
-      validateHighlights(
-        Object.entries(merged)
-          .filter(([key]) => key.startsWith('highlight:'))
-          .map(([, entry]) => entry.value),
-      ),
+      syncedHighlights?.map((item) => {
+        const note = merged[`note:${item.id}`]?.value as
+          | { text: string }
+          | undefined
+        return note ? { ...item, note: note.text } : item
+      }) ?? null,
     )
     comments.write(
       validateSentComments(

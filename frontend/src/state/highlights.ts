@@ -11,15 +11,7 @@
 // that page needs to list a Grifo (its page, its title, its link, its text)
 // is stored here, so it never has to read the Guide's DOM.
 import { useSyncExternalStore } from 'react'
-import {
-  decodeKeptQuote,
-  decodeQuoteList,
-  isQuoteRecord,
-  markedFound,
-  sameQuote,
-  type Highlight,
-} from './highlight-record'
-import { stored } from './stored'
+import { markedFound, sameQuote, type Highlight } from './highlight-record'
 
 /** What a page gives to make a Grifo; the store adds the rest. */
 export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>
@@ -27,29 +19,8 @@ export type NewHighlight = Omit<Highlight, 'id' | 'note' | 'changed' | 'at'>
 /** How much text on each side is kept to tell repeats apart. */
 export { CONTEXT_LENGTH } from './highlight-record'
 
-/** The longest Nota kept. */
-export const NOTE_LENGTH = 500
-
-function validHighlight(raw: unknown): Highlight | null {
-  if (!isQuoteRecord(raw)) return null
-  const quote = decodeKeptQuote(raw)
-  if (!quote) return null
-  const { note } = raw
-  return {
-    ...quote,
-    note: typeof note === 'string' ? note.slice(0, NOTE_LENGTH) : '',
-  }
-}
-
-/** What the storage holds, validated: a Grifo that does not hold up is
- * dropped alone, and the others stay. */
-export function validateHighlights(
-  raw: unknown,
-): ReadonlyArray<Highlight> | null {
-  return decodeQuoteList(raw, validHighlight)
-}
-
-export const highlights = stored('highlights', validateHighlights)
+import { highlights, NOTE_LENGTH } from './highlight-storage'
+export { validateHighlights, NOTE_LENGTH } from './highlight-storage'
 
 /** No Grifo: one array, so React sees the same snapshot each time. */
 const NONE: ReadonlyArray<Highlight> = []

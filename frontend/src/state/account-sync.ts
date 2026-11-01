@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { followStoredWrites } from './stored'
+import { followStoredWrites } from './storage-events'
 import { applySyncData, deviceSyncData, syncBinding } from './sync-device'
 import { readSyncData } from './sync-data'
 

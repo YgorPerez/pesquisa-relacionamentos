@@ -4,7 +4,7 @@ import { expect, test, vi } from 'vite-plus/test'
 import { AccountPage } from './account'
 
 test('sync consent explains administrator access and declining sends only the decision', async () => {
-  const decide = vi.fn()
+  const decide = vi.fn<(accept: boolean) => void>()
   render(
     <AccountPage
       account={{ nickname: 'Leitora' }}

@@ -1,6 +1,6 @@
 import { beforeEach, expect, test, vi } from 'vite-plus/test'
 import { savedProfile, saveProfile } from './profile'
-import { withStorageSource } from './stored'
+import { withStorageSource } from './storage-events'
 import { applySyncData, deviceSyncData } from './sync-device'
 import { addHighlight, readHighlights, setNote } from './highlights'
 

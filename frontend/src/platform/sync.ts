@@ -1,6 +1,6 @@
 import { getCurrentAccount } from './accounts'
 import { openDatabase } from './database'
-import { isQuoteRecord } from '#/state/highlight-record'
+import { isQuoteRecord } from '#/state/json-record'
 import { mergeSyncData, readSyncData } from '#/state/sync-data'
 
 const reply = (body: unknown, status = 200) =>
