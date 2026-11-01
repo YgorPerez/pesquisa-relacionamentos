@@ -6,8 +6,6 @@
 // On the server, and during hydration, the value is always `null`: the page
 // comes out the same for everyone and the browser applies the saved state
 // right after.
-import { useSyncExternalStore } from 'react'
-
 import { notifyStoredWrite } from './storage-events'
 
 function subscribeToStorage(
@@ -140,10 +138,4 @@ export function stored<T>(
   const subscribe = subscribeToStorage(name, subscribers, notify)
 
   return { read, write, subscribe }
-}
-
-/** The saved value in a React component; `null` on the server and during
- * hydration. */
-export function useStored<T>(part: Stored<T>): T | null {
-  return useSyncExternalStore(part.subscribe, part.read, () => null)
 }

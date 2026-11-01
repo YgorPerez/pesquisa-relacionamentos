@@ -4,9 +4,11 @@
 // each Perfil-like edit, so a first merge can tell which version is the newest.
 import { sameQuote, type Highlight } from './highlight-record'
 import { highlights, validateHighlights } from './highlight-storage'
-import { savedPriorities } from './priorities'
-import { savedProfile } from './profile-storage'
-import { savedRequirements } from './requirements-storage'
+import {
+  savedPriorities,
+  savedProfile,
+  savedRequirements,
+} from './reader-choices'
 import {
   comments,
   validateSentComments,
@@ -17,7 +19,8 @@ import {
   followStoredWrites,
   withStorageSource,
 } from './storage-events'
-import { stored, useStored } from './stored'
+import { stored } from './stored'
+import { useStored } from './use-stored'
 import { mergeSyncData, readSyncData, type SyncData } from './sync-data'
 
 const journal = stored('sync-journal', readSyncData)

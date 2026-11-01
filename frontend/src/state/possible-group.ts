@@ -25,9 +25,9 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import possibleGroup from 'virtual:possible-group'
 import { requestPack, usePack } from './group-packs'
-import { savedRequirements } from './requirements-storage'
-import { useStored } from './stored'
-export { LEGACY_REQUIREMENTS } from './requirements-storage'
+import { savedRequirements } from './reader-choices'
+import { useStored } from './use-stored'
+export { LEGACY_REQUIREMENTS } from './reader-choices'
 
 /** The saved Requirements; `null` if the visitor never touched them (and on
  * the server). */

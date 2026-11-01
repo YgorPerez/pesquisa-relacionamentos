@@ -1,9 +1,9 @@
 // The visitor's Profile, saved in the browser and read by any page: the
 // Guide, the Tip page and the calculators' cards and pages.
 import { readProfile, type Profile } from '@tem-estudo/rules/profile'
-import { useStored } from './stored'
-import { savedProfile } from './profile-storage'
-export { savedProfile, LEGACY_PROFILE } from './profile-storage'
+import { useStored } from './use-stored'
+import { savedProfile } from './reader-choices'
+export { savedProfile, LEGACY_PROFILE } from './reader-choices'
 
 /** The saved Profile, or `null` (no Profile, on the server and during
  * hydration). */
