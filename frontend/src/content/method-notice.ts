@@ -16,7 +16,7 @@ const METHOD_REFUSED = [
   'senha-errada',
   'senha-curta',
   'ultimo-metodo',
-  'perde-curadoria',
+  'google-do-curador',
   'muitas-tentativas',
   'indisponivel',
 ] as const

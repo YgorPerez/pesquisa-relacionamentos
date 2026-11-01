@@ -142,7 +142,9 @@ test('with two methods either can go, and the last one stays', async ({
   const email = `both-${unique()}@example.org`
   seed((db) =>
     db
-      .prepare('INSERT INTO email_credentials VALUES (?, ?, ?)')
+      .prepare(
+        'INSERT INTO email_credentials (account_id, email, password_hash) VALUES (?, ?, ?)',
+      )
       .run(Number(accountIdOf(nickname)), email, 'not-a-login-hash'),
   )
   await page.goto('/conta')
@@ -157,7 +159,7 @@ test('with two methods either can go, and the last one stays', async ({
   ).toBeVisible()
 })
 
-test('the curator is warned, and the browser holds the removal until it is ticked', async ({
+test('the curator is told why Google stays, and a forged removal is refused', async ({
   page,
   context,
 }) => {
@@ -165,16 +167,21 @@ test('the curator is warned, and the browser holds the removal until it is ticke
   seed((db) =>
     db
       .prepare(
-        `INSERT OR IGNORE INTO email_credentials
+        `INSERT OR IGNORE INTO email_credentials (account_id, email, password_hash)
         SELECT id, 'curator@example.org', 'not-a-login-hash' FROM accounts WHERE google_sub = 'e2e-curator'`,
       )
       .run(),
   )
   await page.goto('/conta')
-  await expect(page.getByText(/perde a Curadoria/)).toBeVisible()
-  await page.getByRole('button', { name: 'Tirar Google' }).click()
-  await expect(page.getByText('Google ligado.')).toBeVisible()
-  await expect(
-    page.getByRole('checkbox', { name: /vou perder a Curadoria/ }),
-  ).toBeVisible()
+  await expect(page.getByText(/não pode sair/)).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Tirar Google' })).toHaveCount(
+    0,
+  )
+  const origin = new URL(page.url()).origin
+  const forged = await context.request.post('/auth/remove-method', {
+    form: { method: 'google' },
+    headers: { origin },
+    maxRedirects: 0,
+  })
+  expect(forged.headers().location).toContain('metodo=google-do-curador')
 })

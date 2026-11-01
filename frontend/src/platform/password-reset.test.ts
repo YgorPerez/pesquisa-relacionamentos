@@ -3,8 +3,35 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createServer } from 'node:http'
 import { DatabaseSync } from 'node:sqlite'
-import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
+import { afterEach, beforeEach, expect, test, vi } from 'vite-plus/test'
 import { createAccounts } from './accounts'
+
+// A login checks the password off the database's lock, and scrypt takes a while:
+// the password can change before that login gets its session. This stops the one
+// scrypt a test names, so the order is the test's and needs no timer.
+type Hold = { reached: () => void; release: Promise<void> }
+const holds = vi.hoisted(() => ({ next: null as Hold | null }))
+vi.mock('node:crypto', async (original) => {
+  const crypto = await original<typeof import('node:crypto')>()
+  return {
+    ...crypto,
+    scrypt: (
+      password: string,
+      salt: string,
+      length: number,
+      options: object,
+      done: (error: Error | null, key: Buffer) => void,
+    ) => {
+      const hold = holds.next
+      holds.next = null
+      crypto.scrypt(password, salt, length, options, (error, key) => {
+        if (!hold) return done(error, key)
+        hold.reached()
+        void hold.release.then(() => done(error, key))
+      })
+    },
+  }
+})
 
 function deferred<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
@@ -165,10 +192,104 @@ test('unknown notices and provider failures show the same answer as a known addr
   expect((await ask()).screen).toBe(known.screen)
 })
 
-test('limits follow email across IPs and IP across emails, with the same screen', async () => {
+/** A login whose scrypt has finished with the old password, waiting to go on. */
+async function loginPastScrypt() {
+  let release!: () => void
+  const released = new Promise<void>((done) => {
+    release = done
+  })
+  const reached = new Promise<void>((done) => {
+    holds.next = { reached: done, release: released }
+  })
+  const login = post('login', registration)
+  await reached
+  return {
+    finish: () => {
+      release()
+      return login
+    },
+  }
+}
+const sessionCount = () => {
+  const db = new DatabaseSync(join(folder, 'app.sqlite'))
+  try {
+    return db.prepare('SELECT token_hash FROM account_sessions').all().length
+  } finally {
+    db.close()
+  }
+}
+
+test('a login that passed the old password gets no session after a reset ended them all', async () => {
+  release.resolve()
+  await post('register', registration)
+  const { mail } = await ask()
+  const login = await loginPastScrypt()
+  expect((await reset(tokenOf(mail)))!.status).toBe(200)
+  expect(sessionCount()).toBe(0)
+  const response = (await login.finish())!
+  expect(response.status).toBe(400)
+  expect(response.headers.getSetCookie()).toEqual([])
+  expect(sessionCount()).toBe(0)
+})
+
+test('a login that passed the old password gets no session after a password change', async () => {
+  const cookie = cookieOf((await post('register', registration))!)
+  const login = await loginPastScrypt()
+  const changed = await service.handle(
+    new Request('https://example.org/auth/change-password', {
+      method: 'POST',
+      headers: { cookie, origin: 'https://example.org' },
+      body: new URLSearchParams({
+        current: registration.password,
+        password: 'new password',
+      }),
+    }),
+  )
+  expect(changed!.status).toBe(303)
+  expect((await login.finish())!.status).toBe(400)
+  expect(sessionCount()).toBe(1)
+})
+
+test('a login with nothing in its way still gets its session', async () => {
+  await post('register', registration)
+  const login = await loginPastScrypt()
+  expect((await login.finish())!.status).toBe(303)
+})
+
+test('wrong logins from anywhere block neither the reset nor, after it, the owner', async () => {
+  release.resolve()
+  await post('register', registration)
+  // Too long to hash, so the eleven attempts stay fast, and each still counts.
+  const wrong = { email: registration.email, password: 'x'.repeat(1025) }
+  const attempt = (n: number) => post('login', wrong, `203.0.113.${n}`)
+  for (let n = 0; n < 10; n++) expect((await attempt(n))!.status).toBe(400)
+  expect((await attempt(10))!.status).toBe(429)
+
+  const { mail } = await ask(registration.email, '198.51.100.9')
+  expect((await reset(tokenOf(mail)))!.status).toBe(200)
+  expect(
+    (await post('login', { ...registration, password: 'new password' }))!
+      .status,
+  ).toBe(303)
+})
+
+test('sign-up attempts do not spend the logins of an address', async () => {
+  release.resolve()
+  await post('register', registration)
+  for (let n = 0; n < 10; n++)
+    // Refused before the hashing: this stays fast.
+    await post(
+      'register',
+      { ...registration, password: 'bad' },
+      `203.0.113.${n}`,
+    )
+  expect((await post('login', registration, '198.51.100.9'))!.status).toBe(303)
+})
+
+test('limits follow email across IPs, three mails an address, and IP across emails, with the same screen', async () => {
   release.resolve()
   const known = await ask('unknown@example.org')
-  for (let n = 0; n < 9; n++)
+  for (let n = 0; n < 2; n++)
     await ask('unknown@example.org', `198.51.100.${n + 2}`)
   expect(
     await (await post(

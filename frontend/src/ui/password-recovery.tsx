@@ -1,8 +1,8 @@
-import { Sheet, Column, Display, Lead } from './sheet'
 import { Section } from './section'
-import { Input } from './shadcn/input'
 import { SiteButton } from './button'
+import { Field, FieldForm } from './field'
 import { RECOVERY } from './password-recovery.copy'
+import { TokenPage } from './token-page'
 
 export function PasswordRecovery({
   token,
@@ -14,49 +14,34 @@ export function PasswordRecovery({
   disabled?: boolean
 }) {
   return (
-    <Sheet>
-      <Column>
-        <Display>{token ? RECOVERY.resetTitle : RECOVERY.title}</Display>
-        <Lead>{token ? RECOVERY.note : RECOVERY.explanation}</Lead>
-        {message && (
-          <Section>
-            <p role="status">{message}</p>
-          </Section>
-        )}
-        {!disabled && (
-          <Section>
-            <form
-              action={token ? '/auth/reset' : '/auth/forgot'}
-              method="post"
-              className="flex flex-col gap-md"
-            >
-              {token && <input type="hidden" name="token" value={token} />}
-              <label
-                htmlFor="recovery-field"
-                className="flex w-full flex-col gap-xs"
-              >
-                {token ? RECOVERY.password : RECOVERY.email}
-                <Input
-                  className="w-full"
-                  id="recovery-field"
-                  name={token ? 'password' : 'email'}
-                  type={token ? 'password' : 'email'}
-                  autoComplete={token ? 'new-password' : 'email'}
-                  minLength={token ? 8 : undefined}
-                  maxLength={token ? 1024 : 254}
-                  required
-                />
-              </label>
-              <SiteButton type="submit" className="self-start">
-                {token ? RECOVERY.save : RECOVERY.send}
-              </SiteButton>
-            </form>
-          </Section>
-        )}
-        <p className="mt-lg">
-          <a href="/conta">{RECOVERY.back}</a>
-        </p>
-      </Column>
-    </Sheet>
+    <TokenPage
+      title={token ? RECOVERY.resetTitle : RECOVERY.title}
+      lead={disabled ? undefined : token ? RECOVERY.note : RECOVERY.explanation}
+      message={message}
+      back={RECOVERY.back}
+    >
+      {!disabled && (
+        <Section>
+          <FieldForm
+            action={token ? '/auth/reset' : '/auth/forgot'}
+            className="mt-0 gap-md"
+          >
+            {token && <input type="hidden" name="token" value={token} />}
+            <Field
+              id="recovery-field"
+              label={token ? RECOVERY.password : RECOVERY.email}
+              name={token ? 'password' : 'email'}
+              type={token ? 'password' : 'email'}
+              autoComplete={token ? 'new-password' : 'email'}
+              minLength={token ? 8 : undefined}
+              maxLength={token ? 1024 : 254}
+            />
+            <SiteButton type="submit">
+              {token ? RECOVERY.save : RECOVERY.send}
+            </SiteButton>
+          </FieldForm>
+        </Section>
+      )}
+    </TokenPage>
   )
 }

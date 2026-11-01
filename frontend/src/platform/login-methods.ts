@@ -1,30 +1,22 @@
 // Linking and managing the ways into an account (#572). Works on a connection
 // `accounts.ts` opened, after it checked who is asking.
-import { createHash, randomBytes } from 'node:crypto'
+import { randomBytes } from 'node:crypto'
 import type { DatabaseSync } from 'node:sqlite'
 import type { MethodNotice } from '#/content/method-notice'
-import { sendAccountEmail } from './account-email'
+import { sendAccountEmail, type AccountMail } from './account-email'
 import {
   allowEmailAttempt,
   hashPassword,
   isEmail,
+  normalizeEmail,
+  tokenHash,
+  validPassword,
   verifiesPassword,
 } from './email-accounts'
 import { transaction } from './transaction'
 
-type Mail = {
-  origin: string
-  rateKey: string
-  apiKey: string
-  from: string
-  endpoint?: string
-}
 /** Long enough to reach the inbox; the password reset's window (ADR 0045). */
 const EMAIL_LINK_MS = 30 * 60_000
-const tokenHash = (token: string) =>
-  createHash('sha256').update(token).digest('base64url')
-const validPassword = (password: string) =>
-  password.length >= 8 && password.length <= 1024
 
 /** The device that asked stays signed in. */
 const endOtherSessions = (
@@ -100,13 +92,13 @@ export async function requestEmailLink(
   request: Request,
   accountId: number,
   form: URLSearchParams,
-  mail: Mail,
+  mail: AccountMail,
   now: number,
 ): Promise<MethodNotice> {
-  const email = form.get('email')?.trim().toLowerCase() ?? ''
+  const email = normalizeEmail(form.get('email'))
   const password = form.get('password') ?? ''
   if (!isEmail(email) || !validPassword(password)) return 'email-invalido'
-  if (!allowEmailAttempt(db, request, email, mail.rateKey, now))
+  if (!allowEmailAttempt(db, request, email, 'add-email', mail.rateKey, now))
     return 'muitas-tentativas'
   const taken = db
     .prepare(
@@ -168,7 +160,9 @@ export function confirmEmailLink(
       .get(tokenHash(token), accountId, now)
     if (!link) return null
     const added = db
-      .prepare('INSERT OR IGNORE INTO email_credentials VALUES (?, ?, ?)')
+      .prepare(
+        'INSERT OR IGNORE INTO email_credentials (account_id, email, password_hash, confirmed) VALUES (?, ?, ?, 1)',
+      )
       .run(accountId, link.email!, link.password_hash!)
     if (!added.changes) return 'email-em-uso'
     endOtherSessions(db, accountId, sessionHash)
@@ -247,7 +241,7 @@ export async function changePassword(
   const password = form.get('password') ?? ''
   if (!validPassword(password)) return 'senha-curta'
   const email = String(credential.email)
-  if (!allowEmailAttempt(db, request, email, rateKey, now))
+  if (!allowEmailAttempt(db, request, email, 'change-password', rateKey, now))
     return 'muitas-tentativas'
   const stored = String(credential.password_hash)
   if (!(await verifiesPassword(form.get('current') ?? '', stored)))

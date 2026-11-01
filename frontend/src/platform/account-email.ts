@@ -1,3 +1,12 @@
+/** What sending and limiting account mail needs. */
+export type AccountMail = {
+  origin: string
+  rateKey: string
+  apiKey: string
+  from: string
+  endpoint?: string
+}
+
 /** Server-only mail seam shared by password recovery and identity linking.
  * Endpoint injection is for local tests only; runtime always uses Resend. */
 export async function sendAccountEmail(

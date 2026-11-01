@@ -4,6 +4,30 @@ import { join } from 'node:path'
 import { expect, it } from 'vite-plus/test'
 import { openDatabase } from './database.ts'
 
+it('an orphan row does not stop a database from opening, and a migration still refuses one', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'orphan-'))
+  const path = join(folder, 'app.sqlite')
+  const parent =
+    'CREATE TABLE parent (id INTEGER PRIMARY KEY); CREATE TABLE child (parent_id INTEGER REFERENCES parent(id))'
+  try {
+    const first = openDatabase(path, [parent])
+    first.exec(
+      'PRAGMA foreign_keys = OFF; INSERT INTO child VALUES (404); PRAGMA foreign_keys = ON',
+    )
+    first.close()
+    const reopened = openDatabase(path, [parent])
+    expect(reopened.prepare('SELECT parent_id FROM child').get()).toEqual({
+      parent_id: 404,
+    })
+    reopened.close()
+    expect(() =>
+      openDatabase(path, [parent, 'CREATE TABLE later (id INTEGER)']),
+    ).toThrow('invalid account references')
+  } finally {
+    rmSync(folder, { recursive: true, force: true })
+  }
+})
+
 it('migrates once and shares committed data across connections and reopen', () => {
   const folder = mkdtempSync(join(tmpdir(), 'database-'))
   const path = join(folder, 'app.sqlite')

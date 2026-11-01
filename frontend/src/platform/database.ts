@@ -73,6 +73,10 @@ const migrations: readonly string[] = [
     email TEXT NOT NULL, password_hash TEXT NOT NULL,
     token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL
   ) STRICT;`,
+  // Whether a mailbox proved this address: the confirmation link or a reset. Rows
+  // from before this start unproven, the safe side (ADR 0045). A column, though
+  // inserts elsewhere go by position: no image on `main` writes this table yet.
+  `ALTER TABLE email_credentials ADD COLUMN confirmed INTEGER NOT NULL DEFAULT 0 CHECK (confirmed IN (0, 1));`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import.
@@ -94,6 +98,7 @@ export function openDatabase(
       db.exec(
         'CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, checksum TEXT NOT NULL) STRICT',
       )
+      let migrated = false
       for (const [index, sql] of changes.entries()) {
         const version = index + 1
         const checksum = createHash('sha256').update(sql).digest('hex')
@@ -108,9 +113,12 @@ export function openDatabase(
             version,
             checksum,
           )
+          migrated = true
         }
       }
-      if (db.prepare('PRAGMA foreign_key_check').all().length)
+      // Only after a migration: on every open it would scan under the write lock,
+      // and one orphan row would close the site to every reader.
+      if (migrated && db.prepare('PRAGMA foreign_key_check').all().length)
         throw new Error('Migration left invalid account references.')
       db.exec('COMMIT; PRAGMA foreign_keys = ON')
     } catch (error) {

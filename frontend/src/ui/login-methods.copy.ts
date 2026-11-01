@@ -27,9 +27,8 @@ export const LOGIN_METHODS = {
   passwordNote:
     'Use pelo menos 8 caracteres. A troca encerra o acesso nos outros aparelhos.',
   passwordSubmit: 'Trocar senha',
-  curatorWarning:
-    'Esta é a conta do curador, e o site reconhece o curador pelo Google. Sem ele, você perde a Curadoria até ligar o mesmo Google de novo.',
-  curatorConfirm: 'Entendo que vou perder a Curadoria',
+  curatorKeepsGoogle:
+    'O Google desta conta não pode sair, porque é por ele que o site reconhece o curador. Sem ele, esta conta perderia a Curadoria, e entrar de novo com esse Google abriria outra conta, que viraria a do curador. Um e-mail ligado continua servindo para entrar.',
 } as const
 
 export const METHOD_NOTICE: Record<MethodNotice, string> = {
@@ -54,8 +53,8 @@ export const METHOD_NOTICE: Record<MethodNotice, string> = {
   'senha-curta': 'A nova senha precisa ter de 8 a 1024 caracteres.',
   'ultimo-metodo':
     'Sua conta precisa de um jeito de entrar. Ligue outro antes de tirar este.',
-  'perde-curadoria':
-    'O Google continua ligado. Para tirá-lo, marque que entende que vai perder a Curadoria.',
+  'google-do-curador':
+    'O Google continua ligado. Ele não pode sair da conta do curador, porque é por ele que o site reconhece o curador.',
   'muitas-tentativas': 'Muitas tentativas. Espere 15 minutos e tente de novo.',
   indisponivel: 'Isso está indisponível agora. Tente de novo mais tarde.',
 }

@@ -90,23 +90,16 @@ test('changing the password asks for the current one', () => {
   expect(screen.getByText(LOGIN_METHODS.passwordNote)).toBeVisible()
 })
 
-test('the curator is warned before removing Google, and must tick that the desk goes with it', () => {
+test('the curator is told why Google stays, has no form to remove it, and can still remove the email', () => {
   render(<LoginMethods methods={{ ...both, curator: true }} />)
-  expect(screen.getByText(LOGIN_METHODS.curatorWarning)).toBeVisible()
-  const form = formOf(LOGIN_METHODS.removeGoogle)
-  const confirm = within(form).getByRole('checkbox', {
-    name: LOGIN_METHODS.curatorConfirm,
-  })
-  expect(confirm).toBeRequired()
-  expect(confirm).toHaveAttribute('name', 'lose-curator')
-  expect(
-    within(formOf(LOGIN_METHODS.removeEmail)).queryByRole('checkbox'),
-  ).toBeNull()
+  expect(screen.getByText(LOGIN_METHODS.curatorKeepsGoogle)).toBeVisible()
+  expect(button(LOGIN_METHODS.removeGoogle)).toBeNull()
+  expect(button(LOGIN_METHODS.removeEmail)).toBeVisible()
 })
 
 test('a reader who is not the curator sees no word of it', () => {
   render(<LoginMethods methods={both} />)
-  expect(screen.queryByText(LOGIN_METHODS.curatorWarning)).toBeNull()
+  expect(screen.queryByText(LOGIN_METHODS.curatorKeepsGoogle)).toBeNull()
 })
 
 test('nothing a server without Google or mail cannot do is offered', () => {

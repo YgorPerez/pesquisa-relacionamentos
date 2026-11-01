@@ -1,16 +1,17 @@
-import type { ComponentProps, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import {
   isMethodRefusal,
   type AccountMethods,
   type MethodNotice,
 } from '#/content/method-notice'
-import { Agreement } from './agreement'
 import { SiteButton } from './button'
+import { Field, FieldForm } from './field'
 import { Headline, Notice, Section } from './section'
-import { Input } from './shadcn/input'
 import { LOGIN_METHODS, METHOD_NOTICE } from './login-methods.copy'
 
-const FORM = 'mt-md flex flex-col items-start gap-sm'
+function MethodTitle({ children }: { children: ReactNode }) {
+  return <h3 className="mt-lg mb-xs font-title text-title">{children}</h3>
+}
 
 /** What a form about methods came back with, at the top of the page: the reader
  * lands there after the redirect, on a phone too. */
@@ -25,35 +26,20 @@ export function MethodMessage({ notice }: { notice: MethodNotice }) {
   )
 }
 
-function Field({
-  label,
-  ...props
-}: ComponentProps<typeof Input> & { label: string }) {
-  return (
-    <label htmlFor={props.id} className="flex w-full flex-col gap-xs">
-      {label}
-      <Input className="w-full" required {...props} />
-    </label>
-  )
-}
-
 function RemoveMethod({
   method,
-  children,
   label,
 }: {
   method: 'google' | 'email'
   label: string
-  children?: ReactNode
 }) {
   return (
-    <form action="/auth/remove-method" method="post" className={FORM}>
+    <FieldForm action="/auth/remove-method">
       <input type="hidden" name="method" value={method} />
-      {children}
       <SiteButton type="submit" variant="light">
         {label}
       </SiteButton>
-    </form>
+    </FieldForm>
   )
 }
 
@@ -68,23 +54,20 @@ function GoogleMethod({
     <>
       <p>{methods.google ? LOGIN_METHODS.googleOn : LOGIN_METHODS.googleOff}</p>
       {methods.canLinkGoogle && (
-        <form action="/auth/link-google" method="post" className={FORM}>
+        <FieldForm action="/auth/link-google">
           <SiteButton type="submit" variant="light">
             {LOGIN_METHODS.linkGoogle}
           </SiteButton>
-        </form>
+        </FieldForm>
       )}
-      {removable && (
-        <RemoveMethod method="google" label={LOGIN_METHODS.removeGoogle}>
-          {methods.curator && (
-            <>
-              <Notice className="mb-0">{LOGIN_METHODS.curatorWarning}</Notice>
-              <Agreement name="lose-curator">
-                {LOGIN_METHODS.curatorConfirm}
-              </Agreement>
-            </>
-          )}
-        </RemoveMethod>
+      {methods.curator ? (
+        <Notice className="mt-md mb-0">
+          {LOGIN_METHODS.curatorKeepsGoogle}
+        </Notice>
+      ) : (
+        removable && (
+          <RemoveMethod method="google" label={LOGIN_METHODS.removeGoogle} />
+        )
       )}
     </>
   )
@@ -116,12 +99,12 @@ function EmailMethod({
 function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
   return (
     <>
-      <h3 className="mt-lg font-bold">{LOGIN_METHODS.addTitle}</h3>
+      <MethodTitle>{LOGIN_METHODS.addTitle}</MethodTitle>
       <p>{LOGIN_METHODS.addExplanation}</p>
       {pendingEmail && (
         <p className="wrap-anywhere">{LOGIN_METHODS.pending(pendingEmail)}</p>
       )}
-      <form action="/auth/add-email" method="post" className={FORM}>
+      <FieldForm action="/auth/add-email">
         <Field
           id="add-email"
           label={LOGIN_METHODS.addEmail}
@@ -140,7 +123,7 @@ function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
           autoComplete="new-password"
         />
         <SiteButton type="submit">{LOGIN_METHODS.addSubmit}</SiteButton>
-      </form>
+      </FieldForm>
     </>
   )
 }
@@ -148,9 +131,9 @@ function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
 function ChangePassword() {
   return (
     <>
-      <h3 className="mt-lg font-bold">{LOGIN_METHODS.passwordTitle}</h3>
+      <MethodTitle>{LOGIN_METHODS.passwordTitle}</MethodTitle>
       <p>{LOGIN_METHODS.passwordNote}</p>
-      <form action="/auth/change-password" method="post" className={FORM}>
+      <FieldForm action="/auth/change-password">
         <Field
           id="current-password"
           label={LOGIN_METHODS.passwordCurrent}
@@ -169,7 +152,7 @@ function ChangePassword() {
           autoComplete="new-password"
         />
         <SiteButton type="submit">{LOGIN_METHODS.passwordSubmit}</SiteButton>
-      </form>
+      </FieldForm>
     </>
   )
 }
@@ -184,7 +167,7 @@ export function LoginMethods({ methods }: { methods: AccountMethods }) {
       <p>{LOGIN_METHODS.sessions}</p>
       <GoogleMethod methods={methods} removable={removable} />
       <EmailMethod email={methods.email} removable={removable} />
-      {!removable && <p>{LOGIN_METHODS.onlyOne}</p>}
+      {!removable && !methods.curator && <p>{LOGIN_METHODS.onlyOne}</p>}
       {methods.canAddEmail && <AddEmail pendingEmail={methods.pendingEmail} />}
       {methods.canChangePassword && <ChangePassword />}
     </Section>
