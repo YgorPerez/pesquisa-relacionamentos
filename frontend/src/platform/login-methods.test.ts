@@ -373,7 +373,9 @@ test('the link is single use, dies in 30 minutes, a new request replaces it, and
     send('confirm-email', { token: live }, first.here),
     send('confirm-email', { token: live }, first.here),
   ])
-  expect(results.map((result) => result.status).sort()).toEqual([303, 400])
+  expect(results.map((result) => result.status).sort((a, b) => a - b)).toEqual([
+    303, 400,
+  ])
   expect(
     (await send('confirm-email', { token: live }, first.here)).status,
   ).toBe(400)
@@ -404,7 +406,7 @@ test('an email taken between the request and the link: the unique address decide
   expect((await send('confirm-email', { token }, here)).status).toBe(400)
 })
 
-test('adding an email takes a valid address and password, is limited, and tells when the mail did not go', async () => {
+test('adding an email takes a valid address and password, and tells when the mail did not go', async () => {
   const here = await googleLogin('google-reader')
   const add = (email: string, password = NEW) =>
     send('add-email', { email, password }, here)
@@ -415,10 +417,17 @@ test('adding an email takes a valid address and password, is limited, and tells 
   mailFails = true
   expect(noticeOf(await add('reader@example.org'))).toBe('email-nao-enviado')
   expect(databaseRows('SELECT 1 FROM email_links')).toEqual([])
-  mailFails = false
-  for (let attempt = 0; attempt < 9; attempt++) await add('reader@example.org')
-  expect(noticeOf(await add('reader@example.org'))).toBe('muitas-tentativas')
-  expect(mails).toHaveLength(10)
+})
+
+test('adding an email is limited by address, with the logins of that address', async () => {
+  await register()
+  const here = await googleLogin('google-reader')
+  const add = () =>
+    send('add-email', { email: registration.email, password: NEW }, here)
+  // An address in use is refused before the hashing: this stays fast.
+  for (let attempt = 0; attempt < 9; attempt++)
+    expect(noticeOf(await add())).toBe('email-em-uso')
+  expect(noticeOf(await add())).toBe('muitas-tentativas')
 })
 
 /** One account with both methods, signed in twice. */
@@ -477,10 +486,9 @@ test('the last method never goes, also when two sessions remove the two methods 
     send('remove-method', { method: 'google' }, here),
     send('remove-method', { method: 'email' }, other),
   ])
-  expect(results.map(noticeOf).sort()).toEqual([
-    'metodo-removido',
-    'ultimo-metodo',
-  ])
+  expect(results.map(noticeOf)).toEqual(
+    expect.arrayContaining(['metodo-removido', 'ultimo-metodo']),
+  )
   const left = databaseRows(
     `SELECT id FROM accounts a WHERE a.nickname = 'Ambas' AND (a.google_sub IS NOT NULL OR EXISTS (SELECT 1 FROM email_credentials c WHERE c.account_id = a.id))`,
   )

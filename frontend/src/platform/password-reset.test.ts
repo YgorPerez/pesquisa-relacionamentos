@@ -66,6 +66,8 @@ beforeEach(async () => {
   now = Date.now()
   release = deferred<void>()
   fake = createServer(async (request, response) => {
+    // Tools on this machine probe any port that opens; only the app posts here.
+    if (request.method !== 'POST') return response.end()
     let body = ''
     for await (const chunk of request) body += String(chunk)
     const mail = JSON.parse(body) as Mail
