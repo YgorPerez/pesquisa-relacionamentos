@@ -2,6 +2,7 @@ import {
   useEffect,
   useId,
   useState,
+  useSyncExternalStore,
   type FormEvent,
   type ReactNode,
 } from 'react'
@@ -21,6 +22,17 @@ import { Headline, Section } from './section'
 import { findQuote, pageText } from './highlight-text'
 import { canPaint } from './highlight-paint'
 import { PUBLIC_COMMENT as COPY } from './public-comments.copy'
+import { QUOTABLE } from './quote-text'
+
+const stable = () => () => {}
+
+/** Sending needs JS: the server's HTML has no button that would do nothing. */
+const useHydrated = () =>
+  useSyncExternalStore(
+    stable,
+    () => true,
+    () => false,
+  )
 
 function PublicCommentForm({
   input,
@@ -39,9 +51,11 @@ function PublicCommentForm({
     try {
       const body = new FormData(event.currentTarget).get('body')
       const text = typeof body === 'string' ? body : ''
-      await writePublicComment({ data: { ...input, body: text } })
-      window.dispatchEvent(new Event('public-comments-changed'))
-      onDone()
+      const result = await writePublicComment({ data: { ...input, body: text } })
+      if (result.ok) {
+        window.dispatchEvent(new Event('public-comments-changed'))
+        onDone()
+      } else setProblem(result.problem)
     } catch {
       setProblem(COPY.failed)
     }
@@ -105,10 +119,15 @@ export function CommentAudience({
         </RadioGroup>
       )}
       {audience === 'public' ? (
-        <PublicCommentForm
-          input={{ action: 'publish', path, quote, body: '' }}
-          onDone={onDone}
-        />
+        <>
+          <blockquote className="m-0 line-clamp-3 border-l-2 border-tinta pl-xs text-nota text-tinta-2">
+            {quote}
+          </blockquote>
+          <PublicCommentForm
+            input={{ action: 'publish', path, quote, body: '' }}
+            onDone={onDone}
+          />
+        </>
       ) : (
         children
       )}
@@ -140,24 +159,31 @@ function useConversation(path: string, comments: PublicComment[]) {
   return { items, problem }
 }
 
+/** Marks each comment's passage and says which comments it found; `null`
+ * until the page has been read, when only the server's answer exists. */
 function useCommentMarks(items: PublicComment[]) {
+  const [found, setFound] = useState<ReadonlySet<number> | null>(null)
   useEffect(() => {
+    const quoted = items.filter((comment) => comment.parentId === null)
     const paint = () => {
-      const page = pageText()
-      const found = items.flatMap(
-        (comment) =>
+      // Most pages have none: no need to read the page's text.
+      const page = quoted.length ? pageText() : null
+      const located = quoted.flatMap((comment) => {
+        const where =
+          page &&
           findQuote(page, { exact: comment.quote, prefix: '', suffix: '' })
-            ?.parts ?? [],
-      )
+        return where ? [{ id: comment.id, parts: where.parts }] : []
+      })
+      setFound(new Set(located.map(({ id }) => id)))
       if (canPaint())
         CSS.highlights.set(
           'comentario-publico',
-          new globalThis.Highlight(...found),
+          new globalThis.Highlight(...located.flatMap(({ parts }) => parts)),
         )
     }
     paint()
     const observer = new MutationObserver(paint)
-    document.querySelectorAll('[data-quote]').forEach((node) =>
+    document.querySelectorAll(QUOTABLE).forEach((node) =>
       observer.observe(node, {
         subtree: true,
         childList: true,
@@ -169,6 +195,7 @@ function useCommentMarks(items: PublicComment[]) {
       if (canPaint()) CSS.highlights.delete('comentario-publico')
     }
   }, [items])
+  return found
 }
 
 export function PublicComments({
@@ -178,9 +205,13 @@ export function PublicComments({
   path: string
   comments: PublicComment[]
 }) {
-  const { items, problem } = useConversation(path, comments)
-  const signedIn = items.some((comment) => comment.canReply)
-  useCommentMarks(items)
+  const { items: listed, problem } = useConversation(path, comments)
+  const hydrated = useHydrated()
+  const found = useCommentMarks(listed)
+  const items = found
+    ? listed.map((comment) => ({ ...comment, changed: !found.has(comment.id) }))
+    : listed
+  const signedIn = hydrated && items.some((comment) => comment.canReply)
   if (!items.length) return null
   return (
     <Section aria-labelledby="comentarios-publicos">
@@ -190,7 +221,12 @@ export function PublicComments({
         .filter((comment) => comment.parentId === null)
         .map((comment) => (
           <div key={comment.id} className="border-t border-tinta">
-            <CommentEntry path={path} comment={comment} signedIn={signedIn} />
+            <CommentEntry
+              path={path}
+              comment={comment}
+              signedIn={signedIn}
+              hydrated={hydrated}
+            />
             <div className="pl-md">
               {items
                 .filter((reply) => reply.parentId === comment.id)
@@ -200,6 +236,7 @@ export function PublicComments({
                     path={path}
                     comment={reply}
                     signedIn={signedIn}
+                    hydrated={hydrated}
                   />
                 ))}
             </div>
@@ -213,10 +250,12 @@ function CommentEntry({
   path,
   comment,
   signedIn,
+  hydrated,
 }: {
   path: string
   comment: PublicComment
   signedIn: boolean
+  hydrated: boolean
 }) {
   const [editing, setEditing] = useState<{ id: number; reply: boolean } | null>(
     null,
@@ -224,14 +263,17 @@ function CommentEntry({
   const [problem, setProblem] = useState('')
   async function remove(id: number) {
     try {
-      await writePublicComment({ data: { action: 'delete', id } })
-      window.dispatchEvent(new Event('public-comments-changed'))
+      const result = await writePublicComment({
+        data: { action: 'delete', id },
+      })
+      if (result.ok) window.dispatchEvent(new Event('public-comments-changed'))
+      else setProblem(result.problem)
     } catch {
       setProblem(COPY.failed)
     }
   }
   return (
-    <article id={`comentario-${comment.id}`} className="py-sm" key={comment.id}>
+    <article id={`comentario-${comment.id}`} className="py-sm">
       <CommentBody comment={comment} />
       <div className="flex flex-wrap gap-xs">
         {signedIn && comment.parentId === null && (
@@ -242,7 +284,7 @@ function CommentEntry({
             {COPY.reply}
           </Button>
         )}
-        {comment.own && (
+        {hydrated && comment.own && (
           <>
             <Button
               variant="light"
@@ -318,7 +360,7 @@ function CommentBody({ comment }: { comment: PublicComment }) {
       {comment.parentId === null && (
         <blockquote className="mx-0 my-xs border-l-2 border-tinta pl-xs text-nota text-tinta-2">
           {comment.quote}
-          {comment.changed && <p>{COPY.changed}</p>}
+          {comment.changed && <p className="m-0 mt-xs">{COPY.changed}</p>}
         </blockquote>
       )}
       <p className="my-xs whitespace-pre-wrap wrap-anywhere">{comment.body}</p>

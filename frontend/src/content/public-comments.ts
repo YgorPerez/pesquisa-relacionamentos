@@ -1,6 +1,18 @@
 import { createServerFn } from '@tanstack/react-start'
-import type { PublicCommentWrite } from './public-comment-record'
-import { publicPageText } from './site-search-view'
+import type {
+  PublicCommentResult,
+  PublicCommentWrite,
+} from './public-comment-record'
+
+/** The passage's text on the server, by which a reader without JS learns that
+ * a passage changed. The page corrects it when it can look (`ui/public-comments.tsx`). */
+async function pageTextReader() {
+  const [{ default: library }, { publicPageText }] = await Promise.all([
+    import('virtual:library'),
+    import('./site-search-view'),
+  ])
+  return (path: string) => publicPageText(library, path)
+}
 
 export const readPublicComments = createServerFn({ method: 'GET' })
   .validator((path: string) => path)
@@ -10,25 +22,40 @@ export const readPublicComments = createServerFn({ method: 'GET' })
         import('#/platform/public-comments'),
         import('@tanstack/react-start/server'),
       ])
-    setResponseHeader('Cache-Control', 'private, no-store')
     const comments = createPublicComments().list(data, getRequest())
+    // Called by the page's loader, so this header is the whole document's:
+    // only what carries the reader's own buttons turns off the caches.
+    if (comments.some((comment) => comment.own || comment.canReply))
+      setResponseHeader('Cache-Control', 'private, no-store')
     if (!comments.length) return comments
-    const { default: library } = await import('virtual:library')
-    const text = publicPageText(library, data)
+    const text = (await pageTextReader())(data)
     return comments.map((comment) => ({
       ...comment,
-      changed: !text.includes(comment.quote.replace(/\s+/g, ' ').trim()),
+      changed: !text.includes(comment.quote),
     }))
   })
 
 export const writePublicComment = createServerFn({ method: 'POST' })
   .validator((input: PublicCommentWrite) => input)
-  .handler(async ({ data }) => {
-    const [{ createPublicComments }, { getRequest, setResponseHeader }] =
-      await Promise.all([
-        import('#/platform/public-comments'),
-        import('@tanstack/react-start/server'),
-      ])
+  .handler(async ({ data }): Promise<PublicCommentResult> => {
+    const [
+      { createPublicComments, PublicCommentRefusal },
+      { getRequest, setResponseHeader },
+      read,
+    ] = await Promise.all([
+      import('#/platform/public-comments'),
+      import('@tanstack/react-start/server'),
+      pageTextReader(),
+    ])
     setResponseHeader('Cache-Control', 'private, no-store')
-    return createPublicComments().write(getRequest(), data)
+    const comments = createPublicComments({
+      isPage: (path) => read(path) !== '',
+    })
+    try {
+      return { ok: true, id: comments.write(getRequest(), data) }
+    } catch (error) {
+      if (error instanceof PublicCommentRefusal)
+        return { ok: false, problem: error.message }
+      throw error
+    }
   })

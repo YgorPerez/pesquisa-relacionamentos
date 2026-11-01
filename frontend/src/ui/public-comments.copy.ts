@@ -5,6 +5,7 @@ export const PUBLIC_COMMENT = {
   audience: 'Quem pode ler',
   text: 'Seu comentário público',
   send: 'Publicar',
+  published: 'Comentário publicado.',
   sending: 'Enviando…',
   failed: 'Não foi possível enviar. Confira sua conta e tente de novo.',
   changed: 'este trecho mudou',

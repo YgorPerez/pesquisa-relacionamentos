@@ -10,6 +10,10 @@ export interface PublicComment {
   canReply?: boolean
   changed?: boolean
 }
+/** A refusal carries what the form tells the reader. */
+export type PublicCommentResult =
+  | { ok: true; id: number }
+  | { ok: false; problem: string }
 export type PublicCommentWrite =
   | {
       action: 'publish'
