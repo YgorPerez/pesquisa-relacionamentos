@@ -5,8 +5,8 @@
 # and the push hook runs the affected tests; the rest is left to this
 # workflow.
 #
-# Three jobs in parallel, each on its own runner: `check`, `stories` and
-# `e2e`. `nightly-suite.yml` calls this same workflow every night, on `main`.
+# Jobs in parallel, each on its own runner: `check`, `stories`, `build` and
+# three `e2e` shards. `nightly-suite.yml` calls this same workflow every night, on `main`.
 #
 # Every job has `timeout-minutes`: without it, a stuck job holds the PR for
 # GitHub's default six hours.
@@ -105,11 +105,10 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-  # The site build, as deploy does it, and e2e. They share a job because e2e
-  # builds again, with the fixture library, into the same `.output`.
-  e2e:
+  # The site build, as deploy does it, with the repository's library.
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -142,17 +141,44 @@ jobs:
           fi
           pnpm build
 
+  # The whole e2e, split in three so the PR takes the time of its slowest
+  # shard. Each one builds the fixture library on its own. `fail-fast: false`:
+  # a red shard does not hide what the others would say.
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       # `playwright.config.ts` uses the machine's Chrome (`channel: 'chrome'`),
       # and GitHub's ubuntu image already ships Google Chrome.
       - name: E2E
-        run: pnpm e2e
+        run: pnpm e2e --shard=${{ matrix.shard }}/3
 
       # The trace and screenshot of what failed, in `test-results/`.
       - name: Upload e2e traces
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-test-results
+          name: e2e-test-results-${{ matrix.shard }}
           path: frontend/test-results/
           if-no-files-found: ignore
           retention-days: 14
