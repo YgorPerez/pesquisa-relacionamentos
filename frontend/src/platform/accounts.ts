@@ -1,4 +1,5 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto'
+import { existsSync } from 'node:fs'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
@@ -17,7 +18,11 @@ type Options = {
   userinfoEndpoint?: string
   now?: () => number
 }
-export type Account = { id: number; googleSub: string | null; nickname: string | null }
+export type Account = {
+  id: number
+  googleSub: string | null
+  nickname: string | null
+}
 const hash = (value: string) =>
   createHash('sha256').update(value).digest('base64url')
 const random = () => randomBytes(32).toString('base64url')
@@ -108,7 +113,8 @@ class AccountService {
       return row
         ? {
             id: Number(row.id),
-            googleSub: typeof row.google_sub === 'string' ? row.google_sub : null,
+            googleSub:
+              typeof row.google_sub === 'string' ? row.google_sub : null,
             nickname: typeof row.nickname === 'string' ? row.nickname : null,
           }
         : null
@@ -373,10 +379,17 @@ class AccountService {
     )
       return response(403, 'Abra o formulário neste site e tente de novo.')
     if (url.pathname === '/auth/google' && request.method === 'GET')
-      return this.configured() ? this.start() : response(503, 'O login com Google está indisponível.')
+      return this.configured()
+        ? this.start()
+        : response(503, 'O login com Google está indisponível.')
     if (url.pathname === '/auth/callback' && request.method === 'GET')
-      return this.configured() ? this.callback(request, url) : response(503, 'O login com Google está indisponível.')
-    if (request.method === 'POST' && ['/auth/register', '/auth/login'].includes(url.pathname))
+      return this.configured()
+        ? this.callback(request, url)
+        : response(503, 'O login com Google está indisponível.')
+    if (
+      request.method === 'POST' &&
+      ['/auth/register', '/auth/login'].includes(url.pathname)
+    )
       return this.email(request, url.pathname === '/auth/register')
     const account = this.current(request)
     if (!account) return response(401, 'Entre para continuar.')
@@ -390,19 +403,38 @@ class AccountService {
   }
   private emailConfigured() {
     const origin = this.options.origin
-    return Boolean(this.options.emailRateLimitKey && origin && (this.secure || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)))
+    return Boolean(
+      this.options.emailRateLimitKey &&
+      origin &&
+      (this.secure ||
+        /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)),
+    )
   }
   private async email(request: Request, register: boolean) {
-    if (!this.emailConfigured()) return response(503, 'O login com e-mail está indisponível.')
+    if (!this.emailConfigured())
+      return response(503, 'O login com e-mail está indisponível.')
     const form = await readForm(request)
     if (form instanceof Response) return form
     const db = this.database()
     try {
       const email = form.get('email')?.trim().toLowerCase() ?? ''
-      if (!allowEmailAttempt(db, request, email, this.options.emailRateLimitKey!, this.now()))
-        return response(429, 'Muitas tentativas. Espere 15 minutos e tente de novo.')
+      if (
+        !allowEmailAttempt(
+          db,
+          request,
+          email,
+          this.options.emailRateLimitKey!,
+          this.now(),
+        )
+      )
+        return response(
+          429,
+          'Muitas tentativas. Espere 15 minutos e tente de novo.',
+        )
       const result = await emailAccount(db, form, register, this.now())
-      return typeof result === 'number' ? this.createSession(request, result) : response(400, result)
+      return typeof result === 'number'
+        ? this.createSession(request, result)
+        : response(400, result)
     } finally {
       db.close()
     }
@@ -440,10 +472,12 @@ export function handleAccountRequest(request: Request) {
 /** Hourly erasure also covers an idle site; expiry is 15 minutes, retention <24h. */
 export function pruneEmailRateLimits() {
   const env = serverEnv()
-  if (!env.EMAIL_RATE_LIMIT_KEY) return
+  if (!existsSync(env.DATABASE_PATH)) return
   const db = openDatabase(env.DATABASE_PATH)
   try {
-    db.prepare('DELETE FROM email_rate_limits WHERE expires_at <= ?').run(Date.now())
+    db.prepare('DELETE FROM email_rate_limits WHERE expires_at <= ?').run(
+      Date.now(),
+    )
   } finally {
     db.close()
   }

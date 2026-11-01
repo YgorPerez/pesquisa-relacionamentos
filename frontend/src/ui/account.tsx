@@ -165,35 +165,78 @@ function EmailForm({ register = false }: { register?: boolean }) {
   const prefix = register ? 'register' : 'login'
   return (
     <Section aria-labelledby={`email-${prefix}`}>
-      <Headline id={`email-${prefix}`}>{register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}</Headline>
-      <form action={`/auth/${prefix}`} method="post" className="mt-md flex flex-col items-start gap-sm">
-        <label htmlFor={`${prefix}-email`} className="flex w-full flex-col gap-xs">
+      <Headline id={`email-${prefix}`}>
+        {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
+      </Headline>
+      <form
+        action={`/auth/${prefix}`}
+        method="post"
+        className="mt-md flex flex-col items-start gap-sm"
+      >
+        <label
+          htmlFor={`${prefix}-email`}
+          className="flex w-full flex-col gap-xs"
+        >
           {register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin}
-          <Input id={`${prefix}-email`} name="email" type="email" maxLength={254} required autoComplete="email" />
+          <Input
+            id={`${prefix}-email`}
+            name="email"
+            type="email"
+            maxLength={254}
+            required
+            autoComplete="email"
+          />
         </label>
-        <label htmlFor={`${prefix}-password`} className="flex w-full flex-col gap-xs">
-          {register ? EMAIL_ACCOUNT.passwordRegister : EMAIL_ACCOUNT.passwordLogin}
-          <Input id={`${prefix}-password`} name="password" type="password" minLength={register ? 8 : undefined} maxLength={1024} required autoComplete={register ? 'new-password' : 'current-password'} />
+        <label
+          htmlFor={`${prefix}-password`}
+          className="flex w-full flex-col gap-xs"
+        >
+          {register
+            ? EMAIL_ACCOUNT.passwordRegister
+            : EMAIL_ACCOUNT.passwordLogin}
+          <Input
+            id={`${prefix}-password`}
+            name="password"
+            type="password"
+            minLength={register ? 8 : undefined}
+            maxLength={1024}
+            required
+            autoComplete={register ? 'new-password' : 'current-password'}
+          />
         </label>
         {register && <EmailRegistration />}
-        <SiteButton type="submit">{register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}</SiteButton>
+        <SiteButton type="submit">
+          {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
+        </SiteButton>
       </form>
     </Section>
   )
 }
 
 function EmailRegistration() {
-  return <>
-    <p className="text-nota text-tinta-2">{EMAIL_ACCOUNT.passwordNote}</p>
-    <label htmlFor="register-nickname" className="flex w-full flex-col gap-xs">
-      {ACCOUNT.nickname}
-      <Input id="register-nickname" name="nickname" minLength={2} maxLength={40} required autoComplete="off" />
-    </label>
-    <p>{ACCOUNT_RULES}</p>
-    <Agreement name="adult">{ACCOUNT.adult}</Agreement>
-    <Agreement name="rules">{ACCOUNT.rules}</Agreement>
-    <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
-  </>
+  return (
+    <>
+      <p className="text-nota text-tinta-2">{EMAIL_ACCOUNT.passwordNote}</p>
+      <label
+        htmlFor="register-nickname"
+        className="flex w-full flex-col gap-xs"
+      >
+        {ACCOUNT.nickname}
+        <Input
+          id="register-nickname"
+          name="nickname"
+          minLength={2}
+          maxLength={40}
+          required
+          autoComplete="off"
+        />
+      </label>
+      <p>{ACCOUNT_RULES}</p>
+      <Agreement name="adult">{ACCOUNT.adult}</Agreement>
+      <Agreement name="rules">{ACCOUNT.rules}</Agreement>
+      <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
+    </>
+  )
 }
 
 function SignedIn({
@@ -265,16 +308,16 @@ export function AccountPage({
           <SignedIn nickname={account.nickname} refusal={nicknameRefusal} />
         ) : (
           <>
-          <Section>
-            <a
-              href="/auth/google"
-              className="inline-flex min-h-toque items-center font-bold"
-            >
-              {ACCOUNT.signIn}
-            </a>
-          </Section>
-          <EmailForm />
-          <EmailForm register />
+            <Section>
+              <a
+                href="/auth/google"
+                className="inline-flex min-h-toque items-center font-bold"
+              >
+                {ACCOUNT.signIn}
+              </a>
+            </Section>
+            <EmailForm />
+            <EmailForm register />
           </>
         )}
         {account?.nickname && (

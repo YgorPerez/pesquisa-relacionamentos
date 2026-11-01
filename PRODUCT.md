@@ -27,7 +27,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 ## Operating Context
 
 - A maioria abre o site no celular.
-- Ler não pede login. Uma conta Google opcional usa um apelido escolhido. O Perfil, os Requisitos e as Prioridades ficam no navegador, a menos que o leitor entre na Sincronização, e podem ser compartilhados por link.
+- Ler não pede login. Uma conta opcional com Google ou e-mail e senha usa um apelido escolhido. O Perfil, os Requisitos e as Prioridades ficam no navegador, a menos que o leitor entre na Sincronização, e podem ser compartilhados por link.
 - O conteúdo (Fichas, Guias, Dicas) é markdown neste repositório e é a fonte da verdade. Agentes escrevem Fichas e um humano revisa em PR.
 - Vocabulário em `GLOSSARY.md`; convenções de Fichas no `README.md`.
 

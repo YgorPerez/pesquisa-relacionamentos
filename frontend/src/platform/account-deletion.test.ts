@@ -26,7 +26,8 @@ const TABLES: Readonly<Record<string, string>> = {
   public_comment_reports: 'cascades, and follows its comment',
   oauth_attempts: 'has no account',
   email_credentials: 'cascades: email and password hash go',
-  email_rate_limits: 'has no account; keyed hashes expire and are erased hourly',
+  email_rate_limits:
+    'has no account; keyed hashes expire and are erased hourly',
   schema_migrations: 'has no account',
 }
 
