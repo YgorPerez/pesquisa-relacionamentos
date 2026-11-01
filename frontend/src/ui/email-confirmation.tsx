@@ -24,7 +24,9 @@ export function EmailConfirmation({
         )}
         {token && email && (
           <>
-            <Lead>{EMAIL_CONFIRMATION.explanation(email)}</Lead>
+            <Lead className="wrap-anywhere">
+              {EMAIL_CONFIRMATION.explanation(email)}
+            </Lead>
             <Section>
               <p>{EMAIL_CONFIRMATION.note}</p>
               <form

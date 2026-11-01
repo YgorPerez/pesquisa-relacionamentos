@@ -15,7 +15,7 @@ export const LOGIN_METHODS = {
     'Sua conta precisa de um jeito de entrar. Ligue outro para poder tirar este.',
   addTitle: 'Ligar um e-mail',
   addExplanation:
-    'Mandamos um link para confirmar o endereço. Ele só entra na conta quando você abrir o link com esta conta aberta. Guardamos o e-mail para login e recuperação de senha.',
+    'Vamos mandar um link para confirmar o endereço. Ele só entra na conta quando você abrir o link com esta conta aberta. Guardamos o e-mail para login e recuperação de senha.',
   addEmail: 'E-mail que vai ligar',
   addPassword: 'Crie uma senha para esse e-mail',
   addSubmit: 'Enviar link de confirmação',

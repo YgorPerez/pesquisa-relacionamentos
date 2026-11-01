@@ -100,7 +100,7 @@ function EmailMethod({
   return (
     <>
       {email ? (
-        <p className="mt-md">
+        <p className="mt-md wrap-anywhere">
           {LOGIN_METHODS.emailOn} <strong>{email}</strong>
         </p>
       ) : (
@@ -118,7 +118,9 @@ function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
     <>
       <h3 className="mt-lg font-bold">{LOGIN_METHODS.addTitle}</h3>
       <p>{LOGIN_METHODS.addExplanation}</p>
-      {pendingEmail && <p>{LOGIN_METHODS.pending(pendingEmail)}</p>}
+      {pendingEmail && (
+        <p className="wrap-anywhere">{LOGIN_METHODS.pending(pendingEmail)}</p>
+      )}
       <form action="/auth/add-email" method="post" className={FORM}>
         <Field
           id="add-email"
