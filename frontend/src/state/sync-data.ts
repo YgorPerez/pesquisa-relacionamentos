@@ -3,7 +3,7 @@ import { readRequirements } from '@tem-estudo/rules/requirements'
 import { readPriorities } from '@tem-estudo/rules/priorities'
 import { validateHighlights } from './highlight-storage'
 import { validateSentComments } from './sent-comment-storage'
-import { isQuoteRecord } from './json-record'
+import { isRecord } from './json-record'
 
 export interface SyncEntry {
   readonly at: number
@@ -18,7 +18,7 @@ function validateSyncValue(key: string, value: unknown): unknown {
   if (key === 'priorities') return readPriorities(value)
   if (
     key.startsWith('note:') &&
-    isQuoteRecord(value) &&
+    isRecord(value) &&
     typeof value.text === 'string'
   )
     return { text: value.text.slice(0, 500) }
@@ -37,23 +37,49 @@ const SCALARS = ['profile', 'requirements', 'priorities']
 const knownKey = (key: string) =>
   SCALARS.includes(key) || /^(note|highlight|comment):./.test(key)
 
+function readEntry(key: string, entry: unknown): SyncEntry | null {
+  if (!isRecord(entry) || !knownKey(key)) return null
+  const { at } = entry
+  if (typeof at !== 'number' || !Number.isSafeInteger(at) || at < 0) return null
+  const value =
+    entry.value === null ? null : validateSyncValue(key, entry.value)
+  return value || entry.value === null ? { at, value } : null
+}
+
+/** All of it, or `null` if any entry fails: what a device may send. */
 export function readSyncData(raw: unknown): SyncData | null {
-  if (!isQuoteRecord(raw)) return null
-  const entries: [string, SyncEntry][] = []
-  for (const [key, entry] of Object.entries(raw)) {
-    if (!isQuoteRecord(entry)) return null
-    const { at } = entry
-    if (typeof at !== 'number' || !Number.isSafeInteger(at) || at < 0)
-      return null
-    const value =
-      entry.value === null && knownKey(key)
-        ? null
-        : validateSyncValue(key, entry.value)
-    if (!value && entry.value !== null) return null
-    if (!knownKey(key)) return null
-    entries.push([key, { at, value }])
+  if (!isRecord(raw)) return null
+  const entries = Object.entries(raw).map(
+    ([key, entry]) => [key, readEntry(key, entry)] as const,
+  )
+  return entries.every(([, entry]) => entry)
+    ? (Object.fromEntries(entries) as SyncData)
+    : null
+}
+
+/** What the account holds that this version can read. An entry it cannot, from
+ * another version of these rules, stays stored and is not offered. */
+export const readableSyncData = (stored: Record<string, unknown>): SyncData =>
+  Object.fromEntries(
+    Object.entries(stored).flatMap(([key, raw]) => {
+      const entry = readEntry(key, raw)
+      return entry ? [[key, entry]] : []
+    }),
+  )
+
+/** `mergeSyncData` over the stored JSON: only an entry that wins is written, so
+ * everything else stays byte for byte, the unreadable above all. */
+export function mergeStoredSyncData(
+  stored: Record<string, unknown>,
+  incoming: SyncData,
+): Record<string, unknown> {
+  const merged = { ...stored }
+  for (const [key, next] of Object.entries(incoming)) {
+    const previous = readEntry(key, stored[key])
+    if (stored[key] === undefined || (previous && next.at > previous.at))
+      merged[key] = next
   }
-  return Object.fromEntries(entries)
+  return merged
 }
 
 /** A missing entry never deletes; only an entry the reader removed, with

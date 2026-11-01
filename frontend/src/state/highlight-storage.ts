@@ -1,16 +1,16 @@
 import {
   decodeKeptQuote,
   decodeQuoteList,
-  isQuoteRecord,
   type Highlight,
 } from './highlight-record'
+import { isRecord } from './json-record'
 import { stored } from './stored'
 
 /** The longest Nota kept. */
 export const NOTE_LENGTH = 500
 
 function validHighlight(raw: unknown): Highlight | null {
-  if (!isQuoteRecord(raw)) return null
+  if (!isRecord(raw)) return null
   const quote = decodeKeptQuote(raw)
   if (!quote) return null
   const { note } = raw

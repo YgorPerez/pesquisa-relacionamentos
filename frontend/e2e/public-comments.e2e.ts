@@ -77,13 +77,27 @@ test.describe('without JavaScript', () => {
   })
 })
 
-test('an anonymous reader still only has the private form', async ({
+test('an anonymous reader starts private, is told of the public option, and keeps the text through logging in', async ({
   page,
+  context,
   isMobile,
 }) => {
   const form = await openComment(page, isMobile)
-  await expect(form.getByLabel('Seu comentário')).toBeVisible()
-  await expect(form.getByRole('radio', { name: 'Público' })).toHaveCount(0)
+  await expect(
+    form.getByRole('radio', { name: 'Só para o curador' }),
+  ).toBeChecked()
+  await form.getByLabel('Seu comentário').fill('Minha dúvida')
+  await form.getByRole('radio', { name: 'Público' }).click()
+  await expect(
+    form.getByRole('link', { name: /Entrar com Google/ }),
+  ).toHaveAttribute('href', '/auth/google')
+
+  // The login happens in the other tab; this one looks again on the way back.
+  await signIn(context)
+  await page.evaluate(() => window.dispatchEvent(new Event('focus')))
+  await expect(form.getByLabel('Seu comentário público')).toHaveValue(
+    'Minha dúvida',
+  )
 })
 
 test('a signed-in reader publishes from the selection, marks the passage, edits, replies and deletes', async ({
@@ -107,7 +121,7 @@ test('a signed-in reader publishes from the selection, marks the passage, edits,
   await expect(entry).not.toContainText('este trecho mudou')
   await expect
     .poll(() =>
-      page.evaluate(() => CSS.highlights.get('comentario-publico')?.size ?? 0),
+      page.evaluate(() => CSS.highlights.get('public-comment')?.size ?? 0),
     )
     .toBeGreaterThan(0)
 

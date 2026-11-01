@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PUBLIC_COMMENTS_CHANGED } from '#/content/public-comment-record'
 import { reportPublicComment } from '#/content/public-comments'
 import { SiteButton as Button } from './button'
 import { COMMENT_REPORT as COPY } from './comment-report.copy'
@@ -20,7 +21,7 @@ export function CommentReport({
     onProblem('')
     try {
       const result = await reportPublicComment({ data: id })
-      if (result.ok) window.dispatchEvent(new Event('public-comments-changed'))
+      if (result.ok) window.dispatchEvent(new Event(PUBLIC_COMMENTS_CHANGED))
       else onProblem(result.problem)
     } catch {
       onProblem(COPY.failed)

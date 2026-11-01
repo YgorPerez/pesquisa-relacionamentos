@@ -1,7 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vite-plus/test'
 import { PublicComments, CommentAudience } from './public-comments'
+import { PUBLIC_COMMENT as COPY } from './public-comments.copy'
 import { readAccount } from '#/content/account'
 import {
   readPublicComments,
@@ -49,7 +50,7 @@ test('a signed-in reader picks public, publishes, and the page refreshes its con
   render(
     <>
       <CommentAudience path="/dicas/exemplo" quote="Um trecho" onDone={onDone}>
-        <p>Formulário privado</p>
+        {() => <p>Formulário privado</p>}
       </CommentAudience>
       <PublicComments path="/dicas/exemplo" comments={[]} />
     </>,
@@ -57,7 +58,7 @@ test('a signed-in reader picks public, publishes, and the page refreshes its con
   await user.click(await screen.findByRole('radio', { name: 'Público' }))
   expect(screen.queryByText('Formulário privado')).toBeNull()
   await user.type(
-    screen.getByLabelText('Seu comentário público'),
+    await screen.findByLabelText('Seu comentário público'),
     'Minha dúvida',
   )
   vi.mocked(readPublicComments).mockResolvedValue([
@@ -82,7 +83,7 @@ test('a signed-in reader picks public, publishes, and the page refreshes its con
       body: 'Minha dúvida',
     },
   })
-  expect(await screen.findByText('Minha dúvida')).toBeVisible()
+  expect(await screen.findByRole('article')).toHaveTextContent('Minha dúvida')
   expect(onDone).toHaveBeenCalledOnce()
 })
 
@@ -177,11 +178,11 @@ test('a refused send tells the reader why and keeps the text', async () => {
   const user = userEvent.setup()
   render(
     <CommentAudience path="/dicas/exemplo" quote="Um trecho" onDone={onDone}>
-      <p>Formulário privado</p>
+      {() => <p>Formulário privado</p>}
     </CommentAudience>,
   )
   await user.click(await screen.findByRole('radio', { name: 'Público' }))
-  expect(screen.getByText('Um trecho')).toBeVisible()
+  expect(await screen.findByText('Um trecho')).toBeVisible()
   await user.type(screen.getByLabelText('Seu comentário público'), 'Texto')
   await user.click(screen.getByRole('button', { name: 'Publicar' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('limite de 10')
@@ -189,14 +190,57 @@ test('a refused send tells the reader why and keeps the text', async () => {
   expect(onDone).not.toHaveBeenCalled()
 })
 
-test('an anonymous reader gets the private form and no choice', async () => {
-  vi.mocked(readAccount).mockResolvedValue(null)
+const audience = () =>
   render(
     <CommentAudience path="/dicas/exemplo" quote="Um trecho" onDone={() => {}}>
-      <p>Formulário privado</p>
+      {({ text, onText }) => (
+        <label>
+          Formulário privado
+          <textarea
+            value={text}
+            onChange={(event) => onText(event.currentTarget.value)}
+          />
+        </label>
+      )}
     </CommentAudience>,
   )
+
+test('a signed-out reader starts on the private form and is told the public option exists', async () => {
+  vi.mocked(readAccount).mockResolvedValue(null)
+  const user = userEvent.setup()
+  audience()
+  expect(screen.getByRole('radio', { name: COPY.private })).toBeChecked()
+  expect(screen.getByLabelText('Formulário privado')).toBeVisible()
+  await user.click(screen.getByRole('radio', { name: COPY.public }))
+  const login = screen.getByRole('link', { name: new RegExp(COPY.signIn) })
+  expect(login).toHaveAttribute('href', '/auth/google')
+  expect(login).toHaveAttribute('target', '_blank')
+  expect(screen.getByText(COPY.needsAccount)).toBeVisible()
+})
+
+test('a reader with an unfinished account is sent to finish the nickname', async () => {
+  vi.mocked(readAccount).mockResolvedValue({ nickname: null })
+  const user = userEvent.setup()
+  audience()
   await waitFor(() => expect(readAccount).toHaveBeenCalled())
-  expect(screen.getByText('Formulário privado')).toBeVisible()
-  expect(screen.queryByRole('radio')).toBeNull()
+  await user.click(screen.getByRole('radio', { name: COPY.public }))
+  expect(
+    await screen.findByRole('link', { name: new RegExp(COPY.chooseNickname) }),
+  ).toHaveAttribute('href', '/conta')
+})
+
+test('what was typed survives logging in on the other tab, and goes to the public form', async () => {
+  vi.mocked(readAccount).mockResolvedValue(null)
+  const user = userEvent.setup()
+  audience()
+  await user.type(screen.getByLabelText('Formulário privado'), 'Meu texto')
+  await user.click(screen.getByRole('radio', { name: COPY.public }))
+  vi.mocked(readAccount).mockResolvedValue({ nickname: 'Leitora' })
+  fireEvent.focus(window)
+  expect(await screen.findByLabelText(COPY.text)).toHaveValue('Meu texto')
+  await user.type(screen.getByLabelText(COPY.text), ' e mais')
+  await user.click(screen.getByRole('radio', { name: COPY.private }))
+  expect(screen.getByLabelText('Formulário privado')).toHaveValue(
+    'Meu texto e mais',
+  )
 })

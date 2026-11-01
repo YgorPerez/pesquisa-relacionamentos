@@ -8,7 +8,9 @@ Spec #556 carries the Perfil, Requisitos, Prioridades, Grifos, Notas and sent Co
 
 The account holds one JSON document in `account_sync`, keyed by entry (`profile`, `highlight:<id>`, `note:<id>`, `comment:<id>`), each with the time it changed. The newest entry wins, and a tie keeps the account's. The server holds times to its own clock.
 
-**An absent entry never deletes.** Only an explicit removal does: "Tirar grifo", "Tirar da lista" or erasing the Perfil writes `value: null`, without the content, and that entry merges like any other. Without this a removed Grifo would return on the next exchange. A removal comes from the action, never from comparing lists, since a list can be short because this device never held the item. A Nota written after a removal renews its Grifo, which comes back.
+**An absent entry never deletes.** Only an explicit removal does: "Tirar grifo", "Tirar da lista" or erasing the Perfil writes `value: null`, without the content, and that entry merges like any other. Without this a removed Grifo would return on the next exchange. A removal comes from the action, never from comparing lists, since a list can be short because this device never held the item. A Nota written after a removal renews its Grifo, which comes back. Removing a Grifo also removes its empty twins on the same passage, only as this device knows them: a twin with a Nota stays, and so does one given a Nota elsewhere that this device has not seen.
+
+**What the server cannot read stays.** The merge writes only an entry that wins, so everything else in the stored JSON stays as it was. An entry this version cannot read, as after a change in the rules, is kept and not offered to devices, and nothing replaces it. A document that is no record at all refuses the exchange with a 500 and is left untouched.
 
 **A received link stays on the device.** Its fields are marked and neither uploaded nor overwritten by the account, until the reader edits that field, which is the intent to keep it, or chooses "Voltar aos dados da conta". Clearing a field a link filled drops only the copy here: the account's version returns.
 

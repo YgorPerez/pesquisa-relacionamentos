@@ -202,9 +202,9 @@ function Backups() {
     <Section className="prosa" aria-labelledby="p-copias">
       <Headline id="p-copias">Cópias de segurança</Headline>
       <p>
-        Uma vez por dia, o banco inteiro vai criptografado para um armazenamento
-        privado fora do servidor. A chave fica guardada à parte. Quem a tem pode
-        ler a cópia.
+        Com as cópias ligadas, uma vez por dia o banco inteiro vai criptografado
+        para um armazenamento privado fora do servidor. A chave fica guardada à
+        parte. Quem a tem pode ler a cópia.
       </p>
       <p>
         Uma conta excluída continua nas cópias feitas antes da exclusão até elas

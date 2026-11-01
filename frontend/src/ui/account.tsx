@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, type ReactNode } from 'react'
+import type { NicknameRefusal } from '#/content/nickname-refusal'
 import {
   decideSync,
   forgetDeletedAccount,
@@ -14,11 +15,12 @@ import { DELETION } from './account-deletion.copy'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
-import { Checkbox } from './shadcn/checkbox'
 import { Section, Headline } from './section'
 import {
+  ACCOUNT,
   ACCOUNT_INTRO,
   ACCOUNT_RULES,
+  NICKNAME_REFUSAL,
   SYNC_ACTIVE,
   SYNC_DECLINED,
   SYNC_DEVICE,
@@ -41,12 +43,10 @@ function SyncChoice({
       <p>{SYNC_EXPLANATION}</p>
       {status === 'device' && <p>{SYNC_DEVICE}</p>}
       <div className="mt-md flex flex-wrap gap-sm">
-        <SiteButton onClick={() => decide(true)}>
-          Juntar e sincronizar
-        </SiteButton>
+        <SiteButton onClick={() => decide(true)}>{ACCOUNT.join}</SiteButton>
         {status === 'ask' && (
           <SiteButton variant="light" onClick={() => decide(false)}>
-            Manter só neste aparelho
+            {ACCOUNT.keepHere}
           </SiteButton>
         )}
       </div>
@@ -67,13 +67,13 @@ function SyncActive({ linkFields }: { linkFields: boolean }) {
               void returnToAccountData()
             }}
           >
-            Voltar aos dados da conta
+            {ACCOUNT.backToAccount}
           </SiteButton>
         </>
       )}
       <p className="mt-md text-nota text-tinta-2">{SYNC_STOP_NOTE}</p>
       <SiteButton variant="light" onClick={stopDeviceSync}>
-        Parar neste aparelho
+        {ACCOUNT.stop}
       </SiteButton>
     </>
   )
@@ -91,7 +91,7 @@ function SyncSettings({
   if (status === 'loading' || status === 'anonymous') return null
   return (
     <Section aria-labelledby="account-sync">
-      <Headline id="account-sync">Seus dados nos seus aparelhos</Headline>
+      <Headline id="account-sync">{ACCOUNT.syncTitle}</Headline>
       {status === 'failed' ? (
         <>
           <p>{SYNC_FAILED}</p>
@@ -101,7 +101,7 @@ function SyncSettings({
               void refreshSync()
             }}
           >
-            Tentar de novo
+            {ACCOUNT.retry}
           </SiteButton>
         </>
       ) : status === 'active' ? (
@@ -113,18 +113,34 @@ function SyncSettings({
   )
 }
 
-function NicknameForm() {
-  const [adult, setAdult] = useState(false)
-  const [rules, setRules] = useState(false)
-  const [nickname, setNickname] = useState('')
+/** The browser's own checkbox: the Base UI one does not toggle without
+ * JavaScript, and this is what a reader must tick to get a nickname. */
+function Agreement({ name, children }: { name: string; children: ReactNode }) {
+  return (
+    <label className="flex min-h-toque items-center gap-xs font-bold">
+      <input
+        type="checkbox"
+        name={name}
+        required
+        className="size-5 flex-none accent-tinta"
+      />
+      {children}
+    </label>
+  )
+}
+
+/** A plain form with the browser's own checks, so it works without JavaScript;
+ * the server checks all of it again, and a refusal comes back to this page. */
+function NicknameForm({ refusal }: { refusal?: NicknameRefusal }) {
   return (
     <form
       action="/auth/nickname"
       method="post"
       className="mt-md flex flex-col items-start gap-sm"
     >
+      {refusal && <p role="alert">{NICKNAME_REFUSAL[refusal]}</p>}
       <label className="flex w-full flex-col gap-xs" htmlFor="nickname">
-        Apelido
+        {ACCOUNT.nickname}
         <Input
           id="nickname"
           name="nickname"
@@ -132,51 +148,41 @@ function NicknameForm() {
           minLength={2}
           maxLength={40}
           required
-          value={nickname}
-          onChange={(event) => setNickname(event.target.value)}
           autoComplete="off"
         />
       </label>
       <p>{ACCOUNT_RULES}</p>
-      <Checkbox name="adult" checked={adult} onCheckedChange={setAdult}>
-        Declaro ter 18 anos ou mais
-      </Checkbox>
-      <Checkbox name="rules" checked={rules} onCheckedChange={setRules}>
-        Li e aceito as regras acima
-      </Checkbox>
-      <p className="text-nota text-tinta-2">
-        A idade é uma declaração sua; o site não a verifica.
-      </p>
-      <SiteButton
-        type="submit"
-        disabled={!adult || !rules || nickname.trim().length < 2}
-      >
-        Criar apelido
-      </SiteButton>
+      <Agreement name="adult">{ACCOUNT.adult}</Agreement>
+      <Agreement name="rules">{ACCOUNT.rules}</Agreement>
+      <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
+      <SiteButton type="submit">{ACCOUNT.createNickname}</SiteButton>
     </form>
   )
 }
 
-function SignedIn({ nickname }: { nickname: string | null }) {
+function SignedIn({
+  nickname,
+  refusal,
+}: {
+  nickname: string | null
+  refusal?: NicknameRefusal
+}) {
   return (
     <>
       {nickname === null ? (
         <Section aria-labelledby="account-nickname">
-          <Headline id="account-nickname">Como você quer aparecer?</Headline>
-          <p>
-            O apelido será público nos comentários que você publicar. Evite usar
-            seu nome completo.
-          </p>
-          <NicknameForm />
+          <Headline id="account-nickname">{ACCOUNT.nicknameTitle}</Headline>
+          <p>{ACCOUNT.nicknameExplanation}</p>
+          <NicknameForm refusal={refusal} />
         </Section>
       ) : (
         <Section>
-          <p>Você entrou como {nickname}.</p>
+          <p>{ACCOUNT.signedInAs(nickname)}</p>
         </Section>
       )}
       <form action="/auth/logout" method="post" className="mt-lg">
         <SiteButton type="submit" variant="light">
-          Sair da conta
+          {ACCOUNT.signOut}
         </SiteButton>
       </form>
     </>
@@ -189,12 +195,15 @@ export function AccountPage({
   syncStatus,
   onSyncDecision = decideSync,
   deleted = false,
+  nicknameRefusal,
 }: {
   account: { nickname: string | null } | null
   syncStatus?: SyncStatus
   onSyncDecision?: (accept: boolean) => void
   /** The account was deleted on the request that led here. */
   deleted?: boolean
+  /** Why the server sent the nickname form back. */
+  nicknameRefusal?: NicknameRefusal
 }) {
   const currentSyncStatus = useSyncStatus()
   const linkFields = useLinkFields()
@@ -208,7 +217,7 @@ export function AccountPage({
   return (
     <Sheet>
       <Column>
-        <Display>Sua conta</Display>
+        <Display>{ACCOUNT.title}</Display>
         <Lead>{ACCOUNT_INTRO}</Lead>
         {deleted && (
           <Section>
@@ -217,14 +226,14 @@ export function AccountPage({
           </Section>
         )}
         {account ? (
-          <SignedIn nickname={account.nickname} />
+          <SignedIn nickname={account.nickname} refusal={nicknameRefusal} />
         ) : (
           <Section>
             <a
               href="/auth/google"
               className="inline-flex min-h-toque items-center font-bold"
             >
-              Entrar com Google
+              {ACCOUNT.signIn}
             </a>
           </Section>
         )}
@@ -237,8 +246,7 @@ export function AccountPage({
         )}
         {account && <AccountDeletion canPublish={signedIn} />}
         <p className="mt-lg text-nota text-tinta-2">
-          Sair da conta mantém o que está salvo neste aparelho.{' '}
-          <a href="/privacidade">Veja o que o site guarda.</a>
+          {ACCOUNT.leaving} <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
         </p>
       </Column>
     </Sheet>

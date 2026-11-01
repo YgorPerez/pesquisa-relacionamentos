@@ -7,9 +7,9 @@
 // with its issue's number (`state/sent-comments.ts`, #347), the popover or
 // the sheet closes and a notice says so, with a link to "Seus trechos"; a
 // failure keeps what was typed and keeps nothing. The count carries the
-// action's name only, once a comment is sent. A reader with a nickname also
-// gets to publish it instead (`public-comments.tsx`, #559); to everyone else
-// this form is all there is.
+// action's name only, once a comment is sent. The form also offers publishing
+// it instead (`public-comments.tsx`, #559), which needs an account; this one
+// never does.
 import { useId, useState, type FormEvent } from 'react'
 import {
   COMMENT_KINDS,
@@ -17,11 +17,13 @@ import {
   KIND_LABEL,
   type CommentKind,
 } from '#/content/comment-kinds'
+import { useDeviceJoined } from '#/state/sync-device'
 import { RadioGroup, RadioGroupItem } from '@/ui/shadcn/radio-group'
 import { Textarea } from '@/ui/shadcn/textarea'
 // The form's "Enviar" is the yellow shadcn `Button`, as `SiteButton`
 // (`button.tsx`) renders it: that module's fan-in is at the limit.
 import { Button } from '@/ui/shadcn/button'
+import { CommentQuote } from './comment-quote'
 import { missing, send, toKeep } from './comment-send'
 import { ActionButton } from './selection-button'
 import { COMMENT } from './selection-comment.copy'
@@ -144,9 +146,19 @@ export function FormProblem({ children }: { children: string }) {
   )
 }
 
-function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
+function CommentForm({
+  quote,
+  onSent,
+  text,
+  onText,
+}: {
+  quote: Quote
+  onSent: () => void
+  text: string
+  onText: (text: string) => void
+}) {
+  const joined = useDeviceJoined()
   const [kind, setKind] = useState<CommentKind | null>(null)
-  const [text, setText] = useState('')
   const [website, setWebsite] = useState('')
   const [status, setStatus] = useState<Status>('editing')
   const [problem, setProblem] = useState<string | null>(null)
@@ -167,17 +179,10 @@ function CommentForm({ quote, onSent }: { quote: Quote; onSent: () => void }) {
 
   return (
     <form className="flex flex-col gap-xs" onSubmit={submit} noValidate>
-      <blockquote className="m-0 line-clamp-3 border-l-2 border-tinta pl-xs text-nota text-tinta-2">
-        {quote.text}
-      </blockquote>
-      <CommentFields
-        kind={kind}
-        text={text}
-        onKind={setKind}
-        onText={setText}
-      />
+      <CommentQuote className="line-clamp-3">{quote.text}</CommentQuote>
+      <CommentFields kind={kind} text={text} onKind={setKind} onText={onText} />
       <Honeypot value={website} onChange={setWebsite} />
-      <PopoverLine>{COMMENT.anonymous}</PopoverLine>
+      <PopoverLine>{joined ? COMMENT.joined : COMMENT.anonymous}</PopoverLine>
       {(problem ?? status === 'failed') && (
         <FormProblem>{problem ?? COMMENT.failed}</FormProblem>
       )}
@@ -208,12 +213,15 @@ export function CommentOnQuote({
           finish(PUBLIC_COMMENT.published)
         }}
       >
-        <CommentForm
-          quote={quote}
-          onSent={() =>
-            finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
-          }
-        />
+        {(draft) => (
+          <CommentForm
+            quote={quote}
+            onSent={() =>
+              finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
+            }
+            {...draft}
+          />
+        )}
       </CommentAudience>,
     )
   return <ActionButton onClick={open}>{ACTION_LABEL.comment}</ActionButton>

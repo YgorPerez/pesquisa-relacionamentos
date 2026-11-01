@@ -32,6 +32,14 @@ The first nickname records the time of the adult declaration and rules acceptanc
 and the rules version. Age is self-declared. Accounts do not send the device's
 Profile, Highlights or Notes; synchronization has its own consent in #561.
 
+A nickname belongs to one account, or a reader could pose as another and the
+operator could read the wrong subject when naming the curator. The rule lives in
+`nickname_key`, with a unique index: the app writes it folded (Unicode forms, case
+in any alphabet, repeated spaces), which SQLite's `lower` cannot do. "leitor
+removido" is refused, since it names a deleted account's comments. A nickname
+already equal when the migration ran keeps no key rather than stop the database
+from opening, and deleting an account frees its nickname.
+
 ## Consequences
 
 Reading requires neither OAuth configuration nor a database connection. The

@@ -9,8 +9,6 @@ import {
 import { savedPriorities } from './reader-choices'
 import { useStored } from './use-stored'
 
-export { LEGACY_PRIORITIES } from './reader-choices'
-
 const NO_PRIORITIES: PrioritiesState = {
   top3: [],
   outcome: INITIAL_OUTCOME,

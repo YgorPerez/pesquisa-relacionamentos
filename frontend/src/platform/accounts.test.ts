@@ -1,7 +1,10 @@
+import { createHash } from 'node:crypto'
 import { mkdtempSync, rmSync, readdirSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { DatabaseSync } from 'node:sqlite'
 import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
+import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { createAccounts } from './accounts'
 import { createServer } from 'node:http'
 import { once } from 'node:events'
@@ -162,7 +165,8 @@ test('first nickname requires same-origin consent and cannot be replaced', async
         ),
       )
     )?.status,
-  ).toBe(400)
+  ).toBe(303)
+  expect(app.accounts.current(request('/', cookie))?.nickname).toBeNull()
   expect(
     (await app.accounts.handle(request('/auth/nickname', cookie, accepted())))
       ?.status,
@@ -216,6 +220,92 @@ test('coming back after deleting the account is a new account with a new id, so 
   expect(second.googleSub).toBe(first.googleSub)
   expect(second.nickname).toBeNull()
   expect(second.id).not.toBe(first.id)
+})
+
+/** A second reader, signed in and without a nickname: the fake Google always
+ * answers with the first one's subject. */
+function otherReader(sub: string) {
+  const db = new DatabaseSync(join(app.folder, 'app.sqlite'))
+  const account = db
+    .prepare(
+      'INSERT INTO accounts (id, google_sub) VALUES (NULL, ?) RETURNING id',
+    )
+    .get(sub)!
+  db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
+    createHash('sha256').update(sub).digest('base64url'),
+    account.id!,
+    Date.now() + 60_000,
+  )
+  db.close()
+  return `__Host-session=${sub}`
+}
+const choosing = (nickname: string) =>
+  new URLSearchParams({ nickname, adult: 'on', rules: 'on' })
+
+test.each(['Leitora', 'LEITORA', 'leitora', '  Leitora ', 'Leｉtora'])(
+  'a nickname in use is refused to another reader, however it is written: %s',
+  async (copy) => {
+    const cookie = cookieOf(await app.login(), '__Host-session')
+    await app.accounts.handle(request('/auth/nickname', cookie, accepted()))
+    const copycat = otherReader('copycat')
+    const refused = await app.accounts.handle(
+      request('/auth/nickname', copycat, choosing(copy)),
+    )
+    expect(refused?.status).toBe(303)
+    expect(refused?.headers.get('location')).toBe(
+      `/conta?recusa=${NICKNAME_TAKEN}`,
+    )
+    expect(app.accounts.current(request('/', copycat))?.nickname).toBeNull()
+    // Refused, not stuck: the same reader can pick another.
+    await app.accounts.handle(
+      request('/auth/nickname', copycat, choosing('Outra')),
+    )
+    expect(app.accounts.current(request('/', copycat))?.nickname).toBe('Outra')
+  },
+)
+
+test('case folds beyond ASCII, which SQLite alone does not do', async () => {
+  const cookie = cookieOf(await app.login(), '__Host-session')
+  await app.accounts.handle(
+    request('/auth/nickname', cookie, choosing('Ágata')),
+  )
+  const copycat = otherReader('copycat')
+  await app.accounts.handle(
+    request('/auth/nickname', copycat, choosing('ÁGATA')),
+  )
+  expect(app.accounts.current(request('/', copycat))?.nickname).toBeNull()
+})
+
+test('a nickname cannot pose as a removed reader, and a deleted account frees its own', async () => {
+  const cookie = cookieOf(await app.login(), '__Host-session')
+  const refused = await app.accounts.handle(
+    request('/auth/nickname', cookie, choosing('Leitor Removido')),
+  )
+  expect(refused?.headers.get('location')).toBe(
+    `/conta?recusa=${NICKNAME_TAKEN}`,
+  )
+  await app.accounts.handle(request('/auth/nickname', cookie, accepted()))
+  await app.accounts.handle(
+    request(
+      '/auth/delete',
+      cookie,
+      new URLSearchParams({ confirm: 'EXCLUIR' }),
+    ),
+  )
+  const next = otherReader('next')
+  await app.accounts.handle(request('/auth/nickname', next, accepted()))
+  expect(app.accounts.current(request('/', next))?.nickname).toBe('Leitora')
+})
+
+test('an invalid nickname comes back to the page, with no account changed', async () => {
+  const cookie = cookieOf(await app.login(), '__Host-session')
+  const refused = await app.accounts.handle(
+    request('/auth/nickname', cookie, choosing('x')),
+  )
+  expect(refused?.headers.get('location')).toBe(
+    `/conta?recusa=${NICKNAME_INVALID}`,
+  )
+  expect(app.accounts.current(request('/', cookie))?.nickname).toBeNull()
 })
 
 test('sessions and unused OAuth attempts expire', async () => {

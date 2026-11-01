@@ -2,9 +2,9 @@ import { COMMENT_KINDS, type CommentKind } from '#/content/comment-kinds'
 import {
   decodeKeptQuote,
   decodeQuoteList,
-  isQuoteRecord,
   type KeptQuote,
 } from './highlight-record'
+import { isRecord } from './json-record'
 import { notifyRemoved } from './storage-events'
 import { stored } from './stored'
 import type { CommentStatus } from '#/content/comment-status'
@@ -47,7 +47,7 @@ const validKey = (raw: unknown): raw is string =>
   typeof raw === 'string' && /^[\w-]{43}$/.test(raw)
 
 function validComment(raw: unknown): SentComment | null {
-  if (!isQuoteRecord(raw)) return null
+  if (!isRecord(raw)) return null
   const quote = decodeKeptQuote(raw)
   if (!quote) return null
   const { kind, issue, comment } = raw

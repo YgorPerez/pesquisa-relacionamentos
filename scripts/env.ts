@@ -95,6 +95,17 @@ export const optionalSecret: Schema<string | undefined> = {
   },
 }
 
+/** Text with a default, like the database's path. */
+export const text = (fallback: string) =>
+  variable('text', fallback, (value) => value)
+
+/** Text that is no secret, like the site's origin, or nothing (blank too). */
+export const optionalText = variable<string | undefined>(
+  'text',
+  undefined,
+  (value) => value,
+)
+
 /** An on/off switch, `1` or `0`, like `VITE_COUNT_ON_LOCALHOST`. */
 export const flag = (fallback: boolean) =>
   variable('1 or 0', fallback, (value) =>

@@ -9,9 +9,11 @@ import {
 import { readPriorities } from '@tem-estudo/rules/priorities'
 import { readProfile } from '@tem-estudo/rules/profile'
 import { readRequirements } from '@tem-estudo/rules/requirements'
-import { LEGACY_REQUIREMENTS } from './possible-group'
-import { LEGACY_PRIORITIES } from './priorities'
-import { LEGACY_PROFILE } from './profile'
+import {
+  LEGACY_PRIORITIES,
+  LEGACY_PROFILE,
+  LEGACY_REQUIREMENTS,
+} from './reader-choices'
 import { stored } from './stored'
 
 vi.mock('virtual:possible-group', () => ({

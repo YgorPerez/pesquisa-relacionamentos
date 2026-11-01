@@ -6,23 +6,26 @@ import type {
   PublicComment,
   PublicCommentWrite,
 } from '#/content/public-comment-record'
-import { getCurrentAccount, type Account } from './accounts'
+import { fromThisSite, getCurrentAccount, type Account } from './accounts'
 import { openDatabase } from './database'
 import {
+  HOUR,
   PublicCommentRefusal,
   readDesk,
   recordReport,
   recordReportIssue,
+  REMOVED_READER,
   removeComment,
   restoreComment,
+  SHOWN_COMMENT,
   type ReportedComment,
 } from './public-comment-moderation'
 import { serverEnv } from './server-env'
+import { transaction } from './transaction'
 
 export { PublicCommentRefusal }
 
 const SENDS_PER_HOUR = 10
-const HOUR = 3_600_000
 const MAX_LENGTH = 4000
 
 /** A new comment and an edit both put text in front of everybody, so both
@@ -119,12 +122,6 @@ const squeeze = (text: string) => text.replace(/\s+/g, ' ').trim()
 
 const OTHER_SITE = 'Abra o formulário neste site.'
 
-/** A POST from this site's own pages. */
-const fromThisSite = (request: Request) =>
-  request.method === 'POST' &&
-  request.headers.get('origin') ===
-    (process.env.APP_ORIGIN ?? new URL(request.url).origin)
-
 /** Checks what needs no database: where the write came from, who sent it and
  * whether its text fits. */
 function refusal(
@@ -164,8 +161,7 @@ function listComments(
         (SELECT 1 FROM public_comment_reports r WHERE r.comment_id = c.id AND r.account_id = ?) AS reported
       FROM public_comments c
       LEFT JOIN accounts a ON a.id = c.account_id
-      WHERE c.path = ? AND c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
-        (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))
+      WHERE c.path = ? AND ${SHOWN_COMMENT}
       ORDER BY c.created_at, c.id`)
       .all(account?.id ?? null, page)
       .map((row) => ({
@@ -173,8 +169,7 @@ function listComments(
         parentId: row.parent_id === null ? null : Number(row.parent_id),
         quote: String(row.quote),
         body: String(row.body),
-        nickname:
-          row.nickname === null ? 'leitor removido' : String(row.nickname),
+        nickname: row.nickname === null ? REMOVED_READER : String(row.nickname),
         edited: row.edited_at !== null,
         createdAt: Number(row.created_at),
         own: account?.id === row.account_id,
@@ -190,63 +185,56 @@ function listComments(
 function inTransaction<T>(path: string, work: (db: DatabaseSync) => T): T {
   const db = openDatabase(path)
   try {
-    db.exec('BEGIN IMMEDIATE')
-    try {
-      const result = work(db)
-      db.exec('COMMIT')
-      return result
-    } catch (error) {
-      db.exec('ROLLBACK')
-      throw error
-    }
+    return transaction(db, () => work(db))
   } finally {
     db.close()
   }
 }
 
-/** Reports and the curator's desk. Each read and write checks who asks. */
-function moderation({
-  path,
-  current,
-  now,
-  curator,
-  notify,
-}: {
+type ModerationOptions = {
   path: string
   current: (request: Request) => Account | null
   now: () => number
   curator: () => string | undefined
   notify: (comment: ReportedComment) => Promise<number | null>
-}) {
+}
+
+/** Everything is committed before GitHub is called: whatever happens to the
+ * notice, the report and the hiding hold. */
+async function report(
+  { path, current, now, notify }: ModerationOptions,
+  request: Request,
+  id: number,
+): Promise<void> {
+  if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+  const account = current(request)
+  if (!account?.nickname)
+    throw new PublicCommentRefusal('Entre e crie um apelido para denunciar.')
+  if (!Number.isSafeInteger(id))
+    throw new PublicCommentRefusal('Comentário inválido.')
+  const at = now()
+  const reported = inTransaction(path, (db) =>
+    recordReport(db, id, account.id, at),
+  )
+  if (!reported) return
+  try {
+    const issue = await notify(reported)
+    if (issue !== null)
+      inTransaction(path, (db) => recordReportIssue(db, id, at, issue))
+  } catch {
+    // The curator's page shows that the notice did not go out.
+  }
+}
+
+/** Reports and the curator's desk. Each read and write checks who asks. */
+function moderation(options: ModerationOptions) {
+  const { path, current, now, curator } = options
   const isCurator = (request: Request) => {
     const subject = curator()
     return Boolean(subject) && current(request)?.googleSub === subject
   }
   return {
-    /** Everything is committed before GitHub is called: whatever happens to
-     * the notice, the report and the hiding hold. */
-    async report(request: Request, id: number): Promise<void> {
-      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
-      const account = current(request)
-      if (!account?.nickname)
-        throw new PublicCommentRefusal(
-          'Entre e crie um apelido para denunciar.',
-        )
-      if (!Number.isSafeInteger(id))
-        throw new PublicCommentRefusal('Comentário inválido.')
-      const at = now()
-      const reported = inTransaction(path, (db) =>
-        recordReport(db, id, account.id, at),
-      )
-      if (!reported) return
-      try {
-        const issue = await notify(reported)
-        if (issue !== null)
-          inTransaction(path, (db) => recordReportIssue(db, id, at, issue))
-      } catch {
-        // The curator's page shows that the notice did not go out.
-      }
-    },
+    report: (request: Request, id: number) => report(options, request, id),
     /** `null` for anyone but the curator. */
     curatorDesk(request: Request, before?: number): CuratorDesk | null {
       if (!isCurator(request)) return null
@@ -286,8 +274,7 @@ export function createPublicComments(
     notify?: (comment: ReportedComment) => Promise<number | null>
   } = {},
 ) {
-  const path =
-    options.databasePath ?? process.env.DATABASE_PATH ?? '/data/app.sqlite'
+  const path = options.databasePath ?? serverEnv().DATABASE_PATH
   const current = options.current ?? getCurrentAccount
   const now = options.now ?? Date.now
   const isPage = options.isPage ?? (() => true)

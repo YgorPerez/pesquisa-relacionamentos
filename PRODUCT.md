@@ -27,7 +27,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 ## Operating Context
 
 - A maioria abre o site no celular.
-- Reading needs no login. An optional Google account uses a chosen nickname. The Profile, Requirements and Priorities stay in the browser unless the reader joins Sync, and can be shared by link.
+- Ler não pede login. Uma conta Google opcional usa um apelido escolhido. O Perfil, os Requisitos e as Prioridades ficam no navegador, a menos que o leitor entre na Sincronização, e podem ser compartilhados por link.
 - O conteúdo (Fichas, Guias, Dicas) é markdown neste repositório e é a fonte da verdade. Agentes escrevem Fichas e um humano revisa em PR.
 - Vocabulário em `GLOSSARY.md`; convenções de Fichas no `README.md`.
 
@@ -39,7 +39,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 - Perfil opcional (#5): nada some. O que cobre o Perfil ganha "vale para você", o resto leva aviso da amostra.
 - Grupo possível (#8): número em faixa, "o que mais pesa", Requisito sem dado desabilitado com o motivo.
 - Prioridades (#9, #19): o usuário toca nas três características que mais importam, na ordem; a evidência agrupa em degraus por desfecho, sem nota de compatibilidade.
-- Out of scope: AI chat, other languages and countries.
+- Fora do escopo: chat com IA, outras línguas e países.
 - Analytics (#21): GoatCounter na própria VPS, sem Perfil nos eventos, 31 dias e opt-out por GPC/DNT ou chave no rodapé; "Ajudou?" no fim do Guia mede se ele ajudou.
 
 ## Brand Commitments

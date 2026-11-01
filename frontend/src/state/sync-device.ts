@@ -111,7 +111,10 @@ followRemovals((kind, id) => {
     record(`comment:${id}`, null, now)
     return
   }
-  // A twin of this passage, hidden by `shownHighlights`, goes with it.
+  // An empty twin of this passage, hidden by `shownHighlights`, goes with it, or
+  // it would show up again. Only as this device knows it: its time is just past
+  // the twin's, so a Nota written elsewhere and not seen here wins and keeps it.
+  // A twin with a Nota is the reader's own, and stays.
   const entries = journal.read() ?? {}
   const removed = entries[`highlight:${id}`]?.value as
     | Highlight
@@ -120,10 +123,9 @@ followRemovals((kind, id) => {
   for (const [key, entry] of Object.entries(entries)) {
     const other = entry.value as Highlight | null
     if (!key.startsWith('highlight:') || !other || !removed) continue
-    if (other.path === removed.path && sameQuote(other, removed)) {
-      record(key, null, now)
-      record(`note:${other.id}`, null, now)
-    }
+    const note = entries[`note:${other.id}`]?.value as { text: string } | null
+    if (other.path === removed.path && sameQuote(other, removed) && !note?.text)
+      record(key, null, 0)
   }
   record(`highlight:${id}`, null, now)
   record(`note:${id}`, null, now)
@@ -260,6 +262,9 @@ export function leaveDeletedAccount() {
     journal.write(null)
   })
 }
+
+/** Whether what this device keeps also goes to an account. */
+export const useDeviceJoined = () => useStored(syncBinding) !== null
 
 /** The fields a link replaced here, which the reader can trade back. */
 export const useLinkFields = () => useStored(protectedFields)

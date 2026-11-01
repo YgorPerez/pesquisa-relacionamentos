@@ -1,3 +1,6 @@
+/** The window event a page's list listens to, to read itself again. */
+export const PUBLIC_COMMENTS_CHANGED = 'public-comments-changed'
+
 export interface PublicComment {
   id: number
   parentId: number | null

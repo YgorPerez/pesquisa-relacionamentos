@@ -6,15 +6,17 @@ import {
   type ReactNode,
 } from 'react'
 import { readAccount } from '#/content/account'
-import type {
-  PublicComment,
-  PublicCommentWrite,
+import {
+  PUBLIC_COMMENTS_CHANGED,
+  type PublicComment,
+  type PublicCommentWrite,
 } from '#/content/public-comment-record'
 import {
   readPublicComments,
   writePublicComment,
 } from '#/content/public-comments'
 import { SiteButton as Button } from './button'
+import { CommentQuote } from './comment-quote'
 import { CommentReport } from './comment-report'
 import { COMMENT_REPORT as REPORT_COPY } from './comment-report.copy'
 import { Textarea } from './shadcn/textarea'
@@ -24,14 +26,17 @@ import { findQuote, pageText } from './highlight-text'
 import { canPaint } from './highlight-paint'
 import { PUBLIC_COMMENT as COPY } from './public-comments.copy'
 import { QUOTABLE } from './quote-text'
+import { Column } from './sheet'
 import { useHydrated } from './use-hydrated'
 
 function PublicCommentForm({
   input,
   onDone,
+  onText,
 }: {
   input: Exclude<PublicCommentWrite, { action: 'delete' }>
   onDone: () => void
+  onText?: (text: string) => void
 }) {
   const id = useId()
   const [busy, setBusy] = useState(false)
@@ -47,7 +52,7 @@ function PublicCommentForm({
         data: { ...input, body: text },
       })
       if (result.ok) {
-        window.dispatchEvent(new Event('public-comments-changed'))
+        window.dispatchEvent(new Event(PUBLIC_COMMENTS_CHANGED))
         onDone()
       } else setProblem(result.problem)
     } catch {
@@ -64,6 +69,7 @@ function PublicCommentForm({
         id={id}
         name="body"
         defaultValue={input.body}
+        onChange={(event) => onText?.(event.currentTarget.value)}
         required
         maxLength={4000}
       />
@@ -76,54 +82,88 @@ function PublicCommentForm({
   )
 }
 
+/** What publishing still asks of this reader. In another tab, so this form and
+ * what was typed in it stay; `CommentAudience` looks again on the way back. */
+function PublishNeedsAccount({ hasAccount }: { hasAccount: boolean }) {
+  return (
+    <>
+      <p className="m-0 text-nota">
+        {hasAccount ? COPY.needsNickname : COPY.needsAccount}
+      </p>
+      <a
+        href={hasAccount ? '/conta' : '/auth/google'}
+        target="_blank"
+        rel="noopener"
+        className="inline-flex min-h-toque items-center font-bold"
+      >
+        {hasAccount ? COPY.chooseNickname : COPY.signIn}
+        <span className="sr-only">{COPY.newTab}</span>
+      </a>
+    </>
+  )
+}
+
+/** Who reads this comment: the curator, the default, which needs no account; or
+ * everyone, which needs one with a nickname. The text goes along when the choice
+ * changes. */
 export function CommentAudience({
   children,
   path,
   quote,
   onDone,
 }: {
-  children: ReactNode
+  children: (draft: {
+    text: string
+    onText: (text: string) => void
+  }) => ReactNode
   path: string
   quote: string
   onDone: () => void
 }) {
-  const [signedIn, setSignedIn] = useState(false)
+  const [account, setAccount] = useState<{ nickname: string | null } | null>(
+    null,
+  )
   const [audience, setAudience] = useState('private')
+  const [text, setText] = useState('')
   useEffect(() => {
     let active = true
-    void readAccount()
-      .then((account) => {
-        if (active) setSignedIn(Boolean(account?.nickname))
-      })
-      .catch(() => {})
+    const look = () => {
+      void readAccount()
+        .then((next) => {
+          if (active) setAccount(next)
+        })
+        .catch(() => {})
+    }
+    look()
+    window.addEventListener('focus', look)
     return () => {
       active = false
+      window.removeEventListener('focus', look)
     }
   }, [])
   return (
     <div className="flex flex-col gap-xs">
-      {signedIn && (
-        <RadioGroup
-          aria-label={COPY.audience}
-          value={audience}
-          onValueChange={(value) => setAudience(String(value))}
-        >
-          <RadioGroupItem value="private">{COPY.private}</RadioGroupItem>
-          <RadioGroupItem value="public">{COPY.public}</RadioGroupItem>
-        </RadioGroup>
-      )}
-      {audience === 'public' ? (
+      <RadioGroup
+        aria-label={COPY.audience}
+        value={audience}
+        onValueChange={(value) => setAudience(String(value))}
+      >
+        <RadioGroupItem value="private">{COPY.private}</RadioGroupItem>
+        <RadioGroupItem value="public">{COPY.public}</RadioGroupItem>
+      </RadioGroup>
+      {audience !== 'public' ? (
+        children({ text, onText: setText })
+      ) : account?.nickname ? (
         <>
-          <blockquote className="m-0 line-clamp-3 border-l-2 border-tinta pl-xs text-nota text-tinta-2">
-            {quote}
-          </blockquote>
+          <CommentQuote className="line-clamp-3">{quote}</CommentQuote>
           <PublicCommentForm
-            input={{ action: 'publish', path, quote, body: '' }}
+            input={{ action: 'publish', path, quote, body: text }}
             onDone={onDone}
+            onText={setText}
           />
         </>
       ) : (
-        children
+        <PublishNeedsAccount hasAccount={account !== null} />
       )}
     </div>
   )
@@ -144,10 +184,10 @@ function useConversation(path: string, comments: PublicComment[]) {
           if (active) setProblem(COPY.failed)
         })
     }
-    window.addEventListener('public-comments-changed', refresh)
+    window.addEventListener(PUBLIC_COMMENTS_CHANGED, refresh)
     return () => {
       active = false
-      window.removeEventListener('public-comments-changed', refresh)
+      window.removeEventListener(PUBLIC_COMMENTS_CHANGED, refresh)
     }
   }, [path])
   return { items, problem }
@@ -172,7 +212,7 @@ function watchMarks(
     onFound(new Set(located.map(({ id }) => id)))
     if (canPaint())
       CSS.highlights.set(
-        'comentario-publico',
+        'public-comment',
         new globalThis.Highlight(...located.flatMap(({ parts }) => parts)),
       )
   }
@@ -187,7 +227,7 @@ function watchMarks(
   )
   return () => {
     observer.disconnect()
-    if (canPaint()) CSS.highlights.delete('comentario-publico')
+    if (canPaint()) CSS.highlights.delete('public-comment')
   }
 }
 
@@ -199,7 +239,15 @@ function useCommentMarks(items: PublicComment[]) {
   return found
 }
 
-export function PublicComments({
+/** A page's comments, read afresh when the page changes. */
+export function PublicComments(props: {
+  path: string
+  comments: PublicComment[]
+}) {
+  return <Conversation key={props.path} {...props} />
+}
+
+function Conversation({
   path,
   comments,
 }: {
@@ -215,35 +263,37 @@ export function PublicComments({
   const signedIn = hydrated && items.some((comment) => comment.canReply)
   if (!items.length) return null
   return (
-    <Section aria-labelledby="comentarios-publicos">
-      <Headline id="comentarios-publicos">{COPY.title}</Headline>
-      {problem && <p role="alert">{problem}</p>}
-      {items
-        .filter((comment) => comment.parentId === null)
-        .map((comment) => (
-          <div key={comment.id} className="border-t border-tinta">
-            <CommentEntry
-              path={path}
-              comment={comment}
-              signedIn={signedIn}
-              hydrated={hydrated}
-            />
-            <div className="pl-md">
-              {items
-                .filter((reply) => reply.parentId === comment.id)
-                .map((reply) => (
-                  <CommentEntry
-                    key={reply.id}
-                    path={path}
-                    comment={reply}
-                    signedIn={signedIn}
-                    hydrated={hydrated}
-                  />
-                ))}
+    <Column>
+      <Section aria-labelledby="comentarios-publicos">
+        <Headline id="comentarios-publicos">{COPY.title}</Headline>
+        {problem && <p role="alert">{problem}</p>}
+        {items
+          .filter((comment) => comment.parentId === null)
+          .map((comment) => (
+            <div key={comment.id} className="border-t border-tinta">
+              <CommentEntry
+                path={path}
+                comment={comment}
+                signedIn={signedIn}
+                hydrated={hydrated}
+              />
+              <div className="pl-md">
+                {items
+                  .filter((reply) => reply.parentId === comment.id)
+                  .map((reply) => (
+                    <CommentEntry
+                      key={reply.id}
+                      path={path}
+                      comment={reply}
+                      signedIn={signedIn}
+                      hydrated={hydrated}
+                    />
+                  ))}
+              </div>
             </div>
-          </div>
-        ))}
-    </Section>
+          ))}
+      </Section>
+    </Column>
   )
 }
 
@@ -267,7 +317,7 @@ function CommentActions({
       const result = await writePublicComment({
         data: { action: 'delete', id: comment.id },
       })
-      if (result.ok) window.dispatchEvent(new Event('public-comments-changed'))
+      if (result.ok) window.dispatchEvent(new Event(PUBLIC_COMMENTS_CHANGED))
       else onProblem(result.problem)
     } catch {
       onProblem(COPY.failed)
@@ -383,10 +433,10 @@ function CommentBody({ comment }: { comment: PublicComment }) {
         )}
       </p>
       {comment.parentId === null && (
-        <blockquote className="mx-0 my-xs border-l-2 border-tinta pl-xs text-nota text-tinta-2">
+        <CommentQuote className="my-xs">
           {comment.quote}
           {comment.changed && <p className="m-0 mt-xs">{COPY.changed}</p>}
-        </blockquote>
+        </CommentQuote>
       )}
       <p className="my-xs whitespace-pre-wrap wrap-anywhere">{comment.body}</p>
     </>

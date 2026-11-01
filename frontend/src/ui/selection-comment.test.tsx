@@ -90,6 +90,20 @@ async function expectSent() {
   expect(document.getSelection()!.isCollapsed).toBe(true)
 }
 
+it('says anonymous on a device that keeps its comments to itself', async () => {
+  const { form } = await openForm()
+  expect(form.getByText(COMMENT.anonymous)).toBeVisible()
+  expect(form.queryByText(COMMENT.joined)).toBeNull()
+})
+
+it('tells a device joined to an account where its sent comment also goes', async () => {
+  localStorage.setItem('tem-estudo:sync-account', '5')
+  const { form } = await openForm()
+  expect(form.getByText(COMMENT.joined)).toBeVisible()
+  expect(form.queryByText(COMMENT.anonymous)).toBeNull()
+  localStorage.removeItem('tem-estudo:sync-account')
+})
+
 it('sends the type, the text, the quote and its link as one issue, and says it went', async () => {
   const received = github(201)
   const { user, form } = await openForm()

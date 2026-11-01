@@ -38,6 +38,7 @@ export const Route = createFileRoute('/dicas/$slug')({
 })
 
 function TipPage() {
+  const { comments } = Route.useLoaderData()
   const { data: tip } = useSuspenseQuery(reads.tip(Route.useParams().slug))
 
   return (
@@ -88,23 +89,11 @@ function TipPage() {
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
       </Column>
-      <TipComments slug={tip.slug} />
+      <PublicComments path={`/dicas/${tip.slug}`} comments={comments} />
       <PageSelection />
       <TermPopover terms={tip.terms} />
       <ReferencePopover key={tip.slug} factSheets={tip.factSheets} />
     </Sheet>
-  )
-}
-
-function TipComments({ slug }: { slug: string }) {
-  return (
-    <Column>
-      <PublicComments
-        key={slug}
-        path={`/dicas/${slug}`}
-        comments={Route.useLoaderData().comments}
-      />
-    </Column>
   )
 }
 
