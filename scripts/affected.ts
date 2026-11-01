@@ -61,6 +61,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
     'dicas',
     'estudos',
   ],
+  'sync.e2e.ts': ['grifo', 'grifos'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and

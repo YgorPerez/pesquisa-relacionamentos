@@ -1,7 +1,67 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test } from 'vite-plus/test'
+import { expect, test, vi } from 'vite-plus/test'
 import { AccountPage } from './account'
+
+test('sync consent explains administrator access and declining sends only the decision', async () => {
+  const decide = vi.fn<(accept: boolean) => void>()
+  render(
+    <AccountPage
+      account={{ nickname: 'Leitora' }}
+      syncStatus="ask"
+      onSyncDecision={decide}
+    />,
+  )
+  expect(screen.getByText(/Quem administra o servidor pode ler/)).toBeVisible()
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Manter só neste aparelho' }),
+  )
+  expect(decide).toHaveBeenCalledWith(false)
+})
+
+test('a reader who declined can still join later', async () => {
+  const decide = vi.fn<(accept: boolean) => void>()
+  render(
+    <AccountPage
+      account={{ nickname: 'Leitora' }}
+      syncStatus="declined"
+      onSyncDecision={decide}
+    />,
+  )
+  expect(screen.getByText(/Nada foi enviado à conta/)).toBeVisible()
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Juntar e sincronizar' }),
+  )
+  expect(decide).toHaveBeenCalledWith(true)
+})
+
+test('an active device can stop, and says what stopping keeps', () => {
+  render(<AccountPage account={{ nickname: 'Leitora' }} syncStatus="active" />)
+  expect(
+    screen.getByRole('button', { name: 'Parar neste aparelho' }),
+  ).toBeVisible()
+  expect(screen.getByText(/Parar não apaga/)).toBeVisible()
+  expect(
+    screen.queryByRole('button', { name: 'Voltar aos dados da conta' }),
+  ).toBeNull()
+})
+
+test('a device holding link data offers the way back to the account', () => {
+  localStorage.setItem(
+    'tem-estudo:sync-link-fields',
+    JSON.stringify(['profile']),
+  )
+  render(<AccountPage account={{ nickname: 'Leitora' }} syncStatus="active" />)
+  expect(screen.getByText(/Um link recebido trocou/)).toBeVisible()
+  expect(
+    screen.getByRole('button', { name: 'Voltar aos dados da conta' }),
+  ).toBeVisible()
+})
+
+test('nothing about sync shows before the nickname exists', () => {
+  render(<AccountPage account={{ nickname: null }} syncStatus="ask" />)
+  expect(screen.queryByText(/Quem administra o servidor/)).toBeNull()
+})
 
 test('reading is offered without login and Google is optional', () => {
   render(<AccountPage account={null} />)

@@ -29,6 +29,8 @@ const migrations: readonly string[] = [
     sent_at INTEGER NOT NULL
   ) STRICT;
   CREATE INDEX public_comment_rate ON public_comment_sends(account_id, sent_at);`,
+  `CREATE TABLE account_sync (account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    consent INTEGER NOT NULL CHECK (consent IN (0, 1)), data TEXT NOT NULL DEFAULT '{}') STRICT;`,
   `ALTER TABLE public_comments ADD COLUMN report_issue_claimed_at INTEGER;
   ALTER TABLE public_comments ADD COLUMN report_issue INTEGER;
   CREATE TABLE public_comment_reports (

@@ -5,6 +5,7 @@ import { withRedirects } from '#/platform/redirects'
 import { withRequestLog } from '#/platform/request-log'
 import { preloadPlot } from '#/ui/visual-chart-loader'
 import { handleAccountRequest } from '#/platform/accounts'
+import { handleSyncRequest } from '#/platform/sync'
 
 // The TanStack Start server, with each request logged without the query and
 // every response with `Referrer-Policy: strict-origin` (ADR 0001,
@@ -15,7 +16,9 @@ const app = withRequestLog(
   withRedirects(
     redirects(library),
     async (request) =>
-      (await handleAccountRequest(request)) ?? handler.fetch(request),
+      (await handleAccountRequest(request)) ??
+      (await handleSyncRequest(request)) ??
+      handler.fetch(request),
   ),
 )
 

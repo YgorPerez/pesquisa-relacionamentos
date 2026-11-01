@@ -2,15 +2,15 @@ import { spawnSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { DatabaseSync } from 'node:sqlite'
 import { expect, it } from 'vite-plus/test'
-import { openDatabase } from '../src/platform/database.ts'
 
 it('restores an encrypted online snapshot including committed WAL data, and rejects tampering and overwrite', () => {
   const folder = mkdtempSync(join(tmpdir(), 'restore-'))
   const source = join(folder, 'source.sqlite')
   const target = join(folder, 'restored.sqlite')
-  const db = openDatabase(source)
-  db.exec('CREATE TABLE example (value TEXT)')
+  const db = new DatabaseSync(source)
+  db.exec('PRAGMA journal_mode = WAL; CREATE TABLE example (value TEXT)')
   db.prepare('INSERT INTO example VALUES (?)').run('local restore evidence')
   const run = (mode: string, path: string, input?: Buffer) =>
     spawnSync(
@@ -25,7 +25,7 @@ it('restores an encrypted online snapshot including committed WAL data, and reje
       false,
     )
     expect(run('restore', target, copy.stdout).status).toBe(0)
-    const restored = openDatabase(target)
+    const restored = new DatabaseSync(target)
     expect(restored.prepare('SELECT value FROM example').get()).toEqual({
       value: 'local restore evidence',
     })

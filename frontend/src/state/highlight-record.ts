@@ -63,8 +63,7 @@ export interface Highlight extends KeptQuote {
 /** How much text on each side is kept to tell repeats apart. */
 export const CONTEXT_LENGTH = 32
 
-export const isQuoteRecord = (raw: unknown): raw is Record<string, unknown> =>
-  typeof raw === 'object' && raw !== null && !Array.isArray(raw)
+export { isQuoteRecord } from './json-record'
 
 const QUOTE_STRINGS = [
   'id',

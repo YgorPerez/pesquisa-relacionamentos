@@ -1,3 +1,13 @@
+// State that lives only in the browser (spec, "Estado no link"; story 68): the
+// Profile, the Requirements, and the calculators' top 3 and outcome. Each part
+// has its own localStorage key and a reader that validates what it finds
+// there, because the storage may hold junk from another version.
+//
+// On the server, and during hydration, the value is always `null`: the page
+// comes out the same for everyone and the browser applies the saved state
+// right after.
+import { notifyStoredWrite } from './storage-events'
+
 function subscribeToStorage(
   name: string,
   subscribers: Set<() => void>,
@@ -16,16 +26,6 @@ function subscribeToStorage(
     }
   }
 }
-
-// State that lives only in the browser (spec, "Estado no link"; story 68): the
-// Profile, the Requirements, and the calculators' top 3 and outcome. Each part
-// has its own localStorage key and a reader that validates what it finds
-// there, because the storage may hold junk from another version.
-//
-// On the server, and during hydration, the value is always `null`: the page
-// comes out the same for everyone and the browser applies the saved state
-// right after.
-import { useSyncExternalStore } from 'react'
 
 export interface Stored<T> {
   /** The saved value, already validated; `null` if there is nothing (or on
@@ -131,16 +131,11 @@ export function stored<T>(
     } catch {
       // No space or blocked: the value is gone on reload, and that is all.
     }
+    notifyStoredWrite(key, next)
     notify()
   }
 
   const subscribe = subscribeToStorage(name, subscribers, notify)
 
   return { read, write, subscribe }
-}
-
-/** The saved value in a React component; `null` on the server and during
- * hydration. */
-export function useStored<T>(part: Stored<T>): T | null {
-  return useSyncExternalStore(part.subscribe, part.read, () => null)
 }
