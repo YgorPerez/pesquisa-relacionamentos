@@ -301,7 +301,7 @@ test('a reader who cancels at Google, or a Google that fails, comes back to the 
   expect(who(here)?.googleSub).toBeNull()
 })
 
-test('a second tab finishing the link does not call the reader\'s own Google someone else\'s', async () => {
+test("a second tab finishing the link does not call the reader's own Google someone else's", async () => {
   const here = await register()
   const first = await startLink(here)
   const second = await startLink(here)
@@ -472,11 +472,7 @@ test('adding an email is limited by address, with the logins of that address', a
 
 test('an address the reader corrected, or one whose mail failed, does not stay in the database file', async () => {
   const { here } = await askEmail('first-typo@example.org')
-  await send(
-    'add-email',
-    { email: 'right@example.org', password: NEW },
-    here,
-  )
+  await send('add-email', { email: 'right@example.org', password: NEW }, here)
   mailFails = true
   await send(
     'add-email',
