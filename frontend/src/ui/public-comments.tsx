@@ -41,7 +41,6 @@ function PublicCommentForm({
   const id = useId()
   const [busy, setBusy] = useState(false)
   const [problem, setProblem] = useState('')
-  const [startingText] = useState(input.body)
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setBusy(true)
@@ -69,7 +68,7 @@ function PublicCommentForm({
       <Textarea
         id={id}
         name="body"
-        defaultValue={startingText}
+        defaultValue={input.body}
         onChange={(event) => onText?.(event.currentTarget.value)}
         required
         maxLength={4000}
@@ -240,7 +239,15 @@ function useCommentMarks(items: PublicComment[]) {
   return found
 }
 
-export function PublicComments({
+/** A page's comments, read afresh when the page changes. */
+export function PublicComments(props: {
+  path: string
+  comments: PublicComment[]
+}) {
+  return <Conversation key={props.path} {...props} />
+}
+
+function Conversation({
   path,
   comments,
 }: {

@@ -120,14 +120,7 @@ function FactSheetPage() {
           </Section>
         ))}
 
-        <Section aria-labelledby="limitacoes">
-          <Headline id="limitacoes">Limitações</Headline>
-          <Html
-            className="prosa limites"
-            html={factSheet.limitationsHtml}
-            quote="limitacoes"
-          />
-        </Section>
+        <Limitations />
 
         <CitedBy />
 
@@ -137,7 +130,6 @@ function FactSheetPage() {
         </Section>
       </Column>
       <PublicComments
-        key={factSheet.slug}
         path={`/estudos/${factSheet.slug}`}
         comments={Route.useLoaderData().comments}
       />
@@ -269,6 +261,20 @@ function Findings() {
         ))}
       </ol>
       {notesHtml && <Html className="prosa" html={notesHtml} quote="achados" />}
+    </Section>
+  )
+}
+
+function Limitations() {
+  const { limitationsHtml } = useFactSheet()
+  return (
+    <Section aria-labelledby="limitacoes">
+      <Headline id="limitacoes">Limitações</Headline>
+      <Html
+        className="prosa limites"
+        html={limitationsHtml}
+        quote="limitacoes"
+      />
     </Section>
   )
 }

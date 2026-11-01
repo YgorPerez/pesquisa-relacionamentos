@@ -191,49 +191,50 @@ function inTransaction<T>(path: string, work: (db: DatabaseSync) => T): T {
   }
 }
 
-/** Reports and the curator's desk. Each read and write checks who asks. */
-function moderation({
-  path,
-  current,
-  now,
-  curator,
-  notify,
-}: {
+type ModerationOptions = {
   path: string
   current: (request: Request) => Account | null
   now: () => number
   curator: () => string | undefined
   notify: (comment: ReportedComment) => Promise<number | null>
-}) {
+}
+
+/** Everything is committed before GitHub is called: whatever happens to the
+ * notice, the report and the hiding hold. */
+async function report(
+  { path, current, now, notify }: ModerationOptions,
+  request: Request,
+  id: number,
+): Promise<void> {
+  if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+  const account = current(request)
+  if (!account?.nickname)
+    throw new PublicCommentRefusal('Entre e crie um apelido para denunciar.')
+  if (!Number.isSafeInteger(id))
+    throw new PublicCommentRefusal('Comentário inválido.')
+  const at = now()
+  const reported = inTransaction(path, (db) =>
+    recordReport(db, id, account.id, at),
+  )
+  if (!reported) return
+  try {
+    const issue = await notify(reported)
+    if (issue !== null)
+      inTransaction(path, (db) => recordReportIssue(db, id, at, issue))
+  } catch {
+    // The curator's page shows that the notice did not go out.
+  }
+}
+
+/** Reports and the curator's desk. Each read and write checks who asks. */
+function moderation(options: ModerationOptions) {
+  const { path, current, now, curator } = options
   const isCurator = (request: Request) => {
     const subject = curator()
     return Boolean(subject) && current(request)?.googleSub === subject
   }
   return {
-    /** Everything is committed before GitHub is called: whatever happens to
-     * the notice, the report and the hiding hold. */
-    async report(request: Request, id: number): Promise<void> {
-      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
-      const account = current(request)
-      if (!account?.nickname)
-        throw new PublicCommentRefusal(
-          'Entre e crie um apelido para denunciar.',
-        )
-      if (!Number.isSafeInteger(id))
-        throw new PublicCommentRefusal('Comentário inválido.')
-      const at = now()
-      const reported = inTransaction(path, (db) =>
-        recordReport(db, id, account.id, at),
-      )
-      if (!reported) return
-      try {
-        const issue = await notify(reported)
-        if (issue !== null)
-          inTransaction(path, (db) => recordReportIssue(db, id, at, issue))
-      } catch {
-        // The curator's page shows that the notice did not go out.
-      }
-    },
+    report: (request: Request, id: number) => report(options, request, id),
     /** `null` for anyone but the curator. */
     curatorDesk(request: Request, before?: number): CuratorDesk | null {
       if (!isCurator(request)) return null

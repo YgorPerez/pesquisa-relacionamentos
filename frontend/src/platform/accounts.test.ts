@@ -2,10 +2,10 @@ import { createHash } from 'node:crypto'
 import { mkdtempSync, rmSync, readdirSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { DatabaseSync } from 'node:sqlite'
 import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { createAccounts } from './accounts'
-import { openDatabase } from './database'
 import { createServer } from 'node:http'
 import { once } from 'node:events'
 
@@ -225,7 +225,7 @@ test('coming back after deleting the account is a new account with a new id, so 
 /** A second reader, signed in and without a nickname: the fake Google always
  * answers with the first one's subject. */
 function otherReader(sub: string) {
-  const db = openDatabase(join(app.folder, 'app.sqlite'))
+  const db = new DatabaseSync(join(app.folder, 'app.sqlite'))
   const account = db
     .prepare(
       'INSERT INTO accounts (id, google_sub) VALUES (NULL, ?) RETURNING id',
@@ -306,28 +306,6 @@ test('an invalid nickname comes back to the page, with no account changed', asyn
     `/conta?recusa=${NICKNAME_INVALID}`,
   )
   expect(app.accounts.current(request('/', cookie))?.nickname).toBeNull()
-})
-
-test('a database that already holds equal nicknames still opens, and the oldest keeps the name', () => {
-  const path = join(app.folder, 'app.sqlite')
-  const before = openDatabase(path)
-  before.exec(`DROP INDEX accounts_nickname_key;
-    ALTER TABLE accounts DROP COLUMN nickname_key;
-    INSERT INTO accounts (id, google_sub, nickname) VALUES (1, 'a', 'Ana'), (2, 'b', 'ANA'), (3, 'c', 'Bia');
-    DELETE FROM schema_migrations WHERE version = (SELECT max(version) FROM schema_migrations);`)
-  before.close()
-  const after = openDatabase(path)
-  expect(
-    after
-      .prepare('SELECT id, nickname_key FROM accounts ORDER BY id')
-      .all()
-      .map((row) => ({ ...row })),
-  ).toEqual([
-    { id: 1, nickname_key: 'ana' },
-    { id: 2, nickname_key: null },
-    { id: 3, nickname_key: 'bia' },
-  ])
-  after.close()
 })
 
 test('sessions and unused OAuth attempts expire', async () => {

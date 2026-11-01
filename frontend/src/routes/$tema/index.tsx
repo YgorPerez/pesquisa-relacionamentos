@@ -103,7 +103,6 @@ function useGuide() {
 }
 
 function GuidePage() {
-  const { tema } = Route.useParams()
   const guide = useGuide()
   useReadingPointInHistory()
   useCountOpenedFactSheets(guide.topic)
@@ -151,8 +150,7 @@ function GuidePage() {
         <GuideShare />
       </Column>
       <PublicComments
-        key={`/${tema}`}
-        path={`/${tema}`}
+        path={`/${guide.topic}`}
         comments={Route.useLoaderData().comments}
       />
       <PageSelection />

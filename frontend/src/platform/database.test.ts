@@ -27,6 +27,33 @@ it('migrates once and shares committed data across connections and reopen', () =
   }
 })
 
+it('a database that already holds equal nicknames still opens, and the oldest keeps the name', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'nicknames-'))
+  const path = join(folder, 'app.sqlite')
+  try {
+    const before = openDatabase(path)
+    before.exec(`DROP INDEX accounts_nickname_key;
+      ALTER TABLE accounts DROP COLUMN nickname_key;
+      INSERT INTO accounts (id, google_sub, nickname) VALUES (1, 'a', 'Ana'), (2, 'b', 'ANA'), (3, 'c', 'Bia');
+      DELETE FROM schema_migrations WHERE version = (SELECT max(version) FROM schema_migrations);`)
+    before.close()
+    const after = openDatabase(path)
+    expect(
+      after
+        .prepare('SELECT id, nickname_key FROM accounts ORDER BY id')
+        .all()
+        .map((row) => ({ ...row })),
+    ).toEqual([
+      { id: 1, nickname_key: 'ana' },
+      { id: 2, nickname_key: null },
+      { id: 3, nickname_key: 'bia' },
+    ])
+    after.close()
+  } finally {
+    rmSync(folder, { recursive: true, force: true })
+  }
+})
+
 it('rolls back a failed migration and refuses an edited migration', () => {
   const db = openDatabase(':memory:')
   expect(db.prepare('PRAGMA foreign_keys').get()).toEqual({ foreign_keys: 1 })

@@ -83,7 +83,7 @@ test('a signed-in reader picks public, publishes, and the page refreshes its con
       body: 'Minha dúvida',
     },
   })
-  expect(await screen.findByText('Minha dúvida')).toBeVisible()
+  expect(await screen.findByRole('article')).toHaveTextContent('Minha dúvida')
   expect(onDone).toHaveBeenCalledOnce()
 })
 
