@@ -27,6 +27,11 @@ test('the form posts to the server, names what goes and asks for the typed word'
   expect(field.closest('form')).toHaveAttribute('method', 'post')
   expect(section.getByText(/não dá para desfazer/i)).toBeVisible()
   expect(section.getByText(/respostas de outros leitores/i)).toBeVisible()
+  expect(section.getByText(/o e-mail e a senha, se houver/)).toBeVisible()
+  // The same form serves an account with no Google behind it.
+  expect(
+    screen.getByRole('region', { name: 'Excluir a conta' }).textContent,
+  ).not.toMatch(/Google/)
   expect(
     section.getByRole('button', { name: 'Excluir a conta para sempre' }),
   ).toBeVisible()

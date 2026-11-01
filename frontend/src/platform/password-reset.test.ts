@@ -102,6 +102,7 @@ test('the link resets once, ends every session and keeps data, without waiting f
   const id = current(cookie)!.id
   const { mail } = await ask(' READER@example.org ')
   expect(mail.html).toBeUndefined()
+  expect(mail.text).toContain('No Tem estudo?, você pediu para trocar a senha.')
   expect(new URL(mail.text.match(/https:\/\/\S+/)![0]).origin).toBe(
     'https://example.org',
   )

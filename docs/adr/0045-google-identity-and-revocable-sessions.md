@@ -16,7 +16,11 @@ SQLite transaction. Account data stays. Known addresses receive the link;
 unknown addresses receive a plain notice. Both and rate-limited/provider-failed
 requests return the same page before deferred delivery starts. `allowEmailAttempt`
 bounds mail by email and IP. A process restart may lose pending delivery.
-`account-email.ts` owns the Resend transport for recovery and later linking.
+`account-email.ts` owns the Resend transport for recovery and linking. Resend
+receives the recipient, subject and plain text, including the link, and the notice
+to an address with no account, so a stranger's typed address reaches it too. What
+it keeps is its own rule, and deleting an account cannot reach it. Those are the
+only three messages the site sends.
 Recovery pages have no scripts or analytics, use a restrictive CSP and
 origin-only referrer policy, and remain outside the sitemap. Links use `APP_ORIGIN` only.
 
@@ -52,13 +56,18 @@ unknown email still runs scrypt with the same parameters and has the same
 login refusal as a wrong password. Signup explicitly reports an email in use.
 
 Email login stays off without `EMAIL_RATE_LIMIT_KEY` and `APP_ORIGIN`.
-Login and signup share a limit of ten attempts per fifteen minutes for each
-normalized email and IP. Only HMAC-SHA256 keys and counters are stored. Expired
-rows are erased on attempts, on server startup and hourly, including idle
-periods. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
+Login, signup, recovery, adding an email and changing the password share a limit
+of ten attempts per fifteen minutes for each normalized email and IP. Only
+HMAC-SHA256 keys and counters are stored, tied to no account, so deleting an account
+leaves them to expire. Expired rows are erased on attempts, on server startup and
+hourly, including idle periods, which keeps a row about 75 minutes at most while the
+server runs: tighter than the 24 hours #572 allowed, and `/privacidade` states this
+number. A daily backup can still hold the rows of that moment. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
 is used. The deploy binds app ports to loopback, so visitors cannot bypass
 Nginx to choose that final address. Missing or invalid addresses share a bucket.
-The email is used only for login and recovery, not shown in the curator desk.
+The email is used only for login, recovery and confirming a link, shown to its own
+reader in `/conta`, and not shown in the curator desk. The administrator can read it,
+and backups carry it until someone removes them.
 
 A signed-in reader links and removes methods in `/conta`
 (`platform/login-methods.ts`); accounts never merge. Linking Google starts by POST
@@ -69,7 +78,8 @@ it. The unique subject refuses a Google that has its own account.
 
 Adding an email takes a password, and the address and its scrypt hash wait in
 `email_links`, one row per account, for 30 minutes, under a SHA-256 hash of a
-256-bit token. A new request replaces the row. Opening the link only shows a page,
+256-bit token. A new request replaces the row, and an expired one waits for the
+hourly erasure, so it lives about 90 minutes at most. Opening the link only shows a page,
 because mail scanners open links too. Its form spends the token, and only for the
 account that asked, signed in at that moment. If the address found an account
 since the request, the unique email decides, the link is spent and the reader hears
@@ -105,6 +115,8 @@ from opening, and deleting an account frees its nickname.
 ## Consequences
 
 Reading requires neither OAuth configuration nor a database connection. The
-curator cannot contact account holders using their Google identity. Revocable
+curator cannot contact account holders using their Google identity, and an account
+with only Google has no address to write to. `/privacidade` must be read against this
+ADR when either changes, and it ships before email login goes live. Revocable
 sessions need a database read for authenticated account operations. Google client
 creation and a real-provider acceptance test remain manual setup steps.
