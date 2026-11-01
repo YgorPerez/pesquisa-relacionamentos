@@ -15,7 +15,7 @@ export const readAccount = createServerFn({ method: 'GET' }).handler(
  * notice is read once. */
 export const readAccountPage = createServerFn({ method: 'GET' }).handler(
   async () => {
-    const { deletionNoticeCookie, getCurrentAccount } =
+    const { deletionNoticeCookie, getAccountMethods, getCurrentAccount } =
       await import('#/platform/accounts')
     setResponseHeader('Cache-Control', 'private, no-store')
     const request = getRequest()
@@ -24,6 +24,7 @@ export const readAccountPage = createServerFn({ method: 'GET' }).handler(
     if (clearNotice) setResponseHeader('Set-Cookie', clearNotice)
     return {
       account: account ? { nickname: account.nickname } : null,
+      methods: account ? getAccountMethods(account) : null,
       deleted: clearNotice !== null,
     }
   },

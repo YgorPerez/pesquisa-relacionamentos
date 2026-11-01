@@ -63,6 +63,16 @@ const migrations: readonly string[] = [
     account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
     token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL
   ) STRICT;`,
+  // Its own table and not a column of `oauth_attempts`: the previous image inserts
+  // there by position, and must not take a link's callback for a login.
+  `CREATE TABLE google_link_attempts (state_hash TEXT PRIMARY KEY, browser_hash TEXT NOT NULL,
+    verifier TEXT NOT NULL, account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    session_hash TEXT NOT NULL, expires_at INTEGER NOT NULL) STRICT;
+  CREATE TABLE email_links (
+    account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    email TEXT NOT NULL, password_hash TEXT NOT NULL,
+    token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL
+  ) STRICT;`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import.
@@ -74,8 +84,10 @@ export function openDatabase(
 ) {
   const db = new DatabaseSync(path)
   try {
+    // secure_delete: an address that left a table, a typo waiting for its link
+    // too, does not live on in the file's free pages and in its backups.
     db.exec(
-      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA foreign_keys = OFF;',
+      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA secure_delete = ON; PRAGMA foreign_keys = OFF;',
     )
     db.exec('BEGIN IMMEDIATE')
     try {

@@ -11,6 +11,7 @@ import { createPublicComments } from './public-comments'
 
 const SUB = 'sub-of-the-leaving-reader'
 const NICKNAME = 'Apelido-De-Quem-Sai'
+const PENDING_EMAIL = 'waiting-for-its-link@example.org'
 const LEAVING = 7001
 const OTHER = 7002
 
@@ -27,6 +28,8 @@ const TABLES: Readonly<Record<string, string>> = {
   oauth_attempts: 'has no account',
   email_credentials: 'cascades: email and password hash go',
   password_resets: 'cascades: reset token hash goes',
+  email_links: 'cascades: the address waiting for its link goes',
+  google_link_attempts: 'cascades: a link under way dies with the account',
   email_rate_limits:
     'has no account; keyed hashes expire and are erased hourly',
   schema_migrations: 'has no account',
@@ -88,6 +91,21 @@ beforeEach(() => {
   db.prepare('INSERT INTO password_resets VALUES (?, ?, ?)').run(
     LEAVING,
     tokenHash('reset-token'),
+    Date.now() + 60_000,
+  )
+  db.prepare('INSERT INTO email_links VALUES (?, ?, ?, ?, ?)').run(
+    LEAVING,
+    PENDING_EMAIL,
+    'hash',
+    tokenHash('link-token'),
+    Date.now() + 60_000,
+  )
+  db.prepare('INSERT INTO google_link_attempts VALUES (?, ?, ?, ?, ?, ?)').run(
+    tokenHash('state'),
+    tokenHash('browser'),
+    'verifier',
+    LEAVING,
+    tokenHash('phone'),
     Date.now() + 60_000,
   )
   addAccount(db, 7003, 'sub-third', 'Terceira')
@@ -162,7 +180,8 @@ function expectNothingTiesTheDatabaseToTheReader() {
       .map((row) => String(row.name))
     for (const table of tables) {
       const text = JSON.stringify(db.prepare(`SELECT * FROM ${table}`).all())
-      if (text.includes(SUB) || text.includes(NICKNAME)) leftovers.push(table)
+      if ([SUB, NICKNAME, PENDING_EMAIL].some((value) => text.includes(value)))
+        leftovers.push(table)
       const columns = db
         .prepare(`PRAGMA foreign_key_list(${table})`)
         .all()
@@ -204,6 +223,8 @@ test('a table can only point at an account in a way deletion reaches', () => {
     'account_sessions:CASCADE',
     'account_sync:CASCADE',
     'email_credentials:CASCADE',
+    'email_links:CASCADE',
+    'google_link_attempts:CASCADE',
     'password_resets:CASCADE',
     'public_comment_reports:CASCADE',
     'public_comment_sends:CASCADE',
@@ -253,6 +274,7 @@ test('the deleted text does not linger in the free space of the database file', 
   db.close()
   const file = readFileSync(path).toString()
   expect(file).not.toContain(SUB)
+  expect(file).not.toContain(PENDING_EMAIL)
   expect(file).not.toContain('nota íntima')
 })
 

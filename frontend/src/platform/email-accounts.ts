@@ -22,7 +22,7 @@ export async function hashPassword(password: string) {
   const key = await derive(password, salt)
   return `${salt}:${key.toString('hex')}`
 }
-async function verifiesPassword(password: string, stored = DUMMY) {
+export async function verifiesPassword(password: string, stored = DUMMY) {
   const [salt, digest] = stored.split(':')
   const key = await derive(password, salt!)
   return timingSafeEqual(key, Buffer.from(digest!, 'hex'))
@@ -74,6 +74,9 @@ export function allowEmailAttempt(
   }
 }
 
+export const isEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254
+
 export async function emailAccount(
   db: DatabaseSync,
   form: URLSearchParams,
@@ -82,11 +85,7 @@ export async function emailAccount(
 ): Promise<number | string> {
   const email = form.get('email')?.trim().toLowerCase() ?? ''
   const password = form.get('password') ?? ''
-  if (
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-    email.length > 254 ||
-    password.length > 1024
-  )
+  if (!isEmail(email) || password.length > 1024)
     return 'Confira o e-mail e a senha.'
   const existing = db
     .prepare(

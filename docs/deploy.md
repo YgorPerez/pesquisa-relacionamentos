@@ -171,13 +171,13 @@ restart can lose that in-memory delivery; the reader can request another link.
 Provider failures are deliberately invisible on this screen. Automated tests
 use a local fake of the [send endpoint](https://resend.com/docs/api-reference/emails/send-email),
 never real mail. Real inbox delivery and DNS verification remain user-only.
-The reset endpoint discards Nginx error logs, which otherwise copy secret queries;
+The reset and email-confirmation endpoints discard Nginx error logs, which otherwise copy secret queries;
 access logs and app logs retain only the path. Its `strict-origin` referrer
 policy strips the token while preserving `Origin` on forms without JavaScript.
 
 ## The curator's account (#560)
 
-`/curadoria` opens only for the Google subject in `CURATOR_GOOGLE_SUB` ([ADR 0047](adr/0047-reports-hide-a-comment-until-the-curator-decides.md)). Without it, nobody reads the page or decides anything. The site never shows a subject, so the operator reads it from the database on the VPS, after logging in and choosing a nickname. Nicknames are unique ([ADR 0045](adr/0045-google-identity-and-revocable-sessions.md)), so a copycat cannot share yours; yours is the one `/conta` says "Você entrou como" while you are logged in, so copy it from there, not from memory: `SELECT google_sub FROM accounts WHERE nickname = '<nickname>'`, which must return one row, or stop and find out why. Add the line to `/opt/temestudo/google-oauth.env`, which publish and rollback already pass to Docker, and publish again. Then open `/curadoria` logged in and logged out: only your account reads it. No new GitHub secret is required. A report's notice uses `COMMENT_GITHUB_TOKEN`; without the token, reports and hiding still work and `/curadoria` says the notice did not go out.
+`/curadoria` opens only for the account holding the Google subject in `CURATOR_GOOGLE_SUB` ([ADR 0047](adr/0047-reports-hide-a-comment-until-the-curator-decides.md)), from any login method of that account. Removing Google from it in `/conta` leaves the desk. Without it, nobody reads the page or decides anything. The site never shows a subject, so the operator reads it from the database on the VPS, after logging in and choosing a nickname. Nicknames are unique ([ADR 0045](adr/0045-google-identity-and-revocable-sessions.md)), so a copycat cannot share yours; yours is the one `/conta` says "Você entrou como" while you are logged in, so copy it from there, not from memory: `SELECT google_sub FROM accounts WHERE nickname = '<nickname>'`, which must return one row, or stop and find out why. Add the line to `/opt/temestudo/google-oauth.env`, which publish and rollback already pass to Docker, and publish again. Then open `/curadoria` logged in and logged out: only your account reads it. No new GitHub secret is required. A report's notice uses `COMMENT_GITHUB_TOKEN`; without the token, reports and hiding still work and `/curadoria` says the notice did not go out.
 
 ## App database and encrypted backup (#557)
 

@@ -1,4 +1,5 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect } from 'react'
+import type { AccountMethods, MethodNotice } from '#/content/method-notice'
 import type { NicknameRefusal } from '#/content/nickname-refusal'
 import {
   decideSync,
@@ -12,6 +13,8 @@ import {
 import { useLinkFields } from '#/state/sync-device'
 import { AccountDeletion } from './account-deletion'
 import { DELETION } from './account-deletion.copy'
+import { Agreement } from './agreement'
+import { LoginMethods, MethodMessage } from './login-methods'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
@@ -111,22 +114,6 @@ function SyncSettings({
         <SyncChoice status={status} decide={decide} />
       )}
     </Section>
-  )
-}
-
-/** The browser's own checkbox: the Base UI one does not toggle without
- * JavaScript, and this is what a reader must tick to get a nickname. */
-function Agreement({ name, children }: { name: string; children: ReactNode }) {
-  return (
-    <label className="flex min-h-toque items-center gap-xs font-bold">
-      <input
-        type="checkbox"
-        name={name}
-        required
-        className="size-5 flex-none accent-tinta"
-      />
-      {children}
-    </label>
   )
 }
 
@@ -278,6 +265,8 @@ export function AccountPage({
   onSyncDecision = decideSync,
   deleted = false,
   nicknameRefusal,
+  methods,
+  methodNotice,
 }: {
   account: { nickname: string | null } | null
   syncStatus?: SyncStatus
@@ -286,6 +275,10 @@ export function AccountPage({
   deleted?: boolean
   /** Why the server sent the nickname form back. */
   nicknameRefusal?: NicknameRefusal
+  /** The account's login methods; without them the page offers none. */
+  methods?: AccountMethods | null
+  /** What a form about methods came back with. */
+  methodNotice?: MethodNotice
 }) {
   const currentSyncStatus = useSyncStatus()
   const linkFields = useLinkFields()
@@ -301,6 +294,7 @@ export function AccountPage({
       <Column>
         <Display>{ACCOUNT.title}</Display>
         <Lead>{ACCOUNT_INTRO}</Lead>
+        {methodNotice && <MethodMessage notice={methodNotice} />}
         {deleted && (
           <Section>
             <p role="status">{DELETION.done}</p>
@@ -326,6 +320,7 @@ export function AccountPage({
             <EmailForm register />
           </>
         )}
+        {account && methods && <LoginMethods methods={methods} />}
         {account?.nickname && (
           <SyncSettings
             status={syncStatus ?? currentSyncStatus}
