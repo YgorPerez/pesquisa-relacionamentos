@@ -24,7 +24,7 @@ const cookieOf = (response: Response, name: string) =>
     .find((value) => value.startsWith(`${name}=`))!
     .split(';')[0]!
 
-async function setup() {
+async function provider() {
   const verifiers: (string | null)[] = [],
     secrets: (string | null)[] = [],
     authorizations: (string | undefined)[] = []
@@ -52,6 +52,12 @@ async function setup() {
   const address = google.address()
   if (!address || typeof address === 'string')
     throw new Error('Missing address')
+  return { google, address, verifiers, secrets, authorizations }
+}
+
+async function setup() {
+  const { google, address, verifiers, secrets, authorizations } =
+    await provider()
   const folder = mkdtempSync(join(tmpdir(), 'login-'))
   let now = Date.now()
   const accounts = createAccounts({
