@@ -10,7 +10,7 @@ export const Route = createFileRoute('/privacidade')({
       {
         name: 'description',
         content:
-          'O que fica no seu aparelho, o que a conta guarda, como excluí-la, o que vai num link, o que o servidor anota e o que a contagem de visitas guarda.',
+          'O que fica no seu aparelho, o que a conta guarda, os e-mails que mandamos, como excluir a conta, o que vai num link, o que o servidor anota e o que a contagem de visitas guarda.',
       },
     ],
   }),
@@ -26,13 +26,17 @@ function Privacy() {
       <Column>
         <Display>Privacidade</Display>
         <Lead>
-          Você pode ler tudo sem conta. O que você diz sobre você fica no seu
-          aparelho, a menos que aceite sincronizar. A conta é opcional e serve
-          para publicar comentários e levar seus dados a outros aparelhos.
+          Você pode ler tudo sem conta. O Perfil e o que você marca nos textos
+          ficam no seu aparelho, a menos que aceite sincronizar. A conta é
+          opcional e serve para publicar comentários e levar seus dados a outros
+          aparelhos. Se ela usar e-mail, guardamos o endereço.
         </Lead>
 
         <OnTheDevice />
         <WithAnAccount />
+        <WithGoogle />
+        <WithEmail />
+        <TheEmailsWeSend />
         <InAPublicComment />
         <InAReport />
         <WhenSyncing />
@@ -96,26 +100,141 @@ function OnTheDevice() {
 function WithAnAccount() {
   return (
     <Section className="prosa" aria-labelledby="p-conta">
-      <Headline id="p-conta">Se você entrar com Google</Headline>
+      <Headline id="p-conta">Se você criar uma conta</Headline>
       <p>
-        O Google confirma quem você é e nos passa um código que identifica a sua
-        conta lá. Guardamos só esse código, o apelido que você escolher e quando
-        você declarou ter 18 anos ou mais e aceitou as regras. Não guardamos seu
-        nome, e-mail ou foto do Google, então não temos como falar com você. A
-        idade é uma declaração sua, e o site não a confere. O Google fica
-        sabendo que você entrou aqui.
+        Dá para entrar com Google, com e-mail e senha, ou ligar os dois à mesma
+        conta. Em qualquer caso guardamos o apelido que você escolher e quando
+        você declarou ter 18 anos ou mais e aceitou as regras. A idade é uma
+        declaração sua, e o site não a confere.
       </p>
       <p>
         Um cookie reconhece sua sessão por até 30 dias, e o JavaScript não
-        consegue lê-lo. Dois outros cookies duram pouco: um protege o login por
-        até 10 minutos, e outro avisa, por até 1 minuto, que a conta acabou de
-        ser excluída. Sair da conta encerra a sessão deste aparelho. Não apaga a
-        conta nem o que ficou no aparelho.
+        consegue lê-lo. Dois outros cookies duram pouco: um protege o login com
+        Google por até 10 minutos, e outro avisa, por até 1 minuto, que a conta
+        acabou de ser excluída. Sair da conta encerra a sessão deste aparelho.
+        Não apaga a conta nem o que ficou no aparelho.
       </p>
       <p>
         A conta fica num banco de dados no nosso servidor. Quem administra o
-        servidor pode ler tudo o que está nele: a conta, os comentários, as
-        denúncias e os dados sincronizados.
+        servidor pode ler tudo o que está nele: a conta, o e-mail, os
+        comentários, as denúncias e os dados sincronizados.
+      </p>
+    </Section>
+  )
+}
+
+function WithGoogle() {
+  return (
+    <Section className="prosa" aria-labelledby="p-google">
+      <Headline id="p-google">Se você entrar com Google</Headline>
+      <p>
+        O Google confirma quem você é e nos passa um código que identifica a sua
+        conta lá. Guardamos só esse código. Não pedimos nem guardamos o nome, o
+        e-mail ou a foto do Google, então, numa conta só com Google, não temos
+        como falar com você. O Google fica sabendo que você entrou aqui.
+      </p>
+      <p>
+        Se você ligar um e-mail a essa conta, guardamos o endereço que você
+        digitou, como na seção abaixo, mesmo que seja o do seu Gmail. Em{' '}
+        <Link to="/conta">Sua conta</Link>, “Tirar Google” apaga o código, desde
+        que a conta tenha um e-mail para você continuar entrando.
+      </p>
+    </Section>
+  )
+}
+
+function WithEmail() {
+  return (
+    <Section className="prosa" aria-labelledby="p-email">
+      <Headline id="p-email">Se você entrar com e-mail e senha</Headline>
+      <p>
+        Guardamos o seu e-mail em letras minúsculas, sem criptografia. Quem
+        administra o servidor consegue lê-lo, e ele também vai nas{' '}
+        <a href="#p-copias">cópias de segurança</a>. Ele serve para você entrar,
+        recuperar a senha e confirmar o endereço. Não mandamos mais nada para
+        ele, e ele não aparece na página do curador nem nos comentários.
+      </p>
+      <p>
+        A senha não fica guardada. Fica uma impressão dela, feita com scrypt, da
+        qual não dá para tirar a senha de volta. Quem tiver o banco ainda pode
+        testar senhas fracas uma a uma, então não repita aqui a senha de outro
+        site. O e-mail e a senha nunca entram no registro do servidor, e as
+        páginas de recuperação e de confirmação não carregam a contagem de
+        visitas.
+      </p>
+      <p>
+        Criar conta não confirma o e-mail. Se você errar o endereço, quem for
+        dono dele pode pegar a conta pela recuperação de senha e ver o que está
+        nela, Notas sincronizadas inclusive. Se alguém usar o seu e-mail, o
+        mesmo caminho devolve a conta a você, com o que a pessoa deixou lá.
+        Quando um e-mail já tem conta, a tela de criar conta diz isso, então
+        qualquer um pode descobrir, dentro do limite de tentativas, se um
+        endereço está cadastrado.
+      </p>
+      <p>
+        Para ligar um e-mail a uma conta que já existe, mandamos um link de
+        confirmação. Enquanto ele não é aberto, o endereço e a impressão da
+        senha esperam guardados. O link vale 30 minutos. Com o servidor no ar, o
+        que espera sai em até 1 hora e meia depois do pedido, ou na hora se o
+        envio falhar. Um pedido novo troca o anterior.
+      </p>
+      <p>
+        Para limitar tentativas de entrar, criar conta, recuperar ou trocar a
+        senha e ligar um e-mail, o banco anota um contador com uma impressão do
+        e-mail e outra do IP, feitas com uma chave secreta. Elas não ficam
+        ligadas a nenhuma conta, e quem tem a chave e o banco pode conferir se
+        um endereço ou IP aparece ali. O limite vale por 15 minutos. O servidor
+        apaga essas anotações na tentativa seguinte de qualquer leitor e de hora
+        em hora, então com ele no ar nenhuma passa de 1 hora e 15 minutos.
+      </p>
+      <p>
+        Em <Link to="/conta">Sua conta</Link>, “Tirar e-mail” apaga o endereço e
+        a impressão da senha, desde que o Google esteja ligado. Sem o Google, o
+        jeito de tirar o e-mail é ligar o Google antes ou excluir a conta. Não
+        dá para trocar o endereço direto: tire o antigo e ligue o novo. Ligar ou
+        tirar um jeito de entrar e trocar a senha encerram a sessão nos outros
+        aparelhos. Recuperar a senha encerra em todos e mantém os dados da
+        conta.
+      </p>
+    </Section>
+  )
+}
+
+function TheEmailsWeSend() {
+  return (
+    <Section className="prosa" aria-labelledby="p-mensagens">
+      <Headline id="p-mensagens">Os e-mails que mandamos</Headline>
+      <p>Só estes três, e só quando alguém pede:</p>
+      <ul>
+        <li>o link para trocar a senha, válido por 30 minutos e uma só vez;</li>
+        <li>
+          o aviso de que não há conta, quando alguém pede a recuperação para um
+          endereço sem cadastro;
+        </li>
+        <li>o link para confirmar um e-mail que você quer ligar à conta.</li>
+      </ul>
+      <p>
+        Qualquer pessoa pode digitar um endereço na recuperação de senha, então
+        você pode receber o aviso sem ter pedido. A tela responde igual nos dois
+        casos, e não guardamos o endereço de quem não tem conta, só a impressão
+        usada no limite de tentativas. Do link de troca e do de confirmação, o
+        banco guarda só uma impressão.
+      </p>
+      <p>
+        Quem envia é a Resend, uma empresa de fora. Ela recebe o endereço, o
+        assunto e o texto, com o link, inclusive o aviso para quem não tem
+        conta. As mensagens são só texto, sem imagem. Segundo a{' '}
+        <a
+          href="https://resend.com/legal/privacy-policy"
+          target="_blank"
+          rel="noopener"
+        >
+          política de privacidade dela
+        </a>
+        , a Resend trata dados nos Estados Unidos. Não controlamos por quanto
+        tempo ela guarda cada envio, e o que ela recebeu não sai de lá quando
+        você exclui a conta. A mensagem na sua caixa de entrada fica lá até você
+        apagá-la.
       </p>
     </Section>
   )
@@ -136,7 +255,7 @@ function InAPublicComment() {
         fica guardada, e o curador pode lê-la. Apagar um comentário tira ele, as
         versões anteriores, as denúncias e as respostas, inclusive as de outros
         leitores. O curador vê os comentários com o apelido, nunca o código do
-        Google, e pode removê-los.
+        Google nem o e-mail, e pode removê-los.
       </p>
       <p>
         Cada conta pode fazer 10 envios por hora, contando as edições. Para
@@ -204,13 +323,17 @@ function Backups() {
       <p>
         Com as cópias ligadas, uma vez por dia o banco inteiro vai criptografado
         para um armazenamento privado fora do servidor. A chave fica guardada à
-        parte. Quem a tem pode ler a cópia.
+        parte. Quem a tem pode ler a cópia, com os e-mails e as impressões de
+        senha. Uma cópia guarda também o que estava no banco naquele momento e
+        sairia logo depois: um e-mail esperando confirmação e as anotações do
+        limite de tentativas.
       </p>
       <p>
-        Uma conta excluída continua nas cópias feitas antes da exclusão até elas
-        serem apagadas. Hoje não há prazo definido para isso: uma cópia fica até
-        alguém apagá-la. Se o banco precisar ser restaurado de uma cópia antiga,
-        uma conta excluída depois dela pode voltar.
+        Uma conta excluída ou um e-mail tirado continua nas cópias feitas antes
+        até elas serem apagadas. Hoje não há prazo definido para isso: uma cópia
+        fica até alguém apagá-la. Se o banco precisar ser restaurado de uma
+        cópia antiga, uma conta excluída ou um e-mail tirado depois dela pode
+        voltar.
       </p>
     </Section>
   )
@@ -223,8 +346,9 @@ function DeletingTheAccount() {
       <p>
         Em <Link to="/conta">Sua conta</Link>, depois de entrar. Não dá para
         desfazer. A exclusão encerra a sessão em todos os aparelhos e apaga do
-        banco a conta, o código do Google, o apelido, os dados sincronizados,
-        seus comentários públicos com as versões anteriores, suas denúncias e as
+        banco a conta, o código do Google, o e-mail, a impressão da senha, um
+        e-mail esperando confirmação, o apelido, os dados sincronizados, seus
+        comentários públicos com as versões anteriores, suas denúncias e as
         anotações de envio. As respostas de outros leitores aos seus comentários
         saem junto, como quando você apaga um comentário.
       </p>
@@ -243,15 +367,17 @@ function DeletingTheAccount() {
       <p>
         O que está nos seus aparelhos fica neles. Este aparelho deixa de
         sincronizar, e os outros só voltam a enviar dados a uma conta se você
-        juntar de novo. Entrar depois com o mesmo Google cria uma conta nova,
-        sem nada da antiga.
+        juntar de novo. Entrar depois com o mesmo Google ou criar conta com o
+        mesmo e-mail dá uma conta nova, sem nada da antiga.
       </p>
       <p>
         Alguns registros não têm ligação com a conta e seguem o próprio caminho:
         os Comentários privados já enviados continuam com o curador, as issues
-        de denúncia continuam no repositório dele, e os registros do servidor e
-        a contagem de visitas expiram nos prazos abaixo. As{' '}
-        <a href="#p-copias">cópias de segurança</a> também seguem o prazo delas.
+        de denúncia continuam no repositório dele, os e-mails enviados seguem as
+        regras da Resend, as anotações do limite de tentativas saem no prazo
+        delas, e os registros do servidor e a contagem de visitas expiram nos
+        prazos abaixo. As <a href="#p-copias">cópias de segurança</a> também
+        seguem o prazo delas.
       </p>
     </Section>
   )
@@ -344,7 +470,8 @@ function OnTheServer() {
       <p>
         Quando um pedido dá erro, o registro de erros copia o endereço inteiro,
         que pode ter os dados de um link. Esse registro é apagado depois de 3
-        dias. O programa do site anota só a página, a resposta e o tempo, sem
+        dias, e os links de troca de senha e de confirmação de e-mail ficam fora
+        dele. O programa do site anota só a página, a resposta e o tempo, sem
         IP, e escreve por cima das linhas mais antigas.
       </p>
     </Section>

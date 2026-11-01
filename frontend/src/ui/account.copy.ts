@@ -16,6 +16,7 @@ export const EMAIL_ACCOUNT = {
   passwordLogin: 'Senha',
   passwordRegister: 'Crie uma senha',
   passwordNote: 'Use pelo menos 8 caracteres.',
+  forgot: 'Esqueci minha senha',
 } as const
 export const SYNC_EXPLANATION =
   'Quer levar seu Perfil, Requisitos, Prioridades, Grifos, Notas e Comentários privados enviados para outros aparelhos? Quem administra o servidor pode ler esses dados e ligá-los à sua conta. Ao juntar, os Grifos se somam e o Perfil, os Requisitos e as Prioridades ficam na versão mais recente. Se você recusar, nada é enviado.'

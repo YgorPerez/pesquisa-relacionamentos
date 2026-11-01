@@ -36,7 +36,7 @@ export async function deliverPasswordReset(
     )
     const link = new URL('/auth/reset', config.origin)
     link.searchParams.set('token', token)
-    text = `Você pediu para trocar a senha no Tem estudo?. Abra este link em até 30 minutos. Ele só pode ser usado uma vez.\n\n${link.href}\n\nA troca encerra o acesso em todos os aparelhos e mantém os dados da conta. Se não foi você, ignore esta mensagem. Sua senha continua a mesma.`
+    text = `No Tem estudo?, você pediu para trocar a senha. Abra este link em até 30 minutos. Ele só pode ser usado uma vez.\n\n${link.href}\n\nA troca encerra o acesso em todos os aparelhos e mantém os dados da conta. Se não foi você, ignore esta mensagem. Sua senha continua a mesma.`
   }
   await sendAccountEmail(config, {
     to: email,

@@ -315,7 +315,7 @@ export function AccountPage({
             </Section>
             <EmailForm />
             <p className="mt-md">
-              <a href="/auth/forgot">Esqueci minha senha</a>
+              <a href="/auth/forgot">{EMAIL_ACCOUNT.forgot}</a>
             </p>
             <EmailForm register />
           </>
