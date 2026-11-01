@@ -11,6 +11,13 @@ test.use({ javaScriptEnabled: false })
 
 const PASSWORD = 'a long password'
 
+/** One address per test, as Nginx would forward it: without one, every run shares
+ * the email limit of the `local` bucket, ten attempts in fifteen minutes. */
+test.beforeEach(async ({ page }) => {
+  const [a, b, c] = randomBytes(3)
+  await page.setExtraHTTPHeaders({ 'x-forwarded-for': `10.${a}.${b}.${c}` })
+})
+
 async function registerByEmail(page: Page) {
   const suffix = unique()
   const email = `methods-${suffix}@example.org`
