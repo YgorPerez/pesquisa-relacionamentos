@@ -29,6 +29,15 @@ const migrations: readonly string[] = [
     sent_at INTEGER NOT NULL
   ) STRICT;
   CREATE INDEX public_comment_rate ON public_comment_sends(account_id, sent_at);`,
+  `ALTER TABLE public_comments ADD COLUMN report_issue_claimed_at INTEGER;
+  ALTER TABLE public_comments ADD COLUMN report_issue INTEGER;
+  CREATE TABLE public_comment_reports (
+    comment_id INTEGER NOT NULL REFERENCES public_comments(id) ON DELETE CASCADE,
+    account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    reported_at INTEGER NOT NULL, cleared_at INTEGER,
+    PRIMARY KEY (comment_id, account_id)
+  ) STRICT;
+  CREATE INDEX public_comment_report_rate ON public_comment_reports(account_id, reported_at);`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import. */

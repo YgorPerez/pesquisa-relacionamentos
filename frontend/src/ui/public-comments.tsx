@@ -16,6 +16,8 @@ import {
   writePublicComment,
 } from '#/content/public-comments'
 import { SiteButton as Button } from './button'
+import { CommentReport } from './comment-report'
+import { COMMENT_REPORT as REPORT_COPY } from './comment-report.copy'
 import { Textarea } from './shadcn/textarea'
 import { RadioGroup, RadioGroupItem } from './shadcn/radio-group'
 import { Headline, Section } from './section'
@@ -297,6 +299,12 @@ function CommentActions({
             {COPY.delete}
           </Button>
         </>
+      )}
+      {signedIn && !comment.own && !comment.reported && (
+        <CommentReport id={comment.id} onProblem={onProblem} />
+      )}
+      {signedIn && comment.reported && (
+        <p className="m-0 text-nota text-tinta-2">{REPORT_COPY.reported}</p>
       )}
     </div>
   )

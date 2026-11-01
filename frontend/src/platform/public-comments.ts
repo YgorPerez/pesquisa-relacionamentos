@@ -1,19 +1,29 @@
 import { existsSync } from 'node:fs'
 import type { DatabaseSync } from 'node:sqlite'
 import type {
+  CuratorDecision,
+  CuratorDesk,
   PublicComment,
   PublicCommentWrite,
 } from '#/content/public-comment-record'
 import { getCurrentAccount, type Account } from './accounts'
 import { openDatabase } from './database'
+import {
+  PublicCommentRefusal,
+  readDesk,
+  recordReport,
+  recordReportIssue,
+  removeComment,
+  restoreComment,
+  type ReportedComment,
+} from './public-comment-moderation'
+import { serverEnv } from './server-env'
+
+export { PublicCommentRefusal }
 
 const SENDS_PER_HOUR = 10
 const HOUR = 3_600_000
 const MAX_LENGTH = 4000
-
-/** A write the reader can be told about. Its message is PT-BR, for the form;
- * any other error stays on the server. */
-export class PublicCommentRefusal extends Error {}
 
 /** A new comment and an edit both put text in front of everybody, so both
  * spend the account's hourly limit. Deleting frees nothing. */
@@ -107,6 +117,14 @@ function revise(
 
 const squeeze = (text: string) => text.replace(/\s+/g, ' ').trim()
 
+const OTHER_SITE = 'Abra o formulário neste site.'
+
+/** A POST from this site's own pages. */
+const fromThisSite = (request: Request) =>
+  request.method === 'POST' &&
+  request.headers.get('origin') ===
+    (process.env.APP_ORIGIN ?? new URL(request.url).origin)
+
 /** Checks what needs no database: where the write came from, who sent it and
  * whether its text fits. */
 function refusal(
@@ -115,12 +133,7 @@ function refusal(
   input: PublicCommentWrite,
   isPage: (path: string) => boolean,
 ): string | null {
-  if (
-    request.method !== 'POST' ||
-    request.headers.get('origin') !==
-      (process.env.APP_ORIGIN ?? new URL(request.url).origin)
-  )
-    return 'Abra o formulário neste site.'
+  if (!fromThisSite(request)) return OTHER_SITE
   if (!account?.nickname) return 'Entre e crie um apelido para publicar.'
   if (!input || !['publish', 'edit', 'delete'].includes(input.action))
     return 'Comentário inválido.'
@@ -147,12 +160,14 @@ function listComments(
   const db = openDatabase(path)
   try {
     return db
-      .prepare(`SELECT c.*, a.nickname FROM public_comments c
+      .prepare(`SELECT c.*, a.nickname, EXISTS
+        (SELECT 1 FROM public_comment_reports r WHERE r.comment_id = c.id AND r.account_id = ?) AS reported
+      FROM public_comments c
       LEFT JOIN accounts a ON a.id = c.account_id
       WHERE c.path = ? AND c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
         (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))
       ORDER BY c.created_at, c.id`)
-      .all(page)
+      .all(account?.id ?? null, page)
       .map((row) => ({
         id: Number(row.id),
         parentId: row.parent_id === null ? null : Number(row.parent_id),
@@ -164,6 +179,7 @@ function listComments(
         createdAt: Number(row.created_at),
         own: account?.id === row.account_id,
         canReply: Boolean(account?.nickname),
+        reported: row.reported === 1,
       }))
   } finally {
     db.close()
@@ -177,6 +193,10 @@ export function createPublicComments(
     now?: () => number
     /** Whether the path is a page that shows comments. */
     isPage?: (path: string) => boolean
+    /** The curator's Google subject; without one, nobody is the curator. */
+    curator?: () => string | undefined
+    /** Tells the curator of a first report; the issue's number, or `null`. */
+    notify?: (comment: ReportedComment) => Promise<number | null>
   } = {},
 ) {
   const path =
@@ -184,7 +204,75 @@ export function createPublicComments(
   const current = options.current ?? getCurrentAccount
   const now = options.now ?? Date.now
   const isPage = options.isPage ?? (() => true)
+  const curator = options.curator ?? (() => serverEnv().CURATOR_GOOGLE_SUB)
+  const notify = options.notify ?? (async () => null)
+  const isCurator = (request: Request) => {
+    const subject = curator()
+    return Boolean(subject) && current(request)?.googleSub === subject
+  }
+  /** Runs one write in a transaction on its own connection. */
+  const transaction = <T>(work: (db: DatabaseSync) => T): T => {
+    const db = openDatabase(path)
+    try {
+      db.exec('BEGIN IMMEDIATE')
+      try {
+        const result = work(db)
+        db.exec('COMMIT')
+        return result
+      } catch (error) {
+        db.exec('ROLLBACK')
+        throw error
+      }
+    } finally {
+      db.close()
+    }
+  }
   return {
+    /** Everything is committed before GitHub is called: whatever happens to
+     * the notice, the report and the hiding hold. */
+    async report(request: Request, id: number): Promise<void> {
+      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+      const account = current(request)
+      if (!account?.nickname)
+        throw new PublicCommentRefusal('Entre e crie um apelido para denunciar.')
+      if (!Number.isSafeInteger(id))
+        throw new PublicCommentRefusal('Comentário inválido.')
+      const at = now()
+      const reported = transaction((db) =>
+        recordReport(db, id, account.id, at),
+      )
+      if (!reported) return
+      try {
+        const issue = await notify(reported)
+        if (issue !== null)
+          transaction((db) => recordReportIssue(db, id, at, issue))
+      } catch {
+        // The curator's page shows that the notice did not go out.
+      }
+    },
+    /** `null` for anyone but the curator. */
+    curatorDesk(request: Request, before?: number): CuratorDesk | null {
+      if (!isCurator(request)) return null
+      const db = openDatabase(path)
+      try {
+        return readDesk(db, before)
+      } finally {
+        db.close()
+      }
+    },
+    decide(request: Request, decision: CuratorDecision): void {
+      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+      if (!isCurator(request))
+        throw new PublicCommentRefusal('Esta ação é só do curador.')
+      const id = decision?.id
+      if (!Number.isSafeInteger(id))
+        throw new PublicCommentRefusal('Comentário inválido.')
+      transaction((db) => {
+        if (decision.action === 'restore') restoreComment(db, id, now())
+        else if (decision.action === 'remove') removeComment(db, id)
+        else throw new PublicCommentRefusal('Decisão inválida.')
+      })
+    },
     /** Reading never depends on the database (ADR 0045): whatever goes wrong
      * here, the page opens, with no comments. */
     list(page: string, request?: Request): PublicComment[] {
@@ -200,23 +288,11 @@ export function createPublicComments(
       const refused = refusal(request, account, input, isPage)
       if (refused) throw new PublicCommentRefusal(refused)
       const accountId = account!.id
-      const db = openDatabase(path)
-      try {
-        db.exec('BEGIN IMMEDIATE')
-        try {
-          const id =
-            input.action === 'publish'
-              ? publish(db, input, accountId, now())
-              : revise(db, input, accountId, now())
-          db.exec('COMMIT')
-          return id
-        } catch (error) {
-          db.exec('ROLLBACK')
-          throw error
-        }
-      } finally {
-        db.close()
-      }
+      return transaction((db) =>
+        input.action === 'publish'
+          ? publish(db, input, accountId, now())
+          : revise(db, input, accountId, now()),
+      )
     },
   }
 }

@@ -1,5 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import type {
+  CommentActionResult,
+  CuratorDecision,
   PublicCommentResult,
   PublicCommentWrite,
 } from './public-comment-record'
@@ -31,6 +33,73 @@ export const readPublicComments = createServerFn({ method: 'GET' })
       ...comment,
       changed: !text.includes(comment.quote),
     }))
+  })
+
+/** A failed notice never fails the report (`platform/public-comments.ts`). */
+export const reportPublicComment = createServerFn({ method: 'POST' })
+  .validator((id: number) => id)
+  .handler(async ({ data }): Promise<CommentActionResult> => {
+    const [
+      { createPublicComments, PublicCommentRefusal },
+      { getRequest, setResponseHeader },
+      { reportNotifier },
+      { serverEnv },
+    ] = await Promise.all([
+      import('#/platform/public-comments'),
+      import('@tanstack/react-start/server'),
+      import('./report-issue'),
+      import('#/platform/server-env'),
+    ])
+    setResponseHeader('Cache-Control', 'private, no-store')
+    const comments = createPublicComments({
+      notify: (comment) =>
+        reportNotifier({
+          fetch,
+          token: serverEnv().COMMENT_GITHUB_TOKEN,
+        })(comment),
+    })
+    try {
+      await comments.report(getRequest(), data)
+      return { ok: true }
+    } catch (error) {
+      if (error instanceof PublicCommentRefusal)
+        return { ok: false, problem: error.message }
+      throw error
+    }
+  })
+
+/** `null` for anyone but the curator, whom the store checks on every read. */
+export const readCuratorDesk = createServerFn({ method: 'GET' })
+  .validator((before: number | undefined) => before)
+  .handler(async ({ data }) => {
+    const [{ createPublicComments }, { getRequest, setResponseHeader }] =
+      await Promise.all([
+        import('#/platform/public-comments'),
+        import('@tanstack/react-start/server'),
+      ])
+    setResponseHeader('Cache-Control', 'private, no-store')
+    return createPublicComments().curatorDesk(getRequest(), data)
+  })
+
+export const decideComment = createServerFn({ method: 'POST' })
+  .validator((decision: CuratorDecision) => decision)
+  .handler(async ({ data }): Promise<CommentActionResult> => {
+    const [
+      { createPublicComments, PublicCommentRefusal },
+      { getRequest, setResponseHeader },
+    ] = await Promise.all([
+      import('#/platform/public-comments'),
+      import('@tanstack/react-start/server'),
+    ])
+    setResponseHeader('Cache-Control', 'private, no-store')
+    try {
+      createPublicComments().decide(getRequest(), data)
+      return { ok: true }
+    } catch (error) {
+      if (error instanceof PublicCommentRefusal)
+        return { ok: false, problem: error.message }
+      throw error
+    }
   })
 
 export const writePublicComment = createServerFn({ method: 'POST' })

@@ -13,6 +13,9 @@ export const serverEnv = () =>
       // The token that opens a Comentário's issue (ADR 0043); without it, no
       // comment goes out.
       COMMENT_GITHUB_TOKEN: optionalSecret,
+      // The curator's Google subject (ADR 0047); without it, `/curadoria`
+      // shows nothing to anyone and no curator action runs.
+      CURATOR_GOOGLE_SUB: optionalSecret,
     },
     process.env,
   )
