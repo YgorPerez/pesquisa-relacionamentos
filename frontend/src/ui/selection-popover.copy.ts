@@ -10,7 +10,6 @@ export const ACTION_LABEL: Readonly<Record<SelectionAction, string>> = {
   copy: 'Copiar',
   link: 'Copiar link',
   highlight: 'Grifar',
-  source: 'De onde vem isso?',
   comment: 'Comentar',
 }
 

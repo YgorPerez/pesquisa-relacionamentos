@@ -1,10 +1,9 @@
 // What a reference ring cites (#467): in a paragraph, the text from the
-// previous ring (or the paragraph's start) up to the ring, read the way the
-// selection's sentences read their rings (`selection-sentences.ts`); rings
-// side by side (`[1][2]`) cite the same text. In a Visual, the whole figure:
-// its rings are where each label and value came from.
+// previous ring (or the paragraph's start) up to the ring (`ring-text.ts`);
+// rings side by side (`[1][2]`) cite the same text. In a Visual, the whole
+// figure: its rings are where each label and value came from.
 import { FINDING_SLOT } from './quote-text'
-import { BLOCK, blockText } from './selection-sentences'
+import { BLOCK, blockText } from './ring-text'
 
 /** What follows a ring and still belongs to its sentence. */
 const CLOSE = /[\s.,;:!?…"”’»)\]]/

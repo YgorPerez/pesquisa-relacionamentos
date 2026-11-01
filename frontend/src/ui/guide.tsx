@@ -80,7 +80,7 @@ export function CitedFactSheets({
 
 /** A Fact sheet's title, leading to its page, over its Status and its
  * Strength; `children` go at the end of that row. */
-export function FactSheetTitle({
+function FactSheetTitle({
   factSheet,
   children,
 }: {

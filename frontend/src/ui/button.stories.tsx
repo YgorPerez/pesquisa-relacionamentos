@@ -19,5 +19,5 @@ export const Light: Story = {
 
 /** The button of an action in the popover on selected text: the light one. */
 export const SelectionAction: Story = {
-  render: () => <ActionButton>De onde vem isso?</ActionButton>,
+  render: () => <ActionButton>Grifar</ActionButton>,
 }

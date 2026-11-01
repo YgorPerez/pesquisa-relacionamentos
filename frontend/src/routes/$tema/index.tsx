@@ -144,7 +144,7 @@ function GuidePage() {
 
         <GuideShare />
       </Column>
-      <PageSelection factSheets={guide.factSheets} page="guide" />
+      <PageSelection />
       <TermPopover terms={guide.terms} />
       <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />
     </Sheet>
