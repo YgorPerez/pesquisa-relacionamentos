@@ -13,6 +13,103 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vite-plus/test'
 
+type Run = (command: string, args: string[], input?: Buffer) => Buffer
+
+function localRunner(work: string) {
+  const env = {
+    ...process.env,
+    AWS_ACCESS_KEY_ID: 'local',
+    AWS_SECRET_ACCESS_KEY: 'local',
+    AWS_DEFAULT_REGION: 'us-east-1',
+    AWS_EC2_METADATA_DISABLED: 'true',
+    DATABASE_BACKUP_HOME: work,
+  }
+  const run: Run = (command, args, input) => {
+    const result = spawnSync(command, args, {
+      env,
+      input,
+      maxBuffer: 16 * 1024 * 1024,
+    })
+    if (result.status !== 0)
+      throw new Error(`${command} failed: ${result.stderr.toString()}`)
+    return result.stdout
+  }
+  return { env, run }
+}
+
+function volumeCommand(config: string, image: string) {
+  return (name: string) => [
+    'run',
+    '--rm',
+    '--env-file',
+    config,
+    '-v',
+    `${name}:/data`,
+    image,
+    'node',
+  ]
+}
+
+function prepareImage(work: string, id: string, image: string, run: Run) {
+  mkdirSync(join(work, 'server'))
+  mkdirSync(join(work, 'public'))
+  writeFileSync(join(work, 'server/index.mjs'), '')
+  writeFileSync(join(work, 'nitro.json'), '{}')
+  copyFileSync(
+    join(import.meta.dirname, 'database-maintenance.ts'),
+    join(work, 'database-maintenance.ts'),
+  )
+  copyFileSync(
+    join(import.meta.dirname, '../src/platform/database.ts'),
+    join(work, 'database.ts'),
+  )
+  writeFileSync(join(work, 'no-ar'), id)
+  run('docker', [
+    'build',
+    '-q',
+    '-f',
+    join(import.meta.dirname, '../Dockerfile'),
+    '-t',
+    image,
+    work,
+  ])
+}
+
+function restoreSnapshot(
+  run: Run,
+  config: string,
+  restored: string,
+  image: string,
+  bytes: Buffer,
+  withVolume: (name: string) => string[],
+) {
+  run(
+    'docker',
+    [
+      'run',
+      '-i',
+      '--rm',
+      '--env-file',
+      config,
+      '-v',
+      `${restored}:/data`,
+      image,
+      'node',
+      'scripts/database-maintenance.ts',
+      'restore',
+      '/data/app.sqlite',
+    ],
+    bytes,
+  )
+  const result = run('docker', [
+    ...withVolume(restored),
+    '--input-type=module',
+    '-e',
+    `import { DatabaseSync } from 'node:sqlite'; const db = new DatabaseSync('/data/app.sqlite'); console.log(db.prepare('SELECT value FROM evidence').get().value); console.log(db.prepare('PRAGMA integrity_check').get().integrity_check); db.close()`,
+  ])
+  expect(result.toString()).toBe('S3 restore worked\nok\n')
+}
+
 it.skipIf(process.env.TEST_DATABASE_BACKUP !== '1')(
   'uploads an encrypted snapshot to local S3 and restores it to a new Docker volume',
   () => {
@@ -25,65 +122,18 @@ it.skipIf(process.env.TEST_DATABASE_BACKUP !== '1')(
     const restored = `${volume}-restore`
     const bucket = `ticket557-${id}`
     const work = mkdtempSync(join(tmpdir(), 's3-restore-'))
-    const env = {
-      ...process.env,
-      AWS_ACCESS_KEY_ID: 'local',
-      AWS_SECRET_ACCESS_KEY: 'local',
-      AWS_DEFAULT_REGION: 'us-east-1',
-      AWS_EC2_METADATA_DISABLED: 'true',
-      DATABASE_BACKUP_HOME: work,
-    }
-    const run = (command: string, args: string[], input?: Buffer) => {
-      const result = spawnSync(command, args, {
-        env,
-        input,
-        maxBuffer: 16 * 1024 * 1024,
-      })
-      if (result.status !== 0)
-        throw new Error(`${command} failed: ${result.stderr.toString()}`)
-      return result.stdout
-    }
+    const { env, run } = localRunner(work)
     const aws = (...args: string[]) =>
       run('aws', ['--endpoint-url', endpoint, ...args])
     const config = join(work, 'database-backup.env')
-    const withVolume = (name: string) => [
-      'run',
-      '--rm',
-      '--env-file',
-      config,
-      '-v',
-      `${name}:/data`,
-      image,
-      'node',
-    ]
+    const withVolume = volumeCommand(config, image)
     try {
-      mkdirSync(join(work, 'server'))
-      mkdirSync(join(work, 'public'))
-      writeFileSync(join(work, 'server/index.mjs'), '')
-      writeFileSync(join(work, 'nitro.json'), '{}')
-      copyFileSync(
-        join(import.meta.dirname, 'database-maintenance.ts'),
-        join(work, 'database-maintenance.ts'),
-      )
-      copyFileSync(
-        join(import.meta.dirname, '../src/platform/database.ts'),
-        join(work, 'database.ts'),
-      )
-      writeFileSync(join(work, 'no-ar'), id)
       writeFileSync(
         config,
         `DATABASE_BACKUP_BUCKET=${bucket}\nDATABASE_BACKUP_ENDPOINT=${endpoint}\nDATABASE_BACKUP_KEY=${'ab'.repeat(32)}\nDATABASE_VOLUME=${volume}\nAWS_ACCESS_KEY_ID=local\nAWS_SECRET_ACCESS_KEY=local\nAWS_DEFAULT_REGION=us-east-1\n`,
         { mode: 0o600 },
       )
-      run('docker', [
-        'build',
-        '-q',
-        '-f',
-        join(import.meta.dirname, '../Dockerfile'),
-        '-t',
-        image,
-        work,
-      ])
+      prepareImage(work, id, image, run)
       run('docker', [
         ...withVolume(volume),
         'scripts/database-maintenance.ts',
@@ -109,31 +159,7 @@ it.skipIf(process.env.TEST_DATABASE_BACKUP !== '1')(
         '-',
       )
       expect(bytes.includes(Buffer.from('S3 restore worked'))).toBe(false)
-      run(
-        'docker',
-        [
-          'run',
-          '-i',
-          '--rm',
-          '--env-file',
-          config,
-          '-v',
-          `${restored}:/data`,
-          image,
-          'node',
-          'scripts/database-maintenance.ts',
-          'restore',
-          '/data/app.sqlite',
-        ],
-        bytes,
-      )
-      const result = run('docker', [
-        ...withVolume(restored),
-        '--input-type=module',
-        '-e',
-        `import { DatabaseSync } from 'node:sqlite'; const db = new DatabaseSync('/data/app.sqlite'); console.log(db.prepare('SELECT value FROM evidence').get().value); console.log(db.prepare('PRAGMA integrity_check').get().integrity_check); db.close()`,
-      ])
-      expect(result.toString()).toBe('S3 restore worked\nok\n')
+      restoreSnapshot(run, config, restored, image, bytes, withVolume)
     } finally {
       spawnSync('docker', ['volume', 'rm', volume, restored])
       spawnSync('docker', ['image', 'rm', image])

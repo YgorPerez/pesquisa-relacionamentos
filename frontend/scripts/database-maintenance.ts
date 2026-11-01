@@ -15,6 +15,37 @@ import { openDatabase } from '../src/platform/database.ts'
 // Format v1: magic, 12-byte nonce, 16-byte authentication tag, ciphertext.
 const MAGIC = Buffer.from('TEMESTUDO-BACKUP-1\n')
 
+async function writeBackup(path: string, snapshot: string, key: Buffer) {
+  if (!existsSync(path)) throw new Error('The source database does not exist.')
+  const db = new DatabaseSync(path, { readOnly: true })
+  try {
+    await backup(db, snapshot)
+  } finally {
+    db.close()
+  }
+  const nonce = randomBytes(12)
+  const cipher = createCipheriv('aes-256-gcm', key, nonce)
+  cipher.setAAD(MAGIC)
+  const encrypted = Buffer.concat([
+    cipher.update(readFileSync(snapshot)),
+    cipher.final(),
+  ])
+  process.stdout.write(
+    Buffer.concat([MAGIC, nonce, cipher.getAuthTag(), encrypted]),
+  )
+}
+
+function checkIntegrity(snapshot: string) {
+  const restored = new DatabaseSync(snapshot, { readOnly: true })
+  try {
+    const results = restored.prepare('PRAGMA integrity_check').all()
+    if (results.length !== 1 || results[0].integrity_check !== 'ok')
+      throw new Error('Restored database failed integrity_check.')
+  } finally {
+    restored.close()
+  }
+}
+
 async function main() {
   const [mode, path] = process.argv.slice(2)
   if (!path)
@@ -35,24 +66,7 @@ async function main() {
   const snapshot = join(work, 'snapshot.sqlite')
   try {
     if (mode === 'backup') {
-      if (!existsSync(path))
-        throw new Error('The source database does not exist.')
-      const db = new DatabaseSync(path, { readOnly: true })
-      try {
-        await backup(db, snapshot)
-      } finally {
-        db.close()
-      }
-      const nonce = randomBytes(12)
-      const cipher = createCipheriv('aes-256-gcm', key, nonce)
-      cipher.setAAD(MAGIC)
-      const encrypted = Buffer.concat([
-        cipher.update(readFileSync(snapshot)),
-        cipher.final(),
-      ])
-      process.stdout.write(
-        Buffer.concat([MAGIC, nonce, cipher.getAuthTag(), encrypted]),
-      )
+      await writeBackup(path, snapshot, key)
     } else if (mode === 'restore') {
       if (
         existsSync(path) ||
@@ -81,14 +95,7 @@ async function main() {
         ]),
         { mode: 0o600 },
       )
-      const restored = new DatabaseSync(snapshot, { readOnly: true })
-      try {
-        const results = restored.prepare('PRAGMA integrity_check').all()
-        if (results.length !== 1 || results[0].integrity_check !== 'ok')
-          throw new Error('Restored database failed integrity_check.')
-      } finally {
-        restored.close()
-      }
+      checkIntegrity(snapshot)
       // Atomic publication that refuses to replace an existing file.
       linkSync(snapshot, path)
     } else throw new Error('Unknown maintenance command.')
