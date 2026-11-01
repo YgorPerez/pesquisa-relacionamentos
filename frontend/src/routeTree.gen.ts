@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BuscaRouteImport } from './routes/busca'
 import { Route as ContaRouteImport } from './routes/conta'
+import { Route as CuradoriaRouteImport } from './routes/curadoria'
 import { Route as GlossarioRouteImport } from './routes/glossario'
 import { Route as GrifosRouteImport } from './routes/grifos'
 import { Route as GrupoPossivelRouteImport } from './routes/grupo-possivel'
@@ -39,6 +40,11 @@ const BuscaRoute = BuscaRouteImport.update({
 const ContaRoute = ContaRouteImport.update({
   id: '/conta',
   path: '/conta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuradoriaRoute = CuradoriaRouteImport.update({
+  id: '/curadoria',
+  path: '/curadoria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlossarioRoute = GlossarioRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
   '/conta': typeof ContaRoute
+  '/curadoria': typeof CuradoriaRoute
   '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
   '/conta': typeof ContaRoute
+  '/curadoria': typeof CuradoriaRoute
   '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/busca': typeof BuscaRoute
   '/conta': typeof ContaRoute
+  '/curadoria': typeof CuradoriaRoute
   '/glossario': typeof GlossarioRoute
   '/grifos': typeof GrifosRoute
   '/grupo-possivel': typeof GrupoPossivelRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/busca'
     | '/conta'
+    | '/curadoria'
     | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/busca'
     | '/conta'
+    | '/curadoria'
     | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/busca'
     | '/conta'
+    | '/curadoria'
     | '/glossario'
     | '/grifos'
     | '/grupo-possivel'
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuscaRoute: typeof BuscaRoute
   ContaRoute: typeof ContaRoute
+  CuradoriaRoute: typeof CuradoriaRoute
   GlossarioRoute: typeof GlossarioRoute
   GrifosRoute: typeof GrifosRoute
   GrupoPossivelRoute: typeof GrupoPossivelRoute
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/conta'
       fullPath: '/conta'
       preLoaderRoute: typeof ContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/curadoria': {
+      id: '/curadoria'
+      path: '/curadoria'
+      fullPath: '/curadoria'
+      preLoaderRoute: typeof CuradoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/glossario': {
@@ -359,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuscaRoute: BuscaRoute,
   ContaRoute: ContaRoute,
+  CuradoriaRoute: CuradoriaRoute,
   GlossarioRoute: GlossarioRoute,
   GrifosRoute: GrifosRoute,
   GrupoPossivelRoute: GrupoPossivelRoute,

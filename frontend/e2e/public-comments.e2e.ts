@@ -2,53 +2,13 @@
 // database of its own (`playwright.config.ts`). The account and its session
 // are written straight to the database: Google is `platform/accounts.test.ts`'s.
 // A Tip, so the list does not show up among a Guide's headings in another spec.
-import { createHash, randomBytes } from 'node:crypto'
-import { expect, test, type BrowserContext, type Page } from '@playwright/test'
-import { openDatabase } from '../src/platform/database.ts'
+import { expect, test, type Page } from '@playwright/test'
+import { seed, signIn, unique } from './accounts'
 
 const TIP = '/dicas/apps-como-complemento'
 const TIP_TEXT = 'Use o app como complemento, não como o único caminho.'
 const MISSING = 'Uma frase que saiu da Dica.'
 const LIST = 'Comentários públicos'
-
-const unique = () => randomBytes(6).toString('hex')
-
-/** A database connection for the test to seed with. */
-function seed<T>(write: (db: ReturnType<typeof openDatabase>) => T): T {
-  const db = openDatabase(process.env.E2E_DATABASE_PATH)
-  try {
-    return write(db)
-  } finally {
-    db.close()
-  }
-}
-
-/** A finished account with a live session in `context`. */
-async function signIn(context: BrowserContext) {
-  const token = randomBytes(32).toString('base64url')
-  const nickname = `Leitora ${unique()}`
-  seed((db) => {
-    const { lastInsertRowid } = db
-      .prepare('INSERT INTO accounts (google_sub, nickname) VALUES (?, ?)')
-      .run(unique(), nickname)
-    db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
-      createHash('sha256').update(token).digest('base64url'),
-      lastInsertRowid,
-      Date.now() + 3_600_000,
-    )
-  })
-  await context.addCookies([
-    {
-      name: 'local-session',
-      value: token,
-      domain: 'localhost',
-      path: '/',
-      httpOnly: true,
-      sameSite: 'Lax',
-    },
-  ])
-  return nickname
-}
 
 /** Writes a comment by a new account, with no browser involved. */
 function seedComment(quote: string, body: string, edited = false) {

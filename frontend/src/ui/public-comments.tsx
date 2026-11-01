@@ -2,7 +2,6 @@ import {
   useEffect,
   useId,
   useState,
-  useSyncExternalStore,
   type FormEvent,
   type ReactNode,
 } from 'react'
@@ -16,6 +15,8 @@ import {
   writePublicComment,
 } from '#/content/public-comments'
 import { SiteButton as Button } from './button'
+import { CommentReport } from './comment-report'
+import { COMMENT_REPORT as REPORT_COPY } from './comment-report.copy'
 import { Textarea } from './shadcn/textarea'
 import { RadioGroup, RadioGroupItem } from './shadcn/radio-group'
 import { Headline, Section } from './section'
@@ -23,16 +24,7 @@ import { findQuote, pageText } from './highlight-text'
 import { canPaint } from './highlight-paint'
 import { PUBLIC_COMMENT as COPY } from './public-comments.copy'
 import { QUOTABLE } from './quote-text'
-
-const stable = () => () => {}
-
-/** Sending needs JS: the server's HTML has no button that would do nothing. */
-const useHydrated = () =>
-  useSyncExternalStore(
-    stable,
-    () => true,
-    () => false,
-  )
+import { useHydrated } from './use-hydrated'
 
 function PublicCommentForm({
   input,
@@ -282,7 +274,7 @@ function CommentActions({
     }
   }
   return (
-    <div className="flex flex-wrap gap-xs">
+    <div className="flex flex-wrap items-center gap-xs">
       {signedIn && comment.parentId === null && (
         <Button variant="light" onClick={() => onEdit({ reply: true })}>
           {COPY.reply}
@@ -297,6 +289,12 @@ function CommentActions({
             {COPY.delete}
           </Button>
         </>
+      )}
+      {signedIn && !comment.own && !comment.reported && (
+        <CommentReport id={comment.id} onProblem={onProblem} />
+      )}
+      {signedIn && comment.reported && (
+        <p className="m-0 text-nota text-tinta-2">{REPORT_COPY.reported}</p>
       )}
     </div>
   )
