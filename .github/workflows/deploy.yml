@@ -1,6 +1,6 @@
 # Each merge into main publishes the site at https://temestudo.cloud (spec
 # #23, "Deploy"; `docs/deploy.md`). The `testes-e-build` job runs the tests
-# and the content build. `publicar` sends that same build to the VPS over
+# and the content build, and three `e2e` shards run beside it. `publicar` sends that same build to the VPS over
 # SSH, and `frontend/scripts/vps.ts` swaps the container without taking the
 # site down and ensures the GoatCounter container at stats.temestudo.cloud.
 #
@@ -92,22 +92,7 @@ jobs:
       - name: Tests
         run: pnpm test
 
-      # `pnpm e2e` builds on top of the fixture content
-      # (`frontend/e2e/library`) and runs Playwright on it.
-      - name: E2E
-        run: pnpm e2e
-
-      - name: Upload e2e traces
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-test-results
-          path: frontend/test-results/
-          if-no-files-found: ignore
-          retention-days: 14
-
-      # The build that goes to the VPS, with the repository's library. It
-      # comes after e2e, which left the fixture build in `.output`. Content
+      # The build that goes to the VPS, with the repository's library. Content
       # with an error fails this step, and nothing is published. It checks
       # the live sitemap: a published path that disappeared without `antes`
       # also fails it (`frontend/vite/library.ts`). Before the first deploy
@@ -134,8 +119,48 @@ jobs:
           path: build.tar.gz
           retention-days: 7
 
+  # `pnpm e2e` builds on top of the fixture content (`frontend/e2e/library`)
+  # and runs Playwright on it, one shard per runner. `fail-fast: false`: a red
+  # shard does not hide what the others would say.
+  e2e:
+    if: inputs.voltar == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: E2E
+        run: pnpm e2e --shard=${{ matrix.shard }}/3
+
+      - name: Upload e2e traces
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-results-${{ matrix.shard }}
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+
   publicar:
-    needs: [segredos, testes-e-build]
+    needs: [segredos, testes-e-build, e2e]
     if: needs.segredos.outputs.ready == 'true' && inputs.voltar == ''
     runs-on: ubuntu-latest
     timeout-minutes: 15
