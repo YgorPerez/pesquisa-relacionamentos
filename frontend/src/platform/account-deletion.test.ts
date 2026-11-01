@@ -85,6 +85,11 @@ beforeEach(() => {
   const db = database()
   addAccount(db, LEAVING, SUB, NICKNAME)
   addAccount(db, OTHER, 'sub-other', 'Outra')
+  db.prepare('INSERT INTO password_resets VALUES (?, ?, ?)').run(
+    LEAVING,
+    tokenHash('reset-token'),
+    Date.now() + 60_000,
+  )
   addAccount(db, 7003, 'sub-third', 'Terceira')
   addAccount(db, 7004, 'sub-fourth', 'Quarta')
   for (const device of ['phone', 'laptop'])

@@ -6,10 +6,18 @@ import { RECOVERY } from './password-recovery.copy'
 
 test('a reader enters an email and can return to login', async () => {
   render(<PasswordRecovery />)
-  await userEvent.type(screen.getByLabelText(RECOVERY.email), 'reader@example.org')
-  expect(screen.getByLabelText(RECOVERY.email)).toHaveValue('reader@example.org')
+  await userEvent.type(
+    screen.getByLabelText(RECOVERY.email),
+    'reader@example.org',
+  )
+  expect(screen.getByLabelText(RECOVERY.email)).toHaveValue(
+    'reader@example.org',
+  )
   expect(screen.getByRole('button', { name: RECOVERY.send })).toBeEnabled()
-  expect(screen.getByRole('link', { name: RECOVERY.back })).toHaveAttribute('href', '/conta')
+  expect(screen.getByRole('link', { name: RECOVERY.back })).toHaveAttribute(
+    'href',
+    '/conta',
+  )
 })
 test('a reset explains session revocation and accepts a new password', async () => {
   render(<PasswordRecovery token="example-token" />)

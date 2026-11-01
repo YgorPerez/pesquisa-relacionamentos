@@ -320,7 +320,9 @@ export function AccountPage({
               </a>
             </Section>
             <EmailForm />
-            <p className="mt-md"><a href="/auth/forgot">Esqueci minha senha</a></p>
+            <p className="mt-md">
+              <a href="/auth/forgot">Esqueci minha senha</a>
+            </p>
             <EmailForm register />
           </>
         )}

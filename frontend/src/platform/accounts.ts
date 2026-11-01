@@ -6,7 +6,11 @@ import { openDatabase } from './database'
 import { REMOVED_READER } from './public-comment-moderation'
 import { serverEnv } from './server-env'
 import { allowEmailAttempt, emailAccount } from './email-accounts'
-import { deliverPasswordReset, resetPassword, validReset } from './password-reset'
+import {
+  deliverPasswordReset,
+  resetPassword,
+  validReset,
+} from './password-reset'
 import { recoveryPage } from './recovery-page'
 import { RECOVERY } from '#/ui/password-recovery.copy'
 
@@ -419,11 +423,22 @@ class AccountService {
     )
   }
   private async recovery(request: Request, url: URL) {
-    if (!['GET', 'POST'].includes(request.method)) return response(405, 'Método não permitido.')
-    if (request.method === 'POST' && request.headers.get('origin') !== this.options.origin)
+    if (!['GET', 'POST'].includes(request.method))
+      return response(405, 'Método não permitido.')
+    if (
+      request.method === 'POST' &&
+      request.headers.get('origin') !== this.options.origin
+    )
       return response(403, 'Abra o formulário neste site e tente de novo.')
-    if (!this.emailConfigured() || !this.options.resendApiKey || !this.options.emailFrom)
-      return recoveryPage({ disabled: true, message: RECOVERY.unavailable }, 503)
+    if (
+      !this.emailConfigured() ||
+      !this.options.resendApiKey ||
+      !this.options.emailFrom
+    )
+      return recoveryPage(
+        { disabled: true, message: RECOVERY.unavailable },
+        503,
+      )
     if (url.pathname === '/auth/forgot') {
       if (request.method === 'GET') return recoveryPage({})
       const form = await readForm(request)
@@ -436,7 +451,8 @@ class AccountService {
       })
       return recoveryPage({ message: RECOVERY.sent, disabled: true })
     }
-    const form = request.method === 'POST' ? await readForm(request) : url.searchParams
+    const form =
+      request.method === 'POST' ? await readForm(request) : url.searchParams
     if (form instanceof Response) return form
     const token = form.get('token') ?? ''
     const db = this.database()
@@ -447,23 +463,37 @@ class AccountService {
       const password = form.get('password') ?? ''
       if (password.length < 8 || password.length > 1024)
         return recoveryPage({ token, message: RECOVERY.short }, 400)
-      return await resetPassword(db, token, password, this.now)
+      return (await resetPassword(db, token, password, this.now))
         ? recoveryPage({ message: RECOVERY.done, disabled: true })
         : recoveryPage({ message: RECOVERY.invalid }, 400)
-    } finally { db.close() }
+    } finally {
+      db.close()
+    }
   }
   private async deliverRecovery(request: Request, email: string) {
     // Never expose database/provider exceptions containing a recipient/token.
     try {
       const db = this.database()
       try {
-        await deliverPasswordReset(db, request, email, {
-          origin: this.options.origin!, rateKey: this.options.emailRateLimitKey!,
-          apiKey: this.options.resendApiKey!, from: this.options.emailFrom!,
-          endpoint: this.options.resendEndpoint,
-        }, this.now())
-      } finally { db.close() }
-    } catch { /* Recovery is best effort after the response. */ }
+        await deliverPasswordReset(
+          db,
+          request,
+          email,
+          {
+            origin: this.options.origin!,
+            rateKey: this.options.emailRateLimitKey!,
+            apiKey: this.options.resendApiKey!,
+            from: this.options.emailFrom!,
+            endpoint: this.options.resendEndpoint,
+          },
+          this.now(),
+        )
+      } finally {
+        db.close()
+      }
+    } catch {
+      /* Recovery is best effort after the response. */
+    }
   }
   private async email(request: Request, register: boolean) {
     if (!this.emailConfigured())
@@ -533,6 +563,9 @@ export function pruneEmailRateLimits() {
   const db = openDatabase(env.DATABASE_PATH)
   try {
     db.prepare('DELETE FROM email_rate_limits WHERE expires_at <= ?').run(
+      Date.now(),
+    )
+    db.prepare('DELETE FROM password_resets WHERE expires_at <= ?').run(
       Date.now(),
     )
   } finally {

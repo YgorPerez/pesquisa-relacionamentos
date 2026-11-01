@@ -5,10 +5,13 @@ export const RECOVERY = {
   password: 'Nova senha',
   send: 'Enviar e-mail de recuperação',
   save: 'Salvar nova senha',
-  explanation: 'Vamos mandar um e-mail com as instruções. O link vale por 30 minutos e só pode ser usado uma vez.',
+  explanation:
+    'Vamos mandar um e-mail com as instruções. O link vale por 30 minutos e só pode ser usado uma vez.',
   sent: 'Se for possível enviar agora, você receberá um e-mail com as instruções. Confira também o spam. Se não chegar, espere 15 minutos e tente de novo.',
-  unavailable: 'A recuperação de senha está indisponível. Tente de novo mais tarde. Você pode continuar lendo sem entrar.',
-  invalid: 'Este link expirou ou já foi usado. Peça outro e-mail de recuperação.',
+  unavailable:
+    'A recuperação de senha está indisponível. Tente de novo mais tarde. Você pode continuar lendo sem entrar.',
+  invalid:
+    'Este link expirou ou já foi usado. Peça outro e-mail de recuperação.',
   short: 'A senha precisa ter de 8 a 1024 caracteres.',
   note: 'Use pelo menos 8 caracteres. A nova senha encerra o acesso em todos os aparelhos e mantém os dados da conta.',
   done: 'Senha alterada. Entre com a nova senha. Seus dados continuam na conta.',

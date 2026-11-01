@@ -5,13 +5,19 @@ export async function sendAccountEmail(
   mail: { to: string; subject: string; text: string },
 ): Promise<boolean> {
   try {
-    const response = await fetch(config.endpoint ?? 'https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { authorization: `Bearer ${config.apiKey}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ from: config.from, ...mail }),
-      redirect: 'error',
-      signal: AbortSignal.timeout(10_000),
-    })
+    const response = await fetch(
+      config.endpoint ?? 'https://api.resend.com/emails',
+      {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${config.apiKey}`,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ from: config.from, ...mail }),
+        redirect: 'error',
+        signal: AbortSignal.timeout(10_000),
+      },
+    )
     return response.ok
   } catch {
     // Provider errors may contain the recipient or link. Never log them.
