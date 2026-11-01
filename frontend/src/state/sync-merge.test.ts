@@ -10,11 +10,7 @@ import {
   setNote,
 } from './highlights'
 import { savedProfile, saveProfile } from './profile'
-import {
-  addSentComment,
-  readSentComments,
-  removeSentComment,
-} from './sent-comments'
+import { comments, removeSentComment } from './sent-comment-storage'
 import { withStorageSource } from './storage-events'
 import {
   applySyncData,
@@ -61,6 +57,12 @@ const sentComment = (text: string) => ({
   comment: text,
   issue: 7,
 })
+const addSentComment = (made: ReturnType<typeof sentComment>) => {
+  const comment = { ...made, id: made.comment, changed: false, at: Date.now() }
+  comments.write([...(comments.read() ?? []), comment])
+  return comment
+}
+const readSentComments = () => comments.read() ?? []
 const raw = () => [...items.values()].join('\n')
 
 beforeEach(() => {
@@ -100,7 +102,7 @@ test('first merge adds up the Grifos of both devices and keeps each Nota', () =>
     expect(
       readHighlights()
         .map((h) => `${h.exact}: ${h.note}`)
-        .toSorted(),
+        .sort(),
     ).toEqual(['dois: nota do computador', 'um: nota do celular'])
   }
 })

@@ -5,6 +5,7 @@ import {
   isQuoteRecord,
   type KeptQuote,
 } from './highlight-record'
+import { notifyRemoved } from './storage-events'
 import { stored } from './stored'
 import type { CommentStatus } from '#/content/comment-status'
 
@@ -73,3 +74,13 @@ export function validateSentComments(
 }
 
 export const comments = stored('sent-comments', validateSentComments)
+
+/** "Tirar da lista": forgets the entry on this device, and on the others if
+ * this one syncs. */
+export function removeSentComment(id: string) {
+  const saved = comments.read() ?? []
+  if (!saved.some((c) => c.id === id)) return
+  notifyRemoved('comment', id)
+  const next = saved.filter((c) => c.id !== id)
+  comments.write(next.length > 0 ? next : null)
+}

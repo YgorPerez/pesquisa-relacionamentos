@@ -11,7 +11,6 @@
 // replied with stays here too (#442), and syncs with the rest of the record.
 import { useSyncExternalStore } from 'react'
 import { markedFound } from './highlight-record'
-import { notifyRemoved } from './storage-events'
 import type { IssueStatus } from '#/content/comment-status'
 import type { EditInput, EditReply } from '#/content/comment-issue'
 
@@ -21,6 +20,7 @@ import {
   type NewSentComment,
 } from './sent-comment-storage'
 export {
+  removeSentComment,
   validateSentComments,
   type SentComment,
   type NewSentComment,
@@ -85,14 +85,6 @@ export async function editSentComment(
       ),
     )
   return reply.edit
-}
-
-/** "Tirar da lista": forgets the entry on this device. */
-export function removeSentComment(id: string) {
-  const saved = readSentComments()
-  if (!saved.some((c) => c.id === id)) return
-  notifyRemoved('comment', id)
-  save(saved.filter((c) => c.id !== id))
 }
 
 /** After the page at `path` looked for its comments' quotes: the ones in
