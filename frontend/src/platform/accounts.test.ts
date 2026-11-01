@@ -196,6 +196,28 @@ test('logout revokes the session and returning Google identity retains the nickn
   }
 })
 
+test('coming back after deleting the account is a new account with a new id, so a device still joined to the old one is asked again', async () => {
+  const cookie = cookieOf(await app.login(), '__Host-session')
+  const first = app.accounts.current(request('/', cookie))!
+  await app.accounts.handle(request('/auth/nickname', cookie, accepted()))
+  expect(
+    (
+      await app.accounts.handle(
+        request(
+          '/auth/delete',
+          cookie,
+          new URLSearchParams({ confirm: 'EXCLUIR' }),
+        ),
+      )
+    )?.status,
+  ).toBe(303)
+  const returning = cookieOf(await app.login(), '__Host-session')
+  const second = app.accounts.current(request('/', returning))!
+  expect(second.googleSub).toBe(first.googleSub)
+  expect(second.nickname).toBeNull()
+  expect(second.id).not.toBe(first.id)
+})
+
 test('sessions and unused OAuth attempts expire', async () => {
   const cookie = cookieOf(await app.login(), '__Host-session')
   app.advance(31 * 24 * 60 * 60 * 1000)

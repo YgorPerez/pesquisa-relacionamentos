@@ -1,4 +1,5 @@
-import { createHash, randomBytes } from 'node:crypto'
+import { createHash, randomBytes, randomInt } from 'node:crypto'
+import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
 
 type Options = {
@@ -16,6 +17,10 @@ const hash = (value: string) =>
   createHash('sha256').update(value).digest('base64url')
 const random = () => randomBytes(32).toString('base64url')
 const SESSION_SECONDS = 30 * 24 * 60 * 60
+/** Long enough for the redirect to `/conta` to read it. */
+const DELETION_NOTICE_SECONDS = 60
+/** The largest range `randomInt` takes, and still a safe integer in JSON. */
+const ACCOUNT_ID_RANGE = 2 ** 48 - 1
 const response = (status: number, message: string) =>
   new Response(message, {
     status,
@@ -33,6 +38,14 @@ function redirect(cookies: string[] = []) {
   return new Response(null, { status: 303, headers })
 }
 
+async function readForm(request: Request) {
+  if (Number(request.headers.get('content-length')) > 4096)
+    return response(413, 'Formulário muito grande.')
+  const text = await request.text()
+  if (text.length > 4096) return response(413, 'Formulário muito grande.')
+  return new URLSearchParams(text)
+}
+
 /** Server-only. Never send googleSub through a loader or JSON response. */
 class AccountService {
   private options: Options
@@ -40,12 +53,14 @@ class AccountService {
   private secure: boolean
   private sessionName: string
   private stateName: string
+  private deletedName: string
   constructor(options: Options) {
     this.options = options
     this.now = options.now ?? Date.now
     this.secure = options.origin?.startsWith('https://') ?? true
     this.sessionName = this.secure ? '__Host-session' : 'local-session'
     this.stateName = this.secure ? '__Host-oauth' : 'local-oauth'
+    this.deletedName = this.secure ? '__Host-deleted' : 'local-deleted'
   }
   private cookie(name: string, value: string, seconds: number) {
     return `${name}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${seconds}${this.secure ? '; Secure' : ''}`
@@ -193,9 +208,11 @@ class AccountService {
   private session(request: Request, sub: string) {
     const db = this.database()
     try {
+      // A random id, never reused: a device joined to a deleted account holds
+      // its id, and must not find it again on a later account (ADR 0048).
       db.prepare(
-        'INSERT INTO accounts (google_sub) VALUES (?) ON CONFLICT DO NOTHING',
-      ).run(sub)
+        'INSERT INTO accounts (id, google_sub) VALUES (?, ?) ON CONFLICT DO NOTHING',
+      ).run(randomInt(1, ACCOUNT_ID_RANGE), sub)
       const account = db
         .prepare('SELECT id FROM accounts WHERE google_sub = ?')
         .get(sub)!
@@ -269,12 +286,32 @@ class AccountService {
     }
     return redirect([this.cookie(this.sessionName, '', 0)])
   }
+  private async remove(request: Request, account: Account) {
+    const form = await readForm(request)
+    if (form instanceof Response) return form
+    if (!confirmsDeletion(form.get('confirm')))
+      return response(400, 'Para excluir a conta, escreva EXCLUIR no campo.')
+    const db = this.database()
+    try {
+      deleteAccount(db, account.id, form.get('keep-comments') === 'on')
+    } finally {
+      db.close()
+    }
+    return redirect([
+      this.cookie(this.sessionName, '', 0),
+      this.cookie(this.deletedName, '1', DELETION_NOTICE_SECONDS),
+    ])
+  }
+  /** The cookie that clears the notice, when the request carries one: only the
+   * deletion sets it, so a link cannot make a device forget its sync. */
+  deletionNoticeCookie(request: Request): string | null {
+    return this.readCookie(request, this.deletedName)
+      ? this.cookie(this.deletedName, '', 0)
+      : null
+  }
   private async nickname(request: Request, account: Account) {
-    if (Number(request.headers.get('content-length')) > 4096)
-      return response(413, 'Formulário muito grande.')
-    const text = await request.text()
-    if (text.length > 4096) return response(413, 'Formulário muito grande.')
-    const form = new URLSearchParams(text)
+    const form = await readForm(request)
+    if (form instanceof Response) return form
     const nickname = form.get('nickname')?.trim() ?? ''
     if (
       nickname.length < 2 ||
@@ -324,6 +361,8 @@ class AccountService {
     if (!account) return response(401, 'Entre para continuar.')
     if (url.pathname === '/auth/logout' && request.method === 'POST')
       return this.logout(request)
+    if (url.pathname === '/auth/delete' && request.method === 'POST')
+      return this.remove(request, account)
     if (url.pathname === '/auth/nickname' && request.method === 'POST')
       return this.nickname(request, account)
     return response(404, 'Página não encontrada.')
@@ -343,6 +382,10 @@ function accountsFromEnvironment() {
 /** Server seam for later tickets. A null nickname means onboarding is incomplete. */
 export function getCurrentAccount(request: Request): Account | null {
   return accountsFromEnvironment().current(request)
+}
+/** See `AccountService.deletionNoticeCookie`. */
+export function deletionNoticeCookie(request: Request) {
+  return accountsFromEnvironment().deletionNoticeCookie(request)
 }
 export function handleAccountRequest(request: Request) {
   return accountsFromEnvironment().handle(request)

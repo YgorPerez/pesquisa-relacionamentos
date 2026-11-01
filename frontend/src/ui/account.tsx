@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   decideSync,
+  forgetDeletedAccount,
   refreshSync,
   returnToAccountData,
   stopDeviceSync,
@@ -8,6 +9,8 @@ import {
   type SyncStatus,
 } from '#/state/account-sync'
 import { useLinkFields } from '#/state/sync-device'
+import { AccountDeletion } from './account-deletion'
+import { DELETION } from './account-deletion.copy'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
@@ -185,10 +188,13 @@ export function AccountPage({
   account,
   syncStatus,
   onSyncDecision = decideSync,
+  deleted = false,
 }: {
   account: { nickname: string | null } | null
   syncStatus?: SyncStatus
   onSyncDecision?: (accept: boolean) => void
+  /** The account was deleted on the request that led here. */
+  deleted?: boolean
 }) {
   const currentSyncStatus = useSyncStatus()
   const linkFields = useLinkFields()
@@ -196,11 +202,20 @@ export function AccountPage({
   useEffect(() => {
     if (signedIn && !syncStatus) void refreshSync()
   }, [signedIn, syncStatus])
+  useEffect(() => {
+    if (deleted) forgetDeletedAccount()
+  }, [deleted])
   return (
     <Sheet>
       <Column>
         <Display>Sua conta</Display>
         <Lead>{ACCOUNT_INTRO}</Lead>
+        {deleted && (
+          <Section>
+            <p role="status">{DELETION.done}</p>
+            <p>{DELETION.doneDevice}</p>
+          </Section>
+        )}
         {account ? (
           <SignedIn nickname={account.nickname} />
         ) : (
@@ -220,6 +235,7 @@ export function AccountPage({
             linkFields={Boolean(linkFields?.length)}
           />
         )}
+        {account && <AccountDeletion canPublish={signedIn} />}
         <p className="mt-lg text-nota text-tinta-2">
           Sair da conta mantém o que está salvo neste aparelho.{' '}
           <a href="/privacidade">Veja o que o site guarda.</a>

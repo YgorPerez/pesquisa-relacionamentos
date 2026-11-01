@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { readAccount } from '#/content/account'
+import { readAccountPage } from '#/content/account'
 import { AccountPage } from '#/ui/account'
 
 export const Route = createFileRoute('/conta')({
-  loader: () => readAccount(),
+  loader: () => readAccountPage(),
   head: () => ({
     meta: [
       { title: 'Sua conta · Tem estudo?' },
@@ -13,5 +13,6 @@ export const Route = createFileRoute('/conta')({
   component: Account,
 })
 function Account() {
-  return <AccountPage account={Route.useLoaderData()} />
+  const { account, deleted } = Route.useLoaderData()
+  return <AccountPage account={account} deleted={deleted} />
 }
