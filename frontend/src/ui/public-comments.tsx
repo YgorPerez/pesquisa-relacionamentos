@@ -32,12 +32,13 @@ function PublicCommentForm({
   const id = useId()
   const [busy, setBusy] = useState(false)
   const [problem, setProblem] = useState('')
-  async function submit(event: FormEvent) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setBusy(true)
     setProblem('')
     try {
-      const text = String(new FormData(event.currentTarget).get('body') ?? '')
+      const body = new FormData(event.currentTarget).get('body')
+      const text = typeof body === 'string' ? body : ''
       await writePublicComment({ data: { ...input, body: text } })
       window.dispatchEvent(new Event('public-comments-changed'))
       onDone()
@@ -170,22 +171,6 @@ function useCommentMarks(items: PublicComment[]) {
   }, [items])
 }
 
-function useSignedIn() {
-  const [signedIn, setSignedIn] = useState(false)
-  useEffect(() => {
-    let active = true
-    void readAccount()
-      .then((account) => {
-        if (active) setSignedIn(Boolean(account?.nickname))
-      })
-      .catch(() => {})
-    return () => {
-      active = false
-    }
-  }, [])
-  return signedIn
-}
-
 export function PublicComments({
   path,
   comments,
@@ -194,7 +179,7 @@ export function PublicComments({
   comments: PublicComment[]
 }) {
   const { items, problem } = useConversation(path, comments)
-  const signedIn = useSignedIn()
+  const signedIn = items.some((comment) => comment.canReply)
   useCommentMarks(items)
   if (!items.length) return null
   return (
@@ -247,22 +232,7 @@ function CommentEntry({
   }
   return (
     <article id={`comentario-${comment.id}`} className="py-sm" key={comment.id}>
-      <p className="m-0 text-label font-bold">
-        {comment.nickname}
-        {comment.edited && (
-          <>
-            {' '}
-            · <span>{COPY.edited}</span>
-          </>
-        )}
-      </p>
-      {comment.parentId === null && (
-        <blockquote className="mx-0 my-xs border-l-2 border-tinta pl-xs text-nota text-tinta-2">
-          {comment.quote}
-          {comment.changed && <p>{COPY.changed}</p>}
-        </blockquote>
-      )}
-      <p className="my-xs whitespace-pre-wrap wrap-anywhere">{comment.body}</p>
+      <CommentBody comment={comment} />
       <div className="flex flex-wrap gap-xs">
         {signedIn && comment.parentId === null && (
           <Button
@@ -288,27 +258,70 @@ function CommentEntry({
       </div>
       {problem && <p role="alert">{problem}</p>}
       {editing?.id === comment.id && (
-        <>
-          <PublicCommentForm
-            key={`${comment.id}-${editing.reply}`}
-            input={
-              editing.reply
-                ? {
-                    action: 'publish',
-                    path,
-                    quote: comment.quote,
-                    parentId: comment.id,
-                    body: '',
-                  }
-                : { action: 'edit', id: comment.id, body: comment.body }
-            }
-            onDone={() => setEditing(null)}
-          />
-          <Button variant="light" onClick={() => setEditing(null)}>
-            {COPY.cancel}
-          </Button>
-        </>
+        <CommentEditor
+          path={path}
+          comment={comment}
+          reply={editing.reply}
+          onDone={() => setEditing(null)}
+        />
       )}
     </article>
+  )
+}
+
+function CommentEditor({
+  path,
+  comment,
+  reply,
+  onDone,
+}: {
+  path: string
+  comment: PublicComment
+  reply: boolean
+  onDone: () => void
+}) {
+  const input: Exclude<PublicCommentWrite, { action: 'delete' }> = reply
+    ? {
+        action: 'publish',
+        path,
+        quote: comment.quote,
+        parentId: comment.id,
+        body: '',
+      }
+    : { action: 'edit', id: comment.id, body: comment.body }
+  return (
+    <>
+      <PublicCommentForm
+        key={`${comment.id}-${reply}`}
+        input={input}
+        onDone={onDone}
+      />
+      <Button variant="light" onClick={onDone}>
+        {COPY.cancel}
+      </Button>
+    </>
+  )
+}
+
+function CommentBody({ comment }: { comment: PublicComment }) {
+  return (
+    <>
+      <p className="m-0 text-label font-bold">
+        {comment.nickname}
+        {comment.edited && (
+          <>
+            {' '}
+            · <span>{COPY.edited}</span>
+          </>
+        )}
+      </p>
+      {comment.parentId === null && (
+        <blockquote className="mx-0 my-xs border-l-2 border-tinta pl-xs text-nota text-tinta-2">
+          {comment.quote}
+          {comment.changed && <p>{COPY.changed}</p>}
+        </blockquote>
+      )}
+      <p className="my-xs whitespace-pre-wrap wrap-anywhere">{comment.body}</p>
+    </>
   )
 }

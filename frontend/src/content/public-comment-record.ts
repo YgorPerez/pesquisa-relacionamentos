@@ -7,6 +7,7 @@ export interface PublicComment {
   edited: boolean
   createdAt: number
   own: boolean
+  canReply?: boolean
   changed?: boolean
 }
 export type PublicCommentWrite =

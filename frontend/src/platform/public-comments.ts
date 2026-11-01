@@ -89,6 +89,38 @@ function revise(
   return id
 }
 
+function listComments(
+  path: string,
+  page: string,
+  account: Account | null,
+): PublicComment[] {
+  if (!existsSync(path)) return []
+  const db = openDatabase(path)
+  try {
+    return db
+      .prepare(`SELECT c.*, a.nickname FROM public_comments c
+      LEFT JOIN accounts a ON a.id = c.account_id
+      WHERE c.path = ? AND c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
+        (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))
+      ORDER BY c.created_at, c.id`)
+      .all(page)
+      .map((row) => ({
+        id: Number(row.id),
+        parentId: row.parent_id === null ? null : Number(row.parent_id),
+        quote: String(row.quote),
+        body: String(row.body),
+        nickname:
+          row.nickname === null ? 'leitor removido' : String(row.nickname),
+        edited: row.edited_at !== null,
+        createdAt: Number(row.created_at),
+        own: account?.id === row.account_id,
+        canReply: Boolean(account?.nickname),
+      }))
+  } finally {
+    db.close()
+  }
+}
+
 export function createPublicComments(
   options: {
     databasePath?: string
@@ -102,31 +134,7 @@ export function createPublicComments(
   const now = options.now ?? Date.now
   return {
     list(page: string, request?: Request): PublicComment[] {
-      if (!existsSync(path)) return []
-      const account = request ? current(request) : null
-      const db = openDatabase(path)
-      try {
-        return db
-          .prepare(`SELECT c.*, a.nickname FROM public_comments c
-          LEFT JOIN accounts a ON a.id = c.account_id
-          WHERE c.path = ? AND c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
-            (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))
-          ORDER BY c.created_at, c.id`)
-          .all(page)
-          .map((row) => ({
-            id: Number(row.id),
-            parentId: row.parent_id === null ? null : Number(row.parent_id),
-            quote: String(row.quote),
-            body: String(row.body),
-            nickname:
-              row.nickname === null ? 'leitor removido' : String(row.nickname),
-            edited: row.edited_at !== null,
-            createdAt: Number(row.created_at),
-            own: account?.id === row.account_id,
-          }))
-      } finally {
-        db.close()
-      }
+      return listComments(path, page, request ? current(request) : null)
     },
     write(request: Request, input: PublicCommentWrite): number {
       if (
