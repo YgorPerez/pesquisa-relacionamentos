@@ -378,7 +378,8 @@
  * ink, which reads apart from the Grifo's wave and from a link's straight
  * line. `comment-paint.ts` paints it; where a passage is both, the Grifo's
  * higher priority draws the wave over it. */
-::highlight(comentario) {
+::highlight(comentario),
+::highlight(comentario-publico) {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-color: var(--color-tinta);

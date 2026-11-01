@@ -1,0 +1,19 @@
+export const PUBLIC_COMMENT = {
+  title: 'Comentários públicos',
+  public: 'Público',
+  private: 'Só para o curador',
+  audience: 'Quem pode ler',
+  text: 'Seu comentário público',
+  send: 'Publicar',
+  sending: 'Enviando…',
+  failed: 'Não foi possível enviar. Confira sua conta e tente de novo.',
+  changed: 'este trecho mudou',
+  edited: 'editado',
+  edit: 'Editar',
+  delete: 'Apagar',
+  reply: 'Responder',
+  save: 'Salvar',
+  cancel: 'Cancelar',
+  rules:
+    'Seu apelido e este texto ficam visíveis para todos. Não publique dados pessoais seus ou de outras pessoas.',
+} as const

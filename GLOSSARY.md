@@ -14,6 +14,8 @@ Cada termo traz, entre colchetes, o nome que ele tem no código, que é em ingl�
 
 ## Site
 
+- **Comentário público** [public comment]**:** o texto de um leitor sobre um trecho de um Guia, Ficha ou Dica, publicado na hora e visível para todos, junto do apelido escolhido. Exige uma conta com apelido e aceita respostas de um nível. Quem escreveu pode editar ou apagar; uma edição leva a marca "editado" e o curador pode consultar as versões anteriores. Se o trecho some do texto, o comentário conserva a citação e diz "este trecho mudou". É diferente do Comentário privado ao curador, que continua anônimo.
+
 - **Guia** [guide]**:** o texto público de um Tema: uma narrativa corrida, dividida em Capítulos, que responde às Perguntas do Tema e explica o porquê, o que fazer, onde os Estudos discordam e o que vale no Brasil. Cada afirmação aponta para Fichas. Cada Tema tem um Guia.
 - **Capítulo** [chapter]**:** um passo do raciocínio de um Guia, como "o online virou o caminho mais comum". Um Capítulo pode responder a nenhuma, uma ou várias Perguntas.
 - **Pergunta** [question]**:** uma dúvida do usuário, por exemplo "onde conhecer alguém da minha idade?". O Guia a responde no ponto da narrativa em que ela cabe, com a resposta curta e a Confiança dela em destaque; o resumo no topo do Guia junta todas.

@@ -1,6 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { reads } from '#/content/reads'
+import { readPublicComments } from '#/content/public-comments'
+import { PublicComments } from '#/ui/public-comments'
 import { CitedFactSheets } from '#/ui/guide'
 import { Html } from '#/ui/html'
 import { ReferencePopover } from '#/ui/reference-popover'
@@ -18,7 +20,10 @@ export const Route = createFileRoute('/dicas/$slug')({
   // the `queryClient`.
   loader: async ({ context, params }) => {
     const tip = await context.queryClient.query(reads.tip(params.slug))
-    return { search: tip.search }
+    return {
+      search: tip.search,
+      comments: await readPublicComments({ data: `/dicas/${params.slug}` }),
+    }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -82,6 +87,13 @@ function TipPage() {
           <Headline id="t-fichas">Fichas citadas</Headline>
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
+      </Column>
+      <Column>
+        <PublicComments
+          key={tip.slug}
+          path={`/dicas/${tip.slug}`}
+          comments={Route.useLoaderData().comments}
+        />
       </Column>
       <PageSelection />
       <TermPopover terms={tip.terms} />

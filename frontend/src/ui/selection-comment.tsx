@@ -27,6 +27,7 @@ import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
 import { PopoverLine } from './text-popover'
+import { CommentAudience } from './public-comments'
 
 type Status = 'editing' | 'sending' | 'failed'
 
@@ -196,12 +197,18 @@ export function CommentOnQuote({
   const open = () =>
     showForm(
       ACTION_LABEL.comment,
-      <CommentForm
-        quote={quote}
-        onSent={() =>
-          finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
-        }
-      />,
+      <CommentAudience
+        path={quote.path}
+        quote={quote.text}
+        onDone={() => finish('Comentário publicado.')}
+      >
+        <CommentForm
+          quote={quote}
+          onSent={() =>
+            finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
+          }
+        />
+      </CommentAudience>,
     )
   return <ActionButton onClick={open}>{ACTION_LABEL.comment}</ActionButton>
 }
