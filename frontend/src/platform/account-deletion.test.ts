@@ -25,6 +25,8 @@ const TABLES: Readonly<Record<string, string>> = {
   public_comment_sends: 'cascades',
   public_comment_reports: 'cascades, and follows its comment',
   oauth_attempts: 'has no account',
+  email_credentials: 'cascades: email and password hash go',
+  email_rate_limits: 'has no account; keyed hashes expire and are erased hourly',
   schema_migrations: 'has no account',
 }
 
@@ -194,6 +196,7 @@ test('a table can only point at an account in a way deletion reaches', () => {
   expect(pointers.sort()).toEqual([
     'account_sessions:CASCADE',
     'account_sync:CASCADE',
+    'email_credentials:CASCADE',
     'public_comment_reports:CASCADE',
     'public_comment_sends:CASCADE',
     'public_comments:SET NULL',

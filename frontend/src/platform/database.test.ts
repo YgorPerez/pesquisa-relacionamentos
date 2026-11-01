@@ -35,7 +35,7 @@ it('a database that already holds equal nicknames still opens, and the oldest ke
     before.exec(`DROP INDEX accounts_nickname_key;
       ALTER TABLE accounts DROP COLUMN nickname_key;
       INSERT INTO accounts (id, google_sub, nickname) VALUES (1, 'a', 'Ana'), (2, 'b', 'ANA'), (3, 'c', 'Bia');
-      DELETE FROM schema_migrations WHERE version = (SELECT max(version) FROM schema_migrations);`)
+      DELETE FROM schema_migrations WHERE version = 5;`)
     before.close()
     const after = openDatabase(path)
     expect(

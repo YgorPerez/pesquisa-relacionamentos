@@ -47,6 +47,18 @@ const migrations: readonly string[] = [
   UPDATE accounts SET nickname_key = lower(nickname) WHERE nickname IS NOT NULL AND id =
     (SELECT min(other.id) FROM accounts other WHERE lower(other.nickname) = lower(accounts.nickname));
   CREATE UNIQUE INDEX accounts_nickname_key ON accounts(nickname_key);`,
+  // Rebuild to allow accounts without a Google identity. Existing columns and
+  // inserts remain compatible with the previous image during blue/green.
+  `CREATE TABLE accounts_email_migration (id INTEGER PRIMARY KEY, google_sub TEXT UNIQUE,
+    nickname TEXT, accepted_at INTEGER, rules_version TEXT, nickname_key TEXT) STRICT;
+  INSERT INTO accounts_email_migration SELECT * FROM accounts;
+  DROP TABLE accounts;
+  ALTER TABLE accounts_email_migration RENAME TO accounts;
+  CREATE UNIQUE INDEX accounts_nickname_key ON accounts(nickname_key);
+  CREATE TABLE email_credentials (account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL) STRICT;
+  CREATE TABLE email_rate_limits (key_hash TEXT PRIMARY KEY, attempts INTEGER NOT NULL,
+    expires_at INTEGER NOT NULL) STRICT;`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import.
@@ -59,7 +71,7 @@ export function openDatabase(
   const db = new DatabaseSync(path)
   try {
     db.exec(
-      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;',
+      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA foreign_keys = OFF;',
     )
     db.exec('BEGIN IMMEDIATE')
     try {
@@ -82,7 +94,9 @@ export function openDatabase(
           )
         }
       }
-      db.exec('COMMIT')
+      if (db.prepare('PRAGMA foreign_key_check').all().length)
+        throw new Error('Migration left invalid account references.')
+      db.exec('COMMIT; PRAGMA foreign_keys = ON')
     } catch (error) {
       db.exec('ROLLBACK')
       throw error

@@ -23,6 +23,7 @@ export const serverEnv = () =>
       DATABASE_PATH: text('/data/app.sqlite'),
       GOOGLE_CLIENT_ID: optionalText,
       GOOGLE_CLIENT_SECRET: optionalSecret,
+      EMAIL_RATE_LIMIT_KEY: optionalSecret,
       // The token that opens a Comentário's issue (ADR 0043); without it, no
       // comment goes out.
       COMMENT_GITHUB_TOKEN: optionalSecret,
