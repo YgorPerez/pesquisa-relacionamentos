@@ -44,9 +44,8 @@ describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
   it('keeps database rows through publish, failed swap and rollback', () => {
     const vps = aVps()
     vps.publish(SHA_1)
-    const db = openDatabase(vps.databasePath('temestudo-app'), [
-      'CREATE TABLE example (value TEXT)',
-    ])
+    const db = openDatabase(vps.databasePath('temestudo-app'))
+    db.exec('CREATE TABLE example (value TEXT)')
     db.prepare('INSERT INTO example VALUES (?)').run('survives swaps')
     db.close()
     vps.publish(SHA_2)
