@@ -6,8 +6,10 @@ import { RING, UNSEEN } from './quote-text'
 
 /** A ring that leads to a Fact sheet of the page. */
 export const CITING_RING = `a${RING}[href^="#ficha-"]`
-/** The elements a ring's cited text does not cross (`cited-text.ts`). */
-export const BLOCK =
+/** The elements a ring's cited text does not cross (`cited-text.ts`): fewer
+ * than `quote-text.ts`'s blocks, since cited text may run through a `div` or a
+ * `span`. */
+export const CITED_TEXT_BLOCK =
   'p, li, h1, h2, h3, h4, h5, h6, td, th, dt, dd, figcaption, caption, blockquote'
 
 /** The slug of the Fact sheet a citing ring leads to. */

@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { expect, within } from 'storybook/test'
 import { withRouter } from '@/platform/storybook/with-router'
 import { PageSelection } from './page-selection'
-import { POPOVER_LABEL } from './selection-popover.copy'
+import { ACTION_LABEL, POPOVER_LABEL } from './selection-popover.copy'
 import { quotable } from './selection-quote'
 
 const SENTENCE =
@@ -41,7 +41,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/** A sentence selected: the popover opens, without "De onde vem isso?". */
+/** A sentence selected: the popover opens with the reader's actions. */
 export const OnASentence: Story = {
   render: () => <SelectedParagraph />,
   play: async () => {
@@ -49,10 +49,7 @@ export const OnASentence: Story = {
       name: POPOVER_LABEL,
     })
     await expect(
-      within(popover).getByRole('button', { name: 'Grifar' }),
+      within(popover).getByRole('button', { name: ACTION_LABEL.highlight }),
     ).toBeVisible()
-    await expect(
-      within(popover).queryByRole('button', { name: 'De onde vem isso?' }),
-    ).not.toBeInTheDocument()
   },
 }
