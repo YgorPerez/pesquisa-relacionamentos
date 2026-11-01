@@ -274,7 +274,7 @@ function CommentActions({
     }
   }
   return (
-    <div className="flex flex-wrap gap-xs">
+    <div className="flex flex-wrap items-center gap-xs">
       {signedIn && comment.parentId === null && (
         <Button variant="light" onClick={() => onEdit({ reply: true })}>
           {COPY.reply}
