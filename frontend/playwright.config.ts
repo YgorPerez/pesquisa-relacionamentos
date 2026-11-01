@@ -74,7 +74,7 @@ export default defineConfig({
   // `analytics.e2e.ts` intercepts the sends to GoatCounter. A blank
   // `COMMENT_GITHUB_TOKEN`: no e2e comment reaches GitHub.
   webServer: {
-    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && EMAIL_RATE_LIMIT_KEY=e2e-only-key COMMENT_GITHUB_TOKEN= DATABASE_PATH=${process.env.E2E_DATABASE_PATH} APP_ORIGIN=http://localhost:${port} GOOGLE_CLIENT_ID=e2e GOOGLE_CLIENT_SECRET=e2e CURATOR_GOOGLE_SUB=e2e-curator PORT=${port} node .output/server/index.mjs`,
+    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && EMAIL_RATE_LIMIT_KEY=e2e-only-key RESEND_API_KEY=e2e-only-key EMAIL_FROM=e2e@example.org COMMENT_GITHUB_TOKEN= DATABASE_PATH=${process.env.E2E_DATABASE_PATH} APP_ORIGIN=http://localhost:${port} GOOGLE_CLIENT_ID=e2e GOOGLE_CLIENT_SECRET=e2e CURATOR_GOOGLE_SUB=e2e-curator PORT=${port} node .output/server/index.mjs`,
     url: `http://localhost:${port}/`,
     reuseExistingServer: false,
     stdout: 'ignore',
