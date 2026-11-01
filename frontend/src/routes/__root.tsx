@@ -6,7 +6,8 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { ORIGIN } from '@tem-estudo/content/search'
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
+import { startAccountSync } from '#/state/account-sync'
 import { Header } from '#/ui/header'
 import { Footer } from '#/ui/counting'
 import { BRAND_COLORS } from '#/ui/brand'
@@ -98,6 +99,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function Root() {
   useCountVisits()
+  useEffect(startAccountSync, [])
   return (
     <Document>
       <Header />

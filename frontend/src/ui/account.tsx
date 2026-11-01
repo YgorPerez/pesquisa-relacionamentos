@@ -1,10 +1,114 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {
+  decideSync,
+  refreshSync,
+  returnToAccountData,
+  stopDeviceSync,
+  useSyncStatus,
+  type SyncStatus,
+} from '#/state/account-sync'
+import { useLinkFields } from '#/state/sync-device'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
 import { Checkbox } from './shadcn/checkbox'
 import { Section, Headline } from './section'
-import { ACCOUNT_INTRO, ACCOUNT_RULES } from './account.copy'
+import {
+  ACCOUNT_INTRO,
+  ACCOUNT_RULES,
+  SYNC_ACTIVE,
+  SYNC_DECLINED,
+  SYNC_DEVICE,
+  SYNC_EXPLANATION,
+  SYNC_FAILED,
+  SYNC_LINK,
+  SYNC_STOP_NOTE,
+} from './account.copy'
+
+function SyncChoice({
+  status,
+  decide,
+}: {
+  status: 'ask' | 'device' | 'declined'
+  decide: (accept: boolean) => void
+}) {
+  return (
+    <>
+      {status === 'declined' && <p>{SYNC_DECLINED}</p>}
+      <p>{SYNC_EXPLANATION}</p>
+      {status === 'device' && <p>{SYNC_DEVICE}</p>}
+      <div className="mt-md flex flex-wrap gap-sm">
+        <SiteButton onClick={() => decide(true)}>
+          Juntar e sincronizar
+        </SiteButton>
+        {status === 'ask' && (
+          <SiteButton variant="light" onClick={() => decide(false)}>
+            Manter só neste aparelho
+          </SiteButton>
+        )}
+      </div>
+    </>
+  )
+}
+
+function SyncActive({ linkFields }: { linkFields: boolean }) {
+  return (
+    <>
+      <p>{SYNC_ACTIVE}</p>
+      {linkFields && (
+        <>
+          <p>{SYNC_LINK}</p>
+          <SiteButton
+            variant="light"
+            onClick={() => {
+              void returnToAccountData()
+            }}
+          >
+            Voltar aos dados da conta
+          </SiteButton>
+        </>
+      )}
+      <p className="mt-md text-nota text-tinta-2">{SYNC_STOP_NOTE}</p>
+      <SiteButton variant="light" onClick={stopDeviceSync}>
+        Parar neste aparelho
+      </SiteButton>
+    </>
+  )
+}
+
+function SyncSettings({
+  status,
+  decide,
+  linkFields,
+}: {
+  status: SyncStatus
+  decide: (accept: boolean) => void
+  linkFields: boolean
+}) {
+  if (status === 'loading' || status === 'anonymous') return null
+  return (
+    <Section aria-labelledby="account-sync">
+      <Headline id="account-sync">Seus dados nos seus aparelhos</Headline>
+      {status === 'failed' ? (
+        <>
+          <p>{SYNC_FAILED}</p>
+          <SiteButton
+            variant="light"
+            onClick={() => {
+              void refreshSync()
+            }}
+          >
+            Tentar de novo
+          </SiteButton>
+        </>
+      ) : status === 'active' ? (
+        <SyncActive linkFields={linkFields} />
+      ) : (
+        <SyncChoice status={status} decide={decide} />
+      )}
+    </Section>
+  )
+}
 
 function NicknameForm() {
   const [adult, setAdult] = useState(false)
@@ -79,9 +183,19 @@ function SignedIn({ nickname }: { nickname: string | null }) {
 /** The account is separate from the device's Profile. */
 export function AccountPage({
   account,
+  syncStatus,
+  onSyncDecision = decideSync,
 }: {
   account: { nickname: string | null } | null
+  syncStatus?: SyncStatus
+  onSyncDecision?: (accept: boolean) => void
 }) {
+  const currentSyncStatus = useSyncStatus()
+  const linkFields = useLinkFields()
+  const signedIn = Boolean(account?.nickname)
+  useEffect(() => {
+    if (signedIn && !syncStatus) void refreshSync()
+  }, [signedIn, syncStatus])
   return (
     <Sheet>
       <Column>
@@ -98,6 +212,13 @@ export function AccountPage({
               Entrar com Google
             </a>
           </Section>
+        )}
+        {account?.nickname && (
+          <SyncSettings
+            status={syncStatus ?? currentSyncStatus}
+            decide={onSyncDecision}
+            linkFields={Boolean(linkFields?.length)}
+          />
         )}
         <p className="mt-lg text-nota text-tinta-2">
           Sair da conta mantém o que está salvo neste aparelho.{' '}

@@ -29,6 +29,8 @@ const migrations: readonly string[] = [
     sent_at INTEGER NOT NULL
   ) STRICT;
   CREATE INDEX public_comment_rate ON public_comment_sends(account_id, sent_at);`,
+  `CREATE TABLE account_sync (account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    consent INTEGER NOT NULL CHECK (consent IN (0, 1)), data TEXT NOT NULL DEFAULT '{}') STRICT;`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import. */

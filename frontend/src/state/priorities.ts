@@ -6,20 +6,10 @@ import {
   readPriorities,
   type PrioritiesState,
 } from '@tem-estudo/rules/priorities'
-import { renameKeys, stored, useStored } from './stored'
+import { savedPriorities } from './reader-choices'
+import { useStored } from './use-stored'
 
-/** The state as saved before the code moved to English (ADR 0039). */
-export const LEGACY_PRIORITIES = {
-  key: 'prioridades',
-  migrate: (raw: unknown) =>
-    renameKeys(raw, { topo3: 'top3', desfecho: 'outcome' }),
-}
-
-const savedPriorities = stored<PrioritiesState>(
-  'priorities',
-  (raw) => readPriorities(raw),
-  LEGACY_PRIORITIES,
-)
+export { LEGACY_PRIORITIES } from './reader-choices'
 
 const NO_PRIORITIES: PrioritiesState = {
   top3: [],

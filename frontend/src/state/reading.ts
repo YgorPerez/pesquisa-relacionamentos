@@ -11,7 +11,8 @@
 //
 // The back-and-forth of the browser's history is another store
 // (`useReadingPointInHistory`, in `ui/navigation.tsx`), and stays as it is.
-import { stored, useStored } from './stored'
+import { stored } from './stored'
+import { useStored } from './use-stored'
 
 /** A paragraph of a Chapter: its index among the Chapter's paragraphs and the
  * start of its text. */
