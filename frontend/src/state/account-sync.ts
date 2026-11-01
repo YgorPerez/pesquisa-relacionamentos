@@ -3,6 +3,7 @@ import { followStoredWrites } from './storage-events'
 import {
   applySyncData,
   deviceSyncData,
+  leaveDeletedAccount,
   releaseLinkFields,
   syncBinding,
 } from './sync-device'
@@ -120,6 +121,13 @@ export async function decideSync(accept: boolean) {
 export function stopDeviceSync() {
   syncBinding.write(null)
   setStatus('device')
+}
+
+/** The account this device was joined to no longer exists. Its data stays here;
+ * a later account starts by asking (ADR 0048). */
+export function forgetDeletedAccount() {
+  leaveDeletedAccount()
+  setStatus('anonymous')
 }
 
 /** "Voltar aos dados da conta", then a fresh look at what the account has. */

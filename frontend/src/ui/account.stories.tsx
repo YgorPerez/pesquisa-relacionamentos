@@ -9,10 +9,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const Anonymous: Story = { args: { account: null } }
 export const FirstUse: Story = { args: { account: { nickname: null } } }
-export const SignedIn: Story = { args: { account: { nickname: 'Leitora' } } }
+export const JustDeleted: Story = { args: { account: null, deleted: true } }
 export const SyncConsent: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'ask' },
 }
+// A signed-in story always passes `syncStatus`: without it the page calls
+// `/api/sync`, which Storybook does not have.
 export const SyncActive: Story = {
   args: { account: { nickname: 'Leitora' }, syncStatus: 'active' },
 }

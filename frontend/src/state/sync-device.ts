@@ -251,6 +251,16 @@ export function applySyncData(remote: SyncData, sent: SyncData = {}) {
   })
 }
 
+/** Drops the binding and the journal, the copy kept to exchange with the deleted
+ * account. The reader's own lists and choices stay, and a marked link field
+ * stays marked, so a later join still does not upload it. */
+export function leaveDeletedAccount() {
+  withStorageSource('sync', () => {
+    syncBinding.write(null)
+    journal.write(null)
+  })
+}
+
 /** The fields a link replaced here, which the reader can trade back. */
 export const useLinkFields = () => useStored(protectedFields)
 
