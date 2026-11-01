@@ -146,6 +146,7 @@ export function CountingSwitch({ className }: { className?: string }) {
 }
 
 const FOOTER_LINKS = [
+  { to: '/conta', label: 'Sua conta' },
   { to: '/privacidade', label: 'Privacidade' },
   { to: '/sites-vizinhos', label: 'Sites vizinhos' },
   { to: '/glossario', label: 'Glossário' },

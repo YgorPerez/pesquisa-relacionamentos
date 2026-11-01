@@ -3,7 +3,15 @@ import { DatabaseSync } from 'node:sqlite'
 
 // Append migrations here. During blue/green both versions use the same file;
 // only additive changes may ship while the previous image can still run.
-const migrations: readonly string[] = []
+const migrations: readonly string[] = [
+  `CREATE TABLE accounts (id INTEGER PRIMARY KEY, google_sub TEXT NOT NULL UNIQUE,
+    nickname TEXT, accepted_at INTEGER, rules_version TEXT) STRICT;
+  CREATE TABLE account_sessions (token_hash TEXT PRIMARY KEY,
+    account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    expires_at INTEGER NOT NULL) STRICT;
+  CREATE TABLE oauth_attempts (state_hash TEXT PRIMARY KEY, browser_hash TEXT NOT NULL,
+    verifier TEXT NOT NULL, expires_at INTEGER NOT NULL) STRICT;`,
+]
 
 /** Server-only callers own and close the connection. No database opens at import. */
 export function openDatabase(
