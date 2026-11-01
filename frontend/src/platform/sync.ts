@@ -19,8 +19,6 @@ export async function handleSyncRequest(
     request.headers.get('origin') !== process.env.APP_ORIGIN
   )
     return reply({}, 403)
-  const account = getCurrentAccount(request)
-  if (!account?.nickname) return reply({}, 401)
   let input: Record<string, unknown> = {}
   if (request.method === 'POST') {
     if (Number(request.headers.get('content-length')) > 2_000_000)
@@ -35,6 +33,8 @@ export async function handleSyncRequest(
       return reply({}, 400)
     }
   }
+  const account = getCurrentAccount(request)
+  if (!account?.nickname) return reply({}, 401)
   const db = openDatabase()
   try {
     db.exec('BEGIN IMMEDIATE')
