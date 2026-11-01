@@ -6,6 +6,7 @@ import {
   addHighlight,
   readHighlights,
   removeHighlight,
+  markFound,
   setNote,
 } from './highlights'
 import { savedProfile, saveProfile } from './profile'
@@ -98,12 +99,9 @@ test('first merge adds up the Grifos of both devices and keeps each Nota', () =>
     on(device)
     expect(
       readHighlights()
-        .map((h) => [h.exact, h.note])
-        .sort(),
-    ).toEqual([
-      ['dois', 'nota do computador'],
-      ['um', 'nota do celular'],
-    ])
+        .map((h) => `${h.exact}: ${h.note}`)
+        .toSorted(),
+    ).toEqual(['dois: nota do computador', 'um: nota do celular'])
   }
 })
 
@@ -336,4 +334,62 @@ test('a device that never joined keeps no copy of Notas and Perfil outside their
   setNote(addHighlight(quote('um')).id, 'nota íntima')
   saveProfile({ age: 30 })
   expect([...items.keys()].filter((key) => key.includes('journal'))).toEqual([])
+})
+
+test('a received link replaces device data without uploading it, including after another sync', () => {
+  applySyncData({ profile: { at: 20, value: { age: 42 } } })
+  withStorageSource('link', () => saveProfile({ age: 24 }))
+  expect(savedProfile.read()).toEqual({ age: 24 })
+  expect(deviceSyncData().profile?.value).toEqual({ age: 42 })
+  applySyncData({ profile: { at: 30, value: { age: 43 } } })
+  expect(savedProfile.read()).toEqual({ age: 24 })
+  saveProfile({ age: 25 })
+  expect(deviceSyncData().profile?.value).toEqual({ age: 25 })
+})
+
+test('first consent after a shared link never seeds its fields', () => {
+  withStorageSource('link', () => saveProfile({ age: 24 }))
+  expect(deviceSyncData()).toEqual({})
+})
+
+test('highlights add up, latest notes survive retries and omission never deletes', () => {
+  const first = addHighlight({
+    path: '/guia',
+    pageTitle: 'Guia',
+    link: '/guia',
+    text: 'a',
+    exact: 'a',
+    prefix: '',
+    suffix: '',
+  })
+  const initial = deviceSyncData()
+  setNote(first.id, 'Minha nota nova')
+  applySyncData(initial)
+  expect(readHighlights()[0]?.note).toBe('Minha nota nova')
+  applySyncData({})
+  expect(readHighlights()).toHaveLength(1)
+})
+
+test('moving a highlight mark does not promote an old note over a newer account note', () => {
+  const first = addHighlight({
+    path: '/guia',
+    pageTitle: 'Guia',
+    link: '/guia',
+    text: 'a',
+    exact: 'a',
+    prefix: '',
+    suffix: '',
+  })
+  setNote(first.id, 'Nota antiga')
+  const stale = deviceSyncData()
+  markFound('/guia', new Set())
+  const moved = deviceSyncData()
+  expect(moved[`note:${first.id}`]).toEqual(stale[`note:${first.id}`])
+  applySyncData({
+    [`note:${first.id}`]: {
+      at: Date.now() + 1000,
+      value: { text: 'Nota nova do outro aparelho' },
+    },
+  })
+  expect(readHighlights()[0]?.note).toBe('Nota nova do outro aparelho')
 })
