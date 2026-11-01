@@ -221,7 +221,7 @@ function DeletingTheAccount() {
     <Section className="prosa" aria-labelledby="p-excluir">
       <Headline id="p-excluir">Excluir a conta</Headline>
       <p>
-        Em <a href="/conta">Sua conta</a>, depois de entrar. Não dá para
+        Em <Link to="/conta">Sua conta</Link>, depois de entrar. Não dá para
         desfazer. A exclusão encerra a sessão em todos os aparelhos e apaga do
         banco a conta, o código do Google, o apelido, os dados sincronizados,
         seus comentários públicos com as versões anteriores, suas denúncias e as

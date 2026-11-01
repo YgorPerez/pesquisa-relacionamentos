@@ -2,12 +2,11 @@
 // read the database on purpose: "no row is left" has no other witness.
 import { createHash } from 'node:crypto'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import type { DatabaseSync } from 'node:sqlite'
+import { DatabaseSync } from 'node:sqlite'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
 import { createAccounts } from './accounts'
-import { openDatabase } from './database'
 import { createPublicComments } from './public-comments'
 
 const SUB = 'sub-of-the-leaving-reader'
@@ -31,7 +30,12 @@ const TABLES: Readonly<Record<string, string>> = {
 
 let folder: string
 let path: string
-const database = () => openDatabase(path)
+/** A plain connection: the app has already migrated the file (`beforeEach`). */
+function database() {
+  const db = new DatabaseSync(path)
+  db.exec('PRAGMA foreign_keys = ON')
+  return db
+}
 const accounts = () =>
   createAccounts({
     databasePath: path,
@@ -68,6 +72,12 @@ function addReport(db: DatabaseSync, commentId: number, accountId: number) {
 beforeEach(() => {
   folder = mkdtempSync(join(tmpdir(), 'deletion-'))
   path = join(folder, 'app.sqlite')
+  // Any lookup with a session cookie opens, and so migrates, the database.
+  accounts().current(
+    new Request('https://example.org/', {
+      headers: { cookie: '__Host-session=nobody' },
+    }),
+  )
   const db = database()
   addAccount(db, LEAVING, SUB, NICKNAME)
   addAccount(db, OTHER, 'sub-other', 'Outra')
@@ -134,6 +144,7 @@ const rowsOf = (table: string) => {
 const commentIds = () => rowsOf('public_comments').map((row) => row.id)
 
 function expectNothingTiesTheDatabaseToTheReader() {
+  const leftovers: string[] = []
   const db = database()
   try {
     const tables = db
@@ -142,19 +153,19 @@ function expectNothingTiesTheDatabaseToTheReader() {
       .map((row) => String(row.name))
     for (const table of tables) {
       const text = JSON.stringify(db.prepare(`SELECT * FROM ${table}`).all())
-      expect(text, table).not.toContain(SUB)
-      expect(text, table).not.toContain(NICKNAME)
+      if (text.includes(SUB) || text.includes(NICKNAME)) leftovers.push(table)
       const columns = db
         .prepare(`PRAGMA foreign_key_list(${table})`)
         .all()
         .filter((key) => key.table === 'accounts')
         .map((key) => String(key.from))
       for (const column of columns)
-        expect(
-          db.prepare(`SELECT 1 FROM ${table} WHERE ${column} = ?`).all(LEAVING),
-          `${table}.${column}`,
-        ).toEqual([])
+        if (
+          db.prepare(`SELECT 1 FROM ${table} WHERE ${column} = ?`).get(LEAVING)
+        )
+          leftovers.push(`${table}.${column}`)
     }
+    expect(leftovers).toEqual([])
   } finally {
     db.close()
   }
