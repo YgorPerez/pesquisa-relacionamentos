@@ -6,11 +6,6 @@ import { DatabaseSync } from 'node:sqlite'
 import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
 import { createAccounts } from './accounts'
 
-let folder: string
-beforeEach(() => {
-  folder = mkdtempSync(join(tmpdir(), 'reset-'))
-})
-afterEach(() => rmSync(folder, { recursive: true, force: true }))
 function deferred<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void
   const promise = new Promise<T>((done) => {
@@ -18,125 +13,71 @@ function deferred<T>() {
   })
   return { promise, resolve }
 }
+type Mail = { text: string; html?: string }
+let folder: string
+let next = deferred<Mail>()
+let release = deferred<void>()
+let fail = false
+let now: number
+let service: ReturnType<typeof createAccounts>
+let fake: ReturnType<typeof createServer>
+const mails: Mail[] = []
+const registration = {
+  email: 'reader@example.org',
+  password: 'old password',
+  nickname: 'Leitora',
+  adult: 'on',
+  rules: 'on',
+}
+const cookieOf = (response: Response) =>
+  response.headers.getSetCookie()[0]!.split(';')[0]!
+const tokenOf = (mail: Mail) =>
+  new URL(mail.text.match(/https:\/\/\S+/)![0]).searchParams.get('token')!
+const current = (cookie: string) =>
+  service.current(new Request('https://example.org', { headers: { cookie } }))
+const post = (
+  action: string,
+  form: Record<string, string>,
+  ip = '198.51.100.1',
+  origin = 'https://example.org',
+) =>
+  service.handle(
+    new Request(`https://example.org/auth/${action}`, {
+      method: 'POST',
+      headers: { origin, 'x-forwarded-for': ip },
+      body: new URLSearchParams(form),
+    }),
+  )
+const reset = (token: string) =>
+  post('reset', { token, password: 'new password' })
+async function ask(email = registration.email, ip?: string) {
+  next = deferred<Mail>()
+  const response = (await post('forgot', { email }, ip))!
+  expect(response.status).toBe(200)
+  const screen = await response.text()
+  const mail = await next.promise
+  return { screen, mail }
+}
 
-test('a recovery response does not wait for Resend; its link resets the password once and ends sessions', async () => {
-  const received = deferred<string>()
-  const release = deferred<void>()
-  const fake = createServer(async (request, response) => {
+beforeEach(async () => {
+  folder = mkdtempSync(join(tmpdir(), 'reset-'))
+  mails.length = 0
+  fail = false
+  now = Date.now()
+  release = deferred<void>()
+  fake = createServer(async (request, response) => {
     let body = ''
     for await (const chunk of request) body += String(chunk)
-    received.resolve(body)
-    await release.promise
-    response.writeHead(200).end('{}')
-  })
-  await new Promise<void>((resolve) => fake.listen(0, '127.0.0.1', resolve))
-  const address = fake.address()
-  if (!address || typeof address === 'string') throw new Error('No fake port')
-  const accounts = createAccounts({
-    databasePath: join(folder, 'app.sqlite'),
-    origin: 'https://example.org',
-    emailRateLimitKey: 'test-key',
-    resendApiKey: 'fake',
-    emailFrom: 'reset@example.org',
-    resendEndpoint: `http://127.0.0.1:${address.port}/emails`,
-  })
-  const post = (action: string, form: Record<string, string>) =>
-    accounts.handle(
-      new Request(`https://example.org/auth/${action}`, {
-        method: 'POST',
-        headers: { origin: 'https://example.org' },
-        body: new URLSearchParams(form),
-      }),
-    )
-  try {
-    const registered = (await post('register', {
-      email: 'reader@example.org',
-      password: 'old password',
-      nickname: 'Leitora',
-      adult: 'on',
-      rules: 'on',
-    }))!
-    const cookie = registered.headers.getSetCookie()[0]!.split(';')[0]!
-    expect(
-      (await post('forgot', { email: ' READER@example.org ' }))!.status,
-    ).toBe(200)
-    const mail = JSON.parse(await received.promise) as {
-      text: string
-      html?: string
-    }
-    expect(mail.html).toBeUndefined()
-    const link = new URL(mail.text.match(/https:\/\/\S+/)![0])
-    expect(link.origin).toBe('https://example.org')
-    const token = link.searchParams.get('token')!
-    const db = new DatabaseSync(join(folder, 'app.sqlite'))
-    const id = accounts.current(
-      new Request('https://example.org', { headers: { cookie } }),
-    )!.id
-    db.prepare(
-      `INSERT INTO account_sync VALUES (?, 1, '{"note":"keep me"}')`,
-    ).run(id)
-    const stored = JSON.stringify(
-      db.prepare('SELECT * FROM password_resets').all(),
-    )
-    expect(stored).not.toContain(token)
-    expect(stored).not.toContain('reader@example.org')
-    const page = (await accounts.handle(new Request(link)))!
-    expect(page.headers.get('referrer-policy')).toBe('strict-origin')
-    expect(page.headers.get('content-security-policy')).toContain(
-      "default-src 'none'",
-    )
-    expect(await page.text()).not.toMatch(/<script|https:\/\//)
-    const reset = (await post('reset', { token, password: 'new password' }))!
-    expect(reset.status).toBe(200)
-    expect(
-      accounts.current(
-        new Request('https://example.org', { headers: { cookie } }),
-      ),
-    ).toBeNull()
-    expect(
-      (await post('reset', { token, password: 'another password' }))!.status,
-    ).toBe(400)
-    expect(
-      (await post('login', {
-        email: 'reader@example.org',
-        password: 'old password',
-      }))!.status,
-    ).toBe(400)
-    expect(
-      (await post('login', {
-        email: 'reader@example.org',
-        password: 'new password',
-      }))!.status,
-    ).toBe(303)
-    expect(
-      db.prepare('SELECT data FROM account_sync WHERE account_id = ?').get(id)
-        ?.data,
-    ).toContain('keep me')
-    db.close()
-  } finally {
-    release.resolve()
-    fake.closeAllConnections()
-    await new Promise<void>((resolve) => fake.close(() => resolve()))
-  }
-})
-
-test('new requests replace links, expiry is 30 minutes, and unknown notices share the bounded response', async () => {
-  let next = deferred<{ text: string }>()
-  const mails: { text: string }[] = []
-  let fail = false
-  const fake = createServer(async (request, response) => {
-    let body = ''
-    for await (const chunk of request) body += String(chunk)
-    const mail = JSON.parse(body) as { text: string }
+    const mail = JSON.parse(body) as Mail
     mails.push(mail)
     next.resolve(mail)
+    await release.promise
     response.writeHead(fail ? 500 : 200).end('{}')
   })
   await new Promise<void>((resolve) => fake.listen(0, '127.0.0.1', resolve))
   const address = fake.address()
   if (!address || typeof address === 'string') throw new Error('No fake port')
-  let now = Date.now()
-  const accounts = createAccounts({
+  service = createAccounts({
     databasePath: join(folder, 'app.sqlite'),
     origin: 'https://example.org',
     emailRateLimitKey: 'test-key',
@@ -145,104 +86,142 @@ test('new requests replace links, expiry is 30 minutes, and unknown notices shar
     resendEndpoint: `http://127.0.0.1:${address.port}/emails`,
     now: () => now,
   })
-  const post = (
-    action: string,
-    form: Record<string, string>,
-    ip = '198.51.100.1',
-    origin = 'https://example.org',
-  ) =>
-    accounts.handle(
-      new Request(`https://example.org/auth/${action}`, {
-        method: 'POST',
-        headers: { origin, 'x-forwarded-for': ip },
-        body: new URLSearchParams(form),
-      }),
-    )
-  const ask = async (email: string, ip?: string) => {
-    next = deferred<{ text: string }>()
-    const response = (await post('forgot', { email }, ip))!
-    const mail = await next.promise
-    return { screen: await response.text(), mail }
-  }
-  const tokenOf = (text: string) =>
-    new URL(text.match(/https:\/\/\S+/)![0]).searchParams.get('token')!
+})
+afterEach(async () => {
+  release.resolve()
+  fake.closeAllConnections()
+  await new Promise<void>((resolve) => fake.close(() => resolve()))
+  rmSync(folder, { recursive: true, force: true })
+})
+
+test('the link resets once, ends every session and keeps data, without waiting for Resend', async () => {
+  const cookie = cookieOf((await post('register', registration))!)
+  const otherCookie = cookieOf((await post('login', registration))!)
+  const id = current(cookie)!.id
+  const { mail } = await ask(' READER@example.org ')
+  expect(mail.html).toBeUndefined()
+  expect(new URL(mail.text.match(/https:\/\/\S+/)![0]).origin).toBe(
+    'https://example.org',
+  )
+  const token = tokenOf(mail)
+  const db = new DatabaseSync(join(folder, 'app.sqlite'))
   try {
-    await post('register', {
-      email: 'reader@example.org',
-      password: 'old password',
-      nickname: 'Leitora',
-      adult: 'on',
-      rules: 'on',
-    })
-    const first = await ask('reader@example.org')
-    const second = await ask('reader@example.org')
-    expect(tokenOf(first.mail.text)).not.toBe(tokenOf(second.mail.text))
-    expect(
-      (await post('reset', {
-        token: tokenOf(first.mail.text),
-        password: 'new password',
-      }))!.status,
-    ).toBe(400)
-    now += 30 * 60_000
-    expect(
-      (await post('reset', {
-        token: tokenOf(second.mail.text),
-        password: 'new password',
-      }))!.status,
-    ).toBe(400)
-    const unknown = await ask('unknown@example.org')
-    expect(unknown.mail.text).toContain('não há conta')
-    expect(unknown.mail.text).not.toMatch(/https?:|<img/)
-    expect(unknown.screen).toBe(first.screen)
-    fail = true
-    expect((await ask('reader@example.org')).screen).toBe(first.screen)
-    // Nine notices plus the previous unknown request exhaust this address,
-    // even as its IP changes. Each accepted notice is observed at the fake.
-    for (let n = 0; n < 9; n++)
-      await ask('unknown@example.org', `198.51.100.${n + 2}`)
-    expect(
-      await (await post(
-        'forgot',
-        { email: 'unknown@example.org' },
-        '203.0.113.1',
-      ))!.text(),
-    ).toBe(first.screen)
-    // Origin is checked before scheduling any delivery.
-    expect(
-      (await post(
-        'forgot',
-        { email: 'reader@example.org' },
-        undefined,
-        'https://evil.org',
-      ))!.status,
-    ).toBe(403)
-    expect(
-      mails.filter((mail) => mail.text.includes('não há conta')),
-    ).toHaveLength(10)
-    const fresh = await ask('reader@example.org', '203.0.113.2')
-    const attempts = await Promise.all(
-      [1, 2].map(() =>
-        post('reset', {
-          token: tokenOf(fresh.mail.text),
-          password: 'new password',
-        }),
-      ),
+    db.prepare(
+      `INSERT INTO account_sync VALUES (?, 1, '{"note":"keep me"}')`,
+    ).run(id)
+    const stored = JSON.stringify(
+      db.prepare('SELECT * FROM password_resets').all(),
     )
-    expect(attempts.map((r) => r!.status).sort((a, b) => a - b)).toEqual([
-      200, 400,
-    ])
+    expect(stored).not.toContain(token)
+    expect(stored).not.toContain(registration.email)
+    expect((await reset(token))!.status).toBe(200)
+    expect(current(cookie)).toBeNull()
+    expect(current(otherCookie)).toBeNull()
+    expect((await reset(token))!.status).toBe(400)
+    expect((await post('login', registration))!.status).toBe(400)
+    expect(
+      (await post('login', { ...registration, password: 'new password' }))!
+        .status,
+    ).toBe(303)
+    expect(
+      db.prepare('SELECT data FROM account_sync WHERE account_id = ?').get(id)
+        ?.data,
+    ).toContain('keep me')
   } finally {
-    fake.closeAllConnections()
-    await new Promise<void>((resolve) => fake.close(() => resolve()))
+    db.close()
   }
 })
 
+test('new requests replace links, expiry is 30 minutes, and concurrent use has one winner', async () => {
+  await post('register', registration)
+  const first = await ask()
+  const second = await ask()
+  expect(tokenOf(first.mail)).not.toBe(tokenOf(second.mail))
+  expect((await reset(tokenOf(first.mail)))!.status).toBe(400)
+  now += 30 * 60_000
+  expect((await reset(tokenOf(second.mail)))!.status).toBe(400)
+  const fresh = await ask()
+  const results = await Promise.all([
+    reset(tokenOf(fresh.mail)),
+    reset(tokenOf(fresh.mail)),
+  ])
+  expect(results.map((r) => r!.status).sort((a, b) => a - b)).toEqual([
+    200, 400,
+  ])
+})
+
+test('unknown notices and provider failures show the same answer as a known address', async () => {
+  release.resolve()
+  await post('register', registration)
+  const known = await ask()
+  const unknown = await ask('unknown@example.org')
+  expect(unknown.mail.text).toContain('não há conta')
+  expect(unknown.mail.text).not.toMatch(/https?:|<img/)
+  expect(unknown.screen).toBe(known.screen)
+  fail = true
+  expect((await ask()).screen).toBe(known.screen)
+})
+
+test('limits follow email across IPs and IP across emails, with the same screen', async () => {
+  release.resolve()
+  const known = await ask('unknown@example.org')
+  for (let n = 0; n < 9; n++)
+    await ask('unknown@example.org', `198.51.100.${n + 2}`)
+  expect(
+    await (await post(
+      'forgot',
+      { email: 'unknown@example.org' },
+      '203.0.113.1',
+    ))!.text(),
+  ).toBe(known.screen)
+  for (let n = 0; n < 9; n++) await ask(`notice${n}@example.org`)
+  const count = mails.length
+  expect(
+    await (await post('forgot', { email: 'another@example.org' }))!.text(),
+  ).toBe(known.screen)
+  await ask('marker@example.org', '203.0.113.3')
+  expect(mails).toHaveLength(count + 1)
+})
+
+test('reset pages reject outside writes and third-party requests; short passwords keep the link', async () => {
+  await post('register', registration)
+  const { mail } = await ask()
+  const page = (await service.handle(
+    new Request(`https://example.org/auth/reset?token=${tokenOf(mail)}`),
+  ))!
+  expect(page.headers.get('referrer-policy')).toBe('strict-origin')
+  expect(page.headers.get('content-security-policy')).toContain(
+    "default-src 'none'",
+  )
+  expect(await page.text()).not.toMatch(/<script|https:\/\//)
+  expect(
+    (await post('reset', { token: tokenOf(mail), password: 'short' }))!.status,
+  ).toBe(400)
+  expect(
+    (await post(
+      'reset',
+      { token: tokenOf(mail), password: 'new password' },
+      undefined,
+      'https://evil.org',
+    ))!.status,
+  ).toBe(403)
+  expect(
+    (await post(
+      'forgot',
+      { email: registration.email },
+      undefined,
+      'https://evil.org',
+    ))!.status,
+  ).toBe(403)
+  expect((await reset(tokenOf(mail)))!.status).toBe(200)
+})
+
 test('missing Resend configuration shows a clear unavailable screen', async () => {
-  const service = createAccounts({
+  const disabled = createAccounts({
     origin: 'https://example.org',
     emailRateLimitKey: 'key',
   })
-  const response = (await service.handle(
+  const response = (await disabled.handle(
     new Request('https://example.org/auth/forgot'),
   ))!
   expect(response.status).toBe(503)

@@ -49,7 +49,6 @@ export function withRequestLog<Rest extends unknown[]>(
 /** `Response.redirect` and `fetch` return immutable headers: for those, the
  * response is copied with the new headers. */
 function withReferrerPolicy(response: Response): Response {
-  if (response.headers.has('referrer-policy')) return response
   try {
     response.headers.set('referrer-policy', REFERRER_POLICY)
     return response

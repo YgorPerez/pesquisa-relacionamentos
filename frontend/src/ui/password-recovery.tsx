@@ -37,6 +37,7 @@ export function PasswordRecovery({
               >
                 {token ? RECOVERY.password : RECOVERY.email}
                 <Input
+                  className="w-full"
                   id="recovery-field"
                   name={token ? 'password' : 'email'}
                   type={token ? 'password' : 'email'}
@@ -46,7 +47,7 @@ export function PasswordRecovery({
                   required
                 />
               </label>
-              <SiteButton type="submit">
+              <SiteButton type="submit" className="self-start">
                 {token ? RECOVERY.save : RECOVERY.send}
               </SiteButton>
             </form>
