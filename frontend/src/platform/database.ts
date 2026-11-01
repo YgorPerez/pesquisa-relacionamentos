@@ -84,8 +84,10 @@ export function openDatabase(
 ) {
   const db = new DatabaseSync(path)
   try {
+    // secure_delete: an address that left a table, a typo waiting for its link
+    // too, does not live on in the file's free pages and in its backups.
     db.exec(
-      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA foreign_keys = OFF;',
+      'PRAGMA busy_timeout = 10000; PRAGMA journal_mode = WAL; PRAGMA secure_delete = ON; PRAGMA foreign_keys = OFF;',
     )
     db.exec('BEGIN IMMEDIATE')
     try {

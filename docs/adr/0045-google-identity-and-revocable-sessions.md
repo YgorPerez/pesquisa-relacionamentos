@@ -73,7 +73,10 @@ Adding an email takes a password, and the address and its scrypt hash wait in
 because mail scanners open links too. Its form spends the token, and only for the
 account that asked, signed in at that moment. If the address found an account
 since the request, the unique email decides, the link is spent and the reader hears
-why. If the mail does not leave, the row goes and the reader is told.
+why. If the mail does not leave, the row goes and the reader is told. Every
+connection runs with `secure_delete`, so a replaced or expired address leaves the
+file's free pages too, and Nginx discards the error log of this endpoint, which
+would copy the token.
 
 Adding or removing a method and changing the password end the account's other
 sessions and keep this one. Removing a method checks in one statement that another

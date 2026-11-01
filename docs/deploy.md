@@ -171,7 +171,7 @@ restart can lose that in-memory delivery; the reader can request another link.
 Provider failures are deliberately invisible on this screen. Automated tests
 use a local fake of the [send endpoint](https://resend.com/docs/api-reference/emails/send-email),
 never real mail. Real inbox delivery and DNS verification remain user-only.
-The reset endpoint discards Nginx error logs, which otherwise copy secret queries;
+The reset and email-confirmation endpoints discard Nginx error logs, which otherwise copy secret queries;
 access logs and app logs retain only the path. Its `strict-origin` referrer
 policy strips the token while preserving `Origin` on forms without JavaScript.
 

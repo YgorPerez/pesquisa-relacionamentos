@@ -75,6 +75,12 @@ export function linkGoogle(
       )
       .get(sessionHash, accountId, now)
     if (!session) return 'google-falhou'
+    // Another tab finished first: this is not a Google with an account of its own.
+    const holding = db
+      .prepare('SELECT google_sub FROM accounts WHERE id = ?')
+      .get(accountId)?.google_sub
+    if (typeof holding === 'string')
+      return holding === sub ? 'google-ligado' : 'google-falhou'
     const linked = db
       .prepare(
         'UPDATE OR IGNORE accounts SET google_sub = ? WHERE id = ? AND google_sub IS NULL',
@@ -124,7 +130,7 @@ export async function requestEmailLink(
   const sent = await sendAccountEmail(mail, {
     to: email,
     subject: 'Confirme seu e-mail · Tem estudo?',
-    text: `Você pediu para ligar este e-mail à sua conta no Tem estudo?. Abra este link em até 30 minutos, com a conta aberta no navegador. Ele só pode ser usado uma vez.\n\n${link.href}\n\nSe não foi você, ignore esta mensagem. Nada muda.`,
+    text: `No Tem estudo?, você pediu para ligar este e-mail à sua conta. Abra este link em até 30 minutos, com a conta aberta no navegador. Ele só pode ser usado uma vez.\n\n${link.href}\n\nSe não foi você, ignore esta mensagem. Nada muda.`,
   })
   if (sent) return 'email-enviado'
   db.prepare('DELETE FROM email_links WHERE token_hash = ?').run(
@@ -178,8 +184,6 @@ export function removeMethod(
   sessionHash: string,
   method: 'google' | 'email',
 ): MethodNotice {
-  // Zeroes the address, so it does not live on in the file's free pages.
-  db.exec('PRAGMA secure_delete = ON')
   return transaction(db, () => {
     const removed =
       method === 'google'

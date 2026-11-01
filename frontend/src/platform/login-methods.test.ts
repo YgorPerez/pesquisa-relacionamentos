@@ -1,7 +1,7 @@
 // Linking and managing login methods, through the requests `/conta` sends, with a
 // fake Google and a fake Resend. A few tests read the database on purpose: "no row
 // holds the token" has no other witness.
-import { mkdtempSync, rmSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { createServer, type Server } from 'node:http'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -30,6 +30,7 @@ let google: Server
 let resend: Server
 let subject: string
 let mailFails: boolean
+let googleFails: boolean
 let mails: Mail[]
 let accounts: ReturnType<typeof createAccounts>
 
@@ -47,9 +48,11 @@ beforeEach(async () => {
   now = Date.now()
   subject = 'google-subject'
   mailFails = false
+  googleFails = false
   mails = []
   google = createServer((request, response) => {
     request.resume()
+    if (googleFails) return response.writeHead(500).end()
     response.end(
       JSON.stringify(
         request.url === '/token' ? { access_token: 'a' } : { sub: subject },
@@ -283,6 +286,43 @@ test('another site cannot start a link, a link attempt dies in ten minutes, and 
   expect(who(here)?.googleSub).toBeNull()
 })
 
+test('a reader who cancels at Google, or a Google that fails, comes back to the account page with the reason', async () => {
+  const here = await register()
+  const cancelled = await startLink(here)
+  const back = await open(
+    cancelled.callback.replace('code=code', 'error=access_denied'),
+    `${here}; ${cancelled.oauth}`,
+  )
+  expect(noticeOf(back)).toBe('google-falhou')
+  googleFails = true
+  const failing = await startLink(here)
+  const failed = await open(failing.callback, `${here}; ${failing.oauth}`)
+  expect(noticeOf(failed)).toBe('google-falhou')
+  expect(who(here)?.googleSub).toBeNull()
+})
+
+test('a second tab finishing the link does not call the reader\'s own Google someone else\'s', async () => {
+  const here = await register()
+  const first = await startLink(here)
+  const second = await startLink(here)
+  subject = 'google-of-the-reader'
+  await open(first.callback, `${here}; ${first.oauth}`)
+  const same = await open(second.callback, `${here}; ${second.oauth}`)
+  expect(noticeOf(same)).toBe('google-ligado')
+  const third = await register({
+    email: 'third@example.org',
+    nickname: 'Terceira',
+  })
+  const a = await startLink(third)
+  const b = await startLink(third)
+  subject = 'first-google'
+  await open(a.callback, `${third}; ${a.oauth}`)
+  subject = 'second-google'
+  const other = await open(b.callback, `${third}; ${b.oauth}`)
+  expect(noticeOf(other)).toBe('google-falhou')
+  expect(who(third)?.googleSub).toBe('first-google')
+})
+
 const confirmationLink = (mail: Mail) =>
   new URL(mail.text.match(/https:\/\/\S+/)![0])
 /** A Google-only account that asked to add `email`; the link from the mail. */
@@ -428,6 +468,27 @@ test('adding an email is limited by address, with the logins of that address', a
   for (let attempt = 0; attempt < 9; attempt++)
     expect(noticeOf(await add())).toBe('email-em-uso')
   expect(noticeOf(await add())).toBe('muitas-tentativas')
+})
+
+test('an address the reader corrected, or one whose mail failed, does not stay in the database file', async () => {
+  const { here } = await askEmail('first-typo@example.org')
+  await send(
+    'add-email',
+    { email: 'right@example.org', password: NEW },
+    here,
+  )
+  mailFails = true
+  await send(
+    'add-email',
+    { email: 'mail-failed@example.org', password: NEW },
+    here,
+  )
+  const db = new DatabaseSync(path)
+  db.exec('PRAGMA wal_checkpoint(TRUNCATE)')
+  db.close()
+  const file = readFileSync(path).toString()
+  expect(file).not.toContain('first-typo@example.org')
+  expect(file).not.toContain('mail-failed@example.org')
 })
 
 /** One account with both methods, signed in twice. */

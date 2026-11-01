@@ -301,7 +301,7 @@ class AccountService {
     const state = url.searchParams.get('state'),
       code = url.searchParams.get('code'),
       browser = this.readCookie(request, this.stateName)
-    if (!state || !code || !browser)
+    if (!state || !browser)
       return response(
         400,
         'O login não foi concluído. Volte à conta e tente de novo.',
@@ -325,22 +325,36 @@ class AccountService {
     } finally {
       db.close()
     }
+    // A reader linking Google has a page to go back to, and a reason to read there.
+    const linkFailed = () =>
+      noticeRedirect('google-falhou', [this.cookie(this.stateName, '', 0)])
+    if (!code)
+      return link
+        ? linkFailed()
+        : response(
+            400,
+            'O login não foi concluído. Volte à conta e tente de novo.',
+          )
     try {
       const sub = await this.googleSub(code, verifier)
       if (!sub)
-        return response(
-          400,
-          'Não foi possível entrar. Volte à conta e tente de novo.',
-        )
+        return link
+          ? linkFailed()
+          : response(
+              400,
+              'Não foi possível entrar. Volte à conta e tente de novo.',
+            )
       return link
         ? this.finishLink(request, link, sub)
         : this.session(request, sub)
     } catch {
       // Provider responses, codes, tokens and identity must never reach logs.
-      return response(
-        502,
-        'O Google não respondeu. Volte à conta e tente de novo.',
-      )
+      return link
+        ? linkFailed()
+        : response(
+            502,
+            'O Google não respondeu. Volte à conta e tente de novo.',
+          )
     }
   }
   private logout(request: Request) {
