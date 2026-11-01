@@ -174,9 +174,25 @@ export function publish({
   try {
     // The whole `.output`: Nitro serves `public/` from Node itself, and
     // Nginx only proxies (`../nginx/temestudo.conf`).
-    run('tar', ['-czf', join(work, 'build.tar.gz'), '-C', output, '.'])
+    run('tar', [
+      '-czf',
+      join(work, 'build.tar.gz'),
+      '-C',
+      output,
+      '.',
+      '-C',
+      import.meta.dirname,
+      'database-maintenance.ts',
+      '-C',
+      resolve(import.meta.dirname, '../src/platform'),
+      'database.ts',
+    ])
     const frontend = resolve(output, '..')
     copyFileSync(join(frontend, 'Dockerfile'), join(work, 'Dockerfile'))
+    copyFileSync(
+      join(import.meta.dirname, 'database-backup.sh'),
+      join(work, 'database-backup.sh'),
+    )
     for (const [name] of HOST_CONFIG)
       copyFileSync(join(frontend, 'nginx', name), join(work, name))
     followThePlan({ steps, vps, upload: work, say, now })

@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
 import { fakeFrontend, fakeVps } from './fake-docker.ts'
 import { publish, rollback } from './vps.ts'
+import { openDatabase } from '../src/platform/database.ts'
 
 const SHA_1 = 'aaaaaaa'
 const SHA_2 = 'bbbbbbb'
@@ -40,6 +41,25 @@ function aVps() {
 }
 
 describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
+  it('keeps database rows through publish, failed swap and rollback', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    const db = openDatabase(vps.databasePath('temestudo-app'), [
+      'CREATE TABLE example (value TEXT)',
+    ])
+    db.prepare('INSERT INTO example VALUES (?)').run('survives swaps')
+    db.close()
+    vps.publish(SHA_2)
+    vps.breakWith('nginx-refuses')
+    expect(() => vps.publish(SHA_3)).toThrow('nginx -t refused')
+    vps.fix('nginx-refuses')
+    vps.rollback()
+    const restored = openDatabase(vps.databasePath('temestudo-app'))
+    expect(restored.prepare('SELECT value FROM example').get()).toEqual({
+      value: 'survives swaps',
+    })
+    restored.close()
+  })
   it('the first deploy starts the app on the first port and installs the vhost', () => {
     const vps = aVps()
 
@@ -74,6 +94,7 @@ describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
     expect(times.map((l) => l.replace(/[\d.]+ s/, 'N s'))).toEqual([
       'Upload took N s.',
       'Image took N s.',
+      'Database backup schedule took N s.',
       'GoatCounter took N s.',
       'Swap took N s.',
       'Total: N s.',

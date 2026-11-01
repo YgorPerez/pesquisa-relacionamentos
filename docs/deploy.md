@@ -1,6 +1,6 @@
 # Deploy em temestudo.cloud
 
-O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.cloud. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O único banco é o SQLite do GoatCounter, fora do app.
+O site roda numa VPS da Hostinger (Ubuntu 26.04) que só serve a ele. O app é um contêiner Docker em `127.0.0.1`, atrás do Nginx do host, com certificado do certbot por webroot. O DNS fica na Hostinger, onde o domínio foi comprado. Ao lado do app, outro contêiner roda o GoatCounter em stats.temestudo.cloud. O molde é o deploy do Festival dos Macacos, sem homologação e sem Sentry. O app tem um SQLite no volume `temestudo-data`; o SQLite do GoatCounter continua separado.
 
 | Peça                                                           | Onde                                                                                                                 |
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -121,6 +121,75 @@ O Comentário de um leitor vira issue no repo privado `YgorPerez/pesquisa-relaci
 - sem token nenhum, o site segue no ar, e cada Comentário responde que não foi enviado.
 
 Os rótulos das issues são os quatro tipos do formulário: Está errado, Falta estudo, Não entendi, Outro.
+
+## App database and encrypted backup (#557)
+
+The app image opens `/data/app.sqlite` before serving requests. Docker initializes the `temestudo-data` volume with a directory owned by uid 1000 (`node`), mode 700. Every publish and rollback mounts the same volume. Swapping images never restores or deletes reader data. `frontend/src/platform/database.ts` is the server access point and ordered migration registry; see [ADR 0044](adr/0044-sqlite-persists-reader-data-outside-the-app-image.md) for compatibility during blue/green and rollback. Server callers may override `DATABASE_PATH` for local use; the container always initializes `/data/app.sqlite`.
+
+The deploy installs `/opt/temestudo/database-backup.sh` and `/etc/cron.d/temestudo-database`, scheduled daily at 03:20 in the host timezone. The script reads the live image SHA from `no-ar`, takes an online snapshot with [Node's SQLite backup API](https://nodejs.org/docs/latest-v24.x/api/sqlite.html#sqlitebackupsourceDb-path-options), encrypts it with AES-256-GCM, and uploads only the encrypted file with [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html). It uses a separate lock to prevent overlapping backups. A failed snapshot never uploads a partial object. The read-only SQLite connection still needs a writable volume mount for SQLite's WAL/SHM bookkeeping.
+
+### User-only setup
+
+Run `bash frontend/scripts/bucket-wizard.sh` locally. It walks through account/subscription creation, a private bucket, bucket-scoped credentials and an encryption key. Its Cloudflare R2 paths follow the provider's [account setup](https://developers.cloudflare.com/r2/get-started/) and [token documentation](https://developers.cloudflare.com/r2/api/tokens/); any S3-compatible bucket works. The wizard writes only `~/.config/temestudo/database-backup.env` (or `BUCKET_ENV_FILE`), mode 600. It does not connect to the VPS or set GitHub secrets.
+
+Review and perform these host steps yourself:
+
+1. Install the AWS CLI and cron (`apt-get install awscli cron` on Ubuntu), and enable `cron` with `systemctl enable --now cron`.
+2. Transfer the generated file to `/opt/temestudo/database-backup.env`, root-owned, mode 600. Keep the encryption key in a password manager separate from the VPS and bucket.
+3. Run `/opt/temestudo/database-backup.sh`. Confirm a new object under `database/` in the private bucket, then run the restore procedure below for that object.
+4. Check the daily job with `journalctl -u cron` and the newest object's timestamp. Cron sends command output/failures to root mail; configure delivery or monitor it. A missing config makes the job fail. The deploy warns when config is absent; do not accept reader data until backup and restore succeed against the real bucket.
+
+The host file is shared by bash and Docker's env-file parser. Use plain `KEY=value` lines without quoting or shell expressions. The wizard validates values for that format.
+
+| Variable                                     | Purpose                                                        |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| `DATABASE_BACKUP_BUCKET`                     | Private bucket name                                            |
+| `DATABASE_BACKUP_ENDPOINT`                   | S3 HTTPS endpoint                                              |
+| `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | Credentials restricted to this bucket                          |
+| `AWS_DEFAULT_REGION`                         | `auto` for R2; the provider's region otherwise                 |
+| `DATABASE_BACKUP_KEY`                        | 64 hex characters from `openssl rand -hex 32`; AES-256-GCM key |
+
+No new GitHub secrets are required. Do not put these values in `app.env`. `DATABASE_BACKUP_HOME` and `DATABASE_VOLUME` are local drill overrides; production uses `/opt/temestudo` and `temestudo-data`. Backups are retained until deleted by the operator or a separately configured bucket lifecycle. Keep old keys when rotating encryption keys; an old object still needs its original key.
+
+### Restore to a fresh volume
+
+Run as root on a recovery host with Docker, AWS CLI, the app image and the backup env file. Replace the object URI and use a new volume name each time. Do not restore over a live file.
+
+```bash
+set -euo pipefail
+umask 077
+set -a
+source /opt/temestudo/database-backup.env
+set +a
+image="temestudo-app:sha-$(cat /opt/temestudo/no-ar)"
+recovery="temestudo-recovery-$(date -u +%Y%m%dT%H%M%S)"
+aws --endpoint-url "$DATABASE_BACKUP_ENDPOINT" s3 cp \
+  s3://YOUR-BUCKET/database/YOUR-OBJECT.sqlite.enc /tmp/temestudo-restore.enc --only-show-errors
+docker run -i --rm --read-only --tmpfs /tmp \
+  --env-file /opt/temestudo/database-backup.env -v "$recovery:/data" \
+  "$image" node scripts/database-maintenance.ts restore /data/app.sqlite < /tmp/temestudo-restore.enc
+docker run --rm -v "$recovery:/data" "$image" node --input-type=module -e \
+  "import { DatabaseSync } from 'node:sqlite'; const db = new DatabaseSync('/data/app.sqlite'); console.log(db.prepare('PRAGMA integrity_check').get()); console.log(db.prepare('SELECT * FROM schema_migrations').all()); db.close()"
+rm /tmp/temestudo-restore.enc
+```
+
+Restore checks authentication and integrity before publishing the file. Verify the expected records with server queries for the installed spec version. A wrong key, altered ciphertext, invalid SQLite file or existing target fails without replacing data.
+
+Promotion is a maintenance operation: prevent deploys, stop `temestudo-app` and any `temestudo-app-novo`, and archive the serving volume's database together with its WAL/SHM files. Copy `app.sqlite` from the checked recovery volume into `temestudo-data` as uid/gid 1000, mode 600, with no old WAL/SHM beside it. Restart the app and check it before reopening traffic. Keep the archive until recovery is confirmed. Never copy a snapshot over a running SQLite database. An image rollback needs none of these steps.
+
+### Local restore evidence
+
+The repeatable drill uses a local `moto_server`, Docker and AWS CLI with dummy credentials. It builds the real app Dockerfile with an empty HTTP-server fixture, initializes the database in a unique Docker volume, inserts `S3 restore worked`, runs the production `database-backup.sh`, downloads the resulting S3 object, and restores it into another unique volume. It verifies the row and `PRAGMA integrity_check = ok`, then removes its volumes, image and bucket. No production endpoint is accepted.
+
+```bash
+# Install moto[server] and awscli in a temporary Python environment first.
+moto_server -H 127.0.0.1 -p 47993
+# In another terminal, with aws on PATH:
+TEST_DATABASE_BACKUP=1 TEST_S3_ENDPOINT=http://127.0.0.1:47993 \
+  pnpm --filter frontend exec vp test run scripts/database-backup.docker.test.ts
+```
+
+`database-maintenance.test.ts` separately keeps a source connection open with committed WAL data and verifies restore, tamper rejection and overwrite rejection. `vps.test.ts` checks that rows survive publish, a refused swap and rollback. This proves the local mechanism; bucket access policy, real credentials, offsite retention, host cron and a restore downloaded from the real bucket remain user-only checks.
 
 ## GoatCounter (#35)
 
