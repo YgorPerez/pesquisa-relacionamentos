@@ -1,21 +1,28 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto'
+import { existsSync } from 'node:fs'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
 import { REMOVED_READER } from './public-comment-moderation'
 import { serverEnv } from './server-env'
+import { allowEmailAttempt, emailAccount } from './email-accounts'
 
 type Options = {
   databasePath?: string
   origin?: string
   clientId?: string
   clientSecret?: string
+  emailRateLimitKey?: string
   /** Explicit injection for local provider tests; never environment overrides. */
   tokenEndpoint?: string
   userinfoEndpoint?: string
   now?: () => number
 }
-export type Account = { id: number; googleSub: string; nickname: string | null }
+export type Account = {
+  id: number
+  googleSub: string | null
+  nickname: string | null
+}
 const hash = (value: string) =>
   createHash('sha256').update(value).digest('base64url')
 const random = () => randomBytes(32).toString('base64url')
@@ -95,7 +102,7 @@ class AccountService {
   }
   current(request: Request): Account | null {
     const token = this.readCookie(request, this.sessionName)
-    if (!token || !this.configured()) return null
+    if (!token || !(this.configured() || this.emailConfigured())) return null
     const db = this.database()
     try {
       const row = db
@@ -106,7 +113,8 @@ class AccountService {
       return row
         ? {
             id: Number(row.id),
-            googleSub: String(row.google_sub),
+            googleSub:
+              typeof row.google_sub === 'string' ? row.google_sub : null,
             nickname: typeof row.nickname === 'string' ? row.nickname : null,
           }
         : null
@@ -223,10 +231,18 @@ class AccountService {
       const account = db
         .prepare('SELECT id FROM accounts WHERE google_sub = ?')
         .get(sub)!
+      return this.createSession(request, Number(account.id))
+    } finally {
+      db.close()
+    }
+  }
+  private createSession(request: Request, accountId: number) {
+    const db = this.database()
+    try {
       const token = random()
       db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
         hash(token),
-        account.id!,
+        accountId,
         this.now() + SESSION_SECONDS * 1000,
       )
       const previous = this.readCookie(request, this.sessionName)
@@ -350,7 +366,7 @@ class AccountService {
   async handle(request: Request): Promise<Response | null> {
     const url = new URL(request.url)
     if (!url.pathname.startsWith('/auth/')) return null
-    if (!this.configured())
+    if (!(this.configured() || this.emailConfigured()))
       return response(
         503,
         'O login está indisponível. Você pode continuar lendo sem entrar.',
@@ -363,9 +379,18 @@ class AccountService {
     )
       return response(403, 'Abra o formulário neste site e tente de novo.')
     if (url.pathname === '/auth/google' && request.method === 'GET')
-      return this.start()
+      return this.configured()
+        ? this.start()
+        : response(503, 'O login com Google está indisponível.')
     if (url.pathname === '/auth/callback' && request.method === 'GET')
-      return this.callback(request, url)
+      return this.configured()
+        ? this.callback(request, url)
+        : response(503, 'O login com Google está indisponível.')
+    if (
+      request.method === 'POST' &&
+      ['/auth/register', '/auth/login'].includes(url.pathname)
+    )
+      return this.email(request, url.pathname === '/auth/register')
     const account = this.current(request)
     if (!account) return response(401, 'Entre para continuar.')
     if (url.pathname === '/auth/logout' && request.method === 'POST')
@@ -375,6 +400,44 @@ class AccountService {
     if (url.pathname === '/auth/nickname' && request.method === 'POST')
       return this.nickname(request, account)
     return response(404, 'Página não encontrada.')
+  }
+  private emailConfigured() {
+    const origin = this.options.origin
+    return Boolean(
+      this.options.emailRateLimitKey &&
+      origin &&
+      (this.secure ||
+        /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)),
+    )
+  }
+  private async email(request: Request, register: boolean) {
+    if (!this.emailConfigured())
+      return response(503, 'O login com e-mail está indisponível.')
+    const form = await readForm(request)
+    if (form instanceof Response) return form
+    const db = this.database()
+    try {
+      const email = form.get('email')?.trim().toLowerCase() ?? ''
+      if (
+        !allowEmailAttempt(
+          db,
+          request,
+          email,
+          this.options.emailRateLimitKey!,
+          this.now(),
+        )
+      )
+        return response(
+          429,
+          'Muitas tentativas. Espere 15 minutos e tente de novo.',
+        )
+      const result = await emailAccount(db, form, register, this.now())
+      return typeof result === 'number'
+        ? this.createSession(request, result)
+        : response(400, result)
+    } finally {
+      db.close()
+    }
   }
 }
 
@@ -387,6 +450,7 @@ function accountsFromEnvironment() {
     origin: env.APP_ORIGIN,
     clientId: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
+    emailRateLimitKey: env.EMAIL_RATE_LIMIT_KEY,
   })
 }
 /** A POST from this site's own pages. */
@@ -404,4 +468,17 @@ export function deletionNoticeCookie(request: Request) {
 }
 export function handleAccountRequest(request: Request) {
   return accountsFromEnvironment().handle(request)
+}
+/** Hourly erasure also covers an idle site; expiry is 15 minutes, retention <24h. */
+export function pruneEmailRateLimits() {
+  const env = serverEnv()
+  if (!existsSync(env.DATABASE_PATH)) return
+  const db = openDatabase(env.DATABASE_PATH)
+  try {
+    db.prepare('DELETE FROM email_rate_limits WHERE expires_at <= ?').run(
+      Date.now(),
+    )
+  } finally {
+    db.close()
+  }
 }

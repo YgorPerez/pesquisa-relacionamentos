@@ -76,6 +76,26 @@ test('reading is offered without login and Google is optional', () => {
   expect(screen.getByText(ACCOUNT_INTRO)).toBeVisible()
 })
 
+test('email login and registration have separately labelled browser forms', async () => {
+  render(<AccountPage account={null} />)
+  const login = screen
+    .getByRole('button', { name: 'Entrar com e-mail' })
+    .closest('form')!
+  expect(login).toHaveAttribute('action', '/auth/login')
+  await userEvent.type(
+    screen.getByLabelText('E-mail para entrar'),
+    'reader@example.org',
+  )
+  expect(screen.getByLabelText('E-mail para entrar')).toHaveValue(
+    'reader@example.org',
+  )
+  const register = screen
+    .getByRole('button', { name: 'Criar conta com e-mail' })
+    .closest('form')!
+  expect(register).toHaveAttribute('action', '/auth/register')
+  expect(screen.getByRole('checkbox', { name: ACCOUNT.adult })).toBeRequired()
+})
+
 test('the first nickname is a plain form the browser checks, ready without JavaScript', () => {
   render(<AccountPage account={{ nickname: null }} />)
   const submit = screen.getByRole('button', { name: ACCOUNT.createNickname })

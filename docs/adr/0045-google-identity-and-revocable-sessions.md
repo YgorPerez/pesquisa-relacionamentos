@@ -2,9 +2,10 @@
 
 ## Context
 
-Spec #556 introduces optional accounts. Google verifies identity, but the site
-must not retain the reader's email, Google name or photo. Later tickets need the
-same account for comments, curator access and synchronization.
+Spec #556 introduces optional accounts. Spec #572 adds email and password
+accounts and reverses the prohibition on retaining an email for that method.
+Google's email, name and photo are still discarded. Both methods use the same
+account for comments, curator access and synchronization.
 
 ## Decision
 
@@ -27,6 +28,25 @@ server-only account lookup. It returns the account id, Google subject and
 nickname. A null nickname means the reader has not completed onboarding; public
 actions must require a nickname. Never return the subject to the browser.
 The account loader projects only the nickname and disables response caching.
+
+`googleSub` is nullable. `email_credentials` holds a unique normalized email
+(trimmed, lowercased) in plain text and a salted scrypt hash, and cascades on
+account deletion. An account may have either identity or both; never merge
+accounts by matching email. Google subjects remain the curator identity.
+Email signup requires the nickname, adult declaration and rules acceptance.
+Passwords require eight characters without composition rules. Scrypt uses
+N=32768, r=8, p=1 with a fresh 16-byte salt; comparison is constant-time. An
+unknown email still runs scrypt with the same parameters and has the same
+login refusal as a wrong password. Signup explicitly reports an email in use.
+
+Email login stays off without `EMAIL_RATE_LIMIT_KEY` and `APP_ORIGIN`.
+Login and signup share a limit of ten attempts per fifteen minutes for each
+normalized email and IP. Only HMAC-SHA256 keys and counters are stored. Expired
+rows are erased on attempts, on server startup and hourly, including idle
+periods. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
+is used. The deploy binds app ports to loopback, so visitors cannot bypass
+Nginx to choose that final address. Missing or invalid addresses share a bucket.
+The email is used only for login and recovery, not shown in the curator desk.
 
 The first nickname records the time of the adult declaration and rules acceptance
 and the rules version. Age is self-declared. Accounts do not send the device's
