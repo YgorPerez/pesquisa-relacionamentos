@@ -2,7 +2,6 @@ import {
   useEffect,
   useId,
   useState,
-  useSyncExternalStore,
   type FormEvent,
   type ReactNode,
 } from 'react'
@@ -25,16 +24,7 @@ import { findQuote, pageText } from './highlight-text'
 import { canPaint } from './highlight-paint'
 import { PUBLIC_COMMENT as COPY } from './public-comments.copy'
 import { QUOTABLE } from './quote-text'
-
-const stable = () => () => {}
-
-/** Sending needs JS: the server's HTML has no button that would do nothing. */
-const useHydrated = () =>
-  useSyncExternalStore(
-    stable,
-    () => true,
-    () => false,
-  )
+import { useHydrated } from './use-hydrated'
 
 function PublicCommentForm({
   input,

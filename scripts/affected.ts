@@ -47,6 +47,13 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
   'highlights.e2e.ts': ['grifo', 'grifos'],
   'selection-comment.e2e.ts': ['comentario', 'selecao'],
+  'curator.e2e.ts': [
+    'curadoria',
+    'curator',
+    'comment-report',
+    'report-issue',
+    'public-comment-moderation',
+  ],
   'public-comments.e2e.ts': [
     'comentario',
     'selecao',

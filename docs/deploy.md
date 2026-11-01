@@ -147,6 +147,10 @@ Google client for localhost. The automated flow uses local fake token and UserIn
 endpoints; real consent, client registration and production cookies still need the
 wizard's manual check.
 
+## The curator's account (#560)
+
+`/curadoria` opens only for the Google subject in `CURATOR_GOOGLE_SUB` ([ADR 0047](adr/0047-reports-hide-a-comment-until-the-curator-decides.md)). Without it, nobody reads the page or decides anything. The site never shows a subject, so the operator reads it from the database on the VPS, after logging in and choosing a nickname: `SELECT google_sub FROM accounts WHERE nickname = '<nickname>'`. Add the line to `/opt/temestudo/google-oauth.env`, which publish and rollback already pass to Docker, and publish again. No new GitHub secret is required. A report's notice uses `COMMENT_GITHUB_TOKEN`; without the token, reports and hiding still work and `/curadoria` says the notice did not go out.
+
 ## App database and encrypted backup (#557)
 
 The app image opens `/data/app.sqlite` before serving requests. Docker initializes the `temestudo-data` volume with a directory owned by uid 1000 (`node`), mode 700. Every publish and rollback mounts the same volume. Swapping images never restores or deletes reader data. `frontend/src/platform/database.ts` is the server access point and ordered migration registry; see [ADR 0044](adr/0044-sqlite-persists-reader-data-outside-the-app-image.md) for compatibility during blue/green and rollback. Server callers may override `DATABASE_PATH` for local use; the container always initializes `/data/app.sqlite`.
