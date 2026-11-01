@@ -161,42 +161,49 @@ function useConversation(path: string, comments: PublicComment[]) {
   return { items, problem }
 }
 
-/** Marks each comment's passage and says which comments it found; `null`
- * until the page has been read, when only the server's answer exists. */
+/** Marks the passage of each comment while the page's text can change, and
+ * tells `onFound` which comments it found. Returns how to stop. */
+function watchMarks(
+  items: PublicComment[],
+  onFound: (found: ReadonlySet<number>) => void,
+) {
+  const quoted = items.filter((comment) => comment.parentId === null)
+  const paint = () => {
+    // Most pages have none: no need to read the page's text.
+    const page = quoted.length ? pageText() : null
+    const located = quoted.flatMap((comment) => {
+      const where =
+        page &&
+        findQuote(page, { exact: comment.quote, prefix: '', suffix: '' })
+      return where ? [{ id: comment.id, parts: where.parts }] : []
+    })
+    onFound(new Set(located.map(({ id }) => id)))
+    if (canPaint())
+      CSS.highlights.set(
+        'comentario-publico',
+        new globalThis.Highlight(...located.flatMap(({ parts }) => parts)),
+      )
+  }
+  paint()
+  const observer = new MutationObserver(paint)
+  document.querySelectorAll(QUOTABLE).forEach((node) =>
+    observer.observe(node, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+    }),
+  )
+  return () => {
+    observer.disconnect()
+    if (canPaint()) CSS.highlights.delete('comentario-publico')
+  }
+}
+
+/** Which comments the page itself shows the passage of; `null` until it has
+ * been read, when only the server's answer exists. */
 function useCommentMarks(items: PublicComment[]) {
   const [found, setFound] = useState<ReadonlySet<number> | null>(null)
-  useEffect(() => {
-    const quoted = items.filter((comment) => comment.parentId === null)
-    const paint = () => {
-      // Most pages have none: no need to read the page's text.
-      const page = quoted.length ? pageText() : null
-      const located = quoted.flatMap((comment) => {
-        const where =
-          page &&
-          findQuote(page, { exact: comment.quote, prefix: '', suffix: '' })
-        return where ? [{ id: comment.id, parts: where.parts }] : []
-      })
-      setFound(new Set(located.map(({ id }) => id)))
-      if (canPaint())
-        CSS.highlights.set(
-          'comentario-publico',
-          new globalThis.Highlight(...located.flatMap(({ parts }) => parts)),
-        )
-    }
-    paint()
-    const observer = new MutationObserver(paint)
-    document.querySelectorAll(QUOTABLE).forEach((node) =>
-      observer.observe(node, {
-        subtree: true,
-        childList: true,
-        characterData: true,
-      }),
-    )
-    return () => {
-      observer.disconnect()
-      if (canPaint()) CSS.highlights.delete('comentario-publico')
-    }
-  }, [items])
+  useEffect(() => watchMarks(items, setFound), [items])
   return found
 }
 
@@ -248,6 +255,53 @@ export function PublicComments({
   )
 }
 
+type Editing = { reply: boolean } | null
+
+function CommentActions({
+  comment,
+  signedIn,
+  hydrated,
+  onEdit,
+  onProblem,
+}: {
+  comment: PublicComment
+  signedIn: boolean
+  hydrated: boolean
+  onEdit: (editing: Editing) => void
+  onProblem: (problem: string) => void
+}) {
+  async function remove() {
+    try {
+      const result = await writePublicComment({
+        data: { action: 'delete', id: comment.id },
+      })
+      if (result.ok) window.dispatchEvent(new Event('public-comments-changed'))
+      else onProblem(result.problem)
+    } catch {
+      onProblem(COPY.failed)
+    }
+  }
+  return (
+    <div className="flex flex-wrap gap-xs">
+      {signedIn && comment.parentId === null && (
+        <Button variant="light" onClick={() => onEdit({ reply: true })}>
+          {COPY.reply}
+        </Button>
+      )}
+      {hydrated && comment.own && (
+        <>
+          <Button variant="light" onClick={() => onEdit({ reply: false })}>
+            {COPY.edit}
+          </Button>
+          <Button variant="light" onClick={() => void remove()}>
+            {COPY.delete}
+          </Button>
+        </>
+      )}
+    </div>
+  )
+}
+
 function CommentEntry({
   path,
   comment,
@@ -259,49 +313,20 @@ function CommentEntry({
   signedIn: boolean
   hydrated: boolean
 }) {
-  const [editing, setEditing] = useState<{ id: number; reply: boolean } | null>(
-    null,
-  )
+  const [editing, setEditing] = useState<Editing>(null)
   const [problem, setProblem] = useState('')
-  async function remove(id: number) {
-    try {
-      const result = await writePublicComment({
-        data: { action: 'delete', id },
-      })
-      if (result.ok) window.dispatchEvent(new Event('public-comments-changed'))
-      else setProblem(result.problem)
-    } catch {
-      setProblem(COPY.failed)
-    }
-  }
   return (
     <article id={`comentario-${comment.id}`} className="py-sm">
       <CommentBody comment={comment} />
-      <div className="flex flex-wrap gap-xs">
-        {signedIn && comment.parentId === null && (
-          <Button
-            variant="light"
-            onClick={() => setEditing({ id: comment.id, reply: true })}
-          >
-            {COPY.reply}
-          </Button>
-        )}
-        {hydrated && comment.own && (
-          <>
-            <Button
-              variant="light"
-              onClick={() => setEditing({ id: comment.id, reply: false })}
-            >
-              {COPY.edit}
-            </Button>
-            <Button variant="light" onClick={() => void remove(comment.id)}>
-              {COPY.delete}
-            </Button>
-          </>
-        )}
-      </div>
+      <CommentActions
+        comment={comment}
+        signedIn={signedIn}
+        hydrated={hydrated}
+        onEdit={setEditing}
+        onProblem={setProblem}
+      />
       {problem && <p role="alert">{problem}</p>}
-      {editing?.id === comment.id && (
+      {editing && (
         <CommentEditor
           path={path}
           comment={comment}

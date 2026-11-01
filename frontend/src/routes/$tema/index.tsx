@@ -149,13 +149,7 @@ function GuidePage() {
 
         <GuideShare />
       </Column>
-      <Column>
-        <PublicComments
-          key={Route.useParams().tema}
-          path={`/${Route.useParams().tema}`}
-          comments={Route.useLoaderData().comments}
-        />
-      </Column>
+      <GuideComments />
       <PageSelection />
       <TermPopover terms={guide.terms} />
       <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />
@@ -165,6 +159,19 @@ function GuidePage() {
 
 /** "Copiar link": the Guide's address, with the chosen country when there
  * is one (`?pais=`), never the Profile. */
+function GuideComments() {
+  const { tema } = Route.useParams()
+  return (
+    <Column>
+      <PublicComments
+        key={tema}
+        path={`/${tema}`}
+        comments={Route.useLoaderData().comments}
+      />
+    </Column>
+  )
+}
+
 function GuideShare() {
   const { countries } = useGuide()
   const country = useChosenCountry(countries.map((c) => c.slug))

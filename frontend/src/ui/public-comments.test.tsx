@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vite-plus/test'
 import { PublicComments, CommentAudience } from './public-comments'
@@ -84,18 +84,40 @@ test('a signed-in reader picks public, publishes, and the page refreshes its con
   })
   expect(await screen.findByText('Minha dúvida')).toBeVisible()
   expect(onDone).toHaveBeenCalledOnce()
+})
+
+test('the author edits, replies to and deletes a comment from the list', async () => {
+  vi.mocked(writePublicComment).mockResolvedValue({ ok: true, id: 1 })
+  const user = userEvent.setup()
+  render(
+    <PublicComments
+      path="/dicas/exemplo"
+      comments={[
+        {
+          id: 1,
+          parentId: null,
+          quote: 'Um trecho',
+          body: 'Minha dúvida',
+          nickname: 'Leitora',
+          edited: false,
+          createdAt: 1,
+          own: true,
+          canReply: true,
+        },
+      ]}
+    />,
+  )
   await user.click(screen.getByRole('button', { name: 'Editar' }))
-  const fields = screen.getAllByLabelText('Seu comentário público')
-  await user.clear(fields[1]!)
-  await user.type(fields[1]!, 'Revisto')
+  const field = screen.getByLabelText('Seu comentário público')
+  await user.clear(field)
+  await user.type(field, 'Revisto')
   await user.click(screen.getByRole('button', { name: 'Salvar' }))
   expect(writePublicComment).toHaveBeenLastCalledWith({
     data: { action: 'edit', id: 1, body: 'Revisto' },
   })
   await user.click(screen.getByRole('button', { name: 'Responder' }))
-  const replies = screen.getAllByLabelText('Seu comentário público')
-  await user.type(replies[1]!, 'Resposta')
-  await user.click(screen.getAllByRole('button', { name: 'Publicar' })[1]!)
+  await user.type(screen.getByLabelText('Seu comentário público'), 'Resposta')
+  await user.click(screen.getByRole('button', { name: 'Publicar' }))
   expect(writePublicComment).toHaveBeenLastCalledWith({
     data: {
       action: 'publish',
@@ -174,7 +196,7 @@ test('an anonymous reader gets the private form and no choice', async () => {
       <p>Formulário privado</p>
     </CommentAudience>,
   )
-  await vi.waitFor(() => expect(readAccount).toHaveBeenCalled())
+  await waitFor(() => expect(readAccount).toHaveBeenCalled())
   expect(screen.getByText('Formulário privado')).toBeVisible()
   expect(screen.queryByRole('radio')).toBeNull()
 })

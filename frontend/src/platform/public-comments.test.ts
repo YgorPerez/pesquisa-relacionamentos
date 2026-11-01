@@ -37,7 +37,7 @@ test('publishes immediately, checks ownership and keeps edits out of the public 
     account = { id: 2, googleSub: 'two', nickname: 'Outro' }
     expect(() =>
       service.write(request, { action: 'edit', id, body: 'Stolen' }),
-    ).toThrow()
+    ).toThrow('não está disponível')
     const reply = service.write(request, {
       action: 'publish',
       ...passage,
@@ -49,7 +49,7 @@ test('publishes immediately, checks ownership and keeps edits out of the public 
         ...passage,
         parentId: reply,
       }),
-    ).toThrow()
+    ).toThrow('resposta não está disponível')
     account = { id: 1, googleSub: 'one', nickname: 'Leitora' }
     service.write(request, { action: 'edit', id, body: 'Corrigido' })
     expect(service.list(passage.path)[0]).toMatchObject({
@@ -113,14 +113,6 @@ test('rejects anonymous, unfinished, expired and cross-origin writes and limits 
     account = { id: 1, googleSub: 'one', nickname: 'Leitora' }
     now += 3600000
     expect(service().write(request, input)).toBe(11)
-    const hidden = openDatabase(databasePath)
-    hidden.exec('UPDATE public_comments SET hidden = 1 WHERE id = 1')
-    hidden.close()
-    expect(
-      service()
-        .list(input.path)
-        .some((comment) => comment.id === 1),
-    ).toBe(false)
   } finally {
     rmSync(folder, { recursive: true, force: true })
   }
@@ -236,6 +228,20 @@ test('tells the author their own comment, and deleting it takes its replies alon
       canReply: false,
     })
     service().write(request, { action: 'delete', id })
+    expect(service().list(PASSAGE.path)).toEqual([])
+  } finally {
+    cleanup()
+  }
+})
+
+test('a hidden comment leaves the list, and its replies with it', () => {
+  const { folder, request, service, cleanup } = fixture()
+  try {
+    const id = service().write(request, PASSAGE)
+    service().write(request, { ...PASSAGE, parentId: id })
+    const db = openDatabase(join(folder, 'app.sqlite'))
+    db.prepare('UPDATE public_comments SET hidden = 1 WHERE id = ?').run(id)
+    db.close()
     expect(service().list(PASSAGE.path)).toEqual([])
   } finally {
     cleanup()

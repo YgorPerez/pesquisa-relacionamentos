@@ -88,17 +88,23 @@ function TipPage() {
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
       </Column>
-      <Column>
-        <PublicComments
-          key={tip.slug}
-          path={`/dicas/${tip.slug}`}
-          comments={Route.useLoaderData().comments}
-        />
-      </Column>
+      <TipComments slug={tip.slug} />
       <PageSelection />
       <TermPopover terms={tip.terms} />
       <ReferencePopover key={tip.slug} factSheets={tip.factSheets} />
     </Sheet>
+  )
+}
+
+function TipComments({ slug }: { slug: string }) {
+  return (
+    <Column>
+      <PublicComments
+        key={slug}
+        path={`/dicas/${slug}`}
+        comments={Route.useLoaderData().comments}
+      />
+    </Column>
   )
 }
 

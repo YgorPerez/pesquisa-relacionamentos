@@ -3,14 +3,12 @@ import type {
   PublicCommentResult,
   PublicCommentWrite,
 } from './public-comment-record'
+import { publicPageText } from './site-search-view'
 
 /** The passage's text on the server, by which a reader without JS learns that
  * a passage changed. The page corrects it when it can look (`ui/public-comments.tsx`). */
 async function pageTextReader() {
-  const [{ default: library }, { publicPageText }] = await Promise.all([
-    import('virtual:library'),
-    import('./site-search-view'),
-  ])
+  const { default: library } = await import('virtual:library')
   return (path: string) => publicPageText(library, path)
 }
 
