@@ -186,6 +186,93 @@ function listComments(
   }
 }
 
+/** Runs one write in a transaction on its own connection. */
+function inTransaction<T>(path: string, work: (db: DatabaseSync) => T): T {
+  const db = openDatabase(path)
+  try {
+    db.exec('BEGIN IMMEDIATE')
+    try {
+      const result = work(db)
+      db.exec('COMMIT')
+      return result
+    } catch (error) {
+      db.exec('ROLLBACK')
+      throw error
+    }
+  } finally {
+    db.close()
+  }
+}
+
+/** Reports and the curator's desk. Each read and write checks who asks. */
+function moderation({
+  path,
+  current,
+  now,
+  curator,
+  notify,
+}: {
+  path: string
+  current: (request: Request) => Account | null
+  now: () => number
+  curator: () => string | undefined
+  notify: (comment: ReportedComment) => Promise<number | null>
+}) {
+  const isCurator = (request: Request) => {
+    const subject = curator()
+    return Boolean(subject) && current(request)?.googleSub === subject
+  }
+  return {
+    /** Everything is committed before GitHub is called: whatever happens to
+     * the notice, the report and the hiding hold. */
+    async report(request: Request, id: number): Promise<void> {
+      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+      const account = current(request)
+      if (!account?.nickname)
+        throw new PublicCommentRefusal(
+          'Entre e crie um apelido para denunciar.',
+        )
+      if (!Number.isSafeInteger(id))
+        throw new PublicCommentRefusal('Comentário inválido.')
+      const at = now()
+      const reported = inTransaction(path, (db) =>
+        recordReport(db, id, account.id, at),
+      )
+      if (!reported) return
+      try {
+        const issue = await notify(reported)
+        if (issue !== null)
+          inTransaction(path, (db) => recordReportIssue(db, id, at, issue))
+      } catch {
+        // The curator's page shows that the notice did not go out.
+      }
+    },
+    /** `null` for anyone but the curator. */
+    curatorDesk(request: Request, before?: number): CuratorDesk | null {
+      if (!isCurator(request)) return null
+      const db = openDatabase(path)
+      try {
+        return readDesk(db, Number.isSafeInteger(before) ? before : undefined)
+      } finally {
+        db.close()
+      }
+    },
+    decide(request: Request, decision: CuratorDecision): void {
+      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
+      if (!isCurator(request))
+        throw new PublicCommentRefusal('Esta ação é só do curador.')
+      const id = decision?.id
+      if (!Number.isSafeInteger(id))
+        throw new PublicCommentRefusal('Comentário inválido.')
+      inTransaction(path, (db) => {
+        if (decision.action === 'restore') restoreComment(db, id, now())
+        else if (decision.action === 'remove') removeComment(db, id)
+        else throw new PublicCommentRefusal('Decisão inválida.')
+      })
+    },
+  }
+}
+
 export function createPublicComments(
   options: {
     databasePath?: string
@@ -204,75 +291,14 @@ export function createPublicComments(
   const current = options.current ?? getCurrentAccount
   const now = options.now ?? Date.now
   const isPage = options.isPage ?? (() => true)
-  const curator = options.curator ?? (() => serverEnv().CURATOR_GOOGLE_SUB)
-  const notify = options.notify ?? (async () => null)
-  const isCurator = (request: Request) => {
-    const subject = curator()
-    return Boolean(subject) && current(request)?.googleSub === subject
-  }
-  /** Runs one write in a transaction on its own connection. */
-  const transaction = <T>(work: (db: DatabaseSync) => T): T => {
-    const db = openDatabase(path)
-    try {
-      db.exec('BEGIN IMMEDIATE')
-      try {
-        const result = work(db)
-        db.exec('COMMIT')
-        return result
-      } catch (error) {
-        db.exec('ROLLBACK')
-        throw error
-      }
-    } finally {
-      db.close()
-    }
-  }
   return {
-    /** Everything is committed before GitHub is called: whatever happens to
-     * the notice, the report and the hiding hold. */
-    async report(request: Request, id: number): Promise<void> {
-      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
-      const account = current(request)
-      if (!account?.nickname)
-        throw new PublicCommentRefusal('Entre e crie um apelido para denunciar.')
-      if (!Number.isSafeInteger(id))
-        throw new PublicCommentRefusal('Comentário inválido.')
-      const at = now()
-      const reported = transaction((db) =>
-        recordReport(db, id, account.id, at),
-      )
-      if (!reported) return
-      try {
-        const issue = await notify(reported)
-        if (issue !== null)
-          transaction((db) => recordReportIssue(db, id, at, issue))
-      } catch {
-        // The curator's page shows that the notice did not go out.
-      }
-    },
-    /** `null` for anyone but the curator. */
-    curatorDesk(request: Request, before?: number): CuratorDesk | null {
-      if (!isCurator(request)) return null
-      const db = openDatabase(path)
-      try {
-        return readDesk(db, before)
-      } finally {
-        db.close()
-      }
-    },
-    decide(request: Request, decision: CuratorDecision): void {
-      if (!fromThisSite(request)) throw new PublicCommentRefusal(OTHER_SITE)
-      if (!isCurator(request))
-        throw new PublicCommentRefusal('Esta ação é só do curador.')
-      const id = decision?.id
-      if (!Number.isSafeInteger(id))
-        throw new PublicCommentRefusal('Comentário inválido.')
-      transaction((db) => {
-        if (decision.action === 'restore') restoreComment(db, id, now())
-        else if (decision.action === 'remove') removeComment(db, id)
-        else throw new PublicCommentRefusal('Decisão inválida.')
-      })
-    },
+    ...moderation({
+      path,
+      current,
+      now,
+      curator: options.curator ?? (() => serverEnv().CURATOR_GOOGLE_SUB),
+      notify: options.notify ?? (async () => null),
+    }),
     /** Reading never depends on the database (ADR 0045): whatever goes wrong
      * here, the page opens, with no comments. */
     list(page: string, request?: Request): PublicComment[] {
@@ -288,7 +314,7 @@ export function createPublicComments(
       const refused = refusal(request, account, input, isPage)
       if (refused) throw new PublicCommentRefusal(refused)
       const accountId = account!.id
-      return transaction((db) =>
+      return inTransaction(path, (db) =>
         input.action === 'publish'
           ? publish(db, input, accountId, now())
           : revise(db, input, accountId, now()),

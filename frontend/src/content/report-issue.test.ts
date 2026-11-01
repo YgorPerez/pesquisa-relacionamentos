@@ -4,18 +4,21 @@ import { expect, test, vi } from 'vite-plus/test'
 import { reportNotifier } from './report-issue'
 
 const COMMENT = { id: 12, path: '/dicas/exemplo' }
-const created = () => new Response(JSON.stringify({ number: 41 }), { status: 201 })
+const created = () =>
+  new Response(JSON.stringify({ number: 41 }), { status: 201 })
 
 test('opens one issue in the private repo with the links the curator needs and nothing else', async () => {
   const fetch = vi.fn<typeof globalThis.fetch>(async () => created())
-  const issue = await reportNotifier({ fetch, token: 'github_pat_test' })(COMMENT)
+  const issue = await reportNotifier({ fetch, token: 'github_pat_test' })(
+    COMMENT,
+  )
   expect(issue).toBe(41)
   expect(fetch).toHaveBeenCalledTimes(1)
   const [url, init] = fetch.mock.calls[0]!
   expect(url).toBe(
     'https://api.github.com/repos/YgorPerez/pesquisa-relacionamentos-fontes/issues',
   )
-  expect(JSON.parse(String(init?.body))).toEqual({
+  expect(JSON.parse(init?.body as string)).toEqual({
     title: 'Denúncia: comentário público 12',
     labels: [],
     body: [
@@ -35,7 +38,7 @@ test('without a token no request goes out', async () => {
 })
 
 test('a refusal, an offline GitHub and one that never answers all come back as no issue', async () => {
-  const answers: typeof globalThis.fetch[] = [
+  const answers: (typeof globalThis.fetch)[] = [
     async () => new Response('{}', { status: 500 }),
     async () => {
       throw new Error('offline')

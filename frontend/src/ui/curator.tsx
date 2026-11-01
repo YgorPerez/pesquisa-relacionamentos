@@ -65,6 +65,28 @@ function CommentHistory({ history }: { history: CuratorComment['history'] }) {
   )
 }
 
+function RemoveQuestion({
+  busy,
+  onConfirm,
+  onCancel,
+}: {
+  busy: boolean
+  onConfirm: () => void
+  onCancel: () => void
+}) {
+  return (
+    <>
+      <p className="m-0 w-full text-nota">{COPY.removeQuestion}</p>
+      <Button variant="light" disabled={busy} onClick={onConfirm}>
+        {COPY.removeConfirm}
+      </Button>
+      <Button variant="light" onClick={onCancel}>
+        {COPY.cancel}
+      </Button>
+    </>
+  )
+}
+
 function CommentDecisions({
   comment,
   pending,
@@ -94,19 +116,11 @@ function CommentDecisions({
   return (
     <div className="flex flex-wrap items-center gap-xs">
       {removing ? (
-        <>
-          <p className="m-0 w-full text-nota">{COPY.removeQuestion}</p>
-          <Button
-            variant="light"
-            disabled={busy}
-            onClick={() => void decide('remove')}
-          >
-            {COPY.removeConfirm}
-          </Button>
-          <Button variant="light" onClick={() => setRemoving(false)}>
-            {COPY.cancel}
-          </Button>
-        </>
+        <RemoveQuestion
+          busy={busy}
+          onConfirm={() => void decide('remove')}
+          onCancel={() => setRemoving(false)}
+        />
       ) : (
         <>
           {pending && (

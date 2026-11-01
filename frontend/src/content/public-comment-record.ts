@@ -47,9 +47,7 @@ export type CuratorDecision = {
 export type PublicCommentResult =
   | { ok: true; id: number }
   | { ok: false; problem: string }
-export type CommentActionResult =
-  | { ok: true }
-  | { ok: false; problem: string }
+export type CommentActionResult = { ok: true } | { ok: false; problem: string }
 export type PublicCommentWrite =
   | {
       action: 'publish'

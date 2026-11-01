@@ -59,7 +59,10 @@ async function reportAs(id: number, comment = 1) {
   who = account(id)
   await service().report(post(), comment)
 }
-const visible = () => service().list(PAGE).map(({ id }) => id)
+const visible = () =>
+  service()
+    .list(PAGE)
+    .map(({ id }) => id)
 
 test('three different accounts hide a comment; the same account counts once', async () => {
   await reportAs(3)
@@ -72,7 +75,7 @@ test('three different accounts hide a comment; the same account counts once', as
 })
 
 test('a report needs a finished account, this site and someone else’s visible comment', async () => {
-  const report = service().report
+  const report = (request: Request, id: number) => service().report(request, id)
   who = null
   await expect(report(post(), 1)).rejects.toThrow('Entre')
   who = account(8)
@@ -160,13 +163,13 @@ test('an account has a limit of reports per hour, freed as the hour passes', asy
 
 test('the reader’s own list says what they already reported', async () => {
   await reportAs(3)
-  const seenBy = (id: number) =>
+  const seen = () =>
     service()
       .list(PAGE, post())
       .find((comment) => comment.id === 1)
-  expect(seenBy(3)?.reported).toBe(true)
+  expect(seen()?.reported).toBe(true)
   who = account(4)
-  expect(seenBy(4)?.reported).toBe(false)
+  expect(seen()?.reported).toBe(false)
 })
 
 test('nobody but the configured curator reads or decides anything', async () => {
