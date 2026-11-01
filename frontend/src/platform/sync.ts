@@ -1,5 +1,6 @@
-import { getCurrentAccount } from './accounts'
+import { fromThisSite, getCurrentAccount } from './accounts'
 import { openDatabase } from './database'
+import { serverEnv } from './server-env'
 import { isQuoteRecord } from '#/state/json-record'
 import {
   mergeStoredSyncData,
@@ -41,11 +42,7 @@ export async function handleSyncRequest(
 ): Promise<Response | null> {
   if (new URL(request.url).pathname !== '/api/sync') return null
   if (!['GET', 'POST'].includes(request.method)) return reply({}, 405)
-  if (
-    request.method === 'POST' &&
-    request.headers.get('origin') !== process.env.APP_ORIGIN
-  )
-    return reply({}, 403)
+  if (request.method === 'POST' && !fromThisSite(request)) return reply({}, 403)
   // Before reading a body; the check below is the one the transaction trusts.
   if (!getCurrentAccount(request)?.nickname) return reply({}, 401)
   let input: Record<string, unknown> = {}
@@ -64,7 +61,7 @@ export async function handleSyncRequest(
   }
   const account = getCurrentAccount(request)
   if (!account?.nickname) return reply({}, 401)
-  const db = openDatabase()
+  const db = openDatabase(serverEnv().DATABASE_PATH)
   try {
     db.exec('BEGIN IMMEDIATE')
     const row = db

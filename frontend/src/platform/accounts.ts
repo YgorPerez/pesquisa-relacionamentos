@@ -1,6 +1,9 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto'
+import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
+import { REMOVED_READER } from './public-comment-moderation'
+import { serverEnv } from './server-env'
 
 type Options = {
   databasePath?: string
@@ -16,6 +19,10 @@ export type Account = { id: number; googleSub: string; nickname: string | null }
 const hash = (value: string) =>
   createHash('sha256').update(value).digest('base64url')
 const random = () => randomBytes(32).toString('base64url')
+/** What makes two nicknames the same to a reader: case, in any alphabet (SQLite's
+ * `lower` knows only ASCII), Unicode forms and repeated spaces (ADR 0045). */
+const nicknameKey = (nickname: string) =>
+  nickname.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim()
 const SESSION_SECONDS = 30 * 24 * 60 * 60
 /** Long enough for the redirect to `/conta` to read it. */
 const DELETION_NOTICE_SECONDS = 60
@@ -29,9 +36,9 @@ const response = (status: number, message: string) =>
       'content-type': 'text/plain; charset=utf-8',
     },
   })
-function redirect(cookies: string[] = []) {
+function redirect(cookies: string[] = [], location = '/conta') {
   const headers = new Headers({
-    location: '/conta',
+    location,
     'cache-control': 'no-store',
   })
   for (const value of cookies) headers.append('set-cookie', value)
@@ -74,7 +81,7 @@ class AccountService {
       ?.slice(name.length + 1)
   }
   private database() {
-    return openDatabase(this.options.databasePath)
+    return openDatabase(this.options.databasePath ?? serverEnv().DATABASE_PATH)
   }
   private configured() {
     const { origin, clientId, clientSecret } = this.options
@@ -320,19 +327,21 @@ class AccountService {
       form.get('adult') !== 'on' ||
       form.get('rules') !== 'on'
     )
-      return response(
-        400,
-        'Escolha um apelido de 2 a 40 caracteres, declare ter 18 anos ou mais e aceite as regras.',
-      )
+      return redirect([], `/conta?recusa=${NICKNAME_INVALID}`)
+    const key = nicknameKey(nickname)
+    if (key === REMOVED_READER)
+      return redirect([], `/conta?recusa=${NICKNAME_TAKEN}`)
     const db = this.database()
     try {
+      // IGNORE: the unique index is what decides between two readers at once.
       const changed = db
         .prepare(
-          "UPDATE accounts SET nickname = ?, accepted_at = ?, rules_version = '1' WHERE id = ? AND nickname IS NULL",
+          "UPDATE OR IGNORE accounts SET nickname = ?, nickname_key = ?, accepted_at = ?, rules_version = '1' WHERE id = ? AND nickname IS NULL",
         )
-        .run(nickname, this.now(), account.id)
-      return changed.changes
-        ? redirect()
+        .run(nickname, key, this.now(), account.id)
+      if (changed.changes) return redirect()
+      return account.nickname === null
+        ? redirect([], `/conta?recusa=${NICKNAME_TAKEN}`)
         : response(409, 'Esta conta já tem apelido.')
     } finally {
       db.close()
@@ -373,12 +382,18 @@ export function createAccounts(options: Options) {
   return new AccountService(options)
 }
 function accountsFromEnvironment() {
+  const env = serverEnv()
   return createAccounts({
-    origin: process.env.APP_ORIGIN,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    origin: env.APP_ORIGIN,
+    clientId: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
   })
 }
+/** A POST from this site's own pages. */
+export const fromThisSite = (request: Request) =>
+  request.method === 'POST' &&
+  request.headers.get('origin') ===
+    (serverEnv().APP_ORIGIN ?? new URL(request.url).origin)
 /** Server seam for later tickets. A null nickname means onboarding is incomplete. */
 export function getCurrentAccount(request: Request): Account | null {
   return accountsFromEnvironment().current(request)

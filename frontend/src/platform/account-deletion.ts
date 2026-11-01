@@ -1,6 +1,7 @@
 // What deleting an account does to the database (ADR 0048). Works on a
 // connection `accounts.ts` opened, after it checked who is asking.
 import type { DatabaseSync } from 'node:sqlite'
+import { transaction } from './transaction'
 
 /** The word the form asks to be typed, whatever a phone keyboard did to it. */
 export const confirmsDeletion = (typed: string | null) =>
@@ -20,16 +21,11 @@ export function deleteAccount(
   // Zeroes what it deletes, so the text does not live on in the file's free
   // pages, which a backup would copy.
   db.exec('PRAGMA secure_delete = ON')
-  db.exec('BEGIN IMMEDIATE')
-  try {
+  transaction(db, () => {
     if (!keepComments)
       db.prepare('DELETE FROM public_comments WHERE account_id = ?').run(
         accountId,
       )
     db.prepare('DELETE FROM accounts WHERE id = ?').run(accountId)
-    db.exec('COMMIT')
-  } catch (error) {
-    db.exec('ROLLBACK')
-    throw error
-  }
+  })
 }

@@ -13,7 +13,7 @@ beforeEach(() => {
   vi.stubEnv('APP_ORIGIN', 'https://example.org')
   vi.stubEnv('GOOGLE_CLIENT_ID', 'test')
   vi.stubEnv('GOOGLE_CLIENT_SECRET', 'test')
-  const db = openDatabase()
+  const db = openDatabase(process.env.DATABASE_PATH!)
   for (const id of [1, 2, 3]) {
     db.prepare(
       'INSERT INTO accounts (id, google_sub, nickname) VALUES (?, ?, ?)',
@@ -150,10 +150,7 @@ test('a removal stays, without the removed text, and an older copy does not revi
   expect(await reply.json()).toMatchObject({
     data: { [note]: { at: 20, value: null } },
   })
-  const db = openDatabase()
-  const row = db.prepare('SELECT data FROM account_sync').get()
-  db.close()
-  expect(String(row?.data)).not.toContain('íntima')
+  expect(readRaw()).not.toContain('íntima')
 })
 
 test('a time from the future is held to the server clock, so a later edit wins', async () => {
@@ -207,7 +204,7 @@ test('account scoped merge survives stale devices, retries, empty uploads and ac
   await call(2, { consent: true })
   expect((await call(2, { data: latest, accountId: 1 })).status).toBe(409)
   expect(await (await call(2)).json()).toMatchObject({ data: {} })
-  const db = openDatabase()
+  const db = openDatabase(process.env.DATABASE_PATH!)
   db.prepare('DELETE FROM accounts WHERE id = 1').run()
   expect(
     db.prepare('SELECT * FROM account_sync WHERE account_id = 1').all(),

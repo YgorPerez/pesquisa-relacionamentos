@@ -10,8 +10,16 @@ import type {
 
 const REPORTS_TO_HIDE = 3
 const REPORTS_PER_HOUR = 20
-const HOUR = 3_600_000
 const PAGE_SIZE = 50
+
+export const HOUR = 3_600_000
+
+/** The name of a comment whose account is gone (ADR 0048). */
+export const REMOVED_READER = 'leitor removido'
+
+/** A comment `c` that readers see: not hidden, nor a reply to a hidden one. */
+export const SHOWN_COMMENT = `c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
+  (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))`
 
 /** A refusal the reader can be told about. Its message is PT-BR. */
 export class PublicCommentRefusal extends Error {}
@@ -36,8 +44,7 @@ export function recordReport(
   const comment = db
     .prepare(
       `SELECT c.path, c.account_id FROM public_comments c
-      WHERE c.id = ? AND c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
-        (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))`,
+      WHERE c.id = ? AND ${SHOWN_COMMENT}`,
     )
     .get(commentId)
   if (!comment) throw unavailable()
@@ -128,7 +135,7 @@ function curatorComment(
     path: String(row.path),
     quote: String(row.quote),
     body: String(row.body),
-    nickname: row.nickname === null ? 'leitor removido' : String(row.nickname),
+    nickname: row.nickname === null ? REMOVED_READER : String(row.nickname),
     createdAt: Number(row.created_at),
     editedAt: row.edited_at === null ? null : Number(row.edited_at),
     hidden: row.hidden === 1,

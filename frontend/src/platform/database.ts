@@ -40,11 +40,20 @@ const migrations: readonly string[] = [
     PRIMARY KEY (comment_id, account_id)
   ) STRICT;
   CREATE INDEX public_comment_report_rate ON public_comment_reports(account_id, reported_at);`,
+  // The app writes the key (`nicknameKey`, `accounts.ts`). Of nicknames already
+  // equal, the oldest keeps it and the others stay as they are, keyless: opening
+  // the database must not depend on what it holds.
+  `ALTER TABLE accounts ADD COLUMN nickname_key TEXT;
+  UPDATE accounts SET nickname_key = lower(nickname) WHERE nickname IS NOT NULL AND id =
+    (SELECT min(other.id) FROM accounts other WHERE lower(other.nickname) = lower(accounts.nickname));
+  CREATE UNIQUE INDEX accounts_nickname_key ON accounts(nickname_key);`,
 ]
 
-/** Server-only callers own and close the connection. No database opens at import. */
+/** Server-only callers own and close the connection. No database opens at import.
+ * The app's path comes from `serverEnv()`: this file imports nothing of the app,
+ * because the image runs it alone (`scripts/database-maintenance.ts`). */
 export function openDatabase(
-  path = process.env.DATABASE_PATH ?? '/data/app.sqlite',
+  path: string,
   changes: readonly string[] = migrations,
 ) {
   const db = new DatabaseSync(path)
