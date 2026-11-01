@@ -122,6 +122,31 @@ O Comentário de um leitor vira issue no repo privado `YgorPerez/pesquisa-relaci
 
 Os rótulos das issues são os quatro tipos do formulário: Está errado, Falta estudo, Não entendi, Outro.
 
+## Optional Google login (#558)
+
+Run `bash frontend/scripts/google-oauth-wizard.sh` to create the Google web
+application client yourself. The wizard writes a mode-600 file under
+`~/.config/tem-estudo/google-oauth.env`, outside the repository, and never deploys
+or changes GitHub secrets. Its stages cover consent, the client and a real-provider
+acceptance check. Follow Google's [OpenID Connect setup](https://developers.google.com/identity/openid-connect/openid-connect).
+
+Runtime values are `APP_ORIGIN` (the exact public origin without a trailing slash),
+`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. The registered callback is
+`<APP_ORIGIN>/auth/callback`; the only scope is `openid`. No session signing key is
+needed: sessions are random tokens whose hashes live in SQLite.
+
+After reviewing the file, the operator installs it as
+`/opt/temestudo/google-oauth.env`, owned by root, mode 600. Publish and rollback
+both pass this optional file to Docker after `app.env`; the comment-token writer
+does not modify it. No new GitHub secret is required. Without OAuth configuration,
+reading works and the login endpoint replies that login is unavailable.
+
+For local development, provide the same variables to the server process, using
+the worktree's localhost origin and a writable `DATABASE_PATH`. Use a separate
+Google client for localhost. The automated flow uses local fake token and UserInfo
+endpoints; real consent, client registration and production cookies still need the
+wizard's manual check.
+
 ## App database and encrypted backup (#557)
 
 The app image opens `/data/app.sqlite` before serving requests. Docker initializes the `temestudo-data` volume with a directory owned by uid 1000 (`node`), mode 700. Every publish and rollback mounts the same volume. Swapping images never restores or deletes reader data. `frontend/src/platform/database.ts` is the server access point and ordered migration registry; see [ADR 0044](adr/0044-sqlite-persists-reader-data-outside-the-app-image.md) for compatibility during blue/green and rollback. Server callers may override `DATABASE_PATH` for local use; the container always initializes `/data/app.sqlite`.

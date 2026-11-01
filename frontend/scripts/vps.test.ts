@@ -1,6 +1,6 @@
 // The deploy against a fake VPS (`fake-docker.ts`): the same plan that goes
 // over SSH, run in a bash, with no real Docker or Nginx.
-import { statSync } from 'node:fs'
+import { statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
 import { fakeFrontend, fakeVps } from './fake-docker.ts'
@@ -41,6 +41,19 @@ function aVps() {
 }
 
 describe.skipIf(process.platform === 'win32')('the deploy on the VPS', () => {
+  it('loads a separately provisioned OAuth runtime file on publish and rollback', () => {
+    const vps = aVps()
+    vps.publish(SHA_1)
+    writeFileSync(
+      join(vps.paths.folder, 'google-oauth.env'),
+      'APP_ORIGIN=https://example.org\nGOOGLE_CLIENT_ID=fake\nGOOGLE_CLIENT_SECRET=fake\n',
+      { mode: 0o600 },
+    )
+    vps.publish(SHA_2)
+    expect(vps.containerEnv('temestudo-app')).toContain('GOOGLE_CLIENT_ID=fake')
+    vps.rollback()
+    expect(vps.containerEnv('temestudo-app')).toContain('GOOGLE_CLIENT_ID=fake')
+  })
   it('keeps database rows through publish, failed swap and rollback', () => {
     const vps = aVps()
     vps.publish(SHA_1)
