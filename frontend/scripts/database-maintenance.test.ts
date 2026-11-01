@@ -9,7 +9,8 @@ it('restores an encrypted online snapshot including committed WAL data, and reje
   const folder = mkdtempSync(join(tmpdir(), 'restore-'))
   const source = join(folder, 'source.sqlite')
   const target = join(folder, 'restored.sqlite')
-  const db = openDatabase(source, ['CREATE TABLE example (value TEXT)'])
+  const db = openDatabase(source)
+  db.exec('CREATE TABLE example (value TEXT)')
   db.prepare('INSERT INTO example VALUES (?)').run('local restore evidence')
   const run = (mode: string, path: string, input?: Buffer) =>
     spawnSync(

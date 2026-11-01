@@ -199,6 +199,7 @@ NEW=${container}-novo
 docker rm -f "$NEW" >/dev/null 2>&1 || true
 ENV_FILE=()
 if [ -f ${APP_ENV} ]; then ENV_FILE=(--env-file ${APP_ENV}); fi
+if [ -f google-oauth.env ]; then ENV_FILE+=(--env-file google-oauth.env); fi
 docker run -d --name "$NEW" --restart unless-stopped --init \
   --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
   --log-opt max-size=10m --log-opt max-file=3 "${'$'}{ENV_FILE[@]}" \

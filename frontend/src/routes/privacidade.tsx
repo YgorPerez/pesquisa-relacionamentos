@@ -25,11 +25,30 @@ function Privacy() {
       <Column>
         <Display>Privacidade</Display>
         <Lead>
-          O site não tem conta nem login. O que você diz sobre você fica no seu
-          aparelho, e a gente conta as visitas sem saber quem você é.
+          Você pode ler tudo sem conta. O que você diz sobre você fica no seu
+          aparelho. Se entrar com Google, o site guarda uma conta com o apelido
+          que você escolher.
         </Lead>
 
         <OnTheDevice />
+        <Section className="prosa" aria-labelledby="p-conta">
+          <Headline id="p-conta">Se você entrar com Google</Headline>
+          <p>
+            O Google confirma sua conta com um identificador. Guardamos só esse
+            código, seu apelido e quando você declarou ter 18 anos ou mais e
+            aceitou as regras. Não guardamos seu nome, e-mail ou foto do Google.
+          </p>
+          <p>
+            Um cookie permite reconhecer sua conta por até 30 dias. Ele não pode
+            ser lido pelo JavaScript. Sair da conta encerra essa sessão; não
+            apaga a conta nem os dados que ficaram neste aparelho.
+          </p>
+          <p>
+            A conta fica no banco do servidor, com cópias de segurança
+            criptografadas. Quem administra o servidor pode ler esses dados.
+            Entrar ainda não envia seu Perfil, Grifos ou Notas ao servidor.
+          </p>
+        </Section>
         <InTheLink />
         <InAComment />
         <OnTheServer />

@@ -45,12 +45,12 @@ case "$1" in
   pull) grep -qxF "$3" "$E/images" || echo "$3" >> "$E/images" ;;
   volume) mkdir -p "$E/volumes/$3" ;;
   run)
-    shift; NAME=; PORT=; IMAGE=; ENV_FILE=; VOLUME=
+    shift; NAME=; PORT=; IMAGE=; ENV_FILES=(); VOLUME=
     while [ $# -gt 0 ]; do
       case "$1" in
         --name) NAME=$2; shift 2 ;;
         -p) PORT=$(echo "$2" | cut -d: -f2); shift 2 ;;
-        --env-file) ENV_FILE=$2; shift 2 ;;
+        --env-file) ENV_FILES+=("$2"); shift 2 ;;
         -v) VOLUME=$2; shift 2 ;;
         --restart|--tmpfs|--cap-drop|--security-opt|--log-opt) shift 2 ;;
         -*) shift ;;
@@ -61,7 +61,7 @@ case "$1" in
     [ ! -f "$C/$NAME" ] || { echo "Conflict: $NAME already exists" >&2; exit 125; }
     echo "$IMAGE" > "$C/$NAME"; echo "$PORT" > "$C/$NAME.port"
     if [ -n "$VOLUME" ]; then echo "$VOLUME" > "$C/$NAME.volume"; fi
-    if [ -n "$ENV_FILE" ]; then cp "$ENV_FILE" "$C/$NAME.env"; fi ;;
+    for ENV_FILE in "${'$'}{ENV_FILES[@]}"; do cat "$ENV_FILE" >> "$C/$NAME.env"; done ;;
   rm)
     [ -f "$C/$LAST" ] || { echo "No such container: $LAST" >&2; exit 1; }
     rm -f "$C/$LAST" "$C/$LAST.port" "$C/$LAST.stopped" "$C/$LAST.env" "$C/$LAST.volume" ;;
