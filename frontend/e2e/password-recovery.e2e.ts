@@ -25,11 +25,9 @@ test('a valid link changes the password without JavaScript or third-party reques
       id,
       `Reset ${id}`,
     )
-    db.prepare('INSERT INTO email_credentials VALUES (?, ?, ?)').run(
-      id,
-      `reset-${id}@example.org`,
-      'not-a-login-hash',
-    )
+    db.prepare(
+      'INSERT INTO email_credentials (account_id, email, password_hash) VALUES (?, ?, ?)',
+    ).run(id, `reset-${id}@example.org`, 'not-a-login-hash')
     db.prepare('INSERT INTO password_resets VALUES (?, ?, ?)').run(
       id,
       createHash('sha256').update(token).digest('base64url'),
@@ -49,4 +47,37 @@ test('a valid link changes the password without JavaScript or third-party reques
   expect(new URL(page.url()).search).toBe('')
   await page.goto(`/auth/reset?token=${token}`)
   await expect(page.getByRole('status')).toContainText('já foi usado')
+})
+
+test('a reset of an address nobody proved says that Google left the account', async ({
+  page,
+}) => {
+  const token = randomBytes(32).toString('base64url')
+  const id = randomInt(1, 2 ** 48 - 1)
+  seed((db) => {
+    db.prepare(
+      'INSERT INTO accounts (id, google_sub, nickname) VALUES (?, ?, ?)',
+    ).run(id, `linked-by-a-stranger-${id}`, `Reset ${id}`)
+    db.prepare(
+      'INSERT INTO email_credentials (account_id, email, password_hash) VALUES (?, ?, ?)',
+    ).run(id, `unproven-${id}@example.org`, 'not-a-login-hash')
+    db.prepare('INSERT INTO password_resets VALUES (?, ?, ?)').run(
+      id,
+      createHash('sha256').update(token).digest('base64url'),
+      Date.now() + 30 * 60_000,
+    )
+  })
+  await page.goto(`/auth/reset?token=${token}`)
+  await page.getByLabel('Nova senha').fill('a new password')
+  await page.getByRole('button', { name: 'Salvar nova senha' }).click()
+  await expect(page.getByRole('status')).toContainText(
+    'tiramos o Google desta conta',
+  )
+  expect(
+    seed(
+      (db) =>
+        db.prepare('SELECT google_sub FROM accounts WHERE id = ?').get(id)
+          ?.google_sub,
+    ),
+  ).toBeNull()
 })

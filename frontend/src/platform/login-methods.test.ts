@@ -459,13 +459,13 @@ test('adding an email takes a valid address and password, and tells when the mai
   expect(databaseRows('SELECT 1 FROM email_links')).toEqual([])
 })
 
-test('adding an email is limited by address, with the logins of that address', async () => {
+test('adding an email is limited by address', async () => {
   await register()
   const here = await googleLogin('google-reader')
   const add = () =>
     send('add-email', { email: registration.email, password: NEW }, here)
   // An address in use is refused before the hashing: this stays fast.
-  for (let attempt = 0; attempt < 9; attempt++)
+  for (let attempt = 0; attempt < 10; attempt++)
     expect(noticeOf(await add())).toBe('email-em-uso')
   expect(noticeOf(await add())).toBe('muitas-tentativas')
 })
@@ -568,7 +568,7 @@ const desk = (cookie: string) =>
     new Request('https://example.org/curadoria', { headers: { cookie } }),
   )
 
-test('the curator desk opens from any method of the curator account, and leaves with its Google subject', async () => {
+test('the curator desk opens from any method of the curator account, whose Google the server will not remove', async () => {
   const { here: google } = await askEmail('curator@example.org', CURATOR)
   const token = confirmationLink(mails.at(-1)!).searchParams.get('token')!
   await send('confirm-email', { token }, google)
@@ -576,18 +576,108 @@ test('the curator desk opens from any method of the curator account, and leaves 
   expect(desk(google)).not.toBeNull()
   expect(desk(password)).not.toBeNull()
 
-  const unchecked = await send('remove-method', { method: 'google' }, password)
-  expect(noticeOf(unchecked)).toBe('perde-curadoria')
+  const refused = await send('remove-method', { method: 'google' }, password)
+  expect(noticeOf(refused)).toBe('google-do-curador')
+  expect(who(password)).toMatchObject({ googleSub: CURATOR })
   expect(desk(password)).not.toBeNull()
+  expect(who(google)).not.toBeNull()
+  // The email may still go, and the desk stays with the Google.
+  expect(
+    noticeOf(await send('remove-method', { method: 'email' }, google)),
+  ).toBe('metodo-removido')
+  expect(desk(google)).not.toBeNull()
+})
 
-  const removed = await send(
-    'remove-method',
-    { method: 'google', 'lose-curator': 'on' },
-    password,
+/** The link a reset mail carries, asked for on the public form. */
+async function resetLink(email: string) {
+  const before = mails.length
+  await send('forgot', { email })
+  await expect.poll(() => mails.length).toBe(before + 1)
+  return new URL(
+    mails.at(-1)!.text.match(/https:\/\/\S+/)![0],
+  ).searchParams.get('token')!
+}
+const resetWith = (token: string) =>
+  send('reset', { token, password: 'third password' })
+
+test('the owner who resets an unproven email takes the account back from a Google a stranger linked', async () => {
+  // A stranger signs up with the victim's address and links their own Google.
+  const stranger = await register()
+  const account = who(stranger)!.id
+  const attempt = await startLink(stranger)
+  subject = 'google-of-the-stranger'
+  await open(attempt.callback, `${stranger}; ${attempt.oauth}`)
+  expect(who(stranger)?.googleSub).toBe('google-of-the-stranger')
+
+  const reset = await resetWith(await resetLink(registration.email))
+  expect(reset.status).toBe(200)
+  expect(await reset.text()).toContain('tiramos o Google desta conta')
+  expect(who(stranger)).toBeNull()
+
+  // The stranger's way back opens a new, empty account, and not this one.
+  const back = await googleLogin('google-of-the-stranger')
+  expect(who(back)?.id).not.toBe(account)
+  const owner = signedIn(await login(registration.email, 'third password'))
+  expect(who(owner)).toMatchObject({ id: account, googleSub: null })
+})
+
+test('a reset proves the address once: a Google linked after it survives the next reset', async () => {
+  const first = await register()
+  await resetWith(await resetLink(registration.email))
+  expect(who(first)).toBeNull()
+  const owner = signedIn(await login(registration.email, 'third password'))
+  const attempt = await startLink(owner)
+  subject = 'google-of-the-owner'
+  await open(attempt.callback, `${owner}; ${attempt.oauth}`)
+  const id = who(owner)!.id
+
+  const reset = await resetWith(await resetLink(registration.email))
+  expect(reset.status).toBe(200)
+  expect(await reset.text()).not.toContain('tiramos o Google')
+  expect(who(await googleLogin('google-of-the-owner'))?.id).toBe(id)
+})
+
+test('an address the confirmation link proved keeps its Google through a reset', async () => {
+  const { here, token } = await askEmail('proven@example.org', 'google-proven')
+  await send('confirm-email', { token }, here)
+  const id = who(here)!.id
+  const reset = await resetWith(await resetLink('proven@example.org'))
+  expect(reset.status).toBe(200)
+  expect(await reset.text()).not.toContain('tiramos o Google')
+  expect(who(await googleLogin('google-proven'))?.id).toBe(id)
+})
+
+test('a reset of an unproven email on the curator account changes nothing, says so, and spends the link', async () => {
+  const here = await register()
+  const attempt = await startLink(here)
+  subject = CURATOR
+  await open(attempt.callback, `${here}; ${attempt.oauth}`)
+  expect(desk(here)).not.toBeNull()
+
+  const token = await resetLink(registration.email)
+  const refused = await resetWith(token)
+  expect(refused.status).toBe(409)
+  const screen = await refused.text()
+  expect(screen).toContain('A senha não mudou')
+  expect(screen).not.toMatch(/curador/i)
+
+  expect(who(here)).toMatchObject({ googleSub: CURATOR })
+  expect(desk(here)).not.toBeNull()
+  expect((await login(registration.email, 'third password')).status).toBe(400)
+  expect((await login(registration.email, OLD)).status).toBe(303)
+  expect((await resetWith(token)).status).toBe(400)
+})
+
+test('the curator with a proven email resets the password, keeps Google and keeps the desk', async () => {
+  const { here, token } = await askEmail('curator@example.org', CURATOR)
+  await send('confirm-email', { token }, here)
+  expect((await resetWith(await resetLink('curator@example.org'))).status).toBe(
+    200,
   )
-  expect(noticeOf(removed)).toBe('metodo-removido')
-  expect(who(password)).toMatchObject({ googleSub: null })
-  expect(desk(password)).toBeNull()
+  expect(desk(await googleLogin(CURATOR))).not.toBeNull()
+  expect(
+    desk(signedIn(await login('curator@example.org', 'third password'))),
+  ).not.toBeNull()
 })
 
 test('the page learns the methods, never the subject, and only what this server can do', async () => {

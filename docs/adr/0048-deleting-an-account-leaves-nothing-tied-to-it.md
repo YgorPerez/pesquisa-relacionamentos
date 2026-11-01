@@ -12,7 +12,7 @@ Spec #556 decided that deleting an account removes everything by default, with t
 - **Account ids are random and never reused.** SQLite reuses the highest rowid after a delete, and a device holds its account's id as its sync binding. With a reused id, a device still joined to a deleted account could upload the deleted data to a later account without asking. A random 48-bit id needs no record of the deleted account, which a high-water mark or a tombstone would keep. Coming back with the same Google subject is a new account.
 - **Device data stays on the device.** It was the reader's before any account, and the site cannot reach the other devices anyway. The deleting browser drops its binding and sync journal. Another joined device keeps both until it joins a new account, which asks first. The one-minute `deleted` cookie tells `/conta` to do this. A query parameter would let a link make a device forget its sync.
 - **The form works without JavaScript**: a typed word, checked by the browser and again by the server. Without JavaScript the "keep" checkbox does not toggle, which leaves the default.
-- **`secure_delete` on the deleting connection**, so the text does not sit in free pages that the daily snapshot copies.
+- **`secure_delete` on every connection** (`openDatabase`), so the deleted text does not sit in free pages that the daily snapshot copies.
 
 ## Consequences
 

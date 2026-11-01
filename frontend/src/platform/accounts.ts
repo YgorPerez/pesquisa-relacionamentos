@@ -1,12 +1,22 @@
-import { createHash, randomBytes, randomInt } from 'node:crypto'
+import { randomBytes } from 'node:crypto'
 import { existsSync } from 'node:fs'
+import type { DatabaseSync } from 'node:sqlite'
 import type { AccountMethods, MethodNotice } from '#/content/method-notice'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
-import { REMOVED_READER } from './public-comment-moderation'
+import { isCuratorSubject } from './public-comment-moderation'
 import { serverEnv } from './server-env'
-import { allowEmailAttempt, emailAccount } from './email-accounts'
+import {
+  allowEmailAttempt,
+  emailAccount,
+  newAccountId,
+  nicknameFrom,
+  normalizeEmail,
+  tokenHash as hash,
+  validPassword,
+} from './email-accounts'
+import { transaction } from './transaction'
 import {
   changePassword,
   confirmEmailLink,
@@ -46,18 +56,10 @@ export type Account = {
   googleSub: string | null
   nickname: string | null
 }
-const hash = (value: string) =>
-  createHash('sha256').update(value).digest('base64url')
 const random = () => randomBytes(32).toString('base64url')
-/** What makes two nicknames the same to a reader: case, in any alphabet (SQLite's
- * `lower` knows only ASCII), Unicode forms and repeated spaces (ADR 0045). */
-const nicknameKey = (nickname: string) =>
-  nickname.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim()
 const SESSION_SECONDS = 30 * 24 * 60 * 60
 /** Long enough for the redirect to `/conta` to read it. */
 const DELETION_NOTICE_SECONDS = 60
-/** The largest range `randomInt` takes, and still a safe integer in JSON. */
-const ACCOUNT_ID_RANGE = 2 ** 48 - 1
 const response = (status: number, message: string) =>
   new Response(message, {
     status,
@@ -262,40 +264,40 @@ class AccountService {
   private session(request: Request, sub: string) {
     const db = this.database()
     try {
-      // A random id, never reused: a device joined to a deleted account holds
-      // its id, and must not find it again on a later account (ADR 0048).
-      db.prepare(
-        'INSERT INTO accounts (id, google_sub) VALUES (?, ?) ON CONFLICT DO NOTHING',
-      ).run(randomInt(1, ACCOUNT_ID_RANGE), sub)
-      const account = db
-        .prepare('SELECT id FROM accounts WHERE google_sub = ?')
-        .get(sub)!
-      return this.createSession(request, Number(account.id))
+      // One transaction: a reset that unlinks this Google cannot land between
+      // finding the account and giving it a session.
+      return transaction(db, () => {
+        // A random id, never reused: a device joined to a deleted account holds
+        // its id, and must not find it again on a later account (ADR 0048).
+        db.prepare(
+          'INSERT INTO accounts (id, google_sub) VALUES (?, ?) ON CONFLICT DO NOTHING',
+        ).run(newAccountId(), sub)
+        const account = db
+          .prepare('SELECT id FROM accounts WHERE google_sub = ?')
+          .get(sub)!
+        return this.createSession(db, request, Number(account.id))
+      })
     } finally {
       db.close()
     }
   }
-  private createSession(request: Request, accountId: number) {
-    const db = this.database()
-    try {
-      const token = random()
-      db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
-        hash(token),
-        accountId,
-        this.now() + SESSION_SECONDS * 1000,
+  /** Inside the caller's transaction. */
+  private createSession(db: DatabaseSync, request: Request, accountId: number) {
+    const token = random()
+    db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
+      hash(token),
+      accountId,
+      this.now() + SESSION_SECONDS * 1000,
+    )
+    const previous = this.readCookie(request, this.sessionName)
+    if (previous)
+      db.prepare('DELETE FROM account_sessions WHERE token_hash = ?').run(
+        hash(previous),
       )
-      const previous = this.readCookie(request, this.sessionName)
-      if (previous)
-        db.prepare('DELETE FROM account_sessions WHERE token_hash = ?').run(
-          hash(previous),
-        )
-      return redirect([
-        this.cookie(this.sessionName, token, SESSION_SECONDS),
-        this.cookie(this.stateName, '', 0),
-      ])
-    } finally {
-      db.close()
-    }
+    return redirect([
+      this.cookie(this.sessionName, token, SESSION_SECONDS),
+      this.cookie(this.stateName, '', 0),
+    ])
   }
   private async callback(request: Request, url: URL) {
     const state = url.searchParams.get('state'),
@@ -394,18 +396,10 @@ class AccountService {
   private async nickname(request: Request, account: Account) {
     const form = await readForm(request)
     if (form instanceof Response) return form
-    const nickname = form.get('nickname')?.trim() ?? ''
-    if (
-      nickname.length < 2 ||
-      nickname.length > 40 ||
-      /[\p{C}<>]/u.test(nickname) ||
-      form.get('adult') !== 'on' ||
-      form.get('rules') !== 'on'
-    )
-      return redirect([], `/conta?recusa=${NICKNAME_INVALID}`)
-    const key = nicknameKey(nickname)
-    if (key === REMOVED_READER)
-      return redirect([], `/conta?recusa=${NICKNAME_TAKEN}`)
+    const chosen = nicknameFrom(form)
+    if (!chosen) return redirect([], `/conta?recusa=${NICKNAME_INVALID}`)
+    if (!chosen.free) return redirect([], `/conta?recusa=${NICKNAME_TAKEN}`)
+    const { nickname, key } = chosen
     const db = this.database()
     try {
       // IGNORE: the unique index is what decides between two readers at once.
@@ -477,10 +471,7 @@ class AccountService {
     return hash(this.readCookie(request, this.sessionName) ?? '')
   }
   private isCurator(account: Account) {
-    return (
-      account.googleSub !== null &&
-      account.googleSub === this.options.curatorSub
-    )
+    return isCuratorSubject(account.googleSub, this.options.curatorSub)
   }
   /** What the account page may know: the reader's own address, no subject. */
   methods(account: Account): AccountMethods {
@@ -500,20 +491,17 @@ class AccountService {
       db.close()
     }
   }
-  /** `CURATOR_GOOGLE_SUB` names the curator, so removing Google leaves the desk:
-   * the form asks for that to be said, and the server holds it to it. */
+  /** `CURATOR_GOOGLE_SUB` names the curator: without that Google this account is
+   * denied, and a later login with it opens a new account, which is the curator's.
+   * So it stays here, whatever a form says. */
   private async removeMethod(request: Request, account: Account) {
     const form = await readForm(request)
     if (form instanceof Response) return form
     const method = form.get('method')
     if (method !== 'google' && method !== 'email')
       return response(400, 'Método desconhecido.')
-    if (
-      method === 'google' &&
-      this.isCurator(account) &&
-      form.get('lose-curator') !== 'on'
-    )
-      return noticeRedirect('perde-curadoria')
+    if (method === 'google' && this.isCurator(account))
+      return noticeRedirect('google-do-curador')
     const db = this.database()
     try {
       return noticeRedirect(
@@ -669,7 +657,7 @@ class AccountService {
       if (request.method === 'GET') return recoveryPage({})
       const form = await readForm(request)
       if (form instanceof Response) return form
-      const email = form.get('email')?.trim().toLowerCase() ?? ''
+      const email = normalizeEmail(form.get('email'))
       // Defer all lookup, rate limiting and provider I/O until the identical
       // answer is returned. Provider latency and failure cannot affect it.
       setImmediate(() => {
@@ -687,14 +675,28 @@ class AccountService {
         return recoveryPage({ message: RECOVERY.invalid }, 400)
       if (request.method === 'GET') return recoveryPage({ token })
       const password = form.get('password') ?? ''
-      if (password.length < 8 || password.length > 1024)
+      if (!validPassword(password))
         return recoveryPage({ token, message: RECOVERY.short }, 400)
-      return (await resetPassword(db, token, password, this.now))
-        ? recoveryPage({ message: RECOVERY.done, disabled: true })
-        : recoveryPage({ message: RECOVERY.invalid }, 400)
+      return await this.finishReset(db, token, password)
     } finally {
       db.close()
     }
+  }
+  private async finishReset(db: DatabaseSync, token: string, password: string) {
+    const result = await resetPassword(db, token, password, this.now, {
+      rateKey: this.options.emailRateLimitKey!,
+      curatorSub: this.options.curatorSub,
+    })
+    if (result === 'invalid')
+      return recoveryPage({ message: RECOVERY.invalid }, 400)
+    if (result === 'curator-unproven')
+      return recoveryPage(
+        { message: RECOVERY.keptUnproven, disabled: true },
+        409,
+      )
+    const message =
+      result === 'google-removed' ? RECOVERY.doneGoogleRemoved : RECOVERY.done
+    return recoveryPage({ message, disabled: true })
   }
   private async deliverRecovery(request: Request, email: string) {
     // Never expose database/provider exceptions containing a recipient/token.
@@ -709,6 +711,25 @@ class AccountService {
       /* Recovery is best effort after the response. */
     }
   }
+  /** Covers an idle site. With the server up, the hourly pass is what bounds a row:
+   * a rate limit expires in 15 minutes, so it lives at most 75; a pending address or
+   * reset link expires in 30, so it lives at most 90. `/privacidade` states these. */
+  eraseExpired() {
+    const path = this.options.databasePath ?? serverEnv().DATABASE_PATH
+    if (!this.emailConfigured() || !existsSync(path)) return
+    const db = this.database()
+    try {
+      for (const table of [
+        'email_rate_limits',
+        'password_resets',
+        'email_links',
+        'google_link_attempts',
+      ])
+        db.prepare(`DELETE FROM ${table} WHERE expires_at <= ?`).run(this.now())
+    } finally {
+      db.close()
+    }
+  }
   private async email(request: Request, register: boolean) {
     if (!this.emailConfigured())
       return response(503, 'O login com e-mail está indisponível.')
@@ -716,12 +737,12 @@ class AccountService {
     if (form instanceof Response) return form
     const db = this.database()
     try {
-      const email = form.get('email')?.trim().toLowerCase() ?? ''
       if (
         !allowEmailAttempt(
           db,
           request,
-          email,
+          normalizeEmail(form.get('email')),
+          register ? 'register' : 'login',
           this.options.emailRateLimitKey!,
           this.now(),
         )
@@ -731,9 +752,19 @@ class AccountService {
           'Muitas tentativas. Espere 15 minutos e tente de novo.',
         )
       const result = await emailAccount(db, form, register, this.now())
-      return typeof result === 'number'
-        ? this.createSession(request, result)
-        : response(400, result)
+      if ('refusal' in result) return response(400, result.refusal)
+      // scrypt ran off the lock: the password may have changed since, and that
+      // ended every session this one must not outlive.
+      const session = transaction(db, () =>
+        db
+          .prepare(
+            'SELECT 1 FROM email_credentials WHERE account_id = ? AND password_hash = ?',
+          )
+          .get(result.accountId, result.passwordHash)
+          ? this.createSession(db, request, result.accountId)
+          : null,
+      )
+      return session ?? response(400, 'E-mail ou senha incorretos.')
     } finally {
       db.close()
     }
@@ -775,24 +806,19 @@ export function getAccountMethods(account: Account) {
 export function handleAccountRequest(request: Request) {
   return accountsFromEnvironment().handle(request)
 }
-/** Hourly erasure also covers an idle site; expiry is 15 minutes, retention <24h. */
-export function pruneEmailRateLimits() {
-  const env = serverEnv()
-  if (!existsSync(env.DATABASE_PATH)) return
-  const db = openDatabase(env.DATABASE_PATH)
+/** Never throws: this runs on a timer, and a page must not fall with it. */
+export function eraseExpiredEmailData(service = accountsFromEnvironment) {
   try {
-    db.prepare('DELETE FROM email_rate_limits WHERE expires_at <= ?').run(
-      Date.now(),
-    )
-    db.prepare('DELETE FROM password_resets WHERE expires_at <= ?').run(
-      Date.now(),
-    )
-    // A link's address and hashed password wait here no longer than this hour.
-    db.prepare('DELETE FROM email_links WHERE expires_at <= ?').run(Date.now())
-    db.prepare('DELETE FROM google_link_attempts WHERE expires_at <= ?').run(
-      Date.now(),
-    )
-  } finally {
-    db.close()
+    service().eraseExpired()
+  } catch {
+    console.error('Could not erase expired email data.')
   }
+}
+const FIRST_ERASURE_MS = 60_000
+const ERASURE_MS = 60 * 60_000
+/** Opens nothing now: the first pass waits for a running server, since reading
+ * needs no database (ADR 0045). Both timers let the process exit. */
+export function scheduleEmailErasure(service = accountsFromEnvironment) {
+  setTimeout(() => eraseExpiredEmailData(service), FIRST_ERASURE_MS).unref()
+  setInterval(() => eraseExpiredEmailData(service), ERASURE_MS).unref()
 }

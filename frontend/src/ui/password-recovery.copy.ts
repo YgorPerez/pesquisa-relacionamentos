@@ -15,5 +15,9 @@ export const RECOVERY = {
   short: 'A senha precisa ter de 8 a 1024 caracteres.',
   note: 'Use pelo menos 8 caracteres. A nova senha encerra o acesso em todos os aparelhos e mantém os dados da conta.',
   done: 'Senha alterada. Entre com a nova senha. Seus dados continuam na conta.',
+  doneGoogleRemoved:
+    'Senha alterada. Por segurança, tiramos o Google desta conta: este e-mail nunca tinha sido confirmado, então esse Google pode ter sido ligado por outra pessoa. Entre com a nova senha. Se o Google era seu, ligue-o de novo em Sua conta. Seus dados continuam na conta.',
+  keptUnproven:
+    'A senha não mudou. Este e-mail nunca foi confirmado, e esta conta precisa manter o Google que tem. Para recuperar a senha por e-mail, entre com esse Google, tire o e-mail em Sua conta e ligue-o de novo: o link de confirmação prova o endereço.',
   back: 'Voltar à conta',
 }

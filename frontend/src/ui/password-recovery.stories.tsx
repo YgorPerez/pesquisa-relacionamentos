@@ -14,3 +14,9 @@ export const Unavailable: Story = {
   args: { disabled: true, message: RECOVERY.unavailable },
 }
 export const Expired: Story = { args: { message: RECOVERY.invalid } }
+export const GoogleRemoved: Story = {
+  args: { disabled: true, message: RECOVERY.doneGoogleRemoved },
+}
+export const KeptUnproven: Story = {
+  args: { disabled: true, message: RECOVERY.keptUnproven },
+}

@@ -1,15 +1,98 @@
-import { mkdtempSync, rmSync } from 'node:fs'
+import { existsSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
-import { afterEach, beforeEach, expect, test } from 'vite-plus/test'
-import { createAccounts } from './accounts'
+import { afterEach, beforeEach, expect, test, vi } from 'vite-plus/test'
+import {
+  createAccounts,
+  eraseExpiredEmailData,
+  scheduleEmailErasure,
+} from './accounts'
+
+const databaseWithExpiredLimit = (path: string) => {
+  // Any lookup with a session cookie opens, and so migrates, the database.
+  createAccounts({
+    databasePath: path,
+    origin: 'https://example.org',
+    emailRateLimitKey: 'key',
+  }).current(
+    new Request('https://example.org/', {
+      headers: { cookie: '__Host-session=nobody' },
+    }),
+  )
+  const db = new DatabaseSync(path)
+  db.exec(`INSERT INTO email_rate_limits VALUES ('old', 1, 1)`)
+  db.exec(`INSERT INTO email_rate_limits VALUES ('live', 1, 9999999999999)`)
+  db.close()
+}
+const limitsIn = (path: string) => {
+  const db = new DatabaseSync(path)
+  try {
+    return db
+      .prepare('SELECT key_hash FROM email_rate_limits ORDER BY key_hash')
+      .all()
+      .map((row) => row.key_hash)
+  } finally {
+    db.close()
+  }
+}
 
 let folder: string
 beforeEach(() => {
   folder = mkdtempSync(join(tmpdir(), 'email-accounts-'))
 })
 afterEach(() => rmSync(folder, { recursive: true, force: true }))
+
+test('the erasure removes what expired, and only with email on', () => {
+  const path = join(folder, 'app.sqlite')
+  databaseWithExpiredLimit(path)
+  const off = createAccounts({ databasePath: path })
+  eraseExpiredEmailData(() => off)
+  expect(limitsIn(path)).toEqual(['live', 'old'])
+  const on = createAccounts({
+    databasePath: path,
+    origin: 'https://example.org',
+    emailRateLimitKey: 'key',
+  })
+  eraseExpiredEmailData(() => on)
+  expect(limitsIn(path)).toEqual(['live'])
+})
+
+test('the erasure creates no database, and one that cannot open fails nothing', () => {
+  const email = { origin: 'https://example.org', emailRateLimitKey: 'key' }
+  const missing = join(folder, 'missing.sqlite')
+  eraseExpiredEmailData(() =>
+    createAccounts({ ...email, databasePath: missing }),
+  )
+  expect(existsSync(missing)).toBe(false)
+  const logged = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+  // The folder exists and is no database.
+  expect(() =>
+    eraseExpiredEmailData(() =>
+      createAccounts({ ...email, databasePath: folder }),
+    ),
+  ).not.toThrow()
+  expect(logged).toHaveBeenCalledOnce()
+  logged.mockRestore()
+})
+
+test('scheduling opens nothing: the first pass waits a minute, the next ones an hour', () => {
+  vi.useFakeTimers()
+  try {
+    const eraseExpired = vi.fn<() => void>()
+    const service = () =>
+      ({ eraseExpired }) as unknown as ReturnType<typeof createAccounts>
+    scheduleEmailErasure(service)
+    expect(eraseExpired).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(60_000)
+    expect(eraseExpired).toHaveBeenCalledTimes(1)
+    vi.advanceTimersByTime(60 * 60_000)
+    expect(eraseExpired).toHaveBeenCalledTimes(2)
+  } finally {
+    vi.clearAllTimers()
+    vi.useRealTimers()
+  }
+})
 
 test('an email reader registers, leaves and logs in with a normalized address without Google', async () => {
   const accounts = createAccounts({
@@ -179,7 +262,7 @@ test('IP throttling uses the last Nginx hop and expires, while email throttling 
     expect(
       (
         await post(
-          'login',
+          'register',
           { email: ' READER@EXAMPLE.ORG ', password: 'x'.repeat(1025) },
           { 'x-forwarded-for': `198.51.100.${n + 2}` },
         )

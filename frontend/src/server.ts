@@ -4,7 +4,7 @@ import library from 'virtual:library'
 import { withRedirects } from '#/platform/redirects'
 import { withRequestLog } from '#/platform/request-log'
 import { preloadPlot } from '#/ui/visual-chart-loader'
-import { handleAccountRequest, pruneEmailRateLimits } from '#/platform/accounts'
+import { handleAccountRequest, scheduleEmailErasure } from '#/platform/accounts'
 import { handleSyncRequest } from '#/platform/sync'
 
 // The TanStack Start server, with each request logged without the query and
@@ -12,8 +12,7 @@ import { handleSyncRequest } from '#/platform/sync'
 // `platform/request-log.ts`). Before the app, the 301s for the trailing
 // slash and for `antes` (`platform/redirects.ts`).
 const plotReady = preloadPlot()
-pruneEmailRateLimits()
-setInterval(pruneEmailRateLimits, 60 * 60_000).unref()
+scheduleEmailErasure()
 const app = withRequestLog(
   withRedirects(
     redirects(library),

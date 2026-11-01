@@ -137,9 +137,24 @@ function WithGoogle() {
         Se você ligar um e-mail a essa conta, guardamos o endereço que você
         digitou, como na seção abaixo, mesmo que seja o do seu Gmail. Em{' '}
         <Link to="/conta">Sua conta</Link>, “Tirar Google” apaga o código, desde
-        que a conta tenha um e-mail para você continuar entrando.
+        que a conta tenha um e-mail para você continuar entrando. A exceção é a
+        conta do curador: é por esse Google que o site a reconhece, então ele
+        não pode sair dela.
       </p>
     </Section>
+  )
+}
+
+function ProvenAddress() {
+  return (
+    <p>
+      Guardamos também se o endereço já foi confirmado. Ele fica confirmado pelo
+      link de confirmação ou pela primeira recuperação de senha. Se um endereço
+      ainda não confirmado recupera a senha e a conta tem um Google, esse Google
+      sai da conta, e a tela avisa: ele pode ter sido ligado por quem usou o seu
+      e-mail. A exceção é a conta do curador, em que a recuperação recusa a
+      troca e nada muda.
+    </p>
   )
 }
 
@@ -171,6 +186,7 @@ function WithEmail() {
         qualquer um pode descobrir, dentro do limite de tentativas, se um
         endereço está cadastrado.
       </p>
+      <ProvenAddress />
       <p>
         Para ligar um e-mail a uma conta que já existe, mandamos um link de
         confirmação. Enquanto ele não é aberto, o endereço e a impressão da
@@ -183,9 +199,10 @@ function WithEmail() {
         senha e ligar um e-mail, o banco anota um contador com uma impressão do
         e-mail e outra do IP, feitas com uma chave secreta. Elas não ficam
         ligadas a nenhuma conta, e quem tem a chave e o banco pode conferir se
-        um endereço ou IP aparece ali. O limite vale por 15 minutos. O servidor
-        apaga essas anotações na tentativa seguinte de qualquer leitor e de hora
-        em hora, então com ele no ar nenhuma passa de 1 hora e 15 minutos.
+        um endereço ou IP aparece ali. Cada formulário conta à parte, e o limite
+        vale por 15 minutos. O servidor apaga essas anotações na tentativa
+        seguinte de qualquer leitor e de hora em hora, então com ele no ar
+        nenhuma passa de 1 hora e 15 minutos.
       </p>
       <p>
         Em <Link to="/conta">Sua conta</Link>, “Tirar e-mail” apaga o endereço e

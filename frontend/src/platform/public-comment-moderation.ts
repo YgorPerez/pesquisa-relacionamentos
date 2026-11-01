@@ -17,6 +17,10 @@ export const HOUR = 3_600_000
 /** The name of a comment whose account is gone (ADR 0048). */
 export const REMOVED_READER = 'leitor removido'
 
+/** `CURATOR_GOOGLE_SUB` names the curator; unset, nobody is. */
+export const isCuratorSubject = (subject: unknown, curator?: string) =>
+  Boolean(curator) && subject === curator
+
 /** A comment `c` that readers see: not hidden, nor a reply to a hidden one. */
 export const SHOWN_COMMENT = `c.hidden = 0 AND (c.parent_id IS NULL OR EXISTS
   (SELECT 1 FROM public_comments p WHERE p.id = c.parent_id AND p.hidden = 0))`

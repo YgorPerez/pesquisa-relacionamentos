@@ -17,7 +17,7 @@ import { Agreement } from './agreement'
 import { LoginMethods, MethodMessage } from './login-methods'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
-import { Input } from './shadcn/input'
+import { Field, FieldForm } from './field'
 import { Section, Headline } from './section'
 import {
   ACCOUNT,
@@ -121,30 +121,22 @@ function SyncSettings({
  * the server checks all of it again, and a refusal comes back to this page. */
 function NicknameForm({ refusal }: { refusal?: NicknameRefusal }) {
   return (
-    <form
-      action="/auth/nickname"
-      method="post"
-      className="mt-md flex flex-col items-start gap-sm"
-    >
+    <FieldForm action="/auth/nickname">
       {refusal && <p role="alert">{NICKNAME_REFUSAL[refusal]}</p>}
-      <label className="flex w-full flex-col gap-xs" htmlFor="nickname">
-        {ACCOUNT.nickname}
-        <Input
-          id="nickname"
-          name="nickname"
-          className="w-full"
-          minLength={2}
-          maxLength={40}
-          required
-          autoComplete="off"
-        />
-      </label>
+      <Field
+        id="nickname"
+        label={ACCOUNT.nickname}
+        name="nickname"
+        minLength={2}
+        maxLength={40}
+        autoComplete="off"
+      />
       <p>{ACCOUNT_RULES}</p>
       <Agreement name="adult">{ACCOUNT.adult}</Agreement>
       <Agreement name="rules">{ACCOUNT.rules}</Agreement>
       <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
       <SiteButton type="submit">{ACCOUNT.createNickname}</SiteButton>
-    </form>
+    </FieldForm>
   )
 }
 
@@ -155,49 +147,35 @@ function EmailForm({ register = false }: { register?: boolean }) {
       <Headline id={`email-${prefix}`}>
         {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
       </Headline>
-      <form
-        action={`/auth/${prefix}`}
-        method="post"
-        className="mt-md flex flex-col items-start gap-sm"
-      >
-        <label
-          htmlFor={`${prefix}-email`}
-          className="flex w-full flex-col gap-xs"
-        >
-          {register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin}
-          <Input
-            id={`${prefix}-email`}
-            className="w-full"
-            name="email"
-            type="email"
-            maxLength={254}
-            required
-            autoComplete="email"
-          />
-        </label>
-        <label
-          htmlFor={`${prefix}-password`}
-          className="flex w-full flex-col gap-xs"
-        >
-          {register
-            ? EMAIL_ACCOUNT.passwordRegister
-            : EMAIL_ACCOUNT.passwordLogin}
-          <Input
-            id={`${prefix}-password`}
-            className="w-full"
-            name="password"
-            type="password"
-            minLength={register ? 8 : undefined}
-            maxLength={1024}
-            required
-            autoComplete={register ? 'new-password' : 'current-password'}
-          />
-        </label>
+      <FieldForm action={`/auth/${prefix}`}>
+        <Field
+          id={`${prefix}-email`}
+          label={
+            register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin
+          }
+          name="email"
+          type="email"
+          maxLength={254}
+          autoComplete="email"
+        />
+        <Field
+          id={`${prefix}-password`}
+          label={
+            register
+              ? EMAIL_ACCOUNT.passwordRegister
+              : EMAIL_ACCOUNT.passwordLogin
+          }
+          name="password"
+          type="password"
+          minLength={register ? 8 : undefined}
+          maxLength={1024}
+          autoComplete={register ? 'new-password' : 'current-password'}
+        />
         {register && <EmailRegistration />}
         <SiteButton type="submit">
           {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
         </SiteButton>
-      </form>
+      </FieldForm>
     </Section>
   )
 }
@@ -206,21 +184,14 @@ function EmailRegistration() {
   return (
     <>
       <p className="text-nota text-tinta-2">{EMAIL_ACCOUNT.passwordNote}</p>
-      <label
-        htmlFor="register-nickname"
-        className="flex w-full flex-col gap-xs"
-      >
-        {ACCOUNT.nickname}
-        <Input
-          id="register-nickname"
-          className="w-full"
-          name="nickname"
-          minLength={2}
-          maxLength={40}
-          required
-          autoComplete="off"
-        />
-      </label>
+      <Field
+        id="register-nickname"
+        label={ACCOUNT.nickname}
+        name="nickname"
+        minLength={2}
+        maxLength={40}
+        autoComplete="off"
+      />
       <p>{ACCOUNT_RULES}</p>
       <Agreement name="adult">{ACCOUNT.adult}</Agreement>
       <Agreement name="rules">{ACCOUNT.rules}</Agreement>

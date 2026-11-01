@@ -18,9 +18,6 @@ export function deleteAccount(
   accountId: number,
   keepComments: boolean,
 ) {
-  // Zeroes what it deletes, so the text does not live on in the file's free
-  // pages, which a backup would copy.
-  db.exec('PRAGMA secure_delete = ON')
   transaction(db, () => {
     if (!keepComments)
       db.prepare('DELETE FROM public_comments WHERE account_id = ?').run(

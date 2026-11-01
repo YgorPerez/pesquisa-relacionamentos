@@ -12,7 +12,16 @@ account for comments, curator access and synchronization.
 Password recovery uses 256-bit random tokens, stored only as SHA-256 hashes.
 One live token per account expires after 30 minutes; a new request replaces it.
 Consumption, password update and revocation of every account session share one
-SQLite transaction. Account data stays. Known addresses receive the link;
+SQLite transaction. Account data stays. `email_credentials.confirmed` says whether
+a mailbox proved the address: sign-up leaves it 0, the confirmation link and a reset
+set it, and rows from before the column are 0. A reset of an unproven address also
+unlinks the account's Google and tells the reader, because a stranger who registered
+someone's address could have linked their own Google to return after the owner's
+reset. A proven address keeps Google. On the curator's account an unproven reset
+changes nothing and spends the link: unlinking would lose the desk, and keeping Google
+while the password changes would hand the desk to whoever holds an address nobody
+proved. The curator removes that email from `/conta` and adds it again through the
+link. The screen does not name the curator. Known addresses receive the link;
 unknown addresses receive a plain notice. Both and rate-limited/provider-failed
 requests return the same page before deferred delivery starts. `allowEmailAttempt`
 bounds mail by email and IP. A process restart may lose pending delivery.
@@ -54,15 +63,24 @@ Passwords require eight characters without composition rules. Scrypt uses
 N=32768, r=8, p=1 with a fresh 16-byte salt; comparison is constant-time. An
 unknown email still runs scrypt with the same parameters and has the same
 login refusal as a wrong password. Signup explicitly reports an email in use.
+scrypt runs off the database's lock, so a login creates its session in a transaction
+that re-reads the stored hash and refuses if it differs from the one verified: a reset
+or a password change cannot be outlived by a login that passed the old password.
 
 Email login stays off without `EMAIL_RATE_LIMIT_KEY` and `APP_ORIGIN`.
-Login, signup, recovery, adding an email and changing the password share a limit
-of ten attempts per fifteen minutes for each normalized email and IP. Only
+Login, signup, recovery, adding an email and changing the password each count apart,
+for each normalized email and IP: ten attempts per fifteen minutes, and three per
+email for recovery, since each one mails that address. Separate counts mean a stranger's
+wrong logins never spend the owner's reset, and whoever spends the three leaves the
+owner a live link in the inbox. A successful reset clears that email's login count.
+Up to the limit, a stranger can still hold off an address's logins for fifteen
+minutes, which the map records as an accepted risk. Only
 HMAC-SHA256 keys and counters are stored, tied to no account, so deleting an account
-leaves them to expire. Expired rows are erased on attempts, on server startup and
-hourly, including idle periods, which keeps a row about 75 minutes at most while the
-server runs: tighter than the 24 hours #572 allowed, and `/privacidade` states this
-number. A daily backup can still hold the rows of that moment. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
+leaves them to expire. Expired rows are erased on attempts, a minute after the server
+starts and hourly, including idle periods, which keeps a row about 75 minutes at most
+while the server runs: tighter than the 24 hours #572 allowed, and `/privacidade` states
+this number. The erasure opens no database at import, does nothing with email off or
+with no database file, and a failure only logs a fixed line. A daily backup can still hold the rows of that moment. Nginx appends `$remote_addr` to X-Forwarded-For; only the last address
 is used. The deploy binds app ports to loopback, so visitors cannot bypass
 Nginx to choose that final address. Missing or invalid addresses share a bucket.
 The email is used only for login, recovery and confirming a link, shown to its own
@@ -95,10 +113,10 @@ password also voids a live reset link. Changing the password requires the curren
 one, under the login limit.
 
 The session resolves to the account, so `/curadoria` opens from any method of the
-account holding `CURATOR_GOOGLE_SUB`. The subject still names the curator: removing
-Google leaves the desk. `/conta` warns about that and the server requires
-`lose-curator`, so it cannot happen by accident. Linking the same Google restores
-it. A Google login after the removal opens a new account, which is then the curator's.
+account holding `CURATOR_GOOGLE_SUB`. The subject still names the curator, so the
+server refuses to remove Google from that account and `/conta` says why: without it
+the account is denied, and a later Google login opens a new account that becomes the
+curator's. To hand the desk over, the operator changes `CURATOR_GOOGLE_SUB`.
 
 The first nickname records the time of the adult declaration and rules acceptance
 and the rules version. Age is self-declared. Accounts do not send the device's
