@@ -17,7 +17,7 @@ const derive = (password: string, salt: string) =>
     })
   })
 const DUMMY = `${'00'.repeat(16)}:${'00'.repeat(64)}`
-async function hashPassword(password: string) {
+export async function hashPassword(password: string) {
   const salt = randomBytes(16).toString('hex')
   const key = await derive(password, salt)
   return `${salt}:${key.toString('hex')}`

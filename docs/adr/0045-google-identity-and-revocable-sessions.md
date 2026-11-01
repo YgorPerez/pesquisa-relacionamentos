@@ -9,6 +9,17 @@ account for comments, curator access and synchronization.
 
 ## Decision
 
+Password recovery uses 256-bit random tokens, stored only as SHA-256 hashes.
+One live token per account expires after 30 minutes; a new request replaces it.
+Consumption, password update and revocation of every account session share one
+SQLite transaction. Account data stays. Known addresses receive the link;
+unknown addresses receive a plain notice. Both and rate-limited/provider-failed
+requests return the same page before deferred delivery starts. `allowEmailAttempt`
+bounds mail by email and IP. A process restart may lose pending delivery.
+`account-email.ts` owns the Resend transport for recovery and later linking.
+Recovery pages have no scripts or analytics, use a restrictive CSP and
+origin-only referrer policy, and remain outside the sitemap. Links use `APP_ORIGIN` only.
+
 Use an authorization-code flow with PKCE and the `openid` scope only. Exchange
 the code on the server and request Google's authenticated UserInfo endpoint.
 Retain only `sub`; discard tokens and other claims. Provider failures return
