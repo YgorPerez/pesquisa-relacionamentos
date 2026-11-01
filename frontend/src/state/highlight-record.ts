@@ -63,8 +63,6 @@ export interface Highlight extends KeptQuote {
 /** How much text on each side is kept to tell repeats apart. */
 export const CONTEXT_LENGTH = 32
 
-export { isQuoteRecord } from './json-record'
-
 const QUOTE_STRINGS = [
   'id',
   'path',

@@ -27,7 +27,6 @@ import possibleGroup from 'virtual:possible-group'
 import { requestPack, usePack } from './group-packs'
 import { savedRequirements } from './reader-choices'
 import { useStored } from './use-stored'
-export { LEGACY_REQUIREMENTS } from './reader-choices'
 
 /** The saved Requirements; `null` if the visitor never touched them (and on
  * the server). */

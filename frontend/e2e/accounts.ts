@@ -8,7 +8,7 @@ export const unique = () => randomBytes(6).toString('hex')
 
 /** A database connection for the test to seed with. */
 export function seed<T>(write: (db: ReturnType<typeof openDatabase>) => T): T {
-  const db = openDatabase(process.env.E2E_DATABASE_PATH)
+  const db = openDatabase(process.env.E2E_DATABASE_PATH!)
   try {
     return write(db)
   } finally {
@@ -18,8 +18,21 @@ export function seed<T>(write: (db: ReturnType<typeof openDatabase>) => T): T {
 
 /** A finished account with a live session in `context`. */
 export async function signIn(context: BrowserContext, googleSub = unique()) {
-  const token = randomBytes(32).toString('base64url')
   const nickname = `Leitora ${unique()}`
+  await openSession(context, googleSub, nickname)
+  return nickname
+}
+
+/** A reader who logged in and has not chosen a nickname yet. */
+export const signInWithoutNickname = (context: BrowserContext) =>
+  openSession(context, unique(), null)
+
+async function openSession(
+  context: BrowserContext,
+  googleSub: string,
+  nickname: string | null,
+) {
+  const token = randomBytes(32).toString('base64url')
   seed((db) => {
     const account = db
       .prepare(
@@ -44,5 +57,4 @@ export async function signIn(context: BrowserContext, googleSub = unique()) {
       sameSite: 'Lax',
     },
   ])
-  return nickname
 }

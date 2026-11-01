@@ -3,7 +3,7 @@ import { readRequirements } from '@tem-estudo/rules/requirements'
 import { readPriorities } from '@tem-estudo/rules/priorities'
 import { validateHighlights } from './highlight-storage'
 import { validateSentComments } from './sent-comment-storage'
-import { isQuoteRecord } from './json-record'
+import { isRecord } from './json-record'
 
 export interface SyncEntry {
   readonly at: number
@@ -18,7 +18,7 @@ function validateSyncValue(key: string, value: unknown): unknown {
   if (key === 'priorities') return readPriorities(value)
   if (
     key.startsWith('note:') &&
-    isQuoteRecord(value) &&
+    isRecord(value) &&
     typeof value.text === 'string'
   )
     return { text: value.text.slice(0, 500) }
@@ -38,16 +38,17 @@ const knownKey = (key: string) =>
   SCALARS.includes(key) || /^(note|highlight|comment):./.test(key)
 
 function readEntry(key: string, entry: unknown): SyncEntry | null {
-  if (!isQuoteRecord(entry) || !knownKey(key)) return null
+  if (!isRecord(entry) || !knownKey(key)) return null
   const { at } = entry
   if (typeof at !== 'number' || !Number.isSafeInteger(at) || at < 0) return null
-  const value = entry.value === null ? null : validateSyncValue(key, entry.value)
+  const value =
+    entry.value === null ? null : validateSyncValue(key, entry.value)
   return value || entry.value === null ? { at, value } : null
 }
 
 /** All of it, or `null` if any entry fails: what a device may send. */
 export function readSyncData(raw: unknown): SyncData | null {
-  if (!isQuoteRecord(raw)) return null
+  if (!isRecord(raw)) return null
   const entries = Object.entries(raw).map(
     ([key, entry]) => [key, readEntry(key, entry)] as const,
   )

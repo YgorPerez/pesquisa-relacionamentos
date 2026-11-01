@@ -7,6 +7,7 @@ import type {
 } from '#/content/public-comment-record'
 import { decideComment } from '#/content/public-comments'
 import { SiteButton as Button } from './button'
+import { CommentQuote } from './comment-quote'
 import { CURATOR as COPY } from './curator.copy'
 import { Headline, Section } from './section'
 import { Column, Display, Lead, Sheet } from './sheet'
@@ -165,9 +166,7 @@ function CuratorEntry({
         <a href={`${comment.path}#comentario-${comment.id}`}>{comment.path}</a>
       </p>
       <CommentState comment={comment} />
-      <blockquote className="m-0 border-l-2 border-tinta pl-xs text-nota text-tinta-2 wrap-anywhere">
-        {comment.quote}
-      </blockquote>
+      <CommentQuote className="wrap-anywhere">{comment.quote}</CommentQuote>
       <p className="m-0 whitespace-pre-wrap wrap-anywhere">{comment.body}</p>
       <CommentHistory history={comment.history} />
       {hydrated && (
@@ -221,8 +220,8 @@ export function CuratorPage({
         {desk ? (
           <>
             <Lead>{COPY.lead}</Lead>
-            <Section aria-labelledby="curadoria-decidir">
-              <Headline id="curadoria-decidir">{COPY.pending}</Headline>
+            <Section aria-labelledby="curator-pending">
+              <Headline id="curator-pending">{COPY.pending}</Headline>
               <Comments
                 comments={desk.pending}
                 pending

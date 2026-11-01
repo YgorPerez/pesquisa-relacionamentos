@@ -103,6 +103,7 @@ function useGuide() {
 }
 
 function GuidePage() {
+  const { tema } = Route.useParams()
   const guide = useGuide()
   useReadingPointInHistory()
   useCountOpenedFactSheets(guide.topic)
@@ -149,7 +150,11 @@ function GuidePage() {
 
         <GuideShare />
       </Column>
-      <GuideComments />
+      <PublicComments
+        key={`/${tema}`}
+        path={`/${tema}`}
+        comments={Route.useLoaderData().comments}
+      />
       <PageSelection />
       <TermPopover terms={guide.terms} />
       <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />
@@ -159,19 +164,6 @@ function GuidePage() {
 
 /** "Copiar link": the Guide's address, with the chosen country when there
  * is one (`?pais=`), never the Profile. */
-function GuideComments() {
-  const { tema } = Route.useParams()
-  return (
-    <Column>
-      <PublicComments
-        key={tema}
-        path={`/${tema}`}
-        comments={Route.useLoaderData().comments}
-      />
-    </Column>
-  )
-}
-
 function GuideShare() {
   const { countries } = useGuide()
   const country = useChosenCountry(countries.map((c) => c.slug))

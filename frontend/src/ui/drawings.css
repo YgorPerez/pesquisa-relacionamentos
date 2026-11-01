@@ -379,7 +379,7 @@
  * line. `comment-paint.ts` paints it; where a passage is both, the Grifo's
  * higher priority draws the wave over it. */
 ::highlight(comentario),
-::highlight(comentario-publico) {
+::highlight(public-comment) {
   text-decoration-line: underline;
   text-decoration-style: dotted;
   text-decoration-color: var(--color-tinta);

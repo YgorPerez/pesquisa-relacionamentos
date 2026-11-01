@@ -3,6 +3,13 @@ export const PUBLIC_COMMENT = {
   public: 'Público',
   private: 'Só para o curador',
   audience: 'Quem pode ler',
+  needsAccount:
+    'Publicar pede uma conta com apelido; só para o curador, não. A conta abre em outra aba: o que você escreveu continua aqui, e ao voltar é só publicar.',
+  needsNickname:
+    'Falta o apelido que aparece no comentário. Ele se escolhe em outra aba: o que você escreveu continua aqui, e ao voltar é só publicar.',
+  signIn: 'Entrar com Google',
+  chooseNickname: 'Escolher apelido',
+  newTab: ' (abre em outra aba)',
   text: 'Seu comentário público',
   send: 'Publicar',
   published: 'Comentário publicado.',

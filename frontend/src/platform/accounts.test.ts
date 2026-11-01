@@ -227,7 +227,9 @@ test('coming back after deleting the account is a new account with a new id, so 
 function otherReader(sub: string) {
   const db = openDatabase(join(app.folder, 'app.sqlite'))
   const account = db
-    .prepare('INSERT INTO accounts (id, google_sub) VALUES (NULL, ?) RETURNING id')
+    .prepare(
+      'INSERT INTO accounts (id, google_sub) VALUES (NULL, ?) RETURNING id',
+    )
     .get(sub)!
   db.prepare('INSERT INTO account_sessions VALUES (?, ?, ?)').run(
     createHash('sha256').update(sub).digest('base64url'),

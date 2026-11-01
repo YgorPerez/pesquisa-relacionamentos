@@ -35,7 +35,8 @@ export const Conversation: Story = {
   },
 }
 
-/** What an anonymous reader gets: the private form, with no choice above it. */
+/** The choice as an anonymous reader finds it: the private form, the default,
+ * with the public option above it. */
 export const AudienceWithoutAccount: Story = {
   args: { path: '/dicas/exemplo', comments: [] },
   render: () => (
@@ -44,7 +45,7 @@ export const AudienceWithoutAccount: Story = {
       quote="O lugar quase não muda a relação."
       onDone={() => {}}
     >
-      <p>O formulário do Comentário ao curador.</p>
+      {() => <p>O formulário do Comentário ao curador.</p>}
     </CommentAudience>
   ),
 }

@@ -107,7 +107,7 @@ test('a signed-in reader publishes from the selection, marks the passage, edits,
   await expect(entry).not.toContainText('este trecho mudou')
   await expect
     .poll(() =>
-      page.evaluate(() => CSS.highlights.get('comentario-publico')?.size ?? 0),
+      page.evaluate(() => CSS.highlights.get('public-comment')?.size ?? 0),
     )
     .toBeGreaterThan(0)
 

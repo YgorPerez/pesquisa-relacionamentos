@@ -3,7 +3,7 @@
 import { readProfile, type Profile } from '@tem-estudo/rules/profile'
 import { useStored } from './use-stored'
 import { savedProfile } from './reader-choices'
-export { savedProfile, LEGACY_PROFILE } from './reader-choices'
+export { savedProfile } from './reader-choices'
 
 /** The saved Profile, or `null` (no Profile, on the server and during
  * hydration). */

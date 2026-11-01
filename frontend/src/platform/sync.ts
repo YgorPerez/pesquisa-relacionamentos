@@ -1,7 +1,7 @@
 import { fromThisSite, getCurrentAccount } from './accounts'
 import { openDatabase } from './database'
 import { serverEnv } from './server-env'
-import { isQuoteRecord } from '#/state/json-record'
+import { isRecord } from '#/state/json-record'
 import {
   mergeStoredSyncData,
   readableSyncData,
@@ -16,7 +16,7 @@ const MAX_ACCOUNT_LENGTH = 5_000_000
 function parseStored(text: string): Record<string, unknown> | null {
   try {
     const raw: unknown = JSON.parse(text)
-    return isQuoteRecord(raw) ? raw : null
+    return isRecord(raw) ? raw : null
   } catch {
     return null
   }
@@ -53,7 +53,7 @@ export async function handleSyncRequest(
     if (text.length > 2_000_000) return reply({}, 413)
     try {
       const raw: unknown = JSON.parse(text)
-      if (!isQuoteRecord(raw)) return reply({}, 400)
+      if (!isRecord(raw)) return reply({}, 400)
       input = raw
     } catch {
       return reply({}, 400)

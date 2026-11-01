@@ -4,7 +4,7 @@ import { openDatabase } from '../src/platform/database'
 
 function signIn(nickname: string | null = 'Leitora') {
   const token = randomUUID()
-  const db = openDatabase(process.env.E2E_DATABASE_PATH)
+  const db = openDatabase(process.env.E2E_DATABASE_PATH!)
   const account = db
     .prepare(
       'INSERT INTO accounts (google_sub, nickname) VALUES (?, ?) RETURNING id',

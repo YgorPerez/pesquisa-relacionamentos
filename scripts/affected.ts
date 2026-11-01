@@ -63,6 +63,7 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   ],
   'sync.e2e.ts': ['grifo', 'grifos'],
   'account-deletion.e2e.ts': ['account', 'account-deletion', 'conta'],
+  'account.e2e.ts': ['account', 'accounts', 'conta'],
 }
 
 /** Run on every run that touches the app: they open each page cold, and

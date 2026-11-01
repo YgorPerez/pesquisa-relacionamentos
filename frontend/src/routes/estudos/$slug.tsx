@@ -136,7 +136,11 @@ function FactSheetPage() {
           <FactSheetLegend />
         </Section>
       </Column>
-      <FactSheetComments slug={factSheet.slug} />
+      <PublicComments
+        key={factSheet.slug}
+        path={`/estudos/${factSheet.slug}`}
+        comments={Route.useLoaderData().comments}
+      />
       <FactSheetSelection />
     </Sheet>
   )
@@ -144,18 +148,6 @@ function FactSheetPage() {
 
 /** The reader's actions on the text, where this Fact sheet is what the text
  * rests on. */
-function FactSheetComments({ slug }: { slug: string }) {
-  return (
-    <Column>
-      <PublicComments
-        key={slug}
-        path={`/estudos/${slug}`}
-        comments={Route.useLoaderData().comments}
-      />
-    </Column>
-  )
-}
-
 function FactSheetSelection() {
   const factSheet = useFactSheet()
   return (

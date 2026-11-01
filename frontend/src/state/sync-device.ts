@@ -263,6 +263,9 @@ export function leaveDeletedAccount() {
   })
 }
 
+/** Whether what this device keeps also goes to an account. */
+export const useDeviceJoined = () => useStored(syncBinding) !== null
+
 /** The fields a link replaced here, which the reader can trade back. */
 export const useLinkFields = () => useStored(protectedFields)
 
