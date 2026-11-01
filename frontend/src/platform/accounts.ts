@@ -132,7 +132,7 @@ class AccountService {
       },
     })
   }
-  private async googleSub(
+  private async accessToken(
     code: string,
     verifier: string,
   ): Promise<string | null> {
@@ -161,12 +161,20 @@ class AccountService {
       typeof token.access_token !== 'string'
     )
       return null
+    return token.access_token
+  }
+  private async googleSub(
+    code: string,
+    verifier: string,
+  ): Promise<string | null> {
+    const token = await this.accessToken(code, verifier)
+    if (!token) return null
     // Request openid only. Discard tokens and every identity field except sub.
     const identityResponse = await fetch(
       this.options.userinfoEndpoint ??
         'https://openidconnect.googleapis.com/v1/userinfo',
       {
-        headers: { authorization: `Bearer ${token.access_token}` },
+        headers: { authorization: `Bearer ${token}` },
         redirect: 'error',
         signal: AbortSignal.timeout(10_000),
       },
