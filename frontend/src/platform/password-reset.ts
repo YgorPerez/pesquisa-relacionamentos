@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'node:crypto'
 import type { DatabaseSync } from 'node:sqlite'
-import { allowEmailAttempt, hashPassword } from './email-accounts'
+import { allowEmailAttempt, hashPassword, isEmail } from './email-accounts'
 import { sendAccountEmail } from './account-email'
 
 const hash = (token: string) =>
@@ -19,7 +19,7 @@ export async function deliverPasswordReset(
   now: number,
 ) {
   if (!allowEmailAttempt(db, request, email, config.rateKey, now)) return
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return
+  if (!isEmail(email)) return
   db.prepare('DELETE FROM password_resets WHERE expires_at <= ?').run(now)
   const account = db
     .prepare('SELECT account_id FROM email_credentials WHERE email = ?')

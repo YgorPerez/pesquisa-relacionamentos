@@ -1,5 +1,6 @@
 import { createHash, randomBytes, randomInt } from 'node:crypto'
 import { existsSync } from 'node:fs'
+import type { MethodNotice } from '#/content/method-notice'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
@@ -7,11 +8,20 @@ import { REMOVED_READER } from './public-comment-moderation'
 import { serverEnv } from './server-env'
 import { allowEmailAttempt, emailAccount } from './email-accounts'
 import {
+  changePassword,
+  confirmEmailLink,
+  consumeGoogleLink,
+  emailLink,
+  linkGoogle,
+  requestEmailLink,
+} from './login-methods'
+import {
   deliverPasswordReset,
   resetPassword,
   validReset,
 } from './password-reset'
-import { recoveryPage } from './recovery-page'
+import { emailConfirmationPage, recoveryPage } from './recovery-page'
+import { EMAIL_CONFIRMATION } from '#/ui/email-confirmation.copy'
 import { RECOVERY } from '#/ui/password-recovery.copy'
 
 type Options = {
@@ -23,6 +33,7 @@ type Options = {
   resendApiKey?: string
   emailFrom?: string
   resendEndpoint?: string
+  curatorSub?: string
   /** Explicit injection for local provider tests; never environment overrides. */
   tokenEndpoint?: string
   userinfoEndpoint?: string
@@ -61,6 +72,8 @@ function redirect(cookies: string[] = [], location = '/conta') {
   for (const value of cookies) headers.append('set-cookie', value)
   return new Response(null, { status: 303, headers })
 }
+const noticeRedirect = (notice: MethodNotice, cookies: string[] = []) =>
+  redirect(cookies, `/conta?metodo=${notice}`)
 
 async function readForm(request: Request) {
   if (Number(request.headers.get('content-length')) > 4096)
@@ -132,7 +145,9 @@ class AccountService {
       db.close()
     }
   }
-  private start() {
+  /** With `link`, the attempt belongs to that signed-in session: its callback
+   * never starts a session, and lives in a table logins do not read. */
+  private start(link?: { accountId: number; sessionHash: string }) {
     const state = random(),
       browser = random(),
       verifier = random()
@@ -141,15 +156,27 @@ class AccountService {
       db.prepare('DELETE FROM oauth_attempts WHERE expires_at <= ?').run(
         this.now(),
       )
+      db.prepare('DELETE FROM google_link_attempts WHERE expires_at <= ?').run(
+        this.now(),
+      )
       db.prepare('DELETE FROM account_sessions WHERE expires_at <= ?').run(
         this.now(),
       )
-      db.prepare('INSERT INTO oauth_attempts VALUES (?, ?, ?, ?)').run(
+      const attempt = [
         hash(state),
         hash(browser),
         verifier,
         this.now() + 600_000,
-      )
+      ] as const
+      if (link)
+        db.prepare(
+          `INSERT INTO google_link_attempts (state_hash, browser_hash, verifier, expires_at, account_id, session_hash)
+          VALUES (?, ?, ?, ?, ?, ?)`,
+        ).run(...attempt, link.accountId, link.sessionHash)
+      else
+        db.prepare('INSERT INTO oauth_attempts VALUES (?, ?, ?, ?)').run(
+          ...attempt,
+        )
     } finally {
       db.close()
     }
@@ -279,13 +306,17 @@ class AccountService {
       )
     const db = this.database()
     let verifier: string
+    let link: ReturnType<typeof consumeGoogleLink>
     try {
+      link = consumeGoogleLink(db, hash(state), hash(browser), this.now())
       // DELETE RETURNING consumes state atomically before contacting the provider.
-      const attempt = db
-        .prepare(
-          'DELETE FROM oauth_attempts WHERE state_hash = ? AND browser_hash = ? AND expires_at > ? RETURNING verifier',
-        )
-        .get(hash(state), hash(browser), this.now())
+      const attempt =
+        link ??
+        db
+          .prepare(
+            'DELETE FROM oauth_attempts WHERE state_hash = ? AND browser_hash = ? AND expires_at > ? RETURNING verifier',
+          )
+          .get(hash(state), hash(browser), this.now())
       if (!attempt)
         return response(400, 'O login expirou. Volte à conta e tente de novo.')
       verifier = String(attempt.verifier)
@@ -294,12 +325,12 @@ class AccountService {
     }
     try {
       const sub = await this.googleSub(code, verifier)
-      return sub
-        ? this.session(request, sub)
-        : response(
-            400,
-            'Não foi possível entrar. Volte à conta e tente de novo.',
-          )
+      if (!sub)
+        return response(
+          400,
+          'Não foi possível entrar. Volte à conta e tente de novo.',
+        )
+      return link ? this.finishLink(request, link, sub) : this.session(request, sub)
     } catch {
       // Provider responses, codes, tokens and identity must never reach logs.
       return response(
@@ -403,6 +434,8 @@ class AccountService {
       ['/auth/register', '/auth/login'].includes(url.pathname)
     )
       return this.email(request, url.pathname === '/auth/register')
+    if (url.pathname === '/auth/confirm-email')
+      return this.confirmEmail(request, url)
     const account = this.current(request)
     if (!account) return response(401, 'Entre para continuar.')
     if (url.pathname === '/auth/logout' && request.method === 'POST')
@@ -411,7 +444,118 @@ class AccountService {
       return this.remove(request, account)
     if (url.pathname === '/auth/nickname' && request.method === 'POST')
       return this.nickname(request, account)
+    if (url.pathname === '/auth/change-password' && request.method === 'POST')
+      return this.changePassword(request, account)
+    // POST, so another site cannot send a signed-in reader through the link.
+    if (url.pathname === '/auth/link-google' && request.method === 'POST')
+      return this.linkGoogle(request, account)
+    if (url.pathname === '/auth/add-email' && request.method === 'POST')
+      return this.addEmail(request, account)
     return response(404, 'Página não encontrada.')
+  }
+  private sessionHash(request: Request) {
+    return hash(this.readCookie(request, this.sessionName) ?? '')
+  }
+  private async addEmail(request: Request, account: Account) {
+    const form = await readForm(request)
+    if (form instanceof Response) return form
+    if (!this.mailConfigured()) return noticeRedirect('indisponivel')
+    const db = this.database()
+    try {
+      return noticeRedirect(
+        await requestEmailLink(
+          db,
+          request,
+          account.id,
+          form,
+          this.mail(),
+          this.now(),
+        ),
+      )
+    } finally {
+      db.close()
+    }
+  }
+  /** Opening the link only shows it, as a mail scanner opens links too: the form
+   * consumes it, and only for the account that asked, still signed in. */
+  private async confirmEmail(request: Request, url: URL) {
+    const form =
+      request.method === 'POST' ? await readForm(request) : url.searchParams
+    if (form instanceof Response) return form
+    const token = form.get('token') ?? ''
+    const account = this.current(request)
+    const db = this.database()
+    try {
+      const link = emailLink(db, token, this.now())
+      if (!link)
+        return emailConfirmationPage({ message: EMAIL_CONFIRMATION.invalid }, 400)
+      if (link.accountId !== account?.id)
+        return emailConfirmationPage(
+          { message: EMAIL_CONFIRMATION.otherAccount },
+          403,
+        )
+      if (request.method === 'GET')
+        return emailConfirmationPage({ token, email: link.email })
+      const notice = confirmEmailLink(
+        db,
+        token,
+        account.id,
+        this.sessionHash(request),
+        this.now(),
+      )
+      return notice
+        ? noticeRedirect(notice)
+        : emailConfirmationPage({ message: EMAIL_CONFIRMATION.invalid }, 400)
+    } finally {
+      db.close()
+    }
+  }
+  private linkGoogle(request: Request, account: Account) {
+    if (!this.configured()) return noticeRedirect('indisponivel')
+    if (account.googleSub !== null) return redirect()
+    return this.start({
+      accountId: account.id,
+      sessionHash: this.sessionHash(request),
+    })
+  }
+  /** Only the session that started the link finishes it: another account in the
+   * same browser, or none, gets the refusal and no change. */
+  private finishLink(
+    request: Request,
+    link: { accountId: number; sessionHash: string },
+    sub: string,
+  ) {
+    const db = this.database()
+    try {
+      const notice =
+        this.sessionHash(request) === link.sessionHash
+          ? linkGoogle(db, link.accountId, link.sessionHash, sub, this.now())
+          : 'google-falhou'
+      return noticeRedirect(notice, [this.cookie(this.stateName, '', 0)])
+    } finally {
+      db.close()
+    }
+  }
+  private async changePassword(request: Request, account: Account) {
+    const form = await readForm(request)
+    if (form instanceof Response) return form
+    if (!this.emailConfigured()) return noticeRedirect('indisponivel')
+    const db = this.database()
+    try {
+      return noticeRedirect(
+        await changePassword(
+          db,
+          request,
+          account.id,
+          this.sessionHash(request),
+          form,
+          this.options.emailRateLimitKey!,
+          this.now(),
+        ),
+      )
+    } finally {
+      db.close()
+    }
   }
   private emailConfigured() {
     const origin = this.options.origin
@@ -422,6 +566,22 @@ class AccountService {
         /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)),
     )
   }
+  private mailConfigured() {
+    return Boolean(
+      this.emailConfigured() &&
+      this.options.resendApiKey &&
+      this.options.emailFrom,
+    )
+  }
+  private mail() {
+    return {
+      origin: this.options.origin!,
+      rateKey: this.options.emailRateLimitKey!,
+      apiKey: this.options.resendApiKey!,
+      from: this.options.emailFrom!,
+      endpoint: this.options.resendEndpoint,
+    }
+  }
   private async recovery(request: Request, url: URL) {
     if (!['GET', 'POST'].includes(request.method))
       return response(405, 'Método não permitido.')
@@ -430,11 +590,7 @@ class AccountService {
       request.headers.get('origin') !== this.options.origin
     )
       return response(403, 'Abra o formulário neste site e tente de novo.')
-    if (
-      !this.emailConfigured() ||
-      !this.options.resendApiKey ||
-      !this.options.emailFrom
-    )
+    if (!this.mailConfigured())
       return recoveryPage(
         { disabled: true, message: RECOVERY.unavailable },
         503,
@@ -479,13 +635,7 @@ class AccountService {
           db,
           request,
           email,
-          {
-            origin: this.options.origin!,
-            rateKey: this.options.emailRateLimitKey!,
-            apiKey: this.options.resendApiKey!,
-            from: this.options.emailFrom!,
-            endpoint: this.options.resendEndpoint,
-          },
+          this.mail(),
           this.now(),
         )
       } finally {
