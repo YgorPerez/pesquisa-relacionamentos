@@ -1,10 +1,25 @@
 import { getCurrentAccount } from './accounts'
 import { openDatabase } from './database'
 import { isQuoteRecord } from '#/state/json-record'
-import { mergeSyncData, readSyncData, type SyncData } from '#/state/sync-data'
+import {
+  mergeStoredSyncData,
+  readableSyncData,
+  readSyncData,
+  type SyncData,
+} from '#/state/sync-data'
 
 /** One account's stored JSON. A device past it keeps its data and is told so. */
 const MAX_ACCOUNT_LENGTH = 5_000_000
+
+/** The account's JSON as stored, entries not yet read; `null` if it is no record. */
+function parseStored(text: string): Record<string, unknown> | null {
+  try {
+    const raw: unknown = JSON.parse(text)
+    return isQuoteRecord(raw) ? raw : null
+  } catch {
+    return null
+  }
+}
 
 /** A device clock running ahead must not win over every later edit. */
 const heldToNow = (data: SyncData, now: number): SyncData =>
@@ -56,7 +71,10 @@ export async function handleSyncRequest(
       .prepare('SELECT consent, data FROM account_sync WHERE account_id = ?')
       .get(account.id)
     let consent = row ? row.consent === 1 : null
-    let data = row ? readSyncData(JSON.parse(String(row.data)))! : {}
+    let data = row ? parseStored(String(row.data)) : {}
+    // Not even a record: nothing here can tell what it holds, so nothing touches
+    // it. Closing rolls the transaction back and the device keeps its own data.
+    if (!data) return reply({}, 500)
     if (typeof input.consent === 'boolean') {
       // A refusal can become consent. Consent is not undone here: another
       // device's stale refusal must not cut this one off. Ending it is the
@@ -78,7 +96,7 @@ export async function handleSyncRequest(
       if (input.accountId !== account.id) return reply({}, 409)
       const incoming = readSyncData(input.data)
       if (!incoming) return reply({}, 400)
-      data = mergeSyncData(data, heldToNow(incoming, Date.now()))
+      data = mergeStoredSyncData(data, heldToNow(incoming, Date.now()))
       const stored = JSON.stringify(data)
       if (stored.length > MAX_ACCOUNT_LENGTH) return reply({}, 413)
       db.prepare('UPDATE account_sync SET data = ? WHERE account_id = ?').run(
@@ -90,7 +108,7 @@ export async function handleSyncRequest(
     return reply({
       accountId: account.id,
       consent,
-      ...(consent === true ? { data } : {}),
+      ...(consent === true ? { data: readableSyncData(data) } : {}),
     })
   } finally {
     // Closing rolls back any early return in a transaction.

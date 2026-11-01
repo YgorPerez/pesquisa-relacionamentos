@@ -44,6 +44,72 @@ const call = async (
     }),
   ))!
 
+const storeRaw = (data: string) => {
+  const db = openDatabase(process.env.DATABASE_PATH!)
+  db.prepare(
+    'INSERT INTO account_sync (account_id, consent, data) VALUES (1, 1, ?)',
+  ).run(data)
+  db.close()
+}
+const readRaw = () => {
+  const db = openDatabase(process.env.DATABASE_PATH!)
+  const row = db.prepare('SELECT data FROM account_sync').get()
+  db.close()
+  return String(row?.data)
+}
+const UNREADABLE = { at: 5, value: { fromAnotherVersion: 'guardar' } }
+
+test('an entry the server cannot read stays stored through a merge, and the rest still syncs', async () => {
+  storeRaw(
+    JSON.stringify({
+      'highlight:a': UNREADABLE,
+      'note:b': { at: 5, value: { text: 'guardada' } },
+    }),
+  )
+  const reply = await call(1, {
+    accountId: 1,
+    data: {
+      'highlight:a': { at: 9, value: null },
+      'note:c': { at: 7, value: { text: 'nova' } },
+    },
+  })
+  expect(reply.status).toBe(200)
+  const answered = (await reply.json()) as { data: object }
+  expect(answered.data).toEqual({
+    'note:b': { at: 5, value: { text: 'guardada' } },
+    'note:c': { at: 7, value: { text: 'nova' } },
+  })
+  expect(JSON.parse(readRaw())).toEqual({
+    'highlight:a': UNREADABLE,
+    'note:b': { at: 5, value: { text: 'guardada' } },
+    'note:c': { at: 7, value: { text: 'nova' } },
+  })
+})
+
+test('a readable entry is not rewritten when nothing newer arrives', async () => {
+  const long = { at: 5, value: { text: 'x'.repeat(600) } }
+  storeRaw(JSON.stringify({ 'note:a': long }))
+  await call(1, {
+    accountId: 1,
+    data: { 'note:b': { at: 7, value: { text: 'nova' } } },
+  })
+  expect(JSON.parse(readRaw())).toMatchObject({ 'note:a': long })
+})
+
+test.each(['not json', '[1]', 'null'])(
+  'a stored value that is no record at all refuses the write and keeps its bytes: %s',
+  async (stored) => {
+    storeRaw(stored)
+    const reply = await call(1, {
+      accountId: 1,
+      data: { 'note:c': { at: 7, value: { text: 'nova' } } },
+    })
+    expect(reply.status).toBe(500)
+    expect(readRaw()).toBe(stored)
+    expect((await call(1)).status).toBe(500)
+  },
+)
+
 test('only completed sessions may read or write; consent is needed before any data transfer', async () => {
   expect((await call(0)).status).toBe(401)
   expect((await call(3)).status).toBe(401)
