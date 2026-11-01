@@ -56,6 +56,7 @@ export const HOST_CONFIG = [
 const UPLOAD = [
   'build.tar.gz',
   'Dockerfile',
+  'database-backup.sh',
   ...HOST_CONFIG.map(([name]) => name),
 ] as const
 
@@ -103,6 +104,7 @@ export function vpsPaths(root = '') {
     nginxPid: at('/run/nginx.pid'),
     nginxTOutput: at('/tmp/temestudo-nginx-t.txt'),
     statsPassword: at(`${APP.folder}/goatcounter-senha`),
+    backupCron: at('/etc/cron.d/temestudo-database'),
   }
 }
 
@@ -189,6 +191,7 @@ rm -f ${sitesEnabled}/default ${sitesEnabled}/temestudo-acme.conf`
     : ''
   return String.raw`${LOCK}
 docker image inspect ${container}:sha-${sha} >/dev/null 2>&1 || { echo "The VPS does not have the image ${container}:sha-${sha}." >&2; exit 1; }
+docker volume create temestudo-data >/dev/null
 INCLUDE=${include}
 LIVE=$(grep -o '127\.0\.0\.1:[0-9]*' "$INCLUDE" 2>/dev/null | cut -d: -f2 || true)
 if [ "$LIVE" = "${ports[0]}" ]; then PORT=${ports[1]}; else PORT=${ports[0]}; fi
@@ -199,6 +202,7 @@ if [ -f ${APP_ENV} ]; then ENV_FILE=(--env-file ${APP_ENV}); fi
 docker run -d --name "$NEW" --restart unless-stopped --init \
   --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
   --log-opt max-size=10m --log-opt max-file=3 "${'$'}{ENV_FILE[@]}" \
+  -v temestudo-data:/data \
   -p "127.0.0.1:$PORT:3000" ${container}:sha-${sha} >/dev/null
 UP=0
 for i in $(seq 1 30); do
@@ -391,6 +395,14 @@ export function publishPlan({
       script: 'rm -rf envio && mkdir -p envio',
     },
     { name: 'Image', script: buildImage(sha) },
+    {
+      name: 'Database backup schedule',
+      script: `install -m 700 envio/database-backup.sh database-backup.sh
+printf '%s\\n' '20 3 * * * root /opt/temestudo/database-backup.sh' > ${paths.backupCron}
+chmod 644 ${paths.backupCron}
+if [ ! -f database-backup.env ]; then echo 'Warning: database backup needs database-backup.env; run the bucket wizard before accepting reader data.'; fi
+`,
+    },
     {
       name: 'GoatCounter',
       script: scriptOrFailure(() =>
