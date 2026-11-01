@@ -3,7 +3,7 @@
 // rings side by side (`[1][2]`) cite the same text. In a Visual, the whole
 // figure: its rings are where each label and value came from.
 import { FINDING_SLOT } from './quote-text'
-import { BLOCK, blockText } from './ring-text'
+import { CITED_TEXT_BLOCK, blockText } from './ring-text'
 
 /** What follows a ring and still belongs to its sentence. */
 const CLOSE = /[\s.,;:!?…"”’»)\]]/
@@ -14,7 +14,7 @@ export function citedBy(ring: Element): Range | HTMLElement | null {
   const figure = ring.closest('figure')
   if (figure instanceof HTMLElement) return figure
   const block =
-    ring.closest(`[data-slot="${FINDING_SLOT}"], ${BLOCK}`) ??
+    ring.closest(`[data-slot="${FINDING_SLOT}"], ${CITED_TEXT_BLOCK}`) ??
     ring.parentElement
   if (!block) return null
   const { pieces, ref, text } = blockText(block)
