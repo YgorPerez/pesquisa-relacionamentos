@@ -28,7 +28,6 @@ import { CopyLink, CopyText } from './selection-copy'
 import { POPOVER_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
 import { quoteOf, snapToWords, type QuotedPage } from './selection-quote'
-import { WhereFrom } from './selection-source'
 import { PopoverPanel, TextPopover } from './text-popover'
 
 // The actions, in the popover's order (#332). Each is a component of its
@@ -44,8 +43,6 @@ const ACTIONS: ReadonlyArray<{
   { id: 'link', Action: CopyLink },
 
   { id: 'highlight', Action: HighlightAction },
-
-  { id: 'source', Action: WhereFrom },
 
   { id: 'comment', Action: CommentOnQuote },
 ]

@@ -12,8 +12,8 @@ import { citedBy } from './cited-text'
 import { CitedFactSheetCard } from './guide'
 import { canPaint } from './highlight-paint'
 import { OPEN_FACT_SHEET, referenceLabel } from './reference-popover.copy'
+import { CITING_RING, slugOf } from './ring-text'
 import { SmallLink } from './section'
-import { CITING_RING, slugOf } from './selection-sentences'
 import { TextPopover } from './text-popover'
 
 /** The name `drawings.css` paints. */

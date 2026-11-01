@@ -1,7 +1,6 @@
 // Which of the page's text counts as quotable, and how it splits into
-// blocks: what the popover on selected text quotes (`selection-quote.ts`),
-// what a Grifo is found in (`highlight-text.ts`) and which sentences "De
-// onde vem isso?" reads (`selection-sentences.ts`) read the page the same
+// blocks: what the popover on selected text quotes (`selection-quote.ts`)
+// and what a Grifo is found in (`highlight-text.ts`) read the page the same
 // way. Its own module so that each of them imports only this.
 import { REF_CLASS } from '#/content/text-fragment'
 
@@ -28,8 +27,8 @@ export const RING = `.${REF_CLASS}`
 
 /** A finding quoted inside a line of its own ("Para o seu Perfil: …",
  * `profile.tsx`): the text its ring cites starts where it does
- * (`cited-text.ts`). Here, a leaf, since `profile.tsx` sits in a cycle with
- * `selection-sentences.ts`. */
+ * (`cited-text.ts`). Here, a leaf, so `cited-text.ts` does not import
+ * `profile.tsx`. */
 export const FINDING_SLOT = 'achado'
 
 /** The elements that start a new line of text (`site-search-view.ts`). */

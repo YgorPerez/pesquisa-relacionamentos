@@ -83,7 +83,7 @@ function TipPage() {
           <CitedFactSheets factSheets={tip.factSheets} />
         </Section>
       </Column>
-      <PageSelection factSheets={tip.factSheets} page="tip" />
+      <PageSelection />
       <TermPopover terms={tip.terms} />
       <ReferencePopover key={tip.slug} factSheets={tip.factSheets} />
     </Sheet>

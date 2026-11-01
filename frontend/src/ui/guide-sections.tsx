@@ -371,10 +371,6 @@ function Block({
   }
 }
 
-/** The `data-slot` of a Chapter's section, which "De onde vem isso?" looks
- * for around a sentence with no citation (`selection-sentences.ts`). */
-export const CHAPTER_SLOT = 'capitulo'
-
 /** One Chapter: its number and title, then its blocks in body order. */
 function Chapter({
   chapter,
@@ -391,7 +387,7 @@ function Chapter({
       id={chapter.id}
       aria-labelledby={title}
       className="scroll-mt-md"
-      data-slot={CHAPTER_SLOT}
+      data-slot="capitulo"
     >
       <Headline id={title} className="flex items-baseline gap-sm">
         <ChapterNumber n={n} />

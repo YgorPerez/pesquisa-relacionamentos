@@ -141,7 +141,7 @@ function FactSheetSelection() {
   const factSheet = useFactSheet()
   return (
     <>
-      <PageSelection factSheets={[factSheet]} page="fact-sheet" />
+      <PageSelection />
       <TermPopover terms={factSheet.terms} />
     </>
   )
