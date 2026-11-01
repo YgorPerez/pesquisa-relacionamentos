@@ -9,7 +9,11 @@ import {
   setNote,
 } from './highlights'
 import { savedProfile, saveProfile } from './profile'
-import { addSentComment, readSentComments, removeSentComment } from './sent-comments'
+import {
+  addSentComment,
+  readSentComments,
+  removeSentComment,
+} from './sent-comments'
 import { withStorageSource } from './storage-events'
 import {
   applySyncData,
@@ -92,7 +96,11 @@ test('first merge adds up the Grifos of both devices and keeps each Nota', () =>
   sync()
   for (const device of ['a', 'b']) {
     on(device)
-    expect(readHighlights().map((h) => [h.exact, h.note]).sort()).toEqual([
+    expect(
+      readHighlights()
+        .map((h) => [h.exact, h.note])
+        .sort(),
+    ).toEqual([
       ['dois', 'nota do computador'],
       ['um', 'nota do celular'],
     ])
@@ -107,7 +115,11 @@ test('sent Comentários add up across devices', () => {
   addSentComment(sentComment('dois'))
   bind()
   sync()
-  expect(readSentComments().map((c) => c.comment).sort()).toEqual(['dois', 'um'])
+  expect(
+    readSentComments()
+      .map((c) => c.comment)
+      .sort(),
+  ).toEqual(['dois', 'um'])
 })
 
 test('the Perfil keeps the most recent version, whichever device merges last', () => {
@@ -242,10 +254,11 @@ test('two Notas on the same passage both stay', () => {
   setNote(addHighlight(quote('um')).id, 'segunda')
   bind()
   sync()
-  expect(readHighlights().map((h) => h.note).sort()).toEqual([
-    'primeira',
-    'segunda',
-  ])
+  expect(
+    readHighlights()
+      .map((h) => h.note)
+      .sort(),
+  ).toEqual(['primeira', 'segunda'])
 })
 
 test('a device clock ahead cannot keep beating later edits once the account corrects it', () => {

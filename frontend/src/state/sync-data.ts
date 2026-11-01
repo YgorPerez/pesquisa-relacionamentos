@@ -35,8 +35,7 @@ function validateSyncValue(key: string, value: unknown): unknown {
 
 const SCALARS = ['profile', 'requirements', 'priorities']
 const knownKey = (key: string) =>
-  SCALARS.includes(key) ||
-  /^(note|highlight|comment):./.test(key)
+  SCALARS.includes(key) || /^(note|highlight|comment):./.test(key)
 
 export function readSyncData(raw: unknown): SyncData | null {
   if (!isQuoteRecord(raw)) return null

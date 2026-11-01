@@ -100,9 +100,7 @@ test('a received link stays on the device and the account keeps its version', as
 
   await page.goto('/grupo-possivel?v=1&genero=mulher&idade=22')
   await expect
-    .poll(() =>
-      page.evaluate(() => localStorage.getItem('tem-estudo:profile')),
-    )
+    .poll(() => page.evaluate(() => localStorage.getItem('tem-estudo:profile')))
     .toContain('22')
   await page.goto('/conta')
   await expect(page.getByText(/Um link recebido trocou/)).toBeVisible()

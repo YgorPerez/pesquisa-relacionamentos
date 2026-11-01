@@ -29,7 +29,6 @@ import { savedRequirements } from './requirements-storage'
 import { useStored } from './stored'
 export { LEGACY_REQUIREMENTS } from './requirements-storage'
 
-
 /** The saved Requirements; `null` if the visitor never touched them (and on
  * the server). */
 export const useSavedRequirements = (): Requirements | null =>

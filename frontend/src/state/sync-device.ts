@@ -41,8 +41,7 @@ const scalarStores = {
 }
 type ScalarKey = keyof typeof scalarStores
 const isScalar = (key: string): key is ScalarKey => key in scalarStores
-const same = (a: unknown, b: unknown) =>
-  JSON.stringify(a) === JSON.stringify(b)
+const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 const tracking = () => syncBinding.read() !== null || journal.read() !== null
 
 function record(key: string, value: unknown, at: number, force = false) {
@@ -79,7 +78,12 @@ function followList(key: string, value: unknown) {
         text: item.note,
       })
       if (noteMoved) record(`note:${item.id}`, { text: item.note }, Date.now())
-      record(`highlight:${item.id}`, { ...item, note: '' }, Date.now(), noteMoved)
+      record(
+        `highlight:${item.id}`,
+        { ...item, note: '' },
+        Date.now(),
+        noteMoved,
+      )
     }
   else
     for (const item of validateSentComments(value) ?? [])
@@ -90,7 +94,10 @@ function followList(key: string, value: unknown) {
 followStoredWrites((key, value, source) => {
   if (source === 'sync') return
   if (isScalar(key)) followScalarWrite(key, value, source === 'link')
-  else if (source === 'local' && (key === 'highlights' || key === 'sent-comments'))
+  else if (
+    source === 'local' &&
+    (key === 'highlights' || key === 'sent-comments')
+  )
     followList(key, value)
 })
 
@@ -103,7 +110,10 @@ followRemovals((kind, id) => {
   }
   // A twin of this passage, hidden by `shownHighlights`, goes with it.
   const entries = journal.read() ?? {}
-  const removed = entries[`highlight:${id}`]?.value as Highlight | null | undefined
+  const removed = entries[`highlight:${id}`]?.value as
+    | Highlight
+    | null
+    | undefined
   for (const [key, entry] of Object.entries(entries)) {
     const other = entry.value as Highlight | null
     if (!key.startsWith('highlight:') || !other || !removed) continue
