@@ -27,7 +27,7 @@ Toda afirmação é rastreável até a fonte primária, com o Status de verifica
 ## Operating Context
 
 - A maioria abre o site no celular.
-- Reading needs no login. An optional Google account uses a chosen nickname. The Profile, Requirements and Priorities stay in the browser and can be shared by link.
+- Reading needs no login. An optional Google account uses a chosen nickname. The Profile, Requirements and Priorities stay in the browser unless the reader joins Sync, and can be shared by link.
 - O conteúdo (Fichas, Guias, Dicas) é markdown neste repositório e é a fonte da verdade. Agentes escrevem Fichas e um humano revisa em PR.
 - Vocabulário em `GLOSSARY.md`; convenções de Fichas no `README.md`.
 

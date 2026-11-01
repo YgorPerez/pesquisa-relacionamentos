@@ -87,9 +87,9 @@ beforeEach(() => {
   db.prepare(
     `INSERT INTO account_sync (account_id, consent, data) VALUES (?, 1, '{"note:1":{"at":1,"value":{"text":"nota íntima"}}}')`,
   ).run(LEAVING)
-  db.prepare('INSERT INTO account_sync (account_id, consent) VALUES (?, 1)').run(
-    OTHER,
-  )
+  db.prepare(
+    'INSERT INTO account_sync (account_id, consent) VALUES (?, 1)',
+  ).run(OTHER)
   db.prepare('INSERT INTO public_comment_sends VALUES (?, 1)').run(LEAVING)
   db.prepare('INSERT INTO public_comment_sends VALUES (?, 1)').run(OTHER)
   // The leaving reader's comment, edited once, with another reader's reply and
@@ -121,8 +121,7 @@ const submit = (
     }),
   )
 const eraseEverything = () => submit({ confirm: 'EXCLUIR' })
-const keepComments = () =>
-  submit({ confirm: 'EXCLUIR', 'keep-comments': 'on' })
+const keepComments = () => submit({ confirm: 'EXCLUIR', 'keep-comments': 'on' })
 
 const rowsOf = (table: string) => {
   const db = database()
@@ -152,9 +151,7 @@ function expectNothingTiesTheDatabaseToTheReader() {
         .map((key) => String(key.from))
       for (const column of columns)
         expect(
-          db
-            .prepare(`SELECT 1 FROM ${table} WHERE ${column} = ?`)
-            .all(LEAVING),
+          db.prepare(`SELECT 1 FROM ${table} WHERE ${column} = ?`).all(LEAVING),
           `${table}.${column}`,
         ).toEqual([])
     }
@@ -251,9 +248,7 @@ test('a comment hidden by three reports stays hidden when one of the reporters l
     curator: () => 'curator',
   })
   expect(store.list('/guia').map((comment) => comment.id)).not.toContain(30)
-  const desk = store.curatorDesk(
-    new Request('https://example.org/curadoria'),
-  )!
+  const desk = store.curatorDesk(new Request('https://example.org/curadoria'))!
   expect(desk.pending.find((comment) => comment.id === 30)).toMatchObject({
     hidden: true,
     reports: 2,
@@ -301,9 +296,9 @@ test('another site cannot ask for it, nor anyone without a session', async () =>
     (await submit({ confirm: 'EXCLUIR' }, { origin: 'https://evil.org' }))!
       .status,
   ).toBe(403)
-  expect(
-    (await submit({ confirm: 'EXCLUIR' }, { cookie: '' }))!.status,
-  ).toBe(401)
+  expect((await submit({ confirm: 'EXCLUIR' }, { cookie: '' }))!.status).toBe(
+    401,
+  )
   expect(rowsOf('accounts').map((row) => row.id)).toContain(LEAVING)
 })
 
