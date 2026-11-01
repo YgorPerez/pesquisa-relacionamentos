@@ -7,7 +7,9 @@
 // with its issue's number (`state/sent-comments.ts`, #347), the popover or
 // the sheet closes and a notice says so, with a link to "Seus trechos"; a
 // failure keeps what was typed and keeps nothing. The count carries the
-// action's name only, once a comment is sent.
+// action's name only, once a comment is sent. A reader with a nickname also
+// gets to publish it instead (`public-comments.tsx`, #559); to everyone else
+// this form is all there is.
 import { useId, useState, type FormEvent } from 'react'
 import {
   COMMENT_KINDS,
@@ -27,6 +29,8 @@ import { countSelection } from './selection-count'
 import { ACTION_LABEL } from './selection-popover.copy'
 import type { Quote, SelectionActionProps } from './selection-action'
 import { PopoverLine } from './text-popover'
+import { CommentAudience } from './public-comments'
+import { PUBLIC_COMMENT } from './public-comments.copy'
 
 type Status = 'editing' | 'sending' | 'failed'
 
@@ -196,12 +200,21 @@ export function CommentOnQuote({
   const open = () =>
     showForm(
       ACTION_LABEL.comment,
-      <CommentForm
-        quote={quote}
-        onSent={() =>
-          finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
-        }
-      />,
+      <CommentAudience
+        path={quote.path}
+        quote={quote.text}
+        onDone={() => {
+          countSelection('comment')
+          finish(PUBLIC_COMMENT.published)
+        }}
+      >
+        <CommentForm
+          quote={quote}
+          onSent={() =>
+            finish(COMMENT.sent, { to: '/trechos', label: COMMENT.seeSent })
+          }
+        />
+      </CommentAudience>,
     )
   return <ActionButton onClick={open}>{ACTION_LABEL.comment}</ActionButton>
 }

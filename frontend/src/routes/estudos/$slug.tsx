@@ -2,6 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { reads } from '#/content/reads'
+import { readPublicComments } from '#/content/public-comments'
+import { PublicComments } from '#/ui/public-comments'
 import { Html } from '#/ui/guide'
 import { QuestionRow } from '#/ui/question-row'
 import { BackLink } from '#/ui/navigation'
@@ -25,7 +27,11 @@ export const Route = createFileRoute('/estudos/$slug')({
     const factSheet = await context.queryClient.query(
       reads.factSheet(params.slug),
     )
-    return { search: factSheet.search, indexable: factSheet.indexable }
+    return {
+      search: factSheet.search,
+      indexable: factSheet.indexable,
+      comments: await readPublicComments({ data: `/estudos/${params.slug}` }),
+    }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -130,6 +136,7 @@ function FactSheetPage() {
           <FactSheetLegend />
         </Section>
       </Column>
+      <FactSheetComments slug={factSheet.slug} />
       <FactSheetSelection />
     </Sheet>
   )
@@ -137,6 +144,18 @@ function FactSheetPage() {
 
 /** The reader's actions on the text, where this Fact sheet is what the text
  * rests on. */
+function FactSheetComments({ slug }: { slug: string }) {
+  return (
+    <Column>
+      <PublicComments
+        key={slug}
+        path={`/estudos/${slug}`}
+        comments={Route.useLoaderData().comments}
+      />
+    </Column>
+  )
+}
+
 function FactSheetSelection() {
   const factSheet = useFactSheet()
   return (
