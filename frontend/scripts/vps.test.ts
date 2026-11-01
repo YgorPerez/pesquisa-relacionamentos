@@ -2,10 +2,10 @@
 // over SSH, run in a bash, with no real Docker or Nginx.
 import { statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { DatabaseSync } from 'node:sqlite'
 import { describe, expect, it } from 'vite-plus/test'
 import { fakeFrontend, fakeVps } from './fake-docker.ts'
 import { publish, rollback } from './vps.ts'
-import { openDatabase } from '../src/platform/database.ts'
 
 const SHA_1 = 'aaaaaaa'
 const SHA_2 = 'bbbbbbb'
@@ -72,7 +72,7 @@ describe.skipIf(process.platform === 'win32')(
     it('keeps database rows through publish, failed swap and rollback', () => {
       const vps = aVps()
       vps.publish(SHA_1)
-      const db = openDatabase(vps.databasePath('temestudo-app'))
+      const db = new DatabaseSync(vps.databasePath('temestudo-app'))
       db.exec('CREATE TABLE example (value TEXT)')
       db.prepare('INSERT INTO example VALUES (?)').run('survives swaps')
       db.close()
@@ -81,7 +81,7 @@ describe.skipIf(process.platform === 'win32')(
       expect(() => vps.publish(SHA_3)).toThrow('nginx -t refused')
       vps.fix('nginx-refuses')
       vps.rollback()
-      const restored = openDatabase(vps.databasePath('temestudo-app'))
+      const restored = new DatabaseSync(vps.databasePath('temestudo-app'))
       expect(restored.prepare('SELECT value FROM example').get()).toEqual({
         value: 'survives swaps',
       })
