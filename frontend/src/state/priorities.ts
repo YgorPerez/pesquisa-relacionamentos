@@ -15,7 +15,7 @@ export const LEGACY_PRIORITIES = {
     renameKeys(raw, { topo3: 'top3', desfecho: 'outcome' }),
 }
 
-const savedPriorities = stored<PrioritiesState>(
+export const savedPriorities = stored<PrioritiesState>(
   'priorities',
   (raw) => readPriorities(raw),
   LEGACY_PRIORITIES,

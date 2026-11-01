@@ -1,10 +1,76 @@
 import { useState } from 'react'
+import {
+  decideSync,
+  refreshSync,
+  useSyncStatus,
+  type SyncStatus,
+} from '#/state/account-sync'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
 import { Input } from './shadcn/input'
 import { Checkbox } from './shadcn/checkbox'
 import { Section, Headline } from './section'
-import { ACCOUNT_INTRO, ACCOUNT_RULES } from './account.copy'
+import { ACCOUNT_INTRO, ACCOUNT_RULES, SYNC_EXPLANATION } from './account.copy'
+
+function SyncSettings({
+  status,
+  decide,
+}: {
+  status: SyncStatus
+  decide: (accept: boolean) => void
+}) {
+  if (status === 'loading' || status === 'anonymous') return null
+  return (
+    <Section aria-labelledby="account-sync">
+      <Headline id="account-sync">Seus dados nos seus aparelhos</Headline>
+      {status === 'ask' || status === 'device' ? (
+        <>
+          <p>{SYNC_EXPLANATION}</p>
+          {status === 'device' && (
+            <p>
+              Esta conta já permite sincronizar. Junte os dados deste aparelho
+              para começar aqui.
+            </p>
+          )}
+          <div className="mt-md flex flex-wrap gap-sm">
+            <SiteButton onClick={() => decide(true)}>
+              Juntar e sincronizar
+            </SiteButton>
+            {status === 'ask' && (
+              <SiteButton variant="light" onClick={() => decide(false)}>
+                Manter só neste aparelho
+              </SiteButton>
+            )}
+          </div>
+        </>
+      ) : status === 'declined' ? (
+        <p>
+          Você escolheu manter seus dados só no aparelho. Eles não são enviados
+          à conta.
+        </p>
+      ) : status === 'failed' ? (
+        <>
+          <p>
+            Não foi possível sincronizar. Seus dados continuam neste aparelho.
+          </p>
+          <SiteButton
+            variant="light"
+            onClick={() => {
+              void refreshSync()
+            }}
+          >
+            Tentar de novo
+          </SiteButton>
+        </>
+      ) : (
+        <p>
+          A sincronização está ligada neste aparelho. Dados recebidos por link
+          ficam só aqui até você editá-los.
+        </p>
+      )}
+    </Section>
+  )
+}
 
 function NicknameForm() {
   const [adult, setAdult] = useState(false)
@@ -79,9 +145,14 @@ function SignedIn({ nickname }: { nickname: string | null }) {
 /** The account is separate from the device's Profile. */
 export function AccountPage({
   account,
+  syncStatus,
+  onSyncDecision = decideSync,
 }: {
   account: { nickname: string | null } | null
+  syncStatus?: SyncStatus
+  onSyncDecision?: (accept: boolean) => void
 }) {
+  const currentSyncStatus = useSyncStatus()
   return (
     <Sheet>
       <Column>
@@ -98,6 +169,12 @@ export function AccountPage({
               Entrar com Google
             </a>
           </Section>
+        )}
+        {account?.nickname && (
+          <SyncSettings
+            status={syncStatus ?? currentSyncStatus}
+            decide={onSyncDecision}
+          />
         )}
         <p className="mt-lg text-nota text-tinta-2">
           Sair da conta mantém o que está salvo neste aparelho.{' '}

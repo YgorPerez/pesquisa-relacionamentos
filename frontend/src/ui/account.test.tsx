@@ -1,7 +1,23 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test } from 'vite-plus/test'
+import { expect, test, vi } from 'vite-plus/test'
 import { AccountPage } from './account'
+
+test('sync consent explains administrator access and declining sends only the decision', async () => {
+  const decide = vi.fn()
+  render(
+    <AccountPage
+      account={{ nickname: 'Leitora' }}
+      syncStatus="ask"
+      onSyncDecision={decide}
+    />,
+  )
+  expect(screen.getByText(/Quem administra o servidor pode ler/)).toBeVisible()
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Manter só neste aparelho' }),
+  )
+  expect(decide).toHaveBeenCalledWith(false)
+})
 
 test('reading is offered without login and Google is optional', () => {
   render(<AccountPage account={null} />)

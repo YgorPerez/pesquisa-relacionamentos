@@ -49,7 +49,7 @@ export function validateHighlights(
   return decodeQuoteList(raw, validHighlight)
 }
 
-const highlights = stored('highlights', validateHighlights)
+export const highlights = stored('highlights', validateHighlights)
 
 /** No Grifo: one array, so React sees the same snapshot each time. */
 const NONE: ReadonlyArray<Highlight> = []

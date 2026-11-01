@@ -85,7 +85,7 @@ export function validateSentComments(
   return decodeQuoteList(raw, validComment)
 }
 
-const comments = stored('sent-comments', validateSentComments)
+export const comments = stored('sent-comments', validateSentComments)
 
 /** None: one array, so React sees the same snapshot each time. */
 const NONE: ReadonlyArray<SentComment> = []

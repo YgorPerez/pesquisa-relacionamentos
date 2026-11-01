@@ -27,6 +27,29 @@ function subscribeToStorage(
 // right after.
 import { useSyncExternalStore } from 'react'
 
+type WriteSource = 'local' | 'link' | 'sync'
+let writeSource: WriteSource = 'local'
+const writeListeners = new Set<
+  (key: string, value: unknown, source: WriteSource) => void
+>()
+export function withStorageSource<T>(source: WriteSource, action: () => T): T {
+  const previous = writeSource
+  writeSource = source
+  try {
+    return action()
+  } finally {
+    writeSource = previous
+  }
+}
+export function followStoredWrites(
+  listener: (key: string, value: unknown, source: WriteSource) => void,
+) {
+  writeListeners.add(listener)
+  return () => {
+    writeListeners.delete(listener)
+  }
+}
+
 export interface Stored<T> {
   /** The saved value, already validated; `null` if there is nothing (or on
    * the server). */
@@ -131,6 +154,7 @@ export function stored<T>(
     } catch {
       // No space or blocked: the value is gone on reload, and that is all.
     }
+    for (const listener of writeListeners) listener(key, next, writeSource)
     notify()
   }
 

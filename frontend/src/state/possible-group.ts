@@ -54,7 +54,7 @@ export const LEGACY_REQUIREMENTS = {
   },
 }
 
-const savedRequirements = stored<Requirements>(
+export const savedRequirements = stored<Requirements>(
   'requirements',
   readRequirements,
   LEGACY_REQUIREMENTS,

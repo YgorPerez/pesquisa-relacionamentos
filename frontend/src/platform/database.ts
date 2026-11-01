@@ -11,6 +11,8 @@ const migrations: readonly string[] = [
     expires_at INTEGER NOT NULL) STRICT;
   CREATE TABLE oauth_attempts (state_hash TEXT PRIMARY KEY, browser_hash TEXT NOT NULL,
     verifier TEXT NOT NULL, expires_at INTEGER NOT NULL) STRICT;`,
+  `CREATE TABLE account_sync (account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    consent INTEGER NOT NULL CHECK (consent IN (0, 1)), data TEXT NOT NULL DEFAULT '{}') STRICT;`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import. */
