@@ -51,7 +51,9 @@ function PublicCommentForm({
     try {
       const body = new FormData(event.currentTarget).get('body')
       const text = typeof body === 'string' ? body : ''
-      const result = await writePublicComment({ data: { ...input, body: text } })
+      const result = await writePublicComment({
+        data: { ...input, body: text },
+      })
       if (result.ok) {
         window.dispatchEvent(new Event('public-comments-changed'))
         onDone()

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { PublicComments } from './public-comments'
+import { CommentAudience, PublicComments } from './public-comments'
 const meta = {
   component: PublicComments,
   parameters: { layout: 'padded' },
@@ -33,4 +33,18 @@ export const Conversation: Story = {
       },
     ],
   },
+}
+
+/** What an anonymous reader gets: the private form, with no choice above it. */
+export const AudienceWithoutAccount: Story = {
+  args: { path: '/dicas/exemplo', comments: [] },
+  render: () => (
+    <CommentAudience
+      path="/dicas/exemplo"
+      quote="O lugar quase não muda a relação."
+      onDone={() => {}}
+    >
+      <p>O formulário do Comentário ao curador.</p>
+    </CommentAudience>
+  ),
 }

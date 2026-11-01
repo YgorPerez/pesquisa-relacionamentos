@@ -130,7 +130,12 @@ test('the page itself settles whether the passage changed, once it can look', ()
         path="/dicas/exemplo"
         comments={[
           { ...QUOTED, changed: true },
-          { ...QUOTED, id: 8, quote: 'Outro trecho, que saiu.', changed: false },
+          {
+            ...QUOTED,
+            id: 8,
+            quote: 'Outro trecho, que saiu.',
+            changed: false,
+          },
         ]}
       />
     </>,

@@ -8,7 +8,9 @@
 // The files end in `.e2e.ts`, and not `.spec.ts`, because Vitest picks up
 // `*.spec.ts` by default.
 
-import { availableParallelism } from 'node:os'
+import { mkdtempSync } from 'node:fs'
+import { availableParallelism, tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { defineConfig, devices } from '@playwright/test'
 import { joinQueue, playwrightRequest } from '../scripts/machine-queue.ts'
 import { requestedPort } from '../scripts/ports.ts'
@@ -21,6 +23,14 @@ const port = requestedPort('e2e')
 // again and inherit `MACHINE_QUEUE`, so they do not join again.
 const HALF = Math.max(1, Math.floor(availableParallelism() / 2))
 const workers = await joinQueue(playwrightRequest(process.argv, HALF))
+
+// A database for this run alone. The workers inherit the variable, read this
+// config again and keep it; `public-comments.e2e.ts` seeds it. The Google
+// values only make the server read a session cookie: no spec reaches Google.
+process.env.E2E_DATABASE_PATH ??= join(
+  mkdtempSync(join(tmpdir(), 'e2e-database-')),
+  'app.sqlite',
+)
 
 export default defineConfig({
   testDir: './e2e',
@@ -64,7 +74,7 @@ export default defineConfig({
   // `analytics.e2e.ts` intercepts the sends to GoatCounter. A blank
   // `COMMENT_GITHUB_TOKEN`: no e2e comment reaches GitHub.
   webServer: {
-    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && COMMENT_GITHUB_TOKEN= PORT=${port} node .output/server/index.mjs`,
+    command: `CONTENT_ROOT=e2e/library VITE_COUNT_ON_LOCALHOST=1 pnpm build && COMMENT_GITHUB_TOKEN= DATABASE_PATH=${process.env.E2E_DATABASE_PATH} APP_ORIGIN=http://localhost:${port} GOOGLE_CLIENT_ID=e2e GOOGLE_CLIENT_SECRET=e2e PORT=${port} node .output/server/index.mjs`,
     url: `http://localhost:${port}/`,
     reuseExistingServer: false,
     stdout: 'ignore',
