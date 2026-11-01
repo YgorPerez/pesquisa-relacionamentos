@@ -188,6 +188,33 @@ function guidePassages(guide: GuideView): Passage[] {
   ]
 }
 
+/** Public text used to detect a comment whose passage changed. */
+export function publicPageText(library: Library, path: string): string {
+  let texts = pageTexts.get(library)
+  if (!texts) {
+    texts = new Map(
+      [
+        ...guidePages(library),
+        ...tipPages(library),
+        ...factSheetPages(library),
+      ].map((page) => [
+        page.path,
+        page.passages
+          .flatMap(({ html }) =>
+            lines(html).map((line) => squeeze(withoutRefs(line))),
+          )
+          .join(' '),
+      ]),
+    )
+    pageTexts.set(library, texts)
+  }
+  return texts.get(path) ?? ''
+}
+
+/** The library does not change while the server runs, and building every
+ * page's view on each read of a commented page would cost a search index. */
+const pageTexts = new WeakMap<Library, ReadonlyMap<string, string>>()
+
 function guidePages(library: Library): Page[] {
   return library.topics.map((topic) => {
     const guide = guideView(topic, library)
