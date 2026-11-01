@@ -11,6 +11,24 @@ const migrations: readonly string[] = [
     expires_at INTEGER NOT NULL) STRICT;
   CREATE TABLE oauth_attempts (state_hash TEXT PRIMARY KEY, browser_hash TEXT NOT NULL,
     verifier TEXT NOT NULL, expires_at INTEGER NOT NULL) STRICT;`,
+  `CREATE TABLE public_comments (
+    id INTEGER PRIMARY KEY,
+    account_id INTEGER REFERENCES accounts(id) ON DELETE SET NULL,
+    path TEXT NOT NULL, quote TEXT NOT NULL, body TEXT NOT NULL,
+    parent_id INTEGER REFERENCES public_comments(id) ON DELETE CASCADE,
+    created_at INTEGER NOT NULL, edited_at INTEGER,
+    hidden INTEGER NOT NULL DEFAULT 0 CHECK (hidden IN (0, 1))
+  ) STRICT;
+  CREATE INDEX public_comments_page ON public_comments(path, created_at);
+  CREATE TABLE public_comment_history (
+    id INTEGER PRIMARY KEY, comment_id INTEGER NOT NULL REFERENCES public_comments(id) ON DELETE CASCADE,
+    body TEXT NOT NULL, replaced_at INTEGER NOT NULL
+  ) STRICT;
+  CREATE TABLE public_comment_sends (
+    account_id INTEGER NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+    sent_at INTEGER NOT NULL
+  ) STRICT;
+  CREATE INDEX public_comment_rate ON public_comment_sends(account_id, sent_at);`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import. */
