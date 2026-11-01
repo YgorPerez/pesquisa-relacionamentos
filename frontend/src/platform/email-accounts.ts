@@ -7,19 +7,24 @@ import {
 } from 'node:crypto'
 import { isIP } from 'node:net'
 import type { DatabaseSync } from 'node:sqlite'
-import { promisify } from 'node:util'
 
-const derive = promisify(scrypt)
 const SCRYPT = { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }
+const derive = (password: string, salt: string) =>
+  new Promise<Buffer>((resolve, reject) => {
+    scrypt(password, salt, 64, SCRYPT, (error, key) => {
+      if (error) reject(error)
+      else resolve(key)
+    })
+  })
 const DUMMY = `${'00'.repeat(16)}:${'00'.repeat(64)}`
-export async function hashPassword(password: string) {
+async function hashPassword(password: string) {
   const salt = randomBytes(16).toString('hex')
-  const key = (await derive(password, salt, 64, SCRYPT)) as Buffer
+  const key = await derive(password, salt)
   return `${salt}:${key.toString('hex')}`
 }
-export async function verifiesPassword(password: string, stored = DUMMY) {
+async function verifiesPassword(password: string, stored = DUMMY) {
   const [salt, digest] = stored.split(':')
-  const key = (await derive(password, salt!, 64, SCRYPT)) as Buffer
+  const key = await derive(password, salt!)
   return timingSafeEqual(key, Buffer.from(digest!, 'hex'))
 }
 

@@ -75,3 +75,46 @@ it('rolls back a failed migration and refuses an edited migration', () => {
     rmSync(folder, { recursive: true, force: true })
   }
 })
+
+it('adding email accounts preserves existing Google sessions and account data', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'email-migration-'))
+  const path = join(folder, 'app.sqlite')
+  try {
+    const before = openDatabase(path)
+    before.exec(`INSERT INTO accounts (id, google_sub, nickname) VALUES (123, 'kept-sub', 'Leitora');
+      INSERT INTO account_sessions VALUES ('kept-session', 123, 9999999999999);
+      INSERT INTO account_sync VALUES (123, 1, '{}');
+      PRAGMA foreign_keys = OFF;
+      CREATE TABLE old_accounts (id INTEGER PRIMARY KEY, google_sub TEXT NOT NULL UNIQUE,
+        nickname TEXT, accepted_at INTEGER, rules_version TEXT, nickname_key TEXT) STRICT;
+      INSERT INTO old_accounts SELECT * FROM accounts;
+      DROP TABLE accounts;
+      ALTER TABLE old_accounts RENAME TO accounts;
+      CREATE UNIQUE INDEX accounts_nickname_key ON accounts(nickname_key);
+      DROP TABLE email_credentials;
+      DROP TABLE email_rate_limits;
+      DELETE FROM schema_migrations WHERE version = 6;`)
+    before.close()
+    const after = openDatabase(path)
+    expect(
+      after.prepare('SELECT google_sub FROM accounts WHERE id = 123').get()
+        ?.google_sub,
+    ).toBe('kept-sub')
+    expect(
+      after
+        .prepare(
+          'SELECT token_hash FROM account_sessions WHERE account_id = 123',
+        )
+        .get()?.token_hash,
+    ).toBe('kept-session')
+    expect(
+      after
+        .prepare('SELECT consent FROM account_sync WHERE account_id = 123')
+        .get()?.consent,
+    ).toBe(1)
+    expect(after.prepare('PRAGMA foreign_key_check').all()).toEqual([])
+    after.close()
+  } finally {
+    rmSync(folder, { recursive: true, force: true })
+  }
+})
