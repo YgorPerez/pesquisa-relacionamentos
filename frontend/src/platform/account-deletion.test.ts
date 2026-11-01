@@ -26,6 +26,7 @@ const TABLES: Readonly<Record<string, string>> = {
   public_comment_reports: 'cascades, and follows its comment',
   oauth_attempts: 'has no account',
   email_credentials: 'cascades: email and password hash go',
+  password_resets: 'cascades: reset token hash goes',
   email_rate_limits:
     'has no account; keyed hashes expire and are erased hourly',
   schema_migrations: 'has no account',
@@ -198,6 +199,7 @@ test('a table can only point at an account in a way deletion reaches', () => {
     'account_sessions:CASCADE',
     'account_sync:CASCADE',
     'email_credentials:CASCADE',
+    'password_resets:CASCADE',
     'public_comment_reports:CASCADE',
     'public_comment_sends:CASCADE',
     'public_comments:SET NULL',

@@ -6,6 +6,9 @@ import { openDatabase } from './database'
 import { REMOVED_READER } from './public-comment-moderation'
 import { serverEnv } from './server-env'
 import { allowEmailAttempt, emailAccount } from './email-accounts'
+import { deliverPasswordReset, resetPassword, validReset } from './password-reset'
+import { recoveryPage } from './recovery-page'
+import { RECOVERY } from '#/ui/password-recovery.copy'
 
 type Options = {
   databasePath?: string
@@ -13,6 +16,9 @@ type Options = {
   clientId?: string
   clientSecret?: string
   emailRateLimitKey?: string
+  resendApiKey?: string
+  emailFrom?: string
+  resendEndpoint?: string
   /** Explicit injection for local provider tests; never environment overrides. */
   tokenEndpoint?: string
   userinfoEndpoint?: string
@@ -366,6 +372,8 @@ class AccountService {
   async handle(request: Request): Promise<Response | null> {
     const url = new URL(request.url)
     if (!url.pathname.startsWith('/auth/')) return null
+    if (['/auth/forgot', '/auth/reset'].includes(url.pathname))
+      return this.recovery(request, url)
     if (!(this.configured() || this.emailConfigured()))
       return response(
         503,
@@ -410,6 +418,53 @@ class AccountService {
         /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)),
     )
   }
+  private async recovery(request: Request, url: URL) {
+    if (!['GET', 'POST'].includes(request.method)) return response(405, 'Método não permitido.')
+    if (request.method === 'POST' && request.headers.get('origin') !== this.options.origin)
+      return response(403, 'Abra o formulário neste site e tente de novo.')
+    if (!this.emailConfigured() || !this.options.resendApiKey || !this.options.emailFrom)
+      return recoveryPage({ disabled: true, message: RECOVERY.unavailable }, 503)
+    if (url.pathname === '/auth/forgot') {
+      if (request.method === 'GET') return recoveryPage({})
+      const form = await readForm(request)
+      if (form instanceof Response) return form
+      const email = form.get('email')?.trim().toLowerCase() ?? ''
+      // Defer all lookup, rate limiting and provider I/O until the identical
+      // answer is returned. Provider latency and failure cannot affect it.
+      setImmediate(() => {
+        void this.deliverRecovery(request, email)
+      })
+      return recoveryPage({ message: RECOVERY.sent, disabled: true })
+    }
+    const form = request.method === 'POST' ? await readForm(request) : url.searchParams
+    if (form instanceof Response) return form
+    const token = form.get('token') ?? ''
+    const db = this.database()
+    try {
+      if (!validReset(db, token, this.now()))
+        return recoveryPage({ message: RECOVERY.invalid }, 400)
+      if (request.method === 'GET') return recoveryPage({ token })
+      const password = form.get('password') ?? ''
+      if (password.length < 8 || password.length > 1024)
+        return recoveryPage({ token, message: RECOVERY.short }, 400)
+      return await resetPassword(db, token, password, this.now)
+        ? recoveryPage({ message: RECOVERY.done, disabled: true })
+        : recoveryPage({ message: RECOVERY.invalid }, 400)
+    } finally { db.close() }
+  }
+  private async deliverRecovery(request: Request, email: string) {
+    // Never expose database/provider exceptions containing a recipient/token.
+    try {
+      const db = this.database()
+      try {
+        await deliverPasswordReset(db, request, email, {
+          origin: this.options.origin!, rateKey: this.options.emailRateLimitKey!,
+          apiKey: this.options.resendApiKey!, from: this.options.emailFrom!,
+          endpoint: this.options.resendEndpoint,
+        }, this.now())
+      } finally { db.close() }
+    } catch { /* Recovery is best effort after the response. */ }
+  }
   private async email(request: Request, register: boolean) {
     if (!this.emailConfigured())
       return response(503, 'O login com e-mail está indisponível.')
@@ -451,6 +506,8 @@ function accountsFromEnvironment() {
     clientId: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
     emailRateLimitKey: env.EMAIL_RATE_LIMIT_KEY,
+    resendApiKey: env.RESEND_API_KEY,
+    emailFrom: env.EMAIL_FROM,
   })
 }
 /** A POST from this site's own pages. */

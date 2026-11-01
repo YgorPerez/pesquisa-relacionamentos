@@ -59,6 +59,10 @@ const migrations: readonly string[] = [
     email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL) STRICT;
   CREATE TABLE email_rate_limits (key_hash TEXT PRIMARY KEY, attempts INTEGER NOT NULL,
     expires_at INTEGER NOT NULL) STRICT;`,
+  `CREATE TABLE password_resets (
+    account_id INTEGER PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+    token_hash TEXT NOT NULL UNIQUE, expires_at INTEGER NOT NULL
+  ) STRICT;`,
 ]
 
 /** Server-only callers own and close the connection. No database opens at import.
