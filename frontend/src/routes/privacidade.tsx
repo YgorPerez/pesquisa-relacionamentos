@@ -346,11 +346,10 @@ function Backups() {
         limite de tentativas.
       </p>
       <p>
-        Uma conta excluída ou um e-mail tirado continua nas cópias feitas antes
-        até elas serem apagadas. Hoje não há prazo definido para isso: uma cópia
-        fica até alguém apagá-la. Se o banco precisar ser restaurado de uma
-        cópia antiga, uma conta excluída ou um e-mail tirado depois dela pode
-        voltar.
+        Cada cópia é apagada cerca de 30 dias depois de feita. Até lá, uma conta
+        excluída ou um e-mail tirado continua nas cópias feitas antes. Se o
+        banco precisar ser restaurado de uma cópia desse período, uma conta
+        excluída ou um e-mail tirado depois dela pode voltar.
       </p>
     </Section>
   )
