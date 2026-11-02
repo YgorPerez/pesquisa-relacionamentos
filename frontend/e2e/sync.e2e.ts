@@ -149,7 +149,7 @@ test('account reading works without JavaScript', async ({
   await page.goto(`${baseURL}/conta`)
   await expect(page.getByRole('heading', { name: 'Sua conta' })).toBeVisible()
   await expect(
-    page.getByRole('link', { name: 'Entrar com Google' }),
+    page.getByRole('link', { name: 'Continuar com Google' }),
   ).toBeVisible()
   await context.close()
 })

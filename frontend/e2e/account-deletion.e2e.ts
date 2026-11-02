@@ -30,7 +30,7 @@ test('deleting from /conta asks for the word, ends the session and tells the dev
   await expect(page.getByText(/Sua conta foi excluída/)).toBeVisible()
   expect(signedInAs(googleSub)).toBeUndefined()
   await expect(
-    page.getByRole('link', { name: 'Entrar com Google' }),
+    page.getByRole('link', { name: 'Continuar com Google' }),
   ).toBeVisible()
   await expect
     .poll(() =>

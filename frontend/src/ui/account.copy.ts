@@ -6,18 +6,6 @@ import {
 
 export const ACCOUNT_RULES =
   'Use um apelido que não identifique outra pessoa. Não publique dados pessoais seus ou de terceiros, ofensas, ameaças ou spam. O curador pode retirar comentários que desrespeitem estas regras.'
-export const ACCOUNT_INTRO =
-  'Você pode ler tudo sem entrar. Na conta, você escolhe um apelido. Se entrar com Google, não guardamos seu nome, e-mail ou foto. Se criar conta com e-mail, guardamos o endereço para login e recuperação de senha.'
-export const EMAIL_ACCOUNT = {
-  login: 'Entrar com e-mail',
-  register: 'Criar conta com e-mail',
-  emailLogin: 'E-mail para entrar',
-  emailRegister: 'E-mail para criar conta',
-  passwordLogin: 'Senha',
-  passwordRegister: 'Crie uma senha',
-  passwordNote: 'Use pelo menos 8 caracteres.',
-  forgot: 'Esqueci minha senha',
-} as const
 export const SYNC_EXPLANATION =
   'Quer levar seu Perfil, Requisitos, Prioridades, Grifos, Notas e Comentários privados enviados para outros aparelhos? Quem administra o servidor pode ler esses dados e ligá-los à sua conta. Ao juntar, os Grifos se somam e o Perfil, os Requisitos e as Prioridades ficam na versão mais recente. Se você recusar, nada é enviado.'
 export const SYNC_DEVICE =
@@ -34,7 +22,6 @@ export const SYNC_LINK =
   'Um link recebido trocou dados neste aparelho. Eles ficam só aqui: a conta guarda a sua versão até você editá-los.'
 export const ACCOUNT = {
   title: 'Sua conta',
-  signIn: 'Entrar com Google',
   signOut: 'Sair da conta',
   signedInAs: (nickname: string) => `Você entrou como ${nickname}.`,
   leaving: 'Sair da conta mantém o que está salvo neste aparelho.',
@@ -45,7 +32,7 @@ export const ACCOUNT = {
   backToAccount: 'Voltar aos dados da conta',
   stop: 'Parar neste aparelho',
   retry: 'Tentar de novo',
-  nicknameTitle: 'Como você quer aparecer?',
+  nicknameTitle: 'Falta um passo: como você quer aparecer?',
   nicknameExplanation:
     'O apelido será público nos comentários que você publicar. Evite usar seu nome completo.',
   nickname: 'Apelido',

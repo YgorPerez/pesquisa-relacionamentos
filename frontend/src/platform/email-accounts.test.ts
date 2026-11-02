@@ -1,3 +1,4 @@
+import { EMAIL_TAKEN, WRONG_LOGIN } from '#/content/email-refusal'
 import { existsSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -161,7 +162,11 @@ function setup(key: string | undefined = 'test-only-key') {
     service.handle(
       new Request(`https://example.org/auth/${action}`, {
         method: 'POST',
-        headers: { origin: 'https://example.org', ...headers },
+        headers: {
+          origin: 'https://example.org',
+          accept: 'application/json',
+          ...headers,
+        },
         body: new URLSearchParams(form),
       }),
     )
@@ -197,7 +202,7 @@ test('registration rejects missing declarations, short passwords and duplicate n
     nickname: 'Outra',
   }))!
   expect(duplicate.status).toBe(400)
-  expect(await duplicate.text()).toContain('Esqueci minha senha')
+  expect(await duplicate.json()).toEqual({ refusal: EMAIL_TAKEN })
 })
 
 test('wrong passwords and unknown emails have the same refusal', async () => {
@@ -213,6 +218,26 @@ test('wrong passwords and unknown emails have the same refusal', async () => {
   }))!
   expect(wrong.status).toBe(unknown.status)
   expect(await wrong.text()).toBe(await unknown.text())
+})
+
+test('without JavaScript a refusal goes back to its section of /conta', async () => {
+  const { post } = setup()
+  await post('register', registration)
+  const page = { accept: 'text/html' }
+  const duplicate = (await post('register', registration, page))!
+  expect(duplicate.status).toBe(303)
+  expect(duplicate.headers.get('location')).toBe(
+    `/conta?criar=${EMAIL_TAKEN}#criar-conta`,
+  )
+  const wrong = (await post(
+    'login',
+    { email: registration.email, password: 'wrong password' },
+    page,
+  ))!
+  expect(wrong.status).toBe(303)
+  expect(wrong.headers.get('location')).toBe(
+    `/conta?entrar=${WRONG_LOGIN}#ja-tenho-conta`,
+  )
 })
 
 test('email writes require the configured origin and a rate limit key', async () => {

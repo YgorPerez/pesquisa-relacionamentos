@@ -5,13 +5,13 @@ import { NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { AccountPage } from './account'
 import {
   ACCOUNT,
-  ACCOUNT_INTRO,
   NICKNAME_REFUSAL,
   SYNC_DECLINED,
   SYNC_EXPLANATION,
   SYNC_LINK,
   SYNC_STOP_NOTE,
 } from './account.copy'
+import { ACCOUNT_INTRO, ENTRY } from './account-entry.copy'
 import { LOGIN_METHODS, METHOD_NOTICE } from './login-methods.copy'
 
 test('sync consent explains administrator access and declining sends only the decision', async () => {
@@ -70,31 +70,21 @@ test('nothing about sync shows before the nickname exists', () => {
 
 test('reading is offered without login and Google is optional', () => {
   render(<AccountPage account={null} />)
-  expect(screen.getByRole('link', { name: ACCOUNT.signIn })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: ENTRY.google })).toHaveAttribute(
     'href',
     '/auth/google',
   )
   expect(screen.getByText(ACCOUNT_INTRO)).toBeVisible()
 })
 
-test('email login and registration have separately labelled browser forms', async () => {
+test('email login and registration are separate browser forms', () => {
   render(<AccountPage account={null} />)
-  const login = screen
-    .getByRole('button', { name: 'Entrar com e-mail' })
-    .closest('form')!
-  expect(login).toHaveAttribute('action', '/auth/login')
-  await userEvent.type(
-    screen.getByLabelText('E-mail para entrar'),
-    'reader@example.org',
-  )
-  expect(screen.getByLabelText('E-mail para entrar')).toHaveValue(
-    'reader@example.org',
-  )
-  const register = screen
-    .getByRole('button', { name: 'Criar conta com e-mail' })
-    .closest('form')!
-  expect(register).toHaveAttribute('action', '/auth/register')
-  expect(screen.getByRole('checkbox', { name: ACCOUNT.adult })).toBeRequired()
+  expect(
+    screen.getByRole('button', { name: ENTRY.login }).closest('form'),
+  ).toHaveAttribute('action', '/auth/login')
+  expect(
+    screen.getByRole('button', { name: ENTRY.next }).closest('form'),
+  ).toHaveAttribute('action', '/auth/register')
 })
 
 test('the first nickname is a plain form the browser checks, ready without JavaScript', () => {
