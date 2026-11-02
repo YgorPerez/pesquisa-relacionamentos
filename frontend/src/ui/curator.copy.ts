@@ -1,8 +1,7 @@
 export const CURATOR = {
   title: 'Curadoria',
   lead: 'Os comentários públicos: o que recebeu denúncia, o que está oculto e o histórico de edições.',
-  denied:
-    'Esta página é só do curador. Se for você, entre com a sua conta do Google.',
+  denied: 'Esta página é só do curador. Se for você, entre com a sua conta.',
   toAccount: 'Ir para a conta',
   pending: 'Para decidir',
   nothingPending: 'Nada espera decisão.',

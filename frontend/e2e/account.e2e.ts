@@ -6,6 +6,27 @@ import { signInWithoutNickname, unique } from './accounts'
 
 test.use({ javaScriptEnabled: false })
 
+test('without JavaScript a reader registers with email, signs out and logs in again', async ({
+  page,
+}) => {
+  const suffix = unique()
+  const email = `reader-${suffix}@example.org`
+  const nickname = `Leitora ${suffix}`
+  await page.goto('/conta')
+  await page.getByLabel('E-mail para criar conta').fill(email)
+  await page.getByLabel('Crie uma senha').fill('a long password')
+  await page.getByLabel('Apelido').fill(nickname)
+  await page.getByRole('checkbox', { name: /18 anos/ }).check()
+  await page.getByRole('checkbox', { name: /Li e aceito/ }).check()
+  await page.getByRole('button', { name: 'Criar conta com e-mail' }).click()
+  await expect(page.getByText(`Você entrou como ${nickname}.`)).toBeVisible()
+  await page.getByRole('button', { name: 'Sair da conta' }).click()
+  await page.getByLabel('E-mail para entrar').fill(email.toUpperCase())
+  await page.getByLabel('Senha', { exact: true }).fill('a long password')
+  await page.getByRole('button', { name: 'Entrar com e-mail' }).click()
+  await expect(page.getByText(`Você entrou como ${nickname}.`)).toBeVisible()
+})
+
 async function chooseNickname(page: Page, nickname: string) {
   await page.goto('/conta')
   await page.getByLabel('Apelido').fill(nickname)

@@ -11,6 +11,7 @@ import { openDatabase } from './database'
 import {
   HOUR,
   PublicCommentRefusal,
+  isCuratorSubject,
   readDesk,
   recordReport,
   recordReportIssue,
@@ -229,10 +230,8 @@ async function report(
 /** Reports and the curator's desk. Each read and write checks who asks. */
 function moderation(options: ModerationOptions) {
   const { path, current, now, curator } = options
-  const isCurator = (request: Request) => {
-    const subject = curator()
-    return Boolean(subject) && current(request)?.googleSub === subject
-  }
+  const isCurator = (request: Request) =>
+    isCuratorSubject(current(request)?.googleSub, curator())
   return {
     report: (request: Request, id: number) => report(options, request, id),
     /** `null` for anyone but the curator. */

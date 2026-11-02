@@ -4,6 +4,30 @@ import { join } from 'node:path'
 import { expect, it } from 'vite-plus/test'
 import { openDatabase } from './database.ts'
 
+it('an orphan row does not stop a database from opening, and a migration still refuses one', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'orphan-'))
+  const path = join(folder, 'app.sqlite')
+  const parent =
+    'CREATE TABLE parent (id INTEGER PRIMARY KEY); CREATE TABLE child (parent_id INTEGER REFERENCES parent(id))'
+  try {
+    const first = openDatabase(path, [parent])
+    first.exec(
+      'PRAGMA foreign_keys = OFF; INSERT INTO child VALUES (404); PRAGMA foreign_keys = ON',
+    )
+    first.close()
+    const reopened = openDatabase(path, [parent])
+    expect(reopened.prepare('SELECT parent_id FROM child').get()).toEqual({
+      parent_id: 404,
+    })
+    reopened.close()
+    expect(() =>
+      openDatabase(path, [parent, 'CREATE TABLE later (id INTEGER)']),
+    ).toThrow('invalid account references')
+  } finally {
+    rmSync(folder, { recursive: true, force: true })
+  }
+})
+
 it('migrates once and shares committed data across connections and reopen', () => {
   const folder = mkdtempSync(join(tmpdir(), 'database-'))
   const path = join(folder, 'app.sqlite')
@@ -35,7 +59,7 @@ it('a database that already holds equal nicknames still opens, and the oldest ke
     before.exec(`DROP INDEX accounts_nickname_key;
       ALTER TABLE accounts DROP COLUMN nickname_key;
       INSERT INTO accounts (id, google_sub, nickname) VALUES (1, 'a', 'Ana'), (2, 'b', 'ANA'), (3, 'c', 'Bia');
-      DELETE FROM schema_migrations WHERE version = (SELECT max(version) FROM schema_migrations);`)
+      DELETE FROM schema_migrations WHERE version = 5;`)
     before.close()
     const after = openDatabase(path)
     expect(
@@ -71,6 +95,49 @@ it('rolls back a failed migration and refuses an edited migration', () => {
     ).toThrow('changed after being applied')
     // An old image may reopen a database after a newer additive migration.
     openDatabase(path, []).close()
+  } finally {
+    rmSync(folder, { recursive: true, force: true })
+  }
+})
+
+it('adding email accounts preserves existing Google sessions and account data', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'email-migration-'))
+  const path = join(folder, 'app.sqlite')
+  try {
+    const before = openDatabase(path)
+    before.exec(`INSERT INTO accounts (id, google_sub, nickname) VALUES (123, 'kept-sub', 'Leitora');
+      INSERT INTO account_sessions VALUES ('kept-session', 123, 9999999999999);
+      INSERT INTO account_sync VALUES (123, 1, '{}');
+      PRAGMA foreign_keys = OFF;
+      CREATE TABLE old_accounts (id INTEGER PRIMARY KEY, google_sub TEXT NOT NULL UNIQUE,
+        nickname TEXT, accepted_at INTEGER, rules_version TEXT, nickname_key TEXT) STRICT;
+      INSERT INTO old_accounts SELECT * FROM accounts;
+      DROP TABLE accounts;
+      ALTER TABLE old_accounts RENAME TO accounts;
+      CREATE UNIQUE INDEX accounts_nickname_key ON accounts(nickname_key);
+      DROP TABLE email_credentials;
+      DROP TABLE email_rate_limits;
+      DELETE FROM schema_migrations WHERE version = 6;`)
+    before.close()
+    const after = openDatabase(path)
+    expect(
+      after.prepare('SELECT google_sub FROM accounts WHERE id = 123').get()
+        ?.google_sub,
+    ).toBe('kept-sub')
+    expect(
+      after
+        .prepare(
+          'SELECT token_hash FROM account_sessions WHERE account_id = 123',
+        )
+        .get()?.token_hash,
+    ).toBe('kept-session')
+    expect(
+      after
+        .prepare('SELECT consent FROM account_sync WHERE account_id = 123')
+        .get()?.consent,
+    ).toBe(1)
+    expect(after.prepare('PRAGMA foreign_key_check').all()).toEqual([])
+    after.close()
   } finally {
     rmSync(folder, { recursive: true, force: true })
   }

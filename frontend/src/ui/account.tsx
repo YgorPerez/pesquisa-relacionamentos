@@ -1,4 +1,5 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect } from 'react'
+import type { AccountMethods, MethodNotice } from '#/content/method-notice'
 import type { NicknameRefusal } from '#/content/nickname-refusal'
 import {
   decideSync,
@@ -12,14 +13,17 @@ import {
 import { useLinkFields } from '#/state/sync-device'
 import { AccountDeletion } from './account-deletion'
 import { DELETION } from './account-deletion.copy'
+import { Agreement } from './agreement'
+import { LoginMethods, MethodMessage } from './login-methods'
 import { Sheet, Column, Display, Lead } from './sheet'
 import { SiteButton } from './button'
-import { Input } from './shadcn/input'
+import { Field, FieldForm } from './field'
 import { Section, Headline } from './section'
 import {
   ACCOUNT,
   ACCOUNT_INTRO,
   ACCOUNT_RULES,
+  EMAIL_ACCOUNT,
   NICKNAME_REFUSAL,
   SYNC_ACTIVE,
   SYNC_DECLINED,
@@ -113,50 +117,86 @@ function SyncSettings({
   )
 }
 
-/** The browser's own checkbox: the Base UI one does not toggle without
- * JavaScript, and this is what a reader must tick to get a nickname. */
-function Agreement({ name, children }: { name: string; children: ReactNode }) {
-  return (
-    <label className="flex min-h-toque items-center gap-xs font-bold">
-      <input
-        type="checkbox"
-        name={name}
-        required
-        className="size-5 flex-none accent-tinta"
-      />
-      {children}
-    </label>
-  )
-}
-
 /** A plain form with the browser's own checks, so it works without JavaScript;
  * the server checks all of it again, and a refusal comes back to this page. */
 function NicknameForm({ refusal }: { refusal?: NicknameRefusal }) {
   return (
-    <form
-      action="/auth/nickname"
-      method="post"
-      className="mt-md flex flex-col items-start gap-sm"
-    >
+    <FieldForm action="/auth/nickname">
       {refusal && <p role="alert">{NICKNAME_REFUSAL[refusal]}</p>}
-      <label className="flex w-full flex-col gap-xs" htmlFor="nickname">
-        {ACCOUNT.nickname}
-        <Input
-          id="nickname"
-          name="nickname"
-          className="w-full"
-          minLength={2}
-          maxLength={40}
-          required
-          autoComplete="off"
-        />
-      </label>
+      <Field
+        id="nickname"
+        label={ACCOUNT.nickname}
+        name="nickname"
+        minLength={2}
+        maxLength={40}
+        autoComplete="off"
+      />
       <p>{ACCOUNT_RULES}</p>
       <Agreement name="adult">{ACCOUNT.adult}</Agreement>
       <Agreement name="rules">{ACCOUNT.rules}</Agreement>
       <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
       <SiteButton type="submit">{ACCOUNT.createNickname}</SiteButton>
-    </form>
+    </FieldForm>
+  )
+}
+
+function EmailForm({ register = false }: { register?: boolean }) {
+  const prefix = register ? 'register' : 'login'
+  return (
+    <Section aria-labelledby={`email-${prefix}`}>
+      <Headline id={`email-${prefix}`}>
+        {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
+      </Headline>
+      <FieldForm action={`/auth/${prefix}`}>
+        <Field
+          id={`${prefix}-email`}
+          label={
+            register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin
+          }
+          name="email"
+          type="email"
+          maxLength={254}
+          autoComplete="email"
+        />
+        <Field
+          id={`${prefix}-password`}
+          label={
+            register
+              ? EMAIL_ACCOUNT.passwordRegister
+              : EMAIL_ACCOUNT.passwordLogin
+          }
+          name="password"
+          type="password"
+          minLength={register ? 8 : undefined}
+          maxLength={1024}
+          autoComplete={register ? 'new-password' : 'current-password'}
+        />
+        {register && <EmailRegistration />}
+        <SiteButton type="submit">
+          {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
+        </SiteButton>
+      </FieldForm>
+    </Section>
+  )
+}
+
+function EmailRegistration() {
+  return (
+    <>
+      <p className="text-nota text-tinta-2">{EMAIL_ACCOUNT.passwordNote}</p>
+      <Field
+        id="register-nickname"
+        label={ACCOUNT.nickname}
+        name="nickname"
+        minLength={2}
+        maxLength={40}
+        autoComplete="off"
+      />
+      <p>{ACCOUNT_RULES}</p>
+      <Agreement name="adult">{ACCOUNT.adult}</Agreement>
+      <Agreement name="rules">{ACCOUNT.rules}</Agreement>
+      <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
+    </>
   )
 }
 
@@ -196,6 +236,8 @@ export function AccountPage({
   onSyncDecision = decideSync,
   deleted = false,
   nicknameRefusal,
+  methods,
+  methodNotice,
 }: {
   account: { nickname: string | null } | null
   syncStatus?: SyncStatus
@@ -204,6 +246,10 @@ export function AccountPage({
   deleted?: boolean
   /** Why the server sent the nickname form back. */
   nicknameRefusal?: NicknameRefusal
+  /** The account's login methods; without them the page offers none. */
+  methods?: AccountMethods | null
+  /** What a form about methods came back with. */
+  methodNotice?: MethodNotice
 }) {
   const currentSyncStatus = useSyncStatus()
   const linkFields = useLinkFields()
@@ -219,6 +265,7 @@ export function AccountPage({
       <Column>
         <Display>{ACCOUNT.title}</Display>
         <Lead>{ACCOUNT_INTRO}</Lead>
+        {methodNotice && <MethodMessage notice={methodNotice} />}
         {deleted && (
           <Section>
             <p role="status">{DELETION.done}</p>
@@ -228,15 +275,23 @@ export function AccountPage({
         {account ? (
           <SignedIn nickname={account.nickname} refusal={nicknameRefusal} />
         ) : (
-          <Section>
-            <a
-              href="/auth/google"
-              className="inline-flex min-h-toque items-center font-bold"
-            >
-              {ACCOUNT.signIn}
-            </a>
-          </Section>
+          <>
+            <Section>
+              <a
+                href="/auth/google"
+                className="inline-flex min-h-toque items-center font-bold"
+              >
+                {ACCOUNT.signIn}
+              </a>
+            </Section>
+            <EmailForm />
+            <p className="mt-md">
+              <a href="/auth/forgot">{EMAIL_ACCOUNT.forgot}</a>
+            </p>
+            <EmailForm register />
+          </>
         )}
+        {account && methods && <LoginMethods methods={methods} />}
         {account?.nickname && (
           <SyncSettings
             status={syncStatus ?? currentSyncStatus}

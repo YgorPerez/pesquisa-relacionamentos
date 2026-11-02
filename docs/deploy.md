@@ -147,9 +147,37 @@ Google client for localhost. The automated flow uses local fake token and UserIn
 endpoints; real consent, client registration and production cookies still need the
 wizard's manual check.
 
+## Password recovery email (#574)
+
+Run `bash frontend/scripts/resend-wizard.sh` yourself to create the Resend
+account, verify a sending domain and disable open/click tracking. The wizard
+does not send mail or deploy. It writes `~/.config/tem-estudo/resend.env`, mode
+600, outside the repository. Follow the provider's
+[domain setup](https://resend.com/docs/dashboard/domains/introduction).
+
+Add `RESEND_API_KEY` (Sending access, restricted to that domain), `EMAIL_FROM`
+(an address on it) and `EMAIL_RATE_LIMIT_KEY` to the existing optional
+`/opt/temestudo/google-oauth.env`, root-owned, mode 600. Publish and rollback
+already load this file. Preserve its other values. Use a random rate-limit key
+of at least 32 bytes (`openssl rand -hex 32`); keep the existing key if email
+login is configured. It keys hashes of email and IP, never mail content.
+`APP_ORIGIN` remains the exact public origin and is the sole reset-link base.
+Runtime reads these values through `serverEnv()`; no new GitHub secret is needed.
+Without the Resend key, sender, origin or rate key, recovery shows an unavailable
+message. No production enablement before #576 updates `/privacidade`.
+
+The request responds before rate checks, account lookup and delivery. A process
+restart can lose that in-memory delivery; the reader can request another link.
+Provider failures are deliberately invisible on this screen. Automated tests
+use a local fake of the [send endpoint](https://resend.com/docs/api-reference/emails/send-email),
+never real mail. Real inbox delivery and DNS verification remain user-only.
+The reset and email-confirmation endpoints discard Nginx error logs, which otherwise copy secret queries;
+access logs and app logs retain only the path. Its `strict-origin` referrer
+policy strips the token while preserving `Origin` on forms without JavaScript.
+
 ## The curator's account (#560)
 
-`/curadoria` opens only for the Google subject in `CURATOR_GOOGLE_SUB` ([ADR 0047](adr/0047-reports-hide-a-comment-until-the-curator-decides.md)). Without it, nobody reads the page or decides anything. The site never shows a subject, so the operator reads it from the database on the VPS, after logging in and choosing a nickname. Nicknames are unique ([ADR 0045](adr/0045-google-identity-and-revocable-sessions.md)), so a copycat cannot share yours; yours is the one `/conta` says "Você entrou como" while you are logged in, so copy it from there, not from memory: `SELECT google_sub FROM accounts WHERE nickname = '<nickname>'`, which must return one row, or stop and find out why. Add the line to `/opt/temestudo/google-oauth.env`, which publish and rollback already pass to Docker, and publish again. Then open `/curadoria` logged in and logged out: only your account reads it. No new GitHub secret is required. A report's notice uses `COMMENT_GITHUB_TOKEN`; without the token, reports and hiding still work and `/curadoria` says the notice did not go out.
+`/curadoria` opens only for the account holding the Google subject in `CURATOR_GOOGLE_SUB` ([ADR 0047](adr/0047-reports-hide-a-comment-until-the-curator-decides.md)), from any login method of that account. Its email login works while Google is linked, and the server refuses to remove Google from it, because the account would be denied and the next Google login would open a new account that becomes the curator's. A reset through an email on that account that no link or reset ever proved also changes nothing: remove the email in `/conta` and add it again through the confirmation link. To hand the desk to another account, change `CURATOR_GOOGLE_SUB`. Without the variable, nobody reads the page or decides anything. The site never shows a subject, so the operator reads it from the database on the VPS, after logging in and choosing a nickname. Nicknames are unique ([ADR 0045](adr/0045-google-identity-and-revocable-sessions.md)), so a copycat cannot share yours; yours is the one `/conta` says "Você entrou como" while you are logged in, so copy it from there, not from memory: `SELECT google_sub FROM accounts WHERE nickname = '<nickname>'`, which must return one row, or stop and find out why. Add the line to `/opt/temestudo/google-oauth.env`, which publish and rollback already pass to Docker, and publish again. Then open `/curadoria` logged in and logged out: only your account reads it. No new GitHub secret is required. A report's notice uses `COMMENT_GITHUB_TOKEN`; without the token, reports and hiding still work and `/curadoria` says the notice did not go out.
 
 ## App database and encrypted backup (#557)
 
@@ -178,7 +206,7 @@ The host file is shared by bash and Docker's env-file parser. Use plain `KEY=val
 | `AWS_DEFAULT_REGION`                         | `auto` for R2; the provider's region otherwise                 |
 | `DATABASE_BACKUP_KEY`                        | 64 hex characters from `openssl rand -hex 32`; AES-256-GCM key |
 
-No new GitHub secrets are required. Do not put these values in `app.env`. `DATABASE_BACKUP_HOME` and `DATABASE_VOLUME` are local drill overrides; production uses `/opt/temestudo` and `temestudo-data`. Backups are retained until deleted by the operator or a separately configured bucket lifecycle. Keep old keys when rotating encryption keys; an old object still needs its original key.
+No new GitHub secrets are required. Do not put these values in `app.env`. `DATABASE_BACKUP_HOME` and `DATABASE_VOLUME` are local drill overrides; production uses `/opt/temestudo` and `temestudo-data`. A lifecycle rule on the bucket (`delete-backups-after-30-days`, prefix `database/`) deletes each backup after 30 days, and `/privacidade` states that period: change both together. Keep old keys when rotating encryption keys; an old object still needs its original key.
 
 ### Restore to a fresh volume
 

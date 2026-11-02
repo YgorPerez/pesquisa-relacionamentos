@@ -12,6 +12,7 @@ import {
   SYNC_LINK,
   SYNC_STOP_NOTE,
 } from './account.copy'
+import { LOGIN_METHODS, METHOD_NOTICE } from './login-methods.copy'
 
 test('sync consent explains administrator access and declining sends only the decision', async () => {
   const decide = vi.fn<(accept: boolean) => void>()
@@ -76,6 +77,26 @@ test('reading is offered without login and Google is optional', () => {
   expect(screen.getByText(ACCOUNT_INTRO)).toBeVisible()
 })
 
+test('email login and registration have separately labelled browser forms', async () => {
+  render(<AccountPage account={null} />)
+  const login = screen
+    .getByRole('button', { name: 'Entrar com e-mail' })
+    .closest('form')!
+  expect(login).toHaveAttribute('action', '/auth/login')
+  await userEvent.type(
+    screen.getByLabelText('E-mail para entrar'),
+    'reader@example.org',
+  )
+  expect(screen.getByLabelText('E-mail para entrar')).toHaveValue(
+    'reader@example.org',
+  )
+  const register = screen
+    .getByRole('button', { name: 'Criar conta com e-mail' })
+    .closest('form')!
+  expect(register).toHaveAttribute('action', '/auth/register')
+  expect(screen.getByRole('checkbox', { name: ACCOUNT.adult })).toBeRequired()
+})
+
 test('the first nickname is a plain form the browser checks, ready without JavaScript', () => {
   render(<AccountPage account={{ nickname: null }} />)
   const submit = screen.getByRole('button', { name: ACCOUNT.createNickname })
@@ -104,4 +125,36 @@ test('an existing account shows only its nickname and can leave', () => {
   expect(screen.getByText(ACCOUNT.signedInAs('Leitora'))).toBeVisible()
   expect(screen.getByRole('button', { name: ACCOUNT.signOut })).toBeVisible()
   expect(screen.queryByLabelText(ACCOUNT.nickname)).toBeNull()
+})
+
+test('a signed-in reader manages the methods, and what a form came back with shows at the top', () => {
+  render(
+    <AccountPage
+      account={{ nickname: 'Leitora' }}
+      syncStatus="active"
+      methodNotice="email-em-uso"
+      methods={{
+        google: true,
+        email: null,
+        pendingEmail: null,
+        canLinkGoogle: false,
+        canChangePassword: false,
+        canAddEmail: true,
+        curator: false,
+      }}
+    />,
+  )
+  expect(screen.getByRole('alert')).toHaveTextContent(
+    METHOD_NOTICE['email-em-uso'],
+  )
+  expect(
+    screen.getByRole('heading', { name: LOGIN_METHODS.title }),
+  ).toBeVisible()
+})
+
+test('nobody signed in sees no method to manage', () => {
+  render(<AccountPage account={null} />)
+  expect(
+    screen.queryByRole('heading', { name: LOGIN_METHODS.title }),
+  ).toBeNull()
 })

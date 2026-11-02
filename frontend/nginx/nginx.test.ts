@@ -52,6 +52,26 @@ const servers = top.filter((d) => d.name === 'server')
 const named = (block: Directive[] | undefined, name: string) =>
   (block ?? []).filter((d) => d.name === name)
 
+test.each(['/auth/reset', '/auth/confirm-email'])(
+  'upstream errors of %s cannot log the secret query',
+  (path) => {
+    const app = servers.find((server) =>
+      named(server.children, 'server_name').some(
+        (d) => d.args.join(' ') === 'temestudo.cloud',
+      ),
+    )!
+    const location = named(app.children, 'location').find(
+      (d) => d.args.join(' ') === `= ${path}`,
+    )
+    expect(named(location?.children, 'error_log').map((d) => d.args)).toEqual([
+      ['/dev/null'],
+    ])
+    expect(
+      named(location?.children, 'include').map((d) => d.args),
+    ).toContainEqual(['/etc/nginx/temestudo/temestudo-app.conf'])
+  },
+)
+
 /** Every block that declares an `add_header` drops the ones outside it: in
  * Nginx, an `add_header` inside `location` erases the `server` ones. */
 function blocksWithHeaders(block: Directive[]): Directive[][] {
