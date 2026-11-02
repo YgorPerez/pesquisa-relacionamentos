@@ -48,6 +48,7 @@ async function sendForm(
       ),
     })
     if (response.type === 'opaqueredirect') return null
+    if (response.ok) return EMAIL_UNAVAILABLE
     const body = (await response.json()) as { refusal?: unknown }
     return isEmailRefusal(body.refusal) ? body.refusal : EMAIL_UNAVAILABLE
   } catch {
