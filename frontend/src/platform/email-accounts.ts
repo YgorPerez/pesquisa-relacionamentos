@@ -1,4 +1,12 @@
 import {
+  EMAIL_INVALID,
+  EMAIL_TAKEN,
+  PASSWORD_SHORT,
+  WRONG_LOGIN,
+  type EmailRefusal,
+} from '#/content/email-refusal'
+import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
+import {
   createHash,
   createHmac,
   randomBytes,
@@ -136,7 +144,7 @@ export const clearLoginAttempts = (
 /** Who the password opened, and the stored hash it was checked against. */
 type EmailAccount =
   | { accountId: number; passwordHash: string }
-  | { refusal: string }
+  | { refusal: EmailRefusal }
 
 export async function emailAccount(
   db: DatabaseSync,
@@ -147,16 +155,11 @@ export async function emailAccount(
   const email = normalizeEmail(form.get('email'))
   const password = form.get('password') ?? ''
   if (!isEmail(email) || password.length > 1024)
-    return { refusal: 'Confira o e-mail e a senha.' }
+    return { refusal: EMAIL_INVALID }
   if (!register) return login(db, email, password)
-  if (!validPassword(password))
-    return { refusal: 'A senha precisa ter pelo menos 8 caracteres.' }
+  if (!validPassword(password)) return { refusal: PASSWORD_SHORT }
   const nickname = nicknameFrom(form)
-  if (!nickname)
-    return {
-      refusal:
-        'Escolha um apelido de 2 a 40 caracteres, declare ter 18 anos ou mais e aceite as regras.',
-    }
+  if (!nickname) return { refusal: NICKNAME_INVALID }
   const passwordHash = await hashPassword(password)
   return registerAccount(db, email, passwordHash, nickname, now)
 }
@@ -178,7 +181,7 @@ async function login(
   const valid = await verifiesPassword(password, stored)
   return valid && existing && stored
     ? { accountId: Number(existing.account_id), passwordHash: stored }
-    : { refusal: 'E-mail ou senha incorretos.' }
+    : { refusal: WRONG_LOGIN }
 }
 
 function registerAccount(
@@ -192,15 +195,12 @@ function registerAccount(
     if (
       db.prepare('SELECT 1 FROM email_credentials WHERE email = ?').get(email)
     )
-      return {
-        refusal:
-          'Esse e-mail já tem conta. Use “Esqueci minha senha” para recuperar o acesso.',
-      }
+      return { refusal: EMAIL_TAKEN }
     if (
       !free ||
       db.prepare('SELECT 1 FROM accounts WHERE nickname_key = ?').get(key)
     )
-      return { refusal: 'Esse apelido já está em uso. Escolha outro.' }
+      return { refusal: NICKNAME_TAKEN }
     const id = newAccountId()
     db.prepare(
       "INSERT INTO accounts (id, nickname, nickname_key, accepted_at, rules_version) VALUES (?, ?, ?, ?, '1')",

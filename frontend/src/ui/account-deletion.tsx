@@ -9,7 +9,7 @@ import { DELETION } from './account-deletion.copy'
  * toggle, and the form takes the default, which erases everything. */
 export function AccountDeletion({ canPublish }: { canPublish: boolean }) {
   return (
-    <Section aria-labelledby="account-delete">
+    <Section aria-labelledby="account-delete" className="mt-20">
       <Headline id="account-delete">{DELETION.title}</Headline>
       <p>{DELETION.whatGoes}</p>
       <p>{DELETION.device}</p>

@@ -47,7 +47,7 @@ test('a Google account adds an email with a password in a plain form, and hears 
   const password = within(form).getByLabelText(LOGIN_METHODS.addPassword)
   expect(password).toBeRequired()
   expect(password).toHaveAttribute('autocomplete', 'new-password')
-  expect(screen.getByText(LOGIN_METHODS.addExplanation)).toBeVisible()
+  expect(screen.getByText(LOGIN_METHODS.addExplanation)).not.toBeVisible()
   expect(button(LOGIN_METHODS.linkGoogle)).toBeNull()
   expect(button(LOGIN_METHODS.passwordSubmit)).toBeNull()
 })
@@ -77,6 +77,14 @@ test('with both methods either can go, each by its own form', () => {
   expect(screen.queryByText(LOGIN_METHODS.onlyOne)).toBeNull()
 })
 
+test('a rare form stays folded until asked for, and comes back open when refused', () => {
+  const { unmount } = render(<LoginMethods methods={emailOnly} />)
+  expect(screen.getByLabelText(LOGIN_METHODS.passwordCurrent)).not.toBeVisible()
+  unmount()
+  render(<LoginMethods methods={emailOnly} notice="senha-errada" />)
+  expect(screen.getByLabelText(LOGIN_METHODS.passwordCurrent)).toBeVisible()
+})
+
 test('changing the password asks for the current one', () => {
   render(<LoginMethods methods={emailOnly} />)
   const form = formOf(LOGIN_METHODS.passwordSubmit)
@@ -87,7 +95,6 @@ test('changing the password asks for the current one', () => {
   expect(
     within(form).getByLabelText(LOGIN_METHODS.passwordNew),
   ).toHaveAttribute('minlength', '8')
-  expect(screen.getByText(LOGIN_METHODS.passwordNote)).toBeVisible()
 })
 
 test('the curator is told why Google stays, has no form to remove it, and can still remove the email', () => {

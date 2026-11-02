@@ -36,7 +36,8 @@ import {
   CollapsibleTrigger,
 } from '@/ui/shadcn/collapsible'
 import { ChapterLinks } from './guide-sections'
-import { FoldArrow, useInBrowser } from './navigation'
+import { FoldArrow } from './fold-arrow'
+import { useInBrowser } from './in-browser'
 import { CHAPTER, chapterOf } from './reading-progress.copy'
 
 declare module '@tanstack/react-router' {

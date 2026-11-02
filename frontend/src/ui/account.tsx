@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import type { EmailRefusal } from '#/content/email-refusal'
 import type { AccountMethods, MethodNotice } from '#/content/method-notice'
 import type { NicknameRefusal } from '#/content/nickname-refusal'
 import {
@@ -13,6 +14,8 @@ import {
 import { useLinkFields } from '#/state/sync-device'
 import { AccountDeletion } from './account-deletion'
 import { DELETION } from './account-deletion.copy'
+import { AccountEntry } from './account-entry'
+import { ACCOUNT_INTRO } from './account-entry.copy'
 import { Agreement } from './agreement'
 import { LoginMethods, MethodMessage } from './login-methods'
 import { Sheet, Column, Display, Lead } from './sheet'
@@ -21,9 +24,7 @@ import { Field, FieldForm } from './field'
 import { Section, Headline } from './section'
 import {
   ACCOUNT,
-  ACCOUNT_INTRO,
   ACCOUNT_RULES,
-  EMAIL_ACCOUNT,
   NICKNAME_REFUSAL,
   SYNC_ACTIVE,
   SYNC_DECLINED,
@@ -140,66 +141,6 @@ function NicknameForm({ refusal }: { refusal?: NicknameRefusal }) {
   )
 }
 
-function EmailForm({ register = false }: { register?: boolean }) {
-  const prefix = register ? 'register' : 'login'
-  return (
-    <Section aria-labelledby={`email-${prefix}`}>
-      <Headline id={`email-${prefix}`}>
-        {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
-      </Headline>
-      <FieldForm action={`/auth/${prefix}`}>
-        <Field
-          id={`${prefix}-email`}
-          label={
-            register ? EMAIL_ACCOUNT.emailRegister : EMAIL_ACCOUNT.emailLogin
-          }
-          name="email"
-          type="email"
-          maxLength={254}
-          autoComplete="email"
-        />
-        <Field
-          id={`${prefix}-password`}
-          label={
-            register
-              ? EMAIL_ACCOUNT.passwordRegister
-              : EMAIL_ACCOUNT.passwordLogin
-          }
-          name="password"
-          type="password"
-          minLength={register ? 8 : undefined}
-          maxLength={1024}
-          autoComplete={register ? 'new-password' : 'current-password'}
-        />
-        {register && <EmailRegistration />}
-        <SiteButton type="submit">
-          {register ? EMAIL_ACCOUNT.register : EMAIL_ACCOUNT.login}
-        </SiteButton>
-      </FieldForm>
-    </Section>
-  )
-}
-
-function EmailRegistration() {
-  return (
-    <>
-      <p className="text-nota text-tinta-2">{EMAIL_ACCOUNT.passwordNote}</p>
-      <Field
-        id="register-nickname"
-        label={ACCOUNT.nickname}
-        name="nickname"
-        minLength={2}
-        maxLength={40}
-        autoComplete="off"
-      />
-      <p>{ACCOUNT_RULES}</p>
-      <Agreement name="adult">{ACCOUNT.adult}</Agreement>
-      <Agreement name="rules">{ACCOUNT.rules}</Agreement>
-      <p className="text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
-    </>
-  )
-}
-
 function SignedIn({
   nickname,
   refusal,
@@ -208,24 +149,27 @@ function SignedIn({
   refusal?: NicknameRefusal
 }) {
   return (
-    <>
+    <Section aria-labelledby="account-identity">
+      <Headline id="account-identity">
+        {nickname === null ? ACCOUNT.nicknameTitle : ACCOUNT.identityTitle}
+      </Headline>
       {nickname === null ? (
-        <Section aria-labelledby="account-nickname">
-          <Headline id="account-nickname">{ACCOUNT.nicknameTitle}</Headline>
+        <>
           <p>{ACCOUNT.nicknameExplanation}</p>
           <NicknameForm refusal={refusal} />
-        </Section>
+        </>
       ) : (
-        <Section>
-          <p>{ACCOUNT.signedInAs(nickname)}</p>
-        </Section>
+        <p>{ACCOUNT.signedInAs(nickname)}</p>
       )}
-      <form action="/auth/logout" method="post" className="mt-lg">
+      <p className="mt-md text-nota text-tinta-2">
+        {ACCOUNT.leaving} <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
+      </p>
+      <form action="/auth/logout" method="post" className="mt-sm">
         <SiteButton type="submit" variant="light">
           {ACCOUNT.signOut}
         </SiteButton>
       </form>
-    </>
+    </Section>
   )
 }
 
@@ -236,6 +180,8 @@ export function AccountPage({
   onSyncDecision = decideSync,
   deleted = false,
   nicknameRefusal,
+  loginRefusal,
+  signUpRefusal,
   methods,
   methodNotice,
 }: {
@@ -246,6 +192,9 @@ export function AccountPage({
   deleted?: boolean
   /** Why the server sent the nickname form back. */
   nicknameRefusal?: NicknameRefusal
+  /** Why the server sent the login or the sign-up back, without JavaScript. */
+  loginRefusal?: EmailRefusal
+  signUpRefusal?: EmailRefusal
   /** The account's login methods; without them the page offers none. */
   methods?: AccountMethods | null
   /** What a form about methods came back with. */
@@ -264,7 +213,7 @@ export function AccountPage({
     <Sheet>
       <Column>
         <Display>{ACCOUNT.title}</Display>
-        <Lead>{ACCOUNT_INTRO}</Lead>
+        {!account && <Lead>{ACCOUNT_INTRO}</Lead>}
         {methodNotice && <MethodMessage notice={methodNotice} />}
         {deleted && (
           <Section>
@@ -275,23 +224,11 @@ export function AccountPage({
         {account ? (
           <SignedIn nickname={account.nickname} refusal={nicknameRefusal} />
         ) : (
-          <>
-            <Section>
-              <a
-                href="/auth/google"
-                className="inline-flex min-h-toque items-center font-bold"
-              >
-                {ACCOUNT.signIn}
-              </a>
-            </Section>
-            <EmailForm />
-            <p className="mt-md">
-              <a href="/auth/forgot">{EMAIL_ACCOUNT.forgot}</a>
-            </p>
-            <EmailForm register />
-          </>
+          <AccountEntry
+            loginRefusal={loginRefusal}
+            signUpRefusal={signUpRefusal}
+          />
         )}
-        {account && methods && <LoginMethods methods={methods} />}
         {account?.nickname && (
           <SyncSettings
             status={syncStatus ?? currentSyncStatus}
@@ -299,10 +236,15 @@ export function AccountPage({
             linkFields={Boolean(linkFields?.length)}
           />
         )}
+        {account && methods && (
+          <LoginMethods methods={methods} notice={methodNotice} />
+        )}
         {account && <AccountDeletion canPublish={signedIn} />}
-        <p className="mt-lg text-nota text-tinta-2">
-          {ACCOUNT.leaving} <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
-        </p>
+        {!account && (
+          <p className="mt-lg text-nota text-tinta-2">
+            <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
+          </p>
+        )}
       </Column>
     </Sheet>
   )
