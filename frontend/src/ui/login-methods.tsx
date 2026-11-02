@@ -5,12 +5,30 @@ import {
   type MethodNotice,
 } from '#/content/method-notice'
 import { SiteButton } from './button'
+import { FoldArrow } from './navigation'
 import { Field, FieldForm } from './field'
 import { Headline, Notice, Section } from './section'
 import { LOGIN_METHODS, METHOD_NOTICE } from './login-methods.copy'
 
-function MethodTitle({ children }: { children: ReactNode }) {
-  return <h3 className="mt-lg mb-xs font-title text-title">{children}</h3>
+/** The rare form, folded: the browser's `<details>` opens without JavaScript. */
+function MethodFold({
+  title,
+  open,
+  children,
+}: {
+  title: string
+  open: boolean
+  children: ReactNode
+}) {
+  return (
+    <details open={open} className="group mt-md">
+      <summary className="flex min-h-toque cursor-pointer list-none items-center gap-2.5 font-title text-title [&::-webkit-details-marker]:hidden">
+        <FoldArrow className="group-open:rotate-90" />
+        {title}
+      </summary>
+      {children}
+    </details>
+  )
 }
 
 /** What a form about methods came back with, at the top of the page: the reader
@@ -96,10 +114,18 @@ function EmailMethod({
   )
 }
 
-function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
+function AddEmail({
+  pendingEmail,
+  refused,
+}: {
+  pendingEmail: string | null
+  refused: boolean
+}) {
   return (
-    <>
-      <MethodTitle>{LOGIN_METHODS.addTitle}</MethodTitle>
+    <MethodFold
+      title={LOGIN_METHODS.addTitle}
+      open={refused || pendingEmail !== null}
+    >
       <p>{LOGIN_METHODS.addExplanation}</p>
       {pendingEmail && (
         <p className="wrap-anywhere">{LOGIN_METHODS.pending(pendingEmail)}</p>
@@ -124,14 +150,13 @@ function AddEmail({ pendingEmail }: { pendingEmail: string | null }) {
         />
         <SiteButton type="submit">{LOGIN_METHODS.addSubmit}</SiteButton>
       </FieldForm>
-    </>
+    </MethodFold>
   )
 }
 
-function ChangePassword() {
+function ChangePassword({ refused }: { refused: boolean }) {
   return (
-    <>
-      <MethodTitle>{LOGIN_METHODS.passwordTitle}</MethodTitle>
+    <MethodFold title={LOGIN_METHODS.passwordTitle} open={refused}>
       <p>{LOGIN_METHODS.passwordNote}</p>
       <FieldForm action="/auth/change-password">
         <Field
@@ -153,13 +178,20 @@ function ChangePassword() {
         />
         <SiteButton type="submit">{LOGIN_METHODS.passwordSubmit}</SiteButton>
       </FieldForm>
-    </>
+    </MethodFold>
   )
 }
 
 /** Plain forms with the browser's own checks, so all of this works without
  * JavaScript; the server checks everything again and answers in `?metodo=`. */
-export function LoginMethods({ methods }: { methods: AccountMethods }) {
+export function LoginMethods({
+  methods,
+  notice,
+}: {
+  methods: AccountMethods
+  /** A refused form comes back open, for the reader to try again. */
+  notice?: MethodNotice
+}) {
   const removable = methods.google && methods.email !== null
   return (
     <Section aria-labelledby="account-methods">
@@ -168,8 +200,21 @@ export function LoginMethods({ methods }: { methods: AccountMethods }) {
       <GoogleMethod methods={methods} removable={removable} />
       <EmailMethod email={methods.email} removable={removable} />
       {!removable && !methods.curator && <p>{LOGIN_METHODS.onlyOne}</p>}
-      {methods.canAddEmail && <AddEmail pendingEmail={methods.pendingEmail} />}
-      {methods.canChangePassword && <ChangePassword />}
+      {methods.canAddEmail && (
+        <AddEmail
+          pendingEmail={methods.pendingEmail}
+          refused={
+            notice === 'email-em-uso' ||
+            notice === 'email-invalido' ||
+            notice === 'email-nao-enviado'
+          }
+        />
+      )}
+      {methods.canChangePassword && (
+        <ChangePassword
+          refused={notice === 'senha-errada' || notice === 'senha-curta'}
+        />
+      )}
     </Section>
   )
 }

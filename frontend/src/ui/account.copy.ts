@@ -22,6 +22,7 @@ export const SYNC_LINK =
   'Um link recebido trocou dados neste aparelho. Eles ficam só aqui: a conta guarda a sua versão até você editá-los.'
 export const ACCOUNT = {
   title: 'Sua conta',
+  identityTitle: 'Quem você é',
   signOut: 'Sair da conta',
   signedInAs: (nickname: string) => `Você entrou como ${nickname}.`,
   leaving: 'Sair da conta mantém o que está salvo neste aparelho.',

@@ -71,6 +71,7 @@ test('an email account sees Google to link, changes the password, and keeps its 
     0,
   )
 
+  await page.getByText('Trocar a senha').click()
   await page.getByLabel('Senha atual').fill('not the password')
   await page.getByLabel('Nova senha').fill('a new password')
   await page.getByRole('button', { name: 'Trocar senha' }).click()
@@ -93,6 +94,7 @@ test('a confirmation link joins the email for its account, and does nothing for 
 }) => {
   const nickname = await signIn(context)
   await page.goto('/conta')
+  await page.getByText('Ligar um e-mail').click()
   await expect(page.getByLabel('E-mail que vai ligar')).toBeVisible()
   await expect(
     page.getByRole('button', { name: 'Enviar link de confirmação' }),
