@@ -36,7 +36,7 @@ import {
   Bookcase,
   OutcomePicker,
 } from '#/ui/priorities'
-import { FoldArrow } from '#/ui/navigation'
+import { FoldArrow } from '#/ui/fold-arrow'
 import { Column, Display, Sheet } from '#/ui/sheet'
 import { Notice, Headline, Panel, Section } from '#/ui/section'
 import {

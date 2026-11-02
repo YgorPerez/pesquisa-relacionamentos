@@ -14,7 +14,7 @@ import { ACCOUNT, ACCOUNT_RULES } from './account.copy'
 import { EMAIL_REFUSAL, ENTRY } from './account-entry.copy'
 import { SiteButton } from './button'
 import { Field, FieldForm } from './field'
-import { useInBrowser } from './navigation'
+import { useInBrowser } from './in-browser'
 import { Headline, Notice, Section } from './section'
 
 const STEPS = [ENTRY.accessStep, ENTRY.nicknameStep, ENTRY.rulesStep]
@@ -199,6 +199,55 @@ function Step({
   )
 }
 
+function SignUpSteps({
+  hiddenStep,
+}: {
+  hiddenStep: (index: number) => boolean
+}) {
+  return (
+    <>
+      <Step index={0} hidden={hiddenStep(0)}>
+        <p className="m-0">{ENTRY.emailKept}</p>
+        <Field
+          id="register-email"
+          label={ENTRY.emailRegister}
+          name="email"
+          type="email"
+          maxLength={254}
+          autoComplete="email"
+        />
+        <Field
+          id="register-password"
+          label={ENTRY.passwordRegister}
+          name="password"
+          type="password"
+          minLength={8}
+          maxLength={1024}
+          autoComplete="new-password"
+        />
+        <p className="m-0 text-nota text-tinta-2">{ENTRY.passwordNote}</p>
+      </Step>
+      <Step index={1} hidden={hiddenStep(1)}>
+        <p className="m-0">{ACCOUNT.nicknameExplanation}</p>
+        <Field
+          id="register-nickname"
+          label={ACCOUNT.nickname}
+          name="nickname"
+          minLength={2}
+          maxLength={40}
+          autoComplete="off"
+        />
+      </Step>
+      <Step index={2} hidden={hiddenStep(2)}>
+        <p className="m-0">{ACCOUNT_RULES}</p>
+        <Agreement name="adult">{ACCOUNT.adult}</Agreement>
+        <Agreement name="rules">{ACCOUNT.rules}</Agreement>
+        <p className="m-0 text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
+      </Step>
+    </>
+  )
+}
+
 /** One form and one POST, whatever the reader sees: without JavaScript every step
  * shows and the browser checks them all. With it, one shows at a time, and the
  * hidden fields keep what was typed. */
@@ -243,44 +292,7 @@ function SignUp({ refusal: initial }: { refusal?: EmailRefusal }) {
         onSubmit={(event) => void onSubmit(event)}
       >
         {stepping && <StepProgress step={step} />}
-        <Step index={0} hidden={hiddenStep(0)}>
-          <p className="m-0">{ENTRY.emailKept}</p>
-          <Field
-            id="register-email"
-            label={ENTRY.emailRegister}
-            name="email"
-            type="email"
-            maxLength={254}
-            autoComplete="email"
-          />
-          <Field
-            id="register-password"
-            label={ENTRY.passwordRegister}
-            name="password"
-            type="password"
-            minLength={8}
-            maxLength={1024}
-            autoComplete="new-password"
-          />
-          <p className="m-0 text-nota text-tinta-2">{ENTRY.passwordNote}</p>
-        </Step>
-        <Step index={1} hidden={hiddenStep(1)}>
-          <p className="m-0">{ACCOUNT.nicknameExplanation}</p>
-          <Field
-            id="register-nickname"
-            label={ACCOUNT.nickname}
-            name="nickname"
-            minLength={2}
-            maxLength={40}
-            autoComplete="off"
-          />
-        </Step>
-        <Step index={2} hidden={hiddenStep(2)}>
-          <p className="m-0">{ACCOUNT_RULES}</p>
-          <Agreement name="adult">{ACCOUNT.adult}</Agreement>
-          <Agreement name="rules">{ACCOUNT.rules}</Agreement>
-          <p className="m-0 text-nota text-tinta-2">{ACCOUNT.ageNote}</p>
-        </Step>
+        <SignUpSteps hiddenStep={hiddenStep} />
         <div className="flex flex-wrap gap-sm">
           <SiteButton type="submit" disabled={sending}>
             {stepping && step < last ? ENTRY.next : ENTRY.register}

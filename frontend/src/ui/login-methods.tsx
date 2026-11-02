@@ -5,7 +5,7 @@ import {
   type MethodNotice,
 } from '#/content/method-notice'
 import { SiteButton } from './button'
-import { FoldArrow } from './navigation'
+import { FoldArrow } from './fold-arrow'
 import { Field, FieldForm } from './field'
 import { Headline, Notice, Section } from './section'
 import { LOGIN_METHODS, METHOD_NOTICE } from './login-methods.copy'

@@ -3,14 +3,9 @@
 // kept in the history. A reference ring opens its Fact sheet in a popover
 // (`reference-popover.tsx`, #467).
 import { Link, useRouter, useRouterState } from '@tanstack/react-router'
-import {
-  type ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useSyncExternalStore,
-} from 'react'
-import { cn } from '@/platform/cn'
+import { type ReactNode, useEffect, useLayoutEffect } from 'react'
 import { Button } from '@/ui/shadcn/button'
+import { useInBrowser } from './in-browser'
 import { TERM_LINK } from './term-popover'
 
 declare module '@tanstack/react-router' {
@@ -110,29 +105,6 @@ const BackArrow = () => (
   </svg>
 )
 
-/** The little arrow of the DESIGN.md fold, which turns when the fold opens.
- * `className` says what opens it: `group-data-panel-open:rotate-90` in a
- * Base UI `Collapsible`, `group-open:rotate-90` in a `<details>`. */
-export const FoldArrow = ({ className }: { className: string }) => (
-  <svg
-    className={cn(
-      'flex-none transition-transform duration-250 ease-sai motion-reduce:transition-none',
-      className,
-    )}
-    width="14"
-    height="16"
-    viewBox="0 0 14 16"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M4 2.5l6.5 5.6L4 13.6" />
-  </svg>
-)
-
 /** The hand-drawn arrow of a link that goes on: "Ler o Guia", "Abrir o
  * Tema". */
 export const ForwardArrow = () => (
@@ -171,19 +143,6 @@ export function BackLink({
     </Button>
   )
 }
-
-/** Being in the browser does not change after hydration: no one to
- * notify. */
-const noSubscribers = () => () => {}
-
-/** `false` on the server and during hydration, `true` on the next render:
- * for a piece that only the browser can draw. */
-export const useInBrowser = () =>
-  useSyncExternalStore(
-    noSubscribers,
-    () => true,
-    () => false,
-  )
 
 /** "Voltar para <Guia>", when the page came from another Guide. Does the
  * same as the browser's back. */
