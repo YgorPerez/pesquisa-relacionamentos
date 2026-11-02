@@ -206,7 +206,7 @@ The host file is shared by bash and Docker's env-file parser. Use plain `KEY=val
 | `AWS_DEFAULT_REGION`                         | `auto` for R2; the provider's region otherwise                 |
 | `DATABASE_BACKUP_KEY`                        | 64 hex characters from `openssl rand -hex 32`; AES-256-GCM key |
 
-No new GitHub secrets are required. Do not put these values in `app.env`. `DATABASE_BACKUP_HOME` and `DATABASE_VOLUME` are local drill overrides; production uses `/opt/temestudo` and `temestudo-data`. Backups are retained until deleted by the operator or a separately configured bucket lifecycle. Keep old keys when rotating encryption keys; an old object still needs its original key.
+No new GitHub secrets are required. Do not put these values in `app.env`. `DATABASE_BACKUP_HOME` and `DATABASE_VOLUME` are local drill overrides; production uses `/opt/temestudo` and `temestudo-data`. A lifecycle rule on the bucket (`delete-backups-after-30-days`, prefix `database/`) deletes each backup after 30 days, and `/privacidade` states that period: change both together. Keep old keys when rotating encryption keys; an old object still needs its original key.
 
 ### Restore to a fresh volume
 
