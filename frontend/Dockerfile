@@ -8,8 +8,10 @@
 # commit SHA in the name. To build and run it here:
 #
 #   pnpm build
+#   cp scripts/database-maintenance.ts .output/
+#   cp src/platform/database.ts .output/
 #   docker build -f Dockerfile -t temestudo-app .output
-#   docker run --rm -p 127.0.0.1:4311:3000 temestudo-app
+#   docker run --rm -v temestudo-data:/data -p 127.0.0.1:4311:3000 temestudo-app
 FROM node:24-alpine
 
 ENV NODE_ENV=production \
@@ -24,6 +26,11 @@ WORKDIR /app
 COPY --link server ./server
 COPY --link public ./public
 COPY --link nitro.json ./
+COPY --link database.ts ./src/platform/database.ts
+COPY --link database-maintenance.ts ./scripts/database-maintenance.ts
+
+# Docker initializes a new named volume from this directory, with this owner.
+RUN mkdir /data && chown node:node /data && chmod 700 /data
 
 USER node
 
@@ -33,4 +40,4 @@ EXPOSE 3000
 
 # Each request goes to stdout as `GET /path 200 12ms`, without the query
 # (`src/platform/request-log.ts`), and that is what `docker logs` shows.
-CMD ["node", "server/index.mjs"]
+CMD ["sh", "-c", "node scripts/database-maintenance.ts init /data/app.sqlite && exec node server/index.mjs"]

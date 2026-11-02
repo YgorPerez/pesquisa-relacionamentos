@@ -4,13 +4,24 @@ import library from 'virtual:library'
 import { withRedirects } from '#/platform/redirects'
 import { withRequestLog } from '#/platform/request-log'
 import { preloadPlot } from '#/ui/visual-chart-loader'
+import { handleAccountRequest, scheduleEmailErasure } from '#/platform/accounts'
+import { handleSyncRequest } from '#/platform/sync'
 
 // The TanStack Start server, with each request logged without the query and
 // every response with `Referrer-Policy: strict-origin` (ADR 0001,
 // `platform/request-log.ts`). Before the app, the 301s for the trailing
 // slash and for `antes` (`platform/redirects.ts`).
 const plotReady = preloadPlot()
-const app = withRequestLog(withRedirects(redirects(library), handler.fetch))
+scheduleEmailErasure()
+const app = withRequestLog(
+  withRedirects(
+    redirects(library),
+    async (request) =>
+      (await handleAccountRequest(request)) ??
+      (await handleSyncRequest(request)) ??
+      handler.fetch(request),
+  ),
+)
 
 export default createServerEntry({
   fetch: async (request) => {

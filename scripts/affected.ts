@@ -47,6 +47,41 @@ export const SPEC_TERMS: Readonly<Record<string, readonly string[]>> = {
   'highlight.e2e.ts': ['grifo', 'selecao', 'guia'],
   'highlights.e2e.ts': ['grifo', 'grifos'],
   'selection-comment.e2e.ts': ['comentario', 'selecao'],
+  'curator.e2e.ts': [
+    'curadoria',
+    'curator',
+    'comment-report',
+    'report-issue',
+    'public-comment-moderation',
+  ],
+  'public-comments.e2e.ts': [
+    'comentario',
+    'selecao',
+    'guia',
+    'dicas',
+    'estudos',
+  ],
+  'sync.e2e.ts': ['grifo', 'grifos'],
+  'account-deletion.e2e.ts': ['account', 'account-deletion', 'conta'],
+  'account.e2e.ts': ['account', 'accounts', 'conta'],
+  'login-methods.e2e.ts': [
+    'login-methods',
+    'method-notice',
+    'email-confirmation',
+    'recovery-page',
+    'account',
+    'accounts',
+    'conta',
+  ],
+  'password-recovery.e2e.ts': [
+    'password-recovery',
+    'password-reset',
+    'account-email',
+    'recovery-page',
+    'account',
+    'accounts',
+    'conta',
+  ],
 }
 
 /** Run on every run that touches the app: they open each page cold, and

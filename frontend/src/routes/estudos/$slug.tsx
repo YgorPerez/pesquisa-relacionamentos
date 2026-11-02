@@ -2,6 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { reads } from '#/content/reads'
+import { readPublicComments } from '#/content/public-comments'
+import { PublicComments } from '#/ui/public-comments'
 import { Html } from '#/ui/guide'
 import { QuestionRow } from '#/ui/question-row'
 import { BackLink } from '#/ui/navigation'
@@ -25,7 +27,11 @@ export const Route = createFileRoute('/estudos/$slug')({
     const factSheet = await context.queryClient.query(
       reads.factSheet(params.slug),
     )
-    return { search: factSheet.search, indexable: factSheet.indexable }
+    return {
+      search: factSheet.search,
+      indexable: factSheet.indexable,
+      comments: await readPublicComments({ data: `/estudos/${params.slug}` }),
+    }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -114,14 +120,7 @@ function FactSheetPage() {
           </Section>
         ))}
 
-        <Section aria-labelledby="limitacoes">
-          <Headline id="limitacoes">Limitações</Headline>
-          <Html
-            className="prosa limites"
-            html={factSheet.limitationsHtml}
-            quote="limitacoes"
-          />
-        </Section>
+        <Limitations />
 
         <CitedBy />
 
@@ -130,6 +129,10 @@ function FactSheetPage() {
           <FactSheetLegend />
         </Section>
       </Column>
+      <PublicComments
+        path={`/estudos/${factSheet.slug}`}
+        comments={Route.useLoaderData().comments}
+      />
       <FactSheetSelection />
     </Sheet>
   )
@@ -258,6 +261,20 @@ function Findings() {
         ))}
       </ol>
       {notesHtml && <Html className="prosa" html={notesHtml} quote="achados" />}
+    </Section>
+  )
+}
+
+function Limitations() {
+  const { limitationsHtml } = useFactSheet()
+  return (
+    <Section aria-labelledby="limitacoes">
+      <Headline id="limitacoes">Limitações</Headline>
+      <Html
+        className="prosa limites"
+        html={limitationsHtml}
+        quote="limitacoes"
+      />
     </Section>
   )
 }

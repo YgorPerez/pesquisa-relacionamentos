@@ -286,8 +286,17 @@ test('the privacy page says what stays on the device, in the link, in the log an
   const sections = await page.locator('main h2').allTextContents()
   expect(sections).toEqual([
     'O que fica no seu aparelho',
+    'Se você criar uma conta',
+    'Se você entrar com Google',
+    'Se você entrar com e-mail e senha',
+    'Os e-mails que mandamos',
+    'Se você publicar um comentário',
+    'Se você denunciar um comentário',
+    'Se você sincronizar',
+    'Cópias de segurança',
+    'Excluir a conta',
     'O que vai no link',
-    'O que vai num Comentário',
+    'O que vai num Comentário privado',
     'O que o servidor anota',
     'O que a contagem de visitas guarda',
     'Não ser contado',

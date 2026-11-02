@@ -196,7 +196,13 @@ test.describe('Possible group link', () => {
     const keys = await other.page.evaluate(() =>
       Object.keys(localStorage).sort(),
     )
-    expect(keys).toEqual(['tem-estudo:do-not-count', 'tem-estudo:profile'])
+    // `sync-link-fields` holds only field names: it keeps a link's value out of
+    // the account if this reader joins sync later (ADR 0046).
+    expect(keys).toEqual([
+      'tem-estudo:do-not-count',
+      'tem-estudo:profile',
+      'tem-estudo:sync-link-fields',
+    ])
     await other.context.close()
   })
 })

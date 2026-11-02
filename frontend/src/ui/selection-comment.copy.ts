@@ -6,6 +6,10 @@ export const COMMENT = {
   text: 'Seu comentário',
   anonymous:
     'Anônimo: vai só o trecho, o link dele e o que você escrever. Só o curador lê.',
+  /** On a device joined to an account, whose sent comment reaches the account
+   * with its issue's number (ADR 0046). */
+  joined:
+    'Vai só o trecho, o link dele e o que você escrever, sem o seu apelido. Como este aparelho sincroniza, uma cópia com o número do envio fica na sua conta, e quem administra o servidor pode ligar uma à outra.',
   send: 'Enviar',
   sending: 'Enviando…',
   missingKind: 'Escolha o que é.',

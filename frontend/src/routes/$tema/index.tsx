@@ -7,6 +7,8 @@ import {
   requirementValue,
 } from '@tem-estudo/rules/requirements'
 import { reads } from '#/content/reads'
+import { readPublicComments } from '#/content/public-comments'
+import { PublicComments } from '#/ui/public-comments'
 import type { PrioritiesView } from '#/content/priorities-view'
 import { useCountOpenedFactSheets } from '#/analytics/page-counting'
 import { useChosenCountry } from '#/state/country'
@@ -53,7 +55,10 @@ export const Route = createFileRoute('/$tema/')({
   // through the `queryClient`.
   loader: async ({ context, params }) => {
     const guide = await context.queryClient.query(reads.guide(params.tema))
-    return { search: guide.search }
+    return {
+      search: guide.search,
+      comments: await readPublicComments({ data: `/${params.tema}` }),
+    }
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] }
@@ -144,6 +149,10 @@ function GuidePage() {
 
         <GuideShare />
       </Column>
+      <PublicComments
+        path={`/${guide.topic}`}
+        comments={Route.useLoaderData().comments}
+      />
       <PageSelection />
       <TermPopover terms={guide.terms} />
       <ReferencePopover key={guide.topic} factSheets={guide.factSheets} />

@@ -6,6 +6,11 @@ const HEADERS: Readonly<Record<string, string>> = {
   'x-forwarded-for': '203.0.113.7',
 }
 
+export function getRequest() {
+  return new Request('https://temestudo.cloud')
+}
+export function setResponseHeader(_name: string, _value: string) {}
+
 export function getRequestHeader(name: string): string | undefined {
   return HEADERS[name.toLowerCase()]
 }

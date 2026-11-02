@@ -61,6 +61,10 @@ export interface OpenedIssue extends Issue {
 
 const REPO = 'YgorPerez/pesquisa-relacionamentos-fontes'
 
+/** Where the curator opens an issue. */
+export const issueLink = (issue: number) =>
+  `https://github.com/${REPO}/issues/${issue}`
+
 /** The error carries no field: what the reader wrote never reaches a log. */
 const invalid = () => new Error('Invalid comment.')
 
