@@ -71,7 +71,11 @@ const post = (
   service.handle(
     new Request(`https://example.org/auth/${action}`, {
       method: 'POST',
-      headers: { origin, 'x-forwarded-for': ip },
+      headers: {
+        origin,
+        accept: 'application/json',
+        'x-forwarded-for': ip,
+      },
       body: new URLSearchParams(form),
     }),
   )

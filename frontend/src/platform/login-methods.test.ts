@@ -122,6 +122,8 @@ const register = async (over: Record<string, string> = {}) =>
   signedIn(await send('register', { ...registration, ...over }))
 const login = (email: string, password: string) =>
   send('login', { email, password })
+const loginRefused = async (email: string, password: string) =>
+  (await login(email, password)).headers.get('location')?.includes('entrar=')
 const noticeOf = (response: Response) =>
   new URL(
     response.headers.get('location')!,
@@ -147,7 +149,7 @@ test('changing the password asks for the current one and ends only the other ses
   expect(noticeOf(changed)).toBe('senha-trocada')
   expect(who(here)).not.toBeNull()
   expect(who(other)).toBeNull()
-  expect((await login(registration.email, OLD)).status).toBe(400)
+  expect(await loginRefused(registration.email, OLD)).toBe(true)
   expect((await login(registration.email, NEW)).status).toBe(303)
 })
 
@@ -343,7 +345,7 @@ test('a Google account adds an email: nothing joins until the link is opened and
   const { here, path: page, token } = await askEmail(' ADDED@example.org ')
   expect(who(other)).not.toBeNull()
   expect(mails[0]!.to).toBe('added@example.org')
-  expect((await login('added@example.org', NEW)).status).toBe(400)
+  expect(await loginRefused('added@example.org', NEW)).toBe(true)
   const stored = JSON.stringify(databaseRows('SELECT * FROM email_links'))
   expect(stored).not.toContain(token)
   expect(stored).not.toContain(NEW)
@@ -514,7 +516,7 @@ test('removing the email keeps Google, and its address and pending reset go with
   expect(noticeOf(removed)).toBe('metodo-removido')
   expect(who(other)).toBeNull()
   expect(who(here)?.googleSub).toBe('google-of-the-reader')
-  expect((await login(registration.email, OLD)).status).toBe(400)
+  expect(await loginRefused(registration.email, OLD)).toBe(true)
   expect(databaseRows('SELECT 1 FROM email_credentials')).toEqual([])
   expect(databaseRows('SELECT 1 FROM password_resets')).toEqual([])
   const reused = await send('register', { ...registration, nickname: 'Outra' })
@@ -663,7 +665,7 @@ test('a reset of an unproven email on the curator account changes nothing, says 
 
   expect(who(here)).toMatchObject({ googleSub: CURATOR })
   expect(desk(here)).not.toBeNull()
-  expect((await login(registration.email, 'third password')).status).toBe(400)
+  expect(await loginRefused(registration.email, 'third password')).toBe(true)
   expect((await login(registration.email, OLD)).status).toBe(303)
   expect((await resetWith(token)).status).toBe(400)
 })

@@ -2,6 +2,12 @@ import { randomBytes } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import type { DatabaseSync } from 'node:sqlite'
 import type { AccountMethods, MethodNotice } from '#/content/method-notice'
+import {
+  EMAIL_UNAVAILABLE,
+  TOO_MANY_ATTEMPTS,
+  WRONG_LOGIN,
+  type EmailRefusal,
+} from '#/content/email-refusal'
 import { NICKNAME_INVALID, NICKNAME_TAKEN } from '#/content/nickname-refusal'
 import { confirmsDeletion, deleteAccount } from './account-deletion'
 import { openDatabase } from './database'
@@ -75,6 +81,26 @@ function redirect(cookies: string[] = [], location = '/conta') {
   })
   for (const value of cookies) headers.append('set-cookie', value)
   return new Response(null, { status: 303, headers })
+}
+/** A refused login or sign-up: in JSON for the page that sent it with JavaScript,
+ * and without it back to `/conta`, on the section that was refused. */
+function refused(
+  request: Request,
+  register: boolean,
+  refusal: EmailRefusal,
+  status: number,
+) {
+  if (request.headers.get('accept') === 'application/json')
+    return Response.json(
+      { refusal },
+      { status, headers: { 'cache-control': 'no-store' } },
+    )
+  return redirect(
+    [],
+    register
+      ? `/conta?criar=${refusal}#criar-conta`
+      : `/conta?entrar=${refusal}#ja-tenho-conta`,
+  )
 }
 const noticeRedirect = (notice: MethodNotice, cookies: string[] = []) =>
   redirect(cookies, `/conta?metodo=${notice}`)
@@ -732,7 +758,7 @@ class AccountService {
   }
   private async email(request: Request, register: boolean) {
     if (!this.emailConfigured())
-      return response(503, 'O login com e-mail está indisponível.')
+      return refused(request, register, EMAIL_UNAVAILABLE, 503)
     const form = await readForm(request)
     if (form instanceof Response) return form
     const db = this.database()
@@ -747,12 +773,10 @@ class AccountService {
           this.now(),
         )
       )
-        return response(
-          429,
-          'Muitas tentativas. Espere 15 minutos e tente de novo.',
-        )
+        return refused(request, register, TOO_MANY_ATTEMPTS, 429)
       const result = await emailAccount(db, form, register, this.now())
-      if ('refusal' in result) return response(400, result.refusal)
+      if ('refusal' in result)
+        return refused(request, register, result.refusal, 400)
       // scrypt ran off the lock: the password may have changed since, and that
       // ended every session this one must not outlive.
       const session = transaction(db, () =>
@@ -764,7 +788,7 @@ class AccountService {
           ? this.createSession(db, request, result.accountId)
           : null,
       )
-      return session ?? response(400, 'E-mail ou senha incorretos.')
+      return session ?? refused(request, register, WRONG_LOGIN, 400)
     } finally {
       db.close()
     }
