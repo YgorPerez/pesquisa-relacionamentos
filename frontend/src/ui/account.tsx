@@ -149,24 +149,27 @@ function SignedIn({
   refusal?: NicknameRefusal
 }) {
   return (
-    <>
+    <Section aria-labelledby="account-identity">
+      <Headline id="account-identity">
+        {nickname === null ? ACCOUNT.nicknameTitle : ACCOUNT.identityTitle}
+      </Headline>
       {nickname === null ? (
-        <Section aria-labelledby="account-nickname">
-          <Headline id="account-nickname">{ACCOUNT.nicknameTitle}</Headline>
+        <>
           <p>{ACCOUNT.nicknameExplanation}</p>
           <NicknameForm refusal={refusal} />
-        </Section>
+        </>
       ) : (
-        <Section>
-          <p>{ACCOUNT.signedInAs(nickname)}</p>
-        </Section>
+        <p>{ACCOUNT.signedInAs(nickname)}</p>
       )}
-      <form action="/auth/logout" method="post" className="mt-lg">
+      <p className="mt-md text-nota text-tinta-2">
+        {ACCOUNT.leaving} <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
+      </p>
+      <form action="/auth/logout" method="post" className="mt-sm">
         <SiteButton type="submit" variant="light">
           {ACCOUNT.signOut}
         </SiteButton>
       </form>
-    </>
+    </Section>
   )
 }
 
@@ -226,7 +229,6 @@ export function AccountPage({
             signUpRefusal={signUpRefusal}
           />
         )}
-        {account && methods && <LoginMethods methods={methods} />}
         {account?.nickname && (
           <SyncSettings
             status={syncStatus ?? currentSyncStatus}
@@ -234,10 +236,15 @@ export function AccountPage({
             linkFields={Boolean(linkFields?.length)}
           />
         )}
+        {account && methods && (
+          <LoginMethods methods={methods} notice={methodNotice} />
+        )}
         {account && <AccountDeletion canPublish={signedIn} />}
-        <p className="mt-lg text-nota text-tinta-2">
-          {ACCOUNT.leaving} <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
-        </p>
+        {!account && (
+          <p className="mt-lg text-nota text-tinta-2">
+            <a href="/privacidade">{ACCOUNT.whatIsKept}</a>
+          </p>
+        )}
       </Column>
     </Sheet>
   )

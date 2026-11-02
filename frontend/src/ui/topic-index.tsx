@@ -7,7 +7,8 @@
 // opens without JavaScript and before hydration, and the Guide's reading
 // point (`useReadingPointInHistory`) reopens it on the way back by its `id`.
 import { Link } from '@tanstack/react-router'
-import { FoldArrow, ForwardArrow } from './navigation'
+import { FoldArrow } from './fold-arrow'
+import { ForwardArrow } from './navigation'
 import { Panel, Tag } from './section'
 import { OPEN_TOPIC, READ, questionCount } from './topic-index.copy'
 
