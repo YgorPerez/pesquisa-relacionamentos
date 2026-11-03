@@ -179,7 +179,7 @@ findings:
     fact_sheets: [vrangalova-2014-sociossexualidade-sexo-casual]
     applies_to: { genders: [man] }
   - id: orgasmo-universitarias
-    text: Universitárias heterossexuais americanas chegaram ao orgasmo em 11% das primeiras ficadas com um parceiro, 16% da segunda ou terceira, 34% da quarta em diante e 67% do sexo num namoro. Gostaram "muito" de 50% das ficadas e de 81% do sexo no namoro.
+    text: Universitárias heterossexuais americanas chegaram ao orgasmo em 11% das primeiras ficadas com um parceiro, 16% da segunda ou terceira, 34% da quarta em diante e 67% do sexo num namoro, contando as ficadas que ficaram em beijo e toque não genital. Só com transa, foram 42% das ficadas contra 74% do sexo no namoro. Gostaram "muito" de 50% das ficadas e de 81% do sexo no namoro.
     fact_sheets: [armstrong-2012-orgasmo-ficadas-namoro]
     applies_to: { genders: [woman], seeks: [men] }
   - id: sexo-oral-na-ficada
@@ -516,7 +516,7 @@ visuals:
     note: seguindo calouras mês a mês, ficar não previu depressão depois
   - id: orgasmo-ficada-namoro
     kind: bars
-    title: Ficadas e transas no namoro em que universitárias americanas chegaram ao orgasmo
+    title: Ficadas e sexo no namoro em que universitárias americanas chegaram ao orgasmo
     unit: '%'
     bars:
       - label: Primeira ficada com o parceiro
@@ -532,7 +532,7 @@ visuals:
         value: 67
         fact_sheet: armstrong-2012-orgasmo-ficadas-namoro
     highlight: Primeira ficada com o parceiro
-    note: mulheres heterossexuais, com parceiro homem; as ficadas incluem as que ficaram em beijo e toque não genital
+    note: mulheres heterossexuais, com parceiro homem; as ficadas incluem as que ficaram em beijo e toque não genital, e o namoro conta só o que foi além do beijo
   - id: mais-de-dez-parceiros-brasil
     kind: bars
     title: Brasileiros que já transaram e tiveram mais de dez parceiros na vida, em 2008
