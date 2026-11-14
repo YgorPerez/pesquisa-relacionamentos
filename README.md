@@ -174,6 +174,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
 - [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
+- [Maner et al. 2005](studies/maner-2005-projecao-funcional.md): motivo de quem olha e excitação sexual vista em rostos neutros · ✅ · fraca
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [McFarland et al. 2013](studies/mcfarland-2013-conexao-speed-dating.md): a conversa de um speed dating e a sensação de conexão · ✅ · fraca
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
@@ -264,6 +265,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
@@ -281,7 +283,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
+- [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
+- [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
