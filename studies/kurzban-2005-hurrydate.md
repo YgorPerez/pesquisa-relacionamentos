@@ -3,8 +3,8 @@ reference: "Kurzban R, Weeden J. *HurryDate: Mate preferences in action*. Evolut
 link: https://doi.org/10.1016/j.evolhumbehav.2004.08.012
 status: verified
 verified_on: 2026-11-14
-strength: weak
-strength_reason: "Dados comerciais: a HurryDate, empresa de speed dating, cedeu os registros, e os autores se comprometeram a entregar a ela todas as análises; os 10.526 participantes são clientes pagantes, na maioria de origem europeia, com muita escolaridade e renda alta, e aparência, peso e altura são o que cada um declarou."
+strength: moderate
+strength_reason: "Não conta como estudo comercial. Os dois autores assinam pela Universidade da Pensilvânia, não pela HurryDate, num artigo revisado por pares. A empresa fez mais que ceder os registros. A pedido dos autores, pôs perguntas no seu questionário por alguns meses de 2003 e deu 10 dólares de desconto num evento seguinte a quem as respondeu; em troca, os autores se comprometeram a lhe entregar todas as análises e a apontar o que podia melhorar o serviço. Mas as perguntas e as análises são dos autores, e o artigo não declara financiamento. É moderada porque mede escolhas reais de 10.526 clientes depois de três minutos cara a cara, mas de uma empresa só, de clientes pagantes na maioria de origem europeia, com muita escolaridade e renda alta. É um estudo de correlação, e a nota da própria beleza, o peso e a altura são o que cada um declarou; a nota e o peso existem só para cerca de um quarto deles, os que responderam ao questionário opcional."
 countries: []
 period: "Vários meses de 2003"
 sample:
@@ -12,7 +12,7 @@ sample:
   description: "10.526 clientes (54,3% mulheres) de sessões de speed dating da HurryDate, empresa comercial com sede em Nova York que, segundo o artigo, atuava em grandes áreas metropolitanas da América do Norte; o artigo não nomeia os países dos dados. A empresa cedeu dados de 12.892 pessoas, e os autores tiraram cerca de 18%: quem não tinha idade, quase não respondeu ao questionário ou tinha dados incoerentes, homens fora de 23 a 50 anos e mulheres fora de 22 a 47, e quem tinha pouca informação sobre escolhas. Em média, os homens tinham 33,8 anos e as mulheres 31,4, com cerca de 17 anos de estudo, e 84% dos homens e 83% das mulheres eram de origem europeia. Para 2.650 havia também um questionário opcional, respondido em troca de 10 dólares de desconto num próximo evento."
   representative: false
 design: platform
-conflict: "A HurryDate cedeu os dados e acrescentou ao seu questionário perguntas a pedido dos autores; em troca, os autores se comprometeram a entregar à empresa todas as análises e a apontar os resultados que poderiam melhorar o serviço. Os agradecimentos citam a HurryDate, a Hurry Brands e Adele Testani. O artigo não declara financiamento nem conflito de interesse."
+conflict: "Os dois autores são do Departamento de Psicologia da Universidade da Pensilvânia. A HurryDate cedeu os dados e, por alguns meses de 2003, acrescentou ao seu questionário perguntas a pedido dos autores, com 10 dólares de desconto num próximo evento para quem as respondesse; em troca, os autores se comprometeram a entregar à empresa todas as análises e a apontar os resultados que poderiam melhorar o serviço. Os agradecimentos citam a HurryDate, a Hurry Brands e Adele Testani. O artigo não declara financiamento nem conflito de interesse."
 covers:
   genders: [man, woman]
   ages: { min: 22, max: 50 }
@@ -60,7 +60,7 @@ Com isso, mediram duas coisas para cada pessoa: a parte das pessoas do outro sex
 
 ## Limitações
 
-- Dados comerciais de uma empresa só. A HurryDate cedeu os registros e, em troca, os autores se comprometeram a entregar a ela todas as análises e a apontar o que podia melhorar o serviço.
+- Dados de uma empresa só, coletados por ela. A HurryDate cedeu os registros e, a pedido dos autores, acrescentou perguntas ao seu questionário por alguns meses de 2003; em troca, os autores se comprometeram a entregar a ela todas as análises e a apontar o que podia melhorar o serviço.
 - Os participantes pagavam cerca de 35 dólares por sessão e eram, na maioria, de origem europeia, com muita escolaridade e renda alta. Os próprios autores dizem que essa amostra "peculiar" pode explicar por que a escolaridade não pesou nas escolhas das mulheres.
 - O artigo diz que a HurryDate atuava em grandes áreas metropolitanas da América do Norte, sem nomear países. O artigo seguinte dos mesmos autores, com dados da mesma empresa e do mesmo ano, diz que eram cidades dos EUA ([Kurzban & Weeden 2007](kurzban-2007-preferencias-anunciadas-speed-dating.md)).
 - Altura, peso, renda e as notas de beleza e de personalidade são o que cada um declarou; não houve avaliador de fora. O IMC e as notas existem só para quem respondeu ao questionário opcional, cerca de um quarto da amostra, e os modelos de regressão da Tabela 2 usam 1.211 homens e 1.285 mulheres. Os autores dizem que quem respondeu e quem não respondeu não diferiram nos itens do questionário padrão.

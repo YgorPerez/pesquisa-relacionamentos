@@ -328,7 +328,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
-- [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · fraca
+- [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · moderada
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
