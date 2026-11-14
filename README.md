@@ -86,6 +86,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Armstrong et al. 2012](studies/armstrong-2012-orgasmo-ficadas-namoro.md): orgasmo e prazer das universitárias em ficadas e namoros · ✅ · moderada
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
 - [Asendorpf, Penke & Back 2011](studies/asendorpf-2011-speed-dating-acompanhamento.md): do speed dating ao sexo e ao namoro, um ano depois · ✅ · fraca
+- [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
 - [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
@@ -242,6 +243,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
+- [Vazire & Gosling 2004](studies/vazire-2004-site-pessoal-personalidade.md): a personalidade lida num site pessoal · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Verwers 2021](studies/verwers-2021-humor-abertura-tinder.md): frase de abertura engraçada e foto no Tinder · ✅ · fraca
 - [Vieira & Sepúlveda 2017](studies/vieira-2017-autoapresentacao-tinder-portugal.md): o que os portugueses mostram no perfil do Tinder · ✅ · fraca
@@ -277,6 +279,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
@@ -300,6 +303,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
+- [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 
