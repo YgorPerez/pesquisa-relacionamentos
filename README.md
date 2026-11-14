@@ -80,6 +80,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Outros países
 
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
+- [von Andrian-Werburg et al. 2020](studies/andrian-werburg-2020-personalidade-chat.md): personalidade e inteligência percebidas numa conversa por chat · ✅ · fraca
 - [Antar & Stephen 2021](studies/antar-2021-sociossexualidade-formato-rosto.md): formato do rosto e abertura a sexo casual · ✅ · fraca
 - [Apostolou, O & Esposito 2020](studies/apostolou-2020-motivos-solteiro.md): por que os solteiros dizem estar solteiros · ✅ · fraca
 - [Apostolou et al. 2026](studies/apostolou-2026-capacidade-manter-parceiro.md): capacidade de manter um parceiro e solteirice · ✅ · fraca
@@ -269,6 +270,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
+- [Wan & Yeung 2022](studies/wan-2021-objetivo-autoapresentacao-eua-china.md): o objetivo e a autoapresentação em anúncios de sites de namoro dos EUA e de Hong Kong · ✅ · fraca
 - [Weidman et al. 2015](studies/weidman-2015-personalidade-anuncio-pessoal.md): personalidade lida em anúncios pessoais · ✅ · fraca
 - [Weisbuch, Ivcevic & Ambady 2009](studies/weisbuch-2009-pagina-web-presencial.md): agradar pela página do Facebook e agradar ao vivo · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
@@ -281,11 +283,13 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · fraca
 - [Yan 2018](studies/yan-2018-intencao-foto-sexualizada.md): intenção declarada e sinais sexuais nas fotos de perfil · ✅ · fraca
 - [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
+- [van der Zanden et al. 2020](studies/zanden-2020-erros-linguagem-perfil.md): erros de língua no texto do perfil e a impressão sobre o dono · ✅ · moderada
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
 - [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
 - [Zytko et al. 2020](studies/zytko-2020-interface-decisao-encontro.md): uma interface de mensagens e a vontade de sair depois do encontro · ✅ · fraca
+- [Zytko et al. 2022](studies/zytko-2022-interesse-sexual-apps.md): como usuários de apps mostram e leem o interesse, sexual ou não · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
