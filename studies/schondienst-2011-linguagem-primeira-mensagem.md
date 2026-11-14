@@ -28,10 +28,9 @@ Os autores separaram, nos registros de um site de namoro australiano, as primeir
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Quem manda a primeira mensagem | Segundo o texto, 78% das primeiras mensagens vieram de homens e 22% de mulheres | 5.1 (p. 7) | "(78% males and 22% females)" |
-| Quem decidiu responder, mulheres | As contas das mulheres usam 154.417 decisões de 1.416 mulheres | Tabela 2, nota (p. 9) | "This data set included 154,417 decisions of 1,416 female members." |
-| Quem decidiu responder, homens | As contas dos homens usam 12.859 decisões de 1.883 homens | Tabela 1, nota (p. 9) | "This data set included 12,859 decisions of 1,883 male members." |
-| Aparência de quem escreve | Quanto mais alta a nota de aparência de quem escreveu, mais resposta, e isso pesou mais para os homens (b = 0,13) que para as mulheres (b = 0,06) | 5.2 (p. 7) | "(b = 0.13, p < 0.001) is higher than that in Table 2 (b = 0.06, p < 0.001)" |
+| Quem decidiu responder, mulheres | 1.416 mulheres receberam 154.417 primeiras mensagens e responderam ou não a cada uma | Tabela 2, nota (p. 9) | "This data set included 154,417 decisions of 1,416 female members." |
+| Quem decidiu responder, homens | 1.883 homens receberam 12.859 primeiras mensagens e responderam ou não a cada uma | Tabela 1, nota (p. 9) | "This data set included 12,859 decisions of 1,883 male members." |
+| Aparência de quem escreve | Quanto mais alta a nota de aparência de quem escreveu, mais resposta, e isso pesou mais quando quem decidia responder era um homem (b = 0,13) do que quando era uma mulher (b = 0,06) | 5.2 (p. 7) | "(b = 0.13, p < 0.001) is higher than that in Table 2 (b = 0.06, p < 0.001)" |
 | Aparência de quem recebe | Mulheres com nota de aparência mais alta responderam menos (b = −0,08); homens com nota mais alta responderam mais (b = 0,10) | 5.2 (p. 8) | "Table 2 is significantly negative (b = -0.08, p < 0.05), the same coefficient in Table 1 is significantly positive (b = 0.10, p < 0.001)" |
 | Mensagem longa, quando ela responde | As mulheres responderam um pouco mais a mensagens mais longas (b = 0,01) | 5.2 (p. 8) | "WORDCOUNT is significantly positively related to the probability of a reply (b = 0.01, p < 0.05; see Model 2, Table 2)" |
 | Mensagem longa, quando ele responde | Os homens responderam um pouco menos a mensagens mais longas (b = −0,01) | 5.2 (p. 8) | "they are less likely to respond to longer messages (b = -0.01, p < 0.05; see Model 2, Table 1)" |
