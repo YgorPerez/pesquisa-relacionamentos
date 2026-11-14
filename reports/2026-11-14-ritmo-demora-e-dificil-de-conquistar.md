@@ -536,13 +536,13 @@ O acervo não tem nenhum estudo do Brasil sobre demora para responder, tamanho d
 A busca da frente achou 23 estudos cujo texto completo nenhum script conseguiu ler. A lista inteira está em [#688](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/688), com o link de cada um. Não descrevo o resultado de nenhum deles. Pelo que medem, estes são os que mais poderiam mudar a resposta:
 
 - **Huang & Hancock 2022**, _Will you go on a date with me? Predicting first dates from linguistic traces in online dating messages_. Liga as mensagens de namoro online a um primeiro encontro, o desfecho que nenhum estudo daqui alcança.
-- **Büttner & Lutz 2025**, _When does waiting for a reply turn into ghosting?_ Pergunta quando a espera por uma resposta passa a ser sentida como ghosting, a ponte entre os estudos de demora e os de ghosting daqui, que não se tocam. Acesso aberto.
+- **Büttner & Lutz 2025**, _When does waiting for a reply turn into ghosting?_ Pergunta quando a espera por uma resposta passa a ser sentida como ghosting, a ponte entre os estudos de demora e os de ghosting daqui, que não se tocam. Acesso aberto. Agora tem [Ficha](../studies/buttner-2025-espera-por-resposta.md).
 - **Dai, Dong & Jia 2014**, _When does playing hard to get increase romantic attraction?_, e **Birnbaum, Zholtack & Reis 2020**, _No pain, no gain_. Testam se fazer de difícil em encontros com gente de verdade, inclusive online, onde os estudos primários daqui com números usam perfis inventados ou cenas imaginadas. Dai et al. é um dos dois estudos de encontro da revisão de Hazel.
 - **Birnbaum et al. 2018**, _Are you into me? Uncertainty and sexual desire in online encounters_. Incerteza sobre o interesse do outro numa conversa online, a parte em que Whitchurch e Montoya discordam.
-- **Jonason & Li 2013**, _Playing hard-to-get: Manipulating one's perceived availability as a mate_. A disponibilidade em si, que nenhum estudo daqui variou.
+- **Jonason & Li 2013**, _Playing hard-to-get: Manipulating one's perceived availability as a mate_. A disponibilidade em si, que nenhum estudo daqui variou. Agora tem [Ficha](../studies/jonason-2013-dificil-de-conquistar.md).
 - **Kato, Kato & Ozawa 2020** e **Hwang, Khojasteh & Fussell 2019**. Velocidade de resposta com confirmação de leitura e a leitura de atrasos em mensagens, as duas variáveis de Ferreres.
 - **Riordan, Markman & Stewart 2013** e **Ohadi et al. 2018**. Convergência no ritmo das mensagens e semelhança no jeito de escrever entre parceiros: a parte "acompanhar o ritmo do outro", que hoje não tem nenhuma Ficha.
-- **Forrai, Koban & Matthes 2023**, _Short-sighted ghosts_. Antecedentes e consequências de dar ghosting, em namoros e amizades. Todos os estudos de ghosting daqui são de uma medição só.
+- **Forrai, Koban & Matthes 2023**, _Short-sighted ghosts_. Antecedentes e consequências de dar ghosting, em namoros e amizades. Todos os estudos de ghosting daqui são de uma medição só. Agora tem [Ficha](../studies/forrai-2023-fantasmas-de-vista-curta.md).
 
 ## O que isso muda nos Guias e nas Dicas
 
