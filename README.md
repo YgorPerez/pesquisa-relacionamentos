@@ -184,6 +184,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
+- [Weisbuch, Ivcevic & Ambady 2009](studies/weisbuch-2009-pagina-web-presencial.md): agradar pela página do Facebook e agradar ao vivo · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
@@ -199,7 +200,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
+- [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
