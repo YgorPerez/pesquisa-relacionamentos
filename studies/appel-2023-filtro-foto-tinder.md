@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Os autores tiraram uma foto de cada um de dez rapazes e editaram cada foto com o FaceApp, um programa gratuito e popular de edição de fotos. Num teste prévio, 42 mulheres com o mesmo perfil das participantes deram notas de atratividade e de retoque às 20 fotos. Ficaram as fotos de quatro homens: aqueles cuja foto original não parecia editada e cuja foto editada não parecia nem pouco nem exageradamente retocada. Cada foto foi posta numa tela de perfil do Tinder, com um nome e uma idade de 24 a 26 anos.
+Os autores partiram de dez fotos sem edição, cada uma de um rapaz diferente que autorizou o uso, e editaram cada foto com o FaceApp, um programa gratuito e popular de edição de fotos. Num teste prévio, 42 mulheres com o mesmo perfil das participantes deram notas de atratividade e de retoque às 20 fotos. Ficaram as fotos de quatro homens: aqueles cuja foto original não parecia editada e cuja foto editada não parecia nem pouco nem exageradamente retocada. Cada foto foi posta numa tela de perfil do Tinder, com um nome e uma idade de 24 a 26 anos.
 
 Cada participante viu quatro perfis, de quatro homens diferentes: dois com a foto original e dois com a foto filtrada. A distribuição foi sorteada pelo programa, de modo que nenhuma participante viu o mesmo homem nas duas versões. Depois de cada perfil, ela deu notas à atratividade física do homem, a quanto ele parecia confiável e a se deslizaria para a direita, isto é, se teria interesse em sair com ele. As notas dos dois perfis de cada versão viraram uma média.
 
@@ -52,7 +52,7 @@ Outro estudo do acervo, [Dai & Xia (2025)](dai-2025-foto-embelezada-perfil.md), 
 
 ## Limitações
 
-- As participantes são 241 voluntárias pagas de um [[painel online]], a Prolific: mulheres solteiras de 20 a 28 anos, heterossexuais ou bissexuais, de seis países de língua inglesa. Os autores dizem que a escolha do Tinder e dessa faixa de idade limita até onde os resultados valem.
+- As participantes são 241 voluntárias pagas de um [[painel online]], a Prolific: mulheres solteiras de 20 a 28 anos, heterossexuais ou bissexuais, que moravam em um de seis países de língua inglesa. Os autores dizem que a escolha do Tinder e dessa faixa de idade limita até onde os resultados valem.
 - Só mulheres julgaram, e só perfis de homens. Os autores explicam que deixaram de fora o caso inverso porque estímulos diferentes para cada sexo impediriam separar o efeito do gênero do efeito das fotos.
 - As fotos são de quatro homens, todos brancos, editadas com um único programa, num grau de retoque que o teste prévio julgou nem leve nem exagerado. O que o estudo compara são essas fotos.
 - Cada perfil tinha uma foto, um nome e uma idade. Os autores lembram que mais fotos e um texto podem mudar a impressão.

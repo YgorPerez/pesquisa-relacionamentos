@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Os autores escreveram 20 textos de perfil de namoro, de 75 a 90 palavras, inspirados em sites de dicas, uns pensados para atrair e outros para afastar. Dez pessoas deram notas de atratividade a cada texto. Ficaram os cinco com notas mais altas e os cinco com notas mais baixas, depois de tirados os que davam pista do gênero de quem escreveu. Nenhum texto tinha foto, idade ou gênero.
+Os autores escreveram 20 textos de perfil de namoro, de 75 a 90 palavras, inspirados em sites de dicas, uns pensados para ser atraentes e outros pouco atraentes. Dez pessoas deram notas de atratividade a cada texto. Ficaram os cinco com notas mais altas e os cinco com notas mais baixas, depois de tirados os que davam pista do gênero de quem escreveu. Nenhum texto tinha foto, idade ou gênero.
 
 No experimento, o programa do questionário sorteou cada participante para um de dois grupos. Um grupo leu os dez textos como escritos pelas próprias pessoas. O outro viu antes uma animação de dez segundos de um gerador de perfis por inteligência artificial, que escreveria o perfil a partir da conta do Facebook do usuário, e leu cada texto com um rótulo que lembrava esse sistema. O gerador não existia, e os participantes não foram avisados disso. Os textos eram os mesmos nos dois grupos. Cada participante deu notas à atratividade de quem escreveu (geral, como amizade e como par romântico) e a quanto essa pessoa parecia confiável.
 
@@ -43,7 +43,7 @@ O estudo mede o efeito de acreditar que uma IA escreveu o perfil. Nenhum texto f
 | Opinião sobre IA | A ligação entre a opinião geral de cada participante sobre IA e as notas de atratividade (β = 0,179) e de confiança (β = 0,054) pode ser acaso (p > 0,05) | Seção 4.3 | "We found that AI attitude did not predict participants’ attractiveness ratings (β = 0.179, p > 0.05) or trust ratings (β = 0.054, p > 0.05)." |
 | O que acharam do gerador | No grupo do rótulo de IA, 23 participantes falaram bem da ideia do gerador de perfis e 1 disse que ela não era tão impressionante; 11 o chamaram de conveniente | Seção 4.3 | "23 participants were positive about the idea. Only 1 said that the idea was “not so impressive”. Participants viewed the tool as an easy way to generate profiles: 11 people mentioned the tool was “convenient”" |
 
-As notas vão de 1 ("nada") a 7 ("muito"). A atratividade junta três perguntas: se a pessoa é atraente, se daria para conversar com ela como amigo e se o participante gostaria de ter um relacionamento romântico com ela. A confiança é uma pergunta só ("Acho que essa pessoa é confiável"). O F vem da análise de variância que compara os grupos, e o "p" é a chance de uma diferença daquele tamanho aparecer só por acaso. O β vem de uma conta que tenta prever as notas pela opinião sobre IA. O artigo não diz quantos participantes ficaram em cada grupo.
+As notas vão de 1 ("nada") a 7 ("muito"). A atratividade junta três perguntas: se a pessoa é atraente, se daria para conversar com ela como amigo e se o participante gostaria de ter um relacionamento romântico com ela. A confiança é uma pergunta só ("Acho que essa pessoa é confiável"). O F vem da análise de variância que compara os grupos, e o "p" é a chance de uma diferença daquele tamanho aparecer só por acaso. O β vem de uma conta que tenta prever as notas pela opinião sobre IA. A introdução diz que metade dos participantes ficou em cada grupo.
 
 ## Limitações
 
