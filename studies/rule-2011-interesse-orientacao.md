@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Mulheres heterossexuais viram, num computador, fotos de rosto em preto e branco, padronizadas e sem acessórios nem barba, e apertaram uma tecla para dizer se cada pessoa era gay ou hétero (nos Estudos 2 e 3b, lésbica ou hétero). As pessoas das fotos tinham dito a própria orientação. Os autores medem o acerto com o A′, um índice da teoria de detecção de sinais em que 0,50 é o acerto do chute, e medem à parte a tendência de responder mais "hétero" do que "gay" (o B′).
+Mulheres heterossexuais viram, num computador, fotos de rosto em preto e branco, padronizadas e sem acessórios nem barba, e apertaram uma tecla para dizer se cada pessoa era gay ou hétero (nos Estudos 2 e 3b, lésbica ou hétero). Os homens das fotos tinham se declarado gays ou héteros; das mulheres, o artigo diz só que eram lésbicas ou héteros, em fotos validadas num estudo anterior dos autores. Os autores medem o acerto com o A′, um índice da teoria de detecção de sinais em que 0,50 é o acerto do chute, e medem à parte a tendência de responder mais "hétero" do que "gay" (o B′).
 
 Nos Estudos 1 e 2, os autores ligaram o acerto à fase do ciclo menstrual, estimada pelo que cada mulher disse da data da última menstruação e da duração do seu ciclo. No Estudo 3, as mulheres foram sorteadas entre ler antes uma história de um encontro romântico, para despertar o interesse em parceiros, ou não ler nada.
 
@@ -53,4 +53,4 @@ O artigo usa 0,50 como o acerto do chute no A′, e não dá o acerto em porcent
 - Os grupos do Estudo 3 tinham cerca de 20 mulheres, e a diferença do Estudo 3a passou no teste com p = 0,04. O terceiro grupo, com a história não romântica, foi rodado depois dos outros.
 - No Estudo 3a, os autores dizem que não apareceu diferença entre os dois grupos na proporção de mulheres que usavam anticoncepcional; o texto não diz quantas usavam. Nos Estudos 1 e 2, a seleção pedia mulheres sem anticoncepcional sistêmico.
 - Nos Estudos 1 e 2, a fase do ciclo foi medida, não sorteada; só o Estudo 3 é experimento. Os autores leem os resultados como sinal de que o interesse em parceiros faz a mulher prestar mais atenção à orientação dos homens; o estudo não mede atenção.
-- O estudo trata de classificar fotos de rosto num laboratório, não de perfis, conversas ou interesse. O artigo não diz em que universidade nem em que país foi feito.
+- O estudo trata de classificar fotos de rosto num computador, não de perfis, conversas ou interesse. O artigo não diz em que universidade nem em que país foi feito.

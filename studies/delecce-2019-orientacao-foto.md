@@ -43,7 +43,7 @@ Os autores tratam a sociossexualidade da mulher como indicador do risco de infid
 
 ## Limitações
 
-- O acerto aqui é uma ligação, não uma contagem de acertos. O artigo não dá a nota média de fidelidade nem diz se os homens tenderam a dar notas altas ou baixas demais; mostra só que as notas foram um pouco mais baixas para as mulheres de SOI mais alto. Os autores escrevem que o resultado não quer dizer que os homens erraram.
+- O acerto aqui é uma ligação, não uma contagem de acertos. O artigo não dá a nota média de fidelidade nem diz se os homens tenderam a dar notas altas ou baixas demais; mostra só que as notas foram um pouco mais baixas para as mulheres de SOI mais alto. Os autores escrevem que o fato de a sociossexualidade do homem não mudar essa ligação não quer dizer que os homens erraram.
 - A sociossexualidade da mulher entra como indicador do risco de infidelidade, com base em estudos que os autores citam; o artigo não compara as notas com a infidelidade que as mulheres declararam.
 - O artigo diz que as notas de SOI de homens e mulheres foram de 21 a 71 e dá, para os homens, média 57,0 e desvio-padrão 31,9, e para as mulheres, média 34,3 e desvio-padrão 24,1. Com notas entre 21 e 71, nenhum dos dois desvios-padrão é possível com essas médias (o máximo seria perto de 22). Pelo menos um desses números está errado, e a Ficha não usa nenhum deles.
 - A ligação entre a nota de fidelidade e o SOI da mulher já estava no artigo de 2014, com correlação e regressão; a novidade aqui é o modelo multinível e o teste da sociossexualidade do homem.
