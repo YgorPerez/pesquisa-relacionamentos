@@ -125,6 +125,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
+- [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
@@ -135,6 +136,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
+- [Jiwa et al. 2025](studies/jiwa-2025-precisao-perfil-app.md): o que o perfil de app deixa ver da personalidade · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Kahn & London 1991](studies/kahn-1991-sexo-premarital-divorcio.md): sexo antes do casamento e risco de divórcio · ✅ · moderada
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
@@ -204,6 +206,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
 - [Timmermans et al. 2021](studies/timmermans-2021-ghosting-em-apps.md): por que somem e como é levar um sumiço em app de namoro · ✅ · fraca
+- [Toma et al. 2008](studies/toma-2008-mentira-altura-peso-idade.md): altura, peso e idade no perfil e na medida · ✅ · fraca
 - [Toma & Hancock 2010](studies/toma-2010-atratividade-mentira.md): quem é menos atraente mente mais no perfil? · ✅ · fraca
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
