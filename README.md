@@ -182,6 +182,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lewis 2013](studies/lewis-2013-preconceito-racial-respostas.md): raça, primeira mensagem e resposta no OkCupid · ✅ · moderada
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
+- [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
 - [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
