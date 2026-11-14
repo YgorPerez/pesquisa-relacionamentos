@@ -8,7 +8,7 @@ O revisor é outra sessão, nunca a que escreveu o PR. Ele faz o merge sozinho d
 
 3. **Conferência.** Leia cada script de `scripts/calculations/` do PR antes de rodar, porque o `pnpm verify` executa esses scripts. Depois rode `pnpm verify studies/<slug>.md` para cada Ficha, mais `pnpm build` e `pnpm test`. Qualquer saída diferente de 0 bloqueia o merge: `gh pr review <pr> --request-changes` com a saída colada.
 
-4. **Força.** A `strength` bate com a rubrica do `README.md`, e `strength_reason` dá o motivo que a rubrica pede: amostra pequena, comercial ou com conflito é fraca, mesmo com número bonito.
+4. **Força.** A `strength` bate com a rubrica do `README.md`, e `strength_reason` dá o motivo que a rubrica pede: amostra pequena, comercial ou com conflito é fraca, mesmo com número bonito. O que conta como comercial está logo abaixo da rubrica.
 
 5. **Limitações e conflito.** `## Limitações` traz as que o artigo declara e as óbvias do desenho (autorrelato, transversal, painel com cotas). `conflict` diz quem financiou e os vínculos dos autores, conferidos na seção de financiamento da Fonte local.
 
