@@ -63,10 +63,12 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'json'],
       include: ['scripts/**/*.ts', '.github/scripts/**/*.ts'],
-      exclude: ['scripts/fixtures/**'],
+      // The Fact sheets' calculations print a number that `pnpm verify` checks
+      // against the Fact sheet; no unit test imports them.
+      exclude: ['scripts/fixtures/**', 'scripts/calculations/**'],
       // The floor is the coverage from when it came in (ADR 0005): it goes up
       // with coverage, never down.
-      thresholds: { statements: 60, branches: 49, functions: 60, lines: 60 },
+      thresholds: { statements: 68, branches: 63, functions: 72, lines: 69 },
     },
   },
   fmt: {
