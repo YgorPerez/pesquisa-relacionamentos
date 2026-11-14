@@ -5,7 +5,7 @@ ticket: 396
 # Algum estudo mediu a chance de cada caminho dar em namoro?
 
 **Data:** 2026-10-28 · **Ticket:** [#396](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/396)
-**Status de verificação:** cada estudo leva a marca do que eu li. ✅ texto completo (artigo, relatório ou versão do autor, dito em cada caso). 🟡 só o resumo, pelo OpenAlex ou pela página da revista. ⬜ não li o original, só uma fonte secundária. Oito estudos daqui já têm Ficha e entram pelos números dela. A força segue o [README](../README.md).
+**Status de verificação:** cada estudo leva a marca do que eu li. ✅ texto completo (artigo, relatório ou versão do autor, dito em cada caso). 🟡 só o resumo, pelo OpenAlex ou pela página da revista. ⬜ não li o original, só uma fonte secundária. Nove estudos daqui já têm Ficha e entram pelos números dela. A força segue o [README](../README.md).
 
 Um leitor viu, na resposta de "App ou presencial: onde tenho mais chance?" no Guia `onde-conhecer-pessoas`, a frase "Nenhum estudo mediu a chance de cada caminho dar em namoro" e perguntou se existe algum. Para responder, o estudo precisa contar quem tentou cada caminho, inclusive quem não achou ninguém. A fatia dos casais que se conheceram em cada lugar não serve, e o Guia já traz essa fatia (Rosenfeld 2019, Pew 2023, Lampard 2020, Bergström 2016, Kowal 2025).
 
@@ -73,14 +73,14 @@ Recruit Bridal Research Institute (リクルートブライダル総研). 「婚
 
 ### O que mede só o app, ou só a internet
 
-Os cinco primeiros já têm Ficha.
+Os seis primeiros já têm Ficha.
 
 - [Pew 2023 e 2020](../studies/pew-2023-2020-online-dating.md): 39% de quem já usou site ou app de namoro diz ter namorado sério ou casado com alguém de lá (relatório de 2020, p. 16). O denominador é quem tentou, mas a conta vale para a vida toda e não tem caminho presencial para comparar.
 - [Timmermans & Courtois 2018](../studies/timmermans-2018-tinder.md): entre usuários do Tinder na Bélgica que tinham encontrado alguém do app, 27% começaram uma relação com compromisso. Força fraca.
 - [Erevik et al. 2020](../studies/erevik-2020-tinder-relacionamentos.md): estudantes solteiros de Bergen, um ano de seguimento. Sem ajuste, quem usava Tinder tinha mais chance de estar numa relação (OR = 1,31; IC de 1,06 a 1,62), e a diferença perdeu significância com os ajustes. Compara usar e não usar o app, não um caminho com outro.
 - [Büyükeren, Makarin & Xiong 2026](../studies/buyukeren-2026-tinder.md): a chegada do Tinder aos campi americanos não mudou estar num relacionamento (β = 0,004; EP = 0,004).
 - [Rosenfeld & Thomas 2012](../studies/rosenfeld-2012-searching-for-a-mate.md): ter internet em casa andava com ter parceiro (razão de chances ajustada de 1,78, Tabela 7), com possível causalidade reversa.
-- Rosenfeld MJ. _Are Tinder and Dating Apps Changing Dating and Mating in the U.S.?_ Em Van Hook, McHale & King (orgs.), _Families and Technology_, Springer, 2018, p. 103–117. https://doi.org/10.1007/978-3-319-95540-7_6. ✅ versão do autor (https://web.stanford.edu/~mrosenfe/Rosenfeld_Tinder_and%20Dating_apps.pdf). Usa o HCMST 2017, com 177 homens e 236 mulheres heterossexuais sem parceiro. Só 18,7% desses homens e 11,4% dessas mulheres conheceram alguém para sair ou transar nos últimos 12 meses. Os apps responderam por 8% das pessoas que esses homens conheceram e por 22% das que essas mulheres conheceram (Tabela 2). Conta encontros, não namoros, e não segue ninguém até formar casal. Serve para mostrar que a maioria dos solteiros nem está tentando.
+- [Rosenfeld 2018](../studies/rosenfeld-2018-apps-encontros-eua.md): na HCMST de 2017, com 177 homens e 236 mulheres héteros sem par, só 18,7% desses homens e 11,4% dessas mulheres encontraram alguém para namoro, romance ou sexo nos 12 meses anteriores. Os apps responderam por 8% das pessoas que esses homens encontraram e por 22% das que essas mulheres encontraram (Tabela 2). Conta encontros, não namoros, e não segue ninguém até formar casal. Serve para mostrar que a maioria dos solteiros nem está tentando.
 - Sironi M, Kashyap R. _Internet access and partnership formation in the United States_. Population Studies, 2022. https://doi.org/10.1080/00324728.2021.1999485. 🟡 só o resumo. No NLSY97, ter internet anda com menos união nas idades mais novas e com mais união a partir de meados ou fim dos 20 anos. Mede o acesso à internet, não o uso de app.
 - Ershov D, Fong J, Yıldırım P. _What Happens When Dating Goes Online?_ NBER Working Paper 34757, 2026. https://doi.org/10.3386/w34757. 🟡 só o resumo. Num estudo por condado, na era do celular, 1% a mais de atividade em apps veio com 0,40% a menos de casamentos. Mede a população do condado, não quem usa.
 
@@ -104,7 +104,7 @@ Hall JA. _How many hours does it take to make a friend?_ Journal of Social and P
 | Pew 2020                | EUA                                    | quem usou app ou site          | não                            | não                                                          | Ficha ✅ |
 | Erevik 2020             | Noruega, 2.385                         | usa e não usa Tinder           | não                            | não                                                          | Ficha ✅ |
 | Büyükeren 2026          | EUA, campi                             | chegada do Tinder              | não                            | quase-experimento                                            | Ficha ✅ |
-| Rosenfeld 2018          | EUA, 413 héteros sem parceiro          | solteiros                      | não (encontros, não namoros)   | não                                                          | ✅       |
+| Rosenfeld 2018          | EUA, 413 héteros sem parceiro          | solteiros                      | não (encontros, não namoros)   | não                                                          | Ficha ✅ |
 | Asendorpf 2011          | Alemanha, 382                          | pares de speed dating          | não                            | não                                                          | 🟡       |
 
 ## O que isso muda no Guia
