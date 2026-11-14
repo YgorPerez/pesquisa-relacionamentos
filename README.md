@@ -114,11 +114,13 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
+- [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
+- [Jiwa et al. 2025](studies/jiwa-2025-precisao-perfil-app.md): o que o perfil de app deixa ver da personalidade · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Kahn & London 1991](studies/kahn-1991-sexo-premarital-divorcio.md): sexo antes do casamento e risco de divórcio · ✅ · moderada
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
@@ -171,6 +173,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
+- [Toma et al. 2008](studies/toma-2008-mentira-altura-peso-idade.md): altura, peso e idade no perfil e na medida · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
