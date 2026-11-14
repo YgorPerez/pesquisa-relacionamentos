@@ -15,6 +15,9 @@ export type VerificationStatus = (typeof VERIFICATION_STATUSES)[number]
 export const STRENGTHS = ['strong', 'moderate', 'weak'] as const
 export type Strength = (typeof STRENGTHS)[number]
 
+/** How a Study got its data. A `meta-analysis` pools the studies' numbers
+ * into one estimate; a `review` (narrative, systematic or scoping) describes
+ * them without pooling, so it does not test a cause (#711). */
 export const DESIGNS = [
   'longitudinal',
   'cross-sectional',
@@ -22,6 +25,7 @@ export const DESIGNS = [
   'platform',
   'administrative',
   'meta-analysis',
+  'review',
 ] as const
 export type Design = (typeof DESIGNS)[number]
 

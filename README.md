@@ -34,6 +34,8 @@ O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https
 - **Moderada:** bom desenho, mas uma única amostra, transversal ou com algum viés conhecido.
 - **Fraca:** amostra pequena, não representativa, comercial ou com conflito de interesse relevante.
 
+Comercial é o estudo que a empresa dona dos dados fez, pagou ou assinou com gente sua: o blog de um app, uma pesquisa de mercado, um artigo com autores empregados pelo site. Pesquisadores independentes que analisam registros cedidos por um site, num artigo revisado por pares, não fazem o estudo comercial; ele é julgado pelo desenho e pela amostra.
+
 **Nomes de arquivo:** `studies/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `reports/<AAAA-MM-DD>-<tema>.md`. Fonte local: `sources/<slug-da-ficha>.<pdf|html|txt>` ou `sources/private/<slug-da-ficha>.<pdf|html|txt>`.
 
 Para uma ficha nova, copie [`studies/_modelo.md`](studies/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/content`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
@@ -157,7 +159,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Hoyle et al. 2017](studies/hoyle-2017-mensagem-vista.md): o aviso de mensagem vista no Facebook Messenger · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
-- [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
+- [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): em chats entre desconhecidos, quem pergunta mais é mais querido · ✅ · moderada
 - [Huang & Yao 2024](studies/huang-2024-sem-resposta-no-conflito.md): demora do parceiro para responder durante uma briga por mensagem · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
