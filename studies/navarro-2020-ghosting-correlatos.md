@@ -9,7 +9,7 @@ countries: [Espanha]
 period: "2019"
 sample:
   n: 626
-  description: "626 adultos de 18 a 40 anos na Espanha (323 mulheres e 303 homens; 82,9% heterossexuais; 79,4% com ensino superior; 62,3% com parceiro ao responder), os mesmos da Ficha navarro-2020-ghosting-e-apps. O link do questionário foi enviado a doutorandos de uma universidade de porte médio do centro do país, que o repassaram a familiares e conhecidos com internet, celular e ao menos uma relação na vida. Responderam 716; saíram 64 que nunca tinham tido uma relação e 26 que erraram a pergunta de checagem de atenção."
+  description: "626 adultos de 18 a 40 anos na Espanha (323 mulheres e 303 homens; 82,9% heterossexuais; 79,4% com ensino superior; 62,3% com parceiro ao responder), com os mesmos números da amostra da Ficha navarro-2020-ghosting-e-apps. O link do questionário foi enviado a doutorandos de uma universidade de porte médio do centro do país, que o repassaram a familiares e conhecidos com internet, celular e ao menos uma relação na vida. Responderam 716; saíram 64 que nunca tinham tido uma relação e 26 que erraram a pergunta de checagem de atenção."
   representative: false
 design: cross-sectional
 conflict: "Os autores declaram que a pesquisa não recebeu financiamento externo e que não têm conflito de interesses. Os quatro são da Universidad de Castilla-La Mancha."
@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-Um questionário online perguntou a adultos de 18 a 40 anos se, no último ano, alguém que consideravam um par tinha sumido sem explicação (ghosting) ou mantido contato esporádico sem deixar a relação avançar (breadcrumbing), e aplicou três escalas: [[satisfação]] com a vida, solidão e desamparo. Os autores separaram quem tinha passado por cada conduta três vezes ou mais no ano e compararam as notas desses grupos com as de quem não tinha passado por nenhuma delas três vezes ou mais. É o segundo artigo sobre a mesma amostra; o primeiro, sobre a frequência das duas condutas e o uso de apps, está em [Navarro et al. 2020, ghosting e apps](navarro-2020-ghosting-e-apps.md).
+Um questionário online perguntou a adultos de 18 a 40 anos se, no último ano, alguém que consideravam um par tinha sumido sem explicação (ghosting) ou mantido contato esporádico sem deixar a relação avançar (breadcrumbing), e aplicou três escalas: [[satisfação]] com a vida, solidão e desamparo. Os autores separaram quem tinha passado por cada conduta três vezes ou mais no ano e compararam as notas desses grupos com as de quem não tinha passado por nenhuma delas três vezes ou mais. Os mesmos autores escreveram outro artigo, sobre a frequência das duas condutas e o uso de apps, com uma amostra de números idênticos: [Navarro et al. 2020, ghosting e apps](navarro-2020-ghosting-e-apps.md).
 
 ## Achados
 
@@ -54,7 +54,8 @@ Os 45 da linha calculada batem com o primeiro artigo: lá, 27 pessoas disseram t
 
 ## Limitações
 
-- A amostra é a mesma de [Navarro et al. 2020, ghosting e apps](navarro-2020-ghosting-e-apps.md): 626 pessoas, de conveniência e bola de neve, a partir de doutorandos de uma universidade, com 79,4% de pessoas com ensino superior. Não representa os adultos da Espanha, nem os do Brasil. Os dois artigos não são evidência independente um do outro.
+- A amostra é de conveniência e bola de neve, a partir de doutorandos de uma universidade, com 79,4% de pessoas com ensino superior. Não representa os adultos da Espanha, nem os do Brasil.
+- [Navarro et al. 2020, ghosting e apps](navarro-2020-ghosting-e-apps.md), dos mesmos quatro autores, descreve uma amostra com os mesmos números: 626 adultos de 18 a 40 anos, 303 homens e 323 mulheres, 79,4% com ensino superior, 82,9% heterossexuais e 62,3% com parceiro, recrutados do mesmo jeito. Nenhum dos dois artigos diz que a amostra é a mesma. Este cita os 19,3% de ghosting sofrido e os 35,6% de breadcrumbing sofrido daquele como achado anterior; aquele diz que o estudo faz parte de um projeto maior e cita este, então em avaliação. Pelos números idênticos, a Ficha não conta os dois como evidência independente.
 - O grupo de ghosting repetido tem 30 pessoas e o que passou pelas duas condutas tem 15. Grupos desse tamanho só mostram com segurança diferenças grandes. Os próprios autores escrevem que o resultado não quer dizer que quem sofre ghosting não sinta mal-estar.
 - O desenho é transversal e por autorrelato. Não dá para saber o que veio antes, o breadcrumbing ou a solidão e a insatisfação. Os autores dizem que não podem tirar conclusões de causa.
 - Cada conduta foi medida por uma pergunta só. O questionário não perguntou há quanto tempo aquilo aconteceu nem que tipo de relação era (um encontro, um caso curto, um namoro), e os autores apontam as duas faltas. Eles levantam a hipótese de que o ghosting acontece mais em relações curtas e de pouco compromisso, o que, para eles, pode explicar por que a ligação não apareceu.
