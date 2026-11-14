@@ -1,14 +1,14 @@
 ---
-reference: "Antar JC, Stephen ID. *Facial shape provides a valid cue to sociosexuality in men but not women*. Evolution and Human Behavior 42(4):361–370, 2021. Versão lida: o manuscrito aceito dos autores, em Word, sem a diagramação nem a paginação da revista."
+reference: "Antar JC, Stephen ID. *Facial shape provides a valid cue to sociosexuality in men but not women*. Evolution and Human Behavior 42(4):361–370, 2021. Versão lida: um manuscrito dos autores, em Word, sem a diagramação nem a paginação da revista; o arquivo não diz se é a versão aceita."
 link: https://doi.org/10.1016/j.evolhumbehav.2021.02.001
 status: verified
 verified_on: 2026-11-14
 strength: weak
-strength_reason: "Uma amostra só, de participantes brancos e jovens fotografados (123 nos métodos, 103 no resumo) e 65 avaliadores, sem repetição; o modelo do formato do rosto escolheu suas medidas na mesma amostra que ele explica, e os testes dos rostos médios usaram menos avaliadores do que os recrutados, sem explicação."
+strength_reason: "Uma amostra só, de participantes brancos e jovens fotografados (123, 112 depois das exclusões listadas, 103 no resumo) e 65 avaliadores, sem repetição; o modelo do formato do rosto escolheu suas medidas na mesma amostra que ele explica, e os testes dos rostos médios usaram menos avaliadores do que os recrutados, sem explicação."
 countries: [Austrália]
 period: "não informado no texto lido"
 sample:
-  description: "Estudo 1: 123 participantes brancos (63 mulheres e 60 homens), com 20,21 anos em média, fotografados em troca de crédito de disciplina ou AU$10; os métodos listam exclusões por etnia, boca aberta, cicatriz e questionário incompleto, e o resumo fala em 103 analisados. Estudo 2: 65 participantes brancos que não estavam no Estudo 1 (45 mulheres e 20 homens), com 22,03 anos em média, deram notas às fotos do sexo oposto; 7 avaliadoras que se disseram homossexuais foram excluídas. A pesquisa foi aprovada pelo comitê de ética da Universidade Macquarie, na Austrália."
+  description: "Estudo 1: 123 participantes brancos (63 mulheres e 60 homens), com 20,21 anos em média, fotografados em troca de crédito de disciplina ou AU$10; os métodos listam 11 exclusões, por etnia (5), boca aberta (1), cicatriz (1) e questionário incompleto (4), o que deixa 112 (57 homens e 55 mulheres), e cada modelo retira ainda casos muito influentes; o resumo fala em 103 analisados. Estudo 2: 65 participantes brancos que não estavam no Estudo 1 (45 mulheres e 20 homens), com 22,03 anos em média, deram notas às fotos do sexo oposto; 7 avaliadoras que se disseram homossexuais foram excluídas. A pesquisa foi aprovada pelo comitê de ética da Universidade Macquarie, na Austrália."
   representative: false
 design: cross-sectional
 conflict: "O manuscrito não informa financiamento. Os autores, da Universidade Macquarie, declaram não ter conflito de interesse."
@@ -42,7 +42,7 @@ No Estudo 1, marcaram 167 pontos em cada rosto, resumiram o formato em 12 medida
 
 R² diz quanto das diferenças entre as pessoas um modelo explica, de 0 a 1: 0,35 quer dizer 35%. O R² marginal é o mesmo para os modelos do Estudo 2, que levam em conta que cada avaliador deu várias notas e que cada rosto recebeu várias; "R2m" e "R2" nos Trechos são como o texto salvo escreve R² marginal e R². Nos homens, o que cada um declarou explicou 3% das diferenças entre as notas que as avaliadoras lhe deram.
 
-Na tarefa dos rostos médios, cada avaliador respondeu às cinco perguntas numa escala de 6 pontos, da imagem da esquerda muito mais provável à da direita muito mais provável. A média de cada avaliador ia de −3, certeza de que o rosto dos mais fechados era o mais aberto, a 3, certeza de que era o dos mais abertos; 0 era não saber. A média de 0,44 das avaliadoras diante dos rostos de homens fica, assim, mais perto de não saber que de ter certeza. O "d" mede o tamanho de uma diferença em desvios-padrão, e 0,5 costuma ser chamado de médio. "p" diz o quanto um resultado assim seria comum só por acaso; o limite usual é 0,05.
+Na tarefa dos rostos médios, cada avaliador respondeu às cinco perguntas numa escala de 6 pontos, da imagem da esquerda muito mais provável à da direita muito mais provável. A média de cada avaliador ia de −3, certeza de que o rosto dos mais fechados era o mais aberto, a 3, certeza de que era o dos mais abertos; 0, o meio, era não pender para nenhum dos dois. A média de 0,44 das avaliadoras diante dos rostos de homens fica, assim, mais perto do meio que de ter certeza. O "d" mede o tamanho de uma diferença em desvios-padrão, e 0,5 costuma ser chamado de médio. "p" diz o quanto um resultado assim seria comum só por acaso; o limite usual é 0,05.
 
 Os autores leem que o formato do rosto é uma pista válida da sociossexualidade nos homens e não nas mulheres. Nas mulheres, eles dizem que o formato previu a nota dos avaliadores, mas não o que elas declararam.
 
@@ -50,9 +50,9 @@ Os autores leem que o formato do rosto é uma pista válida da sociossexualidade
 
 - As fotos são de rosto, padronizadas, com roupa e fundo iguais para todos, e não fotos de perfil. O estudo não testou perfis de app, fotos escolhidas pela pessoa nem texto.
 - Todos os participantes eram brancos e jovens, e cada foto foi avaliada só por pessoas do sexo oposto.
-- O resumo fala em 103 pessoas analisadas no Estudo 1; os métodos falam em 123 fotografadas, listam as exclusões e a retirada de casos muito influentes em cada modelo, e não dão o total final.
+- O resumo fala em 103 pessoas analisadas no Estudo 1. Os métodos falam em 123 fotografadas e listam 11 exclusões, o que deixa 112 (57 homens e 55 mulheres); cada modelo retira ainda casos muito influentes, e os graus de liberdade dos modelos com os dois sexos dão de 102 a 104 pessoas. Nenhum modelo do texto tem 103.
 - Nos rostos médios, os testes têm 25 e 11 graus de liberdade, o que corresponde a 26 avaliadoras e 12 avaliadores, menos que as 45 mulheres (7 delas excluídas) e os 20 homens recrutados. O texto não diz por que os outros ficaram de fora.
 - O modelo do formato escolheu, passo a passo, as medidas que mais ajudavam a prever na mesma amostra que ele explica, com cerca de 50 rostos de cada sexo. A conferência que os autores relatam compara a previsão feita sem cada rosto com a previsão do modelo inteiro, não com o que a pessoa declarou, e o artigo não testa o modelo em rostos novos.
 - Juntando homens e mulheres, a ligação entre nota e questionário explicou 13% das diferenças, mais que em cada sexo separado (0,03 e 0,00). O texto não comenta a diferença, e a Ficha não usa esse número.
 - O artigo também testa se uma das medidas de formato explica parte da ligação entre nota e questionário; os números estão só nas Figuras 5 e 6, que são imagens, e a Ficha não os usa.
-- O manuscrito não traz seção de limitações nem informa financiamento. A Fonte local é o manuscrito aceito, sem a revisão de texto da revista; números da versão publicada podem diferir em detalhe.
+- O manuscrito não traz seção de limitações nem informa financiamento. A Fonte local é um manuscrito dos autores sem marca de versão, sem a revisão de texto da revista; números da versão publicada podem diferir em detalhe.

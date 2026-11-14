@@ -4,7 +4,7 @@ link: https://doi.org/10.1016/j.evolhumbehav.2008.09.005
 status: verified
 verified_on: 2026-11-14
 strength: weak
-strength_reason: "24 universitárias escolhidas de propósito nas duas pontas do questionário, filmadas numa única tarefa sem fala com um assistente homem, e julgadas por 10 e depois por 50 universitários que viram os mesmos vídeos; escolher as pontas tende a aumentar a ligação entre nota e questionário."
+strength_reason: "24 universitárias, recrutadas de modo a incluir de propósito mulheres das duas pontas do questionário, filmadas numa única tarefa sem fala com um assistente homem, e julgadas por 10 e depois por 50 universitários que viram os mesmos vídeos; incluir as pontas de propósito tende a aumentar a ligação entre nota e questionário."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
@@ -43,12 +43,12 @@ Os autores chamaram 24 universitárias solteiras, incluindo de propósito mulher
 
 "r" mede o quanto duas coisas andam juntas, de −1 a 1; 0 é nenhuma ligação, como seria chutar. A ligação com a nota média de vários avaliadores (0,55 e 0,49) é maior que a ligação média de cada avaliador sozinho (0,37 nas mulheres e 0,28 nos homens, no Estudo 2), e alguns avaliadores ficaram perto de zero. "β" é o mesmo tipo de ligação numa conta que leva outras coisas em conta. "t" mede uma diferença em relação à variação dos dados. "p" diz o quanto um resultado assim seria comum só por acaso, e o limite usual é 0,05. Nos Trechos, "N" e "b" são como o texto salvo escreve os sinais de maior e de menor.
 
-Os autores chamam de pistas enganosas os aspectos que andaram junto com a nota e não com o questionário, e de pistas válidas os três comportamentos que andaram junto com os dois. Eles leem os resultados como sinal de que a sociossexualidade das mulheres pode ser percebida em pouco tempo, e dizem que a escolha das mulheres pelas pontas da escala e a tarefa de perto com um assistente atraente podem explicar por que acharam mais acerto que um estudo anterior, que não achou acerto nas mulheres.
+Os autores chamam de pistas enganosas os aspectos que andaram junto com a nota e não com o questionário, e de pistas válidas os três comportamentos que andaram junto com os dois. Eles leem os resultados como sinal de que a sociossexualidade das mulheres pode ser percebida em pouco tempo, e dizem que o recrutamento feito para garantir variação no questionário e a tarefa de perto com um assistente atraente podem explicar por que acharam mais acerto que um estudo anterior, que não achou acerto nas mulheres.
 
 ## Limitações
 
 - É o vídeo sem som de uma tarefa num laboratório, com um assistente de pesquisa, e não um encontro nem um perfil de app. O estudo não testou fotos, texto ou conversa.
-- Só mulheres foram julgadas, e foram 24. Os autores as escolheram de propósito nas duas pontas do questionário para garantir variação. Escolher as pontas costuma aumentar a ligação entre duas medidas em relação a um grupo comum, com mais gente do meio da escala, e o texto não diz quantas vieram de cada ponta.
+- Só mulheres foram julgadas, e foram 24. Para garantir variação, os autores incluíram de propósito mulheres das duas pontas do questionário (notas padronizadas de −1,28 a 2,81). Incluir as pontas de propósito costuma aumentar a ligação entre duas medidas em relação a um grupo comum, e o texto não diz quantas vieram das pontas nem quantas do meio.
 - Os dois estudos usaram as mesmas 24 gravações, então o Estudo 2 repete a conta com outros avaliadores, mas não com outras mulheres.
 - Os autores dizem que não esgotaram os comportamentos nem as situações possíveis, e que o questionário mede sobretudo a abertura a relações curtas, não a tendência a relações longas.
 - O texto diz que os aspectos enganosos tiveram r acima de 0,51 com a nota e abaixo de 0,27 com o questionário, mas a Tabela 2 traz rir com 0,51 e sorrir com 0,27; o texto diz também que levou em conta quatro aspectos enganosos, e a tabela lista cinco. A Ficha diz só o que o texto e a tabela sustentam juntos.

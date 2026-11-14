@@ -20,7 +20,7 @@ covers:
 
 ## O que mediu
 
-O estudo perguntou se quem vê só o rosto de um desconhecido consegue dizer o quanto ele é aberto a sexo sem compromisso, o que a psicologia chama de sociossexualidade. A referência foi o que cada pessoa fotografada respondeu no Inventário de Orientação Sociossexual (SOI), um questionário sobre número de parceiros, casos de uma noite, fantasias e atitudes. Não há perfil de app: são fotos de rosto tiradas com luz padronizada, sem roupa, pose ou texto escolhidos pela pessoa.
+O estudo perguntou se quem vê só o rosto de um desconhecido consegue dizer o quanto ele é aberto a sexo sem compromisso, o que a psicologia chama de sociossexualidade. A referência foi o que cada pessoa fotografada respondeu no Inventário de Orientação Sociossexual (SOI), um questionário sobre número de parceiros, casos de uma noite, fantasias e atitudes. Não há perfil de app: são fotos só do rosto, tiradas com luz padronizada, e não fotos ou textos escolhidos pela própria pessoa.
 
 No Estudo 1, os autores juntaram por computador as fotos dos estudantes com as notas mais altas no questionário (o quarto mais aberto) num rosto médio, e as dos estudantes com as notas mais baixas (o quarto mais fechado) noutro. Os avaliadores viam os dois rostos lado a lado e diziam qual parecia mais aberto a relações curtas, casos de uma noite e sexo sem amor, e com que certeza. Na Amostra 1a eles responderam pela internet, e outro grupo disse qual rosto era mais bonito e qual era mais masculino ou feminino; na 1b, os mesmos avaliadores fizeram as duas coisas, no laboratório.
 
