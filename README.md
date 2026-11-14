@@ -184,7 +184,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
-- [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · moderada
+- [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · fraca
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)

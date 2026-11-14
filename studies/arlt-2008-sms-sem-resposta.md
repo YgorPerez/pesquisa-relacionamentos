@@ -52,5 +52,5 @@ As médias são do índice de emoções, numa escala de cinco pontos em que um n
 - Os dados são de 2007, quando a conversa pelo celular era por SMS.
 - Não há tabela com as médias de cada grupo nem o valor exato de p, só "p < .01".
 - O capítulo cita como fonte da sua figura um livro em alemão da primeira autora, do mesmo ano e sobre o mesmo tema (Arlt, *Nicht-Erreichbarkeit in der Mobilkommunikation*, Universitätsverlag Ilmenau, 2008). Não lemos esse livro, e os resultados que faltam podem estar nele.
-- É um capítulo de um livro de conferência. O texto não diz se passou por revisão por pares.
+- É um capítulo de uma coletânea organizada por Kristóf Nyíri. O texto não diz se passou por revisão por pares.
 - A Fonte local é a cópia digitalizada que uma das autoras publica no site dela, com o texto reconhecido por OCR.
