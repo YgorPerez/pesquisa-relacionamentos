@@ -61,7 +61,7 @@ O texto extraído do PDF troca o sinal de igual por "¼" e perde o sinal de meno
 ## Limitações
 
 - Uma única amostra de solteiros que responderam a convites por e-mail, sites e anúncios para sessões gratuitas, sem pagamento. Os autores escrevem que o único motivo deles para ir era achar um parceiro romântico ou sexual. A amostra não representa uma população. O artigo não diz quando os dados foram coletados.
-- Os dados são do Berlin Speed-dating Study, que o artigo diz estar descrito em detalhe em Asendorpf, Penke & Back, da mesma equipe e então no prelo. O Relatório [chance por caminho](../reports/2026-10-28-chance-por-caminho.md) cita esse outro artigo, que tem DOI próprio e não tem Ficha.
+- Os dados são do Berlin Speed-dating Study, que o artigo diz estar descrito em detalhe em Asendorpf, Penke & Back, da mesma equipe e então no prelo. Esse outro artigo tem DOI próprio e Ficha: [Asendorpf, Penke & Back (2011)](asendorpf-2011-speed-dating-acompanhamento.md), que segue os mesmos participantes por um ano. As duas Fichas não são replicações independentes uma da outra.
 - São correlações: nada foi sorteado. A escolha e a expectativa foram anotadas logo depois de um encontro de 3 minutos, e este artigo não segue os participantes depois do evento.
 - As mulheres sempre ficaram sentadas e os homens sempre circularam, o arranjo que [Finkel & Eastwick 2009](finkel-2009-quem-se-aproxima.md) trocou por sorteio. Este artigo não testa se isso pesa nas escolhas.
 - O flerte é uma nota global só, dada por observadores que viam a pessoa avaliada e ouviam o par. A concordância entre os dois observadores de cada vídeo foi, em média, α = 0,68, que os autores chamam de aceitável. Eles pedem medidas mais finas do comportamento em estudos futuros.
