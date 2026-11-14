@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Cada participante leu seis cantadas, todas elogios à aparência, mostradas como uma primeira mensagem na tela de conversa do Tinder, sem nome nem foto de quem mandava. Havia três tipos, dois de cada por pessoa. A "comum" é adequada mas nada nova: "Hey! You remind me of a model, you are so good-looking!". A "original" é nova e adequada: "Hey! you remind me of a beautiful summer day, you are so joyous!". A "aleatória" é nova mas inadequada: "You remind me of my ex, you are just as good-looking!". Depois de cada frase, a pessoa deu notas a quem a mandou: quão original parece, quão atraente, se sairia com a pessoa e se responderia à mensagem. Um pré-teste conferiu se as frases eram vistas como novas e adequadas do jeito planejado.
+Cada participante leu seis cantadas, que a autora descreve como elogios à aparência, mostradas como uma primeira mensagem na tela de conversa do Tinder, sem nome nem foto de quem mandava. Havia três tipos, dois de cada por pessoa. A "comum" é adequada mas nada nova: "Hey! You remind me of a model, you are so good-looking!". A "original" é nova e adequada: "Hey! you remind me of a beautiful summer day, you are so joyous!". A "aleatória" é nova mas inadequada: "You remind me of my ex, you are just as good-looking!". Depois de cada frase, a pessoa deu notas a quem a mandou: quão original parece, quão atraente, se sairia com a pessoa e se responderia à mensagem. Um pré-teste conferiu se as frases eram vistas como novas e adequadas do jeito planejado.
 
 ## Achados
 
@@ -32,7 +32,7 @@ Cada participante leu seis cantadas, todas elogios à aparência, mostradas como
 | Idade | 25,55 anos em média | Método, Participants (p. 16) | "The average age was 25.55 years (SD = 9.67)." |
 | Nacionalidade | A maior parte era holandesa (81,8%); ingleses e alemães eram 5,0% cada | Método, Participants (p. 17) | "(81.8%), followed by English (5.0%), and German (5.0%)" |
 | Namoro online e relacionamento | 62,8% tinham experiência com namoro online, e 59,5% estavam num relacionamento, contra 39,7% de solteiros | Método, Participants (p. 17) | "most participants had experience with online dating (62.8%), compared to fewer participants having no experience with online dating (37.2%). Lastly, more participants were currently in a relationship (59.5%) than single (39.7%)." |
-| As cantadas | 18 frases, todas elogios à aparência de alguém | Método, Materials (p. 18) | "resulting in a total of 18 (6x3) lines. All lines were complimentary pick-up lines about someone's looks." |
+| As cantadas | 18 frases, que a autora descreve como elogios à aparência de alguém | Método, Materials (p. 18) | "resulting in a total of 18 (6x3) lines. All lines were complimentary pick-up lines about someone's looks." |
 | Pré-teste: novidade | As frases originais foram vistas como mais novas que as comuns (4,25 contra 2,97) | Método, Pretest (p. 21) | "the original sentences scored higher on novelty (M = 4.25, SD = 1.04) than the common sentences (M = 2.97, SD = 1.08)" |
 | Pré-teste: adequação | As frases originais foram vistas como mais adequadas que as aleatórias (5,37 contra 3,12) | Método, Pretest (p. 21) | "the original sentences scored higher on appropriateness (M = 5.37 , SD = .92) than the random sentences (M = 3.12, SD = .90)" |
 | Quão original parece quem mandou | Nota média de 2,75 para a frase comum, 3,86 para a aleatória e 4,29 para a original | Tabela 2 (p. 25): Common, Random, Original | "Perceived originality 2.75 (1.23) 3.86 (1.72) 4.29 (1.39)" |
@@ -58,5 +58,5 @@ As notas vão de 1 a 7, e nota mais alta quer dizer mais original, mais atraente
 - A Tabela 2 conta 242 avaliações por tipo de frase, 726 no total, mas os testes relatam 681 graus de liberdade, o que indica menos avaliações na análise. A tese não comenta respostas faltantes.
 - Cada pessoa avaliou seis frases, e a análise tratou as avaliações como casos separados, com o participante como covariável. Isso não desconta direito que as notas vêm da mesma pessoa, e os valores de p ficam mais otimistas do que deveriam.
 - As frases foram escritas pela pesquisadora, três por tema, em seis temas. As "aleatórias" diferem das outras em mais de uma coisa: nenhuma começa com "Hey!", que abre todas as comuns e as originais, e duas falam do corpo ou têm teor sexual ("I love your body", "kiss your tasty lips"). O que a tese chama de "nova mas inadequada" mistura falta de saudação, teor sexual e estranheza.
-- Todas as frases são elogios à aparência. Não há pergunta, comentário sobre o perfil nem saudação simples como comparação.
+- A autora descreve todas as frases como elogios à aparência, mas a lista do apêndice traz também perguntas, um comentário sobre a foto e frases que não falam de aparência ("I would love to get to know you!"). Não há saudação simples como comparação.
 - Vale para mensagens curtas de aplicativo; a autora diz que pode não valer para sites em que as pessoas escrevem mensagens longas.
