@@ -9,13 +9,14 @@ countries: [EUA]
 period: "não informado no texto lido"
 sample:
   n: 156
-  description: "156 alunos de graduação (75 mulheres), idade média de 19,6 anos, em sete eventos de speed dating com 9 a 13 encontros de 4 minutos cada. Uma segunda amostra de 608 pessoas (idade média de 40,1 anos) de eventos comerciais de speed dating é citada só em uma frase."
+  description: "156 alunos de graduação (75 mulheres), idade média de 19,6 anos, em sete eventos de speed dating com 9 a 13 encontros de 4 minutos cada, sempre com pessoas do outro sexo. Uma segunda amostra de 608 pessoas (idade média de 40,1 anos) de eventos comerciais de speed dating é citada só em uma frase."
   representative: false
 design: experiment
 conflict: "Financiado pelo Research Grants Committee da Northwestern University, pelo Dispute Resolution Research Center da Kellogg e pela bolsa de pós-graduação da National Science Foundation."
 covers:
   genders: [man, woman]
   seeks: [men, women]
+  couple: different-sex
 ---
 
 # Eastwick et al. (2007): desejo por uma pessoa atrai; desejo por todo mundo afasta
@@ -46,7 +47,7 @@ Depois de cada encontro de 4 minutos num speed dating, cada pessoa deu notas de 
 - Correlacional: o desejo não foi sorteado. O campo `design` diz `experiment` porque os encontros foram montados pelos pesquisadores, mas o achado vem de correlações.
 - Encontros de 4 minutos entre universitários de cerca de 20 anos; diz pouco sobre o que acontece depois do primeiro encontro.
 - Relato curto (três páginas). A amostra de 608 adultos aparece numa frase, sem coeficientes.
-- Este artigo não diz se os universitários aparecem em outros; [Baxter et al. 2022](baxter-2022-compatibilidade-popularidade.md) diz que os dados dos speed datings da Northwestern que usa já saíram em artigos anteriores, entre eles este. Aqui são 156 universitários em sete sessões, com o método remetido a Finkel, Eastwick & Matthews (2007), e uma nota diz que outros 7 participantes foram excluídos por limite do software, o que dá 163. [Eastwick & Finkel 2008, preferências](eastwick-2008-preferencias-speed-dating.md) e o Estudo 3 de [Eastwick & Finkel 2008, ansiedade](eastwick-2008-ansiedade-no-comeco.md) descrevem 163 universitários em sete eventos, com a mesma idade média e o mesmo formato de encontro. [Finkel & Eastwick 2009](finkel-2009-quem-se-aproxima.md) tem 350 universitários em 15 eventos e não diz se eles incluem estes. Os achados dessas Fichas não são replicações independentes uns dos outros.
+- Este artigo não diz se os universitários aparecem em outros; [Baxter et al. 2022](baxter-2022-compatibilidade-popularidade.md) diz que os dados dos speed datings da Northwestern que usa já saíram em artigos anteriores, entre eles este. Aqui são 156 universitários em sete sessões, com o método remetido a Finkel, Eastwick & Matthews (2007), e uma nota diz que outros 7 participantes foram excluídos por limite do software, o que dá 163. [Eastwick & Finkel 2008, preferências](eastwick-2008-preferencias-speed-dating.md) e o Estudo 3 de [Eastwick & Finkel 2008, ansiedade](eastwick-2008-ansiedade-no-comeco.md) descrevem 163 universitários em sete eventos, com a mesma idade média e o mesmo formato de encontro. [Finkel & Eastwick 2009](finkel-2009-quem-se-aproxima.md) tem 350 universitários em 15 eventos e não diz se eles incluem estes; os números batem com a soma das duas amostras de [Joel et al. 2017](joel-2017-atracao-speed-dating.md), a primeira com 163 universitários em sete eventos de 2005. Os achados dessas Fichas não são replicações independentes uns dos outros.
 - As correlações diádicas são pequenas (0,14 e 0,20). A generalizada (−0,41) é desatenuada, como é convenção no modelo, o que a deixa maior do que a correlação observada.
 
 ## Como usamos
