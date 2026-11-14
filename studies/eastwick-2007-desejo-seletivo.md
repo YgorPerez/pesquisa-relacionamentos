@@ -42,7 +42,7 @@ Depois de cada encontro de 4 minutos num speed dating, cada pessoa deu notas de 
 
 ## Limitações
 
-- A Dica ("mostre interesse específico pela pessoa, não por todo mundo") lê um pouco além do estudo. O estudo mede quanto cada pessoa *sentiu* desejo, não o que ela *mostrou* nem uma estratégia aplicada. Os autores supõem que quem deseja todo mundo deixa isso transparecer, mas a mediação que testaram ficou em p = 0,065, e eles mesmos dizem que ela aponta só um dos mecanismos possíveis.
+- O estudo mede quanto cada pessoa *sentiu* desejo, não o que ela *mostrou* nem uma estratégia aplicada. Os autores supõem que quem deseja todo mundo deixa isso transparecer, mas a mediação que testaram ficou em p = 0,065, e eles mesmos dizem que ela aponta só um dos mecanismos possíveis. O estudo não testou se mostrar interesse por uma pessoa só muda a resposta dela.
 - Correlacional: o desejo não foi sorteado. O campo `design` diz `experiment` porque os encontros foram montados pelos pesquisadores, mas o achado vem de correlações.
 - Encontros de 4 minutos entre universitários de cerca de 20 anos; diz pouco sobre o que acontece depois do primeiro encontro.
 - Relato curto (três páginas). A amostra de 608 adultos aparece numa frase, sem coeficientes.
@@ -50,4 +50,4 @@ Depois de cada encontro de 4 minutos num speed dating, cada pessoa deu notas de 
 
 ## Como usamos
 
-- Dica [`interesse-especifico`](../tips/interesse-especifico.md), marcada como inferência: o estudo mede o desejo sentido, e a Dica fala do que se mostra.
+- Dica [`interesse-especifico`](../tips/interesse-especifico.md), marcada como inferência, junto com [Baxter et al. 2022](baxter-2022-compatibilidade-popularidade.md) e [Luo & Zhang 2009](luo-2009-o-que-gera-atracao.md). O estudo mede a reciprocidade do desejo sentido logo depois de encontros de 4 minutos, e a Dica tira dela o conselho de não descartar que um interesse especial seja correspondido. Os estudos 1 e 2 de Baxter usam speed datings da Northwestern que já apareceram neste artigo, então não o confirmam de forma independente.
