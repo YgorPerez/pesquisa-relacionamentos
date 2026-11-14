@@ -121,6 +121,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
+- [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
@@ -143,6 +144,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
 - [Lee & Niederle 2015](studies/lee-2015-rosa-virtual.md): a rosa virtual que acompanha o pedido de encontro · ✅ · moderada
+- [van der Lee et al. 2019](studies/lee-2019-classificar-objetivo-perfil.md): adivinhar pelo texto do perfil o que a pessoa procura · ✅ · fraca
 - [Lee et al. 2026](studies/lee-2026-foto-presencial.md): notas dadas a uma foto de rosto e notas dadas depois de conversar · ✅ · fraca
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
@@ -176,6 +178,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
 - [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
+- [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
@@ -210,6 +213,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
+- [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
