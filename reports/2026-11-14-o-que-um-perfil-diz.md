@@ -368,7 +368,7 @@ A busca da [#597](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/5
 - **Spielmann & Gahman 2020**, _Detectability and desirability of fear of being single in online dating profiles_ (Journal of Personality, fechado). Se um traço específico se lê no perfil.
 - **Kaurin et al. 2018** (Journal of Research in Personality, fechado). Compara a personalidade lida em selfies com a lida em fotos e vídeos de laboratório. A selfie é o tipo de foto mais comum nos perfis de Araújo 2025 e Sedgewick 2017.
 - **Gangestad et al. 1992** e **Boothroyd et al. 2011** (fechado e talvez aberto em Durham). Outros testes da abertura a sexo casual lida em vídeo e no rosto, que podem decidir a discordância entre Boothroyd 2008 e Antar 2021.
-- **Gallant et al. 2011** e **Wan & Yeung 2022** (os dois abertos, só pelo navegador). Estratégia de acasalamento ou objetivo de relacionamento e a autoapresentação em fotos de anúncios e em sites dos EUA e da China; hoje o acervo tem só Yan 2018 para foto e objetivo.
+- **Gallant et al. 2011** e **Wan & Yeung 2022** (os dois abertos, só pelo navegador). Estratégia de acasalamento ou objetivo de relacionamento e a autoapresentação em fotos de anúncios e em sites dos EUA e da China; quando este relatório foi escrito, o acervo tinha só Yan 2018 para foto e objetivo. Gallant et al. 2011 ganhou [Ficha](../studies/gallant-2011-estrategia-foto-anuncio.md) depois.
 - **DeAndrea et al. 2012** (fechado). Distorção de altura e peso com a medida real e com prestação de contas, o mesmo tipo de critério de Toma 2008.
 - **Lenton et al. 2007** (fechado). Projeção no julgamento da intenção sexual, o achado central de Lee 2020.
 
