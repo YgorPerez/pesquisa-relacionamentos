@@ -4,7 +4,7 @@
 //   node scripts/calculations/leckfor-2023-necessidade-de-fechamento.ts
 //     the internal checks the Limitações section quotes: Cohen's d for the
 //     Study 3 comparisons from the means, SDs and group sizes the article
-//     prints, next to t / sqrt(df), which is what the printed d values match;
+//     prints, next to t / sqrt(n), which is what the printed d values match;
 //     and, for Study 2, the d the paired means and SDs allow
 const comma = (n: number, digits: number) => n.toFixed(digits).replace('.', ',')
 
@@ -18,7 +18,7 @@ interface Group {
 const ghosted: Group = { mean: 2.45, sd: 1.08, n: 183 }
 const included: Group = { mean: 5.9, sd: 0.78, n: 190 }
 const rejected: Group = { mean: 2.81, sd: 1.04, n: 172 }
-const residualDf = 542
+const participants = 545
 
 function cohensD(a: Group, b: Group): number {
   const pooled = Math.sqrt(
@@ -33,9 +33,9 @@ const comparisons: Array<[string, Group, number, number]> = [
 ]
 for (const [name, other, t, printed] of comparisons) {
   const d = cohensD(ghosted, other)
-  const fromT = t / Math.sqrt(residualDf)
+  const fromT = t / Math.sqrt(participants)
   console.log(
-    `Estudo 3, ${name}: d pelas médias = ${comma(d, 2)}; t / raiz(gl) = ${comma(fromT, 2)}; o artigo imprime d = ${comma(printed, 2)}`,
+    `Estudo 3, ${name}: d pelas médias = ${comma(d, 2)}; t / raiz(n) = ${comma(fromT, 2)}; o artigo imprime d = ${comma(printed, 2)}`,
   )
 }
 
