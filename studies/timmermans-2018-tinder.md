@@ -49,6 +49,7 @@ Os motivos foram medidos em três escalas: relação, sexo e socializar. Os perc
 ## Limitações
 
 - A amostra foi voluntária, recrutada pelo Facebook, com predomínio de estudantes. Não representa todos os usuários do Tinder, nem o Brasil.
+- A mesma primeira autora publicou no mesmo ano [Timmermans, De Caluwé & Alexopoulos (2018)](timmermans-2018-comprometidos-tinder.md), sobre usuários do Tinder que estão num relacionamento. Aquele artigo cita este como outro estudo ("a Belgian study") e descreve outra amostra: 1.486 usuários de 18 a 74 anos, de duas coletas divulgadas pela imprensa e por redes sociais. Nos dois, dois estudantes de pós-graduação ajudaram na coleta. Este artigo não menciona aquele, e nenhum dos dois diz se há participantes em comum.
 - Só usuários atuais entraram nas análises. Os próprios autores observam que quem encontrou um parceiro pode ter apagado o app; excluir ex-usuários pode distorcer os resultados sobre formação de relacionamentos.
 - O desenho transversal e o autorrelato não permitem acompanhar a sequência entre conversa, encontro, sexo e relacionamento, nem estimar o efeito causal de usar o Tinder. Não há comparação com não usuários.
 - Há inconsistências sobre encontros presenciais. Os métodos informam 571 participantes com encontro numa amostra de 1.038; os resultados mencionam 46,5% de zeros para encontros e aproximadamente 45% sem encontro; resumo e discussão dizem que menos da metade teve encontro. A Ficha não usa essas passagens para estimar a proporção total que encontrou alguém.

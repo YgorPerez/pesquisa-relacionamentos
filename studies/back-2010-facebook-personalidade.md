@@ -50,6 +50,7 @@ O resto da Tabela 1: com um observador só, o acerto vai de 0,06 (neuroticismo) 
 - Os observadores eram assistentes de pesquisa da graduação, que examinaram cada perfil sem limite de tempo e deram notas num questionário de dez perguntas. Não eram pessoas avaliando alguém para conhecer.
 - A personalidade medida muda de um país para o outro: nos EUA é o relato do dono num questionário de dez perguntas junto com o de quatro amigos; na Alemanha, só o próprio dono, em dois questionários. O ideal de si foi medido com os questionários curtos de dez perguntas.
 - São voluntários de 17 a 22 anos, de um campus nos EUA e de anúncios de um estudo online na Alemanha. Na amostra alemã, 86 dos 103 eram mulheres.
+- [Gosling et al. (2011)](gosling-2011-facebook-personalidade.md), com três autores em comum, descreve, no Estudo 2, 133 estudantes da Universidade do Texas em Austin (61% mulheres), cujos perfis do Facebook foram julgados por nove assistentes de pesquisa da graduação, como a amostra dos EUA daqui (133 pessoas, 81 delas mulheres, e 9 assistentes). Aquele artigo cita este, e nenhum dos dois diz se são as mesmas pessoas.
 - É um relato curto, de três páginas: não diz o que havia nos perfis nem quais partes deles levaram ao acerto. Os autores deixam isso, os usuários mais velhos e outras redes para estudos futuros.
 - Os perfis foram salvos antes de o assunto aparecer; o estudo não mostra se o dono mudaria o perfil sabendo que um estranho iria julgá-lo.
 - O artigo não diz quando os dados foram coletados.

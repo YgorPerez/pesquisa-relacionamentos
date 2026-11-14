@@ -4,7 +4,7 @@ link: https://doi.org/10.1609/icwsm.v8i1.14516
 status: verified
 verified_on: 2026-11-14
 strength: weak
-strength_reason: "Dados comerciais de um site só, cedidos por ele e não abertos, com dois dos cinco autores empregados na divisão de produto do site e nenhum conflito declarado; o sorteio de 200 mil usuários com o registro real de mensagens é um bom desenho, mas cobre só as oito primeiras semanas de cada conta, e os modelos preveem a resposta sem testar o que a causa."
+strength_reason: "Dados comerciais de um site só, cedidos por ele numa colaboração, com dois dos cinco autores empregados na divisão de produto do site e nenhum conflito declarado; o sorteio de 200 mil usuários com o registro real de mensagens é um bom desenho, mas cobre só as oito primeiras semanas de cada conta, e os modelos preveem a resposta sem testar o que a causa."
 countries: [China]
 period: "Novembro de 2011 a janeiro de 2012 (as oito primeiras semanas de cada conta)"
 sample:
@@ -57,5 +57,5 @@ A AUC é a medida que os autores usam para dizer se um modelo acerta: é a chanc
 - A informação que mais ajudou (quanto a pessoa costuma responder) é, como os próprios autores notam, uma medida direta do que se quer prever.
 - Os autores ordenaram em separado as informações dos perfis e as do histórico de mensagens, então o artigo não diz qual das 145 ajuda mais no conjunto.
 - O acerto foi medido com metade de mensagens respondidas e metade de não respondidas, sorteando partes dos mesmos dados para treinar e para testar. No site real, onde menos de uma em cinco mensagens tem resposta, e em outro período ou outro site, o acerto pode ser outro.
-- Dois dos cinco autores trabalhavam no site que cedeu os dados, e o artigo não traz declaração de financiamento nem de conflito de interesse. Os dados são do site e não estão abertos.
-- O artigo não tem seção de limitações. A descrição detalhada dos dados está em outro texto dos mesmos autores (arXiv:1401.5710), que esta Ficha não cobre.
+- Dois dos cinco autores trabalhavam no site que cedeu os dados, e o artigo não traz declaração de financiamento nem de conflito de interesse. Ele também não diz se os dados estão disponíveis para outros pesquisadores.
+- O artigo não tem seção de limitações. Ele remete a descrição detalhada dos dados a dois textos anteriores do grupo, um de 2013, apresentado no congresso ASONAM e sem Ficha aqui, e o preprint arXiv:1401.5710, dos cinco autores com mais três, que tem Ficha própria: [Xia et al. (2014), quem namora quem](xia-2014-quem-namora-quem.md). Os dados são os mesmos, os 200.000 usuários do baihe.com cadastrados em novembro de 2011, e as contagens de resposta também: 150.917 respostas das mulheres (9,5%) e 58.946 dos homens (17,9%). As duas Fichas não são evidência independente uma da outra.

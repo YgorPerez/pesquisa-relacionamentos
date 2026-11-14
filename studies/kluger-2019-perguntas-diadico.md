@@ -64,5 +64,5 @@ As linhas da Tabela 5 e da Tabela 7 usam 96 das 110 pessoas, 48 homens e 48 mulh
 - A taxa de dados faltantes foi de 4,85%, 2,08% e 1,76% nas três sessões. Dois dos oito modelos multinível só rodaram depois de transformar as medidas e de tirar do modelo a diferença entre as sessões.
 - "Pergunta" é uma fala com ponto de interrogação na transcrição, contada por algoritmo. Nada mede se quem perguntou ouviu a resposta.
 - Os autores concluem que querer um segundo encontro não é o mesmo que gostar de alguém, e que perguntar não é o mesmo que escutar. Isso é argumento deles, apoiado em outros estudos, não um teste feito com estes dados.
-- O artigo não diz o país, o ano nem a idade dos participantes; remete a Huang. A coleta está descrita na Ficha de [McFarland et al. (2013)](mcfarland-2013-conexao-speed-dating.md), que usa as mesmas gravações.
+- O artigo não diz o país, o ano nem a idade dos participantes; remete a Huang. Por isso o campo `countries` desta Ficha fica vazio. A coleta está descrita em [McFarland et al. (2013)](mcfarland-2013-conexao-speed-dating.md), artigo a que Huang remete para o método e que usa as mesmas gravações. Aquele artigo diz que os eventos foram numa universidade particular americana, em 2005, e a Ficha dele traz EUA.
 - O texto lido é o manuscrito dos autores no PMC, sem a paginação da revista. Por isso o Onde cita seções e tabelas.
