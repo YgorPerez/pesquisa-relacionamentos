@@ -87,6 +87,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Arlt, Pöschl & Döring 2008](studies/arlt-2008-sms-sem-resposta.md): SMS sem resposta depois de uma festa · ✅ · fraca
 - [Armstrong et al. 2012](studies/armstrong-2012-orgasmo-ficadas-namoro.md): orgasmo e prazer das universitárias em ficadas e namoros · ✅ · moderada
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
+- [Aronson & Worchel 1966](studies/aronson-1966-similaridade-ou-ser-gostado.md): concordar nas opiniões ou saber que o outro gosta de você · ✅ · fraca
 - [Asendorpf, Penke & Back 2011](studies/asendorpf-2011-speed-dating-acompanhamento.md): do speed dating ao sexo e ao namoro, um ano depois · ✅ · fraca
 - [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
 - [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
@@ -130,8 +131,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
 - [Fiore et al. 2010](studies/fiore-2010-contatos-respostas.md): quem escreve e quem responde num site de namoro · ✅ · moderada
 - [Fisher et al. 2010](studies/fisher-2010-rejeicao-amor.md): ver a foto de quem rejeitou ativa áreas de recompensa e de desejo intenso · ✅ · fraca
+- [Fisher et al. 2020](studies/fisher-2020-cantadas-de-mulheres.md): cantadas de mulheres para homens, com fotos · ✅ · fraca
 - [Fletcher, Simpson & Thomas 2000](studies/fletcher-2000-ideal-e-termino.md): encaixe com o ideal e término nos primeiros meses de namoro · ✅ · fraca
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
+- [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
@@ -141,6 +144,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hamilton 2020](studies/hamilton-2020-personalidade-texto-perfil.md): personalidade escrita e lida no texto de perfis de namoro · ✅ · fraca
 - [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
+- [Hazel et al. 2023](studies/hazel-2023-revisao-dificil-de-conquistar.md): revisão de estudos sobre se fazer de difícil · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
@@ -164,6 +168,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kerr et al. 2020](studies/kerr-2020-primeira-impressao-encontros.md): primeira impressão da personalidade e interesse romântico no speed dating · ✅ · fraca
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
+- [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kreager et al. 2014](studies/kreager-2014-iniciativa-respostas.md): quem toma a iniciativa e quem responde num site de namoro · ✅ · moderada
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · fraca
@@ -205,6 +210,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
+- [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
 - [Previti & Amato 2004](studies/previti-2004-infidelidade-qualidade.md): infidelidade, causa ou consequência de um casamento ruim · ✅ · moderada
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
@@ -237,8 +243,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Stevic et al. 2025](studies/stevic-2025-motivos-solidao.md): motivo para usar app de namoro, sucesso percebido e solidão · ✅ · fraca
 - [Stillman & Maner 2009](studies/stillman-2009-sociossexualidade-percepcao.md): abertura a sexo casual julgada num vídeo curto · ✅ · fraca
 - [Stoeber 2012](studies/stoeber-2012-perfeccionismo-parceiro.md): exigir perfeição do parceiro e satisfação no namoro · ✅ · fraca
+- [Su & Hu 2019](studies/su-2019-preferencia-por-genero.md): para quem homens e mulheres escrevem num site de namoro da China · ✅ · fraca
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
+- [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
 - [Teichmann et al. 2026](studies/teichmann-2026-hora-da-mensagem-apos-encontro.md): a hora da primeira mensagem depois do encontro · ✅ · moderada
 - [Templeton et al. 2022](studies/templeton-2022-resposta-rapida-conexao.md): a pausa entre as falas e a conexão numa conversa · ✅ · moderada
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
@@ -260,6 +268,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
+- [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
 - [Weidman et al. 2015](studies/weidman-2015-personalidade-anuncio-pessoal.md): personalidade lida em anúncios pessoais · ✅ · fraca
 - [Weisbuch, Ivcevic & Ambady 2009](studies/weisbuch-2009-pagina-web-presencial.md): agradar pela página do Facebook e agradar ao vivo · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
@@ -319,6 +328,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
