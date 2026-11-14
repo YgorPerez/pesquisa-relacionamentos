@@ -45,21 +45,33 @@ Texto.
 `
 
 /** The valid Guide with a `visuals:` block (YAML, indented under the key)
- * and the body lines in its first Chapter. */
-function withVisuals(yaml: string, body: string, path = GUIDE): LoadResult {
+ * and the body lines in its first Chapter. `designs` gives a Fact sheet,
+ * by its file, another `design`. */
+function withVisuals(
+  yaml: string,
+  body: string,
+  path = GUIDE,
+  designs: Readonly<Record<string, string>> = {},
+): LoadResult {
   const files = [
     ...readFiles(VALID),
     { path: OTHER_GUIDE, text: ONLY_COSTA },
-  ].map((file) =>
-    file.path === path
+  ].map((file) => {
+    const design = designs[file.path]
+    if (design !== undefined)
+      return {
+        ...file,
+        text: file.text.replace(/^design: .+$/m, `design: ${design}`),
+      }
+    return file.path === path
       ? {
           ...file,
           text: file.text
             .replace(/\n---\n/, `\nvisuals:\n${yaml}\n---\n`)
             .replace(/(\n## [^\n]+\n\n[^\n]+\n)/, `$1\n${body}\n`),
         }
-      : file,
-  )
+      : file
+  })
   return buildLibrary(files)
 }
 
@@ -87,7 +99,25 @@ const BARS = `  - id: app-por-idade
 
 const PLACED = '{{visual:app-por-idade}}'
 
+/** A diagram whose one arrow is solid (a study tested the cause) and cites
+ * Silva (2020), a cross-sectional survey in the fixture. */
+const SOLID_ARROW = `  - id: relacoes
+    kind: diagram
+    title: Relações
+    nodes: [{ id: app, label: App }, { id: casal, label: Casal }]
+    arrows:
+      - { from: app, to: casal, evidence: cause, text: Causa., fact_sheets: [silva-2020-apps-brasil] }`
+const SILVA = 'studies/silva-2020-apps-brasil.md'
+const NOT_A_CAUSE = `${GUIDE}: visuals.0.arrows.0.evidence: a solid arrow (a study tested the cause) cites an experiment or a meta-analysis; otherwise it is an association`
+
 describe('a Visual that passes', () => {
+  it('has a solid arrow when the Study it cites is a meta-analysis', () => {
+    const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
+      [SILVA]: 'meta-analysis',
+    })
+    expect(result.ok ? [] : result.errors.map((e) => e.message)).toEqual([])
+  })
+
   it('comes into the Guide with its data, the own calculation included', () => {
     const result = withVisuals(BARS, PLACED)
     if (!result.ok) throw new Error(formatProblems(result.errors))
@@ -393,15 +423,16 @@ describe('the build rejects', () => {
   })
 
   it('a solid arrow backed by no experiment', () => {
-    const yaml = `  - id: relacoes
-    kind: diagram
-    title: Relações
-    nodes: [{ id: app, label: App }, { id: casal, label: Casal }]
-    arrows:
-      - { from: app, to: casal, evidence: cause, text: Causa., fact_sheets: [silva-2020-apps-brasil] }`
-    expect(errorsOf(withVisuals(yaml, '{{visual:relacoes}}'))).toEqual([
-      `${GUIDE}: visuals.0.arrows.0.evidence: a solid arrow (a study tested the cause) cites an experiment or a meta-analysis; otherwise it is an association`,
+    expect(errorsOf(withVisuals(SOLID_ARROW, '{{visual:relacoes}}'))).toEqual([
+      NOT_A_CAUSE,
     ])
+  })
+
+  it('a solid arrow backed only by a review, which pools no data (#711)', () => {
+    const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
+      [SILVA]: 'review',
+    })
+    expect(errorsOf(result)).toEqual([NOT_A_CAUSE])
   })
 
   it('a Visual declared and not placed, or placed and not declared', () => {

@@ -11,8 +11,7 @@ sample:
   n: 18
   description: "18 estudos, publicados ou não (14 artigos de revista e 4 teses), com 37 experimentos ao todo. Cada experimento teve de 32 a 425 participantes, 132 em média. 15 estudos são dos EUA, e Austrália, Israel e Hong Kong têm um cada. A Tabela 2 marca como universitários os participantes de 13 dos 37 experimentos e como alunos do ensino médio os de 2 (um estudo); nos outros, dá só a idade. Os autores dizem que as amostras eram todas heteronormativas. A revisão não soma o total de pessoas."
   representative: false
-# The schema groups research syntheses here; this scoping review has no pooled effects.
-design: meta-analysis
+design: review
 conflict: "Os autores declararam não ter conflito de interesses (Princeton University e Concordia University). O artigo não informa financiamento."
 covers:
   genders: [man, woman]

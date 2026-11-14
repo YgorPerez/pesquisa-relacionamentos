@@ -23,7 +23,9 @@ sample:
   description: "<n, quem são, como foram recrutados>"
   # true só se a amostra for probabilística/representativa da população.
   representative: false
-# longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis
+# longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis | review
+# meta-analysis só quando os autores juntam os números dos estudos numa estimativa.
+# Uma revisão (narrativa, sistemática ou de escopo) que só descreve os estudos é review.
 design: <design>
 # Financiamento e conflitos de interesse. Omita só se não houver informação nenhuma.
 conflict: "<quem financiou; vínculos dos autores>"
