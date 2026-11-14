@@ -4,7 +4,7 @@ position: 30
 questions:
   - slug: o-que-digo-querer-me-atrai
     question: O que eu digo querer é o que me ==atrai==?
-    answer: Só em parte, porque bater traço a traço com a lista pessoal teve efeito muito pequeno num estudo em 43 países, Brasil incluído [@eastwick-2024-preferencias-43-paises]. Ter os traços que quase todo mundo valoriza pesou ==cerca de três vezes mais== que bater com a lista pessoal inteira [@eastwick-2024-preferencias-43-paises]. As pessoas também dizem dar menos peso à aparência e ao sexo do que de fato dão [@eastwick-2024-preferencias-43-paises]. Em dois speed datings, as respostas dadas antes, parceiro ideal incluído, quase não previram o interesse por um par específico, o que não quer dizer que toda preferência deixe de importar [@joel-2017-atracao-speed-dating].
+    answer: Só em parte, porque bater traço a traço com a lista pessoal teve efeito muito pequeno num estudo em 43 países, Brasil incluído [@eastwick-2024-preferencias-43-paises]. Ter os traços que quase todo mundo valoriza pesou ==cerca de três vezes mais== que bater com a lista pessoal inteira [@eastwick-2024-preferencias-43-paises]. As pessoas também dizem dar menos peso à aparência e ao sexo do que de fato dão [@eastwick-2024-preferencias-43-paises]. Em dois experimentos de laboratório, ler um perfil com traços do próprio ideal despertou mais interesse que ler um com os traços menos queridos, mas, depois de uma interação curta com a pessoa, ao vivo, a diferença encolheu a ponto de poder ser acaso [@eastwick-2011-ideais-perfil-ao-vivo]. Em dois speed datings, as respostas dadas antes, parceiro ideal incluído, quase não previram o interesse por um par específico, o que não quer dizer que toda preferência deixe de importar [@joel-2017-atracao-speed-dating].
     confidence: strong
     findings:
       [
@@ -17,6 +17,8 @@ questions:
         mulheres-subestimam-aparencia,
         perfis-contra-pessoas-reais,
         desejo-por-um-par,
+        perfil-ideal-e-ao-vivo,
+        pedido-no-perfil-e-o-sim,
       ]
   - slug: aparencia-e-dinheiro-importam
     question: Aparência e dinheiro ==importam==?
@@ -120,6 +122,14 @@ findings:
     text: Em dois speed datings com universitários, as respostas dadas antes sobre personalidade, valores e parceiro ideal previram parte de quanto cada um desejava os outros em geral e de quanto era desejado em geral. O interesse por um par específico, descontadas essas duas tendências, ficou quase sem previsão, menos de 0,1% no melhor caso. O estudo não mostra que toda preferência deixa de importar.
     fact_sheets: [joel-2017-atracao-speed-dating]
     period: 2005 e 2007
+  - id: perfil-ideal-e-ao-vivo
+    text: Em dois experimentos de laboratório com 100 e 90 universitários dos EUA, quem leu um perfil com traços do próprio ideal disse mais interesse pela pessoa do que quem leu um perfil com os traços que menos queria. Depois de uma interação curta e roteirizada com ela, ao vivo, a diferença entre os dois grupos encolheu a ponto de poder ser acaso.
+    fact_sheets: [eastwick-2011-ideais-perfil-ao-vivo]
+    period: publicado em 2011
+    applies_to: { genders: [man, woman], couple: different-sex }
+  - id: pedido-no-perfil-e-o-sim
+    text: Nos dados de 8.961 clientes de uma empresa de speed dating dos EUA, nos traços em que a empresa separava os eventos, como idade, raça e religião, o que cada um pediu no perfil andou junto com quem estava nos eventos a que foi. Lá dentro, o pedido acrescentou pouco para prever a quem a pessoa disse sim depois de três minutos de conversa. São dados de uma empresa só.
+    fact_sheets: [kurzban-2007-preferencias-anunciadas-speed-dating]
   - id: aparencia-e-renda-com-pessoas-reais
     text: Com pessoas que se conheceram de verdade, a aparência teve uma associação de moderada a forte com o interesse romântico, e a renda, uma associação pequena. Foi igual para homens e mulheres.
     fact_sheets: [eastwick-2014-meta-analise-preferencias]
@@ -227,7 +237,7 @@ findings:
     text: Entre todos os adultos, 1,2% se declararam homossexuais e 0,7% bissexuais; 1,1% não souberam e 2,3% não quiseram responder.
     fact_sheets: [ibge-2019-pns]
   - id: mirar-acima
-    text: Num site de namoro dos EUA, homens e mulheres escreveram em média para quem estava uns 25% acima deles num ranking de desejabilidade. Quanto maior a distância, menor a chance de resposta.
+    text: Num site de namoro dos EUA, homens e mulheres escreveram em média para quem estava uns 25% acima deles num ranking de desejabilidade. Quanto mais acima de quem escreveu estava quem recebeu, menor foi a chance de resposta.
     fact_sheets: [bruch-2018-aspirational-pursuit]
     applies_to: { genders: [man, woman], couple: different-sex }
   - id: solteiros-se-acham-exigentes
@@ -463,6 +473,12 @@ Quase todo mundo tem uma lista do que procura em alguém. Este Guia põe a lista
 
 Num speed dating nos EUA, 163 universitários disseram, antes do evento, quanto valorizavam aparência, renda e simpatia num parceiro. Depois tiveram de 9 a 13 encontros de 4 minutos e responderam questionários por 30 dias sobre quem tinham conhecido [@eastwick-2008-preferencias-speed-dating]. O peso que cada um disse dar a um traço não bateu com o peso que o traço teve no interesse dele: das 72 correlações testadas, só 2 foram positivas e [[significativas]]. Os autores sugerem que as pessoas talvez não consigam enxergar, olhando para dentro, o que de fato as atrai.
 
+Um artigo de 2011, do mesmo primeiro autor, testou o ideal antes e depois de conhecer a pessoa. Em dois experimentos de laboratório nos EUA, com 100 e 90 universitários solteiros de uns 19 anos, cada participante leu um perfil de três traços atribuído a uma pessoa do outro sexo, que trabalhava com os pesquisadores [@eastwick-2011-ideais-perfil-ao-vivo]. Uns receberam traços que tinham apontado antes como os que mais queriam num parceiro; outros, os que menos queriam. Logo depois de ler, quem recebeu os traços do próprio ideal disse mais interesse pela pessoa. Depois de uma interação curta ao vivo, em que os dois se revezavam para descrever figuras, a diferença entre os grupos encolheu a ponto de poder ser acaso [@eastwick-2011-ideais-perfil-ao-vivo]. No primeiro experimento, quem tinha recebido os traços menos queridos passou a dizer mais interesse depois da interação. Os autores leem o segundo experimento assim: depois de conhecer a pessoa, quem participou deu outro sentido aos traços dela, e eles deixaram de ser comparáveis ao ideal dito no abstrato. Eles mesmos chamam essa evidência de sugestiva.
+
+São amostras pequenas, de laboratório, e o artigo não diz como cada participante foi posto num grupo [@eastwick-2011-ideais-perfil-ao-vivo]. O perfil eram três traços, sem foto, de alguém que o participante já tinha visto chegar, e a pessoa seguia um roteiro e se portava bem. Os autores admitem que, com alguém que se saísse mal na interação, os grupos poderiam ter mudado de outro jeito.
+
+O mesmo artigo saiu do laboratório com 502 clientes de uma empresa de speed dating nos EUA, de 41 anos em média [@eastwick-2011-ideais-perfil-ao-vivo]. Traço a traço, bater com o ideal dito uns 27 meses antes quase não pesou em como cada um avaliava o parceiro ou, se solteiro, a pessoa que mais desejava. No conjunto dos traços, entre quem tinha parceiro, vê-lo parecido com o próprio ideal andou junto com avaliações melhores da relação em seis de sete medidas, uma delas só no limite do teste; entre os solteiros, essa ligação pode ser acaso [@eastwick-2011-ideais-perfil-ao-vivo]. Só respondeu quem quis, e os traços do parceiro são os que o próprio participante enxerga.
+
 Um estudo maior refez o teste em 43 países, com 10.358 pessoas [@eastwick-2024-preferencias-43-paises]. Cada uma deu nota a 35 atributos num parceiro ideal e depois avaliou o parceiro atual, ou, se solteira, a pessoa que mais desejava. Bater traço a traço com a lista pessoal teve efeito médio de β = 0,04, tão pequeno que seria preciso ter umas 4.500 pessoas para detectá-lo com segurança. O que pesou foi outra coisa: o parceiro ter os traços que quase todo mundo valoriza, como ser caloroso, confiável e atraente. Esse encaixe com o que todos valorizam pesou cerca de três vezes mais que o encaixe com a lista pessoal inteira.
 
 {{visual:o-que-pesa-na-atracao}}
@@ -479,7 +495,9 @@ Outro estudo tentou o caminho inverso: prever, antes de as pessoas se conhecerem
 
 Isso não quer dizer que nenhuma preferência importe. O estudo testou as respostas todas juntas, numa conversa curta, e não mostra que cada preferência deixa de contar em qualquer situação [@joel-2017-atracao-speed-dating]. Os próprios autores dizem que medidas que ainda não se conhecem, ou amostras maiores, poderiam prever o que estes modelos não previram [@joel-2017-atracao-speed-dating].
 
-{{brazil}} O Brasil entrou no estudo com duas amostras, 124 pessoas, 1,2% do total [@eastwick-2024-preferencias-43-paises]. O artigo não dá resultado por país, então não há um número brasileiro. O que há é que o efeito quase não variou entre as 60 amostras dos 43 países. Esperar o mesmo padrão aqui é inferência nossa, e ninguém a testou com uma amostra brasileira grande.
+Uma preferência pode pesar antes do encontro, em quem se vai conhecer. Em 2003, 8.961 clientes de uma empresa de speed dating dos EUA, a HurryDate, preencheram um perfil com o que queriam num par, como faixa de idade e de altura, escolaridade e renda mínimas, religião e raça [@kurzban-2007-preferencias-anunciadas-speed-dating]. Nos traços em que a empresa separava os eventos, como idade, raça e religião, o que cada um pediu andou junto com quem estava nos eventos a que foi. Lá dentro, o pedido acrescentou pouco para prever a quem a pessoa disse sim depois de três minutos de conversa [@kurzban-2007-preferencias-anunciadas-speed-dating]. Mesmo onde passou no teste, o pedido explicou sozinho 2% ou menos das diferenças entre as pessoas escolhidas. A média daquele traço entre os presentes no evento explicou sozinha de 9,7% a 58,2%, conforme o traço e o sexo [@kurzban-2007-preferencias-anunciadas-speed-dating]. Os autores levantam três explicações, sem dados para escolher entre elas: três minutos talvez não bastem para saber a renda ou a religião de alguém, a aparência pode servir de pista para o que não se vê, ou o próprio evento pode mudar o que se quer. São dados de uma empresa só, coletados por ela, de clientes na maioria de origem europeia, com muito estudo e renda alta, e mostram associação, não causa [@kurzban-2007-preferencias-anunciadas-speed-dating].
+
+{{brazil}} O Brasil entrou no estudo dos 43 países com duas amostras, 124 pessoas, 1,2% do total [@eastwick-2024-preferencias-43-paises]. O artigo não dá resultado por país, então não há um número brasileiro. O que há é que o efeito quase não variou entre as 60 amostras dos 43 países. Esperar o mesmo padrão aqui é inferência nossa, e ninguém a testou com uma amostra brasileira grande.
 
 {{question:o-que-digo-querer-me-atrai}}
 
@@ -573,9 +591,9 @@ A calculadora que vem depois da resposta, mais abaixo, faz essa conta com o seu 
 
 {{question:requisitos-exigentes-demais}}
 
-Do outro lado da balança, o ganho de cada Requisito é pequeno. Bater traço a traço com a própria lista mal mexeu em quanto as pessoas gostaram de alguém [@eastwick-2024-preferencias-43-paises]. E o ideal de parceiro ajudou a prever a [[satisfação]] em só 10% das vezes em que foi testado [@joel-2020-machine-learning-43-datasets]. A conclusão é nossa, tirada desses dois estudos: um Requisito que corta metade do grupo precisa importar muito para você, como religião para quem é religioso, porque a evidência não diz que ele melhora a relação.
+Do outro lado da balança, o ganho de cada Requisito é pequeno. Bater traço a traço com a própria lista mal mexeu em quanto as pessoas gostaram de alguém [@eastwick-2024-preferencias-43-paises]. Nos dados da empresa de speed dating do primeiro Capítulo, o que cada um pediu no perfil acrescentou pouco para prever a quem disse sim [@kurzban-2007-preferencias-anunciadas-speed-dating]. E o ideal de parceiro ajudou a prever a [[satisfação]] em só 10% das vezes em que foi testado [@joel-2020-machine-learning-43-datasets]. A conclusão é nossa, tirada desses estudos: um Requisito que corta metade do grupo precisa importar muito para você, como religião para quem é religioso, porque a evidência não diz que ele melhora a relação.
 
-O mesmo vale para mirar alto. Num site de namoro dos EUA, homens e mulheres escreveram, em média, para pessoas uns 25% acima deles num ranking de desejabilidade, e quanto maior a distância, menor a chance de resposta [@bruch-2018-aspirational-pursuit]. O estudo olhou só homens e mulheres héteros, e não achamos dado brasileiro sobre isso.
+Os registros de sites de namoro mostram também a quem as pessoas escrevem e quem responde. Num site dos EUA, em janeiro de 2014, homens e mulheres escreveram, em média, para pessoas uns 25% acima deles num ranking que o estudo montou a partir de quem escreveu para quem, e o mais comum foi escrever para alguém mais ou menos da mesma posição [@bruch-2018-aspirational-pursuit]. Quanto mais acima de quem escreveu estava quem recebeu, menor foi a chance de resposta [@bruch-2018-aspirational-pursuit]. Num grande site dos EUA, com registros de 2008 e 2009, quem recebia mais contatos por dia respondia a uma parte menor deles, e quem escreveu para pessoas muito procuradas teve menos resposta [@fiore-2010-contatos-respostas]. Os dois estudos olharam só contatos entre homens e mulheres, mostram associação e contam respostas, não encontros. Não achamos dado brasileiro sobre isso.
 
 {{tip:mensagem-um-pouco-acima}}
 

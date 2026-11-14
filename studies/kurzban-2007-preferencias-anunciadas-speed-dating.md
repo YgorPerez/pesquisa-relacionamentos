@@ -3,8 +3,8 @@ reference: "Kurzban R, Weeden J. *Do advertised preferences predict the behavior
 link: https://doi.org/10.1111/j.1475-6811.2007.00175.x
 status: verified
 verified_on: 2026-11-14
-strength: weak
-strength_reason: "Dados comerciais de uma empresa só, a HurryDate, que coletou os perfis e as escolhas sem participação dos autores; 8.961 clientes pagantes de cidades dos EUA em 2003, na maioria de origem europeia, com muita escolaridade e renda alta, e um estudo de correlação."
+strength: moderate
+strength_reason: "Não conta como estudo comercial: dois pesquisadores de universidades, nenhum da HurryDate, analisaram num artigo revisado por pares os registros que ela coletou no curso do negócio, e em troca, segundo o artigo de 2005, se comprometeram a lhe entregar as análises e apontar o que podia melhorar o serviço. É moderada porque compara o perfil com escolhas reais de 8.961 clientes, mas de uma empresa só, em cidades dos EUA em 2003, clientes pagantes na maioria de origem europeia, com muita escolaridade e renda alta, num estudo de correlação em que o texto e as tabelas divergem em dois pontos."
 countries: [EUA]
 period: "Vários meses de 2003"
 sample:
@@ -55,7 +55,7 @@ Os clientes da HurryDate preenchiam um perfil online com as próprias caracterí
 
 ## Limitações
 
-- Dados comerciais de uma empresa só. Os próprios autores escrevem que, com dados de uma única empresa, não está claro se os achados se repetiriam em outro estudo nos EUA, e que não sabem se valem fora do país.
+- Dados de uma empresa só, coletados por ela. Os próprios autores escrevem que, com dados de uma única empresa, não está claro se os achados se repetiriam em outro estudo nos EUA, e que não sabem se valem fora do país.
 - É a mesma base de [Kurzban & Weeden 2005](kurzban-2005-hurrydate.md), com um recorte um pouco menor; as duas Fichas não são estudos independentes.
 - O perfil era o da HurryDate; depois do evento, quem teve match podia ver o perfil do par. O estudo não mede como alguém lê o perfil de outra pessoa: compara o que cada um pediu com o que ele mesmo fez.
 - As preferências são respostas a categorias e faixas do formulário da empresa; as de raça e religião viraram, pelos autores, notas de 0 a 1. Ficaram de fora quem disse sim ou não a mais de 90% dos pares.
