@@ -4,7 +4,7 @@ link: https://doi.org/10.1037/a0024062
 status: verified
 verified_on: 2026-11-14
 strength: moderate
-strength_reason: "Dois experimentos de laboratório deram o mesmo resultado, mas com 100 e 90 universitários solteiros, uma conversa roteirizada com um cúmplice e sem o texto dizer como cada um foi posto num grupo; o terceiro estudo acompanha 502 clientes de uma empresa de speed dating que quiseram responder."
+strength_reason: "Dois experimentos de laboratório deram o mesmo resultado, mas com 100 e 90 universitários solteiros, uma interação roteirizada com um cúmplice, em que os dois só descreviam figuras, e sem o texto dizer como cada um foi posto num grupo; o terceiro estudo acompanha 502 clientes de uma empresa de speed dating que quiseram responder."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
@@ -16,7 +16,7 @@ covers:
   genders: [man, woman]
 ---
 
-# Eastwick et al. (2011): o parceiro ideal no perfil e depois de conversar ao vivo
+# Eastwick et al. (2011): o parceiro ideal no perfil e depois de uma interação ao vivo
 
 ## O que mediu
 
@@ -68,7 +68,7 @@ Nos Estudos 1 e 2, cada participante leu um perfil de três traços atribuído a
 - Amostras pequenas de universitários solteiros com cerca de 18 anos, e só pares de sexos diferentes: dois participantes que discordaram totalmente de sentir atração só pelo outro sexo foram excluídos do Estudo 1.
 - A interação ao vivo foi curta e artificial (descrever figuras), com cúmplices que, nas palavras dos autores, falavam bem e se portavam com decoro. Os autores admitem que, com cúmplices que se saíssem mal, os grupos poderiam ter se movido de outro jeito.
 - No Estudo 1, os traços do perfil fora do ideal eram neutros ou levemente positivos, e não o oposto do ideal; os autores apontam essa leitura alternativa e usam traços indesejáveis no Estudo 2 para testá-la.
-- O perfil tinha três traços escritos à mão. Não é um perfil de app, com foto e texto livre, e o participante já tinha visto o cúmplice chegar antes de ler o perfil.
+- O perfil eram três traços, escritos à mão no Estudo 1 e circulados numa lista de doze no Estudo 2. Não é um perfil de app, com foto e texto livre, e o participante já tinha visto o cúmplice chegar antes de ler o perfil.
 - No Estudo 2, 16 dos 107 participantes foram excluídos por errar a checagem dos traços do perfil; no Estudo 1, foram 4 de 106.
 - O Estudo 3 é de quem quis responder dois questionários opcionais: os 502 são parte dos 783 que responderam algum trecho do segundo, e o texto não diz quantos responderam o primeiro. Os traços do parceiro são a percepção do próprio participante.
 - No Estudo 3, o texto não traz a divisão entre homens e mulheres.

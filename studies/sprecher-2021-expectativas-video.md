@@ -44,7 +44,7 @@ Duplas de universitários que não se conheciam conversaram 15 minutos por víde
 
 As perguntas de expectativa e a de quanto achou que foi querido vão de 1 (nada) a 7 (muito). "r" mede quanto duas coisas andam juntas: quanto mais perto de zero, menos. "F" é a estatística do teste que compara os grupos, e "pode ser acaso" quer dizer que o resultado não passou no teste de [[significância]]. "R²" é a parte da variação do gostar que a expectativa explica.
 
-- O gostar depois da conversa é a média de três perguntas de 7 pontos: quanto gostou do outro e duas frases de uma escala de julgamento interpessoal (sentimento geral e vontade de trabalhar com a pessoa de novo num experimento).
+- O gostar depois da conversa é a média de três perguntas de 7 pontos: quanto gostou do outro e duas frases de uma escala de julgamento interpessoal (sentimento geral e vontade de trabalhar com a pessoa de novo num experimento). A linha "Quanto achou que foi querido" é a exceção: ela compara só a primeira dessas perguntas (quanto gostou do outro) com a de quanto achou que foi querido, e por isso o 5,42 fica abaixo das médias de gostar da linha da ficha (5,84 e 5,62).
 - A ficha tinha 17 itens de escolha entre duas opções (café ou chá, introvertido ou extrovertido). Na condição de parecido, a ficha falsa discordava do participante em 3 dos 17; na de diferente, concordava em 3.
 - Depois da conversa, quem tinha recebido a ficha de parecido ainda se achava mais parecido com o outro; nas demais reações (gostar, proximidade, curtir a conversa, achar que foi querido), a ficha não fez diferença que passe no teste.
 - As ligações da Tabela 3 valem para quase todas as reações medidas, e a autora as descreve como de fracas a moderadas.
