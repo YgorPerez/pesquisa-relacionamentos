@@ -173,7 +173,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
 - [Toma & Hancock 2010](studies/toma-2010-atratividade-mentira.md): quem é menos atraente mente mais no perfil? · ✅ · fraca
-- [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): o que o texto do perfil deixa escapar de quem mente · ✅ · fraca
+- [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
