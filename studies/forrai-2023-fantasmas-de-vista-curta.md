@@ -10,7 +10,7 @@ countries: [Alemanha]
 period: "Março a abril de 2021 (primeira onda) e agosto a outubro de 2021 (segunda onda)"
 sample:
   n: 978
-  description: "978 jovens de 16 a 21 anos (média de 19,08), 54,81% mulheres, 44,48% homens e 0,72% não binários, recrutados por um instituto de pesquisa de mercado, sem cotas, buscando variedade de idade, gênero e escolaridade; só entrou quem já tinha usado redes sociais. Dos 1.098 que terminaram a primeira onda, saíram 77 que responderam rápido demais, 6 que disseram não ter prestado atenção nenhuma e 37 que erraram as três checagens de atenção. 415 responderam também à segunda onda, em média 132,78 dias depois (57,57% saíram). O texto diz 'German emerging adults' e 'German sample' sem dizer em que país eles moram; os autores são da Universidade de Viena, na Áustria. O estudo trata de parar de responder parceiros de relação casual ou fixa e amigos ou conhecidos nas redes sociais, não de app de namoro."
+  description: "978 jovens de 16 a 21 anos (média de 19,08), 54,81% mulheres, 44,48% homens e 0,72% não binários, recrutados por um instituto de pesquisa de mercado, sem cotas, buscando variedade de idade, gênero e escolaridade; só entrou quem já tinha usado redes sociais. Dos 1.098 que terminaram a primeira onda, saíram 77 que responderam rápido demais, 6 que disseram não ter prestado atenção nenhuma e 37 que erraram as três checagens de atenção. 415 responderam também à segunda onda, em média 132,78 dias depois (57,57% saíram). O texto diz 'German emerging adults' e 'German sample' sem dizer em que país eles moram; os autores são da Universidade de Viena, na Áustria. O estudo trata de parar de responder, nas redes sociais, parceiros de relação casual ou fixa e amigos ou conhecidos; o artigo inclui os apps de namoro no que chama de redes sociais, mas as perguntas não os separam."
   representative: false
 design: longitudinal
 conflict: "Financiado pelo Austrian Science Fund (projeto P 33413-G), que pagou o segundo autor e a coleta de dados e parte do trabalho do primeiro autor, e que, segundo o artigo, não teve papel no desenho, na coleta, na análise nem na decisão de publicar. Os autores declaram não ter conflito de interesse."
@@ -23,12 +23,12 @@ covers:
 
 ## O que mediu
 
-Um questionário online respondido duas vezes pelos mesmos jovens, com cerca de quatro meses de intervalo: a primeira onda entre março e abril de 2021 e a segunda entre agosto e outubro de 2021. O estudo chama de ghosting parar de se comunicar com alguém pelas redes sociais sem explicação, e olha só para quem some, não para quem leva o sumiço. Mediu, com duas perguntas criadas pelos autores para cada tipo de relação, quantas vezes a pessoa tinha parado de repente de responder:
+Um questionário respondido duas vezes pelos mesmos jovens, com cerca de quatro meses de intervalo: a primeira onda entre março e abril de 2021 e a segunda entre agosto e outubro de 2021. O estudo chama de ghosting parar de se comunicar com alguém pelas redes sociais sem explicação, e olha só para quem some, não para quem leva o sumiço. Mediu, com duas perguntas criadas pelos autores para cada tipo de relação, quantas vezes a pessoa tinha parado de repente de responder:
 
 - **um parceiro ou parceira de relação casual ou fixa**, sem que a pessoa soubesse por quê;
 - **alguém do círculo de amigos ou conhecidos**, sem dar o motivo.
 
-As respostas iam de 1 (nunca) a 5 (o tempo todo). Os participantes não leram a palavra "ghosting", para não puxar a resposta bem vista; leram uma descrição do fenômeno. Na mesma escala de 1 (nada) a 5 (completamente), responderam sobre sobrecarga de mensagens nas redes (três frases, como "fico sobrecarregado com a enxurrada de mensagens pessoais"), autoestima (quatro frases da escala de Rosenberg) e tendências depressivas na semana anterior (quatro frases da escala CES-D, como "me senti triste").
+As respostas iam de 1 (nunca) a 5 (o tempo todo). As perguntas não falavam explicitamente em ghosting, para não puxar a resposta bem vista; o questionário apresentou o fenômeno em termos gerais, para que todos o entendessem do mesmo jeito. Numa escala de 1 (nada) a 5 (completamente), responderam sobre sobrecarga de mensagens nas redes (três frases, como "fico sobrecarregado com a enxurrada de mensagens pessoais"), autoestima (quatro frases da escala de Rosenberg) e tendências depressivas na semana anterior (quatro frases da escala CES-D, como "me senti triste").
 
 Os autores montaram dois modelos, um para namoro e outro para amizade. Cada modelo liga as medidas da primeira onda às da segunda, levando em conta o valor que a mesma medida tinha na primeira onda, a idade, o gênero e a escolaridade. As perguntas de ghosting entraram em logaritmo, porque as respostas eram muito assimétricas.
 
@@ -63,4 +63,4 @@ As frequências de sumiço vêm de uma escala de 1 (nunca) a 5 (o tempo todo). �
 - A autoestima muda de sentido entre a mesma onda (r = −0,12 com sumir de amigos) e a ligação de uma onda para a outra (β = 0,13). Na segunda onda, sumir de amigos e tendências depressivas quase não andaram juntos (r = 0,09 na Tabela 4b), embora a ligação da primeira onda para a segunda tenha dado β = 0,18.
 - Os autores escrevem que sumir de amigos "aumentou" as tendências depressivas. O desenho mostra uma ligação no tempo, levando em conta o que a pessoa já relatava antes, mas não exclui outras causas que mudem as duas coisas.
 - O estudo olha só para quem some. Os autores lembram que muita gente que some também já levou um sumiço, e que o estudo não separa as duas experiências.
-- "Parceiro" junta relação casual e fixa nas redes sociais, sem dizer o sexo do parceiro. Não há pergunta sobre app de namoro nem sobre o começo de uma paquera.
+- "Parceiro" junta relação casual e fixa nas redes sociais, sem dizer o sexo do parceiro. Nenhuma pergunta separa o app de namoro das outras redes sociais, e nenhuma trata do começo de uma paquera.
