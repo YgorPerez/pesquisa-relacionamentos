@@ -671,18 +671,20 @@ export function visualProblems(
               return f ? [f] : []
             })
             // A solid arrow says a study tested the cause: an experiment, or
-            // a meta-analysis, which pools studies (not always experiments).
-            // A review pools nothing, so it does not count (#711).
+            // a meta-analysis of experiments. A meta-analysis of surveys or
+            // follow-ups pools associations (#745), and a review pools
+            // nothing (#711), so neither counts.
             if (
               arrow.evidence === 'cause' &&
               cited.length > 0 &&
               !cited.some(
                 (f) =>
-                  f.design === 'experiment' || f.design === 'meta-analysis',
+                  f.design === 'experiment' ||
+                  f.design === 'meta-analysis-of-experiments',
               )
             )
               err(
-                'a solid arrow (a study tested the cause) cites an experiment or a meta-analysis; otherwise it is an association',
+                'a solid arrow (a study tested the cause) cites an experiment or a meta-analysis of experiments; otherwise it is an association',
                 `${field}.evidence`,
               )
           })

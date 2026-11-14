@@ -108,12 +108,12 @@ const SOLID_ARROW = `  - id: relacoes
     arrows:
       - { from: app, to: casal, evidence: cause, text: Causa., fact_sheets: [silva-2020-apps-brasil] }`
 const SILVA = 'studies/silva-2020-apps-brasil.md'
-const NOT_A_CAUSE = `${GUIDE}: visuals.0.arrows.0.evidence: a solid arrow (a study tested the cause) cites an experiment or a meta-analysis; otherwise it is an association`
+const NOT_A_CAUSE = `${GUIDE}: visuals.0.arrows.0.evidence: a solid arrow (a study tested the cause) cites an experiment or a meta-analysis of experiments; otherwise it is an association`
 
 describe('a Visual that passes', () => {
-  it('has a solid arrow when the Study it cites is a meta-analysis', () => {
+  it('has a solid arrow when the Study it cites is a meta-analysis of experiments', () => {
     const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
-      [SILVA]: 'meta-analysis',
+      [SILVA]: 'meta-analysis-of-experiments',
     })
     expect(result.ok ? [] : result.errors.map((e) => e.message)).toEqual([])
   })
@@ -431,6 +431,13 @@ describe('the build rejects', () => {
   it('a solid arrow backed only by a review, which pools no data (#711)', () => {
     const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
       [SILVA]: 'review',
+    })
+    expect(errorsOf(result)).toEqual([NOT_A_CAUSE])
+  })
+
+  it('a solid arrow backed only by a meta-analysis that pools no experiment (#745)', () => {
+    const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
+      [SILVA]: 'meta-analysis',
     })
     expect(errorsOf(result)).toEqual([NOT_A_CAUSE])
   })

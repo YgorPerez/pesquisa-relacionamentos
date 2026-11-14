@@ -17,5 +17,7 @@ export const DESIGN_NAME: Record<Design, string> = {
   platform: 'dados de plataforma',
   administrative: 'registro administrativo',
   'meta-analysis': 'meta-análise (junta vários estudos)',
+  'meta-analysis-of-experiments':
+    'meta-análise de experimentos (soma os resultados de vários experimentos)',
   review: 'revisão de estudos (descreve vários, sem somar os resultados)',
 }

@@ -17,7 +17,10 @@ export type Strength = (typeof STRENGTHS)[number]
 
 /** How a Study got its data. A `meta-analysis` pools the studies' numbers
  * into one estimate; a `review` (narrative, systematic or scoping) describes
- * them without pooling, so it does not test a cause (#711). */
+ * them without pooling, so it does not test a cause (#711). A meta-analysis
+ * tests a cause only when what it pools are experiments: that one is a
+ * `meta-analysis-of-experiments`, and a plain `meta-analysis` (of surveys,
+ * follow-ups, or a mix) does not (#745). */
 export const DESIGNS = [
   'longitudinal',
   'cross-sectional',
@@ -25,6 +28,7 @@ export const DESIGNS = [
   'platform',
   'administrative',
   'meta-analysis',
+  'meta-analysis-of-experiments',
   'review',
 ] as const
 export type Design = (typeof DESIGNS)[number]
