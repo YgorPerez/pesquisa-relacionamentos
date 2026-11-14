@@ -10,7 +10,7 @@ period: "Artigos publicados de 1997 a setembro de 2019"
 sample:
   description: "71 artigos quantitativos revisados por pares, em inglês, achados no PsycINFO e no Web of Science e nas referências deles, que medem alguma experiência sexual casual (ficada, amizade colorida, sexo de uma noite, 'booty call') e alguma reação emocional ou indicador de saúde emocional. 13 com adolescentes, 48 com universitários, 3 com jovens com e sem faculdade e 7 com adultos de várias idades; 44 transversais e 27 longitudinais. A maioria é dos EUA. Ficaram de fora estudos de infidelidade e estudos qualitativos."
   representative: false
-design: meta-analysis
+design: review
 conflict: "Financiada pelo National Institute of Mental Health (auxílios T32MH019985 e P30MH052776). As autoras declaram não ter conflito de interesse."
 covers:
   genders: [man, woman]
@@ -22,7 +22,7 @@ covers:
 
 As autoras reuniram os estudos quantitativos que relacionam sexo casual (qualquer encontro sexual com alguém que a pessoa não considera parceiro romântico) a dois tipos de desfecho. O primeiro são as reações subjetivas: o que a pessoa diz que sentiu depois, como [[satisfação]], arrependimento, vergonha ou se sentir usada. O segundo é a saúde emocional em geral: sintomas depressivos, ansiedade, solidão, autoestima. Também listaram o que torna o desfecho pior ou melhor (gênero, atitudes, motivos, álcool, tipo de parceiro, tipo de sexo, camisinha, satisfação sexual).
 
-É uma revisão sistemática narrativa. A ficha usa `meta-analysis` porque a lista de desenhos não tem opção para revisão, mas não há [[meta-análise]]: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
+É uma revisão sistemática narrativa, e não uma [[meta-análise]]: as autoras não combinam os estudos num número só nem calculam tamanho de efeito médio. Os achados abaixo contam quantos estudos apontam para cada lado.
 
 ## Achados
 

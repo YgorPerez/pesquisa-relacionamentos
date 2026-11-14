@@ -34,6 +34,8 @@ O que falta verificar ou pesquisar está nas [issues com o label `acervo`](https
 - **Moderada:** bom desenho, mas uma única amostra, transversal ou com algum viés conhecido.
 - **Fraca:** amostra pequena, não representativa, comercial ou com conflito de interesse relevante.
 
+Comercial é o estudo que a empresa dona dos dados fez, pagou ou assinou com gente sua: o blog de um app, uma pesquisa de mercado, um artigo com autores empregados pelo site. Pesquisadores independentes que analisam registros cedidos por um site, num artigo revisado por pares, não fazem o estudo comercial; ele é julgado pelo desenho e pela amostra.
+
 **Nomes de arquivo:** `studies/<sobrenome-primeiro-autor>-<ano>-<tema-curto>.md`. Relatórios: `reports/<AAAA-MM-DD>-<tema>.md`. Fonte local: `sources/<slug-da-ficha>.<pdf|html|txt>` ou `sources/private/<slug-da-ficha>.<pdf|html|txt>`.
 
 Para uma ficha nova, copie [`studies/_modelo.md`](studies/_modelo.md). Os campos do cabeçalho ficam no frontmatter YAML, e o build do site (`packages/content`) falha com a lista de erros quando um campo é inválido, sai de uma lista fechada ou repete o DOI de outra ficha.
