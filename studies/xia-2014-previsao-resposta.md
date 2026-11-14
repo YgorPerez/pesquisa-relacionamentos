@@ -3,8 +3,8 @@ reference: "Xia P, Jiang H, Wang X, Chen C, Liu B. *Predicting User Replying Beh
 link: https://doi.org/10.1609/icwsm.v8i1.14516
 status: verified
 verified_on: 2026-11-14
-strength: moderate
-strength_reason: "Sorteio de 200 mil usuários de um grande site de namoro chinês, com o registro real de quem escreveu a quem e quem respondeu, mas de um site só, nas oito primeiras semanas de cada conta, com dois dos cinco autores empregados do site e modelos que preveem a resposta sem testar o que a causa."
+strength: weak
+strength_reason: "Dados comerciais de um site só, cedidos por ele e não abertos, com dois dos cinco autores empregados na divisão de produto do site e nenhum conflito declarado; o sorteio de 200 mil usuários com o registro real de mensagens é um bom desenho, mas cobre só as oito primeiras semanas de cada conta, e os modelos preveem a resposta sem testar o que a causa."
 countries: [China]
 period: "Novembro de 2011 a janeiro de 2012 (as oito primeiras semanas de cada conta)"
 sample:
@@ -38,10 +38,10 @@ Os autores pegaram o registro de mensagens de um grande site de namoro chinês e
 | O que entrou nos modelos | 145 informações por mensagem: 81 tiradas dos perfis de quem escreve e de quem recebe e 64 tiradas do histórico de mensagens no site | §5.5 | "a total number of 145 extracted features out of which 81 are user-based features while 64 are graph-based features" |
 | Acerto do melhor modelo | Com todas as informações, o melhor modelo separou as mensagens respondidas das não respondidas em 84,1% das comparações quando um homem escreve a uma mulher, e em 81,6% quando uma mulher escreve a um homem (AUC) | §5.4 | "AUC of 81.6% for female to sample male, and 84.1% for male to sample female" |
 | Perfil ou histórico | As informações dos perfis e as do histórico de mensagens previram a resposta mais ou menos igual, e juntar as duas ajudou pouco | §5.4 | "There is only a small gain in performance when we use both user-based and graph-based features." |
-| O que a pessoa diz procurar | Saber se quem escreve cumpre o que a outra pessoa disse procurar (idade, altura, renda, escolaridade) ajudou pouco a prever a resposta, bem menos que os outros grupos de informação segundo os autores: ficou entre 0,5 e 0,6, numa medida em que 0,5 é o acaso (AUC) | §5.3 | "worse than other feature sets with AUC in the range of 0.5 - 0.6" |
+| O que a pessoa diz procurar | Saber se quem escreve cumpre o que a outra pessoa disse procurar (idade, altura, renda, escolaridade) ajudou pouco a prever a resposta: ficou entre 0,5 e 0,6, numa medida em que 0,5 é o acaso (AUC) | §5.3 | "worse than other feature sets with AUC in the range of 0.5 - 0.6" |
 | O hábito de quem recebe | Entre as informações do histórico de mensagens, a que mais ajudou a prever a resposta foi quanto a própria pessoa que recebe costuma responder, para homens e para mulheres | §5.5, Tabela 6 | "the receiver's reply rate feature ranks first for both males and females" |
 | Idade e renda de quem escreve | A idade, a renda e a situação de moradia de quem escreve ficaram entre as informações de perfil que mais ajudaram a prever se uma mulher responde; para prever se um homem responde, não ficaram entre as 15 primeiras | §5.5, Tabela 5 | "while age, income, and house situation of a sender are important factors for female receivers, they are not among the top 15 features for male receivers" |
-| A resposta dos homens | Para prever se um homem responde a uma mulher, as informações de estilo de vida e de planos para o futuro ajudaram mais que as do perfil básico | §5.5, Tabela 5 | "life style and future plan features play a more important role than user profile features" |
+| Itens que mais pesam na resposta dos homens | Na lista dos itens isolados que mais ajudaram a prever se um homem responde a uma mulher, os de estilo de vida e de planos para o futuro apareceram mais que os do perfil básico. Como grupo, porém, o perfil básico previu a resposta melhor que os outros dois | §5.5, Tabela 5 | "life style and future plan features play a more important role than user profile features" |
 
 A AUC é a medida que os autores usam para dizer se um modelo acerta: é a chance de o modelo dar nota mais alta a uma mensagem respondida do que a uma não respondida, quando se sorteia uma de cada. Com 50% (ou 0,5) o modelo não sabe mais que uma moeda; com 100% acerta sempre. Os autores mediram a AUC num conjunto montado com o mesmo número de mensagens respondidas e não respondidas, não na proporção real do site.
 

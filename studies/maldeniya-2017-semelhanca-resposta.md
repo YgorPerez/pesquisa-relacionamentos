@@ -18,7 +18,7 @@ covers:
   couple: different-sex
 ---
 
-# Maldeniya et al. (2017): parecer com ela e diferir dos outros homens
+# Maldeniya et al. (2017): semelhança com ela e diferença dos outros homens
 
 ## O que mediu
 
@@ -33,7 +33,7 @@ Os autores compararam o texto livre dos perfis de um site de namoro dos EUA: o d
 | Quem usa o site | Cerca de 55% dos usuários ativos eram homens e 94% eram heterossexuais | Results, Data | "about 55% of the users are male and 94% are heterosexual" |
 | Quem escreve primeiro | Os homens começaram 86% das conversas e mandaram 62% de todas as mensagens | Results, Data | "males account for 62% of all messages sent and they initiated 86% of all communication dyads" |
 | Perfil parecido com o dela | Quanto mais o texto do perfil dele se parecia com o dela, mais vezes ela respondia | Results, Fig. 2(a) | "as dyadic text similarity increases, the likelihood of a replies increases" |
-| Perfil parecido com o dela, no modelo | A ligação continuou levando em conta idade, altura, cidade, etnia, nota de atratividade e os outros dados dos dois (0,0243, com três asteriscos, no modelo em que os concorrentes são todos os homens que escreveram a ela) | Tabela 1, linha "dyad text similarity", coluna MLC | "0.0243***" |
+| Perfil parecido com o dela, no modelo | A chance de ela responder andou junto com um texto de perfil mais parecido com o dela, mesmo levando em conta idade, altura, cidade, etnia, nota de atratividade e os outros dados dos dois (0,0243, com três asteriscos, no modelo em que os concorrentes são todos os homens que escreveram a ela) | Tabela 1, linha "dyad text similarity", coluna MLC | "0.0243***" |
 | Perfil parecido com o dos outros homens | Quanto mais o texto dele se parecia com o dos outros homens que escreveram a ela, menos vezes ela respondia | Results, Fig. 2(b) e 2(c) | "There is a clear drop in the response probability as the male sender becomes more similar to his peers for market level and female choice sets." |
 | Concorrentes: todos os que escreveram a ela | No modelo, parecer com eles andou junto com menos resposta (−0,0289, com três asteriscos) | Tabela 1, linha "MLC text similarity" | "0.0289***" |
 | Concorrentes: os que escreveram antes dele | No modelo, parecer com eles andou junto com menos resposta (−0,0222, com três asteriscos) | Tabela 1, linha "FCC text similarity" | "0.0222***" |

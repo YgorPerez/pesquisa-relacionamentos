@@ -134,7 +134,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
-- [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): parecer com ela e diferir dos outros homens · ✅ · fraca
+- [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
@@ -184,7 +184,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
-- [Xia et al. 2014](studies/xia-2014-previsao-resposta.md): dá para prever quem responde à primeira mensagem? · ✅ · moderada
+- [Xia et al. 2014](studies/xia-2014-previsao-resposta.md): dá para prever quem responde à primeira mensagem? · ✅ · fraca
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
