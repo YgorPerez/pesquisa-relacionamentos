@@ -1,0 +1,364 @@
+---
+ticket: 594
+---
+
+# O que faz a primeira mensagem num app de namoro ter resposta?
+
+**Data:** 2026-11-14 · **Ticket:** [#594](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/594), frente 1 do mapa [#593](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/593)
+**Status de verificação:** cada estudo leva a marca da Ficha dele. ✅ Ficha conferida no texto completo (artigo, manuscrito do autor, preprint ou dissertação, dito em cada caso). 🟡 Ficha parcial: a fonte é um post de blog de empresa, com parte dos números só em gráficos. Os 30 estudos que respondem à pergunta têm Ficha, e cada número vem dela; a seção sobre o Brasil cita mais duas Fichas brasileiras, que não tratam de mensagens. A força segue o [README](../README.md).
+
+A pergunta do ticket é o que faz uma primeira mensagem num app de namoro ter resposta: o conteúdo (citar o perfil, perguntar, fazer graça, elogiar, só cumprimentar), o tamanho, quem escreve primeiro e o tempo entre o match e a mensagem. O que acontece depois da primeira resposta é da frente 2, e o perfil, da frente 4. Frases de abordagem estudadas cara a cara entram como evidência vizinha, marcadas assim.
+
+Os estudos medem coisas de natureza diferente, e eu digo em cada caso de qual se trata:
+
+- **Dado de plataforma:** o registro do que as pessoas mandaram num site ou app e de quem respondeu. É comportamento real, mas só mostra o que anda junto com a resposta.
+- **Experimento de campo:** um sorteio decide algo que gente de verdade recebe num site ou app, e se conta o que ela faz.
+- **Situação imaginada:** a pessoa lê uma mensagem inventada e dá uma nota ou escreve o que responderia. Ninguém responde a ninguém.
+- **Questionário:** o que a pessoa diz que viveu.
+- **Cara a cara:** abordagem num bar ou num speed dating, fora de app.
+
+## Resposta curta
+
+- **Nos sites de namoro, a maioria das primeiras mensagens fica sem resposta, e a de mulher tem resposta mais vezes que a de homem.** Em dados de plataforma de sites dos EUA, os homens mandaram a maior parte das primeiras mensagens: 77,1% em [Fiore 2010](../studies/fiore-2010-contatos-respostas.md), 4 para 1 em [Kreager 2014](../studies/kreager-2014-iniciativa-respostas.md), mais de 80% em [Bruch & Newman 2018](../studies/bruch-2018-aspirational-pursuit.md). A de mulher teve resposta mais vezes: 26,4% contra 15,9% ([Fiore 2010](../studies/fiore-2010-contatos-respostas.md)), 42% contra 21% ([Kreager 2014](../studies/kreager-2014-iniciativa-respostas.md)), 34% contra 15% em Nova York ([Bruch & Newman 2019](../studies/bruch-2019-mercados-por-cidade.md)), todos de força moderada, e 17,9% contra 9,5% na China ([Xia 2014](../studies/xia-2014-quem-namora-quem.md), fraca). O nível muda muito de um site para outro: num site gratuito em que qualquer um escrevia a qualquer um, 5,62% e 2,55% ([Lin & Lundquist 2013](../studies/lin-2013-raca-genero-respostas.md), moderada). No único estudo que contou respostas num app em que só se conversa depois do match, 51% das conversas tiveram resposta, e a mensagem de homem teve resposta mais vezes (53%) que a de mulher (42%) ([Zhang & Yasseri 2016](../studies/zhang-2016-conversas-apos-match.md), preprint, fraca).
+- **Quem escreve e quem recebe preveem a resposta melhor do que o texto que foi medido.** Num site chinês, um modelo que não via o texto das mensagens separou as respondidas das não respondidas em 84,1% das comparações, e o que mais ajudou foi o hábito de responder de quem recebe ([Xia 2014](../studies/xia-2014-previsao-resposta.md), fraca). Em dois sites dos EUA, de força moderada, escrever a pessoas mais procuradas que a gente andou junto com menos resposta ([Fiore 2010](../studies/fiore-2010-contatos-respostas.md), [Bruch & Newman 2018](../studies/bruch-2018-aspirational-pursuit.md)); das mulheres mais "desejáveis" que o homem, a resposta a ele nunca passou de 21%. Num terceiro, com mais de um milhão de usuários, escrever a gente de popularidade parecida não andou junto com mais resposta (r = −0,01 e 0,00; [Shaw Taylor 2011](../studies/taylor-2011-fora-da-minha-liga.md), fraca). Em dois sites dos EUA, de força moderada, mulheres de todos os grupos raciais responderam mais a homens brancos ([Lin & Lundquist 2013](../studies/lin-2013-raca-genero-respostas.md), [Lewis 2013](../studies/lewis-2013-preconceito-racial-respostas.md)), e homens asiáticos, hispânicos e brancos responderam menos a mulheres negras que a mulheres do próprio grupo (Lin & Lundquist).
+- **Sobre o conteúdo, os dados de plataforma são poucos, quase todos de força fraca, e só mostram associação.** Num site australiano, mensagens com mais "você" tiveram mais resposta, e com mais "eu", menos; palavras de sexo andaram junto com mais resposta dos homens e não mudaram a das mulheres. O artigo não traduz esses números em porcentagem de respostas ([Schöndienst 2011](../studies/schondienst-2011-linguagem-primeira-mensagem.md)). Num post do OkCupid de 2009 (🟡), mensagens com elogio à aparência e com internetês tiveram resposta abaixo da média, e as que mostravam ter lido o perfil passaram de 45% pelo gráfico, numa conta que não leva em conta quem escreve ([OkCupid 2009](../studies/okcupid-2009-palavras-primeira-mensagem.md)). Bruch & Newman 2018 acharam que escrever mais longo ou de forma mais positiva mudou pouco a resposta.
+- **Só um teste sorteou o texto de uma primeira mensagem num app e contou respostas de verdade, e ele é um post de empresa.** No Tinder, 1.227 mulheres de 25 a 45 anos em cinco cidades dos EUA, que deram match com um mesmo perfil de homem, responderam a uma piada pronta em 54,97% das vezes e a uma pergunta sincera em 49,27% ([Irrational Labs 2023](../studies/irrational-labs-2023-humor-tinder.md), 🟡, fraca, números só no gráfico). Dois experimentos de campo de força moderada sortearam sinais de interesse, não texto: num site coreano, uma "rosa virtual" presa a um pedido de encontro aumentou o aceite em 3,3 pontos percentuais ([Lee & Niederle 2015](../studies/lee-2015-rosa-virtual.md)), e num site da América do Norte esconder por um mês as visitas aos perfis cortou de 18,5% a 24,7% as conversas de três ou mais mensagens que o outro lado começava ([Bapna 2016](../studies/bapna-2016-navegacao-anonima.md)).
+- **Em situações imaginadas, a mensagem sexualmente explícita leva notas bem piores; cantada pronta e humor não têm resultado firme.** 275 universitários dos EUA deram nota 2,83 a uma mensagem explícita imaginada e 4,95 a uma saudação com pergunta, de 1 a 7, com distância maior entre as mulheres ([Lilly 2023](../studies/lilly-2023-mensagem-sexual-explicita.md), fraca). Em duas dissertações holandesas, fracas, cantadas engraçadas tiradas do Reddit não aumentaram a intenção de responder (4,56 contra 4,62; [Verwers 2021](../studies/verwers-2021-humor-abertura-tinder.md)), e um elogio original ficou acima de um comum (4,63 contra 4,22; [Berkes 2021](../studies/berkes-2021-cantadas-originais.md)). Em oito estudos pré-registrados, abreviar ("hru") baixou a vontade de responder numa conversa imaginada (5,06 contra 5,65), e num canal do Discord, fora do namoro, a mensagem abreviada teve 15% de resposta contra 20% ([Fang 2025](../studies/fang-2025-abreviacoes-resposta.md), moderada).
+- **Nada disso mostra que um tipo de mensagem causa resposta num app, e algumas perguntas ficaram sem estudo.** Os dados de plataforma mostram associação, e os testes de texto ou são imaginados ou são um post de empresa com uma piada e uma pergunta. Ninguém testou se o tempo entre o match e a primeira mensagem muda a chance de resposta; os estudos só descrevem esse tempo. Quase nenhum segue a conversa até um encontro. O acervo não tem nada do Brasil sobre a primeira mensagem.
+
+Para os Guias: dá para afirmar, com Confiança moderada, que nos sites de namoro os homens escrevem a maior parte das primeiras mensagens e recebem resposta menos vezes, porque seis bases de dados reais apontam o mesmo, cinco delas de força moderada. Não dá para afirmar, acima de Confiança fraca, que um jeito de escrever a primeira mensagem tenha mais resposta num app.
+
+## Os estudos
+
+Agrupei pelo que cada estudo mede como desfecho: resposta contada em dados reais, resposta num experimento de campo, nota ou resposta escrita diante de uma situação imaginada, o que as pessoas dizem num questionário e, por último, a abordagem cara a cara.
+
+### Quem escreve primeiro e quanto se responde (dados de plataforma)
+
+#### Fiore et al. 2010 (EUA, site de namoro)
+
+Fiore AT, Taylor LS, Zhong X, Mendelsohn GA, Cheshire C. _Who's Right and Who Writes: People, Profiles, Contacts, and Replies in Online Dating_. Proceedings of the 43rd Hawaii International Conference on System Sciences (HICSS), p. 1–10, 2010. https://doi.org/10.1109/HICSS.2010.444. ✅ [Ficha](../studies/fiore-2010-contatos-respostas.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** 676.500 usuários ativos de um grande site dos EUA, não nomeado, de abril de 2008 a janeiro de 2009, com mediana de 41 a 42 anos, e 6,3 milhões de contatos entre homem e mulher.
+- **Achado:** os homens fizeram 77,1% dos primeiros contatos. Eles responderam a 26,4% dos contatos de mulheres, e elas a 15,9% dos de homens. Quem recebia mais contatos respondia a uma parte menor deles (r = −0,20 nos homens e −0,30 nas mulheres), e quem escrevia a pessoas muito procuradas teve menos resposta. Com o resto igual, a chance de ela responder foi 25% maior quando a idade dele estava na faixa que ela pedia no perfil e 83% maior quando a etnia dele estava entre as que ela marcou; a dele, 42% e 35% maior. A distância entre os dois não teve ligação com a resposta. Entre os contatos respondidos, a resposta veio em mediana 16,1 horas depois quando a mulher escreveu primeiro e 19,2 horas quando o homem escreveu.
+- **Ressalva:** os "X% maior" comparam chances (odds), não porcentagens de resposta, e saem de uma parte dos contatos em que a resposta foi de 21,6% e 36,6%, acima do site todo; o artigo não diz como essa parte foi escolhida. O texto da mensagem não entrou. Resposta é qualquer mensagem de volta, até uma recusa.
+
+#### Kreager et al. 2014 (EUA, site de namoro)
+
+Kreager DA, Cavanagh SE, Yen J, Yu M. _"Where have all the good men gone?" Gendered interactions in online dating_. Journal of Marriage and Family 76(2):387–410, 2014. https://doi.org/10.1111/jomf.12072. ✅ manuscrito aceito, no PMC. [Ficha](../studies/kreager-2014-iniciativa-respostas.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** 8.259 homens e 6.274 mulheres heterossexuais de um site gratuito numa cidade de porte médio do sudoeste dos EUA, seis meses entre 2010 e 2011.
+- **Achado:** os homens mandaram 142.444 primeiros contatos e as mulheres, 34.960, 4 para 1. Ficaram sem resposta 79% dos contatos dos homens e 58% dos das mulheres. Só 3% e 7% passaram de cinco trocas. O destino mais comum das mensagens foi a faixa mais bem avaliada do outro sexo, qualquer que fosse a avaliação de quem escrevia. Pela estimativa do modelo, a mulher que escreve primeiro tem quase 60% de chance de estar falando com um homem mais bem avaliado que ela no ponto em que a conversa costuma virar encontro, e a que espera ser procurada tem quase 70% de chance de o homem ser menos bem avaliado. Os autores concluem que a vantagem de tomar a iniciativa vale sobretudo para as mulheres.
+- **Ressalva:** "primeiro contato" junta a mensagem escrita e a piscadela (_wink_), um aviso sem texto, e os autores avisam que os contatos das mulheres podem ter sido na maioria piscadelas. A vantagem de quem começa é uma associação: as mulheres que escrevem podem ser diferentes das que esperam. Ninguém sabe se as conversas viraram encontro.
+
+#### Bruch & Newman 2018 (EUA, site de namoro)
+
+Bruch EE, Newman MEJ. _Aspirational pursuit of mates in online dating markets_. Science Advances 4(8):eaap9815, 2018. https://doi.org/10.1126/sciadv.aap9815. ✅ [Ficha](../studies/bruch-2018-aspirational-pursuit.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** cerca de 187 mil usuários heterossexuais ativos de um site gratuito em Nova York, Boston, Chicago e Seattle, em janeiro de 2014.
+- **Achado:** mais de 80% das primeiras mensagens vieram de homens, e as mulheres responderam em média a menos de 20% delas. Homens e mulheres escreveram a pessoas cerca de 25% mais "desejáveis" que eles no ranking do estudo. Quanto maior essa distância, menos resposta: os homens tiveram mais que o dobro da chance de resposta de mulheres menos desejáveis que eles do que das mais desejáveis, e destas a resposta nunca passou de 21%. As pessoas escreveram mensagens mais longas a quem estava mais acima, em alguns casos o dobro. Mensagem mais longa andou junto com mais resposta só em parte dos grupos ("only for women and men in Seattle", na frase do artigo), e a diferença entre escrever mais ou de forma mais positiva foi pequena.
+- **Ressalva:** a desejabilidade é calculada das próprias mensagens recebidas (PageRank), então parte do resultado sai da construção da medida, como os autores reconhecem. Um site e um mês.
+
+#### Bruch & Newman 2019 (EUA, a mesma base)
+
+Bruch EE, Newman MEJ. _Structure of online dating markets in U.S. cities_. Sociological Science 6:219–234, 2019. https://doi.org/10.15195/v6.a9. ✅ [Ficha](../studies/bruch-2019-mercados-por-cidade.md). Dado de plataforma. Força moderada.
+
+- **Achado:** os homens de Nova York mandaram 23,3 mensagens em média, com 15% de resposta, e as mulheres, 9,4, com 34%. Em Seattle, 12,4 e 20% para eles, 7,8 e 45% para elas. A resposta foi mais comum quando a mensagem ficava dentro do próprio "submercado", grupos que os autores acharam na rede de mensagens e que se separam sobretudo por idade, e cerca de 43% das primeiras mensagens foram para alguém de outro submercado. As mulheres que escreviam primeiro tiveram resposta mais vezes quando escreviam a homens de submercados mais velhos.
+- **Ressalva:** é a mesma base de 2018, não uma replicação. As taxas de resposta entre submercados aparecem só em mapas de cor, sem números.
+
+#### Lin & Lundquist 2013 (EUA, site de namoro)
+
+Lin K-H, Lundquist J. _Mate selection in cyberspace: the intersection of race, gender, and education_. American Journal of Sociology 119(1):183–215, 2013. https://doi.org/10.1086/673129. ✅ PDF do artigo publicado, no SelectedWorks da autora. [Ficha](../studies/lin-2013-raca-genero-respostas.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** 528.800 homens e 405.021 mulheres heterossexuais de um grande site gratuito dos EUA, nas 20 maiores regiões metropolitanas, de 2003 a 2010, sem o texto das mensagens. No site, qualquer um podia mandar e responder mensagens sem pagar.
+- **Achado:** os homens mandaram 2.750.893 primeiras mensagens a mulheres e as mulheres, 1.180.260 a homens. Tiveram resposta 2,55% das deles e 5,62% das delas. Com o resto do perfil no modelo, mulheres asiáticas, negras e hispânicas responderam mais a homens brancos do que a homens do próprio grupo, e as brancas, mais a brancos do que a qualquer outro grupo. Homens asiáticos, hispânicos e brancos responderam menos a mulheres negras do que a mulheres do próprio grupo. Na leitura dos autores, a preferência pelo próprio grupo pesou mais na primeira mensagem, e na resposta pesou mais a raça de quem escreveu.
+- **Ressalva:** as taxas de resposta são muito menores que as de outros sites, e o artigo não define resposta além de a mensagem ter sido respondida. O texto às vezes diz mais que as tabelas; a Ficha fica com o que os dois sustentam.
+
+#### Hitsch, Hortaçsu & Ariely 2010 (EUA, site pago)
+
+Hitsch GJ, Hortaçsu A, Ariely D. _What makes you click? Mate preferences in online dating_. Quantitative Marketing and Economics 8(4):393–427, 2010. https://doi.org/10.1007/s11129-010-9088-6. ✅ manuscrito final dos autores, sem o apêndice. [Ficha](../studies/hitsch-2010-preferencias-primeiro-contato.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** 3.702 homens e 2.783 mulheres heterossexuais de um site pago em Boston e San Diego, em três meses e meio de 2003, com cerca de 794 mil perfis vistos.
+- **Achado:** os homens mandaram um primeiro e-mail a 12,5% das mulheres cujo perfil viram, e as mulheres, a 9% dos homens. Ficaram sem resposta 71% dos primeiros e-mails dos homens e 56% dos das mulheres. Quem estava na faixa mais baixa de aparência não deixou de escrever a pessoas de nota mais alta, e o custo estimado de escrever e ser rejeitado foi muito pequeno, talvez zero.
+- **Ressalva:** só assinantes pagantes podiam escrever. As tabelas da chance de resposta e do teste do medo de rejeição estão no apêndice, que a cópia lida não tem, e o teste depende de suposições do modelo.
+
+#### Xia et al. 2014, "Who is Dating Whom" (China, site de namoro)
+
+Xia P, Tu K, Ribeiro B, Jiang H, Wang X, Chen C, Liu B, Towsley D. _Who is Dating Whom: Characterizing User Behaviors of a Large Online Dating Site_. arXiv:1401.5710, 2014. https://arxiv.org/abs/1401.5710. ✅ preprint. [Ficha](../studies/xia-2014-quem-namora-quem.md). Dado de plataforma. Força fraca.
+
+- **Amostra:** 200 mil cadastros novos do baihe.com, sorteados entre os de novembro de 2011, nas oito primeiras semanas de cada conta.
+- **Achado:** as mulheres da amostra responderam a 9,5% das 1.586.059 primeiras mensagens que receberam de homens, e os homens, a 17,9% das 328.645 que receberam de mulheres. Metade das respostas saiu em até cerca de 9 horas, 72,6% em até 24 horas e 6,3% depois de uma semana ou mais. Mais de 70% das mensagens que as mulheres responderam e cerca de 55% das que os homens responderam vinham de alguém que não cumpria ao menos um item do que quem respondeu dizia procurar.
+- **Ressalva:** preprint; dois dos oito autores trabalham no site que cedeu os dados; segundo o site, há contas de spam no meio; respostas depois de oito semanas ficam de fora.
+
+#### Zhang & Yasseri 2016 (EUA, app com match)
+
+Zhang J, Yasseri T. _What Happens After You Both Swipe Right: A Statistical Description of Mobile Dating Communications_. arXiv:1607.03320, 2016. https://doi.org/10.48550/arXiv.1607.03320. ✅ preprint. [Ficha](../studies/zhang-2016-conversas-apos-match.md). Dado de plataforma. Força fraca.
+
+- **Amostra:** 400 mil usuários heterossexuais de um app por celular não nomeado, de 30 regiões metropolitanas dos EUA, em que duas pessoas só conversam depois do match; 2.088.486 conversas entre 2013 e 2015, sem o texto.
+- **Achado:** os homens mandaram 79,4% das primeiras mensagens. Em 51% das conversas, quem escreveu teve alguma resposta, e 39% ficaram numa mensagem só, sem resposta. Quando o homem escreveu primeiro, 53% tiveram resposta; quando a mulher escreveu, 42%. Em 89,4% das conversas com resposta, ela veio depois de uma única mensagem. A primeira mensagem teve em média 8 palavras ou 42 caracteres, e cerca de 47% delas tinham um ponto de interrogação. Sobre o tempo, ver a seção do tempo, abaixo.
+- **Ressalva:** preprint. Não há identificador de usuário, então poucas pessoas muito ativas podem pesar nas porcentagens. Ficar sem resposta pode ser desinteresse ou conta parada. A explicação dos autores para a diferença entre homens e mulheres (homens que curtem muitos perfis e escolhem depois) não foi testada.
+
+#### Tyson et al. 2016 (Reino Unido e EUA, Tinder, perfis de teste)
+
+Tyson G, Perta VC, Haddadi H, Seto MC. _A First Look at User Activity on Tinder_. IEEE/ACM ASONAM, 2016. https://arxiv.org/abs/1607.01952. ✅ [Ficha](../studies/tyson-2016-tinder.md). Perfis criados pelos autores no app real. Força fraca.
+
+- **Achado:** nos perfis de teste masculinos com foto de banco de imagens, 0,6% dos likes dados viraram match; nos femininos, 10,5%. Entre quem deu match com os perfis de teste, 21% das mulheres e 7% dos homens mandaram mensagem. A mensagem dos homens saiu em mediana 2 minutos depois do match, e a das mulheres, 38 minutos; a mensagem típica teve 12 caracteres nos homens e 122 nas mulheres.
+- **Ressalva:** são 14 perfis, todos brancos e de 24 anos, em duas cidades. Os 7% dos homens incluem os matches vindos de outros homens, 86% do total dos perfis masculinos. O estudo conta quem escreve aos perfis de teste, não a resposta a uma mensagem.
+
+#### Dinh et al. 2022 (Reino Unido, eharmony)
+
+Dinh R, Gildersleve P, Blex C, Yasseri T. _Computational courtship understanding the evolution of online dating through large-scale data analysis_. Journal of Computational Social Science 5:401–426, 2022. https://doi.org/10.1007/s42001-021-00132-w. ✅ [Ficha](../studies/dinh-2022-iniciativa-eharmony.md). Dado de plataforma. Força fraca.
+
+- **Amostra:** 149.440 usuários heterossexuais do eharmony no Reino Unido, os cadastrados em março de cada ano de 2007 a 2018, com registro de mensagens de 70.508.
+- **Achado:** em todos os anos de 2009 a 2018, a parte das conversas que o homem médio começou ficou acima da da mulher média, e a distância cresceu, o contrário do que os autores esperavam. Quem recebia mais pedidos de conversa interagia com uma parte menor das pessoas com quem poderia.
+- **Ressalva:** no eharmony só se escreve aos pares que o algoritmo escolhe. O resultado sobre quem começa está só num gráfico, e o artigo não compara a resposta quando ela começa com a resposta quando ele começa. A primeira autora foi financiada em parte pelo site.
+
+### Para quem se escreve e quem recebe (dados de plataforma)
+
+#### Xia et al. 2014, "Predicting User Replying Behavior" (China, a mesma base)
+
+Xia P, Jiang H, Wang X, Chen C, Liu B. _Predicting User Replying Behavior on a Large Online Dating Site_. Proceedings of the Eighth International AAAI Conference on Weblogs and Social Media (ICWSM) 8(1):545–554, 2014. https://doi.org/10.1609/icwsm.v8i1.14516. ✅ [Ficha](../studies/xia-2014-previsao-resposta.md). Dado de plataforma. Força fraca.
+
+- **Achado:** com 145 informações sobre quem escreve e quem recebe (perfil e histórico de mensagens no site) e sem o texto das mensagens, o melhor modelo separou as respondidas das não respondidas em 84,1% das comparações quando um homem escreve a uma mulher e em 81,6% quando uma mulher escreve a um homem (AUC). A informação que mais ajudou foi quanto a própria pessoa que recebe costuma responder. Saber se quem escreve cumpre o que a outra pessoa disse procurar ajudou pouco (AUC entre 0,5 e 0,6, sendo 0,5 o acaso). A idade, a renda e a moradia de quem escreve ajudaram a prever a resposta das mulheres e ficaram fora das 15 primeiras para a dos homens.
+- **Ressalva:** a AUC foi medida num conjunto com metade de mensagens respondidas e metade não, e não na proporção do site. O hábito de responder mede quase direto o que se quer prever, como os autores notam. Prever não é causar. Mesmos dados e parte dos mesmos autores de "Who is Dating Whom".
+
+#### Shaw Taylor et al. 2011 (EUA, quatro estudos)
+
+Shaw Taylor L, Fiore AT, Mendelsohn GA, Cheshire C. _"Out of my league": A real-world test of the matching hypothesis_. Personality and Social Psychology Bulletin 37(7):942–954, 2011. https://doi.org/10.1177/0146167211409947. ✅ [Ficha](../studies/taylor-2011-fora-da-minha-liga.md). Dado de plataforma nos Estudos 2 e 4. Força fraca.
+
+- **Achado:** no Estudo 2 (120 perfis de um site, com as fotos avaliadas por juízes), quem escreveu era em média menos bonito que quem recebeu (−0,24 contra 0,09, em notas padronizadas), e quem escreveu a pessoas de beleza mais parecida com a sua teve resposta numa parte maior das mensagens, numa ligação fraca (r = −0,18). No Estudo 4 (registros de mais de um milhão de usuários do site), a popularidade de quem escreve andou junto com a de quem recebe numa medida parecida entre os que responderam e os que não responderam, e escrever a gente de popularidade parecida não andou junto com mais resposta (r = −0,01 nos homens e 0,00 nas mulheres).
+- **Ressalva:** os dois estudos discordam, e os autores não têm explicação firme. O Estudo 2 tem 120 perfis. É o mesmo grupo de pesquisa e a mesma verba da NSF de Fiore 2010; as Fichas não dizem se o site é o mesmo.
+
+#### Lewis 2013 (EUA, OkCupid)
+
+Lewis K. _The limits of racial prejudice_. Proceedings of the National Academy of Sciences 110(47):18814–18819, 2013. https://doi.org/10.1073/pnas.1308501110. ✅ [Ficha](../studies/lewis-2013-preconceito-racial-respostas.md). Dado de plataforma. Força moderada.
+
+- **Amostra:** 126.134 usuários heterossexuais do OkCupid nos EUA, de outubro a meados de dezembro de 2010.
+- **Achado:** a preferência pelo próprio grupo racial foi quase sempre maior em quem manda a primeira mensagem do que em quem decide responder; a exceção foram os homens indianos. Mesmo assim, quem recebeu respondeu em geral mais a alguém do próprio grupo. Mulheres de todos os grupos responderam a homens brancos mais do que a parcela deles entre quem escreveu faria esperar, e homens de todos os grupos responderam a mulheres asiáticas menos. A chance de escrever a alguém foi muito maior quando essa pessoa tinha escrito antes. Quem respondeu a uma mensagem de alguém de outro grupo racial iniciou, na semana seguinte, 115% mais conversas com outro grupo do que usuários parecidos; na segunda semana, a diferença tinha sumido.
+- **Ressalva:** as linhas sobre a resposta a homens brancos e a mulheres asiáticas vêm de um índice do site inteiro, que sai inflado conforme o tamanho do grupo. O autor chama de provisória a leitura de causa da comparação com usuários parecidos.
+
+#### Su & Hu 2019 (China, site de namoro)
+
+Su X, Hu H. _Gender-specific preference in online dating_. EPJ Data Science 8:12, 2019. https://doi.org/10.1140/epjds/s13688-019-0192-x. ✅ [Ficha](../studies/su-2019-preferencia-por-genero.md). Dado de plataforma. Força fraca.
+
+- **Achado:** num site chinês com 548.395 usuários, as medidas de popularidade de quem recebe foram as que mais ajudaram a prever se alguém mandaria mensagem. 90,2% das mensagens de mulheres e 83,3% das de homens foram para alguém de PageRank maior que o de quem escreveu, contra 82,7% e 77,5% se os destinatários fossem ao acaso.
+- **Ressalva:** não há dado de resposta, e o estudo entra aqui só para quem escreve a quem. Duas das medidas de popularidade são feitas das próprias mensagens, e as pessoas escreviam a partir das listas que o site recomendava.
+
+### O texto da mensagem (dados de plataforma)
+
+#### Schöndienst & Dang-Xuan 2011 (Austrália, site de namoro)
+
+Schöndienst V, Dang-Xuan L. _The Role of Linguistic Properties in Online Dating Communication – A Large-Scale Study of Contact Initiation Messages_. PACIS 2011 Proceedings, artigo 169, 2011. https://aisel.aisnet.org/pacis2011/169. ✅ [Ficha](../studies/schondienst-2011-linguagem-primeira-mensagem.md). Dado de plataforma. Força fraca.
+
+- **Amostra:** 167.276 primeiras mensagens entre homem e mulher num grande site australiano, de março de 2009 a julho de 2010. As tabelas contam 154.417 decisões de responder tomadas por mulheres e 12.859 por homens.
+- **Achado:** mais "você" e "seu" andou junto com mais resposta, de homens (b = 0,10) e de mulheres (b = 0,08), e mais "eu" e "me", com menos (b = −0,09 e −0,03). Palavras de lazer, como "filme", andaram junto com menos resposta (b = −0,22 nos homens e −0,15 nas mulheres). Palavras de sexo andaram junto com mais resposta dos homens (b = 0,16) e não mudaram a das mulheres (b = −0,01; p = 0,68). As mulheres responderam um pouco mais a mensagens longas (b = 0,01) e os homens, um pouco menos (b = −0,01). A nota de aparência de quem escreveu pesou mais quando quem decidia era um homem (b = 0,13) do que uma mulher (b = 0,06).
+- **Ressalva:** o artigo não transforma nenhum b em porcentagem de respostas nem diz a unidade das medidas de palavras, então os números dão o sentido, não o tamanho. Cada tipo de palavra entrou sozinho no modelo, só ao lado das notas de aparência. Com 154 mil decisões, diferenças muito pequenas passam no teste. O texto e as tabelas não batem em vários pontos, como a parte das mensagens mandadas por homens (78% no texto, 92% pelas tabelas).
+
+#### OkCupid 2009 (blog da empresa)
+
+Rudder C. _Exactly What To Say In A First Message_. OkTrends (blog oficial do OkCupid), 14 de setembro de 2009. https://gwern.net/doc/psychology/okcupid/exactlywhattosayinafirstmessage.html (cópia do Internet Archive de 2010). 🟡 [Ficha](../studies/okcupid-2009-palavras-primeira-mensagem.md). Dado de plataforma, publicado por empresa. Força fraca.
+
+- **Amostra:** mais de 500 mil primeiros contatos no OkCupid, sem período nem país informados.
+- **Achado:** mensagens com "haha" tiveram resposta em 45% dos casos, com "lol" em 41% e com "hehe" em 33%. A média, que está só na legenda de dois gráficos, foi de 32% para todas as mensagens e 27% para as de homem para mulher. As seis palavras de menor resposta foram internetês ("ur", "r", "u", "ya", "cant" e "hit", que o post conta como gíria), todas abaixo de 10% pelo gráfico. Mensagens com "sexy" ou "beautiful" ficaram abaixo da média. As três saudações mais usadas ("hi", "hey" e "hello") também; mensagem sem saudação teve 27%. Expressões que mostram que o perfil foi lido, como "you mention", passaram de 45% pelo gráfico.
+- **Ressalva:** é um post de empresa, em tom de conselho, sem revisão por pares, sem definição de resposta, sem contagem por palavra e sem os testes. A conta não leva em conta quem escreve nem a quem: quem escreve "ur" pode diferir de quem não escreve em idade, fotos e escolha de destinatário. Os números de gráfico foram lidos a olho na Ficha.
+
+#### Maldeniya et al. 2017 (EUA, site de namoro)
+
+Maldeniya D, Varghese A, Stuart T, Romero DM. _The Role of Optimal Distinctiveness and Homophily in Online Dating_. Proceedings of the Eleventh International AAAI Conference on Web and Social Media (ICWSM 2017) 11(1):616–619, 2017. https://doi.org/10.1609/icwsm.v11i1.14940. ✅ [Ficha](../studies/maldeniya-2017-semelhanca-resposta.md). Dado de plataforma. Força fraca.
+
+- **Amostra:** 410 mil usuários ativos de um site dos EUA, em dez regiões metropolitanas, de setembro a novembro de 2013. A análise usa só primeiras mensagens de homens a mulheres.
+- **Achado:** os homens começaram 86% das conversas. Quanto mais o texto do perfil dele se parecia com o dela, mais ela respondia, e quanto mais se parecia com o dos outros homens que escreveram a ela, menos. O número que mais pesou no modelo foi o hábito dela de responder.
+- **Ressalva:** compara o texto do perfil, não o da mensagem. Pela Figura 2, a resposta fica entre cerca de 17% e 20% em toda a faixa de semelhança: poucos pontos de diferença. O artigo não diz a escala dos números nem quantas mensagens entraram.
+
+O estudo do Tinder em [Fang 2025](../studies/fang-2025-abreviacoes-resposta.md) (Estudo 8, abaixo) também é dado de plataforma sobre o texto: quem abreviava mais tinha conversas mais curtas, mas a abreviação explica menos de 1% da variação (R² = 0,008), e a medida não diz se a primeira mensagem teve resposta.
+
+### O tempo até a mensagem e até a resposta
+
+Nenhum estudo testou se o tempo entre o match e a primeira mensagem muda a chance de resposta. Os dados só descrevem:
+
+- No app de [Zhang & Yasseri 2016](../studies/zhang-2016-conversas-apos-match.md), 15% das primeiras mensagens saíram no minuto do match. Nas conversas que tiveram resposta, metade começou em até 8 horas depois do match (média de 4,2 dias), e 71% das conversas começaram até uma semana depois. A primeira resposta veio em média 2,4 dias depois da primeira mensagem, uma média puxada por poucas conversas lentas. Como o tempo até a primeira mensagem só aparece para as conversas com resposta, não dá para comparar com as que ficaram sem.
+- Nos perfis de teste do Tinder em [Tyson 2016](../studies/tyson-2016-tinder.md), 63% das mensagens dos homens saíram até 5 minutos depois do match, contra 18% das das mulheres.
+- No site chinês de [Xia 2014](../studies/xia-2014-quem-namora-quem.md), metade das respostas saiu em até cerca de 9 horas.
+- No site dos EUA de [Fiore 2010](../studies/fiore-2010-contatos-respostas.md), cada dia a mais de espera pela resposta andou junto com uma chance cerca de 0,7% menor de quem escreveu primeiro mandar outra mensagem. É a demora da resposta, não a da primeira mensagem.
+
+### Resposta real, com sorteio (experimentos de campo)
+
+#### Irrational Labs 2023 (EUA, Tinder)
+
+Frishberg E, Purcell K, Fallick S. _We Sent 1,700 Funny Messages on Tinder. Here's What the Responses Taught Us About Humor in Dating_. Irrational Labs (blog da empresa), 14 de fevereiro de 2023. https://irrationallabs.com/blog/tinder-humor-dating/. 🟡 [Ficha](../studies/irrational-labs-2023-humor-tinder.md). Experimento de campo, publicado por empresa. Força fraca.
+
+- **Desenho:** cinco pesquisadores da empresa usaram o mesmo perfil masculino, cada um numa grande cidade dos EUA, deram "sim" ao maior número de perfis que conseguiram e mandaram a cada mulher de 25 a 45 anos que deu match, por sorteio, uma pergunta sincera ("Hey, what song have you been playing on repeat lately?") ou uma piada ("Hey, did we have class together? I could have sworn we had chemistry."). Foram 1.227 mensagens.
+- **Achado:** pelo gráfico do post, a piada teve 54,97% de resposta e a pergunta, 49,27%, uma diferença de 5,7 pontos (o post fala em "12% mais", uma diferença relativa). O post diz que a diferença não é acaso, sem mostrar o teste.
+- **Ressalva:** um perfil, uma piada e uma pergunta. O post não dá o número de respostas de cada grupo, e quem mandava a mensagem fazia o sorteio. O título fala em 1.700 mensagens e o método, em 1.227. Mede só se houve resposta. A empresa encerra o post oferecendo consultoria a apps de namoro.
+
+#### Lee & Niederle 2015 (Coreia do Sul, site de namoro)
+
+Lee S, Niederle M. _Propose with a rose? Signaling in internet dating markets_. Experimental Economics 18(4):731–755, 2015. https://doi.org/10.1007/s10683-014-9425-9. ✅ PDF da editora, no site de Niederle. [Ficha](../studies/lee-2015-rosa-virtual.md). Experimento de campo. Força moderada.
+
+- **Desenho:** 613 participações em dois eventos de um site sul-coreano, em 2008, de coreanos com faculdade e nunca casados, de 22 a 38 anos. Cada um podia mandar pedidos de encontro, uma nota pronta e igual para todos, a até dez pessoas e prender a alguns uma "rosa virtual". Por sorteio, a maioria ganhou duas rosas e 20%, oito.
+- **Achado:** foram aceitos 295 dos 1.921 pedidos. Para a mesma pessoa, um pedido com rosa teve 3,3 pontos percentuais a mais de chance de aceite que um sem rosa, cerca de 20% da taxa geral. Para quem recebia e era do grupo do meio em desejabilidade, foram 7,8 pontos; o grupo mais desejável não reagiu à rosa. Para comparar, o pedido de alguém do grupo mais desejável teve cerca de 18 pontos a mais de chance de aceite que o de alguém do grupo de baixo. Um aviso na tela que incentivava as mulheres a fazer o pedido não mudou o que elas fizeram.
+- **Ressalva:** a rosa não é uma mensagem, e ninguém escrevia nada. Na contagem simples a diferença é pequena (pedidos feitos a mulheres: 12,3% sem rosa e 12,9% com), e a conta que usa o sorteio dá 4,1 pontos que, no geral, pode ser acaso. O aceite leva à troca de telefones; o artigo não sabe se houve encontro.
+
+#### Bapna et al. 2016 (América do Norte, site de namoro)
+
+Bapna R, Ramaprasad J, Shmueli G, Umyarov A. _One-way mirrors in online dating: A randomized field experiment_. Management Science 62(11):3100–3122, 2016. https://doi.org/10.1287/mnsc.2015.2301. ✅ manuscrito dos autores. [Ficha](../studies/bapna-2016-navegacao-anonima.md). Experimento de campo. Força moderada.
+
+- **Desenho:** 100 mil usuários novos de um grande site da América do Norte; 50 mil, sorteados, ganharam um mês de navegação anônima, em que a visita a um perfil não aparece na lista de visitantes da outra pessoa. "Match", aqui, é uma troca de três ou mais mensagens.
+- **Achado:** antes do experimento, 75% dos matches das mulheres começaram com uma primeira mensagem do homem, e elas receberam mais de dezesseis vezes as mensagens que os homens receberam. Com anonimato, os matches que a outra pessoa começou caíram 18,5% entre as mulheres e 24,7% entre os homens, e os que o próprio usuário começou quase não mudaram. Sem anonimato, cada mulher recebeu no mês, em média, 0,63 primeira mensagem de alguém cujo perfil ela tinha visitado sem escrever; com anonimato, 0,25. As mulheres com anonimato também responderam a uma parcela 10,5% menor de quem escreveu a elas (16,0% contra 17,8%). No mês seguinte, sem anonimato, a diferença sumiu.
+- **Ressalva:** um site e um mês, só usuários novos, heterossexuais e sem assinatura paga; o manuscrito não diz quantos ficaram na análise. O estudo mede o efeito de um sinal, a visita vista, e não do texto.
+
+#### Fang, Zhang & Maglio 2025 (EUA e Reino Unido, oito estudos)
+
+Fang D, Zhang Y (E), Maglio SJ. _Shortcuts to insincerity: Texting abbreviations seem insincere and not worth answering_. Journal of Experimental Psychology: General 154(1):39–57, 2025. https://doi.org/10.1037/xge0001684. ✅ [Ficha](../studies/fang-2025-abreviacoes-resposta.md). Oito estudos pré-registrados, de desenhos diferentes. Força moderada.
+
+- **Situação imaginada:** no Estudo 1, 1.170 pessoas do Prolific viram uma conversa com abreviações ("hru?") ou a mesma por extenso. A nota de vontade de responder foi 5,06 contra 5,65, e a de sinceridade, 5,12 contra 5,67 (de 1 a 7). No Estudo 5, abreviar 10% das palavras já baixou a nota.
+- **Mensagem real, fora do namoro:** no Estudo 4, num canal do Discord sobre anime, 20% dos 1.889 membros responderam à mensagem dos pesquisadores por extenso e 15% à abreviada.
+- **Conversa real com notas:** no Estudo 7, 98 duplas de solteiros heterossexuais da Costa Leste dos EUA conversaram por texto num speed dating online. Quem conversou com o parceiro que usava os termos por extenso deu nota 3,70 à vontade de seguir escrevendo, e quem conversou com o dos termos abreviados, 2,54.
+- **Dado de plataforma:** no Estudo 8, o histórico de 686 usuários do Tinder, de 37 países, mostrou conversas mais curtas entre quem abreviava mais, com R² = 0,008.
+- **Ressalva:** só o Estudo 4 mede uma resposta real, e não é paquera. Vários números do artigo não fecham entre si, e a troca de contato do Estudo 7 ficou fora da Ficha por isso. Num levantamento feito depois, 80% dos participantes previram que abreviar não faria diferença.
+
+### Nota ou resposta escrita diante de uma situação imaginada
+
+#### Lilly & Buehler 2023 (EUA)
+
+Lilly AE, Buehler EM. _Online daters' reactions to sexually explicit initiation messages_. Personal Relationships 30(3):960–979, 2023. https://doi.org/10.1111/pere.12486. ✅ [Ficha](../studies/lilly-2023-mensagem-sexual-explicita.md). Situação imaginada. Força fraca.
+
+- **Amostra:** 275 universitários de uma universidade pública do Meio-Oeste dos EUA, de 18 a 29 anos, que usavam ou já tinham usado app ou site de namoro (184 mulheres, 88 homens), com crédito extra.
+- **Desenho:** cada um foi sorteado para imaginar que um match tinha mandado como primeira mensagem "uma saudação e uma pergunta" ou uma mensagem "de natureza sexualmente explícita". Ninguém viu uma mensagem, só essa frase.
+- **Achado:** a mensagem explícita teve nota 2,83 de quanto a pessoa gostava dela, contra 4,95 da comum, de 1 a 7 (d = 1,46, uma diferença grande). Entre as mulheres, a distância foi de 2,65 pontos; entre os homens, de 1,20. As mulheres deram 2,24 à explícita, e os homens, 3,90, perto do meio da escala. Quem tinha mais motivo de usar o app para sexo casual teve uma distância menor entre as duas notas.
+- **Ressalva:** o estudo não mediu se a pessoa responderia. Saíram da análise 57 pessoas que erraram a pergunta que conferia a condição, e o artigo não diz de que condição eram.
+
+#### Verwers 2021 (Holanda)
+
+Verwers Z. _Humorous at Heart: Opening Lines and Physical Attractiveness on Tinder. An Experimental Study on the Effects of Humorous Opening Lines and Physical Attractiveness on Overall Attractiveness, Intention to Reply and Intention to Date_. Dissertação de mestrado (MSc Communication and Information Sciences), Tilburg University, 18 de janeiro de 2021. https://arno.uvt.nl/show.cgi?fid=156121. ✅ [Ficha](../studies/verwers-2021-humor-abertura-tinder.md). Situação imaginada. Força fraca.
+
+- **Amostra:** 243 jovens, 91,8% de nacionalidade holandesa (91 homens e 152 mulheres, 22 anos em média), pelas redes sociais da pesquisadora.
+- **Desenho:** quatro perfis inventados, dois com foto atraente e dois com foto mediana, mandavam uma primeira mensagem: uma de duas cantadas engraçadas tiradas do Reddit ("Can I show a picture of you to Santa, to show what I want for Christmas?") ou uma de duas comuns ("Hi, how is your day going this far?").
+- **Achado:** a cantada engraçada não rendeu mais intenção de responder que a comum (4,56 contra 4,62; p = 0,517). Com foto atraente, rendeu menos (4,77 contra 5,14; p = 0,007). Com foto mediana, um pouco mais (4,35 contra 4,10), numa diferença que pode ser acaso (p = 0,072). Os homens que receberam a mensagem deram mais intenção de responder à cantada engraçada (5,45 contra 5,09), e as mulheres, menos (4,03 contra 4,34). A foto atraente rendeu mais intenção de responder que a mediana (4,96 contra 4,22).
+- **Ressalva:** dissertação sem revisão por pares. Duas frases de cada tipo, e a autora diz que as engraçadas "não eram muito engraçadas" (a melhor teve 5,05 de 10 no pré-teste). As quatro notas de cada pessoa foram tratadas como casos separados, o que deixa os p otimistas. Na comparação entre homens e mulheres, quem manda a mensagem muda junto com quem recebe.
+
+#### Berkes 2021 (Holanda)
+
+Berkes M. _Original Pick-up Lines in Online Dating and their Effects on Impression Formation: Should they be both Novel and Appropriate?_ Dissertação de mestrado (Communication and Information Sciences, Business Communication and Digital Media), Tilburg University, junho de 2021. https://arno.uvt.nl/show.cgi?fid=154925. ✅ [Ficha](../studies/berkes-2021-cantadas-originais.md). Situação imaginada. Força fraca.
+
+- **Amostra:** 121 pessoas recrutadas por indicação, 76% mulheres, 81,8% holandesas, 59,5% num relacionamento.
+- **Desenho:** cada um leu seis cantadas mostradas como primeira mensagem na tela do Tinder, sem nome nem foto: comuns ("Hey! You remind me of a model, you are so good-looking!"), originais ("Hey! you remind me of a beautiful summer day, you are so joyous!") e aleatórias ("You remind me of my ex, you are just as good-looking!").
+- **Achado:** a nota de chance de responder foi 4,63 para a cantada original, 4,22 para a comum e 4,09 para a aleatória, de 1 a 7. A original ficou 0,41 ponto acima da comum, uma vantagem que some quando se leva em conta o quanto quem mandou parece original.
+- **Ressalva:** para as aleatórias, a diferença que o modelo dá (1,34 ponto) não bate com as médias da tabela (0,54). As aleatórias também diferem das outras por não começar com "Hey!" e, em dois casos, por ter teor sexual. As avaliações foram tratadas como casos separados.
+
+#### Cantos Delgado 2020 (país não informado, espanhol e inglês)
+
+Cantos Delgado C. _Gender, culture and digital communication: A contrastive study of women's reaction to men's conversational starters on Tinder_. Trabajo de Fin de Máster, Facultad de Filología, Universidad Complutense de Madrid, setembro de 2020. https://hdl.handle.net/20.500.14352/9265. ✅ [Ficha](../studies/cantos-delgado-2020-aberturas-tinder.md). Resposta escrita a uma situação imaginada. Força fraca.
+
+- **Amostra:** 94 mulheres de 18 a 30 anos, recrutadas por WhatsApp e Instagram; 84 questionários em espanhol e 51 em inglês, com 41 mulheres respondendo nas duas línguas.
+- **Desenho:** cada uma viu uma abertura de homem, montada como conversa do Tinder com um perfil inventado, e escreveu a resposta que mandaria. A autora classificou o tom de cada resposta.
+- **Achado:** a saudação simples ("Hey!", "Hola!") teve tom positivo em 94,0% das respostas em espanhol e 92,2% em inglês; o elogio à inteligência, em 79,8% e 68,6%; um trocadilho sem sexo ("Titanic. Sorry, that was a bad icebreaker"), em 63,1% e 58,8%. As diferenças entre essas três podem ser acaso. As duas cantadas com referência sexual tiveram cerca de metade das respostas negativas (de 47,1% a 51,0%).
+- **Ressalva:** um exemplo por tipo de abertura. A autora acha que a ordem do questionário pode explicar a boa aceitação da saudação e lembra que no Tinder real muitas mensagens iguais se acumulam. O tom foi classificado só por ela. O texto não diz em que país as participantes moravam nem se usavam o Tinder.
+
+### O que as pessoas dizem num questionário
+
+- [Pew Research Center 2023 e 2020](../studies/pew-2023-2020-online-dating.md). McClain C, Gelles-Watnick R. _From Looking for Love to Swiping the Field: Online Dating in the U.S._ Pew Research Center, 2 de fevereiro de 2023; Anderson M, Vogels EA, Turner E. _The Virtues and Downsides of Online Dating_. Pew Research Center, 6 de fevereiro de 2020. https://www.pewresearch.org/internet/2023/02/02/from-looking-for-love-to-swiping-the-field-online-dating-in-the-u-s/. ✅ Questionário com amostra sorteada e ponderada dos EUA. Força forte. Entre quem usou nos últimos cinco anos, 57% dos homens e 24% das mulheres acharam que receberam poucas mensagens, e 30% das mulheres e 6% dos homens, mensagens demais (2020). Entre quem usou no último ano, 64% dos homens e 40% das mulheres se sentiram inseguros, ao menos às vezes, por receber poucas mensagens (2023). 38% de quem já usou recebeu mensagem sexual explícita sem pedir. É o que as pessoas dizem, não uma contagem, e os dois anos têm públicos diferentes.
+- [Timmermans & Courtois 2018](../studies/timmermans-2018-tinder.md). Timmermans E, Courtois C. _From swiping to casual sex and/or committed relationships: Exploring the experiences of Tinder users_. The Information Society 34(2):59–70, 2018. https://doi.org/10.1080/01972243.2017.1414093. ✅ Questionário com 1.038 usuários do Tinder na Bélgica, de 18 a 29 anos. Força fraca. As mulheres disseram começar menos conversas e receber mais mensagens que os homens. O texto e a tabela divergem no tamanho dessa diferença, e a Ficha fica só com a direção.
+
+### Abordagem cara a cara (evidência vizinha)
+
+Nenhum destes estudos é de app. Entram porque medem frases de abertura ou quem toma a iniciativa.
+
+#### Weber, Goodboy & Cayanus 2010 (EUA)
+
+Weber K, Goodboy AK, Cayanus JL. _Flirting competence: An experimental study on appropriate and effective opening lines_. Communication Research Reports 27(2):184–191, 2010. https://doi.org/10.1080/08824091003738149. ✅ [Ficha](../studies/weber-2010-competencia-em-flerte.md). Cara a cara, em vídeo. Força fraca.
+
+- **Desenho e achado:** 642 universitários viram um de cinco vídeos em que um homem aborda uma mulher num bar e deram notas de 1 a 7. Em eficácia, a apresentação por um amigo em comum teve 4,70; a apresentação direta ("Hi, my name is Josh. What is your name?"), 4,44; o elogio direto, 3,26; a tentativa de humor ("Do you think I look like Johnny Depp?"), 3,02; e a cantada pronta, 2,98. As três últimas não diferiram entre si, nem em eficácia nem em adequação.
+- **Ressalva:** quem dá a nota assiste de fora, não é a mulher abordada. Um vídeo e uma frase por tipo, e os autores não conferiram se a frase de humor pareceu engraçada.
+
+#### Fisher, Coughlin & Wade 2020 (EUA e Canadá)
+
+Fisher ML, Coughlin S, Wade TJ. _Can I have your number? Men's perceived effectiveness of pick-up lines used by women_. Personality and Individual Differences 153:109664, 2020. https://doi.org/10.1016/j.paid.2019.109664. ✅ [Ficha](../studies/fisher-2020-cantadas-de-mulheres.md). Cara a cara, imaginada a partir de fotos. Força fraca.
+
+- **Desenho e achado:** 130 homens heterossexuais recrutados no Reddit deram nota à eficácia de frases de mulheres, cada uma ao lado de uma foto de modelo. A frase direta ("Want to have a drink together?") teve 4,63, a de brincadeira 4,43 e a inócua ("Hi") 3,97. A aparência da mulher na foto pesou mais nas notas que o tipo de frase (eta ao quadrado parcial de 0,66 contra 0,33).
+- **Ressalva:** se a frase de cada foto não mudava entre as versões do questionário, cada média é uma foto e uma frase só. Os graus de liberdade indicam 122 homens na análise, e o artigo tem um trecho truncado.
+
+#### Finkel & Eastwick 2009 (EUA, speed dating)
+
+Finkel EJ, Eastwick PW. _Arbitrary social norms influence sex differences in romantic selectivity_. Psychological Science 20(10):1290–1295, 2009. https://doi.org/10.1111/j.1467-9280.2009.02439.x. ✅ [Ficha](../studies/finkel-2009-quem-se-aproxima.md). Cara a cara, com sorteio. Força fraca.
+
+- **Desenho e achado:** em 15 eventos de speed dating com 350 universitários, um sorteio decidiu, evento a evento, se os homens ou as mulheres iam de mesa em mesa. Quem circulou sentiu mais desejo pelos pares (5,13 contra 4,83, de 1 a 9) e disse "sim" a 47,86% deles, contra 43,07% de quem ficou sentado (p = 0,051, no limite do acaso). Quando as mulheres circularam, a diferença de seletividade entre os sexos no desejo e na química não apareceu.
+- **Ressalva:** é speed dating, não mensagem, e o "sim" fica no limite do acaso. A explicação pela autoconfiança de quem se aproxima é preliminar, e os autores citam outra: ser abordado muitas vezes pode sobrecarregar quem fica sentado.
+
+## Onde os estudos discordam
+
+**Quanto se responde.** A resposta à primeira mensagem vai de 2,55% ([Lin & Lundquist 2013](../studies/lin-2013-raca-genero-respostas.md)) a 51% ([Zhang & Yasseri 2016](../studies/zhang-2016-conversas-apos-match.md)). Parte da diferença vem do tipo de serviço: no app de Zhang & Yasseri só se conversa depois do match, que já filtra muito (nos perfis de teste masculinos de [Tyson 2016](../studies/tyson-2016-tinder.md), 0,6% dos likes viraram match), e no site de Lin & Lundquist qualquer um escrevia a qualquer um, de graça. Também muda o que conta como primeiro contato (Kreager junta mensagem e piscadela), a janela observada (oito semanas em Xia, nove meses em Fiore) e o recorte dos modelos (em Fiore, os contatos dos modelos responderam mais que o site todo).
+
+**Quem tem mais resposta.** Em seis bases de sites (Fiore, Kreager, Bruch & Newman, Lin & Lundquist, Hitsch e Xia), a mensagem de mulher teve resposta mais vezes que a de homem. No único app com match, foi o contrário (53% contra 42%). É um estudo só, fraco e sem identificador de usuário, e a explicação dos autores não foi testada. Uma leitura possível, que nenhum estudo testou, é que no app a seleção de quem responde já aconteceu no match.
+
+**Escrever a quem está "acima".** Os dois estudos moderados que olham isso apontam para o mesmo lado: escrever a pessoas mais procuradas que a gente anda junto com menos resposta ([Bruch & Newman 2018](../studies/bruch-2018-aspirational-pursuit.md), [Fiore 2010](../studies/fiore-2010-contatos-respostas.md)). Em [Shaw Taylor 2011](../studies/taylor-2011-fora-da-minha-liga.md), o resultado muda de um estudo para o outro: beleza parecida andou junto com mais resposta no Estudo 2 (120 perfis), e popularidade parecida não andou no Estudo 4 (mais de um milhão de usuários). As medidas são diferentes: PageRank calculado das mensagens, número de pessoas que escreveram, nota de juízes para a foto. A unidade também: Bruch & Newman olham cada mensagem, e Shaw Taylor, a média de cada usuário. [Kreager 2014](../studies/kreager-2014-iniciativa-respostas.md) mostra o outro lado: pelo modelo, as mulheres que escrevem primeiro acabam conversando com homens mais bem avaliados que elas, e os autores leem que, de tanto tentar gente mais bem avaliada, às vezes dá certo, embora a chance seja pequena. E em [Hitsch 2010](../studies/hitsch-2010-preferencias-primeiro-contato.md) quem estava na faixa mais baixa de aparência não deixou de escrever a quem tinha nota mais alta.
+
+**Humor.** O único teste com resposta real ([Irrational Labs 2023](../studies/irrational-labs-2023-humor-tinder.md)) achou mais resposta para uma piada em forma de pergunta, depois do match. Numa situação imaginada, cantadas engraçadas prontas não aumentaram a intenção de responder e baixaram a das mulheres ([Verwers 2021](../studies/verwers-2021-humor-abertura-tinder.md)). Na resposta escrita de [Cantos Delgado 2020](../studies/cantos-delgado-2020-aberturas-tinder.md), o trocadilho teve a menor parcela de tom positivo entre as três aberturas preferidas, numa diferença que pode ser acaso. Cara a cara, a tentativa de humor ficou junto com a cantada pronta, embaixo ([Weber 2010](../studies/weber-2010-competencia-em-flerte.md)). O tipo de humor muda (uma pergunta com trocadilho, cantadas de internet, uma pergunta sobre Johnny Depp), a medida muda (resposta real, intenção, tom de uma resposta imaginada, nota de quem assiste), e cada estudo usou uma ou duas frases. Nenhum é forte, e o único com resposta real é um post de empresa.
+
+**A saudação simples.** No post do OkCupid, "hi", "hey" e "hello" tiveram resposta abaixo da média, em dados reais sem controle de quem escreve. Em Cantos Delgado, a saudação simples teve a maior parcela de respostas de tom positivo, numa situação imaginada, e a própria autora aponta a ordem do questionário como possível motivo. Cara a cara, a apresentação direta ficou entre as mais bem avaliadas (Weber). São medidas que não se comparam: taxa de resposta real, tom de uma resposta escrita e nota de quem assiste a um vídeo.
+
+**Conteúdo sexual.** Para as mulheres, os estudos concordam: palavras de sexo não mudaram a resposta delas num site australiano ([Schöndienst 2011](../studies/schondienst-2011-linguagem-primeira-mensagem.md)), a mensagem explícita imaginada teve nota bem baixa ([Lilly 2023](../studies/lilly-2023-mensagem-sexual-explicita.md)), e as cantadas sexuais tiveram cerca de metade das respostas negativas (Cantos Delgado). Para os homens, palavras de sexo andaram junto com mais resposta em Schöndienst, e a nota deles à mensagem explícita ficou perto do meio da escala em Lilly. Schöndienst conta a parcela de palavras de sexo numa mensagem real, e Lilly pede que se imagine uma mensagem "sexualmente explícita"; não é a mesma coisa.
+
+**Tamanho da mensagem.** Em Schöndienst, as mulheres responderam um pouco mais a mensagens longas e os homens, um pouco menos. Em Bruch & Newman 2018, mensagem longa andou junto com mais resposta só em parte dos grupos, e o ganho de escrever mais foi pequeno. Nenhum dos dois dá o tamanho do efeito numa porcentagem de respostas.
+
+**Elogio.** No post do OkCupid, palavras de elogio à aparência ficaram abaixo da média. Em [Berkes 2021](../studies/berkes-2021-cantadas-originais.md), um elogio à aparência dito de forma original teve nota maior que um comum. Em Cantos Delgado, o elogio à inteligência ficou entre a saudação e o trocadilho. Cara a cara, o elogio direto ficou embaixo com a cantada pronta (Weber). O que se elogia e como se mede mudam de um estudo para o outro.
+
+**Bases que não são independentes.** Bruch & Newman 2018 e 2019 usam a mesma base, e os dois artigos de Xia et al. 2014 também. Fiore 2010 e Shaw Taylor 2011 são do mesmo grupo e da mesma verba, e as Fichas não dizem se o site é o mesmo. Contar esses pares como replicação exageraria a evidência.
+
+## Brasil
+
+O acervo não tem nenhum estudo do Brasil sobre a primeira mensagem, sobre quem escreve primeiro ou sobre a taxa de resposta. Os estudos acima são dos EUA, do Canadá, da China, da Austrália, do Reino Unido, da Bélgica, da Coreia do Sul e da Holanda; o histórico do Tinder em Fang 2025 vem de 37 países, sem lista. Do Brasil, o acervo tem 458.987 perfis do Tinder em 11 estados ([Araújo 2025](../studies/araujo-2025-perfis-tinder-brasil.md), ✅, fraca), que descrevem o que as pessoas mostram no perfil e não o que acontece depois, e uma pesquisa de painel sobre encontros por app ([Mobile Time/Opinion Box 2025](../studies/mobiletime-2025-apps-relacionamento-brasil.md), 🟡, fraca), sem dado de mensagem. Nada diz se a assimetria entre homens e mulheres, as taxas de resposta ou a preferência racial na resposta valem aqui.
+
+## Resumo em tabela
+
+| Estudo                     | País, N                                           | Tipo de dado                         | O que mede                                   | Achado principal                                                                              | Força    | Lido     |
+| -------------------------- | ------------------------------------------------- | ------------------------------------ | -------------------------------------------- | --------------------------------------------------------------------------------------------- | -------- | -------- |
+| Fiore 2010                 | EUA, 676.500                                      | plataforma (site)                    | quem escreve, quem responde                  | homens fazem 77,1% dos contatos; resposta a elas 26,4%, a eles 15,9%                          | moderada | Ficha ✅ |
+| Kreager 2014               | EUA, 14.533                                       | plataforma (site)                    | quem escreve, quem responde, a quem          | 79% dos contatos dos homens e 58% dos delas sem resposta                                      | moderada | Ficha ✅ |
+| Bruch & Newman 2018        | EUA, ~187 mil                                     | plataforma (site)                    | distância de desejabilidade e resposta       | mais distância, menos resposta; das mais desejáveis, no máximo 21%                            | moderada | Ficha ✅ |
+| Bruch & Newman 2019        | EUA, mesma base                                   | plataforma (site)                    | resposta por cidade e submercado             | NY: homens 15%, mulheres 34% de resposta                                                      | moderada | Ficha ✅ |
+| Lin & Lundquist 2013       | EUA, 933.821                                      | plataforma (site)                    | raça e resposta                              | resposta de 2,55% e 5,62%; mulheres respondem mais a homens brancos                           | moderada | Ficha ✅ |
+| Lewis 2013                 | EUA, 126.134                                      | plataforma (OkCupid)                 | raça na primeira mensagem e na resposta      | preferência pelo próprio grupo maior em quem escreve que em quem responde                     | moderada | Ficha ✅ |
+| Hitsch 2010                | EUA, 6.485                                        | plataforma (site pago)               | a quem se escreve                            | 71% e 56% sem resposta; custo de ser rejeitado perto de zero                                  | moderada | Ficha ✅ |
+| Xia 2014 (quem namora)     | China, 200.000                                    | plataforma (site)                    | quem responde, em quanto tempo               | mulheres respondem a 9,5%, homens a 17,9%; metade das respostas em ~9 h                       | fraca    | Ficha ✅ |
+| Xia 2014 (previsão)        | China, mesma base                                 | plataforma (site)                    | prever a resposta sem o texto                | AUC de 84,1% e 81,6%; o hábito de quem recebe pesa mais                                       | fraca    | Ficha ✅ |
+| Zhang & Yasseri 2016       | EUA, 2,1 milhões de conversas                     | plataforma (app com match)           | resposta e tempo depois do match             | 51% com resposta; homem 53%, mulher 42%                                                       | fraca    | Ficha ✅ |
+| Tyson 2016                 | Reino Unido e EUA, 14 perfis                      | perfis de teste no Tinder            | match e quem escreve                         | 0,6% contra 10,5% de match; 21% das mulheres e 7% dos homens escrevem                         | fraca    | Ficha ✅ |
+| Dinh 2022                  | Reino Unido, 149.440                              | plataforma (eharmony)                | quem começa, ano a ano                       | homens começam mais, e a distância cresceu                                                    | fraca    | Ficha ✅ |
+| Shaw Taylor 2011           | EUA, 120 perfis e mais de 1 milhão                | plataforma (site)                    | semelhança e resposta                        | beleza parecida, um pouco mais de resposta; popularidade parecida, nada                       | fraca    | Ficha ✅ |
+| Su & Hu 2019               | China, 548.395                                    | plataforma (site)                    | a quem se escreve                            | mais para quem é mais popular; sem dado de resposta                                           | fraca    | Ficha ✅ |
+| Schöndienst 2011           | Austrália, 167.276 mensagens                      | plataforma (site)                    | palavras da mensagem e resposta              | mais "você", mais resposta; mais "eu", menos; sem tamanho em %                                | fraca    | Ficha ✅ |
+| OkCupid 2009               | não informado, 500 mil                            | plataforma, post da empresa          | palavras da mensagem e resposta              | internetês e elogio à aparência abaixo da média; sem controle                                 | fraca    | Ficha 🟡 |
+| Maldeniya 2017             | EUA, 410.000                                      | plataforma (site)                    | semelhança do perfil e resposta              | perfil parecido com o dela, mais resposta, de 17% a 20%                                       | fraca    | Ficha ✅ |
+| Irrational Labs 2023       | EUA, 1.227 mensagens                              | experimento de campo, post da empresa | piada contra pergunta no Tinder             | 54,97% contra 49,27% de resposta                                                              | fraca    | Ficha 🟡 |
+| Lee & Niederle 2015        | Coreia do Sul, 613                                | experimento de campo                 | rosa virtual e aceite                        | +3,3 pontos no aceite; não é mensagem                                                         | moderada | Ficha ✅ |
+| Bapna 2016                 | América do Norte, 100.000                         | experimento de campo                 | visita visível e quem escreve                | sem a visita visível, 18,5% a 24,7% menos conversas começadas pelo outro                      | moderada | Ficha ✅ |
+| Fang 2025                  | EUA e Reino Unido, 5.306                          | imaginada, campo fora do namoro, app | abreviações e vontade de responder           | vontade 5,06 contra 5,65; Discord 15% contra 20%                                              | moderada | Ficha ✅ |
+| Lilly 2023                 | EUA, 275                                          | situação imaginada                   | mensagem explícita                           | nota 2,83 contra 4,95; distância maior nas mulheres                                           | fraca    | Ficha ✅ |
+| Verwers 2021               | Holanda, 243                                      | situação imaginada                   | cantada engraçada                            | intenção 4,56 contra 4,62; menor nas mulheres                                                 | fraca    | Ficha ✅ |
+| Berkes 2021                | Holanda, 121                                      | situação imaginada                   | cantada original                             | intenção 4,63 contra 4,22 da comum                                                            | fraca    | Ficha ✅ |
+| Cantos Delgado 2020        | não informado, 94                                 | resposta escrita imaginada           | cinco aberturas no Tinder                    | saudação 94% de tom positivo; cantadas sexuais, metade negativas                              | fraca    | Ficha ✅ |
+| Pew 2023 e 2020            | EUA, 6.034 e 4.860                                | questionário                         | mensagens recebidas                          | 57% dos homens e 24% das mulheres: poucas mensagens                                           | forte    | Ficha ✅ |
+| Timmermans & Courtois 2018 | Bélgica, 1.038                                    | questionário                         | quem começa a conversa                       | mulheres começam menos e recebem mais                                                         | fraca    | Ficha ✅ |
+| Weber 2010                 | EUA, 642                                          | cara a cara, vídeo                   | frases de abordagem                          | amigo e apresentação direta acima de elogio, humor e cantada                                  | fraca    | Ficha ✅ |
+| Fisher 2020                | EUA e Canadá, 130                                 | cara a cara, imaginada               | frases de mulheres                           | direta 4,63; a foto pesa mais que a frase                                                     | fraca    | Ficha ✅ |
+| Finkel & Eastwick 2009     | EUA, 350                                          | cara a cara, speed dating            | quem se aproxima                             | quem circula é menos seletivo                                                                 | fraca    | Ficha ✅ |
+
+## O que foi achado e não lido
+
+A busca do ticket achou estudos que não pude ler, porque o texto completo é fechado. Estão na issue [#687](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/687), com o nome do arquivo para salvar. Não descrevo o resultado deles, porque não os li. Os que mais poderiam mudar a resposta:
+
+1. **Dai M, Robbins R. 2021.** _Exploring the influences of profile perceptions and different pick-up lines on dating outcomes on Tinder: An online experiment_. Computers in Human Behavior 117:106667. https://doi.org/10.1016/j.chb.2020.106667. Pelo título, é um experimento com cantadas no Tinder publicado numa revista com revisão por pares. Entre os estudos lidos, os que testam cantadas em app são duas dissertações e um post de empresa, e é aí que falta evidência mais forte.
+2. **Sharabi LL, Dykstra-DeVette TA. 2019.** _From first email to first date: Strategies for initiating relationships in online dating_. Journal of Social and Personal Relationships 36(11–12):3389–3407. https://doi.org/10.1177/0265407518822780. Segundo a issue, usa os e-mails de 105 participantes, a mesma base da tese de Sharabi de 2015 que está no acervo, com outra codificação; pelo título, liga o primeiro e-mail ao primeiro encontro, que nenhum estudo lido aqui faz.
+3. **Skopek J, Schulz F, Blossfeld H-P. 2011.** _Who contacts whom? Educational homophily in online mate selection_. European Sociological Review 27(2):180–195. https://doi.org/10.1093/esr/jcp068. E **Schulz F, Skopek J, Blossfeld H-P. 2010.** _Partnerwahl als konsensuelle Entscheidung_. Kölner Zeitschrift für Soziologie und Sozialpsychologie 62(3):485–514. https://doi.org/10.1007/s11577-010-0107-0. Pelos títulos, tratam de quem contata quem no namoro online e da escolha de parceiro como decisão dos dois lados, numa revista europeia e numa alemã. Poderiam trazer dados de plataforma de fora dos EUA e da China.
+4. **Cunningham MR. 1989.** _Reactions to heterosexual opening gambits: Female selectivity and male responsiveness_. Personality and Social Psychology Bulletin 15(1):27–41. https://doi.org/10.1177/0146167289151003. E **Kleinke CL, Meeker FB, Staneski RA. 1986.** _Preference for opening lines: Comparing ratings by men and women_. Sex Roles 15(11–12):585–600. https://doi.org/10.1007/BF00288216. Dois estudos antigos sobre frases de abordagem cara a cara, que dariam uma base de comparação para Weber 2010 e Fisher 2020.
+5. **Wade TJ, Butrie LK, Hoffman KM. 2009.** _Women's direct opening lines are perceived as most effective_. Personality and Individual Differences 47(2):145–149. https://doi.org/10.1016/j.paid.2009.02.016. Do mesmo grupo de Fisher 2020 (Wade é autor dos dois), também sobre frases de mulheres.
+
+A issue lista ainda Bale et al. 2006, Cooper et al. 2007, Levine et al. 1994 e Senko & Fyffe 2010, todos sobre cantadas cara a cara.
+
+## O que isso muda nos Guias e nas Dicas
+
+O Guia `onde-conhecer-pessoas` diz, com [Bruch & Newman 2018](../studies/bruch-2018-aspirational-pursuit.md), que os homens mandam mais de 80% das primeiras mensagens e que as mulheres respondem a menos de 20%. Isso se sustenta para sites de namoro, e agora com outras bases reais de força moderada que apontam o mesmo ([Fiore 2010](../studies/fiore-2010-contatos-respostas.md), [Kreager 2014](../studies/kreager-2014-iniciativa-respostas.md), [Lin & Lundquist 2013](../studies/lin-2013-raca-genero-respostas.md), [Hitsch 2010](../studies/hitsch-2010-preferencias-primeiro-contato.md)). Para apps em que só se conversa depois do match, o Guia não deveria estender a taxa de resposta sem aviso: o único estudo que a contou num app desse tipo achou 51% de conversas com resposta e mais resposta para a mensagem de homem, e nos perfis de teste de [Tyson 2016](../studies/tyson-2016-tinder.md), ambos fracos, a assimetria aparece antes, no match (0,6% contra 10,5% dos likes). Nenhum desses números é do Brasil, e o Guia precisa dizer isso.
+
+A Dica `mensagem-um-pouco-acima` se apoia só em Bruch & Newman 2018. [Fiore 2010](../studies/fiore-2010-contatos-respostas.md) aponta no mesmo sentido e pode entrar como segunda Ficha. [Shaw Taylor 2011](../studies/taylor-2011-fora-da-minha-liga.md), no estudo de mais de um milhão de usuários, não achou ligação entre escrever a gente de popularidade parecida e receber mais resposta, e a Dica deveria saber que essa ligação não aparece em todas as medidas.
+
+Nenhum Guia ou Dica pode afirmar, acima de Confiança fraca, que um tipo de primeira mensagem (piada, pergunta, elogio, citar o perfil, saudação simples) tenha mais resposta num app. Os dados de plataforma sobre o texto são de associação e fracos, o único teste com resposta real é um post de empresa com uma piada e uma pergunta, e sobre humor os estudos discordam. A Dica `humor`, que fala do humor na escolha de parceiro, não deveria ser estendida à primeira mensagem com estes estudos. Sobre a mensagem sexualmente explícita, um Guia pode dizer que, em situações imaginadas, ela leva notas bem piores, sobretudo das mulheres, com Confiança fraca, e citar o [Pew](../studies/pew-2023-2020-online-dating.md) para quantos já receberam uma sem pedir. Sobre abreviações, [Fang 2025](../studies/fang-2025-abreviacoes-resposta.md) é moderada, mas a parte de namoro é imaginada ou feita de notas; um Guia que o cite deve dizer que a única resposta real medida foi fora do namoro. Sobre o tempo entre o match e a primeira mensagem, um Guia só pode descrever o que os estudos contaram, sem dizer que a demora muda a chance de resposta.
