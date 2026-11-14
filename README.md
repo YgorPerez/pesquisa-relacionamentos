@@ -80,6 +80,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Outros países
 
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
+- [Antar & Stephen 2021](studies/antar-2021-sociossexualidade-formato-rosto.md): formato do rosto e abertura a sexo casual · ✅ · fraca
 - [Apostolou, O & Esposito 2020](studies/apostolou-2020-motivos-solteiro.md): por que os solteiros dizem estar solteiros · ✅ · fraca
 - [Apostolou et al. 2026](studies/apostolou-2026-capacidade-manter-parceiro.md): capacidade de manter um parceiro e solteirice · ✅ · fraca
 - [Arlt, Pöschl & Döring 2008](studies/arlt-2008-sms-sem-resposta.md): SMS sem resposta depois de uma festa · ✅ · fraca
@@ -95,6 +96,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
+- [Boothroyd et al. 2008](studies/boothroyd-2008-sociossexualidade-rosto.md): abertura a sexo casual julgada pela foto do rosto · ✅ · fraca
 - [Bowman et al. 2025](studies/bowman-2025-apps-saude.md): apps de namoro, imagem corporal e saúde mental · ✅ · fraca
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
@@ -223,10 +225,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Sprecher 2021](studies/sprecher-2021-expectativas-video.md): o que se espera antes e o quanto se gosta depois de uma conversa por vídeo · ✅ · fraca
+- [Sprecher et al. 2026](studies/sprecher-2026-autoestima-sociossexualidade-julgada.md): autoestima, gênero e a abertura a sexo casual que se supõe · ✅ · fraca
 - [Stanley, Markman & Whitton 2002](studies/stanley-2002-comunicacao-conflito-compromisso.md): comunicação, conflito e compromisso numa pesquisa nacional · ✅ · moderada
 - [Stanley et al. 2010](studies/stanley-2010-coabitacao-noivado.md): coabitação antes do noivado e divórcio no primeiro casamento · ✅ · fraca
 - [Stavang et al. 2026](studies/stavang-2026-exigencia-anos-solteiro.md): ser exigente e os anos passados solteiro, na Noruega · ✅ · moderada
 - [Stevic et al. 2025](studies/stevic-2025-motivos-solidao.md): motivo para usar app de namoro, sucesso percebido e solidão · ✅ · fraca
+- [Stillman & Maner 2009](studies/stillman-2009-sociossexualidade-percepcao.md): abertura a sexo casual julgada num vídeo curto · ✅ · fraca
 - [Stoeber 2012](studies/stoeber-2012-perfeccionismo-parceiro.md): exigir perfeição do parceiro e satisfação no namoro · ✅ · fraca
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
