@@ -12,7 +12,7 @@ sample:
   n: 11869
   description: "120 experimentos (98 artigos) com o Cyberball, um jogo de passar bola no computador em que o participante é excluído ou incluído por jogadores virtuais, com sorteio entre grupos; 11.869 participantes, média de 39% de homens e idade média de cerca de 20,5 anos. 52% dos estudos dos EUA, 45% de outros países ocidentais e 3% da Ásia."
   representative: false
-design: meta-analysis
+design: meta-analysis-of-experiments
 conflict: "Financiado pela Organização Holandesa para Pesquisa Científica (NWO) e pela National Science Foundation (EUA). Os autores declaram não ter conflito de interesse; Kipling Williams, coautor, criou o Cyberball."
 covers:
   genders: [man, woman]

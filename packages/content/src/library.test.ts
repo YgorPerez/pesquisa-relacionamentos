@@ -137,7 +137,7 @@ describe('build errors', () => {
     expect(errors).toEqual(
       expect.arrayContaining([
         `${file}: strength: value outside the closed list (strong | moderate | weak) (got "muito-forte")`,
-        `${file}: design: value outside the closed list (longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis | review) (got "survey")`,
+        `${file}: design: value outside the closed list (longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis | meta-analysis-of-experiments | review) (got "survey")`,
         `${file}: covers.genders.1: value outside the closed list (man | woman) (got "outro")`,
         `${file}: covers.seeks.0: value outside the closed list (men | women) (got "ambos")`,
         `${file}: covers.couple: value outside the closed list (different-sex | same-sex) (got "misto")`,

@@ -23,8 +23,13 @@ sample:
   description: "<n, quem são, como foram recrutados>"
   # true só se a amostra for probabilística/representativa da população.
   representative: false
-# longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis | review
+# longitudinal | cross-sectional | experiment | platform | administrative | meta-analysis | meta-analysis-of-experiments | review
 # meta-analysis só quando os autores juntam os números dos estudos numa estimativa.
+# meta-analysis-of-experiments quando os estudos somados são experimentos (o pesquisador
+# sorteou ou provocou a condição). Se mistura experimentos e estudos que só observam, só
+# quando os achados da Ficha vêm da parte experimental; senão, meta-analysis. No diagrama
+# de um Guia, só um experiment ou uma meta-analysis-of-experiments sustenta a seta de
+# "um estudo testou a causa".
 # Uma revisão (narrativa, sistemática ou de escopo) que só descreve os estudos é review.
 design: <design>
 # Financiamento e conflitos de interesse. Omita só se não houver informação nenhuma.
