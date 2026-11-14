@@ -46,7 +46,7 @@ O contexto não é romântico nem de amizade: a conversa foi com um desconhecido
 | Segunda mensagem durante a espera | Cinco participantes que receberam a resposta demorada mandaram uma segunda mensagem enquanto esperavam | Discussion (p. 34) | "five participants who received a long delayed response sent a second message while they were waiting" |
 | Hábito de conferir se a mensagem foi lida | 57,6% dos estudantes disseram que, quando esperam uma resposta, acompanham se a mensagem foi lida; 41,6% disseram não fazer nada | Method, Participants (p. 24) | "57.6% of the students reported that they monitor whether a message has been read when they send a message when they are waiting for an answer compared with the 41.6% of the participants who reported doing nothing in the same case" |
 
-As notas de satisfação vão de 1 a 7, e a de ter esperado muito usa uma escala de 7 pontos. "p" é a chance de uma diferença desse tamanho aparecer só por acaso: quanto menor, menos provável que seja acaso. "η²" é a parte da variação das notas ligada à combinação de demora e confirmação, de 0 a 1. O `pdftotext` solta a Tabela 2 em números seguidos; os Trechos dela copiam a sequência como ela sai, e a coluna Onde diz de que linha vêm.
+As notas de satisfação vão de 1 a 7, e a de ter esperado muito usa uma escala de 7 pontos. O teste dessa pergunta tem 138 graus de liberdade (t(138)), o que dá 140 pessoas: as 125 da análise e as 15 que erraram a cor dos tiques. "p" é a chance de uma diferença desse tamanho aparecer só por acaso: quanto menor, menos provável que seja acaso. "η²" é a parte da variação das notas ligada à combinação de demora e confirmação, de 0 a 1. O `pdftotext` solta a Tabela 2 em números seguidos; os Trechos dela copiam a sequência como ela sai, e a coluna Onde diz de que linha vêm.
 
 ## Definições
 
@@ -59,7 +59,7 @@ As notas de satisfação vão de 1 a 7, e a de ter esperado muito usa uma escala
 - O estudo não é sobre paquera, namoro nem amizade. A conversa foi com quem conduzia o experimento, um desconhecido, numa mensagem e uma resposta. A autora diz que escolheu desconhecidos para isolar o efeito e que isso custa aplicação à vida real, em que as pessoas conversam com quem conhecem.
 - O participante pedia um link de que precisava para terminar a pesquisa em até 30 minutos e ganhar o crédito. Ele também foi avisado de que haveria perguntas sobre a conversa e instruído a esperar nela atento a qualquer detalhe. A atenção aos tiques e à espera pode ser maior que numa conversa comum.
 - A demora longa foi de 5 a 6 minutos. A autora diz que talvez não seja longa o bastante para atrapalhar a conversa e que não há consenso sobre o que é demora curta ou longa em aplicativos de mensagem.
-- É uma dissertação de mestrado, com estudantes de um só curso de uma universidade, a maioria com vinte e poucos anos e 70,4% mulheres. A autora diz que a amostra pode não representar os usuários de WhatsApp da Holanda.
+- É uma dissertação de mestrado, com estudantes de uma só área de uma universidade, a maioria com vinte e poucos anos e 70,4% mulheres. A autora diz que a amostra pode não representar os usuários de WhatsApp da Holanda.
 - A distribuição nas condições foi por blocos de horário, não pessoa a pessoa.
 - Quinze pessoas saíram da análise por errarem a cor dos tiques: 59 de 70 acertaram na condição sem confirmação de leitura e 66 de 70 na condição com confirmação.
 - As notas de satisfação não seguem a distribuição normal que o teste supõe, e a autora pede cautela na leitura.
