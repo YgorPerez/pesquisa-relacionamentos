@@ -210,6 +210,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sedgewick et al. 2017](studies/sedgewick-2017-angulo-selfie-tinder.md): ângulo da câmera nas selfies de perfil do Tinder · ✅ · fraca
+- [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
@@ -253,9 +254,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
 - [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
+- [Zytko et al. 2020](studies/zytko-2020-interface-decisao-encontro.md): uma interface de mensagens e a vontade de sair depois do encontro · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
+- [Antheunis et al. 2020](studies/antheunis-2020-texto-video-presencial.md): chat ou vídeo antes do encontro pessoal · ✅ · fraca
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
