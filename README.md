@@ -191,6 +191,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Stavang et al. 2026](studies/stavang-2026-exigencia-anos-solteiro.md): ser exigente e os anos passados solteiro, na Noruega · ✅ · moderada
 - [Stevic et al. 2025](studies/stevic-2025-motivos-solidao.md): motivo para usar app de namoro, sucesso percebido e solidão · ✅ · fraca
 - [Stoeber 2012](studies/stoeber-2012-perfeccionismo-parceiro.md): exigir perfeição do parceiro e satisfação no namoro · ✅ · fraca
+- [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
@@ -223,6 +224,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
+- [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
@@ -232,6 +234,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
+- [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 
 <!-- /study-index -->
