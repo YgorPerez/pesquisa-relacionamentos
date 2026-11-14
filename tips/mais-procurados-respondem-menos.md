@@ -6,6 +6,7 @@ fact_sheets:
     taylor-2011-fora-da-minha-liga,
   ]
 strength: moderate
+previous: [mensagem-um-pouco-acima]
 seo: { title: "Quem recebe muitas mensagens responde a uma parte menor" }
 ---
 

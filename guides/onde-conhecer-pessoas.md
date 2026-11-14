@@ -755,7 +755,7 @@ takeaways:
   [
     apps-como-complemento,
     convivencia-repetida,
-    mensagem-um-pouco-acima,
+    mais-procurados-respondem-menos,
     seguranca-no-app,
   ]
 related:
