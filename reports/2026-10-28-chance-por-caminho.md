@@ -86,7 +86,7 @@ Os seis primeiros já têm Ficha.
 
 ### Outros caminhos com denominador, mas sem comparação
 
-- Asendorpf JB, Penke L, Back MD. _From Dating to Mating and Relating: Predictors of Initial and Long-Term Outcomes of Speed-Dating in a Community Sample_. European Journal of Personality 25(1):16–30, 2011. https://doi.org/10.1002/per.768. 🟡 só o resumo (a cópia do autor, na HU Berlin, estava atrás de uma verificação anti-robô). São 382 pessoas de 18 a 54 anos em speed dating na Alemanha, seguidas por um ano. Pelo resumo, a chance de namorar um parceiro do speed dating foi de 4% e a de transar com ele, de 6%. Não sei se a base são todos os pares ou só os que se escolheram. É uma taxa por contato num evento presencial, sem comparação com outro caminho.
+- [Asendorpf, Penke & Back 2011](../studies/asendorpf-2011-speed-dating-acompanhamento.md): 382 solteiros heterossexuais de 18 a 54 anos, em 17 sessões gratuitas de speed dating em Berlim, seguidos por um ano. A base é todo participante do evento, não só quem teve escolha correspondida: na estimativa dos autores, a chance de transar com um par em algum momento do ano seguinte foi de 5,8%, e a de estar num relacionamento com um par 1 ano depois, de 4,4% (o resumo arredonda para 6% e 4%). A conta multiplica a chance por par correspondido pelo número médio de pares correspondidos e pela parte dos participantes que teve algum. Os autores a convertem em 75 horas e 750 euros por namoro, supondo eventos de 3 horas a 30 euros; é uma suposição, não uma medida. Força fraca. É uma taxa por evento presencial, sem comparação com outro caminho.
 - Visser L, Pat-El R, Lataster J, van Lankveld J, Jacobs N. _The Relation Between Big Five Personality Traits and Relationship Formation Through Matchmaking_. Psychology International 7(2):52, 2025. https://doi.org/10.3390/psycholint7020052. 🟡 só o resumo (o site da MDPI bloqueou o download). São 1.704 clientes de uma agência de casamento na Holanda, com idade média de 62,5 anos, e sucesso quer dizer estar numa relação há pelo menos três meses. O resumo não dá a taxa de sucesso, e a personalidade não previu nada.
 
 #### Hall 2018 (horas para fazer um amigo)
@@ -105,7 +105,7 @@ Hall JA. _How many hours does it take to make a friend?_ Journal of Social and P
 | Erevik 2020             | Noruega, 2.385                         | usa e não usa Tinder           | não                            | não                                                          | Ficha ✅ |
 | Büyükeren 2026          | EUA, campi                             | chegada do Tinder              | não                            | quase-experimento                                            | Ficha ✅ |
 | Rosenfeld 2018          | EUA, 413 héteros sem parceiro          | solteiros                      | não (encontros, não namoros)   | não                                                          | Ficha ✅ |
-| Asendorpf 2011          | Alemanha, 382                          | pares de speed dating          | não                            | não                                                          | 🟡       |
+| Asendorpf 2011          | Alemanha, 382                          | participantes do speed dating  | não                            | não                                                          | Ficha ✅ |
 
 ## O que isso muda no Guia
 
@@ -124,11 +124,11 @@ Se o Guia mudar sem o parágrafo sobre Miwa, o mínimo honesto é tirar o absolu
 1. **Miwa 2010**, JLPS. Sem DOI; PDF aberto no site do CSRDA, Universidade de Tóquio. É o único estudo que responde à pergunta. Força fraca (amostra não representativa, taxa de resposta de 36%, working paper e poucos casos por atividade), apesar do painel nacional e do ajuste por propensão. Já tem [Ficha](../studies/miwa-2010-busca-por-caminho.md).
 2. **Recruit Bridal Research 2024**, _婚活実態調査2024_. Sem DOI; PDFs abertos. A única fonte com taxa por caminho lado a lado, presencial incluído. Força fraca (painel online, empresa do ramo, base em quem casou). Já tem [Ficha](../studies/recruit-2024-konkatsu.md).
 3. **Hogan, Dutton & Li 2011**. DOI 10.2139/ssrn.1763884; aberto (green) no site do OII. Tem a taxa grosseira por lugar e uma amostra brasileira. Força fraca (painel online, financiado pelo eHarmony, sem peso). Já tem [Ficha](../studies/hogan-2011-me-myspouse.md).
-4. **Asendorpf, Penke & Back 2011**. DOI 10.1002/per.768; fechado na editora, cópia do autor na HU Berlin atrás de verificação anti-robô. Só se o texto completo for obtido, para saber a base dos 4%.
+4. **Asendorpf, Penke & Back 2011**. DOI 10.1002/per.768. O texto completo mostrou a base dos 4%: todo participante do evento, numa estimativa dos autores. Força fraca (uma amostra de voluntários, que não representa uma população, e poucos casos). Já tem [Ficha](../studies/asendorpf-2011-speed-dating-acompanhamento.md).
 
 ## O que não consegui acessar
 
 - Visser et al. 2025: a MDPI devolveu 403 em todas as rotas; só o resumo, que não dá a taxa de sucesso.
 - Potârcă 2025, capítulo _Dating and online partnership formation_ (Elgar, DOI 10.4337/9781803923383.00019, marcado como aberto): o download voltou vazio por bloqueio anti-robô. É uma revisão e pode citar algo que me escapou.
-- A cópia do autor de Asendorpf 2011, atrás de verificação anti-robô na HU Berlin.
+- A cópia do autor de Asendorpf 2011, atrás de verificação anti-robô na HU Berlin. O texto completo foi obtido depois e tem [Ficha](../studies/asendorpf-2011-speed-dating-acompanhamento.md).
 - Não procurei as fontes que Miwa cita sobre agências: Miwa 2008, SSJDA RP 39, e o relatório do METI de 2006 sobre a taxa de namoros que saem das agências.
