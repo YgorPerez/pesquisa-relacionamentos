@@ -10,7 +10,7 @@ period: "Artigos publicados de 1997 a setembro de 2019"
 sample:
   description: "71 artigos quantitativos revisados por pares, em inglês, achados no PsycINFO e no Web of Science e nas referências deles, que medem alguma experiência sexual casual (ficada, amizade colorida, sexo de uma noite, 'booty call') e alguma reação emocional ou indicador de saúde emocional. 13 com adolescentes, 48 com universitários, 3 com jovens com e sem faculdade e 7 com adultos de várias idades; 44 transversais e 27 longitudinais. A maioria é dos EUA. Ficaram de fora estudos de infidelidade e estudos qualitativos."
   representative: false
-design: meta-analysis
+design: review
 conflict: "Financiada pelo National Institute of Mental Health (auxílios T32MH019985 e P30MH052776). As autoras declaram não ter conflito de interesse."
 covers:
   genders: [man, woman]

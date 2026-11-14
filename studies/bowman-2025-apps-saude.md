@@ -12,8 +12,7 @@ sample:
   n: 45
   description: "45 estudos revisados por pares, quantitativos, qualitativos ou mistos, encontrados em seis bases; amostras de 13 a 5.253 participantes, com mediana de 322. Incluem universitários, adultos, homens de minorias sexuais, mulheres de minorias sexuais e homens héteros. O artigo não informa um total agregado de participantes; parte dos estudos é multinacional ou não informa o país."
   representative: false
-# The schema groups research syntheses here; this review has no pooled effects.
-design: meta-analysis
+design: review
 conflict: "Os autores declaram não ter interesses financeiros ou relações pessoais que possam ter influenciado o trabalho. O texto completo não informa financiamento."
 covers:
   genders: [man, woman]
