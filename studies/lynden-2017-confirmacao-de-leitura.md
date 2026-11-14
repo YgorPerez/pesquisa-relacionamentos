@@ -4,11 +4,11 @@ link: https://tidsskrift.dk/mef-journal/article/view/28781
 status: verified
 verified_on: 2026-11-14
 strength: weak
-strength_reason: "Dez entrevistas e um questionário com cerca de cem estudantes de humanas de uma universidade, abordados no campus e em grupos de Facebook; só porcentagens, sem teste de diferença, e o artigo dá dois totais de respondentes sem explicar."
+strength_reason: "Dez entrevistas e um questionário com cerca de cem estudantes de humanas de uma universidade, abordados no campus e em grupos de Facebook; só porcentagens, sem teste de diferença."
 countries: [Dinamarca]
 period: "não informado no texto lido (a pesquisa toda coube em três semanas; o artigo cita uma busca feita em maio de 2016)"
 sample:
-  description: "Entrevistas: 10 estudantes de humanas da Universidade de Copenhague, de 20 a 29 anos, escolhidos para variar em gênero, curso e nacionalidade. Questionário: 108 pessoas (67 mulheres e 41 homens) abordadas no campus de humanas da mesma universidade, em troca de um café, e em grupos de Facebook de lá; as figuras trazem 101 respostas. As perguntas são sobre conversas por aplicativo em geral, não sobre paquera ou namoro."
+  description: "Entrevistas: 10 estudantes de humanas da Universidade de Copenhague, de 20 a 29 anos, escolhidos para variar em gênero, curso e nacionalidade. Questionário: 108 pessoas (67 mulheres e 41 homens) abordadas no campus de humanas da mesma universidade, em troca de um café, e em grupos de Facebook de lá; 101 delas usavam aplicativos de mensagem e seguiram no questionário. As perguntas são sobre conversas por aplicativo em geral, não sobre paquera ou namoro."
   representative: false
 design: cross-sectional
 conflict: "O artigo não declara financiamento nem conflito de interesses; os autores o descrevem como um projeto de estudantes."
@@ -43,7 +43,7 @@ Não é um estudo de paquera ou namoro. As perguntas valem para qualquer convers
 | Se sabem desligar | Mais de um terço não sabia como mudar a configuração | Findings, Attitudes (p. 24) | "Over a third of the respondents did not know how to change settings." |
 | Sozinho ou acompanhado | As pessoas disseram reparar mais na confirmação de leitura quando estão sozinhas do que quando estão com outras pessoas | Findings, Situational factors (p. 25) | "Respondents reported being more aware of read receipts when alone than when in the company of others." |
 | Com quem mais reparam | As pessoas disseram reparar mais na confirmação de leitura quando falam com alguém com quem estão saindo do que nos outros tipos de relação perguntados | Findings, Relationship factors (p. 25) | "A dating context seems to be where people are most aware of read receipts, which confirms the findings of the qualitative phase." |
-| Com a família | Com a família, as pessoas disseram se preocupar menos com a confirmação de leitura | Findings, Relationship factors (p. 25) | "When dealing with family, close friends or co-workers, respondents seem less concerned." |
+| Com a família | Com a família, as pessoas disseram reparar menos na confirmação de leitura | Findings, Relationship factors (p. 25); Fig. 9 (p. 26) | "When dealing with family, close friends or co-workers, respondents seem less concerned." |
 | Entrevistas: quem recebe | Todos os entrevistados tinham algum jeito de não deixar a mensagem aparecer como lida, como ler só o começo na tela inicial do celular ou não abrir o aplicativo | Qualitative phase, Effects on receiver (p. 14) | "all participants employed avoidance strategies such as reading snippets on the mobile home screen or avoiding opening the application or the message" |
 | Entrevistas: quem envia | Para quem enviou, ver a mensagem como lida e ficar sem resposta pode trazer a preocupação de estar sendo ignorado | Qualitative phase, Effects on sender (p. 14) | "For the sender, the message being marked as “read” can cause concern about "being ignored"" |
 | Entrevistas: encontros | Nas entrevistas, sair com alguém foi o contexto em que as pessoas mais reparavam na confirmação de leitura: ela entra num "jogo" em que cada um tenta não parecer desesperado | Qualitative phase, Influencing factors (p. 17) | "The read receipt becomes part of a "mind game" in which people attempt to seem "not desperate". It is here that participants were most aware of the feature" |
@@ -51,7 +51,7 @@ Não é um estudo de paquera ou namoro. As perguntas valem para qualquer convers
 
 As páginas são as da revista (o artigo vai da 5 à 34). O artigo traz só porcentagens, sem teste que diga se uma diferença pode ser acaso.
 
-As figuras do artigo trazem "(101 responses)" em cada pergunta, e quem não usava aplicativos de mensagem saiu do questionário. A Figura 6 tem 94 respostas à pergunta sobre como a pessoa evita marcar a mensagem como lida: 81,9% disseram que evitam abrir a mensagem e 9,6% que evitam abrir o aplicativo.
+As Figuras 4 e 5 trazem "(101 responses)", as contagens da Figura 7 somam 101, e quem não usava aplicativos de mensagem saiu do questionário. A Figura 6 tem 94 respostas à pergunta sobre como a pessoa evita marcar a mensagem como lida: 81,9% disseram que evitam abrir a mensagem e 9,6% que evitam abrir o aplicativo.
 
 Na Figura 9, a pergunta é em que tipos de relação a pessoa repara mais ou menos na confirmação de leitura, com as opções "Less aware", "No difference" e "More aware". "More aware" é a mais marcada para "A date" e para "Girlfriend or Boyfriend"; "Less aware" é a mais marcada para "Family". Para "Close friends", as três opções ficam quase empatadas.
 
@@ -59,10 +59,10 @@ Na Figura 9, a pergunta é em que tipos de relação a pessoa repara mais ou men
 
 - Não é um estudo de paquera ou namoro. Sobre encontros, ele traz os relatos de dez entrevistas e uma pergunta em que os estudantes disseram reparar mais na confirmação de leitura nesse contexto. Ele não mede se a confirmação de leitura ou a demora em responder muda o interesse de alguém.
 - A amostra é de conveniência: estudantes de humanas de uma universidade, muitos de comunicação, que os autores abordaram no campus e em grupos de Facebook. Os autores escrevem que não podem generalizar para além dela ("we cannot confidently draw conclusions beyond our sample").
-- O método fala em 108 respondentes e os resultados em "the 101 respondents"; as figuras trazem 101 respostas. O artigo não explica a diferença, e a frase que traz os 101 ("Of the 101 respondents, 93.5% use MIM apps") não fecha com o resto. A Ficha não usa essa porcentagem.
+- O método fala em 108 respondentes e os resultados em "the 101 respondents"; as Figuras 4, 5 e 7 trazem 101 respostas. O artigo não explica a diferença, mas os números dele explicam: 101 é 93,5% de 108, a porcentagem que o artigo dá para quem usa aplicativos de mensagem, e quem não usava saiu do questionário. A frase "Of the 101 respondents, 93.5% use MIM apps" está mal escrita: as porcentagens de cada aplicativo que vêm depois dela (94,1%, 37,6% e 60,4%) só fecham com 101 pessoas. As 67 mulheres e os 41 homens somam 108, então o artigo não diz quantas mulheres e quantos homens ficaram entre os 101.
 - O texto diz que 93% evitam marcar a mensagem como lida "specifically, by not opening the message at all". A Figura 6 mostra outra coisa: 94 pessoas responderam à pergunta e, delas, 81,9% disseram que evitam abrir a mensagem. A Ficha fica com o que os dois sustentam.
 - Sobre namorados, o artigo se contradiz. Os resultados e a Figura 9 dizem que as pessoas reparam mais na confirmação de leitura com namorado ou namorada; a discussão diz que reparam menos ("with a girlfriend or boyfriend, they are less aware of read receipts"). Por isso não há linha sobre namorados.
-- O texto junta família, amigos próximos e colegas de trabalho como relações em que as pessoas se preocupam menos. A Figura 9 só mostra isso com clareza para a família; para amigos próximos, as respostas ficam divididas.
+- O texto junta família, amigos próximos e colegas de trabalho como relações em que as pessoas se preocupam menos ("seem less concerned"). A pergunta da Figura 9 era sobre reparar mais ou menos, não sobre se preocupar, e ela só mostra "Less aware" na frente com clareza para a família; para amigos próximos, as respostas ficam divididas.
 - A diferença entre mulheres e homens vem sem teste e sem o número de pessoas em cada grupo. Os autores ressalvam que os homens podem só dizer que se afetam menos.
 - Tudo é o que a pessoa diz sentir e fazer. Ninguém observou o comportamento, e "reparar mais" na confirmação de leitura não é o mesmo que se incomodar mais com ela.
 - Os autores dizem que o questionário ficou com perguntas demais (30) para o tamanho da amostra e que os cruzamentos entre emoções, atitudes e comportamentos foram "generally uninformative".
