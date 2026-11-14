@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Universitárias ouviram que homens de outras universidades tinham visto o perfil delas no Facebook e dado uma nota de quanto achavam que se dariam bem com cada uma. Depois, cada participante viu quatro perfis de homens, todos inventados pelos pesquisadores. Por sorteio, um grupo ouviu que aqueles eram os homens que mais gostaram dela, outro que eram os que deram nota média, e o terceiro que podiam ser uns ou outros, sem dizer qual (o grupo da incerteza). O estudo comparou a atração pelos homens, o quanto elas disseram ter pensado neles e o humor.
+Universitárias ouviram que homens de outras universidades tinham visto o perfil delas no Facebook e dado uma nota de quanto achavam que se dariam bem com cada uma. Depois, cada participante viu quatro perfis de homens, todos inventados pelos pesquisadores. Um grupo ouviu que aqueles eram os homens que mais gostaram dela, outro que eram os que deram nota média, e o terceiro que podiam ser uns ou outros, sem dizer qual (o grupo da incerteza). O estudo comparou a atração pelos homens, o quanto elas disseram ter pensado neles e o humor.
 
 ## Achados
 
