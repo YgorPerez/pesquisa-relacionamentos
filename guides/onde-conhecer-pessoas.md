@@ -26,8 +26,10 @@ questions:
     findings:
       [
         jovens-por-app,
+        encontros-sem-par,
         mensagens-de-menos-e-demais,
         homens-mandam-as-mensagens,
+        mensagem-sem-resposta,
         teste-no-tinder,
         matches-belgica,
         usuarias-conteudo-sexual,
@@ -39,7 +41,7 @@ questions:
       ]
   - slug: vale-a-pena-usar-app
     question: Vale a pena usar ==app de namoro==?
-    answer: Vale, como um caminho entre outros, não como a única aposta; essa é nossa leitura dos estudos. Nos EUA, ==39% de quem já usou== site ou app de namoro namorou sério ou casou com alguém de lá [@pew-2023-2020-online-dating], e os casais que se conhecem online não terminam mais que os outros [@rosenfeld-2017-marriage-choice-couplehood]. Mas os dois estudos que chegaram mais perto de medir o efeito do app deram resultados fracos ou mistos [@erevik-2020-tinder-relacionamentos] [@buyukeren-2026-tinder]. O app rende mais para lésbicas, gays e bissexuais e para quem tem poucas opções por perto [@rosenfeld-2012-searching-for-a-mate]. Rende menos para homens héteros, que mandam a maior parte das mensagens e recebem resposta a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Entre as usuárias com menos de 50 anos, 66% já passaram por assédio no app [@pew-2023-2020-online-dating]. O motivo para usar também pesa, mas aqui a evidência é fraca e não prova causa. Buscar validação da autoestima apareceu ligado a usar o app mais e de forma problemática [@sumter-2017-motivos-tinder] [@orosz-2018-uso-problematico-tinder], e, num painel alemão, a um pouco mais de solidão um mês depois, mesmo com a solidão inicial na conta [@stevic-2025-motivos-solidao]. Só que, na Holanda, buscar validação não mudou a chance de ter saído com alguém do app, e buscar amor, sim [@sumter-2017-motivos-tinder]. Querer uma relação não trouxe mais namoros com compromisso na Bélgica [@timmermans-2018-tinder] e, nos EUA, andou junto com mais ansiedade e tristeza [@her-2021-tinder-bem-estar]. Então não há base para dizer que o app só vale para quem não busca validação, nem que querer namorar basta para dar certo. Não achamos dado brasileiro sobre quantos usuários chegam a namorar.
+    answer: Vale, como um caminho entre outros, não como a única aposta; essa é nossa leitura dos estudos. Nos EUA, ==39% de quem já usou== site ou app de namoro namorou sério ou casou com alguém de lá [@pew-2023-2020-online-dating], e os casais que se conhecem online não terminam mais que os outros [@rosenfeld-2017-marriage-choice-couplehood]. Mas os dois estudos que chegaram mais perto de medir o efeito do app deram resultados fracos ou mistos [@erevik-2020-tinder-relacionamentos] [@buyukeren-2026-tinder]. O app rende mais para lésbicas, gays e bissexuais e para quem tem poucas opções por perto [@rosenfeld-2012-searching-for-a-mate]. Rende menos para homens héteros. Nos sites de namoro estudados, eles mandaram a maior parte das primeiras mensagens, e a maior parte delas ficou sem resposta, mais que as das mulheres [@kreager-2014-iniciativa-respostas] [@hitsch-2010-preferencias-primeiro-contato] [@bruch-2018-aspirational-pursuit]. Entre as usuárias com menos de 50 anos, 66% já passaram por assédio no app [@pew-2023-2020-online-dating]. O motivo para usar também pesa, mas aqui a evidência é fraca e não prova causa. Buscar validação da autoestima apareceu ligado a usar o app mais e de forma problemática [@sumter-2017-motivos-tinder] [@orosz-2018-uso-problematico-tinder], e, num painel alemão, a um pouco mais de solidão um mês depois, mesmo com a solidão inicial na conta [@stevic-2025-motivos-solidao]. Só que, na Holanda, buscar validação não teve ligação clara com ter saído com alguém do app, e buscar amor andou junto com mais chance de ter saído [@sumter-2017-motivos-tinder]. Numa dissertação de mestrado com universitários de uma só universidade americana, buscar amor também andou junto com já ter encontrado ao vivo alguém do app, o que mede um encontro, não um namoro [@griffin-2018-motivos-encontro-presencial]. Querer uma relação não trouxe mais namoros com compromisso na Bélgica [@timmermans-2018-tinder] e, nos EUA, andou junto com mais ansiedade e tristeza [@her-2021-tinder-bem-estar]. Então não há base para dizer que o app só vale para quem não busca validação, nem que querer namorar basta para dar certo. Não achamos dado brasileiro sobre quantos usuários chegam a namorar.
     confidence: moderate
     findings:
       [
@@ -51,6 +53,8 @@ questions:
         lgb-por-app,
         casais-do-mesmo-sexo-online,
         poucas-opcoes-por-perto,
+        homens-mandam-as-mensagens,
+        mensagem-sem-resposta,
         mirar-acima,
         assedio-no-app,
         usuarias-assedio,
@@ -59,6 +63,7 @@ questions:
         golpe-romantico,
         saude-mental,
         recusar-em-sequencia,
+        motivo-amor-e-encontro,
         brasil-ja-se-relacionaram,
       ]
   - slug: o-lugar-muda-a-relacao
@@ -134,18 +139,41 @@ findings:
     text: Em 2022, 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro. Em todas as idades, a fatia foi de 10%.
     fact_sheets: [pew-2023-2020-online-dating]
     applies_to: { ages: { min: 18, max: 29 } }
+  - id: encontros-sem-par
+    text: Em 2017, entre os adultos héteros americanos sem par, 18,7% dos homens e 11,4% das mulheres tinham encontrado alguém para namoro, romance ou sexo nos 12 meses anteriores. Os apps de celular responderam por 8% das mulheres que esses homens encontraram e por 22% das pessoas que essas mulheres encontraram. Os grupos são pequenos, 177 homens e 236 mulheres sem par, e os 8% e os 22% saem só de quem tinha encontrado alguém, algumas dezenas de pessoas. O autor sugere que a definição larga de par da pesquisa deixa entre os sem par as pessoas menos ativas.
+    fact_sheets: [rosenfeld-2018-apps-encontros-eua]
+    period: '2017'
+    applies_to: { couple: different-sex }
   - id: mensagens-de-menos-e-demais
     text: Entre quem usou site ou app no último ano, 64% dos homens se sentiram inseguros por receber poucas mensagens, contra 40% das mulheres. Já 54% das mulheres se sentiram sobrecarregadas por receber mensagens demais, contra 25% dos homens.
     fact_sheets: [pew-2023-2020-online-dating]
   - id: homens-mandam-as-mensagens
-    text: Num site de namoro em quatro cidades, os homens mandaram mais de 80% das primeiras mensagens, e a taxa média de resposta das mulheres a elas ficou abaixo de 20%.
-    fact_sheets: [bruch-2018-aspirational-pursuit]
-    period: '2014'
+    text: Nos registros de mensagens de sites de namoro dos EUA, os homens escreveram primeiro bem mais que as mulheres. Num site gratuito de uma cidade de porte médio, em 2010 e 2011, foram quatro primeiros contatos de homem para cada um de mulher, contando a piscadela, um aviso de interesse sem texto. Num site de dez regiões metropolitanas, de setembro a novembro de 2013, os homens começaram 86% das conversas. Num site de quatro cidades grandes, em janeiro de 2014, mais de 80% das primeiras mensagens vieram de homens, e as mulheres receberam quatro vezes mais primeiras mensagens que os homens.
+    fact_sheets:
+      [
+        kreager-2014-iniciativa-respostas,
+        maldeniya-2017-semelhanca-resposta,
+        bruch-2018-aspirational-pursuit,
+        bruch-2019-mercados-por-cidade,
+      ]
+    period: 2010 a 2014
+  - id: mensagem-sem-resposta
+    text: Nos registros de sites de namoro, a maior parte das primeiras mensagens ficou sem resposta, e as dos homens mais que as das mulheres. Num site pago de Boston e San Diego, em 2003, 71% dos primeiros e-mails dos homens e 56% dos das mulheres ficaram sem resposta. Num site gratuito de uma cidade de porte médio dos EUA, em 2010 e 2011, 79% dos primeiros contatos dos homens e 58% dos das mulheres nunca tiveram resposta, e os das mulheres podem ter sido na maioria piscadelas, um aviso sem texto. Num site de quatro cidades grandes dos EUA, em janeiro de 2014, as mulheres responderam em média a menos de 20% das mensagens de homens, e em Nova York 15% das mensagens dos homens tiveram resposta, contra 34% das mensagens das mulheres. Num site chinês, de novembro de 2011 a janeiro de 2012, as mulheres recém-cadastradas responderam a 9,5% das primeiras mensagens que receberam de homens, e os homens recém-cadastrados, a 17,9% das que receberam de mulheres. Contando as primeiras mensagens que esses recém-cadastrados mandaram, os homens tiveram resposta a 7,5% delas e as mulheres, a 9,3%.
+    fact_sheets:
+      [
+        hitsch-2010-preferencias-primeiro-contato,
+        kreager-2014-iniciativa-respostas,
+        bruch-2018-aspirational-pursuit,
+        bruch-2019-mercados-por-cidade,
+        xia-2014-previsao-resposta,
+        xia-2014-quem-namora-quem,
+      ]
+    period: 2003 a 2014
   - id: teste-no-tinder
     text: Num teste com 14 perfis criados pelos autores no Tinder, os perfis de homem deram match com 0,6% de quem curtiram, e os de mulher, com 10,5%. São poucos perfis, então o número ilustra a diferença, mas não é a taxa de um usuário real.
     fact_sheets: [tyson-2016-tinder]
   - id: matches-belgica
-    text: Num questionário com usuários atuais do Tinder, as mulheres relataram mais matches que os homens. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas.
+    text: Num questionário com usuários atuais do Tinder na Bélgica, as mulheres relataram mais chance que os homens de ter match, menos chance de começar a conversa e mais chance de receber mensagem. O estudo mediu matches, que pedem interesse dos dois lados, e não curtidas recebidas.
     fact_sheets: [timmermans-2018-tinder]
   - id: usuarias-conteudo-sexual
     text: Entre as usuárias com menos de 50 anos, 56% já receberam mensagem ou imagem sexual que não pediram.
@@ -222,6 +250,10 @@ findings:
   - id: recusar-em-sequencia
     text: Em laboratório, a chance de aceitar alguém caiu 27% em média do primeiro ao último perfil de uma sequência, e quem recusou mais ficou menos satisfeito até com quem aceitou.
     fact_sheets: [pronk-2020-mentalidade-rejeicao]
+  - id: motivo-amor-e-encontro
+    text: Entre jovens holandeses que já tinham usado o Tinder, quem pontuava mais no motivo amor tinha mais chance de já ter saído com alguém do app, e o motivo validação da autoestima não teve ligação clara com isso. Entre universitários de uma universidade americana que já tinham usado app de namoro, em 2017, quem concordava mais com o motivo amor tinha mais chance de já ter encontrado ao vivo alguém com quem deu match, por qualquer motivo. O motivo sexo casual também andou junto com esse encontro quando olhado sozinho, mas não quando o motivo amor entrou na mesma conta. Essa segunda pesquisa é uma dissertação de mestrado com 136 usuários, e não diz quantos encontros viraram namoro. Os dois estudos ouviram cada pessoa uma vez só, então não dá para saber se o motivo veio antes do encontro.
+    fact_sheets:
+      [sumter-2017-motivos-tinder, griffin-2018-motivos-encontro-presencial]
   - id: brasil-ja-se-relacionaram
     text: Num painel online de internautas de 2017, 37% já tinham se relacionado com alguém que conheceram na internet, e 27% já tinham marcado encontro com alguém de app de paquera.
     fact_sheets: [opinionbox-2017-relacionamentos-brasil]
@@ -775,7 +807,15 @@ Saber onde os casais se conheceram não diz onde você tem mais chance. Para iss
 
 O que existe dá duas pistas. A primeira é que a maioria dos casais começa fora do app, mesmo entre os jovens. Nos EUA, só 20% dos adultos com parceiro com menos de 30 anos o conheceram em site ou app de namoro [@pew-2023-2020-online-dating]. No Reino Unido, amigos e família eram o lugar onde mais casais se conheciam, 25,8% dos que passaram a morar juntos de 2008 a 2012 [@lampard-2020-natsal-reino-unido]. Esses caminhos têm uma coisa em comum: você reencontra as mesmas pessoas várias vezes.
 
-A segunda pista é que, dentro do app, a disputa é desigual. Num site de namoro em quatro cidades dos EUA, os homens mandaram mais de 80% das primeiras mensagens, e as mulheres responderam a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com uma fatia muito menor de quem curtiram do que os de mulher [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real. Num questionário com usuários do Tinder na Bélgica, as mulheres também relataram mais matches que os homens [@timmermans-2018-tinder]. O estudo contou matches, que pedem interesse dos dois lados, e não curtidas recebidas [@timmermans-2018-tinder].
+Nos encontros, o app também fica com a menor parte. {{you:encontros-sem-par}} Em 2017, entre os adultos héteros americanos sem par, os apps de celular responderam por 8% das mulheres que os homens tinham encontrado nos 12 meses anteriores para namoro, romance ou sexo, e por 22% das pessoas que as mulheres tinham encontrado [@rosenfeld-2018-apps-encontros-eua]. Mais de 80% desses solteiros, entre homens e entre mulheres, não tinham encontrado ninguém novo nesses 12 meses [@rosenfeld-2018-apps-encontros-eua]. Por isso os 8% e os 22% saem só de quem tinha encontrado alguém, algumas dezenas de pessoas num grupo de 177 homens e 236 mulheres sem par [@rosenfeld-2018-apps-encontros-eua]. Contando também quem tinha par, só 19 homens e 18 mulheres héteros tinham encontrado alguém por app [@rosenfeld-2018-apps-encontros-eua]. A pesquisa conta como par até um parceiro sexual ou um romance em andamento, e o autor sugere que isso deixa entre os sem par as pessoas menos ativas [@rosenfeld-2018-apps-encontros-eua].
+
+A segunda pista é que, nos sites e apps de namoro, a disputa é desigual. Nos registros de mensagens que sites de namoro dos EUA e da China cederam a pesquisadores, o desenho se repetiu. Os homens escreveram primeiro bem mais que as mulheres, e a maior parte das primeiras mensagens ficou sem resposta, mais ainda as dos homens. Num site de quatro cidades grandes dos EUA, em janeiro de 2014, mais de 80% das primeiras mensagens vieram de homens, e as mulheres responderam em média a menos de 20% delas [@bruch-2018-aspirational-pursuit]. Na mesma base, elas receberam quatro vezes mais primeiras mensagens que eles, e, em Nova York, 34% das mensagens que elas mandaram tiveram resposta, contra 15% das deles [@bruch-2019-mercados-por-cidade]. Num site de uma cidade de porte médio dos EUA, em 2010 e 2011, foram quatro primeiros contatos de homem para cada um de mulher, e 79% dos contatos deles nunca tiveram resposta, contra 58% dos delas [@kreager-2014-iniciativa-respostas]. Esse estudo conta também a piscadela, um aviso de interesse sem texto, e os autores avisam que os contatos das mulheres podem ter sido na maioria piscadelas [@kreager-2014-iniciativa-respostas]. Num site pago de Boston e San Diego, em 2003, ficaram sem resposta 71% dos primeiros e-mails dos homens e 56% dos das mulheres [@hitsch-2010-preferencias-primeiro-contato].
+
+Mais três estudos, de força fraca, apontam para o mesmo lado. Num site de dez regiões metropolitanas dos EUA, de setembro a novembro de 2013, os homens começaram 86% das conversas [@maldeniya-2017-semelhanca-resposta]. Num site chinês, de novembro de 2011 a janeiro de 2012, as mulheres recém-cadastradas responderam a 9,5% das primeiras mensagens que receberam de homens, e os homens recém-cadastrados, a 17,9% das que receberam de mulheres [@xia-2014-previsao-resposta]. Outro artigo do mesmo grupo, com os mesmos dados, conta também pelo outro lado, o das primeiras mensagens que esses recém-cadastrados mandaram. Aí a diferença fica bem menor: os homens tiveram resposta a 7,5% delas, e as mulheres, a 9,3% [@xia-2014-quem-namora-quem]. Nos dois artigos, dois dos autores trabalhavam no site que cedeu os dados [@xia-2014-previsao-resposta] [@xia-2014-quem-namora-quem].
+
+Os números mudam muito de um site para outro. Todos vêm de sites de antes de os apps de deslizar dominarem [@bruch-2019-mercados-por-cidade]. O estudo das dez regiões contou as conversas do site inteiro, onde 94% dos usuários eram héteros [@maldeniya-2017-semelhanca-resposta]. Os outros contaram só usuários héteros [@hitsch-2010-preferencias-primeiro-contato] [@bruch-2018-aspirational-pursuit]. Os estudos descrevem o que acontecia nesses sites. Nenhum testou o que alguém deveria fazer, e nenhum sabe se a conversa virou encontro [@kreager-2014-iniciativa-respostas] [@bruch-2019-mercados-por-cidade].
+
+Dos apps de deslizar, os estudos que temos são mais fracos. Num teste no Tinder com 14 perfis criados pelos autores, os de homem deram match com uma fatia muito menor de quem curtiram do que os de mulher [@tyson-2016-tinder]. Com tão poucos perfis, o número mostra o tamanho da diferença, não a taxa de um usuário real. Num questionário com usuários do Tinder na Bélgica, as mulheres também relataram mais chance que os homens de ter match, menos chance de começar a conversa e mais chance de receber mensagem [@timmermans-2018-tinder]. O estudo mediu matches, que pedem interesse dos dois lados, e não curtidas recebidas [@timmermans-2018-tinder].
 
 {{visual:match-no-tinder}}
 
