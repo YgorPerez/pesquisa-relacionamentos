@@ -95,6 +95,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Büyükeren et al. 2026](studies/buyukeren-2026-tinder.md): chegada do Tinder, sexo e saúde entre universitários dos EUA · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
+- [Cooper et al. 2012](studies/cooper-2012-foto-speed-dating.md): a nota dada a uma foto e a decisão depois do speed dating · ✅ · fraca
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
@@ -130,6 +131,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
 - [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
+- [Lee et al. 2026](studies/lee-2026-foto-presencial.md): notas dadas a uma foto de rosto e notas dadas depois de conversar · ✅ · fraca
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
@@ -182,6 +184,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
+- [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
