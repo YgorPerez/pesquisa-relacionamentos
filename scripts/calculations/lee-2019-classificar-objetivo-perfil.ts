@@ -1,6 +1,7 @@
 // Table 3 (p. 96): the accuracy of each method on the 300 test texts, shown
-// as a percentage. Table 1 (p. 95): the share of each relationship goal among
-// the 12,310 collected profiles.
+// as a percentage. Table 1 (p. 95): the share of each relationship goal in the
+// Full row, which sums to 12,330 (10,696 + 1,634). The text says 12,310
+// profiles; either total gives the same rounded shares.
 //
 //   node scripts/calculations/lee-2019-classificar-objetivo-perfil.ts <human|liwc|word|corpus>
 const percent = (p: number) => `${Math.round(p * 100)}%`

@@ -3,8 +3,8 @@ reference: "Hall JA, Park N, Song H, Cody MJ. *Strategic misrepresentation in on
 link: https://doi.org/10.1177/0265407509349633
 status: verified
 verified_on: 2026-11-14
-strength: moderate
-strength_reason: "Amostra grande (5.020 usuários de um site de namoro dos EUA), com corte de 0,001 para chamar uma diferença de real, mas de quem quis responder a um link na newsletter de um site só, 74% mulheres, transversal, e a medida é a chance que a pessoa diz ter de distorcer, não a distorção em perfis de verdade."
+strength: weak
+strength_reason: "Amostra grande (5.020 usuários de um site de namoro dos EUA), mas não representativa: quem quis responder a um link na newsletter de um site só, sem taxa de resposta informada, 74% mulheres; transversal, e a medida é a chance que a pessoa diz ter de distorcer, não a distorção em perfis de verdade, o que os próprios autores dão como explicação provável da diferença entre homens e mulheres."
 countries: [EUA]
 period: "fevereiro de 2007"
 sample:
@@ -28,7 +28,7 @@ Um questionário online perguntou a usuários de um site de namoro qual a chance
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Como foi perguntado | Cada item pedia a chance de distorcer aquilo para conseguir um encontro, de 1 (nada provável) a 10 (muito provável) | Method, Measurements (p. 124) | "items were accompanied by a 10-point scale, ranging from “not at all likely” (1) to “very likely” (10)" |
+| Como foi perguntado | Em cinco dos sete assuntos, cada item pedia a chance de distorcer aquilo para conseguir um encontro, de 1 (nada provável) a 10 (muito provável); o artigo não descreve as perguntas de peso e de idade | Method, Measurements (p. 124) | "items were accompanied by a 10-point scale, ranging from “not at all likely” (1) to “very likely” (10)" |
 | Bens, renda e estudo: os homens | Os homens deram uma chance um pouco maior que as mulheres de distorcer bens, renda e estudo (média deles: 2,01) | Results (p. 124, última linha) | "men (M = 2.01, SD = 1.49) were more likely to misrepresent" |
 | Bens, renda e estudo: as mulheres | A média das mulheres foi 1,83; a diferença para os homens é pequena, mas dificilmente é acaso (p < 0,001; η² = 0,003) | Results (p. 125, primeira linha) | "personal assets than women (M = 1.83, SD = 1.34), t(2047.40) = 3.80, p < .001, η2 = .003" |
 | Objetivo de relacionamento | A diferença entre homens e mulheres não passou no corte de 0,001 que o estudo adotou (p = 0,050) | Results (p. 125) | "there was no significant difference in relationship goals at .001 alpha level, t(2128.23) = 1.96, p = .050" |
@@ -42,9 +42,9 @@ Um questionário online perguntou a usuários de um site de namoro qual a chance
 | Ajustar-se ao que os outros esperam | Quem mais se ajusta ao que os outros esperam deu uma chance maior de distorcer nos sete assuntos; a habilidade de representar um papel não teve ligação com nenhum | Results (p. 125) | "self-monitoring other-directed was a significant positive predictor across all dependent variables, whereas self-monitoring actor was not a predictor of misrepresentation" |
 | Amabilidade | Pessoas mais amáveis deram uma chance menor de distorcer em todos os assuntos, menos o peso | Results (p. 125) | "Agreeableness was found to be a consistent negative predictor for all dependent variables except for weight." |
 | Peso do gênero | O gênero foi o que mais pesou na chance de distorcer o peso; nos outros assuntos, pesou muito pouco | Results (p. 126) | "Gender had the largest predictive impact on misrepresentation of weight. For other types of misrepresentation, the effects of gender were extremely small." |
-| Quanto o estudo explica | Tudo o que o estudo mediu explicou só cerca de 10% das diferenças entre as pessoas na chance de distorcer | Discussion (p. 132) | "only about 10% of total variance was explained across the seven traits" |
+| Quanto o estudo explica | Os autores resumem que tudo o que mediram explicou só cerca de 10% das diferenças entre as pessoas na chance de distorcer | Discussion (p. 132) | "only about 10% of total variance was explained across the seven traits" |
 
-As médias estão na escala de 1 a 10 da primeira linha: todas ficam perto de 2, isto é, a maioria disse que dificilmente distorceria. O p indica quão fácil seria uma diferença assim aparecer só por acaso; com 5.020 pessoas, os autores só aceitaram p abaixo de 0,001. O η² é a parte das diferenças entre as pessoas que o gênero explica: 0,021, o maior da tabela, é 2,1%. "Ajustar-se ao que os outros esperam" traduz *self-monitoring other-directed*, e "representar um papel", *self-monitoring actor*, as duas partes da escala de automonitoramento. As linhas de personalidade vêm de contas que levam em conta, ao mesmo tempo, os dois lados do automonitoramento, os cinco grandes traços, a escolaridade e a renda.
+As médias dos cinco primeiros assuntos estão na escala de 1 a 10 da primeira linha, e as que o artigo traz ficam entre 1,82 e 2,38, mais perto de "nada provável" que de "muito provável". O artigo não diz a escala das perguntas de peso e de idade, cujas médias vão de 1,80 a 3,24. O p indica quão fácil seria uma diferença assim aparecer só por acaso; com 5.020 pessoas, os autores só aceitaram p abaixo de 0,001. O η² é a parte das diferenças entre as pessoas que o gênero explica: 0,021, o maior da tabela, é 2,1%. "Ajustar-se ao que os outros esperam" traduz *self-monitoring other-directed*, e "representar um papel", *self-monitoring actor*, as duas partes da escala de automonitoramento. As linhas de personalidade vêm de contas que levam em conta, ao mesmo tempo, os dois lados do automonitoramento, os cinco grandes traços, a escolaridade e a renda. Os "cerca de 10%" da última linha são o resumo dos autores: na Tabela 1 (p. 127), essa parte vai de 2% na idade e 4% no peso a 12% nos interesses pessoais.
 
 O resumo do artigo diz que os homens são mais propensos a distorcer o objetivo de relacionamento. A seção de resultados diz que essa diferença não passou no corte do próprio estudo e que a hipótese não foi confirmada ("H1a was supported, but H1b was not", p. 125). A linha acima segue os resultados.
 
