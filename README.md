@@ -160,7 +160,6 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
-- [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
@@ -201,6 +200,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
+- [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 
 <!-- /study-index -->
