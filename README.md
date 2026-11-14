@@ -140,6 +140,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
+- [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hamilton 2020](studies/hamilton-2020-personalidade-texto-perfil.md): personalidade escrita e lida no texto de perfis de namoro · ✅ · fraca
