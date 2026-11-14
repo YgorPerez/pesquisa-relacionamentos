@@ -78,4 +78,4 @@ O r mede quanto duas medidas andam juntas, olhando só as duas: vai de −1 a 1,
 
 ## Como usamos
 
-O [relatório sobre como a conversa num app vira um primeiro encontro](../reports/2026-11-14-do-app-ao-primeiro-encontro.md) aponta para esta Ficha na lista dos estudos que ainda não tinham sido lidos.
+O [relatório sobre como a conversa num app vira um primeiro encontro](../reports/2026-11-14-do-app-ao-primeiro-encontro.md) a cita entre os questionários com usuários de apps, e o [relatório sobre o motivo para usar app e o que se ganha com ele](../reports/2026-10-28-motivos-app-e-desfecho.md), entre os estudos sobre motivo e encontro.
