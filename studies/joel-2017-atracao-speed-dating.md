@@ -41,7 +41,7 @@ O resultado quase nulo diz respeito ao interesse específico pelo par, descontad
 - O desfecho é atração logo após uma conversa breve, não formação, contentamento ou duração de um relacionamento. O artigo não testa um algoritmo de compatibilidade de longo prazo.
 - O fracasso destes modelos não prova que toda previsão seja impossível. Os autores consideram tanto medidas ainda desconhecidas quanto muitos efeitos de interação pequenos, que exigiriam amostras maiores.
 - Os traços e as preferências foram autorrelatados. O estudo testa sua capacidade conjunta de prever o interesse, sem mostrar que cada preferência declarada deixa de importar em qualquer situação.
-- A amostra A já foi analisada em publicações anteriores, incluindo [Eastwick & Finkel (2008)](eastwick-2008-preferencias-speed-dating.md). Essas Fichas não contam como replicações independentes entre si.
+- O artigo diz que 8% dos itens da amostra A e 19% dos da amostra B já tinham entrado em análises publicadas antes, e remete a descrição das amostras a Finkel, Eastwick & Matthews (2007) e a Tidwell et al. (2013). O texto não diz em que artigos as amostras já apareceram; remete a duas bases do material suplementar, que não estão na Fonte local. A amostra A tem os mesmos números (163 universitários, 81 mulheres, sete eventos) de [Eastwick & Finkel (2008)](eastwick-2008-preferencias-speed-dating.md), e [Baxter et al. 2022](baxter-2022-compatibilidade-popularidade.md) diz que os dados dos speed datings da Northwestern já saíram em artigos anteriores, entre eles este e aquele. Essas Fichas não contam como replicações independentes entre si.
 - Para os modelos principais, usamos as faixas do corpo do artigo e da Tabela 2. O resumo apresenta faixas com limites inferiores diferentes.
 
 ## Como usamos
