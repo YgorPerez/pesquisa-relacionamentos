@@ -128,6 +128,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
+- [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
@@ -194,6 +195,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
+- [Ranzini & Lutz 2017](studies/ranzini-2017-autoapresentacao-tinder.md): autoapresentação e motivos de uso no Tinder · ✅ · fraca
 - [Recruit Bridal 2024](studies/recruit-2024-konkatsu.md): casamento por caminho no Japão · ✅ · fraca
 - [Reysen & Katzarska-Miller 2013](studies/reysen-2013-moderadamente-dificil.md): quanto o outro retribui e a atração · ✅ · fraca
 - [Rhoades et al. 2009](studies/rhoades-2009-coabitacao-noivado.md): morar junto antes do noivado e qualidade do casamento · ✅ · fraca
@@ -267,6 +269,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
+- [Gibbs et al. 2011](studies/gibbs-2011-reducao-incerteza.md): como usuários de sites de namoro checam quem conhecem online · ✅ · fraca
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
