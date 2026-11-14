@@ -4,7 +4,7 @@ link: https://doi.org/10.1177/02654075231213824
 status: verified
 verified_on: 2026-11-14
 strength: weak
-strength_reason: "Questionário respondido uma vez por 162 universitários de uma universidade dos EUA, quase 80% mulheres, sobre uma briga com o parceiro e uma falta de resposta imaginadas; prazo e seriedade medidos com uma pergunta só cada, e o desenho não mostra o que causa o quê."
+strength_reason: "Questionário respondido uma vez por 200 universitários de uma universidade dos EUA, quase 80% mulheres, 162 deles nas contas finais, sobre uma briga com o parceiro e uma falta de resposta imaginadas; prazo e seriedade medidos com uma pergunta só cada, e o desenho não mostra o que causa o quê."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
@@ -43,7 +43,7 @@ Dois questionários online com universitários de Austin, nos EUA. No piloto, 50
 | Apego evitativo e emoções negativas | Não apareceu ligação entre o apego evitativo e as emoções negativas que a pessoa diz que sentiria; pode ser acaso | Hypotheses testing (p. 1195) | "no significant association was found between attachment avoidance and negative affect" |
 | Prazo esperado na briga | Quanto mais séria a pessoa achava a briga, mais cedo esperava a resposta (β = −0,24; p = 0,001); quanto mais o parceiro costuma demorar, mais tarde ela esperava a resposta também na briga (β = 0,39) | Hypotheses testing (p. 1195) | "perceived conflict seriousness (β = .24, p = .001) and usual response latency (β = .39, p = .000) had significant impacts on conflict expected latency" |
 
-"β" mede o quanto duas coisas andam juntas, levando em conta as outras do modelo: 0 é nada, e o sinal diz o sentido (negativo quer dizer que, quando uma sobe, a outra desce). "p" é a chance de uma ligação assim aparecer só por acaso; o costume é aceitar abaixo de 0,05. O PDF imprime o sinal de menos em "−.17" e "−.24" (p. 1195, Tabela A3 e Figura A2), mas o texto extraído perde o sinal, e por isso os Trechos mostram ".17" e ".24". Na Tabela A2, que não leva nada em conta e usa os prazos em minutos, a ligação entre o prazo esperado e as emoções negativas é de −0,09, sem a marca de que não seria acaso; o modelo usou os prazos na escala logarítmica. As emoções negativas do estudo principal são as dez da escala PANAS, cada uma com cinco opções, de "muito pouco ou nada" a "muitíssimo".
+"β" mede o quanto duas coisas andam juntas, levando em conta as outras do modelo: 0 é nada, e o sinal diz o sentido (negativo quer dizer que, quando uma sobe, a outra desce). "p" é a chance de uma ligação assim aparecer só por acaso; o costume é aceitar abaixo de 0,05. O PDF imprime o sinal de menos em "−.17" (p. 1195, Tabela A3 e Figura A2) e em "−.24" (p. 1195 e Figura A2), mas o texto extraído perde o sinal, e por isso os Trechos mostram ".17" e ".24". Na Tabela A2, que não leva nada em conta e usa os prazos em minutos, a ligação entre o prazo esperado e as emoções negativas é de −0,09, sem a marca de que não seria acaso; o modelo usou os prazos na escala logarítmica. As emoções negativas do estudo principal são as dez da escala PANAS, cada uma com cinco opções, de "muito pouco ou nada" a "muitíssimo".
 
 ## Limitações
 
