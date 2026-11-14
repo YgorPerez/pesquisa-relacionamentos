@@ -1,7 +1,7 @@
 ---
 fact_sheets: [huang-2017-perguntas-de-continuidade, kluger-2019-perguntas-diadico]
 strength: moderate
-seo: { title: "Perguntar mais agradou num chat entre desconhecidos" }
+seo: { title: "Pergunte mais a quem você acabou de conhecer" }
 ---
 
-Em chats de texto entre desconhecidos, quem foi sorteado para perguntar mais foi um pouco mais querido por quem respondia. As perguntas sobre o que o outro tinha acabado de dizer foram as que andaram junto com esse gosto, mas o tipo de pergunta não foi sorteado. Num speed dating, o único dado de paquera desses estudos, esse tipo e o de troca de assunto andaram quase sempre juntos. Levando em conta quem perguntava, perguntar mais não andou junto com o outro querer um segundo encontro.
+Numa conversa com quem você acabou de conhecer, pergunte mais. Em chats de texto entre desconhecidos, quem foi sorteado para perguntar mais foi um pouco mais querido por quem respondia. Mas no único dado de paquera desses estudos, um speed dating, perguntar mais não andou junto com mais pares querendo um segundo encontro, quando se leva em conta o quanto cada pessoa já era desejada. Nos chats, as perguntas sobre o que o outro tinha acabado de dizer foram as que andaram junto com gostar mais de quem perguntava, mas o tipo de pergunta não foi sorteado, então isso é só uma associação.
