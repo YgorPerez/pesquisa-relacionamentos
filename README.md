@@ -157,7 +157,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Hoyle et al. 2017](studies/hoyle-2017-mensagem-vista.md): o aviso de mensagem vista no Facebook Messenger · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
-- [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): quem pergunta mais, sobretudo perguntas de continuidade, é mais querido · ✅ · moderada
+- [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): em chats entre desconhecidos, quem pergunta mais é mais querido · ✅ · moderada
 - [Huang & Yao 2024](studies/huang-2024-sem-resposta-no-conflito.md): demora do parceiro para responder durante uma briga por mensagem · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
