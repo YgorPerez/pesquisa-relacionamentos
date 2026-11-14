@@ -85,6 +85,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Arlt, Pöschl & Döring 2008](studies/arlt-2008-sms-sem-resposta.md): SMS sem resposta depois de uma festa · ✅ · fraca
 - [Armstrong et al. 2012](studies/armstrong-2012-orgasmo-ficadas-namoro.md): orgasmo e prazer das universitárias em ficadas e namoros · ✅ · moderada
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
+- [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
 - [Berkes 2021](studies/berkes-2021-cantadas-originais.md): cantadas originais, comuns e aleatórias em app de namoro · ✅ · fraca
@@ -260,6 +261,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
