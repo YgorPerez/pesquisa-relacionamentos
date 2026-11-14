@@ -39,7 +39,7 @@ Os autores ordenaram os usuários de um site de namoro por "desejabilidade", cal
 | Resposta média das mulheres | Em média, elas respondem a menos de 20% das mensagens de homens | Métodos, Network analysis, §2 | "their average reply rate is less than 20%" |
 | Quantas mensagens manda quem mira alto | Quanto mais alto a pessoa mira, menos mensagens manda | Resultados, "Men and women both reach up the desirability ladder", §6 | "The number of initial contacts an individual makes falls off rapidly with increasing gap" |
 | Tamanho da mensagem | Homens e mulheres tendem a escrever mais a pessoas mais desejáveis, em alguns casos o dobro | Resultados, "Messaging strategies vary with mate seekers' aspirations", §1 | "Both men and women tend to write substantially longer messages to more desirable partners, up to twice as long in some cases." |
-| Mensagem longa e resposta | Mensagem mais longa andou junto com mais resposta só para mulheres e para homens em Seattle | Fig. 4 | "longer messages are positively associated with response rates only for women and men in Seattle" |
+| Mensagem longa e resposta | Quando quem escrevia era mulher, mensagem mais longa andou junto com mais resposta; quando era homem, isso só aconteceu em Seattle | Fig. 4 | "longer messages are positively associated with response rates only for women and men in Seattle" |
 | Formas de escrever | Escrever mais ou de forma mais positiva mudou pouco o resultado | Resultados, "Messaging strategies vary with mate seekers' aspirations", §4 | "the variation in payoff for different strategies is fairly small" |
 | Quem recebeu mais mensagens | Uma mulher de 30 anos em Nova York, com 1.504 mensagens no período | Resultados, §1 | "a 30-year-old woman living in New York, received 1504 messages during the period of observation" |
 | Idade e posição no ranking, mulheres | A posição média cai dos 18 aos 60 anos | Resultados, §3 | "The average woman’s desirability drops from the time she is 18 until she is 60." |
@@ -47,6 +47,8 @@ Os autores ordenaram os usuários de um site de namoro por "desejabilidade", cal
 | Quem ficou de fora | Entre outros, usuários gays e bissexuais, cerca de 14% do site | Métodos, Data, §3 | "about 14% of the overall user base of the site" |
 
 "Desejável" e "ranking" são medidas do estudo, calculadas com o PageRank: a pessoa sobe quando é procurada por gente que também é desejável. Não é uma nota de beleza, e os autores não dizem que os usuários escolhem desse jeito.
+
+Na linha da mensagem longa, a frase em inglês admite duas leituras: as mulheres em geral e os homens de Seattle, ou só os usuários de Seattle. A versão do arXiv desfaz a dúvida, com "only for women and for men in Seattle", e adiante o artigo repete a parte dos homens: "only Seattle men experience a payoff to writing longer messages". O ganho medido é o de quem escreve a mensagem, não o de quem a recebe.
 
 ## Limitações
 

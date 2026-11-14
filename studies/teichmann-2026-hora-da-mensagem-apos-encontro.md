@@ -3,8 +3,8 @@ reference: "Teichmann L, Petrowsky HM, Boecker L, Soliman M, Loschelder DD. *How
 link: https://doi.org/10.1177/02654075251377184
 status: verified
 verified_on: 2026-11-14
-strength: moderate
-strength_reason: "Experimento pré-registrado, com sorteio da condição e 543 pessoas, mas com uma amostra só, de um painel online dos EUA e do Reino Unido, um encontro imaginado a partir de um texto e respostas sobre o que a pessoa acha que sentiria; a diferença entre mulheres e homens ficou no limite (p = 0,052)."
+strength: weak
+strength_reason: "Fraca pela rubrica: 543 voluntários pagos de um painel online (Prolific), dos EUA e do Reino Unido, que não representam nenhuma população. O experimento foi pré-registrado e sorteou a condição, mas o encontro é imaginado a partir de um texto, as respostas dizem o que a pessoa acha que sentiria, e a diferença entre mulheres e homens ficou no limite (p = 0,052)."
 countries: [Reino Unido, EUA]
 period: "Abril de 2024 (experimento principal); o artigo não dá a data do pré-estudo"
 sample:

@@ -24,7 +24,7 @@ covers:
 
 Os pesquisadores levaram ao laboratório 54 pessoas com foto no perfil de um site de namoro. Cada uma deu uma nota de um a cinco à precisão da própria foto principal, comparando-a com a aparência daquele momento, e foi fotografada ali, na mesma pose da foto do perfil. Depois, 50 universitários que não conheciam ninguém viram as duas fotos lado a lado e deram nota na mesma escala, com a instrução de não levar em conta roupa, maquiagem e adereços. Por fim, quatro avaliadores treinados marcaram em cada par de fotos o que diferia (peso, idade aparente, pele, cabelo, dentes) e se a foto do perfil parecia retocada, cortada ou tirada por fotógrafo profissional.
 
-O recrutamento descrito é o mesmo de [Toma et al. (2008)](toma-2008-mentira-altura-peso-idade.md), que mediu a altura, o peso e a idade: 479 inscritos, os mesmos quatro sites, 30 dólares por participante. O artigo não diz quantas pessoas estão nos dois estudos.
+O recrutamento descrito é o mesmo de [Toma et al. (2008)](toma-2008-mentira-altura-peso-idade.md), que mediu a altura, o peso e a idade: 479 inscritos, os mesmos quatro sites, 30 dólares por participante. O artigo não diz quantas pessoas estão nos dois estudos. [Toma (2010)](toma-2010-confiabilidade-perfil.md), da segunda autora, também descreve 54 usuários (27 homens e 27 mulheres) dos mesmos quatro sites, pagos com 30 dólares por uma entrevista em Nova York, e cita este artigo, mas nenhum dos dois diz se são as mesmas pessoas.
 
 ## Achados
 
