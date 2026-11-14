@@ -1,7 +1,7 @@
 ---
-fact_sheets: [huang-2017-perguntas-de-continuidade]
+fact_sheets: [huang-2017-perguntas-de-continuidade, kluger-2019-perguntas-diadico]
 strength: moderate
-seo: { title: "Faça mais perguntas, de preferência sobre o que a pessoa disse" }
+seo: { title: "Pergunte mais a quem você acabou de conhecer" }
 ---
 
-Faça mais perguntas, de preferência sobre o que a pessoa acabou de dizer ("e como foi isso?"). Quem foi sorteado para perguntar mais foi mais querido, mas o efeito é pequeno e veio de conversas por texto entre desconhecidos, sem clima de paquera. O tipo de pergunta não foi sorteado. Que a de continuidade ajuda mais é só uma associação.
+Numa conversa com quem você acabou de conhecer, pergunte mais. Em chats de texto entre desconhecidos, quem foi sorteado para perguntar mais foi um pouco mais querido por quem respondia. Mas no único dado de paquera desses estudos, um speed dating, perguntar mais não andou junto com mais pares querendo um segundo encontro, quando se leva em conta o quanto cada pessoa já era desejada. Nos chats, as perguntas sobre o que o outro tinha acabado de dizer foram as que andaram junto com gostar mais de quem perguntava, mas o tipo de pergunta não foi sorteado, então isso é só uma associação.

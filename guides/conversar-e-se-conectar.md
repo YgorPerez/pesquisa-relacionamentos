@@ -4,7 +4,7 @@ position: 20
 questions:
   - slug: conversas-melhores
     question: Como ter ==conversas melhores== com quem acabei de conhecer?
-    answer: Pergunte mais, de preferência sobre o que a pessoa acabou de dizer, e conte de si aos poucos. Nos EUA, quem foi sorteado para perguntar mais foi um pouco mais querido, ==5,79 contra 5,31== numa escala de 1 a 7 [@huang-2017-perguntas-de-continuidade], e duplas que se abriram aos poucos, dos dois lados, se sentiram mais próximas [@aron-1997-36-perguntas]. Puxar conversa também costuma ser melhor do que se espera, e quem é abordado gosta tanto quanto quem puxa [@epley-2014-conversar-com-estranhos]. Os experimentos foram entre desconhecidos, não em encontros, e não achamos estudo brasileiro.
+    answer: Pergunte mais e conte de si aos poucos. Nos EUA, quem foi sorteado para perguntar mais num chat foi um pouco mais querido, ==5,79 contra 5,31== numa escala de 1 a 7 [@huang-2017-perguntas-de-continuidade], e duplas que se abriram aos poucos, dos dois lados, se sentiram mais próximas [@aron-1997-36-perguntas]. Puxar conversa também costuma ser melhor do que se espera, e quem é abordado gosta tanto quanto quem puxa [@epley-2014-conversar-com-estranhos]. Os experimentos foram entre desconhecidos, não em encontros. Num speed dating, quando se leva em conta o quanto cada pessoa já era desejada, perguntar mais não andou junto com mais pares querendo um segundo encontro [@huang-2017-perguntas-de-continuidade] [@kluger-2019-perguntas-diadico]. Não achamos estudo brasileiro.
     confidence: moderate
     findings:
       [
@@ -18,6 +18,7 @@ questions:
         observadores-de-fora,
         so-a-continuidade,
         speed-dating-perguntas,
+        speed-dating-reanalise,
         desejo-por-uma-pessoa,
         aprofundar-aproxima,
       ]
@@ -74,16 +75,19 @@ findings:
     text: Observadores que leram as conversas depois não gostaram mais de quem perguntou muito. O efeito apareceu só em quem recebia as perguntas.
     fact_sheets: [huang-2017-perguntas-de-continuidade]
   - id: so-a-continuidade
-    text: Das perguntas feitas, cerca de 40% retomavam o que o outro tinha acabado de dizer, e só esse tipo se associou a gostar mais de quem perguntou. O tipo de pergunta não foi sorteado; os autores o classificaram depois.
+    text: Nos chats, cerca de 40% das perguntas retomavam o que o outro tinha acabado de dizer, e só esse tipo se associou a gostar mais de quem perguntou. O tipo de pergunta não foi sorteado; os autores o classificaram depois.
     fact_sheets: [huang-2017-perguntas-de-continuidade]
   - id: speed-dating-perguntas
-    text: Num speed dating com 110 pessoas, a taxa de perguntas de continuidade andou junto com mais segundos encontros. Uma diferença de 8% nessa taxa andou junto, em média, com um encontro a mais a cada 20. A relação entre perguntar e conseguir o segundo encontro foi parecida para homens e para mulheres. É correlação, e o peso das perguntas cai quando se leva em conta o quanto cada pessoa já era desejada.
+    text: Num speed dating com 110 pessoas, os autores acharam que uma taxa maior de perguntas de continuidade andava junto com o par querer um segundo encontro. Uma diferença de 8% nessa taxa andou junto, em média, com um par a mais a cada 20 encontros. Esse número vem de um modelo que não leva em conta o quanto cada pessoa já era desejada; nos modelos dos autores que levam isso em conta, a ligação de cada medida de pergunta pode ser acaso. Eles não acharam diferença entre homens e mulheres. É correlação.
     fact_sheets: [huang-2017-perguntas-de-continuidade]
-    applies_to: { genders: [man, woman] }
+    applies_to: { genders: [man, woman], couple: different-sex }
+  - id: speed-dating-reanalise
+    text: Uma reanálise das mesmas 110 pessoas, que separou o que vinha de quem perguntava, de quem respondia e de cada par, achou que num encontro com mais perguntas de continuidade tendia a haver também mais de troca de assunto (r = 0,87). Com os dois tipos no mesmo modelo, a de continuidade não previu o par querer um segundo encontro melhor que a de troca de assunto. Ser alguém que pergunta muito não andou junto com mais pares querendo um segundo encontro. Num encontro em que o homem fez mais perguntas que o seu costume, a chance de a mulher querer revê-lo foi menor; para as mulheres, o resultado mudou com a forma de contar as perguntas. São os mesmos dados, não uma confirmação à parte, e é correlação.
+    fact_sheets: [kluger-2019-perguntas-diadico]
   - id: desejo-por-uma-pessoa
     text: Num speed dating com 156 universitários, quem sentiu desejo por uma pessoa em particular tendia a ser correspondido (r = 0,14), e quem sentiu desejo por quase todos foi menos desejado de volta (r = −0,41, uma correlação corrigida pelo modelo, maior que a observada). Não houve diferença entre homens e mulheres. O estudo mediu o desejo sentido, não o que cada um mostrou.
     fact_sheets: [eastwick-2007-desejo-seletivo]
-    applies_to: { genders: [man, woman] }
+    applies_to: { genders: [man, woman], couple: different-sex }
   - id: aprofundar-aproxima
     text: Duplas de desconhecidos passaram 45 minutos se revezando em perguntas e tarefas que ficavam mais pessoais a cada 15 minutos. Elas se sentiram mais próximas do que as duplas que só jogaram conversa fora, 4,06 contra 3,25 numa escala de proximidade. É um efeito grande.
     fact_sheets: [aron-1997-36-perguntas]
@@ -243,7 +247,7 @@ Parte do erro está no que achamos que os outros querem. As pessoas disseram ter
 
 Eram conversas de trajeto, de 10 a 20 minutos em média, sem nenhum clima de paquera [@epley-2014-conversar-com-estranhos]. O que se transfere para quem quer conhecer alguém é o erro de previsão, não o tamanho do prazer. {{brazil}} Todos os experimentos foram na região de Chicago, e os próprios autores esperam que o erro mude com o quanto a cultura local incentiva falar com desconhecidos. Não achamos estudo brasileiro que tenha medido isso, então não dá para dizer se aqui o erro é maior, menor ou igual.
 
-## Pergunte, e pergunte sobre o que a pessoa disse
+## Num chat, perguntar agrada a quem responde
 
 Depois de puxar a conversa, vem a dúvida do que dizer. O melhor teste que achamos sobre isso foi feito em chats de texto de 15 minutos entre desconhecidos, nos EUA, que deviam só "se conhecer". Os pesquisadores sortearam um dos dois para fazer pelo menos nove perguntas, ou no máximo quatro. O parceiro de quem perguntou muito gostou mais dele [@huang-2017-perguntas-de-continuidade]. Num segundo experimento, com as duas pessoas da dupla sorteadas, o resultado se repetiu [@huang-2017-perguntas-de-continuidade].
 
@@ -251,13 +255,15 @@ Depois de puxar a conversa, vem a dúvida do que dizer. O melhor teste que acham
 
 A diferença é pequena, e quem perguntava não a previu: ninguém esperava que perguntar faria o outro gostar mais dele [@huang-2017-perguntas-de-continuidade]. Ela também aparece só em quem recebe as perguntas. Observadores que leram as conversas depois não gostaram mais de quem perguntou muito.
 
-Talvez nem toda pergunta conte igual. Cerca de 40% das perguntas retomavam o que o outro tinha acabado de dizer ("e como foi isso?"), e só esse tipo andou junto com gostar mais de quem perguntou [@huang-2017-perguntas-de-continuidade]. Aqui o desenho é mais fraco. O sorteio decidiu quantas perguntas cada um faria, e os autores classificaram o tipo depois. Em 2024, pesquisadores do Imperial College London e da Universidade de Sussex refizeram as contas, e a análise que ligava o efeito do sorteio a esse tipo de pergunta pode ter sido acaso [@huang-2017-perguntas-de-continuidade]. Sobram só associações para dizer que a pergunta de continuidade pesa mais.
+Talvez nem toda pergunta conte igual. Cerca de 40% das perguntas retomavam o que o outro tinha acabado de dizer ("e como foi isso?"), e só esse tipo andou junto com gostar mais de quem perguntou [@huang-2017-perguntas-de-continuidade]. Aqui o desenho é mais fraco. O sorteio decidiu quantas perguntas cada um faria, e os autores classificaram o tipo depois. Em 2024, pesquisadores do Imperial College London e da Universidade de Sussex refizeram as contas, e a análise que ligava o efeito do sorteio a esse tipo de pergunta pode ter sido acaso [@huang-2017-perguntas-de-continuidade]. Para dizer que a pergunta de continuidade pesa mais, sobra essa associação nos chats.
 
-O único dado desse estudo num contexto romântico vem de um speed dating com 110 pessoas, em encontros de 4 minutos. Ali, fazer mais perguntas de continuidade andou junto com conseguir mais segundos encontros. Pelas contas dos autores, uma diferença de 8% nessas perguntas andava junto, em média, com um encontro a mais a cada 20 [@huang-2017-perguntas-de-continuidade]. {{you:speed-dating-perguntas}} A relação entre perguntar e conseguir o segundo encontro foi parecida para homens e para mulheres. É correlação, e o peso das perguntas cai quando se leva em conta o quanto cada pessoa já era desejada. {{brazil}} Não achamos estudo brasileiro sobre perguntas numa conversa.
+O único dado desse estudo num contexto romântico vem de um speed dating com 110 pessoas, em encontros de 4 minutos. Ali, os autores acharam que mais perguntas de continuidade andavam junto com o par querer um segundo encontro. Pelas contas deles, uma diferença de 8% nessas perguntas andava junto, em média, com um par a mais a cada 20 encontros [@huang-2017-perguntas-de-continuidade]. {{you:speed-dating-perguntas}} Esse número vem de um modelo que não leva em conta o quanto cada pessoa já era desejada. Nos modelos dos próprios autores que levam isso em conta, a ligação de cada medida de pergunta com o segundo encontro pode ser acaso.
+
+Dois outros pesquisadores refizeram a análise com os mesmos dados, separando o que vinha de quem perguntava, de quem respondia e de cada par. Num encontro com mais perguntas de continuidade tendia a haver também mais de troca de assunto, e, com as duas no mesmo modelo, a de continuidade não previu o segundo encontro melhor que a outra [@kluger-2019-perguntas-diadico]. Ser alguém que pergunta muito não andou junto com mais pares querendo um segundo encontro. Num encontro em que o homem fez mais perguntas que o seu costume, a chance de a mulher querer revê-lo foi menor; para as mulheres, o resultado mudou com a forma de contar as perguntas. Os primeiros autores não tinham achado diferença entre homens e mulheres. Tudo isso é correlação, e a reanálise usa as mesmas 110 pessoas, então não conta como um segundo estudo. {{brazil}} Não achamos estudo brasileiro sobre perguntas numa conversa.
 
 {{tip:perguntas-de-continuidade}}
 
-Talvez uma pergunta de continuidade pese por mostrar atenção àquela pessoa em particular. Outro speed dating dá uma pista nesse sentido. Com 156 universitários, quem sentiu desejo por uma pessoa em particular tendia a ser correspondido por ela, e quem sentiu desejo por quase todos foi menos desejado de volta [@eastwick-2007-desejo-seletivo]. {{you:desejo-por-uma-pessoa}} Não houve diferença entre homens e mulheres. O estudo mediu o que cada um sentiu, não o que mostrou, e ninguém testou se perguntar sobre o que o outro disse passa esse interesse. A ligação entre os dois estudos é inferência nossa. A Pergunta [O que eu digo querer é o que me atrai?](/escolher-parceiro#o-que-digo-querer-me-atrai) usa outros dados de speed dating.
+Se perguntar agradou nos chats, talvez tenha sido por mostrar atenção àquela pessoa em particular. Outro speed dating dá uma pista. Com 156 universitários, quem sentiu desejo por uma pessoa em particular tendia a ser correspondido por ela, e quem sentiu desejo por quase todos foi menos desejado de volta [@eastwick-2007-desejo-seletivo]. {{you:desejo-por-uma-pessoa}} Não houve diferença entre homens e mulheres. O estudo mediu o que cada um sentiu, não o que mostrou, e ninguém testou se uma pergunta passa esse interesse. A ligação entre os dois estudos é inferência nossa. A Pergunta [O que eu digo querer é o que me atrai?](/escolher-parceiro#o-que-digo-querer-me-atrai) usa outros dados de speed dating.
 
 {{tip:interesse-especifico}}
 
@@ -311,4 +317,4 @@ Juntando com o estudo do trem, os dois erros vão no mesmo sentido. Antes, a gen
 
 ## O que não se sabe
 
-Quase nada aqui foi medido num encontro romântico. Os experimentos são de chats, trens e aulas entre desconhecidos, e os dados românticos, de speed dating, são correlação. Não achamos estudo brasileiro sobre nenhuma das três perguntas, e os autores do estudo do trem esperam que a cultura mude o resultado. As amostras eram de universitários, passageiros da região de Chicago, pessoas recrutadas num site de tarefas online e participantes de oficinas no Reino Unido; para quem tem 40 ou 60 anos, não achamos teste com números publicados. Ninguém testou os limites das duas regras práticas: quantas perguntas passam a cansar, e se abrir-se rápido demais afasta. As conversas por mensagem no app ficaram de fora, embora o estudo das perguntas tenha sido em chat de texto. E ninguém acompanhou, com grupo de comparação, o que acontece semanas depois com quem conversou desse jeito. Os limites de cada estudo estão na página da Ficha dele.
+Quase nada aqui foi medido num encontro romântico. Os experimentos são de chats, trens e aulas entre desconhecidos, e os dados românticos, de speed dating, são correlação. Não achamos estudo brasileiro sobre nenhuma das três perguntas, e os autores do estudo do trem esperam que a cultura mude o resultado. As amostras eram de universitários, passageiros da região de Chicago, pessoas recrutadas num site de tarefas online e participantes de oficinas no Reino Unido; para quem tem 40 ou 60 anos, não achamos teste com números publicados. Ninguém testou os limites das duas regras práticas: quantas perguntas passam a cansar, e se abrir-se rápido demais afasta. As conversas por mensagem no app quase não aparecem aqui, embora o estudo das perguntas tenha sido em chat de texto. Uma tese de doutorado, de uma universidade de Illinois, contou quantas perguntas cada um fez e quanto falou de si nas mensagens mandadas pelo site ou app antes do primeiro encontro. Quem fez mais perguntas quis mais rever a pessoa depois do encontro, e quem contou menos de si foi quem menos quis [@sharabi-2015-tese-troca-de-modalidade]. A evidência é fraca. Eram 186 pessoas, jovens e na maioria mulheres, e só 94 responderam depois do encontro. A tese não passou por revisão de revista e fez dezenas de testes nos mesmos dados, então algum resultado pode ser acaso. Só um lado de cada encontro respondeu, então ela mediu a vontade de quem perguntou, não o que o outro achou. Tudo é associação. E ninguém acompanhou, com grupo de comparação, o que acontece semanas depois com quem conversou desse jeito. Os limites de cada estudo estão na página da Ficha dele.
