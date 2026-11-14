@@ -127,6 +127,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
+- [Lange et al. 2019](studies/lange-2019-apelido-personalidade.md): o que um apelido de site de namoro diz sobre o dono · ✅ · fraca
 - [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
 - [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
@@ -171,6 +172,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
+- [Toma & Hancock 2010](studies/toma-2010-atratividade-mentira.md): quem é menos atraente mente mais no perfil? · ✅ · fraca
+- [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): o que o texto do perfil deixa escapar de quem mente · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
