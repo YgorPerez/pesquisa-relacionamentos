@@ -111,12 +111,15 @@ const SILVA = 'studies/silva-2020-apps-brasil.md'
 const NOT_A_CAUSE = `${GUIDE}: visuals.0.arrows.0.evidence: a solid arrow (a study tested the cause) cites an experiment or a meta-analysis of experiments; otherwise it is an association`
 
 describe('a Visual that passes', () => {
-  it('has a solid arrow when the Study it cites is a meta-analysis of experiments', () => {
-    const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
-      [SILVA]: 'meta-analysis-of-experiments',
-    })
-    expect(result.ok ? [] : result.errors.map((e) => e.message)).toEqual([])
-  })
+  it.each(['experiment', 'meta-analysis-of-experiments'])(
+    'has a solid arrow when the Study it cites is a %s',
+    (design) => {
+      const result = withVisuals(SOLID_ARROW, '{{visual:relacoes}}', GUIDE, {
+        [SILVA]: design,
+      })
+      expect(result.ok ? [] : result.errors.map((e) => e.message)).toEqual([])
+    },
+  )
 
   it('comes into the Guide with its data, the own calculation included', () => {
     const result = withVisuals(BARS, PLACED)
