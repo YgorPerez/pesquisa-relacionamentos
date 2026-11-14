@@ -7,7 +7,7 @@ fact_sheets:
   ]
 strength: moderate
 inference: true
-seo: { title: "Desejar uma pessoa ou todo mundo: o que é correspondido" }
+seo: { title: "Interesse especial por alguém tende a ser um pouco recíproco" }
 ---
 
-Quem sente desejo por uma pessoa em particular tende a ser um pouco correspondido, e quem deseja quase todo mundo, a ser menos desejado de volta. Isso apareceu num speed dating com 156 universitários nos EUA, logo depois de encontros de 4 minutos. Outro estudo acompanhou por um a quatro meses os pares em que os dois disseram sim: quem tinha um par que desejava quase todo mundo disse menos vezes ter interesse romântico por ele. Esse dado vem de speed datings da mesma universidade, já usados no primeiro estudo, e não o confirma de forma independente. Num speed dating de outra universidade, com 108 alunos, os números foram para o mesmo lado, mas podem ser acaso. Os estudos mediram o desejo que cada um sentiu, não o que mostrou, e nenhum testou se mostrar interesse por uma pessoa só muda a resposta dela.
+Se uma conversa com alguém despertou em você um interesse especial, não descarte que seja correspondido. Em speed datings com 156 universitários nos EUA, logo depois de encontros de 4 minutos, quem desejou uma pessoa em particular tendia a ser um pouco correspondido por ela, e quem desejou quase todo mundo foi menos desejado de volta. Outro estudo acompanhou por um a quatro meses as duplas em que os dois disseram sim. Quem deu match com alguém que desejava quase todo mundo disse menos vezes ter interesse romântico por essa pessoa. Esse dado vem de speed datings da mesma universidade, já usados no primeiro estudo, e não o confirma de forma independente. Em speed datings de outra universidade dos EUA, com 108 alunos, os números logo depois dos encontros foram para o mesmo lado, mas podem ser acaso. Os estudos mediram o que cada um sentiu, não o que mostrou, e uma tendência pequena não diz o que uma pessoa específica sentiu por você.

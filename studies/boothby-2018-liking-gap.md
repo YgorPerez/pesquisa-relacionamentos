@@ -42,7 +42,7 @@ As notas de gostar vão de 1 a 7 e as de interesse, de 1 a 5. "b" é a diferenç
 
 ## Limitações
 
-- A Dica ("você provavelmente acha que a conversa foi pior do que foi") tem apoio nos cinco estudos. A "replicação" está dentro do mesmo artigo, com amostras pequenas de conveniência; esta Ficha não conferiu replicações de outros grupos.
+- A "replicação" dos cinco estudos está dentro do mesmo artigo, com amostras pequenas de conveniência. Fora dele, [Sprecher (2021)](sprecher-2021-expectativas-video.md), um estudo de outra pesquisadora com 142 universitários que conversaram 15 minutos por vídeo, achou o mesmo erro. Numa escala de 1 a 7, as pessoas deram 4,75 em média ao quanto acharam que o outro gostou delas, e o outro deu 5,42 ao quanto gostou.
 - Nenhum estudo é de encontro romântico. Os Estudos 1a e 2 usaram duplas do mesmo sexo; o 3 incluiu duplas mistas, mas a conversa era de laboratório, sem interesse romântico declarado.
 - O tamanho do erro é modesto: de 0,36 a 0,65 ponto numa escala de 1 a 7, conforme o estudo. No Estudo 1a, quem tinha pouca timidez não errou de forma [[significativa]].
 - O Estudo 5 mostra que o erro dura meses, mas some no fim do ano letivo, quando as pessoas já se conhecem bem.
@@ -50,4 +50,4 @@ As notas de gostar vão de 1 a 7 e as de interesse, de 1 a 5. "b" é a diferenç
 
 ## Como usamos
 
-- Dica [`conversa-melhor-do-que-parece`](../tips/conversa-melhor-do-que-parece.md), junto com [Epley & Schroeder (2014)](epley-2014-conversar-com-estranhos.md).
+- Dica [`conversa-melhor-do-que-parece`](../tips/conversa-melhor-do-que-parece.md), junto com [Epley & Schroeder (2014)](epley-2014-conversar-com-estranhos.md) e [Sprecher (2021)](sprecher-2021-expectativas-video.md), que achou o mesmo erro numa conversa de 15 minutos por vídeo.

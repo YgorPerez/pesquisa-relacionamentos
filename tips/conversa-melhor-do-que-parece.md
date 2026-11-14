@@ -9,4 +9,4 @@ strength: moderate
 seo: { title: "A conversa foi melhor do que você acha" }
 ---
 
-Depois de conversar com alguém novo, você provavelmente acha que a pessoa gostou menos de você do que gostou de fato. O erro se repetiu em outro estudo, com universitários que conversaram 15 minutos por vídeo. E puxar conversa com um desconhecido costuma ser melhor do que a gente imagina antes. Os dois erros foram medidos em conversas sem interesse romântico.
+Depois de conversar com alguém novo, você provavelmente acha que a pessoa gostou menos de você do que gostou de fato. O erro se repetiu num estudo de outra pesquisadora, com universitários que conversaram 15 minutos por vídeo. E puxar conversa com um desconhecido costuma ser melhor do que a gente imagina antes. Os dois erros foram medidos em conversas sem interesse romântico.
