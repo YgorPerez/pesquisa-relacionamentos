@@ -671,7 +671,8 @@ export function visualProblems(
               return f ? [f] : []
             })
             // A solid arrow says a study tested the cause: an experiment, or
-            // a meta-analysis (which pools the experiments).
+            // a meta-analysis (which pools the experiments). A review pools
+            // nothing, so it does not count (#711).
             if (
               arrow.evidence === 'cause' &&
               cited.length > 0 &&
