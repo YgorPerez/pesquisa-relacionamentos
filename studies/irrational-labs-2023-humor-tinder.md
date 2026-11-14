@@ -48,7 +48,7 @@ Os 12% são uma diferença relativa. O gráfico do post dá a taxa de resposta d
 - O título fala em 1.700 mensagens e a seção de método em 1.227; o post não explica a diferença.
 - Uma piada e uma pergunta sincera, de um só perfil. O resultado é o dessas duas frases e dessas fotos, e pode não valer para outras piadas ou outros perfis.
 - Cada pesquisador ficou numa cidade, e o post não mostra o resultado por cidade. Ele também não diz como o sorteio foi feito, e quem escolhia a mensagem era quem a enviava.
-- O post diz em que horário os pesquisadores deram "sim" e não diz quando cada mensagem foi enviada depois do match.
+- O post diz que os pesquisadores deram "sim" nas 3 horas de maior movimento do dia e não diz quando cada mensagem foi enviada depois do match.
 - Mede só se houve resposta. Não diz o que a mulher respondeu, se a conversa seguiu ou se houve encontro.
 - As mulheres já tinham dado match com o perfil, tinham de 25 a 45 anos e estavam em grandes cidades dos EUA.
 - O post não fala de consentimento das usuárias nem de avaliação ética.
