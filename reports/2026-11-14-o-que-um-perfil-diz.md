@@ -173,7 +173,7 @@ Questionário com 1.486 usuários do Tinder que responderam a um link na imprens
 
 Dados comerciais da HurryDate: 8.961 clientes com perfil online, em 2003. Nos traços em que a empresa separava os eventos (idade, raça e religião), o que cada um pediu no perfil previu a que eventos ia; na altura, não. Lá dentro, o pedido acrescentou pouco a quem ele disse sim: só na raça respondeu por 0,7% a 2,0% das diferenças, e nos outros traços por 0,4% ou menos. A composição do evento pesou de 9,7% a 58,2%. Mede o que a pessoa fez com o próprio perfil, não como outro o leu.
 
-**Kurzban & Weeden 2005.** Kurzban R, Weeden J. _HurryDate: Mate preferences in action_. Evolution and Human Behavior 26(3):227–244, 2005. https://doi.org/10.1016/j.evolhumbehav.2004.08.012. ✅ [Ficha](../studies/kurzban-2005-hurrydate.md), força fraca.
+**Kurzban & Weeden 2005.** Kurzban R, Weeden J. _HurryDate: Mate preferences in action_. Evolution and Human Behavior 26(3):227–244, 2005. https://doi.org/10.1016/j.evolhumbehav.2004.08.012. ✅ [Ficha](../studies/kurzban-2005-hurrydate.md), força moderada (era fraca até a regra sobre dados comerciais da #710).
 
 A mesma base, com 10.526 clientes. Depois de três minutos cara a cara, receberam mais sins os homens que davam nota mais alta à beleza do próprio rosto, os mais altos, os mais novos e os de IMC mais perto de 25, e as mulheres de IMC mais baixo, mais novas e com nota mais alta à beleza do próprio rosto; nos dois sexos, também quem tinha mais gente da própria raça na sessão. Esses fatores responderam por 18,4% das diferenças entre os homens e 34,0% entre as mulheres; escolaridade, renda, religião e sociossexualidade responderam por menos de 1% cada. Não é perfil, e beleza e peso são os declarados.
 
