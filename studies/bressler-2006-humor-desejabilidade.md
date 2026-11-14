@@ -2,7 +2,7 @@
 reference: "Bressler ER, Balshine S. *The influence of humor on desirability*. Evolution and Human Behavior 27(1):29–39, 2006. Texto completo no site do laboratório de Balshine: https://abel.mcmaster.ca/publications/pdfs/Bressler%20-%20Balshine.pdf"
 link: https://doi.org/10.1016/j.evolhumbehav.2005.06.002
 status: verified
-verified_on: 2026-10-20
+verified_on: 2026-11-14
 strength: weak
 strength_reason: "Experimento controlado, mas com 210 universitários de uma só universidade, escolha forçada entre fotos e frases escritas, sem conversa nem encontro real."
 countries: [Canadá]
@@ -33,11 +33,12 @@ Cada participante via duas fotos de pessoas do mesmo sexo e de atratividade pare
 | Homens avaliando mulheres | Não mostraram preferência pela engraçada: o resultado pode ser acaso (t = 0,36; p = 0,72) | Seção 3.2 | "men evaluating women: t(58)=0.36, p =.72" |
 | Engraçados e sociáveis | Os engraçados foram escolhidos como mais sociáveis (divertidos, simpáticos, populares) 2,48 vezes em média, acima do acaso | Seção 3.3 | "Humorous individuals were chosen as socially adept (average of fun, friendly, and popular) more often than expected by chance [2.48F0.05" |
 | Engraçados e inteligentes | Os engraçados foram escolhidos como mais inteligentes 1,73 vez em média, abaixo do acaso | Seção 3.3 | "less likely to be chosen as intelligent [1.73F0.07" |
+| Engraçados e honestos | Mulheres e homens escolheram o engraçado como o mais honesto e confiável menos vezes do que o acaso daria, com foto bonita ou feia, e as mulheres ainda menos quando a foto era feia. A conta junta as perguntas "honesto" e "confiável" numa medida só e mistura quem avaliou o próprio sexo com quem avaliou o outro, então não mostra à parte como as mulheres viram os homens engraçados. Até no grupo mais perto do acaso, mulheres vendo fotos bonitas, o engraçado ficou abaixo (0,88 escolha em média em duas séries; o acaso dá 1) | Seção 3.3; a medida combinada, Seção 2.4 e Tabela 2 | "trustworthiness/honesty was still attributed to humorous individuals of both levels of attractiveness less often than expected by chance by both sexes [because there were two series of trials for each level of attractiveness, the chance expectation for these comparisons=1; women viewing attractive stimuli: 0.88F0.06" |
 | Conferência: as frases sem graça eram piores? (média de 13 traços) | Não: na média dos traços de personalidade, as sem graça tiveram nota 4,10 e as engraçadas, 3,98, sem diferença | Seção 3.4 | "nonhumorous statements: 4.10F0.05; humorous statements: 3.98F0.09" |
 
 t mede o quanto o resultado se afasta do acaso: quanto maior, mais longe. "p" é a chance de um resultado assim aparecer só por acaso.
 
-Os autores resumem: o humor pode aumentar a desejabilidade como parceiro, "but this effect is most likely to occur when men use humor and are evaluated by women" (Discussão). As mulheres escolheram o homem engraçado mesmo vendo-o, em média, como menos honesto e menos inteligente.
+Os autores resumem: o humor pode aumentar a desejabilidade como parceiro, "but this effect is most likely to occur when men use humor and are evaluated by women" (Discussão). Na Discussão, dizem que as mulheres escolheram o homem engraçado mesmo vendo-o muitas vezes como menos honesto e menos inteligente; a conta de honestidade, porém, junta quem avaliou homens e quem avaliou mulheres.
 
 ### A Dica "Senso de humor ajuda"
 
