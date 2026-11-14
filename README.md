@@ -83,6 +83,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Arlt, Pöschl & Döring 2008](studies/arlt-2008-sms-sem-resposta.md): SMS sem resposta depois de uma festa · ✅ · fraca
 - [Armstrong et al. 2012](studies/armstrong-2012-orgasmo-ficadas-namoro.md): orgasmo e prazer das universitárias em ficadas e namoros · ✅ · moderada
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
+- [Aronson & Worchel 1966](studies/aronson-1966-similaridade-ou-ser-gostado.md): concordar nas opiniões ou saber que o outro gosta de você · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
 - [Berkes 2021](studies/berkes-2021-cantadas-originais.md): cantadas originais, comuns e aleatórias em app de namoro · ✅ · fraca
@@ -129,6 +130,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
+- [Hazel et al. 2023](studies/hazel-2023-revisao-dificil-de-conquistar.md): revisão de estudos sobre se fazer de difícil · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
@@ -225,6 +227,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
+- [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
 - [Whitty 2008](studies/whitty-2008-apresentacao-site-namoro.md): o perfil num site de namoro e a pressa de se encontrar · ✅ · fraca
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
