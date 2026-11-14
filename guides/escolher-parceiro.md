@@ -237,7 +237,7 @@ findings:
     text: Entre todos os adultos, 1,2% se declararam homossexuais e 0,7% bissexuais; 1,1% não souberam e 2,3% não quiseram responder.
     fact_sheets: [ibge-2019-pns]
   - id: mirar-acima
-    text: Num site de namoro dos EUA, homens e mulheres escreveram em média para quem estava uns 25% acima deles num ranking de desejabilidade. Quanto maior a distância, menor a chance de resposta.
+    text: Num site de namoro dos EUA, homens e mulheres escreveram em média para quem estava uns 25% acima deles num ranking de desejabilidade. Quanto mais acima de quem escreveu estava quem recebeu, menor foi a chance de resposta.
     fact_sheets: [bruch-2018-aspirational-pursuit]
     applies_to: { genders: [man, woman], couple: different-sex }
   - id: solteiros-se-acham-exigentes

@@ -223,7 +223,7 @@ findings:
     fact_sheets: [rosenfeld-2012-searching-for-a-mate]
     period: '2009'
   - id: mirar-acima
-    text: Num site de namoro, homens e mulheres escreveram, em média, para pessoas cerca de 25% mais "desejáveis" que eles no ranking do estudo. Quanto maior a distância, menor a chance de resposta.
+    text: Num site de namoro, homens e mulheres escreveram, em média, para pessoas cerca de 25% mais "desejáveis" que eles no ranking do estudo. Quanto mais acima de quem escreveu estava quem recebeu, menor foi a chance de resposta.
     fact_sheets: [bruch-2018-aspirational-pursuit]
     period: '2014'
   - id: assedio-no-app
