@@ -27,6 +27,8 @@ O artigo tem um estudo de percepção e uma análise de conteúdo, os dois pré-
 
 O estudo mede a impressão que o texto dá em quem lê. Não há medida de como quem escreveu o perfil é de verdade: ninguém mediu a inteligência nem o humor dos autores dos textos, nem o que eles procuravam.
 
+Os quatro autores assinam também [van der Zanden et al. (2019)](zanden-2019-objetivo-linguagem-perfil.md), que compara, em perfis de um site holandês, o texto de quem marcou relacionamento de longo prazo com o de quem marcou encontro.
+
 ## Achados
 
 | Medida | Valor | Onde | Trecho |
