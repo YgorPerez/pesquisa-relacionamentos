@@ -5,11 +5,11 @@ status: verified
 verified_on: 2026-11-15
 strength: weak
 strength_reason: "Um experimento pequeno com sorteio da bio, mas com 195 universitários de conveniência de cursos de comunicação, alguns conhecidos dos pesquisadores, um perfil de Tinder impresso com avatar de Bitmoji e bios que o artigo não mostra, escalas descritas com as duas pontas iguais, uma medida de 'resposta' que mistura deslizar, mandar mensagem, bloquear e querer só sexo, e uma discussão que contradiz os resultados sobre a hipótese principal."
-countries: []
+countries: [EUA]
 period: "não informado no texto"
 sample:
   n: 195
-  description: "200 alunos de graduação de vários cursos de comunicação de uma grande universidade do Sudoeste, diz o texto, sem nomear o país (o autor é da University of North Texas, em Denton). Escolhidos por conveniência, com a ajuda dos professores, em troca de crédito extra; 50 receberam cada versão do perfil, e 5 questionários foram descartados, ficando 195. De 18 a 49 anos (idade média de 21,72); 56% mulheres, 41,5% homens e 2,5% de outro gênero. O artigo não diz a orientação sexual dos participantes."
+  description: "200 alunos de graduação de vários cursos de comunicação de uma grande universidade do Sudoeste, a mesma dos pesquisadores, diz o texto; o autor é da University of North Texas, em Denton, Texas, EUA. Escolhidos por conveniência, com a ajuda dos professores, em troca de crédito extra; 50 receberam cada versão do perfil, e 5 questionários foram descartados, ficando 195. De 18 a 49 anos (idade média de 21,72); 56% mulheres, 41,5% homens e 2,5% de outro gênero. O artigo não diz a orientação sexual dos participantes."
   representative: false
 design: experiment
 conflict: "O autor declara não ter conflito de interesse. O artigo não traz declaração de financiamento."
@@ -45,6 +45,6 @@ As notas vão de 1 a 5. As diferenças entre as quatro bios passaram no teste na
 - O artigo não mostra as bios nem o perfil, e diz que o mesmo perfil tinha "um avatar feminino e um masculino", sem explicar se cada participante viu o do gênero que prefere. Não diz a orientação sexual dos participantes nem se o perfil era do sexo que eles procuram. O autor conta que muitos tiveram dificuldade de dar nota de atração física a um Bitmoji.
 - As escalas aparecem descritas de "(1) discordo totalmente" a "(5) discordo totalmente", com as duas pontas iguais, e misturam perguntas a favor e contra (como "seria difícil conversar com essa pessoa" e "eu bloquearia essa pessoa") sem dizer se foram invertidas antes da média. Não dá para conferir que nota alta quer dizer mais atração.
 - A "resposta de comportamento" junta deslizar para a direita, deslizar para a esquerda, mandar mensagem primeiro, responder, querer uma relação só sexual e bloquear; o autor a resume como deslizar para a direita. A medida de "resposta de atitude" (relação séria, casual, sair num encontro) é descrita no método, mas não tem resultado no artigo.
-- Os resultados dizem que a primeira hipótese não se confirmou, e a discussão diz que se confirmou. A discussão também fala em 96% dos participantes na faixa dos 20 anos, com idades de 18 a 49 na descrição da amostra.
+- Os resultados dizem que a primeira hipótese não se confirmou, e a discussão diz que se confirmou. A discussão também diz que 96% dos participantes estavam na faixa dos 20 anos, número que a descrição da amostra não dá.
 - O autor lembra que o True Colors teve pouca validade convergente com outros testes de interesse. O perfil foi impresso e lido em sala de aula; ninguém usou o app nem escolheu um par.
 - A revista é da Scientific Research Publishing (SCIRP); o artigo não descreve a revisão por pares nem aprovação por comitê de ética, só o termo de consentimento assinado em sala.
