@@ -198,7 +198,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gao et al. 2017](studies/gao-2017-elogios-metaforicos.md): elogios metafóricos de homens num contexto de encontro e num de trabalho · ✅ · fraca
 - [Gavin et al. 2019](studies/gavin-2019-perfil-autista-conteudo.md): o que homens que se dizem autistas escrevem no perfil de namoro · ✅ · fraca
 - [Geher 2009](studies/geher-2009-leitura-mente.md): adivinhar o que o outro sexo quer em anúncios pessoais · ✅ · fraca
+- [Geng et al. 2024](studies/geng-2024-voz-medicos-honorarios.md): palavras do médico, mensagem de voz e valor pago na consulta online · ✅ · moderada
 - [Gerna et al. 2026](studies/gerna-2026-foto-bio-tinder.md): foto e bio em separado no interesse por um encontro · ✅ · fraca
+- [Gesselman, Ta & Garcia 2019](studies/gesselman-2019-emoji-encontros.md): emoji com possíveis parceiros e encontros no último ano · ✅ · fraca
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
 - [Gogan et al. 2025](studies/gogan-2025-filtros-confianca.md): filtro de beleza na foto do perfil, atração e confiança · ✅ · fraca
 - [Gosling et al. 2011](studies/gosling-2011-facebook-personalidade.md): a personalidade no uso e no perfil do Facebook · ✅ · fraca
@@ -485,6 +487,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Farris, Viken & Treat 2010](studies/farris-2010-pistas-diagnosticas.md): roupa, expressão e coerção sexual na leitura de fotos · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
+- [Fullwood et al. 2015](studies/fullwood-2015-textspeak-personalidade.md): textspeak e a personalidade atribuída a quem escreve · ✅ · fraca
 - [Gavin et al. 2019](studies/gavin-2019-autismo-perfil.md): o perfil de namoro de homens autistas visto por mulheres · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
 - [Gibbs et al. 2011](studies/gibbs-2011-reducao-incerteza.md): como usuários de sites de namoro checam quem conhecem online · ✅ · fraca
