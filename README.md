@@ -103,6 +103,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Bersamin et al. 2014](studies/bersamin-2014-sexo-casual-saude-mental.md): sexo casual e saúde mental de universitários · ✅ · moderada
 - [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
+- [Boller, Lechner & Okasa 2025](studies/boller-2025-esporte-perfil.md): a frequência de esporte no perfil e a primeira mensagem num site alemão · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
 - [Boothroyd et al. 2008](studies/boothroyd-2008-sociossexualidade-rosto.md): abertura a sexo casual julgada pela foto do rosto · ✅ · fraca
 - [Botnen et al. 2018](studies/botnen-2018-sociossexualidade-apps.md): sociossexualidade e uso de apps de namoro com fotos · ✅ · fraca
@@ -316,6 +317,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-rejeicao-neuroimagem.md): a rejeição usa o circuito da dor física? · ✅ · moderada
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
+- [Celani-Morrell 2016](studies/celani-morrell-2016-foto-texto-mulheres.md): a beleza da foto e a nota do texto em perfis de mulheres · ✅ · fraca
+- [Chappetta 2016](studies/chappetta-2016-papeis-genero-perfil.md): papéis de gênero e beleza da foto num perfil de namoro, entre universitários · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
