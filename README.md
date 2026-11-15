@@ -286,6 +286,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Krohn 2020](studies/krohn-2020-formas-de-risada.md): o que jaja, jajaja, jeje e jiji querem dizer numa conversa escrita · ✅ · fraca
 - [Kruger et al. 2005](studies/kruger-2005-egocentrismo-email.md): o tom de uma mensagem por e-mail e por voz · ✅ · fraca
 - [Kruger 2006](studies/kruger-2006-masculinidade-estrategia.md): o que um rosto mais ou menos masculino faz pensar de um homem · ✅ · fraca
+- [Kumar e Epley 2021](studies/kumar-2021-voz-conexao.md): voz ou texto para se conectar com alguém · ✅ · fraca
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
@@ -308,6 +309,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
+- [Liu et al. 2023](studies/liu-2023-estilo-escrita-medicos.md): emoji e linguagem inclusiva de médicos em consultas online · ✅ · fraca
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
 - [Lynn & Shurgot 1984](studies/lynn-1984-anuncios-aparencia.md): o que o anúncio dizia da aparência e as respostas que recebeu · ✅ · fraca
@@ -559,6 +561,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lee et al. 2008](studies/lee-2008-hotornot-propria-atratividade.md): a própria beleza, a beleza que se vê nos outros e quem se aceita no HOTorNOT · ✅ · fraca
 - [Lee, Sun & Thiry 2011](studies/lee-2011-riqueza-midia-perfil.md): texto, áudio ou vídeo no perfil de namoro · ✅ · fraca
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
+- [Liegl e Furtner 2024](studies/liegl-2024-emoji-lider.md): emoji no e-mail de um chefe · ✅ · fraca
 - [Luevano e Zebrowitz 2007](studies/luevano-2007-masculinidade-curto-prazo.md): rosto masculino e preferência para algo curto ou longo · ✅ · fraca
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Mao et al. 2018](studies/mao-2018-identidade-genero-trans.md): rótulo de pessoa trans ou não binária e atração por um perfil · ✅ · fraca
