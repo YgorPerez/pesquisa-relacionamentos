@@ -44,4 +44,4 @@ As notas vão de 1 a 5. "dz" mede o tamanho da diferença entre duas condições
 - As mensagens eram de chefe ou de amigo no LINE, não de alguém que se paquera, e o estudo não trata de namoro.
 - É um texto de seminário de grupo de pesquisa da Sociedade Japonesa de Inteligência Artificial, que os autores chamam de exploratório, sem revisão de revista.
 - Os 100 participantes vieram de um serviço comercial de questionários online, e o texto não diz como foram escolhidos dentro dele, nem o gênero ou onde moram; nada indica que representem os jovens que falam japonês.
-- O resumo em inglês diz que o emoji aumentou ou diminuiu a simpatia conforme o tom; no corpo do texto, os autores dizem que o desenho não permite essa leitura de causa.
+- O resumo em inglês diz que, nas mensagens do chefe, o emoji aumentou a simpatia no tom educado e a diminuiu no informal; no corpo do texto, os autores dizem que o desenho não permite essa leitura de causa.
