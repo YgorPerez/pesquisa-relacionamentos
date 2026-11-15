@@ -12,7 +12,7 @@ sample:
   description: "37 usuários heterossexuais do Yahoo! Personals, do Match.com/MSN Match.com, do American Singles e do Webdate, que o artigo chama de os quatro sites tradicionais mais populares dos EUA na época, recrutados em Nova York por anúncios no Village Voice e no Craigslist.com. São os primeiros 37 dos 80 participantes do estudo maior de Toma et al. (2008), entrevistados um a um; a equipe parou de entrevistar quando as respostas deixaram de trazer ideias novas. São 12 homens e 25 mulheres, de 18 a 47 anos (média de 30), que usavam namoro online havia cerca de dois anos em média (de dois meses a sete anos). Receberam 30 dólares."
   representative: false
 design: cross-sectional
-conflict: "Financiado pela National Science Foundation (bolsa 0624267). O artigo não traz declaração de conflito de interesse. Quem entrevistou foi a terceira autora, Catalina Toma."
+conflict: "Financiado pela National Science Foundation (bolsa 0624267). O artigo não traz declaração de conflito de interesse. Quem entrevistou foi Catalina Toma, que assina o artigo em terceiro lugar."
 covers:
   genders: [man, woman]
   ages: { min: 18, max: 47 }
@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-O estudo pergunta como usuários de sites de namoro julgam as diferenças entre o próprio perfil, ou o dos outros, e a pessoa que aparece no encontro: quais são aceitáveis e quais não são. Cada participante recebeu o próprio perfil impresso e deu uma nota à precisão de cada item (idade, altura, profissão e religião, entre outros) e ao quanto acha aceitável mentir naquele item. Depois respondeu a um questionário e passou por uma entrevista de cerca de 30 minutos. A entrevistadora partia dos itens que a própria pessoa tinha marcado como imprecisos ("Você se deu nota baixa de precisão na altura. Pode me contar sobre isso?") e perguntava que tipos de distorção no perfil são aceitáveis, quais não são e por quê. As entrevistas foram gravadas, transcritas e analisadas de forma qualitativa, por comparação constante, num caminho inspirado na teoria fundamentada (grounded theory).
+O estudo pergunta como usuários de sites de namoro julgam as diferenças entre o próprio perfil, ou o dos outros, e a pessoa que aparece no encontro: quais são aceitáveis e quais não são. Cada participante recebeu o próprio perfil impresso e deu uma nota à precisão de cada item (idade, altura, profissão e religião, entre outros) e ao quanto acha aceitável mentir naquele item. Depois respondeu a um questionário e passou por uma entrevista de cerca de 30 minutos. Quem entrevistou partia dos itens que a própria pessoa tinha marcado como imprecisos ("Você se deu nota baixa de precisão na altura. Pode me contar sobre isso?") e perguntava que tipos de distorção no perfil são aceitáveis, quais não são e por quê. As entrevistas foram gravadas, transcritas e analisadas de forma qualitativa, por comparação constante, num caminho inspirado na teoria fundamentada (grounded theory).
 
 Os participantes são parte dos 80 de [Toma et al. (2008)](toma-2008-mentira-altura-peso-idade.md), que no mesmo dia mediu altura, peso e idade. O artigo não junta essas medidas às entrevistas. A ideia do perfil como promessa é dos autores: eles dizem que ela não foi formulada pelos participantes e que serviu para organizar os temas das entrevistas.
 
@@ -55,6 +55,6 @@ Os achados são temas tirados das entrevistas, com exemplos de falas; o artigo n
 
 - São 37 voluntários, só da região de Nova York e só de sites grandes como o Match.com, como os próprios autores apontam. Todos são heterossexuais, e as mulheres são mais que o dobro dos homens.
 - Os autores dizem que dar nota à precisão do próprio perfil antes da entrevista pode ter deixado o assunto da mentira mais presente, e que os participantes falaram em retrospecto sobre como montaram o perfil, o que abre espaço para justificativas feitas depois.
-- O estudo é qualitativo: os temas vêm da leitura da primeira autora, discutida entre os três, sem contagem por tema e sem medida de concordância entre codificadores. A Ficha não pode dizer quão comum é cada justificativa.
+- O estudo é qualitativo: os temas vêm da leitura que Nicole Ellison, que assina o artigo em primeiro lugar, fez de todas as entrevistas, discutida entre os três autores, sem contagem por tema e sem medida de concordância entre codificadores. A Ficha não pode dizer quão comum é cada justificativa.
 - A ideia do perfil como promessa é uma proposta de interpretação dos autores; eles dizem que os participantes não a formularam.
-- O estudo não confere se o que os participantes dizem aceitar muda o que fazem no perfil ou como reagem no encontro. Os sites são de antes dos apps, e o artigo não informa quando as entrevistas foram feitas.
+- O estudo não confere se o que os participantes dizem aceitar muda o que fazem no perfil ou como reagem no encontro. O artigo chama os sites de os quatro sites tradicionais mais populares dos EUA na época, sem dizer quando as entrevistas foram feitas.
