@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Num questionário online, adultos de um [[painel-online|painel online]] do Reino Unido leram uma definição de golpe de namoro online e viram 20 perfis em ordem aleatória, 10 de golpistas conhecidos e 10 verdadeiros, cada um com foto e texto e todos no mesmo formato. Para cada perfil, marcaram se era verdadeiro ou golpe. O acerto de cada pessoa é o número de perfis classificados certo, somando os falsos e os verdadeiros. O questionário também mediu quanto tempo cada pessoa levou para decidir, somando os tempos de todos os perfis.
+Num questionário online, adultos de um [[painel-online|painel online]] do Reino Unido leram uma definição de golpe de namoro online e viram 20 perfis apresentados de forma aleatória, 10 de golpistas conhecidos e 10 verdadeiros, cada um com foto e texto e todos no mesmo formato. Para cada perfil, marcaram se era verdadeiro ou golpe. O acerto de cada pessoa é o número de perfis classificados certo, somando os falsos e os verdadeiros. O questionário também mediu quanto tempo cada pessoa levou para decidir, somando os tempos de todos os perfis.
 
 Depois, os participantes disseram se já tinham identificado um perfil de golpe antes da pesquisa e responderam três questionários: crenças românticas (a ideia de amor como destino, pela escala de Sprecher e Metts), impulsividade (UPPS-R) e consideração de consequências futuras (CFC, o quanto a pessoa pensa no que os atos de hoje vão causar depois). Um modelo de regressão testou esses cinco fatores juntos como preditores do acerto. O estudo é sobre golpe em perfis de namoro online, não sobre as conversas que vêm depois do primeiro contato.
 
@@ -29,7 +29,7 @@ Depois, os participantes disseram se já tinham identificado um perfil de golpe 
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| A tarefa | Depois de ler uma definição de golpe de namoro online, cada participante viu 20 perfis em ordem aleatória, 10 falsos e 10 verdadeiros, e marcou cada um como verdadeiro ou golpe | Procedure (p. 10 do manuscrito) | "provided a definition of the online dating scam followed by 20 randomly presented profiles (10 fake and 10 genuine)" |
+| A tarefa | Depois de ler uma definição de golpe de namoro online, cada participante viu 20 perfis apresentados de forma aleatória, 10 falsos e 10 verdadeiros, e marcou cada um como verdadeiro ou golpe | Procedure (p. 10 do manuscrito) | "provided a definition of the online dating scam followed by 20 randomly presented profiles (10 fake and 10 genuine)" |
 | Acertos nos perfis falsos | Entre os perfis de golpe, os participantes acertaram em média 6,74 (desvio-padrão 2,04) | Materials (p. 9 do manuscrito) | "Participants scored a mean of 6.74 (SD = 2.04) on the fake" |
 | Acertos nos perfis verdadeiros e no total | Entre os perfis verdadeiros, a média de acertos foi 6,77 (desvio-padrão 2,40); somando os dois tipos, 13,51 perfis classificados certo (desvio-padrão 2,63) | Materials (p. 9 do manuscrito) | "profiles and 6.77 (SD = 2.40) on the real profiles, making a total accuracy mean of 13.51 (SD = 2.63)." |
 | Já ter visto um golpe | 28% dos participantes acreditavam já ter identificado um perfil de golpe antes da pesquisa | Participants (p. 8 do manuscrito) | "In the final sample 28% of participants believed they had previously spotted a dating scam profile." |
@@ -48,7 +48,7 @@ Depois, os participantes disseram se já tinham identificado um perfil de golpe 
 - O estudo é transversal: os fatores e o acerto foram medidos juntos. O artigo só dá o modelo com os cinco fatores ao mesmo tempo; a correlação simples de cada fator com o acerto não aparece (a Tabela 1 traz só as correlações dos fatores entre si).
 - Três dos cinco fatores passam no teste por pouco (p entre 0,026 e 0,037), sem correção para vários testes, e o modelo inteiro explica 13% das diferenças de acerto.
 - O artigo chama a amostra de representativa do Reino Unido, mas ela saiu de um painel online da Qualtrics, e o texto não diz como a representatividade foi buscada nem quantos convidados responderam.
-- O texto dá duas contagens de perfis: na seção de materiais, 20 perfis de golpe e 20 verdadeiros, pareados por sexo e idade; no procedimento, 20 perfis por participante, 10 de cada tipo. O artigo não diz como os 20 de cada pessoa foram escolhidos entre os 40, nem se todos viram os mesmos.
+- O texto dá duas contagens de perfis: na seção de materiais, 20 perfis de golpe e 20 verdadeiros, pareados por sexo e idade; no procedimento, 20 perfis por participante, 10 de cada tipo. O artigo diz só que os 20 perfis foram "randomly presented" (apresentados de forma aleatória), sem dizer se o aleatório era a ordem ou a escolha dos 20 entre os 40, nem se todos viram os mesmos.
 - O artigo não compara a média de acertos com o que se acertaria chutando. O artigo lê os números como sinal de que separar perfil falso de verdadeiro não é fácil.
 - Os perfis de golpe são os que moderadores de um site já tinham identificado, e os verdadeiros vêm de um site de namoro com perfis verificados, do mesmo dono. Golpes que ninguém identificou podem ser mais difíceis de ver.
 - A tarefa julga só o perfil, com foto e texto. No golpe real, o contato segue por conversas; o artigo propõe acrescentar a etapa de julgar o perfil ao modelo de etapas do golpe de Whitty (2013), mas não mediu as etapas seguintes.
