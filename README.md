@@ -67,6 +67,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2022](studies/ibge-2022-pnad-ocupacao.md): PNAD Contínua, ocupação · ✅ · forte
 - [IBGE 2022](studies/ibge-2022-pnad-voluntariado.md): PNAD Contínua, trabalho voluntário · ✅ · forte
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
+- [Komesu 2006](studies/komesu-2006-comentarios-internetes.md): o que universitários dizem do internetês · ✅ · fraca
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
 - [Ma, Sun & Naaman 2017](studies/ma-2017-happn-localizacao-garantia.md): como usuários do happn leem os cruzamentos de caminho · ✅ · fraca
@@ -218,6 +219,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Heijckers 2022](studies/heijckers-2022-erros-ingles-l2.md): erros de inglês no texto do perfil e a nota dada ao autor · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
+- [Hilte, Vandekerckhove & Daelemans 2019](studies/hilte-2019-percepcao-escrita-adolescentes.md): como adolescentes leem a escrita nas redes · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Horsham et al. 2025](studies/horsham-2025-replicacao-menos-e-mais.md): réplica de "saber mais e gostar menos" · ✅ · fraca
@@ -523,6 +525,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lee et al. 2008](studies/lee-2008-hotornot-propria-atratividade.md): a própria beleza, a beleza que se vê nos outros e quem se aceita no HOTorNOT · ✅ · fraca
 - [Lee, Sun & Thiry 2011](studies/lee-2011-riqueza-midia-perfil.md): texto, áudio ou vídeo no perfil de namoro · ✅ · fraca
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
+- [Lewandowski & Harrington 2006](studies/lewandowski-2006-abreviacoes-foneticas-professor.md): abreviações fonéticas num e-mail a um professor · ✅ · fraca
 - [Luevano e Zebrowitz 2007](studies/luevano-2007-masculinidade-curto-prazo.md): rosto masculino e preferência para algo curto ou longo · ✅ · fraca
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Mao et al. 2018](studies/mao-2018-identidade-genero-trans.md): rótulo de pessoa trans ou não binária e atração por um perfil · ✅ · fraca
