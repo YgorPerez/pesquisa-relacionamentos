@@ -147,6 +147,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gosling et al. 2011](studies/gosling-2011-facebook-personalidade.md): a personalidade no uso e no perfil do Facebook · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
+- [Green et al. 2026](studies/green-2026-conspiracao-perfil.md): teoria da conspiração no perfil de namoro · ✅ · moderada
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
@@ -317,8 +318,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
+- [Gavin et al. 2019](studies/gavin-2019-autismo-perfil.md): o perfil de namoro de homens autistas visto por mulheres · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
 - [Gibbs et al. 2011](studies/gibbs-2011-reducao-incerteza.md): como usuários de sites de namoro checam quem conhecem online · ✅ · fraca
+- [Gillrath 2022](studies/gillrath-2022-erros-nativo.md): erros de linguagem e saber que quem escreveu não é nativo · ✅ · fraca
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
