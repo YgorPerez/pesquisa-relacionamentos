@@ -86,6 +86,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Adamczyk et al. 2024](studies/adamczyk-2024-vegetariano.md): o perfil de namoro de um vegetariano visto por quem come carne · ✅ · fraca
 - [Afridi et al. 2025](studies/afridi-2025-trabalho-mulheres-matrimonial.md): trabalho da mulher e interesse num site de casamento da Índia · ✅ · moderada
 - [Aguinaldo & Peissig 2021](studies/aguinaldo-2021-maquiagem-sociossexualidade.md): quanta maquiagem e como o rosto é julgado · ✅ · fraca
+- [Akadal e Söyük 2022](studies/akadal-2022-respostas-so-emoji.md): mensagens só com emoji, para quem escreve e para quem lê · ✅ · fraca
 - [Amano 2026](studies/amano-2026-investimento-parental.md): falar de filhos no perfil de um homem · ✅ · fraca
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
 - [Amirkhani et al. 2026](studies/amirkhani-2026-golpes-romanticos-ira.md): o que fez vítimas de golpe romântico no Irã desconfiarem · ✅ · fraca
@@ -462,6 +463,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Antheunis et al. 2020](studies/antheunis-2020-texto-video-presencial.md): chat ou vídeo antes do encontro pessoal · ✅ · fraca
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
+- [Arakawa et al. 2006](studies/arakawa-2006-frequencia-emoticons-impressao.md): emoticons no e-mail de uma amiga e o costume de recebê-los · ✅ · fraca
+- [Aretz e Mierke 2019](studies/aretz-2019-emoji-chefe.md): emoji no e-mail de um chefe · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
 - [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
 - [Bašić 2021](studies/basic-2021-papeis-genero-perfil.md): papéis de gênero e foto em perfis de namoro · ✅ · fraca
