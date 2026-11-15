@@ -42,6 +42,8 @@ else if (mode === 'dates')
     `${MEN} homens: ${one(DATES / MEN)} encontros por homem; ${WOMEN} mulheres: ${one(DATES / WOMEN)} por mulher`,
   )
 else {
-  console.error('usage: samara-2021-projecao-superpercepcao.ts binomial|guess|dates')
+  console.error(
+    'usage: samara-2021-projecao-superpercepcao.ts binomial|guess|dates',
+  )
   process.exit(1)
 }
