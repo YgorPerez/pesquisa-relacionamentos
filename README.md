@@ -315,10 +315,13 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Weisbuch, Ivcevic & Ambady 2009](studies/weisbuch-2009-pagina-web-presencial.md): agradar pela página do Facebook e agradar ao vivo · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
 - [Whitty 2008](studies/whitty-2008-apresentacao-site-namoro.md): o perfil num site de namoro e a pressa de se encontrar · ✅ · fraca
+- [Witmer et al. 2025](studies/witmer-2025-importancia-relativa-bio.md): o peso da foto, da altura, da profissão, do texto e do QI num aplicativo de teste · ✅ · fraca
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
+- [Wongsomboon et al. 2021](studies/wongsomboon-2021-rosto-perfil-risco-sexual.md): rosto na foto do perfil, beleza própria e sexo sem camisinha entre rapazes que fazem sexo com homens em aplicativos · ✅ · fraca
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
+- [Xia et al. 2013](studies/xia-2013-comportamento-site-namoro.md): mensagens, respostas e número de fotos num site de namoro chinês · ✅ · fraca
 - [Xia et al. 2014](studies/xia-2014-previsao-resposta.md): dá para prever quem responde à primeira mensagem? · ✅ · fraca
 - [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · fraca
 - [Yan 2018](studies/yan-2018-intencao-foto-sexualizada.md): intenção declarada e sinais sexuais nas fotos de perfil · ✅ · fraca
