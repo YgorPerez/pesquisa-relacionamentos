@@ -40,5 +40,5 @@ t é o teste que compara as notas médias dos dois grupos (texto antes ou foto a
 - É só um resumo de congresso. Não traz o número de participantes, quem eram, onde e como foram recrutados, as notas médias nem os testes, a não ser um do Estudo 1. Nos Estudos 2a, 2b e 3, a Ficha só repete o que o resumo afirma.
 - O resumo não diz se os participantes procuravam alguém nem qual a orientação sexual deles; o desenho só pôs homens avaliando mulheres e mulheres avaliando homens.
 - No Estudo 1, a foto "desfavorável" é uma que parecia pouco inteligente, não pouco atraente: a atratividade física ficou na média. Só o Estudo 2b usou foto de pessoa pouco atraente.
-- O resumo atribui a diferença entre homens e mulheres a eles processarem a informação com menos detalhe, com base em estudos anteriores. É a leitura dos autores, apoiada nos Estudos 2a e 3, cujos números o resumo não dá.
+- O resumo atribui a diferença entre homens e mulheres ao fato de os homens processarem a informação com menos detalhe que as mulheres, com base em estudos anteriores. É a leitura dos autores, apoiada no Estudo 2a, cujos números o resumo não dá. O Estudo 3 olhou outra explicação, a diferença no que homens e mulheres esperam da aparência do rosto, e o resumo não dá o resultado.
 - Os perfis eram de "candidatos" montados para o estudo, sem contato real nem decisão de sair com alguém.
