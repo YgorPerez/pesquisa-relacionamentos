@@ -4,7 +4,7 @@ link: https://doi.org/10.1177/17470218261457115
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Experimento online com 443 voluntários (estudantes em troca de crédito, redes sociais e Prolific), 80% mulheres e na maioria jovens; cada pessoa imaginou ser a vítima em cenas inventadas, com dois emojis tristes só, e a diferença entre pedir desculpas com e sem emoji foi pequena; lido no manuscrito aceito, não na versão final da revista."
+strength_reason: "Experimento online com 443 voluntários (estudantes em troca de crédito, redes sociais e Prolific), 80% mulheres e na maioria jovens; cada pessoa imaginou ser a vítima em cenas inventadas, com só dois emojis tristes, e a diferença entre pedir desculpas com e sem emoji foi pequena; lido no manuscrito aceito, não na versão final da revista."
 countries: [Reino Unido]
 period: "não informado no texto lido"
 sample:
@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Cada participante leu 24 cenas curtas em que um personagem ofendia outro e depois pedia desculpas por mensagem, e respondeu, no lugar da vítima, o quanto estaria disposto a perdoar, de "not at all" (1) a "extremely" (5). O pedido vinha de três jeitos: só texto ("I'm sorry"), texto com emoji ("I'm sorry" mais o emoji) ou só o emoji. Os emojis eram dois rostos tristes, o pensativo e o que chora uma lágrima, cada um em 12 cenas. Cada pessoa viu cada cena num só dos três jeitos, oito cenas de cada, e foi distribuída ao acaso entre três versões do questionário. As cenas cobriam relações variadas (pais e filhos, irmãos, namorados, amigos, colegas), e 12 cenas de distração, sem ofensa, ficaram fora da análise.
+Cada participante leu 24 cenas curtas em que um personagem ofendia outro e depois pedia desculpas por mensagem, e respondeu, no lugar da vítima, o quanto estaria disposto a perdoar, de "not at all" (1) a "extremely" (5). O pedido vinha de três jeitos: só texto ("I'm sorry"), texto com emoji ("I'm sorry" mais o emoji) ou só o emoji. Os emojis eram dois rostos tristes, o pensativo e o que chora uma lágrima, cada um em 12 cenas. Cada pessoa viu cada cena num só dos três jeitos, oito cenas de cada, e foi distribuída ao acaso entre três versões do questionário. As cenas cobriam relações variadas (pais e filhos, irmãos, namorados, amigos, colegas), e 12 cenas de distração, com uma pergunta que não era sobre perdão, ficaram fora da análise.
 
 ## Achados
 
