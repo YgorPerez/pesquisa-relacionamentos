@@ -330,8 +330,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · moderada
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
+- [Lee et al. 2008](studies/lee-2008-hotornot-propria-atratividade.md): a própria beleza, a beleza que se vê nos outros e quem se aceita no HOTorNOT · ✅ · fraca
+- [Lee, Sun & Thiry 2011](studies/lee-2011-riqueza-midia-perfil.md): texto, áudio ou vídeo no perfil de namoro · ✅ · fraca
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
+- [de Meijer 2014](studies/meijer-2014-fotos-erros-linguagem.md): foto atraente, foto não atraente ou nenhuma foto, e erros de ortografia no perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
