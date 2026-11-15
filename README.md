@@ -315,8 +315,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Otani 2026](studies/otani-2026-idade-exibida-japao.md): a idade exibida no perfil e o aniversário numa plataforma de casamento do Japão · ✅ · fraca
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
 - [Palomo-Vélez et al. 2025](studies/palomo-velez-2025-vegetariano-namorado.md): homem vegetariano e apelo como parceiro · ✅ · fraca
+- [Pelica et al. 2024](studies/pelica-2024-tom-de-pele-emoji.md): tom de pele do emoji e foto de perfil numa conversa · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
 - [Peters e Salzsieder 2018](studies/peters-2018-similaridade-swipe.md): beleza e ambição num perfil de namoro simulado · ✅ · fraca
+- [Petrocchi et al. 2020](studies/petrocchi-2020-emoji-whatsapp-presenca.md): emoji, rapidez e tom da resposta no WhatsApp · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Place et al. 2009](studies/place-2009-interesse-romantico-terceiros.md): julgar o interesse romântico de outras pessoas · ✅ · fraca
 - [Place et al. 2012](studies/place-2012-interesse-intercultural.md): adivinhar o interesse de outras pessoas num speed date, em três países · ✅ · fraca
@@ -535,6 +537,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
+- [Prada et al. 2022](studies/prada-2022-emoji-reservas-clientes.md): emoji na resposta de um restaurante ou hotel · ✅ · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
 - [Rothe et al. 2016](studies/rothe-2016-preferencia-visual-blinq.md): prever pela foto quem vai ser curtido num aplicativo · ✅ · fraca
 - [Rudder 2010](studies/rudder-2010-mitos-fotos-perfil.md): tipo de foto de perfil e mensagens no OkCupid · 🟡 · fraca
