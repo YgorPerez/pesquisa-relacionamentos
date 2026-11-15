@@ -1,6 +1,7 @@
 ---
 reference: "Filice E, Johnson CW, Parry DC, Oakes H. *Shades of digital deception: Self-presentation among men seeking men on locative dating apps*. Convergence: The International Journal of Research into New Media Technologies 28(6):1598–1620, 2022. Texto completo: https://pmc.ncbi.nlm.nih.gov/articles/PMC9634332/"
 link: https://doi.org/10.1177/13548565221102714
+license: "CC BY 4.0 (Creative Commons Attribution 4.0 License, como diz a página do artigo no PMC; o PDF não traz a licença)"
 status: verified
 verified_on: 2026-11-15
 strength: weak
@@ -46,7 +47,7 @@ Os autores entrevistaram dez homens que buscam homens em apps de encontro por lo
 
 O estudo não traz números além dos da amostra: não diz quantos entrevistados disseram cada coisa nem compara grupos. Os autores chamam de "deception" qualquer afastamento do modo como a pessoa se vê, qualquer que seja o motivo. As páginas são as da revista.
 
-Os relatos em que as linhas sobre racismo se apoiam são dois: um entrevistado acha que homens não brancos no Grindr põem menos coisas no perfil e menos fotos, e outro conta que trocou a própria foto pela de um ator indiano bonito e recebeu só uma ou duas respostas a mais (p. 1613).
+Os relatos que o artigo dá para a linha sobre racismo são três: a foto ideal que um entrevistado descreve ("tan skin, dark hair"), a opinião de outro de que pessoas não brancas no Grindr põem menos coisas no perfil e que menos delas põem foto, e o relato de um terceiro, que conta que trocou a própria foto pela de um ator indiano bonito e recebeu só uma ou duas respostas a mais (p. 1612–1613).
 
 ## Limitações
 
