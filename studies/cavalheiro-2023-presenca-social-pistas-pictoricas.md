@@ -4,7 +4,7 @@ link: https://hdl.handle.net/10071/31763
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Capítulo de tese de doutorado, sem revisão por pares de revista, com dois experimentos online de 188 e 125 voluntários que moram em Portugal, quase todos mulheres jovens e estudantes; quem respondeu olhou de fora uma troca inventada entre duas colegas de turma no Facebook, e a presença social que explicaria os efeitos foi medida, não sorteada."
+strength_reason: "Capítulo de tese de doutorado, sem revisão por pares de revista, com dois experimentos online de 188 e 125 voluntários que moram em Portugal, na maioria mulheres (77,1% e 80,8%) e jovens (idade média de 26,45 e 20,59 anos), e estudantes em 55,3% e 90,4% dos casos; quem respondeu olhou de fora uma troca inventada entre duas colegas de turma no Facebook, e a presença social que explicaria os efeitos foi medida, não sorteada."
 countries: [Portugal]
 period: "não informado no texto lido"
 sample:
@@ -44,11 +44,12 @@ As notas vão de 1 a 7. O p é a chance de uma diferença daquele tamanho aparec
 ## Limitações
 
 - É um capítulo de tese de doutorado; quando a tese foi entregue, o artigo estava em revisão numa revista e ainda não tinha passado por revisão por pares. Não lemos nenhuma versão publicada depois.
-- As amostras são de voluntários, quase todos mulheres jovens e estudantes, e não representam ninguém.
+- As amostras são de voluntários, na maioria mulheres jovens; estudavam 55,3% no Estudo 1 e 90,4% no Estudo 2. Elas não representam ninguém.
+- O capítulo 2 da mesma tese traz o estudo de Cavalheiro et al. (2022) sobre a adequação do emoji com remetentes próximos e distantes, que tem Ficha própria.
 - Muita gente saiu por não responder a todas as medidas: 81 de 292 no Estudo 1 e 55 de 190 no Estudo 2. A tese não compara quem saiu com quem ficou, nem diz de que grupos saíram.
 - Os participantes olharam de fora uma conversa inventada entre duas colegas de turma, num trabalho em grupo. Os autores apontam que não eram quem recebia a mensagem, o que afasta a situação de uma conversa real. O estudo não é sobre namoro.
 - Cada estudo usou um só comentário. O comentário do Estudo 2 era outro (um pedido para imprimir o trabalho), então a comparação entre os dois estudos mistura o símbolo com o texto.
 - A presença social foi medida depois de cada pessoa ver o comentário, no mesmo questionário que as outras notas. A ligação dela com as avaliações não mostra o que causa o quê. A escala de presença social inclui o par frio–caloroso, e o calor da colega foi medido com o item "caloroso".
 - No Estudo 2, a tese descreve o efeito direto que sobrou na adequação como sendo do emoji "positivo", mas o emoji desse estudo era triste, e a Tabela 6.4 dá esse efeito como negativo (−0,55).
-- No Estudo 1, os testes têm 182 graus de liberdade no erro, o que pede 186 pessoas, não as 188 da amostra final; a tese não explica a diferença. Ela também não diz quantas pessoas ficaram em cada um dos quatro grupos.
+- No Estudo 1, as comparações entre os quatro grupos têm 182 graus de liberdade no erro. Com 188 pessoas, isso bate com quatro grupos mais a idade e o gênero, que a tese diz ter incluído em todos os modelos. A tese também não diz quantas pessoas ficaram em cada um dos quatro grupos.
 - Os autores apontam que o memoji pode ser lido como o rosto da própria pessoa, não só como um símbolo, o que confunde a comparação com o emoji e o emoticon.
