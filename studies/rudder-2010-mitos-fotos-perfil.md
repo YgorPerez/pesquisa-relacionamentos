@@ -1,0 +1,64 @@
+---
+reference: "Rudder C. *The 4 Big Myths of Profile Pictures*. OkTrends (blog oficial do OkCupid), 20 de janeiro de 2010. O blog saiu do ar; lido na cópia republicada em gwern.net, com os comentários dos leitores e uma nota do editor da cópia, de 2019."
+link: https://gwern.net/doc/psychology/okcupid/the4bigmythsofprofilepictures.html
+status: partial
+verified_on: 2026-11-15
+strength: weak
+strength_reason: "Dado de empresa, publicado em tom de conselho no blog do próprio site: 7.140 usuários com uma foto só, mas sem período, sem país, sem o número de fotos de cada tipo e sem teste, com a maior parte dos números só em gráficos, e cada um escolhe a própria foto."
+countries: []
+period: "não informado no texto lido; o post é de janeiro de 2010"
+sample:
+  n: 7140
+  description: "7.140 usuários do OkCupid de 18 a 32 anos, de grandes cidades, com uma só foto de perfil, escolhidos ao acaso entre todos os usuários com essas características, segundo o post. Depois, a equipe tirou os mais e os menos atraentes e fez outra triagem que não descreve, então os dados são de pessoas de aparência mediana. O post não diz de que país são nem quantos são homens e quantas são mulheres. O corte por atratividade só aparece para as mulheres, num gráfico de 0 a 5, sem dizer quantas saíram."
+  representative: false
+design: platform
+conflict: "Análise feita pelo próprio OkCupid com as fotos e as mensagens dos usuários e publicada no OkTrends, o blog oficial do site, que fala em nome da empresa (\"we\"). Não declara financiamento externo."
+covers:
+  genders: [man, woman]
+  ages: { min: 18, max: 32 }
+  couple: different-sex
+---
+
+# Rudder (2010): tipo de foto de perfil e mensagens no OkCupid
+
+## O que mediu
+
+A equipe do OkCupid marcou à mão, numa foto de perfil de cada usuário, a expressão (sorriso, olhar para a câmera, cara de flerte), o contexto (bebida, bicho, ar livre, quarto) e quanto de pele e de rosto aparecia, e rodou programas de análise de imagem. Depois comparou essas marcas com as mensagens de cada pessoa: para as mulheres, mensagens novas recebidas por mês ativo no site; para os homens, quantas mulheres eles conheceram por mulher que procuraram. Os gráficos são medidos a partir da foto média. A publicação inteira é o post do blog, sem relatório técnico; a maior parte dos números está só em gráficos, por isso a Ficha é parcial.
+
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Usuários analisados | 7.140 usuários do OkCupid, cada um com uma foto de perfil, marcada à mão pela equipe | Fim do post, coleta dos dados | "After a bit more sifting, we finalized our data pool at 7,140 users." |
+| Expressão nas fotos, por sexo | Nas fotos, as mulheres sorriram cerca de 50% mais que os homens e fizeram cara de flerte quatro vezes mais | Mito 1, texto e gráfico | "Women smile about 50% more than men do and make that flirty-face four times as often." |
+| Expressão nas fotos de mulheres | Entre as mulheres, a foto com cara de flerte olhando para a câmera andou junto com o maior número de mensagens novas por mês; a foto sorrindo não ficou à frente dela | Mito 1, texto e gráfico | "For women, a smile isn’t strictly better: she actually gets the most messages by flirting directly into the camera" |
+| Flerte sem olhar a câmera, mulheres | Entre as mulheres, a cara de flerte olhando para longe da câmera foi, pelo texto, a expressão com menos mensagens novas por mês | Mito 1, texto e gráfico | "flirting away from the camera is the single worst attitude a woman can take" |
+| Expressão nas fotos de homens | Entre os homens, a foto olhando para longe da câmera e sem sorrir andou junto com mais mulheres conhecidas por mulher procurada que as outras expressões | Mito 1, texto e gráfico | "Men’s photos are most effective when they look away from the camera and don’t smile" |
+| Flerte sem olhar a câmera, homens | Entre os homens também, a cara de flerte olhando para longe da câmera foi a expressão com menos mulheres conhecidas por mulher procurada; a cara de flerte olhando para a câmera ficou perto da média | Mito 1, texto e gráfico | "while making flirty eye contact is relatively okay for men, flirting away from the camera is the worst thing they, too, can do" |
+| Foto do alto, mulheres | Entre as mulheres, a foto tirada com a câmera acima da cabeça (o "ângulo MySpace") foi o tipo de foto que andou junto com mais mensagens novas | Mito 2, texto e gráfico | "In terms of getting new messages, the MySpace shot is the single most effective photo type for women." |
+| Foto do alto sem decote | Tirando da conta as fotos de mulheres que mostravam decote, a foto do alto continuou à frente dos outros tipos | Mito 2 | "so we excluded all cleavage-showing shots from the pool and ran the numbers again. No change: it’s still the best shot" |
+| Foto sem camisa, homens | Entre os homens, a foto sem camisa andou junto com mais mulheres conhecidas por mulher procurada que a foto de roupa comum. O próprio post avisa que mostra o abdômen quem tem abdômen para mostrar | Mito 3, texto e gráfico | "Of course, there is some self-selection here: the guys showing off their abs are the ones with abs worth showing, and naturally the best bodies get lots of messages." |
+| Idade e foto sem camisa | Entre os homens com foto mostrando o abdômen, os de 19 anos conheceram em média pouco menos de 1,4 mulher por mulher que procuraram; nos de 31 anos, essa conta ficou bem mais perto da média de todos os homens analisados | Mito 3, texto e gráfico | "A 19 year-old showing his abs meets just under 1.4 women for every women he reaches out to, meaning that not only are females responding to his messages, but many are actually contacting him first. For a 31 year-old ab shower, that ratio has regressed to much closer to the average." |
+| Roupa social, homens | Entre os homens, a foto com roupa mais arrumada que uma camisa simples de gola ficou um pouco abaixo da média de mulheres conhecidas por mulher procurada, pouco atrás da foto de roupa comum, que ficou na média. O post diz que ela se sai mal; sem teste, essa diferença pequena pode ser acaso | Mito 3, texto e gráfico | "Outfits more sophisticated than a simple collared shirt fare poorly" |
+| Foto com decote, mulheres | Mulheres com foto mostrando decote receberam 12,9 mensagens novas por mês, 49% acima da média das mulheres analisadas | Seção do decote | "the Cleavage Shot is very successful, drawing 12.9 new contacts per month, or 49% more than average" |
+| Idade e foto com decote | Entre as mulheres, as mais velhas receberam menos mensagens novas por mês que as mais novas, e essa diferença entre idades foi bem menor entre as que tinham foto com decote | Seção do decote, texto e gráfico | "this decrease in new contacts is substantially slower for women with cleavage pics" |
+| Tipo de foto por idade, mulheres | Entre as mulheres no fim da adolescência e no começo dos vinte e poucos anos, foto de corpo foi o tipo mais comum e foto ao ar livre o segundo; pelo meio da casa dos vinte, a ordem se inverte | Seção do decote, texto e gráfico | "For women in their late teens and early twenties, body pictures are the most popular type of shot; outdoor pictures are second." |
+| Mensagem que vira conversa | A equipe contou, pela troca de mensagens, quantas das mensagens recebidas viraram conversa. No gráfico da seção sobre fotos de mulheres com decote, fotos fazendo algo interessante, com um bicho ou de viagem ficaram acima da média; fotos com decote, do alto, com amigos ou bebendo ficaram abaixo | Seção do decote, texto e gráfico | "We looked a level deeper and analyzed what resulted from the incoming contacts." |
+| Rosto na foto | Não apareceu diferença entre a foto com o rosto e a foto sem o rosto: nas mulheres, nas mensagens novas por mês; nos homens, nas mulheres conhecidas por mulher procurada. O post diz que comparou "com todo o resto igual", sem dizer o que entrou na conta | Mito 4, texto e tabela | "we found that all other things being equal whether you show your face really doesn’t affect your messages at all" |
+
+Para as mulheres, a medida é o número de mensagens novas recebidas por mês ativo no site. Para os homens, que mandam a maior parte das primeiras mensagens, é a soma das mensagens novas recebidas com as respostas às primeiras mensagens que eles mandaram, dividida pelo número de primeiras mensagens mandadas; o post chama isso de "mulheres conhecidas por tentativa", e pode passar de 1. A média com que o post compara é a da foto média do grupo. Os gráficos são imagens na página, e só alguns trazem o valor escrito; os números a seguir vêm desses rótulos ou foram lidos a olho. No gráfico de expressão por sexo, os homens sorriem em 37% das fotos, não sorriem em 61% e fazem cara de flerte em 2%; as mulheres, em 56%, 35% e 9%. Nas mulheres, a média fica perto de 8,7 mensagens novas por mês: com olhar para a câmera, a cara de flerte fica perto de 9,3, o sorriso de 9,1 e o rosto sem sorriso de 8,1; sem olhar para a câmera, a cara de flerte fica perto de 7,5, o rosto sem sorriso de 7,6 e o sorriso de 8,8. Nos homens, a média fica perto de 0,59 mulher por tentativa: sem olhar para a câmera, o rosto sem sorriso fica perto de 0,89 e a cara de flerte de 0,34. Entre os contextos das fotos de mulheres, a foto do alto fica perto de 15,4 mensagens por mês, na cama perto de 10, ao ar livre perto de 9,7, e com bebida e com bicho abaixo da média, perto de 7,2 e 6,7. Entre os contextos das fotos de homens, por 10 tentativas, com bicho fica perto de 9, sem camisa perto de 8,9 e fazendo algo interessante perto de 8,3; ao ar livre, bebendo e de viagem ficam abaixo da média de cerca de 5,9. Sem camisa fica perto de 8,9, roupa comum perto de 5,9 e roupa arrumada perto de 5,7. No gráfico de idade dos homens, a linha de quem mostra o abdômen vai de perto de 1,33 aos 19 anos a perto de 0,78 aos 31, e a de todas as fotos fica perto de 0,6. No gráfico de idade das mulheres, a linha de todas as fotos vai de perto de 11,4 mensagens por mês aos 18 anos a perto de 6,9 aos 32, e a das fotos com decote, de perto de 14 a perto de 12; os rótulos dizem 24% acima aos 18 anos e 79% acima aos 32. No gráfico de conversa, a média fica perto de 27%: fazendo algo interessante perto de 40%, com bicho 37%, de viagem 30%, e bebendo perto de 18%. Na tabela do rosto, as mulheres com e sem o rosto na foto recebem 8,69 e 8,66 mensagens novas por mês, e os homens conhecem 5,91 e 5,92 mulheres por 10 tentativas.
+
+## Limitações
+
+- É um post de blog da empresa, escrito em tom de humor e de conselho, sem revisão por pares. Não diz o período dos dados, o país dos usuários, quantas fotos entraram em cada tipo nem que teste usou; não fala em [[significância estatística]].
+- Cada pessoa escolhe a própria foto, e quem escolhe um tipo de foto pode diferir de quem escolhe outro na aparência, no perfil e no jeito de usar o site. O post reconhece isso para a foto sem camisa e não leva em conta nas outras comparações, fora a do rosto, em que diz que comparou "com todo o resto igual" sem dizer o quê.
+- A equipe tirou do grupo os usuários mais e menos atraentes. O post mostra o corte só para as mulheres, num gráfico de atratividade de 0 a 5, e não diz como fez o dos homens nem quantos saíram.
+- Homens e mulheres foram medidos por números diferentes, então os resultados de um sexo não se comparam com os do outro.
+- As medidas contam só contatos entre homens e mulheres: para elas, novos contatos de homens; para eles, mulheres conhecidas. Por isso a Ficha vale só para quem busca o outro sexo. O post não diz se deixou de fora os usuários gays e bissexuais.
+- No texto, uma mulher de 32 anos com foto de decote recebe "só 1 mensagem a menos" por mês que uma de 18, e a que não mostra o corpo recebe 4 a menos. No gráfico da mesma seção, a linha das fotos com decote cai de perto de 14 para perto de 12, uma queda de cerca de 2, e a de todas as fotos cai cerca de 4,5. Por isso o "1 a menos" ficou fora da tabela.
+- O post só faz afirmações sobre homens de 19 a 31 anos na parte do abdômen, por causa do recorte dos dados.
+- As marcas foram feitas à mão e conferidas duas vezes, segundo o post, que não diz quantas pessoas marcaram nem quanto concordaram.
+- O gráfico de conversa está na seção sobre fotos de mulheres com decote e não diz se inclui fotos de homens. A conversa foi definida por um modelo da troca de mensagens que o post não descreve.
+- A maior parte dos números está em gráficos. Esta Ficha traz na tabela só o que o texto escreve.
+- A cópia lida tem uma nota do editor de gwern.net, de 2019, que aponta um post do Photofeeler de 2017 que diz ter repetido a análise e contestado a análise sobre os homens, e uma análise paralela com fotos do Snappr. Esses textos não foram lidos.
+- O blog original saiu do ar. A Fonte local é a cópia de gwern.net, com os comentários dos leitores embaixo do post.
