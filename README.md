@@ -97,6 +97,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
 - [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
 - [Bajnaid & Al-Saggaf 2017](studies/bajnaid-2017-sites-matrimoniais-ozchi.md): como usuários de um site de casamento saudita formam impressões · ✅ · fraca
+- [Bajnaid et al. 2018](studies/bajnaid-2018-sites-matrimoniais.md): o perfil e a escolha de cônjuge num site saudita de casamento · ✅ · fraca
+- [Bak 2010](studies/bak-2010-efeito-halo.md): foto bonita num perfil, mesmo sabendo que não é da pessoa · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
 - [Berkes 2021](studies/berkes-2021-cantadas-originais.md): cantadas originais, comuns e aleatórias em app de namoro · ✅ · fraca
@@ -310,6 +312,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
+- [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
 - [Birnbaum et al. 2026](studies/birnbaum-2026-perfil-sexualizado.md): a impressão que um perfil sexualizado dá · ✅ · fraca
 - [Blabst & Diefenbach 2017](studies/blabst-2017-whatsapp-visto-por-ultimo.md): "visto por último", confirmação de leitura e estresse no WhatsApp · ✅ · fraca
 - [Bogolyubova 2026](studies/bogolyubova-2026-aceitabilidade-engano.md): aceitação de mentiras no perfil de namoro, por assunto, gênero e personalidade · ✅ · fraca
