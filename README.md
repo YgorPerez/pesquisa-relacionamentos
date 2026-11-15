@@ -179,6 +179,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kreager et al. 2014](studies/kreager-2014-iniciativa-respostas.md): quem toma a iniciativa e quem responde num site de namoro · ✅ · moderada
+- [Krishnamurti et al. 2020](studies/krishnamurti-2020-risco-ist-atratividade.md): julgar pela foto quem tem infecção sexualmente transmissível · ✅ · fraca
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
@@ -328,6 +329,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
+- [Konings et al. 2024](studies/konings-2024-foto-sexualizada-tracos.md): fotos e textos sexualizados em perfis do Tinder e do Bumble · ✅ · fraca
+- [van Kooten 2021](studies/kooten-2021-qualidade-texto-tinder.md): foto, texto com erros e ausência de texto num perfil do Tinder · ✅ · fraca
 - [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · moderada
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
