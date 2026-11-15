@@ -159,8 +159,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
 - [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
+- [Fullwood & Attrill-Smith 2018](studies/fullwood-2018-foto-perfil-offline.md): chance esperada de encontro num site e numa noite fora · ✅ · fraca
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
+- [Gao et al. 2017](studies/gao-2017-elogios-metaforicos.md): elogios metafóricos de homens num contexto de encontro e num de trabalho · ✅ · fraca
+- [Gavin et al. 2019](studies/gavin-2019-perfil-autista-conteudo.md): o que homens que se dizem autistas escrevem no perfil de namoro · ✅ · fraca
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
 - [Gosling et al. 2011](studies/gosling-2011-facebook-personalidade.md): a personalidade no uso e no perfil do Facebook · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
