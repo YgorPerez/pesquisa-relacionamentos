@@ -5,7 +5,7 @@ license: "CC BY 4.0 (Creative Commons CC BY, como diz a página do artigo no sit
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Um experimento só, com 86 questionários válidos de estudantes universitários que aceitaram participar, sem representar um grupo definido; um único e-mail de trabalho, de líder para subordinado, fora do namoro; revista pequena, e o texto não mostra os e-mails nem diz quantos emoticons havia."
+strength_reason: "Um experimento só, com 86 questionários válidos de estudantes universitários que aceitaram participar, sem representar um grupo definido; um único e-mail de trabalho, de líder para subordinado, fora do namoro; o texto não mostra os e-mails nem diz quantos emoticons havia."
 countries: []
 period: "2015 (as tabelas citam \"dados da pesquisa (2015)\")"
 sample:
@@ -50,5 +50,6 @@ Os pesquisadores variaram duas coisas no e-mail: a presença de emoticons e o no
 - A frase dos autores de que os emoticons têm "forte influência" vale para o conjunto dos traços e para a nota de liderança; nos traços de carisma, diversão, felicidade e extroversão, não apareceu diferença. As diferenças da Tabela 1 vão de 0,30 a 1,00 ponto numa escala de 1 a 4.
 - O texto diz que as quatro dimensões da liderança foram somadas numa só variável, mas as médias de 4,03 e 3,63 cabem numa escala de 1 a 5, como se fossem a média das afirmações. A Tabela 1 diz "G.L. total = 86" com 86 questionários válidos, quando o total de graus de liberdade de uma ANOVA com 86 pessoas seria 85.
 - A conclusão de que o grupo vê os emoticons como inadequados no trabalho, e de que quem os usa parece "amador, menos inteligente, sem trato na comunicação", é a leitura dos autores ("levando a supor"). O que os dados mostram é a nota menor nos traços da Tabela 1 e a pergunta sobre o próprio uso.
+- No teste do gênero do líder, o texto diz que nenhum dos efeitos deu significativo, num modelo que tinha o uso de emoticons como variável independente e a percepção dos traços como dependente; isso não bate com a Tabela 2, em que os emoticons andaram junto com uma nota menor nos traços (p = 0,03), e o texto não explica a diferença.
 - O teste do gênero do líder e a comparação entre estudantes homens e mulheres vêm sem números; a Ficha só repete o que o texto afirma.
 - No site da revista, a página do artigo mostra o DOI 10.21727/rm.v7i1.103, que não está registrado no Crossref; o DOI registrado com este título é o do link da Ficha.
