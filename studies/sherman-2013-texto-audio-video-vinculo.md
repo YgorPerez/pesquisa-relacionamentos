@@ -5,12 +5,12 @@ license: "CC BY-NC-ND 4.0 (como diz a página do artigo na revista, consultada e
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "58 universitárias de uma universidade de Los Angeles, em pares de amigas próximas, com quatro conversas de 5 minutos cada, uma por canal, no laboratório; amizade, não namoro; parte das diferenças no vínculo relatado pode ser acaso, e a revista corrigiu em 2017 uma frase que dava como significativas diferenças que não eram."
+strength_reason: "58 universitárias recrutadas numa universidade de Los Angeles, com as amigas que trouxeram, em pares de amigas próximas, com quatro conversas de 5 minutos cada, uma por canal, no laboratório; amizade, não namoro; parte das diferenças no vínculo relatado pode ser acaso, e a revista corrigiu em 2017 uma frase que dava como significativas diferenças que não eram."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
   n: 58
-  description: "58 universitárias de 18 a 21 anos (19,33 em média), em 29 pares de amigas próximas, recrutadas no banco de participantes do departamento de Psicologia ou por cartazes numa grande universidade de Los Angeles; cada uma trouxe uma amiga. Só podiam participar mulheres de 18 a 24 anos que se diziam heterossexuais. As amigas se conheciam havia 32,70 meses em média. A análise dos gestos e expressões gravados usa 50 delas, porque faltou vídeo das outras."
+  description: "58 universitárias de 18 a 21 anos (19,33 em média), em 29 pares de amigas próximas, recrutadas em pares: quem se inscreveu pelo banco de participantes do departamento de Psicologia ou por cartazes numa grande universidade de Los Angeles trouxe uma amiga próxima. Só podiam participar mulheres de 18 a 24 anos que se diziam heterossexuais. As amigas se conheciam havia 32,70 meses em média. A análise dos gestos e expressões gravados usa 50 delas, porque faltou vídeo das outras."
   representative: false
 design: experiment
 conflict: "O texto lido não traz financiamento nem declaração de conflito de interesse."
@@ -26,7 +26,7 @@ covers:
 
 Pares de amigas próximas tiveram, no laboratório, quatro conversas de 5 minutos cada: uma pessoalmente, frente a frente, e três pelo Skype, de salas separadas, por vídeo, só por áudio e por mensagem instantânea. A ordem dos canais e dos temas começou balanceada entre os pares. Cada conversa partia de um tema proposto, como planejar a festa ideal, e as amigas podiam mudar de assunto.
 
-Depois de cada conversa, cada uma disse, de 0 (nenhuma emoção) a 8 (emoção extrema), o quanto sentiu de "simpatia/vínculo" pela amiga. A equipe também gravou cada uma e contou, num trecho de 90 segundos de cada conversa, os sinais de afeto no corpo que estudos anteriores ligam ao vínculo entre amigos: sorriso genuíno, riso, aceno de cabeça e gestos com as mãos. Na conversa por mensagem, contou ainda emoticons, risadas escritas ("hahaha", "LOL"), letras repetidas, pontuação repetida e palavras em maiúsculas. No fim, cada uma disse com que frequência e há quanto tempo usava telefone, videochamada, SMS e mensagem instantânea.
+Depois de cada conversa, cada uma disse, de 0 (nenhuma emoção) a 8 (emoção extrema), o quanto sentiu de "simpatia/vínculo" pela amiga. A equipe também gravou cada uma e contou, num trecho de 90 segundos de cada conversa, os sinais de afeto no corpo que estudos anteriores ligam ao vínculo (sorriso genuíno, aceno de cabeça e gestos com as mãos), mais o riso, que os autores acrescentaram. Na conversa por mensagem, contou ainda emoticons, risadas escritas ("hahaha", "LOL"), letras repetidas, pontuação repetida e palavras em maiúsculas. No fim, cada uma disse com que frequência e há quanto tempo usava telefone, videochamada, SMS e mensagem instantânea.
 
 São amigas que já se conheciam, não pessoas se conhecendo nem casais. O áudio é uma ligação ao vivo, não mensagem de voz gravada.
 
@@ -51,7 +51,7 @@ São amigas que já se conheciam, não pessoas se conhecendo nem casais. O áudi
 | Tempo de uso | Há quanto tempo cada uma usava cada ferramenta não teve ligação com o vínculo em nenhum canal | Results, Hypothesis 3 | "Length of time using a tool did not significantly predict bonding in any condition." |
 | Costume de mensagem | Quanto cada uma usava mensagem instantânea ou SMS não teve ligação com o vínculo na conversa por mensagem, medido de várias formas | Discussion | "Despite measuring text-based communication in a number of ways, we failed to find a relationship." |
 | Pistas escritas e vínculo | Na conversa por mensagem, a soma de emoticons, risadas escritas, letras repetidas, pontuação repetida e maiúsculas que cada uma usou andou junto com mais vínculo relatado por ela | Results, Hypothesis 4 | "The composite score of digital affiliation cues was significantly related to self-reported bonding during IM." |
-| Risada escrita e risada de verdade | Na conversa por mensagem, escrever mais risadas andou junto com rir mais em voz alta diante da tela, no vídeo gravado | Results, Hypothesis 4 | "In addition, typed laughter and vocal laughter were significantly related to each other." |
+| Risada escrita e risada de verdade | Na conversa por mensagem, escrever mais risadas andou junto com mais tempo rindo de verdade diante da tela, contado no vídeo gravado | Results, Hypothesis 4 | "In addition, typed laughter and vocal laughter were significantly related to each other." |
 | Como os autores resumem as pistas escritas | No resumo, os autores dizem que emoticons, risadas escritas e maiúsculas andaram junto com mais vínculo na conversa por mensagem; na tabela, só a soma das pistas passa do limite usual, e a risada escrita sozinha não teve ligação com o vínculo relatado | Abstract | "Use of textual affiliation cues like emoticons, typed laughter, and excessive letter capitalization during IM related to increased bonding experience during IM." |
 
 O vínculo relatado é a nota de 0 (nenhuma emoção) a 8 (emoção extrema) que cada uma deu a "simpatia/vínculo" depois de cada conversa. Os sinais de afeto no corpo foram contados em vídeo pela equipe, num trecho de 90 segundos de cada conversa; a soma em pontos-z põe os quatro sinais na mesma escala, e 0 é a média de todas as conversas. O t e o F vêm de modelos que levam em conta que as duas amigas de um par se parecem; o p indica quão fácil seria um resultado assim aparecer só por acaso, e acima de 0,05 se costuma dizer que pode ser acaso.
@@ -66,7 +66,7 @@ O vínculo relatado é a nota de 0 (nenhuma emoção) a 8 (emoção extrema) que
 - O resumo e a discussão dizem que o vínculo caiu de canal em canal, de pessoalmente a vídeo, áudio e mensagem, "pelas duas medidas". Isso vale, passo a passo, para os sinais de afeto no corpo. No vínculo relatado, as diferenças entre canais vizinhos podem ser acaso, e as que passam do limite são pessoalmente contra áudio e contra mensagem, e vídeo contra mensagem.
 - No vínculo relatado, as médias vão de 5,88 a 6,59 numa escala de 0 a 8 (Tabela 1): todos os canais ficaram altos, e a distância entre o melhor e o pior é menor que um ponto.
 - A ligação entre pistas escritas e vínculo é de associação, dentro da conversa por mensagem: quem já se sentia mais próxima pode ter escrito mais risadas e emoticons. O estudo não sorteou quem usaria essas pistas.
-- São 58 universitárias de uma universidade de Los Angeles, todas mulheres e heterossexuais, conversando com uma amiga próxima por 5 minutos. O estudo não diz nada de homens, de pessoas se conhecendo num app ou de casais.
+- São 58 universitárias, recrutadas numa universidade de Los Angeles com as amigas que trouxeram, todas mulheres e heterossexuais, conversando com uma amiga próxima por 5 minutos. O estudo não diz nada de homens, de pessoas se conhecendo num app ou de casais.
 - O áudio foi uma ligação ao vivo pelo Skype, e a mensagem, um chat ao vivo. Nada aqui é mensagem de voz gravada ou troca de mensagens ao longo do dia.
 - As conversas tinham o mesmo tempo em todos os canais. Os autores lembram que digitar é mais lento, e que conversas mais longas por mensagem podem dar outro resultado.
 - A videochamada às vezes travou, numa rede sem fio. Os autores tiraram um par com travamentos demais e escolheram trechos de vídeo com pouco travamento, mas dizem que isso pode ter afetado o vínculo por vídeo.
