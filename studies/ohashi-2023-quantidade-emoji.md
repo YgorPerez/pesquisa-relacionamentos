@@ -37,7 +37,7 @@ A fonte inteira é esse resumo de uma página, com dois gráficos sem os número
 | Sentimentos negativos e número de emojis | Juntando incômodo, raiva e tristeza, não apareceu diferença entre as quatro versões da resposta; pode ser acaso (F = 1,99; p = 0,12) | 結果 (Resultados); Figura 2 | "絵文字の個数の主 効果は有意ではなかった(F (3, 74) = 1.99, p = .12)" |
 | Cada sentimento negativo | A ligação com o número de emojis não foi a mesma para incômodo, raiva e tristeza (F = 3,82; p = 0,01) | 結果 (Resultados) | "ネガティブ感情と絵文字の個 数の交互作用は有意であった(F (4.13, 101.77) = 3.82, p = .01)" |
 | Incômodo | O incômodo variou com o número de emojis da resposta (F = 3,63; p = 0,02): quem viu a resposta com cinco emojis relatou mais incômodo que quem viu a resposta com um, a única diferença entre versões que o resumo relata | 結果 (Resultados); Figura 2 | "不快感において絵文字の個数 の単純主効果が有意であり(F (3,74) = 3.63, p = .02)、多 重比較の結果、絵文字 5 個の不快感は絵文字 1 個の不快感よ り有意に大きかった。" |
-| Raiva e tristeza | Os autores leem que, na raiva e na tristeza, o número de emojis não fez diferença | 考察 (Discussão) | "怒りや悲しみ において返報性の規範が絵文字の個数の影響を受けないこと" |
+| Raiva e tristeza | Para raiva e tristeza, o resumo não relata teste próprio; os autores leem que nelas não apareceu efeito do número de emojis | 考察 (Discussão) | "怒りや悲しみ において返報性の規範が絵文字の個数の影響を受けないこと" |
 
 O F compara as médias das versões, e o p é a probabilidade de uma diferença desse tamanho aparecer por acaso se ela não existisse. O resumo não dá as médias em números; elas só aparecem nos gráficos.
 
