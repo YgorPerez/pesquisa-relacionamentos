@@ -4,7 +4,7 @@ link: https://doi.org/10.1016/j.teler.2021.100001
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Um experimento só, com 535 pessoas de um painel online montado com a Qualtrics nos EUA, que julgaram trechos de entrevistas para bolsa de estudo, não mensagens entre conhecidos nem de namoro; as respostas neutras saíram da conta, e as contagens e porcentagens do texto não batem entre si em vários pontos."
+strength_reason: "Um experimento só, com 535 pessoas de um painel montado com a Qualtrics nos EUA, que julgaram trechos de entrevistas para bolsa de estudo, não mensagens entre conhecidos nem de namoro; as respostas neutras saíram da conta, e as contagens e porcentagens do texto não batem entre si em vários pontos."
 countries: [EUA]
 period: "outono de 2018"
 sample:

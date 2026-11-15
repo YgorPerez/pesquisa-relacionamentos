@@ -4,7 +4,7 @@ link: https://doi.org/10.1080/03075079.2019.1602760
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Três experimentos com sorteio das versões e 848 estudantes ao todo, mas recrutados num painel pago do Prolific, sem representar nenhuma população; as mensagens eram cenas imaginadas de e-mails de um professor, não de namoro; o que se mediu foi intenção, não comportamento; e um tamanho de diferença da tabela não bate com o da discussão."
+strength_reason: "Três experimentos com 848 estudantes ao todo, dois deles com sorteio declarado das versões, mas recrutados num painel pago do Prolific, sem representar nenhuma população; as mensagens eram cenas imaginadas de mensagens de funcionários da universidade para estudantes, não de namoro; o que se mediu foi intenção, não comportamento; e um tamanho de diferença da tabela não bate com o da discussão."
 countries: []
 period: "não informado no texto lido"
 sample:
@@ -17,11 +17,11 @@ covers:
   genders: [man, woman]
 ---
 
-# Marder et al. (2020): smileys nos e-mails de professores para estudantes
+# Marder et al. (2020): smileys nas mensagens de funcionários da universidade para estudantes
 
 ## O que mediu
 
-Três experimentos com cenas imaginadas numa universidade fictícia. No primeiro, o estudante via o print de um e-mail de "Andrew Watkins" pedindo que respondesse a uma pesquisa de satisfação, com ou sem dois smileys (☺), assinado como assistente administrativo, professor assistente ou professor titular. No segundo, lia três e-mails do orientador do trabalho de conclusão, com ou sem dois a três smileys, numa universidade de ranking alto ou baixo e com o orientador como professor assistente ou titular. No terceiro, lia o comentário de um professor assistente de 29 ou de 60 anos sobre uma redação, com nota satisfatória ou excelente, com ou sem smileys. Cada estudante caiu em uma das versões por sorteio e depois julgou o quanto o remetente parecia caloroso e competente, a intenção de fazer o que o e-mail pedia e, no segundo e no terceiro, a avaliação que daria ao professor.
+Três experimentos com cenas imaginadas numa universidade fictícia. No primeiro, o estudante via o print de um e-mail de "Andrew Watkins" pedindo que respondesse a uma pesquisa de satisfação, com ou sem dois smileys (☺), assinado como assistente administrativo, professor assistente ou professor titular. No segundo, lia três e-mails do orientador do trabalho de conclusão, com ou sem dois a três smileys, numa universidade de ranking alto ou baixo e com o orientador como professor assistente ou titular. No terceiro, lia o comentário de um professor assistente de 29 ou de 60 anos sobre uma redação, com nota satisfatória ou excelente, com ou sem smileys. No primeiro e no terceiro, cada estudante caiu numa das versões por sorteio; no segundo, o artigo só diz que a coleta e a amostragem repetiram as do primeiro. Depois, o estudante julgou o quanto o remetente parecia caloroso e competente, a intenção de fazer o que o e-mail pedia e, no segundo e no terceiro, a avaliação que daria ao professor.
 
 ## Achados
 
