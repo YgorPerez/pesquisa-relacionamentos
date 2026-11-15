@@ -325,8 +325,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [McKenna et al. 2002](studies/mckenna-2002-relacoes-na-internet.md): relações formadas na internet · ✅ · fraca
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
+- [Méndez Santos 2024](studies/mendez-santos-2024-abertura-tinder.md): perfis, ortografia e a primeira mensagem no Tinder espanhol · ✅ · fraca
 - [Meng et al. 2026](studies/meng-2026-engano-gays-china.md): engano e confiança entre usuários gays de apps de namoro na China · ✅ · fraca
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
+- [Mills et al. 2021](studies/mills-2021-risada-escrita-ia.md): risada escrita inserida ou apagada às escondidas no chat · ✅ · fraca
 - [Mitchell et al. 2019](studies/mitchell-2019-diferenca-genero-parceiros.md): por que os homens relatam mais parceiras do que as mulheres relatam parceiros · ✅ · forte
 - [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · fraca
 - [Miyamoto & Bedi 2024](studies/miyamoto-2024-ingles-site-matrimonial.md): inglês no perfil de mulheres num site matrimonial de Delhi · ✅ · fraca
@@ -577,6 +579,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Olivera-La Rosa et al. 2019](studies/olivera-la-rosa-2019-swipe-rostos.md): caráter moral e rostos no Tinder · ✅ · fraca
+- [Oyama et al. 2026](studies/oyama-2026-estilo-ojisan-jovens.md): emoji, tom e o "estilo tiozão" em mensagens de chefe e de amigo, em japonês · ✅ · fraca
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
