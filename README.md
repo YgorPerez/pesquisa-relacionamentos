@@ -278,7 +278,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lew et al. 2018](studies/lew-2018-latencia-e-contingencia.md): demora e pertinência da resposta num chat de atendimento · ✅ · fraca
 - [Lewis 2013](studies/lewis-2013-preconceito-racial-respostas.md): raça, primeira mensagem e resposta no OkCupid · ✅ · moderada
 - [Li et al. 2013](studies/li-2013-preferencias-atracao-escolha.md): preferências declaradas, atração e escolha nos primeiros encontros · ✅ · fraca
+- [Li & Hu 2025](studies/li-2025-similaridade-medico-paciente.md): semelhança entre as mensagens de médico e paciente numa plataforma chinesa de consultas · ✅ · fraca
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
+- [Liao et al. 2023](studies/liao-2023-emocao-compartilhada-chat.md): a sequência de tarefa e simpatia num chat entre desconhecidos · ✅ · moderada
+- [Liebman & Gergle 2016](studies/liebman-2016-pistas-afinidade.md): emoticons, exclamações e maiúsculas num chat entre desconhecidos · ✅ · fraca
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
