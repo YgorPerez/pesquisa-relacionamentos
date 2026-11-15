@@ -138,6 +138,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Carlson, Alcser-Isais & Eastwick 2026](studies/carlson-2026-atributos-perfil.md): a mesma qualidade em pessoas diferentes · ✅ · fraca
 - [Casañ-Pitarch 2020](studies/casan-pitarch-2020-emoji-descricao.md): emoji na descrição do perfil de namoro · ✅ · fraca
 - [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
+- [Chung et al. 2026](studies/chung-2026-emoticons-reciprocidade-ajuda.md): emoticons entre atendentes e jovens num chat de apoio · ✅ · fraca
 - [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
 - [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
 - [Cichosz 2013](studies/cichosz-2013-estereotipos-perfis.md): o que mulheres escrevem e mostram em perfis do Match.com e do Plenty of Fish · ✅ · fraca
@@ -146,6 +147,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [Cowan & Little 2013](studies/cowan-2013-humor-anuncio.md): humor afiliativo e agressivo em anúncios pessoais · ✅ · fraca
+- [Curcic 2020](studies/curcic-2020-convergencia-textismos-idade.md): imitar as abreviações do outro no chat, por idade · ✅ · fraca
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Daniels 2016](studies/daniels-2016-foto-sexy-rede-social.md): a foto sexualizada no perfil de Facebook de uma mulher, vista por universitários · ✅ · fraca
@@ -477,6 +479,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [Celani-Morrell 2016](studies/celani-morrell-2016-foto-texto-mulheres.md): a beleza da foto e a nota do texto em perfis de mulheres · ✅ · fraca
 - [Chappetta 2016](studies/chappetta-2016-papeis-genero-perfil.md): papéis de gênero e beleza da foto num perfil de namoro, entre universitários · ✅ · fraca
+- [Clerke & Heerey 2021](studies/clerke-2021-mimica-confianca-chat.md): imitação, semelhança e confiança numa sala de bate-papo · ✅ · fraca
 - [Comhair 2018](studies/comhair-2018-humor-likes-tinder.md): humor no texto do perfil e likes no Tinder · ✅ · fraca
 - [De La Mare & Lee 2023](studies/de-la-mare-2023-similaridade-personalidade.md): personalidade parecida na escolha de perfis · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
