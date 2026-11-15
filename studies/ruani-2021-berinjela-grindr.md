@@ -5,7 +5,7 @@ license: "CC BY 4.0 (Creative Commons Attribution 4.0 International, como diz o 
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Estudo qualitativo, parte de um mestrado em andamento, com dez homens gays do Rio de Janeiro convidados pelo próprio Grindr e por indicação uns dos outros; a análise se apoia em conversas com três deles, não mede frequência nem compara grupos, e tudo é o que cada um contou."
+strength_reason: "Estudo qualitativo, parte de um mestrado em andamento, com dez homens gays do Rio de Janeiro convidados no próprio Grindr e por indicação uns dos outros; a análise se apoia em conversas com três deles, não mede frequência nem compara grupos, e tudo é o que cada um contou."
 countries: [Brasil]
 period: "2019 em diante (o texto diz que a pesquisa vem sendo feita desde 2019; artigo publicado em 2021)"
 sample:
@@ -25,7 +25,7 @@ covers:
 
 ## O que mediu
 
-O estudo é um recorte de uma pesquisa de mestrado em andamento sobre como homens gays que usam o Grindr constroem a própria masculinidade. Quem fez o campo analisou perfis e conversas no Grindr e conversou com os participantes pelo WhatsApp, numa conversa aberta, sem roteiro fixo. Este artigo trata do emoji de berinjela no perfil: o que ele anuncia sobre quem o usa e o que os outros esperam de quem o usa. A análise é qualitativa, numa perspectiva pós-estruturalista, apoiada sobretudo em Butler, Foucault e Bourdieu; o texto mostra trechos das conversas com três participantes e a leitura dos autores sobre elas.
+O estudo é um recorte de uma pesquisa de mestrado em andamento sobre como homens gays que usam o Grindr constroem a própria masculinidade. Quem fez o campo analisou perfis e conversas no Grindr e conversou com os participantes pelo WhatsApp, numa conversa aberta, sem roteiro fixo. Este artigo trata do emoji de berinjela no perfil: o que ele anuncia sobre quem o usa e o que os outros esperam de quem o usa. A análise é qualitativa, numa perspectiva pós-estruturalista, que cita autores como Butler, Foucault, Bourdieu e Zago; o texto mostra trechos das conversas com três participantes e a leitura dos autores sobre elas.
 
 ## Achados
 
@@ -43,7 +43,7 @@ O estudo é um recorte de uma pesquisa de mestrado em andamento sobre como homen
 | O que os outros esperam | O mesmo participante conta que, por ele ter pênis grande, muitos homens já chegam esperando um "machão" | Seção 3 (p. 10) | "por eu ter o pau grande muitos caras já chegam me considerando machão e tal" |
 | Quem procura a berinjela | Um participante que escreve no perfil que busca a berinjela diz saber que ela anuncia pênis grande, mas que o que importa para ele é o parceiro ser "macho" | Seção 3 (p. 12) | "Sei que eles usam isso aqui [a berinjela] para dizer que são dotados, mas o importante é ser macho." |
 | Outros sentidos | Os autores leem que, nas conversas, a berinjela muitas vezes ganha outro sentido: o pênis em destaque não prende quem o anuncia ao papel de quem penetra | Seção 3 (p. 13) | "o emoji de berinjela é muitas vezes ressignificado, apontando que o falo, embora tenha destaque, não se limita à prática de penetração durante o ato sexual" |
-| Ativo acima de passivo | Na conclusão dos autores, a berinjela também reforça normas de gênero quando liga o tamanho do pênis a uma masculinidade viril e desejada, que valoriza o gay ativo acima do passivo | Seção 4 (p. 16) | "o emoji de berinjela também pode reiterar a força das normas regulatórias quando o tamanho do falo é associado a uma masculinidade viril e desejada" |
+| Ativo e passivo na conclusão | Na conclusão dos autores, a berinjela também pode reforçar normas de gênero quando liga o tamanho do pênis a uma masculinidade viril e desejada, que valoriza o gay ativo acima do passivo | Seção 4 (p. 16) | "o emoji de berinjela também pode reiterar a força das normas regulatórias quando o tamanho do falo é associado a uma masculinidade viril e desejada" |
 
 O estudo não traz números além dos da amostra: não diz quantos perfis usavam a berinjela, quantos participantes disseram cada coisa nem compara quem usa o emoji com quem não usa. Os achados são relatos de três participantes e a leitura que os autores fazem deles. "Ativo" e "passivo" são os termos dos participantes para quem penetra e quem é penetrado no sexo entre homens.
 
