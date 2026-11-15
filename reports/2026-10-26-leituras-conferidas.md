@@ -197,7 +197,7 @@ Estudo principal: [Huang et al. 2017](../studies/huang-2017-perguntas-de-continu
 | "Nine research assistants" leram 368 transcrições | errado (o artigo diz "six research assistants") | ✅ |
 | 44% das perguntas eram de continuidade | confere (apêndice B; o texto principal dá 40,51%) | ✅ |
 | Encontros rápidos: 110 pessoas, "over 2,000 conversations" | exagera: 987 transcrições; os 1.961 são decisões de sim ou não | ✅ |
-| Dados de um estudo de Stanford de 2013 ([Ranganath, Jurafsky & McFarland 2013](https://doi.org/10.1016/j.csl.2012.01.005)) | confere (retratação: nenhuma) | ✅ |
+| Dados de um estudo de Stanford de 2013 ([Ranganath, Jurafsky & McFarland 2013](../studies/ranganath-2013-flerte-fala.md)) | confere (retratação: nenhuma) | ✅ |
 | "The top third of question askers got the most second dates" | não conferível: o artigo não divide em terços | ✅ |
 | Uma pergunta a mais em cada um dos 20 encontros daria um "sim" a mais | exagera: o artigo fala de 8% a mais na taxa de perguntas de continuidade e avisa "one cannot interpret this relationship causally" | ✅ |
 | Perguntas demais têm efeito contrário, "the research shows" | exagera: o artigo só sugere testar isso no futuro (é a Ressalva) | ✅ |

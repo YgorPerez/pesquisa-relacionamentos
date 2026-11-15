@@ -225,8 +225,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
+- [Ramaker 2020](studies/ramaker-2020-efeito-halo.md): a foto bonita e a impressão que um perfil de namoro passa · ✅ · fraca
+- [Ranganath, Jurafsky & McFarland 2013](studies/ranganath-2013-flerte-fala.md): flerte, simpatia e falta de jeito na fala de um speed dating · ✅ · fraca
 - [Ranzini & Lutz 2017](studies/ranzini-2017-autoapresentacao-tinder.md): autoapresentação e motivos de uso no Tinder · ✅ · fraca
 - [Recruit Bridal 2024](studies/recruit-2024-konkatsu.md): casamento por caminho no Japão · ✅ · fraca
+- [Rerick, Livingston & Singer 2025](studies/rerick-2025-autoatratividade-intencao.md): a beleza de uma mulher, a autoimagem do homem e a leitura de intenção sexual · ✅ · fraca
 - [Reysen & Katzarska-Miller 2013](studies/reysen-2013-moderadamente-dificil.md): quanto o outro retribui e a atração · ✅ · fraca
 - [Rhoades et al. 2009](studies/rhoades-2009-coabitacao-noivado.md): morar junto antes do noivado e qualidade do casamento · ✅ · fraca
 - [Rhoades et al. 2011](studies/rhoades-2011-termino-saude-mental.md): o término de um namoro e a saúde mental · ✅ · moderada
