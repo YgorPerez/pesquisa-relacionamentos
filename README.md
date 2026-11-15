@@ -275,6 +275,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
 - [Kitamura & Sato 2009](studies/kitamura-2009-pictogramas-impressao.md): emoji em mensagem de celular e a impressão de quem escreve · ✅ · fraca
+- [Kitamura 2023](studies/kitamura-2023-emoji-line-sinceridade.md): emoji em mensagens do LINE e a impressão de quem escreve · 🟡 · fraca
 - [Knights 2018](studies/knights-2018-persuasao-tinder.md): técnicas de persuasão num perfil do Tinder · ✅ · fraca
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kogan & Volsche 2020](studies/kogan-2020-gato-foto.md): o homem fotografado com um gato, aos olhos de mulheres jovens · ✅ · fraca
@@ -282,6 +283,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kosakowska-Berezecka & Besta 2018](studies/kosakowska-berezecka-2018-macho-cara-legal.md): o "macho" e o "cara legal" em tempos de ameaça e de prosperidade · ✅ · fraca
 - [Kreager et al. 2014](studies/kreager-2014-iniciativa-respostas.md): quem toma a iniciativa e quem responde num site de namoro · ✅ · moderada
 - [Krishnamurti et al. 2020](studies/krishnamurti-2020-risco-ist-atratividade.md): julgar pela foto quem tem infecção sexualmente transmissível · ✅ · fraca
+- [Krohn 2020](studies/krohn-2020-formas-de-risada.md): o que jaja, jajaja, jeje e jiji querem dizer numa conversa escrita · ✅ · fraca
+- [Kruger et al. 2005](studies/kruger-2005-egocentrismo-email.md): o tom de uma mensagem por e-mail e por voz · ✅ · fraca
 - [Kruger 2006](studies/kruger-2006-masculinidade-estrategia.md): o que um rosto mais ou menos masculino faz pensar de um homem · ✅ · fraca
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · moderada
