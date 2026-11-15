@@ -137,7 +137,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
 - [Carlson, Alcser-Isais & Eastwick 2026](studies/carlson-2026-atributos-perfil.md): a mesma qualidade em pessoas diferentes · ✅ · fraca
 - [Casañ-Pitarch 2020](studies/casan-pitarch-2020-emoji-descricao.md): emoji na descrição do perfil de namoro · ✅ · fraca
+- [Cavalheiro et al. 2024](studies/cavalheiro-2024-emoji-reciproco.md): emoji de volta numa conversa entre colegas de trabalho · ✅ · fraca
+- [Chartrand & Bargh 1999](studies/chartrand-1999-efeito-camaleao.md): o efeito camaleão, imitar e ser imitado cara a cara · ✅ · fraca
 - [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
+- [Christopherson 2011](studies/christopherson-2011-ciberlinguagem-bibliotecario.md): ciberlinguagem do usuário e do bibliotecário no chat de atendimento · ✅ · fraca
 - [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
 - [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
 - [Cichosz 2013](studies/cichosz-2013-estereotipos-perfis.md): o que mulheres escrevem e mostram em perfis do Match.com e do Plenty of Fish · ✅ · fraca
