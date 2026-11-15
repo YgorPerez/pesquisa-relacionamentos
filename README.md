@@ -66,6 +66,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [IBGE 2024](studies/ibge-2024-registro-civil.md): Estatísticas do Registro Civil · ✅ · forte
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
+- [Ma, Sun & Naaman 2017](studies/ma-2017-happn-localizacao-garantia.md): como usuários do happn leem os cruzamentos de caminho · ✅ · fraca
 - [Martinez et al. 2025](studies/martinez-2025-apps-risco-sexual.md): apps e comportamento sexual em universitários de Ribeirão Preto · ✅ · fraca
 - [Ministério da Saúde 2011](studies/ministerio-saude-2011-pcap-2008.md): PCAP 2008, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2016](studies/ministerio-saude-2016-pcap-2013.md): PCAP 2013, parceiros na vida no Brasil · ✅ · moderada
@@ -227,6 +228,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
+- [Madden & Lenhart 2006](studies/madden-2006-pew-namoro-online.md): o que os americanos achavam do namoro online em 2005 · ✅ · moderada
+- [Madill 2009](studies/madill-2009-autoapresentacao-namoro.md): como cinco usuários de um site de namoro se apresentavam e julgavam os outros · ✅ · fraca
 - [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
 - [Maner et al. 2005](studies/maner-2005-projecao-funcional.md): motivo de quem olha e excitação sexual vista em rostos neutros · ✅ · fraca
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
