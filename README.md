@@ -230,6 +230,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hilte, Vandekerckhove & Daelemans 2019](studies/hilte-2019-percepcao-escrita-adolescentes.md): como adolescentes leem a escrita nas redes · ✅ · fraca
+- [Hilte, Vandekerckhove & Daelemans 2020](studies/hilte-2020-convergencia-genero.md): rapazes e moças imitam o jeito de escrever um do outro no chat? · ✅ · fraca
+- [Hilte, Daelemans & Vandekerckhove 2021](studies/hilte-2021-acomodacao-escolaridade.md): adolescentes ajustam o jeito de escrever à escola do outro? · ✅ · fraca
+- [Hilte 2023](studies/hilte-2023-acomodacao-percebida.md): como adolescentes percebem quem imita o jeito de escrever do outro no chat · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Horsham et al. 2025](studies/horsham-2025-replicacao-menos-e-mais.md): réplica de "saber mais e gostar menos" · ✅ · fraca
