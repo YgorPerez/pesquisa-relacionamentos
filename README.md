@@ -214,7 +214,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Navarro et al. 2020](studies/navarro-2020-ghosting-correlatos.md): ghosting, breadcrumbing e bem-estar de quem passou por eles · ✅ · fraca
 - [Navarro et al. 2020](studies/navarro-2020-ghosting-e-apps.md): ghosting, breadcrumbing e uso de apps de namoro na Espanha · ✅ · fraca
 - [NCHS 2021](studies/nchs-2021-nsfg-parceiros-na-vida.md): parceiros na vida nos EUA, NSFG 2015–2019 · 🟡 · forte
+- [Ong et al. 2020](studies/ong-2020-renda-homens-escassez-mulheres.md): renda dos perfis masculinos e escassez de mulheres na China · ✅ · moderada
 - [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
+- [Otani 2026](studies/otani-2026-idade-exibida-japao.md): a idade exibida no perfil e o aniversário numa plataforma de casamento do Japão · ✅ · fraca
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
@@ -226,6 +228,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
 - [Ranzini & Lutz 2017](studies/ranzini-2017-autoapresentacao-tinder.md): autoapresentação e motivos de uso no Tinder · ✅ · fraca
+- [Ranzini & Rosenbaum 2020](studies/ranzini-2020-namoro-inter-racial.md): foto, nome e etnia em perfis de Tinder · ✅ · fraca
 - [Recruit Bridal 2024](studies/recruit-2024-konkatsu.md): casamento por caminho no Japão · ✅ · fraca
 - [Reysen & Katzarska-Miller 2013](studies/reysen-2013-moderadamente-dificil.md): quanto o outro retribui e a atração · ✅ · fraca
 - [Rhoades et al. 2009](studies/rhoades-2009-coabitacao-noivado.md): morar junto antes do noivado e qualidade do casamento · ✅ · fraca
