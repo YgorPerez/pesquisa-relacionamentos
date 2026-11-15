@@ -243,7 +243,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
 - [Kant 2022](studies/kant-2022-erros-escolaridade.md): erros de língua no perfil e a escolaridade de quem lê · ✅ · fraca
 - [Kato & Hama 2011](studies/kato-2011-convites-recusas-email.md): convites e pedidos por mensagem de celular entre universitárias · 🟡 · fraca
-- [Keane 2022](studies/keane-2024-provocacao-emoji-lol.md): provocação por mensagem de texto, com emoji, com "lol" e de quem vem · ✅ · fraca
+- [Keane 2022](studies/keane-2022-provocacao-emoji-lol.md): provocação por mensagem de texto, com emoji, com "lol" e de quem vem · ✅ · fraca
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Kerr 2009](studies/kerr-2009-padroes-ideais-perfis.md): padrões ideais e escolha entre perfis num site de namoro imaginado · ✅ · fraca

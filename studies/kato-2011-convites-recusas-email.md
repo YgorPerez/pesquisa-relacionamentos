@@ -36,7 +36,7 @@ A fonte inteira é um resumo de uma página nos anais do congresso, sem números
 | Tarefas | Cada participante fez 12 tarefas, metade mandando um pedido e metade respondendo | Método | "つまり、各被験者は合計12の課題を行った。" |
 | Convite para fazer algo junto | No convite para fazer algo junto, o resumo diz que o número de pessoas foi o que mais pesou, sem dar números nem dizer em que sentido | Resultados | "「一緒に行動する」依頼に関しては、特に人数が影響してい" |
 | Pagamento no pedido de ajuda | No pedido de ajuda, o resumo diz que não apareceu diferença pelo valor do pagamento oferecido, sem dar números | Resultados | "「支援を求める」状況においては、謝礼金額による影響は見ら" |
-| Emoji e tamanho no pedido de ajuda | No pedido de ajuda, quem recebeu o pedido preferiu, segundo o resumo, mensagens com menos caracteres e mais emoji; os pesquisadores não variaram nem o emoji nem o tamanho, e o resumo não dá números | Resultados | "絵文字の数が多い文章が依頼の受け手にとっては好まれるこ" |
+| Emoji e tamanho no pedido de ajuda | No pedido de ajuda, o resumo diz que mensagens mais curtas e com mais emoji andaram junto com mais simpatia de quem recebeu o pedido; os pesquisadores não variaram nem o emoji nem o tamanho, e o resumo não dá números | Resultados | "絵文字の数が多い文章が依頼の受け手にとっては好まれるこ" |
 | Expectativa e agradecimento | O resumo diz que apareceu diferença na simpatia entre mensagens com e sem uma frase de expectativa, e com e sem uma de agradecimento; essas frases não foram variadas pelos pesquisadores, e o resumo não dá números | Resultados | "と感謝表現それぞれの有無による差がみられた。すなわち、次" |
 | Frases numa recusa | Os autores leem que frases de expectativa por uma próxima vez e de agradecimento funcionaram melhor que explicar o motivo de não aceitar ou suavizar a recusa; o resumo não dá números | Resultados | "理由の説明や緩和表現よりも効果的であることを示している。" |
 
