@@ -284,6 +284,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Su & Hu 2019](studies/su-2019-preferencia-por-genero.md): para quem homens e mulheres escrevem num site de namoro da China · ✅ · fraca
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
+- [Taubert et al. 2016](studies/taubert-2016-ordem-atratividade.md): a foto vista logo antes e a nota da seguinte · ✅ · fraca
 - [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
 - [Teichmann et al. 2026](studies/teichmann-2026-hora-da-mensagem-apos-encontro.md): a hora da primeira mensagem depois do encontro · ✅ · fraca
 - [Templeton et al. 2022](studies/templeton-2022-resposta-rapida-conexao.md): a pausa entre as falas e a conexão numa conversa · ✅ · moderada
@@ -300,6 +301,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
+- [Vacharkulksemsuk et al. 2016](studies/vacharkulksemsuk-2016-postura-expansiva.md): postura expansiva no encontro rápido e na foto do aplicativo · ✅ · fraca
 - [Vazire & Gosling 2004](studies/vazire-2004-site-pessoal-personalidade.md): a personalidade lida num site pessoal · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Verwers 2021](studies/verwers-2021-humor-abertura-tinder.md): frase de abertura engraçada e foto no Tinder · ✅ · fraca
@@ -391,6 +393,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
+- [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
