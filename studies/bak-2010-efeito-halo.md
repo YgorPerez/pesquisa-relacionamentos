@@ -1,6 +1,7 @@
 ---
 reference: "Bak PM. *Sex Differences in the Attractiveness Halo Effect in the Online Dating Environment*. Journal of Business and Media Psychology 1:1–7, 2010."
 link: https://journal-bmp.de/wp-content/uploads/JBMP-1-2010-Halo-Bak.pdf
+previous: [bak-2010-efeito-halo-perfil]
 status: verified
 verified_on: 2026-11-15
 strength: weak
@@ -49,3 +50,4 @@ O teste F compara as médias dos grupos; o p diz com que frequência uma diferen
 - Um dos dez traços positivos da lista do apêndice é "atraente" (attraktiv). Parte da nota dos traços positivos mede, então, o quanto a pessoa do perfil pareceu atraente, justamente o que a foto muda.
 - O texto diz que foram usados oito traços positivos e oito negativos; a lista do apêndice tem dez de cada.
 - O artigo não diz quando os dados foram coletados nem como os estudantes que receberam o convite foram escolhidos.
+- O artigo lê o resultado à luz da psicologia evolucionista (os homens valorizariam mais a aparência). O experimento mostra a diferença entre homens e mulheres nesta amostra; não testa a explicação.
