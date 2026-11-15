@@ -175,6 +175,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Kerr et al. 2020](studies/kerr-2020-primeira-impressao-encontros.md): primeira impressão da personalidade e interesse romântico no speed dating · ✅ · fraca
+- [Keverline 2020](studies/keverline-2021-cachorro-foto-perfil.md): o cachorro na foto do perfil · ✅ · fraca
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
@@ -323,6 +324,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
+- [van den Heuvel 2021](studies/heuvel-2021-fundo-foto-atracao.md): o fundo da foto de perfil e a atração · ✅ · fraca
+- [Jin et al. 2019](studies/jin-2019-instagram-namorada.md): o tipo de foto no Instagram e o desejo de sair · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
