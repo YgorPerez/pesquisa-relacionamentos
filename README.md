@@ -109,6 +109,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
 - [Brinberg & Ram 2021](studies/brinberg-2021-linguagem-de-casais-novos.md): a linguagem de casais novos fica mais parecida com o tempo? · ✅ · fraca
+- [Brooks & Neville 2016](studies/brooks-2016-atracao-inter-racial.md): atração por mulheres da mesma raça e de outra entre universitários · ✅ · fraca
 - [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Bruch & Newman 2019](studies/bruch-2019-mercados-por-cidade.md): submercados de namoro online em cidades dos EUA · ✅ · moderada
 - [Busby, Carroll & Willoughby 2010](studies/busby-2010-compatibility-or-restraint.md): quanto o casal esperou para transar e a qualidade do casamento · ✅ · fraca
@@ -117,6 +118,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
 - [Camerini et al. 2022](studies/camerini-2022-latencia-da-mensagem.md): esperar mais ou menos pela resposta no WhatsApp · ✅ · fraca
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
+- [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
+- [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
 - [Cooper et al. 2012](studies/cooper-2012-foto-speed-dating.md): a nota dada a uma foto e a decisão depois do speed dating · ✅ · fraca
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
