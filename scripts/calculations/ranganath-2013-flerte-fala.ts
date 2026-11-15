@@ -21,7 +21,9 @@ const tables: Record<string, ReadonlyArray<number>> = {
 
 const values = tables[process.argv[2] ?? '']
 if (!values) {
-  console.error(`usage: ranganath-2013-flerte-fala.ts ${Object.keys(tables).join('|')}`)
+  console.error(
+    `usage: ranganath-2013-flerte-fala.ts ${Object.keys(tables).join('|')}`,
+  )
   process.exit(1)
 }
 console.log(values.map(percent).join(', '))
