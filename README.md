@@ -388,7 +388,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Sutherland et al. 2018](studies/sutherland-2018-infidelidade-universal.md): julgar pelo rosto quem já traiu, em mulheres de culturas diferentes · ✅ · fraca
+- [Swaab, Maddux & Sinaceur 2011](studies/swaab-2011-mimica-verbal-negociacao-online.md): imitar as palavras do outro numa negociação por chat · ✅ · fraca
 - [Szczuka et al. 2025](studies/szczuka-2025-respostas-ia-perfil.md): respostas de perfil escritas pelo ChatGPT, com rótulo de pessoa ou de IA · ✅ · fraca
+- [Takizawa, Sakamaki & Yamashita 2015](studies/takizawa-2015-sincronia-emoticons.md): pontuação e emoticons na resposta a uma mensagem · ✅ · fraca
 - [Taubert et al. 2016](studies/taubert-2016-ordem-atratividade.md): a foto vista logo antes e a nota da seguinte · ✅ · fraca
 - [Shaw Taylor et al. 2010](studies/taylor-2010-segunda-chance.md): impressões antes e depois do primeiro encontro de quem se conheceu online · ✅ · fraca
 - [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
@@ -406,6 +408,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Toma et al. 2018](studies/toma-2018-crenca-engano-alheio.md): crenças sobre a própria mentira e a dos outros, cara a cara e por texto · ✅ · moderada
 - [Tracy & Beall 2011](studies/tracy-2011-expressao-atracao-sexual.md): sorriso, orgulho e vergonha na atração sexual por uma foto · ✅ · fraca
+- [Trzmielewska et al. 2025](studies/trzmielewska-2025-condicao-controle-mimica.md): o grupo de comparação nos experimentos de imitação e gostar · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tuinman et al. 2018](studies/tuinman-2018-sobrevivente-cancer.md): perfil de quem teve câncer · ✅ · fraca
 - [Turnbull-Dugarte & López Ortega 2025](studies/turnbull-dugarte-2025-extrema-direita.md): votar na extrema direita e o like no perfil de namoro · ✅ · moderada
