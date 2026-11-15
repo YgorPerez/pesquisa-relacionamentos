@@ -263,6 +263,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kahn & London 1991](studies/kahn-1991-sexo-premarital-divorcio.md): sexo antes do casamento e risco de divórcio · ✅ · moderada
 - [Kalman & Rafaeli 2011](studies/kalman-2011-pausa-e-silencio-online.md): demora e silêncio na resposta de um candidato a emprego por e-mail · ✅ · fraca
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
+- [Kang et al. 2022](studies/kang-2022-risada-coreana.md): ㅋㅋㅋ, ㅎㅎ e ㅠㅠ no fim da mensagem · ✅ · fraca
 - [Kant 2022](studies/kant-2022-erros-escolaridade.md): erros de língua no perfil e a escolaridade de quem lê · ✅ · fraca
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
@@ -530,6 +531,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hernandez & Punyanunt-Carter 2018](studies/hernandez-2018-respostas-escritas.md): respostas escritas no perfil e a decisão de começar a conversar · ✅ · fraca
 - [van den Heuvel 2021](studies/heuvel-2021-fundo-foto-atracao.md): o fundo da foto de perfil e a atração · ✅ · fraca
 - [Holmgreen & Oswald 2017](studies/holmgreen-2017-apego-anuncios.md): o estilo de apego escrito no anúncio de namoro de uma mulher · ✅ · fraca
+- [Indalecio et al. 2016](studies/indalecio-2016-emoticons-lideranca.md): emoticons no e-mail de um líder · ✅ · fraca
 - [Janssen 2022](studies/janssen-2022-erros-nao-nativo.md): erros de língua num perfil de namoro e saber que quem escreve não é nativo · ✅ · fraca
 - [Janulevičiūtė & Mikuličiūtė 2024](studies/januleviciute-2024-autorrevelacao-solidao.md): quanto o homem conta de si no perfil e a nota que as mulheres dão a ele · ✅ · fraca
 - [Jin et al. 2019](studies/jin-2019-instagram-namorada.md): o tipo de foto no Instagram e o desejo de sair · ✅ · fraca
@@ -538,6 +540,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Jongerius 2022](studies/jongerius-2022-texto-perfil-match.md): o texto do perfil e o match no app Breeze · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Kalra & Peterson 2019](studies/kalra-2019-photofeeler.md): a impressão que uma foto de namoro passa, prevista por uma rede neural · ✅ · fraca
+- [Kalyanaraman & Ivory 2006](studies/kalyanaraman-2006-emoticons-chat.md): emoticons num bate-papo com um especialista · 🟡 · fraca
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Khan & Chaudhry 2015](studies/khan-2015-revisao-contato-encontro.md): revisão sobre o caminho do contato online ao primeiro encontro · ✅ · fraca
 - [Kho 2022](studies/kho-2022-primeira-impressao-tinder.md): como três homens formam a primeira impressão de mulheres por fotos · ✅ · fraca
