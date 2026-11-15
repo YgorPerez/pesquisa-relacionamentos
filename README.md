@@ -122,12 +122,15 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Dinh et al. 2022](studies/dinh-2022-iniciativa-eharmony.md): quem começa a conversa no eharmony, ano a ano · ✅ · fraca
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
+- [Earle 2023](studies/earle-2023-garantia-verdade-padrao.md): o controle do dono sobre o perfil e a confiança de quem o lê · ✅ · fraca
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
 - [Eastwick & Finkel 2008](studies/eastwick-2008-ansiedade-no-comeco.md): a ansiedade de não saber se o outro corresponde, no começo · ✅ · moderada
 - [Eastwick & Finkel 2008](studies/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem o desejo real (speed dating) · ✅ · moderada
 - [Eastwick et al. 2011](studies/eastwick-2011-ideais-perfil-ao-vivo.md): o parceiro ideal no perfil e depois de uma interação ao vivo · ✅ · moderada
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
 - [Eisenberger, Lieberman & Williams 2003](studies/eisenberger-2003-rejeicao-dor.md): a exclusão social ativa regiões do cérebro ligadas à dor · ✅ · fraca
+- [Elliott 2010](studies/elliott-2010-pistas-anuncios.md): adivinhar o gênero e a orientação de quem escreveu um anúncio pessoal · ✅ · fraca
+- [Ellison et al. 2012](studies/ellison-2012-perfil-promessa.md): quais diferenças entre o perfil e a pessoa os usuários aceitam · ✅ · fraca
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
 - [Fang, Zhang & Maglio 2025](studies/fang-2025-abreviacoes-resposta.md): abreviações em mensagens de texto e resposta · ✅ · moderada
