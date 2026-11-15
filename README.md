@@ -236,6 +236,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld 2018](studies/rosenfeld-2018-apps-encontros-eua.md): quantos solteiros americanos saíram com alguém em um ano, e por onde · ✅ · moderada
 - [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
+- [Sauer e Wolff 2016](studies/sauer-2016-carro-luxo.md): carro de luxo na foto do perfil · ✅ · fraca
 - [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
@@ -243,10 +244,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sedgewick et al. 2017](studies/sedgewick-2017-angulo-selfie-tinder.md): ângulo da câmera nas selfies de perfil do Tinder · ✅ · fraca
 - [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
+- [Shum 2014](studies/shum-2014-fotos-lgbt.md): fotos de perfil numa comunidade de namoro gay · ✅ · fraca
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Sprecher 2021](studies/sprecher-2021-expectativas-video.md): o que se espera antes e o quanto se gosta depois de uma conversa por vídeo · ✅ · fraca
 - [Sprecher et al. 2026](studies/sprecher-2026-autoestima-sociossexualidade-julgada.md): autoestima, gênero e a abertura a sexo casual que se supõe · ✅ · fraca
+- [Sritharan et al. 2010](studies/sritharan-2010-avaliacao-espontanea-perfil.md): reação espontânea e avaliação declarada diante de um perfil · ✅ · fraca
 - [Stanley, Markman & Whitton 2002](studies/stanley-2002-comunicacao-conflito-compromisso.md): comunicação, conflito e compromisso numa pesquisa nacional · ✅ · moderada
 - [Stanley et al. 2010](studies/stanley-2010-coabitacao-noivado.md): coabitação antes do noivado e divórcio no primeiro casamento · ✅ · fraca
 - [Stavang et al. 2026](studies/stavang-2026-exigencia-anos-solteiro.md): ser exigente e os anos passados solteiro, na Noruega · ✅ · moderada
