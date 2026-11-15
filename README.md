@@ -224,6 +224,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
 - [Mitchell et al. 2019](studies/mitchell-2019-diferenca-genero-parceiros.md): por que os homens relatam mais parceiras do que as mulheres relatam parceiros · ✅ · forte
 - [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · fraca
+- [Miyamoto & Bedi 2024](studies/miyamoto-2024-ingles-site-matrimonial.md): inglês no perfil de mulheres num site matrimonial de Delhi · ✅ · fraca
 - [Montoya et al. 2015](studies/montoya-2015-incerteza-e-atracao.md): a incerteza de Whitchurch refeita com escolha direta · ✅ · fraca
 - [Moran et al. 2023](studies/moran-2023-comportamentos-primeiro-encontro.md): atos num primeiro encontro e o segundo encontro · ✅ · fraca
 - [Navarro et al. 2020](studies/navarro-2020-ghosting-correlatos.md): ghosting, breadcrumbing e bem-estar de quem passou por eles · ✅ · fraca
@@ -257,6 +258,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sedgewick et al. 2017](studies/sedgewick-2017-angulo-selfie-tinder.md): ângulo da câmera nas selfies de perfil do Tinder · ✅ · fraca
 - [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
+- [Seymour 2022](studies/seymour-2022-partidarismo-vacina-perfil.md): partido e vacina contra a covid-19 num perfil de namoro · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
@@ -350,6 +352,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
+- [Mao et al. 2018](studies/mao-2018-identidade-genero-trans.md): rótulo de pessoa trans ou não binária e atração por um perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
