@@ -148,13 +148,16 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Fang, Zhang & Maglio 2025](studies/fang-2025-abreviacoes-resposta.md): abreviações em mensagens de texto e resposta · ✅ · moderada
 - [Ferreres Fernández 2021](studies/ferreres-2021-demora-e-confirmacao-de-leitura.md): demora na resposta, confirmação de leitura e satisfação com a conversa · ✅ · fraca
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
+- [Filice et al. 2022](studies/filice-2022-engano-hsh.md): verdade e engano no perfil de homens que buscam homens · ✅ · fraca
 - [Fiore et al. 2010](studies/fiore-2010-contatos-respostas.md): quem escreve e quem responde num site de namoro · ✅ · moderada
 - [Fisher et al. 2010](studies/fisher-2010-rejeicao-amor.md): ver a foto de quem rejeitou ativa áreas de recompensa e de desejo intenso · ✅ · fraca
 - [Fisher et al. 2020](studies/fisher-2020-cantadas-de-mulheres.md): cantadas de mulheres para homens, com fotos · ✅ · fraca
+- [Fitzpatrick 2017](studies/fitzpatrick-2017-pistas-sistema.md): foto, distância, disponibilidade e amigos em comum num app de cartões · ✅ · fraca
 - [Fletcher, Simpson & Thomas 2000](studies/fletcher-2000-ideal-e-termino.md): encaixe com o ideal e término nos primeiros meses de namoro · ✅ · fraca
 - [Forrai, Koban & Matthes 2023](studies/forrai-2023-fantasmas-de-vista-curta.md): dar ghosting em namoros e amizades, em duas ondas · ✅ · fraca
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
+- [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
