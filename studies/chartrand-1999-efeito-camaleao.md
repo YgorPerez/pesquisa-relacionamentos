@@ -49,7 +49,7 @@ No Experimento 1, a contagem é o número de vezes por minuto que o participante
 
 - Não é paquera. São desconhecidos numa tarefa de descrever fotos, num laboratório, e a cúmplice evitava olhar nos olhos do participante. O estudo não mediu atração romântica nem conversa por mensagem.
 - As amostras são pequenas (35, 72 e 50) e todas de alunos de introdução à psicologia da New York University. O artigo não dá idades.
-- Vários resultados ficam no limite usual: o pé no Experimento 1 (p = 0,06), a imitação do cúmplice sério (p = 0,05), a fluidez da conversa no Experimento 2 (p = 0,05) e o efeito de se pôr no lugar do outro no Experimento 3 (p = 0,05). O artigo não dá intervalo de confiança nem desvio-padrão das médias.
+- Vários resultados ficam no limite usual: o pé no Experimento 1 (p = 0,06), a imitação do cúmplice sério (p = 0,05), a fluidez da conversa no Experimento 2 (p = 0,05) e o efeito de se pôr no lugar do outro no Experimento 3 (p = 0,05). O artigo não dá intervalo de confiança nem desvio-padrão das médias dos participantes; só a Tabela 1, sobre o jeito das cúmplices, traz desvio-padrão.
 - O artigo não diz como os participantes do Experimento 2 foram distribuídos entre imitação e controle. No Experimento 1, cada participante passou pelos dois cúmplices, com a ordem alternada entre os participantes.
 - As cúmplices do Experimento 2 sabiam quem estavam imitando, embora não soubessem a hipótese. Os autores filmaram 22 das sessões para conferir se elas tratavam os grupos de outro jeito e não acharam diferença clara; as outras sessões não foram filmadas.
 - No Experimento 2, a diferença entre os grupos é de menos de um ponto numa nota de 1 a 9, e os dois grupos deram notas acima do meio da escala.

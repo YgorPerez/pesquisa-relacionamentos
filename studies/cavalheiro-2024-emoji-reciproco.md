@@ -4,7 +4,7 @@ link: https://doi.org/10.1177/02654075231219032
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Dois experimentos online com voluntários que moram em Portugal (369 e 199), distribuídos ao acaso entre as condições, que julgaram de fora uma conversa inventada entre dois colegas de trabalho; as amostras são de conveniência e não representam ninguém, o estudo não foi pré-registrado, as diferenças são pequenas e o efeito do emoji de quem responde não se repetiu no Estudo 2."
+strength_reason: "Dois experimentos online com voluntários que moram em Portugal (369 e 199), distribuídos ao acaso entre as condições, que julgaram de fora uma conversa inventada entre dois colegas de trabalho; as amostras são de conveniência e não representam ninguém, o estudo não foi pré-registrado, as diferenças são pequenas e o efeito do emoji de A, o colega que fecha a conversa, não se repetiu no Estudo 2."
 countries: [Portugal]
 period: "não informado no texto lido"
 sample:
@@ -61,7 +61,7 @@ Todas as notas vão de 1 ("nada") a 7 ("extremamente"), dadas por quem leu a con
 - O emoji de A (dar de ombros) foi julgado neutro num teste prévio, mas também pouco adequado ao trabalho e ambíguo, segundo os autores.
 - O efeito do emoji de A apareceu no Estudo 1 e não no Estudo 2, em que o cenário e o tom da cobrança mudaram. No Estudo 1, dois desses resultados (o calor de A e o peso de A na positividade da conversa) deixam de passar do limite usual quando saem os 37 que não lembravam de ter visto emoji.
 - Na discussão do Estudo 1, os autores dizem que B pareceu mais cooperativo com o emoji positivo, mas nos resultados nenhuma comparação entre dois emoji na cooperação passou do limite usual.
-- As diferenças são pequenas, como os autores reconhecem, e boa parte das médias ficou abaixo do meio da escala ou perto dele: mesmo com o emoji, os colegas não chegaram a ser vistos como calorosos ou brincalhões.
+- As diferenças são pequenas, como os autores reconhecem, e boa parte das médias ficou abaixo do meio da escala ou perto dele. Os autores leem que, mesmo com o emoji positivo, B não chegou a ser visto como caloroso ou brincalhão. Na Figura 2, o calor de B com o braço flexionado ficou em 4,33, pouco acima do meio da escala, e o ar brincalhão, em 3,79, abaixo dele.
 - As amostras são de voluntários: no Estudo 1, chamados por e-mail, redes sociais e o grupo de participantes da universidade, com 74,2% de mulheres e 89,7% com diploma universitário; no Estudo 2, pagos pela plataforma ClickWorker. Não representam a população de Portugal nem de outro lugar. O estudo não coletou orientação sexual.
 - O estudo não foi pré-registrado. Os dados e o material, segundo o artigo, são enviados a quem pedir por e-mail.
 - O texto não diz quando os dados foram coletados.
