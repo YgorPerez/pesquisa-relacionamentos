@@ -159,8 +159,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Hoyle et al. 2017](studies/hoyle-2017-mensagem-vista.md): o aviso de mensagem vista no Facebook Messenger · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
+- [Hu 2026](studies/hu-2026-meta-analise-texto-perfil.md): traços no texto do perfil e a avaliação do dono (meta-análise) · ✅ · moderada
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): em chats entre desconhecidos, quem pergunta mais é mais querido · ✅ · moderada
 - [Huang & Yao 2024](studies/huang-2024-sem-resposta-no-conflito.md): demora do parceiro para responder durante uma briga por mensagem · ✅ · fraca
+- [Huber & Malhotra 2017](studies/huber-2017-homofilia-politica.md): afinidade política na escolha de par num site de namoro · ✅ · moderada
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
@@ -323,6 +325,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
+- [Janssen 2022](studies/janssen-2022-erros-nao-nativo.md): erros de língua num perfil de namoro e saber que quem escreve não é nativo · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
