@@ -4,7 +4,7 @@ link: https://doi.org/10.4992/pacjpa.77.0_1pm-041
 status: partial
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Fraca pela rubrica: é só o resumo de uma página de um pôster de congresso, sem revisão por pares de artigo; 43 universitárias de uma faculdade feminina avaliaram mensagens inventadas, e a análise parece tratar cada nota como uma observação independente (797 graus de liberdade para 43 pessoas)."
+strength_reason: "Fraca pela rubrica: é só o resumo de uma página de um pôster de congresso, sem revisão por pares de artigo; 43 universitárias avaliaram mensagens inventadas, e a análise parece tratar cada nota como uma observação independente (797 graus de liberdade para 43 pessoas)."
 countries: []
 period: "não informado no texto lido; resumo apresentado em 2013"
 sample:
@@ -26,7 +26,7 @@ Universitárias leram mensagens de e-mail de celular (50 a 55 caracteres) e dera
 
 São mensagens imaginadas entre colegas de faculdade, não mensagens de um app de namoro.
 
-A fonte inteira é um resumo de uma página nos anais do congresso. Não achamos artigo completo com esses dados, por isso a Ficha é parcial. O PDF da J-STAGE tem uma camada de texto que perde os números; a conferência dos Trechos usou o texto reconhecido por OCR (Tesseract, japonês) na cópia `sources/private/awazu-2013-quantidade-emoji-email-ocr.pdf`, conferido contra a imagem da página.
+A fonte inteira é um resumo de uma página nos anais do congresso. Não achamos artigo completo com esses dados, por isso a Ficha é parcial. O PDF da J-STAGE tem uma camada de texto que perde os números; a Fonte local tem no lugar dela o texto reconhecido por OCR (Tesseract, japonês), conferido contra a imagem da página.
 
 ## Achados
 
@@ -45,5 +45,5 @@ O F vem da análise de variância que compara as médias das condições; o resu
 - É só um resumo de pôster de uma página. Não traz as médias de cada condição em números (só um gráfico), nem os testes de cada comparação par a par, nem como as versões do questionário foram distribuídas entre as turmas.
 - A análise tem 797 graus de liberdade no erro para 43 participantes. O resumo não explica, mas o número sugere que cada nota de cada participante entrou como uma observação separada, o que faz diferenças parecerem mais seguras do que são.
 - As participantes eram só mulheres universitárias de 19 a 22 anos, e as mensagens eram inventadas, entre colegas, com remetentes imaginados. O resumo não diz o país; os autores e o congresso são japoneses, e as mensagens foram escritas em japonês.
-- O resumo também diz que a impressão prévia do remetente (não gostar, sem opinião, gostar) teve efeito sobre a impressão positiva, sem dizer em que sentido; a Ficha não a inclui por isso.
+- O resumo também diz que a impressão prévia do remetente (não gostar, sem opinião, gostar) teve efeito sobre a impressão positiva. O texto não diz o sentido; no gráfico da Figura 2, o remetente de quem a participante não gostava tem as notas mais baixas em todas as condições. A Ficha não traz uma linha sobre isso porque o resumo não dá esses números.
 - O PDF original perde os números na extração de texto; os Trechos vêm de OCR, que separa os caracteres japoneses com espaços e erra alguns (絵文字昌 no lugar de 絵文字量).
