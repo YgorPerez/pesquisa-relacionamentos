@@ -227,6 +227,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Green et al. 2026](studies/green-2026-conspiracao-perfil.md): teoria da conspiração no perfil de namoro · ✅ · moderada
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
 - [Groggel 2023](studies/groggel-2023-flerte-genero.md): o que universitários imaginam que cada lado de um flerte pensa · ✅ · fraca
+- [Groggel 2023](studies/groggel-2023-piscadela-ambiguidade.md): emoji e clareza numa paquera por Snapchat · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hall et al. 2015](studies/hall-2015-deteccao-flerte.md): perceber o flerte numa conversa entre desconhecidos · ✅ · fraca
@@ -246,6 +247,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Huang et al. 2020](studies/huang-2020-informacao-demanda-perfil.md): o número de pedidos recebidos, exibido no perfil · ✅ · moderada
 - [Huang & Yao 2024](studies/huang-2024-sem-resposta-no-conflito.md): demora do parceiro para responder durante uma briga por mensagem · ✅ · fraca
 - [Huber & Malhotra 2017](studies/huber-2017-homofilia-politica.md): afinidade política na escolha de par num site de namoro · ✅ · moderada
+- [Huh 2025](studies/huh-2025-emoji-responsividade.md): emoji e a impressão de atenção nas respostas de um amigo · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Hunter et al. 2019](studies/hunter-2018-riqueza-perfil.md): o saldo bancário e outros sinais de riqueza num perfil de namoro · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
@@ -521,6 +523,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hamilton et al. 2015](studies/hamilton-2015-tracos-texto-namoro.md): personalidade lida no texto do perfil e atração · ✅ · fraca
+- [Hand et al. 2022](studies/hand-2022-emoji-remetente.md): emoji, texto e a imagem de quem manda a mensagem · ✅ · fraca
 - [Handel & Shklovski 2012](studies/handel-2012-ambiguidade-risco.md): o "pergunte-me" no perfil de um site de encontros entre homens · ✅ · fraca
 - [Hargitai 2022](studies/hargitai-2022-leitores-nativos.md): erros de inglês no perfil de quem não é nativo, julgados por nativos e por alemães · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
