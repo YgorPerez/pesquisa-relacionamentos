@@ -24,7 +24,7 @@ covers:
 
 A equipe escreveu um texto de cerca de 380 palavras e o apresentou de dois jeitos: como a seção "sobre mim" (*about me*) de um perfil de rede social ou como a carta de apresentação (*personal statement*) de uma candidatura à universidade. Cada contexto tinha três versões com o mesmo conteúdo: em inglês padrão, com pouco *textspeak* e com muito. *Textspeak* é o conjunto de atalhos da escrita online: siglas ("atm"), palavras cortadas ("readin"), grafias fora do padrão ("dat"), contrações ("hrs") e emoticons. O sexo do autor não aparecia.
 
-Cada participante viu uma das seis versões, distribuída ao acaso, e ouviu que o texto vinha de uma pessoa real. Depois avaliou o autor em autoestima (escala de Rosenberg) e nos cinco grandes traços de personalidade (50 itens do International Personality Item Pool), com as perguntas reescritas para falar do autor. Não há foto, perfil completo nem interesse romântico: quem julga é um desconhecido diante de um texto. O estudo não separa o peso dos emoticons do resto do *textspeak*.
+Cada participante viu uma das seis versões, distribuída ao acaso, e ouviu que o texto vinha de uma pessoa real. Depois avaliou o autor em autoestima (escala de Rosenberg) e nos cinco grandes traços de personalidade (50 itens do International Personality Item Pool), com as perguntas reescritas para falar do autor. O artigo descreve só o texto, sem falar em foto nem em perfil completo, e não pergunta nada sobre interesse romântico: quem julga é um desconhecido diante de um texto. O estudo não separa o peso dos emoticons do resto do *textspeak*.
 
 ## Achados
 
@@ -50,7 +50,7 @@ As médias são as notas que os participantes deram ao autor em cada traço, por
 ## Limitações
 
 - O *textspeak* juntava siglas, palavras cortadas, grafias fora do padrão, contrações e emoticons. O estudo não separa o peso de cada tipo, e nenhum resultado pode ser atribuído aos emoticons sozinhos. Os autores leem a estabilidade emocional maior como efeito possível dos emoticons e de outras marcas de emoção, que aproximariam quem lê de quem escreve; essa leitura não foi testada.
-- Não é um estudo de namoro. A seção "sobre mim" era só o texto apresentado com esse nome, sem foto nem perfil, e quem julgou era um desconhecido sem interesse romântico no autor. Os autores sugerem que o resultado deve valer para contextos como sites de namoro, mas não testaram isso.
+- Não é um estudo de namoro. A seção "sobre mim" é descrita só como o texto apresentado com esse nome, sem menção a foto ou perfil, e quem julgou era um desconhecido, sem nenhuma pergunta sobre interesse romântico no autor. Os autores sugerem que o resultado deve valer para contextos como sites de namoro, mas não testaram isso.
 - O artigo descreve o estímulo como texto, não como perfil de Facebook montado.
 - Os autores apontam a amostra de maioria feminina (63%) e de estudantes (72%), e levantam que pessoas acostumadas à escrita formal da universidade podem julgar pior a escrita informal.
 - São 167 pessoas divididas em seis versões de um único texto, cerca de 28 por versão. O artigo não diz o país dos participantes nem quando os dados foram coletados.
