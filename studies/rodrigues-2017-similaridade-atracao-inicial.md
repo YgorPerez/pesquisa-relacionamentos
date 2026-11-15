@@ -22,7 +22,7 @@ covers:
 
 Os participantes imaginavam que estavam navegando numa rede social e viam por 5 segundos a foto de rosto de um desconhecido, em preto e branco e sem acessórios. Heterossexuais e bissexuais viam alguém do outro sexo; homossexuais, alguém do mesmo sexo. Depois davam notas, de 1 a 9, a quanto achavam a pessoa bonita, a quanto ela parecia ter ideias, atitudes e crenças parecidas com as suas e à atração inicial: se, conhecendo a pessoa, gostariam de estar com ela, rir com ela e saber mais sobre ela.
 
-No primeiro estudo, metade viu a foto de um rosto que um pré-teste julgou atraente e metade a de um rosto julgado neutro, distribuídos ao acaso. No segundo, todos viram o rosto neutro, mas antes metade passou 4 minutos anotando semelhanças entre duas imagens de uma praça, e a outra metade anotando diferenças, também distribuídos ao acaso. No terceiro, todos viram o rosto neutro, sem nada variado, e disseram se queriam interagir com a pessoa.
+No primeiro estudo, cada participante foi sorteado para ver a foto de um rosto que um pré-teste julgou atraente ou a de um rosto julgado neutro; o texto não diz quantos ficaram em cada grupo. No segundo, todos viram o rosto neutro, mas antes passaram 4 minutos com duas imagens de uma praça, e um sorteio decidia se cada um anotava as semelhanças ou as diferenças entre elas. No terceiro, todos viram o rosto neutro, sem nada variado, e disseram se queriam interagir com a pessoa.
 
 ## Achados
 

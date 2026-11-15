@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Cada participante leu os textos de três perfis de namoro (o "sobre mim" e respostas como livros favoritos e sexta à noite) do sexo que escolheu ver, com um ícone genérico no lugar da foto. Os textos vieram de perfis reais do OkCupid que tinham erros de ortografia, gramática ou vocabulário, por volta de um por frase. Metade dos participantes leu os textos com os erros originais, e a outra metade leu os mesmos textos corrigidos; o anexo diz que a versão foi sorteada. Depois, cada um deu notas à inteligência de quem escreveu, à atração por essa pessoa e à vontade de conhecê-la, numa escala de 7 pontos. O estudo comparou também as notas de homens e de mulheres.
+Cada participante leu os textos de três perfis de namoro (o "sobre mim" e respostas como livros favoritos e sexta à noite) do sexo que escolheu ver, com um ícone genérico no lugar da foto. Os textos vieram de perfis reais do OkCupid que tinham erros de ortografia, gramática ou vocabulário, por volta de um por frase. 73 participantes leram os textos com os erros originais, e 58 leram os mesmos textos corrigidos; o anexo diz que a versão foi sorteada. Depois, cada um deu notas à inteligência de quem escreveu, à atração por essa pessoa e à vontade de conhecê-la, numa escala de 7 pontos. O estudo comparou também as notas de homens e de mulheres.
 
 ## Achados
 
@@ -46,13 +46,13 @@ As notas vão de 1 a 7; a Tabela 2 diz que 1 é muito baixo e 7 muito alto. A no
 ## Limitações
 
 - Trabalho de conclusão de bacharelado, sem a revisão de um periódico. A amostra veio em bola de neve e não representa ninguém.
-- Os grupos ficaram desiguais: só 20 homens leram os textos sem erros. O trabalho aponta isso como a primeira limitação.
+- Os grupos ficaram desiguais: 50 homens e 81 mulheres, e só 20 homens leram os textos sem erros. O trabalho aponta como primeira limitação o número desigual de homens e mulheres, e logo depois a divisão desigual entre os grupos.
 - A comparação entre homens e mulheres não é sobre os mesmos perfis: cada participante escolhia ver perfis de homens ou de mulheres (62,6% escolheram homens), e o texto não diz quantos homens e quantas mulheres viram cada tipo. A diferença entre homens e mulheres pode vir de quem eles leram, não só de quem leu.
 - A frase sobre a vontade de conhecer, nos resultados, repete palavra por palavra o teste e as médias da atração. O texto não traz um teste próprio da diferença entre homens e mulheres na vontade de conhecer, embora o resumo diga que os homens mostraram mais vontade de sair com os donos dos perfis. Por isso essa comparação não entrou na tabela, só as médias da Tabela 2.
 - Os testes têm 123 graus de liberdade, o que indica 127 pessoas na análise, não 131; o texto não explica a diferença.
 - Os métodos dizem que na escala 1 era concordo totalmente e 7 discordo totalmente, o contrário do que a Tabela 2 diz (1 muito baixo, 7 muito alto). A Ficha segue a Tabela 2.
 - O texto se contradiz sobre a divisão por gênero entre os grupos: um teste diz que ela foi desigual (χ2 (1) = 4,53, p = 0,033), outro diz que não (χ2 (1) = 0,56, p = 0,439).
 - Quem respondeu "tanto faz" à pergunta sobre que perfil queria ver não viu perfil nenhum e não pôde participar direito, segundo o trabalho.
-- Cada participante avaliou três perfis, e as notas foram somadas; o trabalho diz que o conteúdo de cada texto, e não só os erros, pode ter pesado.
+- Cada participante avaliou três perfis, e as notas dos três foram agrupadas numa só; o trabalho diz que o conteúdo de cada texto, e não só os erros, pode ter pesado.
 - Os textos, em inglês, vieram de perfis de bilíngues inglês-espanhol que moravam nos EUA, e foram lidos, na maioria, por pessoas cuja língua materna não é o inglês (4,6% tinham o inglês como língua materna). O trabalho diz que nativos podem ter achado mais erros e que algumas nacionalidades são mais críticas com erros.
 - Sem pagamento nem incentivo, os participantes podem ter lido os textos sem muita atenção, diz o trabalho.
