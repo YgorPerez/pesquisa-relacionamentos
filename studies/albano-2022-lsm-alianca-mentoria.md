@@ -4,7 +4,7 @@ link: https://doi.org/10.1002/erv.2948
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "São 93 pacientes de um só braço de um ensaio clínico, analisados sem sorteio do tipo de mentor; a transcrição da sexta sessão faltava para um terço das duplas e os autores imputaram os dados faltantes, a sintonia ficou perto do teto em todas as sessões e a aliança foi medida por uma escala não padronizada."
+strength_reason: "São 93 pacientes de um só braço de um ensaio clínico, analisados sem sorteio do tipo de mentor; a transcrição da sexta sessão faltava para um terço das duplas e os autores imputaram os dados faltantes, a sintonia ficou alta e com pouca variação em todas as sessões e a aliança foi medida por uma escala não padronizada."
 countries: [Reino Unido]
 period: "não informado no texto"
 sample:
@@ -41,7 +41,7 @@ O RecoveryMANTRA é uma autoajuda guiada de seis semanas para adultos com anorex
 
 O LSM vai de zero a um e compara a proporção de nove classes de palavras de ligação no texto do paciente e no do mentor; não olha o assunto. Os autores tomam, de outro estudo, 0,60 como sintonia relativamente baixa e 0,85 ou mais como relativamente alta. O β é o tamanho da ligação em desvios-padrão, levando em conta as outras medidas da conta: 0,3 quer dizer que um desvio-padrão a mais de sintonia vem com três décimos de desvio-padrão a mais no desfecho. O d mede a distância entre duas médias em desvios-padrão: perto de 0,2 é pequena, perto de 0,5 é média. O p é a probabilidade de uma ligação ou diferença desse tamanho aparecer por acaso se ela não existisse; abaixo de 0,05 costuma-se tratar como improvável.
 
-Na conta dos sintomas alimentares, quase tudo é explicado pelos sintomas do começo; a Tabela 2 dá ΔR² = 0,015 para o que a sintonia da sexta sessão acrescenta.
+Na conta dos sintomas alimentares, as medidas do começo (sintomas alimentares, IMC e depressão, ansiedade e estresse) já explicam cerca de três quartos da variação (ΔR² = 0,736 no primeiro passo da Tabela 2); a sintonia da sexta sessão acrescenta ΔR² = 0,015.
 
 ## Limitações
 
