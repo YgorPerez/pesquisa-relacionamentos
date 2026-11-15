@@ -4,7 +4,7 @@ link: https://doi.org/10.1007/s12144-016-9530-3
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "183 universitárias voluntárias de uma universidade na Polônia e de outra na Noruega, divididas em seis grupos de 22 a 37; os perfis eram de homens inventados, o texto não diz como as participantes foram postas em cada condição, e as duas diferenças que os autores destacam ficaram no limite do teste (p = 0,01 e p = 0,05), sem conta que compare os dois países diretamente."
+strength_reason: "183 universitárias voluntárias de uma universidade na Polônia e de outra na Noruega, divididas em seis grupos de 22 a 37; os perfis eram apresentados como tirados de um site de namoro, o texto não diz como as participantes foram postas em cada condição, e das duas diferenças que os autores destacam uma tem p = 0,01 e a outra ficou no limite do teste (p = 0,05), sem conta que compare os dois países diretamente."
 countries: [Polônia, Noruega]
 period: "não informado no texto lido"
 sample:
@@ -47,9 +47,9 @@ O interesse romântico é a média de oito perguntas respondidas numa escala de 
 
 ## Limitações
 
-- Ninguém conheceu ninguém: as participantes deram notas a perfis escritos de homens inventados, num estudo apresentado como sobre clareza de textos. O artigo não mostra os perfis nem diz se tinham foto.
+- Ninguém conheceu ninguém: as participantes deram notas aos perfis de quatro homens, com uma autodescrição que o artigo diz ser supostamente tirada de um site de namoro, num estudo apresentado como sobre clareza de textos. O artigo não mostra os perfis nem diz se tinham foto.
 - O texto não diz como as participantes foram postas em cada condição (texto de ameaça, de prosperidade ou neutro).
-- Os grupos eram pequenos, de 22 a 37 mulheres. As duas diferenças que os autores destacam ficaram perto do limite do teste: p = 0,01 nas polonesas que leram o texto de prosperidade e p = 0,05 nas norueguesas que leram o texto de ameaça.
+- Os grupos eram pequenos, de 22 a 37 mulheres. Das duas diferenças que os autores destacam, a das polonesas que leram o texto de prosperidade tem p = 0,01, e a das norueguesas que leram o texto de ameaça ficou no limite do teste (p = 0,05).
 - Os autores testaram cada país em separado e não relatam uma conta que compare os dois países na mesma análise. Que a diferença apareça num país e não no outro não mostra, por si, que os países reagiram de modo diferente.
 - No grupo de controle, as norueguesas deram aos agênticos uma vantagem (d = 0,25) do mesmo tamanho da vantagem dos comunais depois do texto de prosperidade nos dois países juntos (d = 0,24), que os autores leem como a favor de uma hipótese. As duas podem ser acaso.
 - Os autores dizem que não houve efeito do país, mas só mostram a comparação dentro dos grupos de controle; não relatam o teste do país na análise geral. Nos grupos de controle, as médias das norueguesas ficaram acima das das polonesas para os dois tipos de homem (3,47 e 3,25 contra 2,92 e 2,85), sem teste dessa diferença no artigo.
