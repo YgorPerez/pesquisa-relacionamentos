@@ -290,6 +290,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
 - [Masden e Edwards 2015](studies/masden-2015-comunidade-perfil.md): os fóruns do Reddit sobre OkCupid e Tinder · ✅ · fraca
 - [McFarland et al. 2013](studies/mcfarland-2013-conexao-speed-dating.md): a conversa de um speed dating e a sensação de conexão · ✅ · fraca
+- [McHaney & George 2021](studies/mchaney-2021-emoticons-mentira.md): emoticons e a detecção de mentira em texto · ✅ · fraca
 - [McKenna et al. 2002](studies/mckenna-2002-relacoes-na-internet.md): relações formadas na internet · ✅ · fraca
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
@@ -520,9 +521,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lee et al. 2008](studies/lee-2008-hotornot-propria-atratividade.md): a própria beleza, a beleza que se vê nos outros e quem se aceita no HOTorNOT · ✅ · fraca
 - [Lee, Sun & Thiry 2011](studies/lee-2011-riqueza-midia-perfil.md): texto, áudio ou vídeo no perfil de namoro · ✅ · fraca
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
+- [Losby 2022](studies/losby-2023-emoji-conexao-social.md): emoji numa mensagem ambígua e a sensação de proximidade · ✅ · fraca
 - [Luevano e Zebrowitz 2007](studies/luevano-2007-masculinidade-curto-prazo.md): rosto masculino e preferência para algo curto ou longo · ✅ · fraca
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Mao et al. 2018](studies/mao-2018-identidade-genero-trans.md): rótulo de pessoa trans ou não binária e atração por um perfil · ✅ · fraca
+- [Marder et al. 2020](studies/marder-2020-emoticons-professor-aluno.md): smileys nos e-mails de professores para estudantes · ✅ · fraca
 - [de Meijer 2014](studies/meijer-2014-fotos-erros-linguagem.md): foto atraente, foto não atraente ou nenhuma foto, e erros de ortografia no perfil · ✅ · fraca
 - [Mierke et al. 2011](studies/mierke-2011-riqueza-midia-atratividade.md): vídeo, áudio, foto ou texto na apresentação de um perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
