@@ -4,7 +4,7 @@ link: https://doi.org/10.1177/21522715251382736
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "135 universitários heterossexuais de uma só universidade dos EUA, de um banco de participantes do departamento, julgando no laboratório perfis montados com fotos de 30 pessoas; as três diferenças achadas passam por pouco do limite de 5%, entre dez testes sem correção, e a Tabela 1 traz médias que não batem entre si."
+strength_reason: "135 universitários heterossexuais de uma só universidade dos EUA, de um banco de participantes do departamento, julgando no laboratório perfis montados com fotos de 30 pessoas; as três diferenças achadas passam por pouco do limite de 5%, entre doze testes sem correção, e a Tabela 1 traz médias que não batem entre si."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
@@ -19,7 +19,7 @@ covers:
   couple: different-sex
 ---
 
-# Ellithorpe, Kunaish & Wright (2025): perfis sexualizados no Tinder, na reação rápida e na resposta pensada
+# Ellithorpe, Kunaish & Wright (2025): perfis sexualizados com cara de Tinder, na reação rápida e na resposta pensada
 
 ## O que mediu
 
@@ -42,7 +42,7 @@ O texto não descreve o que faz um perfil ser sexualizado: remete aos exemplos d
 | Homens e mulheres diante de perfis sexualizados | Na tarefa rápida, os homens reagiram aos perfis sexualizados de mulheres de forma mais positiva do que as mulheres reagiram aos perfis sexualizados de homens (t(125) = 2,10; p < 0,04) | Results, p. 7 | "men were significantly more positive toward sexualized profiles compared to women, t(125)=2.10, p<.04." |
 | Homens e mulheres nas outras comparações | Entre homens e mulheres, não apareceu diferença nos perfis não sexualizados da tarefa rápida (t(125) = 0,08; p = 0,94), nem no questionário, para os sexualizados (t(133) = 1,29; p = 0,20) e para os não sexualizados (t(133) = 0,68; p = 0,50) | Results, p. 7 | "sexualized, t(125)=0.08, p=.94; explicitly measured sexualized, t(133)=1.29, p=.20; explicitly measured non-sexualized, t(133)=0.68, p=.50" |
 | Tarefa rápida contra questionário, perfis sexualizados | Comparando, na mesma pessoa, o escore da tarefa rápida com o do questionário para os perfis sexualizados, não apareceu diferença, nem nos homens (t(66) = −0,08; p = 0,93) nem nas mulheres (t(59) = −0,42; p = 0,67) | Results, p. 6 | "evaluations of sexualized profiles for men, t(66)=-0.08, p=.93; or for women, t(59)=-0.42, p=.67." |
-| Tarefa rápida contra questionário, perfis não sexualizados | Para os perfis não sexualizados, também não apareceu diferença entre os dois escores, nos homens (t(66) = −1,39; p = 0,17) e nas mulheres (t(59) = 0,50) | Results, p. 7 | "evaluations of non-sexualized profiles for men, t(66)=-1.39, p=.17; or for women, t(59)=0.50," |
+| Tarefa rápida contra questionário, perfis não sexualizados | Para os perfis não sexualizados, também não apareceu diferença entre os dois escores, nos homens (t(66) = −1,39; p = 0,17) e nas mulheres (t(59) = 0,50; p = 0,62) | Results, p. 7 | "evaluations of non-sexualized profiles for men, t(66)=-1.39, p=.17; or for women, t(59)=0.50, p=.62." |
 | Por que as medidas divergem, na leitura dos autores | Os autores leem a diferença entre a tarefa rápida e o questionário como efeito de querer parecer bem (desejabilidade social) e dizem que isso é só uma especulação | Limitations, p. 9 | "This study can only speculate that social desirability drives the differences between implicit and explicit evaluations." |
 
 O t compara duas médias: quanto mais longe de zero, maior a diferença diante da variação entre as pessoas, e o sinal dá o sentido. O p é a chance de aparecer uma diferença desse tamanho se não houvesse diferença nenhuma; os autores tratam como real o que fica abaixo de 0,05. O número entre parênteses depois do t são os graus de liberdade, que acompanham o tamanho do grupo comparado.
@@ -56,7 +56,7 @@ O resumo e a discussão dizem que as reações de homens e mulheres divergiram n
 - Os perfis foram montados pela equipe e julgados no laboratório, com uma tecla em vez do deslize na tela. Os autores apontam que todos os perfis mostravam a pessoa a "1 mile" de distância, o que pode ter mudado as respostas em relação ao uso normal do app.
 - Os participantes são 135 universitários de uma só universidade, com idade média de 19,75 anos, de um banco de participantes de pesquisa. Os autores dizem que muitos nunca tinham usado o Tinder e que o resultado pode não valer para outras idades e regiões. O texto dá 80 participantes (59,70%) que já tinham usado algum app de namoro; 80 de 135 seriam 59,26%, então essa porcentagem usa 134 respostas, sem dizer por quê.
 - Os homens julgaram perfis de 15 mulheres, e as mulheres, de 15 homens. A comparação entre homens e mulheres é também uma comparação entre dois conjuntos diferentes de fotos.
-- São dez testes sem correção para comparações múltiplas. Os três que passaram do limite ficam entre p < 0,02 e p < 0,05.
+- São doze testes sem correção para comparações múltiplas. Os três que passaram do limite ficam entre p < 0,02 e p < 0,05.
 - A Tabela 1 não bate consigo mesma. Na pergunta 1, as médias das mulheres aparecem trocadas (0,01 para os perfis sexualizados e −0,18 para os não sexualizados), ao contrário do texto e das perguntas 3 a 5. As médias dos homens no questionário são 0,10 e 0,05 nas perguntas 2 e 5, e 0,20 e 0,16 nas perguntas 3 e 4.
-- Os escores foram padronizados dentro de cada medida. A comparação entre a tarefa rápida e o questionário diz onde cada perfil fica em relação aos outros em cada medida, não se a pessoa gostou mais ou menos numa delas.
+- Os escores foram padronizados dentro de cada medida. A comparação entre a tarefa rápida e o questionário diz onde a média de um grupo fica em relação aos escores daquela medida, não se a pessoa gostou mais ou menos numa delas.
 - O texto lido é o manuscrito aceito, sem os nomes dos autores e sem a formatação final da revista. A versão publicada não foi lida.

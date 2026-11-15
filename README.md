@@ -128,7 +128,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Eastwick et al. 2011](studies/eastwick-2011-ideais-perfil-ao-vivo.md): o parceiro ideal no perfil e depois de uma interação ao vivo · ✅ · moderada
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
 - [Eisenberger, Lieberman & Williams 2003](studies/eisenberger-2003-rejeicao-dor.md): a exclusão social ativa regiões do cérebro ligadas à dor · ✅ · fraca
-- [Ellithorpe, Kunaish & Wright 2025](studies/ellithorpe-2025-perfis-sexualizados-tinder.md): perfis sexualizados no Tinder, na reação rápida e na resposta pensada · ✅ · fraca
+- [Ellithorpe, Kunaish & Wright 2025](studies/ellithorpe-2025-perfis-sexualizados-tinder.md): perfis sexualizados com cara de Tinder, na reação rápida e na resposta pensada · ✅ · fraca
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
 - [Fan et al. 2023](studies/fan-2023-fotos-gays-visao-computacional.md): rosto, corpo e cenário nas fotos de um app chinês para homens gays · ✅ · fraca
