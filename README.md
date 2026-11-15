@@ -588,8 +588,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rudder 2010](studies/rudder-2010-qualidade-foto-camera.md): câmera, flash, foco e hora da foto de perfil no OkCupid · 🟡 · fraca
 - [Rudder 2014](studies/rudder-2014-experimentos-okcupid.md): três testes do OkCupid com fotos, texto e compatibilidade · 🟡 · fraca
 - [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
+- [Scissors et al. 2008](studies/scissors-2008-mimica-lexical-confianca.md): repetir as palavras do outro no chat e confiança · ✅ · fraca
+- [Scissors et al. 2009](studies/scissors-2009-similaridade-confianca-chat.md): falar parecido no chat e confiança · ✅ · fraca
 - [Sepúlveda e Crespo 2024](studies/sepulveda-2024-perfis-falsos.md): o que usuários de apps chamam de desinformação · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
+- [Stein 2023](studies/stein-2023-intensidade-emoji.md): quantos emojis numa primeira mensagem, e se a resposta devolve emojis · ✅ · fraca
 - [Strokoff 2015](studies/strokoff-2015-influencia-parental-perfil.md): perfil parecido com o pai ou a mãe e atração por perfis de namoro simulados · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
