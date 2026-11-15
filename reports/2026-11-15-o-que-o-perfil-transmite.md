@@ -476,7 +476,7 @@ A busca da frente achou estudos que nenhum script conseguiu ler; estão na issue
 
 ## Fichas da frente que ficaram de fora
 
-Das 111 Fichas desta frente, 18 ficaram de fora porque medem só atração, interesse ou escolha, sem uma leitura de traço, intenção ou confiança, ou porque só descrevem o que os perfis contêm:
+Das 108 Fichas desta frente, 18 ficaram de fora porque medem só atração, interesse ou escolha, sem uma leitura de traço, intenção ou confiança, ou porque só descrevem o que os perfis contêm:
 
 - Só atração, interesse ou escolha, assunto das frentes 1 e 2: [Barclay 2010](../studies/barclay-2010-generosidade-corte.md), [Celani-Morrell 2016](../studies/celani-morrell-2016-foto-texto-mulheres.md), [Chappetta 2016](../studies/chappetta-2016-papeis-genero-perfil.md), [Ellithorpe 2025](../studies/ellithorpe-2025-perfis-sexualizados-tinder.md), [Gale 2024](../studies/gale-2024-rastreamento-olhar-perfil.md) (olhar no rosto e no texto), [van Kooten 2021](../studies/kooten-2021-qualidade-texto-tinder.md), [Luevano 2007](../studies/luevano-2007-masculinidade-curto-prazo.md), [Perrone 2022](../studies/perrone-2022-encarceramento-perfil.md), [Sritharan 2010](../studies/sritharan-2010-avaliacao-espontanea-perfil.md), [Tracy 2011](../studies/tracy-2011-expressao-atracao-sexual.md), [Zhao 2026](../studies/zhao-2026-embelezamento-contextos.md) (roupas sem pessoa) e [Goode 2009](../studies/goode-2009-impressao-nao-atraente.md), que é só um resumo de congresso (🟡).
 - O que o participante imagina que os outros pensariam dele, não o que ele lê no outro: [Fullwood 2018](../studies/fullwood-2018-foto-perfil-offline.md) e [Ploessl 2021](../studies/ploessl-2021-masculinidade-raca-perfil.md).
