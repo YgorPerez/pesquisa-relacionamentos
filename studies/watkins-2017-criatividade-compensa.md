@@ -1,0 +1,60 @@
+---
+reference: "Watkins CD. *Creating beauty: creativity compensates for low physical attractiveness when individuals assess the attractiveness of social and romantic partners*. Royal Society Open Science 4:160955, 2017."
+link: https://doi.org/10.1098/rsos.160955
+license: "CC BY 4.0 (Creative Commons Attribution License, como diz a primeira página do artigo)"
+status: verified
+verified_on: 2026-11-15
+strength: weak
+strength_reason: "Três experimentos pequenos, com 89, 104 e 98 voluntários (uma turma valendo crédito de curso e dois painéis online pagos ou com doação), que deram nota a só 16 pares de rosto e texto, sempre os mesmos; uma só pessoa assina, e o resultado das mulheres mudou de um experimento para outro."
+countries: [EUA]
+period: "não informado no texto lido; a revista recebeu o artigo em novembro de 2016"
+sample:
+  n: 291
+  description: "Três experimentos, 291 pessoas na análise final. Experimento 1: 89 participantes (21 homens; idade média de 23,01 anos) que fizeram a tarefa em aula, valendo crédito de curso. Experimento 2: 104 participantes (49 homens; idade média de 24,51 anos) de um painel do SurveyMonkey, com o critério de amostra americana de 18 a 30 anos, que recebiam como incentivo doações a instituições de caridade; dos 125 recrutados, saíram os que não responderam a tudo, não disseram se eram homem ou mulher ou marcaram sempre a ponta da escala. Experimento 3: 98 participantes (60 homens e 38 mulheres; idade média de 24,13 anos) do Prolific, com o critério de 18 a 30 anos, pagos com o equivalente a £5 por hora. O artigo só diz o país no experimento 2. Os participantes deram nota a fotos de rosto com um texto embaixo; não é um app nem um perfil de namoro, e o artigo não pergunta a orientação sexual de ninguém."
+  representative: false
+design: experiment
+conflict: "O artigo declara que não há conflito de interesses e que não recebeu financiamento. Nos agradecimentos, quem ajudou a coletar as histórias foi pago por uma bolsa do Carnegie Trust dada a quem assina o artigo, e uma terceira pessoa custeou o recrutamento do experimento 2. A autoria é de uma só pessoa, da Abertay University, na Escócia."
+# Notas de rostos desconhecidos com um texto embaixo, fora de app e de perfil de namoro.
+covers:
+  genders: [man, woman]
+---
+
+# Watkins (2017): texto criativo, rosto atraente e a nota de atração
+
+## O que mediu
+
+Três experimentos em que cada participante viu 16 fotos de rosto (8 de homens e 8 de mulheres) com um texto embaixo e deu nota a quanto a pessoa parecia atraente, de 1 ("muito menos atraente que a média") a 7 ("muito mais atraente que a média"). Metade dos rostos tinha sido julgada atraente por um painel, e a outra metade ficava no meio do conjunto. Metade dos textos tinha sido julgada criativa por outro painel, e a outra metade, menos criativa. Cada combinação (rosto atraente ou não, texto criativo ou não) apareceu duas vezes para cada sexo, com os rostos e os textos do mesmo sexo, e a ordem das fotos variava ao acaso.
+
+Nos experimentos 1 e 3, o texto era uma história curta que outras pessoas tinham escrito, em até 5 minutos, sobre o que acontecia num quadro de Magritte, *Os amantes*. No experimento 2, era a lista de usos diferentes para um pneu de carro que outras pessoas tinham feito num teste de criatividade. O experimento 3 repetiu o 1 com outro banco de rostos. A pergunta era só o quanto a pessoa parecia atraente; nenhum experimento perguntou se o participante sairia com ela.
+
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Texto criativo nos rostos de homens (experimento 1) | Os 89 participantes, homens e mulheres, deram nota de atração mais alta aos homens que vieram com a história criativa do que aos que vieram com a história menos criativa: 3,75 contra 3,08 em média, uma diferença grande (d = 0,99) | §3, p. 5 | "men with creative story-telling ability (M = 3.75, s.e.m. = 0.09) were judged as more attractive than men with less creative story-telling ability (M = 3.08, s.e.m. = 0.09, t89 = 9.36; p < 0.001, d = 0.99)" |
+| Rosto atraente nos homens (experimento 1) | Os mesmos participantes deram aos homens de rosto atraente nota média de 3,99, e aos de rosto menos atraente, 2,84, uma diferença muito grande (d = 1,36) | §3, p. 5 | "men with attractive faces (M = 3.99, s.e.m. = 0.09) were judged as more attractive than men with less attractive faces (M = 2.84, s.e.m. = 0.10, t89 = 12.78; p < 0.001, d = 1.36" |
+| Texto criativo conforme o rosto, nos homens (experimento 1) | Para os mesmos participantes, não apareceu diferença no ganho da história criativa entre os homens de rosto atraente e os de rosto menos atraente; pode ser acaso (F = 0,03; p = 0,87) | §3, p. 5 | "no significant interaction between creativity and facial attractiveness (F1,88 = 0.03; p = 0.87)" |
+| Texto criativo nas mulheres de rosto menos atraente (experimento 1) | Entre as mulheres de rosto menos atraente, as que vieram com a história criativa receberam dos participantes nota de atração mais baixa do que as que vieram com a história menos criativa, uma diferença média (d = 0,52) | §3, p. 5 | "high creativity reducing the overall attractiveness of less attractive women (t88 = 4.90; p < 0.001, d = 0.52)" |
+| Texto criativo nas mulheres de rosto atraente (experimento 1) | Entre as mulheres de rosto atraente, a diferença entre a nota que os participantes deram com a história criativa e com a menos criativa foi pequena e pode ser acaso (d = 0,20; p = 0,07) | §3, p. 5 | "Creativity did not enhance the overall attractiveness of women with attractive faces (t88 = 1.85; p = 0.07, d = 0.20)" |
+| Lista criativa conforme o rosto, nos homens (experimento 2) | Com a lista de usos para um pneu no lugar da história, os participantes do painel americano deram aos homens com lista criativa nota mais alta que aos com lista pouco criativa, e a diferença foi maior entre os de rosto menos atraente (d = 0,75) que entre os de rosto atraente (d = 0,50) | §6, p. 7 | "the positive effects of creativity on overall attractiveness are relatively more substantial for less attractive men (d = 0.75) than they are for attractive men (d = 0.50)" |
+| Rosto menos atraente com lista criativa, nos homens (experimento 2) | Os participantes do painel americano deram notas próximas aos homens de rosto menos atraente com lista criativa e aos de rosto atraente com lista pouco criativa; não apareceu diferença entre eles (p = 0,84) | §6, p. 7 | "except for creative but less attractive men and attractive but less creative men, who were equivalent in overall attractiveness (t103 = 0.20; p = 0.84)" |
+| Lista criativa nos rostos de mulheres (experimento 2) | Somando os dois tipos de rosto, não apareceu diferença entre a nota que os participantes do painel americano deram às mulheres com lista criativa e às com lista pouco criativa; pode ser acaso (F = 0,40; p = 0,53) | §6, p. 8 | "There was no main effect of creativity (F1,103 = 0.40; p = 0.53)" |
+| Lista criativa nas mulheres de rosto atraente (experimento 2) | Entre as mulheres de rosto atraente, a diferença entre a nota que os participantes do painel americano deram com a lista criativa e com a pouco criativa foi pequena e pode ser acaso (d = 0,17; p = 0,094) | §6, p. 8 | "less creative but attractive women and creative but attractive women, who were equivalent in overall attractiveness (absolute t103 = 1.69; p = 0.094, d = 0.17" |
+| Texto criativo nos rostos de mulheres (experimentos 1 e 2) | O artigo resume que, nos dois primeiros experimentos, as mulheres de rosto menos atraente receberam dos participantes nota de atração mais baixa quando vinham com o texto criativo, e que nas de rosto atraente o texto criativo não ajudou | §10, p. 10 | "across these experiments, creativity weakened the appeal of women with less attractive faces and did not benefit their attractiveness when displayed by women with attractive faces" |
+| Texto criativo nos rostos menos atraentes (experimento 3) | Com outro banco de rostos e as mesmas histórias, os participantes do Prolific deram nota média de 3,81 aos rostos menos atraentes com história criativa e de 3,49 aos com história menos criativa, uma diferença entre pequena e média (d = 0,41), sem diferença clara entre rostos de homens e de mulheres | §9, p. 9 | "an effect of creativity on the overall attractiveness of less attractive faces (MCreative = 3.81, s.e.m. = 0.11, MLess Creative = 3.49, s.e.m. = 0.11, t97 = 4.08; p < 0.001, d = 0.41)" |
+| Texto criativo nos rostos atraentes (experimento 3) | Nos rostos atraentes, os participantes do Prolific deram nota média de 4,33 com a história criativa e de 4,31 com a menos criativa; não apareceu diferença (p = 0,77) | §9, p. 9 | "no effect of creativity on the overall attractiveness of attractive faces (MCreative = 4.33, s.e.m. = 0.10, MLess Creative = 4.31, s.e.m. = 0.10, t97 = 0.30; p = 0.77)" |
+| Rosto atraente em homens e em mulheres (experimento 3) | Com o outro banco de rostos, o rosto atraente pesou mais na nota que os participantes do Prolific deram aos rostos de mulheres (d = 0,97) do que na que deram aos rostos de homens (d = 0,48) | §9, p. 9 | "a more substantial effect of facial attractiveness on women's overall attractiveness (t97 = 9.53; p < 0.001, d = 0.97) than on men's overall attractiveness (t97 = 4.73; p < 0.001, d = 0.48)" |
+
+- O d mede o tamanho da diferença em desvios-padrão: perto de 0,2 é pequena, de 0,5 é média e de 0,8 ou mais é grande. O F e o p vêm do teste que diz se uma diferença pode ser acaso: com p acima de 0,05, ela pode ser.
+- Os rostos e os textos não variaram de pessoa para pessoa: no experimento 1, cada participante viu os mesmos 16 pares, e o experimento 3 diz o mesmo. Em cada combinação de rosto e texto havia dois pares por sexo.
+- O artigo lê os resultados como sinal de que a criatividade compensa um rosto menos atraente, mais claramente nos homens. Nas mulheres de rosto menos atraente, o texto criativo veio com nota mais baixa nos experimentos 1 e 2. No experimento 3, que não separou rostos de homens e de mulheres porque a diferença entre eles podia ser acaso, a história criativa veio com nota mais alta nos rostos menos atraentes, e o artigo pede cautela na leitura do primeiro resultado.
+
+## Limitações
+
+- O estudo não é sobre namoro: os participantes deram nota de atração a rostos de desconhecidos com um texto embaixo, sem app, perfil, foto escolhida pela pessoa ou chance de contato. A pergunta não separava atração como par de atração como amigo. O artigo trata a nota dada a um rosto do outro sexo como julgamento de um possível par, e a dada a um rosto do mesmo sexo como julgamento fora do namoro.
+- Os textos não eram descrições de perfil: eram histórias sobre um quadro e listas de usos para um pneu, escritas por outras pessoas e ligadas aos rostos por quem fez o estudo. Quem via a foto sabia que todos tinham feito a mesma tarefa no mesmo tempo.
+- Cada combinação de rosto e texto tinha só dois pares por sexo, e nos experimentos 1 e 3 todos viram os mesmos pares. Uma diferença pode vir daqueles rostos e textos, não da criatividade em geral. Os rostos eram todos de pessoas brancas.
+- No experimento 1 e no 2, a análise geral mostrou que o peso da criatividade variou conforme o sexo de quem dava a nota (F = 4,41 e F = 4,23), e o artigo não mostra como. As comparações da tabela juntam homens e mulheres que deram as notas.
+- O resultado das mulheres não se repetiu: nos experimentos 1 e 2, o texto criativo veio com nota mais baixa nas de rosto menos atraente; no 3, a nota dos rostos menos atraentes, de homens e de mulheres juntos, subiu com a história criativa. A interação entre o sexo do rosto, o rosto e a criatividade apareceu nos experimentos 1 e 2 e não no 3.
+- As amostras são pequenas, jovens e de voluntários: uma turma que ganhava crédito de curso (o artigo não diz de que país), um painel americano e um painel do Prolific (o artigo não diz de que país). Não representam ninguém.
+- Uma só pessoa assina o artigo, sem financiamento declarado. O artigo diz que os dados estão no material suplementar, que não foi lido.
