@@ -14,6 +14,10 @@
 //     Section 5.1's education (14% to 20%) and income (23% to 25%)
 //     penalties: the Table 8 coefficients on interests per view over the mean
 //     of all 48 profiles (0.286, Table 5).
+//   node scripts/calculations/miyamoto-2024-ingles-site-matrimonial.ts lowermiddle
+//     Table 9, lower middle income (27.1% vs. 16.7%): each income cell has 48
+//     interests (6 fictitious profiles x 8 men), so the rates are 13 and 8 of
+//     48. The table prints p = 0.014.
 const twoProportionP = (a: number, b: number, n: number) => {
   const pooled = (a + b) / (2 * n)
   const z = (a / n - b / n) / Math.sqrt((pooled * (1 - pooled) * 2) / n)
@@ -50,9 +54,14 @@ switch (process.argv[2]) {
       `education ${percent(0.04 / 0.286)} (MA) to ${percent(0.056 / 0.286)} (BA); income ${percent(0.067 / 0.286)} (5-7.5 lakhs) to ${percent(0.07 / 0.286)} (3-4 lakhs)`,
     )
     break
+  case 'lowermiddle':
+    console.log(
+      `lower middle income p = ${twoProportionP(13, 8, 48).toFixed(3)}`,
+    )
+    break
   default:
     console.error(
-      'usage: miyamoto-2024-ingles-site-matrimonial.ts [relative|penalty]',
+      'usage: miyamoto-2024-ingles-site-matrimonial.ts [relative|penalty|lowermiddle]',
     )
     process.exit(1)
 }
