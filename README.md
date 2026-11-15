@@ -273,6 +273,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sedgewick et al. 2017](studies/sedgewick-2017-angulo-selfie-tinder.md): ângulo da câmera nas selfies de perfil do Tinder · ✅ · fraca
 - [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
+- [Shtatfeld & Barak 2009](studies/shtatfeld-2009-habilidade-escrita-contatos.md): escrita do perfil e contatos num site de namoro de Israel · ✅ · fraca
+- [Sleiman, Melios & Dolan 2025](studies/sleiman-2025-partidarismo-tolerancia.md): partido e tolerância política em perfis de namoro no Reino Unido · ✅ · fraca
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Sprecher 2021](studies/sprecher-2021-expectativas-video.md): o que se espera antes e o quanto se gosta depois de uma conversa por vídeo · ✅ · fraca
@@ -379,6 +381,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
 - [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
+- [Strokoff 2015](studies/strokoff-2015-influencia-parental-perfil.md): perfil parecido com o pai ou a mãe e atração por perfis de namoro simulados · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
