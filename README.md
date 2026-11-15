@@ -309,6 +309,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Neve & McConville 2020](studies/neve-2020-preferencias-reciprocas-imagens.md): fotos para prever o match · ✅ · fraca
 - [Neyt et al. 2019](studies/neyt-2019-escolaridade-tinder.md): escolaridade do perfil e matches no Tinder · ✅ · moderada
 - [Neyt et al. 2022](studies/neyt-2022-prestigio-profissao-tinder.md): situação de trabalho, cargo e sucesso no Tinder · ✅ · moderada
+- [Niederhoffer & Pennebaker 2002](studies/niederhoffer-2002-estilo-linguistico-chat.md): estilo de linguagem parecido em conversas a dois · ✅ · fraca
 - [Ogawa & Takikawa 2024](studies/ogawa-2024-nomes-ambiguos.md): nome de leitura ambígua no perfil · ✅ · fraca
 - [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
 - [Ong e Wang 2015](studies/ong-2015-renda-perfil-china.md): renda no perfil e visitas num site de namoro chinês · ✅ · moderada
@@ -530,8 +531,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [Murphy et al. 2015](studies/murphy-2015-excesso-confianca.md): excesso de confiança, perfil de namoro e disputa por um parceiro · ✅ · fraca
 - [Neve & McConville 2021](studies/neve-2021-fotos-recomendacao.md): fotos e histórico de Likes para prever o match · ✅ · fraca
+- [Niculae et al. 2015](studies/niculae-2015-desequilibrio-traicao.md): o desequilíbrio na conversa antes de uma traição num jogo online · ✅ · fraca
 - [Norcie et al. 2013](studies/norcie-2013-verificacao-perfis.md): verificar o perfil de namoro pelo Facebook · ✅ · fraca
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
+- [Ohashi, Okubo & Okamura 2023](studies/ohashi-2023-quantidade-emoji.md): quantos emojis vêm na resposta · 🟡 · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Olivera-La Rosa et al. 2019](studies/olivera-la-rosa-2019-swipe-rostos.md): caráter moral e rostos no Tinder · ✅ · fraca
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
