@@ -144,6 +144,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Castellanos-Barreto et al. 2023](studies/castellanos-barreto-2024-emoji-organizacional.md): emoji sorridente num e-mail de crítica do supervisor · ✅ · fraca
 - [Cavalheiro et al. 2022](studies/cavalheiro-2022-adequacao-emoji.md): emoji em mensagens boas e ruins de remetentes próximos e distantes · ✅ · fraca
 - [Cavalheiro et al. 2023](studies/cavalheiro-2023-presenca-social-pistas-pictoricas.md): emoticon, emoji e memoji num comentário de colega e a sensação de presença · ✅ · fraca
+- [Choi, Shim & Kim 2023](studies/choi-2023-emoji-lider-criatividade.md): emojis positivos do chefe e a criatividade da equipe · ✅ · fraca
 - [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
 - [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
 - [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
@@ -152,6 +153,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cooper et al. 2012](studies/cooper-2012-foto-speed-dating.md): a nota dada a uma foto e a decisão depois do speed dating · ✅ · fraca
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
+- [Courtice et al. 2026](studies/courtice-2026-emoji-trabalho.md): emojis em mensagens de um colega de trabalho · ✅ · fraca
 - [Cowan & Little 2013](studies/cowan-2013-humor-anuncio.md): humor afiliativo e agressivo em anúncios pessoais · ✅ · fraca
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
@@ -491,6 +493,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [De La Mare & Lee 2023](studies/de-la-mare-2023-similaridade-personalidade.md): personalidade parecida na escolha de perfis · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
 - [Duguay 2017](studies/duguay-2016-autenticidade-tinder.md): como o Tinder enquadra a autenticidade do perfil · ✅ · fraca
+- [Erle et al. 2022](studies/erle-2022-emoji-informacao-social.md): emojis como informação social nas mensagens · ✅ · moderada
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Farris et al. 2008](studies/farris-2008-decodificar-intencao.md): homens e mulheres lendo simpatia e interesse sexual em fotos · ✅ · fraca
 - [Farris, Treat & Viken 2010](studies/farris-2010-alcool-interesse.md): álcool e a leitura do interesse sexual em fotos · ✅ · fraca
