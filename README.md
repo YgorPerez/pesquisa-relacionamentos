@@ -549,6 +549,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma 2016](studies/toma-2016-literacia-engano.md): o que se sabe sobre perceber a mentira de quem se conhece online · ✅ · fraca
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
+- [Trzmielewska & Rak 2026](studies/trzmielewska-2026-meta-analise-mimica.md): ser imitado e a simpatia pelo cúmplice, conforme a condição de comparação · ✅ · moderada
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
@@ -558,6 +559,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 - [Zhang & Santtila 2024](studies/zhang-2024-app-analogo-memoria.md): o que o perfil procura, o match e a memória num app simulado · ✅ · fraca
+- [Zijlmans 2020](studies/zijlmans-2020-convergencia-textismos.md): o jeito de escrever de quem responde a mensagens com abreviações no WhatsApp · ✅ · fraca
 
 <!-- /study-index -->
 
