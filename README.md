@@ -102,8 +102,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Aronson & Worchel 1966](studies/aronson-1966-similaridade-ou-ser-gostado.md): concordar nas opiniões ou saber que o outro gosta de você · ✅ · fraca
 - [Arranz Aldana & Salazar 2024](studies/arranz-aldana-2024-raca-tinder.md): raça no Tinder em Madri · ✅ · fraca
 - [Asendorpf, Penke & Back 2011](studies/asendorpf-2011-speed-dating-acompanhamento.md): do speed dating ao sexo e ao namoro, um ano depois · ✅ · fraca
+- [Babin 2020](studies/babin-2020-emoji-jogo-confianca.md): emojis, tom de pele e confiança num jogo de dinheiro · ✅ · fraca
 - [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
 - [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
+- [Bagaskara & Putri 2023](studies/bagaskara-2023-emoji-calor-competencia.md): emoji numa mensagem de trabalho entre estudantes · ✅ · fraca
 - [Bajnaid & Al-Saggaf 2017](studies/bajnaid-2017-sites-matrimoniais-ozchi.md): como usuários de um site de casamento saudita formam impressões · ✅ · fraca
 - [Bajnaid et al. 2018](studies/bajnaid-2018-sites-matrimoniais.md): o perfil e a escolha de cônjuge num site saudita de casamento · ✅ · fraca
 - [Bak 2010](studies/bak-2010-efeito-halo.md): foto bonita num perfil, mesmo sabendo que não é da pessoa · ✅ · fraca
@@ -465,6 +467,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Arakawa et al. 2006](studies/arakawa-2006-frequencia-emoticons-impressao.md): emoticons no e-mail de uma amiga e o costume de recebê-los · ✅ · fraca
 - [Aretz e Mierke 2019](studies/aretz-2019-emoji-chefe.md): emoji no e-mail de um chefe · ✅ · fraca
+- [Awazu & Yamabe 2013](studies/awazu-2013-quantidade-emoji-email.md): quantos emojis numa mensagem de celular · 🟡 · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
 - [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
 - [Bašić 2021](studies/basic-2021-papeis-genero-perfil.md): papéis de gênero e foto em perfis de namoro · ✅ · fraca
