@@ -269,6 +269,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma 2010](studies/toma-2010-confiabilidade-perfil.md): foto, texto e a confiança que um perfil de namoro inspira · ✅ · fraca
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Toma et al. 2018](studies/toma-2018-crenca-engano-alheio.md): crenças sobre a própria mentira e a dos outros, cara a cara e por texto · ✅ · moderada
+- [Tracy & Beall 2011](studies/tracy-2011-expressao-atracao-sexual.md): sorriso, orgulho e vergonha na atração sexual por uma foto · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
@@ -341,6 +342,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
+- [Toma 2016](studies/toma-2016-literacia-engano.md): o que se sabe sobre perceber a mentira de quem se conhece online · ✅ · fraca
+- [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
