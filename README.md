@@ -398,6 +398,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
 - [Schroeder & Epley 2015](studies/schroeder-2015-voz-candidato.md): ouvir ou ler o discurso de um candidato a emprego · ✅ · moderada
+- [Schroeder, Kardas & Epley 2017](studies/schroeder-2017-voz-humaniza.md): ouvir ou ler quem pensa diferente · ✅ · moderada
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Sciara et al. 2026](studies/sciara-2026-preconceito-tinder.md): o preconceito contra o Tinder, no perfil e no casal · ✅ · fraca
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
@@ -405,6 +406,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
 - [Seymour 2022](studies/seymour-2022-partidarismo-vacina-perfil.md): partido e vacina contra a covid-19 num perfil de namoro · ✅ · fraca
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
+- [Shen et al. 2024](studies/shen-2024-namoro-por-voz.md): namoro por voz ao vivo no app chinês Soul · ✅ · fraca
+- [Sherman, Michikyan & Greenfield 2013](studies/sherman-2013-texto-audio-video-vinculo.md): o vínculo entre amigas por mensagem, áudio, vídeo e pessoalmente · ✅ · fraca
 - [Shtatfeld & Barak 2009](studies/shtatfeld-2009-habilidade-escrita-contatos.md): escrita do perfil e contatos num site de namoro de Israel · ✅ · fraca
 - [Shum 2014](studies/shum-2014-fotos-lgbt.md): fotos de perfil numa comunidade de namoro gay · ✅ · fraca
 - [Sienko 2017](studies/sienko-2017-estigma-peso-namoro-online.md): peso na foto e atributos do perfil, avaliados por universitários · ✅ · fraca
