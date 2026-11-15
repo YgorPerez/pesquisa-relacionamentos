@@ -136,6 +136,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
 - [Carlson, Alcser-Isais & Eastwick 2026](studies/carlson-2026-atributos-perfil.md): a mesma qualidade em pessoas diferentes · ✅ · fraca
 - [Casañ-Pitarch 2020](studies/casan-pitarch-2020-emoji-descricao.md): emoji na descrição do perfil de namoro · ✅ · fraca
+- [Castellanos-Barreto et al. 2023](studies/castellanos-barreto-2024-emoji-organizacional.md): emoji sorridente num e-mail de crítica do supervisor · ✅ · fraca
+- [Cavalheiro et al. 2022](studies/cavalheiro-2022-adequacao-emoji.md): emoji em mensagens boas e ruins de remetentes próximos e distantes · ✅ · fraca
+- [Cavalheiro et al. 2023](studies/cavalheiro-2023-presenca-social-pistas-pictoricas.md): emoticon, emoji e memoji num comentário de colega e a sensação de presença · ✅ · fraca
 - [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
 - [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
 - [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
