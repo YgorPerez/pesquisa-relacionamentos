@@ -211,9 +211,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · fraca
 - [Montoya et al. 2015](studies/montoya-2015-incerteza-e-atracao.md): a incerteza de Whitchurch refeita com escolha direta · ✅ · fraca
 - [Moran et al. 2023](studies/moran-2023-comportamentos-primeiro-encontro.md): atos num primeiro encontro e o segundo encontro · ✅ · fraca
+- [Nagar 2018](studies/nagar-2018-tom-de-pele-matrimonial.md): tom de pele num perfil para casamento arranjado · ✅ · fraca
 - [Navarro et al. 2020](studies/navarro-2020-ghosting-correlatos.md): ghosting, breadcrumbing e bem-estar de quem passou por eles · ✅ · fraca
 - [Navarro et al. 2020](studies/navarro-2020-ghosting-e-apps.md): ghosting, breadcrumbing e uso de apps de namoro na Espanha · ✅ · fraca
 - [NCHS 2021](studies/nchs-2021-nsfg-parceiros-na-vida.md): parceiros na vida nos EUA, NSFG 2015–2019 · 🟡 · forte
+- [Ogawa & Takikawa 2024](studies/ogawa-2024-nomes-ambiguos.md): nome de leitura ambígua no perfil · ✅ · fraca
+- [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
 - [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
