@@ -344,6 +344,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
 - [Rhodes et al. 2013](studies/rhodes-2013-infidelidade-rosto.md): julgar pelo rosto de um desconhecido quem já traiu · ✅ · fraca
 - [Rodrigues et al. 2017](studies/rodrigues-2017-similaridade-atracao-inicial.md): semelhança percebida e atração inicial pela foto de um desconhecido · ✅ · fraca
+- [Rodrigues, Cavalheiro e Prada 2022](studies/rodrigues-2022-emoji-quebra-gelo.md): emoji na primeira mensagem a um desconhecido · ✅ · fraca
 - [Roney et al. 2006](studies/roney-2006-rosto-testosterona-bebes.md): o rosto de um homem, a testosterona e o interesse por bebês · ✅ · fraca
 - [Rosen et al. 2008](studies/rosen-2008-emocionalidade-autorrevelacao.md): palavras de emoção e quanto se conta de si no primeiro e-mail · ✅ · fraca
 - [Rosenfeld & Thomas 2012](studies/rosenfeld-2012-searching-for-a-mate.md): a internet como intermediária na busca de parceiro · ✅ · moderada
@@ -536,6 +537,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
+- [Rodrigues et al. 2017](studies/rodrigues-2017-emoji-parceiro.md): emoji numa resposta negativa entre namorados · ✅ · fraca
+- [Rong 2023](studies/rong-2023-emoji-github-resposta.md): emoji em comentários do GitHub e tempo até a resposta · ✅ · fraca
 - [Rothe et al. 2016](studies/rothe-2016-preferencia-visual-blinq.md): prever pela foto quem vai ser curtido num aplicativo · ✅ · fraca
 - [Rudder 2010](studies/rudder-2010-mitos-fotos-perfil.md): tipo de foto de perfil e mensagens no OkCupid · 🟡 · fraca
 - [Rudder 2010](studies/rudder-2010-qualidade-foto-camera.md): câmera, flash, foco e hora da foto de perfil no OkCupid · 🟡 · fraca
