@@ -116,17 +116,20 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Brown et al. 2022](studies/brown-2022-gordura-orientacao-acasalamento.md): gordura, músculos e seios e o tipo de relação atribuída · ✅ · fraca
 - [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Bruch & Newman 2019](studies/bruch-2019-mercados-por-cidade.md): submercados de namoro online em cidades dos EUA · ✅ · moderada
+- [Brym & Lenton 2001](studies/brym-2001-namoro-digital-canada.md): informação falsa e desconfiança no namoro online do Canadá · ✅ · fraca
 - [Busby, Carroll & Willoughby 2010](studies/busby-2010-compatibility-or-restraint.md): quanto o casal esperou para transar e a qualidade do casamento · ✅ · fraca
 - [Büttner & Lutz 2025](studies/buttner-2025-espera-por-resposta.md): a espera por resposta e o sentir-se ignorado · ✅ · fraca
 - [Büyükeren et al. 2026](studies/buyukeren-2026-tinder.md): chegada do Tinder, sexo e saúde entre universitários dos EUA · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
 - [Camerini et al. 2022](studies/camerini-2022-latencia-da-mensagem.md): esperar mais ou menos pela resposta no WhatsApp · ✅ · fraca
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
+- [Cichosz 2013](studies/cichosz-2013-estereotipos-perfis.md): o que mulheres escrevem e mostram em perfis do Match.com e do Plenty of Fish · ✅ · fraca
 - [Cooper et al. 2012](studies/cooper-2012-foto-speed-dating.md): a nota dada a uma foto e a decisão depois do speed dating · ✅ · fraca
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
+- [DelPriore et al. 2018](studies/delpriore-2018-ausencia-paterna-intencao.md): lembrar o pai ausente e a intenção que se vê nos homens · ✅ · fraca
 - [Dinh et al. 2022](studies/dinh-2022-iniciativa-eharmony.md): quem começa a conversa no eharmony, ano a ano · ✅ · fraca
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
