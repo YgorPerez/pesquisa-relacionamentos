@@ -190,6 +190,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kahn & London 1991](studies/kahn-1991-sexo-premarital-divorcio.md): sexo antes do casamento e risco de divórcio · ✅ · moderada
 - [Kalman & Rafaeli 2011](studies/kalman-2011-pausa-e-silencio-online.md): demora e silêncio na resposta de um candidato a emprego por e-mail · ✅ · fraca
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
+- [Kant 2022](studies/kant-2022-erros-escolaridade.md): erros de língua no perfil e a escolaridade de quem lê · ✅ · fraca
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Kerr et al. 2020](studies/kerr-2020-primeira-impressao-encontros.md): primeira impressão da personalidade e interesse romântico no speed dating · ✅ · fraca
@@ -207,6 +208,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Leckfor et al. 2023](studies/leckfor-2023-necessidade-de-fechamento.md): necessidade de fechamento, intenção de sumir e reação a levar um sumiço · ✅ · fraca
 - [Lee & Niederle 2015](studies/lee-2015-rosa-virtual.md): a rosa virtual que acompanha o pedido de encontro · ✅ · moderada
 - [van der Lee et al. 2019](studies/lee-2019-classificar-objetivo-perfil.md): adivinhar pelo texto do perfil o que a pessoa procura · ✅ · fraca
+- [Lee, Jones & DeBruine 2019](studies/lee-2019-topicos-descricao-pessoal.md): os temas do texto de perfil e as notas de desejabilidade · ✅ · fraca
 - [Lee et al. 2026](studies/lee-2026-foto-presencial.md): notas dadas a uma foto de rosto e notas dadas depois de conversar · ✅ · fraca
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
@@ -217,6 +219,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
+- [Lynn & Shurgot 1984](studies/lynn-1984-anuncios-aparencia.md): o que o anúncio dizia da aparência e as respostas que recebeu · ✅ · fraca
 - [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
 - [Maner et al. 2005](studies/maner-2005-projecao-funcional.md): motivo de quem olha e excitação sexual vista em rostos neutros · ✅ · fraca
 - [Manning & Cohen 2012](studies/manning-2012-coabitacao-divorcio.md): coabitação antes do casamento e risco de dissolução · ✅ · moderada
