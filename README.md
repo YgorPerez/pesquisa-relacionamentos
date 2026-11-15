@@ -276,6 +276,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Verwers 2021](studies/verwers-2021-humor-abertura-tinder.md): frase de abertura engraçada e foto no Tinder · ✅ · fraca
 - [Vieira & Sepúlveda 2017](studies/vieira-2017-autoapresentacao-tinder-portugal.md): o que os portugueses mostram no perfil do Tinder · ✅ · fraca
+- [Vincke 2016](studies/vincke-2016-fumar-beber-homens.md): fumar e beber na descrição de um rapaz, aos olhos de mulheres · ✅ · fraca
+- [Vincke 2016](studies/vincke-2016-fumar-beber-mulheres.md): fumar e beber na descrição de uma moça, aos olhos de homens · ✅ · fraca
 - [Vrangalova & Ong 2014](studies/vrangalova-2014-sociossexualidade-sexo-casual.md): sociossexualidade e quem se beneficia do sexo casual · ✅ · fraca
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
@@ -342,6 +344,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
