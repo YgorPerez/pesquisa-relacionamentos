@@ -4,12 +4,12 @@ link: https://resolver.tudelft.nl/uuid:2db1d7af-9b7b-4503-9141-35cb3aa12d4b
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Dissertação de mestrado, sem revisão de periódico, feita dentro da Breeze com um supervisor da empresa e com os dados dela; as taxas de match com e sem bio comparam grupos sem nenhum ajuste, e a pesquisa com usuários teve 46 respostas de cerca de 800 convidados."
+strength_reason: "Dissertação de mestrado, sem revisão de periódico, feita dentro da Breeze com um supervisor da empresa e com os dados dela; as taxas de match com bio e em todas as sugestões comparam grupos sem nenhum ajuste, e a pesquisa com usuários teve 46 respostas de cerca de 800 convidados."
 countries: []
 period: "não informado no texto lido; a bio existe no app desde o fim de dezembro de 2021, e o texto dos perfis usado é o do começo de abril"
 sample:
   n: 113197
-  description: "Sugestões históricas do app de namoro Breeze, em que os dois lados tinham bio: 113.197 sugestões, de um total de 5.314.152 (Tabela 3.1). O conjunto de teste tinha 2.941 usuários diferentes. À parte, uma pesquisa online foi mandada a cerca de 800 usuários ativos, sorteados entre os ativos no último mês e também por um e-mail de marketing; 46 responderam. A tese não dá o sexo, a idade nem a orientação dos usuários, nem o país; diz que a maioria dos perfis é em holandês."
+  description: "Sugestões históricas do app de namoro Breeze, em que os dois lados tinham bio: 113.197 sugestões, de um total de 5.314.152 (Tabela 3.1). O conjunto de teste tinha 2.941 usuários diferentes. À parte, uma pesquisa online foi mandada a cerca de 800 pessoas: usuários sorteados entre os ativos no último mês, pela central de ajuda do app, e quem escolheu receber os e-mails de marketing do Breeze; 46 responderam. A tese não dá o sexo, a idade nem a orientação dos usuários, nem o país; diz que a maioria dos perfis é em holandês."
   representative: false
 design: platform
 conflict: "Dissertação de mestrado na TU Delft feita dentro da Breeze, por convite de um fundador da empresa; um dos supervisores e membros da banca é da Breeze, e os dados são dela. O texto não declara financiamento nem conflito de interesse."
@@ -22,7 +22,7 @@ covers: {}
 
 No Breeze, um app de namoro em que quem dá match vai direto a um primeiro encontro, sem conversar antes, cada usuário recebe poucas sugestões por dia. A tese usou o texto livre dos perfis (a bio e as respostas a perguntas abertas que o usuário escolhe) para treinar um modelo de linguagem, o LoveBERT, a prever duas coisas numa sugestão: se quem recebeu a sugestão curtiu a pessoa sugerida (curtida de um lado) e se as duas se curtiram (match). Comparou esse modelo com outros que não leem texto: um que usa dados do perfil e da sugestão, como idade, altura, distância, escolaridade e o quanto a pessoa curte e é curtida; um que aprende só com o histórico de curtidas; e uma mistura dos dois, inspirada no algoritmo que o Breeze usava. Testou também cada pedaço do texto em separado (bio com bio, respostas com respostas, bio de um com respostas do outro).
 
-Antes, a tese contou a taxa de match nas sugestões com e sem bio e fez uma pesquisa online com usuários sobre o que olham num perfil.
+Antes, a tese contou a taxa de match em todas as sugestões e nas que tinham bio de um ou dos dois lados, e fez uma pesquisa online com usuários sobre o que olham num perfil.
 
 ## Achados
 
@@ -47,7 +47,7 @@ Pela tese, a bio "signiﬁcantly improves the match rate" (p. 19), mas ela não 
 
 ## Limitações
 
-- As taxas de match com e sem bio só comparam grupos: quem escreve bio pode ser diferente de quem não escreve (a tese diz que é mais velho), e nada foi ajustado. A tese também compara com "todas as sugestões", que incluem as com bio, e não diz se "uma das duas tem bio" exclui as com bio dos dois lados nem de que período são as 5,3 milhões de sugestões.
+- As taxas de match com bio e em todas as sugestões só comparam grupos: quem escreve bio pode ser diferente de quem não escreve (a tese diz que é mais velho), e nada foi ajustado. A tese também compara com "todas as sugestões", que incluem as com bio, e não diz se "uma das duas tem bio" exclui as com bio dos dois lados nem de que período são as 5,3 milhões de sugestões.
 - O Breeze não guarda o histórico dos perfis: o texto usado é o do começo de abril, que pode não ser o que o usuário viu na hora da sugestão (5.1.3).
 - O que o modelo aprende é se o perfil inteiro, com fotos, levou à curtida ou ao match, não só o texto; a tese diz que duas pessoas podem combinar no texto e não se atrair fisicamente (5.1.3).
 - O modelo foi treinado com curtidas de um lado, porque treinar com matches, raros, não funcionou (5.1.1).

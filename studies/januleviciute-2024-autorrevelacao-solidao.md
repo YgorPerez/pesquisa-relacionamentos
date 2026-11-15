@@ -45,16 +45,16 @@ Antes do experimento, seis mulheres que não participaram leram os dois textos e
 
 F testa se as médias dos grupos diferem; η² é a parte da variação das notas que fica com o grupo (de 0 a 1). r vai de −1 a 1 e mede o quanto duas notas andam juntas; 0 é nenhuma ligação. p é a chance de um resultado assim aparecer só por acaso.
 
-Na Tabela 3, a diferença de atração física entre os três grupos tem η² = 0,06, e a de atração social, 0,05: dois tamanhos parecidos, mas só o primeiro passou no teste.
+Na Tabela 3, a diferença de atração física entre os três grupos tem η² = 0,06, e a de atração social, 0,05: tamanhos parecidos, mas só o primeiro passou no teste. O η² da atração física não bate com o F da mesma linha: F = 3,86 com três grupos e 90 pessoas daria perto de 0,08.
 
 A equipe lê o resultado assim: nos apps, as mulheres buscam relação romântica, e um homem que conta demais pareceria fora das normas sociais e menos desejável como parceiro romântico, o que pesaria na nota física e não na social (Diskusija, p. 17).
 
 ## Limitações
 
-- O texto excessivo não mudava só a quantidade de informação. A própria equipe diz que ele trazia também opiniões negativas sobre grupos sociais ("man nepatinka LGBT paradai") e traços negativos do rapaz ("darbas man gana nuobodus"), então a diferença na nota física pode vir do tom negativo, não do quanto ele contou (p. 19).
+- O texto excessivo não mudava só a quantidade de informação. A própria equipe diz que ele trazia também opiniões negativas sobre grupos sociais ("man nepatinka LGBT paradai") e traços negativos do rapaz ("darbas man gana nuobodus"), então a diferença na nota física pode vir do tom negativo, não do quanto ele contou (p. 19). Logo depois, a equipe pondera que, como a nota social não mudou entre os grupos, o tom negativo provavelmente não pesou muito neste estudo.
 - Um só rapaz fictício, com as mesmas duas fotos: o resultado pode ser dele e daquelas fotos.
 - O artigo não diz quantas participantes ficaram em cada grupo.
-- Os números dos testes no texto não batem com a Tabela 3. Na atração física, o texto dá "F(3,86) = 89, p = 0,03" e a tabela dá F = 3,86 com graus de liberdade (2, 89); na social, o texto dá "F(2,2) = 89, p = 1,2", um p impossível, e a tabela, F = 2,2. Com 90 pessoas em três grupos, os graus de liberdade seriam (2, 87). A Ficha usa as médias, que batem entre texto e tabela, e o F da tabela.
+- Os números dos testes no texto não batem com a Tabela 3. Na atração física, o texto dá "F(3,86) = 89, p = 0,03" e a tabela dá F = 3,86 com graus de liberdade (2, 89); na social, o texto dá "F(2,2) = 89, p = 1,2", um p impossível, e a tabela, F = 2,2. Com 90 pessoas em três grupos, os graus de liberdade seriam (2, 87). A Ficha usa as médias, que batem entre texto e tabela, e o F da tabela. Na mesma tabela, o η² de 0,06 da atração física não bate com o F de 3,86, que daria perto de 0,08.
 - Só três participantes tinham solidão alta; a equipe as juntou à faixa acima da média (16, 50 e 24 participantes nas três faixas). A própria equipe diz que faltaram mulheres muito solitárias para testar a hipótese da solidão.
 - Universitárias, a maioria de psicologia, recrutadas por conveniência e bola de neve no Facebook. A equipe lembra que estudantes de psicologia podem reagir de outro jeito a quem se abre muito, e que só mulheres participaram; o resultado não diz nada sobre como homens avaliam o perfil de uma mulher.
 - Mais da metade tinha parceiro romântico, e o artigo não diz a orientação sexual das participantes nem se usavam apps de namoro.
