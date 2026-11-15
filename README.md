@@ -275,6 +275,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
 - [Leivers et al. 2015](studies/leivers-2015-fidelidade-rosto-mulheres.md): homens julgando pela foto a fidelidade de mulheres · ✅ · fraca
+- [Lelonkiewicz et al. 2021](studies/lelonkiewicz-2021-imitacao-lexical-nulo.md): ter as próprias palavras repetidas por um parceiro online · ✅ · fraca
 - [Lew et al. 2018](studies/lew-2018-latencia-e-contingencia.md): demora e pertinência da resposta num chat de atendimento · ✅ · fraca
 - [Lewis 2013](studies/lewis-2013-preconceito-racial-respostas.md): raça, primeira mensagem e resposta no OkCupid · ✅ · moderada
 - [Li et al. 2013](studies/li-2013-preferencias-atracao-escolha.md): preferências declaradas, atração e escolha nos primeiros encontros · ✅ · fraca
@@ -511,8 +512,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Kalra & Peterson 2019](studies/kalra-2019-photofeeler.md): a impressão que uma foto de namoro passa, prevista por uma rede neural · ✅ · fraca
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
+- [Kavanagh & Winkielman 2016](studies/kavanagh-2016-revisao-mimica-afiliacao.md): para que serve a imitação espontânea e por que ela agrada · ✅ · fraca
 - [Khan & Chaudhry 2015](studies/khan-2015-revisao-contato-encontro.md): revisão sobre o caminho do contato online ao primeiro encontro · ✅ · fraca
 - [Kho 2022](studies/kho-2022-primeira-impressao-tinder.md): como três homens formam a primeira impressão de mulheres por fotos · ✅ · fraca
+- [Kimura & Yamamoto 2017](studies/kimura-2017-troca-emoticons.md): retribuir ou não o emoticon numa troca de mensagens com um amigo · ✅ · fraca
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Konings et al. 2024](studies/konings-2024-foto-sexualizada-tracos.md): fotos e textos sexualizados em perfis do Tinder e do Bumble · ✅ · fraca
 - [van Kooten 2021](studies/kooten-2021-qualidade-texto-tinder.md): foto, texto com erros e ausência de texto num perfil do Tinder · ✅ · fraca
