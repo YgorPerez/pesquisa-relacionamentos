@@ -5,7 +5,7 @@ license: "CC BY 4.0"
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Dois grupos pequenos de voluntários chamados por posts em redes sociais (31 que escreveram e 132 que leram), quase todos mulheres e com curso superior, numa tarefa de responder a perguntas de um questionário; o teste usado é de pares para grupos de pessoas diferentes, e o texto contradiz as próprias tabelas em alguns números."
+strength_reason: "Dois grupos pequenos de voluntários chamados por posts em redes sociais (31 que escreveram e 132 que leram), na maioria mulheres (71% e 84%) e com curso superior, numa tarefa de responder a perguntas de um questionário; o teste usado é de pares para grupos de pessoas diferentes, e o texto contradiz as próprias tabelas em alguns números."
 countries: [Turquia]
 period: "não informado no texto lido"
 sample:
@@ -38,7 +38,7 @@ Na primeira etapa, cada participante respondeu a dez perguntas do dia a dia ("Co
 | Tristeza | Para mostrar tristeza, quem escreveu deu nota média 6,59, e quem leu deu 5,85 (tamanho de efeito 0,294) | Tabela 5 | "Sadness 6.59 7 .68 5.85 6 1.41 0 .294" |
 | Nojo | Para mostrar nojo, não apareceu diferença entre quem escreveu (nota média 4,78) e quem leu (4,8) | Tabela 5 | "Disgust 4.78 5 1.51 4.8 5 2.12 .918 .007" |
 | Raiva | Para mostrar raiva, não apareceu diferença entre a nota de quem escreveu e a de quem leu; quem leu deu nota média 6,09, a maior entre as emoções do lado de quem lê | Seção 9; Tabela 5 (p = 0,965) | "6.09 (SD: 1.54) for anger" |
-| Homens e mulheres | Entre os que escreveram, homens e mulheres deram notas diferentes ao próprio emoji em cinco perguntas e uma emoção; entre os que leram, em nenhuma (p < 0,05) | Seção 7, Tabela 3 | "We determined a significant difference (p < .05) for five questions and one emotion on the side of the producer, but none on the side of the receiver." |
+| Homens e mulheres | Entre os que escreveram, homens e mulheres deram notas diferentes ao próprio emoji em cinco perguntas e uma emoção (p < 0,05); entre os que leram, não apareceu diferença entre homens e mulheres em nenhuma pergunta ou emoção | Seção 7, Tabela 3 | "We determined a significant difference (p < .05) for five questions and one emotion on the side of the producer, but none on the side of the receiver." |
 
 As notas vão de 1 (menor) a 7 (maior). A nota de quem escreveu mede o quanto a própria resposta em emoji o satisfez; a de quem leu, o quanto o emoji refletia a resposta que o autor deu em texto. "p" é a chance de uma diferença assim aparecer só por acaso; na Tabela 5, seis emoções têm p registrado como 0. O artigo não diz qual medida de tamanho de efeito usa; nas emoções em que não apareceu diferença, ele fica perto de zero (0,003 na raiva, 0,007 no nojo). Nas dez perguntas, a Tabela 4 dá tamanho de efeito 0,296.
 
@@ -47,7 +47,7 @@ Os autores leem a nota mais baixa e mais espalhada de quem leu como perda de sen
 ## Limitações
 
 - Não é um estudo de namoro nem de conversa: desconhecidos responderam a perguntas de questionário com emoji, e outras pessoas avaliaram essas respostas. Nada foi enviado numa conversa real.
-- Os dois grupos são pequenos (31 e 132), de voluntários chamados por posts em redes sociais, quase todos mulheres e com curso superior, todos cidadãos turcos. Os próprios autores dizem que os achados podem ser lidos como um jeito turco de usar emoji e que idade e gênero não foram levados em conta.
+- Os dois grupos são pequenos (31 e 132), de voluntários chamados por posts em redes sociais, na maioria mulheres (71% e 84%) e com curso superior, todos cidadãos turcos. Os próprios autores dizem que os achados podem ser lidos como um jeito turco de usar emoji e que idade e gênero não foram levados em conta.
 - Os autores comparam os dois grupos com o teste de postos sinalizados de Wilcoxon, feito para duas medidas das mesmas pessoas. Aqui as notas vêm de pessoas diferentes (cada leitor viu o registro de um só autor), e o artigo não diz como formou os pares.
 - O texto e as tabelas não batem em alguns pontos. Na Seção 10, os valores-p de raiva e nojo aparecem como 0,056 e 0,321; na Tabela 5, como 0,965 e 0,918. A nota média de quem escreveu para a raiva é 6,13 na Seção 8 e 6 na Tabela 5, por isso a linha da raiva não dá a nota de quem escreveu. A Seção 9 diz que 4,78 é a média de quem leu na primeira pergunta; a Tabela 4 dá 4,78 como a média das dez perguntas. A Seção 10 diz que a ordem das emoções pela nota foi a mesma nos dois grupos, mas na Tabela 5 a alegria é a mais bem avaliada por quem escreveu (6,6) e a raiva por quem leu (6,09).
 - Os métodos dizem que quem leu avaliou o quanto o emoji refletia a resposta que o autor quis dar; a Seção 9 descreve a nota como o quanto o texto do próprio leitor refletia o sentido do emoji. Não fica claro qual pergunta os leitores responderam.
