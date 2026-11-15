@@ -55,6 +55,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
+- [Fusca, Komesu & Tenani 2011](studies/fusca-2011-abreviacao-internet.md): abreviações em salas de bate-papo · ✅ · fraca
+- [Gomes & Correa 2009](studies/gomes-2009-escrita-teclada-adolescentes.md): escrita teclada de adolescentes no Orkut e na escola · ✅ · fraca
 - [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
 - [Hogan, Dutton & Li 2011](studies/hogan-2011-me-myspouse.md): onde casais de 18 países se conheceram · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
@@ -462,6 +464,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Antheunis et al. 2020](studies/antheunis-2020-texto-video-presencial.md): chat ou vídeo antes do encontro pessoal · ✅ · fraca
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
+- [Ávila & Cox 2009](studies/avila-2009-internetes-historia-escrita.md): o internetês como sistema de escrita · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
 - [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
 - [Bašić 2021](studies/basic-2021-papeis-genero-perfil.md): papéis de gênero e foto em perfis de namoro · ✅ · fraca
