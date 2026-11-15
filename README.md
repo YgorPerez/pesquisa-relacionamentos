@@ -200,6 +200,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Geher 2009](studies/geher-2009-leitura-mente.md): adivinhar o que o outro sexo quer em anúncios pessoais · ✅ · fraca
 - [Gerna et al. 2026](studies/gerna-2026-foto-bio-tinder.md): foto e bio em separado no interesse por um encontro · ✅ · fraca
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
+- [Gibson 2024](studies/gibson-2024-piscadela-tinder.md): o emoji de piscadela no flerte do Tinder · ✅ · fraca
+- [Glikson et al. 2018](studies/glikson-2018-smiley-primeira-impressao.md): o smiley no primeiro contato por e-mail de trabalho · ✅ · fraca
 - [Gogan et al. 2025](studies/gogan-2025-filtros-confianca.md): filtro de beleza na foto do perfil, atração e confiança · ✅ · fraca
 - [Gosling et al. 2011](studies/gosling-2011-facebook-personalidade.md): a personalidade no uso e no perfil do Facebook · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
@@ -207,6 +209,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gray et al. 2018](studies/gray-2018-perfis-eficazes.md): o que alunos de uma universidade dos EUA dizem atrair num perfil de namoro · ✅ · fraca
 - [Green et al. 2026](studies/green-2026-conspiracao-perfil.md): teoria da conspiração no perfil de namoro · ✅ · moderada
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
+- [Groggel 2023](studies/groggel-2023-flerte-genero.md): o que universitários imaginam que cada lado de um flerte pensa · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hall et al. 2015](studies/hall-2015-deteccao-flerte.md): perceber o flerte numa conversa entre desconhecidos · ✅ · fraca
