@@ -292,6 +292,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Smith e Duggan 2013](studies/smith-2013-pew-namoro-online.md): namoro online nos EUA em 2013 · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [South Palomares et al. 2017](studies/south-palomares-2017-estrutura-impressoes.md): como se organizam as impressões de traços de parceiro em fotos de rosto · ✅ · fraca
+- [South Palomares & Young 2018](studies/south-palomares-2018-impressoes-parceiro.md): confiança, status e atratividade num relance de rosto · ✅ · fraca
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Sprecher 2021](studies/sprecher-2021-expectativas-video.md): o que se espera antes e o quanto se gosta depois de uma conversa por vídeo · ✅ · fraca
 - [Sprecher et al. 2026](studies/sprecher-2026-autoestima-sociossexualidade-julgada.md): autoestima, gênero e a abertura a sexo casual que se supõe · ✅ · fraca
@@ -304,6 +305,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Su & Hu 2019](studies/su-2019-preferencia-por-genero.md): para quem homens e mulheres escrevem num site de namoro da China · ✅ · fraca
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
+- [Sutherland et al. 2018](studies/sutherland-2018-infidelidade-universal.md): julgar pelo rosto quem já traiu, em mulheres de culturas diferentes · ✅ · fraca
+- [Shaw Taylor et al. 2010](studies/taylor-2010-segunda-chance.md): impressões antes e depois do primeiro encontro de quem se conheceu online · ✅ · fraca
 - [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
 - [Teichmann et al. 2026](studies/teichmann-2026-hora-da-mensagem-apos-encontro.md): a hora da primeira mensagem depois do encontro · ✅ · fraca
 - [Templeton et al. 2022](studies/templeton-2022-resposta-rapida-conexao.md): a pausa entre as falas e a conexão numa conversa · ✅ · moderada
