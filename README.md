@@ -81,6 +81,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 ### Outros países
 
+- [Adamczyk et al. 2024](studies/adamczyk-2024-vegetariano.md): o perfil de namoro de um vegetariano visto por quem come carne · ✅ · fraca
+- [Amano 2026](studies/amano-2026-investimento-parental.md): falar de filhos no perfil de um homem · ✅ · fraca
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
 - [von Andrian-Werburg et al. 2020](studies/andrian-werburg-2020-personalidade-chat.md): personalidade e inteligência percebidas numa conversa por chat · ✅ · fraca
 - [Antar & Stephen 2021](studies/antar-2021-sociossexualidade-formato-rosto.md): formato do rosto e abertura a sexo casual · ✅ · fraca
@@ -307,6 +309,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
+- [Birnbaum et al. 2026](studies/birnbaum-2026-autorrevelacao-perfil.md): quanto o texto de um perfil de namoro conta sobre a pessoa · ✅ · fraca
 - [Birnbaum et al. 2026](studies/birnbaum-2026-perfil-sexualizado.md): a impressão que um perfil sexualizado dá · ✅ · fraca
 - [Blabst & Diefenbach 2017](studies/blabst-2017-whatsapp-visto-por-ultimo.md): "visto por último", confirmação de leitura e estresse no WhatsApp · ✅ · fraca
 - [Bogolyubova 2026](studies/bogolyubova-2026-aceitabilidade-engano.md): aceitação de mentiras no perfil de namoro, por assunto, gênero e personalidade · ✅ · fraca
