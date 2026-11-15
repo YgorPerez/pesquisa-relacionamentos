@@ -242,6 +242,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman & Rafaeli 2011](studies/kalman-2011-pausa-e-silencio-online.md): demora e silêncio na resposta de um candidato a emprego por e-mail · ✅ · fraca
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
 - [Kant 2022](studies/kant-2022-erros-escolaridade.md): erros de língua no perfil e a escolaridade de quem lê · ✅ · fraca
+- [Kato & Hama 2011](studies/kato-2011-convites-recusas-email.md): convites e pedidos por mensagem de celular entre universitárias · 🟡 · fraca
+- [Keane 2022](studies/keane-2024-provocacao-emoji-lol.md): provocação por mensagem de texto, com emoji, com "lol" e de quem vem · ✅ · fraca
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
 - [Kerr 2009](studies/kerr-2009-padroes-ideais-perfis.md): padrões ideais e escolha entre perfis num site de namoro imaginado · ✅ · fraca
@@ -249,6 +251,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Keverline 2020](studies/keverline-2020-cachorro-foto-perfil.md): o cachorro na foto do perfil · ✅ · fraca
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
+- [Kitamura & Sato 2009](studies/kitamura-2009-pictogramas-impressao.md): emoji em mensagem de celular e a impressão de quem escreve · ✅ · fraca
 - [Knights 2018](studies/knights-2018-persuasao-tinder.md): técnicas de persuasão num perfil do Tinder · ✅ · fraca
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kogan & Volsche 2020](studies/kogan-2020-gato-foto.md): o homem fotografado com um gato, aos olhos de mulheres jovens · ✅ · fraca
