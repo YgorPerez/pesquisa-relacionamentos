@@ -289,7 +289,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
-- [Wongsomboon et al. 2021](studies/wongsomboon-2021-rosto-perfil-risco-sexual.md): rosto na foto do perfil, beleza e sexo sem camisinha entre rapazes que usam aplicativos · ✅ · fraca
+- [Wongsomboon et al. 2021](studies/wongsomboon-2021-rosto-perfil-risco-sexual.md): rosto na foto do perfil, beleza própria e sexo sem camisinha entre rapazes que fazem sexo com homens em aplicativos · ✅ · fraca
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
 - [Xia et al. 2013](studies/xia-2013-comportamento-site-namoro.md): mensagens, respostas e número de fotos num site de namoro chinês · ✅ · fraca
 - [Xia et al. 2014](studies/xia-2014-previsao-resposta.md): dá para prever quem responde à primeira mensagem? · ✅ · fraca
