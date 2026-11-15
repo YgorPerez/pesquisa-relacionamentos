@@ -4,7 +4,7 @@ link: https://doi.org/10.4092/jsre.31.supplement_po1-17
 status: partial
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Fraca pela rubrica: é o texto de uma página de uma apresentação, sem revisão por pares declarada e sem artigo completo publicado, com 130 estudantes de uma universidade de Tóquio que responderam em sala; as diferenças do emoji vêm de testes F com p entre 0,016 e 0,030, as médias só aparecem em gráficos, e o texto não diz como os participantes foram distribuídos entre as versões."
+strength_reason: "Fraca pela rubrica: é o texto de uma página de uma apresentação, sem revisão por pares declarada e sem artigo completo publicado, com 130 estudantes de uma universidade de Tóquio que responderam em sala; as duas diferenças do emoji com F próprio (sinceridade e cordialidade) têm p de 0,016 e 0,030, as médias só aparecem em gráficos, e o texto não diz como os participantes foram distribuídos entre as versões."
 countries: [Japão]
 period: "novembro de 2022"
 sample:
@@ -45,9 +45,10 @@ O F e o p vêm da análise de variância: o p indica quão fácil seria uma dife
 
 ## Limitações
 
-- O texto publicado é de uma página e é a base de uma apresentação; não achamos artigo completo com esses dados. Não traz as médias em números (só em dois gráficos, de educação e de positividade), nem as mensagens usadas, nem os emoji.
+- O texto publicado é de uma página e é a base de uma apresentação; não achamos artigo completo com esses dados. Não traz as médias em números (só em dois gráficos), nem as mensagens usadas, nem os emoji.
+- A legenda do primeiro gráfico diz que ele é de educação (ていねいさ), mas o eixo diz sinceridade (誠実さ). O gráfico mostra barras mais altas no estilo educado e sem emoji, enquanto a tabela marca só a diferença do estilo na educação e só a do emoji na sinceridade; o texto não diz qual das duas impressões o gráfico mostra.
 - Não diz como os estudantes foram distribuídos entre as versões com e sem emoji. A frase sobre o desenho diz que um fator variou dentro de cada participante e o outro entre participantes (前者は参加者内条件，後者は参加者間条件), sem deixar claro qual é qual. Os graus de liberdade, (1, 126) para 130 pessoas, são os de uma análise com os dois fatores entre participantes; o texto não explica.
 - Na linha da positividade, a tabela mostra diferença do estilo e do emoji, mas um F só (14,87, p < 0,001), sem dizer de qual. Na linha da educação, o p aparece como ",ｐ=.00".
-- Os participantes são estudantes de uma universidade de Tóquio, quase todos com 18 ou 19 anos, que julgaram mensagens de LINE sem paquera nem namoro e sem saber quem as mandava. O texto não diz se o remetente era apresentado como amigo, conhecido ou desconhecido.
+- Os participantes são estudantes de uma universidade de Tóquio, com 18,80 anos em média, que julgaram mensagens de LINE sem paquera nem namoro e sem saber quem as mandava. O texto não diz se o remetente era apresentado como amigo, conhecido ou desconhecido.
 - O texto diz que "muitos" estão acostumados a emoji no LINE (多くの者が LINE のやりとりにおいて，絵文字に接していることがわかった), sem dar o número nem a pergunta.
 - Kitamura e Sato (2009), o estudo anterior que este segue, não foi lido para esta Ficha.
