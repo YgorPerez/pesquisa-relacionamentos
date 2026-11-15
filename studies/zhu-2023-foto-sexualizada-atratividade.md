@@ -4,7 +4,7 @@ link: https://doi.org/10.54254/2753-7064/10/20231354
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Experimento com sorteio do questionário, mas com 218 jovens recrutados em redes sociais que não representam nenhuma população, perfis de só duas mulheres com uma foto cada (uma delas feita por inteligência artificial), sem tamanho de efeito, com erros de digitação nas conclusões e uma tabela sem a linha que o texto cita, publicado em anais de conferência cujo texto não descreve revisão por pares."
+strength_reason: "Experimento com sorteio do questionário, mas com 218 jovens recrutados em redes sociais que não representam nenhuma população, perfis de só duas mulheres com uma foto cada (uma delas feita por inteligência artificial), sem tamanho de efeito, com erros de digitação nos resultados e na discussão e uma tabela sem a linha que o texto cita, publicado em anais de conferência cujo texto não descreve revisão por pares."
 countries: [China]
 period: "não informado no texto lido"
 sample:
@@ -44,7 +44,7 @@ Quem julgou foram homens e mulheres heterossexuais. Para os homens, as mulheres 
 | Competência | Juntando homens e mulheres que julgaram, a nota média de competência foi mais alta nas fotos do dia a dia (26,05) que nas de maiô (21,18) | Resultados, 3.3, p. 314 | "participants’ task attractiveness ratings for the candidates’ non-sexualized photos (M=26.05) were significantly higher than sexualized photos (M=21.18)" |
 | Competência, por quem julga | Homens e mulheres deram notas de competência mais altas às fotos do dia a dia que às de maiô, nas duas mulheres dos perfis | Resultados, 3.3, p. 315 | "For both males and females, Candidate A and B, the perceived task attractiveness for non-sexualized photos was significantly higher than for sexualized photos" |
 | Notas de homens e de mulheres | Na atratividade social, os homens deram notas médias mais altas às mulheres dos perfis (24,87) que as mulheres que julgaram (22,14). Pelas comparações do estudo, essa diferença apareceu nas fotos do dia a dia e não nas de maiô | Resultados, 3.1, p. 310 | "Males (M=24.87) rated significantly higher on social attractiveness for the candidates than females (M=22.14)" |
-| As duas mulheres dos perfis | Nas fotos de maiô, a mulher criada por inteligência artificial teve nota de atratividade física mais alta que a voluntária real; o estudo atribui isso ao maiô dela mostrar mais os seios | Resultados, 3.2, p. 313 | "For sexualized photos, Candidate A’s physical attractiveness rating was significantly higher" |
+| As duas mulheres dos perfis | Nas fotos de maiô, a mulher criada por inteligência artificial teve nota de atratividade física mais alta que a voluntária real; o estudo sugere que isso pode vir de o maiô dela mostrar mais os seios | Resultados, 3.2, p. 313 | "For sexualized photos, Candidate A’s physical attractiveness rating was significantly higher" |
 
 As médias da Tabela 1 contam notas, não pessoas: cada participante deu notas às duas mulheres, e o N é 208 para os homens, 228 para as mulheres, 214 para as fotos de maiô e 222 para as do dia a dia. O artigo não diz se a nota de cada tipo de atratividade é a soma ou a média das cinco frases; como as médias passam de 7, não é a média. As diferenças das Tabelas 5 e 11 estão na mesma unidade das médias. O "critério usual" é p < 0,05, a chance de uma diferença daquele tamanho aparecer só por acaso. O estudo não informa tamanhos de efeito.
 

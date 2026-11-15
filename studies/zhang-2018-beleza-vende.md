@@ -4,7 +4,7 @@ link: https://aisel.aisnet.org/confirm2018/13
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Registros de um app de namoro chinês com 25.389 usuários, em que a plataforma sorteava as fotos mostradas, mas é um artigo curto de anais de conferência que não diz o que conta cada linha das regressões, mede a beleza com um algoritmo que acertou cerca de 81% das notas humanas, mostra uma tabela descritiva com uma linha repetida, e a ligação da beleza com responder só passa no limite mais frouxo da tabela."
+strength_reason: "Registros de um app de namoro chinês com 25.389 usuários, em que a plataforma sorteava as fotos mostradas, mas é um artigo curto de anais de conferência que não diz o que conta cada linha das regressões, mede a beleza com um algoritmo que, ao separar fotos 'bonitas' de 'normais', concordou com a classificação humana em cerca de 81% das fotos, mostra uma tabela descritiva com uma linha repetida, e a ligação da beleza com responder só passa no limite mais frouxo da tabela."
 countries: [China]
 period: "agosto de 2014 a setembro de 2015"
 sample:
@@ -53,7 +53,7 @@ Os "b" são coeficientes de regressões logísticas em vários níveis, que leva
 - A beleza é a de um algoritmo, que acertou a classificação humana em cerca de 81% das fotos. Os autores dizem que primeiro escolheram o serviço da Microsoft (Azure) num teste com 475 fotos e depois treinaram classificadores com as notas humanas; o texto não deixa claro como os dois passos se juntam na nota final.
 - Os autores dizem que os 1.121 avaliadores representam o país, mas não mostram os números que sustentam isso.
 - Os autores escrevem que, tanto ao convidar quanto ao responder, as pessoas procuram as mais bonitas. Ao responder, a ligação só passa no critério mais frouxo da tabela (p < 0,1).
-- Na Tabela 2, as linhas do tempo de uso do app e da distância têm os mesmos números (média 0,632, desvio 0,218, máximo 1,080), o que parece erro de cópia; na linha dos dias entre a foto e o convite, o mínimo (339) e o máximo (0) aparecem trocados. A idade dos usuários vai de 10,17 a 45,25 anos, então havia menores de idade nos dados.
+- Na Tabela 2, as linhas do tempo de uso do app e da distância têm os mesmos números (média 0,632, desvio 0,218, máximo 1,080), o que parece erro de cópia. Na mesma tabela, a idade dos usuários vai de 10,17 a 45,25 anos, então havia menores de idade nos dados.
 - Os autores falam em "13 meses" e dão o período de agosto de 2014 a setembro de 2015.
 - O artigo diz que o resultado não mudou ao levar em conta o tamanho da mensagem, o horário e o clima, mas não mostra esses números.
 - Os autores chamam as decisões ora de namoro, ora de "fazer amizade" (friend-making). O artigo não diz se os pares eram só de sexos diferentes.
