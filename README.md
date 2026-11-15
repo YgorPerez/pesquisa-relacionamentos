@@ -440,6 +440,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Thai et al. 2026](studies/thai-2026-fetichizacao-preferencia-racial.md): perfil que declara preferência racial · ✅ · fraca
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
+- [Thompson & Filik 2016](studies/thompson-2016-sarcasmo-emoticons.md): emoticons para marcar sarcasmo numa mensagem de texto · ✅ · fraca
 - [Tidwell, Eastwick & Finkel 2013](studies/tidwell-2013-similaridade-percebida.md): semelhança real, semelhança percebida e atração num speed dating · ✅ · fraca
 - [Timmermans & Courtois 2018](studies/timmermans-2018-tinder.md): motivos, matches, conversas e relacionamentos pelo Tinder · ✅ · fraca
 - [Timmermans et al. 2021](studies/timmermans-2021-ghosting-em-apps.md): por que somem e como é levar um sumiço em app de namoro · ✅ · fraca
@@ -608,11 +609,13 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Taguchi et al. 2005](studies/taguchi-2005-emoticons-humor-receptor.md): kaomoji em e-mails e o gosto por humor de quem lê · 🟡 · fraca
 - [Takehara & Kuribayashi 2006](studies/takehara-2006-emoticons-gratidao-desculpas.md): emoticons em e-mails de agradecimento e de desculpas · ✅ · fraca
+- [Tavolassi 2023](studies/tavolassi-2023-emoticons-voz-trabalho.md): emoticon numa mensagem de crítica ou de sugestão ao chefe · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Toma 2016](studies/toma-2016-literacia-engano.md): o que se sabe sobre perceber a mentira de quem se conhece online · ✅ · fraca
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Tsushima & Tomono 2024](studies/tsushima-2024-estilo-ojisan.md): o estilo "ojisan" numa mensagem de rede social · 🟡 · fraca
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
