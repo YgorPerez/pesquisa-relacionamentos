@@ -198,12 +198,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Fitzpatrick 2017](studies/fitzpatrick-2017-pistas-sistema.md): foto, distância, disponibilidade e amigos em comum num app de cartões · ✅ · fraca
 - [Fletcher, Simpson & Thomas 2000](studies/fletcher-2000-ideal-e-termino.md): encaixe com o ideal e término nos primeiros meses de namoro · ✅ · fraca
 - [Florijn 2022](studies/florijn-2022-erros-nativo-autor.md): erros de língua num perfil de namoro e o aviso de que o autor não é nativo · ✅ · fraca
+- [Forbes & Buchanan 2019](studies/forbes-2019-textismos-conforto.md): conforto ao receber textismos · ✅ · fraca
 - [Forrai, Koban & Matthes 2023](studies/forrai-2023-fantasmas-de-vista-curta.md): dar ghosting em namoros e amizades, em duas ondas · ✅ · fraca
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Franco 2018](studies/franco-2018-maes-solo.md): o que mães solo e mulheres sem filhos olham no perfil de um homem · ✅ · fraca
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
 - [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
+- [Fullwood & Martino 2007](studies/fullwood-2007-emoticons-impressao.md): emoticons e a impressão sobre quem conversa no chat · ✅ · fraca
 - [Fullwood & Attrill-Smith 2018](studies/fullwood-2018-foto-perfil-offline.md): chance esperada de encontro num site e numa noite fora · ✅ · fraca
 - [Gale et al. 2024](studies/gale-2024-rastreamento-olhar-perfil.md): o olhar no rosto e na renda em perfis de namoro montados · ✅ · fraca
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
@@ -501,6 +503,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Farris et al. 2008](studies/farris-2008-decodificar-intencao.md): homens e mulheres lendo simpatia e interesse sexual em fotos · ✅ · fraca
 - [Farris, Treat & Viken 2010](studies/farris-2010-alcool-interesse.md): álcool e a leitura do interesse sexual em fotos · ✅ · fraca
 - [Farris, Viken & Treat 2010](studies/farris-2010-pistas-diagnosticas.md): roupa, expressão e coerção sexual na leitura de fotos · ✅ · fraca
+- [Filik et al. 2016](studies/filik-2016-sarcasmo-emoticons.md): sarcasmo, emoticons e pontuação em mensagens escritas · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gavin et al. 2019](studies/gavin-2019-autismo-perfil.md): o perfil de namoro de homens autistas visto por mulheres · ✅ · fraca
