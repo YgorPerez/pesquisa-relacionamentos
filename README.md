@@ -131,6 +131,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [DelPriore et al. 2018](studies/delpriore-2018-ausencia-paterna-intencao.md): lembrar o pai ausente e a intenção que se vê nos homens · ✅ · fraca
 - [Dinh et al. 2022](studies/dinh-2022-iniciativa-eharmony.md): quem começa a conversa no eharmony, ano a ano · ✅ · fraca
+- [Driebe et al. 2021](studies/driebe-2021-inteligencia-video.md): inteligência medida, inteligência percebida e atração · ✅ · moderada
+- [Dunlop 2018](studies/dunlop-2018-percepcao-tinder.md): como usuários do Tinder montam o próprio perfil e leem o dos outros · ✅ · fraca
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
 - [Eastwick & Finkel 2008](studies/eastwick-2008-ansiedade-no-comeco.md): a ansiedade de não saber se o outro corresponde, no começo · ✅ · moderada
@@ -326,6 +328,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cantos Delgado 2020](studies/cantos-delgado-2020-aberturas-tinder.md): como mulheres respondem a aberturas de homens no Tinder · ✅ · fraca
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
+- [Duguay 2017](studies/duguay-2016-autenticidade-tinder.md): como o Tinder enquadra a autenticidade do perfil · ✅ · fraca
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
