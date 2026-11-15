@@ -1,0 +1,65 @@
+---
+reference: "Bašić A. *Procjena sviđanja online dating profila i želja za dugotrajnom vezom s obzirom na rodne uloge, fizičku privlačnost i dob* (Avaliação do agrado de perfis de namoro online e desejo de relação longa segundo os papéis de gênero, a atratividade física e a idade). Trabalho de conclusão de mestrado (diplomski rad), Departamento de Psicologia, Faculdade de Filosofia, Universidade de Rijeka, 2021. Orientação de Barbara Kalebić Maglica."
+link: https://urn.nsk.hr/urn:nbn:hr:186:986374
+status: verified
+verified_on: 2026-11-15
+strength: weak
+strength_reason: "Trabalho de mestrado, sem revisão por pares de uma revista; amostra de voluntários recrutados no Facebook, com o dobro de mulheres e mais da metade num relacionamento; notas dadas a perfis fictícios numa página que imitava um site de namoro, sem consequência real; e algumas médias do texto contradizem a frase que as acompanha."
+countries: []
+period: "não informado no texto lido (trabalho entregue em setembro de 2021)"
+sample:
+  n: 911
+  description: "911 falantes de croata maiores de idade recrutados pelo Facebook, 604 mulheres e 307 homens, de 18 a 67 anos (26,88 em média); 302 disseram sentir atração por mulheres e 609 por homens. 39,7% não estavam em nenhum relacionamento e os demais estavam se conhecendo com alguém, namoravam, eram casados, divorciados ou viúvos; 51,3% já tinham tido perfil num site de namoro. O texto não diz o país de quem respondeu; chama a amostra de população croata, no sentido de falantes de croata."
+  representative: false
+design: experiment
+conflict: "O trabalho não informa financiamento nem traz declaração de conflito de interesse."
+covers:
+  genders: [man, woman]
+  seeks: [men, women]
+  ages: { min: 18, max: 67 }
+---
+
+# Bašić (2021): papéis de gênero e foto em perfis de namoro
+
+## O que mediu
+
+O trabalho repete um estudo de Chappetta e Barth (2016). Numa página feita para parecer um site de namoro, cada participante viu quatro perfis fictícios do gênero que o atrai. Cada perfil tinha uma foto e uma descrição (sobre mim, hobbies, sexta à noite típica, o que procuro). As fotos vieram do site Unsplash e foram escolhidas num pré-teste com 2.615 pessoas, que deram notas de 1 a 10: as "mais bonitas" tinham média entre 7 e 7,99, e as "medianas", entre 6 e 6,99. As descrições, traduzidas do estudo original, eram "masculinas" (ambição, aproveitar cada oportunidade) ou "femininas" (família, cuidar dos outros). Uma descrição é "congruente" quando combina com o gênero da pessoa da foto e "incongruente" quando é a do outro gênero.
+
+Cada participante viu as quatro combinações (foto mais bonita ou mediana, descrição congruente ou incongruente), com as descrições sorteadas entre as fotos. Depois de cada perfil, respondeu a duas escalas de 1 a 7, de quanto a pessoa agrada (11 itens) e de atração romântica (5 itens), cuja média é a nota de agrado, e escolheu se teria com ela uma relação curta ou longa. As notas foram comparadas por análise de variância com medidas repetidas, e a escolha entre relação curta e longa, pelo teste de McNemar.
+
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Quem participou | 911 pessoas, 604 mulheres e 307 homens, de 18 a 67 anos (26,88 em média) | 3.2.1, p. 18 | "U istraživanju je sudjelovalo 911 ispitanika od toga 604 (66.3%) žene i 307 (33.7%) muškaraca. Prosječna dob ispitanika je M = 26.88, SD = 6.79, a raspon dobi je od 18 do 67 godina." |
+| Como foram recrutados | Pelo Facebook; podia participar qualquer falante de croata maior de idade | 3.2.1, p. 18 | "Ispitanici su prikupljeni pomoću Facebook društvene mreže, a istraživanju su mogli sudjelovati svi punoljetni govornici hrvatskog jezika." |
+| Por quem sentiam atração | 33,2% disseram sentir atração por mulheres e 609 pessoas (66,8%), por homens | 3.2.1, p. 18 | "Tristo dva (33.2%) ispitanika privlače žene, a 609 (66.8%) ispitanika privlače muškarci." |
+| Situação amorosa | 39,7% não estavam em nenhum relacionamento, 6,1% estavam se conhecendo com uma pessoa só, 44% namoravam e 8,8% eram casados | 3.2.1, p. 18 | "Tristo šezdeset dva (39.7%) ispitanika trenutno nije ni u kakvoj romantičnoj vezi, 56 (6.1%) ih je u kompliciranoj romantičnoj vezi (u fazi upoznavanja i izlaženja sa samo jednom osobom), 401 (44%) ispitanik je u vezi, 80 (8.8%) ih je u braku" |
+| Os perfis | Havia quatro descrições, duas "femininas" e duas "masculinas"; cada participante leu as quatro, sorteadas entre as fotos de duas pessoas mais bonitas e duas medianas | 3.2.3, p. 20 | "Sveukupno ima 4 opisa – dva feminina i dva maskulina, a svaki ispitanik je čitao sva 4 opisa koja su randomiziranim putem uparena s fotografijama 2 iznadprosječno privlačna modela i 2 prosječno privlačna modela." |
+| Foto mais bonita | Os perfis com foto mais bonita agradaram mais que os com foto mediana (nota 5,19 contra 4,97; F = 40,39; p < 0,01) | 4.2, p. 23 | "Dobiven je glavni efekt fizičke privlačnosti modela na procjenu sviđanja profila (F(1. 901) = 40.39, p < .01). Ispitanicima se profili s iznadprosječno privlačnim modelima (M = 5.19, SD = 0.04) više sviđaju, nego profili s prosječno privlačnim modelima (M = 4.97, SD = 0.04)." |
+| Foto mais bonita, por sexo de quem avaliou | Os homens deram nota maior aos perfis com foto mais bonita (5,42) que aos com foto mediana (5,02); nas mulheres, não apareceu diferença. A diferença entre homens e mulheres nesse ponto passou no teste (F = 25,04; p < 0,01) | 4.2, p. 23 | "Dobivena je statistički značajna interakcija fizičke privlačnosti modela i spola na procjenu sviđanja profila (F(1. 901) = 25.04, p < .01). Muškarcima se profili s iznadprosječno privlačnim modelima (M = 5.42, SD = 0.06) više sviđaju, nego profili s prosječno privlačnim modelima (M = 5.02, SD = 0.06)." |
+| Descrição contrária ao papel de gênero | Os perfis de descrição incongruente agradaram mais que os de descrição congruente (nota 5,25 contra 5,06; F = 27,64; p < 0,01) | 4.2, p. 24 | "Dobiven je glavni efekt kongruentnosti profila na procjenu sviđanja profila (F(1. 901) = 27.64, p < .01). Ispitanicima se rodno nekongruentni profili (M = 5.25, SD = 0.03) više sviđaju, nego rodno kongruentni profili (M = 5.06, SD = 0.06)." |
+| Descrição, por sexo de quem avaliou | O trabalho relata que as mulheres deram nota maior aos perfis de descrição incongruente e que, nos homens, não apareceu diferença; a diferença entre homens e mulheres nesse ponto passou no teste (F = 19,81; p < 0,01). As médias que o texto dá para as mulheres contradizem essa frase (ver Limitações) | 4.2, p. 24 | "Dobivena je statistički značajna interakcija spola i kongruentnosti profila na procjenu sviđanja profila (F(1. 901)=19.81, p < .01). Muškarcima se podjednako sviđaju i rodno kongruentni i rodno nekongruentni profili, dok se ženama više sviđaju rodno nekongruentni profili" |
+| Foto e descrição juntas | Não apareceu interação entre a foto e a descrição: o teste não mostrou que a vantagem da descrição incongruente fosse diferente entre fotos mais bonitas e medianas (F = 1,26; p > 0,05) | 4.2, p. 25 | "Nije dobivena značajna interakcija kongruentnosti profila i fizičke privlačnosti modela na procjenu sviđanja profila (F(1. 901) = 1.26, p > .05)." |
+| Idade de quem avaliou | Não apareceu interação entre a faixa de idade de quem avaliou e a descrição na nota de agrado (F = 1,45; p > 0,05) | 4.3, p. 26 | "Nije dobivena značajna interakcija dobi ispitanika i kongruentnosti profila na procjenu sviđanja profila (F(1. 4) = 1.45, p >.05)." |
+| Relação longa, fotos mais bonitas, nas mulheres | Diante dos perfis com foto mais bonita, 374 das 604 mulheres escolheram relação longa com o de descrição incongruente e 304 com o de descrição congruente | Tablica 6, p. 27 (linhas: congruente curta, congruente longa, total; colunas: incongruente curta, incongruente longa, total) | "KONGRUENTNI kratkotrajna veza 126 174 300 PROFILI dugotrajna veza 104 200 304 UKUPNO 230 374 604" |
+| Relação longa, fotos mais bonitas, teste | A diferença entre descrição congruente e incongruente na escolha de relação longa apareceu nas mulheres (χ² = 17,13; p < 0,01) e não nos homens (χ² = 0,03; p > 0,05) | 4.4, p. 27 | "Razlike su pronađene samo kod žena (X2 = 17.13, p < .01), dok kod muškaraca nisu (X2 = 0.03, p > .05)." |
+| Relação longa, fotos medianas, nas mulheres | Diante dos perfis com foto mediana, 357 das 604 mulheres escolheram relação longa com o de descrição incongruente e 272 com o de descrição congruente | Tablica 5, p. 28 (mesma disposição da Tablica 6) | "KONGRUENTNI kratkotrajna veza 147 185 332 PROFILI dugotrajna veza 100 172 272 UKUPNO 247 357 604" |
+| Relação longa, fotos medianas, teste | A diferença entre descrição congruente e incongruente na escolha de relação longa apareceu nas mulheres (χ² = 24,76; p < 0,01) e não nos homens (χ² = 0,01; p > 0,05) | 4.4, p. 28 | "Razlike su također pronađene samo kod žena (X2 = 24.76, p < .01), dok kod muškaraca nisu (X2 = 0.01, p > .05)." |
+| Relação longa por idade, fotos mais bonitas | Com homens e mulheres juntos, só na terceira das cinco faixas de idade (a de quem estava na segunda metade dos vinte anos, ver a nota) apareceu diferença: mais gente escolheu relação longa com o perfil de descrição incongruente (χ² = 11,11; p < 0,01) | 4.5, p. 29; Tablica 3, p. 30 | "Razlike u želji za ostvarenjem dugotrajne veze s iznadprosječno fizički privlačnim profilima, obzirom na rodnu kongruentnost profila, su pronađene u trećoj dobnoj skupini (X2 = 11.11, p < .01)." |
+| Relação longa por idade, fotos medianas | Com homens e mulheres juntos, só na segunda das cinco faixas de idade (a de quem estava na primeira metade dos vinte anos, ver a nota) apareceu diferença: mais gente escolheu relação longa com o perfil de descrição incongruente (χ² = 15,3; p < 0,01) | 4.5, p. 29; Tablica 3, p. 30 | "Razlike u želji za dugotrajnom vezom s prosječno fizički privlačnim profilima, obzirom na kongruentnost profila su pronađene u drugoj dobnoj skupini (X2 = 15.3, p < .01)." |
+| Leitura do trabalho sobre a idade | O próprio trabalho diz que, pelo número desigual de pessoas em cada faixa de idade, não dá para tirar conclusões válidas sobre a idade | 5.4, p. 42 | "ne mogu donositi valjani zaključci" |
+
+A nota de agrado vai de 1 a 7: é a média das duas escalas, em que 1 é "discordo totalmente" e 7 "concordo totalmente". O F e o χ² são as estatísticas dos testes; o p indica quão fácil seria ver uma diferença assim só por acaso, e acima de 0,05 se costuma dizer que pode ser acaso. As faixas de idade do trabalho são 18 a 21, 22 a 25, 26 a 30, 31 a 35 e 36 a 67 anos.
+
+## Limitações
+
+- É um trabalho de mestrado, sem a revisão por pares de uma revista.
+- Os participantes são voluntários recrutados em grupos do Facebook, com o dobro de mulheres; 481 dos 911 estavam num relacionamento ou casados. O próprio trabalho lembra que a diferença no número de homens e mulheres pode pesar nos resultados por sexo.
+- As notas são dadas a perfis fictícios, sem nenhuma consequência: ninguém curtiu, mandou mensagem ou marcou encontro. A escolha entre relação "curta" e "longa" é uma pergunta só, e o próprio trabalho acha que esses termos podem ser abstratos demais.
+- Os resultados são separados pelo sexo de quem avaliou, não pelo do perfil avaliado. Cada pessoa viu perfis do gênero que a atrai, e o texto não diz quantas avaliaram perfis do mesmo sexo. A leitura do trabalho de que as mulheres preferem "homens mais delicados" supõe que todas avaliaram perfis de homem.
+- Na interação entre sexo e descrição, o texto diz que as mulheres gostaram mais dos perfis incongruentes, mas as médias que dá vão no sentido contrário: 5,13 para os incongruentes e 5,74 para os congruentes (p. 24). Com as mulheres sendo dois terços da amostra, uma média de 5,74 nelas não cabe na média geral dos congruentes (5,06), ainda mais porque o texto diz que os homens deram notas mais altas que as mulheres. Pelo menos um desses números está errado, e a Ficha não usa as médias das mulheres.
+- Nas fotos medianas, o texto dá às mulheres média de 1,45 para relação longa com os incongruentes e 1,6 com os congruentes (p. 28), ao contrário do que a frase diz. As contagens da Tablica 5 (357 e 272 de 604) dão cerca de 1,59 para os incongruentes e 1,45 para os congruentes: o texto parece ter trocado os rótulos. A Ficha usa as contagens.
+- As médias da análise (5,19 e 4,97; 5,25 e 5,06) diferem das da tabela descritiva (5,21 e 5,04; 5,26 e 5,00), e o "SD" de 0,03 a 0,06 tem o tamanho de um erro-padrão, não de um desvio-padrão. Os testes têm 901 graus de liberdade com 911 participantes, e o texto não diz quem ficou de fora.
+- O teste de idade (F com 1 e 4 graus de liberdade) e os testes de McNemar por faixa de idade juntam homens e mulheres. As fotos eram de pessoas de vinte e poucos anos, e o trabalho diz que pessoas acima de 40 anos comentaram que os modelos eram jovens demais para elas.
+- O trabalho termina com conselhos práticos para homens e mulheres, que os dados, de notas dadas a perfis fictícios, não testam. A Ficha não os repete.
