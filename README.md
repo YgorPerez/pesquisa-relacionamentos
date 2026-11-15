@@ -350,7 +350,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
+- [Zhao et al. 2026](studies/zhao-2026-embelezamento-contextos.md): a roupa feminina e o julgamento romântico dos homens, em relação casual e séria · ✅ · fraca
 - [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
+- [Zytko et al. 2014](studies/zytko-2014-dificuldades-impressao.md): passar e formar impressões num site de namoro, em entrevistas · ✅ · fraca
+- [Zytko et al. 2015](studies/zytko-2015-atividades-pareadas.md): avaliar o outro pelas mensagens de um site de namoro e num jogo online em dupla · ✅ · fraca
 - [Zytko et al. 2020](studies/zytko-2020-interface-decisao-encontro.md): uma interface de mensagens e a vontade de sair depois do encontro · ✅ · fraca
 - [Zytko et al. 2022](studies/zytko-2022-interesse-sexual-apps.md): como usuários de apps mostram e leem o interesse, sexual ou não · ✅ · fraca
 
