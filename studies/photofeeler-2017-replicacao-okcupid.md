@@ -8,7 +8,7 @@ strength_reason: "Análise comercial que a Photofeeler fez com os dados e as not
 countries: []
 period: "não informado no texto lido; o post diz que a replicação é de 2017"
 sample:
-  description: "Fotos de homens do banco de dados do Photofeeler, um site em que outros usuários dão notas às fotos que alguém quer testar. A empresa diz ter restringido os dados para casar com o perfil da amostra de 7.140 fotos do OkCupid, mas não diz quantas fotos ficaram, de que países são, nem quem deu as notas."
+  description: "Fotos de homens do banco de dados do Photofeeler, um site de teste de fotos de perfil em que cada foto recebe notas de atratividade; o post não diz quem dá essas notas. A empresa diz ter restringido os dados para casar com o perfil da amostra de 7.140 fotos do OkCupid, mas não diz quantas fotos ficaram nem de que países são."
   representative: false
 design: platform
 conflict: "Estudo da própria Photofeeler, com os dados e as notas do seu site, publicado no blog da empresa. O post termina apresentando a ferramenta e dizendo que ela é gratuita. Não declara financiamento."
@@ -20,7 +20,7 @@ covers:
 
 ## O que mediu
 
-Em janeiro de 2010, segundo o post, o OkTrends, blog do OkCupid, publicou dados de que homens com fotos sem sorriso e olhando para longe da câmera conheciam mais mulheres por tentativa ("women met per attempt"). A Photofeeler, empresa de um site em que outros usuários dão notas às fotos de quem quer testá-las, diz ter refeito essa análise com os próprios dados: restringiu as fotos de homens ao mesmo perfil demográfico da amostra do OkCupid, classificou cada foto com redes neurais e à mão (sorriso ou não, olhar para a câmera ou não) e comparou as notas de atratividade dadas no Photofeeler.
+Em janeiro de 2010, segundo o post, o OkTrends, blog do OkCupid, publicou dados de que homens com fotos sem sorriso e olhando para longe da câmera conheciam mais mulheres por tentativa ("women met per attempt"). A Photofeeler, empresa de um site de teste de fotos de perfil, diz ter refeito essa análise com os próprios dados: restringiu as fotos de homens ao mesmo perfil demográfico da amostra do OkCupid, classificou cada foto com redes neurais e à mão (sorriso ou não, olhar para a câmera ou não) e comparou as notas de atratividade dadas no Photofeeler.
 
 A medida não é a mesma do OkCupid: lá, mulheres conhecidas por tentativa; aqui, uma nota que o gráfico chama de "average photo rank", sem definição no texto. O resultado aparece só num gráfico de barras, com barras de erro e sem os valores escritos, e o post não diz quantas fotos entraram em cada grupo nem que teste estatístico usou. Como a fonte inteira é esse post, a Ficha é parcial.
 
@@ -45,7 +45,7 @@ Cada linha relata o que a empresa diz; o post não traz os números por trás do
 
 - É um estudo da própria empresa, com os dados e as notas do próprio site, publicado no blog dela e encerrado com a oferta da ferramenta. Não passou por revisão de ninguém de fora.
 - O post não diz quantas fotos usou, quantas caíram em cada grupo, de que período e países são, quantas pessoas deram as notas, de que sexo eram nem que teste estatístico separou o que é diferença do que é acaso. O resultado só aparece num gráfico, sem os valores.
-- A medida é outra. O OkCupid mediu, segundo o post, quantas mulheres os homens conheciam por tentativa num site de namoro; a Photofeeler mede notas de atratividade dadas por usuários do próprio site a uma foto. Uma nota mais alta não é o mesmo que mais mensagens ou mais encontros. O post diz que usuários relataram de 3 a 5 vezes mais matches depois de usar a ferramenta, sem dizer quantos nem como isso foi contado.
+- A medida é outra. O OkCupid mediu, segundo o post, quantas mulheres os homens conheciam por tentativa num site de namoro; a Photofeeler mede as notas de atratividade que uma foto recebe no próprio site, sem dizer quem as dá. Uma nota mais alta não é o mesmo que mais mensagens ou mais encontros. O post diz que usuários relataram de 3 a 5 vezes mais matches depois de usar a ferramenta, sem dizer quantos nem como isso foi contado.
 - A empresa diz ter casado o perfil da amostra do OkCupid (usuários de 18 a 32 anos, de cidades grandes, de atratividade mediana, com uma só foto e sem texto, segundo o post), mas não diz como fez isso com os próprios dados nem se usou todos esses filtros.
 - Os números sobre a amostra do OkCupid (cerca de 7 fotos de cara de flerte, menos de 15% de fotos sem olhar para a câmera) são estimativas e afirmações da Photofeeler; o post não mostra de onde vêm. A acusação de que o OkCupid manipulou os dados para ter um resultado chamativo é uma suposição do post.
 - A página não traz a data da primeira publicação; o texto lido é a versão atualizada em março de 2020.
