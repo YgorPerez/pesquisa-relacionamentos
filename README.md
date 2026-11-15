@@ -526,6 +526,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [de Meijer 2014](studies/meijer-2014-fotos-erros-linguagem.md): foto atraente, foto não atraente ou nenhuma foto, e erros de ortografia no perfil · ✅ · fraca
 - [Mierke et al. 2011](studies/mierke-2011-riqueza-midia-atratividade.md): vídeo, áudio, foto ou texto na apresentação de um perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
+- [Muir et al. 2017](studies/muir-2017-acomodacao-estilo-poder.md): poder e imitação do estilo de escrita num chat · ✅ · fraca
+- [Muir et al. 2020](studies/muir-2020-mimica-perguntas-negociacao.md): imitar as palavras do outro numa negociação por chat · ✅ · fraca
+- [Munson et al. 2014](studies/munson-2014-lsm-email-equipes.md): estilo parecido nos e-mails de equipes de alunos · ✅ · fraca
 - [Murphy et al. 2015](studies/murphy-2015-excesso-confianca.md): excesso de confiança, perfil de namoro e disputa por um parceiro · ✅ · fraca
 - [Neve & McConville 2021](studies/neve-2021-fotos-recomendacao.md): fotos e histórico de Likes para prever o match · ✅ · fraca
 - [Norcie et al. 2013](studies/norcie-2013-verificacao-perfis.md): verificar o perfil de namoro pelo Facebook · ✅ · fraca
