@@ -166,10 +166,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hamilton 2020](studies/hamilton-2020-personalidade-texto-perfil.md): personalidade escrita e lida no texto de perfis de namoro · ✅ · fraca
 - [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
 - [Hazel et al. 2023](studies/hazel-2023-revisao-dificil-de-conquistar.md): revisão de estudos sobre se fazer de difícil · ✅ · fraca
+- [Heijckers 2022](studies/heijckers-2022-erros-ingles-l2.md): erros de inglês no texto do perfil e a nota dada ao autor · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
+- [Horsham et al. 2025](studies/horsham-2025-replicacao-menos-e-mais.md): réplica de "saber mais e gostar menos" · ✅ · fraca
 - [Hoyle et al. 2017](studies/hoyle-2017-mensagem-vista.md): o aviso de mensagem vista no Facebook Messenger · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
 - [Huang et al. 2017](studies/huang-2017-perguntas-de-continuidade.md): em chats entre desconhecidos, quem pergunta mais é mais querido · ✅ · moderada
@@ -341,6 +343,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
+- [Hernandez & Punyanunt-Carter 2018](studies/hernandez-2018-respostas-escritas.md): respostas escritas no perfil e a decisão de começar a conversar · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
