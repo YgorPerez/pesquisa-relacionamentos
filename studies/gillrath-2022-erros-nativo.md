@@ -9,7 +9,7 @@ countries: []
 period: "não informado no texto lido (a tese é datada de 13 de junho de 2022; os textos dos perfis foram coletados de 2012 a 2015)"
 sample:
   n: 131
-  description: "131 pessoas de 18 a 64 anos (média de 24,63), 81 mulheres e 50 homens, recrutadas em bola de neve por uma mensagem que pedia ajuda com a tese, sem pagamento. A maioria era holandesa (59,9%); 11,5% eram alemães, e só 4,6% tinham o inglês como língua materna. 58% faziam ou tinham feito graduação, e 53,4% já tinham usado um site ou aplicativo de namoro. Cada uma escolheu ver perfis de mulheres ou de homens; a opção 'tanto faz' não funcionou no questionário, e quem a escolheu ficou fora. O texto não diz em que país os participantes moravam."
+  description: "131 pessoas de 18 a 64 anos (média de 24,63), 81 mulheres e 50 homens, recrutadas em bola de neve por uma mensagem que pedia ajuda com a tese, sem pagamento. Mais da metade era holandesa (78 de 131); 11,5% eram alemães, e só 4,6% tinham o inglês como língua materna. 58% faziam ou tinham feito graduação, e 53,4% já tinham usado um site ou aplicativo de namoro. Cada uma escolheu ver perfis de mulheres ou de homens; a opção 'tanto faz' não funcionou no questionário, e quem a escolheu ficou fora. O texto não diz em que país os participantes moravam."
   representative: false
 design: experiment
 conflict: "Tese orientada na Radboud University; o texto não declara financiamento nem conflito de interesse. Os participantes não receberam pagamento."
@@ -32,7 +32,7 @@ O estudo mede a impressão que o texto dá a quem lê. Não houve conversa, enco
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Quem participou | 131 pessoas recrutadas em bola de neve: 81 mulheres (61,8%) e 50 homens (38,2%) | Subjects (p. 13) | "Responses of 131 participants, who were recruited through the snowball method, were used for this study. Of these 131 participants, 81 were female (61.8%) and 50 were male (38.2%)." |
-| Nacionalidade dos participantes | A maioria dos participantes era holandesa (59,9%); 24,4% marcaram uma nacionalidade fora da lista e 11,5% eram alemães | Subjects (p. 13) | "Most participants were Dutch (59.9%) or indicated that they were of another, not listed, nationality (24.4%). Additionally, a lot of people were German (11.5%)." |
+| Nacionalidade dos participantes | Mais da metade dos participantes era holandesa; 24,4% marcaram uma nacionalidade fora da lista e 11,5% eram alemães | Subjects (p. 13) | "Most participants were Dutch (59.9%) or indicated that they were of another, not listed, nationality (24.4%). Additionally, a lot of people were German (11.5%)." |
 | Língua materna dos participantes | Para 95,4% dos participantes, o inglês, língua dos perfis, não era a língua materna | Limitations (p. 24) | "Interestingly, 95.4% of participants indicated that English was not their native language." |
 | Os textos dos perfis | Seis textos de perfis reais, tirados de uma coleção de 59.946 perfis do OkCupid coletados na Califórnia, EUA, entre 2012 e 2015, escritos por pessoas com inglês fraco e espanhol fluente | Materials (p. 10) | "Six dating profile texts from a collection of 59,946 OkCupid profiles, collected between 2012 and 2015 in California, USA" |
 | Quantidade de erros nos textos | Os seis textos tinham, em média, erros de linguagem numa proporção de 8% do texto | Materials (p. 10) | "Then the final 6 profiles were chosen, which had an average 8% ratio of language errors in texts." |
@@ -53,6 +53,7 @@ Os grupos tinham tamanhos diferentes (Tabela 2): 40 pessoas com erros e com avis
 - É um trabalho de conclusão de graduação, que não passou pela revisão por pares de uma revista. Os números são os da tese.
 - A amostra é de voluntários recrutados em bola de neve, na maioria estudantes, 61,8% mulheres, e a proporção de homens e mulheres não ficou igual entre os grupos. A tese diz que isso reduz a representatividade.
 - Os leitores eram, em grande maioria, holandeses e alemães lendo em inglês, que não era a língua materna de 95,4% deles. A tese aponta que falantes nativos podem julgar erros com mais rigor.
+- A tese dá 59,9% de holandeses, por nacionalidade e por língua materna, mas a Tabela 1 dá 78 de 131 participantes nos dois casos, ou 59,5%.
 - Quem queria ver perfis dos dois sexos ficou fora, por um problema no Qualtrics. A tese dá 49 pessoas vendo perfis de mulheres e 83 vendo de homens, o que soma 132, não 131.
 - Todos os textos eram de pessoas com inglês fraco. A tese diz que o texto pode ter dado sinais de que o autor não era nativo também nos grupos sem o aviso, o que explicaria a falta de efeito do aviso. O aviso era uma linha discreta sobre línguas, não a nacionalidade.
 - Muitos participantes não perceberam os erros como o estudo os definiu: 75,9% dos que leram os textos sem erros disseram ter visto erros. A tese sugere que a pergunta pode ter sido indutora ou que linguagem informal foi tomada por erro. O texto não descreve como foram feitas as versões sem erro; os perfis estão no apêndice só como imagem.
