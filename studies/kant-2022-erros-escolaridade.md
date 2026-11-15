@@ -42,7 +42,9 @@ As notas de inteligência e de atração vão de 1 a 7, como dizem as legendas d
 
 ## Limitações
 
-- É um trabalho de conclusão de bacharelado, sem a revisão por pares de uma revista. A página de consentimento do questionário lista nove estudantes e pesquisadores; outras teses podem ter usado a mesma coleta, e não foram lidas.
+- É um trabalho de conclusão de bacharelado, sem a revisão por pares de uma revista. A página de consentimento do questionário lista nove estudantes e pesquisadores.
+- Não é evidência independente: [Janssen (2022)](janssen-2022-erros-nao-nativo.md), [Popova (2022)](popova-2022-erros-bio-genero.md), [Gillrath (2022)](gillrath-2022-erros-nativo.md), [Florijn (2022)](florijn-2022-erros-nativo-autor.md) e [Heijckers (2022)](heijckers-2022-erros-ingles-l2.md), outras teses de Radboud de 2022 cujos autores estão nessa lista, usam o mesmo questionário e os mesmos 131 participantes (81 mulheres e 50 homens), com as mesmas médias de inteligência (4,06 com erros, 4,59 sem). Cada uma cruza os erros com outra pergunta, mas as seis vêm de uma coleta só.
+- As outras cinco teses dão, para o efeito dos erros na inteligência, F(1, 123) = 4,65 e p = 0,033 (Janssen imprime F (1, 12)), e não o F(1, 127) = 9,87 e p = 0,002 daqui, com as mesmas médias. Aqui o segundo fator é a escolaridade; lá, o aviso de que o autor não é nativo ou o gênero de quem leu. Nenhuma das seis explica a diferença.
 - A amostra é de conhecidos dos pesquisadores e de quem eles indicaram, com escolaridade acima da média da Holanda, segundo a própria tese. Só 38 pessoas ficaram no grupo de escolaridade mais baixa, divididas entre as duas versões, e a tese reconhece que isso não permite conclusões firmes sobre esse grupo.
 - A tese conta que 23,7% marcaram o ensino médio como escolaridade, com idade média de 27,87 anos, e acha improvável que todos tenham entendido a pergunta: parte do grupo "mais baixo" pode ter mais estudo do que declarou.
 - A tese não diz como os participantes foram divididos entre a versão com erros e a corrigida. Ela mostra que idade, gênero, escolaridade, nacionalidade, uso anterior de apps e inglês autoavaliado não diferiram entre as versões.
