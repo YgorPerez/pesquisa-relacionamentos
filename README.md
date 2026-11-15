@@ -140,12 +140,15 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
 - [Fang, Zhang & Maglio 2025](studies/fang-2025-abreviacoes-resposta.md): abreviações em mensagens de texto e resposta · ✅ · moderada
+- [Farrelly & King 2019](studies/farrelly-2019-altruismo-perfil.md): altruísmo e beleza do rosto, para relação curta e longa · ✅ · fraca
 - [Ferreres Fernández 2021](studies/ferreres-2021-demora-e-confirmacao-de-leitura.md): demora na resposta, confirmação de leitura e satisfação com a conversa · ✅ · fraca
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
 - [Fiore et al. 2010](studies/fiore-2010-contatos-respostas.md): quem escreve e quem responde num site de namoro · ✅ · moderada
+- [Fiore 2010](studies/fiore-2010-tese-autoapresentacao-perfil.md): a impressão do par antes e depois do primeiro encontro, numa tese sobre namoro online · ✅ · fraca
 - [Fisher et al. 2010](studies/fisher-2010-rejeicao-amor.md): ver a foto de quem rejeitou ativa áreas de recompensa e de desejo intenso · ✅ · fraca
 - [Fisher et al. 2020](studies/fisher-2020-cantadas-de-mulheres.md): cantadas de mulheres para homens, com fotos · ✅ · fraca
 - [Fletcher, Simpson & Thomas 2000](studies/fletcher-2000-ideal-e-termino.md): encaixe com o ideal e término nos primeiros meses de namoro · ✅ · fraca
+- [Florijn 2022](studies/florijn-2022-erros-nativo-autor.md): erros de língua num perfil de namoro e o aviso de que o autor não é nativo · ✅ · fraca
 - [Forrai, Koban & Matthes 2023](studies/forrai-2023-fantasmas-de-vista-curta.md): dar ghosting em namoros e amizades, em duas ondas · ✅ · fraca
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
