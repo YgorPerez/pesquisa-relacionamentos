@@ -245,7 +245,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sharabi & Dorrance-Hall 2024](studies/sharabi-2024-online-dating-effect.md): "efeito do namoro online" na qualidade do casamento · ✅ · moderada
 - [Smith e Duggan 2013](studies/smith-2013-pew-namoro-online.md): namoro online nos EUA em 2013 · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
-- [South Palomares et al. 2017](studies/south-palomares-2017-estrutura-impressoes.md): os traços de parceiro que se leem num rosto · ✅ · fraca
+- [South Palomares et al. 2017](studies/south-palomares-2017-estrutura-impressoes.md): como se organizam as impressões de traços de parceiro em fotos de rosto · ✅ · fraca
 - [Spielmann et al. 2013](studies/spielmann-2013-medo-ficar-solteiro.md): o medo de ficar solteiro e aceitar menos · ✅ · fraca
 - [Sprecher 2021](studies/sprecher-2021-expectativas-video.md): o que se espera antes e o quanto se gosta depois de uma conversa por vídeo · ✅ · fraca
 - [Sprecher et al. 2026](studies/sprecher-2026-autoestima-sociossexualidade-julgada.md): autoestima, gênero e a abertura a sexo casual que se supõe · ✅ · fraca
