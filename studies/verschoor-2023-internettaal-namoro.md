@@ -47,5 +47,5 @@ A nota dos seis traços é a média de seis frases ("Deze persoon lijkt me betro
 - A tese diz que excluiu frases com humor ou elogio, mas algumas das frases usadas são elogios ("Jij bent sowieso de leukste die ik ben tegengekomen op deze applicatie", "door jou heb ik een grote glimlach op mijn gezicht").
 - A versão com internettaal mistura abreviações, letras repetidas, grafias pelo som e troca de palavra por letra. O estudo não separa o peso de cada processo, nem compara doses diferentes no experimento principal.
 - É uma frase imaginada, lida sem perfil, sem foto e sem saber o gênero de quem manda. A tese não perguntou o estado civil dos participantes nem se estavam procurando alguém. A tese também nota que as frases não apareceram em balões de conversa, como num app.
-- A amostra é de voluntários em bola de neve, recrutados pelo LinkedIn e pelo Instagram, e o único critério era dominar o holandês; a tese não diz em que país os participantes moram.
+- A amostra é de voluntários em bola de neve, recrutados pelo LinkedIn e pelo Instagram, e os critérios eram ser maior de idade e dominar o holandês; a tese não diz em que país os participantes moram.
 - É uma dissertação de mestrado, sem revisão por pares de uma revista.
