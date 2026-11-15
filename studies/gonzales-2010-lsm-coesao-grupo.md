@@ -53,5 +53,5 @@ O LSM vai de zero a um: um é cada membro usar cada classe de palavra de ligaç�
 - A coesão é o quanto os membros disseram gostar do grupo, em oito perguntas respondidas depois da tarefa (alfa de Cronbach de 0,82). O acerto é a parte certa das 22 perguntas.
 - O estilo variou pouco entre os grupos: o índice total ficou em 0,88 em média, com desvio-padrão de 0,03 (Tabela 1).
 - Os autores leem o resultado negativo do "nós" e das palavras de conquista como sinal de grupos tentando compensar falta de coesão ou de desempenho; o estudo não testou essa leitura.
-- Os autores atribuem a falta de ligação com os acertos no chat a ter de alternar entre o computador e o almanaque. Isso também não foi testado.
+- Os autores sugerem, como razão possível para a falta de ligação com os acertos no chat, ter de alternar entre o computador e o almanaque. Isso também não foi testado.
 - O texto não diz em que país nem quando os dados foram coletados.

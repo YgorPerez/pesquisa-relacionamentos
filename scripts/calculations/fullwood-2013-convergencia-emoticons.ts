@@ -7,6 +7,10 @@
 //   node scripts/calculations/fullwood-2013-convergencia-emoticons.ts two-sided
 //     Table 6 (pp. 7-8): two-sided p of the winking and hugging t tests,
 //     t(105) = -1.908 and 1.724, which the table reports as p < 0.05.
+//   node scripts/calculations/fullwood-2013-convergencia-emoticons.ts chi-square
+//     Table 1 (p. 6): the 2x2 chi-square with 185 female non-users, as the
+//     cell says, and with 184, the count that fits the 238 and 589 totals.
+//     The article reports χ2 = 11.096.
 const percent = (part: number, whole: number) =>
   `${((part / whole) * 100).toFixed(1).replace('.', ',')}%`
 
@@ -42,6 +46,16 @@ function twoSidedP(t: number, df: number): number {
 if (process.argv[2] === 'two-sided') {
   const p = (t: number) => twoSidedP(t, 105).toFixed(3).replace('.', ',')
   console.log(`piscadela: p = ${p(1.908)}; abraço: p = ${p(1.724)}`)
+} else if (process.argv[2] === 'chi-square') {
+  // Pearson chi-square of the table [[a, b], [c, d]], no continuity correction.
+  const chiSquare = (a: number, b: number, c: number, d: number) => {
+    const n = a + b + c + d
+    return (n * (a * d - b * c) ** 2) / ((a + b) * (c + d) * (a + c) * (b + d))
+  }
+  const format = (x: number) => x.toFixed(3).replace('.', ',')
+  console.log(
+    `com 185 mulheres que não usaram: χ² = ${format(chiSquare(405, 60, 185, 54))}; com 184: χ² = ${format(chiSquare(405, 60, 184, 54))}`,
+  )
 } else {
   console.log(
     `mulheres: 54 de 238 = ${percent(54, 238)}; homens: 60 de 465 = ${percent(60, 465)}`,
