@@ -146,6 +146,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ferreres Fernández 2021](studies/ferreres-2021-demora-e-confirmacao-de-leitura.md): demora na resposta, confirmação de leitura e satisfação com a conversa · ✅ · fraca
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
 - [Fiore 2004](studies/fiore-2004-regressoes-romanticas.md): o que no perfil anda junto com receber mensagens num site de namoro · ✅ · fraca
+- [Fiore et al. 2008](studies/fiore-2008-atratividade-partes-perfil.md): a foto, o texto livre e as respostas fixas na atração do perfil · ✅ · fraca
 - [Fiore et al. 2010](studies/fiore-2010-contatos-respostas.md): quem escreve e quem responde num site de namoro · ✅ · moderada
 - [Fisher et al. 2010](studies/fisher-2010-rejeicao-amor.md): ver a foto de quem rejeitou ativa áreas de recompensa e de desejo intenso · ✅ · fraca
 - [Fisher et al. 2020](studies/fisher-2020-cantadas-de-mulheres.md): cantadas de mulheres para homens, com fotos · ✅ · fraca
@@ -154,8 +155,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
+- [Gale et al. 2024](studies/gale-2024-rastreamento-olhar-perfil.md): o olhar no rosto e na renda em perfis de namoro montados · ✅ · fraca
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
+- [Gerna et al. 2026](studies/gerna-2026-foto-bio-tinder.md): foto e bio em separado no interesse por um encontro · ✅ · fraca
 - [Gibbs et al. 2006](studies/gibbs-2006-autoapresentacao-match.md): honestidade, autorrevelação e sucesso percebido no Match.com · ✅ · fraca
 - [Gosling et al. 2011](studies/gosling-2011-facebook-personalidade.md): a personalidade no uso e no perfil do Facebook · ✅ · fraca
 - [Gottman et al. 1998](studies/gottman-1998-interacao-recem-casados.md): a conversa dos recém-casados e o divórcio · ✅ · fraca
