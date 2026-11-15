@@ -4,7 +4,7 @@ link: https://doi.org/10.1016/j.evolhumbehav.2012.02.001
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "193 observadores em três grupos de conveniência (universitários dos EUA e da China e adultos da Alemanha, sem dizer como foram recrutados) julgando só 24 speed dates, todos de Berlim; um estudo só, lido no manuscrito aceito, que não traz a Tabela 1 com as correlações por pessoa."
+strength_reason: "193 observadores em três grupos (universitários dos EUA e da China e adultos da população geral da Alemanha), sem dizer como foram recrutados, julgando só 24 speed dates, todos de Berlim; um estudo só, lido no manuscrito aceito, que não traz a Tabela 1 com as correlações por pessoa."
 countries: [EUA, China, Alemanha]
 period: "não informado no texto lido"
 sample:
@@ -60,8 +60,8 @@ O escore z diz quantos desvios padrão o acerto médio do grupo ficou acima do q
 - Os observadores não estavam paquerando: julgaram trechos de 10 segundos de encontros de outras pessoas. Os vídeos são todos de speed dates de Berlim; os autores dizem que o ideal seria também ter encontros de americanos e chineses, com cada grupo julgando os três.
 - O grupo alemão difere dos outros em mais de uma coisa ao mesmo tempo: entende a língua dos vídeos, é mais velho e é da população geral, não de universitários. O estudo não separa esses fatores. Os autores conferiram só a idade, que não teve ligação com o acerto.
 - Para o interesse do homem, o grupo alemão ficou em z = 1,12 e os outros dois perto de 0,8; para o da mulher, ficou abaixo dos outros. O teste não separa essas diferenças do acaso, o que não quer dizer que os grupos acertem igual. Os autores leem que o grupo alemão superou os outros de leve no julgamento dos homens e ficou atrás no das mulheres.
-- O teste que os autores dão para a diferença entre os grupos tem 11 graus de liberdade no numerador, o número de todos os fatores do modelo (país, sexo e situação do observador e as combinações), e não só o do país. O denominador, 192, também não bate com os 193 observadores. O manuscrito não explica.
+- O teste que os autores dão para a diferença entre os grupos, F(11,192), tem 11 graus de liberdade no numerador, o número de todos os fatores do modelo (país, sexo e situação do observador e as combinações), e não só o do país. O F e o p parecem ser, então, os do modelo inteiro, e não os do país sozinho. O 192 é o total de observadores menos um, e não os graus de liberdade do erro desse modelo, que seriam 181 (193 menos as 12 combinações de país, sexo e situação). O manuscrito não explica nenhum dos dois.
 - A versão lida é o manuscrito aceito, com marcas de formatação de revisão. Ela cita uma Tabela 1 com a correlação do acerto por pessoa entre os grupos, mas a tabela não está no arquivo. Os valores dessas correlações não foram lidos.
 - A faixa de acerto bruto (58% a 64%) vem sem dizer se é entre observadores ou entre grupos, e o artigo não dá o acerto bruto de cada grupo.
 - Cada observador viu 96 vídeos, de 10 e de 30 segundos e de três momentos do encontro; a análise usa só os 24 trechos de 10 segundos do meio, porque, segundo os autores, foi a combinação de maior acerto no estudo anterior com os observadores dos EUA.
-- Os grupos são de conveniência e o texto não diz como foram recrutados. Os dados dos EUA vêm de um estudo anterior dos mesmos autores, reanalisados; os autores dizem que os valores mudaram um pouco por isso.
+- O texto não diz como os observadores foram recrutados, nem que os grupos representem os seus países. Os dados dos EUA vêm de um estudo anterior dos mesmos autores, reanalisados; os autores dizem que os valores mudaram um pouco por isso.
