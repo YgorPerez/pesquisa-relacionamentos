@@ -219,6 +219,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lee et al. 2026](studies/lee-2026-foto-presencial.md): notas dadas a uma foto de rosto e notas dadas depois de conversar · ✅ · fraca
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
+- [Leivers et al. 2015](studies/leivers-2015-fidelidade-rosto-mulheres.md): homens julgando pela foto a fidelidade de mulheres · ✅ · fraca
 - [Lew et al. 2018](studies/lew-2018-latencia-e-contingencia.md): demora e pertinência da resposta num chat de atendimento · ✅ · fraca
 - [Lewis 2013](studies/lewis-2013-preconceito-racial-respostas.md): raça, primeira mensagem e resposta no OkCupid · ✅ · moderada
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
@@ -365,8 +366,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · moderada
+- [Landwehr et al. 2026](studies/landwehr-2026-roupa-excitacao.md): roupa, expressão e excitação sexual no julgamento de flerte · ✅ · fraca
 - [Le et al. 2010](studies/le-2010-preditores-termino.md): o que prevê o término de namoros (meta-análise) · ⬜ · forte
 - [Lee et al. 2020](studies/lee-2020-interesse-sexual-projecao.md): interesse sexual percebido em encontros rápidos · ✅ · moderada
+- [Luevano e Zebrowitz 2007](studies/luevano-2007-masculinidade-curto-prazo.md): rosto masculino e preferência para algo curto ou longo · ✅ · fraca
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
