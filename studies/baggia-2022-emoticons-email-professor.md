@@ -4,7 +4,7 @@ link: https://doi.org/10.3916/C73-2022-10
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Estudo que só observa, com 20 e-mails com emoticon entre 307, de alunos de duas faculdades, notados pelos próprios professores que os receberam e que montaram o banco; comparações simples, sem levar em conta professor, país, língua ou assunto do e-mail, e vários números do texto não fecham entre si."
+strength_reason: "Estudo que só observa, com 20 e-mails com emoticon entre 307, de alunos de duas faculdades, avaliados pelos próprios professores que os receberam e que montaram o banco; comparações simples, sem levar em conta professor, país, língua ou assunto do e-mail, e vários números do texto não fecham entre si."
 countries: [Eslovênia, Sérvia]
 period: "anos letivos 2018/19 e 2019/20"
 sample:
@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Quinze professores de uma faculdade da Eslovênia e de uma da Sérvia guardaram os e-mails que receberam de alunos e deram nota a cada um num formulário online, em oito itens: linha de assunto, saudação, identificação de quem escreve, fecho, assinatura, diagramação, formalidade e cortesia. Cada item tem uma escala curta (de 0 a 2 ou de 0 a 3), e a soma vai de 0 a 18; nota maior quer dizer um e-mail mais de acordo com as normas de e-mail profissional ou acadêmico. O uso de emoticon não entra na nota. Os autores compararam os e-mails com e sem emoticon (o estudo chama emoji também de emoticon). Os e-mails são os que os alunos mandaram de fato. Depois, os alunos que escreveram responderam a um questionário sobre o próprio letramento digital e a atitude com o professor, e os autores compararam quem tinha usado emoticon com quem não tinha.
+Quinze professores de uma faculdade da Eslovênia e de uma da Sérvia guardaram os e-mails que receberam de alunos e deram nota a cada um num formulário online, em oito itens: linha de assunto, saudação, identificação de quem escreve, fecho, assinatura, diagramação, formalidade e cortesia. Cada item tem uma escala curta (de 0 a 2 ou de 0 a 3), e a soma vai de 0 a 18; nota maior quer dizer um e-mail mais de acordo com as normas de e-mail profissional ou acadêmico. O uso de emoticon não entra na nota. Os autores compararam os e-mails com e sem emoticon (o estudo chama emoji também de emoticon). Os e-mails são os que os alunos mandaram de fato. Depois de mandar o e-mail, o aluno era convidado a responder a um questionário online sobre o próprio letramento digital e a atitude com o professor; 214 responderam ao menos em parte, e os autores compararam quem tinha usado emoticon com quem não tinha.
 
 ## Achados
 

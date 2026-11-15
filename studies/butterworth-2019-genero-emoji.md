@@ -54,7 +54,7 @@ As duas notas vão de 1 a 7, e nota maior quer dizer mais adequada ou mais simp�
 - A versão afetuosa tinha dois emoji (beijo e coração) e a amigável, um só. Os autores reconhecem que a diferença no número de emoji é uma explicação alternativa; o coração foi acrescentado porque, nos pré-testes, alguns participantes confundiram o beijo com o sorriso.
 - Não houve versão sem emoji, então o estudo não diz como a impressão com emoji se compara à impressão sem emoji.
 - O resumo do artigo diz que a mensagem afetuosa foi julgada mais adequada e mais simpática quando vinha de uma mulher. Nos resultados, a diferença de adequação passa no teste, mas a de simpatia (4,43 contra 4,06) pode ser acaso.
-- Na adequação da mensagem com sorriso, o artigo trata a diferença entre Steven e Rebecca (d = 0,52) como ausência de diferença, embora seu tamanho fique perto do de outras que ele trata como reais (d = 0,68). Com cerca de 40 pessoas por comparação, o estudo só distingue diferenças grandes.
+- Na adequação da mensagem com sorriso, o artigo trata a diferença entre Steven e Rebecca (d = 0,52) como ausência de diferença, embora seu tamanho fique perto do de outras que ele trata como reais (d = 0,68).
 - O artigo não diz como cada participante caiu numa das quatro versões nem em que período os dados foram coletados. Fotos de Rebecca e Steven acompanhavam a mensagem; o pré-teste as achou igualmente atraentes, mas o artigo não diz quantas pessoas fizeram o pré-teste.
 - A explicação para Steven parecer mais simpático com o sorriso (homens seriam "celebrated" por mostrar emoção; mulheres competentes sofreriam "backlash") é a leitura dos autores; o estudo não a mediu.
 - O artigo não pergunta a orientação sexual dos participantes.
