@@ -11,7 +11,7 @@ sample:
   description: "Não há amostra própria. A revisão discute estudos com adultos sobre as reações de quem é imitado, quase todos experimentos de laboratório em que um ator treinado, um personagem virtual ou outro participante imita a postura e os movimentos do participante. A Tabela 2 reúne dez experimentos que mediram o quanto o participante gostou de quem o imitou, com 40 a 88 participantes cada; a Tabela 3, cinco estudos de neuroimagem. A revisão deixa de fora a imitação de expressões faciais, emoções e voz, e os estudos com crianças. Os estudos são sobre desconhecidos em tarefas de laboratório, negociações e situações de rua, não sobre namoro."
   representative: false
 design: review
-conflict: "O laboratório da segunda autora tem financiamento do ERC (313398-INTERACT); a primeira autora tem financiamento do MoD (Ministério da Defesa), por meio do Dstl (DSTL/PS79473). O manuscrito não traz declaração de conflito de interesses."
+conflict: "O laboratório de Hamilton tem financiamento do ERC (313398-INTERACT); Joanna Hale tem financiamento do MoD (Ministério da Defesa), por meio do Dstl (DSTL/PS79473). O manuscrito não traz declaração de conflito de interesses."
 covers: {}
 ---
 
@@ -47,10 +47,10 @@ O η² é a parte da variação das notas ligada à imitação; perto de 0,1 é 
 
 ## Limitações
 
-- É uma revisão narrativa. Os autores não dizem onde nem como buscaram os estudos, nem por que esses dez entraram na tabela, e não avaliam a qualidade deles. Não é uma revisão sistemática, embora às vezes seja citada assim.
+- É uma revisão narrativa. Os autores não dizem onde nem como buscaram os estudos, nem por que esses dez entraram na tabela, e não avaliam a qualidade deles. Não é uma revisão sistemática.
 - O texto dá dois números para o tamanho médio do efeito: η² "perto de 0,1" na seção 1.1.1 e η² = 0,01 na seção 3.1.4. Na Tabela 2, os efeitos dos estudos que acharam a ligação ficam entre 0,08 e 0,13, e o único estudo sem a ligação que dá um η² (Drury e van Swol, 2005) tem 0,01. O primeiro valor é o que bate com a tabela. A Ficha não usa o 0,01.
 - Os 120 participantes por grupo não podem ser conferidos sem o poder e o nível de significância usados, que o texto não dá.
 - Os estudos são sobre desconhecidos: participantes de laboratório diante de atores treinados ou de personagens virtuais, parceiros de negociação, pessoas abordadas na rua. Nenhum é sobre namoro ou paquera, e a revisão deixa de fora a imitação da fala, da voz e das expressões faciais.
-- Vários dos achados vêm de um único estudo cada (o de outro grupo, o de status, o da ansiedade social, o de quem percebeu a imitação), descritos pela revisão sem os números.
+- Vários dos achados vêm de um ou dois estudos cada (o de outro grupo, de dois; o de status, o da ansiedade social e o de quem percebeu a imitação, de um cada), descritos pela revisão sem os números.
 - A comparação entre quem percebeu e quem não percebeu a imitação, no estudo de Bailenson e colegas, não foi sorteada: quem percebeu pode ser diferente de quem não percebeu por outros motivos. A revisão cita a ressalva de outros autores de que esses participantes já sabiam que poderiam ser imitados.
-- Li o manuscrito aceito, antes da revisão de texto da editora; a versão publicada pode ter correções de texto ou de números.
+- A Ficha usa o manuscrito aceito, antes da revisão de texto da editora; a versão publicada pode ter correções de texto ou de números.

@@ -12,7 +12,7 @@ sample:
   description: "Estudo 1: 63 voluntários recrutados por anúncios por e-mail (44 mulheres, idade média de 26 anos), pagos com £7,50 por uma hora; um saiu por falha do sensor de movimento e os 12 que perceberam a imitação saíram das análises, que ficaram com 50 (25 em cada grupo de atraso). Estudo 2: dos 236 que responderam a um questionário de triagem, 54 (37 mulheres) foram escolhidos por se identificarem fortemente como europeus ou como do Leste Asiático, estes com menos de um ano no Reino Unido; seis saíram por falha do sensor e oito por perceberem a imitação, e as análises ficaram com 40. A aprovação ética é da University College London. Os participantes conversaram com avatares, não com pessoas, e não num contexto de namoro."
   representative: false
 design: experiment
-conflict: "Financiado pelo MoD (Ministério da Defesa), por meio do Dstl (DSTL/PS79473); a segunda autora tem apoio do ERC (313398-INTERACT). Os autores declararam não ter interesses financeiros em conflito."
+conflict: "Financiado pelo MoD (Ministério da Defesa), por meio do Dstl (DSTL/PS79473); A. Hamilton tem apoio do ERC (313398-INTERACT). Os autores declararam não ter interesses financeiros em conflito."
 covers:
   genders: [man, woman]
 ---
@@ -54,6 +54,6 @@ As notas de afinidade, confiança, semelhança e simpatia vieram de escalas cont
 - O estudo não é sobre namoro nem sobre pessoas conversando entre si. Os participantes descreviam fotos em turnos com um avatar projetado numa tela, e a imitação era só dos movimentos de cabeça e tronco; fala, olhar e expressão do avatar eram iguais nas duas condições. Os autores dizem que avatares mais completos, ou uma conversa livre, poderiam dar outro resultado.
 - As amostras são pequenas (50 e 40 participantes analisados) e de voluntários: no Estudo 1, recrutados por e-mail e pagos; no Estudo 2, escolhidos num questionário de triagem por se identificarem fortemente como europeus ou do Leste Asiático. No Estudo 1, os dois avatares eram mulheres (Anna e Becky).
 - O Estudo 1 foi exploratório: de oito notas, só a afinidade mostrou diferença, e os autores dizem que ela não passaria numa correção para comparações múltiplas (Bonferroni). Eles mesmos o leem como possível falso positivo.
-- Quem percebeu a imitação saiu das análises (12 no Estudo 1 e 8 no Estudo 2). O resultado vale só para a imitação que passa despercebida, e os autores não analisaram quem percebeu.
+- Quem percebeu a imitação saiu das análises (12 no Estudo 1 e 8 no Estudo 2). O resultado vale só para a imitação que passa despercebida; os autores dizem que não puderam analisar em detalhe quem percebeu, por serem poucos e por poderem responder ao que achavam que o estudo esperava.
 - A Tabela 2 traz F(1, 48) no cabeçalho, mas o Estudo 2 analisou 40 participantes, todos vendo os quatro avatares; o artigo não explica. Quatro participantes enjoaram no labirinto e ficaram fora dessa análise.
 - O artigo não diz onde a coleta foi feita; o Reino Unido vem do critério do Estudo 2 (menos de um ano no Reino Unido para os participantes do Leste Asiático), da aprovação ética da University College London e do texto, que diz que o experimento foi feito num país europeu.
