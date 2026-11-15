@@ -4,7 +4,7 @@ link: https://doi.org/10.1075/ip.00107.gib
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Análise qualitativa (análise da conversa) de conversas reais do Tinder enviadas como capturas de tela por 19 voluntários da Espanha e da Dinamarca, que sabiam do estudo e escolheram o que compartilhar; os poucos números são contagens de emojis, e os exemplos foram escolhidos pelo próprio estudo para ilustrar a análise."
+strength_reason: "Análise qualitativa (análise da conversa) de conversas reais do Tinder enviadas como capturas de tela por 19 voluntários da Espanha e da Dinamarca, que sabiam do estudo e podem ter escolhido o que compartilhar; os poucos números são contagens de emojis, e os exemplos foram escolhidos pelo próprio estudo para ilustrar a análise."
 countries: [Espanha, Dinamarca]
 period: "duas semanas por participante, entre maio e setembro de 2021"
 sample:
@@ -23,7 +23,7 @@ license: "CC BY 4.0 (Available under the CC BY 4.0 license, como diz a primeira 
 
 ## O que mediu
 
-O estudo juntou as conversas de 19 voluntários no Tinder, na Espanha e na Dinamarca, enviadas como capturas de tela durante duas semanas de 2021, transcritas e traduzidas para o inglês. Contou quantos emojis e quantos emojis de piscadela (😉, 😜 e 🥴) cada conversa tinha. Depois separou os trechos que leu como flerte e, com a análise da conversa (o método que lê cada mensagem pela mensagem anterior e pela resposta que recebe), descreveu o que a piscadela fazia ali e como o outro lado respondia.
+O estudo juntou as conversas de 19 voluntários no Tinder, na Espanha e na Dinamarca, enviadas como capturas de tela durante duas semanas de 2021, transcritas e traduzidas para o inglês. Contou, para cada voluntário, quantos emojis e quantos emojis de piscadela (😉, 😜 e 🥴) ele mandou e quantos recebeu de quem conversava com ele. Depois separou os trechos que leu como flerte e, com a análise da conversa (o método que lê cada mensagem pela mensagem anterior e pela resposta que recebe), descreveu o que a piscadela fazia ali e como o outro lado respondia.
 
 O artigo não compara grupos nem mede efeito. Os voluntários também foram entrevistados sobre o uso do Tinder, mas a entrevista não tratou de emojis.
 
@@ -33,7 +33,7 @@ O artigo não compara grupos nem mede efeito. Os voluntários também foram entr
 |---|---|---|---|
 | Emojis no material espanhol | Nas 153 conversas dos voluntários da Espanha apareceram 1309 emojis, 90 deles de piscadela | Tabela 1, p. 7 | "153 518 791 74 16 60 15 13 1 TOTAL 1309 90" |
 | Emojis no material dinamarquês | Nas 158 conversas dos voluntários da Dinamarca apareceram 1045 emojis, 133 deles de piscadela | Tabela 2, p. 8 | "TOTAL 158 521 523 59 74 47 72 0 2 1 0 1045 133" |
-| Peso da piscadela entre os emojis | A piscadela foi 6% dos emojis no material espanhol e pouco mais de 12% no dinamarquês | p. 7 | "Wink emoji counted for 6% of all emoji used in the Spanish data and a little over 12% for the Danish data." |
+| Peso da piscadela entre os emojis | No material dinamarquês, a piscadela foi pouco mais de 12% dos emojis | p. 7 | "a little over 12% for the Danish data." |
 | Diferença entre voluntários | O número de emojis variou muito de um voluntário para outro: de 1 a 344 no material espanhol, contando só os que o próprio voluntário mandou | p. 7 | "varying from 1 (P6 Spanish data) to 344 (P3 Spanish data)" |
 | Perguntar o que um emoji quis dizer | Em todo o material, uma conversa só teve alguém questionando um emoji; nas outras, mesmo quando o sentido não era claro, quem recebia seguia a conversa sem perguntar. O estudo lê isso como uma preferência por deixar a ambiguidade passar | p. 11 | "The types of ambiguity we find here are not at all uncommon in the data set and yet there are no further examples of people questioning the use of an emoji." |
 | A conversa em que o emoji foi questionado | No único caso em que a pessoa questionou um emoji, quem o tinha mandado não respondeu, e a conversa acabou ali | p. 11 | "CI does not reply to this message and the interaction ends here." |
@@ -48,7 +48,7 @@ O artigo não compara grupos nem mede efeito. Os voluntários também foram entr
 
 - São 19 voluntários de dois países, e o estudo não diz como foram recrutados além de serem voluntários maiores de 18 anos. O próprio estudo diz que o material é pequeno demais para comparar Espanha e Dinamarca e trata as duas coleções como uma só.
 - Os voluntários sabiam do estudo antes de mandar as conversas. O estudo diz que eles podem ter mudado o jeito de usar o app e escolhido o que compartilhar.
-- O que o emoji queria dizer não foi perguntado a ninguém: a leitura é do estudo, feita a partir da sequência das mensagens, e o próprio estudo diz que essas leituras nunca são totalmente seguras. Os exemplos foram escolhidos para mostrar a análise, sem contagem de quantas vezes cada uso apareceu.
+- O que o emoji queria dizer não foi perguntado a ninguém: a leitura é do estudo, feita a partir da sequência das mensagens, e o próprio estudo diz que essas leituras nem sempre são totalmente seguras, e talvez nunca sejam. Os exemplos foram escolhidos para mostrar a análise, sem contagem de quantas vezes cada uso apareceu.
 - Na época do estudo, o chat do Tinder aceitava texto, mas não vídeo, áudio nem foto. As conversas foram traduzidas para o inglês para a análise.
 - Contas da Tabela 2: emojis de quem conversava com os voluntários (521) mais os dos voluntários (523) dão 1044, não os 1045 do total impresso. Na Tabela 1, 90 piscadelas em 1309 emojis dão perto de 7%, e o texto diz 6%.
 - Nada se sabe de quem conversava com os voluntários (idade, gênero, país), porque os dados vieram anonimizados. O estudo não diz a orientação sexual dos voluntários nem com quem eles buscavam se relacionar.
