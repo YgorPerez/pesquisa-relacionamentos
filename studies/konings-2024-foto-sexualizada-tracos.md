@@ -4,12 +4,12 @@ link: https://doi.org/10.1016/j.bodyim.2024.101781
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Estudo pré-registrado com prints de perfis reais, mas os 443 doadores são jovens de 18 a 30 anos que responderam a anúncios em redes sociais ou foram abordados em lugares como estações de trem, em troca de um vale de cinco euros, e não representam os usuários dos apps; cada um escolheu o que mandar, só até três fotos foram codificadas na maior parte dos perfis, o desenho é transversal e as ligações com a imagem corporal são pequenas e vêm dos 237 que responderam ao questionário."
+strength_reason: "Estudo pré-registrado com prints de perfis reais, mas os 443 doadores são jovens de 18 a 30 anos recrutados por anúncios em redes sociais ou fora da internet (o artigo cita estações de trem), em troca de um vale de cinco euros, e não representam os usuários dos apps; cada um escolheu o que mandar, só até três fotos foram codificadas na maior parte dos perfis, o desenho é transversal e as ligações com a imagem corporal são pequenas e vêm dos 237 que responderam ao questionário."
 countries: []
 period: "abril a agosto de 2022"
 sample:
   n: 443
-  description: "443 usuários de Tinder (299) ou Bumble (144), de 18 a 30 anos, recrutados por anúncios em redes sociais e pessoalmente (o artigo cita estações de trem), que mandaram prints do próprio perfil em troca de um vale-presente de cinco euros. Idade média de 23,15 anos; 72,20% mulheres cisgênero; 34,80% não exclusivamente heterossexuais; 95,70% de etnia da Europa Ocidental. Foram codificados 443 textos de perfil e 1.277 fotos. 237 deles também responderam a um questionário sobre imagem corporal; os outros não foram convidados, para não cansar, porque responderam a outro questionário. As sete pessoas não cisgênero ficaram fora das análises."
+  description: "443 usuários de Tinder (299) ou Bumble (144), de 18 a 30 anos, recrutados por anúncios em redes sociais e fora da internet (o artigo cita estações de trem), que mandaram prints do próprio perfil em troca de um vale-presente de cinco euros. Idade média de 23,15 anos; 72,20% mulheres cisgênero; 34,80% não exclusivamente heterossexuais; 95,70% de etnia da Europa Ocidental. Foram codificados 443 textos de perfil e 1.277 fotos. 237 deles também responderam a um questionário sobre imagem corporal; os outros não foram convidados, para não cansar, porque responderam a outro questionário. As sete pessoas não cisgênero ficaram fora das análises."
   representative: false
 design: cross-sectional
 conflict: "Financiado pela Research Foundation Flanders (FWO, bolsa G077420N). Os autores declaram não ter conflito de interesse. Os participantes ganharam um vale-presente de cinco euros."
@@ -53,9 +53,9 @@ A nota de sexualização do texto é a soma dos quatro sinais no texto do perfil
 
 ## Limitações
 
-- Os participantes responderam a anúncios ou foram abordados pessoalmente e escolheram o que mandar. Os autores dizem que quem se sentisse desconfortável pode ter deixado de fora o conteúdo mais sexualizado; 81% disseram ter mandado o perfil inteiro.
-- Os percentuais não valem para os usuários dos apps em geral. São jovens de 18 a 30 anos, quase todos de etnia da Europa Ocidental, e o artigo não diz como foram escolhidos além dos anúncios e da abordagem.
-- Só 172 perfis (38,80%) tiveram todas as fotos codificadas; nos demais, por viabilidade, só as três primeiras. Os percentuais por foto pesam mais os perfis codificados por inteiro.
+- Os participantes foram recrutados por anúncios em redes sociais ou fora da internet e escolheram o que mandar. Os autores dizem que quem se sentisse desconfortável pode ter deixado de fora o conteúdo mais sexualizado; 81% disseram ter mandado o perfil inteiro.
+- Os percentuais não valem para os usuários dos apps em geral. São jovens de 18 a 30 anos, quase todos de etnia da Europa Ocidental, e o artigo não diz como foram recrutados além dos anúncios em redes sociais e de citar estações de trem.
+- Só 172 perfis (38,80%) tiveram todas as fotos codificadas; nos demais, por viabilidade, no máximo as três primeiras. O artigo não diz quantas fotos tinham os perfis codificados por inteiro nem como isso pesa nos percentuais por foto.
 - O sinal mais comum, o de rosto, é amplo: inclui boca levemente aberta sem sorrir e cabeça inclinada, e responde por boa parte das fotos marcadas. A concordância entre codificadores foi de 0,70 no rosto e de 0,68 na pose, as mais baixas da Tabela 1.
 - O resumo diz que mulheres, não heterossexuais e quem tem imagem corporal mais negativa se sexualizaram mais. Cada parte vale para um caso: as mulheres só nas fotos; os não heterossexuais só nos textos, onde só 19 perfis tinham algum sinal; e a imagem corporal negativa só nas fotos e só em três das cinco medidas negativas. Na Tabela 3, as outras duas, internalizar ideais de aparência (r = 0,06) e insatisfação com o corpo (r = 0,08), não tiveram ligação com as fotos que se separe do acaso.
 - As correlações com a imagem corporal olham duas medidas por vez, sem levar em conta gênero ou orientação, e vêm de um só momento. Os autores dizem que não dá para saber se a imagem corporal leva à sexualização ou o contrário.
