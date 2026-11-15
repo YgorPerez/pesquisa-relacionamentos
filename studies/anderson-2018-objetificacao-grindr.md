@@ -4,7 +4,7 @@ link: https://doi.org/10.1002/ejsp.2350
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Três estudos transversais na Austrália com amostras de conveniência: dois questionários com voluntários recrutados no próprio Grindr e no Facebook e uma análise de 1.400 perfis vistos pelos pesquisadores em Melbourne; nada é sorteado, e texto e tabelas divergem em alguns números."
+strength_reason: "Três estudos transversais na Austrália com amostras de conveniência: dois questionários com voluntários recrutados no próprio Grindr e no Facebook e uma análise de 1.400 perfis vistos pelos pesquisadores em Melbourne; nenhum dos três é um experimento, e texto e tabelas divergem em alguns números."
 countries: [Austrália]
 period: "não informado no texto lido"
 sample:
@@ -57,11 +57,11 @@ No Estudo 2, o propósito é o que o perfil marcava, e cada perfil podia marcar 
 
 ## Limitações
 
-- Nenhum dos três estudos sorteia nada: mostram o que anda junto, não o que causa o quê. As amostras são de voluntários e de perfis vistos pelos pesquisadores numa só cidade, e os autores dizem que usuários do Grindr podem diferir de outros homens que fazem sexo com homens.
+- Nenhum dos três estudos é um experimento: mostram o que anda junto, não o que causa o quê. As amostras são de voluntários e de perfis vistos pelos pesquisadores numa só cidade, e os autores dizem que usuários do Grindr podem diferir de outros homens que fazem sexo com homens.
 - No Estudo 1, os autores não acharam homens que nunca tivessem usado o Grindr; o grupo de comparação é de quem tinha parado de usar. O teste do estado civil relata 159 pessoas, não 169.
 - No Estudo 2, o texto e a Tabela 1 divergem na comparação de foco no corpo entre fotos com e sem camisa: o texto dá t(1398) = 17,99 e d = 1,02, a tabela dá t(1395) = 17,49 e d = 0,86. As médias (0,49 e 0,73) batem. A regressão relata 1.391 graus de liberdade para 1.400 perfis, e a Tabela 3 traz uma constante de 99,601 num índice que vai de 0 a 1.
 - Na Tabela 2, a coluna de razão de chances tem o sentido invertido em relação aos coeficientes dos propósitos: para "right now", o coeficiente é positivo e a razão de chances é 0,399. As leituras dos autores ("cerca de três vezes", "cerca de uma vez e meia") parecem vir dessa coluna invertida e não se conferem direto na tabela. Por isso os Achados trazem o coeficiente.
-- Os autores reconhecem que uma foto que esconde o rosto pode ser um jeito de não se expor, e não um sinal de objetificação, e que algumas fotos podem não ser do dono do perfil. O Estudo 3 apoia a primeira leitura: quem mostrava só o corpo se assumia menos, e o foco no corpo não teve ligação com a objetificação.
-- No Estudo 3, a foto foi descrita pelo próprio usuário, não vista pela equipe; 90 dos 300 não deram detalhe suficiente para saber se estavam de camisa.
+- Os autores reconhecem que uma foto que esconde o rosto pode ser um jeito de não se expor, e não um sinal de objetificação, e que algumas fotos podem não ser do dono do perfil. Os autores leem o Estudo 3 como apoio à primeira leitura: quem mostrava só o corpo se assumia menos, e o foco no corpo não teve ligação com a objetificação.
+- No Estudo 3, a foto foi descrita pelo próprio usuário, não vista pela equipe; 90 dos 300 não deram detalhe suficiente para saber se estavam de camisa. O método diz que a foto de camisa recebeu o código 1 e a sem camisa, 0; a nota da Tabela 5 diz o contrário. Por isso o sinal das ligações da Tabela 5 com a foto sem camisa não se lê com segurança.
 - No Estudo 3, o texto dos resultados diz que objetificar outros homens andou junto com achar parceiros sob efeito de drogas, como previsto; a Tabela 5 e a discussão dão a ligação no sentido contrário (quem objetificava mais disse fazer isso menos). Os resultados também chamam de fraca a ligação entre foto sem camisa e auto-objetificação, e a discussão a chama de marginal.
 - A versão lida é o manuscrito aceito, sem a revisão final da editora; a versão publicada pode ter números corrigidos.
