@@ -229,6 +229,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Huber & Malhotra 2017](studies/huber-2017-homofilia-politica.md): afinidade política na escolha de par num site de namoro · ✅ · moderada
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Hunter et al. 2019](studies/hunter-2018-riqueza-perfil.md): o saldo bancário e outros sinais de riqueza num perfil de namoro · ✅ · fraca
+- [Ireland & Pennebaker 2010](studies/ireland-2010-lsm-escrita-cartas.md): estilo de escrita parecido em redações, cartas e poemas · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
 - [Jaeger et al. 2025](studies/jaeger-2025-tratamento-estetico.md): tratamento estético facial e primeira impressão · ✅ · fraca
@@ -502,8 +503,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hernandez & Punyanunt-Carter 2018](studies/hernandez-2018-respostas-escritas.md): respostas escritas no perfil e a decisão de começar a conversar · ✅ · fraca
 - [van den Heuvel 2021](studies/heuvel-2021-fundo-foto-atracao.md): o fundo da foto de perfil e a atração · ✅ · fraca
 - [Holmgreen & Oswald 2017](studies/holmgreen-2017-apego-anuncios.md): o estilo de apego escrito no anúncio de namoro de uma mulher · ✅ · fraca
+- [Ireland & Henderson 2014](studies/ireland-2014-lsm-negociacao-impasse.md): estilo de linguagem parecido e impasse numa negociação por chat · ✅ · fraca
 - [Janssen 2022](studies/janssen-2022-erros-nao-nativo.md): erros de língua num perfil de namoro e saber que quem escreve não é nativo · ✅ · fraca
 - [Janulevičiūtė & Mikuličiūtė 2024](studies/januleviciute-2024-autorrevelacao-solidao.md): quanto o homem conta de si no perfil e a nota que as mulheres dão a ele · ✅ · fraca
+- [Jiang et al. 2023](studies/jiang-2023-reciprocidade-bitmoji.md): devolver figurinhas Bitmoji entre amigos no Snapchat · ✅ · fraca
 - [Jin et al. 2019](studies/jin-2019-instagram-namorada.md): o tipo de foto no Instagram e o desejo de sair · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
