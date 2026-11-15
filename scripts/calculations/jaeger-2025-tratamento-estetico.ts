@@ -29,7 +29,6 @@ for (const t of types) {
     `${t.name}: open ${open} of ${sample} = ${fmt(pct(open, sample))}%; ` +
       `published ${fmt(t.consider)}% over ${sample}: ` +
       `${overSample.length ? overSample.join('/') : 'no whole count'}; ` +
-      `over the ${open} open: ${consider} of ${open} = ${fmt(pct(consider, open))}%; ` +
-      `${consider} of ${sample} = ${Math.round((100 * consider) / sample)}%`,
+      `over the ${open} open: ${consider} of ${open} = ${fmt(pct(consider, open))}%`,
   )
 }
