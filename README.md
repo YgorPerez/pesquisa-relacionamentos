@@ -412,6 +412,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Vacharkulksemsuk et al. 2016](studies/vacharkulksemsuk-2016-postura-expansiva.md): postura expansiva no encontro rápido e na foto do aplicativo · ✅ · fraca
+- [Vareberg et al. 2023](studies/vareberg-2023-emoji-professor-credibilidade.md): emoji no e-mail de boas-vindas de um professor · ✅ · fraca
 - [Vazire & Gosling 2004](studies/vazire-2004-site-pessoal-personalidade.md): a personalidade lida num site pessoal · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Verwers 2021](studies/verwers-2021-humor-abertura-tinder.md): frase de abertura engraçada e foto no Tinder · ✅ · fraca
@@ -423,6 +424,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
 - [Wan & Yeung 2022](studies/wan-2021-objetivo-autoapresentacao-eua-china.md): o objetivo e a autoapresentação em anúncios de sites de namoro dos EUA e de Hong Kong · ✅ · fraca
+- [Wang et al. 2014](studies/wang-2014-emoticons-feedback-negativo.md): carinhas numa crítica de trabalho por mensagem · ✅ · fraca
 - [Wang 2026](studies/wang-2026-personalidade-bio-tinder.md): tipo de personalidade na bio do Tinder · ✅ · fraca
 - [Watkins 2017](studies/watkins-2017-criatividade-compensa.md): texto criativo, rosto atraente e a nota de atração · ✅ · fraca
 - [Weidman et al. 2015](studies/weidman-2015-personalidade-anuncio-pessoal.md): personalidade lida em anúncios pessoais · ✅ · fraca
@@ -550,6 +552,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Uehara 2007](studies/uehara-2007-emoticons-impressao.md): carinhas de texto e a impressão de uma mensagem · ✅ · fraca
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
