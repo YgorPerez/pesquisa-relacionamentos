@@ -14,6 +14,9 @@ const chosen: ReadonlyArray<readonly [string, number, number]> = [
 
 console.log(
   chosen
-    .map(([study, men, women]) => `${study}: ${percent(men)} vs. ${percent(women)}`)
+    .map(
+      ([study, men, women]) =>
+        `${study}: ${percent(men)} vs. ${percent(women)}`,
+    )
     .join('; '),
 )
