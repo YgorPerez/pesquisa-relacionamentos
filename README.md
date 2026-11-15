@@ -106,7 +106,6 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Bajnaid & Al-Saggaf 2017](studies/bajnaid-2017-sites-matrimoniais-ozchi.md): como usuários de um site de casamento saudita formam impressões · ✅ · fraca
 - [Bajnaid et al. 2018](studies/bajnaid-2018-sites-matrimoniais.md): o perfil e a escolha de cônjuge num site saudita de casamento · ✅ · fraca
 - [Bak 2010](studies/bak-2010-efeito-halo.md): foto bonita num perfil, mesmo sabendo que não é da pessoa · ✅ · fraca
-- [Bak 2010](studies/bak-2010-efeito-halo-perfil.md): foto atraente que todos sabiam ser falsa · ✅ · fraca
 - [Bandell & Krall 2019](studies/bandell-2019-sorriso-olhar-primeira-foto.md): sorriso e olhar na primeira foto de um homem · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
@@ -251,7 +250,6 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kerr 2009](studies/kerr-2009-padroes-ideais-perfis.md): padrões ideais e escolha entre perfis num site de namoro imaginado · ✅ · fraca
 - [Kerr et al. 2020](studies/kerr-2020-primeira-impressao-encontros.md): primeira impressão da personalidade e interesse romântico no speed dating · ✅ · fraca
 - [Keverline 2020](studies/keverline-2020-cachorro-foto-perfil.md): o cachorro na foto do perfil · ✅ · fraca
-- [Keverline 2020](studies/keverline-2021-cachorro-foto.md): cachorro na foto de perfil do Tinder · ✅ · fraca
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
 - [Knights 2018](studies/knights-2018-persuasao-tinder.md): técnicas de persuasão num perfil do Tinder · ✅ · fraca
