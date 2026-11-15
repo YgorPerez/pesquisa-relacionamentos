@@ -236,9 +236,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld 2018](studies/rosenfeld-2018-apps-encontros-eua.md): quantos solteiros americanos saíram com alguém em um ano, e por onde · ✅ · moderada
 - [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
+- [Samara et al. 2022](studies/samara-2022-observadores-atracao.md): o interesse num encontro às cegas, visto de fora · ✅ · fraca
+- [Schmälzle et al. 2019](studies/schmalzle-2019-risco-hiv-perfil.md): o risco de HIV que um perfil de namoro passa · ✅ · fraca
 - [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
+- [Sciara et al. 2026](studies/sciara-2026-preconceito-tinder.md): o preconceito contra o Tinder, no perfil e no casal · ✅ · fraca
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
 - [Sedgewick et al. 2017](studies/sedgewick-2017-angulo-selfie-tinder.md): ângulo da câmera nas selfies de perfil do Tinder · ✅ · fraca
 - [Selterman & Gideon 2022](studies/selterman-2022-atracao-apps-offline.md): encontros que começaram em app e fora dele · ✅ · fraca
