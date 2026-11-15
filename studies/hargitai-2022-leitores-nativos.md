@@ -1,5 +1,5 @@
 ---
-reference: "Hargitai E. *Native and non-native readers' evaluations of authors' attractiveness and dating intentions based on non-native dating profiles with and without language errors*. Trabalho de conclusão (Communication and Information Studies), Radboud University, entregue em 13 de junho de 2022. Orientação de Iris Hendrickx."
+reference: "Hargitai E. *Native and non-native readers' evaluations of authors' attractiveness and dating intentions based on non-native dating profiles with and without language errors*. Trabalho de conclusão (Communication and Information Studies), Radboud University, com entrega prevista para 13 de junho de 2022. Orientação de Iris Hendrickx."
 link: https://theses.ubn.ru.nl/handle/123456789/12855
 status: verified
 verified_on: 2026-11-15
@@ -51,19 +51,19 @@ Cada participante leu três textos de perfil de namoro tirados de perfis reais d
 | Notar erros no segundo texto | Com erros, 62,6% disseram ter notado erros; na versão corrigida, 28,9% | Manipulation checks, Profile 2 (p. 18 do PDF) | "Participants in the text version condition with errors identified errors (62.6%) in the text more frequently than identified no errors (37.4%). Participants in the text version with no errors identified no errors more frequently (71.1%) than identified errors (28.9%)." | |
 | Notar erros no terceiro texto | Pelas contagens da tabela, 46 de 91 que leram com erros disseram ter notado erros (50,5%), e 26 de 97 que leram a versão corrigida (26,8%) | Tabela 6 (p. 20 do PDF): contagens de Errors identified e No Errors identified | "identified 46a No Errors identified 45b 63.9% 38.8% 100% 26a 71b 97" | `scripts/calculations/hargitai-2022-leitores-nativos.ts` |
 
-As notas vão de 1 (pouca atratividade ou pouca vontade de sair) a 7 (muita). "F" é o teste que compara as médias dos grupos, e "p" é a chance de uma diferença daquele tamanho aparecer só por acaso; "F < 1" quer dizer uma diferença menor do que a que o acaso costuma dar. A pergunta sobre os autores serem nativos tinha também "não sei dizer", e essas respostas ficaram fora da conta: sobram 72 nativos e 89 alemães. No terceiro texto, a tese calculou as porcentagens sobre a coluna (todos que notaram erros) e as leu como se fossem da linha; por isso o Valor refaz a conta a partir das contagens.
+As notas vão de 1 (pouca atratividade ou pouca vontade de sair) a 7 (muita). "F" é o teste que compara as médias dos grupos, e "p" é a chance de uma diferença daquele tamanho aparecer só por acaso; "F < 1" quer dizer uma diferença menor do que a que o acaso costuma dar. A pergunta sobre os autores serem nativos tinha também "não sei dizer", e essas respostas ficaram fora da conta: sobram 72 nativos e 89 alemães. No terceiro texto, a tese dá as porcentagens sobre a coluna (todos que notaram erros), e não sobre quem leu cada versão, como nos dois primeiros; por isso o Valor refaz a conta a partir das contagens.
 
 ## Limitações
 
 - É um trabalho de conclusão de curso, sem revisão por pares, e o texto não diz de que grau é.
-- São 188 voluntários recrutados por redes sociais e contatos, que não representam nenhuma população. Sete em cada dez eram mulheres, e a autora diz que não comparou as notas de homens e de mulheres.
-- O resultado é nulo: não apareceu diferença com ou sem erros. Os textos tinham poucos erros (de 4 a 16 por texto), e a autora diz que erros mais graves, de sintaxe ou de sentido, poderiam pesar mais. Dois dos três textos tinham só erros de grafia.
+- São 188 voluntários recrutados por redes sociais e contatos, que não representam nenhuma população. Sete em cada dez eram mulheres, e o trabalho diz que não comparou as notas de homens e de mulheres.
+- O resultado é nulo: não apareceu diferença com ou sem erros. Os textos tinham poucos erros (de 4 a 16 por texto), e o trabalho diz que erros mais graves, de sintaxe ou de sentido, poderiam pesar mais. Dois dos três textos tinham só erros de grafia.
 - O questionário avisava que os autores não eram nativos. O estudo não compara com autores nativos, então não diz se os mesmos erros pesariam no perfil de um nativo.
-- A nota que junta os três perfis teve consistência baixa: alfa de 0,40 para a atratividade e de 0,48 para a vontade de sair. A autora usou a média mesmo assim, "por concisão". Perfil por perfil, a consistência foi de 0,72 a 0,85.
-- Quase metade de quem leu o primeiro texto corrigido disse ter notado erros (46,4%), e no terceiro texto só metade de quem leu a versão com erros disse ter notado algum. A autora lê as checagens como confirmação de que os leitores notaram os erros; as contagens mostram uma separação mais fraca.
-- Na Tabela 6 (terceiro texto), as porcentagens são da coluna, e o texto as lê como da linha ("63,9%" de quem leu com erros teria notado erros). Pelas contagens, foram 50,5%.
+- A nota que junta os três perfis teve consistência baixa: alfa de 0,40 para a atratividade e de 0,48 para a vontade de sair. O trabalho usou a média mesmo assim, "por concisão". Perfil por perfil, a consistência foi de 0,72 a 0,85.
+- Quase metade de quem leu o primeiro texto corrigido disse ter notado erros (46,4%), e no terceiro texto só metade de quem leu a versão com erros disse ter notado algum. O trabalho lê as checagens como confirmação de que os leitores notaram os erros; as contagens mostram uma separação mais fraca.
+- Na Tabela 6 (terceiro texto), as porcentagens são da coluna, ao contrário das Tabelas 4 e 5: de quem notou erros, 63,9% tinham lido a versão com erros. De quem leu a versão com erros, só 50,5% notaram algum.
 - A parte de Materiais diz que o segundo texto tinha só erros de palavras que soam igual a outra e o terceiro só erros de grafia comum; a parte de Desenho diz o contrário. Pelo apêndice, o segundo tem palavras escritas errado ("descovering", "intresting") e o terceiro, trocas como "your" por "you're".
 - No primeiro perfil de homem, a descrição muda entre as versões: 24 anos na corrigida e 30 na com erros, além de detalhes do corpo. Nesse perfil, a comparação não muda só os erros.
-- Os perfis de homem e de mulher eram diferentes, e a análise não os separou; a autora diz que isso pode ter enviesado os resultados.
+- Os perfis de homem e de mulher eram diferentes, e a análise não os separou; o trabalho diz que isso pode ter enviesado os resultados.
 - O questionário termina com um código de conclusão do SurveySwap.io, que a parte de recrutamento não menciona.
 - O estudo foi feito online, sem supervisão, e os participantes leram textos sem foto; num app, a foto e o resto do perfil entram junto.
