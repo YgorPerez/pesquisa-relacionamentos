@@ -169,6 +169,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Jonason & Li 2013](studies/jonason-2013-dificil-de-conquistar.md): se fazer de difícil e a disponibilidade como par · ✅ · fraca
 - [Jonason et al. 2021](studies/jonason-2021-ghosting-e-triade-sombria.md): ghosting e os traços da Tríade Sombria · ✅ · fraca
+- [Jonason & Thomas 2022](studies/jonason-2022-escolaridade-renda-interesse.md): escolaridade, renda e interesse recebido em sites de namoro de 24 países · ✅ · moderada
 - [Kahn & London 1991](studies/kahn-1991-sexo-premarital-divorcio.md): sexo antes do casamento e risco de divórcio · ✅ · moderada
 - [Kalman & Rafaeli 2011](studies/kalman-2011-pausa-e-silencio-online.md): demora e silêncio na resposta de um candidato a emprego por e-mail · ✅ · fraca
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
@@ -323,8 +324,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
+- [Janulevičiūtė & Mikuličiūtė 2024](studies/januleviciute-2024-autorrevelacao-solidao.md): quanto o homem conta de si no perfil e a nota que as mulheres dão a ele · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
+- [Jongerius 2022](studies/jongerius-2022-texto-perfil-match.md): o texto do perfil e o match no app Breeze · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
