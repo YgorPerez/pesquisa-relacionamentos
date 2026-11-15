@@ -291,6 +291,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
 - [Teichmann et al. 2026](studies/teichmann-2026-hora-da-mensagem-apos-encontro.md): a hora da primeira mensagem depois do encontro · ✅ · fraca
 - [Templeton et al. 2022](studies/templeton-2022-resposta-rapida-conexao.md): a pausa entre as falas e a conexão numa conversa · ✅ · moderada
+- [Thai et al. 2026](studies/thai-2026-fetichizacao-preferencia-racial.md): perfil que declara preferência racial · ✅ · fraca
 - [Thomas et al. 2023](studies/thomas-2023-swipe-excessivo.md): swipe excessivo, comparação e medo de ficar solteiro · ✅ · fraca
 - [Thomas, Binder & Matthes 2024](studies/thomas-2024-matches-solidao.md): quantos matches, e o que eles fazem com a solidão · ✅ · fraca
 - [Tidwell, Eastwick & Finkel 2013](studies/tidwell-2013-similaridade-percebida.md): semelhança real, semelhança percebida e atração num speed dating · ✅ · fraca
@@ -302,6 +303,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Toma et al. 2018](studies/toma-2018-crenca-engano-alheio.md): crenças sobre a própria mentira e a dos outros, cara a cara e por texto · ✅ · moderada
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
+- [Tuinman et al. 2018](studies/tuinman-2018-sobrevivente-cancer.md): perfil de quem teve câncer · ✅ · fraca
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Vazire & Gosling 2004](studies/vazire-2004-site-pessoal-personalidade.md): a personalidade lida num site pessoal · ✅ · fraca
@@ -313,6 +315,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
 - [Wan & Yeung 2022](studies/wan-2021-objetivo-autoapresentacao-eua-china.md): o objetivo e a autoapresentação em anúncios de sites de namoro dos EUA e de Hong Kong · ✅ · fraca
+- [Wang 2026](studies/wang-2026-personalidade-bio-tinder.md): tipo de personalidade na bio do Tinder · ✅ · fraca
 - [Weidman et al. 2015](studies/weidman-2015-personalidade-anuncio-pessoal.md): personalidade lida em anúncios pessoais · ✅ · fraca
 - [Weisbuch, Ivcevic & Ambady 2009](studies/weisbuch-2009-pagina-web-presencial.md): agradar pela página do Facebook e agradar ao vivo · ✅ · fraca
 - [Whitchurch et al. 2011](studies/whitchurch-2011-incerteza-aumenta-atracao.md): não saber quanto ele gosta de você e a atração · ✅ · fraca
