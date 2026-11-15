@@ -510,7 +510,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
 - [Kalra & Peterson 2019](studies/kalra-2019-photofeeler.md): a impressão que uma foto de namoro passa, prevista por uma rede neural · ✅ · fraca
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
-- [Kavanagh & Winkielman 2016](studies/kavanagh-2016-revisao-mimica-afiliacao.md): para que serve a imitação espontânea e por que ela agrada · ✅ · fraca
+- [Kavanagh & Winkielman 2016](studies/kavanagh-2016-revisao-mimica-afiliacao.md): a função da imitação espontânea e a afinidade com quem imita · ✅ · fraca
 - [Khan & Chaudhry 2015](studies/khan-2015-revisao-contato-encontro.md): revisão sobre o caminho do contato online ao primeiro encontro · ✅ · fraca
 - [Kho 2022](studies/kho-2022-primeira-impressao-tinder.md): como três homens formam a primeira impressão de mulheres por fotos · ✅ · fraca
 - [Kimura & Yamamoto 2017](studies/kimura-2017-troca-emoticons.md): retribuir ou não o emoticon numa troca de mensagens com um amigo · ✅ · fraca
