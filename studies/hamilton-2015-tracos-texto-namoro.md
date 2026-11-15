@@ -9,7 +9,7 @@ countries: []
 period: "não informado no texto lido"
 sample:
   n: 404
-  description: "404 participantes de língua inglesa (72% mulheres), recrutados pela internet por conveniência e por indicação de outros participantes, que leram cada um um texto de perfil de namoro e deram notas ao autor. Os 124 textos foram escritos num estudo anterior por outra amostra de conveniência (160 pessoas, 74% mulheres), a quem se pediu um perfil de namoro de ao menos 60 palavras. O texto não diz de que países eram os participantes; a equipe é da University of Wolverhampton e de um instituto de Dun Laoghaire."
+  description: "404 participantes de língua inglesa (72% mulheres), recrutados por conveniência e por indicação de outros participantes, que responderam a uma pesquisa pela internet, leram cada um um texto de perfil de namoro e deram notas ao autor. Os 124 textos foram escritos num estudo anterior por uma amostra de conveniência e por indicação (160 pessoas, 74% mulheres), a quem se pediu um perfil de namoro de ao menos 60 palavras. O texto não diz de que países eram os participantes; a equipe é da University of Wolverhampton e de um instituto de Dun Laoghaire."
   representative: false
 design: cross-sectional
 conflict: "O artigo não traz declaração de financiamento nem de conflito de interesse."
@@ -20,7 +20,7 @@ covers: {}
 
 ## O que mediu
 
-Cada participante respondeu ao TIPI, um questionário de personalidade de dez itens sobre os cinco grandes traços, e leu um texto de perfil de namoro sorteado entre os da sua faixa de idade, do seu gênero e da sua orientação sexual. Depois respondeu ao mesmo questionário sobre o autor do texto e deu a ele uma nota de atração numa escala de sete pontos. Os autores dos textos tinham respondido ao TIPI quando escreveram.
+Cada participante respondeu ao TIPI, um questionário de personalidade de dez itens sobre os cinco grandes traços, e leu um texto de perfil de namoro sorteado entre os adequados à sua faixa de idade, ao seu gênero e à sua orientação sexual. Depois respondeu ao mesmo questionário sobre o autor do texto e deu a ele uma nota de atração numa escala de sete pontos. Os autores dos textos tinham respondido ao TIPI quando escreveram.
 
 O acerto é a ligação entre a nota que o leitor deu ao autor e a que o autor se deu. A semelhança de verdade compara os dois questionários de cada um; a semelhança vista compara o questionário do leitor com a nota que ele deu ao autor. Nas duas, o texto diz que uma diferença menor quer dizer mais semelhança.
 
