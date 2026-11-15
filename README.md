@@ -354,6 +354,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Roshchupkina et al. 2023](studies/roshchupkina-2023-autoapresentacao-masculina.md): como mulheres julgam a foto de perfil de homens no Tinder · ✅ · fraca
 - [Samara et al. 2021](studies/samara-2021-projecao-superpercepcao.md): adivinhar se o par quer outro encontro, no speed dating · ✅ · fraca
 - [Samara et al. 2022](studies/samara-2022-observadores-atracao.md): o interesse num encontro às cegas, visto de fora · ✅ · fraca
+- [Sands et al. 2026](studies/sands-2026-abreviacoes-chatbot.md): abreviações no chat de atendimento · ✅ · fraca
 - [Sauer & Wolff 2016](studies/sauer-2016-carro-luxo.md): carro de luxo na foto do perfil · ✅ · fraca
 - [van Schaijk 2023](studies/schaijk-2023-sarcasmo-emoji.md): sarcasmo e emoji de piscadela num perfil de namoro · ✅ · fraca
 - [Schmälzle et al. 2019](studies/schmalzle-2019-risco-hiv-perfil.md): o risco de HIV que um perfil de namoro passa · ✅ · fraca
@@ -536,6 +537,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
+- [Ribeiro 2011](studies/ribeiro-2011-internetes-descricao.md): como se forma o internetês em português · ✅ · fraca
 - [Rothe et al. 2016](studies/rothe-2016-preferencia-visual-blinq.md): prever pela foto quem vai ser curtido num aplicativo · ✅ · fraca
 - [Rudder 2010](studies/rudder-2010-mitos-fotos-perfil.md): tipo de foto de perfil e mensagens no OkCupid · 🟡 · fraca
 - [Rudder 2010](studies/rudder-2010-qualidade-foto-camera.md): câmera, flash, foco e hora da foto de perfil no OkCupid · 🟡 · fraca
@@ -550,6 +552,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Verschoor 2023](studies/verschoor-2023-internettaal-namoro.md): internetês holandês na primeira mensagem de um app de namoro · ✅ · fraca
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
