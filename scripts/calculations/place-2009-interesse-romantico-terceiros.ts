@@ -10,7 +10,8 @@
 //     squared from each F and its degrees of freedom, F·df1 / (F·df1 + df2),
 //     against the printed value; and the printed d of each t(53) against
 //     2t/√df (the independent-groups formula) and t/√n (one group of 54
-//     measured twice, or against a fixed chance level).
+//     measured twice, or against a fixed chance level); and the accuracy of
+//     an observer who knew the offer rates and always answered no, 1 − p.
 const chance = (p: number) => p * p + (1 - p) * (1 - p)
 const percent = (x: number) => `${Math.round(x * 100)}%`
 
@@ -35,6 +36,9 @@ if (process.argv[2] === 'checks') {
     console.log(
       `${name}: t(53) ${t}, 2t/sqrt(53) = ${((2 * t) / Math.sqrt(53)).toFixed(2)}, t/sqrt(54) = ${(t / Math.sqrt(54)).toFixed(2)}, the article prints d ${printed.toFixed(2)}`,
     )
+  console.log(
+    `always answering no: men's interest ${percent(1 - 0.41)}, women's interest ${percent(1 - 0.33)}`,
+  )
 } else {
   console.log(
     `men's interest ${percent(chance(0.41))}, women's interest ${percent(chance(0.33))}`,
