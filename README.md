@@ -241,6 +241,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
 - [Peters e Salzsieder 2018](studies/peters-2018-similaridade-swipe.md): beleza e ambição num perfil de namoro simulado · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
+- [Portela Navarro & Escobar Mercado 2026](studies/portela-navarro-2026-capital-erotico-tinder.md): carga erótica das fotos e o que se busca no Tinder em Madrid · ✅ · fraca
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
 - [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
@@ -259,6 +260,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld 2018](studies/rosenfeld-2018-apps-encontros-eua.md): quantos solteiros americanos saíram com alguém em um ano, e por onde · ✅ · moderada
 - [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
+- [Roshchupkina et al. 2023](studies/roshchupkina-2023-autoapresentacao-masculina.md): como mulheres julgam a foto de perfil de homens no Tinder · ✅ · fraca
 - [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
@@ -376,6 +378,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
+- [Rothe et al. 2016](studies/rothe-2016-preferencia-visual-blinq.md): prever pela foto quem vai ser curtido num aplicativo · ✅ · fraca
 - [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
