@@ -106,12 +106,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
+- [Boothroyd et al. 2007](studies/boothroyd-2007-caracteristicas-parceiro.md): o que um rosto de homem sugere sobre ele como parceiro · ✅ · fraca
 - [Boothroyd et al. 2008](studies/boothroyd-2008-sociossexualidade-rosto.md): abertura a sexo casual julgada pela foto do rosto · ✅ · fraca
 - [Botnen et al. 2018](studies/botnen-2018-sociossexualidade-apps.md): sociossexualidade e uso de apps de namoro com fotos · ✅ · fraca
 - [Bowman et al. 2025](studies/bowman-2025-apps-saude.md): apps de namoro, imagem corporal e saúde mental · ✅ · fraca
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
 - [Bressler, Martin & Balshine 2006](studies/bressler-2006-humor-producao-apreciacao.md): fazer rir ou rir junto · ✅ · fraca
 - [Brinberg & Ram 2021](studies/brinberg-2021-linguagem-de-casais-novos.md): a linguagem de casais novos fica mais parecida com o tempo? · ✅ · fraca
+- [Brown et al. 2022](studies/brown-2022-gordura-orientacao-acasalamento.md): gordura, músculos e seios e o tipo de relação atribuída · ✅ · fraca
 - [Bruch & Newman 2018](studies/bruch-2018-aspirational-pursuit.md): busca "aspiracional" em sites de namoro · ✅ · moderada
 - [Bruch & Newman 2019](studies/bruch-2019-mercados-por-cidade.md): submercados de namoro online em cidades dos EUA · ✅ · moderada
 - [Busby, Carroll & Willoughby 2010](studies/busby-2010-compatibility-or-restraint.md): quanto o casal esperou para transar e a qualidade do casamento · ✅ · fraca
@@ -313,6 +315,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
 - [Bapna et al. 2016](studies/bapna-2016-navegacao-anonima.md): navegação anônima num site de namoro · ✅ · moderada
 - [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
+- [Berger & Barasch 2017](studies/berger-2017-fotos-espontaneas.md): foto espontânea e foto posada · ✅ · fraca
 - [Birnbaum et al. 2026](studies/birnbaum-2026-perfil-sexualizado.md): a impressão que um perfil sexualizado dá · ✅ · fraca
 - [Blabst & Diefenbach 2017](studies/blabst-2017-whatsapp-visto-por-ultimo.md): "visto por último", confirmação de leitura e estresse no WhatsApp · ✅ · fraca
 - [Bogolyubova 2026](studies/bogolyubova-2026-aceitabilidade-engano.md): aceitação de mentiras no perfil de namoro, por assunto, gênero e personalidade · ✅ · fraca
