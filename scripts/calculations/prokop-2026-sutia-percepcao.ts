@@ -18,6 +18,4 @@ const which = process.argv[2] ?? 'attractive'
 const score = scores[which]
 if (!score) throw new Error(`unknown score: ${which}`)
 const [mean, low, high] = score
-console.log(
-  `277 homens: ${percent(mean)} (${percent(low)} a ${percent(high)})`,
-)
+console.log(`277 homens: ${percent(mean)} (${percent(low)} a ${percent(high)})`)
