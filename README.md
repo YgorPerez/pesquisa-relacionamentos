@@ -297,6 +297,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
+- [Zhang, Phang & Zhang 2018](studies/zhang-2018-beleza-vende.md): beleza da foto e convites num app chinês · ✅ · fraca
+- [Zhu 2023](studies/zhu-2023-foto-sexualizada-atratividade.md): foto sensual de mulheres em perfil de app e a atratividade percebida · ✅ · fraca
 - [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
 - [Zytko et al. 2020](studies/zytko-2020-interface-decisao-encontro.md): uma interface de mensagens e a vontade de sair depois do encontro · ✅ · fraca
 - [Zytko et al. 2022](studies/zytko-2022-interesse-sexual-apps.md): como usuários de apps mostram e leem o interesse, sexual ou não · ✅ · fraca
@@ -346,6 +348,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
+- [Zhang & Santtila 2024](studies/zhang-2024-app-analogo-memoria.md): o que o perfil procura, o match e a memória num app simulado · ✅ · fraca
 
 <!-- /study-index -->
 
