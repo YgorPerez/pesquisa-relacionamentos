@@ -183,9 +183,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalman et al. 2013](studies/kalman-2013-cronemica-informacao-social.md): pausas no chat, extroversão e confiança · ✅ · fraca
 - [Kenkel et al. 2019](studies/kenkel-2019-varios-pares-ratos-do-campo.md): ratos-do-campo com vários pares ainda formam casal? · ✅ · moderada
 - [Kennair et al. 2018](studies/kennair-2018-arrependimento-sexo-casual.md): por que mulheres se arrependem mais do sexo casual · ✅ · moderada
+- [Kerr 2009](studies/kerr-2009-padroes-ideais-perfis.md): padrões ideais e escolha entre perfis num site de namoro imaginado · ✅ · fraca
 - [Kerr et al. 2020](studies/kerr-2020-primeira-impressao-encontros.md): primeira impressão da personalidade e interesse romântico no speed dating · ✅ · fraca
+- [Keverline 2020](studies/keverline-2021-cachorro-foto.md): cachorro na foto de perfil do Tinder · ✅ · fraca
 - [Killewald, Lee & England 2023](studies/killewald-2023-riqueza-divorcio.md): riqueza do casal e divórcio · ✅ · moderada
 - [Kislev e Dougan 2026](studies/kislev-2026-satisfacao-sexual-desejo-relacao.md): satisfação sexual de solteiros e vontade de namorar · ✅ · moderada
+- [Knights 2018](studies/knights-2018-persuasao-tinder.md): técnicas de persuasão num perfil do Tinder · ✅ · fraca
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kreager et al. 2014](studies/kreager-2014-iniciativa-respostas.md): quem toma a iniciativa e quem responde num site de namoro · ✅ · moderada
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
