@@ -423,6 +423,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
 - [Wan & Yeung 2022](studies/wan-2021-objetivo-autoapresentacao-eua-china.md): o objetivo e a autoapresentação em anúncios de sites de namoro dos EUA e de Hong Kong · ✅ · fraca
+- [Wang, Yang & Liu 2024](studies/wang-2024-polidez-consultas-medicas.md): polidez e emoji em consultas médicas online na China · ✅ · fraca
 - [Wang 2026](studies/wang-2026-personalidade-bio-tinder.md): tipo de personalidade na bio do Tinder · ✅ · fraca
 - [Watkins 2017](studies/watkins-2017-criatividade-compensa.md): texto criativo, rosto atraente e a nota de atração · ✅ · fraca
 - [Weidman et al. 2015](studies/weidman-2015-personalidade-anuncio-pessoal.md): personalidade lida em anúncios pessoais · ✅ · fraca
@@ -550,8 +551,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
+- [Wang et al. 2023](studies/wang-2023-reacoes-emoji-github.md): reações de emoji em pull requests do GitHub · ✅ · moderada
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
+- [Weiß et al. 2019](studies/weiss-2019-emoji-barganha.md): emoji de resposta num jogo de dividir dinheiro · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
 - [Willigenburg 2023](studies/willigenburg-2023-valores-perfil.md): frase de cuidado ou de autopromoção no perfil · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
