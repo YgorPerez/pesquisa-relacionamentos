@@ -4,12 +4,12 @@ link: https://theses.ubn.ru.nl/handle/123456789/13536
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Trabalho de conclusão de bacharelado, sem revisão por pares de revista, com 131 voluntários recrutados em bola de neve, grupos de 20 a 40 pessoas com proporção de sexos desigual entre as condições, erros de escrita que vêm junto com outro autor e outro texto, e graus de liberdade dos testes que não batem com a amostra."
+strength_reason: "Trabalho de conclusão de bacharelado, sem revisão por pares de revista, com 131 voluntários recrutados em bola de neve, grupos de 20 a 40 pessoas com proporção de sexos desigual entre as condições, métodos que dizem que os perfis com e sem erros vieram de autores diferentes enquanto o apêndice mostra os mesmos textos corrigidos, e graus de liberdade dos testes que não batem com a amostra."
 countries: []
 period: "não informado no texto lido (trabalho entregue em junho de 2022)"
 sample:
   n: 131
-  description: "131 voluntários, sem pagamento, recrutados por mensagem online que um passava ao outro (bola de neve): 50 homens e 81 mulheres de 18 a 64 anos (média 24,7). Por nacionalidade, 59,5% holandeses, 11,5% alemães, 3,1% britânicos, 0,8% espanhóis, 0,8% americanos e 24,3% de outras; o texto não diz onde moravam. 53,4% já tinham usado uma plataforma de namoro. Cada um leu, em inglês, três descrições reais de perfis de um banco público do OkCupid no Kaggle."
+  description: "131 voluntários, sem pagamento, recrutados por mensagem online que um passava ao outro (bola de neve): 50 homens e 81 mulheres de 18 a 64 anos (média 24,7). Por nacionalidade, 59,5% holandeses, 11,5% alemães, 3,1% britânicos, 0,8% espanhóis, 0,8% americanos e 24,3% de outras; o texto não diz onde moravam. 53,4% já tinham usado uma plataforma de namoro. Cada um leu, em inglês, três descrições de perfis tiradas de um banco de perfis do OkCupid no Kaggle."
   representative: false
 design: experiment
 conflict: "Trabalho de conclusão de curso na Radboud University, aprovado pelo comitê de ética de Humanidades (dossiê ETC-GW 2022-2166). O texto não declara financiamento nem conflito de interesse."
@@ -22,9 +22,9 @@ covers:
 
 ## O que mediu
 
-Um experimento online com dois fatores. O primeiro: as três descrições de perfil que cada participante leu tinham erros de língua (de troca de idioma, ortografia, homófonos, gramática e vocabulário) ou não tinham. Pelo texto, os perfis com erros eram de bilíngues, descritos como fluentes em espanhol e fracos em inglês, e os sem erros, de falantes nativos de inglês americano; os erros eram os que os próprios donos tinham escrito. O segundo: uma descrição curta do dono do perfil dizia ou não dizia as línguas que ele fala.
+Um experimento online com dois fatores. O primeiro: as três descrições de perfil que cada participante leu tinham erros de língua (de troca de idioma, ortografia, homófonos, gramática e vocabulário) ou não tinham. Os métodos dizem que os perfis com erros eram de bilíngues, fluentes em espanhol e fracos em inglês, com os erros que eles mesmos escreveram, e os sem erros, de falantes nativos de inglês americano. Os perfis reproduzidos no Apêndice 1 mostram outra coisa: os seis perfis sem erros são os mesmos seis textos dos perfis com erros, com os erros corrigidos. O segundo: uma descrição curta do dono do perfil dizia ou não dizia as línguas dele; no apêndice, ela diz "English: poor" e "Spanish: fluent" tanto nos perfis com erros quanto nos sem erros.
 
-Antes de ler, cada participante escolhia ver perfis de homens, de mulheres ou dizia não ter preferência. Depois de cada perfil, deu notas de 1 (discordo totalmente) a 7 (concordo totalmente) sobre o dono: atração (agradável para passar tempo junto, poderia ser amigo, sente atração, sairia com ele), inteligência (inteligente, competente, habilidoso) e confiança (honesto, confiável, sincero). As quatro condições foram comparadas por análise de variância.
+Antes de ler, cada participante escolhia ver perfis de homens, de mulheres ou dizia não ter preferência. Depois de cada perfil, deu notas de 1 (discordo totalmente) a 7 (concordo totalmente) sobre o dono: atração (agradável para passar tempo junto, poderia ser amigo e, em frases na negativa, não sente atração e não sairia com ele; o texto não diz se essas duas foram invertidas na conta), inteligência (inteligente, competente, habilidoso) e confiança (honesto, confiável, sincero). As quatro condições foram comparadas por análise de variância.
 
 ## Achados
 
@@ -48,7 +48,7 @@ As notas vão de 1 (discordo totalmente) a 7 (concordo totalmente). "p" é a cha
 ## Limitações
 
 - É um trabalho de conclusão de bacharelado, sem revisão por pares de revista. O questionário lista nove pesquisadores, e o texto diz que nove deles escolheram juntos os perfis usados.
-- Os erros vêm junto com outro autor e outro texto. Os perfis com erros eram de pessoas fluentes em espanhol que escrevem mal em inglês, e os sem erros, de nativos de inglês americano. A diferença de notas pode vir dos erros, do conteúdo dos perfis ou de outra coisa que muda com quem os escreveu. O texto não diz o que a descrição de línguas informava nos perfis sem erros.
+- Os métodos e o apêndice não batem. Os métodos dizem que os perfis com erros eram de pessoas fluentes em espanhol que escrevem mal em inglês, e os sem erros, de nativos de inglês americano. O Apêndice 1 mostra os mesmos seis textos nas duas versões, a sem erros corrigida, e a descrição de línguas diz "English: poor" também nos perfis sem erros. Quem leu perfis sem erros com a informação viu, então, um texto sem erros atribuído a alguém que escreve mal em inglês. O texto não diz quem corrigiu os perfis nem como.
 - Os testes trazem 12 ou 13 graus de liberdade no denominador (F (1, 12), F (1, 13)), o que não bate com 131 participantes em quatro grupos. Os valores de p informados batem com cerca de 127, o que sugere erro de digitação; o texto não explica.
 - A descrição do desenho repete uma condição ("sem erros e com a informação") e omite outra; a Tabela 1 e a Tabela 2 mostram as quatro.
 - Os grupos são pequenos e desiguais (de 20 a 40 pessoas); o próprio texto diz que não chegou a um mínimo de 25 pessoas em cada condição. A proporção de sexos não ficou equilibrada entre os grupos sem erros (90,0% de mulheres num, 52,6% no outro).
