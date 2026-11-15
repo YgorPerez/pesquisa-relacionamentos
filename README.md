@@ -77,6 +77,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
 - [Nascimento & Caramaschi 2026](studies/nascimento-2026-proeminencia-facial-tinder.md): rosto e corpo nas fotos de perfis do Tinder em Londrina · ✅ · fraca
 - [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · 🟡 · fraca
+- [Ruani et al. 2021](studies/ruani-2021-berinjela-grindr.md): o emoji de berinjela no Grindr · ✅ · fraca
 - [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · 🟡 · fraca
 - [Ticket Sports 2025](studies/ticketsports-2025-perfil-atleta.md): participação em eventos esportivos e inscrições por grupos · ✅ · fraca
 - [Wellings et al. 2006](studies/wellings-2006-comportamento-sexual-global.md): comportamento sexual em 59 países · ✅ · moderada
@@ -396,6 +397,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Schmälzle et al. 2019](studies/schmalzle-2019-risco-hiv-perfil.md): o risco de HIV que um perfil de namoro passa · ✅ · fraca
 - [Schmitz, Zillmann & Blossfeld 2013](studies/schmitz-2013-engano-genero-alemanha.md): que mentiras de perfil homens e mulheres dizem ter percebido · ✅ · fraca
 - [Schöndienst & Dang-Xuan 2011](studies/schondienst-2011-linguagem-primeira-mensagem.md): as palavras da primeira mensagem e a resposta · ✅ · fraca
+- [Schroeder & Epley 2015](studies/schroeder-2015-voz-candidato.md): ouvir ou ler o discurso de um candidato a emprego · ✅ · moderada
 - [Schwartz & Han 2014](studies/schwartz-2014-homogamia-educacional.md): escolaridade relativa dos cônjuges e divórcio · ✅ · forte
 - [Sciara et al. 2026](studies/sciara-2026-preconceito-tinder.md): o preconceito contra o Tinder, no perfil e no casal · ✅ · fraca
 - [Scott et al. 2013](studies/scott-2013-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · fraca
@@ -595,6 +597,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rudder 2010](studies/rudder-2010-qualidade-foto-camera.md): câmera, flash, foco e hora da foto de perfil no OkCupid · 🟡 · fraca
 - [Rudder 2014](studies/rudder-2014-experimentos-okcupid.md): três testes do OkCupid com fotos, texto e compatibilidade · 🟡 · fraca
 - [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
+- [Sasaki 2007](studies/sasaki-2007-emoticons-intencao.md): o emoticon (-_-) numa mensagem ambígua · 🟡 · fraca
 - [Sepúlveda e Crespo 2024](studies/sepulveda-2024-perfis-falsos.md): o que usuários de apps chamam de desinformação · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strokoff 2015](studies/strokoff-2015-influencia-parental-perfil.md): perfil parecido com o pai ou a mãe e atração por perfis de namoro simulados · ✅ · fraca
