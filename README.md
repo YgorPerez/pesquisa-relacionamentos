@@ -217,7 +217,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Gray et al. 2018](studies/gray-2018-perfis-eficazes.md): o que alunos de uma universidade dos EUA dizem atrair num perfil de namoro · ✅ · fraca
 - [Green et al. 2026](studies/green-2026-conspiracao-perfil.md): teoria da conspiração no perfil de namoro · ✅ · moderada
+- [Grewal et al. 2026](studies/grewal-2026-espelhamento-atendimento-chat.md): espelhar o estilo do cliente no chat de atendimento · ✅ · fraca
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
+- [Hale & Hamilton 2016](studies/hale-2016-mimica-rv-replicacao.md): imitação por um avatar e afinidade · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hall et al. 2015](studies/hall-2015-deteccao-flerte.md): perceber o flerte numa conversa entre desconhecidos · ✅ · fraca
@@ -512,6 +514,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gonzales et al. 2010](studies/gonzales-2010-lsm-coesao-grupo.md): estilo de linguagem parecido em pequenos grupos · ✅ · fraca
 - [Goode & Hoegg 2009](studies/goode-2009-impressao-nao-atraente.md): a ordem entre foto e texto no perfil de namoro · 🟡 · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
+- [Hale & Hamilton 2016](studies/hale-2016-revisao-mimica.md): revisão sobre as reações a ser imitado · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hamilton et al. 2015](studies/hamilton-2015-tracos-texto-namoro.md): personalidade lida no texto do perfil e atração · ✅ · fraca
 - [Handel & Shklovski 2012](studies/handel-2012-ambiguidade-risco.md): o "pergunte-me" no perfil de um site de encontros entre homens · ✅ · fraca
