@@ -51,6 +51,8 @@ Os grupos tinham tamanhos diferentes (Tabela 2): 40 pessoas com erros e com avis
 ## Limitações
 
 - É um trabalho de conclusão de graduação, que não passou pela revisão por pares de uma revista. Os números são os da tese.
+- Não é evidência independente: [Janssen (2022)](janssen-2022-erros-nao-nativo.md), [Popova (2022)](popova-2022-erros-bio-genero.md), [Florijn (2022)](florijn-2022-erros-nativo-autor.md), [Heijckers (2022)](heijckers-2022-erros-ingles-l2.md) e [Kant (2022)](kant-2022-erros-escolaridade.md), outras teses de Radboud de 2022, usam o mesmo questionário e os mesmos 131 participantes (81 mulheres e 50 homens), com as mesmas médias de inteligência (4,06 com erros, 4,59 sem). Cada uma cruza os erros com outra pergunta, mas as seis vêm de uma coleta só.
+- [Kant (2022)](kant-2022-erros-escolaridade.md), com os mesmos participantes e as mesmas médias, dá para o efeito dos erros na inteligência F(1, 127) = 9,87 e p = 0,002, e não o F(1, 123) = 4,65 e p = 0,033 daqui, que Janssen, Popova, Florijn e Heijckers também dão. As teses não explicam a diferença.
 - A amostra é de voluntários recrutados em bola de neve, na maioria estudantes, 61,8% mulheres, e a proporção de homens e mulheres não ficou igual entre os grupos. A tese diz que isso reduz a representatividade.
 - Os leitores eram, em grande maioria, holandeses e alemães lendo em inglês, que não era a língua materna de 95,4% deles. A tese aponta que falantes nativos podem julgar erros com mais rigor.
 - A tese dá 59,9% de holandeses, por nacionalidade e por língua materna, mas a Tabela 1 dá 78 de 131 participantes nos dois casos, ou 59,5%.
