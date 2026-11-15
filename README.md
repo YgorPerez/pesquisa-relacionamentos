@@ -320,6 +320,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Xia et al. 2014](studies/xia-2014-previsao-resposta.md): dá para prever quem responde à primeira mensagem? · ✅ · fraca
 - [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · fraca
 - [Yan 2018](studies/yan-2018-intencao-foto-sexualizada.md): intenção declarada e sinais sexuais nas fotos de perfil · ✅ · fraca
+- [Yong et al. 2022](studies/yong-2022-aparencia-status-perfis.md): beleza e status em perfis fictícios · ✅ · fraca
 - [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
 - [van der Zanden et al. 2020](studies/zanden-2020-erros-linguagem-perfil.md): erros de língua no texto do perfil e a impressão sobre o dono · ✅ · moderada
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
