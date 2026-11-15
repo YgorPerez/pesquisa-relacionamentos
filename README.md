@@ -237,6 +237,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [McKenna et al. 2002](studies/mckenna-2002-relacoes-na-internet.md): relações formadas na internet · ✅ · fraca
 - [McNulty & Russell 2010](studies/mcnulty-2010-negativos-positivos.md): quando criticar e cobrar diretamente ajuda o casamento · ✅ · fraca
 - [Meltzer et al. 2014](studies/meltzer-2014-atratividade-casamento.md): atratividade do cônjuge e satisfação conjugal · ✅ · moderada
+- [Meng et al. 2026](studies/meng-2026-engano-gays-china.md): engano e confiança entre usuários gays de apps de namoro na China · ✅ · fraca
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
 - [Mitchell et al. 2019](studies/mitchell-2019-diferenca-genero-parceiros.md): por que os homens relatam mais parceiras do que as mulheres relatam parceiros · ✅ · forte
 - [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · fraca
@@ -375,6 +376,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Luevano e Zebrowitz 2007](studies/luevano-2007-masculinidade-curto-prazo.md): rosto masculino e preferência para algo curto ou longo · ✅ · fraca
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
+- [Murphy et al. 2015](studies/murphy-2015-excesso-confianca.md): excesso de confiança, perfil de namoro e disputa por um parceiro · ✅ · fraca
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
