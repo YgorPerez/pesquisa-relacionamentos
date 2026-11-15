@@ -243,6 +243,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
+- [Ploessl 2021](studies/ploessl-2021-masculinidade-raca-perfil.md): masculinidade, feminilidade e raça no perfil de um homem · ✅ · fraca
+- [Popova 2022](studies/popova-2022-erros-bio-genero.md): erros de escrita no texto do perfil, lidos por homens e mulheres · ✅ · fraca
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
 - [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
@@ -256,6 +258,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rhoades et al. 2009](studies/rhoades-2009-coabitacao-noivado.md): morar junto antes do noivado e qualidade do casamento · ✅ · fraca
 - [Rhoades et al. 2011](studies/rhoades-2011-termino-saude-mental.md): o término de um namoro e a saúde mental · ✅ · moderada
 - [Rhoades & Stanley 2014](studies/rhoades-2014-before-i-do.md): parceiros sexuais antes do casamento e qualidade do casamento · ✅ · fraca
+- [Rodrigues et al. 2017](studies/rodrigues-2017-similaridade-atracao-inicial.md): semelhança percebida e atração inicial pela foto de um desconhecido · ✅ · fraca
 - [Rosenfeld & Thomas 2012](studies/rosenfeld-2012-searching-for-a-mate.md): a internet como intermediária na busca de parceiro · ✅ · moderada
 - [Rosenfeld 2017](studies/rosenfeld-2017-marriage-choice-couplehood.md): casamento e casal na era da internet · ✅ · forte
 - [Rosenfeld 2018](studies/rosenfeld-2018-apps-encontros-eua.md): quantos solteiros americanos saíram com alguém em um ano, e por onde · ✅ · moderada
