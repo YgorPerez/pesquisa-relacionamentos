@@ -33,17 +33,17 @@ A fonte inteira é um resumo de uma página, e a busca que originou esta Ficha n
 |---|---|---|---|
 | Quem respondeu | Até a data do resumo, 98 pessoas tinham respondido: 32 homens e 66 mulheres | 結果 (Resultados), p. 35 | "現時点で98名（男性：32名、女性66名）の" |
 | Desconforto entre os mais jovens | Entre os respondentes adolescentes ou na casa dos 20 anos, só a versão com katakana no fim das frases incomodou de forma significativa; nas outras versões não apareceu diferença. O resumo não diz com que versão comparou nem dá números | 結果 (Resultados), p. 35 | "10代20代の評価：文末カタカナ条件におい て有意に不快であることが示されたが、ほかの条 件では有意差が見られなかった。" |
-| Idade atribuída a quem escreve | No grupo mais jovem de respondentes, a versão com carinhas em ícone foi a que mais vezes teve o remetente estimado na faixa dos 30 aos 50 e poucos anos; o resumo não dá as porcentagens | 結果 (Resultados), p. 35 | "顔アイコン条件において、最も多く送 信者が30～50代であると推測された。" |
+| Idade atribuída a quem escreve | No grupo mais jovem de respondentes, a versão com carinhas em ícone foi a que mais vezes teve o remetente estimado entre a casa dos 30 e a dos 50 anos; o resumo não dá as porcentagens | 結果 (Resultados), p. 35 | "顔アイコン条件において、最も多く送 信者が30～50代であると推測された。" |
 | Desconforto de homens e mulheres | Segundo o resumo, as mulheres disseram, de forma significativa, não se incomodar com as versões com emoji de objetos, com carinhas em ícone e com pontos de exclamação grandes; entre os homens não apareceu diferença. O resumo não diz com o que essas respostas foram comparadas nem dá números | 結果 (Resultados), p. 35 | "性差：オブジェクト絵条件・顔アイコン条件・大 ビックリマーク条件において女性は有意に不快で ないとしていたが、男性では有意差がなかった。" |
-| Exclamações grandes e idade atribuída | Na versão com pontos de exclamação grandes, as mulheres estimaram, de forma significativa, que o remetente tinha de 40 a 60 e poucos anos, mais do que adolescente ou na casa dos 20; entre os homens não apareceu diferença | 結果 (Resultados), p. 35 | "大ビックリマーク条件におい て女性が有意に10代20代よりも40代～60 代であると評価した一方で男性では有意差が見ら れなかった。" |
+| Exclamações grandes e idade atribuída | Na versão com pontos de exclamação grandes, as mulheres estimaram, de forma significativa, que o remetente estava entre a casa dos 40 e a dos 60 anos, mais do que adolescente ou na casa dos 20; entre os homens não apareceu diferença | 結果 (Resultados), p. 35 | "大ビックリマーク条件におい て女性が有意に10代20代よりも40代～60 代であると評価した一方で男性では有意差が見ら れなかった。" |
 
 A forma da mensagem foi o que os autores variaram, e quem julga é o próprio respondente. "De forma significativa" é como o resumo descreve os resultados; ele não dá o teste, os números nem o limite usado.
 
 ## Limitações
 
 - É só um resumo de uma página, com dados parciais: os autores dizem que a coleta seguia e que era preciso divulgar mais o questionário. Não traz médias, porcentagens, testes, o texto de cada versão nem com que versão as outras foram comparadas.
-- Os respondentes vieram de um questionário espalhado pelos autores e não representam uma população. Quase todos eram adolescentes, estavam na casa dos 20 ou tinham 50 ou 60 e poucos anos; só 6 estavam na casa dos 30 ou 40.
-- A hipótese central, de que quem tinha de 27 a 33 anos (a geração do celular de flip, que usava muitos emoji em SMS e e-mail) não se incomodaria com o estilo, não foi testada: só uma pessoa de 27 e uma de 33 anos responderam.
+- Os respondentes vieram de um questionário espalhado pelos autores e não representam uma população. Quase todos eram adolescentes ou estavam na casa dos 20, 50 ou 60 anos; só 6 estavam na casa dos 30 ou 40.
+- A hipótese central, de que quem tinha de 27 a 33 anos (a "geração garakei", a dos celulares comuns de antes do smartphone, que usava muitos emoji em SMS e e-mail) não se incomodaria com o estilo, não foi testada: só uma pessoa de 27 e uma de 33 anos responderam.
 - O resumo diz que cada pergunta foi feita para as oito versões, o que sugere que cada pessoa viu todas, mas não diz em que ordem nem se a ordem mudava.
 - Os autores leem o desconforto com katakana no fim das frases como falta de costume dos jovens com esse estilo, e a idade atribuída às carinhas em ícone como lembrança do uso delas em e-mails e nos exemplos de "ojisan kōbun" que se popularizaram. São leituras deles, que o resumo não testa.
 - Não é um estudo de namoro: a mensagem é de rede social, e o resumo não diz quem a teria mandado nem a quem.
