@@ -79,6 +79,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
 - [Nascimento & Caramaschi 2026](studies/nascimento-2026-proeminencia-facial-tinder.md): rosto e corpo nas fotos de perfis do Tinder em Londrina · ✅ · fraca
 - [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · 🟡 · fraca
+- [Ribeiro 2006](studies/ribeiro-2006-internetes-abreviaturas.md): abreviaturas do internetês em alunos, num blog e num chat · ✅ · fraca
 - [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · 🟡 · fraca
 - [Ticket Sports 2025](studies/ticketsports-2025-perfil-atleta.md): participação em eventos esportivos e inscrições por grupos · ✅ · fraca
 - [Wellings et al. 2006](studies/wellings-2006-comportamento-sexual-global.md): comportamento sexual em 59 países · ✅ · moderada
@@ -311,6 +312,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Neve & McConville 2020](studies/neve-2020-preferencias-reciprocas-imagens.md): fotos para prever o match · ✅ · fraca
 - [Neyt et al. 2019](studies/neyt-2019-escolaridade-tinder.md): escolaridade do perfil e matches no Tinder · ✅ · moderada
 - [Neyt et al. 2022](studies/neyt-2022-prestigio-profissao-tinder.md): situação de trabalho, cargo e sucesso no Tinder · ✅ · moderada
+- [Nguyen & Rosseel 2025](studies/nguyen-2025-variacao-ortografica-twitter.md): grafia fora do padrão em tweets, para pessoas e para modelos de linguagem · ✅ · fraca
 - [Ogawa & Takikawa 2024](studies/ogawa-2024-nomes-ambiguos.md): nome de leitura ambígua no perfil · ✅ · fraca
 - [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
 - [Ong e Wang 2015](studies/ong-2015-renda-perfil-china.md): renda no perfil e visitas num site de namoro chinês · ✅ · moderada
@@ -530,6 +532,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Malouff et al. 2010](studies/malouff-2010-personalidade-parceiro.md): personalidade do parceiro e satisfação (meta-análise) · ⬜ · forte
 - [Mao et al. 2018](studies/mao-2018-identidade-genero-trans.md): rótulo de pessoa trans ou não binária e atração por um perfil · ✅ · fraca
 - [de Meijer 2014](studies/meijer-2014-fotos-erros-linguagem.md): foto atraente, foto não atraente ou nenhuma foto, e erros de ortografia no perfil · ✅ · fraca
+- [Meireles, Brandão & Carvalho 2024](studies/meireles-2024-internetes-instagram.md): erros ortográficos e internetês em comentários do Instagram · ✅ · fraca
 - [Mierke et al. 2011](studies/mierke-2011-riqueza-midia-atratividade.md): vídeo, áudio, foto ou texto na apresentação de um perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
 - [Murphy et al. 2015](studies/murphy-2015-excesso-confianca.md): excesso de confiança, perfil de namoro e disputa por um parceiro · ✅ · fraca
