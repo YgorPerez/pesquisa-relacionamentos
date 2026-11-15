@@ -4,12 +4,12 @@ link: https://journal-bmp.de/wp-content/uploads/JBMP-1-2010-Halo-Bak.pdf
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Um só experimento com 113 estudantes de uma faculdade de Colônia, que não usavam site de namoro (o próprio autor aponta isso), com um só perfil e duas fotos montadas para cada sexo; a tabela da vontade de conhecer a pessoa traz percentuais que não fecham com o tamanho dos grupos e não tem teste estatístico."
+strength_reason: "Um só experimento com 113 estudantes de uma faculdade de Colônia, que não usavam site de namoro (o próprio artigo aponta isso), com um só perfil e duas fotos montadas para cada sexo; a tabela da vontade de conhecer a pessoa traz percentuais que não fecham com o tamanho dos grupos e não tem teste estatístico."
 countries: [Alemanha]
 period: "não informado no texto"
 sample:
   n: 113
-  description: "113 estudantes da Fresenius University of Applied Sciences, em Colônia, na Alemanha (59 homens e 54 mulheres), de 18 a 40 anos, com 24,4 anos em média, convidados por e-mail para uma pesquisa online. Nas limitações, o autor diz que eram uma amostra de estudantes, e não usuários de namoro online. Cada homem avaliou o perfil de uma mulher, e cada mulher o de um homem."
+  description: "113 estudantes da Fresenius University of Applied Sciences, em Colônia, na Alemanha (59 homens e 54 mulheres), de 18 a 40 anos, com 24,4 anos em média, convidados por e-mail para uma pesquisa online. Nas limitações, o artigo diz que eram uma amostra de estudantes, e não usuários de namoro online. Cada homem avaliou o perfil de uma mulher, e cada mulher o de um homem."
   representative: false
 design: experiment
 conflict: "O artigo não traz declaração de financiamento nem de conflito de interesse."
@@ -36,20 +36,16 @@ Depois, cada um disse o quanto a pessoa do perfil tinha traços positivos (como 
 | Sorteio da foto | Homens e mulheres foram sorteados para ver o perfil com a foto atraente ou com a pouco atraente | 2.3, p. 3 | "Men and women were randomly assigned to one of two experimental (attractive vs. unattractive photo) conditions." |
 | Traços que os homens deram à mulher do perfil | Os homens que viram o perfil da mulher com a foto atraente lhe deram mais traços positivos e menos negativos do que os que viram a foto pouco atraente, embora soubessem que a foto não era dela (F = 16,50, p < 0,001). Entre as mulheres que avaliaram o perfil do homem, não apareceu diferença entre as duas fotos (F < 1) | 3.2, p. 3 | "male participants evaluated the profile owner more positive and less negative when the photo showed an attractive woman in contrast to an unattractive woman (F(1,57) = 16.50, p < .001), there is no such effect for the female participants (F(1,52) < 1; n.s.; see Figure 1)." |
 | Diferença entre homens e mulheres no efeito da foto | O quanto a foto mudou os traços atribuídos foi diferente entre os homens que avaliaram uma mulher e as mulheres que avaliaram um homem (F = 5,75, p < 0,05) | 3.2, p. 3 | "More important, there is an interaction effect of face attractiveness, trait valence and evaluator sex (F(1,109) = 5.75, p < .05)." |
-| Vontade de conhecer a pessoa | Disseram que sim, gostariam de conhecer melhor a pessoa do perfil, 37,93% dos homens que viram a foto atraente e 15,00% dos que viram a pouco atraente. Entre as mulheres, o sim foi de 20,69% com a foto atraente e 14,29% com a pouco atraente, e o talvez, de 41,38% e 22,86%. O artigo não traz teste estatístico para essa tabela | Tabela 1, p. 3 | "Unattractive photo 14.29 62.86 22.86 15.00 57.50 31.03 Attractive photo 20.69 37.93 41.38 37.93 31.03 31.03" |
-| Leitura do autor | O autor lê que a foto atraente aumentou sobretudo a vontade dos homens de contatar a mulher do perfil, e que as mulheres foram mais cautelosas: poucas quiseram contato diante da foto atraente, mas responderam muito mais "talvez" | 3.1, p. 3 | "Especially for men, the attractive photo heightened the desire to contact the target person. Females seem to be more cautious." |
+| Vontade de conhecer a pessoa, leitura do estudo | O estudo lê na sua tabela que a foto atraente aumentou sobretudo a vontade dos homens de contatar a mulher do perfil, e que as mulheres foram mais cautelosas: poucas quiseram contato diante da foto atraente, mas responderam muito mais "talvez". Os percentuais dessa tabela não fecham com o número de participantes e não têm teste estatístico (ver Limitações) | 3.1, p. 3 | "Especially for men, the attractive photo heightened the desire to contact the target person. Females seem to be more cautious." |
 
 O teste F compara as médias dos grupos; o p diz com que frequência uma diferença desse tamanho apareceria só por acaso, se não houvesse diferença nenhuma. Um p abaixo de 0,05 é o corte usual para dizer que a diferença dificilmente é acaso; um F abaixo de 1 quer dizer que a diferença entre os grupos foi menor que a variação dentro deles. O artigo mostra as médias das notas dos traços só num gráfico, sem os números.
 
 ## Limitações
 
-- Os participantes eram estudantes, não usuários de sites de namoro, e o próprio autor diz que não se sabe se o mesmo aconteceria numa troca de verdade num site. Também não se sabe o que o aviso de que a foto era falsa fez com o julgamento.
+- Os participantes eram estudantes, não usuários de sites de namoro, e o próprio artigo diz que não se sabe se o mesmo aconteceria numa troca de verdade num site. Também não se sabe o que o aviso de que a foto era falsa fez com o julgamento.
 - Havia um só perfil de mulher e um só de homem, cada um com uma foto atraente e uma pouco atraente. O resultado pode ser dessas fotos e desses perfis, e não de fotos atraentes em geral.
 - Os homens só avaliaram mulheres e as mulheres só avaliaram homens. A diferença que o estudo atribui ao sexo de quem avalia é também a diferença entre o perfil de mulher e o de homem, e o desenho não separa as duas.
-- O artigo não diz quantas pessoas ficaram em cada grupo. Os menores grupos com que os percentuais da Tabela 1 fecham são de 35 e 29 mulheres e de 40 e 29 homens (conta feita para esta Ficha), mais do que as 54 mulheres e os 59 homens do texto; os graus de liberdade dos testes F batem com 54 e 59. Na linha dos homens que viram a foto pouco atraente, sim, não e talvez somam mais de 100% (15,00 + 57,50 + 31,03); o talvez dessa linha repete o da linha de baixo. Por isso a Ficha não traz o talvez dos homens.
+- O artigo não diz quantas pessoas ficaram em cada grupo. Os menores grupos com que os percentuais da Tabela 1 fecham são de 35 e 29 mulheres e de 40 e 29 homens (conta feita para esta Ficha), mais do que as 54 mulheres e os 59 homens do texto; os graus de liberdade dos testes F batem com 54 e 59. Na linha dos homens que viram a foto pouco atraente, sim, não e talvez somam mais de 100% (15,00 + 57,50 + 31,03); o talvez dessa linha repete o da linha de baixo. Por isso a Ficha não traz os percentuais dessa tabela.
+- Um dos dez traços positivos da lista do apêndice é "atraente" (attraktiv). Parte da nota dos traços positivos mede, então, o quanto a pessoa do perfil pareceu atraente, justamente o que a foto muda.
 - O texto diz que foram usados oito traços positivos e oito negativos; a lista do apêndice tem dez de cada.
 - O artigo não diz quando os dados foram coletados nem como os estudantes que receberam o convite foram escolhidos.
-</content>
-</invoke>
-<invoke name="Bash">
-<parameter name="command">cd /var/www/html/pesquisa-relacionamentos/.claude/worktrees/wf_f8266334-938-39 && pnpm -s verify studies/bak-2010-efeito-halo.md
