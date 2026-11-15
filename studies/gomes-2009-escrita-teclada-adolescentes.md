@@ -41,7 +41,7 @@ O artigo não traz contagens nem estatística. Os achados abaixo são a descriç
 | Erros nos cadernos | Quando pareciam ter pressa, apareceram alguns erros de ortografia, como letra omitida e acento faltando. A equipe lê esses erros como fruto de distração ou pressa, não do uso da internet, porque não se repetiam de forma sistemática | Resultados, p. 80 | "A ocorrência desses erros nos cadernos e trabalhos escolares não parece estar relacionada à interferência realizada pela freqüência com que os adolescentes teclam seus textos na Internet." |
 | Leitura da equipe | A equipe lê as abreviações e os outros desvios da escrita na internet como escolhas deliberadas, ligadas ao contexto digital, e não como erro | Discussão, p. 83 | "entendemos o Internetês como uma opção de uso da língua escrita, onde cada transgressão surge de forma deliberada pelos adolescentes ao longo de suas interações virtuais" |
 
-Os trechos estão em português, a língua do artigo. "Escrita teclada" é o nome que o artigo dá ao jeito de escrever na internet, também chamado de "internetês". As abreviações citadas incluem "vc" e "vcê" para "você", "mto" para "muito", "td" para "tudo" e "tmpo" para "tempo".
+Os trechos estão em português, a língua do artigo. "Escrita teclada" é o nome que o artigo dá ao jeito de escrever na internet, também chamado de "internetês". As abreviações que o artigo mostra num depoimento do Orkut transcrito por inteiro incluem "vc" e "vcê" para "você", "mto" para "muito", "td" para "tudo" e "tmpo" para "tempo".
 
 ## Limitações
 
