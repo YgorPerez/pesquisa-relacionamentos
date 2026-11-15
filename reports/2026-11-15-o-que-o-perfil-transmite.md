@@ -488,7 +488,7 @@ Das 108 Fichas desta frente, 18 ficaram de fora, por um destes motivos:
 - Só o conteúdo dos perfis, sem leitor: [Cichosz 2013](../studies/cichosz-2013-estereotipos-perfis.md), [Gavin, Rees-Evans & Brosnan 2019](../studies/gavin-2019-perfil-autista-conteudo.md) e [Handel 2012](../studies/handel-2012-ambiguidade-risco.md).
 - Preferências declaradas num trabalho de disciplina: [Gray 2018](../studies/gray-2018-perfis-eficazes.md).
 
-Duas Fichas de outras frentes do mapa entraram: [Daniels 2016](../studies/daniels-2016-foto-sexy-rede-social.md), da frente 1, porque mede a competência lida numa foto, e [Fiore 2010](../studies/fiore-2010-tese-autoapresentacao-perfil.md), da frente 2, porque segue a impressão formada online até o encontro. O artigo de Bak 2010 tem duas Fichas, [bak-2010-efeito-halo](../studies/bak-2010-efeito-halo.md), usada aqui, e [bak-2010-efeito-halo-perfil](../studies/bak-2010-efeito-halo-perfil.md), da frente 1; as duas contam o mesmo estudo.
+Duas Fichas de outras frentes do mapa entraram: [Daniels 2016](../studies/daniels-2016-foto-sexy-rede-social.md), da frente 1, porque mede a competência lida numa foto, e [Fiore 2010](../studies/fiore-2010-tese-autoapresentacao-perfil.md), da frente 2, porque segue a impressão formada online até o encontro. O artigo de Bak 2010 tem duas Fichas, [bak-2010-efeito-halo](../studies/bak-2010-efeito-halo.md), usada aqui, e [bak-2010-efeito-halo-perfil](../studies/bak-2010-efeito-halo.md), da frente 1; as duas contam o mesmo estudo.
 
 ## O que isso muda nos Guias e nas Dicas
 
