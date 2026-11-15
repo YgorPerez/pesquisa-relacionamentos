@@ -328,6 +328,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
 - [Pramudiarja et al. 2023](studies/pramudiarja-2023-catfishing.md): como quatro usuários de apps de namoro veem o catfishing · ✅ · fraca
 - [Previti & Amato 2004](studies/previti-2004-infidelidade-qualidade.md): infidelidade, causa ou consequência de um casamento ruim · ✅ · moderada
+- [Prichard, Rousse-Malpat & Girard 2025](studies/prichard-2025-convergencia-humor.md): entrar na brincadeira de uma mensagem, conforme o tipo de humor · ✅ · fraca
 - [Prokop et al. 2026](studies/prokop-2026-sutia-percepcao.md): o que homens e mulheres leem numa foto sem sutiã · ✅ · fraca
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
@@ -532,9 +533,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Olivera-La Rosa et al. 2019](studies/olivera-la-rosa-2019-swipe-rostos.md): caráter moral e rostos no Tinder · ✅ · fraca
+- [Park et al. 2015](studies/park-2015-vocabulario-participacao-forum.md): vocabulário parecido na primeira resposta e volta à conversa em fóruns de saúde · ✅ · moderada
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
+- [Pozzi, Bangerter & Mazzarella 2024](studies/pozzi-2024-pacto-lexical-confianca.md): repetir os nomes que a outra pessoa deu e a confiança nela · ✅ · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
 - [Rothe et al. 2016](studies/rothe-2016-preferencia-visual-blinq.md): prever pela foto quem vai ser curtido num aplicativo · ✅ · fraca
 - [Rudder 2010](studies/rudder-2010-mitos-fotos-perfil.md): tipo de foto de perfil e mensagens no OkCupid · 🟡 · fraca
