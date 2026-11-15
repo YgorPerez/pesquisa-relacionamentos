@@ -51,5 +51,5 @@ As notas de interesse romântico vão de 1 ("discordo totalmente" de "tenho inte
 - As notas respondem a perguntas hipotéticas ("se essa pessoa tivesse tal qualidade e não a outra"). A situação da vida real era sempre a primeira pergunta, antes das outras três.
 - Os perfis de namoro são um par para cada gênero, com fotos de um banco de rostos e qualidades vindas de outro estudo. O artigo não diz quais pares de qualidades foram usados nem separa os resultados de quem viu os perfis de mulheres e de quem viu os de homens.
 - Nos perfis, pela Tabela 2, a vantagem da qualidade própria aparece no perfil 1 e não no perfil 2. Como o estudo usa um só par de perfis por gênero, não dá para dizer se o resultado dos perfis vale para outros perfis.
-- O texto escreve os graus de liberdade do grupo de interesse desigual de dois jeitos: "F(1.227)" no resultado principal e "F(1,225)" na nota de rodapé dos perfis. O grupo tinha 228 pessoas.
+- Na parte dos perfis de namoro, os graus de liberdade (402 na amostra toda, 225 no grupo de interesse desigual) indicam duas pessoas a menos que na parte das pessoas reais; o texto não diz por quê. No resultado do grupo de interesse desigual, o texto escreve "F(1.227)", com ponto no lugar da vírgula.
 - O estudo não mede escolhas: não houve curtida, mensagem nem encontro.
