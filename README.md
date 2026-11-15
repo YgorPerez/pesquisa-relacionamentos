@@ -164,6 +164,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
+- [Jaeger et al. 2025](studies/jaeger-2025-tratamento-estetico.md): tratamento estético facial e primeira impressão · ✅ · fraca
 - [Jakesch et al. 2023](studies/jakesch-2023-texto-ia.md): texto de perfil escrito por pessoa ou gerado por IA · ✅ · moderada
 - [Jiwa et al. 2025](studies/jiwa-2025-precisao-perfil-app.md): o que o perfil de app deixa ver da personalidade · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
@@ -322,10 +323,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
+- [Handel & Shklovski 2012](studies/handel-2012-ambiguidade-risco.md): o "pergunte-me" no perfil de um site de encontros entre homens · ✅ · fraca
 - [Hartgerink et al. 2015](studies/hartgerink-2015-ostracismo-cyberball.md): o efeito de ser ignorado, em 120 experimentos · ✅ · forte
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
 - [Kalman et al. 2006](studies/kalman-2006-latencia-de-resposta.md): quanto demora uma resposta em e-mail e fóruns · ✅ · moderada
+- [Kalra & Peterson 2019](studies/kalra-2019-photofeeler.md): a impressão que uma foto de namoro passa, prevista por uma rede neural · ✅ · fraca
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Kurzban & Weeden 2005](studies/kurzban-2005-hurrydate.md): quem escolhe e quem é escolhido no speed dating da HurryDate · ✅ · moderada
