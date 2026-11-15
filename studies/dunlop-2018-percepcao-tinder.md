@@ -6,13 +6,13 @@ verified_on: 2026-11-15
 strength: weak
 strength_reason: "23 entrevistas com universitários de um só estado dos EUA, recrutados por contatos pessoais, indicação, panfletos e crédito extra numa disciplina; análise qualitativa de uma pessoa só, que conta ter usado o Tinder por anos, sem contagens; e uma dissertação de mestrado, que não passou por revisão de revista."
 countries: [EUA]
-period: "não informado no texto lido; a dissertação é de 2018"
+period: "2018 (o comitê de ética liberou a pesquisa em 28 de junho de 2018, e a dissertação é do semestre de outono de 2018; a data das entrevistas não é informada)"
 sample:
   n: 23
   description: "23 usuários atuais ou recentes do Tinder, todos universitários ou recém-formados de grandes universidades do sudeste dos EUA: 14 mulheres de 18 a 25 anos (média de 20,9) e 9 homens de 19 a 24 anos (média de 21,1). Recrutados até a saturação teórica: 5 contatos pessoais de quem fez a pesquisa, 3 por indicação de outros participantes, 1 por anúncio no Reddit da universidade, 3 por panfletos no campus e 11 por crédito extra numa disciplina de sociologia. A maioria era heterossexual e só via perfis do outro sexo; entre os 23 havia um homem gay, três mulheres bissexuais e uma mulher heterossexual que também via mulheres para fazer amizade."
   representative: false
 design: cross-sectional
-conflict: "A dissertação não declara financiamento nem conflito de interesse. Na seção de limitações, quem a escreveu conta ter usado o Tinder por boa parte dos quatro anos anteriores, inclusive no último relacionamento sério."
+conflict: "A dissertação não declara financiamento nem conflito de interesse, e a carta do comitê de ética deixa em branco o campo da agência financiadora. Na seção de limitações, quem a escreveu conta ter usado o Tinder por boa parte dos quatro anos anteriores e ter visto ali muitos perfis de mulheres, entre eles o da pessoa do último relacionamento sério."
 covers:
   genders: [man, woman]
   ages: { min: 18, max: 25 }
@@ -53,7 +53,7 @@ Entrevistas semiestruturadas com 23 universitários que usavam ou tinham usado o
 
 ## Limitações
 
-- São 23 pessoas parecidas: universitários e recém-formados de um só estado dos EUA. A dissertação avisa que os resultados podem não valer para outras regiões nem para quem não está na universidade. Não informa quando as entrevistas foram feitas.
+- São 23 pessoas parecidas: universitários e recém-formados de um só estado dos EUA. A dissertação avisa que os resultados podem não valer para outras regiões nem para quem não está na universidade. Não informa quando as entrevistas foram feitas, só que o comitê de ética liberou a pesquisa em junho de 2018.
 - Tudo vem do que os entrevistados contaram, numa conversa gravada. A dissertação aponta que o viés de desejabilidade social pode ter feito parte deles esconder temas estigmatizados, como mentir no perfil. Os participantes foram convidados a abrir o próprio perfil no celular durante a entrevista, mas poucos o fizeram, e os perfis não foram analisados.
 - A análise qualitativa é de uma pessoa só, que conta ter usado o Tinder por boa parte dos quatro anos anteriores e reconhece que isso pode ter influenciado a leitura. Para contrabalançar, as transcrições foram mostradas ao orientador.
 - É só o Tinder. Vários entrevistados tinham conta em outros apps, como o Bumble, onde a mulher manda a primeira mensagem, e a dissertação lembra que as normas de gênero podem ser outras lá.
