@@ -23,7 +23,7 @@ covers:
 
 ## O que mediu
 
-A autora fez uma análise de conteúdo etnográfica, nas palavras dela: entrou no Match.com e no Plenty of Fish, descreveu passo a passo o cadastro de cada um e leu vinte perfis de mulheres. Fez uma lista das palavras e dos tipos de foto que se repetiam e contou em quantos perfis cada um aparecia. Chamou de estereótipo o traço de estilo de vida, personalidade ou aparência que aparece em todos os perfis, e de original o perfil que organiza o texto de um jeito diferente (títulos e listas) ou que tem uma voz própria (autodescrição incomum, ironia), sempre em comparação com os outros perfis do estudo.
+A autora fez uma análise de conteúdo etnográfica, nas palavras dela: entrou no Match.com e no Plenty of Fish, descreveu passo a passo o cadastro de cada um e leu vinte perfis de mulheres. Fez uma lista das palavras e dos tipos de foto que se repetiam e contou em quantos perfis cada um aparecia. Chamou de estereótipo o traço de estilo de vida, personalidade ou aparência, escrito pelas próprias mulheres, que se repete de perfil em perfil (família e amigos, por exemplo, aparece em 17 dos 20), e de original o perfil que organiza o texto de um jeito diferente (títulos e listas) ou que tem uma voz própria (autodescrição incomum, ironia), sempre em comparação com os outros perfis do estudo.
 
 As perguntas eram se o cadastro do site limita a originalidade e se um site pago (Match.com) e um grátis (POF) mudam isso. O trabalho descreve o que estava escrito e nas fotos, sem saber se era verdade: a autora diz que trata cada perfil pelo que ele mostra.
 
