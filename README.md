@@ -55,6 +55,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
+- [Fernandes e Primo 2020](studies/fernandes-2020-flerte-apps.md): o flerte em apps de paquera no Brasil · ✅ · fraca
 - [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
 - [Hogan, Dutton & Li 2011](studies/hogan-2011-me-myspouse.md): onde casais de 18 países se conheceram · ✅ · fraca
 - [IBGE 2015](studies/ibge-2015-pnad-esporte.md): PNAD, práticas de esporte e atividade física · ✅ · moderada
@@ -180,6 +181,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ellithorpe, Kunaish & Wright 2025](studies/ellithorpe-2025-perfis-sexualizados-tinder.md): perfis sexualizados com cara de Tinder, na reação rápida e na resposta pensada · ✅ · fraca
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
+- [Ernst e Huschens 2018](studies/ernst-2018-emoticons-email-trabalho.md): emoticons num email de crítica no trabalho · ✅ · fraca
+- [Ernst e Huschens 2019](studies/ernst-2019-emoticons-trabalho.md): emoticons alegres e a imagem de quem escreve no trabalho · ✅ · fraca
 - [Fan et al. 2023](studies/fan-2023-fotos-gays-visao-computacional.md): rosto, corpo e cenário nas fotos de um app chinês para homens gays · ✅ · fraca
 - [Fang, Zhang & Maglio 2025](studies/fang-2025-abreviacoes-resposta.md): abreviações em mensagens de texto e resposta · ✅ · moderada
 - [Farrelly & King 2019](studies/farrelly-2019-altruismo-perfil.md): altruísmo e beleza do rosto, para relação curta e longa · ✅ · fraca
