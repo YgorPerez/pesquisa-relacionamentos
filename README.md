@@ -449,8 +449,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
 - [Zhang & Yasseri 2016](studies/zhang-2016-conversas-apos-match.md): o que acontece depois do match · ✅ · fraca
 - [Zhang, Phang & Zhang 2018](studies/zhang-2018-beleza-vende.md): beleza da foto e convites num app chinês · ✅ · fraca
+- [Zhang et al. 2021](studies/zhang-2021-emoji-confianca.md): emoji e confiança num jogo de dinheiro · ✅ · fraca
 - [Zhao et al. 2026](studies/zhao-2026-embelezamento-contextos.md): a roupa feminina e o julgamento romântico dos homens, em relação casual e séria · ✅ · fraca
 - [Zhu 2023](studies/zhu-2023-foto-sexualizada-atratividade.md): foto sensual de mulheres em perfil de app e a atratividade percebida · ✅ · fraca
+- [Zhu et al. 2026](studies/zhu-2026-emoji-perdao.md): emoji num pedido de desculpas e vontade de perdoar · ✅ · fraca
+- [Zhukova & Herring 2024](studies/zhukova-2024-emoji-passivo-agressivo.md): como gerações e gêneros leem emojis em mensagens · ✅ · fraca
 - [Zinck, Weir & Fisher 2021](studies/zinck-2021-dependentes-foto-perfil.md): filhos e bichos no perfil conforme o objetivo · ✅ · fraca
 - [Zytko et al. 2014](studies/zytko-2014-dificuldades-impressao.md): passar e formar impressões num site de namoro, em entrevistas · ✅ · fraca
 - [Zytko et al. 2015](studies/zytko-2015-atividades-pareadas.md): avaliar o outro pelas mensagens de um site de namoro e num jogo online em dupla · ✅ · fraca
