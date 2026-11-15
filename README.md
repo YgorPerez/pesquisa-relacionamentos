@@ -315,6 +315,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
+- [Farris et al. 2008](studies/farris-2008-decodificar-intencao.md): homens e mulheres lendo simpatia e interesse sexual em fotos · ✅ · fraca
+- [Farris, Treat & Viken 2010](studies/farris-2010-alcool-interesse.md): álcool e a leitura do interesse sexual em fotos · ✅ · fraca
+- [Farris, Viken & Treat 2010](studies/farris-2010-pistas-diagnosticas.md): roupa, expressão e coerção sexual na leitura de fotos · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Gerlach et al. 2019](studies/gerlach-2019-preferencias-proximo-parceiro.md): o que o solteiro pede prevê o próximo parceiro, e o ideal baixa quando o parceiro fica aquém · ✅ · moderada
