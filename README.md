@@ -93,6 +93,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Afridi et al. 2025](studies/afridi-2025-trabalho-mulheres-matrimonial.md): trabalho da mulher e interesse num site de casamento da Índia · ✅ · moderada
 - [Aguinaldo & Peissig 2021](studies/aguinaldo-2021-maquiagem-sociossexualidade.md): quanta maquiagem e como o rosto é julgado · ✅ · fraca
 - [Akadal e Söyük 2022](studies/akadal-2022-respostas-so-emoji.md): mensagens só com emoji, para quem escreve e para quem lê · ✅ · fraca
+- [Albano et al. 2022](studies/albano-2022-lsm-alianca-mentoria.md): sintonia de estilo entre paciente e mentor num chat de autoajuda guiada para anorexia · ✅ · fraca
 - [Amano 2026](studies/amano-2026-investimento-parental.md): falar de filhos no perfil de um homem · ✅ · fraca
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
 - [Amirkhani et al. 2026](studies/amirkhani-2026-golpes-romanticos-ira.md): o que fez vítimas de golpe romântico no Irã desconfiarem · ✅ · fraca
@@ -150,8 +151,12 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Castellanos-Barreto et al. 2023](studies/castellanos-barreto-2024-emoji-organizacional.md): emoji sorridente num e-mail de crítica do supervisor · ✅ · fraca
 - [Cavalheiro et al. 2022](studies/cavalheiro-2022-adequacao-emoji.md): emoji em mensagens boas e ruins de remetentes próximos e distantes · ✅ · fraca
 - [Cavalheiro et al. 2023](studies/cavalheiro-2023-presenca-social-pistas-pictoricas.md): emoticon, emoji e memoji num comentário de colega e a sensação de presença · ✅ · fraca
+- [Cavalheiro et al. 2024](studies/cavalheiro-2024-emoji-reciproco.md): emoji de volta numa conversa entre colegas de trabalho · ✅ · fraca
+- [Chartrand & Bargh 1999](studies/chartrand-1999-efeito-camaleao.md): o efeito camaleão, imitar e ser imitado cara a cara · ✅ · fraca
 - [Choi, Shim & Kim 2023](studies/choi-2023-emoji-lider-criatividade.md): emojis positivos do chefe e a criatividade da equipe · ✅ · fraca
 - [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
+- [Christopherson 2011](studies/christopherson-2011-ciberlinguagem-bibliotecario.md): ciberlinguagem do usuário e do bibliotecário no chat de atendimento · ✅ · fraca
+- [Chung et al. 2026](studies/chung-2026-emoticons-reciprocidade-ajuda.md): emoticons entre atendentes e jovens num chat de apoio · ✅ · fraca
 - [Churchill 2026](studies/churchill-2026-peso-foto-perfil.md): o peso na foto e a nota do perfil de namoro · ✅ · fraca
 - [Chwe, Williams & Robertson 2023](studies/chwe-2023-raca-genero-tinder.md): raça dos perfis de mulheres e o que os homens fazem no Tinder · ✅ · fraca
 - [Cichosz 2013](studies/cichosz-2013-estereotipos-perfis.md): o que mulheres escrevem e mostram em perfis do Match.com e do Plenty of Fish · ✅ · fraca
@@ -161,6 +166,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [Courtice et al. 2026](studies/courtice-2026-emoji-trabalho.md): emojis em mensagens de um colega de trabalho · ✅ · fraca
 - [Cowan & Little 2013](studies/cowan-2013-humor-anuncio.md): humor afiliativo e agressivo em anúncios pessoais · ✅ · fraca
+- [Curcic 2020](studies/curcic-2020-convergencia-textismos-idade.md): imitar as abreviações do outro no chat, por idade · ✅ · fraca
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Daniels 2016](studies/daniels-2016-foto-sexy-rede-social.md): a foto sexualizada no perfil de Facebook de uma mulher, vista por universitários · ✅ · fraca
@@ -211,6 +217,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Fullwood & Martino 2007](studies/fullwood-2007-emoticons-impressao.md): emoticons e a impressão sobre quem conversa no chat · ✅ · fraca
+- [Fullwood et al. 2013](studies/fullwood-2013-convergencia-emoticons.md): emoticons em salas de bate-papo · ✅ · fraca
 - [Fullwood & Attrill-Smith 2018](studies/fullwood-2018-foto-perfil-offline.md): chance esperada de encontro num site e numa noite fora · ✅ · fraca
 - [Gale et al. 2024](studies/gale-2024-rastreamento-olhar-perfil.md): o olhar no rosto e na renda em perfis de namoro montados · ✅ · fraca
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
@@ -230,9 +237,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gottman & Levenson 2000](studies/gottman-2000-timing-divorce.md): crítica, defensividade, desprezo e "se fechar" antes do divórcio · ✅ · fraca
 - [Gray et al. 2018](studies/gray-2018-perfis-eficazes.md): o que alunos de uma universidade dos EUA dizem atrair num perfil de namoro · ✅ · fraca
 - [Green et al. 2026](studies/green-2026-conspiracao-perfil.md): teoria da conspiração no perfil de namoro · ✅ · moderada
+- [Grewal et al. 2026](studies/grewal-2026-espelhamento-atendimento-chat.md): espelhar o estilo do cliente no chat de atendimento · ✅ · fraca
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
 - [Groggel 2023](studies/groggel-2023-flerte-genero.md): o que universitários imaginam que cada lado de um flerte pensa · ✅ · fraca
 - [Groggel 2023](studies/groggel-2023-piscadela-ambiguidade.md): emoji e clareza numa paquera por Snapchat · ✅ · fraca
+- [Hale & Hamilton 2016](studies/hale-2016-mimica-rv-replicacao.md): imitação por um avatar e afinidade · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
 - [Hall et al. 2015](studies/hall-2015-deteccao-flerte.md): perceber o flerte numa conversa entre desconhecidos · ✅ · fraca
@@ -243,6 +252,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
 - [Hilte, Vandekerckhove & Daelemans 2019](studies/hilte-2019-percepcao-escrita-adolescentes.md): como adolescentes leem a escrita nas redes · ✅ · fraca
+- [Hilte, Vandekerckhove & Daelemans 2020](studies/hilte-2020-convergencia-genero.md): rapazes e moças imitam o jeito de escrever um do outro no chat? · ✅ · fraca
+- [Hilte, Daelemans & Vandekerckhove 2021](studies/hilte-2021-acomodacao-escolaridade.md): adolescentes ajustam o jeito de escrever à escola do outro? · ✅ · fraca
+- [Hilte 2023](studies/hilte-2023-acomodacao-percebida.md): como adolescentes percebem quem imita o jeito de escrever do outro no chat · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
 - [Horsham et al. 2025](studies/horsham-2025-replicacao-menos-e-mais.md): réplica de "saber mais e gostar menos" · ✅ · fraca
@@ -256,6 +268,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Huh 2025](studies/huh-2025-emoji-responsividade.md): emoji e a impressão de atenção nas respostas de um amigo · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Hunter et al. 2019](studies/hunter-2018-riqueza-perfil.md): o saldo bancário e outros sinais de riqueza num perfil de namoro · ✅ · fraca
+- [Ireland & Pennebaker 2010](studies/ireland-2010-lsm-escrita-cartas.md): estilo de escrita parecido em redações, cartas e poemas · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
 - [Jaeger et al. 2025](studies/jaeger-2025-tratamento-estetico.md): tratamento estético facial e primeira impressão · ✅ · fraca
@@ -309,10 +322,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lehrer & Chiswick 1993](studies/lehrer-1993-religiao-estabilidade.md): religião do casal e estabilidade do casamento · ✅ · moderada
 - [Lehrer & Chen 2013](studies/lehrer-2013-idade-casamento.md): idade ao casar e risco de separação · ✅ · moderada
 - [Leivers et al. 2015](studies/leivers-2015-fidelidade-rosto-mulheres.md): homens julgando pela foto a fidelidade de mulheres · ✅ · fraca
+- [Lelonkiewicz et al. 2021](studies/lelonkiewicz-2021-imitacao-lexical-nulo.md): ter as próprias palavras repetidas por um parceiro online · ✅ · fraca
 - [Lew et al. 2018](studies/lew-2018-latencia-e-contingencia.md): demora e pertinência da resposta num chat de atendimento · ✅ · fraca
 - [Lewis 2013](studies/lewis-2013-preconceito-racial-respostas.md): raça, primeira mensagem e resposta no OkCupid · ✅ · moderada
 - [Li et al. 2013](studies/li-2013-preferencias-atracao-escolha.md): preferências declaradas, atração e escolha nos primeiros encontros · ✅ · fraca
+- [Li & Hu 2025](studies/li-2025-similaridade-medico-paciente.md): semelhança entre as mensagens de médico e paciente numa plataforma chinesa de consultas · ✅ · fraca
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
+- [Liao et al. 2023](studies/liao-2023-emocao-compartilhada-chat.md): a sequência de tarefa e simpatia num chat entre desconhecidos · ✅ · moderada
+- [Liebman & Gergle 2016](studies/liebman-2016-pistas-afinidade.md): emoticons, exclamações e maiúsculas num chat entre desconhecidos · ✅ · fraca
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Liu et al. 2023](studies/liu-2023-estilo-escrita-medicos.md): emoji e linguagem inclusiva de médicos em consultas online · ✅ · fraca
@@ -348,6 +365,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Neyt et al. 2019](studies/neyt-2019-escolaridade-tinder.md): escolaridade do perfil e matches no Tinder · ✅ · moderada
 - [Neyt et al. 2022](studies/neyt-2022-prestigio-profissao-tinder.md): situação de trabalho, cargo e sucesso no Tinder · ✅ · moderada
 - [Nguyen & Rosseel 2025](studies/nguyen-2025-variacao-ortografica-twitter.md): grafia fora do padrão em tweets, para pessoas e para modelos de linguagem · ✅ · fraca
+- [Niederhoffer & Pennebaker 2002](studies/niederhoffer-2002-estilo-linguistico-chat.md): estilo de linguagem parecido em conversas a dois · ✅ · fraca
 - [Ogawa & Takikawa 2024](studies/ogawa-2024-nomes-ambiguos.md): nome de leitura ambígua no perfil · ✅ · fraca
 - [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
 - [Ong e Wang 2015](studies/ong-2015-renda-perfil-china.md): renda no perfil e visitas num site de namoro chinês · ✅ · moderada
@@ -371,6 +389,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
 - [Pramudiarja et al. 2023](studies/pramudiarja-2023-catfishing.md): como quatro usuários de apps de namoro veem o catfishing · ✅ · fraca
 - [Previti & Amato 2004](studies/previti-2004-infidelidade-qualidade.md): infidelidade, causa ou consequência de um casamento ruim · ✅ · moderada
+- [Prichard, Rousse-Malpat & Girard 2025](studies/prichard-2025-convergencia-humor.md): entrar na brincadeira de uma mensagem, conforme o tipo de humor · ✅ · fraca
 - [Prokop et al. 2026](studies/prokop-2026-sutia-percepcao.md): o que homens e mulheres leem numa foto sem sutiã · ✅ · fraca
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
@@ -437,7 +456,9 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sumner et al. 2024](studies/sumner-2024-video-ou-presencial.md): primeiro encontro por vídeo ou pessoalmente · ✅ · fraca
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Sutherland et al. 2018](studies/sutherland-2018-infidelidade-universal.md): julgar pelo rosto quem já traiu, em mulheres de culturas diferentes · ✅ · fraca
+- [Swaab, Maddux & Sinaceur 2011](studies/swaab-2011-mimica-verbal-negociacao-online.md): imitar as palavras do outro numa negociação por chat · ✅ · fraca
 - [Szczuka et al. 2025](studies/szczuka-2025-respostas-ia-perfil.md): respostas de perfil escritas pelo ChatGPT, com rótulo de pessoa ou de IA · ✅ · fraca
+- [Takizawa, Sakamaki & Yamashita 2015](studies/takizawa-2015-sincronia-emoticons.md): pontuação e emoticons na resposta a uma mensagem · ✅ · fraca
 - [Tamamiya & Okamoto 2022](studies/tamamiya-2022-emoji-line-quantidade.md): quantidade de emoji em mensagens do LINE · 🟡 · fraca
 - [Taubert et al. 2016](studies/taubert-2016-ordem-atratividade.md): a foto vista logo antes e a nota da seguinte · ✅ · fraca
 - [Shaw Taylor et al. 2010](studies/taylor-2010-segunda-chance.md): impressões antes e depois do primeiro encontro de quem se conheceu online · ✅ · fraca
@@ -457,6 +478,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Toma et al. 2018](studies/toma-2018-crenca-engano-alheio.md): crenças sobre a própria mentira e a dos outros, cara a cara e por texto · ✅ · moderada
 - [Tracy & Beall 2011](studies/tracy-2011-expressao-atracao-sexual.md): sorriso, orgulho e vergonha na atração sexual por uma foto · ✅ · fraca
+- [Trzmielewska et al. 2025](studies/trzmielewska-2025-condicao-controle-mimica.md): o grupo de comparação nos experimentos de imitação e gostar · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tuinman et al. 2018](studies/tuinman-2018-sobrevivente-cancer.md): perfil de quem teve câncer · ✅ · fraca
 - [Turnbull-Dugarte & López Ortega 2025](studies/turnbull-dugarte-2025-extrema-direita.md): votar na extrema direita e o like no perfil de namoro · ✅ · moderada
@@ -517,6 +539,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
+- [Adams et al. 2018](studies/adams-2018-acomodacao-textismos.md): textismos e ajuste ao estilo do outro nas mensagens · ✅ · fraca
 - [Antheunis et al. 2020](studies/antheunis-2020-texto-video-presencial.md): chat ou vídeo antes do encontro pessoal · ✅ · fraca
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
@@ -528,6 +551,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Barclay 2010](studies/barclay-2010-generosidade-corte.md): generosidade numa descrição e o interesse de quem lê · ✅ · fraca
 - [Bašić 2021](studies/basic-2021-papeis-genero-perfil.md): papéis de gênero e foto em perfis de namoro · ✅ · fraca
 - [Beattie 2017](studies/beattie-2017-emoji-decisao.md): emoji numa conversa por mensagem para escolher um restaurante · ✅ · fraca
+- [Ben-Haim & Tsur 2021](studies/ben-haim-2021-coordenacao-estilo-debate.md): ajuste de estilo e abertura a mudar de ideia em debates do Reddit · ✅ · fraca
 - [Berger & Barasch 2017](studies/berger-2017-fotos-espontaneas.md): foto espontânea e foto posada · ✅ · fraca
 - [Birnbaum et al. 2026](studies/birnbaum-2026-autorrevelacao-perfil.md): quanto o texto de um perfil de namoro conta sobre a pessoa · ✅ · fraca
 - [Birnbaum et al. 2026](studies/birnbaum-2026-perfil-sexualizado.md): a impressão que um perfil sexualizado dá · ✅ · fraca
@@ -538,9 +562,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [Celani-Morrell 2016](studies/celani-morrell-2016-foto-texto-mulheres.md): a beleza da foto e a nota do texto em perfis de mulheres · ✅ · fraca
 - [Chappetta 2016](studies/chappetta-2016-papeis-genero-perfil.md): papéis de gênero e beleza da foto num perfil de namoro, entre universitários · ✅ · fraca
+- [Clerke & Heerey 2021](studies/clerke-2021-mimica-confianca-chat.md): imitação, semelhança e confiança numa sala de bate-papo · ✅ · fraca
 - [Comhair 2018](studies/comhair-2018-humor-likes-tinder.md): humor no texto do perfil e likes no Tinder · ✅ · fraca
 - [De La Mare & Lee 2023](studies/de-la-mare-2023-similaridade-personalidade.md): personalidade parecida na escolha de perfis · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
+- [Doré & Morris 2018](studies/dore-2018-sincronia-apoio-texto.md): linguagem parecida no apoio emocional por texto · ✅ · fraca
 - [Duguay 2017](studies/duguay-2016-autenticidade-tinder.md): como o Tinder enquadra a autenticidade do perfil · ✅ · fraca
 - [Erle et al. 2022](studies/erle-2022-emoji-informacao-social.md): emojis como informação social nas mensagens · ✅ · moderada
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
@@ -556,8 +582,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gibbs et al. 2011](studies/gibbs-2011-reducao-incerteza.md): como usuários de sites de namoro checam quem conhecem online · ✅ · fraca
 - [Gillrath 2022](studies/gillrath-2022-erros-nativo.md): erros de linguagem e saber que quem escreveu não é nativo · ✅ · fraca
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
+- [Gonzales et al. 2010](studies/gonzales-2010-lsm-coesao-grupo.md): estilo de linguagem parecido em pequenos grupos · ✅ · fraca
 - [Goode & Hoegg 2009](studies/goode-2009-impressao-nao-atraente.md): a ordem entre foto e texto no perfil de namoro · 🟡 · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
+- [Hale & Hamilton 2016](studies/hale-2016-revisao-mimica.md): revisão sobre as reações a ser imitado · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
 - [Hamilton et al. 2015](studies/hamilton-2015-tracos-texto-namoro.md): personalidade lida no texto do perfil e atração · ✅ · fraca
 - [Hand et al. 2022](studies/hand-2022-emoji-remetente.md): emoji, texto e a imagem de quem manda a mensagem · ✅ · fraca
@@ -568,8 +596,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [van den Heuvel 2021](studies/heuvel-2021-fundo-foto-atracao.md): o fundo da foto de perfil e a atração · ✅ · fraca
 - [Holmgreen & Oswald 2017](studies/holmgreen-2017-apego-anuncios.md): o estilo de apego escrito no anúncio de namoro de uma mulher · ✅ · fraca
 - [Indalecio et al. 2016](studies/indalecio-2016-emoticons-lideranca.md): emoticons no e-mail de um líder · ✅ · fraca
+- [Ireland & Henderson 2014](studies/ireland-2014-lsm-negociacao-impasse.md): estilo de linguagem parecido e impasse numa negociação por chat · ✅ · fraca
 - [Janssen 2022](studies/janssen-2022-erros-nao-nativo.md): erros de língua num perfil de namoro e saber que quem escreve não é nativo · ✅ · fraca
 - [Janulevičiūtė & Mikuličiūtė 2024](studies/januleviciute-2024-autorrevelacao-solidao.md): quanto o homem conta de si no perfil e a nota que as mulheres dão a ele · ✅ · fraca
+- [Jiang et al. 2023](studies/jiang-2023-reciprocidade-bitmoji.md): devolver figurinhas Bitmoji entre amigos no Snapchat · ✅ · fraca
 - [Jin et al. 2019](studies/jin-2019-instagram-namorada.md): o tipo de foto no Instagram e o desejo de sair · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
 - [Joel et al. 2017](studies/joel-2017-atracao-speed-dating.md): traços e preferências não previram a atração específica por cada par · ✅ · fraca
@@ -578,8 +608,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kalra & Peterson 2019](studies/kalra-2019-photofeeler.md): a impressão que uma foto de namoro passa, prevista por uma rede neural · ✅ · fraca
 - [Kalyanaraman & Ivory 2006](studies/kalyanaraman-2006-emoticons-chat.md): emoticons num bate-papo com um especialista · 🟡 · fraca
 - [Karney & Bradbury 1995](studies/karney-1995-curso-qualidade-conjugal.md): o curso da qualidade e da estabilidade do casamento · ✅ · moderada
+- [Kavanagh & Winkielman 2016](studies/kavanagh-2016-revisao-mimica-afiliacao.md): a função da imitação espontânea e a afinidade com quem imita · ✅ · fraca
 - [Khan & Chaudhry 2015](studies/khan-2015-revisao-contato-encontro.md): revisão sobre o caminho do contato online ao primeiro encontro · ✅ · fraca
 - [Kho 2022](studies/kho-2022-primeira-impressao-tinder.md): como três homens formam a primeira impressão de mulheres por fotos · ✅ · fraca
+- [Kimura & Yamamoto 2017](studies/kimura-2017-troca-emoticons.md): retribuir ou não o emoticon numa troca de mensagens com um amigo · ✅ · fraca
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Konings et al. 2024](studies/konings-2024-foto-sexualizada-tracos.md): fotos e textos sexualizados em perfis do Tinder e do Bumble · ✅ · fraca
 - [van Kooten 2021](studies/kooten-2021-qualidade-texto-tinder.md): foto, texto com erros e ausência de texto num perfil do Tinder · ✅ · fraca
@@ -600,16 +632,23 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Meireles, Brandão & Carvalho 2024](studies/meireles-2024-internetes-instagram.md): erros ortográficos e internetês em comentários do Instagram · ✅ · fraca
 - [Mierke et al. 2011](studies/mierke-2011-riqueza-midia-atratividade.md): vídeo, áudio, foto ou texto na apresentação de um perfil · ✅ · fraca
 - [Montoya, Horton & Kirchner 2008](studies/montoya-2008-similaridade-real-percebida.md): similaridade real vs. percebida (meta-análise) · ✅ · forte
+- [Muir et al. 2017](studies/muir-2017-acomodacao-estilo-poder.md): poder e imitação do estilo de escrita num chat · ✅ · fraca
+- [Muir et al. 2020](studies/muir-2020-mimica-perguntas-negociacao.md): imitar as palavras do outro numa negociação por chat · ✅ · fraca
+- [Munson et al. 2014](studies/munson-2014-lsm-email-equipes.md): estilo parecido nos e-mails de equipes de alunos · ✅ · fraca
 - [Murphy et al. 2015](studies/murphy-2015-excesso-confianca.md): excesso de confiança, perfil de namoro e disputa por um parceiro · ✅ · fraca
 - [Neve & McConville 2021](studies/neve-2021-fotos-recomendacao.md): fotos e histórico de Likes para prever o match · ✅ · fraca
+- [Niculae et al. 2015](studies/niculae-2015-desequilibrio-traicao.md): o desequilíbrio na conversa antes de uma traição num jogo online · ✅ · fraca
 - [Norcie et al. 2013](studies/norcie-2013-verificacao-perfis.md): verificar o perfil de namoro pelo Facebook · ✅ · fraca
 - [Norton, Frost & Ariely 2007](studies/norton-2007-menos-e-mais.md): saber mais sobre alguém e gostar dele · ✅ · fraca
+- [Ohashi, Okubo & Okamura 2023](studies/ohashi-2023-quantidade-emoji.md): quantos emojis vêm na resposta · 🟡 · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Olivera-La Rosa et al. 2019](studies/olivera-la-rosa-2019-swipe-rostos.md): caráter moral e rostos no Tinder · ✅ · fraca
 - [Oyama et al. 2026](studies/oyama-2026-estilo-ojisan-jovens.md): emoji, tom e o "estilo tiozão" em mensagens de chefe e de amigo, em japonês · ✅ · fraca
+- [Park et al. 2015](studies/park-2015-vocabulario-participacao-forum.md): vocabulário parecido na primeira resposta e volta à conversa em fóruns de saúde · ✅ · moderada
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
 - [Perrone 2022](studies/perrone-2022-encarceramento-perfil.md): passagem pela prisão num perfil de namoro · ✅ · fraca
 - [Photofeeler 2017](studies/photofeeler-2017-replicacao-okcupid.md): sorriso e olhar nas fotos de homens, de novo · 🟡 · fraca
+- [Pozzi, Bangerter & Mazzarella 2024](studies/pozzi-2024-pacto-lexical-confianca.md): repetir os nomes que a outra pessoa deu e a confiança nela · ✅ · fraca
 - [Prada et al. 2022](studies/prada-2022-emoji-reservas-clientes.md): emoji na resposta de um restaurante ou hotel · ✅ · fraca
 - [Ramirez et al. 2015](studies/ramirez-2015-troca-de-modalidade-encontro.md): tempo de conversa online antes do primeiro encontro · ✅ · fraca
 - [Ribeiro 2011](studies/ribeiro-2011-internetes-descricao.md): como se forma o internetês em português · ✅ · fraca
@@ -621,8 +660,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rudder 2014](studies/rudder-2014-experimentos-okcupid.md): três testes do OkCupid com fotos, texto e compatibilidade · 🟡 · fraca
 - [Rule et al. 2011](studies/rule-2011-interesse-orientacao.md): objetivo romântico de quem olha e orientação sexual julgada pelo rosto · ✅ · fraca
 - [Sasaki 2007](studies/sasaki-2007-emoticons-intencao.md): o emoticon (-_-) numa mensagem ambígua · 🟡 · fraca
+- [Scissors et al. 2008](studies/scissors-2008-mimica-lexical-confianca.md): repetir as palavras do outro no chat e confiança · ✅ · fraca
+- [Scissors et al. 2009](studies/scissors-2009-similaridade-confianca-chat.md): falar parecido no chat e confiança · ✅ · fraca
 - [Sepúlveda e Crespo 2024](studies/sepulveda-2024-perfis-falsos.md): o que usuários de apps chamam de desinformação · ✅ · fraca
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
+- [Stein 2023](studies/stein-2023-intensidade-emoji.md): quantos emojis numa primeira mensagem, e se a resposta devolve emojis · ✅ · fraca
 - [Strokoff 2015](studies/strokoff-2015-influencia-parental-perfil.md): perfil parecido com o pai ou a mãe e atração por perfis de namoro simulados · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
 - [Taguchi et al. 2005](studies/taguchi-2005-emoticons-humor-receptor.md): kaomoji em e-mails e o gosto por humor de quem lê · 🟡 · fraca
@@ -632,6 +674,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma 2016](studies/toma-2016-literacia-engano.md): o que se sabe sobre perceber a mentira de quem se conhece online · ✅ · fraca
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
 - [Treat et al. 2017](studies/treat-2016-interesse-momentaneo.md): pistas usadas para julgar o interesse sexual de mulheres em fotos · ✅ · fraca
+- [Trzmielewska & Rak 2026](studies/trzmielewska-2026-meta-analise-mimica.md): ser imitado e a simpatia pelo cúmplice, conforme a condição de comparação · ✅ · moderada
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Tsushima & Tomono 2024](studies/tsushima-2024-estilo-ojisan.md): o estilo "ojisan" numa mensagem de rede social · 🟡 · fraca
 - [Uehara 2007](studies/uehara-2007-emoticons-impressao.md): carinhas de texto e a impressão de uma mensagem · ✅ · fraca
@@ -648,6 +691,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 - [Zhang & Santtila 2024](studies/zhang-2024-app-analogo-memoria.md): o que o perfil procura, o match e a memória num app simulado · ✅ · fraca
+- [Zijlmans 2020](studies/zijlmans-2020-convergencia-textismos.md): o jeito de escrever de quem responde a mensagens com abreviações no WhatsApp · ✅ · fraca
 
 <!-- /study-index -->
 
