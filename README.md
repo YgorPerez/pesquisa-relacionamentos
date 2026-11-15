@@ -52,6 +52,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 - [Araújo 2025](studies/araujo-2025-perfis-tinder-brasil.md): o que homens e mulheres mostram nos perfis do Tinder no Brasil · ✅ · fraca
 - [Buss 1989](studies/buss-1989-preferencias-37-culturas.md): preferências por parceiro em 37 culturas · ✅ · moderada
+- [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
 - [Haack & Falcke 2017](studies/haack-2017-relacionamentos-mediados-internet.md): relacionamentos amorosos mediados e não mediados pela internet no Brasil · ✅ · fraca
@@ -115,6 +116,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
 - [Camerini et al. 2022](studies/camerini-2022-latencia-da-mensagem.md): esperar mais ou menos pela resposta no WhatsApp · ✅ · fraca
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
+- [Chopik & Johnson 2021](studies/chopik-2021-swipe-simulado.md): o que anda junto com o "sim" num deslize simulado · ✅ · moderada
+- [Cöbek 2022](studies/cobek-2022-imagens-cliches.md): fotos-clichê e fotos naturais nos aplicativos de namoro · ✅ · fraca
 - [Cooper et al. 2012](studies/cooper-2012-foto-speed-dating.md): a nota dada a uma foto e a decisão depois do speed dating · ✅ · fraca
 - [Copen et al. 2012](studies/copen-2012-primeiros-casamentos.md): duração dos primeiros casamentos nos EUA · ✅ · forte
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
