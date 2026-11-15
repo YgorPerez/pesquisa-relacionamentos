@@ -44,7 +44,7 @@ Os autores separaram duas coisas com um modelo de detecção de sinal: a sensibi
 
 d′ mede a capacidade de distinguir duas categorias: 0 quer dizer não distinguir nada, e o valor cresce conforme a pessoa distingue melhor. ln(β) mede a tendência de resposta: na leitura da expressão, zero é nenhuma preferência, valores negativos pendem para "interesse sexual" e positivos para "simpatia". Os dois valores de ln(β) da tabela são positivos: com e sem álcool, a tendência ficou do lado de "simpatia", e o álcool a aproximou do meio.
 
-Os autores leem que o efeito do álcool foi específico: piorou a leitura da expressão e baixou o limiar para "interesse sexual", mas não mexeu na leitura da roupa, que sem álcool era até um pouco mais difícil. Eles dizem que um limiar mais baixo faz acertar mais as mulheres interessadas e, ao mesmo tempo, ler mais mulheres simpáticas como interessadas (Discussão); o estudo não contou esses acertos e erros separadamente.
+Os autores leem que o efeito do álcool foi específico: piorou a leitura da expressão e baixou o limiar para "interesse sexual", mas não mexeu na leitura da roupa, que sem álcool era até um pouco mais difícil. Eles dizem que um limiar mais baixo faz acertar mais as mulheres interessadas e, ao mesmo tempo, ler mais mulheres simpáticas como interessadas (Discussão); o artigo não relata essas taxas de acerto e de erro.
 
 ## Limitações
 
@@ -56,7 +56,3 @@ Os autores leem que o efeito do álcool foi específico: piorou a leitura da exp
 - A "categoria certa" de cada foto veio das classificações de outros universitários num piloto, não do que a mulher fotografada queria dizer.
 - A comparação com uma amostra de 504 universitários, usada para dizer qual tarefa é mais difícil, vem de dados não publicados dos autores.
 - Lemos o manuscrito aceito dos autores no PMC, não a versão diagramada da revista.
-</content>
-</invoke>
-<invoke name="Bash">
-<parameter name="command">cd /var/www/html/pesquisa-relacionamentos/.claude/worktrees/wf_f8266334-938-44 && pnpm verify studies/farris-2010-alcool-interesse.md 2>&1 | tail -20
