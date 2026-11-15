@@ -252,10 +252,13 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
 - [Place et al. 2009](studies/place-2009-interesse-romantico-terceiros.md): julgar o interesse romântico de outras pessoas · ✅ · fraca
+- [Place et al. 2012](studies/place-2012-interesse-intercultural.md): adivinhar o interesse de outras pessoas num speed date, em três países · ✅ · fraca
 - [Potarca 2020](studies/potarca-2020-suica-apps.md): casais formados por app, por site e por rede social na Suíça · ✅ · moderada
 - [Potarca 2021](studies/potarca-2021-alemanha-pairfam.md): namoro online, escolaridade e casamento na Alemanha · ✅ · moderada
 - [Powell et al. 2021](studies/powell-2021-apego-e-ghosting.md): apego, crença no destino e ghosting · ✅ · fraca
+- [Pramudiarja et al. 2023](studies/pramudiarja-2023-catfishing.md): como quatro usuários de apps de namoro veem o catfishing · ✅ · fraca
 - [Previti & Amato 2004](studies/previti-2004-infidelidade-qualidade.md): infidelidade, causa ou consequência de um casamento ruim · ✅ · moderada
+- [Prokop et al. 2026](studies/prokop-2026-sutia-percepcao.md): o que homens e mulheres leem numa foto sem sutiã · ✅ · fraca
 - [Pronk & Denissen 2020](studies/pronk-2020-mentalidade-rejeicao.md): quanto mais perfis, mais "não" · ✅ · moderada
 - [Raley & Bumpass 2003](studies/raley-2003-plato-divorcio.md): quem se separa mais nos EUA · ✅ · forte
 - [Raley, Crissey & Muller 2007](studies/raley-2007-sexo-casual-adolescencia-unioes.md): sexo fora do namoro no fim da adolescência e união no começo da vida adulta · ✅ · moderada
