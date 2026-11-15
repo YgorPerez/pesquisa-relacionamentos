@@ -5,7 +5,7 @@ license: "CC BY 4.0 (Creative Commons Attribution 4.0 International License, com
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Artigo de dados de quatro páginas que não traz a comparação entre os perfis com e sem carro; são seis pessoas-isca (três mulheres e três homens) num só site alemão, cada versão uma semana no ar e sem contrabalancear quem viu qual versão, e o texto não diz que passou por revisão por pares antes de sair no The Winnower."
+strength_reason: "Artigo de dados de quatro páginas que não traz a comparação entre os perfis com e sem carro; são seis pessoas-isca (três mulheres e três homens) num só portal de namoro, na versão alemã, cada versão uma semana no ar e sem contrabalancear quem viu qual versão, e o texto não diz que passou por revisão por pares antes de sair no The Winnower."
 countries: [Alemanha]
 period: "5 de janeiro de 2015 a 20 de janeiro de 2016"
 sample:
@@ -17,7 +17,7 @@ conflict: "Os autores declaram não ter conflito de interesse, e o texto não ci
 covers: {}
 ---
 
-# Sauer e Wolff (2016): carro de luxo na foto do perfil
+# Sauer & Wolff (2016): carro de luxo na foto do perfil
 
 ## O que mediu
 
@@ -30,7 +30,7 @@ Os autores montaram 12 perfis num dos maiores portais de namoro online, na vers�
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
 | Perfis com e sem carro | O artigo não traz essa comparação: os autores dizem que os resultados destes dados ainda não foram publicados | Seção "Reuse potential", p. 3 | "The results of the present data have not been published yet" |
-| Tamanho dos dados | Os perfis-isca, somados, tiveram 3.515 matches, vindos de 1.920 pessoas no total | Seção "Sample", p. 2 | "The sample consists of 3515 matches and 1515 messages; in sum, this behavior originated from n = 1920 individuals in total." |
+| Tamanho dos dados | Os perfis-isca, somados, tiveram 3.515 matches; os matches e as mensagens vieram, ao todo, de 1.920 pessoas | Seção "Sample", p. 2 | "The sample consists of 3515 matches and 1515 messages; in sum, this behavior originated from n = 1920 individuals in total." |
 | Matches nos perfis de mulher | 3.205 dos matches (91%) foram com um dos seis perfis de mulher, embora os perfis de homem tenham marcado o mesmo número de pessoas como interessantes | Seção "Sample", p. 2 | "Of all matches, 3205 (91%) were sent to one of the 6 female profiles" |
 | Idade de quem respondeu | Média de 29,5 anos entre as pessoas que deram match ou mandaram mensagem (desvio-padrão de 5,0 anos) | Seção "Sample", p. 2 | "Mean age was 29.5 years (sd = 5.0 years)." |
 | Beleza das pessoas-isca | Uma comissão de cinco pessoas deu notas de 1 a 10 às seis pessoas-isca; a média foi 5,8 (desvio-padrão de 1,2) | Seção "Materials", p. 2 | "rating committee of five persons on a scale from 1 to 10 (M = 5.8; sd = 1.2)" |
