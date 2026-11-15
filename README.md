@@ -138,11 +138,14 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
 - [Egebark et al. 2021](studies/egebark-2021-beleza-educacao-experimento.md): beleza e diploma no perfil, num experimento num site de namoro holandês · ✅ · moderada
 - [Eisenberger, Lieberman & Williams 2003](studies/eisenberger-2003-rejeicao-dor.md): a exclusão social ativa regiões do cérebro ligadas à dor · ✅ · fraca
+- [Ellithorpe, Kunaish & Wright 2025](studies/ellithorpe-2025-perfis-sexualizados-tinder.md): perfis sexualizados com cara de Tinder, na reação rápida e na resposta pensada · ✅ · fraca
 - [Epley & Schroeder 2014](studies/epley-2014-conversar-com-estranhos.md): conversar com um desconhecido é melhor do que a gente prevê · ✅ · moderada
 - [Erevik et al. 2020](studies/erevik-2020-tinder-relacionamentos.md): Tinder e formação de relacionamentos entre estudantes noruegueses · ✅ · fraca
+- [Fan et al. 2023](studies/fan-2023-fotos-gays-visao-computacional.md): rosto, corpo e cenário nas fotos de um app chinês para homens gays · ✅ · fraca
 - [Fang, Zhang & Maglio 2025](studies/fang-2025-abreviacoes-resposta.md): abreviações em mensagens de texto e resposta · ✅ · moderada
 - [Ferreres Fernández 2021](studies/ferreres-2021-demora-e-confirmacao-de-leitura.md): demora na resposta, confirmação de leitura e satisfação com a conversa · ✅ · fraca
 - [Fielder et al. 2014](studies/fielder-2014-ficadas-saude-calouras.md): ficadas, depressão, violência sexual e IST em calouras · ✅ · moderada
+- [Fiore 2004](studies/fiore-2004-regressoes-romanticas.md): o que no perfil anda junto com receber mensagens num site de namoro · ✅ · fraca
 - [Fiore et al. 2010](studies/fiore-2010-contatos-respostas.md): quem escreve e quem responde num site de namoro · ✅ · moderada
 - [Fisher et al. 2010](studies/fisher-2010-rejeicao-amor.md): ver a foto de quem rejeitou ativa áreas de recompensa e de desejo intenso · ✅ · fraca
 - [Fisher et al. 2020](studies/fisher-2020-cantadas-de-mulheres.md): cantadas de mulheres para homens, com fotos · ✅ · fraca
