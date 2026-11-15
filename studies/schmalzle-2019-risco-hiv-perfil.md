@@ -44,13 +44,13 @@ Depois de cada perfil, o participante deu notas de 1 a 7 ao risco de HIV que via
 
 O η² parcial diz quanto da variação nas notas vem da diferença entre as condições comparadas, de 0 a 1; numa convenção comum, a partir de 0,14 já é uma diferença grande. "F", "p" e "ns" (não significativo) são os testes de cada comparação: "p" diz o quanto um resultado assim seria comum só por acaso, e o limite usual é 0,05.
 
-Nas notas de risco de HIV, de confiança, de atração e de vontade de interagir, o artigo não achou combinação entre texto e foto: o peso de um não dependeu do outro. Na saúde aparente, houve combinação (η² parcial = 0,12). O artigo dá as médias de cada condição só num gráfico (Figura 2), sem os números.
+Nas notas de risco de HIV, de atração e de vontade de interagir, o artigo não achou combinação entre texto e foto: o peso de um não dependeu do outro. Na confiança, o artigo não informa esse teste. Na saúde aparente, houve combinação (η² parcial = 0,12). O artigo dá as médias de cada condição só num gráfico (Figura 2), sem os números.
 
 ## Limitações
 
-- São 41 estudantes voluntários de um campus, pagos em dinheiro ou créditos, num laboratório. Os perfis eram fictícios; os autores contaram uma história de cobertura para que o site parecesse real e só no fim revelaram que era inventado.
+- São 41 voluntários recrutados num campus universitário, pagos em dinheiro ou créditos de curso, num laboratório. Os perfis eram fictícios; os autores contaram uma história de cobertura para que o site parecesse real e só no fim revelaram que era inventado.
 - "Alto risco" é uma impressão, não um fato: as fotos foram separadas pelas notas que outros avaliadores deram, e os autores escrevem que nem este estudo nem os anteriores afirmam que esses estereótipos e impressões visuais acertam o risco real de HIV. O estudo não diz nada sobre quem tem ou não tem HIV.
-- A foto não foi alterada entre as condições: as de alto e de baixo risco são fotos diferentes, de pessoas diferentes, e podem diferir em outras coisas além da impressão de risco. Só entraram fotos de pessoas brancas de 18 a 35 anos.
+- A foto não foi alterada entre as condições: as de alto e de baixo risco são fotos diferentes, retratos que variavam em roupa, sinais de nível socioeconômico e cenário, e podem diferir em outras coisas além da impressão de risco. Só entraram fotos de pessoas brancas de 18 a 35 anos.
 - O texto de alto risco juntava várias coisas ao mesmo tempo (número de parceiros, noites casuais, atitude diante da camisinha, descuido e irresponsabilidade), e o estudo não separa qual delas pesou nas notas.
 - Os participantes sempre viam perfis do outro sexo, e o artigo não informa a orientação sexual deles.
 - A leitura da resposta do cérebro como um alarme diante do maior risco é dos autores. Eles próprios dizem que as notas e o registro do cérebro foram medidos em momentos diferentes e que as notas reagiram mais ao texto que à foto.
