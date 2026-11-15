@@ -4,12 +4,12 @@ link: https://doi.org/10.1145/3383313.3411476
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "Dados comerciais de um só site, cedidos pela empresa numa colaboração em que ela também deu os recursos para treinar os modelos; o teste é feito fora do site, com pares montados metade Match e metade Nope, e mede se um modelo prevê o Like, não o que numa foto o provoca."
+strength_reason: "Dados comerciais de um só site, o Pairs, num estudo feito em colaboração com ele; a Eureka Inc., agradecida no artigo, cedeu os dados e os recursos para treinar os modelos. O teste é feito fora do site, com pares montados metade Match e metade Nope, e mede se um modelo prevê o Like, não o que numa foto o provoca."
 countries: [Japão]
 period: "Likes e Nopes do ano mais recente antes do estudo; o artigo não dá as datas"
 sample:
   n: 250000
-  description: "250.000 usuários do Pairs, serviço de namoro japonês, só da região de Kanto (Tóquio e arredores) e só os que conferiram a identidade com documento com foto. Para cada pessoa curtida ou recusada, entrou a foto principal, e só fotos em que um programa achou um rosto. O teste usou outros 20.000 pares: 10.000 que deram Match e 10.000 em que um recusou o outro. O artigo não dá idade nem quantos são homens e quantas são mulheres."
+  description: "250.000 usuários do Pairs, serviço de namoro japonês, só da região de Kanto (Tóquio e arredores) e só os que conferiram a identidade com documento com foto. Para cada pessoa curtida ou recusada, entrou a foto principal, e só fotos em que um programa achou um rosto. O teste usou 20.000 pares: 10.000 que deram Match e 10.000 em que um recusou o outro. O artigo não dá idade nem quantos são homens e quantas são mulheres."
   representative: false
 design: platform
 conflict: "Financiado pelo programa de doutorado (DTP) do EPSRC. O artigo diz que foi feito em colaboração com o Pairs e agradece à Eureka Inc. por ceder os dados e os recursos para treinar os modelos. Não há declaração de conflito de interesse."
@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-No Pairs, uma pessoa manda um Like a outra, que responde com um Like (é o Match, e os dois podem trocar mensagens) ou com um Nope. Os autores treinaram uma rede neural para prever, a partir das fotos de quem uma pessoa já curtiu e recusou, se ela curtiria a foto de outra. Um modelo para homens olhando mulheres, outro para mulheres olhando homens. Depois juntaram as duas previsões numa nota para o par, o ImRec, e testaram se essa nota separava os pares que deram Match dos que tiveram um Nope. Compararam com dois modelos de outros grupos: o RECON, que olha só os dados do perfil por categoria (como idade e tipo físico), e o LFRR, que olha só o padrão de quem curtiu quem.
+No Pairs, uma pessoa manda um Like a outra, que responde com um Like (é o Match, e os dois podem trocar mensagens) ou com um Nope. Os autores treinaram uma rede neural para prever, a partir das fotos de quem uma pessoa já curtiu e recusou, se ela curtiria a foto de outra. Um modelo para homens olhando mulheres, outro para mulheres olhando homens. Depois juntaram as duas previsões numa nota para o par, o ImRec, e testaram se essa nota separava os pares que deram Match dos que tiveram um Nope. Compararam com dois modelos já publicados: o RECON, de outro grupo, que olha só os dados do perfil por categoria (como idade e tipo físico), e o LFRR, de um artigo de 2019 do primeiro autor, que olha só o padrão de quem curtiu quem.
 
 ## Achados
 
@@ -37,7 +37,7 @@ No Pairs, uma pessoa manda um Like a outra, que responde com um Like (é o Match
 | Fotos e dados do perfil | Nos pares de teste do Pairs, a nota feita só com fotos separou os que deram Match dos que tiveram Nope melhor que o acaso, e a feita só com os dados do perfil por categoria (RECON) ficou no nível do acaso (AUC 0,65 contra 0,51) | Tabela 2, linhas ImRec e RECON | "AUC 0.65 0.51" |
 | Acerto entre os apontados | No ponto de melhor equilíbrio entre acertar e encontrar, os dois modelos acertaram a mesma fração dos pares que apontaram como Match (precisão 0,59); o de fotos encontrou mais dos Matches que existiam (0,91 contra 0,64) | Tabela 2 | "Algorithm Precision ImRec 0.59 RECON 0.59 Recall 0.91 0.64" |
 | Conta nova, pouco histórico | Quando o modelo tinha só 1 Like e 1 Nope do usuário para aprender, a nota feita com fotos separou Match de Nope melhor que o LFRR, que aprende só com quem curtiu quem (AUC 0,613 contra 0,530); com 3 de cada, 0,625 contra 0,604 | Tabela 3, linhas ImRec e LFRR | "1 Indicator 3 Indicators 0.613 0.625 0.530 0.604" |
-| Conta com mais histórico | Com 5 Likes e 5 Nopes do usuário, o LFRR já ficou à frente da nota feita com fotos (AUC 0,639 contra 0,633), e com 7 de cada a distância cresceu (0,696 contra 0,639) | Tabela 3, linhas ImRec e LFRR | "5 Indicators 7 Indicators 0.633 0.639 0.639 0.696" |
+| Conta com mais histórico | Com 5 Likes e 5 Nopes do usuário, o LFRR e a nota feita com fotos ficaram praticamente empatados (AUC 0,639 contra 0,633), embora os autores leiam aí o LFRR à frente; com 7 de cada, o LFRR ficou à frente (0,696 contra 0,639) | Tabela 3, linhas ImRec e LFRR | "5 Indicators 7 Indicators 0.633 0.639 0.639 0.696" |
 
 A AUC é a chance de o modelo dar nota mais alta a um par que deu Match do que a um par com Nope, quando se sorteia um de cada: 0,5 é o acaso, 1 é acertar sempre. A precisão é a parte dos pares apontados como Match que deram Match de fato. Os autores escolhem o ponto de corte que dá a melhor combinação (o F1) entre a precisão e a parte dos Matches que o modelo encontrou.
 
@@ -48,8 +48,8 @@ Os autores leem a vantagem sobre o RECON como sinal da importância das fotos no
 ## Limitações
 
 - Dados de um só site, o Pairs, do Japão, e só da região de Kanto, de usuários com identidade conferida e do ano mais recente. Os autores dizem que a base é quase toda de um só grupo étnico e que não deu para ver o efeito em minorias.
-- A pesquisa foi feita em colaboração com o site, que cedeu os dados e os recursos para treinar os modelos. Duas informações do artigo vêm de pesquisas internas do Pairs que não são mostradas: que quem tem muitos Matches sai do site mais vezes dizendo ter achado alguém, e que o primeiro dia decide se o usuário fica. Os dados não foram liberados para outros pesquisadores.
-- O teste foi feito fora do site, com pares do passado, metade Match e metade Nope. No uso real, a mistura de Matches e Nopes é outra, e o artigo não testou recomendar com o modelo para gente de verdade.
+- A pesquisa foi feita em colaboração com o Pairs, que forneceu os dados; o artigo agradece à Eureka Inc. pelos dados e pelos recursos para treinar os modelos, sem dizer a relação dela com o Pairs. Duas informações do artigo vêm de pesquisas internas do Pairs que não são mostradas: que quem tem muitos Matches sai do site mais vezes dizendo ter achado alguém, e que o primeiro dia muitas vezes decide se o usuário fica. Os dados não foram liberados para outros pesquisadores.
+- O teste foi feito fora do site, com pares do passado, metade Match e metade Nope; os autores dizem que equilibraram o teste porque Likes e Nopes aparecem em número parecido na base toda. O artigo não testou recomendar com o modelo para gente de verdade.
 - O Match é uma medida indireta de sucesso: o artigo não sabe quem conversou, saiu ou começou um relacionamento, porque as pessoas saem do site para conversar.
 - O modelo prevê, não explica. O artigo não diz o que nas fotos pesou no Like: rosto, roupa, lugar ou a qualidade da imagem.
 - O RECON foi feito para um site de texto livre e atributos, sem fotos, e os autores o rodaram nos dados do Pairs; isso pode explicar parte do resultado dele no nível do acaso, como os autores reconhecem (Seção 4.4).
