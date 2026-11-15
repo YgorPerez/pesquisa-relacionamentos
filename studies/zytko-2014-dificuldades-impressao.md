@@ -4,12 +4,12 @@ link: https://doi.org/10.1145/2660398.2660410
 status: verified
 verified_on: 2026-11-15
 strength: weak
-strength_reason: "41 entrevistas qualitativas com usuários de um só site de namoro gratuito dos EUA, que aceitaram um convite mandado pelo próprio site (62 responderam de 864 convidados); análise por temas sem contagem na maior parte dos achados, e o que se diz de mentira e de impressão errada é o relato dos próprios participantes."
+strength_reason: "41 entrevistas qualitativas com usuários de um só site de namoro gratuito dos EUA, que aceitaram um convite que a equipe mandou por mensagem no site (dos convidados, 62 responderam); análise por temas sem contagem na maior parte dos achados, e o que se diz de mentira e de impressão errada é o relato dos próprios participantes."
 countries: [EUA]
 period: "não informado no texto lido"
 sample:
   n: 41
-  description: "41 usuários de um site de namoro gratuito e popular dos EUA, achados pela busca do site num raio de 25 milhas da universidade de quem liderou a pesquisa: vinte homens e 21 mulheres, de 19 a 37 anos; 34 heterossexuais, 5 bissexuais e 2 gays. A equipe criou um perfil no site com a intenção da pesquisa escrita nele e, durante oito semanas, mandou convite por mensagem aos seis primeiros perfis que a busca do site devolvia para cada combinação de gênero e etnia; 864 pessoas foram convidadas, 62 responderam e 41 deram entrevista, 28 em pessoa e 13 por Skype."
+  description: "41 usuários de um site de namoro gratuito e popular dos EUA, achados pela busca do site num raio de 25 milhas da universidade de quem liderou a pesquisa: vinte homens e 21 mulheres, de 19 a 37 anos; 34 heterossexuais, 5 bissexuais e 2 gays. A equipe criou um perfil no site com a intenção da pesquisa escrita nele e, durante oito semanas, mandou convite por mensagem aos seis primeiros perfis que a busca do site devolvia para cada combinação de gênero e etnia; 62 responderam e 41 deram entrevista, 28 em pessoa e 13 por Skype."
   representative: false
 design: cross-sectional
 conflict: "O texto lido não traz financiamento nem declaração de conflito de interesse."
@@ -23,15 +23,15 @@ covers:
 
 ## O que mediu
 
-Os autores entrevistaram 41 usuários de um site de namoro gratuito dos EUA, que o artigo não nomeia, sobre como se apresentam no perfil e nas mensagens, como formam uma impressão dos outros, o que buscam no site e como essa impressão se compara com a do encontro cara a cara. As entrevistas foram semiestruturadas, de 22 a 72 minutos, e o roteiro mudou três vezes conforme surgiam os temas. A análise seguiu a teoria fundamentada (grounded theory): os temas saíram de uma codificação aberta das entrevistas, e parte delas foi transcrita por inteiro.
+Os autores entrevistaram 41 usuários de um site de namoro gratuito dos EUA, que o artigo não nomeia, sobre como se apresentam no perfil e nas mensagens, como formam uma impressão dos outros, o que buscam no site e como essa impressão se compara com a do encontro cara a cara. As entrevistas foram semiestruturadas, de 22 a 72 minutos, e o roteiro teve três versões, ajustadas conforme surgiam os temas. A análise seguiu a teoria fundamentada (grounded theory): os temas saíram de uma codificação aberta das entrevistas, e parte delas foi transcrita por inteiro.
 
-O artigo separa dois tipos de informação: os atributos "pesquisáveis", como altura, etnia e orientação sexual, que o site deixa marcar e buscar, e os "experienciais", como senso de humor e confiança, que, para os autores, só se conhecem convivendo. Os achados são temas ilustrados com falas. Fora alguns números, o texto usa "a maioria", "vários" e "alguns", sem dizer quantos.
+O artigo separa dois tipos de informação: os atributos "pesquisáveis", como altura, etnia e orientação sexual, que o site deixa marcar e buscar, e os "experienciais", como senso de humor e confiança, que, para os autores, muitas vezes só se conhecem convivendo. Os achados são temas ilustrados com falas. Fora alguns números, o texto usa "a maioria", "vários" e "alguns", sem dizer quantos.
 
 ## Achados
 
 | Medida | Valor | Onde | Trecho |
 |---|---|---|---|
-| Convites e entrevistas | Em oito semanas, 864 usuários do site receberam convite por mensagem; 62 responderam e 41 deram entrevista | p. 4, Participants | "We engaged in this interview invitation process for eight weeks, resulting in 864 total users being private messaged with an interview invitation. Of these users, 62 responded to the initial interview request and 41 of those resulted in an interview." |
+| Convites e entrevistas | Dos usuários que a equipe convidou por mensagem no site, 62 responderam e 41 deram entrevista | p. 4, Participants | "Of these users, 62 responded to the initial interview request and 41 of those resulted in an interview." |
 | Quem foi entrevistado | Vinte homens e 21 mulheres, de 19 a 37 anos: 34 heterossexuais, 5 bissexuais e 2 gays | p. 4, Participants | "Twenty of the participants were male, 21 were female, and ages ranged from 19 to 37. In terms of sexual orientation, 34 participants were straight, 5 were bisexual, and 2 were gay." |
 | Ser lido como se queria | A maioria dos entrevistados sentia que a maior parte das pessoas com quem conversava no site não os lia como eles queriam | p. 4, 5.1.1 | "A majority of participants felt they were not being interpreted as intended by most of their communication partners on the system." |
 | Perfil mais simples | Vários entrevistados contaram que passaram a mostrar uma versão mais simples de si no texto livre do perfil, porque perceberam que os traços mais sutis eram mal interpretados | p. 5, 5.1.1 | "participants opted to present simpler versions of self in the open-ended sections of their profile pages because they discovered that their subtle experiential traits were often being misinterpreted." |
@@ -53,11 +53,12 @@ O artigo separa dois tipos de informação: os atributos "pesquisáveis", como a
 | Amizade no site | Mais da metade dos entrevistados estava aberta a fazer amigos no site e disse que esse foi um motivo importante para entrar | p. 7, 5.3.1 | "More than half of the participants were open to meeting friends on the system for platonic reasons and considered it an important reason for why they joined the online dating system." |
 | Quem encerra a conversa | Pelas entrevistas, quem encerrava as conversas eram, em geral, as mulheres | p. 8, Discussion | "It was typically women who discontinued conversations according to our interviews." |
 
-"Experiencial" e "pesquisável" são as categorias do artigo: um atributo pesquisável é um dado que o site deixa marcar e buscar, como altura, peso, etnia e orientação sexual; um experiencial é um traço que, para os autores, só se conhece convivendo, como o humor ou a confiança.
+"Experiencial" e "pesquisável" são as categorias do artigo: um atributo pesquisável é um dado que o site deixa marcar e buscar, como altura, peso, etnia e orientação sexual; um experiencial é um traço que, para os autores, muitas vezes só se conhece convivendo, como o humor ou a confiança.
 
 ## Limitações
 
-- São 41 entrevistas com usuários de um só site, gratuito, perto de uma universidade de uma cidade dos EUA. Os convidados eram os primeiros perfis que a busca do site devolvia, e só 62 dos 864 responderam. O artigo não diz como a busca ordenava os perfis.
+- São 41 entrevistas com usuários de um só site, gratuito, perto de uma universidade de uma cidade dos EUA. Os convidados eram os primeiros perfis que a busca do site devolvia, e só 62 responderam. O artigo não diz como a busca ordenava os perfis.
+- O artigo diz que a equipe convidou 96 usuários por semana (os seis primeiros perfis de cada uma das 16 combinações de gênero e etnia) durante oito semanas, o que dá 768, mas dá como total 864 convidados, o que daria nove semanas. A Ficha não usa esse total. [Zytko et al. 2015](zytko-2015-atividades-pareadas.md) repete os mesmos números.
 - Os achados são temas de uma análise qualitativa, com falas de exemplo. Fora os poucos números da tabela, o artigo não diz quantos entrevistados disseram cada coisa, nem quantas pessoas codificaram as entrevistas ou se concordaram.
 - O que a Ficha diz de mentira, de impressão errada e de quem encerra a conversa é o relato dos entrevistados. O estudo não ouviu a outra pessoa de cada conversa ou encontro, nem conferiu o perfil com a pessoa real. Os próprios autores dizem que as entrevistas não separam a conversa que acabou por uma leitura errada da que acabou por uma leitura certa ou por um motivo de fora.
 - O artigo conta como falsear um traço "experiencial" o caso de quem usou uma foto que não era sua. O PDF lido é a cópia do primeiro autor e traz, na margem, um comentário da equipe perguntando por que as fotos foram tratadas como atributo experiencial. Essa cópia pode não ser idêntica à versão publicada pela ACM, que não foi lida.
