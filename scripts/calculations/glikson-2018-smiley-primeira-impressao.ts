@@ -9,14 +9,14 @@
 // ln Γ(x), Lanczos approximation.
 function logGamma(x: number): number {
   const c = [
-    76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155,
-    0.1208650973866179e-2, -0.5395239384953e-5,
+    76.1800917294715, -86.5053203294168, 24.0140982408309, -1.23173957245016,
+    0.00120865097386618, -0.000005395239384953,
   ]
   let y = x
   const tmp = x + 5.5 - (x + 0.5) * Math.log(x + 5.5)
   let ser = 1.000000000190015
   for (const k of c) ser += k / ++y
-  return -tmp + Math.log((2.5066282746310005 * ser) / x)
+  return -tmp + Math.log((Math.sqrt(2 * Math.PI) * ser) / x)
 }
 
 // Continued fraction of the regularized incomplete beta (Numerical Recipes).
@@ -53,7 +53,11 @@ function incompleteBeta(a: number, b: number, x: number): number {
   if (x <= 0) return 0
   if (x >= 1) return 1
   const front = Math.exp(
-    logGamma(a + b) - logGamma(a) - logGamma(b) + a * Math.log(x) + b * Math.log(1 - x),
+    logGamma(a + b) -
+      logGamma(a) -
+      logGamma(b) +
+      a * Math.log(x) +
+      b * Math.log(1 - x),
   )
   return x < (a + 1) / (a + b + 2)
     ? (front * betaCf(a, b, x)) / a
@@ -61,15 +65,31 @@ function incompleteBeta(a: number, b: number, x: number): number {
 }
 
 /** Two-sided p of a t statistic with df degrees of freedom. */
-const pFromT = (t: number, df: number) => incompleteBeta(df / 2, 0.5, df / (df + t * t))
+const pFromT = (t: number, df: number) =>
+  incompleteBeta(df / 2, 0.5, df / (df + t * t))
 
 const tests: Array<[label: string, t: number, df: number, printed: string]> = [
   ['Exp. 2, competence, F(1, 87) = 6.26', Math.sqrt(6.26), 87, '.003'],
   ['Exp. 2, information sharing, F(1, 87) = 4.50', Math.sqrt(4.5), 87, '.014'],
-  ['Exp. 3, warmth, smiley x formality, F(1, 80) = 2.38', Math.sqrt(2.38), 80, '.058'],
+  [
+    'Exp. 3, warmth, smiley x formality, F(1, 80) = 2.38',
+    Math.sqrt(2.38),
+    80,
+    '.058',
+  ],
   ['Exp. 3, competence, smiley, F(1, 80) = 7.83', Math.sqrt(7.83), 80, '.001'],
-  ['Exp. 3, competence, smiley x formality, F(1, 80) = 5.57', Math.sqrt(5.57), 80, '.001'],
-  ['Exp. 3, appropriateness, smiley x formality, F(1, 80) = 4.34', Math.sqrt(4.34), 80, '.003'],
+  [
+    'Exp. 3, competence, smiley x formality, F(1, 80) = 5.57',
+    Math.sqrt(5.57),
+    80,
+    '.001',
+  ],
+  [
+    'Exp. 3, appropriateness, smiley x formality, F(1, 80) = 4.34',
+    Math.sqrt(4.34),
+    80,
+    '.003',
+  ],
 ]
 
 for (const [label, t, df, printed] of tests)
