@@ -442,6 +442,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Xia et al. 2014](studies/xia-2014-quem-namora-quem.md): quem escreve, quem responde e em quanto tempo num site de namoro chinês · ✅ · fraca
 - [Yan 2018](studies/yan-2018-intencao-foto-sexualizada.md): intenção declarada e sinais sexuais nas fotos de perfil · ✅ · fraca
 - [Yong et al. 2022](studies/yong-2022-aparencia-status-perfis.md): beleza e status em perfis fictícios · ✅ · fraca
+- [Yun e Jung 2022](studies/yun-2022-raiva-negociacao-canal.md): raiva por texto, emoticon, voz ou vídeo numa negociação · ✅ · fraca
 - [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
 - [van der Zanden et al. 2020](studies/zanden-2020-erros-linguagem-perfil.md): erros de língua no texto do perfil e a impressão sobre o dono · ✅ · moderada
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
@@ -552,9 +553,11 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
+- [Weiß, Mussel e Hewig 2020](studies/weiss-2020-emoji-rosto-real.md): emoji ou rosto real como reação num jogo de dinheiro · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
 - [Willigenburg 2023](studies/willigenburg-2023-valores-perfil.md): frase de cuidado ou de autopromoção no perfil · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
+- [Yoshizawa 2006](studies/yoshizawa-2006-agradecimento-emoticon.md): agradecimento por e-mail com emoticon ou cara a cara · 🟡 · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
 - [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 - [Zhang & Santtila 2024](studies/zhang-2024-app-analogo-memoria.md): o que o perfil procura, o match e a memória num app simulado · ✅ · fraca
