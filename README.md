@@ -82,6 +82,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Outros países
 
 - [Amato & Previti 2003](studies/amato-2003-motivos-divorcio.md): os motivos que os divorciados dão para o divórcio · ✅ · moderada
+- [Anderson et al. 2018](studies/anderson-2018-objetificacao-grindr.md): foto sem camisa e foco no corpo nos perfis do Grindr · ✅ · fraca
 - [von Andrian-Werburg et al. 2020](studies/andrian-werburg-2020-personalidade-chat.md): personalidade e inteligência percebidas numa conversa por chat · ✅ · fraca
 - [Antar & Stephen 2021](studies/antar-2021-sociossexualidade-formato-rosto.md): formato do rosto e abertura a sexo casual · ✅ · fraca
 - [Apostolou, O & Esposito 2020](studies/apostolou-2020-motivos-solteiro.md): por que os solteiros dizem estar solteiros · ✅ · fraca
@@ -94,6 +95,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Asendorpf, Penke & Back 2011](studies/asendorpf-2011-speed-dating-acompanhamento.md): do speed dating ao sexo e ao namoro, um ano depois · ✅ · fraca
 - [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
 - [Back et al. 2011](studies/back-2011-escolhas-pouco-reciprocas.md): escolher, ser escolhido e flertar num speed dating · ✅ · fraca
+- [Bak 2010](studies/bak-2010-efeito-halo-perfil.md): foto atraente que todos sabiam ser falsa · ✅ · fraca
+- [Bandell & Krall 2019](studies/bandell-2019-sorriso-olhar-primeira-foto.md): sorriso e olhar na primeira foto de um homem · ✅ · fraca
 - [Baxter et al. 2022](studies/baxter-2022-compatibilidade-popularidade.md): popularidade e compatibilidade no primeiro encontro e o que vem depois · ✅ · moderada
 - [Bergström 2016](studies/bergstrom-2016-epic-franca.md): quem usa sites de encontro na França e quem encontra o cônjuge neles · ✅ · forte
 - [Berkes 2021](studies/berkes-2021-cantadas-originais.md): cantadas originais, comuns e aleatórias em app de namoro · ✅ · fraca
