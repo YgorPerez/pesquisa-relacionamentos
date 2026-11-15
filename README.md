@@ -201,6 +201,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
 - [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
+- [Fullwood et al. 2013](studies/fullwood-2013-convergencia-emoticons.md): emoticons em salas de bate-papo · ✅ · fraca
 - [Fullwood & Attrill-Smith 2018](studies/fullwood-2018-foto-perfil-offline.md): chance esperada de encontro num site e numa noite fora · ✅ · fraca
 - [Gale et al. 2024](studies/gale-2024-rastreamento-olhar-perfil.md): o olhar no rosto e na renda em perfis de namoro montados · ✅ · fraca
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
@@ -495,6 +496,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Comhair 2018](studies/comhair-2018-humor-likes-tinder.md): humor no texto do perfil e likes no Tinder · ✅ · fraca
 - [De La Mare & Lee 2023](studies/de-la-mare-2023-similaridade-personalidade.md): personalidade parecida na escolha de perfis · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
+- [Doré & Morris 2018](studies/dore-2018-sincronia-apoio-texto.md): linguagem parecida no apoio emocional por texto · ✅ · fraca
 - [Duguay 2017](studies/duguay-2016-autenticidade-tinder.md): como o Tinder enquadra a autenticidade do perfil · ✅ · fraca
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Farris et al. 2008](studies/farris-2008-decodificar-intencao.md): homens e mulheres lendo simpatia e interesse sexual em fotos · ✅ · fraca
@@ -507,6 +509,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gibbs et al. 2011](studies/gibbs-2011-reducao-incerteza.md): como usuários de sites de namoro checam quem conhecem online · ✅ · fraca
 - [Gillrath 2022](studies/gillrath-2022-erros-nativo.md): erros de linguagem e saber que quem escreveu não é nativo · ✅ · fraca
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
+- [Gonzales et al. 2010](studies/gonzales-2010-lsm-coesao-grupo.md): estilo de linguagem parecido em pequenos grupos · ✅ · fraca
 - [Goode & Hoegg 2009](studies/goode-2009-impressao-nao-atraente.md): a ordem entre foto e texto no perfil de namoro · 🟡 · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
