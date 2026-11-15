@@ -431,6 +431,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sumter, Vandenbosch & Ligtenberg 2017](studies/sumter-2017-motivos-tinder.md): por que jovens holandeses usam o Tinder · ✅ · fraca
 - [Sutherland et al. 2018](studies/sutherland-2018-infidelidade-universal.md): julgar pelo rosto quem já traiu, em mulheres de culturas diferentes · ✅ · fraca
 - [Szczuka et al. 2025](studies/szczuka-2025-respostas-ia-perfil.md): respostas de perfil escritas pelo ChatGPT, com rótulo de pessoa ou de IA · ✅ · fraca
+- [Tamamiya & Okamoto 2022](studies/tamamiya-2022-emoji-line-quantidade.md): quantidade de emoji em mensagens do LINE · 🟡 · fraca
 - [Taubert et al. 2016](studies/taubert-2016-ordem-atratividade.md): a foto vista logo antes e a nota da seguinte · ✅ · fraca
 - [Shaw Taylor et al. 2010](studies/taylor-2010-segunda-chance.md): impressões antes e depois do primeiro encontro de quem se conheceu online · ✅ · fraca
 - [Shaw Taylor et al. 2011](studies/taylor-2011-fora-da-minha-liga.md): desejabilidade de quem escreve e de quem recebe no namoro online · ✅ · fraca
@@ -605,6 +606,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sharabi 2015](studies/sharabi-2015-tese-troca-de-modalidade.md): o que na conversa online anda junto com um bom primeiro encontro · ✅ · fraca
 - [Strokoff 2015](studies/strokoff-2015-influencia-parental-perfil.md): perfil parecido com o pai ou a mãe e atração por perfis de namoro simulados · ✅ · fraca
 - [Strugo & Muise 2019](studies/strugo-2019-metas-sucesso-tinder.md): metas de aproximação e de evitação no Tinder e sucesso nos encontros · ✅ · fraca
+- [Taguchi et al. 2005](studies/taguchi-2005-emoticons-humor-receptor.md): kaomoji em e-mails e o gosto por humor de quem lê · 🟡 · fraca
+- [Takehara & Kuribayashi 2006](studies/takehara-2006-emoticons-gratidao-desculpas.md): emoticons em e-mails de agradecimento e de desculpas · ✅ · fraca
 - [Timmermans et al. 2018](studies/timmermans-2018-comprometidos-tinder.md): usuários do Tinder que estão num relacionamento · ✅ · fraca
 - [Toma 2016](studies/toma-2016-literacia-engano.md): o que se sabe sobre perceber a mentira de quem se conhece online · ✅ · fraca
 - [Treat et al. 2016](studies/treat-2016-ambiente-interesse-sexual.md): cena, roupa e beleza no interesse sexual que homens enxergam numa foto · ✅ · fraca
