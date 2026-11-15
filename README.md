@@ -273,7 +273,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
-- [Vacharkulksemsuk et al. 2016](studies/vacharkulksemsuk-2016-postura-expansiva.md): postura expansiva no encontro rápido e na foto do aplicativo · ✅ · moderada
+- [Vacharkulksemsuk et al. 2016](studies/vacharkulksemsuk-2016-postura-expansiva.md): postura expansiva no encontro rápido e na foto do aplicativo · ✅ · fraca
 - [Vazire & Gosling 2004](studies/vazire-2004-site-pessoal-personalidade.md): a personalidade lida num site pessoal · ✅ · fraca
 - [Verhallen et al. 2019](studies/verhallen-2019-termino-depressao.md): término recente e sintomas de depressão · ✅ · fraca
 - [Verwers 2021](studies/verwers-2021-humor-abertura-tinder.md): frase de abertura engraçada e foto no Tinder · ✅ · fraca
