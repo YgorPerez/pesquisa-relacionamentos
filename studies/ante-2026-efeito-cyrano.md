@@ -50,7 +50,7 @@ São relatos de entrevistas. "Muitos", "vários" e "bem comum" são as palavras 
 ## Limitações
 
 - São 45 pessoas escolhidas por terem passado pela situação, chegadas por fóruns do Reddit sobre namoro: o próprio autor diz que elas podem ser mais ligadas em tecnologia e mais reflexivas sobre namoro que o usuário comum, e que usavam apps havia 2,4 anos em média.
-- No grupo que recebeu, a maioria desconfiou, e não soube, que a mensagem era de IA. A confirmação, quando houve, veio da própria pessoa contando ou de uma mudança de estilo entre o texto e o encontro, que o entrevistado atribuiu à IA depois.
+- O artigo não diz quantos do grupo que recebeu só desconfiaram e quantos confirmaram; o autor diz que as experiências desse grupo eram muitas vezes ambíguas e lembradas depois. A confirmação, quando houve, veio da própria pessoa contando ou de uma mudança de estilo entre o texto e o encontro, que o entrevistado atribuiu à IA depois.
 - Os dois grupos se misturam: o autor diz que alguns dos que usaram IA também desconfiaram de outros, e que isso pode tê-los deixado mais atentos.
 - Não há medida de resultado: o estudo não compara a resposta, o match ou o encontro de quem usou IA com os de quem não usou.
 - Todas as entrevistas foram em inglês, com pessoas de países ocidentais. Nada diz como isso se passa no Brasil ou em português.
