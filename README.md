@@ -183,6 +183,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Duan & Mahbob 2025](studies/duan-2025-revisao-autoapresentacao.md): revisão sobre como as pessoas se apresentam no perfil de apps de namoro · ✅ · fraca
 - [Dugar, Bhattacharya & Reiley 2012](studies/dugar-2012-casta-renda-matrimonial.md): casta e renda em anúncios de casamento na Índia · ✅ · moderada
 - [Dunlop 2018](studies/dunlop-2018-percepcao-tinder.md): como usuários do Tinder montam o próprio perfil e leem o dos outros · ✅ · fraca
+- [Dunn et al. 2026](studies/dunn-2026-alinhamento-medico-ia.md): o médico que repete as palavras do paciente, humano ou IA · ✅ · fraca
 - [Dyrenforth et al. 2010](studies/dyrenforth-2010-personalidade-similaridade.md): personalidade própria, do parceiro e similaridade em 3 países · ⬜ · forte
 - [Earle 2023](studies/earle-2023-garantia-verdade-padrao.md): o controle do dono sobre o perfil e a confiança de quem o lê · ✅ · fraca
 - [Eastwick et al. 2007](studies/eastwick-2007-desejo-seletivo.md): desejo por uma pessoa atrai; desejo por todo mundo afasta · ✅ · moderada
@@ -249,6 +250,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Griffin 2018](studies/griffin-2018-motivos-encontro-presencial.md): motivos para usar app de namoro e encontros ao vivo com matches, entre universitários · ✅ · fraca
 - [Groggel 2023](studies/groggel-2023-flerte-genero.md): o que universitários imaginam que cada lado de um flerte pensa · ✅ · fraca
 - [Groggel 2023](studies/groggel-2023-piscadela-ambiguidade.md): emoji e clareza numa paquera por Snapchat · ✅ · fraca
+- [Guan et al. 2025](studies/guan-2025-estilo-linguistico-recomendacao.md): o estilo das mensagens num recomendador de pares de um site de namoro chinês · ✅ · fraca
 - [Hale & Hamilton 2016](studies/hale-2016-mimica-rv-replicacao.md): imitação por um avatar e afinidade · ✅ · fraca
 - [Hall et al. 2010](studies/hall-2010-distorcao-estrategica.md): quem diz que distorceria o quê para conseguir um encontro · ✅ · fraca
 - [Hall 2014](studies/hall-2014-redes-sociais-casamento.md): sites de namoro e redes sociais nos casamentos americanos · ✅ · fraca
@@ -344,6 +346,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Li et al. 2013](studies/li-2013-preferencias-atracao-escolha.md): preferências declaradas, atração e escolha nos primeiros encontros · ✅ · fraca
 - [Li & Hu 2025](studies/li-2025-similaridade-medico-paciente.md): semelhança entre as mensagens de médico e paciente numa plataforma chinesa de consultas · ✅ · fraca
 - [Liang & Bailey 2026](studies/liang-2026-motivos-idade.md): motivos para usar app de namoro conforme a idade · ✅ · fraca
+- [Liao et al. 2021](studies/liao-2021-acomodacao-doacao.md): ajustar-se ao estilo do outro e doar, num chat entre desconhecidos · ✅ · moderada
 - [Liao et al. 2023](studies/liao-2023-emocao-compartilhada-chat.md): a sequência de tarefa e simpatia num chat entre desconhecidos · ✅ · moderada
 - [Liebman & Gergle 2016](studies/liebman-2016-pistas-afinidade.md): emoticons, exclamações e maiúsculas num chat entre desconhecidos · ✅ · fraca
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
@@ -438,6 +441,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Rosenfeld & Roesler 2019](studies/rosenfeld-2019-coabitacao-dissolucao.md): coabitação antes do casamento e dissolução conjugal · ✅ · moderada
 - [Rosenfeld, Thomas & Hausen 2019](studies/rosenfeld-2019-disintermediating-friends.md): online substitui os amigos como intermediário · ✅ · forte
 - [Roshchupkina et al. 2023](studies/roshchupkina-2023-autoapresentacao-masculina.md): como mulheres julgam a foto de perfil de homens no Tinder · ✅ · fraca
+- [Saljoughian et al. 2025](studies/saljoughian-2025-lsm-respostas-empresas.md): o estilo da resposta da empresa e o tom do cliente no Twitter · ✅ · moderada
 - [Samara et al. 2021](studies/samara-2021-projecao-superpercepcao.md): adivinhar se o par quer outro encontro, no speed dating · ✅ · fraca
 - [Samara et al. 2022](studies/samara-2022-observadores-atracao.md): o interesse num encontro às cegas, visto de fora · ✅ · fraca
 - [Sands et al. 2026](studies/sands-2026-abreviacoes-chatbot.md): abreviações no chat de atendimento · ✅ · fraca
