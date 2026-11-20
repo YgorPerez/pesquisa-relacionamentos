@@ -9,7 +9,7 @@ countries: [Israel]
 period: "não informado no texto lido"
 sample:
   n: 374
-  description: "Três amostras de estudantes heterossexuais de uma universidade do centro de Israel, todos sem relação séria, que participaram por crédito no curso ou por 50 shekels (uns 14 dólares): 115 no Estudo 1 (62 mulheres e 53 homens, depois de excluir 15 que mentiram sobre estar solteiros), 131 no Estudo 2 (66 mulheres e 65 homens, de 20 a 32 anos) e 128 no Estudo 3 (64 mulheres e 64 homens, de 21 a 32 anos). O número total é a soma das três; o texto não diz se alguém entrou em mais de uma."
+  description: "Três amostras de estudantes heterossexuais de uma universidade do centro de Israel, todos sem relação séria, que participaram por crédito no curso (Estudo 1) ou por crédito ou 50 shekels, uns 14 dólares (Estudos 2 e 3): 115 no Estudo 1 (62 mulheres e 53 homens, depois de excluir 15 que mentiram sobre estar solteiros), 131 no Estudo 2 (66 mulheres e 65 homens, de 20 a 32 anos) e 128 no Estudo 3 (64 mulheres e 64 homens, de 21 a 32 anos). O número total é a soma das três; o texto não diz se alguém entrou em mais de uma."
   representative: false
 design: experiment
 conflict: "Financiado pela Israel Science Foundation (bolsas 86/10 e 1210/16, para Birnbaum) e pela Binational Science Foundation (bolsas 2011381 e 2016405, para Birnbaum e Reis). Os autores são do Interdisciplinary Center (IDC) Herzliya, em Israel, e da University of Rochester, nos EUA. O texto não traz declaração de conflito de interesse."
@@ -66,7 +66,7 @@ As notas vêm de escalas de 1 a 5, em que um número maior quer dizer mais. Nos 
 
 - Os participantes eram universitários heterossexuais de uma só universidade de Israel, sem relação séria. Os próprios autores dizem que jovens estudantes podem gostar do jogo de perseguir alguém, e que gente mais velha pode preferir estratégias mais diretas.
 - A pesquisa não foi pré-registrada.
-- O cúmplice era sempre alguém atraente, e o desejo foi medido logo depois de uma conversa de 2 a 15 minutos. Ninguém soube se houve encontro, mensagem de verdade ou relação depois. Os autores pedem testes com parceiros menos atraentes e em fases mais longas de uma relação.
+- O cúmplice era sempre alguém relativamente atraente, e o desejo foi medido logo depois de uma conversa de 2 a 15 minutos. Ninguém soube se houve encontro, mensagem de verdade ou relação depois. Os autores pedem testes com parceiros menos atraentes e em fases mais longas de uma relação.
 - No Estudo 1, não houve um perfil sem informação sobre seletividade. Os autores reconhecem que não dá para saber se o perfil seletivo aumentou o desejo ou se o pouco seletivo o diminuiu. Também não houve um cúmplice difícil para todos, como em Walster et al. 1973: o seletivo aceitou conversar com o participante.
 - No Estudo 2, a tarefa de convencer misturou outras coisas. O cúmplice acabava concordando com o participante, o que pode ter feito os dois parecerem mais parecidos, e a conversa pode ter durado mais. Os autores admitem as duas explicações e não as descartam. A diferença no desejo sexual tem o intervalo de 95% começando em zero.
 - O Estudo 3 não sorteou nada: mede o quanto cada pessoa achou o cúmplice difícil e o quanto escreveu de interesse na última mensagem. É associação. A ligação direta entre as duas coisas ficou em r = 0,16, com p = 0,08 pela nota da tabela, e o caminho pelo valor como par é uma conta feita sobre dados de um só momento, que não prova a ordem das coisas.
