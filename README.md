@@ -316,6 +316,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
 - [Landwehr et al. 2024](studies/landwehr-2024-roupa-flerte.md): roupa sexy, rosto de rejeição e o julgamento de quem está flertando · ✅ · fraca
+- [Lane 2020](studies/lane-2020-plataforma-atracao.md): o site, a foto e o que o perfil procura · ✅ · fraca
 - [Lange et al. 2019](studies/lange-2019-apelido-personalidade.md): o que um apelido de site de namoro diz sobre o dono · ✅ · fraca
 - [Langley e Shiota 2023](studies/langley-2023-humor-criatividade.md): por que o humor atrai, em seis experimentos · ✅ · moderada
 - [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
@@ -376,6 +377,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Niederhoffer & Pennebaker 2002](studies/niederhoffer-2002-estilo-linguistico-chat.md): estilo de linguagem parecido em conversas a dois · ✅ · fraca
 - [Ogawa & Takikawa 2024](studies/ogawa-2024-nomes-ambiguos.md): nome de leitura ambígua no perfil · ✅ · fraca
 - [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
+- [Ong 2015](studies/ong-2015-altura-renda-perfil.md): altura e renda no perfil num site de namoro chinês · ✅ · fraca
 - [Ong e Wang 2015](studies/ong-2015-renda-perfil-china.md): renda no perfil e visitas num site de namoro chinês · ✅ · moderada
 - [Ong et al. 2020](studies/ong-2020-renda-homens-escassez-mulheres.md): renda dos perfis masculinos e escassez de mulheres na China · ✅ · moderada
 - [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
@@ -406,6 +408,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ranganath, Jurafsky & McFarland 2013](studies/ranganath-2013-flerte-fala.md): flerte, simpatia e falta de jeito na fala de um speed dating · ✅ · fraca
 - [Ranzini & Lutz 2017](studies/ranzini-2017-autoapresentacao-tinder.md): autoapresentação e motivos de uso no Tinder · ✅ · fraca
 - [Ranzini & Rosenbaum 2020](studies/ranzini-2020-namoro-inter-racial.md): foto, nome e etnia em perfis de Tinder · ✅ · fraca
+- [Ranzini, Rosenbaum e Tybur 2022](studies/ranzini-2022-app-experimental.md): foto, nome e escolaridade num app de teste · ✅ · fraca
 - [Recruit Bridal 2024](studies/recruit-2024-konkatsu.md): casamento por caminho no Japão · ✅ · fraca
 - [Rerick, Livingston & Singer 2025](studies/rerick-2025-autoatratividade-intencao.md): a beleza de uma mulher, a autoimagem do homem e a leitura de intenção sexual · ✅ · fraca
 - [Reysen & Katzarska-Miller 2013](studies/reysen-2013-moderadamente-dificil.md): quanto o outro retribui e a atração · ✅ · fraca
