@@ -166,6 +166,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Copen 2017](studies/copen-2017-nsfg-camisinha.md): camisinha por tipo de parceiro nos EUA, NSFG 2011–2015 · ✅ · forte
 - [Courtice et al. 2026](studies/courtice-2026-emoji-trabalho.md): emojis em mensagens de um colega de trabalho · ✅ · fraca
 - [Cowan & Little 2013](studies/cowan-2013-humor-anuncio.md): humor afiliativo e agressivo em anúncios pessoais · ✅ · fraca
+- [Cunningham & Fleming 2026](studies/cunningham-2026-audio-versus-email.md): áudio ou e-mail do chefe · ✅ · moderada
 - [Curcic 2020](studies/curcic-2020-convergencia-textismos-idade.md): imitar as abreviações do outro no chat, por idade · ✅ · fraca
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
@@ -296,6 +297,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kitamura & Sato 2009](studies/kitamura-2009-pictogramas-impressao.md): emoji em mensagem de celular e a impressão de quem escreve · ✅ · fraca
 - [Kitamura 2023](studies/kitamura-2023-emoji-line-sinceridade.md): emoji em mensagens do LINE e a impressão de quem escreve · 🟡 · fraca
 - [Knights 2018](studies/knights-2018-persuasao-tinder.md): técnicas de persuasão num perfil do Tinder · ✅ · fraca
+- [Koch et al. 2023](studies/koch-2023-emoji-credibilidade.md): muitos emoji num post deixam a mensagem menos crível · ✅ · moderada
 - [Koessler et al. 2019](studies/koessler-2019-ghosting-e-termino-direto.md): ghosting e conversa direta no fim de uma relação · ✅ · fraca
 - [Kogan & Volsche 2020](studies/kogan-2020-gato-foto.md): o homem fotografado com um gato, aos olhos de mulheres jovens · ✅ · fraca
 - [Korovich et al. 2024](studies/korovich-2024-sinais-vermelhos-hsh.md): os sinais de perigo que homens que fazem sexo com homens dizem ver nos aplicativos · ✅ · fraca
@@ -496,6 +498,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Vrangalova 2015](studies/vrangalova-2015-sexo-casual-bem-estar.md): sexo casual, motivação e bem-estar de universitários · ✅ · moderada
 - [Walster et al. 1966](studies/walster-1966-atratividade-encontros.md): atratividade física no primeiro encontro · ✅ · fraca
 - [Walster et al. 1973](studies/walster-1973-dificil-de-conquistar.md): fazer-se de difícil e a escolha de um encontro · ✅ · fraca
+- [Walther, Loh & Granka 2005](studies/walther-2005-pistas-afinidade.md): simpatia no chat e cara a cara · ✅ · fraca
 - [Wan & Yeung 2022](studies/wan-2021-objetivo-autoapresentacao-eua-china.md): o objetivo e a autoapresentação em anúncios de sites de namoro dos EUA e de Hong Kong · ✅ · fraca
 - [Wang et al. 2014](studies/wang-2014-emoticons-feedback-negativo.md): carinhas numa crítica de trabalho por mensagem · ✅ · fraca
 - [Wang, Yang & Liu 2024](studies/wang-2024-polidez-consultas-medicas.md): polidez e emoji em consultas médicas online na China · ✅ · fraca
@@ -569,6 +572,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Doré & Morris 2018](studies/dore-2018-sincronia-apoio-texto.md): linguagem parecida no apoio emocional por texto · ✅ · fraca
 - [Duguay 2017](studies/duguay-2016-autenticidade-tinder.md): como o Tinder enquadra a autenticidade do perfil · ✅ · fraca
 - [Erle et al. 2022](studies/erle-2022-emoji-informacao-social.md): emojis como informação social nas mensagens · ✅ · moderada
+- [Erle & Bakülü 2026](studies/erle-2026-emoji-negatividade.md): emoji triste não muda uma notícia muito ruim · ✅ · fraca
 - [Evans, Gosling & Carroll 2008](studies/evans-2008-perfil-rede-social.md): campos do perfil de rede social e a concordância com o que o dono diz de si · ✅ · fraca
 - [Farris et al. 2008](studies/farris-2008-decodificar-intencao.md): homens e mulheres lendo simpatia e interesse sexual em fotos · ✅ · fraca
 - [Farris, Treat & Viken 2010](studies/farris-2010-alcool-interesse.md): álcool e a leitura do interesse sexual em fotos · ✅ · fraca
@@ -684,6 +688,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
 - [Weiß et al. 2019](studies/weiss-2019-emoji-barganha.md): emoji de resposta num jogo de dividir dinheiro · ✅ · fraca
 - [Weiß, Mussel e Hewig 2020](studies/weiss-2020-emoji-rosto-real.md): emoji ou rosto real como reação num jogo de dinheiro · ✅ · fraca
+- [Weissman 2024](studies/weissman-2024-emoji-mentira.md): um emoji pode ser mentira? · ✅ · fraca
 - [White et al. 2017](studies/white-2017-escolha-foto-perfil.md): foto de perfil escolhida pela própria pessoa ou por um desconhecido · ✅ · fraca
 - [Willigenburg 2023](studies/willigenburg-2023-valores-perfil.md): frase de cuidado ou de autopromoção no perfil · ✅ · fraca
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
