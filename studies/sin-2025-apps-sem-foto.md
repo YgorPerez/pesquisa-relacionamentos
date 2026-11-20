@@ -51,7 +51,3 @@ As entrevistas, semiestruturadas, presenciais ou por telefone, em cantonês, per
 - A primeira autora usava o Heymandi havia quatro anos, fez todas as entrevistas, traduziu as falas do cantonês e fez a primeira codificação sozinha. O estudo não foi pré-registrado, e os dados não são públicos.
 - A conclusão de que "quem foi a um encontro sem trocar fotos se arrependeu" vai além dos próprios casos do artigo: uma das entrevistadas que fez isso disse que não se importava com a aparência, e o texto diz que "nem todos" ficaram insatisfeitos.
 - O estudo não mede matches, mensagens nem encontros, e não compara o Heymandi com um app com foto.
-</content>
-</invoke>
-<invoke name="Bash">
-<parameter name="command">cd /home/servidor-azul/.t3/scratch/2026-10-22-clone-pesquisa-relacionamento-pra-mim-24024f59/pesquisa-relacionamentos/.claude/worktrees/agent-ae9555a8e1669466e && pnpm -s verify studies/sin-2025-apps-sem-foto.md 2>&1 | tail -8
