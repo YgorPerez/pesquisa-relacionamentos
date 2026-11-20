@@ -56,5 +56,5 @@ As notas sobre o dono do perfil (racismo, beleza, impressão geral e vontade de 
 - 200 jovens de 18 a 30 anos de um painel online pago, sem latinos entre os não brancos. Os autores juntaram negros, asiáticos e outros num grupo só e dizem que reações de cada grupo podem diferir.
 - Racismo e beleza foram medidos com uma pergunta só cada.
 - As notas foram dadas num questionário sobre um tema sensível. Os autores dizem que os participantes brancos podem ter condenado o perfil com a frase de verdade ou para parecer bem.
-- Dois números do texto parecem errados e não entram na Ficha: na beleza dos não brancos, o texto dá ηp2 < .09 para um d de −0,83, e nas emoções ruins dá d = 1,12 com um intervalo, de 0,91 a 1,51, que não fica centrado no d.
+- Um número do texto parece errado e não entra na Ficha: nas emoções ruins, o texto dá d = 1,12 com um intervalo, de 0,91 a 1,51, que não fica centrado no d.
 - O artigo não traz a data da coleta.
