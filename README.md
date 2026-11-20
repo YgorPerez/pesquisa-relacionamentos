@@ -131,6 +131,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
 - [Boothroyd et al. 2007](studies/boothroyd-2007-caracteristicas-parceiro.md): o que um rosto de homem sugere sobre ele como parceiro · ✅ · fraca
 - [Boothroyd et al. 2008](studies/boothroyd-2008-sociossexualidade-rosto.md): abertura a sexo casual julgada pela foto do rosto · ✅ · fraca
+- [Boothroyd et al. 2011](studies/boothroyd-2011-sociossexualidade-rosto.md): abertura a sexo casual julgada pelo rosto, segundo teste · ✅ · fraca
 - [Botnen et al. 2018](studies/botnen-2018-sociossexualidade-apps.md): sociossexualidade e uso de apps de namoro com fotos · ✅ · fraca
 - [Bowman et al. 2025](studies/bowman-2025-apps-saude.md): apps de namoro, imagem corporal e saúde mental · ✅ · fraca
 - [Bressler & Balshine 2006](studies/bressler-2006-humor-desejabilidade.md): humor e desejabilidade como parceiro · ✅ · fraca
@@ -285,6 +286,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ireland & Pennebaker 2010](studies/ireland-2010-lsm-escrita-cartas.md): estilo de escrita parecido em redações, cartas e poemas · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
+- [Ivan 2025](studies/ivan-2025-deteccao-foto-ia.md): quem percebe a foto de perfil feita por IA · ✅ · fraca
 - [Jaeger et al. 2025](studies/jaeger-2025-tratamento-estetico.md): tratamento estético facial e primeira impressão · ✅ · fraca
 - [Jain & Seth 2025](studies/jain-2025-auditoria-algoritmo-matrimonial.md): o que dois sites de casamento indianos recomendam · ✅ · fraca
 - [Jakesch et al. 2023](studies/jakesch-2023-texto-ia.md): texto de perfil escrito por pessoa ou gerado por IA · ✅ · moderada
@@ -719,6 +721,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tskhay & Rule 2014](studies/tskhay-2014-meta-analise-personalidade-online.md): personalidade lida em textos e perfis de redes sociais · ✅ · moderada
 - [Tsushima & Tomono 2024](studies/tsushima-2024-estilo-ojisan.md): o estilo "ojisan" numa mensagem de rede social · 🟡 · fraca
 - [Uehara 2007](studies/uehara-2007-emoticons-impressao.md): carinhas de texto e a impressão de uma mensagem · ✅ · fraca
+- [Vance 2010](studies/vance-2010-atratividade-contato.md): autoconfiança, beleza própria e a foto na decisão de responder · 🟡 · fraca
 - [Verschoor 2023](studies/verschoor-2023-internettaal-namoro.md): internetês holandês na primeira mensagem de um app de namoro · ✅ · fraca
 - [Vogel & Mamani Sanchez 2012](studies/vogel-2012-emoticons-kudos.md): emoticons, ressalvas e "kudos" num fórum técnico · ✅ · fraca
 - [Wang et al. 2023](studies/wang-2023-reacoes-emoji-github.md): reações de emoji em pull requests do GitHub · ✅ · moderada
