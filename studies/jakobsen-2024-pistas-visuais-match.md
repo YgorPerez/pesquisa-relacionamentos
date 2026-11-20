@@ -4,7 +4,7 @@ link: https://research.cbs.dk/files/117063120/2015548_Eyes_on_The_Price_How_Visu
 status: verified
 verified_on: 2026-11-20
 strength: weak
-strength_reason: "Dissertação de mestrado com 26 pessoas no laboratório, parte delas conhecidas das autoras, e 189 num painel online, diante de 48 fotos de perfil sem texto, com respostas de sim ou não sem consequência; as regressões e o texto se contradizem (um coeficiente digitado dez vezes maior, porcentagens trocadas entre condições, uma regressão que dá efeito forte onde as contagens são iguais), e as regressões não dizem levar em conta que as 48 respostas de cada pessoa vêm da mesma pessoa."
+strength_reason: "Dissertação de mestrado com 26 pessoas no laboratório, parte delas conhecidas das autoras, e 189 num painel online, diante de 48 fotos de perfil, com pouco ou nenhum texto (a dissertação se contradiz), com respostas de sim ou não sem consequência; as regressões e o texto se contradizem (um coeficiente digitado dez vezes maior, porcentagens trocadas entre condições, uma regressão que dá efeito forte onde as contagens são iguais), e as regressões não dizem levar em conta que as 48 respostas de cada pessoa vêm da mesma pessoa."
 countries: [Dinamarca]
 period: "fotos coletadas em julho de 2024; experimentos nas semanas 38 a 40 de 2024"
 sample:
@@ -22,7 +22,7 @@ covers:
 
 ## O que mediu
 
-Numa dissertação de mestrado, as autoras montaram 48 fotos de perfil com a cara do Tinder para cada sexo, em quatro tipos de 12: sorrindo sozinho, sem sorrir sozinho, sorrindo com outras pessoas e sem sorrir com outras pessoas. Cada participante viu as 48 fotos do sexo que procura, uma por vez, e respondeu sim ou não. Segundo as limitações da dissertação, as fotos vieram sem bio, nome, idade ou local; a seção sobre os estímulos fala em nome de usuário e descrição curta. No laboratório da Copenhagen Business School, um rastreador do olhar mediu onde e por quanto tempo as pessoas olhavam; o mesmo questionário rodou online no Prolific, sem rastreador.
+Numa dissertação de mestrado, as autoras montaram 48 fotos de perfil com a cara do Tinder para cada sexo, em quatro tipos de 12: sorrindo sozinho, sem sorrir sozinho, sorrindo com outras pessoas e sem sorrir com outras pessoas. Cada participante viu as 48 fotos do sexo que procura, uma por vez, e respondeu sim ou não. Segundo as limitações da dissertação, as fotos vieram sem bio, nome, idade ou local; a seção sobre os estímulos fala em nome de usuário e descrição curta. No laboratório da Copenhagen Business School, um rastreador do olhar mediu onde e por quanto tempo as pessoas olhavam; o mesmo questionário rodou online no Prolific, sem rastreador, com pessoas de vários países que a dissertação não nomeia. O campo de países desta Ficha cobre só o laboratório.
 
 As autoras dizem que as fotos vieram do Unsplash, um banco de imagens grátis, e, noutra seção, que foram coletadas em dois lugares de Copenhague num dia de julho de 2024.
 

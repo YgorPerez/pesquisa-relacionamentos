@@ -1,5 +1,5 @@
 ---
-reference: "Jang J, Kwon S, Park S-H. *Beauty vs. Vibe: Deconstructing visual appeal in online dating with large multimodal models*. Computers in Human Behavior, 2025. A cópia lida é o preprint do SSRN (abstract 5191741), de 24 de março de 2025, anônimo e marcado como não revisado por pares, enviado à revista com o título 'Beauty vs. vibe in online dating with large multimodal models'; fica no repositório privado das Fontes. Os nomes dos autores e o título publicado vêm da divulgação do artigo, não do texto lido. Preprint: https://ssrn.com/abstract=5191741"
+reference: "Jang J, Kwon S, Park S-H. *Beauty vs. Vibe: Deconstructing visual appeal in online dating with large multimodal models*. Computers in Human Behavior 173:108792, 2025. A cópia lida é o preprint do SSRN (abstract 5191741), de 24 de março de 2025, anônimo e marcado como não revisado por pares, enviado à revista com o título 'Beauty vs. vibe in online dating with large multimodal models'; fica no repositório privado das Fontes. Os nomes dos autores e o título publicado vêm da divulgação do artigo, não do texto lido. Preprint: https://ssrn.com/abstract=5191741"
 link: https://doi.org/10.1016/j.chb.2025.108792
 status: verified
 verified_on: 2026-11-20
@@ -49,7 +49,7 @@ As notas das fotos são posições na amostra, de 0 a 1, então "do mais baixo a
 
 ## Limitações
 
-- A versão lida é o preprint anônimo do SSRN, sem revisão por pares; a divulgação da versão publicada fala de um modelo de "dois caminhos" que o preprint não traz, e a versão publicada pode ter outros números.
+- A versão lida é o preprint anônimo do SSRN, sem revisão por pares; a versão publicada pode ter outros números.
 - O "match" não é um match: é uma nota de 4 ou 5 de um usuário a outro, sem saber se o outro respondeu ou se houve conversa.
 - As cinco notas das fotos vêm de um modelo de inteligência artificial. Os autores conferiram a nota de beleza num banco público de rostos, o SCUT-FBP5500 (correlação de 0,7885 com as notas de pessoas), não nas fotos do app; as notas de clima e de capital não foram conferidas com pessoas. As imagens de exemplo do artigo foram geradas por inteligência artificial.
 - O resumo diz 200% e 155% onde a conta do texto dá 2,00 e 1,55 vezes, ou seja, 100% e 55% a mais. O clima das mulheres é 0,3453 na tabela e 0,4350 no texto (linhas com Cálculo). O texto diz que as análises usam 11.627 usuários avaliados por 15 pessoas ou mais, e as tabelas dão 35.476 e 9.923 observações, o total de cada sexo, embora só 20.834 usuários tenham recebido alguma nota.
