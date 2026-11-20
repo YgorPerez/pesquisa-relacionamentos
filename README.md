@@ -100,6 +100,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Anderson et al. 2018](studies/anderson-2018-objetificacao-grindr.md): foto sem camisa e foco no corpo nos perfis do Grindr · ✅ · fraca
 - [von Andrian-Werburg et al. 2020](studies/andrian-werburg-2020-personalidade-chat.md): personalidade e inteligência percebidas numa conversa por chat · ✅ · fraca
 - [Antar & Stephen 2021](studies/antar-2021-sociossexualidade-formato-rosto.md): formato do rosto e abertura a sexo casual · ✅ · fraca
+- [Ante 2026](studies/ante-2026-efeito-cyrano.md): mensagens escritas com IA no namoro por app, contadas por quem usa e por quem recebe · ✅ · fraca
 - [Apostolou, O & Esposito 2020](studies/apostolou-2020-motivos-solteiro.md): por que os solteiros dizem estar solteiros · ✅ · fraca
 - [Apostolou et al. 2026](studies/apostolou-2026-capacidade-manter-parceiro.md): capacidade de manter um parceiro e solteirice · ✅ · fraca
 - [Appel et al. 2023](studies/appel-2023-filtro-foto-tinder.md): filtro de beleza na foto de homens no Tinder · ✅ · fraca
@@ -311,6 +312,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
 - [Landwehr et al. 2024](studies/landwehr-2024-roupa-flerte.md): roupa sexy, rosto de rejeição e o julgamento de quem está flertando · ✅ · fraca
 - [Lange et al. 2019](studies/lange-2019-apelido-personalidade.md): o que um apelido de site de namoro diz sobre o dono · ✅ · fraca
+- [Langley e Shiota 2023](studies/langley-2023-humor-criatividade.md): por que o humor atrai, em seis experimentos · ✅ · moderada
 - [Lavner, Bradbury & Karney 2012](studies/lavner-2012-mudanca-ou-diferencas.md): a relação piora aos poucos ou já começa diferente? · ✅ · fraca
 - [Lavner & Bradbury 2012](studies/lavner-2012-recem-casados-satisfeitos.md): por que até recém-casados satisfeitos se divorciam · ✅ · fraca
 - [Lavner, Karney & Bradbury 2016](studies/lavner-2016-comunicacao-satisfacao.md): a comunicação prevê a satisfação, ou a satisfação prevê a comunicação? · ✅ · moderada
@@ -333,6 +335,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Lilly & Buehler 2023](studies/lilly-2023-mensagem-sexual-explicita.md): primeira mensagem sexualmente explícita num app de namoro · ✅ · fraca
 - [Lin & Lundquist 2013](studies/lin-2013-raca-genero-respostas.md): raça, gênero e escolaridade na primeira mensagem e na resposta · ✅ · moderada
 - [Liu et al. 2023](studies/liu-2023-estilo-escrita-medicos.md): emoji e linguagem inclusiva de médicos em consultas online · ✅ · fraca
+- [Lu et al. 2026](studies/lu-2026-conversas-hinge.md): prever conversas, e não só matches, no Hinge · ✅ · fraca
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
 - [Lynn & Shurgot 1984](studies/lynn-1984-anuncios-aparencia.md): o que o anúncio dizia da aparência e as respostas que recebeu · ✅ · fraca
