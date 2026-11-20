@@ -123,6 +123,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Berkes 2021](studies/berkes-2021-cantadas-originais.md): cantadas originais, comuns e aleatórias em app de namoro · ✅ · fraca
 - [Bersamin et al. 2014](studies/bersamin-2014-sexo-casual-saude-mental.md): sexo casual e saúde mental de universitários · ✅ · moderada
 - [Birditt et al. 2010](studies/birditt-2010-conflito-divorcio.md): o jeito de brigar no primeiro ano e o divórcio em 16 anos · ✅ · moderada
+- [Birnbaum, Zholtack & Reis 2020](studies/birnbaum-2020-dificil-de-conquistar-valor.md): parecer difícil de conquistar e o valor como par · ✅ · fraca
 - [Blanchflower & Oswald 2004](studies/blanchflower-2004-dinheiro-sexo-felicidade.md): dinheiro, sexo e felicidade nos EUA · ✅ · moderada
 - [Boller, Lechner & Okasa 2025](studies/boller-2025-esporte-perfil.md): a frequência de esporte no perfil e a primeira mensagem num site alemão · ✅ · moderada
 - [Boothby et al. 2018](studies/boothby-2018-liking-gap.md): depois de conversar, a gente acha que o outro gostou menos do que gostou · ✅ · moderada
@@ -167,6 +168,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Courtice et al. 2026](studies/courtice-2026-emoji-trabalho.md): emojis em mensagens de um colega de trabalho · ✅ · fraca
 - [Cowan & Little 2013](studies/cowan-2013-humor-anuncio.md): humor afiliativo e agressivo em anúncios pessoais · ✅ · fraca
 - [Curcic 2020](studies/curcic-2020-convergencia-textismos-idade.md): imitar as abreviações do outro no chat, por idade · ✅ · fraca
+- [Dai, Dong & Jia 2014](studies/dai-2014-quando-fazer-se-de-dificil-funciona.md): quando se fazer de difícil funciona · ✅ · fraca
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Daniels 2016](studies/daniels-2016-foto-sexy-rede-social.md): a foto sexualizada no perfil de Facebook de uma mulher, vista por universitários · ✅ · fraca
@@ -268,6 +270,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Huh 2025](studies/huh-2025-emoji-responsividade.md): emoji e a impressão de atenção nas respostas de um amigo · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Hunter et al. 2019](studies/hunter-2018-riqueza-perfil.md): o saldo bancário e outros sinais de riqueza num perfil de namoro · ✅ · fraca
+- [Hwang, Khojasteh & Fussell 2019](studies/hwang-2019-demora-e-indicador-de-digitacao.md): demora no chat com e sem o aviso de "digitando" · ✅ · fraca
 - [Ireland & Pennebaker 2010](studies/ireland-2010-lsm-escrita-cartas.md): estilo de escrita parecido em redações, cartas e poemas · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
 - [Irrational Labs 2023](studies/irrational-labs-2023-humor-tinder.md): piada ou pergunta sincera na primeira mensagem do Tinder · 🟡 · fraca
