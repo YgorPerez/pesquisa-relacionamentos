@@ -540,6 +540,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Sem país na Ficha (meta-análises e bases de vários países)
 
 - [Adams et al. 2018](studies/adams-2018-acomodacao-textismos.md): textismos e ajuste ao estilo do outro nas mensagens · ✅ · fraca
+- [Adams & Miles 2023](studies/adams-2023-convergencia-textismos.md): que tipo de textismo a outra pessoa devolve · ✅ · fraca
 - [Antheunis et al. 2020](studies/antheunis-2020-texto-video-presencial.md): chat ou vídeo antes do encontro pessoal · ✅ · fraca
 - [Apostolou 2021](studies/apostolou-2021-solteirice-involuntaria.md): flerte, esforço de conquista, exigência e solteirice involuntária · ✅ · fraca
 - [Apostolou & Michaelidou 2024](studies/apostolou-2024-caminhos-solteirice.md): aparência, valor de parceiro, flerte, exigência e solteirice · ✅ · fraca
