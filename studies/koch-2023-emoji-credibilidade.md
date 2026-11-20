@@ -4,12 +4,12 @@ link: https://doi.org/10.1177/20563051231194584
 status: verified
 verified_on: 2026-11-20
 strength: moderate
-strength_reason: "Três experimentos sorteados (324, 204 e 338 pessoas), com temas e remetentes diferentes, deram o mesmo resultado: post com emoji pareceu menos crível e a organização, menos confiável; mas as amostras são de voluntários na Alemanha, os posts são de organizações inventadas no Facebook, as versões com emoji tinham de 6 a 26 emoji, e nada disso é conversa entre duas pessoas nem namoro."
+strength_reason: "Três experimentos sorteados (324, 204 e 338 pessoas), com temas e remetentes diferentes, deram o mesmo resultado: post com muitos emoji pareceu menos crível e a organização, menos confiável; mas as amostras são de voluntários na Alemanha, os posts são de organizações inventadas no Facebook, as versões com emoji tinham de 6 a 26 emoji, e nada disso é conversa entre duas pessoas nem namoro."
 countries: [Alemanha]
 period: "não informado no texto lido"
 sample:
   n: 866
-  description: "Três experimentos online feitos na Alemanha, com voluntários não pagos. No 1a, 324 pessoas de um painel online para pesquisa em ciências sociais (SoSci Panel), 58% mulheres, idade média de 48,67 anos. No 1b, 204 pessoas recrutadas em redes sociais, depois de tirar 12 que responderam rápido demais ou admitiram não ter lido o post, 66% mulheres, idade média de 32,58 anos. No 2, 338 pessoas do mesmo painel, 60% mulheres, idade média de 49,46 anos."
+  description: "Três experimentos online feitos na Alemanha, com voluntários não pagos. No 1a, 324 pessoas de um painel online para pesquisa em ciências sociais (SoSci Panel), 58% mulheres, idade média de 48,67 anos. No 1b, 204 pessoas recrutadas em redes sociais, de 216; o texto diz que tirou 8 que responderam rápido demais e 6 que admitiram não ter lido o post, o que não fecha com 216 − 204 = 12; 66% mulheres, idade média de 32,58 anos. No 2, 338 pessoas do mesmo painel, 60% mulheres, idade média de 49,46 anos."
   representative: false
 design: experiment
 conflict: "Os autores declaram não ter conflito de interesse nem financiamento. Todos são da Johannes Gutenberg University Mainz."
@@ -40,15 +40,15 @@ Em três experimentos, cada pessoa leu um post de Facebook de uma organização 
 | Tamanho da diferença na credibilidade no 2 | No terceiro experimento, o número de emoji pesou mais na credibilidade que nos dois primeiros (η² = 0,20) | Study 2, Results (p. 8) | "F(2, 332) = 41.29, p < .001, η2 = .20" |
 | Confiabilidade de quem postou no 2 | Sem emoji, a organização teve confiabilidade de 3,94, com poucos 3,51 e com muitos 3,26 | Study 2, Results (p. 8) | "a post with many emojis led to the source being perceived as less trustworthy (M = 3.26, SD = 0.95) than a post with few (M = 3.51, SD = 1.04) or no (M = 3.94, SD = 0.85) emojis" |
 | Remetente profissional ou não | Nos três experimentos, o peso dos emoji foi o mesmo vindo do remetente mais profissional e do menos profissional | Study 2, Results (p. 8) | "Therefore, H4 cannot be supported for source trustworthiness or message credibility." |
-| Por que a credibilidade caiu | No terceiro experimento, mais emoji andaram junto com a impressão de que o post queria convencer e com mais raiva de quem leu, e essa raiva explicou a maior parte da queda na credibilidade (b = −0,19) | Study 2, Results (p. 9) | "The second indirect effect was mediated by affective reactance (b = −0.19, 95% CI = [−0.28, −0.10])." |
-| Poucos já bastam | Na leitura dos autores, seis a nove emoji já bastaram para o post parecer menos crível e quem postou menos confiável; mais emoji tiveram o mesmo efeito | General Discussion (p. 9) | "six, seven, and nine emojis were sufficient for participants to rate a post as less credible and the source of the post as less trustworthy compared to a post with no emojis" |
+| Por que a credibilidade caiu | No terceiro experimento, mais emoji andaram junto com a impressão de que o post queria convencer e com mais raiva de quem leu, e o caminho pela raiva foi o maior dos cinco caminhos indiretos da queda na credibilidade (b = −0,19) | Study 2, Results (p. 9) | "The second indirect effect was mediated by affective reactance (b = −0.19, 95% CI = [−0.28, −0.10])." |
+| Poucos já bastariam | Na leitura dos autores, seis a nove emoji já bastaram para o post parecer menos crível e quem postou menos confiável; mas os dados do próprio segundo experimento contradizem isso: lá, o post com poucos emoji ficou perto do post sem emoji (ver as linhas de credibilidade e de confiabilidade dele) | General Discussion (p. 9) | "six, seven, and nine emojis were sufficient for participants to rate a post as less credible and the source of the post as less trustworthy compared to a post with no emojis" |
 
 As notas de credibilidade e de confiabilidade iam de 1 a 5, e as de acerto, de 0 a 7. O η² diz que parte da variação das notas o número de emoji explica: 0,20 é 20%. O b, na análise de caminhos do terceiro experimento, é quanto a credibilidade muda por esse caminho a cada passo de "sem" para "poucos" e de "poucos" para "muitos". O p é a chance de uma diferença daquele tamanho aparecer só por acaso. No 1a, poucos e muitos emoji não se distinguiram entre si; no 1b, poucos e nenhum não se distinguiram.
 
 ## Limitações
 
 - Não é sobre namoro nem sobre conversa: são posts públicos de organizações inventadas, e os próprios autores dizem que não dá para estender o resultado a mensagens entre amigos ou desconhecidos.
-- A versão com "poucos" emoji já tinha de 6 a 9; o estudo não testou um, dois ou três emoji, como os autores admitem. O que ele mostra é que um post cheio de emoji perde credibilidade, não que um emoji isolado faça isso.
+- A versão com "poucos" emoji já tinha de 6 a 9; o estudo não testou um, dois ou três emoji, como os autores admitem. O que ele mostra é que um post cheio de emoji perde credibilidade, não que um emoji isolado faça isso. Com 6 a 9 emoji, a queda apareceu no 1a e no 2, mas não no 1b.
 - Os emoji só repetiam o texto e estavam também no meio das frases, o que os autores dizem que pode ter deixado os posts com cara de artificiais. A valência dos emoji não foi controlada.
 - As amostras são de voluntários de um painel e de redes sociais, todos na Alemanha. O texto não diz quando os dados foram coletados.
 - No 1b, quem viu o post sem emoji disse ter visto em média 2,00 emoji, e no 2 o índice de intenção de convencer teve consistência baixa (α = 0,64).

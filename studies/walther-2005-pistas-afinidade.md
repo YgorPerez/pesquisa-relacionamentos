@@ -9,7 +9,7 @@ countries: [EUA]
 period: "não informado no texto lido"
 sample:
   n: 56
-  description: "56 pessoas: metade estudantes de uma disciplina de comunicação de uma grande universidade do nordeste dos EUA, que participaram para cumprir um requisito do curso, e metade gente que cada estudante trouxe, de um sexo pedido pela equipe, para formar duplas do mesmo sexo e de sexos diferentes. Cada estudante conversou com o acompanhante de outro estudante, um desconhecido, e foi ele quem recebeu a instrução secreta; o desconhecido deu as notas. A análise usa 13 duplas por grupo."
+  description: "56 pessoas: metade estudantes de uma disciplina de comunicação de uma grande universidade do nordeste dos EUA, que participaram para cumprir um requisito do curso, e metade gente que cada estudante trouxe, de um sexo pedido pela equipe, para formar duplas do mesmo sexo e de sexos diferentes. Cada estudante conversou com o acompanhante de outro estudante, e foi o estudante quem recebeu a instrução secreta; o desconhecido deu as notas. A análise usa 13 duplas por grupo."
   representative: false
 design: experiment
 conflict: "O artigo não traz declaração de financiamento nem de conflito de interesse. Os autores são da Cornell University e da Stanford University."
@@ -21,7 +21,7 @@ covers:
 
 ## O que mediu
 
-Duplas de desconhecidos discutiram um dilema moral, sorteadas para conversar cara a cara ou por chat. Depois do primeiro minuto, um dos dois, que tinha recebido uma instrução secreta, passou a agir com simpatia ou com antipatia pelo outro, sem que lhe dissessem como. O cara a cara durava até 10 minutos, e o chat até 40, porque digitar leva mais tempo. O parceiro deu notas à proximidade (imediatismo) e ao afeto que sentiu no outro. Colegas de curso contaram, em trechos do terceiro minuto, 122 pistas: as palavras, os gestos e o rosto, e o tom de voz com o som das palavras abafado. No chat, entre as pistas contadas estavam três emoticons, :), ;) e :(. Não é um estudo de namoro.
+Duplas formadas por um estudante e o acompanhante de outro estudante discutiram um dilema moral, sorteadas para conversar cara a cara ou por chat. Depois do primeiro minuto, um dos dois, que tinha recebido uma instrução secreta, passou a agir com simpatia ou com antipatia pelo outro, sem que lhe dissessem como. O cara a cara durava até 10 minutos, e o chat até 40, porque digitar leva mais tempo. O parceiro deu notas à proximidade (imediatismo) e ao afeto que sentiu no outro. Colegas de curso contaram, em trechos do terceiro minuto, 122 pistas: as palavras, os gestos e o rosto, e o tom de voz com o som das palavras abafado. No chat, entre as pistas contadas estavam três emoticons, :), ;) e :(. Não é um estudo de namoro.
 
 ## Achados
 
@@ -49,4 +49,4 @@ As notas de proximidade e de afeto vêm de escalas de concordância respondidas 
 
 ## Como usamos
 
-No Relatório [emoji, risada escrita, figurinha e áudio](../reports/2026-11-15-emoji-risada-figurinha-e-audio.md), para dizer que, num chat entre desconhecidos, quem quis passar simpatia conseguiu tanto quanto cara a cara, e com palavras.
+No Relatório [emoji, risada escrita, figurinha e áudio](../reports/2026-11-15-emoji-risada-figurinha-e-audio.md), para dizer que, num chat de laboratório, quem quis passar simpatia conseguiu tanto quanto cara a cara, e com palavras.

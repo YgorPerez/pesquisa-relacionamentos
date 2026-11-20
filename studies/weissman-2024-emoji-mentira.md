@@ -9,7 +9,7 @@ countries: []
 period: "não informado no texto lido"
 sample:
   n: 296
-  description: "Pessoas recrutadas e pagas no Prolific. Teste dos significados: 28 falantes de inglês na primeira lista e 50 na segunda. Experimento 1: 100 pessoas, 99 analisadas (71 mulheres, 25 homens e 2 não binárias entre as 98 que deram os dados; idade média de 32,4 anos). Experimento 2: 202 pessoas, 197 analisadas (147 mulheres e 50 homens; idade média de 33,7 anos). O texto não diz o país dos participantes."
+  description: "Teste dos significados: 28 falantes de inglês na primeira lista e 50 na segunda; o texto não diz de onde vieram. Os dois experimentos recrutaram e pagaram pessoas no Prolific. Experimento 1: 100 pessoas, 99 analisadas (71 mulheres, 25 homens e 2 não binárias entre as 98 que deram os dados; idade média de 32,4 anos). Experimento 2: 202 pessoas, 197 analisadas (147 mulheres e 50 homens; idade média de 33,7 anos). O texto não diz o país dos participantes."
   representative: false
 design: experiment
 conflict: "Financiado por uma bolsa interna (Flash Grant) da School of Humanities, Arts, and Social Sciences do Rensselaer Polytechnic Institute, onde o autor trabalha. O autor declara não ter conflito de interesse."
@@ -31,7 +31,7 @@ Primeiro, pessoas disseram o que significam 40 emoji vistos sozinhos: 20 de rost
 | Concordância sobre o significado | Vistos sozinhos, os emoji de rosto tiveram concordância média de 0,52 sobre o que significam, e os de objeto, animal e comida, de 0,90 | Table 1 | "Average 0.52 0.90" |
 | Compromisso com o que o emoji diz | Quem respondeu com emoji de objeto, animal ou comida pareceu mais comprometido com aquele significado, e com menos espaço para negar, do que quem respondeu com emoji de rosto | 3.2 Results | "Non-affective emoji registered higher commitment and lower deniability than did the set of affective emoji." |
 | Concordância e compromisso | Quanto mais as pessoas concordavam sobre o que um emoji quer dizer fora de contexto, mais quem o mandou pareceu comprometido com aquele significado | 3.3 Discussion | "As agreement over what the emoji means (out of context) increases, commitment to that emoji's meaning in context increases correspondingly" |
-| Compromisso e poder negar | As notas de compromisso e de poder negar andaram juntas, na pessoa (r = 0,67) e no emoji (r = 0,94) | 3.3 Discussion | "each item they saw (r = 0.67, p < .001); the item-level correlation between commitment and deniability is even stronger (r = 0.94, p < .001)" |
+| Compromisso e poder negar | As notas de compromisso e de poder negar andaram juntas, em cada resposta (r = 0,67) e no emoji (r = 0,94) | 3.3 Discussion | "each item they saw (r = 0.67, p < .001); the item-level correlation between commitment and deniability is even stronger (r = 0.94, p < .001)" |
 | Quem participou no experimento 2 | 197 pessoas do Prolific: 147 mulheres e 50 homens, idade média de 33,7 anos | 4.1.3 Participants | "The final dataset thus included data from 197 participants (average age = 33.7 (sd = 10.3); 147 female, 50 male)" |
 | Emoji como mentira | Quando a resposta era falsa e dita para enganar, a resposta em emoji foi vista, no geral, como mentira | 4.3 Discussion | "content communicated via emoji is overall considered a lie" |
 | Emoji claro e emoji ambíguo | Emoji com que quem manda fica bem comprometido contaram como mentira tanto quanto as mesmas palavras escritas; os de compromisso baixo, menos | 4.3 Discussion | "Emoji with high commitment were considered lies to the same extent as the corresponding text; such was not the case for the emoji with low commitment." |
@@ -42,8 +42,8 @@ A concordância vai de 0 a 1: é a parte das pessoas que deu o significado mais 
 ## Limitações
 
 - Não é namoro nem impressão sobre quem escreve: mede só se as pessoas chamam de mentira uma resposta de um emoji, numa cena inventada em que já se sabe que ela é falsa e dita para enganar.
-- Todas as respostas eram um emoji solto respondendo a uma pergunta direta. O autor avisa que isso não diz nada do emoji que só muda o tom de uma frase, que é o uso mais comum.
-- Amostras de conveniência do Prolific, a maioria mulheres, sem país informado; o teste dos significados teve 28 e 50 pessoas.
+- Todas as respostas eram um emoji solto respondendo a uma pergunta direta. O autor avisa que isso não diz nada do emoji que só muda o tom de uma frase, um uso frequente.
+- Os experimentos usaram amostras de conveniência do Prolific, a maioria mulheres, sem país informado; o teste dos significados teve 28 e 50 falantes de inglês, sem dizer de onde vieram.
 - O texto lido é o preprint do SSRN, enviado antes da revisão por pares. A versão publicada no Journal of Pragmatics pode trazer números ou trechos diferentes.
 
 ## Como usamos
