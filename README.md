@@ -379,6 +379,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Olivo & Yen 2018](studies/olivo-2018-atratividade-taiwan.md): texto e fotos de um perfil de namoro em Taiwan · ✅ · fraca
 - [Ong 2015](studies/ong-2015-altura-renda-perfil.md): altura e renda no perfil num site de namoro chinês · ✅ · fraca
 - [Ong e Wang 2015](studies/ong-2015-renda-perfil-china.md): renda no perfil e visitas num site de namoro chinês · ✅ · moderada
+- [Ong 2016](studies/ong-2016-educacao-renda-perfil.md): escolaridade e renda no perfil e visitas num site de namoro chinês · ✅ · moderada
 - [Ong et al. 2020](studies/ong-2020-renda-homens-escassez-mulheres.md): renda dos perfis masculinos e escassez de mulheres na China · ✅ · moderada
 - [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
 - [Otani 2026](studies/otani-2026-idade-exibida-japao.md): a idade exibida no perfil e o aniversário numa plataforma de casamento do Japão · ✅ · fraca
@@ -448,6 +449,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Shtatfeld & Barak 2009](studies/shtatfeld-2009-habilidade-escrita-contatos.md): escrita do perfil e contatos num site de namoro de Israel · ✅ · fraca
 - [Shum 2014](studies/shum-2014-fotos-lgbt.md): fotos de perfil numa comunidade de namoro gay · ✅ · fraca
 - [Sienko 2017](studies/sienko-2017-estigma-peso-namoro-online.md): peso na foto e atributos do perfil, avaliados por universitários · ✅ · fraca
+- [Sin e Chan 2025](studies/sin-2025-apps-sem-foto.md): como jovens de Hong Kong usam um app de namoro sem foto · ✅ · fraca
 - [Sleiman, Melios & Dolan 2025](studies/sleiman-2025-partidarismo-tolerancia.md): partido e tolerância política em perfis de namoro no Reino Unido · ✅ · fraca
 - [Smith e Duggan 2013](studies/smith-2013-pew-namoro-online.md): namoro online nos EUA em 2013 · ✅ · moderada
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
@@ -533,6 +535,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Yun e Jung 2022](studies/yun-2022-raiva-negociacao-canal.md): raiva por texto, emoticon, voz ou vídeo numa negociação · ✅ · fraca
 - [van der Zanden et al. 2019](studies/zanden-2019-objetivo-linguagem-perfil.md): objetivo declarado e linguagem do texto do perfil · ✅ · moderada
 - [van der Zanden et al. 2020](studies/zanden-2020-erros-linguagem-perfil.md): erros de língua no texto do perfil e a impressão sobre o dono · ✅ · moderada
+- [van der Zanden et al. 2022](studies/zanden-2022-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 - [van der Zanden et al. 2022](studies/zanden-2022-originalidade-texto-perfil.md): texto de perfil original e a impressão sobre quem escreveu · ✅ · moderada
 - [Van der Zanden e Schouten 2024](studies/zanden-2024-criatividade-texto-perfil.md): texto de perfil incomum, fora de lugar ou comum · ✅ · fraca
 - [Zentner 2005](studies/zentner-2005-ideal-personalidade.md): parceiro ideal, semelhança de personalidade e satisfação · ✅ · fraca
@@ -704,7 +707,6 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wu & Kelly 2020](studies/wu-2020-texto-ia-perfil.md): rótulo de IA no texto de perfil de namoro · ✅ · fraca
 - [Yoshizawa 2006](studies/yoshizawa-2006-agradecimento-emoticon.md): agradecimento por e-mail com emoticon ou cara a cara · 🟡 · fraca
 - [Young & Wang 2004](studies/young-2004-neurobiologia-vinculo.md): a neurobiologia do vínculo de casal · ✅ · moderada
-- [van der Zanden et al. 2021](studies/zanden-2021-olhar-foto-texto-perfil.md): olhar e impressão diante da foto e do texto do perfil · ✅ · fraca
 - [Zhang & Santtila 2024](studies/zhang-2024-app-analogo-memoria.md): o que o perfil procura, o match e a memória num app simulado · ✅ · fraca
 - [Zijlmans 2020](studies/zijlmans-2020-convergencia-textismos.md): o jeito de escrever de quem responde a mensagens com abreviações no WhatsApp · ✅ · fraca
 
