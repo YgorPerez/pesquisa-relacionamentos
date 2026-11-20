@@ -489,6 +489,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sutherland et al. 2018](studies/sutherland-2018-infidelidade-universal.md): julgar pelo rosto quem já traiu, em mulheres de culturas diferentes · ✅ · fraca
 - [Swaab, Maddux & Sinaceur 2011](studies/swaab-2011-mimica-verbal-negociacao-online.md): imitar as palavras do outro numa negociação por chat · ✅ · fraca
 - [Szczuka et al. 2025](studies/szczuka-2025-respostas-ia-perfil.md): respostas de perfil escritas pelo ChatGPT, com rótulo de pessoa ou de IA · ✅ · fraca
+- [Taflinger & Hudde 2026](studies/taflinger-2026-partidarismo-perfil.md): por que jovens dos EUA evitam namorar quem é do outro partido · ✅ · moderada
 - [Takizawa, Sakamaki & Yamashita 2015](studies/takizawa-2015-sincronia-emoticons.md): pontuação e emoticons na resposta a uma mensagem · ✅ · fraca
 - [Tamamiya & Okamoto 2022](studies/tamamiya-2022-emoji-line-quantidade.md): quantidade de emoji em mensagens do LINE · 🟡 · fraca
 - [Taubert et al. 2016](studies/taubert-2016-ordem-atratividade.md): a foto vista logo antes e a nota da seguinte · ✅ · fraca
@@ -514,6 +515,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
 - [Tuinman et al. 2018](studies/tuinman-2018-sobrevivente-cancer.md): perfil de quem teve câncer · ✅ · fraca
 - [Turnbull-Dugarte & López Ortega 2025](studies/turnbull-dugarte-2025-extrema-direita.md): votar na extrema direita e o like no perfil de namoro · ✅ · moderada
+- [Turnbull-Dugarte 2026](studies/turnbull-dugarte-2026-bissexualidade-conjoint.md): o perfil que diz ser bissexual no app de namoro · ✅ · moderada
 - [Twenge, Sherman & Wells 2015](studies/twenge-2015-comportamento-sexual-eua.md): parceiros sexuais e atitudes por geração nos EUA · ✅ · moderada
 - [Tyson et al. 2016](studies/tyson-2016-tinder.md): primeiro olhar sobre a atividade no Tinder · ✅ · fraca
 - [Vacharkulksemsuk et al. 2016](studies/vacharkulksemsuk-2016-postura-expansiva.md): postura expansiva no encontro rápido e na foto do aplicativo · ✅ · fraca
