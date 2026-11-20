@@ -109,6 +109,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Aron et al. 1997](studies/aron-1997-36-perguntas.md): as "36 perguntas" geram proximidade, não amor · ✅ · moderada
 - [Aronson & Worchel 1966](studies/aronson-1966-similaridade-ou-ser-gostado.md): concordar nas opiniões ou saber que o outro gosta de você · ✅ · fraca
 - [Arranz Aldana & Salazar 2024](studies/arranz-aldana-2024-raca-tinder.md): raça no Tinder em Madri · ✅ · fraca
+- [Arseneault & Koo 2026](studies/arseneault-2026-emoji-lider-culturas.md): emoji de chefe num chat de trabalho, em quatro culturas · ✅ · moderada
 - [Asendorpf, Penke & Back 2011](studies/asendorpf-2011-speed-dating-acompanhamento.md): do speed dating ao sexo e ao namoro, um ano depois · ✅ · fraca
 - [Babin 2020](studies/babin-2020-emoji-jogo-confianca.md): emojis, tom de pele e confiança num jogo de dinheiro · ✅ · fraca
 - [Back et al. 2010](studies/back-2010-facebook-personalidade.md): o perfil do Facebook e a personalidade real do dono · ✅ · fraca
@@ -265,6 +266,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hilte 2023](studies/hilte-2023-acomodacao-percebida.md): como adolescentes percebem quem imita o jeito de escrever do outro no chat · ✅ · fraca
 - [Hitsch, Hortaçsu & Ariely 2010](studies/hitsch-2010-preferencias-primeiro-contato.md): a quem as pessoas mandam o primeiro e-mail num site de namoro · ✅ · moderada
 - [Holtzhausen et al. 2020](studies/holtzhausen-2020-apps-saude-mental.md): apps de deslizar e saúde mental na Austrália · ✅ · fraca
+- [Holtzman et al. 2025](studies/holtzman-2025-apoio-por-canal.md): apoio de uma amiga ao vivo, por vídeo, por ligação ou por mensagem · ✅ · moderada
 - [Horsham et al. 2025](studies/horsham-2025-replicacao-menos-e-mais.md): réplica de "saber mais e gostar menos" · ✅ · fraca
 - [Hoyle et al. 2017](studies/hoyle-2017-mensagem-vista.md): o aviso de mensagem vista no Facebook Messenger · ✅ · fraca
 - [Hu, Zhu & Zhang 2024](studies/hu-2024-online-dating-replication.md): conhecer o par online e o sucesso da relação · ✅ · moderada
@@ -349,8 +351,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Liu et al. 2023](studies/liu-2023-estilo-escrita-medicos.md): emoji e linguagem inclusiva de médicos em consultas online · ✅ · fraca
 - [Lu et al. 2026](studies/lu-2026-conversas-hinge.md): prever conversas, e não só matches, no Hinge · ✅ · fraca
 - [Luo & Zhang 2009](studies/luo-2009-o-que-gera-atracao.md): beleza, semelhança e atração correspondida num speed dating · ✅ · fraca
+- [Luz 2017](studies/luz-2017-emoji-etnico.md): emoji de tom de pele numa conversa entre colegas · ✅ · fraca
 - [Lynden & Rasmussen 2017](studies/lynden-2017-confirmacao-de-leitura.md): o que estudantes sentem e fazem com a confirmação de leitura · ✅ · fraca
 - [Lynn & Shurgot 1984](studies/lynn-1984-anuncios-aparencia.md): o que o anúncio dizia da aparência e as respostas que recebeu · ✅ · fraca
+- [Ma et al. 2025](studies/ma-2025-mensagens-de-voz-medicos.md): mensagem de voz do médico numa consulta online · ✅ · fraca
 - [Madden & Lenhart 2006](studies/madden-2006-pew-namoro-online.md): o que os americanos achavam do namoro online em 2005 · ✅ · moderada
 - [Madill 2009](studies/madill-2009-autoapresentacao-namoro.md): como cinco usuários de um site de namoro se apresentavam e julgavam os outros · ✅ · fraca
 - [Maldeniya et al. 2017](studies/maldeniya-2017-semelhanca-resposta.md): semelhança com ela e diferença dos outros homens · ✅ · fraca
@@ -393,6 +397,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Palomo-Vélez et al. 2025](studies/palomo-velez-2025-vegetariano-namorado.md): homem vegetariano e apelo como parceiro · ✅ · fraca
 - [Pelica et al. 2024](studies/pelica-2024-tom-de-pele-emoji.md): tom de pele do emoji e foto de perfil numa conversa · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
+- [Perrault et al. 2025](studies/perrault-2025-emoji-abraco.md): emoji de abraço no lugar do abraço · ✅ · fraca
 - [Peters e Salzsieder 2018](studies/peters-2018-similaridade-swipe.md): beleza e ambição num perfil de namoro simulado · ✅ · fraca
 - [Petrocchi et al. 2020](studies/petrocchi-2020-emoji-whatsapp-presenca.md): emoji, rapidez e tom da resposta no WhatsApp · ✅ · fraca
 - [Pew Research Center 2023 e 2020](studies/pew-2023-2020-online-dating.md): namoro online nos EUA · ✅ · forte
@@ -458,6 +463,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sin e Chan 2025](studies/sin-2025-apps-sem-foto.md): como jovens de Hong Kong usam um app de namoro sem foto · ✅ · fraca
 - [Sleiman, Melios & Dolan 2025](studies/sleiman-2025-partidarismo-tolerancia.md): partido e tolerância política em perfis de namoro no Reino Unido · ✅ · fraca
 - [Smith e Duggan 2013](studies/smith-2013-pew-namoro-online.md): namoro online nos EUA em 2013 · ✅ · moderada
+- [Smith 2015](studies/smith-2015-emoticons-presente-apoio.md): flores como emoticon numa mensagem de apoio a uma cuidadora · ✅ · fraca
 - [Smith & Wolfinger 2024](studies/smith-2024-sexo-pre-marital-divorcio.md): sexo antes do casamento e divórcio, de novo · ✅ · moderada
 - [South Palomares et al. 2017](studies/south-palomares-2017-estrutura-impressoes.md): como se organizam as impressões de traços de parceiro em fotos de rosto · ✅ · fraca
 - [South Palomares & Young 2018](studies/south-palomares-2018-impressoes-parceiro.md): confiança, status e atratividade num relance de rosto · ✅ · fraca
@@ -587,6 +593,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Chappetta 2016](studies/chappetta-2016-papeis-genero-perfil.md): papéis de gênero e beleza da foto num perfil de namoro, entre universitários · ✅ · fraca
 - [Clerke & Heerey 2021](studies/clerke-2021-mimica-confianca-chat.md): imitação, semelhança e confiança numa sala de bate-papo · ✅ · fraca
 - [Comhair 2018](studies/comhair-2018-humor-likes-tinder.md): humor no texto do perfil e likes no Tinder · ✅ · fraca
+- [Courtice et al. 2026](studies/courtice-2026-emoji-geracoes.md): emoji em mensagens lidas por jovens e por idosos · ✅ · fraca
 - [De La Mare & Lee 2023](studies/de-la-mare-2023-similaridade-personalidade.md): personalidade parecida na escolha de perfis · ✅ · fraca
 - [DeLecce et al. 2019](studies/delecce-2019-orientacao-foto.md): fidelidade julgada pela foto do rosto e sociossexualidade de quem julga · ✅ · fraca
 - [Doré & Morris 2018](studies/dore-2018-sincronia-apoio-texto.md): linguagem parecida no apoio emocional por texto · ✅ · fraca
@@ -623,6 +630,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ireland & Henderson 2014](studies/ireland-2014-lsm-negociacao-impasse.md): estilo de linguagem parecido e impasse numa negociação por chat · ✅ · fraca
 - [Janssen 2022](studies/janssen-2022-erros-nao-nativo.md): erros de língua num perfil de namoro e saber que quem escreve não é nativo · ✅ · fraca
 - [Janulevičiūtė & Mikuličiūtė 2024](studies/januleviciute-2024-autorrevelacao-solidao.md): quanto o homem conta de si no perfil e a nota que as mulheres dão a ele · ✅ · fraca
+- [Jeong et al. 2026](studies/jeong-2026-gif-rosto-trocado.md): GIFs com o rosto de quem manda, entre amigos · ✅ · fraca
 - [Jiang et al. 2023](studies/jiang-2023-reciprocidade-bitmoji.md): devolver figurinhas Bitmoji entre amigos no Snapchat · ✅ · fraca
 - [Jin et al. 2019](studies/jin-2019-instagram-namorada.md): o tipo de foto no Instagram e o desejo de sair · ✅ · fraca
 - [Joel et al. 2014](studies/joel-2014-rejeicao-real-hipotetica.md): rejeitar um pretendente é mais fácil na imaginação do que na vida · ✅ · fraca
@@ -703,6 +711,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Tsushima & Tomono 2024](studies/tsushima-2024-estilo-ojisan.md): o estilo "ojisan" numa mensagem de rede social · 🟡 · fraca
 - [Uehara 2007](studies/uehara-2007-emoticons-impressao.md): carinhas de texto e a impressão de uma mensagem · ✅ · fraca
 - [Verschoor 2023](studies/verschoor-2023-internettaal-namoro.md): internetês holandês na primeira mensagem de um app de namoro · ✅ · fraca
+- [Vogel & Mamani Sanchez 2012](studies/vogel-2012-emoticons-kudos.md): emoticons, ressalvas e "kudos" num fórum técnico · ✅ · fraca
 - [Wang et al. 2023](studies/wang-2023-reacoes-emoji-github.md): reações de emoji em pull requests do GitHub · ✅ · moderada
 - [Warner et al. 2020](studies/warner-2020-prefiro-nao-dizer.md): o status de HIV não informado em perfis de apps de encontro entre homens · ✅ · fraca
 - [Weber et al. 2010](studies/weber-2010-competencia-em-flerte.md): frases de abordagem cara a cara num bar · ✅ · fraca
