@@ -37,7 +37,7 @@ O estilo não é medido por uma lista de palavras: uma rede neural aprende uma r
 | Um estilo igual para todos | Manter essa parte, mas tratando todos os usuários como se escrevessem do mesmo jeito, fez o acerto cair 26,49% (queda relativa) | 3.3.2 Ablation Study, Tabela 6 | "if we retain the linguistic style module but assume all users share a common linguistic style (thereby ignoring individual variations), the performance dramatically decreases by 26.49% in NDCG@10" |
 | Tirar a foto | Tirar o tipo de foto do perfil fez o acerto cair só 3,86% (queda relativa) | 3.3.2 Ablation Study, Tabela 6 | "when the visual image embedding component is removed, performance drops by only 3.86%" |
 | Pedir e aceitar em duas etapas | O que mais pesou no acerto foi tratar o par como duas decisões em sequência (um pede, o outro aceita): trocar isso por uma média simples das duas preferências fez o acerto cair 57,57% (queda relativa) | 3.3.2 Ablation Study, Tabela 6 | "Replacing the two-stage multiplicative preference score with a simple average of the two preference scores (Equation (16)) causes the NDCG@10 to decline by 57.57%." |
-| O que o modelo olha | Nas mensagens, o modelo deu mais peso a pontos de exclamação e de interrogação, interjeições, pronomes e advérbios, e a verbos como "gostar" | 3.3.4 Effectiveness of Linguistic Style Extraction | "Punctuation marks, including exclamation marks and question marks, which signal emotional states and engagement levels, receive high attention weights" |
+| O que o modelo olha | Em duas mensagens sorteadas para ilustrar (na figura de pesos de atenção), o modelo deu mais peso a pontos de exclamação e de interrogação, interjeições, pronomes e advérbios, e a verbos como "gostar" | 3.3.4 Effectiveness of Linguistic Style Extraction, Figura 6 | "Punctuation marks, including exclamation marks and question marks, which signal emotional states and engagement levels, receive high attention weights" |
 
 As quedas são relativas ao acerto do modelo completo, que foi de 0,5152 no NDCG@10 (Tabela 6): cair 29,35% quer dizer chegar a 0,3640, não perder 29,35 pontos. O NDCG@10 vai de 0 a 1 e é maior quando os pares que de fato se formaram aparecem mais no alto da lista de 10 recomendações.
 
@@ -49,7 +49,7 @@ As quedas são relativas ao acerto do modelo completo, que foi de 0,5152 no NDCG
 - Só 16 dias de dados de um site chinês, com usuários jovens e em maioria universitários. O site não é nomeado.
 - Um par conta como formado quando o pedido é aceito; o que acontece depois (conversa, encontro) ficou de fora, como os autores reconhecem.
 - Os dados vieram sob acordo de confidencialidade e não são públicos; partes do modelo foram implantadas no site.
-- Os exemplos de estilo parecido e diferente (Tabela 7) e os casos da Tabela A1 foram escolhidos pelos autores para ilustrar, não medidos.
+- Os exemplos de estilo parecido e diferente (Tabela 7), os casos da Tabela A1 e as duas mensagens da Figura 6 foram escolhidos pelos autores para ilustrar, não medidos.
 
 ## Como usamos
 

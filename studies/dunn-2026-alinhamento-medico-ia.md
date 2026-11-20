@@ -41,13 +41,14 @@ Depois de ler, cada participante deu notas de 1 a 7 ao médico em competência, 
 | IA contra humano | Com o mesmo conselho, o médico IA foi visto como menos competente que o humano (média de 5,08 contra 5,85, numa escala de sete pontos) | 3. Results | "participants perceived the AI doctor (M = 5.08) as less competent than the human doctor (M = 5.85" |
 | IA contra humano, nas outras notas | O médico IA também teve notas mais baixas que o humano em simpatia, confiabilidade e responsabilidade pelo conselho | 4. Discussion | "Participants consistently rated the AI doctor lower than the human doctor in terms of competency, warmth, trustworthiness, and perceived responsibility for the advice given." |
 
-O β diz quanto a nota (de 1 a 7) muda com repetir os termos do paciente, dentro das conversas com o médico IA ou com o humano, levando em conta a atitude de cada participante diante de robôs. Nas contas principais, repetir foi codificado como 1 e não repetir como −1; o texto não diz as médias de cada uma das quatro versões, que aparecem só num gráfico. O p é a chance de uma diferença desse tamanho aparecer por acaso.
+O β é metade da diferença entre repetir e não repetir, porque repetir foi codificado como 1 e não repetir como −1: com o médico IA, a diferença fica perto de 0,68 ponto na competência e na simpatia e de 0,50 na confiabilidade, numa escala de 1 a 7, levando em conta a atitude diante de robôs. O texto não diz as médias de cada uma das quatro versões, que aparecem só num gráfico. O p é a chance de uma diferença desse tamanho aparecer por acaso.
 
 ## Limitações
 
 - Consulta médica, não namoro. Quem dá a nota leu uma conversa curta e inventada, de fora: ninguém teve seus termos repetidos.
 - Cerca de 45 participantes por versão, recrutados no Prolific, que não representam ninguém. Uma única cena, de baixo risco (gripe), como os próprios autores dizem.
 - A IA foi apresentada como "treinada com dados médicos para dar conselho de alta qualidade", o que pode ter mudado a expectativa de quem leu, como os autores reconhecem.
+- Os participantes leram que a conversa era real, mas ela foi escrita pelos autores.
 - A repetição foi só de cinco termos médicos, sempre todos ou nenhum. O estudo não mede estilo de escrita, ritmo ou tom.
 - A atitude diante de robôs entrou na conta pela subescala que mais acompanhou as notas; as outras três ficaram de fora, por escolha dos autores.
 
