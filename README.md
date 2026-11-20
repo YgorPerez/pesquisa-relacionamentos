@@ -174,6 +174,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Dai & Xia 2025](studies/dai-2025-foto-embelezada-perfil.md): vídeo, várias fotos, desfoque e retoque no perfil do Tinder · ✅ · fraca
 - [D'Angelo & Toma 2017](studies/dangelo-2017-excesso-opcoes.md): escolher entre mais perfis reduziu a satisfação uma semana depois · ✅ · fraca
 - [Daniels 2016](studies/daniels-2016-foto-sexy-rede-social.md): a foto sexualizada no perfil de Facebook de uma mulher, vista por universitários · ✅ · fraca
+- [Daniels, Jerald & Dieker 2022](studies/daniels-2022-foto-sexualizada-tinder.md): o rapaz sem camisa no Tinder, visto por universitários · ✅ · fraca
 - [DelPriore et al. 2018](studies/delpriore-2018-ausencia-paterna-intencao.md): lembrar o pai ausente e a intenção que se vê nos homens · ✅ · fraca
 - [Dinh et al. 2022](studies/dinh-2022-iniciativa-eharmony.md): quem começa a conversa no eharmony, ano a ano · ✅ · fraca
 - [Driebe et al. 2021](studies/driebe-2021-inteligencia-video.md): inteligência medida, inteligência percebida e atração · ✅ · moderada
@@ -218,6 +219,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Francis-Tan & Mialon 2015](studies/francis-tan-2015-gastos-casamento-divorcio.md): gastos com casamento e duração do casamento · ✅ · fraca
 - [Franco 2018](studies/franco-2018-maes-solo.md): o que mães solo e mulheres sem filhos olham no perfil de um homem · ✅ · fraca
 - [Freedman et al. 2019](studies/freedman-2019-ghosting-e-destino.md): crença no destino e opiniões sobre ghosting · ✅ · fraca
+- [From, Banks & Sayler 2026](studies/from-2026-pesca-bandeira.md): foto pescando e bandeira dos EUA no perfil · ✅ · fraca
 - [Frost 2005](studies/frost-2005-impressao-tese.md): o que um perfil faz com a impressão sobre alguém · ✅ · fraca
 - [FTC 2023](studies/ftc-2023-golpe-romantico.md): golpe romântico nas queixas de 2022 · ✅ · moderada
 - [Fullwood & Martino 2007](studies/fullwood-2007-emoticons-impressao.md): emoticons e a impressão sobre quem conversa no chat · ✅ · fraca
@@ -227,6 +229,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Gallant et al. 2011](studies/gallant-2011-estrategia-foto-anuncio.md): a foto do anúncio por sexo e tipo de relação buscada · ✅ · fraca
 - [Galperin et al. 2013](studies/galperin-2013-arrependimento-sexual.md): arrependimento sexual em homens e mulheres · ✅ · moderada
 - [Gao et al. 2017](studies/gao-2017-elogios-metaforicos.md): elogios metafóricos de homens num contexto de encontro e num de trabalho · ✅ · fraca
+- [Gao et al. 2020](studies/gao-2020-atratividade-foto-mensagem.md): beleza da foto e quem deixa mensagem num app chinês · ✅ · fraca
 - [Gavin et al. 2019](studies/gavin-2019-perfil-autista-conteudo.md): o que homens que se dizem autistas escrevem no perfil de namoro · ✅ · fraca
 - [Geher 2009](studies/geher-2009-leitura-mente.md): adivinhar o que o outro sexo quer em anúncios pessoais · ✅ · fraca
 - [Geng et al. 2024](studies/geng-2024-voz-medicos-honorarios.md): palavras do médico, mensagem de voz e valor pago na consulta online · ✅ · moderada
@@ -252,6 +255,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Hamilton 2020](studies/hamilton-2020-personalidade-texto-perfil.md): personalidade escrita e lida no texto de perfis de namoro · ✅ · fraca
 - [Hancock e Toma 2009](studies/hancock-2009-fotos-perfil-precisao.md): a foto do perfil e a aparência no dia · ✅ · fraca
 - [Hazel et al. 2023](studies/hazel-2023-revisao-dificil-de-conquistar.md): revisão de estudos sobre se fazer de difícil · ✅ · fraca
+- [He et al. 2025](studies/he-2024-fotos-efemeras-namoro.md): foto que some depois de vista, no pedido de match · ✅ · moderada
 - [Heijckers 2022](studies/heijckers-2022-erros-ingles-l2.md): erros de inglês no texto do perfil e a nota dada ao autor · ✅ · fraca
 - [Her & Timmermans 2021](studies/her-2021-tinder-bem-estar.md): uso do Tinder, motivos e bem-estar · ✅ · fraca
 - [Heston & Birnholtz 2017](studies/heston-2017-demora-e-atracao.md): demora para responder e atração social entre conhecidos · ✅ · fraca
@@ -279,6 +283,8 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Jaeger et al. 2025](studies/jaeger-2025-tratamento-estetico.md): tratamento estético facial e primeira impressão · ✅ · fraca
 - [Jain & Seth 2025](studies/jain-2025-auditoria-algoritmo-matrimonial.md): o que dois sites de casamento indianos recomendam · ✅ · fraca
 - [Jakesch et al. 2023](studies/jakesch-2023-texto-ia.md): texto de perfil escrito por pessoa ou gerado por IA · ✅ · moderada
+- [Jakobsen & Hoang 2024](studies/jakobsen-2024-pistas-visuais-match.md): sorriso e foto em grupo, sim ou não, numa dissertação dinamarquesa · ✅ · fraca
+- [Jang et al. 2025](studies/jang-2025-beleza-vibe.md): beleza e "clima" das fotos num app coreano, medidos por inteligência artificial · ✅ · fraca
 - [Jiwa et al. 2025](studies/jiwa-2025-precisao-perfil-app.md): o que o perfil de app deixa ver da personalidade · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
 - [Jonason & Li 2013](studies/jonason-2013-dificil-de-conquistar.md): se fazer de difícil e a disponibilidade como par · ✅ · fraca
@@ -525,6 +531,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Wolfinger 2016](studies/wolfinger-2016-parceiros-pre-maritais-coortes.md): parceiros antes do casamento por década do casamento, nos EUA · ✅ · fraca
 - [Wolfinger 2018](studies/wolfinger-2018-parceiros-felicidade-conjugal.md): número de parceiros na vida e felicidade no casamento · ✅ · fraca
 - [Wolfinger & Perry 2023](studies/wolfinger-2023-parceiros-sexuais-casamento.md): mais parceiros sexuais e a chance de casar · ✅ · moderada
+- [Woloszyn, Clyde & Corno 2020](studies/woloszyn-2020-aparencia-renda-perfil.md): foto, renda, calor humano e inteligência no perfil, vistos por universitárias · ✅ · fraca
 - [Wongsomboon et al. 2021](studies/wongsomboon-2021-rosto-perfil-risco-sexual.md): rosto na foto do perfil, beleza própria e sexo sem camisinha entre rapazes que fazem sexo com homens em aplicativos · ✅ · fraca
 - [Woo et al. 2014](studies/woo-2014-dor-fisica-rejeicao.md): dor física e rejeição usam padrões cerebrais diferentes · ✅ · moderada
 - [Xia et al. 2013](studies/xia-2013-comportamento-site-namoro.md): mensagens, respostas e número de fotos num site de namoro chinês · ✅ · fraca
