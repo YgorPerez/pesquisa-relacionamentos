@@ -1,0 +1,70 @@
+---
+reference: "van der Zanden T, Mos MBJ, Schouten AP, Krahmer EJ. *What People Look at in Multimodal Online Dating Profiles: How Pictorial and Textual Cues Affect Impression Formation*. Communication Research 49(6):863–890, 2022 (publicado online em 2021). Texto completo aberto: https://journals.sagepub.com/doi/pdf/10.1177/0093650221995316"
+link: https://doi.org/10.1177/0093650221995316
+license: "CC BY 4.0 (como diz o registro do DOI no Crossref, que a SAGE alimenta; o PDF lido não traz a frase da licença no texto)"
+previous: [zanden-2021-olhar-foto-texto-perfil]
+status: verified
+verified_on: 2026-11-20
+strength: weak
+strength_reason: "Experimento pré-registrado em que foto e erros foram variados nos mesmos participantes, mas com só 48 estudantes de 18 a 27 anos, perfis montados pelos autores e notas dadas no laboratório, sem escolha nem contato de verdade."
+countries: [Holanda]
+period: "não informado no texto; a aprovação ética é da primavera de 2019"
+sample:
+  n: 48
+  description: "57 estudantes de graduação participaram em troca de créditos, no laboratório de rastreamento ocular da universidade dos autores, a Tilburg University, na Holanda; por problemas técnicos e de calibração, ficaram 48, de 18 a 27 anos (média de 21,4), com holandês como língua materna e visão normal ou corrigida. Cada um viu 18 perfis montados pelos autores, de homens ou de mulheres conforme o gênero que o atraía mais, num total de 831 visualizações analisadas."
+  representative: false
+design: experiment
+conflict: "Os autores declaram que não receberam financiamento e que não têm conflito de interesse. Os quatro são da Tilburg University."
+covers:
+  genders: [man, woman]
+  ages: { min: 18, max: 27 }
+---
+
+# van der Zanden et al. (2022): olhar e impressão diante da foto e do texto do perfil
+
+## O que mediu
+
+Cada participante viu, num computador com rastreador ocular, 18 perfis de namoro inventados, cada um com uma foto e um texto do mesmo tamanho, lado a lado. Os autores variaram duas coisas. A foto era bonita, de beleza mediana ou feia: 85 pessoas deram notas a 50 fotos de bancos de imagem gratuitos, e os autores pegaram as seis mais bem avaliadas, as seis do meio e as seis piores de cada sexo. O texto, de 60 a 67 palavras e conteúdo neutro, vinha sem erros ou com oito erros de língua, como erro de digitação, de espaço ou de gramática. Cada participante viu três perfis de cada uma das seis combinações, em ordem sorteada, com a foto à esquerda na metade das vezes. Depois de cada perfil, deu notas de 1 (discordo totalmente) a 7 (concordo totalmente) a três frases: "acho esta pessoa bonita" (atração física), "acho esta pessoa agradável para passar o tempo" (atração social) e "sinto atração por esta pessoa" (atração romântica).
+
+O rastreador registrou onde caiu o primeiro olhar e quantas vezes e por quanto tempo o olho parou na foto e no texto. A pergunta dos autores era se a beleza da foto decide quanta atenção o texto recebe e quanto os erros pesam na impressão. Eles esperavam que, diante de uma foto de beleza mediana, que não basta para formar a impressão, as pessoas lessem mais o texto e dessem mais peso aos erros.
+
+Esta Ficha foi escrita a partir do artigo publicado. A versão anterior, com o nome `zanden-2021-olhar-foto-texto-perfil`, tinha sido lida no capítulo 4 da tese de doutorado da primeira autora (Tilburg University, 2021), que é baseado neste artigo; os números conferidos aqui são os mesmos do capítulo. A mesma tese tem, no capítulo 2, o estudo de [van der Zanden et al. (2019)](zanden-2019-objetivo-linguagem-perfil.md), com 12.310 perfis reais de um site holandês, e, no capítulo 5, o de [van der Zanden et al. (2022)](zanden-2022-originalidade-texto-perfil.md), com notas de 1.234 usuários de sites de namoro sobre 308 textos reais. Os dados deste estudo não são os desses dois: aqui são 48 estudantes no laboratório, com perfis montados pelos autores a partir de um estudo anterior deles sobre erros em perfis reais.
+
+## Achados
+
+| Medida | Valor | Onde | Trecho |
+|---|---|---|---|
+| Participantes | Dos 57 estudantes de graduação que participaram em troca de créditos, 48 entraram na análise; os outros ficaram de fora por problemas técnicos e de calibração do aparelho | Participants, p. 870 | "In this study, 57 undergraduate students participated, who earned credits for their participation. Due to technical difficulties and calibration problems, data of 48 participants could be included for analyses." |
+| Idade e língua | Os participantes tinham de 18 a 27 anos, média de 21,4, e o holandês como língua materna | Participants, p. 870 | "were native speakers of Dutch and were between 18 and 27 years old (M = 21.4 years" |
+| Visualizações | Cada participante viu 18 perfis; das 864 visualizações previstas, 831 entraram na análise | Design and Material, p. 870 | "We thus aimed for a total of 864 cases, that is, 48 (participants) × 18 (dating profiles). However, due to technical issues 33 observations are missing, resulting in a total of 831 cases." |
+| Tempo na foto e no texto | Cada perfil prendeu o olhar por 10,97 segundos em média: 2,23 na foto (20,3%) e 8,74 no texto (79,7%) | Results, p. 874 | "participants fixated on average 10.97 seconds (SD = 6.70) on the dating profiles, from which 2.23 seconds (20.3%, SD = 2.75) were on the picture and 8.74 seconds (79.7%, SD = 4.99) on the text" |
+| Primeiro olhar | O primeiro olhar caiu na foto em 56,5% das visualizações: em 62,4% quando a foto estava à esquerda e em 50,6% quando estava à direita | Tabela 1, p. 874 | "62.4 37.6 50.6 49.4 56.5" |
+| Olhar na foto, conforme a beleza | A foto bonita recebeu mais olhadas (10,88 em média, contra 9,14 na mediana e 8,51 na feia) e foi olhada por mais tempo (2,55 segundos, contra 2,22 e 1,91). A mediana foi olhada por mais tempo que a feia, mas não mais vezes | Tabela 2, p. 874 | "10.88 (12.01)a 2.55 (2.93)a 9.14 (12.03)b 2.22 (2.77)b 8.51 (10.51)b 1.91 (2.46)c" |
+| Olhar no texto, conforme a beleza da foto | Não apareceu diferença além do acaso no número de olhadas nem no tempo de leitura do texto conforme a beleza da foto (p = 0,389 e p = 0,526). Com a foto de beleza mediana, o texto não foi lido mais do que com as outras, ao contrário do que os autores esperavam | Text fixation count and duration, p. 875 | "The number of fixations and the total fixation duration on the profile text did not differ depending on the attractiveness of the picture (TFC: F(2, 784.1) = 0.945, p = .389, TFD: F(2, 784.1) = 0.643, p = .526)." |
+| Leitura de textos com erros | Os textos com erros receberam mais olhadas e foram lidos por mais tempo que os sem erros, com as três fotos; os autores dão só o piso do tamanho da diferença (ηp² acima de 0,002) | Text fixation count and duration, p. 875 | "Participants fixated more and longer on texts with language errors than on those without, with both F's > 4.16, p's < .042, ηp2's > .002." |
+| Beleza da foto e notas | A beleza da foto mudou muito a nota de atração física (ηp² = 0,545) e a de atração romântica (ηp² = 0,392), e bem menos a de atração social (ηp² = 0,072). Nas três, a foto bonita teve nota mais alta que a mediana, e a mediana, que a feia | Picture attractiveness, p. 875 | "Results showed main effects of picture attractiveness on perceived physical, F(2, 784.5) = 705.2, p < .001, ηp2 = .545, social, F(2, 785.0) = 37.91, p < .001, ηp2 = .072, and romantic attraction, F(2, 784.6) = 334.3, p < .001, ηp2 = .392." |
+| Erros e notas | Com erros de língua no texto, o dono do perfil recebeu notas mais baixas de atração social (ηp² = 0,020) e romântica (ηp² = 0,023); na atração física, não apareceu diferença além do acaso (p = 0,154) | Language errors, p. 876 | "Profile owners with language errors in their texts scored lower on perceived social, F(1, 784.9) = 20.26, p < .001, ηp2 = .020, and romantic attraction, F(1, 784.5) = 24.27, p < .001, ηp2 = .023, but not on perceived physical attraction, F(1, 784.4) = 2.03, p = .154." |
+| Notas com a foto bonita | Com a foto bonita, os erros baixaram a atração social de 4,86 para 4,51 e a romântica de 4,46 para 3,98; a atração física ficou em 5,22 sem erros e 5,41 com, sem diferença além do acaso | Tabela 4, coluna Attractive, p. 876 | "5.22 (1.48) 5.41 (1.14)a 4.86 (1.24)a 4.51 (1.14)b 4.46 (1.62)a 3.98 (1.47)b" |
+| Notas com a foto de beleza mediana | Com a foto mediana, os erros baixaram a atração física de 3,75 para 3,40, a social de 4,59 para 4,18 e a romântica de 3,02 para 2,57 | Tabela 4, coluna Moderately attractive, p. 876 | "3.75 (1.53) 3.40 (1.55)b 4.59 (1.16)a 4.18 (1.24)b 3.02 (1.50)a 2.57 (1.42)b" |
+| Notas com a foto feia | Com a foto feia, os erros baixaram a atração social de 4,00 para 3,71 e a romântica de 1,76 para 1,47; a física ficou em 1,91 sem erros e 1,76 com, sem diferença além do acaso | Tabela 4, coluna Unattractive, p. 876 | "1.91 (1.09)a 1.76 (0.82)a 4.00 (1.37)a 3.71 (1.25)b 1.76 (1.01)a 1.47 (0.66)b" |
+| Erros e atração física, conforme a foto | Só com a foto de beleza mediana os erros baixaram a nota de atração física: 3,40 com erros contra 3,75 sem (p = 0,006). Com a foto bonita ou a feia, não apareceu diferença além do acaso | Interaction, p. 876 | "lower scores for profiles with (M = 3.40, SD = 1.55) than for those without errors (M = 3.75, SD = 1.53), F(1, 784.5) = 7.54, p = .006, while this is not the case for profiles with attractive or unattractive pictures" |
+| Erros e atração social e romântica, conforme a foto | Nas atrações social e romântica, não apareceu diferença além do acaso, entre as três fotos, no quanto os erros baixaram a nota (p = 0,805 e p = 0,616) | Interaction, p. 876 | "there was none for social nor for romantic attraction, F(2, 784.4) = 0.217, p = .805 and F(2, 784.9) = 0.485, p = .616, respectively" |
+| Inteligência atribuída | Numa pergunta extra, os donos de perfis com foto feia foram vistos como menos inteligentes que os com foto bonita ou mediana, e os donos de perfis com erros, como menos inteligentes que os de perfis sem erros | Nota 3, p. 885–886 | "with an unattractive picture were rated as significantly less intelligent than profile owners with attractive and moderately attractive pictures, while profile owners with attractive and moderately attractive pictures were rated as similarly intelligent. Moreover, profile owners with language errors in their profiles scored lower on perceived intelligence than profile owners without errors." |
+| Homens e mulheres | Numa nota, os autores dizem que homens e mulheres deram notas mais diferentes entre si aos perfis de foto bonita e mediana que aos de foto feia, e leem que a foto mais bonita pesou mais nas notas dos homens. A nota não dá as médias | Nota 9, p. 886 | "This seems to indicate that pictures that are more attractive have a stronger positive influence on men's than on women's ratings." |
+| Erros notados | No último perfil, mostrado com erros e fora da análise, 86,1% disseram ter notado os erros | Procedure, p. 872 | "86.1% indicated to have noticed the errors" |
+| Ordem da leitura | Em 50,8% das visualizações, o participante olhou primeiro a foto e depois o texto; em 40,7%, primeiro o texto | Different viewing strategies, p. 878 | "Cases in which at least two of the first three fixations were on the picture were categorized as picture-first (50.8%) and cases with two or more of the first three fixations on the text as text-first (40.7%)." |
+| Leitura dos autores | Os autores leem que a beleza da foto pesa sobretudo na atração física e menos na social e na romântica, e que o texto (aqui, ter ou não erros) pesa na social e na romântica, mas não na física | Implications, p. 881 | "We found that picture attractiveness primarily affects perceived physical attraction, and to a lesser extent social and romantic attraction, while text attractiveness affects social and romantic but not physical attraction." |
+
+As notas de atração vão de 1 (discordo totalmente) a 7 (concordo totalmente). Uma visualização é um participante diante de um perfil. Uma olhada é uma fixação: o olho parado num ponto por 40 milissegundos ou mais. O ηp² vai de 0 a 1 e diz quanto das diferenças entre as notas a foto ou os erros explicam: 0,545 quer dizer cerca de metade; 0,020, 2%. "p" é a chance de uma diferença daquele tamanho aparecer só por acaso; o limite usual é 0,05. Nas Tabelas 2 a 4, as letras ao lado das médias indicam quais diferenças os autores tratam como improváveis de ser acaso.
+
+## Limitações
+
+- São 48 estudantes de 18 a 27 anos, que participaram por créditos de disciplina. O artigo dá 67,2% de mulheres, uma porcentagem que não fecha com 48 pessoas nem com 57. A orientação sexual dos participantes não é informada; cada um viu perfis do gênero que o atraía mais.
+- Os perfis foram montados pelos autores, com fotos de bancos de imagem e textos neutros, e os participantes sabiam que eram perfis de teste e que deviam olhá-los "de forma natural". Não houve escolha, curtida nem contato. Os autores dizem que a nota de atração romântica não é o mesmo que querer mandar mensagem ou sair com a pessoa.
+- Foto e texto apareciam juntos e do mesmo tamanho. Os autores dizem que isso pode ter levado a mais atenção ao texto do que num site ou aplicativo de verdade, em que se aceita ou descarta um perfil na hora, e citam o Tinder, em que a foto decide o deslize.
+- O estudo se afasta do pré-registro em três pontos, todos explicados pelos autores: as três notas de atração foram analisadas em separado, e não juntas; a análise usou modelos mistos, e não MANOVA; e a atenção foi medida em números absolutos, e não relativos.
+- A queda das notas com os erros é pequena (ηp² de 0,020 e 0,023). O único lugar em que a beleza da foto mudou o peso dos erros foi a atração física, com ηp² = 0,007 para essa combinação. As análises de ordem de leitura e a diferença entre homens e mulheres são exploratórias.
+- As colunas da Tabela 2 somam 832 visualizações, e o texto fala em 831.
+- O PDF lido não traz a frase da licença; a licença CC BY 4.0 vem do registro do DOI no Crossref e do levantamento da #690.
+</content>
+</invoke>
