@@ -276,6 +276,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Huh 2025](studies/huh-2025-emoji-responsividade.md): emoji e a impressão de atenção nas respostas de um amigo · ✅ · fraca
 - [Humberg et al. 2023](studies/humberg-2023-similaridade-atracao.md): semelhança de personalidade não se associou à atração em encontros rápidos · ✅ · fraca
 - [Hunter et al. 2019](studies/hunter-2018-riqueza-perfil.md): o saldo bancário e outros sinais de riqueza num perfil de namoro · ✅ · fraca
+- [Huxley & Thai 2023](studies/huxley-2023-preferencia-racial-perfil.md): como quem lê reage a uma preferência racial escrita no perfil · ✅ · fraca
 - [Hwang, Khojasteh & Fussell 2019](studies/hwang-2019-demora-e-indicador-de-digitacao.md): demora no chat com e sem o aviso de "digitando" · ✅ · fraca
 - [Ireland & Pennebaker 2010](studies/ireland-2010-lsm-escrita-cartas.md): estilo de escrita parecido em redações, cartas e poemas · ✅ · fraca
 - [Ireland et al. 2011](studies/ireland-2011-estilo-de-linguagem.md): jeito parecido de falar, interesse mútuo e continuar junto · ✅ · fraca
@@ -454,6 +455,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Sherman, Michikyan & Greenfield 2013](studies/sherman-2013-texto-audio-video-vinculo.md): o vínculo entre amigas por mensagem, áudio, vídeo e pessoalmente · ✅ · fraca
 - [Shtatfeld & Barak 2009](studies/shtatfeld-2009-habilidade-escrita-contatos.md): escrita do perfil e contatos num site de namoro de Israel · ✅ · fraca
 - [Shum 2014](studies/shum-2014-fotos-lgbt.md): fotos de perfil numa comunidade de namoro gay · ✅ · fraca
+- [Shuster et al. 2024](studies/shuster-2024-ameaca-avisos.md): sinais de risco na bio e no rosto, e avisos de segurança · ✅ · fraca
 - [Sienko 2017](studies/sienko-2017-estigma-peso-namoro-online.md): peso na foto e atributos do perfil, avaliados por universitários · ✅ · fraca
 - [Sin e Chan 2025](studies/sin-2025-apps-sem-foto.md): como jovens de Hong Kong usam um app de namoro sem foto · ✅ · fraca
 - [Sleiman, Melios & Dolan 2025](studies/sleiman-2025-partidarismo-tolerancia.md): partido e tolerância política em perfis de namoro no Reino Unido · ✅ · fraca
@@ -496,6 +498,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Toma 2010](studies/toma-2010-confiabilidade-perfil.md): foto, texto e a confiança que um perfil de namoro inspira · ✅ · fraca
 - [Toma & Hancock 2012](studies/toma-2012-pistas-linguisticas-mentira.md): as palavras do perfil e a mentira em altura, peso e idade · ✅ · fraca
 - [Toma et al. 2018](studies/toma-2018-crenca-engano-alheio.md): crenças sobre a própria mentira e a dos outros, cara a cara e por texto · ✅ · moderada
+- [Tong, Li & Park 2026](studies/tong-2026-empreendedora-perfil.md): perfil de mulher empreendedora num site de namoro da China · ✅ · moderada
 - [Tracy & Beall 2011](studies/tracy-2011-expressao-atracao-sexual.md): sorriso, orgulho e vergonha na atração sexual por uma foto · ✅ · fraca
 - [Trzmielewska et al. 2025](studies/trzmielewska-2025-condicao-controle-mimica.md): o grupo de comparação nos experimentos de imitação e gostar · ✅ · fraca
 - [Tucker et al. 2022](studies/tucker-2022-apego-parceiros-sexuais.md): apego, álcool e número de parceiros em jovens · ✅ · moderada
