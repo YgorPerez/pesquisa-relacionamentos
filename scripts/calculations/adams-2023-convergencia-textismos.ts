@@ -7,7 +7,10 @@
 //     computes them:
 //       ICC1, one person:        (F - 1) / (F + 1)
 //       ICC1k, mean of the two:  1 - 1 / F
-//     The table's ICC column matches ICC1k, while the Methods say ICC1.
+//     The table's ICC column matches ICC1k, while the Methods say ICC1. It
+//     matches up to the rounding of F to two decimals: in four types
+//     (phrase-shorteners, cases-lower, word-shorteners, spatial-arrays) the
+//     computed ICC1k differs from the table by 0.01.
 //     Last line: Table 2's mean for markers-missing (2.88) against its total
 //     (3674), divided by the 635 screenshots and by the 1270 people in them;
 //     the Limitações section quotes it.
