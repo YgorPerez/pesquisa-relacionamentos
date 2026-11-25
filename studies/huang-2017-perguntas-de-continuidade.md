@@ -57,3 +57,4 @@ As notas de gostar vão de 1 a 7. "d" mede o tamanho da diferença entre dois gr
 ## Como usamos
 
 - Dica [`perguntas-de-continuidade`](../tips/perguntas-de-continuidade.md), com o efeito pequeno e o chat entre desconhecidos dito no texto.
+- Relatório [2026-11-25: perguntas de continuidade e simpatia](../reports/2026-11-25-perguntas-de-continuidade-e-simpatia.md), uma reanálise nossa dos dados abertos do estudo.

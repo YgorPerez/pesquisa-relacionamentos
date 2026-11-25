@@ -52,6 +52,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 
 - [Araújo 2025](studies/araujo-2025-perfis-tinder-brasil.md): o que homens e mulheres mostram nos perfis do Tinder no Brasil · ✅ · fraca
 - [Buss 1989](studies/buss-1989-preferencias-37-culturas.md): preferências por parceiro em 37 culturas · ✅ · moderada
+- [Candido Junior et al. 2022](studies/candido-2022-coraa-fala-espontanea.md): o CORAA, quase 300 horas de fala brasileira transcrita, espontânea e preparada · 🟡 · moderada
 - [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
@@ -71,8 +72,10 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Komesu 2006](studies/komesu-2006-comentarios-internetes.md): o que universitários dizem do internetês · ✅ · fraca
 - [Kowal et al. 2025](studies/kowal-2025-50-paises.md): conhecer-se online e satisfação em 50 países · ✅ · moderada
 - [Leone & Hinde 2007](studies/leone-2007-dissolucao-brasil.md): o que se associa ao fim das uniões no Brasil · ✅ · moderada
+- [Lima et al. 2024](studies/lima-2024-nurc-sp-fala-espontanea.md): o NURC-SP, 239 horas de fala culta paulistana transcrita · 🟡 · moderada
 - [Ma, Sun & Naaman 2017](studies/ma-2017-happn-localizacao-garantia.md): como usuários do happn leem os cruzamentos de caminho · ✅ · fraca
 - [Martinez et al. 2025](studies/martinez-2025-apps-risco-sexual.md): apps e comportamento sexual em universitários de Ribeirão Preto · ✅ · fraca
+- [Mendes & Oushiro 2012](studies/mendes-2012-sp2010-fala-paulistana.md): o SP2010, entrevistas gravadas e transcritas com paulistanos · 🟡 · fraca
 - [Ministério da Saúde 2011](studies/ministerio-saude-2011-pcap-2008.md): PCAP 2008, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2016](studies/ministerio-saude-2016-pcap-2013.md): PCAP 2013, parceiros na vida no Brasil · ✅ · moderada
 - [Ministério da Saúde 2022](studies/ministerio-saude-2022-pcdt-ist.md): PCDT de Infecções Sexualmente Transmissíveis · ✅ · moderada
@@ -80,6 +83,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Mobile Time/Opinion Box 2025](studies/mobiletime-2025-apps-relacionamento-brasil.md): encontros por app de relacionamento no Brasil · 🟡 · fraca
 - [Nascimento & Caramaschi 2026](studies/nascimento-2026-proeminencia-facial-tinder.md): rosto e corpo nas fotos de perfis do Tinder em Londrina · ✅ · fraca
 - [Opinion Box 2017](studies/opinionbox-2017-relacionamentos-brasil.md): pesquisa sobre relacionamentos e internet no Brasil · 🟡 · fraca
+- [Raso, Mello & Mittmann 2012](studies/raso-2012-c-oral-brasil.md): o C-ORAL-BRASIL I, um corpus de fala informal de Minas Gerais · ✅ · moderada
 - [Ribeiro 2006](studies/ribeiro-2006-internetes-abreviaturas.md): abreviaturas do internetês em alunos, num blog e num chat · ✅ · fraca
 - [Ruani et al. 2021](studies/ruani-2021-berinjela-grindr.md): o emoji de berinjela no Grindr · ✅ · fraca
 - [Start.io](studies/startio-tinder-brasil-genero.md): estimativa de gênero dos usuários do Tinder no Brasil · 🟡 · fraca
@@ -294,6 +298,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Jang et al. 2025](studies/jang-2025-beleza-vibe.md): beleza e "clima" das fotos num app coreano, medidos por inteligência artificial · ✅ · fraca
 - [Jiwa et al. 2025](studies/jiwa-2025-precisao-perfil-app.md): o que o perfil de app deixa ver da personalidade · ✅ · fraca
 - [Joel et al. 2020](studies/joel-2020-machine-learning-43-datasets.md): machine learning em 43 bases de casais · ✅ · forte
+- [Jokinen 2016](studies/jokinen-2016-first-encounter.md): primeiros encontros em finlandês e estoniano, com o riso de cada um anotado · 🟡 · fraca
 - [Jonason & Li 2013](studies/jonason-2013-dificil-de-conquistar.md): se fazer de difícil e a disponibilidade como par · ✅ · fraca
 - [Jonason et al. 2021](studies/jonason-2021-ghosting-e-triade-sombria.md): ghosting e os traços da Tríade Sombria · ✅ · fraca
 - [Jonason & Thomas 2022](studies/jonason-2022-escolaridade-renda-interesse.md): escolaridade, renda e interesse recebido em sites de namoro de 24 países · ✅ · moderada
@@ -327,6 +332,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Kumar e Epley 2021](studies/kumar-2021-voz-conexao.md): voz ou texto para se conectar com alguém · ✅ · fraca
 - [Kuperberg 2014](studies/kuperberg-2014-idade-coabitacao.md): idade ao morar junto e dissolução · ✅ · moderada
 - [Kurzban & Weeden 2007](studies/kurzban-2007-preferencias-anunciadas-speed-dating.md): preferências do perfil e escolhas no speed dating da HurryDate · ✅ · moderada
+- [Kwak, An & Park 2022](studies/kwak-2022-conversa-cotidiana-coreana.md): o corpus coreano de conversa cotidiana do NIKL, com mais de mil conversas entre desconhecidos · ✅ · moderada
 - [Lampard 2020](studies/lampard-2020-natsal-reino-unido.md): onde casais britânicos que moram juntos se conheceram · ✅ · forte
 - [Landwehr et al. 2024](studies/landwehr-2024-roupa-flerte.md): roupa sexy, rosto de rejeição e o julgamento de quem está flertando · ✅ · fraca
 - [Lane 2020](studies/lane-2020-plataforma-atracao.md): o site, a foto e o que o perfil procura · ✅ · fraca
@@ -376,6 +382,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Méndez Santos 2024](studies/mendez-santos-2024-abertura-tinder.md): perfis, ortografia e a primeira mensagem no Tinder espanhol · ✅ · fraca
 - [Meng et al. 2026](studies/meng-2026-engano-gays-china.md): engano e confiança entre usuários gays de apps de namoro na China · ✅ · fraca
 - [Mercer et al. 2013](studies/mercer-2013-natsal-tendencias.md): parceiros na vida na Grã-Bretanha, por idade e entre 1990 e 2012 · ✅ · forte
+- [Michalsky & Schoormann 2017](studies/michalsky-2017-convergencia-tom-de-voz.md): num speed dating de 15 minutos, o tom de voz dos dois se aproxima, e mais quando um acha o outro atraente · ✅ · fraca
 - [Mills et al. 2021](studies/mills-2021-risada-escrita-ia.md): risada escrita inserida ou apagada às escondidas no chat · ✅ · fraca
 - [Mitchell et al. 2019](studies/mitchell-2019-diferenca-genero-parceiros.md): por que os homens relatam mais parceiras do que as mulheres relatam parceiros · ✅ · forte
 - [Miwa 2010](studies/miwa-2010-busca-por-caminho.md): a chance de começar um namoro por cada forma de procurar, no Japão · ✅ · fraca
@@ -400,6 +407,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Orosz et al. 2018](studies/orosz-2018-uso-problematico-tinder.md): motivos para usar o Tinder e uso problemático · ✅ · fraca
 - [Otani 2026](studies/otani-2026-idade-exibida-japao.md): a idade exibida no perfil e o aniversário numa plataforma de casamento do Japão · ✅ · fraca
 - [Owen, Fincham & Manthos 2013](studies/owen-2013-amizade-depois-amizade-colorida.md): o que sobra da amizade depois da amizade colorida · ✅ · fraca
+- [Paggio & Navarretta 2016](studies/paggio-2016-nomco-primeiros-encontros.md): o NOMCO dinamarquês, primeiros encontros gravados em vídeo e anotados gesto a gesto · 🟡 · fraca
 - [Palomo-Vélez et al. 2025](studies/palomo-velez-2025-vegetariano-namorado.md): homem vegetariano e apelo como parceiro · ✅ · fraca
 - [Pelica et al. 2024](studies/pelica-2024-tom-de-pele-emoji.md): tom de pele do emoji e foto de perfil numa conversa · ✅ · fraca
 - [Peng 2018](studies/peng-2018-autoapresentacao-namoro-online.md): distorção no perfil de namoro e a reação de quem a descobre · ✅ · fraca
@@ -602,6 +610,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Cela & Wood 2026](studies/cela-2026-meta-analise-apps.md): apps de namoro e saúde mental, meta-análise · ✅ · moderada
 - [Celani-Morrell 2016](studies/celani-morrell-2016-foto-texto-mulheres.md): a beleza da foto e a nota do texto em perfis de mulheres · ✅ · fraca
 - [Chappetta 2016](studies/chappetta-2016-papeis-genero-perfil.md): papéis de gênero e beleza da foto num perfil de namoro, entre universitários · ✅ · fraca
+- [Cieri et al. 2004](studies/cieri-2004-fisher-telefonemas.md): o Fisher, quase 12 mil telefonemas de 10 minutos entre desconhecidos · 🟡 · moderada
 - [Clerke & Heerey 2021](studies/clerke-2021-mimica-confianca-chat.md): imitação, semelhança e confiança numa sala de bate-papo · ✅ · fraca
 - [Comhair 2018](studies/comhair-2018-humor-likes-tinder.md): humor no texto do perfil e likes no Tinder · ✅ · fraca
 - [Courtice et al. 2026](studies/courtice-2026-emoji-geracoes.md): emoji em mensagens lidas por jovens e por idosos · ✅ · fraca
