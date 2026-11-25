@@ -54,6 +54,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Buss 1989](studies/buss-1989-preferencias-37-culturas.md): preferências por parceiro em 37 culturas · ✅ · moderada
 - [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
 - [Datafolha 2009](studies/datafolha-2009-sexualidade-brasileiros.md): Sexualidade dos Brasileiros · ✅ · moderada
+- [Delatorre & Wagner 2019](studies/delatorre-2019-perfis-conflito-casais.md): os quatro jeitos de brigar de casais gaúchos · ✅ · fraca
 - [Eastwick et al. 2024](studies/eastwick-2024-preferencias-43-paises.md): teste mundial do "match" de preferências ideais (43 países) · ✅ · forte
 - [Fernandes e Primo 2020](studies/fernandes-2020-flerte-apps.md): o flerte em apps de paquera no Brasil · ✅ · fraca
 - [Fusca, Komesu & Tenani 2011](studies/fusca-2011-abreviacao-internet.md): abreviações em salas de bate-papo · ✅ · fraca
@@ -616,6 +617,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Farris, Treat & Viken 2010](studies/farris-2010-alcool-interesse.md): álcool e a leitura do interesse sexual em fotos · ✅ · fraca
 - [Farris, Viken & Treat 2010](studies/farris-2010-pistas-diagnosticas.md): roupa, expressão e coerção sexual na leitura de fotos · ✅ · fraca
 - [Filik et al. 2016](studies/filik-2016-sarcasmo-emoticons.md): sarcasmo, emoticons e pontuação em mensagens escritas · ✅ · fraca
+- [Fincham & Beach 1999](studies/fincham-1999-conflito-casamento.md): o que se sabia sobre briga de casal e uma proposta para entendê-la · ✅ · fraca
 - [Finkel & Eastwick 2009](studies/finkel-2009-quem-se-aproxima.md): quem circula e quem fica sentado no speed dating · ✅ · fraca
 - [Foo et al. 2019](studies/foo-2019-infidelidade-rosto.md): julgar pelo rosto quem já traiu · ✅ · fraca
 - [Fullwood et al. 2015](studies/fullwood-2015-textspeak-personalidade.md): textspeak e a personalidade atribuída a quem escreve · ✅ · fraca
