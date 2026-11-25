@@ -45,6 +45,10 @@ Na análise principal, pôr a semelhança na conta não melhorou a previsão da 
 
 Não encontrar essa ligação não quer dizer que ela seja exatamente zero. Tampouco quer dizer que a personalidade de cada participante não tenha ligação com a atração: o artigo achou ligações com traços da própria pessoa e do parceiro, em análises exploratórias.
 
+## Como obter os dados
+
+Os dados são os do estudo "Date me for Science", do grupo de Mitja Back em Münster, como diz o artigo (Método, p. 5). Os dados já processados e o código desta análise estão nos materiais suplementares do artigo, na pasta "data_and_code". Os dados completos do estudo ficam no projeto Münster Open Dating Projects no OSF (https://osf.io/n7dw9/), com o codebook e os formulários de pedido: um para reproduzir um resultado publicado (`datemeforscience_reproduction_request.docx`) e outro para um estudo novo (`datemeforscience_data_request.docx`), que pede projeto, plano de análise e a lista de variáveis marcada no script `datemeforscience_variableselection.R`. Consultado em 2026-11-25.
+
 ## Limitações
 
 - Uma única amostra de jovens heterossexuais na Alemanha, em sua maioria estudantes. Não representa a população brasileira, pessoas mais velhas ou encontros entre pessoas do mesmo sexo; os autores pedem replicações diretas.
