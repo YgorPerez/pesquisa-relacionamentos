@@ -154,6 +154,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Büttner & Lutz 2025](studies/buttner-2025-espera-por-resposta.md): a espera por resposta e o sentir-se ignorado · ✅ · fraca
 - [Büyükeren et al. 2026](studies/buyukeren-2026-tinder.md): chegada do Tinder, sexo e saúde entre universitários dos EUA · ✅ · fraca
 - [Cacioppo et al. 2013](studies/cacioppo-2013-satisfacao-por-local.md): satisfação e separação por local · ✅ · moderada
+- [Cafaro et al. 2017](studies/cafaro-2017-noxi-especialista-novato.md): o NoXi, conversas por tela entre quem sabe e quem quer aprender · ✅ · fraca
 - [Camerini et al. 2022](studies/camerini-2022-latencia-da-mensagem.md): esperar mais ou menos pela resposta no WhatsApp · ✅ · fraca
 - [Campbell et al. 2001](studies/campbell-2001-ideal-flexivel.md): ideal rígido pesa mais quando o parceiro fica longe dele · ✅ · fraca
 - [Carlson, Alcser-Isais & Eastwick 2026](studies/carlson-2026-atributos-perfil.md): a mesma qualidade em pessoas diferentes · ✅ · fraca
