@@ -5,7 +5,7 @@ ticket: 947
 # Fala espontânea, mas em público: muletas, ritmo e pausas no Certas Palavras
 
 **Data:** 2026-11-26 · **Ticket:** [#947](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/947)
-**Status de verificação:** este relatório é uma **reanálise nossa** do [Certas Palavras](https://huggingface.co/datasets/nilc-nlp/certas_palavras) (NILC/USP; [Araújo et al. 2026, PROPOR](https://aclanthology.org/2026.propor-1.81)), que ainda não tem Ficha. Os autores não publicaram nenhuma destas contagens: elas saíram das nossas contas sobre a planilha de segmentos e o áudio que eles distribuem, sem revisão de fora. O que o corpus é vem do artigo.
+**Status de verificação:** este relatório é uma **reanálise nossa** do Certas Palavras (NILC/USP; [Araújo et al. 2026](../studies/araujo-2026-certas-palavras.md), ✅, força fraca). Os autores não publicaram nenhuma destas contagens: elas saíram das nossas contas sobre a planilha de segmentos e o áudio que eles distribuem, sem revisão de fora. O que o corpus é vem do artigo.
 
 A pergunta é a mesma da [reanálise do CORAA](2026-11-25-fala-informal-brasileira-coraa.md), noutro tipo de fala: quantas muletas, de que tamanho são os pedaços, que palavras de palestra aparecem, e agora também a que velocidade se fala e quanto tempo passa entre um turno e outro. O Certas Palavras é conversa sem roteiro, mas entre adultos instruídos, no ar, num programa de rádio sobre livros e ideias dos anos 1980 e 1990. Fica entre a conversa informal do CORAA e a palestra. Não é sobre namoro nem sobre chat.
 
