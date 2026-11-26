@@ -51,6 +51,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 ### Com dados do Brasil
 
 - [Araújo 2025](studies/araujo-2025-perfis-tinder-brasil.md): o que homens e mulheres mostram nos perfis do Tinder no Brasil · ✅ · fraca
+- [Araújo et al. 2026](studies/araujo-2026-certas-palavras.md): o Certas Palavras, 70 horas de diálogo de rádio brasileiro · ✅ · fraca
 - [Buss 1989](studies/buss-1989-preferencias-37-culturas.md): preferências por parceiro em 37 culturas · ✅ · moderada
 - [Candido Junior et al. 2022](studies/candido-2022-coraa-fala-espontanea.md): o CORAA, quase 300 horas de fala brasileira transcrita, espontânea e preparada · 🟡 · moderada
 - [Costantino 2019](studies/costantino-2019-percepcao-mulheres-tinder.md): como mulheres do Rio leem os perfis de homens no Tinder · ✅ · fraca
@@ -197,6 +198,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Eastwick & Finkel 2008](studies/eastwick-2008-preferencias-speed-dating.md): preferências declaradas não preveem o desejo real (speed dating) · ✅ · moderada
 - [Eastwick et al. 2011](studies/eastwick-2011-ideais-perfil-ao-vivo.md): o parceiro ideal no perfil e depois de uma interação ao vivo · ✅ · moderada
 - [Eastwick et al. 2014](studies/eastwick-2014-meta-analise-preferencias.md): validade preditiva das preferências ideais (meta-análise) · ✅ · forte
+- [Eastwick et al. 2025](studies/eastwick-2025-encontros-tawkify.md): idade e atração em 4.500 encontros às cegas · ✅ · fraca
 - [Egebark et al. 2021](studies/egebark-2021-beleza-educacao-experimento.md): beleza e diploma no perfil, num experimento num site de namoro holandês · ✅ · moderada
 - [Eisenberger, Lieberman & Williams 2003](studies/eisenberger-2003-rejeicao-dor.md): a exclusão social ativa regiões do cérebro ligadas à dor · ✅ · fraca
 - [Elliott 2010](studies/elliott-2010-pistas-anuncios.md): adivinhar o gênero e a orientação de quem escreveu um anúncio pessoal · ✅ · fraca
@@ -637,6 +639,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Goetz 2013](studies/goetz-2013-preferencias-video-perfil.md): preferências por parceiro ditas num vídeo de perfil · ✅ · fraca
 - [Gonzales et al. 2010](studies/gonzales-2010-lsm-coesao-grupo.md): estilo de linguagem parecido em pequenos grupos · ✅ · fraca
 - [Goode & Hoegg 2009](studies/goode-2009-impressao-nao-atraente.md): a ordem entre foto e texto no perfil de namoro · 🟡 · fraca
+- [Gopalakrishnan et al. 2019](studies/gopalakrishnan-2019-topical-chat.md): o Topical-Chat, 11 mil conversas por texto com nota a cada mensagem · ✅ · fraca
 - [Gunaydin, Selcuk & Zayas 2017](studies/gunaydin-2017-foto-interacao.md): a impressão pela foto e a impressão depois de conversar · ✅ · fraca
 - [Hale & Hamilton 2016](studies/hale-2016-revisao-mimica.md): revisão sobre as reações a ser imitado · ✅ · fraca
 - [Hallam et al. 2019](studies/hallam-2019-confianca-encontro-offline.md): confiança e levar o namoro online para o encontro · ✅ · fraca
@@ -666,6 +669,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Khan & Chaudhry 2015](studies/khan-2015-revisao-contato-encontro.md): revisão sobre o caminho do contato online ao primeiro encontro · ✅ · fraca
 - [Kho 2022](studies/kho-2022-primeira-impressao-tinder.md): como três homens formam a primeira impressão de mulheres por fotos · ✅ · fraca
 - [Kimura & Yamamoto 2017](studies/kimura-2017-troca-emoticons.md): retribuir ou não o emoticon numa troca de mensagens com um amigo · ✅ · fraca
+- [Kinch 2022](studies/kinch-2022-first-dates.md): o First Dates Dataset, 12 encontros de TV transcritos fala a fala · 🟡 · fraca
 - [Kluger & Malloy 2019](studies/kluger-2019-perguntas-diadico.md): as perguntas do speed dating de Huang, refeitas par a par · ✅ · fraca
 - [Konings et al. 2024](studies/konings-2024-foto-sexualizada-tracos.md): fotos e textos sexualizados em perfis do Tinder e do Bumble · ✅ · fraca
 - [van Kooten 2021](studies/kooten-2021-qualidade-texto-tinder.md): foto, texto com erros e ausência de texto num perfil do Tinder · ✅ · fraca
@@ -697,6 +701,7 @@ As fichas de antes da migração para frontmatter (#26) estão `unverified` até
 - [Ohashi, Okubo & Okamura 2023](studies/ohashi-2023-quantidade-emoji.md): quantos emojis vêm na resposta · 🟡 · fraca
 - [OkCupid 2009](studies/okcupid-2009-palavras-primeira-mensagem.md): palavras da primeira mensagem e taxa de resposta · 🟡 · fraca
 - [Olivera-La Rosa et al. 2019](studies/olivera-la-rosa-2019-swipe-rostos.md): caráter moral e rostos no Tinder · ✅ · fraca
+- [O'Nell, Sanchez e Finn 2026](studies/onell-2026-ruido-rosa-conversa.md): o vaivém do assunto numa conversa e o quanto ela agrada · ✅ · moderada
 - [Oyama et al. 2026](studies/oyama-2026-estilo-ojisan-jovens.md): emoji, tom e o "estilo tiozão" em mensagens de chefe e de amigo, em japonês · ✅ · fraca
 - [Park et al. 2015](studies/park-2015-vocabulario-participacao-forum.md): vocabulário parecido na primeira resposta e volta à conversa em fóruns de saúde · ✅ · moderada
 - [Perilloux et al. 2012](studies/perilloux-2012-percepcao-interesse-sexual.md): interesse sexual percebido e interesse declarado em conversas de três minutos · ✅ · fraca
