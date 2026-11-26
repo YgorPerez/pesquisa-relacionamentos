@@ -2,12 +2,12 @@
 ticket: 940
 ---
 
-# O que separa o primeiro encontro que vira segundo: Blink Date e First Dates
+# O que separa o primeiro encontro que vira segundo: Blink Date, First Dates e Kings and Kweens
 
 **Data:** 2026-11-26 · **Ticket:** [#940](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/940)
-**Status de verificação:** este relatório é uma **reanálise nossa** de duas bases abertas e pequenas, listadas no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram nenhuma destas contas. Nenhuma das duas bases tem Ficha.
+**Status de verificação:** este relatório é uma **reanálise nossa** de três bases abertas e pequenas, listadas no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram nenhuma destas contas. Nenhuma das três bases tem Ficha.
 
-A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se mede no que foi dito separa os encontros que viram segundo encontro dos que não viram? As medidas são de perguntas, de equilíbrio entre os dois, de tamanho de turno, de elogio e de flerte e brincadeira. São 21 encontros por telefone e 12 encontros à mesa, gravados para a TV. É pouco, e o relatório trata tudo como exploração.
+A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se mede no que foi dito separa os encontros que viram segundo encontro dos que não viram? As medidas são de perguntas, de equilíbrio entre os dois, de tamanho de turno, de elogio e de flerte e brincadeira. São 21 encontros por telefone, 12 encontros à mesa gravados para a TV e 52 episódios de um programa ao vivo em que uma pessoa tem 3 ou 4 encontros seguidos e escolhe um para o segundo. É pouco, e o relatório trata tudo como exploração.
 
 ## Resposta curta
 
@@ -15,6 +15,8 @@ A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se med
 - **Perguntar mais, e de que tipo, não separou os encontros.** Quem foi ao segundo encontro fez 33 perguntas a cada 100 turnos; quem não foi, 31. As perguntas de acompanhamento, sobre o que o outro acabou de dizer, foram 7 contra 8 a cada 100 turnos. Devolver a pergunta ("e você?") foi quase igual nos dois grupos.
 - **Os encontros que deram certo tiveram mais vaivém** (mediana de 59 turnos contra 45), com a mesma duração. Foi a única tendência que aparece também na coluna `turn_count` dos 31 encontros da base (62 contra 47,5; p = 0,07). Ela não chega a ser significativa.
 - **No First Dates, o que mais separou foi ela flertar de volta.** Nos 4 encontros que deram certo, a mulher teve de 3 a 5 falas anotadas como flerte. Nos 8 que não deram, teve de 0 a 3. Flerte só dele não bastou: o encontro em que ele mais flertou (15 falas) não deu certo, e ela flertou uma vez.
+- **No Kings and Kweens, ser o último encontro da noite ajudou.** Nos 47 episódios de 3 encontros, o escolhido foi o último em 23 (49%), quando o acaso daria 33% (p = 0,02). Foi o primeiro em só 10.
+- **As medidas de conversa do Kings and Kweens não são confiáveis.** A transcrição é um texto corrido por episódio, com apresentador e plateia, e os falantes não têm nome. Só 12 episódios deram para recortar encontro por encontro. Neles, nenhuma medida passa da correção para comparações múltiplas.
 - **As anotações do First Dates são do autor da base, que via o programa e sabia o desfecho.** Não dá para separar o que aconteceu no encontro do olhar de quem anotou. O resultado é uma pista, não uma medida.
 
 ## Os dados
@@ -22,6 +24,8 @@ A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se med
 **Blink Date** (podcast). Encontros só por telefone, de 11 a 13 minutos, entre desconhecidos, com uma pergunta de partida por episódio. O desfecho é `matched`: os dois responderam "sim" ou "talvez" a um segundo encontro. A base vem do projeto [OSF 7ju2s](https://osf.io/7ju2s/) de O'Nell, Sanchez e Finn (2026, *Science Advances*, doi 10.1126/sciadv.aeb2684). O CSV de desfecho tem 31 encontros (19 sim e 12 não), e a pasta de transcrições tem 24 arquivos. Pelo nome do arquivo, 21 transcrições casam com uma linha do CSV: 14 encontros com match e 7 sem. Os outros 3 arquivos não têm linha. A transcrição é profissional, com o falante em cada fala, e não marca riso. O OSF não declara licença. Usamos só contagens, sem citar trecho.
 
 **First Dates** (TV, Channel 4). São 12 encontros à mesa, com 1.928 falas transcritas em minúsculas e sem pontuação. Cada fala traz o sexo de quem fala, a emoção de quem fala e de quem ouve (neutra, alegre, triste, surpresa, nojo, raiva, medo), a entonação (neutra, brincadeira, confiante, flerte, nervosa, hesitante, sarcasmo) e o alvo: o par, a cabine onde a pessoa fala com a câmera, a entrevista final ou outro. O desfecho `label` diz se o encontro deu certo, e foram 4 sim e 8 não. A base é de Kinch (2022, [figshare 20219411](https://figshare.com/articles/dataset/First_Dates_Dataset/20219411)), em CC BY 4.0, e os direitos do programa são do Channel 4. Só as 1.277 falas dirigidas ao par entram nas medidas de conversa. Um dos encontros que deram certo tem só falas femininas dirigidas ao par, e deve ser um encontro entre duas mulheres. Ele entra nas medidas gerais, e nas medidas por sexo conta só a parte feminina.
+
+**Kings and Kweens** (YouTube). É um programa gravado ao vivo, num bar com plateia. Uma pessoa (o "king" ou a "kween") tem 3 ou 4 encontros às cegas de 10 a 12 minutos, um depois do outro, e no fim escolhe um para um segundo encontro. A base é do mesmo projeto [OSF 7ju2s](https://osf.io/7ju2s/). O CSV tem 161 encontros em 52 episódios (47 de 3 encontros e 5 de 4), cada um com o nome do participante, a ordem na noite e `winner`, que marca quem foi escolhido. Episódios sem escolhido ou com mais de um ficaram de fora da base. Há transcrições em txt para 35 episódios: uma por episódio, com rótulos de falante ("Speaker 0", "Speaker 1") que não dizem quem é quem. Sem licença declarada.
 
 ## Método
 
@@ -36,6 +40,10 @@ A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se med
 O classificador de perguntas é grosso. Ele erra o acompanhamento escrito com outras palavras, e uma amostra lida à mão mostrou acertos e erros nos três tipos.
 
 **First Dates.** Para cada encontro, conta a fatia das falas ao par anotadas como flerte, brincadeira, nervosismo ou hesitação e confiança, e a fatia com emoção alegre ou negativa, de quem fala e de quem ouve. Separa também por sexo e conta as perguntas, que são as falas que começam com palavra interrogativa ou verbo auxiliar, já que não há pontuação.
+
+**Kings and Kweens, ordem.** Para cada episódio, a posição do escolhido na noite. A chance de o último ser escolhido é testada contra 1/3 (ou 1/4) com a binomial, unicaudal.
+
+**Kings and Kweens, conversa.** Os autores não publicaram onde cada encontro começa, então o recorte é nosso. O início de cada encontro é a primeira apresentação do participante depois do início do anterior ("I'm X", "my name is X", "give it up for X", "welcome X"), com os nomes e a ordem do CSV. O encontro vai até a apresentação do seguinte. Para não pegar a escolha do fim da noite nem dar mais peso a encontros mais longos, cada encontro fica com as primeiras 1.500 palavras, uns 10 minutos de fala. Dos 52 episódios, 17 não têm txt e 19 não deram para recortar (um nome não aparece numa apresentação). Dos 16 recortados, 4 têm um encontro com menos de 1.500 palavras até o seguinte, sinal de recorte errado, e saem. Sobram 12 episódios e 36 encontros. As medidas são as do Blink Date, contadas no trecho inteiro, porque os rótulos de falante não dizem quem é o participante, quem é o king ou a kween e quem é o apresentador. A comparação é dentro do episódio: a posição do escolhido entre os do mesmo episódio em cada medida (1 = o maior valor, 0 = o menor), com média entre os episódios e um teste de permutação que sorteia o escolhido dentro de cada episódio (20 mil sorteios).
 
 **Comparação.** Para cada medida, a mediana nos encontros que deram certo e nos que não deram, a AUC e um teste de permutação bicaudal da diferença de medianas, com 20 mil permutações. A AUC é a chance de um encontro que deu certo ter valor maior que um que não deu, e vale 0,5 quando não há diferença. Não há correção para comparações múltiplas nas tabelas. O texto diz quando um resultado não aguentaria a correção.
 
@@ -86,6 +94,28 @@ Em contagem, a mulher flertou 4, 3, 5 e 5 vezes nos encontros que deram certo, e
 
 A direção bate com a dos encontros que deram certo, que foram mais alegres, com mais brincadeira e menos fala negativa. Nenhuma dessas medidas passa de p = 0,1.
 
+## Resultados: Kings and Kweens
+
+**Ordem.** Nos 47 episódios de 3 encontros, o escolhido foi o primeiro em 10, o do meio em 14 e o último em 23. O último foi escolhido em 49% das vezes, e o acaso daria 33% (p = 0,02). Nos 5 episódios de 4 encontros, o último foi escolhido em 2. A ordem é decidida pelo programa, e não sabemos se ao acaso. Se o produtor guarda para o fim o participante que acha mais promissor, parte desse efeito é escolha do produtor, não da memória de quem escolhe.
+
+**Conversa** (12 episódios, 36 encontros). Posição média do escolhido entre os do episódio, onde 0,5 é o acaso:
+
+| Medida | Posição do escolhido | p |
+|---|---|---|
+| Turnos | 0,62 | 0,30 |
+| Palavras por turno | 0,33 | 0,19 |
+| Perguntas por 100 turnos | 0,28 | 0,06 |
+| Acompanhamento por 100 turnos | 0,19 | 0,008 |
+| Devolver a pergunta por 100 turnos | 0,59 | 0,44 |
+| Backchannel por 100 turnos | 0,46 | 0,79 |
+| Elogio por 1.000 palavras | 0,62 | 0,28 |
+| Futuro juntos por 1.000 palavras | 0,44 | 0,64 |
+| "Nós" por 1.000 palavras | 0,42 | 0,55 |
+| "Eu" por 1.000 palavras | 0,58 | 0,55 |
+| "Você" por 1.000 palavras | 0,47 | 0,86 |
+
+Os escolhidos tiveram **menos** perguntas de acompanhamento que os outros do episódio (posição 0,19, p = 0,008). Com 11 medidas, a correção de Bonferroni leva isso a p = 0,09. O trecho medido também mistura o participante, o king ou a kween, o apresentador e a plateia, e o recorte é nosso. Não tratamos como achado, e a direção contraria a do Huang et al. 2017, que mediu a conversa a dois sem mais ninguém.
+
 ## Limites
 
 - **Amostras mínimas.** São 21 e 12 encontros. Um efeito médio passaria despercebido, e um resultado com p < 0,05 entre 15 testes pode ser acaso.
@@ -93,3 +123,4 @@ A direção bate com a dos encontros que deram certo, que foram mais alegres, co
 - **Blink Date é por telefone, com uma pergunta de partida imposta e gente que topou ir a um podcast.** First Dates é TV britânica, com câmera e restaurante. Nenhum dos dois é chat de app.
 - **As medidas de texto do Blink Date são contagens por palavra-chave**, sem leitura de sentido. A pergunta de acompanhamento escrita com outras palavras escapa.
 - **Faltam 10 transcrições do Blink Date**, e não sabemos se faltam ao acaso.
+- **O recorte do Kings and Kweens é nosso e grosso.** Os encontros começam na apresentação gravada do participante, e o trecho medido traz o apresentador e a plateia junto. Os 12 episódios que sobraram podem não ser como os 40 que saíram.
