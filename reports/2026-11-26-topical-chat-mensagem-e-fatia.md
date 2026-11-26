@@ -5,7 +5,7 @@ ticket: 942
 # Quando um fala demais, o outro gosta menos: notas do Topical-Chat
 
 **Data:** 2026-11-26 · **Ticket:** [#942](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/942)
-**Status de verificação:** este relatório é uma **reanálise nossa** do Topical-Chat, listado no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram estas contas, e a base não tem Ficha.
+**Status de verificação:** este relatório é uma **reanálise nossa** do Topical-Chat, listado no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram estas contas. O artigo da base tem Ficha: [Gopalakrishnan et al. 2019](../studies/gopalakrishnan-2019-topical-chat.md).
 
 O Topical-Chat tem 10.784 conversas por texto entre pares de trabalhadores do Mechanical Turk, que conversam sobre um assunto a partir de textos que cada um recebeu para ler. Ele traz duas notas. A outra pessoa dá uma nota a cada mensagem, e cada um dá uma nota à conversa no fim. As perguntas deste relatório são duas. Na mensagem, o que acompanha a nota que a outra pessoa dá a ela? Na conversa, o que no jeito de um acompanha a nota que o outro dá à conversa? Não é namoro: é conversa de tarefa entre desconhecidos, sem rosto e por texto.
 
@@ -18,9 +18,9 @@ O Topical-Chat tem 10.784 conversas por texto entre pares de trabalhadores do Me
 
 ## Os dados
 
-O [Topical-Chat](https://github.com/alexa/Topical-Chat) (Gopalakrishnan et al. 2019, Interspeech, doi 10.21437/Interspeech.2019-3079) tem licença CDLA-Sharing 1.0. Usamos as cinco partes (treino, validação e teste, "freq" e "rare"):
+O [Topical-Chat](https://github.com/alexa/Topical-Chat) ([Gopalakrishnan et al. 2019](../studies/gopalakrishnan-2019-topical-chat.md)) tem licença CDLA-Sharing 1.0. Usamos as cinco partes (treino, validação e teste, "freq" e "rare"):
 
-- **10.784 conversas**, com cerca de 22 mensagens cada;
+- **10.784 conversas** na versão publicada (o artigo conta 11.319), com cerca de 22 mensagens cada;
 - **233.073 mensagens com a nota da outra pessoa** (`turn_rating`, de Poor a Excellent, que lemos de 1 a 5). A distribuição é 696, 1.824, 13.365, 103.983 e 113.205, ou seja, 93% são 4 ou 5;
 - **21.344 notas à conversa** (`conversation_rating`, uma de cada pessoa, mesma escala), das quais 95% são 4 ou 5.
 
