@@ -5,7 +5,7 @@ ticket: 940
 # O que separa o primeiro encontro que vira segundo: Blink Date, First Dates e Kings and Kweens
 
 **Data:** 2026-11-26 · **Ticket:** [#940](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/940)
-**Status de verificação:** este relatório é uma **reanálise nossa** de três bases abertas e pequenas, listadas no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram nenhuma destas contas. Nenhuma das três bases tem Ficha.
+**Status de verificação:** este relatório é uma **reanálise nossa** de três bases abertas e pequenas de encontros reais, e dos diálogos escritos pelo Claude que vêm no mesmo projeto do OSF, listadas no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). Os autores não publicaram nenhuma destas contas. Nenhuma das três bases tem Ficha.
 
 A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se mede no que foi dito separa os encontros que viram segundo encontro dos que não viram? As medidas são de perguntas, de equilíbrio entre os dois, de tamanho de turno, de elogio e de flerte e brincadeira. São 21 encontros por telefone, 12 encontros à mesa gravados para a TV e 52 episódios de um programa ao vivo em que uma pessoa tem 3 ou 4 encontros seguidos e escolhe um para o segundo. É pouco, e o relatório trata tudo como exploração.
 
@@ -17,6 +17,7 @@ A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se med
 - **No First Dates, o que mais separou foi ela flertar de volta.** Nos 4 encontros que deram certo, a mulher teve de 3 a 5 falas anotadas como flerte. Nos 8 que não deram, teve de 0 a 3. Flerte só dele não bastou: o encontro em que ele mais flertou (15 falas) não deu certo, e ela flertou uma vez.
 - **No Kings and Kweens, ser o último encontro da noite ajudou.** Nos 47 episódios de 3 encontros, o escolhido foi o último em 23 (49%), quando o acaso daria 33% (p = 0,02). Foi o primeiro em só 10.
 - **As medidas de conversa do Kings and Kweens não são confiáveis.** A transcrição é um texto corrido por episódio, com apresentador e plateia, e os falantes não têm nome. Só 12 episódios deram para recortar encontro por encontro. Neles, nenhuma medida passa da correção para comparações múltiplas.
+- **Nos diálogos escritos pelo Claude, o que os leitores gostaram é o que o Claude escreveu como "bom".** Os 50 diálogos pedidos como bons tiveram nota 4,6 de 5, e os 49 pedidos como ruins, 2,4. Os bons têm turnos três vezes mais longos, mais perguntas de acompanhamento, mais "nós" e mais exclamação. Dentro de cada grupo, perguntar não mudou a nota. O que acompanhou a nota foi menos "eu" e menos "você" por palavra, e, nos ruins, mais exclamação. Quem deu a nota leu o diálogo de fora, sem participar dele.
 - **As anotações do First Dates são do autor da base, que via o programa e sabia o desfecho.** Não dá para separar o que aconteceu no encontro do olhar de quem anotou. O resultado é uma pista, não uma medida.
 
 ## Os dados
@@ -26,6 +27,8 @@ A pergunta: numa conversa de primeiro encontro entre desconhecidos, o que se med
 **First Dates** (TV, Channel 4). São 12 encontros à mesa, com 1.928 falas transcritas em minúsculas e sem pontuação. Cada fala traz o sexo de quem fala, a emoção de quem fala e de quem ouve (neutra, alegre, triste, surpresa, nojo, raiva, medo), a entonação (neutra, brincadeira, confiante, flerte, nervosa, hesitante, sarcasmo) e o alvo: o par, a cabine onde a pessoa fala com a câmera, a entrevista final ou outro. O desfecho `label` diz se o encontro deu certo, e foram 4 sim e 8 não. A base é de Kinch (2022, [figshare 20219411](https://figshare.com/articles/dataset/First_Dates_Dataset/20219411)), em CC BY 4.0, e os direitos do programa são do Channel 4. Só as 1.277 falas dirigidas ao par entram nas medidas de conversa. Um dos encontros que deram certo tem só falas femininas dirigidas ao par, e deve ser um encontro entre duas mulheres. Ele entra nas medidas gerais, e nas medidas por sexo conta só a parte feminina.
 
 **Kings and Kweens** (YouTube). É um programa gravado ao vivo, num bar com plateia. Uma pessoa (o "king" ou a "kween") tem 3 ou 4 encontros às cegas de 10 a 12 minutos, um depois do outro, e no fim escolhe um para um segundo encontro. A base é do mesmo projeto [OSF 7ju2s](https://osf.io/7ju2s/). O CSV tem 161 encontros em 52 episódios (47 de 3 encontros e 5 de 4), cada um com o nome do participante, a ordem na noite e `winner`, que marca quem foi escolhido. Episódios sem escolhido ou com mais de um ficaram de fora da base. Há transcrições em txt para 35 episódios: uma por episódio, com rótulos de falante ("Speaker 0", "Speaker 1") que não dizem quem é quem. Sem licença declarada.
+
+**Diálogos do Claude.** No mesmo projeto do OSF (pasta `claude-dialogues`), os autores pediram ao Claude 50 conversas "boas" e 50 "ruins" entre duas pessoas que acabam de se conhecer. Todas têm 100 turnos, e a maioria se passa num café. Cada leitor, recrutado no Prolific, leu um diálogo, respondeu três perguntas de atenção sobre o conteúdo e três de agrado em escala de 5 pontos. A planilha bruta tem 675 respostas, e o arquivo pronto dos autores com a nota de cada diálogo não está mais no OSF. Montamos a nota a partir da planilha: são 605 leitores com um diálogo só, 516 deles acertaram as três perguntas de atenção e responderam as três de agrado, e o resultado são 99 diálogos com nota (5 leitores na mediana). A nota do leitor é a média das três perguntas, e a do diálogo é a média dos leitores. A resposta certa das perguntas de atenção é a primeira opção, o que conferimos no texto de alguns diálogos.
 
 ## Método
 
@@ -44,6 +47,8 @@ O classificador de perguntas é grosso. Ele erra o acompanhamento escrito com ou
 **Kings and Kweens, ordem.** Para cada episódio, a posição do escolhido na noite. A chance de o último ser escolhido é testada contra 1/3 (ou 1/4) com a binomial, unicaudal.
 
 **Kings and Kweens, conversa.** Os autores não publicaram onde cada encontro começa, então o recorte é nosso. O início de cada encontro é a primeira apresentação do participante depois do início do anterior ("I'm X", "my name is X", "give it up for X", "welcome X"), com os nomes e a ordem do CSV. O encontro vai até a apresentação do seguinte. Para não pegar a escolha do fim da noite nem dar mais peso a encontros mais longos, cada encontro fica com as primeiras 1.500 palavras, uns 10 minutos de fala. Dos 52 episódios, 17 não têm txt e 19 não deram para recortar (um nome não aparece numa apresentação). Dos 16 recortados, 4 têm um encontro com menos de 1.500 palavras até o seguinte, sinal de recorte errado, e saem. Sobram 12 episódios e 36 encontros. As medidas são as do Blink Date, contadas no trecho inteiro, porque os rótulos de falante não dizem quem é o participante, quem é o king ou a kween e quem é o apresentador. A comparação é dentro do episódio: a posição do escolhido entre os do mesmo episódio em cada medida (1 = o maior valor, 0 = o menor), com média entre os episódios e um teste de permutação que sorteia o escolhido dentro de cada episódio (20 mil sorteios).
+
+**Diálogos do Claude.** As mesmas medidas do Blink Date, mais a fatia de turnos com riso escrito e com exclamação. A diferença entre bons e ruins vem do pedido feito ao Claude, então a comparação que interessa é **dentro** de cada grupo: o Spearman entre a medida e a nota em cada grupo, com média ponderada, e um teste de permutação que embaralha a nota dentro de cada grupo (5 mil sorteios).
 
 **Comparação.** Para cada medida, a mediana nos encontros que deram certo e nos que não deram, a AUC e um teste de permutação bicaudal da diferença de medianas, com 20 mil permutações. A AUC é a chance de um encontro que deu certo ter valor maior que um que não deu, e vale 0,5 quando não há diferença. Não há correção para comparações múltiplas nas tabelas. O texto diz quando um resultado não aguentaria a correção.
 
@@ -116,6 +121,37 @@ A direção bate com a dos encontros que deram certo, que foram mais alegres, co
 
 Os escolhidos tiveram **menos** perguntas de acompanhamento que os outros do episódio (posição 0,19, p = 0,008). Com 11 medidas, a correção de Bonferroni leva isso a p = 0,09. O trecho medido também mistura o participante, o king ou a kween, o apresentador e a plateia, e o recorte é nosso. Não tratamos como achado, e a direção contraria a do Huang et al. 2017, que mediu a conversa a dois sem mais ninguém.
 
+## Resultados: diálogos do Claude
+
+99 diálogos com nota, 50 bons e 49 ruins. A nota média dos bons foi 4,61 (de 4,11 a 4,93) e a dos ruins 2,39 (de 1,20 a 3,33). As duas faixas não se cruzam.
+
+| Medida | Bons (mediana) | Ruins (mediana) | rho, todos | rho dentro do grupo | p dentro |
+|---|---|---|---|---|---|
+| Palavras por turno | 21,4 | 6,2 | 0,76 | 0,03 | 0,79 |
+| Desequilíbrio na fatia de palavras | 0,04 | 0,53 | -0,58 | 0,37 | < 0,001 |
+| Perguntas por 100 turnos | 27 | 24 | 0,37 | 0,19 | 0,06 |
+| Acompanhamento por 100 turnos | 7 | 2 | 0,68 | -0,06 | 0,59 |
+| Devolver a pergunta por 100 turnos | 2 | 0 | 0,60 | -0,07 | 0,49 |
+| Backchannel por 100 turnos | 0 | 5 | -0,72 | 0,07 | 0,30 |
+| Elogio por 1.000 palavras | 2,6 | 1,6 | 0,27 | 0,02 | 0,82 |
+| Futuro juntos por 1.000 palavras | 1,8 | 0 | 0,62 | 0,01 | 0,94 |
+| "Nós" por 1.000 palavras | 11,8 | 1,6 | 0,70 | -0,04 | 0,68 |
+| "Eu" por 1.000 palavras | 48,3 | 62,5 | -0,65 | -0,45 | < 0,001 |
+| "Você" por 1.000 palavras | 26,5 | 50,5 | -0,81 | -0,30 | 0,002 |
+| Exclamação por 100 turnos | 23 | 2 | 0,82 | 0,34 | 0,001 |
+
+**Entre os grupos**, quase tudo separa, e na direção esperada: o ruim do Claude é uma das pessoas respondendo seco ("Sometimes.", "It's okay."), sem pergunta de volta e sem acompanhamento. Isso diz como o Claude escreve uma conversa ruim, e não o que torna uma conversa ruim.
+
+**Dentro dos grupos**, quatro medidas acompanham a nota:
+- **"Eu" por palavra:** rho -0,30 nos bons e -0,60 nos ruins.
+- **"Você" por palavra:** -0,31 e -0,30.
+- **Exclamação:** 0,07 e 0,62.
+- **Desequilíbrio na fatia de palavras:** 0,26 e 0,48.
+
+O desequilíbrio vai na direção contrária à do Huang et al. 2017. Nos diálogos ruins, quanto mais uma das pessoas carrega a conversa, com animação, enquanto a outra responde seco, mais o leitor gosta. Perguntar mais, fazer acompanhamento e devolver a pergunta não mudaram a nota dentro de nenhum grupo.
+
+Os leitores são de fora, e o Huang et al. 2017 mostrou que quem lê de fora não vê o efeito das perguntas de acompanhamento que o parceiro sente. Estas notas medem o que um leitor gosta de ler, que é o mesmo lugar de um juiz de mensagens, e não o que a outra pessoa da conversa sente.
+
 ## Limites
 
 - **Amostras mínimas.** São 21 e 12 encontros. Um efeito médio passaria despercebido, e um resultado com p < 0,05 entre 15 testes pode ser acaso.
@@ -123,4 +159,5 @@ Os escolhidos tiveram **menos** perguntas de acompanhamento que os outros do epi
 - **Blink Date é por telefone, com uma pergunta de partida imposta e gente que topou ir a um podcast.** First Dates é TV britânica, com câmera e restaurante. Nenhum dos dois é chat de app.
 - **As medidas de texto do Blink Date são contagens por palavra-chave**, sem leitura de sentido. A pergunta de acompanhamento escrita com outras palavras escapa.
 - **Faltam 10 transcrições do Blink Date**, e não sabemos se faltam ao acaso.
+- **Os diálogos do Claude são ficção com um pedido explícito de "bom" ou "ruim".** A variação dentro de cada grupo é pequena (de 4,1 a 4,9 nos bons), e são 5 leitores por diálogo na mediana. O que o Claude entende por boa conversa já está no texto, e um juiz que também é um modelo de linguagem tende a concordar com ele.
 - **O recorte do Kings and Kweens é nosso e grosso.** Os encontros começam na apresentação gravada do participante, e o trecho medido traz o apresentador e a plateia junto. Os 12 episódios que sobraram podem não ser como os 40 que saíram.
