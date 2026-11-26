@@ -5,7 +5,7 @@ ticket: 945
 # Quem quer um segundo encontro depois do primeiro: os dados da Tawkify
 
 **Data:** 2026-11-26 · **Ticket:** [#945](https://github.com/YgorPerez/pesquisa-relacionamentos/issues/945)
-**Status de verificação:** este relatório é uma **reanálise nossa** dos dados abertos de Eastwick et al. 2025 ([PNAS, doi 10.1073/pnas.2416984122](https://doi.org/10.1073/pnas.2416984122)), listados no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). O artigo é sobre idade, e as contas daqui, de taxa de segundo encontro, não estão nele.
+**Status de verificação:** este relatório é uma **reanálise nossa** dos dados abertos de [Eastwick et al. 2025](../studies/eastwick-2025-encontros-tawkify.md) (✅, força fraca), listados no [catálogo de bases de conversa e encontros](2026-11-26-bases-de-conversa-e-encontros.md). O artigo é sobre idade, e as contas daqui, de taxa de segundo encontro, não estão nele.
 
 A Tawkify é uma agência de casamenteiros dos Estados Unidos. Ela marca um primeiro encontro entre dois clientes e, depois, pergunta a cada um como foi e se quer um segundo. A pergunta deste relatório: depois de um primeiro encontro de verdade, quantos querem o segundo, quantas vezes os dois querem, e o que acompanha esse sim? Não há conversa nos dados, só o questionário de depois.
 
